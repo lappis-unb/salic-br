@@ -581,7 +581,6 @@ class AvaliaracompanhamentoprojetoController extends GenericControllerNew {
 
         //** Usuario Logado ************************************************/
         $auth               = Zend_Auth::getInstance(); // pega a autenticação
-        $idusuario          = $auth->getIdentity()->usu_codigo;
         /******************************************************************/
 
         $post = Zend_Registry::get('post');
@@ -590,7 +589,7 @@ class AvaliaracompanhamentoprojetoController extends GenericControllerNew {
         $dados = array();
         $dados['idTecnicoAvaliador'] = null;
         $dados['siCumprimentoObjeto'] = 2;
-        $where = "idPronac = $idPronac AND idTecnicoAvaliador = $idusuario";
+        $where = "idPronac = $idPronac";
 
         $tbCumprimentoObjeto = new tbCumprimentoObjeto();
         $return = $tbCumprimentoObjeto->update($dados, $where);
