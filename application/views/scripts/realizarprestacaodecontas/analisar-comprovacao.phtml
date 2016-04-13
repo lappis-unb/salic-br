@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>
 <?php require_once"inc/menu.inc.php"; ?>
 <div id="breadcrumb">
     <ul>
@@ -154,6 +155,7 @@
             $comprovanteNodeId = "comprovantePagamento{$comprovante->idComprovantePagamento}";
                 $editable = true;
     ?>
+	
     <form id="frmValidar" name="frmValidar" action="<?php echo $actionForm; ?>" method="post">
         <input type="hidden" name="comprovantePagamento[<?php echo $comprovante->idPlanilhaAprovacao; ?>][idComprovantePagamento]" value="<?php echo $comprovante->idComprovantePagamento;?>" />
         <input type="hidden" name="comprovantePagamento[<?php echo $comprovante->idPlanilhaAprovacao; ?>][idPlanilhaAprovacao]" value="<?php echo $comprovante->idPlanilhaAprovacao;?>" />
@@ -238,8 +240,9 @@
                     <tr>
                         <td class="destacar" align="right"><b>Ocorrência do Técnico</b></td>
                         <td colspan="5">
-                                <textarea
+                                <textarea 
                                     name="comprovantePagamento[<?php echo $comprovante->idPlanilhaAprovacao; ?>][observacao]"
+				    id="comprovantePagamento_<?php echo $comprovante->idPlanilhaAprovacao; ?>_observacao"
                                     rows="10" cols="100"
                                     class="input_simples"><?php echo $comprovante->ocorrencia; ?></textarea>
                         </td>
@@ -252,6 +255,21 @@
                 </tbody>
             </table>
         </form>
+
+	<script type="text/javascript">
+	 $(document).ready(function(){
+	     tinymce.init({
+		 plugins:"paste,textcolor",
+		 language: "pt_BR",
+		 paste_as_text: true,
+		 selector: '#comprovantePagamento_<?php echo $comprovante->idPlanilhaAprovacao; ?>_observacao',
+		 height: 200,
+		 toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+		 menubar:""
+             });
+	 });
+	</script>
+
         <?php endforeach; ?>
     </form>
 </div>

@@ -722,6 +722,46 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
+    
+    /**
+     * Author: Fernao Lopes Ginez de Lara
+     * Descrição: Função criada a pedido da Área Finalistica em 13/04/2016
+     */
+    public function enviarcomprovacaopagamentoAction() {
+      $idPronac = $this->getRequest()->getParam('idPronac');
+      
+      try {
+	  
+          $comprovantePagamentoModel = new ComprovantePagamento();
+	  $comprovantePagamento = $comprovantePagamentoModel->atualizarComprovanteRecusado($idPronac);
+	  
+	  $this->_helper->flashMessenger('Comprovantes enviados com sucesso!');
+	  $this->_redirect(
+                str_replace(
+                    $this->view->baseUrl(),
+                    '',
+                    $this->view->url(
+                        array(
+                            'controller' => 'comprovarexecucaofinanceira',
+                            'action' => 'comprovantes-recusados',
+                            'idusuario' => $this->view->idusuario,
+                            'idpronac' => $idPronac,
+                        )
+                    )
+                )
+          );
+	} catch (Exception $e) {
+	  $message = $e->getMessage();
+	  if (strpos($e->getMessage(), 'DateTime::__construct()') !== false) {
+	    $message = 'Não foi possível enviar os comprovantes de pagamento!';
+	  }
+	  $this->view->message = $message;
+	  $this->view->message_type = 'ERROR';
+	  $this->_forward('comprovacaopagamento-recusado');
+      }      
+    }
+    
+
     /**
      *
      */
@@ -732,8 +772,8 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             $request = $this->getRequest();
             $idComprovantePagamento = $this->getRequest()->getParam('idComprovantePagamento');
 
-            $comprovanteParamentoModel = new ComprovantePagamento();
-            $comprovanteParamento = $comprovanteParamentoModel->find($idComprovantePagamento)->current();
+            $comprovantePagamentoModel = new ComprovantePagamento();
+            $comprovantePagamento = $comprovantePagamentoModel->find($idComprovantePagamento)->current();
 
             # iniciando os trabalhos com objeto
             $comprovantePagamentoModel = new ComprovantePagamento(
@@ -744,14 +784,14 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                 $request->getParam('nrComprovante'),
                 $request->getParam('nrSerie'),
                 $request->getParam('dtEmissao') ? new DateTime(data::dataAmericana($request->getParam('dtEmissao'))) : null,
-                $comprovanteParamento->idArquivo,
+                $comprovantePagamento->idArquivo,
                 $request->getParam('tpFormaDePagamento'),
                 new DateTime(),
                 str_replace(',', '.', str_replace('.', '', $request->getParam('vlComprovado'))),
                 $request->getParam('nrDocumentoDePagamento'),
                 $request->getParam('dsJustificativa')
             );
-            $comprovantePagamentoModel->atualizar();
+            $comprovantePagamentoModel->atualizar(3);
 
             # View Parameters
             $this->view->comprovantePagamento = $comprovantePagamentoModel->toStdclass();
