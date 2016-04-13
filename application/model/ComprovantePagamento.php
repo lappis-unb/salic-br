@@ -351,6 +351,7 @@ class ComprovantePagamento extends GenericModel
                     comp.vlComprovacao,
                     comp.dtEmissao,
                     comp.dtPagamento,
+                    comp.idFornecedor,
                     comp.idFornecedorExterior,
                     comp.idArquivo,
                     comp.dsOutrasFontes,
