@@ -5,6 +5,9 @@ Release 1.5.0
   * Novo: [Prestação de contas] justificativa no campo de encaminhamento
   * Novo: [Prestação de contas] exibindo coluna justificativa nos itens da comprovação financeira
   * Novo: [Prestação de contas] é possível editar a comprovação de itens
+  * Novo: [Prestação de contas] novo botão de enviar comprovantes em lote e botão de salvar comprovante
+  * Novo: [Prestação de contas] responde diligência automaticamente ao enviar comprovantes recusados
+  * Novo: [Prestação de contas] richtext na comprovação de pagamento (técnico e proponente)
   * Novo: [Coordenador de pronac/parecer] adicionados vídeos introdutórios para parecerista e coordenador de pronac
   * Fix: [Coordenador de pronac/parecer] mudança de nomenclatura dos vídeos introdutórios para coordenador de pronac/parecer
   * Fix: [dados bancários] correção na ocorrência
@@ -22,7 +25,9 @@ Release 1.5.0
   * Fix: [Parecer técnico] campo richtext e limitação de caracteres
   * Fix: [Localização física do projeto] correção na listagem
   * Fix: [Localização física do projeto] agora é possível cadastrar sem um técnico
-  
+  * Fix: [Comprovação de objeto] correção na devolução do técnico para coordenador de avaliação
+  * Fix: [Comprovação de objeto] correção nas etiquetas da visualização do relatório de cumprimento de objeto 
+
 Release 1.4.4
   * Fix: [Comprovação financeira] Ajuste solicitado pela Área na cláusula WHERE do painel de comprovação financeira para não listar projetos excluidos ou nulos
 
