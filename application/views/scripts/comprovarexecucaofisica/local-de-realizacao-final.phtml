@@ -202,9 +202,15 @@
                 $('#dtInicioRealizacao'+n[1]).addClass('obrigatorio');
                 $('#dtInicioRealizacao'+n[1]).removeClass('sumir');
                 $('#dtInicioRealizacao'+n[1]).val('');
+                $('#dtFimRealizacao'+n[1]).addClass('obrigatorio');
+                $('#dtFimRealizacao'+n[1]).removeClass('sumir');
+                $('#dtFimRealizacao'+n[1]).val('');
+
             } else {
                 $('#dtInicioRealizacao'+n[1]).removeClass('obrigatorio');
                 $('#dtInicioRealizacao'+n[1]).addClass('sumir');
+                $('#dtFimRealizacao'+n[1]).removeClass('obrigatorio');
+                $('#dtFimRealizacao'+n[1]).addClass('sumir');
             }
 
         });
@@ -298,7 +304,7 @@
     <form id="formCadastro" action="<?php echo $this->url(array('controller' => 'comprovarexecucaofisica', 'action' => 'cadastrar-local-realizacao'), '', true); ?>?idpronac=<?php echo Seguranca::encrypt($this->idPronac); ?>" method="post">
         <table class="tabela">
             <tr align="center">
-                <th colspan="7">Local de Realização</th>
+                <th colspan="8">Local de Realização</th>
             </tr>
             <tr align="center">
                 <td class="destacar bold">País</td>
@@ -339,9 +345,7 @@
                     <input type="hidden" name="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples" value="<?php echo !empty($LocaisDeRealizacao->dtFimRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'):''; ?>"/>
                     <div style="height: 24px; padding: 6px 0px 0px 4px;" id="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'); ?></div>
                     <?php } else { ?>
-                    <input type="text" name="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples calendario sumir" maxlength="10" value="<?php echo !empty($LocaisDeRealizacao->dtInicioRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'):''; ?>" />
-		    
-		    <div style="height: 24px; padding: 6px 0px 0px 4px;" id="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'); ?></div>
+                    <input type="text" name="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples calendario sumir" maxlength="10" value="" />
                     <?php } ?>
                 </td>
                 <td align="center">
