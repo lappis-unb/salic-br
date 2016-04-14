@@ -82,7 +82,7 @@
                             vlBeneficiario = parseInt(vlBeneficiario)+parseInt($(this).val());
                         }
                     });
-                    if($('#totalBeneficiario'+id).val() < vlBeneficiario){
+                    if(vlBeneficiario > $('#totalBeneficiario'+id).val()){
                         alertaModal('Ultrapassou a quantidade de Produtos aprovados destinados ao Beneficiário.');
                         return false;
                     }
