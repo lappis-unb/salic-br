@@ -668,6 +668,14 @@ label {
 	overflow:auto;
 }
 
+.input_font_pq {
+    font-size: 12px;
+}
+
+.input_pq {
+    width: 100px;
+}
+
 /* formatando textfield para datas com calendario */
 .data input {
 	width:90px;
