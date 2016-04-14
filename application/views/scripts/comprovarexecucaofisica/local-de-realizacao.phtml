@@ -6,6 +6,10 @@
             mascara(this, format_data); // data
 	});
 
+	$('.dtRealizacao').click(function() {
+	    $(this).css('border-color', '#ccc');
+	});
+	
         $('#btn_salvar').click(function(){
             var preenchimento = false;
             $('.obrigatorio').each(function(){
@@ -16,6 +20,54 @@
                 }
             });
 
+	    // verifica se uma data é menor que a outra
+	    var erroData = false;
+	    $('.dtRealizacao').each(function(){
+		var currentType = $(this).attr('id').split('Realizacao')[0],
+		    soleId = $(this).attr('id').split('Realizacao')[1],
+		    currentId = "#" + $(this).attr('id'),
+		    otherType = (currentType == 'dtInicio') ? 'dtFim' : 'dtInicio',
+		    otherId = "#" + otherType + 'Realizacao' + soleId;
+		
+		// verifica apenas inputs ativos
+		if (!$(currentId).hasClass("sumir")) {
+		    // se ambos estiverem preenchidos, verifica
+		    if ($(currentId).val() != "" && $(otherId).val() != "") {
+			if (currentType == "dtInicio") {
+			    if (Date.parse($(currentId).val()) > Date.parse($(otherId).val())) {
+				erroData = true;
+				$(currentId).css('border-color', 'red');
+			    }
+			} else {
+			    if (Date.parse($(currentId).val()) < Date.parse($(otherId).val())) {
+				erroData = true;
+				$(currentId).css('border-color', 'red');
+			    }
+			}
+		    }
+		}		
+	    });
+
+	    if (erroData) {
+		$("#camposObrigatorios").dialog("destroy");
+		$("#camposObrigatorios").html("Data fim não pode ser menor que data início");
+		$("#camposObrigatorios").dialog({
+                    resizable: false,
+                    title: 'Alerta!',
+                    width:320,
+                    height:160,
+                    modal: true,
+                    buttons : {
+			'OK' : function(){
+                            $(this).dialog('close');
+			}
+                    }
+		});
+		$('.ui-dialog-titlebar-close').remove();
+		
+		return false;
+	    }
+	    
             if(preenchimento) {
                 $("#camposObrigatorios").dialog("destroy");
                 $("#camposObrigatorios").html("Favor preencher os dados obrig&aacute;torios!");
@@ -207,9 +259,14 @@
                 $('#dtInicioRealizacao'+n[1]).addClass('obrigatorio');
                 $('#dtInicioRealizacao'+n[1]).removeClass('sumir');
                 $('#dtInicioRealizacao'+n[1]).val('');
+                $('#dtFimRealizacao'+n[1]).addClass('obrigatorio');
+                $('#dtFimRealizacao'+n[1]).removeClass('sumir');
+                $('#dtFimRealizacao'+n[1]).val('');
             } else {
                 $('#dtInicioRealizacao'+n[1]).removeClass('obrigatorio');
                 $('#dtInicioRealizacao'+n[1]).addClass('sumir');
+                $('#dtFimRealizacao'+n[1]).removeClass('obrigatorio');
+                $('#dtFimRealizacao'+n[1]).addClass('sumir');
             }
 
         });
@@ -336,7 +393,7 @@
                     <input type="hidden" name="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples" value="<?php echo !empty($LocaisDeRealizacao->dtInicioRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'):''; ?>"/>
                     <div style="height: 24px; padding: 6px 0px 0px 4px;" id="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'); ?></div>
                     <?php } else { ?>
-                    <input type="text" name="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples calendario sumir" maxlength="10" value="<?php echo !empty($LocaisDeRealizacao->dtInicioRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'):''; ?>" />
+                    <input type="text" name="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples calendario sumir input_font_pq input_pq dtRealizacao" maxlength="10" value="<?php echo !empty($LocaisDeRealizacao->dtInicioRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'):''; ?>" />
                     <?php } ?>
                 </td>
                 <td>
@@ -344,9 +401,7 @@
                     <input type="hidden" name="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples" value="<?php echo !empty($LocaisDeRealizacao->dtFimRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'):''; ?>"/>
                     <div style="height: 24px; padding: 6px 0px 0px 4px;" id="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'); ?></div>
                     <?php } else { ?>
-                    <input type="text" name="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples calendario sumir" maxlength="10" value="<?php echo !empty($LocaisDeRealizacao->dtInicioRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'):''; ?>" />
-		    
-		    <div style="height: 24px; padding: 6px 0px 0px 4px;" id="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'); ?></div>
+                    <input type="text" name="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples calendario sumir input_font_pq input_pq dtRealizacao" maxlength="10" value="" />
                     <?php } ?>
                 </td>
                 <td align="center">
@@ -362,7 +417,7 @@
             <?php } ?>
             <tr>
                 <td>
-                    <select name="novoPais" id="novoPais" class="select_simples">
+                    <select name="novoPais" id="novoPais" class="select_simples input_font_pq">
                         <option value=""> - Selecione - </option>
                         <?php foreach ($this->Paises as $Paises) { ?>
                         <option value="<?php echo $Paises->idPais; ?>"><?php echo $Paises->Descricao; ?></option>
@@ -370,7 +425,7 @@
                     </select>
                 </td>
                 <td>
-                    <select name="novoUf" id="novoUf" class="select_simples" disabled="disabled">
+                    <select name="novoUf" id="novoUf" class="select_simples input_font_pq" disabled="disabled">
                         <option value=""> - Selecione - </option>
                         <?php foreach ($this->UFs as $UFs) { ?>
                         <option value="<?php echo $UFs->idUF; ?>"><?php echo $UFs->Descricao; ?></option>
@@ -378,17 +433,17 @@
                     </select>
                 </td>
                 <td>
-                    <select name="novoMunicipio" id="novoMunicipio" class="select_simples" disabled="disabled">
+                    <select name="novoMunicipio" id="novoMunicipio" class="select_simples input_font_pq" disabled="disabled">
                         <option value=""> - Selecione - </option>
                     </select>
                 </td>
                 <td>
-                    <select name="novoRealizado" class="select_simples obrigatorio w200">
+                    <select name="novoRealizado" class="select_simples obrigatorio w200 input_font_pq">
                         <option value="3">Realizado com outras fontes</option>
                     </select>
                 </td>
-                <td align="center"><input type="text" name="novoDtInicioRealizacao" id="novoDtInicioRealizacao" class="input_simples calendario" maxlength="10" /></td>
-                <td align="center"><input type="text" name="novoDtFimRealizacao" id="novoDtFimRealizacao" class="input_simples calendario" maxlength="10" /></td>
+                <td align="center"><input type="text" name="novoDtInicioRealizacao" id="novoDtInicioRealizacao" class="input_simples calendario input_font_pq input_pq" maxlength="10" /></td>
+                <td align="center"><input type="text" name="novoDtFimRealizacao" id="novoDtFimRealizacao" class="input_simples calendario input_font_pq input_pq" maxlength="10" /></td>
                 <td>&nbsp;</td>
                 <td align="center">
                     <span class="sumir iconeJustificativa" id="iconeNovo"><a href=""><img src="<?php echo $this->baseUrl(); ?>/public/img/table_multiple.png" /></a></span>
