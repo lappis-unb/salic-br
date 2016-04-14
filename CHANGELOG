@@ -9,8 +9,9 @@ Release 1.5.0
   * Novo: [Prestação de contas] responde diligência automaticamente ao enviar comprovantes recusados
   * Novo: [Prestação de contas] richtext na comprovação de pagamento (técnico e proponente)
   * Novo: [Coordenador de pronac/parecer] adicionados vídeos introdutórios para parecerista e coordenador de pronac
+  * Novo: [Comprovação física] local de realização: atividades agora tem data de início e fim
   * Fix: [Coordenador de pronac/parecer] mudança de nomenclatura dos vídeos introdutórios para coordenador de pronac/parecer
-  * Fix: [dados bancários] correção na ocorrência
+  * Fix: [Dados bancários] correção na ocorrência
   * Fix: [Proposta] atualização dos textos de ajuda
   * Fix: [Gerenciar parecer] implementando contador de caracteres e editor ricktext nos formulários de distribuir, encaminhar e concluir parecer
   * Fix: [Prestação de contas] alterado o campo glosado para impugnado
@@ -26,7 +27,11 @@ Release 1.5.0
   * Fix: [Localização física do projeto] correção na listagem
   * Fix: [Localização física do projeto] agora é possível cadastrar sem um técnico
   * Fix: [Comprovação de objeto] correção na devolução do técnico para coordenador de avaliação
-  * Fix: [Comprovação de objeto] correção nas etiquetas da visualização do relatório de cumprimento de objeto 
+  * Fix: [Comprovação de objeto] correção nas etiquetas da visualização do relatório de cumprimento de objeto
+  * Fix: [Comprovação física] plano de distribuição: ajustes de estilo; correção no cadastro de produtos para baixa renda
+  * Fix: [Comprovacao física] plano de divulgação final: listando arquivos anexados
+  * Fix: [Comprovação física] plano de distribuição: ajustes de estilo
+  * Fix: [Comprovação física] local de realização - corrigindo comportamento quando altera estado (realizado / não realizado)
 
 Release 1.4.4
   * Fix: [Comprovação financeira] Ajuste solicitado pela Área na cláusula WHERE do painel de comprovação financeira para não listar projetos excluidos ou nulos
