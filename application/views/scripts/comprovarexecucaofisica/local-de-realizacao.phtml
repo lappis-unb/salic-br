@@ -218,8 +218,9 @@
                 n = select.split(":");
 
             if(n[0] == 0){
-                $('#div_'+n[1]).addClass('sumir');
+                $('.div_'+n[1]).addClass('sumir');
                 $('#dtInicioRealizacao'+n[1]).val('');
+		$('#dtFimRealizacao'+n[1]).val('');
             }
             
             if(n[0] == 1){
@@ -228,11 +229,10 @@
                 $("#justificativaModal").dialog("destroy");
                 $("#justificativaModal").dialog({
                     resizable: false,
-                    title: 'Alerta!',
+                    title: 'Justificativa!',
                     width:500,
                     height:330,
                     modal: true,
-                    closeOnEscape: false,
                     buttons : {
                         'OK' : function(){
                             var text = $('#campoModal').val();
@@ -248,7 +248,7 @@
                     }
                 });
                 $('.ui-dialog-titlebar-close').remove();
-                $('#div_'+n[1]).addClass('sumir');
+                $('.div_'+n[1]).addClass('sumir');
                 $('#dtInicioRealizacao'+n[1]).val('');
             } else {
                 $('#justificativa'+n[1]).val('');
@@ -256,6 +256,7 @@
             }
 
             if(n[0] == 2){
+		$('.div_'+n[1]).removeClass('sumir');
                 $('#dtInicioRealizacao'+n[1]).addClass('obrigatorio');
                 $('#dtInicioRealizacao'+n[1]).removeClass('sumir');
                 $('#dtInicioRealizacao'+n[1]).val('');
@@ -381,7 +382,7 @@
                     <?php if($LocaisDeRealizacao->siAbrangencia == 3) { ?>
                     <div style="height: 24px; padding: 6px 0px 0px 4px;">Realizado com outras fontes</div>
                     <?php } else { ?>
-                    <select name="siAbrangencia[]" class="select_simples obrigatorio w200 selectAbrg">
+                    <select name="siAbrangencia[]" class="select_simples obrigatorio w200 selectAbrg input_font_pq">
                         <option value="0:<?php echo $LocaisDeRealizacao->idAbrangencia; ?>">Sem Informação</option>
                         <option value="1:<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" <?php echo($LocaisDeRealizacao->siAbrangencia == 1)?'selected="selected"':''; ?>>Não Realizado</option>
                         <option value="2:<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" <?php echo($LocaisDeRealizacao->siAbrangencia == 2)?'selected="selected"':''; ?>>Realizado</option>
@@ -391,7 +392,7 @@
                 <td>
                     <?php if(!empty($LocaisDeRealizacao->dtInicioRealizacao)) { ?>
                     <input type="hidden" name="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples" value="<?php echo !empty($LocaisDeRealizacao->dtInicioRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'):''; ?>"/>
-                    <div style="height: 24px; padding: 6px 0px 0px 4px;" id="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'); ?></div>
+                    <div style="height: 24px; padding: 6px 0px 0px 4px;" class="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'); ?></div>
                     <?php } else { ?>
                     <input type="text" name="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples calendario sumir input_font_pq input_pq dtRealizacao" maxlength="10" value="<?php echo !empty($LocaisDeRealizacao->dtInicioRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'):''; ?>" />
                     <?php } ?>
@@ -399,7 +400,7 @@
                 <td>
                     <?php if(!empty($LocaisDeRealizacao->dtFimRealizacao)) { ?>
                     <input type="hidden" name="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples" value="<?php echo !empty($LocaisDeRealizacao->dtFimRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'):''; ?>"/>
-                    <div style="height: 24px; padding: 6px 0px 0px 4px;" id="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'); ?></div>
+                    <div style="height: 24px; padding: 6px 0px 0px 4px;" class="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'); ?></div>
                     <?php } else { ?>
                     <input type="text" name="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples calendario sumir input_font_pq input_pq dtRealizacao" maxlength="10" value="" />
                     <?php } ?>

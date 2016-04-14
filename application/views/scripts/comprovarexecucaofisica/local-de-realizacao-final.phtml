@@ -218,6 +218,12 @@
             var select = $(this).val(),
                 n = select.split(":");
 
+            if(n[0] == 0){
+                $('.div_'+n[1]).addClass('sumir');
+                $('#dtInicioRealizacao'+n[1]).val('');
+		$('#dtFimRealizacao'+n[1]).val('');
+            }
+	    
             if(n[0] == 1){
                 $('#campoModal').css('border-color','#CCC');
                 $('#campoModal').val('');
@@ -248,6 +254,8 @@
 		    }
                 });
                 $('.ui-dialog-titlebar-close').remove();
+                $('.div_'+n[1]).addClass('sumir');
+                $('#dtInicioRealizacao'+n[1]).val('');		
             } else {
                 $('#justificativa'+n[1]).val('');
                 $('#justificativa'+n[1]).removeClass('obrigatorio');
@@ -255,6 +263,7 @@
             }
 
             if(n[0] == 2){
+		$('.div_'+n[1]).removeClass('sumir');
                 $('#dtInicioRealizacao'+n[1]).removeClass('sumir');
                 $('#dtInicioRealizacao'+n[1]).val('');
 		$('#dtInicioRealizacao'+n[1]).addClass('obrigatorio');
@@ -391,7 +400,7 @@
                 <td>
                     <?php if(!empty($LocaisDeRealizacao->dtInicioRealizacao)) { ?>
                     <input type="hidden" name="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples" value="<?php echo !empty($LocaisDeRealizacao->dtInicioRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'):''; ?>"/>
-                    <div style="height: 24px; padding: 6px 0px 0px 4px;" id="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'); ?></div>
+                    <div style="height: 24px; padding: 6px 0px 0px 4px;" class="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'); ?></div>
                     <?php } else { ?>
                     <input type="text" name="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples calendario sumir input_font_pq input_pq dtRealizacao" maxlength="10" value="<?php echo !empty($LocaisDeRealizacao->dtInicioRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'):''; ?>" />
                     <?php } ?>
@@ -399,7 +408,7 @@
                 <td>
                     <?php if(!empty($LocaisDeRealizacao->dtFimRealizacao)) { ?>
                     <input type="hidden" name="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples" value="<?php echo !empty($LocaisDeRealizacao->dtFimRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'):''; ?>"/>
-                    <div style="height: 24px; padding: 6px 0px 0px 4px;" id="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'); ?></div>
+                    <div style="height: 24px; padding: 6px 0px 0px 4px;" class="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'); ?></div>
                     <?php } else { ?>
                     <input type="text" name="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples calendario sumir input_font_pq input_pq dtRealizacao" maxlength="10" value="" />
                     <?php } ?>
