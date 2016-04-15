@@ -133,7 +133,7 @@
         });
     }
 
-    function JShistoricoEncaminhamentoDI(idPronac)
+    function JShistoricoEncaminhamento(idPronac)
     {
         $('html').css('overflow', 'hidden');
         $("body").append("<div id='divDinamicaHistorico'></div>");
@@ -294,6 +294,9 @@
                 <th>Analisar Prestação de Contas</th>
 		<th>Diligência</th>
 		<?php } ?>
+                <?php if(isset($_GET['tipoFiltro']) && ($_GET['tipoFiltro'] == 'emanalise' || $_GET['tipoFiltro'] == 'analisados')){ ?>
+		    <th>Hist&oacute;rico</th>
+                <?php } ?>
             </tr>
         </thead>
         <tbody>
@@ -327,6 +330,9 @@
 		    <a target="_blank" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $projeto->idPronac . '&situacao=E27&tpDiligencia=174';?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
                 </td>
 		<?php } ?>
+                <?php if(isset($_GET['tipoFiltro']) && ($_GET['tipoFiltro'] == 'emanalise' || $_GET['tipoFiltro'] == 'analisados')){ ?>
+                <td align="center"><img style="cursor: pointer;" src="../public/img/btn_busca.jpg" onclick="return JShistoricoEncaminhamento('<?php echo $projeto->idPronac; ?>')" alt="Encaminhar" /></td>
+                <?php } ?>
             </tr>
             <?php $x++; } ?>
 

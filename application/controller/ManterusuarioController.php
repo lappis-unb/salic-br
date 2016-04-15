@@ -120,8 +120,8 @@ private $intTamPag = 10;
                 $mens 		.= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n&atilde;o responda.<br><br>";
                 $mens 		.= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
 
+                parent::message("A senha gerada é <b>".$senha."</b> encaminhe ao usuario.", "/principal", "ALERT");
                 $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
-                parent::message("Senha gerada com sucesso. Verifique seu email!", "/principal", "CONFIRM");
 
             }
 

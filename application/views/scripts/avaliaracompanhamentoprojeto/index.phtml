@@ -71,7 +71,7 @@
                             success: function(data){
                                 if(data.resposta){
                                     $("#alerta").dialog("destroy");
-                                    $("#alerta").html('<br /><div align="center"><img src="<?php echo $this->baseUrl().'/public/img/ajax.gif'; ?>"></div>');
+                                    $("#alerta").html('<center>Finalizado com sucesso!</center><br /><br /><div align="center"><img src="<?php echo $this->baseUrl().'/public/img/ajax.gif'; ?>"></div>');
                                     $("#alerta").dialog({
                                         resizable: false,
                                         width:320,
@@ -80,7 +80,7 @@
                                         title: 'Carregando..'
                                     });
                                     $('.ui-dialog-titlebar-close').remove();
-                                    window.setTimeout('location.reload()', 1000);
+                                    window.setTimeout('location.reload()', 2000);
                                 } else {
                                     alertaModal("Não foi possível finalizar o relatório.");
                                 }
@@ -111,7 +111,7 @@
                         $("#pergunta").dialog('close');
                         $.ajax({
                             type: 'POST',
-                            url: '<?php echo $this->url(array('controller' => 'avaliaracompanhamentoprojeto', 'action' => 'devolver-relatorio'), '', true); ?>?idpronac=<?php echo $this->idPronac; ?>',
+                            url: '<?php echo $this->url(array('controller' => 'avaliaracompanhamentoprojeto', 'action' => 'devolver-relatorio'), '', true); ?>',
                             data: {
                                 pronac: pronac
                             },

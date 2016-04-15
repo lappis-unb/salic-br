@@ -48,7 +48,7 @@ class LocalizacaoFisicaModel extends GenericModel
     }
 
     /**
-     * Pesquisa os projetos / localização de acordo com o pronac informado
+     * Pesquisa os projetos / localizaÃ§Ã£o de acordo com o pronac informado
      */
     public function pesquisarPorPronac($idPronac, $orgaosUsuario, $showOnlyLast = false)
     {
@@ -59,7 +59,7 @@ class LocalizacaoFisicaModel extends GenericModel
     }
 
     /**
-     * Pesquisa os projetos / localização de acordo com o técnico
+     * Pesquisa os projetos / localizaÃ§Ã£o de acordo com o tÃ©cnico
      */
     public function pesquisarPorTecnico($idTecnico, $orgaosUsuario, $showOnlyLast = false)
     {
@@ -70,7 +70,7 @@ class LocalizacaoFisicaModel extends GenericModel
     }
 
     /**
-     * Pesquisa os projetos / localização de acordo com a vinculada
+     * Pesquisa os projetos / localizaÃ§Ã£o de acordo com a vinculada
      */
     public function pesquisarPorVinculada($idVinculada, $orgaosUsuario, $showOnlyLast = false)
     {
@@ -147,12 +147,8 @@ class LocalizacaoFisicaModel extends GenericModel
         );
         
         $select->joinInner(
-            array('a' => 'Agentes'), 'a.CNPJCPF = p.CgcCpf',
-            array(''), 'AGENTES.dbo'
-        );
-        $select->joinInner(
-            array('n' => 'Nomes'), 'n.idAgente = a.idAgente',
-            array('n.Descricao AS NomeProponente'), 'AGENTES.dbo'
+            array('a' => 'Interessado'), 'a.CgcCpf = p.CgcCpf',
+            array('a.Nome AS NomeProponente'), 'SAC.dbo'
         );
         $select->joinInner(
             array('o' => 'Orgaos'), 'o.Codigo = p.Orgao',
@@ -169,7 +165,7 @@ class LocalizacaoFisicaModel extends GenericModel
         }
 
         if ($qtdeTotal) {
-//            xd($select->assemble());
+  //          xd($select->assemble());
             return $this->fetchAll($select)->count();
         }
 
@@ -184,8 +180,6 @@ class LocalizacaoFisicaModel extends GenericModel
             }
             $select->limit($tamanho, $tmpInicio);
         }
-
-//        xd($select->assemble());
         return $this->fetchAll($select);
     }
 }

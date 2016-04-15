@@ -7,9 +7,19 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('#vlComprovado').priceFormat({limit: 8});
+
+	tinymce.init({
+	    plugins:"paste,textcolor",
+	    language: "pt_BR",
+	    paste_as_text: true,
+	    selector: '#dsJustificativa',
+	    height: 200,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+	    menubar:""
+        });
     });
 </script>
-
+<script type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>
 <?php
     $buscarFornecedorHref = $this->url(array('controller' => 'comprovarexecucaofinanceira', 'action' => 'buscarfornecedor')).'?idusuario='.$this->idusuario;
 
@@ -65,9 +75,7 @@
 
 <div id="titulo">
     <div>Comprovar Pagamento
-        <?php if (!$this->vrSituacao || !$this->pagCompRecusado) : ?>
         <span class="voltar"><a href="<?php echo $voltarHref; ?>" title="Ir para p&aacute;gina anterior">Voltar</a></span>
-        <?php endif; ?>
     </div>
 </div>
 
@@ -388,7 +396,9 @@
                     <?php if (!$this->vrSituacao || !$this->pagCompRecusado) : ?>
                     <a href="<?php echo $voltarHref; ?>" id="btnVoltar" style="text-decoration:none;"><input type="button" class="btn_voltar" /></a>
                     <?php endif; ?>
-                    <input type="submit" name="frComprovarPagamentoSubmit" id="frComprovarPagamentoSubmit" value="" class="btn_incluir" />
+                   
+		    <input type="button" name="frComprovarPagamentoSalvar" id="frComprovarPagamentoSalvar" value="" class="btn_salvar" />
+		    <input type="button" class="btn_voltar" />
                 </div>
             </form>
 
@@ -744,8 +754,8 @@
             });
         });
 
-        $("#frComprovarPagamentoSubmit").click(function() {
-            var msg = ';'
+	$("#frComprovarPagamentoSalvar").click(function() {
+            var msg = '';
             if (isInvoice()) {
                 msg = validarParametrosDeComprovacaoDePagamentoInvoice();
             } else {
@@ -777,9 +787,11 @@
                 });
                 $('.ui-dialog-titlebar-close').remove();
                 return false;
-            }
-        });
-
+            } else {
+		$('#frComprovarPagamento').submit();
+	    }
+	});
+	
         function validarParametrosDeComprovacaoDePagamento() {
             var msg = '';
             if (!$("#vlComprovado").val()) { msg += 'Informe o valor do item.<br />'; }
@@ -853,6 +865,10 @@
                 }
             });
         };
+	
+	$('.btn_voltar').click(function() {
+	    window.location.href = "<?php echo $voltarHref; ?>";
+	});
     });
 
     function toggleTabelaComprovacaoPagamentoInvoice() {

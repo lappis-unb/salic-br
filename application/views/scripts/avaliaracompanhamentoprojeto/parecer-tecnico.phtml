@@ -3,59 +3,92 @@
  
   //Contador e limitadores de caracteres
 
-function ExecucaoDaFuncaoLimiterPag(){
-                   
-          
-		    var count  = CountCharacters("informacaoAdicional");
-		    var count2 = CountCharacters("orientacao");
-		    var count3 = CountCharacters("conclusao");
- 
-                   //Atualização para os contadores de caracteres
-                    
-                    document.getElementById("contadorinformacaoAdicional").innerHTML = "Caracteres: " + count + "/7500";
-		    document.getElementById("contadororientacao").innerHTML = "Caracteres: " + count2 + "/950";
-		    document.getElementById("contadorconclusao").innerHTML = "Caracteres: " + count3 + "/950";
+function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
+	var minchar;
+
+ 	if(typeof minchar === 'undefined'){
+	    minchar = 49;
+        }
+
+        countChars  = CountCharacters(fieldName);
+        //Atualização para os contadores de caracteres
+        document.getElementById("contador" + fieldName).innerHTML = "Caracteres: " + countChars;
                      
-                    //mudança de cor caso ultrapasse o numero de caracteres
-
-                    if(count > 7500){
-		        document.getElementById("contadorinformacaoAdicional").style.color = "red";
-		    }else{
-                        document.getElementById("contadorinformacaoAdicional").style.color = "black";
-		    }
-
-		    if(count2 > 950){
-		        document.getElementById("contadororientacao").style.color = "red";
-		    }else{
-                        document.getElementById("contadororientacao").style.color = "black";
-		    }
-
-    	            if(count3 > 950){
-		        document.getElementById("contadorconclusao").style.color = "red";
-		    }else{
-                        document.getElementById("contadorconclusao").style.color = "black";
-		    }
-
+        //mudança de cor caso ultrapasse o numero de caracteres
+        if (countChars <= minchar){
+	    document.getElementById("contador" + fieldName).style.color = "red";
+        }else{
+            document.getElementById("contador" + fieldName).style.color = "black";
+        }
 }
-   //inicializaao e configuração do editor tinyMCE
 
-    window.onload = function () {
+   $(document).ready(function(){    
+
+        //inicializaao e configuração do editor tinyMCE
+
         tinymce.init({
 	    plugins:"paste,textcolor",
+	    language: "pt_BR",
 	    paste_as_text: true,
-            selector: 'textarea',
-            width: 1510,
-	    toolbar : "bold,italic,underline,color,forecolor backcolor",
+            selector: '#informacaoAdicional',
+            height: 500,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
 	    menubar:"",
             setup: function (ed) {
-                ed.on('load', function (e) {
-		ExecucaoDaFuncaoLimiterPag();
+                ed.on('init', function (e) {
+		ExecucaoDaFuncaoLimiterPag('informacaoAdicional');
                 }).on('keyup',function (e) {
-		ExecucaoDaFuncaoLimiterPag();
+		ExecucaoDaFuncaoLimiterPag('informacaoAdicional');
 		});
             }
         });
-    }
+        
+        tinymce.init({
+	    plugins:"paste,textcolor",
+            language: "pt_BR",
+	    paste_as_text: true,
+            selector: '#orientacao',
+            height: 500,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+	    menubar:"",
+            setup: function (ed) {
+                ed.on('init', function (e) {
+		ExecucaoDaFuncaoLimiterPag('orientacao', 0);
+                }).on('keyup',function (e) {
+		ExecucaoDaFuncaoLimiterPag('orientacao', 0);
+		});
+            }
+        });
+
+        tinymce.init({
+	    plugins:"paste,textcolor",
+	    language: "pt_BR",
+	    paste_as_text: true,
+            selector: '#conclusao',
+            height: 500,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+	    menubar:"",
+            setup: function (ed) {
+                ed.on('init', function (e) {
+		ExecucaoDaFuncaoLimiterPag('conclusao');
+                }).on('keyup',function (e) {
+		ExecucaoDaFuncaoLimiterPag('conclusao');
+		});
+            }
+        });
+
+
+        // associa botões a funcoes
+
+        $('#btn_salvar').click(function() { 
+            SalvarFormulario();
+        });
+
+        $('#btn_finalizar').click(function() { 
+            EnviarFormulario();
+        });
+
+    });
     
     //Onde é feita a contagem do elemento do contador
     function CountCharacters(contador) {
@@ -66,22 +99,21 @@ function ExecucaoDaFuncaoLimiterPag(){
  
     //Validação de acordo com o numero maximo de caracteres
     function Validacao(valido) {
-        var max7500 = 7500;
-	var max950= 950;
+	var minchar = 49;
 	var valido = true;  
 
         var count = CountCharacters("informacaoAdicional");
 	var count2= CountCharacters("orientacao");
 	var count3= CountCharacters("conclusao");
  
-        if (count > max7500) {
+        if (count <=minchar) {
 	     $("#camposObrigatorios").dialog("destroy");
-                $("#camposObrigatorios").html("Você ultrapassou o número de caracteres no campo Considerações!");
+                $("#camposObrigatorios").html("Preencha corretamente o número de caracteres no campo PARECER DE AVALIAÇÃO TÉCNICA! Mínimo 50.");
                 $("#camposObrigatorios").dialog({
                     resizable: false,
                     title: 'Alerta!',
-                    width:320,
-                    height:160,
+                    width:370,
+                    height:180,
                     modal: true,
                     buttons : {
                         'OK' : function(){
@@ -92,31 +124,14 @@ function ExecucaoDaFuncaoLimiterPag(){
                 $('.ui-dialog-titlebar-close').remove();
             valido = false;
 	}
-	if (count2 > max950) {
-	     $("#camposObrigatorios").dialog("destroy");
-                $("#camposObrigatorios").html("Você ultrapassou o número de caracteres no campo Recomendações!");
-                $("#camposObrigatorios").dialog({
-                    resizable: false,
-                    title: 'Alerta!',
-                    width:320,
-                    height:160,
-                    modal: true,
-                    buttons : {
-                        'OK' : function(){
-                            $(this).dialog('close');
-                        }
-                    }
-                });
-	    valido = false;
-	}
-	if (count3 > max950) {
+	if (count3 <= minchar) {
 	    $("#camposObrigatorios").dialog("destroy");
-                $("#camposObrigatorios").html("Você ultrapassou o número de caracteres no campo Conclusão!");
+                $("#camposObrigatorios").html("Preencha corretamente o número de caracteres no campo CONCLUSÃO! Mínimo 50.");
                 $("#camposObrigatorios").dialog({
                     resizable: false,
                     title: 'Alerta!',
-                    width:320,
-                    height:160,
+                    width:370,
+                    height:170,
                     modal: true,
                     buttons : {
                         'OK' : function(){
@@ -138,7 +153,6 @@ function ExecucaoDaFuncaoLimiterPag(){
        if (valido == true){
            $('#formParecer').submit();	
        }
-      return;
    }
    
 //Enviar Fomulário 
@@ -146,18 +160,19 @@ function ExecucaoDaFuncaoLimiterPag(){
    function EnviarFormulario(){
        var valido = Validacao();
        if (valido == true){
-           $('#btn_finalizar').click(function(){
-            var preenchimento = true,
-                campoRadioMarcado = false;
-            $('.obrigatorio').each(function(){
-                if($.trim($(this).val()) == '')
-                    preenchimento = false;
-            });
+           var preenchimento = true,
+               campoRadioMarcado = false;
+           $('.obrigatorio').each(function(){
+               if ($.trim($(this).val()) == '') {
+                   preenchimento = false;
+               }
+           });
 
-            $('input:radio').each(function(){
-                if($(this).attr('checked'))
-                    campoRadioMarcado = true;
-            });
+           $('input:radio').each(function(){
+               if($(this).attr('checked')) {
+                   campoRadioMarcado = true;
+               }
+           });
 
             if(!preenchimento || !campoRadioMarcado) {
                 $("#camposObrigatorios").dialog("destroy");
@@ -197,10 +212,10 @@ function ExecucaoDaFuncaoLimiterPag(){
                 });
                 $('.ui-dialog-titlebar-close').remove();
             }
-         });
-
        }
    }
+
+   
 
 </script>
 
@@ -247,7 +262,7 @@ function ExecucaoDaFuncaoLimiterPag(){
     <form id="formParecer" action="<?php echo $this->url(array('controller' => 'avaliaracompanhamentoprojeto', 'action' => 'avaliar-relatorio'), '', true); ?>?idpronac=<?php echo $this->idPronac; ?>" method="post">
         <table class="tabela">
             <tr align="center">
-                <td class="destacar bold">CONSIDERAÇÕES</td>
+                <td class="destacar bold">PARECER DE AVALIAÇÃO TÉCNICA<font color="red"> *</td>
             </tr>
             <tr>
                 <td>
@@ -335,7 +350,7 @@ function ExecucaoDaFuncaoLimiterPag(){
     </form>
 
     <p align="center">
-        <input type="button" class="btn_salvar" id="btn_salvar" onclick="return SalvarFormulario();">
+        <input type="button" class="btn_salvar" id="btn_salvar">
         <input type="button" value="" class="btn_finalizar" id="btn_finalizar" onclick="return EnviarFormulario();">
     </p>
 

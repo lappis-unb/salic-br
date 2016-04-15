@@ -246,6 +246,37 @@
     <p align="center">
         <input type="button" class="btn_salvar" id="btn_salvar">
     </p>
+    
+    <br clear="all" />
+
+    <table class="tabela">
+        <tr align="center">
+            <th colspan="5">Arquivos da Comprovação</th>
+        </tr>
+        <tr align="center">
+            <td class="destacar bold">Peça</td>
+            <td class="destacar bold">Veículo</td>
+            <td class="destacar bold">Arquivo</td>
+            <td class="destacar bold">Data da Anexação</td>
+            <td class="destacar bold" width="1">Ação</td>
+        </tr>
+        <?php $i=0; foreach ($this->PlanoDeDivulgacao as $PlanoDeDivulgacao) { ?>
+        <?php if(!empty($PlanoDeDivulgacao->idDocumento)){ ?>
+        <tr>
+            <td><?php echo $PlanoDeDivulgacao->Peca; ?></td>
+            <td><?php echo $PlanoDeDivulgacao->Veiculo; ?></td>
+            <td><a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $PlanoDeDivulgacao->idArquivo; ?>"><?php echo $PlanoDeDivulgacao->nmArquivo; ?></a></td>
+            <td><?php echo Data::tratarDataZend($PlanoDeDivulgacao->dtEnvio, 'Brasileira', true); ?></td>
+            <td><input type="button" value=" " class="btn_excluir" idPln="<?php echo $PlanoDeDivulgacao->idPlanoDivulgacao; ?>" idArquivo="<?php echo $PlanoDeDivulgacao->idArquivo; ?>" /></td>
+        </tr>
+        <?php $i++; }} ?>
+
+        <?php if($i==0){ ?>
+        <tr align="center">
+            <td colspan="5">Nenhum registro encontrado</td>
+        </tr>
+        <?php } ?>
+    </table>
 
     <br clear="all" />
 </div>

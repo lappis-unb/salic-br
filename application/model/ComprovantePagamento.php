@@ -283,7 +283,7 @@ class ComprovantePagamento extends GenericModel
     /**
      * 
      */
-    public function atualizar()
+    public function atualizar($status = 4)
     {
     	$this->validarCadastrar();
 
@@ -307,7 +307,7 @@ class ComprovantePagamento extends GenericModel
         	),
         	array('idComprovantePagamento = ?' => $this->comprovantePagamento)
         );
-        $this->comprovarPlanilhaAtualizarStatus(4, $this->comprovantePagamento);
+        $this->comprovarPlanilhaAtualizarStatus($status, $this->comprovantePagamento);
     }
 
     /**
@@ -343,7 +343,21 @@ class ComprovantePagamento extends GenericModel
     public function pesquisarComprovante($idComprovante)
     {
         $select = "SELECT
-                    comp.*,
+                    comp.tpDocumento,
+                    comp.nrComprovante,
+                    comp.nrSerie,
+                    comp.idComprovantePagamento,
+                    CAST(comp.dsJustificativa AS TEXT) AS dsJustificativa,
+                    comp.vlComprovacao,
+                    comp.dtEmissao,
+                    comp.dtPagamento,
+                    comp.idFornecedor,
+                    comp.idFornecedorExterior,
+                    comp.idArquivo,
+                    comp.dsOutrasFontes,
+                    comp.tpFormaDePagamento,
+                    comp.nrDocumentoDePagamento,
+                    comp.tbComprovantePagamento,
                     arq.nmArquivo,
                     convert(char(10), comp.dtEmissao, 103) as dtEmissao,
                     (
@@ -378,7 +392,8 @@ class ComprovantePagamento extends GenericModel
                         INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
                         WHERE c1.stAtivo = 'S' AND c1.idPlanilhaAprovacao = pa.idPlanilhaAprovacao
                         GROUP BY a1.idPlanilhaAprovacao
-                    ) AS valorComprovado, cpxpa.dsJustificativa as JustificativaTecnico
+                    ) AS valorComprovado, CAST(cpxpa.dsJustificativa AS TEXT) as JustificativaTecnico
+
                 FROM bdcorporativo.scSAC.tbComprovantePagamento AS comp
                     INNER JOIN bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS cpxpa ON cpxpa.idComprovantePagamento = comp.idComprovantePagamento
                     INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS pa ON pa.idPlanilhaAprovacao = cpxpa.idPlanilhaAprovacao
@@ -515,6 +530,41 @@ class ComprovantePagamento extends GenericModel
 
         return $statement->fetchAll();
     }
+
+
+    /**
+     * Author: Fernao Lopes Ginez de Lara
+     * Descrição: Função criada a pedido da Área Finalistica em 13/04/2016
+     * @param $idPronac
+     */
+    public function atualizarComprovanteRecusado($idPronac) {
+      $db = Zend_Registry::get('db');
+      $db->setFetchMode(Zend_DB::FETCH_ASSOC);
+
+      try {
+	
+	$update = "UPDATE bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao
+                   SET stItemAvaliado = 4
+                   FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a
+                   INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b ON b.idComprovantePagamento = a.idComprovantePagamento
+                   INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c ON c.idPlanilhaAprovacao = a.idPlanilhaAprovacao
+                   WHERE stItemAvaliado = 3
+                   AND IdPRONAC = $idPronac";
+	
+	$db->fetchRow($update);
+	
+	$update2 = "UPDATE sac.dbo.tbDiligencia
+                    SET DtResposta = GETDATE(),
+                    RESPOSTA  = 'O PROPONENTE JÁ REALIZOU O AJUSTE DOS COMPROVANTES QUE HAVIAM SIDO RECUSADOS PELO MINISTÉRIO DA CULTURA.'
+                    WHERE idTipoDiligencia = 174 and idPronac = $idPronac AND stEstado = 0";
+
+	$db->fetchRow($update2);
+
+      } catch (Exception $e) {
+	die("ERRO: " . $e->getMessage());
+      }      
+    }      
+    
 
     /**
      * 

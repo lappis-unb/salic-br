@@ -240,36 +240,43 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
 
             $AbrangenciaDAO = new AbrangenciaDAO();
             foreach ($_POST['siAbrangencia'] as $valores) {
-                list($abragenciaSituacao, $abrangenciaId) = explode(':', $valores);
+                list($abrangenciaSituacao, $abrangenciaId) = explode(':', $valores);
 
-                $dt = null;
+                $dtInicio = null;
+		$dtFim = null;
                 if (filter_input(INPUT_POST, 'dtInicioRealizacao' . $abrangenciaId)) {
-                    $dt = Data::dataAmericana(filter_input(INPUT_POST, 'dtInicioRealizacao' . $abrangenciaId));
-                    $validacao = Data::validarData(filter_input(INPUT_POST, 'dtInicioRealizacao' . $abrangenciaId));
-                    if (!$validacao) {
+                    $dtInicio = Data::dataAmericana(filter_input(INPUT_POST, 'dtInicioRealizacao' . $abrangenciaId));
+                    $validacaoInicio = Data::validarData(filter_input(INPUT_POST, 'dtInicioRealizacao' . $abrangenciaId));
+                    $dtFim = Data::dataAmericana(filter_input(INPUT_POST, 'dtFimRealizacao' . $abrangenciaId));
+                    $validacaoFim = Data::validarData(filter_input(INPUT_POST, 'dtFimRealizacao' . $abrangenciaId));
+		    
+                    if (!$validacaoInicio || !$validacaoFim) {
                         parent::message('Data inválida.', $redirectUrl, 'ERROR');
                     }
                 }
-
-                $abragenciaRow = $AbrangenciaDAO->find($abrangenciaId)->current();
-                if ($abragenciaRow) {
-                    if (2 != $abragenciaRow->siAbrangencia && 2 == $abragenciaSituacao) {
-                        $abragenciaRow->dtInicioRealizacao = $dt;
-                    } elseif (2 != $abragenciaSituacao) {
-                        $abragenciaRow->dtInicioRealizacao = null;
+		
+                $abrangenciaRow = $AbrangenciaDAO->find($abrangenciaId)->current();
+		
+		if ($abrangenciaRow) {
+                    if (2 != $abrangenciaRow->siAbrangencia && 2 == $abrangenciaSituacao) {
+                        $abrangenciaRow->dtInicioRealizacao = $dtInicio;
+                        $abrangenciaRow->dtFimRealizacao = $dtFim;			
+                    } elseif (2 != $abrangenciaSituacao) {
+                        $abrangenciaRow->dtInicioRealizacao = null;
+                        $abrangenciaRow->dtFimRealizacao = null;			
                     }
-                    if (1 == $abragenciaSituacao) {
+                    if (1 == $abrangenciaSituacao) {
                         $justificativa = filter_input(INPUT_POST, 'justificativa' . $abrangenciaId);
                         if (!empty($justificativa)) {
-                            $abragenciaRow->dsJustificativa = $justificativa;
+                            $abrangenciaRow->dsJustificativa = $justificativa;
                         }
                     }
-                    $abragenciaRow->siAbrangencia = $abragenciaSituacao;
-                    $abragenciaRow->Usuario = $this->IdUsuario;
-                    $abragenciaRow->save();
+                    $abrangenciaRow->siAbrangencia = $abrangenciaSituacao;
+                    $abrangenciaRow->Usuario = $this->IdUsuario;
+                    $abrangenciaRow->save();
                 }
             }
-
+	    
             if (filter_input(INPUT_POST, 'novoPais')) {
                 if (31 == \filter_input(\INPUT_POST, 'novoPais')) { //31=Brasil
                     $idPais = filter_input(INPUT_POST, 'novoPais');
@@ -290,17 +297,21 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
 
                 $Abrangencia = new Abrangencia();
                 $abrangencias = $Abrangencia->verificarIgual($idPais, $idUF, $idMunicipio, $idProjeto);
-
+		
                 if (0 == count($abrangencias)) {
-                    $dtNovo = null;
-                    if (filter_input(INPUT_POST, 'novoDtRealizacao')) {
-                        $dtNovo = Data::dataAmericana(filter_input(INPUT_POST, 'novoDtRealizacao'));
-                        $validacaoNova = Data::validarData(filter_input(INPUT_POST, 'novoDtRealizacao'));
-                        if (!$validacaoNova) {
+                    $dtInicioNovo = null;
+                    $dtFimNovo = null;
+		    
+                    if (filter_input(INPUT_POST, 'novoDtInicioRealizacao')) {
+                        $dtInicioNovo = Data::dataAmericana(filter_input(INPUT_POST, 'novoDtInicioRealizacao'));
+                        $dtFimNovo = Data::dataAmericana(filter_input(INPUT_POST, 'novoDtFimRealizacao'));
+                        $validacaoNovaInicio = Data::validarData(filter_input(INPUT_POST, 'novoDtInicioRealizacao'));
+			$validacaoNovaFim = Data::validarData(filter_input(INPUT_POST, 'novoDtFimRealizacao'));
+                        if (!$validacaoNovaInicio || !$validacaoNovaFim) {
                             parent::message('Data inválida.', $redirectUrl, 'ERROR');
                         }
                     }
-
+		    
                     $dados = array(
                         'idProjeto' => $idProjeto,
                         'idPais' => $idPais,
@@ -310,7 +321,8 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
                         'stAbrangencia' => 1,
                         'siAbrangencia' => filter_input(INPUT_POST, 'novoRealizado'),
                         'dsJustificativa' => $dsJustificativa,
-                        'dtInicioRealizacao' => $dtNovo
+                        'dtInicioRealizacao' => $dtInicioNovo,
+			'dtFimRealizacao' => $dtFimNovo
                     );
                     $AbrangenciaDAO->cadastrar($dados);
                 } else {

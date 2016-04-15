@@ -82,7 +82,7 @@
                             vlBeneficiario = parseInt(vlBeneficiario)+parseInt($(this).val());
                         }
                     });
-                    if($('#totalBeneficiario'+id).val() < vlBeneficiario){
+                    if(vlBeneficiario > $('#totalBeneficiario'+id).val()){
                         alertaModal('Ultrapassou a quantidade de Produtos aprovados destinados ao Beneficiário.');
                         return false;
                     }
@@ -369,7 +369,7 @@
             </tr>
             <tr>
                 <td>
-                    <select class="select_simples obrigatorio" id="produto" name="produto">
+                    <select class="select_simples obrigatorio input_font_pq" id="produto" name="produto">
                         <option value=""> - Selecione - </option>
                         <?php foreach ($this->PlanoDeDistribuicao as $PlanoDeDistribuicao) { ?>
                         <option value="<?php echo $PlanoDeDistribuicao->idPlanoDistribuicao; ?>"><?php echo $PlanoDeDistribuicao->Produto; ?></option>
@@ -377,7 +377,7 @@
                     </select>
                 </td>
                 <td>
-                    <select class="select_simples obrigatorio" id="tipoDocumento" name="tipoDocumento">
+                    <select class="select_simples obrigatorio input_font_pq" id="tipoDocumento" name="tipoDocumento">
                         <option value=""> - Selecione - </option>
                         <option value="19">Patrocinador</option>
                         <option value="20">Divulgação</option>
@@ -385,12 +385,12 @@
                     </select>
                 </td>
                 <td align="center">
-                    <input maxlength="18" onkeydown="mascaraCnpjCpf(this);" onkeypress="mascaraCnpjCpf(this);" onkeyup="mascaraCnpjCpf(this);" type="text" name="cnpjcpf" id="cnpjcpf" class="input_simples obrigatorio">
+                    <input maxlength="18" onkeydown="mascaraCnpjCpf(this);" onkeypress="mascaraCnpjCpf(this);" onkeyup="mascaraCnpjCpf(this);" type="text" name="cnpjcpf" id="cnpjcpf" class="input_simples obrigatorio input_font_pq">
                     <input type="hidden" id="idAgente" name="idAgente">
                     <span id="nmAgente" class="sumir" style="cursor: pointer; text-decoration: underline;"></span>
                 </td>
-                <td align="center"><input type="text" class="input_simples obrigatorio" id="quantidade" name="quantidade" maxlength="9"></td>
-                <td><input type="file" id="arquivo" name="arquivo" class="obrigatorio"></td>
+                <td align="center"><input type="text" class="input_simples obrigatorio input_font_pq input_pq" id="quantidade" name="quantidade" maxlength="9"></td>
+                <td><input type="file" id="arquivo" name="arquivo" class="obrigatorio input_font_pq"></td>
                 <td><a href="#" class="adicionarPlano"><img src="<?php echo $this->baseUrl(); ?>/public/img/buttons/novo-p.gif" alt="adicionar" /></a></td>
             </tr>
         </table>

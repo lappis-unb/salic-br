@@ -549,7 +549,7 @@ class PlanilhaAprovacao extends GenericModel {
                                 'cp.idArquivo',
                                 'cp.tpFormaDePagamento',
                                 'cp.nrDocumentoDePagamento',
-                                'cp.dsJustificativa',
+                                'CAST(cp.dsJustificativa AS TEXT) as dsJustificativa',
                                 'cp.vlComprovacao',
                             ),
                             'BDCORPORATIVO.scSAC'

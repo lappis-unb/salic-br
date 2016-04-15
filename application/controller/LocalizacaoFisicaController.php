@@ -302,8 +302,8 @@ class LocalizacaoFisicaController extends GenericControllerNew
 		# persistencia
 		if ($this->getRequest()->isPost()) {
 			$redirectUrl = $this->getRequest()->getScheme() . '://' . $this->getRequest()->getHttpHost() . $this->view->url(array('controller' => 'localizacao-fisica', 'action' => 'index'), null, true);
-			if (!$this->getRequest()->getParam('localizacao') || !$this->getRequest()->getParam('tecnico')) {
-				$this->_helper->flashMessenger->addMessage("Erro ao salvar localiza&ccedil;&atilde;o f&iacute;sica do projeto.");
+			if (!$this->getRequest()->getParam('localizacao')) {
+				$this->_helper->flashMessenger->addMessage("Erro ao salvar localiza&ccedil;&atilde;o f&iacute;sica do projeto. Preencha o campo obrigat&oacute;rio.");
 				$this->_helper->flashMessengerType->addMessage("ERROR");
 				$this->_redirect($_SERVER['HTTP_REFERER']);
 			}

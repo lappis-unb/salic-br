@@ -321,7 +321,7 @@
 		<th>Dias em análise</th>
                 <?php } ?>
 
-                <?php if(isset($_GET['tipoFiltro']) && ($_GET['tipoFiltro'] == 'emanalise')){ ?>
+                <?php if(isset($_GET['tipoFiltro']) && ($_GET['tipoFiltro'] == 'emanalise' || $_GET['tipoFiltro'] == 'analisados')){ ?>
 		<th>Hist&oacute;rico</th>
 		<?php } ?>
             </tr>
@@ -361,7 +361,7 @@
 		<td align="center"><?php echo $projeto->qtDiasAnalise; ?></td>
                 <?php } ?>
 
-                <?php if(isset($_GET['tipoFiltro']) && ($_GET['tipoFiltro'] == 'emanalise')){ ?>
+                <?php if(isset($_GET['tipoFiltro']) && ($_GET['tipoFiltro'] == 'emanalise' || $_GET['tipoFiltro'] == 'analisados')){ ?>
                 <td align="center"><img style="cursor: pointer;" src="../public/img/btn_busca.jpg" onclick="return JShistoricoEncaminhamento('<?php echo $projeto->idPronac; ?>')" alt="Encaminhar" /></td>
                 <?php } ?>
 		

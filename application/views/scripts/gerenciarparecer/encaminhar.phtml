@@ -3,52 +3,52 @@
  
   //Contador e limitadores de caracteres
 
-function ExecucaoDaFuncaoLimiterPag(){
-		    var caracteres  = CountCharacters('1'); //valor vindo do ID da textarea
- 
-                   //Atualização para os contadores de caracteres
-                    
-		    document.getElementById("contadorobs").innerHTML = "Caracteres: " + caracteres + "/8000";
+function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
+	var minchar;
+
+        countChars  = CountCharacters(fieldName);
+        //Atualização para os contadores de caracteres
+        document.getElementById("contador" + fieldName).innerHTML = "Caracteres: " + countChars;
                      
-                    //mudança de cor caso ultrapasse o numero de caracteres
-
-                    if(caracteres > 8000 || caracteres <=10){
-		        document.getElementById("contadorobs").style.color = "red";
-		    }else{
-                        document.getElementById("contadorobs").style.color = "black";
-		    }
+        //mudança de cor caso ultrapasse o numero de caracteres
+        if (countChars <= minchar){
+	    document.getElementById("contador" + fieldName).style.color = "red";
+        }else{
+            document.getElementById("contador" + fieldName).style.color = "black";
+        }
 }
-   //inicializao e configuração do editor tinyMCE
 
-    window.onload = function () {
+   $(document).ready(function(){    
+
+        //inicializao e configuração do editor tinyMCE
         tinymce.init({
 	    plugins:"paste,textcolor",
+	    language: "pt_BR",
 	    paste_as_text: true,
-            selector: 'textarea',
-            width: 1725,
-	    toolbar : "bold,italic,underline,color,forecolor backcolor",
+            selector: '#1',
+            height: 500,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
 	    menubar:"",
             setup: function (ed) {
-                ed.on('load', function (e) {
-		ExecucaoDaFuncaoLimiterPag();
+                ed.on('init', function (e) {
+		    ExecucaoDaFuncaoLimiterPag('1', 10);
                 }).on('keyup',function (e) {
-		ExecucaoDaFuncaoLimiterPag();
+		    ExecucaoDaFuncaoLimiterPag('1', 10);
 		});
             }
         });
-    }
+        
+
+    });
     
     //Onde é feita a contagem do elemento do contador
     function CountCharacters(contador) {
         var body = tinymce.get(contador).getBody();
         var content = tinymce.trim(body.innerText || body.textContent);
         return content.length;
-    } 
+    };
 
  
-</script>
-
-<script type="text/javascript">
 
     function tipo(tipo, count){
         if(tipo =='1'){
@@ -143,7 +143,6 @@ function ExecucaoDaFuncaoLimiterPag(){
     <?php $count = 1; ?>
     <?php foreach($this->dadosProjeto as $dp){ ?>
 
-        <script type="text/javascript">editor(<?php echo $count; ?>);</script>
         <form name="form<?php echo $count; ?>" action="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'encaminhou')); ?>" method="POST">
             <input name="idpronac"    type="hidden" value="<?php echo $dp->IdPRONAC; ?>" />
             <input name="idproduto"   type="hidden" value="<?php echo $dp->idProduto; ?>" />
@@ -194,7 +193,7 @@ function ExecucaoDaFuncaoLimiterPag(){
                 <tr>
                     <td>
                         <textarea id="<?php echo $count; ?>" name="obs" rows="5" cols="100" class="input_simples editor"></textarea>
-                        <div id="contadorobs"></div>
+                        <div id="contador1"></div>
                     </td>
                 </tr>
             </table>
