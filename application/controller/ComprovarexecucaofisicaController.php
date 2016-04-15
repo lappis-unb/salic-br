@@ -243,7 +243,7 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
                 list($abrangenciaSituacao, $abrangenciaId) = explode(':', $valores);
 
                 $dtInicio = null;
-		$dtFim = null;
+                $dtFim = null;
                 if (filter_input(INPUT_POST, 'dtInicioRealizacao' . $abrangenciaId)) {
                     $dtInicio = Data::dataAmericana(filter_input(INPUT_POST, 'dtInicioRealizacao' . $abrangenciaId));
                     $validacaoInicio = Data::validarData(filter_input(INPUT_POST, 'dtInicioRealizacao' . $abrangenciaId));
@@ -257,20 +257,24 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
 		
                 $abrangenciaRow = $AbrangenciaDAO->find($abrangenciaId)->current();
 		
-		if ($abrangenciaRow) {
-                    if (2 != $abrangenciaRow->siAbrangencia && 2 == $abrangenciaSituacao) {
+                if ($abrangenciaRow) {
+                    if ($abrangenciaRow->siAbrangencia != 2 && $abrangenciaSituacao == 2) {
                         $abrangenciaRow->dtInicioRealizacao = $dtInicio;
                         $abrangenciaRow->dtFimRealizacao = $dtFim;			
-                    } elseif (2 != $abrangenciaSituacao) {
+                    } elseif ($abrangenciaSituacao != 2) {
                         $abrangenciaRow->dtInicioRealizacao = null;
                         $abrangenciaRow->dtFimRealizacao = null;			
                     }
-                    if (1 == $abrangenciaSituacao) {
+                    if ($abrangenciaSituacao == 1) {
                         $justificativa = filter_input(INPUT_POST, 'justificativa' . $abrangenciaId);
                         if (!empty($justificativa)) {
                             $abrangenciaRow->dsJustificativa = $justificativa;
                         }
+                    } else {
+                        $abrangenciaRow->dsJustificativa = null;
                     }
+
+                    
                     $abrangenciaRow->siAbrangencia = $abrangenciaSituacao;
                     $abrangenciaRow->Usuario = $this->IdUsuario;
                     $abrangenciaRow->save();
