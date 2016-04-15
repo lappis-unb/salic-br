@@ -490,6 +490,7 @@
     $(document).ready(function(){
         // tratamento comum
         var form = '#incluircomprovacaoAjax';
+                
         $('input[type!=button][type!=submit]').addClass('input_simples');
         $('textarea').addClass('textarea_simples');
         $('select[id!=perfilXgrupo]').addClass('select_simples');
@@ -504,10 +505,12 @@
                     validaDataCorreta(este,$(este).val().substr(6,4),$(este).val().substr(3,2),$(este).val().substr(0,2));
                 }
             });
+
             $(this).datepicker({
                     showOn: 'button',
                     buttonImage: '<?php echo $this->baseUrl(); ?>/public/img/ico/calendar.gif',
                     buttonImageOnly: true,
+                    maxDate: getHoje(),
                     dateFormat:'dd/mm/yy'
             });
         });
@@ -547,6 +550,24 @@
                     janelaAlerta('Selecione o Tipo do Fornecedor');
                     $(este).val('');
             }
+        }
+
+        function getHoje(delimiter) {
+            if (typeof delimiter == 'undefined') {
+                var delimiter = '/';
+            }
+            
+            // pega dia de hoje
+            var hoje = new Date(),
+                dia = hoje.getDate(),
+                mes = hoje.getMonth() + 1,
+                ano = hoje.getFullYear();
+
+            dia = (dia.toString().length == 1) ? '0' + dia : dia;
+            mes = (mes.toString().length == 1) ? '0' + mes : mes;
+            var hojeFormatado = dia + delimiter + mes + delimiter + ano;
+            
+            return hojeFormatado;
         }
         
         function buscarRadioMarcado(este){
@@ -816,6 +837,16 @@
                 msg = validarParametrosDeComprovacaoDePagamento();
             }
 
+            // verifica se data do documento é maior que a de hoje
+            var [dtD, dtM, dtY] = $('#dtEmissao').val().split('/'),
+                dtEmissaoCheck = dtY + '-' + dtM + '-' + dtD,
+                [hjD, hjM, hjY] = getHoje().split('/'),
+                hjCheck = hjY + '-' + hjM + '-' + hjD;
+            
+            if (Date.parse(dtEmissaoCheck) > Date.parse(hjCheck)) {
+                msg += 'A data não pode ser superior ao dia de hoje';
+            }          
+            
             var valorItem = parseFloat($("#vlComprovado").val().replace(".", "").replace(".", "").replace(",", "."));
             var valorAprovado = parseFloat($('#tabelaItem tbody td:nth-child(4)').html().replace(".", "").replace(".", "").replace(",", ".").replace("R$", ""));
             var valorComprovado = parseFloat($('#tabelaItem tbody td:nth-child(5)').html().replace(".", "").replace(".", "").replace(",", ".").replace("R$", ""));
