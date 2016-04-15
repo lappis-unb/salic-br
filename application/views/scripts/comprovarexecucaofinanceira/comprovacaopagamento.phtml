@@ -106,7 +106,7 @@
                         <td class="destacar"><b>Itens de Custo</b></td>
                         <td class="destacar"><b>Valor Aprovado</b></td>
                         <td class="destacar"><b>Valor Comprovado</b></td>
-                        <td class="destacar"><b>Valor do Item</b></td>
+                        <td class="destacar"><b>Valor do Item</b><span style="color: red">*</span></td>
                     </tr>
                     </thead>
                     <tbody>
@@ -264,7 +264,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="destacar" align="right"><b>Anexar Documentos<span style='color:red'>*</span></b></td>
+                            <td class="destacar" align="right">
+                              <b>Anexar Documentos<span style='color:red'>*</span></b>
+                            </td>
                             <td colspan="2">
                                 <input type="file" name="arquivo" id="arquivo" value=""/>
                             </td>
@@ -731,6 +733,57 @@
             return ajaxObj;
         }
 
+	// thanks to: http://codeaid.net/javascript/convert-size-in-bytes-to-human-readable-format-%28javascript%29#comment-1
+	function bytesToSize(bytes) {
+	    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+	    if (bytes == 0) return '0 Byte';
+	    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+	    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+	};
+	
+	// função que verifica o upload
+	
+	var uploadChangeEvent = function(e) {
+	    var arquivosPermitidos = ['pdf', 'jpg', 'png'],
+		tamanhoPermitido = '5000000',  // 5MB
+		ext = $('#arquivo').val().split('.').pop().toLowerCase(),
+		msgErro = '',
+		tamanhoArquivo = $('#arquivo')[0].files[0].size;
+
+	    // verifica tipo de arquiv
+	    if ($.inArray(ext, arquivosPermitidos) == -1) {
+		msgErro = "<h3>Arquivo não permitido!</h3><br> Enviar somente os seguintes tipos: <strong>" + arquivosPermitidos.toString() + "</strong>";
+	    }
+	    
+	    if (tamanhoArquivo > tamanhoPermitido) {
+		msgErro = "<h3>Arquivo enviado excede tamanho máximo!<h3> <br/>Seu arquivo: <strong>" + bytesToSize(tamanhoArquivo) + "</strong><br/>Tamanho permitido: <strong>" + bytesToSize(tamanhoPermitido) + "</strong>";
+	    }
+	    
+	    if (msgErro != '') {
+		// recompoe campo
+		$('#arquivo').replaceWith('<input type="file" name="arquivo" id="arquivo" value=""/>');
+		$('#arquivo').change(uploadChangeEvent);	
+		
+		$("#msgAlerta").dialog("destroy");
+                $("#msgAlerta").html('<center><p>' + msgErro + '</p></center>');
+                $("#msgAlerta").dialog({
+                    resizable: false,
+                    title: 'Alerta!',
+                    width: 500,
+                    height: 300,
+                    modal: true,
+                    buttons : {
+                        'OK' : function(){ $(this).dialog('close'); }
+                    }
+                });
+                $('.ui-dialog-titlebar-close').remove();
+	    }
+	}
+
+	// atribui função ao campo arquivo
+	$('#arquivo').change(uploadChangeEvent);
+
+		      
         $('#itens').change(function (){
             // Recupera o fornecedor e preenche os dados do mesmo.
             $.ajax({
