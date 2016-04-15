@@ -271,7 +271,9 @@
                                 <input type="file" name="arquivo" id="arquivo" value=""/>
                             </td>
                             <td colspan="3">
-                                <a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir'), '', true); ?>?id=<?php echo $this->idArquivo; ?>"><?php echo $this->nomeArquivo; ?></a>
+                              Tipos de arquivo permitidos: pdf, jpg, png<br/>
+			      Tamanho máximo: 5MB
+                              <a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir'), '', true); ?>?id=<?php echo $this->idArquivo; ?>"><?php echo $this->nomeArquivo; ?></a>
                             </td>
                         </tr>
                         <tr>
@@ -756,7 +758,7 @@
 	    }
 	    
 	    if (tamanhoArquivo > tamanhoPermitido) {
-		msgErro = "<h3>Arquivo enviado excede tamanho máximo!<h3> <br/>Seu arquivo: <strong>" + bytesToSize(tamanhoArquivo) + "</strong><br/>Tamanho permitido: <strong>" + bytesToSize(tamanhoPermitido) + "</strong>";
+		msgErro = "<h3>Arquivo enviado excede tamanho máximo!<h3> <br/>Seu arquivo: <strong>> " + bytesToSize(tamanhoArquivo) + "</strong><br/>Tamanho permitido: <strong>" + bytesToSize(tamanhoPermitido) + "</strong>";
 	    }
 	    
 	    if (msgErro != '') {
