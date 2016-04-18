@@ -1,19 +1,104 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
+ 
+  //Contador e limitadores de caracteres
+
+function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
+	var minchar;
+ 
+
+        var countChars  = CountCharacters(fieldName);
+        //Atualização para os contadores de caracteres
+        if(fieldName === "parecerTecnico"){
+            document.getElementById("contador" + fieldName).innerHTML = "Caracteres: " + countChars+ "/3000";
+
+        }else{
+            document.getElementById("contador" + fieldName).innerHTML = "Caracteres: " + countChars +"/1000";
+            
+        }
+
+        //mudança de cor caso ultrapasse o numero de caracteres
+
+            if ((countChars > maxchar) || (countChars <= minchar) ){
+	         document.getElementById("contador" + fieldName).style.color = "red";
+            }else{
+	         document.getElementById("contador" + fieldName).style.color = "black";
+	    }
+
+}
+
+   $(document).ready(function(){    
+
+        //inicializao e configuração do editor tinyMCE
+
+        tinymce.init({
+	    plugins:"paste,textcolor",
+	    language: "pt_BR",
+	    paste_as_text: true,
+            selector: '#parecerTecnico',
+            height: 500,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+	    menubar:"",
+            setup: function (ed) {
+                ed.on('init', function (e) {
+		ExecucaoDaFuncaoLimiterPag('parecerTecnico',0,3000);
+                }).on('keyup',function (e) {
+		ExecucaoDaFuncaoLimiterPag('parecerTecnico',0,3000);
+		});
+            }
+        });
+        
+        tinymce.init({
+	    plugins:"paste,textcolor",
+            language: "pt_BR",
+	    paste_as_text: true,
+            selector: '#recomendacoes',
+            height: 500,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+	    menubar:"",
+            setup: function (ed) {
+                ed.on('init', function (e) {
+		ExecucaoDaFuncaoLimiterPag('recomendacoes',-1,1000);
+                }).on('keyup',function (e) {
+		ExecucaoDaFuncaoLimiterPag('recomendacoes',-1,1000);
+		});
+            }
+        });
+
+    });
+    
+    //Onde é feita a contagem do elemento do contador
+    function CountCharacters(contador) {
+        var body = tinymce.get(contador).getBody();
+        var content = tinymce.trim(body.innerText || body.textContent);
+        return content.length;
+    };
+
+
+
+    function Validacao(){
+	var preenchimento = true;
+        if(CountCharacters('parecerTecnico') <= 0 || CountCharacters('parecerTecnico') > 3000) {
+            preenchimento = false;
+        }
+        if(CountCharacters('recomendacoes') > 1000){
+	    preenchimento = false;
+        }
+	return preenchimento;
+    }
+
+
     $(document).ready(function(){
         $('#btn_salvar').click(function(){
             $('#formParecer').submit();
         });
 
         $('#btn_finalizar').click(function(){
-            var preenchimento = false;
-            $('.obrigatorio').each(function(){
-                if($.trim($(this).val()) == '')
-                    preenchimento = true;
-            });
-
-            if(preenchimento) {
+	
+            var preenchimento = Validacao();
+            if(preenchimento == false) {
                 $("#camposObrigatorios").dialog("destroy");
-                $("#camposObrigatorios").html("Favor preencher o campo obrig&aacute;torio!");
+                $("#camposObrigatorios").html("Preencha corretamente os campos!");
                 $("#camposObrigatorios").dialog({
                     resizable: false,
                     title: 'Alerta!',
@@ -82,7 +167,7 @@
             <tr>
                 <td>
                     <textarea name="parecerTecnico" id="parecerTecnico" cols="" rows="7" style="width: 99%;" class="textarea_simples obrigatorio"><?php echo $this->DadosParecer->dsParecerTecnico; ?></textarea>
-                    <br clear="all" /><span style="color: #FF9999; font-size: 11px;">Limite máximo de 3000 caracteres</span>
+		    <div id="contadorparecerTecnico"></div>
                 </td>
             </tr>
             <tr align="center">
@@ -91,7 +176,7 @@
             <tr>
                 <td>
                     <textarea name="recomendacoes" id="recomendacoes" cols="" rows="7" style="width: 99%;" class="textarea_simples"><?php echo $this->DadosParecer->dsRecomendacao; ?></textarea>
-                    <br clear="all" /><span style="color: #FF9999; font-size: 11px;">Limite máximo de 1000 caracteres</span>
+		    <div id="contadorrecomendacoes"></div>
                 </td>
             </tr>
         </table>

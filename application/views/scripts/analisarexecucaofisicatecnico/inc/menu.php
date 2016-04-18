@@ -1,16 +1,39 @@
-<!-- ========== INÍCIO MENU ========== -->
+<?php
+ $get = Zend_Registry::get("get");
+ //define id do PreProjeto que sera passado as outras implementacoes
+$codPronac = "?idPronac=";
+$auxPronac = "/idpronac/";
+if (isset($this->idPronac)) {
+    $codPronac .= $this->idPronac;
+    $auxPronac .= $this->idPronac;
+    $id = $this->idPronac;
+} elseif (isset($get->idPronac)) {
+    $codPronac .= $get->idPronac;
+    $id = $get->idPronac;
+    $auxPronac .= $get->idPronac;
+}
+?>
+
 <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
 <div id="menu">
+    <script type="text/javascript">
+        $(function(){
+            $('.menuHorizontal').each(function(){
+                var menu = this;
+                $(menu).menu({
+                    content: $(menu).next().html(),
+                    flyOut: true
+                });
+            });
+        });
+    </script>
 
-    <!-- início: conteúdo principal #container -->
+    <!-- inï¿½cio: conteï¿½do principal #container -->
     <div id="container">
-
-        <!-- início: navegação local #qm0 -->
+        <!-- inï¿½cio: navegaï¿½?o local #qm0 -->
         <script type="text/javascript">
-            function layout_fluido()
-            {
+            function layout_fluido(){
                 var janela = $(window).width();
-
                 var fluidNavGlobal = janela - 245;
                 var fluidConteudo = janela - 253;
                 var fluidTitulo = janela - 252;
@@ -21,59 +44,38 @@
                 $("#titulo").css("width",fluidTitulo);
                 $("#rodapeConteudo").css("width",fluidConteudo);
                 $("#rodape").css("width",fluidRodape);
-
                 $("div#rodapeConteudo").attr("id", "rodapeConteudo_com_menu");
             }
 
             function carregaDados(url,divRetorno){
-                //alert( url );
                 //$("#titulo").html('');
                 $("#conteudo").html('<br><br><center>Aguarde, carregando dados...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center><br><br>');
                 $.ajax({
                     url : url,
                     success: function(data){
+                        //alert(data);
                         $("#"+divRetorno).html(data);
                     },
                     type : 'post'
+
                 });
             }
 
-            $(document).ready(function(){
-
-                $(".Desativado").click(function(){
-
-                    $("#produtoDesativado").dialog({
-                        title :'Erro',
-                        resizable: false,
-                        width:400,
-                        height:150,
-                        modal: true,
-                        autoOpen:false,
-                        buttons: {
-                            'OK': function() {
-                                $(this).dialog('close');
-                            }
-                        }
-                    });
-                    $("#produtoDesativado").dialog('open');
-                });
-
-
-
-            });
-
+            //OPCOES DE IMPRESSAO DO PROJETO
         </script>
-
         <style type="text/css">
             .sanfonaDiv {
                 clear: both;
-                /*display: none;*/
+                display: none;
             }
         </style>
-        
         <div id="menuContexto">
             <div class="top"></div>
             <div id="qm0" class="qmmc sanfona">
+
+
+                <!-- ==================== TESTE  =======================   -->
+
                 <a href="<?php echo $this->baseUrl(); ?>/analisarexecucaofisicatecnico/parecer-tecnico?idpronac=<?php echo $this->idPronac; ?>&relatorio=<?php echo $this->idRelatorio; ?>" title="Parecer T&eacute;cnico" class="no_seta">Parecer T&eacute;cnico</a>
                 <a href="<?php echo $this->baseUrl(); ?>/analisarexecucaofisicatecnico/etapas-de-trabalho?idpronac=<?php echo $this->idPronac; ?>&relatorio=<?php echo $this->idRelatorio; ?>" title="Etapas de Trabalho" class="no_seta">Etapas de Trabalho</a>
                 <a href="<?php echo $this->baseUrl(); ?>/analisarexecucaofisicatecnico/local-de-realizacao?idpronac=<?php echo $this->idPronac; ?>&relatorio=<?php echo $this->idRelatorio; ?>" title="Local de Realiza&ccedil;&atilde;o" class="no_seta">Local de Realiza&ccedil;&atilde;o</a>
@@ -97,10 +99,27 @@
                 </div>
                 <div class="sanfonaDiv" style="display:none;"></div>
 
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'planilhaorcamentaria', 'idPronac'=>$this->idPronac)).'?idPronac='.$this->idPronac.'&idRelatorio='.$this->idRelatorio; ?>" title="Ir para Execução Financeira Comprovada">Execução Financeira Comprovada</a>
+                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'planilhaorcamentaria', 'idPronac'=>$this->idPronac)).'?idPronac='.$this->idPronac.'&relatorio='.$this->idRelatorio; ?>" title="Ir para Execução Financeira Comprovada">Execução Financeira Comprovada</a>
+
+
+
             </div>
             <div class="bottom"></div>
+            <div id="space_menu"></div>
         </div>
     </div>
 </div>
+<div id="menu_comp_exec" style="display: none;"></div>
+<div id="boxImprimirProjeto" style="display: none;"></div>
+<script type="text/javascript">
+    $(document).ready(function(){
+            $(this).next().toggle('fast');
+            $('.ancoraPrestacaoContas').click(function(){
+                $(this).next().toggle('fast');
+            });
+    });
+</script>
 <!-- ========== FIM MENU ========== -->
+
+
+

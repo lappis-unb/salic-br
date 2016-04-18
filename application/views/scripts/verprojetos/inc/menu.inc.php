@@ -300,12 +300,6 @@
                 <!--  ==================== FIM - LISTAR PROJETOS ======================  -->
 
 
-                <!--  ======================= MANTER MENSAGENS =======================  -->
-                <?php $perfisMensagens = array(131,92,93,122,123,121,129,94,103,110,118,126,125,124,132,136,134,135,138,139);
-                    if(in_array($this->grupoAtivo,$perfisMensagens)){ ?>
-                        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'mantermensagens', 'action' => 'consultarmensagem', 'idpronac' => $this->idPronac), '', true); ?>">Mensagens</a>
-                <?php } ?>
-                <!--  ==================== FIM - MANTER MENSAGENS =======================  -->
 
 
             </div>

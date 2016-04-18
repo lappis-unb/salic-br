@@ -67,6 +67,7 @@
                 $id = $get->idPronac;
                 $auxPronac .= $get->idPronac;
             }
+            $IdPronac = $this->idPronac;
 
             $resp = array();
        

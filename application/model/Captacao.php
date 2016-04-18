@@ -1325,7 +1325,7 @@ class Captacao extends GenericModel {
                 array(
                     new Zend_Db_Expr("c.CgcCPfMecena, c.NumeroRecibo, c.DtTransferenciaRecurso, c.DtRecibo, c.CaptacaoReal"),
                     new Zend_Db_Expr("CASE 
-                                        WHEN c.TipoApoio = '1'
+                                        WHEN c.TipoApoio = '2'
                                              THEN 'Patrocínio'
                                              ELSE 'Doação'
                                         END AS TipoApoio"),

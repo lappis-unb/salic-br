@@ -1,12 +1,119 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
+ 
+  //Contador e limitadores de caracteres
+
+function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
+	var minchar;
+ 	if(typeof minchar === 'undefined'){
+	    minchar = 0;
+        }
+
+        countChars  = CountCharacters(fieldName);
+         //Escrita do contador
+
+        document.getElementById("contador" + fieldName).innerHTML = "Caracteres: "+ countChars+ "";
+
+        //mudança de cor caso ultrapasse o numero de caracteres
+            if (countChars <= minchar){
+                document.getElementById("contador" + fieldName).style.color = "red";
+            }else{
+	        document.getElementById("contador" + fieldName).style.color = "black";
+            }
+}
+
+   $(document).ready(function(){    
+
+        //inicializao e configuração do editor tinyMCE
+
+        tinymce.init({
+	    plugins:"paste,textcolor",
+	    language: "pt_BR",
+	    paste_as_text: true,
+            selector: '#etapasExecutadas',
+            height: 350,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+	    menubar:"",
+            setup: function (ed) {
+                ed.on('init', function (e) {
+		ExecucaoDaFuncaoLimiterPag('etapasExecutadas');
+                }).on('keyup',function (e) {
+		ExecucaoDaFuncaoLimiterPag('etapasExecutadas');
+		});
+            }
+        });
+        
+        tinymce.init({
+	    plugins:"paste,textcolor",
+            language: "pt_BR",
+	    paste_as_text: true,
+            selector: '#acessibilidade',
+            height: 350,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+	    menubar:"",
+            setup: function (ed) {
+                ed.on('init', function (e) {
+		ExecucaoDaFuncaoLimiterPag('acessibilidade');
+                }).on('keyup',function (e) {
+		ExecucaoDaFuncaoLimiterPag('acessibilidade');
+		});
+            }
+        });
+
+	tinymce.init({
+	    plugins:"paste,textcolor",
+            language: "pt_BR",
+	    paste_as_text: true,
+            selector: '#democratizacaoAcesso',
+            height: 350,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+	    menubar:"",
+            setup: function (ed) {
+                ed.on('init', function (e) {
+		ExecucaoDaFuncaoLimiterPag('democratizacaoAcesso');
+                }).on('keyup',function (e) {
+		ExecucaoDaFuncaoLimiterPag('democratizacaoAcesso');
+		});
+            }
+        });
+
+	tinymce.init({
+	    plugins:"paste,textcolor",
+            language: "pt_BR",
+	    paste_as_text: true,
+            selector: '#impactoAmbiental',
+            height: 350,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+	    menubar:"",
+            setup: function (ed) {
+                ed.on('init', function (e) {
+		ExecucaoDaFuncaoLimiterPag('impactoAmbiental');
+                }).on('keyup',function (e) {
+		ExecucaoDaFuncaoLimiterPag('impactoAmbiental');
+		});
+            }
+        });
+
+
+    });
+    
+    //Onde é feita a contagem do elemento do contador
+    function CountCharacters(contador) {
+        var body = tinymce.get(contador).getBody();
+        var content = tinymce.trim(body.innerText || body.textContent);
+        return content.length;
+    };
+
+
+
     $(document).ready(function(){
         $('#btn_salvar').click(function(){
             var preenchimento = false,
-                etapasExecutadas = CKEDITOR.instances['etapasExecutadas'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,''),
-                acessibilidade = CKEDITOR.instances['acessibilidade'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,''),
-                democratizacaoAcesso = CKEDITOR.instances['democratizacaoAcesso'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
+                etapasExecutadas = CountCharacters('etapasExecutadas'),
+                acessibilidade = CountCharacters('acessibilidade'),
+                democratizacaoAcesso = CountCharacters('democratizacaoAcesso');
             
-            if (etapasExecutadas.length > 0 && acessibilidade.length > 0 && democratizacaoAcesso.length > 0){
+            if (etapasExecutadas >= 50 && acessibilidade >= 50 && democratizacaoAcesso >=50){
                 preenchimento = true;
             }
             
@@ -31,10 +138,6 @@
             }
         });
         
-        CKEDITOR.replace( 'etapasExecutadas', { toolbar: [] } );
-        CKEDITOR.replace( 'acessibilidade', { toolbar: [] } );
-        CKEDITOR.replace( 'democratizacaoAcesso', { toolbar: [] } );
-        CKEDITOR.replace( 'impactoAmbiental', { toolbar: [] } );
     });
 </script>
 
@@ -86,6 +189,7 @@
             <tr>
                 <td>
                     <textarea name="etapasExecutadas" id="etapasExecutadas" cols="" rows="7" style="width: 99%;" class="textarea_simples obrigatorio"><?php echo isset($this->DadosRelatorio->dsEtapasExecutadas) ? $this->DadosRelatorio->dsEtapasExecutadas : ''; ?></textarea>
+		    <div id="contadoretapasExecutadas"></div>
                     <br clear="all" /><span style="color: #FF9999; font-size: 11px;">Limite máximo de 3000 caracteres</span>
                 </td>
             </tr>
@@ -98,6 +202,7 @@
             <tr>
                 <td>
                     <textarea name="acessibilidade" id="acessibilidade" cols="" rows="7" style="width: 99%;" class="textarea_simples obrigatorio"><?php echo isset($this->DadosRelatorio->dsAcessibilidade) ? $this->DadosRelatorio->dsAcessibilidade : ''; ?></textarea>
+		    <div id="contadoracessibilidade"></div>
                     <br clear="all" /><span style="color: #FF9999; font-size: 11px;">Limite máximo de 1000 caracteres</span>
                 </td>
             </tr>
@@ -110,6 +215,7 @@
             <tr>
                 <td>
                     <textarea name="democratizacaoAcesso" id="democratizacaoAcesso" cols="" rows="7" style="width: 99%;" class="textarea_simples obrigatorio"><?php echo isset($this->DadosRelatorio->dsDemocratizacaoAcesso) ? $this->DadosRelatorio->dsDemocratizacaoAcesso : ''; ?></textarea>
+		    <div id="contadordemocratizacaoAcesso"></div>
                     <br clear="all" /><span style="color: #FF9999; font-size: 11px;">Limite máximo de 1000 caracteres</span>
                 </td>
             </tr>
@@ -119,6 +225,7 @@
             <tr>
                 <td>
                     <textarea name="impactoAmbiental" id="impactoAmbiental" cols="" rows="7" style="width: 99%;" class="textarea_simples"><?php echo isset($this->DadosRelatorio->dsImpactoAmbiental) ? $this->DadosRelatorio->dsImpactoAmbiental : ''; ?></textarea>
+		    <div id="contadorimpactoAmbiental"></div>
                     <br clear="all" /><span style="color: #FF9999; font-size: 11px;">Limite máximo de 1000 caracteres</span>
                 </td>
             </tr>

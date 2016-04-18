@@ -50,7 +50,9 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
             $arrSituacoesGrids = explode(',',$arrSituacoesGrids);
             $this->arrSituacoesGrids = $arrSituacoesGrids;
 
+
             $PermissoesGrupo [] = 124;
+            $PermissoesGrupo [] = 121;
             $PermissoesGrupo [] = 125;
             $PermissoesGrupo [] = 126;
             $PermissoesGrupo [] = 125;
@@ -2105,7 +2107,8 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
         $this->dadosProjeto ();
         $this->view->idPronac = $this->getRequest()->getParam('idPronac');
         $this->view->itemAvaliadoFilter = $this->getRequest()->getParam('itemAvaliadoFilter');
-
+        $this->view->idRelatorio = $this->getRequest()->getParam('relatorio');
+        
         $dao = new PlanilhaAprovacao ();
         $resposta = $dao->buscarItensPagamento(
             $this->view->idPronac,

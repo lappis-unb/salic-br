@@ -1,20 +1,141 @@
 <?php $idPronac = Seguranca::encrypt($this->idPronac); ?>
+<script type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
+ 
+  //Contador e limitadores de caracteres
+
+function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
+	var minchar;
+ 	if(typeof minchar === 'undefined'){
+	    minchar = 49;
+        }
+
+        countChars  = CountCharacters(fieldName);
+         //Escrita do contador
+
+        document.getElementById("contador" + fieldName).innerHTML = "Caracteres: "+ countChars+ "";
+
+        //mudança de cor caso ultrapasse o numero de caracteres
+            if (countChars <= minchar){
+                document.getElementById("contador" + fieldName).style.color = "red";
+            }else{
+	        document.getElementById("contador" + fieldName).style.color = "black";
+            }
+}
+
+   $(document).ready(function(){    
+
+        //inicializao e configuração do editor tinyMCE
+
+        tinymce.init({
+	    plugins:"paste,textcolor",
+	    language: "pt_BR",
+	    paste_as_text: true,
+            selector: '#etapasConcluidas',
+            height: 350,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+	    menubar:"",
+            setup: function (ed) {
+                ed.on('init', function (e) {
+			ExecucaoDaFuncaoLimiterPag('etapasConcluidas');
+                }).on('keyup',function (e) {
+		ExecucaoDaFuncaoLimiterPag('etapasConcluidas');
+		});
+            }
+        });
+        
+        tinymce.init({
+	    plugins:"paste,textcolor",
+            language: "pt_BR",
+	    paste_as_text: true,
+            selector: '#medidasAcessibilidade',
+            height: 350,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+	    menubar:"",
+            setup: function (ed) {
+                ed.on('init', function (e) {
+		ExecucaoDaFuncaoLimiterPag('medidasAcessibilidade');
+                }).on('keyup',function (e) {
+		ExecucaoDaFuncaoLimiterPag('medidasAcessibilidade');
+		});
+            }
+        });
+
+	tinymce.init({
+	    plugins:"paste,textcolor",
+            language: "pt_BR",
+	    paste_as_text: true,
+            selector: '#medidasFruicao',
+            height: 350,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+	    menubar:"",
+            setup: function (ed) {
+                ed.on('init', function (e) {
+		ExecucaoDaFuncaoLimiterPag('medidasFruicao');
+                }).on('keyup',function (e) {
+		ExecucaoDaFuncaoLimiterPag('medidasFruicao');
+		});
+            }
+        });
+
+	tinymce.init({
+	    plugins:"paste,textcolor",
+            language: "pt_BR",
+	    paste_as_text: true,
+            selector: '#medidasPreventivas',
+            height: 350,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+	    menubar:"",
+            setup: function (ed) {
+                ed.on('init', function (e) {
+		ExecucaoDaFuncaoLimiterPag('medidasPreventivas',-1);
+                }).on('keyup',function (e) {
+		ExecucaoDaFuncaoLimiterPag('medidasPreventivas',-1);
+		});
+            }
+        });
+
+	tinymce.init({
+	    plugins:"paste,textcolor",
+            language: "pt_BR",
+	    paste_as_text: true,
+            selector: '#empregosGerados',
+            height: 350,
+	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+	    menubar:"",
+            setup: function (ed) {
+                ed.on('init', function (e) {
+		ExecucaoDaFuncaoLimiterPag('empregosGerados');
+                }).on('keyup',function (e) {
+		ExecucaoDaFuncaoLimiterPag('empregosGerados');
+		});
+            }
+        });
+
+
+    });
+    
+    //Onde é feita a contagem do elemento do contador
+    function CountCharacters(contador) {
+        var body = tinymce.get(contador).getBody();
+        var content = tinymce.trim(body.innerText || body.textContent);
+        return content.length;
+    };
+
+
     $(document).ready(function(){
         $('#btn_salvar').click(function() {
             var preenchimento = false,
-                etapasConcluidas = CKEDITOR.instances['etapasConcluidas'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,''),
-                medidasAcessibilidade = CKEDITOR.instances['medidasAcessibilidade'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,''),
-                medidasFruicao = CKEDITOR.instances['medidasFruicao'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,''),
-                medidasPreventivas = CKEDITOR.instances['medidasPreventivas'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,''),
-                empregosGerados = CKEDITOR.instances['empregosGerados'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
+                etapasConcluidas = CountCharacters('etapasConcluidas'),
+                medidasAcessibilidade = CountCharacters('medidasAcessibilidade'),
+                medidasFruicao = CountCharacters('medidasFruicao'),
+                empregosGerados = CountCharacters('empregosGerados');
 
             if (
-                    etapasConcluidas.length > 0 &&
-                    medidasAcessibilidade.length > 0 &&
-                    medidasFruicao.length > 0 &&
-                    medidasPreventivas.length > 0 &&
-                    empregosGerados.length > 0
+		    etapasConcluidas >= 50 &&
+                    medidasAcessibilidade >= 50 &&
+                    medidasFruicao >= 50 &&
+                    empregosGerados >= 50
                     ) 
             {
                 preenchimento = true;
@@ -22,7 +143,7 @@
 
             if(!preenchimento) {
                 $("#camposObrigatorios").dialog("destroy");
-                $("#camposObrigatorios").html("Favor preencher os dados obrigat&oacute;rios!");
+                $("#camposObrigatorios").html("Favor preencher corretamente os campos obrigat&oacute;rios!");
                 $("#camposObrigatorios").dialog({
                     resizable: false,
                     title: 'Alerta!',
@@ -41,11 +162,6 @@
             }
         });
 
-        CKEDITOR.replace('etapasConcluidas', { toolbar: [] } );
-        CKEDITOR.replace('medidasAcessibilidade', { toolbar: [] } );
-        CKEDITOR.replace('medidasFruicao', { toolbar: [] } );
-        CKEDITOR.replace('medidasPreventivas', { toolbar: [] } );
-        CKEDITOR.replace('empregosGerados', { toolbar: [] } );
 
         $("#totalEmpregosDiretos, #totalEmpregosIndiretos").numeric().keyup(function() {
             var totalEmpregosDiretos = $("#totalEmpregosDiretos").val() ? $("#totalEmpregosDiretos").val() : 0;
@@ -134,7 +250,7 @@
                         rows="7"
                         style="width: 99%;"
                         class="textarea_simples obrigatorio"><?php echo $this->cumprimentoDoObjeto->getEtapasConcluidas(); ?></textarea>
-                    <br clear="all" /><span style="color: #FF9999; font-size: 11px;">Limite máximo de 3000 caracteres</span>
+		    <div id="contadoretapasConcluidas"></div>
                 </td>
             </tr>
             <tr align="center">
@@ -170,7 +286,7 @@
                         rows="7"
                         style="width: 99%;"
                         class="textarea_simples obrigatorio"><?php echo $this->cumprimentoDoObjeto->getMedidasAcessibilidade(); ?></textarea>
-                    <br clear="all" /><span style="color: #FF9999; font-size: 11px;">Limite máximo de 1000 caracteres</span>
+		    <div id="contadormedidasAcessibilidade"></div>
                 </td>
             </tr>
             <tr align="center">
@@ -206,11 +322,11 @@
                         rows="7"
                         style="width: 99%;"
                         class="textarea_simples obrigatorio"><?php echo $this->cumprimentoDoObjeto->getMedidasFruicao(); ?></textarea>
-                    <br clear="all" /><span style="color: #FF9999; font-size: 11px;">Limite máximo de 1000 caracteres</span>
+		    <div id="contadormedidasFruicao"></div>
                 </td>
             </tr>
             <tr align="center">
-                <td class="destacar bold">MEDIDAS PREVENTIVAS QUANTO A IMPACTOS AMBIENTAIS <span style="color: red;">*</span></td>
+                <td class="destacar bold">MEDIDAS PREVENTIVAS QUANTO A IMPACTOS AMBIENTAIS</td>
             </tr>
             <tr>
                 <td>(Descrever sobre as medidas adotadas e, se for o caso, anexar comprovantes)</td>
@@ -221,7 +337,7 @@
                     <br clear="all" />
 <!--                    <input class="input_simples" type="file" id="arquivoImpactosAmbientais" name="imagensImpactosAmbientais" style="width:350px;" />-->
                     <!-- Alysson -->
-                    <input class="input_simples obrigatorio" type="file" id="arquivoImpactosAmbientais" name="imagensImpactosAmbientais" style="width:350px;" /> &nbsp; <span style="color: red;">*</span>
+                    <input class="input_simples obrigatorio" type="file" id="arquivoImpactosAmbientais" name="imagensImpactosAmbientais" style="width:350px;" /> &nbsp;
                     <?php
                     if ($this->cumprimentoDoObjeto->getMedidasPreventivasImagens()) :
                         echo $this->partial(
@@ -242,7 +358,7 @@
                         rows="7"
                         style="width: 99%;"
                         class="textarea_simples obrigatorio"><?php echo $this->cumprimentoDoObjeto->getMedidasPreventivas(); ?></textarea>
-                    <br clear="all" /><span style="color: #FF9999; font-size: 11px;">Limite máximo de 1000 caracteres</span>
+		    <div id="contadormedidasPreventivas"></div>
                 </td>
             </tr>
             <tr align="center">
@@ -284,7 +400,7 @@
                         rows="7"
                         style="width: 99%;"
                         class="textarea_simples obrigatorio"><?php echo $this->cumprimentoDoObjeto->getEmpregosGerados(); ?></textarea>
-                        <span style="color: #FF9999; font-size: 11px;">Limite máximo de 1000 caracteres</span>
+		    <div id="contadorempregosGerados"></div>
                 </td>
             </tr>
         </table>
