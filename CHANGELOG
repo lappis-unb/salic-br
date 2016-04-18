@@ -23,6 +23,8 @@ Release 1.5.0
   * Fix: [Prestação de contas] editor de texto gravando parecer do chefe de divisão com formatação html
   * Fix: [Prestação de contas] histórico de alterações corrigido para os coordenadores de prestação de contas
   * Fix: [Prestação de contas] correção na finalização da analise pelo chefe de divisão
+  * Fix: [Prestação de contas] Adicionado Richtext, Bugfixes, e Complementação de Menu
+  * Fix: [Prestação de contas] Corrigindo permissão de menu
   * Fix: [Parecer técnico] campo richtext e limitação de caracteres
   * Fix: [Localização física do projeto] correção na listagem
   * Fix: [Localização física do projeto] agora é possível cadastrar sem um técnico
@@ -32,6 +34,14 @@ Release 1.5.0
   * Fix: [Comprovacao física] plano de divulgação final: listando arquivos anexados
   * Fix: [Comprovação física] plano de distribuição: ajustes de estilo
   * Fix: [Comprovação física] local de realização - corrigindo comportamento quando altera estado (realizado / não realizado)
+  * Fix: [Comprovacao fisica] local de realização gravando corretamente quando altera estado
+  * Fix: [Comprovação física] Adicionado Richtext, Bugfixes, e Complementação de Menu
+  * Fix: [Comprovação financeira] restringindo tipos de arquivos e tamanho no navegador; verifica data do documento
+  * Fix: [Comprovar pagamento] removendo itens excluídos da listagem
+  * Fix: [Relatórios trimestrais - técnico de acompanhamento] Adicionado limitador de caracteres máximos de parecer
+  * Fix: [Relatórios trimestrais - técnico de acompanhamento] Adicionado richtext em analisar relatórios trimestrais
+  * Fix: [Analisar execução física] Adicionado Richtext, Bugfixes, e Complementação de Menu
+  * Fix: [Captação] tipos de apoio em captação possuia valores invertidos
 
 Release 1.4.4
   * Fix: [Comprovação financeira] Ajuste solicitado pela Área na cláusula WHERE do painel de comprovação financeira para não listar projetos excluidos ou nulos
