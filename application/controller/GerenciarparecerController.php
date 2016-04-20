@@ -336,7 +336,7 @@ class GerenciarparecerController extends GenericControllerNew {
         $tipoescolha                = $this->_request->getParam("tipodistribuir");
         $stPrincipal                = $this->_request->getParam("stPrincipal");
 
-        if((strlen($observacao) < 11) or (strlen($observacao) > 505)) {
+        if(strlen($observacao) < 11 ) {
             parent::message("Dados obrigatórios n&atilde;o informados.","gerenciarparecer/distribuir/idpronac/".$idPronac ,"ALERT");
         }
 
@@ -540,8 +540,8 @@ class GerenciarparecerController extends GenericControllerNew {
         $idAgenteParecerista        = $this->_request->getParam("idAgenteParecerista");
         $tipoescolha                = $this->_request->getParam("tipodistribuir");
 
-        if((strlen($observacao) < 11) or (strlen($observacao) > 8000)) {
-            parent::message("O campo observação deve ter no mínimo 11 caracteres e no máximo 8000!",
+        if(strlen($observacao) < 11) {
+            parent::message("O campo observação deve ter no mínimo 11 caracteres!",
                     "gerenciarparecer/encaminhar/idproduto/".$idProduto."/tipoanalise/".$TipoAnalise."/idpronac/".$idPronac ,
                     "ALERT");
         }
@@ -668,8 +668,8 @@ class GerenciarparecerController extends GenericControllerNew {
         $observacao             = $this->_request->getParam("obs");
 
 
-        if((strlen($observacao) < 11) or (strlen($observacao) > 8000)) {
-            parent::message("Dados obrigatórios n&atilde;o informados.",
+        if(strlen($observacao) < 11) {
+            parent::message("O campo observação deve ter no mínimo 11 caracteres!",
                     "gerenciarparecer/concluir/idDistribuirParecer/".$idDistribuirParecer."/idpronac/".$idPronac ,
                     "ALERT");
         }
