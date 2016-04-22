@@ -782,9 +782,7 @@
 	    }
 	    
 	    if (msgErro != '') {
-		// recompoe campo
-		$('#arquivo').replaceWith('<input type="file" name="arquivo" id="arquivo" value=""/>');
-		$('#arquivo').change(uploadChangeEvent);	
+		$('#arquivo').val('');
 		
 		$("#msgAlerta").dialog("destroy");
                 $("#msgAlerta").html('<center><p>' + msgErro + '</p></center>');
