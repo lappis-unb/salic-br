@@ -1,3 +1,6 @@
+Release 1.5.1
+  * Fix: [Gerenciar parecer] remoção de lixo no código e correção da validação de caracteres na controller
+
 Release 1.5.0
   * Novo: [Prestação de contas] chefe de divisão consegue encaminhar para técnico
   * Novo: [Prestação de contas] técnico consegue encaminhar para chefe de divisão
