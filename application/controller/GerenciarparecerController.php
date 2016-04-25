@@ -98,8 +98,7 @@ class GerenciarparecerController extends GenericControllerNew {
 
         }else {
             $campo = null;
-//            $order = array('stPrincipal desc', 'DtDevolucao', 'DtEnvio');
-            $order = array('IdPRONAC', 'stPrincipal desc', 'DtDevolucao', 'DtEnvio');
+            $order = array('DtEnvioMincVinculada','NomeProjeto','stPrincipal desc');
             $ordenacao = null;
         }
 
@@ -110,46 +109,30 @@ class GerenciarparecerController extends GenericControllerNew {
 
         /* ================== PAGINACAO ======================*/
         $where = array();
-        $where['t.stEstado = ?'] = 0;
-        $where['t.FecharAnalise NOT IN (?)'] = array(1);
-        $where['t.tipoanalise IN (?)'] = array(3,1);
-        $where['p.Situacao IN (?)'] = array("B11", "B14");
-        $where['t.idOrgao = ?'] = $codOrgao;
+        $where[] = "idOrgao = $codOrgao";
 
         if((isset($_POST['pronac']) && !empty($_POST['pronac'])) || (isset($_GET['pronac']) && !empty($_GET['pronac']))){
-            $where['AnoProjeto+Sequencial = ?'] = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
+            $where[] = 'AnoProjeto+Sequencial = ' . isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
             $this->view->pronacProjeto = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
         }
 
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
-            $situacaoProjeto = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
-            $this->view->situacaoProjeto = $situacaoProjeto;
-            switch ($situacaoProjeto) {
-                case 0:
-                    break;
-                case 1:
-                    $where['SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise)= ?'] = 'Aguardando distribuição';
-                    break;
-                case 2:
-                    $where['SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise)= ?'] = 'Análise concluída';
-                    break;
-                case 3:
-                    $where['SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise)= ?'] = 'Devolvida p/nova análise';
-                    break;
-            }
+            $tipoFiltro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
+            $this->view->tipoFiltro = $tipoFiltro;
         } else {
-            $where['SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise)= ?'] = 'Aguardando distribuição';
-            $this->view->situacaoProjeto = 1;
+            // filtro padrao: aguardando_distribuicao
+	    $tipoFiltro = 'aguardando_distribuicao';
+            $this->view->tipoFiltro = $tipoFiltro;
         }
-
+	
         $tbDistribuirParecer = new tbDistribuirParecer();
-        $total = $tbDistribuirParecer->painelAnaliseTecnica($where, $order, null, null, true);
+        $total = $tbDistribuirParecer->painelAnaliseTecnica($where, $order, null, null, true, $tipoFiltro);
         $fim = $inicio + $this->intTamPag;
-
+	
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
-        $busca = $tbDistribuirParecer->painelAnaliseTecnica($where, $order, $tamanho, $inicio);
+        $busca = $tbDistribuirParecer->painelAnaliseTecnica($where, $order, $tamanho, $inicio, false, $tipoFiltro);
 
         $paginacao = array(
                 "pag"=>$pag,
