@@ -28,7 +28,7 @@ class paPropostaParaProjeto extends GenericModel {
     public function execSP($idProposta, $CNPJCPF, $idOrgao, $idUsuario, $nrProcesso){
         try{
         #$rodar = "exec " . $this->_banco .".dbo.". $this->_name . ' ' . $idProposta .',"'. $CNPJCPF.'",'. $idOrgao.','. $idUsuario;
-        $rodar = "exec " . $this->_banco .".dbo.". $this->_name . ' ' . $idProposta .',"'. $CNPJCPF.'",'. $idOrgao.','. $idUsuario.','. $nrProcesso;
+        $rodar = "exec " . $this->_banco .".dbo.". $this->_name . ' ' . $idProposta .',"'. $CNPJCPF.'",'. $idOrgao.','. $idUsuario.',"'. $nrProcesso . '"';
         return  $this->getAdapter()->query($rodar);
         }
         catch(Zend_Exception $e){

@@ -23,10 +23,13 @@ class paTransformarPropostaEmProjeto extends GenericModel {
      * @param $nrProcesso
      * @return string|Zend_Db_Statement_Interface
      */
+    #public function execSP($idProposta, $CNPJCPF, $idOrgao, $idUsuario){
     public function execSP($idProposta, $CNPJCPF, $idOrgao, $idUsuario, $nrProcesso){
         try{
         #$rodar = "exec " . $this->_banco .".dbo.". $this->_name . ' ' . $idProposta .',"'. $CNPJCPF.'",'. $idOrgao.','. $idUsuario;
-        $rodar = "exec " . $this->_banco .".dbo.". $this->_name . ' ' . $idProposta .',"'. $CNPJCPF.'",'. $idOrgao.','. $idUsuario.','. $nrProcesso;
+        $rodar = "exec " . $this->_banco .".dbo.". $this->_name . ' ' . $idProposta .',"'. $CNPJCPF.'",'. $idOrgao.','. $idUsuario.',"'. $nrProcesso . '"';
+        #xd( $rodar);
+
         return  $this->getAdapter()->query($rodar);
         }
         catch(Zend_Exception $e){
