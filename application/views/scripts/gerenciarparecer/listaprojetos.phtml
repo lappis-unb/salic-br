@@ -165,41 +165,41 @@
 		<td align="center"><?php echo Data::tratarDataZend($dp->DtEnvioMincVinculada, 'Brasileira'); ?></td>
 		
 		<?php } else if ($this->tipoFiltro == 'em_analise' || $this->tipoFiltro == 'em_validacao') { ?>
-		<td><?php echo Data::tratarDataZend($dp->DtDistribuicao, 'Brasileira'); ?></td>
+		<td align="center"><?php echo Data::tratarDataZend($dp->DtDistribuicao, 'Brasileira'); ?></td>
 		
 		<?php if ($this->tipoFiltro == 'em_validacao') { ?>
-		<td><?php echo Data::tratarDataZend($dp->DtDevolucao, 'Brasileira'); ?></td>
+		<td align="center"><?php echo Data::tratarDataZend($dp->DtDevolucao, 'Brasileira'); ?></td>
 		<?php } ?>
 		
-		<td><strong><?php echo $dp->Parecerista; ?></strong></td>
-		<td><?php echo $dp->TempoTotalAnalise; ?></td>		
-		<td><?php echo $dp->TempoParecerista; ?></td>
-		<td><?php echo $dp->TempoDiligencia; ?></td>
+		<td align="center"><strong><?php echo $dp->Parecerista; ?></strong></td>
+		<td align="center"><?php echo $dp->TempoTotalAnalise; ?></td>		
+		<td align="center"><?php echo $dp->TempoParecerista; ?></td>
+		<td align="center"><?php echo $dp->TempoDiligencia; ?></td>
 
 		<?php if ($this->tipoFiltro == 'em_analise') { ?>
-		<td><?php echo Data::tratarDataZend($dp->dtEnvioDiligencia, 'Brasileira'); ?></td>
-		<td><?php echo Data::tratarDataZend($dp->dtRespostaDiligencia, 'Brasileira'); ?></td>
+		<td align="center"><?php echo Data::tratarDataZend($dp->dtEnvioDiligencia, 'Brasileira'); ?></td>
+		<td align="center"><?php echo Data::tratarDataZend($dp->dtRespostaDiligencia, 'Brasileira'); ?></td>
 		<?php } ?>
 
 		<?php } else if ($this->tipoFiltro == 'validados') { ?>
-		<td><?php echo $dp->TecnicoValidador; ?></td>
-		<td><?php echo Data::tratarDataZend($dp->DtValidacao, 'Brasileira'); ?></td>
+		<td align="center"><?php echo $dp->TecnicoValidador; ?></td>
+		<td align="center"><?php echo Data::tratarDataZend($dp->DtValidacao, 'Brasileira'); ?></td>
 		<?php } else if ($this->tipoFiltro == 'devolvida' ) { ?>
-		<td>
+		<td align="center">
 		    <?php if ($dp->JustComponente != '') { ?>
                     <a title="<?php echo $dp->JustComponente; ?>" class="tooltip" style="text-decoration: none; cursor: pointer">
                         <span title=" "><?php echo substr($dp->JustComponente, 0, 50); ?>...</span>			
                     </a>
 		    <?php } ?>
 		</td>
-		<td>
+		<td align="center">
 		    <?php if ($dp->JustDevolucaoPedido != '') { ?>
                     <a title="<?php echo $dp->JustDevolucaoPedido; ?>" class="tooltip" style="text-decoration: none; cursor: pointer">
                         <span title=" "><?php echo substr($dp->JustDevolucaoPedido, 0, 50); ?>...</span>			
                     </a>
 		    <?php } ?>
 		</td>
-		<td>
+		<td align="center">
 		    <?php if ($dp->JustSecretaria != '') { ?>
                     <a title="<?php echo $dp->JustSecretaria; ?>" class="tooltip" style="text-decoration: none; cursor: pointer">
                         <span title=" "><?php echo substr($dp->JustSecretaria, 0, 50); ?>...</span>

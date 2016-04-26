@@ -446,7 +446,6 @@ class GerenciarparecerController extends GenericControllerNew {
         $dadosWhere["p.IdPRONAC = ?"]                   = $idPronac;
         $dadosWhere["t.idOrgao = ?"]                    = $codOrgao;
         $dadosWhere["t.idProduto = ?"]                  = $idProduto;
-        $dadosWhere["t.DtDevolucao is not null or t.idAgenteParecerista is null"] = '';
         $buscaDadosProjeto = $tbDistribuirParecer->dadosParaDistribuir($dadosWhere);
 
         //Produto Secundario
@@ -458,9 +457,8 @@ class GerenciarparecerController extends GenericControllerNew {
         $dadosWhereS["t.idOrgao = ?"]                    = $codOrgao;
         $dadosWhereS["t.stPrincipal = ?"] 		 = 0;
         $dadosWhereS["t.idProduto = ?"]                  = $idProduto;
-        $dadosWhereS["t.DtDevolucao is not null or t.idAgenteParecerista is null"]        = '';
         $buscaDadosProjetoS = $tbDistribuirParecer->dadosParaDistribuir($dadosWhereS);
-
+	
         if( (count($buscaDadosProjetoS) == 0) && (count($buscaDadosProjeto) == 0) ) {
             parent::message("Todos os produtos foram distribuidos!", "gerenciarparecer/listaprojetos" ,"ALERT");
             //parent::message("Aguardando as análises dos produtos secundários!", "gerenciarparecer/listaprojetos" ,"ALERT");
@@ -493,14 +491,21 @@ class GerenciarparecerController extends GenericControllerNew {
         $spSelecionarParecerista = new spSelecionarParecerista();
         if(count($buscaDadosProjetoS) > 0){
             $pareceristas = $spSelecionarParecerista->exec($buscaDadosProjetoS[0]->idOrgao, $buscaDadosProjetoS[0]->idArea, $buscaDadosProjetoS[0]->idSegmento, $buscaDadosProjetoS[0]->Valor);
+	    $this->view->idSegmentoProduto = $buscaDadosProjetoS[0]->idSegmento;
+	    $this->view->idAreaProduto  = $buscaDadosProjetoS[0]->idArea;
+	
         } else if(count($buscaDadosProjetoSA) > 0) {
             $pareceristas = $spSelecionarParecerista->exec($buscaDadosProjetoSA[0]->idOrgao, $buscaDadosProjetoSA[0]->idArea, $buscaDadosProjetoSA[0]->idSegmento, $buscaDadosProjetoSA[0]->Valor);
+	    $this->view->idSegmentoProduto = $buscaDadosProjetoSA[0]->idSegmento;
+	    $this->view->idAreaProduto  = $buscaDadosProjetoSA[0]->idArea;	
         } else {
             $pareceristas = $spSelecionarParecerista->exec($buscaDadosProjeto[0]->idOrgao, $buscaDadosProjeto[0]->idArea, $buscaDadosProjeto[0]->idSegmento, $buscaDadosProjeto[0]->Valor);
-        }
+	    $this->view->idSegmentoProduto = $buscaDadosProjeto[0]->idSegmento;
+	    $this->view->idAreaProduto  = $buscaDadosProjeto[0]->idArea;
+	}
         $orgaos = new Orgaos();
         $buscar = $orgaos->buscar(array("Codigo <> ?" => $codOrgao, "Status = ?" => 0, "Vinculo = ?" => 1));
-
+	
         $this->view->orgaos         = $buscar;
         $this->view->idpronac       = $idPronac;
         $this->view->pareceristas   = $pareceristas;
@@ -797,11 +802,13 @@ class GerenciarparecerController extends GenericControllerNew {
 
     public function infopareceristaAction() {
         $this->_helper->layout->disableLayout();
-        $this->_helper->ViewRenderer->setNoRender(true);
+	$this->_helper->ViewRenderer->setNoRender(true);
 
         $idAgente = $this->_request->getParam("idAgente");
         $idpronac = $this->_request->getParam("idpronac");
-
+	$idArea = $this->_request->getParam("idArea");
+	$idSegmento = $this->_request->getParam("idSegmento");
+		
         $situacao 		= '1';
         $situacaoTexto 	= 'Ativo';
 
@@ -833,18 +840,19 @@ class GerenciarparecerController extends GenericControllerNew {
         }
 
         // CREDENCIAMENTO
-
+	
         $projetosDAO 		= new Projetos();
         $credenciamentoDAO  = new TbCredenciamentoParecerista();
 
         $whereProjeto['IdPRONAC = ?'] = $idpronac;
-        $projeto = $projetosDAO->buscar($whereProjeto);
-
+        //$projeto = $projetosDAO->buscar($whereProjeto);
+	// se for produto pegar area e segmento do produto
+	
         $whereCredenciamento['idAgente = ?'] 			= $idAgente;
-        $whereCredenciamento['idCodigoArea = ?'] 		= $projeto[0]->Area;
-        $whereCredenciamento['idCodigoSegmento = ?'] 	= $projeto[0]->Segmento;
+        $whereCredenciamento['idCodigoArea = ?'] 		= $idArea;
+        $whereCredenciamento['idCodigoSegmento = ?']            = $idSegmento;
         $credenciamento = $credenciamentoDAO->buscar($whereCredenciamento)->count();
-
+	
         if($credenciamento == 0) {
             $situacao = '0';
             $situacaoTexto .= '<br /> Parecerista não credenciado na área e segmento do Produto!';

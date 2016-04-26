@@ -1839,7 +1839,7 @@ public function analisePorParecerista($where){
                          Parecerista,
                          DtEnvioMincVinculada
                          qtDiasDistribuir,
-                         CAST (JustComponente AS TEXT) AS JustComponente,
+                         CAST (JustComponente AS TEXT) AS JustComponente ,
                          JustDevolucaoPedido,
                          JustSecretaria,
                          Valor ';
