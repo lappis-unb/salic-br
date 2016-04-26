@@ -274,6 +274,7 @@ class GerenciarparecerController extends GenericControllerNew {
         $idPronac = $this->_request->getParam("idpronac");
         $idProduto = $this->_request->getParam("idproduto");
         $TipoAnalise = $this->_request->getParam("tipoanalise");
+	$tipoFiltro = $this->_request->getParam("tipoFiltro");
 
         $tbDistribuirParecer = new tbDistribuirParecer();
 
@@ -301,6 +302,7 @@ class GerenciarparecerController extends GenericControllerNew {
         $this->view->idpronac       = $idPronac;
         $this->view->idproduto      = $idProduto;
         $this->view->tipoanalise    = $TipoAnalise;
+        $this->view->tipoFiltro     = $tipoFiltro;
 
     }
 
@@ -318,14 +320,15 @@ class GerenciarparecerController extends GenericControllerNew {
         $idAgenteParecerista        = $this->_request->getParam("idAgenteParecerista");
         $tipoescolha                = $this->_request->getParam("tipodistribuir");
         $stPrincipal                = $this->_request->getParam("stPrincipal");
+        $tipoFiltro                 = $this->_request->getParam("tipoFiltro");
 
         if((strlen($observacao) < 11) or (strlen($observacao) > 505)) {
-            parent::message("Dados obrigatórios n&atilde;o informados.","gerenciarparecer/distribuir/idpronac/".$idPronac ,"ALERT");
+            parent::message("Dados obrigatórios n&atilde;o informados.","gerenciarparecer/distribuir/idpronac/".$idPronac  . "/tipoFiltro/" . $tipoFiltro, "ALERT");
         }
 
         if((empty($idAgenteParecerista)) && ($tipoescolha == 1)) {
             parent::message("Dados obrigatórios n&atilde;o informados.",
-                    "gerenciarparecer/encaminhar/idproduto/".$idProduto."/tipoanalise/".$TipoAnalise."/idpronac/".$idPronac ,
+                    "gerenciarparecer/encaminhar/idproduto/".$idProduto."/tipoanalise/".$TipoAnalise."/idpronac/".$idPronac  . "/tipoFiltro/" . $tipoFiltro,
                     "ALERT");
         }
         $tbDistribuirParecer = new tbDistribuirParecer();
@@ -413,13 +416,13 @@ class GerenciarparecerController extends GenericControllerNew {
 
             }
 
-            parent::message($msg, "gerenciarparecer/listaprojetos", "CONFIRM");
+            parent::message($msg, "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
             $db->commit();
 
         }
         catch(Zend_Exception $ex) {
             $db->rollBack();
-            parent::message("Error". $ex->getMessage(), "gerenciarparecer/distribuir/idDistribuirParecer/".$idDistribuirParecer."/idproduto/".$idProduto."/tipoanalise/".$TipoAnalise."/idpronac/".$idPronac ,"ERROR");
+            parent::message("Error". $ex->getMessage(), "gerenciarparecer/distribuir/idDistribuirParecer/".$idDistribuirParecer."/idproduto/".$idProduto."/tipoanalise/".$TipoAnalise."/idpronac/".$idPronac . "/tipoFiltro/" . $tipoFiltro, "ERROR");
         }
 
     }
@@ -436,6 +439,7 @@ class GerenciarparecerController extends GenericControllerNew {
 
         $idPronac       = $this->_request->getParam("idpronac");
         $idProduto      = $this->_request->getParam("idproduto");
+        $tipoFiltro     = $this->_request->getParam("tipoFiltro");
         $tbDistribuirParecer = new tbDistribuirParecer();
 
         //Produto Principal
@@ -460,7 +464,7 @@ class GerenciarparecerController extends GenericControllerNew {
         $buscaDadosProjetoS = $tbDistribuirParecer->dadosParaDistribuir($dadosWhereS);
 	
         if( (count($buscaDadosProjetoS) == 0) && (count($buscaDadosProjeto) == 0) ) {
-            parent::message("Todos os produtos foram distribuidos!", "gerenciarparecer/listaprojetos" ,"ALERT");
+            parent::message("Todos os produtos foram distribuidos!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro ,"ALERT");
             //parent::message("Aguardando as análises dos produtos secundários!", "gerenciarparecer/listaprojetos" ,"ALERT");
         }
 
@@ -477,7 +481,7 @@ class GerenciarparecerController extends GenericControllerNew {
         $buscaDadosProjetoSA = $tbDistribuirParecer->dadosParaDistribuir($dadosWhereSA);
 
         if( count($buscaDadosProjetoSA) > 0 && count($buscaDadosProjetoS) == 0) {
-            parent::message("Todos os produtos foram distribuidos SA!", "gerenciarparecer/listaprojetos" ,"ALERT");
+            parent::message("Todos os produtos foram distribuidos SA!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro ,"ALERT");
             //parent::message("Aguardando as análises dos produtos secundários!", "gerenciarparecer/listaprojetos" ,"ALERT");
         }
 
@@ -527,16 +531,17 @@ class GerenciarparecerController extends GenericControllerNew {
         $orgaoDestino               = $this->_request->getParam("orgao");
         $idAgenteParecerista        = $this->_request->getParam("idAgenteParecerista");
         $tipoescolha                = $this->_request->getParam("tipodistribuir");
-
+        $tipoFiltro                 = $this->_request->getParam("tipoFiltro");
+	
         if((strlen($observacao) < 11) or (strlen($observacao) > 8000)) {
             parent::message("O campo observação deve ter no mínimo 11 caracteres e no máximo 8000!",
-                    "gerenciarparecer/encaminhar/idproduto/".$idProduto."/tipoanalise/".$TipoAnalise."/idpronac/".$idPronac ,
+                    "gerenciarparecer/encaminhar/idproduto/".$idProduto."/tipoanalise/".$TipoAnalise."/idpronac/".$idPronac . "/tipoFiltro/" . $tipoFiltro,
                     "ALERT");
         }
 
         if((empty($idAgenteParecerista)) && ($tipoescolha == 1)) {
             parent::message("Selecione um Parecerista!",
-                    "gerenciarparecer/encaminhar/idproduto/".$idProduto."/tipoanalise/".$TipoAnalise."/idpronac/".$idPronac ,
+                    "gerenciarparecer/encaminhar/idproduto/".$idProduto."/tipoanalise/".$TipoAnalise."/idpronac/".$idPronac . "/tipoFiltro/" . $tipoFiltro,
                     "ALERT");
         }
 
@@ -580,7 +585,7 @@ class GerenciarparecerController extends GenericControllerNew {
                     $salvar = $tbDistribuirParecer->alterar(array('stEstado' => 1), $where);
 
                     $insere = $tbDistribuirParecer->inserir($dadosE);
-                    parent::message("Enviado os Produtos/Projeto para a entidade!", "gerenciarparecer/listaprojetos", "CONFIRM");
+                    parent::message("Enviado os Produtos/Projeto para a entidade!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
                 }
                 else {
                     // DISTRIBUIR OU REDISTRIBUIR ( COORDENADOR DE PARECER )
@@ -607,14 +612,14 @@ class GerenciarparecerController extends GenericControllerNew {
                     $salvar = $tbDistribuirParecer->alterar(array('stEstado' => 1), $where);
 
                     $insere = $tbDistribuirParecer->inserir($dadosD);
-                    parent::message("Distribuição Realizada com sucesso!  ", "gerenciarparecer/listaprojetos", "CONFIRM");
+                    parent::message("Distribuição Realizada com sucesso!  ", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
                 }
             }
             $db->commit();
 
         } catch(Zend_Exception $ex) {
             $db->rollBack();
-            parent::message("Error". $ex->getMessage(), "gerenciarparecer/encaminhar/idpronac/".$idPronac ,"ERROR");
+            parent::message("Error". $ex->getMessage(), "gerenciarparecer/encaminhar/idpronac/".$idPronac  . "/tipoFiltro/" . $tipoFiltro, "ERROR");
         }
 
     }
@@ -630,6 +635,7 @@ class GerenciarparecerController extends GenericControllerNew {
         /******************************************************************/
 
         $idDistribuirParecer    = $this->_request->getParam("idDistribuirParecer");
+	$tipoFiltro             = $this->_request->getParam("tipoFiltro");
 
         $tbDistribuirParecer    = new tbDistribuirParecer();
         $dadosWhere["t.idDistribuirParecer = ?"]    = $idDistribuirParecer;
@@ -654,11 +660,12 @@ class GerenciarparecerController extends GenericControllerNew {
         $idDistribuirParecer    = $this->_request->getParam("idDistribuirParecer");
         $idPronac             	= $this->_request->getParam("idpronac");
         $observacao             = $this->_request->getParam("obs");
+	$tipoFiltro             = $this->_request->getParam("tipoFiltro");
 
 
         if((strlen($observacao) < 11) or (strlen($observacao) > 8000)) {
             parent::message("Dados obrigatórios n&atilde;o informados.",
-                    "gerenciarparecer/concluir/idDistribuirParecer/".$idDistribuirParecer."/idpronac/".$idPronac ,
+                    "gerenciarparecer/concluir/idDistribuirParecer/".$idDistribuirParecer."/idpronac/".$idPronac . "/tipoFiltro/" . $tipoFiltro,
                     "ALERT");
         }
 
@@ -757,11 +764,11 @@ class GerenciarparecerController extends GenericControllerNew {
                 /****************************************************************************************************************/
             }
             $db->commit();
-            parent::message("Concluído com sucesso!", "gerenciarparecer/listaprojetos?tipoFiltro=2", "CONFIRM");
+            parent::message("Concluído com sucesso!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
 
         } catch(Zend_Exception $ex) {
             $db->rollBack();
-            parent::message("Erro ao concluir ".$ex->getMessage(), "gerenciarparecer/concluir/idDistribuirParecer/".$idDistribuirParecer ,"ERROR");
+            parent::message("Erro ao concluir ".$ex->getMessage(), "gerenciarparecer/concluir/idDistribuirParecer/".$idDistribuirParecer . "/tipoFiltro/" . $tipoFiltro ,"ERROR");
         }
 
     }

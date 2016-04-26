@@ -147,6 +147,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
 <div id="conteudo">
     <form id="form" action="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'distribuiu')); ?>" method="POST" >
         <input id="idpronac" name="idpronac"  type="hidden" value="<?php echo $this->idpronac; ?>" />
+	<input id="tipoFiltro" name="tipoFiltro"  type="hidden" value="<?php echo $this->tipoFiltro; ?>" />
         <table class="tabela">
             <tr>
                 <th colspan="4" style="font-family: sans-serif; font-size: 13px;">

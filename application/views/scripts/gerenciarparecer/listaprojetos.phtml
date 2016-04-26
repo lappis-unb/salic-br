@@ -211,19 +211,19 @@
 		<td align="center">
 		  <!-- distribuir parecer -->
 		  <?php if ($dp->stPrincipal == 1) { ?>
-		  <img id="img_distribuir_parecer<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer; " title="Distribuir Projeto" src="<?php echo  $this->baseUrl() . '/public/img/ico/archive.png'; ?>" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'distribuir', 'idpronac'=>$dp->IdPRONAC)); ?>')">
+		  <img id="img_distribuir_parecer<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer; " title="Distribuir Projeto" src="<?php echo  $this->baseUrl() . '/public/img/ico/archive.png'; ?>" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'distribuir', 'idpronac'=>$dp->IdPRONAC)); ?>/tipoFiltro/<?php echo $this->tipoFiltro; ?>')" />
 		  <?php } ?>
 		  <!-- distribuir produtos -->
-		  <img id="img_encaminhar_parecer<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer; " title="Distribuir Produtos" src="<?php echo $this->baseUrl() . '/public/img/table_multiple.png'; ?>" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'encaminhar', 'idpronac'=>$dp->IdPRONAC, 'idproduto'=>$dp->idProduto)); ?>')" />
+		  <img id="img_encaminhar_parecer<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer; " title="Distribuir Produtos" src="<?php echo $this->baseUrl() . '/public/img/table_multiple.png'; ?>" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'encaminhar', 'idpronac'=>$dp->IdPRONAC, 'idproduto'=>$dp->idProduto)); ?>/tipoFiltro/<?php echo $this->tipoFiltro; ?>')" />
 		</td>
 		<?php if ($this->tipoFiltro != 'aguardando_distribuicao' && $this->tipoFiltro != '') { ?>
-                <td align="center"><img style="cursor:pointer;" title="Hist&oacute;rico" src="<?php echo $this->baseUrl(); ?>/public/img/edit_ico.gif" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'historico'));?>?idPronac=<?php echo $dp->IdPRONAC; ?>&idProduto=<?php echo $dp->idProduto; ?>&stPrincipal=<?php echo $dp->stPrincipal;?>');" />
+                <td align="center"><img style="cursor:pointer;" title="Hist&oacute;rico" src="<?php echo $this->baseUrl(); ?>/public/img/edit_ico.gif" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'historico'));?>?idPronac=<?php echo $dp->IdPRONAC; ?>&idProduto=<?php echo $dp->idProduto; ?>&stPrincipal=<?php echo $dp->stPrincipal;?>&tipoFiltro=<?php echo $this->tipoFiltro; ?>')">
 		<?php } ?>
 
 		<?php if ($this->tipoFiltro == 'validados' || $this->tipoFiltro == 'em_validacao') { ?>
 		<td align="center">
 		  <!-- concluir analise -->
-		  <img id="img_concluir_analise<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer;" title="<?php echo $concluir; ?>" src="<?php echo $this->baseUrl() . '/public/img/save.gif'; ?>" onclick="redirecionar("<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'concluir', 'idDistribuirParecer' =>$dp->idDistribuirParecer, 'idpronac'=> $dp->IdPRONAC)); ?>")" />
+		  <img id="img_concluir_analise<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer;" title="<?php echo $concluir; ?>" src="<?php echo $this->baseUrl() . '/public/img/save.gif'; ?>" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'concluir', 'idDistribuirParecer' =>$dp->idDistribuirParecer, 'idpronac'=> $dp->IdPRONAC)); ?>/tipoFiltro/<?php echo $this->tipoFiltro; ?>')">
 		</td><!-- concluir -->
 		<?php } ?>
 
