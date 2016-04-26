@@ -13,8 +13,8 @@
 class ServicosSEI {
 
     # Constante usada na classe para conexao com o WS
-    #const CAMINHO_WSDL_SEI 		= "http://sei.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Produção
-    const CAMINHO_WSDL_SEI 		= "http://seihomolog.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Homologação
+    const CAMINHO_WSDL_SEI 		= "http://sei.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Produção
+    #const CAMINHO_WSDL_SEI 		= "http://seihomolog.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Homologação
 
     # Atributos da classe
     private static $objSoapCliente;
@@ -84,19 +84,22 @@ class ServicosSEI {
         $txIdentificacaoServico = "SALIC";
 
         //Numero da Unidade
-        $nrIdUnidade = '110000069'; //COSIS
+        #$nrIdUnidade = '110000069'; //COSIS
+        $nrIdUnidade = '110000142'; //SEFIC
 
         #Inicio dos Dados do Procedimento
         //Procedimento
         $Procedimento = array();
-        $Procedimento['IdTipoProcedimento'] = '100000316';
-        $Procedimento['Especificacao'] = utf8_encode('Gestão de Contrato: Acompanhamento da Execução'); //Verificar se tem que usar UTF-8 Em Produção
+        #$Procedimento['IdTipoProcedimento'] = '100000316';
+        #$Procedimento['Especificacao'] = utf8_encode('Gestão de Contrato: Acompanhamento da Execução'); //Verificar se tem que usar UTF-8 Em Produção
+        $Procedimento['IdTipoProcedimento'] = '1';
+        $Procedimento['Especificacao'] = utf8_encode('Projetos Culturais'); //Verificar se tem que usar UTF-8 Em Produção
 
         //Assuntos
         $arrAssuntos = array();
-        $arrAssuntos[] = array('CodigoEstruturado'=>'930.a');
-        $arrAssuntos[] = array('CodigoEstruturado'=>'930.b');
-        $arrAssuntos[] = array('CodigoEstruturado'=>'930.c');
+        #$arrAssuntos[] = array('CodigoEstruturado'=>'930.a');
+        #$arrAssuntos[] = array('CodigoEstruturado'=>'930.b');
+        #$arrAssuntos[] = array('CodigoEstruturado'=>'930.c');
         $Procedimento['Assuntos'] = $arrAssuntos; //Atribui os Assuntos aos Dados do Procedimento
 
         //Interessados
