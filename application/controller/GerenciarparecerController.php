@@ -665,8 +665,7 @@ class GerenciarparecerController extends GenericControllerNew {
 
         if((strlen($observacao) < 11) or (strlen($observacao) > 8000)) {
             parent::message("Dados obrigatórios n&atilde;o informados.",
-                    "gerenciarparecer/concluir/idDistribuirParecer/".$idDistribuirParecer."/idpronac/".$idPronac . "/tipoFiltro/" . $tipoFiltro,
-                    "ALERT");
+                    "gerenciarparecer/concluir/idDistribuirParecer/".$idDistribuirParecer."/idpronac/".$idPronac . "/tipoFiltro/" . $tipoFiltro, "ALERT");
         }
 
         $db = Zend_Registry :: get('db');
@@ -691,9 +690,14 @@ class GerenciarparecerController extends GenericControllerNew {
                     $fecharAnalise 	= 0;
                 } else {
                     $idOrgao 		= $dp->idOrgao;
-                    $fecharAnalise 	= 1;
+		    
+		    if ($tipoFiltro == 'em_validacao') {
+		      $fecharAnalise 	= 3;	    
+		    } else if ($tipoFiltro == 'validados') {
+		      $fecharAnalise 	= 1;
+		    }
                 }
-
+		
                 $dados = array(
                         'DtEnvio'       		=> $dp->DtEnvio,
                         'idAgenteParecerista'	=> $dp->idAgenteParecerista,
@@ -711,7 +715,7 @@ class GerenciarparecerController extends GenericControllerNew {
                         'stPrincipal'   		=> $dp->stPrincipal,
                         'stDiligenciado'   		=> null
                 );
-
+		
                 $whereD['idDistribuirParecer = ?']  = $idDistribuirParecer;
                 $salvar = $tbDistribuirParecer->alterar(array('stEstado' => 1), $whereD);
                 $insere = $tbDistribuirParecer->inserir($dados);
@@ -723,30 +727,30 @@ class GerenciarparecerController extends GenericControllerNew {
             $wherePro['IdPRONAC = ?'] = $idPronac;
             $buscaDadosdoProjeto = $projeto->buscar($wherePro);
 
+	    // se for produto principal
             if($buscaDadosProjeto[0]->stPrincipal == 1) {
 
                 $inabilitadoDAO = new Inabilitado();
                 $buscaInabilitado = $inabilitadoDAO->BuscarInabilitado($buscaDadosdoProjeto[0]->CgcCpf, $buscaDadosdoProjeto[0]->AnoProjeto, $buscaDadosdoProjeto[0]->Sequencial);
-
+		
+		// nao está inabilitado
                 if(count($buscaInabilitado == 0)) {
-                    
+  		    // dentro das unidades abaixo
                     if(in_array($dp->idOrgao, array(91,92,93,94,95,160,171,335))){
-                        $dadosProjeto = array('ProvidenciaTomada'   => 'Análise técnica concluída',
-                                'DtSituacao' => new Zend_Db_Expr('GETDATE()'),
-                                'Situacao' => 'C20');
+		      if ($tipoFiltro == 'validados') {
+			$projeto->alterarSituacao($idPronac, null, 'C20', 'Análise técnica concluída');
+		      } else if ($tipoFiltro == 'em_validacao') {
+			$projeto->alterarSituacao($idPronac, null, 'B11', 'Aguardando validação do parecer técnico');
+		      }
                     } else {
-                        $dadosProjeto = array('ProvidenciaTomada' => 'Análise técnica concluída',
-                                'DtSituacao' => new Zend_Db_Expr('GETDATE()'));
+		      // fora das unidades acima
+		      $projeto->alterarSituacao($idPronac, null, 'B11', 'Aguardando validação do parecer técnico');
                     }
                 } else {
-                    $dadosProjeto = array('ProvidenciaTomada'   => 'Projeto fora da pauta de reunião da CNIC porque o proponente está inabilitado no Ministério da Cultura.',
-                            'DtSituacao' 		 	=> new Zend_Db_Expr('GETDATE()'),
-                            'Situacao' 		 	=> 'C09');
+		  // inabilitado
+		  $projeto->alterarSituacao($idPronac, null, 'C09', 'Projeto fora da pauta de reunião da CNIC porque o proponente está inabilitado no Ministério da Cultura.');
                 }
-
-                $where['IdPRONAC = ?'] = $idPronac;
-                $alterar = $projeto->alterarProjetos($dadosProjeto, $where);
-
+		
                 /****************************************************************************************************************/
                 $parecerDAO = new Parecer();
                 $whereParecer['idPRONAC = ?'] = $idPronac;

@@ -223,7 +223,7 @@
 		<?php if ($this->tipoFiltro == 'validados' || $this->tipoFiltro == 'em_validacao') { ?>
 		<td align="center">
 		  <!-- concluir analise -->
-		  <img id="img_concluir_analise<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer;" title="<?php echo $concluir; ?>" src="<?php echo $this->baseUrl() . '/public/img/save.gif'; ?>" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'concluir', 'idDistribuirParecer' =>$dp->idDistribuirParecer, 'idpronac'=> $dp->IdPRONAC)); ?>/tipoFiltro/<?php echo $this->tipoFiltro; ?>')">
+		  <img id="img_concluir_analise<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer;" title="Concluir" src="<?php echo $this->baseUrl() . '/public/img/save.gif'; ?>" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'concluir', 'idDistribuirParecer' =>$dp->idDistribuirParecer, 'idpronac'=> $dp->IdPRONAC)); ?>/tipoFiltro/<?php echo $this->tipoFiltro; ?>')">
 		</td><!-- concluir -->
 		<?php } ?>
 
