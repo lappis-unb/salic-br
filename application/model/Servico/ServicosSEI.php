@@ -97,7 +97,7 @@ class ServicosSEI {
 
         //Assuntos
         $arrAssuntos = array();
-        #$arrAssuntos[] = array('CodigoEstruturado'=>'930.a');
+        $arrAssuntos[] = array('CodigoEstruturado'=>'067.1');
         #$arrAssuntos[] = array('CodigoEstruturado'=>'930.b');
         #$arrAssuntos[] = array('CodigoEstruturado'=>'930.c');
         $Procedimento['Assuntos'] = $arrAssuntos; //Atribui os Assuntos aos Dados do Procedimento
