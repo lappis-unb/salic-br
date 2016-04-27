@@ -111,22 +111,14 @@
             }
 
             if (valida) {
-                var vlCaptar = $.trim($("#aCaptar").val().replace('.', ''));
-                vlCaptar = vlCaptar.replace(',', '.');
-                vlCaptar = vlCaptar.replace("R$", "");
-                vlCaptar = parseInt(vlCaptar);
-
-                cpf = $("#cpf").val();
-                cpf = cpf.replace(".", "");
-                cpf = cpf.replace(".", "");
-                cpf = cpf.replace(".", "");
-                cpf = cpf.replace("-", "");
-                cpf = cpf.replace("/", "");
+                var vlCaptar = parseFloat($("#aCaptar").val().replace(/\./g, '').replace("R$", "").replace(',','.'));
+		
+                var cpf = $("#cpf").val();
+                cpf = cpf.replace(/\./g, "").replace('-', '').replace('/', '');
                 $("#cpf").val(cpf);
-
-                var valor = $("#valor").val();
-                valor = parseInt(valor);
-
+		
+                var valor = parseFloat($("#valor").val().replace('.', '').replace(',', '.'));
+		
                 if (valor > vlCaptar) {
                     $('#alerta').dialog("destroy");
                     $("#alerta").html('Valor maior que o valor dispon&iacute;vel para Captar!');
@@ -148,7 +140,8 @@
                             });
                     $(".ui-dialog-titlebar-close").remove()
                 } else {
-                    $('#formulario').submit();
+		    $("#valor").val(valor);
+		    $('#formulario').submit();
                 }
 
             }
