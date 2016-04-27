@@ -20,6 +20,10 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
 
    $(document).ready(function(){    
 
+       $('#idAgenteParecerista').change(function() {
+	   infoparecerista(this.value);
+       });
+       
         //inicializao e configuração do editor tinyMCE
         tinymce.init({
 	    plugins:"paste,textcolor",
@@ -70,9 +74,11 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
                 dataType: "json",
                 data: {
                     idAgente: idAgente,
-                    idpronac: idpronac
+                    idpronac: idpronac,
+		    idArea: <?php echo $this->idAreaProduto; ?>,
+		    idSegmento: <?php echo $this->idSegmentoProduto; ?>
                 },
-                url: '<?php echo $this->url(array("controller"=>"gerenciarparecer", "action"=>"infoparecerista")); ?>',
+                url: '<?php echo $this->url(array("controller"=>"gerenciarparecer", "action"=>"infoparecerista")); ?>' ,
                 success: function (data){
                     $("#infoparecerista").show();
                     $("#infopareceristal").hide();
@@ -171,7 +177,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
                         </div>
                         <div id="parecerista<?php echo $count; ?>" >Parecerista <span style="color: red;">*</span>
                             <br />
-                            <select name="idAgenteParecerista" class="input_simples" onchange="infoparecerista(this.value);">
+                            <select name="idAgenteParecerista" class="input_simples" id="idAgenteParecerista">
                                 <option value="0" selected="selected"> - Selecione - </option>
                                     <?php foreach ($this->pareceristas as $p){ ?>
                                     <option value="<?php echo $p->idParecerista; ?>"><?php echo $p->Nome; ?></option>

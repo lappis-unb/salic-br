@@ -23,9 +23,11 @@
                 <input type="text" class="input_simples" name="pronac" id="pronac" maxlength="7" style="width: 90px;" value="<?php echo $this->pronacProjeto;?>">
                 <input type="button" name="btn_pesquisar" id="btn_pesquisar" class="btn_pesquisar" value="">
                 <select name="tipoFiltro" style="width: 220px;" class="input_simples comboFiltro">
-                    <option value="1" <?php echo isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] == 1?'selected="selected"':''; ?>>Aguardando distribui&ccedil;&atilde;o</option>
-                    <option value="2" <?php echo isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] == 2?'selected="selected"':''; ?>>An&aacute;lise conclu&iacute;da</option>
-                    <option value="3" <?php echo isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] == 3?'selected="selected"':''; ?>>Devolvida para nova an&aacute;lise</option>
+                    <option value="aguardando_distribuicao" <?php echo isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] == 'aguardando_distribuicao' ? 'selected="selected"':''; ?>>Aguardando distribui&ccedil;&atilde;o</option>
+                    <option value="em_analise" <?php echo isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] == 'em_analise' ? 'selected="selected"':''; ?>>Em an&aacute;lise</option>
+                    <option value="em_validacao" <?php echo isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] == 'em_validacao' ? 'selected="selected"':''; ?>>Em valida&ccedil;&atilde;o</option>
+                    <option value="validados" <?php echo isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] == 'validados' ? 'selected="selected"':''; ?>>Validados</option>
+                    <option value="devolvida" <?php echo isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] == 'devolvida' ? 'selected="selected"':''; ?>>Devolvida para nova an&aacute;lise</option>
                 </select>
             </td>
             <td align="center"><?php if($this->qtdDocumentos != 0){echo $this->qtdDocumentos.' Projetos listados';}else{ echo 'Nenhum Registro encontrado!';}?></td>
@@ -41,24 +43,24 @@
                 <form name="form1" id="form1" action="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos'));?>" method="get">
                     <?php if($this->paginacao['pag']>1) { ?>
                     <input class="btn_inicio" id="btn_inicio" type="button" class="btn_inicio"
-                           onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag=1'."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->situacaoProjeto; ?>'">
+                           onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag=1'."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->tipoFiltro; ?>'">
                     <?php } ?>
                     <input id="btn_p_anterior" type="button"
                     <?php if($this->paginacao['pag']<=1) { ?> class="btn_p_anterior-off"
                     <?php }else { ?>
                            class="btn_p_anterior"
-                           onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag='.($this->paginacao['pag'] - 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->situacaoProjeto; ?>'"
+                           onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag='.($this->paginacao['pag'] - 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->tipoFiltro; ?>'"
                     <?php } ?>>
                     <input id="btn_p_proximo" type="button"
                            <?php if($this->paginacao['pag']+1 > $this->paginacao['totalPag']) { ?>
                            class="btn_p_proximo-off"
                     <?php }else { ?>
                            class="btn_p_proximo"
-                           onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag='.($this->paginacao['pag'] + 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->situacaoProjeto; ?>'"
+                           onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag='.($this->paginacao['pag'] + 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->tipoFiltro; ?>'"
                     <?php } ?>>
                     <?php if($this->paginacao['pag'] < $this->paginacao['totalPag']) { ?>
                     <input class="btn_ultimo" id="btn_ultimo" type="button"
-                           onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->situacaoProjeto; ?>'">
+                           onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->tipoFiltro; ?>'">
                     <?php } ?>
                     P&aacute;g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
                         <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
@@ -68,7 +70,7 @@
                     &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                     <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
-                    <input type="hidden" name="tipoFiltro" value="<?php echo $this->situacaoProjeto;?>">
+                    <input type="hidden" name="tipoFiltro" value="<?php echo $this->tipoFiltro;?>">
                     <input type="hidden" name="pronac" value="<?php echo $this->pronacProjeto;?>">
                  </form>
                 </td>
@@ -87,19 +89,52 @@
 
     <?php if($this->qtdDocumentos != 0): ?>
     
-        <table class="tabela">
+        <table class="tabela gerenciar_pareceres">
             <tr class="titulo_tabela">
                 <th width="40">PRONAC</th>
                 <th>Nome do Projeto</th>
                 <th>Segmento Cultural</th>
                 <th>Vl.&nbsp;Incentivo<br />(S&oacute; Mecenato)</th>
                 <th width="250">Produto</th>
-                <th width="80">Tipo do Produto</th>
-                <th width="80">Chegada a vinculada</th>
-                <th width="110">Tempo de An&aacute;lise</th>
+                <th width="80">Produto principal?</th>
+		
+		<?php if ($this->tipoFiltro == 'aguardando_distribuicao') { ?>
+                <th width="80">Dt. Chegada &agrave; vinculada</th>
+		<?php } else if ($this->tipoFiltro == 'em_analise' || $this->tipoFiltro == 'em_validacao') { ?>
+		<th width="80">Dt. distribui&ccedil;&atilde;o</th>
+		
+		<?php if ($this->tipoFiltro == 'em_validacao') { ?>
+		<th width="80">Dt. devolu&ccedil;&atilde;o</th>
+		<?php } ?>
+		
+		<th width="80">Parecerista</th>
+		<th width="80">Tempo total de an&aacute;lise</th>
+		<th width="80">Tempo com parecerista</th>
+		<th width="80">Tempo diligenciado</th>
+		
+		<?php if ($this->tipoFiltro == 'em_analise') { ?>
+		<th width="80">Dt. envio dilig&ecirc;ncia</th>
+		<th width="80">Dt. resposta dilig&ecirc;ncia</th>
+		<?php } ?>
+		
+		<?php } else if ($this->tipoFiltro == 'validados') { ?>
+		<th width="80">T&eacute;cnico validador</th>
+		<th width="80">Dt. valida&ccedil;&atilde;o</th>
+		<?php } else if ($this->tipoFiltro == 'devolvida') { ?>
+		<th width="50">Justificativa do componente</th>
+		<th width="50">Justificativa do atendimento</th>
+		<th width="50">Justificativa da Secretaria</th>
+		<?php } ?>
+		
+		<th width="50">Distribuir / Encaminhar</th>
+
+		<?php if ($this->tipoFiltro != 'aguardando_distribuicao' && $this->tipoFiltro != '') { ?>
                 <th width="50">Hist&oacute;rico</th>
-                <th width="50">Distribuir / Encaminhar</th>
+		<?php } ?>
+
+		<?php if ($this->tipoFiltro == 'validados' || $this->tipoFiltro == 'em_validacao') { ?>
                 <th width="50">Concluir</th>
+		<?php } ?>
             </tr>
             <?php
                 $nomeProjeto = '';
@@ -109,61 +144,6 @@
 
                 foreach($this->dados as $dp):
 
-                    $concluir    = $dp->stPrincipal == 1 ? 'Concluir Produto Principal' : 'Concluir Produto Secundário';
-                    
-                    // Verifica o status da análise
-                    $strtemp = substr($dp->Obs, 0, 10);
-                    $_idProduto = !empty($dp->idProduto) ? $dp->idProduto : 0;
-
-                    $col1 = '<img id="img_distribuir_parecer'. $dp->idDistribuirParecer .'" style="cursor:pointer; " title="Distribuir Projeto" src="' . $this->baseUrl() . '/public/img/ico/archive.png"
-                         onclick=redirecionar("' . $this->url(array('controller' => 'gerenciarparecer', 'action' => 'distribuir', 'idpronac'=>$dp->IdPRONAC)) . '"); />';
-
-                    $col2 = '<img id="img_encaminhar_parecer' . $dp->idDistribuirParecer . '" style="cursor:pointer; " title="Distribuir Produtos" src="' . $this->baseUrl() . '/public/img/table_multiple.png"
-                         onclick=redirecionar("' . $this->url(array('controller' => 'gerenciarparecer', 'action' => 'encaminhar', 'idpronac'=>$dp->IdPRONAC, 'idproduto'=>$_idProduto)) . '"); />';
-
-                    $col3 = '<img id="img_concluir_analise' . $dp->idDistribuirParecer . '" style="cursor:pointer;   " title="'.$concluir.'" src="' . $this->baseUrl() . '/public/img/save.gif"
-                         onclick=redirecionar("' . $this->url(array('controller' => 'gerenciarparecer', 'action' => 'concluir', 'idDistribuirParecer'=>$dp->idDistribuirParecer, 'idpronac'=>$dp->IdPRONAC)) . '"); />';
-
-                    if ($strtemp == 'Aguardando') {
-                        $col3 = '';
-                    } elseif ($strtemp == 'ANÁLISE CO') {
-                        //$col2 = '';
-                    } elseif ($strtemp == 'DEVOLVIDA ') {
-//                        $col3 = '';
-                    } else {
-                        $col3 = '';
-                    }
-
-                    // Se existir algum produto secundário que não foi concluido ele não pode ser fechado!
-                    if(($dp->QtdeSecundarios > 0) && ($dp->stPrincipal == 1)) {
-                        $col1 = '<img style="cursor:pointer; " title="Aguarde a an&aacute;lise dos produtos secund&aacute;rios." src="' . $this->baseUrl() . '/public/img/ajuda.png" />';
-                        $col2 = '';
-                        $col3 = '';
-                    }
-
-                    // Não exibir o pacote para os produtos secundários
-                    if($dp->stPrincipal == 0) {
-                        $col1 = '';
-                    }
-
-                    // Se o produto estiver com algum Parecerista ele não pode ser redistribuido!
-                    if(($dp->DtDevolucao == null) && ($dp->idAgenteParecerista != null)) {
-                        $col1 = '';
-                        $col2 = '';
-                    }
-
-                    $tempoRestante = NULL;
-                    $dias = 0;
-                    $campoTempoAnalise = null;
-
-                    if(($dp->DtDistribuicao != null) && ($dp->DtDevolucao == null)) {
-                        $dias = $dp->DIAS;
-                        $tempoRestante = $dp->DIAS;
-                        $campoTempoAnalise = $tempoRestante.' de '.$dp->tempoFimParecer;
-                    } else if(($dp->DtDistribuicao != null) && ($dp->DtDevolucao != null)) {
-                        $tempoRestante = 0;
-                        $campoTempoAnalise = $tempoRestante.' de '.$dp->tempoFimParecer;
-                    }
                 ?>
             <tr class="<?php if($dp->FecharAnalise == 2) { echo 'red'; }?>" >
                 <td align="center">
@@ -180,11 +160,73 @@
                 <td align="center">
                     <?php if ($dp->stPrincipal == 1) { ?><img title="Produto Principal" src="<?php echo $this->baseUrl();?>/public/img/passed.gif" /><?php } ?>
                 </td>
-                <td align="center"><?php echo $dp->DtEnvioPT; ?></td>
-                <td align="center"><?php echo $campoTempoAnalise; ?></td>
-                <td align="center"><img style="cursor:pointer;" title="Hist&oacute;rico" src="<?php echo $this->baseUrl(); ?>/public/img/edit_ico.gif" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'historico'));?>?idPronac=<?php echo $dp->IdPRONAC; ?>&idProduto=<?php echo $dp->idProduto; ?>&stPrincipal=<?php echo $dp->stPrincipal;?>');" />
-                <td align="center"><?php echo $col1; ?> <?php echo $col2; ?></td>
-                <td align="center"><?php echo $col3; ?></td>
+		
+		<?php if ($this->tipoFiltro == 'aguardando_distribuicao') { ?>
+		<td align="center"><?php echo Data::tratarDataZend($dp->DtEnvioMincVinculada, 'Brasileira'); ?></td>
+		
+		<?php } else if ($this->tipoFiltro == 'em_analise' || $this->tipoFiltro == 'em_validacao') { ?>
+		<td align="center"><?php echo Data::tratarDataZend($dp->DtDistribuicao, 'Brasileira'); ?></td>
+		
+		<?php if ($this->tipoFiltro == 'em_validacao') { ?>
+		<td align="center"><?php echo Data::tratarDataZend($dp->DtDevolucao, 'Brasileira'); ?></td>
+		<?php } ?>
+		
+		<td align="center"><strong><?php echo $dp->Parecerista; ?></strong></td>
+		<td align="center"><?php echo $dp->TempoTotalAnalise; ?></td>		
+		<td align="center"><?php echo $dp->TempoParecerista; ?></td>
+		<td align="center"><?php echo $dp->TempoDiligencia; ?></td>
+
+		<?php if ($this->tipoFiltro == 'em_analise') { ?>
+		<td align="center"><?php echo Data::tratarDataZend($dp->dtEnvioDiligencia, 'Brasileira'); ?></td>
+		<td align="center"><?php echo Data::tratarDataZend($dp->dtRespostaDiligencia, 'Brasileira'); ?></td>
+		<?php } ?>
+
+		<?php } else if ($this->tipoFiltro == 'validados') { ?>
+		<td align="center"><?php echo $dp->TecnicoValidador; ?></td>
+		<td align="center"><?php echo Data::tratarDataZend($dp->DtValidacao, 'Brasileira'); ?></td>
+		<?php } else if ($this->tipoFiltro == 'devolvida' ) { ?>
+		<td align="center">
+		    <?php if ($dp->JustComponente != '') { ?>
+                    <a title="<?php echo $dp->JustComponente; ?>" class="tooltip" style="text-decoration: none; cursor: pointer">
+                        <span title=" "><?php echo substr($dp->JustComponente, 0, 50); ?>...</span>			
+                    </a>
+		    <?php } ?>
+		</td>
+		<td align="center">
+		    <?php if ($dp->JustDevolucaoPedido != '') { ?>
+                    <a title="<?php echo $dp->JustDevolucaoPedido; ?>" class="tooltip" style="text-decoration: none; cursor: pointer">
+                        <span title=" "><?php echo substr($dp->JustDevolucaoPedido, 0, 50); ?>...</span>			
+                    </a>
+		    <?php } ?>
+		</td>
+		<td align="center">
+		    <?php if ($dp->JustSecretaria != '') { ?>
+                    <a title="<?php echo $dp->JustSecretaria; ?>" class="tooltip" style="text-decoration: none; cursor: pointer">
+                        <span title=" "><?php echo substr($dp->JustSecretaria, 0, 50); ?>...</span>
+                    </a>
+		    <?php } ?>
+		</td>
+		<?php } ?>
+
+		<td align="center">
+		  <!-- distribuir parecer -->
+		  <?php if ($dp->stPrincipal == 1) { ?>
+		  <img id="img_distribuir_parecer<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer; " title="Distribuir Projeto" src="<?php echo  $this->baseUrl() . '/public/img/ico/archive.png'; ?>" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'distribuir', 'idpronac'=>$dp->IdPRONAC)); ?>/tipoFiltro/<?php echo $this->tipoFiltro; ?>')" />
+		  <?php } ?>
+		  <!-- distribuir produtos -->
+		  <img id="img_encaminhar_parecer<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer; " title="Distribuir Produtos" src="<?php echo $this->baseUrl() . '/public/img/table_multiple.png'; ?>" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'encaminhar', 'idpronac'=>$dp->IdPRONAC, 'idproduto'=>$dp->idProduto)); ?>/tipoFiltro/<?php echo $this->tipoFiltro; ?>')" />
+		</td>
+		<?php if ($this->tipoFiltro != 'aguardando_distribuicao' && $this->tipoFiltro != '') { ?>
+                <td align="center"><img style="cursor:pointer;" title="Hist&oacute;rico" src="<?php echo $this->baseUrl(); ?>/public/img/edit_ico.gif" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'historico'));?>?idPronac=<?php echo $dp->IdPRONAC; ?>&idProduto=<?php echo $dp->idProduto; ?>&stPrincipal=<?php echo $dp->stPrincipal;?>&tipoFiltro=<?php echo $this->tipoFiltro; ?>')">
+		<?php } ?>
+
+		<?php if ($this->tipoFiltro == 'validados' || $this->tipoFiltro == 'em_validacao') { ?>
+		<td align="center">
+		  <!-- concluir analise -->
+		  <img id="img_concluir_analise<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer;" title="Concluir" src="<?php echo $this->baseUrl() . '/public/img/save.gif'; ?>" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'concluir', 'idDistribuirParecer' =>$dp->idDistribuirParecer, 'idpronac'=> $dp->IdPRONAC)); ?>/tipoFiltro/<?php echo $this->tipoFiltro; ?>')">
+		</td><!-- concluir -->
+		<?php } ?>
+
             </tr>
             <?php 
                 $nomeProjeto = $dp->NomeProjeto;
@@ -212,24 +254,24 @@
                         <form name="form2" id="form2" action="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos'));?>" method="get">
                             <?php if($this->paginacao['pag']>1) { ?>
                             <input class="btn_inicio" id="btn_inicio" type="button" class="btn_inicio"
-                                   onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag=1'."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->situacaoProjeto; ?>'">
+                                   onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag=1'."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->tipoFiltro; ?>'">
                             <?php } ?>
                             <input id="btn_p_anterior" type="button"
                             <?php if($this->paginacao['pag']<=1) { ?> class="btn_p_anterior-off"
                             <?php }else { ?>
                                    class="btn_p_anterior"
-                                   onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag='.($this->paginacao['pag'] - 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->situacaoProjeto; ?>'"
+                                   onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag='.($this->paginacao['pag'] - 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->tipoFiltro; ?>'"
                             <?php } ?>>
                             <input id="btn_p_proximo" type="button"
                                    <?php if($this->paginacao['pag']+1 > $this->paginacao['totalPag']) { ?>
                                    class="btn_p_proximo-off"
                             <?php }else { ?>
                                    class="btn_p_proximo"
-                                   onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag='.($this->paginacao['pag'] + 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->situacaoProjeto; ?>'"
+                                   onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag='.($this->paginacao['pag'] + 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->tipoFiltro; ?>'"
                             <?php } ?>>
                             <?php if($this->paginacao['pag'] < $this->paginacao['totalPag']) { ?>
                             <input class="btn_ultimo" id="btn_ultimo" type="button"
-                                   onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->situacaoProjeto; ?>'">
+                                   onclick="location.href='<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&pronac='.$this->pronacProjeto.'&tipoFiltro='.$this->tipoFiltro; ?>'">
                             <?php } ?>
                             P&aacute;g.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
                                 <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
@@ -239,7 +281,7 @@
                             &nbsp;Registros por p&aacute;gina: <input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                             <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                             <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
-                            <input type="hidden" name="tipoFiltro" value="<?php echo $this->situacaoProjeto;?>">
+                            <input type="hidden" name="tipoFiltro" value="<?php echo $this->tipoFiltro;?>">
                             <input type="hidden" name="pronac" value="<?php echo $this->pronacProjeto;?>">
                          </form>
                         </td>
