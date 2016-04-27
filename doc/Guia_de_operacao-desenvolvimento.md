@@ -36,7 +36,7 @@ Cada desenvolvedor criará uma branch a partir de uma das duas.
 ## Atualizando sua branch com as alterações mais recentes do dev
 
     $ git checkout dev-backlog-fulano
-    $ git pull
+    $ git fetch
     $ git merge dev-backlog
     $ git push origin dev-backlog-fulano
 
@@ -49,7 +49,7 @@ Cada desenvolvedor criará uma branch a partir de uma das duas.
 ## Enviando suas alterações para a branch dev
 
     $ git checkout dev-backlog
-    $ git pull
+    $ git fetch
     $ git merge dev-backlog-fulano
     $ git push origin dev-backlog
 
