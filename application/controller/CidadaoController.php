@@ -74,7 +74,7 @@ class CidadaoController extends GenericControllerNew {
 
         } else {
             $campo = null;
-            $order = array('12 DESC'); //Vl.Aprovado
+            $order = array('2 DESC'); //Vl.Aprovado
             $ordenacao = null;
         }
 
@@ -130,14 +130,14 @@ class CidadaoController extends GenericControllerNew {
         //==== parametro de ordenacao  ======//
         if($this->_request->getParam("ordem")) {
             $ordem = $this->_request->getParam("ordem");
-            if($ordem == "ASC") {
-                $novaOrdem = "DESC";
-            }else {
+            if($ordem == "DESC") {
                 $novaOrdem = "ASC";
+            }else {
+                $novaOrdem = "DESC";
             }
         } else {
-            $ordem = "ASC";
-            $novaOrdem = "ASC";
+            $ordem = "DESC";
+            $novaOrdem = "DESC";
         }
 	#Pedro
         $sess->novaOrdem = $novaOrdem;
@@ -159,7 +159,7 @@ class CidadaoController extends GenericControllerNew {
 	    $sess->campo = $campo;
 
         } else {
-            $campo = 12;
+            $campo = 2;
             $ordem = 'DESC';
             $ordenacao = null;
             $urlComplement[] = "ordem=" . $ordem;
@@ -225,8 +225,9 @@ class CidadaoController extends GenericControllerNew {
         $pag = 1;
         $post  = Zend_Registry::get('get');
         if (isset($post->pag)) $pag = $post->pag;
-        $offset = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;        
-        $total = $Projetos->projetosCnicOpinioesPorIdReuniao($idNrReuniao, $where, $ordem, false, false, true);
+        $offset = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;     
+        $objTotal = $Projetos->countProjetosCnicOpinioesPorIdReuniao($idNrReuniao, $where, $ordem, false, false);
+        $total = $objTotal['total'];
         $fim = $offset + $this->intTamPag;
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $limit = ($fim > $total) ? $total - $offset : $this->intTamPag;
@@ -318,7 +319,7 @@ class CidadaoController extends GenericControllerNew {
 
         } else {
             $campo = null;
-            $order = array('12 DESC'); //Vl.Sugerido
+            $order = array('2 DESC'); 
             $ordenacao = null;
         }
 
@@ -361,8 +362,9 @@ class CidadaoController extends GenericControllerNew {
             $this->intTamPag = $sess->qtde;
         }
 
-        $total = $Projetos->projetosCnicOpinioesPorIdReuniao($idNrReuniao, $where, $order, false, false, true);
-        
+        $objTotal = $Projetos->countProjetosCnicOpinioesPorIdReuniao($idNrReuniao, $where, $ordem, false, false);
+        $total = $objTotal['total'];
+
         $pag = 1;
         $post  = Zend_Registry::get('get');
 
@@ -422,7 +424,7 @@ class CidadaoController extends GenericControllerNew {
 
         } else {
             $campo = null;
-            $order = array('12 DESC'); //Vl.Sugerido
+            $order = array('2 DESC'); //Vl.Sugerido
             $ordenacao = null;
         }
 
@@ -460,8 +462,9 @@ class CidadaoController extends GenericControllerNew {
             $this->intTamPag = $this->_request->getParam("qtde");
         }
 
-        $total = $Projetos->projetosCnicOpinioesPorIdReuniao($idNrReuniao, $where, $order, false, false, true);
-        
+        $objTotal = $Projetos->countProjetosCnicOpinioesPorIdReuniao($idNrReuniao, $where, $ordem, false, false);
+        $total = $objTotal['total'];
+
         $pag = 1;
         $post  = Zend_Registry::get('get');
         if (isset($post->pag)) $pag = $post->pag;

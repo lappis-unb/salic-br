@@ -6235,15 +6235,15 @@ class Projetos extends GenericModel
                             WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorável'
                             WHEN pr.ParecerFavoravel = '2' THEN 'Favorável'
                         END AS descAvaliacao,
-                        p.SolicitadoReal AS vlSolicitado,
+                        SolicitadoReal AS vlSolicitado,
                         CASE
                             WHEN p.Mecanismo ='2' OR p.Mecanismo ='6'
                                 THEN sac.dbo.fnValorAprovadoConvenio(p.AnoProjeto,p.Sequencial)
-                            ELSE sac.dbo.fnValorAprovado(p.AnoProjeto,p.Sequencial)
+                            ELSE sac.dbo.fnTotalAprovadoProjeto(p.AnoProjeto,p.Sequencial)
                         END AS vlAprovado,
                         sac.dbo.fnCustoProjeto (p.AnoProjeto,p.Sequencial) AS vlCaptado,
 
-                        p.ResumoProjeto,
+                        ResumoProjeto,
 			DtInicioExecucao,
 			DtFimExecucao
 
@@ -6271,9 +6271,6 @@ class Projetos extends GenericModel
         );
         $select->joinInner(
             array('se' => 'Segmento'), 'p.Segmento = se.Codigo', array(''), 'SAC.dbo'
-        );
-        $select->joinInner(
-            array('n' => 'Nomes'), 'z.idAgente = n.idAgente', array(''), 'AGENTES.dbo'
         );
         $select->joinInner(
             array('x' => 'Agentes'), 'p.CgcCpf = x.CNPJCPF', array(''), 'AGENTES.dbo'
@@ -6315,6 +6312,63 @@ class Projetos extends GenericModel
             $select->limit($tamanho, $tmpInicio);
         }
         return $this->fetchAll($select);
+    }
+
+    public function countProjetosCnicOpinioesPorIdReuniao($idNrReuniao = null, $where = array(), $order = array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false)
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('t' => 'tbPauta'), array(
+            new Zend_Db_Expr("
+                      count ( p.IdPRONAC) as total
+                    ")
+        ), 'BDCORPORATIVO.scSAC'
+        );
+
+        $select->joinInner(
+            array('z' => 'tbDistribuicaoProjetoComissao'), 't.IdPRONAC = z.idPRONAC', array(''), 'BDCORPORATIVO.scSAC'
+        );
+        $select->joinInner(
+            array('p' => 'Projetos'), 't.idPronac = p.idPronac', array(''), 'SAC.dbo'
+        );
+        $select->joinInner(
+            array('pr' => 'Parecer'), 'pr.idPronac = p.idPronac', array(''), 'SAC.dbo'
+        );
+        $select->joinInner(
+            array('x' => 'Agentes'), 'p.CgcCpf = x.CNPJCPF', array(''), 'AGENTES.dbo'
+        );
+        $select->joinInner(
+            array('y' => 'Nomes'), 'x.idAgente = y.idAgente', array(''), 'AGENTES.dbo'
+        );
+
+        if (!is_null($idNrReuniao)) {
+            $select->joinInner(
+                array('r' => 'tbReuniao'), 't.idNrReuniao = r.idNrReuniao', array(''), 'SAC.dbo'
+            );
+            $select->where('r.idNrReuniao = ?', $idNrReuniao);
+        }
+
+        $select->where('z.stDistribuicao = ?', 'A');
+        $select->where('pr.idTipoAgente = ?', 6);
+        $select->where('pr.stAtivo = ?', 1);
+        #$select->where('r.stEstado = ?', 0);
+        $select->where('y.Status = ?', 0);
+
+        // adiciona quantos filtros foram enviados
+        foreach ($where as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
+
+        // paginacao
+        if ($tamanho > -1) {
+            $tmpInicio = 0;
+            if ($inicio > -1) {
+                $tmpInicio = $inicio;
+            }
+            $select->limit($tamanho, $tmpInicio);
+        }
+        return $this->fetchRow($select);
     }
 
     public function cidadaoDadosProjeto($where = array())
@@ -6506,7 +6560,6 @@ class Projetos extends GenericModel
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
         return $this->fetchAll($select);
     }
 
