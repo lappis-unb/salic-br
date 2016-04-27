@@ -73,14 +73,12 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
             alertar('O campo justificativa deve ter no mínimo 11 caracteres!');
             return false;
 	    validacao = false;
-	alert("Teste hue");
         }
 
         if($('#distribuir').is(':checked') && $('#pareceristaCombo').val()==0) {
             alertar('Favor preencher os dados obrigatórios!');
             return false;
 	    validacao = false;
-	    alert("Teste do checked");
         }
 	
 	if(validacao == true){

@@ -643,10 +643,19 @@ class AdmissibilidadeController extends GenericControllerNew {
 
         $cnpjcpf = $rsAgente->CNPJCPF;
 
+        $wsWebServiceSEI = new ServicosSEI();
+        $txSiglaSistema = "INTRANET";
+        $txIdentificacaoServico = "SALIC";
+        $arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento($txSiglaSistema, $txIdentificacaoServico);
+
+        $chars = array(".","/","-");
+        $nrProcessoSemFormatacao = str_replace($chars,"",$arrRetornoGerarProcedimento->ProcedimentoFormatado);
+        $nrProcesso = $nrProcessoSemFormatacao;
         try{
             $aux = new paTransformarPropostaEmProjeto();
-            $aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario);
-            
+            #$aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario);
+            $aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
+
             $tblProjeto = new Projetos();
 
             $rsProjeto = $tblProjeto->buscar(array("idProjeto = ?" => $this->idPreProjeto), "IdPRONAC DESC")->current();

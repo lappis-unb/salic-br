@@ -67,7 +67,13 @@
 	    $('#pesquisa').attr('action', '<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?>');
             $("#pesquisa").submit();
 	});	//Alysson - Fim
+
+        $('#pag').change(function() {
+            var url = '<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('pag' => $this->paginacao['pag'] -1, 'qtde' => $this->paginacao['qtde'])); ?>';
+            window.location.href = url.replace(/pag\=([0-9]{1,})/, 'pag=' + this.value);
+        });
     });
+
 </script>
 
 <style type="text/css">
@@ -264,11 +270,11 @@ function parseUrlWithParams($url, $params = array()) {
                      <input class="btn_ultimo" id="btn_ultimo" type="button"
                            onclick="location.href='<?php echo $this->url(array('controller' => 'cidadao', 'action' => 'consultar')); ?><?php echo parseUrlWithParams($this->urlComplement, array('pag' => $this->paginacao['totalPag'], 'qtde' => $this->paginacao['qtde'])); ?>'">
                      <?php } ?>
-                    P&aacute;g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                    P&aacute;g.:<select name="pag" id="pag" class="input_simples">
+                         <?php $i=1; ?>
                          <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
-                         <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
+                           <option value='<?php echo $i; ?>' <?php if ($i == $this->paginacao['pag']) { echo "selected"; } ?>><?php echo $i; ?></option>
                          <?php endfor; ?>
-        
                     </select>
                     &nbsp;Registros por p&aacute;gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="button" class="btn_recarregar" value="">
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">

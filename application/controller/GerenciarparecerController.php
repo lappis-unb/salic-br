@@ -322,8 +322,8 @@ class GerenciarparecerController extends GenericControllerNew {
         $stPrincipal                = $this->_request->getParam("stPrincipal");
         $tipoFiltro                 = $this->_request->getParam("tipoFiltro");
 
-        if((strlen($observacao) < 11) or (strlen($observacao) > 505)) {
-            parent::message("Dados obrigatórios n&atilde;o informados.","gerenciarparecer/distribuir/idpronac/".$idPronac  . "/tipoFiltro/" . $tipoFiltro, "ALERT");
+        if(strlen($observacao) < 11 ) {
+            parent::message("Dados obrigatórios n&atilde;o informados.","gerenciarparecer/distribuir/idpronac/".$idPronac ,"ALERT");
         }
 
         if((empty($idAgenteParecerista)) && ($tipoescolha == 1)) {
@@ -533,10 +533,9 @@ class GerenciarparecerController extends GenericControllerNew {
         $tipoescolha                = $this->_request->getParam("tipodistribuir");
         $tipoFiltro                 = $this->_request->getParam("tipoFiltro");
 	
-        if((strlen($observacao) < 11) or (strlen($observacao) > 8000)) {
-            parent::message("O campo observação deve ter no mínimo 11 caracteres e no máximo 8000!",
-                    "gerenciarparecer/encaminhar/idproduto/".$idProduto."/tipoanalise/".$TipoAnalise."/idpronac/".$idPronac . "/tipoFiltro/" . $tipoFiltro,
-                    "ALERT");
+        if(strlen($observacao) < 11) {
+            parent::message("O campo observação deve ter no mínimo 11 caracteres!",
+                    "gerenciarparecer/encaminhar/idproduto/".$idProduto."/tipoanalise/".$TipoAnalise."/idpronac/".$idPronac , "ALERT");
         }
 
         if((empty($idAgenteParecerista)) && ($tipoescolha == 1)) {
@@ -663,9 +662,16 @@ class GerenciarparecerController extends GenericControllerNew {
 	$tipoFiltro             = $this->_request->getParam("tipoFiltro");
 
 
+<<<<<<< HEAD
         if((strlen($observacao) < 11) or (strlen($observacao) > 8000)) {
             parent::message("Dados obrigatórios n&atilde;o informados.",
                     "gerenciarparecer/concluir/idDistribuirParecer/".$idDistribuirParecer."/idpronac/".$idPronac . "/tipoFiltro/" . $tipoFiltro, "ALERT");
+=======
+        if(strlen($observacao) < 11) {
+            parent::message("O campo observação deve ter no mínimo 11 caracteres!",
+                    "gerenciarparecer/concluir/idDistribuirParecer/".$idDistribuirParecer."/idpronac/".$idPronac ,
+                    "ALERT");
+>>>>>>> dev-backlog
         }
 
         $db = Zend_Registry :: get('db');
