@@ -662,16 +662,10 @@ class GerenciarparecerController extends GenericControllerNew {
 	$tipoFiltro             = $this->_request->getParam("tipoFiltro");
 
 
-<<<<<<< HEAD
-        if((strlen($observacao) < 11) or (strlen($observacao) > 8000)) {
-            parent::message("Dados obrigatórios n&atilde;o informados.",
-                    "gerenciarparecer/concluir/idDistribuirParecer/".$idDistribuirParecer."/idpronac/".$idPronac . "/tipoFiltro/" . $tipoFiltro, "ALERT");
-=======
         if(strlen($observacao) < 11) {
             parent::message("O campo observação deve ter no mínimo 11 caracteres!",
                     "gerenciarparecer/concluir/idDistribuirParecer/".$idDistribuirParecer."/idpronac/".$idPronac ,
                     "ALERT");
->>>>>>> dev-backlog
         }
 
         $db = Zend_Registry :: get('db');
