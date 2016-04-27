@@ -1,3 +1,9 @@
+[Release 1.6.0] Planejamento de Release
+  * Novo: [SEI] Realizando correções no WebService do SEI para garantir a exibição correta do número do processo dentro do SALIC.
+  * Novo: [DOC] Adicionando documentação de desenvolvimento
+  * Fix: [Projeto] Correção dos parâmetros de entrada na procedure que transforma proposta em projeto
+  * Fix: [Consulta cidadão] Correção do dropdown de mudança de página
+
 Release 1.5.1
   * Fix: [Gerenciar parecer] remoção de lixo no código e correção da validação de caracteres na controller
 
