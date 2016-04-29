@@ -1711,186 +1711,177 @@ public function analisePorParecerista($where){
      * @return List
      */
     public function painelAnaliseTecnica($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $tipoFiltro='') {
-        
-	$sql = "";
-	$orderSql = "";
-	$whereSql = "";
-	$limitSql = "";
+      
+        $slct = $this->select();
+        $slct->setIntegrityCheck(false);
 	
 	switch ($tipoFiltro) {
             case 'aguardando_distribuicao':
-	        $select = 'SELECT
-                        IdPRONAC,
-                        NrProjeto,
-                        NomeProjeto,
-                        idProduto,
-                        Produto,
-                        stPrincipal,
-                        idArea,
-                        Area,
-                        idSegmento,
-                        Segmento,
-                        idDistribuirParecer,
-                        idOrgao,
-                        FecharAnalise,
-                        DtEnvioMincVinculada,
-                        qtDiasDistribuir,
-                        Valor';
- 	        $from = ' FROM sac.dbo.vwPainelCoordenadorVinculadasAguardandoAnalise ';
-	      
+
+	      $slct->from(
+			  array('dbo.vwPainelCoordenadorVinculadasAguardandoAnalise'),
+			  array('IdPRONAC',
+				'NrProjeto',
+				'NomeProjeto',
+				'idProduto',
+				'Produto',
+				'stPrincipal',
+				'idArea',
+				'Area',
+				'idSegmento',
+				'Segmento',
+				'idDistribuirParecer',
+				'idOrgao',
+				'FecharAnalise',
+				'DtEnvioMincVinculada',
+				'qtDiasDistribuir',
+			  'Valor')
+			  );
+		$from = ' FROM sac.dbo.vwPainelCoordenadorVinculadasAguardandoAnalise';	      
                 break;
             case 'em_analise':
-	        $select = 'SELECT
-                        IdPRONAC,
-                        NrProjeto,
-                        NomeProjeto,
-                        idProduto,
-                        Produto,
-                        stPrincipal,
-                        idArea,
-                        Area,
-                        idSegmento,
-                        Segmento,
-                        idDistribuirParecer,
-                        Parecerista,
-                        idOrgao,
-                        FecharAnalise,
-                        DtEnvioMincVinculada,
-                        DtDistribuicao,
-                        qtDiasParaDistribuir,
-                        TempoTotalAnalise,
-                        TempoParecerista,
-                        TempoDiligencia,
-                        idAgenteParecerista,
-                        dtEnvioDiligencia,
-                        dtRespostaDiligencia,
-                        qtDiligenciaProduto,
-                        QtdeSecundarios,
-                        Valor,
-                        FecharAnalise';
+
+	      $slct->from(
+			  array('dbo.vwPainelCoordenadorVinculadasEmAnalise'),
+			  array('IdPRONAC',
+				'NrProjeto',
+				'NomeProjeto',
+				'idProduto',
+				'Produto',
+				'stPrincipal',
+				'idArea',
+				'Area',
+				'idSegmento',
+				'Segmento',
+				'idDistribuirParecer',
+				'Parecerista',
+				'idOrgao',
+				'DtEnvioMincVinculada',
+				'DtDistribuicao',
+				'qtDiasParaDistribuir',
+				'TempoTotalAnalise',
+				'TempoParecerista',
+				'TempoDiligencia',
+				'idAgenteParecerista',
+				'dtEnvioDiligencia',
+				'dtRespostaDiligencia',
+				'qtDiligenciaProduto',
+				'QtdeSecundarios',
+				'Valor',
+				'FecharAnalise')
+			  );
 
 		$from = ' FROM sac.dbo.vwPainelCoordenadorVinculadasEmAnalise';
                 break;
             case 'em_validacao':
-	        $select = 'SELECT
-                          IdPRONAC,
-                          NrProjeto,
-                          NomeProjeto,
-                          idProduto,
-                          Produto,
-                          stPrincipal,
-                          idArea,
-                          Area,
-                          idSegmento,
-                          Segmento,
-                          idDistribuirParecer,
-                          Parecerista,
-                          idOrgao,
-                          FecharAnalise,
-                          DtEnvioMincVinculada,
-                          DtDistribuicao,
-                          DtDevolucao,
-                          TempoTotalAnalise,
-                          TempoParecerista,
-                          TempoDiligencia,
-                          qtDiligenciaProduto,
-                          Valor ';
 
+	        $slct->from(
+			    array('dbo.vwPainelCoordenadorVinculadasEmValidacao'),
+			    array('IdPRONAC',
+				  'NrProjeto',
+				  'NomeProjeto',
+				  'idProduto',
+				  'Produto',
+				  'stPrincipal',
+				  'idArea',
+				  'Area',
+				  'idSegmento',
+				  'Segmento',
+				  'idDistribuirParecer',
+				  'Parecerista',
+				  'idOrgao',
+				  'FecharAnalise',
+				  'DtEnvioMincVinculada',
+				  'DtDistribuicao',
+				  'DtDevolucao',
+				  'TempoTotalAnalise',
+				  'TempoParecerista',
+				  'TempoDiligencia',
+				  'qtDiligenciaProduto',
+				  'Valor')
+			    );
+		
 		$from = ' FROM sac.dbo.vwPainelCoordenadorVinculadasEmValidacao';
                 break;
             case 'validados':
-	        $select = 'SELECT
-                          IdPRONAC,
-                          NrProjeto,
-                          NomeProjeto,
-                          idProduto,
-                          Produto,
-                          stPrincipal,
-                          idArea,
-                          Area,
-                          idSegmento,
-                          Segmento,
-                          idDistribuirParecer,
-                          Parecerista,
-                          idOrgao,
-                          qtDiligenciaProduto,
-                          Valor,
-                          FecharAnalise,
-                          TecnicoValidador,
-                          DtValidacao';
+	      
+	        $slct->from(
+			    array('dbo.vwPainelCoordenadorVinculadasValidados'),
+			    array('IdPRONAC',
+				  'NrProjeto',
+				  'NomeProjeto',
+				  'idProduto',
+				  'Produto',
+				  'stPrincipal',
+				  'idArea',
+				  'Area',
+				  'idSegmento',
+				  'Segmento',
+				  'idDistribuirParecer',
+				  'Parecerista',
+				  'idOrgao',
+				  'qtDiligenciaProduto',
+				  'Valor',
+				  'FecharAnalise',
+				  'TecnicoValidador',
+				  'DtValidacao')
+			    );
+		
 		  $from = ' FROM sac.dbo.vwPainelCoordenadorVinculadasValidados';
                 break;
             case 'devolvida':
-                $select = 'SELECT
-                         IdPRONAC,
-                         NrProjeto,
-                         NomeProjeto,
-                         idProduto,
-                         Produto,
-                         stPrincipal, 
-                         idArea,
-                         Area,
-                         idSegmento,
-                         Segmento,
-                         idDistribuirParecer,
-                         idOrgao,
-                         FecharAnalise,
-                         idAgenteParecerista,
-                         Parecerista,
-                         DtEnvioMincVinculada
-                         qtDiasDistribuir,
-                         CAST (JustComponente AS TEXT) AS JustComponente ,
-                         JustDevolucaoPedido,
-                         JustSecretaria,
-                         Valor ';
-		  $from = 'FROM sac.dbo.vwPainelCoordenadorVinculadasReanalisar';
+
+	        $slct->from(
+			    array('dbo.vwPainelCoordenadorVinculadasReanalisar'),
+			    array('IdPRONAC',
+				  'NrProjeto',
+				  'NomeProjeto',
+				  'idProduto',
+				  'Produto',
+				  'stPrincipal', 
+				  'idArea',
+				  'Area',
+				  'idSegmento',
+				  'Segmento',
+				  'idDistribuirParecer',
+				  'idOrgao',
+				  'FecharAnalise',
+				  'idAgenteParecerista',
+				  'Parecerista',
+				  'DtEnvioMincVinculada',
+				  'qtDiasDistribuir',
+				  'CAST (JustComponente AS TEXT) AS JustComponente',
+				  'JustDevolucaoPedido',
+				  'JustSecretaria',
+				  'Valor')
+			    );
+		$from = 'FROM sac.dbo.vwPainelCoordenadorVinculadasReanalisar';
                 break;
 	}
+	
+	//adicionando linha order ao select
+        $slct->order($order);
 
-        //adicionando linha order ao select
-	if (!empty($order)) {
-	  $orderSql .= " ORDER BY";
-	  foreach ($order as $ord) {
-	    $orderSql .= " " . $ord . ",";
-	  }
-	  $orderSql = rtrim($orderSql, ",");
-        } else {
-          // ordenacao padrao
-          $orderSql = " ORDER BY DtEnvioVinculada";
-        }
-	
-	if (!empty($where)) {
-            $whereSql .= " WHERE ";
-            foreach ($where as $wher) {
-                $whereSql .= $wher;
-            }  
-        }
-	
-        // paginacao
+        //paginacao
         if ($tamanho > -1) {
             $tmpInicio = 0;
             if ($inicio > -1) {
-	      $tmpInicio = $inicio;
+                $tmpInicio = $inicio;
             }
-	    // validados: dando erro pq esta vazio - não dá pra paginar com resultado = 0
-	    if ($inicio > 1) {
-	      $limitSql = " OFFSET $tmpInicio ROWS FETCH NEXT $tamanho ROWS ONLY";
-            }
+            $slct->limit($tamanho, $tmpInicio);
         }
-	
+
 	$db = Zend_Registry::get('db');
 	$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	
 	// se for totalizador
 	if ($qtdeTotal) {
-            $sql = "SELECT COUNT(IdPRONAC) " . $from . $whereSql;
+            $sql = "SELECT COUNT(IdPRONAC) " . $from;
 	    return $db->fetchOne($sql);
         } else {
-            $sql = $select . $from . $whereSql . $orderSql . $limitSql;
-	    //xd($sql);
-	    return $db->fetchAll($sql);
-	}	
-		
+	  //xd($slct->assemble());
+	  return $this->fetchAll($slct);
+	}
     } // fecha método listarProjetos()
     
     public function buscarHistoricoEncaminhamento($where=array())
