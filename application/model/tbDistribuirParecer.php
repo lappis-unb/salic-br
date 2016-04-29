@@ -1711,7 +1711,7 @@ public function analisePorParecerista($where){
      * @return List
      */
     public function painelAnaliseTecnica($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $tipoFiltro='') {
-      
+        $from = "";
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
 	
@@ -1858,27 +1858,39 @@ public function analisePorParecerista($where){
 		$from = 'FROM sac.dbo.vwPainelCoordenadorVinculadasReanalisar';
                 break;
 	}
-	
-	//adicionando linha order ao select
-        $slct->order($order);
 
-        //paginacao
-        if ($tamanho > -1) {
-            $tmpInicio = 0;
-            if ($inicio > -1) {
-                $tmpInicio = $inicio;
-            }
-            $slct->limit($tamanho, $tmpInicio);
-        }
-
-	$db = Zend_Registry::get('db');
-	$db->setFetchMode(Zend_DB::FETCH_OBJ);
-	
 	// se for totalizador
 	if ($qtdeTotal) {
-            $sql = "SELECT COUNT(IdPRONAC) " . $from;
+
+	    $db = Zend_Registry::get('db');
+	    $db->setFetchMode(Zend_DB::FETCH_OBJ);
+	    $whereSql = '';
+	    if (!empty($where)) {
+	      $whereSql = ' WHERE ';
+	      foreach ($where as $coluna => $valor) {
+		$whereSql .= $valor;
+	      }
+	    }
+            $sql = "SELECT COUNT(IdPRONAC) " . $from . $whereSql;
 	    return $db->fetchOne($sql);
         } else {
+	  //adiciona quantos filtros foram enviados
+	  foreach ($where as $coluna => $valor) {
+	    $slct->where($valor);
+	  }	  
+	  
+	  //adicionando linha order ao select
+	  $slct->order($order);
+	  
+	  //paginacao
+	  if ($tamanho > -1) {
+            $tmpInicio = 0;
+            if ($inicio > -1) {
+	      $tmpInicio = $inicio;
+            }
+            $slct->limit($tamanho, $tmpInicio);
+	  }
+	  
 	  //xd($slct->assemble());
 	  return $this->fetchAll($slct);
 	}

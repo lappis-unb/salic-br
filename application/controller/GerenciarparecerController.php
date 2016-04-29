@@ -108,14 +108,14 @@ class GerenciarparecerController extends GenericControllerNew {
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
-        $where = array();
-        $where[] = "idOrgao = $codOrgao";
-
+        $where = [];
+	
         if((isset($_POST['pronac']) && !empty($_POST['pronac'])) || (isset($_GET['pronac']) && !empty($_GET['pronac']))){
-            $where[] = 'AnoProjeto+Sequencial = ' . isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
+	    $cond = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
+            $where[] = "NrProjeto = '$cond'";
             $this->view->pronacProjeto = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
         }
-
+	
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
             $tipoFiltro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
             $this->view->tipoFiltro = $tipoFiltro;

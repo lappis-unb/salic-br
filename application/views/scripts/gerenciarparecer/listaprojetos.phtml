@@ -315,7 +315,14 @@
     }
 
     $(document).ready(function(){
-        
+	$("#pronac").keypress(function(e) {
+	    if (e.which == 13) {
+		var pronac = $('#pronac').val(),
+                    filtro = $('.comboFiltro').val();
+		window.location = "<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'listaprojetos')); ?>?pag=1&tipoFiltro="+filtro+"&pronac="+pronac;
+	    }
+	});
+	
         $("#btn_pesquisar").click(function(){
             var pronac = $('#pronac').val(),
                 filtro = $('.comboFiltro').val();
