@@ -97,7 +97,9 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
                 dataType: "json",
                 data: {
                     idAgente: idAgente,
-                    idpronac: idpronac
+                    idpronac: idpronac,
+		    idArea: <?php echo $this->idAreaProduto; ?>,
+		    idSegmento: <?php echo $this->idSegmentoProduto; ?>
                 },
                 url: '<?php echo $this->url(array("controller"=>"gerenciarparecer", "action"=>"infoparecerista")); ?>',
                 success: function (data) {

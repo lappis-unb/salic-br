@@ -296,6 +296,8 @@ class GerenciarparecerController extends GenericControllerNew {
         $orgaos = new Orgaos();
         $buscar = $orgaos->buscar(array("Codigo <> ?" => $codOrgao, "Status = ?" => 0, "Vinculo = ?" => 1), array(2));
 
+	$this->view->idSegmentoProduto = $buscaDadosProjeto[0]->idSegmento;
+	$this->view->idAreaProduto  = $buscaDadosProjeto[0]->idArea;	
         $this->view->orgaos         = $buscar;
         $this->view->pareceristas   = $pareceristas;
         $this->view->dadosProjeto   = $buscaDadosProjeto;
