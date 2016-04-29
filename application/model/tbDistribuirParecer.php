@@ -570,7 +570,7 @@ class tbDistribuirParecer extends GenericModel
             $select->distinct('t.idDistribuirParecer');
 
             $select->order('t.stPrincipal desc');
-
+	    
             return $this->fetchAll($select);
 
         } // fecha método dadosParaDistribuir()
@@ -1868,15 +1868,18 @@ public function analisePorParecerista($where){
 	    if (!empty($where)) {
 	      $whereSql = ' WHERE ';
 	      foreach ($where as $coluna => $valor) {
-		$whereSql .= $valor;
+		if ($whereSql != ' WHERE ') {
+		  $whereSql .= ' AND ';
+		}
+		$whereSql .= str_replace('?', "'$valor'" , $coluna);
 	      }
 	    }
             $sql = "SELECT COUNT(IdPRONAC) " . $from . $whereSql;
 	    return $db->fetchOne($sql);
         } else {
 	  //adiciona quantos filtros foram enviados
-	  foreach ($where as $coluna => $valor) {
-	    $slct->where($valor);
+	  foreach ($where as $coluna => $valor) {	    
+	    $slct->where($coluna, $valor);
 	  }	  
 	  
 	  //adicionando linha order ao select

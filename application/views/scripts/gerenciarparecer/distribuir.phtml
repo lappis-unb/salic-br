@@ -98,8 +98,8 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
                 data: {
                     idAgente: idAgente,
                     idpronac: idpronac,
-		    idArea: <?php echo $this->idAreaProduto; ?>,
-		    idSegmento: <?php echo $this->idSegmentoProduto; ?>
+		    idArea: '<?php echo $this->idAreaProduto; ?>',
+		    idSegmento: '<?php echo $this->idSegmentoProduto; ?>'
                 },
                 url: '<?php echo $this->url(array("controller"=>"gerenciarparecer", "action"=>"infoparecerista")); ?>',
                 success: function (data) {

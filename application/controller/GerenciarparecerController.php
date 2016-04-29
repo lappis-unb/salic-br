@@ -109,11 +109,12 @@ class GerenciarparecerController extends GenericControllerNew {
 
         /* ================== PAGINACAO ======================*/
         $where = [];
+	$where["idOrgao = ?"] = $codOrgao;
 	
         if((isset($_POST['pronac']) && !empty($_POST['pronac'])) || (isset($_GET['pronac']) && !empty($_GET['pronac']))){
-	    $cond = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
-            $where[] = "NrProjeto = '$cond'";
-            $this->view->pronacProjeto = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
+	    $pronac = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
+            $where["NrProjeto = ?"] = $pronac;
+            $this->view->pronacProjeto = $pronac;
         }
 	
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
@@ -278,15 +279,11 @@ class GerenciarparecerController extends GenericControllerNew {
 
         $tbDistribuirParecer = new tbDistribuirParecer();
 
-        $dadosWhere["t.stEstado = ?"]               = 0;
-        $dadosWhere["t.FecharAnalise IN (0,2)"]     = '';
-        //$dadosWhere["t.TipoAnalise = ?"]            = 3;
-        $dadosWhere["p.Situacao IN ('B11', 'B14')"] = '';
-        $dadosWhere["p.IdPRONAC = ?"]               = $idPronac;
-        $dadosWhere["t.idOrgao = ?"]                = $codOrgao;
-        $dadosWhere["t.DtDevolucao is not null OR t.idAgenteParecerista is null"] = '';
-        $buscaDadosProjeto = $tbDistribuirParecer->dadosParaDistribuir($dadosWhere);
-
+        $dadosWhere["IdPRONAC = ?"]               = $idPronac;
+        $dadosWhere["idOrgao = ?"]                = $codOrgao;
+	$dadosWhere["stPrincipal = ?"]            = 1;       
+	$buscaDadosProjeto = $tbDistribuirParecer->painelAnaliseTecnica($dadosWhere, null, null, null, null, $tipoFiltro);
+	
         $pareceristas = array();
         $spSelecionarParecerista = new spSelecionarParecerista();
         if(count($buscaDadosProjeto) > 0){
