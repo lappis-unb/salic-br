@@ -108,7 +108,7 @@ class GerenciarparecerController extends GenericControllerNew {
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
-        $where = [];
+        $where = array();
 	$where["idOrgao = ?"] = $codOrgao;
 	
         if((isset($_POST['pronac']) && !empty($_POST['pronac'])) || (isset($_GET['pronac']) && !empty($_GET['pronac']))){
