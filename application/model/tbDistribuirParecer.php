@@ -1878,7 +1878,7 @@ public function analisePorParecerista($where){
 	    return $db->fetchOne($sql);
         } else {
 	  //adiciona quantos filtros foram enviados
-	  foreach ($where as $coluna => $valor) {	    
+	  foreach ($where as $coluna => $valor) {
 	    $slct->where($coluna, $valor);
 	  }	  
 	  
