@@ -335,14 +335,15 @@ class GerenciarparecerController extends GenericControllerNew {
         $dadosWhere["IdPRONAC = ?"]               = $idPronac;
         $dadosWhere["idOrgao = ?"]                = $codOrgao;
 	$buscaDadosProjeto = $tbDistribuirParecer->painelAnaliseTecnica($dadosWhere, null, null, null, null, $tipoFiltro);
-	//xd($buscaDadosProjeto);
+	
 	$error = "";
         $msg = "Distribuição Realizada com sucesso!";
 
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $db->beginTransaction();
-
+	$projetos = new Projetos();
+	
         try {
 
             foreach($buscaDadosProjeto as $dp) {
@@ -376,7 +377,8 @@ class GerenciarparecerController extends GenericControllerNew {
 
 		    $orgaos = new Orgaos();
 		    $orgao = $orgaos->pesquisarNomeOrgao($codOrgao);
-		    $projeto->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para ' . $orgao->NomeOrgao . '.');
+		    
+		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para ' . $orgao->NomeOrgao . '.');
                 }
                 else {
                     $msg = "Distribuição Realizada com sucesso!";
@@ -405,8 +407,8 @@ class GerenciarparecerController extends GenericControllerNew {
                     $salvar = $tbDistribuirParecer->alterar(array('stEstado' => 1), $where);
 
                     $insere = $tbDistribuirParecer->inserir($dadosD);
-		    
-		    $projeto->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para o perito para análise técnica e emissão de parecer.');
+		    $projetos = new Projetos();		    
+		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para o perito para análise técnica e emissão de parecer.');
                 }
 
             }
@@ -537,7 +539,8 @@ class GerenciarparecerController extends GenericControllerNew {
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $db->beginTransaction();
-
+	$projetos = new Projetos();
+	
         try {
 
 
@@ -571,7 +574,8 @@ class GerenciarparecerController extends GenericControllerNew {
 
 		    $orgaos = new Orgaos();
 		    $orgao = $orgaos->pesquisarNomeOrgao($codOrgao);
-		    $projeto->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para ' . $orgao->NomeOrgao . '.');
+		    
+		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para ' . $orgao->NomeOrgao . '.');
 		    
                     parent::message("Enviado os Produtos/Projeto para a entidade!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
                 }
@@ -601,7 +605,6 @@ class GerenciarparecerController extends GenericControllerNew {
 
                     $insere = $tbDistribuirParecer->inserir($dadosD);
 
-		    $projetos = new Projetos();
 		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Produto ' . $dp->Produto . ' encaminhado ao perito para análise técnica e emissão de parecer.');
 		    
                     parent::message("Distribuição Realizada com sucesso!  ", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
@@ -664,6 +667,8 @@ class GerenciarparecerController extends GenericControllerNew {
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
+	$projetos = new Projetos();
+	
         try {
             $db->beginTransaction();
 
