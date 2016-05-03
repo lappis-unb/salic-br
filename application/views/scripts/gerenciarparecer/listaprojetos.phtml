@@ -223,7 +223,18 @@
 		<?php if ($this->tipoFiltro == 'validados' || $this->tipoFiltro == 'em_validacao') { ?>
 		<td align="center">
 		  <!-- concluir analise -->
+
+		  <!-- se for principal, -->
+		  <?php if ($dp->stPrincipal == 1) { ?>
+		  <!-- pergunto se tem secundarios abertos -->
+		  <?php if($this->checarValidacaoSecundarios[$dp->IdPRONAC] == 1) { ?>
+		  <!-- se retornar true mostra o botão -->
 		  <img id="img_concluir_analise<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer;" title="Concluir" src="<?php echo $this->baseUrl() . '/public/img/save.gif'; ?>" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'concluir', 'idDistribuirParecer' =>$dp->idDistribuirParecer, 'idpronac'=> $dp->IdPRONAC)); ?>/tipoFiltro/<?php echo $this->tipoFiltro; ?>')">
+		  <?php } ?>
+		  <!-- secundários: sempre exibe botão de concluir -->
+		  <?php } else { ?>
+		  <img id="img_concluir_analise<?php echo $dp->idDistribuirParecer; ?>" style="cursor:pointer;" title="Concluir" src="<?php echo $this->baseUrl() . '/public/img/save.gif'; ?>" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'concluir', 'idDistribuirParecer' =>$dp->idDistribuirParecer, 'idpronac'=> $dp->IdPRONAC)); ?>/tipoFiltro/<?php echo $this->tipoFiltro; ?>')">
+		  <?php } ?>
 		</td><!-- concluir -->
 		<?php } ?>
 

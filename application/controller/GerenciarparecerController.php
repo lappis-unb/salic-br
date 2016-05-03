@@ -135,6 +135,17 @@ class GerenciarparecerController extends GenericControllerNew {
 
         $busca = $tbDistribuirParecer->painelAnaliseTecnica($where, $order, $tamanho, $inicio, false, $tipoFiltro);
 
+	// caso for produto principal, verifica se pode concluir (caso não haja produtos secundários abertos)
+	if ($tipoFiltro == 'validados' || $tipoFiltro == 'em_validacao') {
+	  $checarValidacaoSecundarios = array();
+	  foreach($busca as $chave => $item) {
+	    if ($item->stPrincipal == 1) {
+	      $checarValidacaoSecundarios[$item->IdPRONAC] = $tbDistribuirParecer->checarValidacaoProdutosSecundarios($item->IdPRONAC);
+	    }
+	  }
+	  $this->view->checarValidacaoSecundarios = $checarValidacaoSecundarios;
+	}	
+	
         $paginacao = array(
                 "pag"=>$pag,
                 "qtde"=>$this->intTamPag,

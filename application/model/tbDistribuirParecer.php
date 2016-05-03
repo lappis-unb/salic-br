@@ -1953,4 +1953,12 @@ public function analisePorParecerista($where){
         return $this->fetchAll($slct)->count();
     }
 
+    public function checarValidacaoProdutosSecundarios($idPronac) {
+      $sql = "SELECT SAC.dbo.fnchecarValidacaoProdutoSecundario($idPronac)";
+
+      $db = Zend_Registry::get('db');
+      $db->setFetchMode(Zend_DB::FETCH_OBJ);
+      return $db->fetchOne($sql);
+    }
+    
 }
