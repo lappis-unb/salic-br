@@ -335,7 +335,7 @@ class GerenciarparecerController extends GenericControllerNew {
         if(strlen($observacao) < 11 ) {
             parent::message("Dados obrigatórios n&atilde;o informados.","gerenciarparecer/distribuir/idpronac/".$idPronac ,"ALERT");
         }
-
+	
         if((empty($idAgenteParecerista)) && ($tipoescolha == 1)) {
             parent::message("Dados obrigatórios n&atilde;o informados.",
                     "gerenciarparecer/encaminhar/idproduto/".$idProduto."/tipoanalise/".$TipoAnalise."/idpronac/".$idPronac  . "/tipoFiltro/" . $tipoFiltro,
@@ -358,6 +358,14 @@ class GerenciarparecerController extends GenericControllerNew {
         try {
 
             foreach($buscaDadosProjeto as $dp) {
+	      
+	        // se forem validados ou em validação, zera fecharAnalise
+	        if ($tipoFiltro == 'devolvida' || $tipoFiltro == 'validados' || $tipoFiltro == 'em_validacao') {
+		  $dp->FecharAnalise = 0;
+		} else {
+		  $dp->FecharAnalise;
+		}
+	      
                 if($tipoescolha == 2) {
                     $msg = "Enviado os Produtos/Projeto para a entidade!";
 
@@ -556,7 +564,15 @@ class GerenciarparecerController extends GenericControllerNew {
 
 
             foreach($buscaDadosProjeto as $dp) {
+	      // invalida e redistribui
 
+	      // se forem validados ou em validação, zera fecharAnalise
+	        if ($tipoFiltro == 'devolvida' || $tipoFiltro == 'validados' || $tipoFiltro == 'em_validacao') {
+		$dp->FecharAnalise = 0;
+	      } else {
+		$dp->FecharAnalise;
+	      }
+	      
                 if($tipoescolha == 2) {
                     // ALTERAR UNIDADE DE ANÁLISE ( COORDENADOR DE PARECER )
 
@@ -592,7 +608,6 @@ class GerenciarparecerController extends GenericControllerNew {
                 }
                 else {
                     // DISTRIBUIR OU REDISTRIBUIR ( COORDENADOR DE PARECER )
-		  
                     $dadosD = array(
                             'idOrgao'       		=> $dp->idOrgao,
                             'DtEnvio'       		=> $dp->DtEnvioMincVinculada,

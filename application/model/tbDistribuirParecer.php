@@ -1817,6 +1817,7 @@ public function analisePorParecerista($where){
 				  'Area',
 				  'idSegmento',
 				  'Segmento',
+				  'DtEnvioMincVinculada',
 				  'idDistribuirParecer',
 				  'Parecerista',
 				  'idOrgao',
