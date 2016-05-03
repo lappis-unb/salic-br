@@ -1647,5 +1647,7 @@ div.plan span {
 }
 
 .gerenciar_pareceres .tooltip:hover:after{
-    left: -150%;
+    left: -300%;
+    font-size: 12px;
+    line-height: 1.3em;   
 }

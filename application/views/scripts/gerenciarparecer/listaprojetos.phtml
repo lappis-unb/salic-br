@@ -187,21 +187,21 @@
 		<?php } else if ($this->tipoFiltro == 'devolvida' ) { ?>
 		<td align="center">
 		    <?php if ($dp->JustComponente != '') { ?>
-                    <a title="<?php echo $dp->JustComponente; ?>" class="tooltip" style="text-decoration: none; cursor: pointer">
+                    <a title="<?php echo strip_tags($dp->JustComponente); ?>" class="tooltip" style="text-decoration: none; cursor: pointer">
                         <span title=" "><?php echo substr($dp->JustComponente, 0, 50); ?>...</span>			
                     </a>
 		    <?php } ?>
 		</td>
 		<td align="center">
 		    <?php if ($dp->JustDevolucaoPedido != '') { ?>
-                    <a title="<?php echo $dp->JustDevolucaoPedido; ?>" class="tooltip" style="text-decoration: none; cursor: pointer">
+                    <a title="<?php echo strip_tags($dp->JustDevolucaoPedido); ?>" class="tooltip" style="text-decoration: none; cursor: pointer">
                         <span title=" "><?php echo substr($dp->JustDevolucaoPedido, 0, 50); ?>...</span>			
                     </a>
 		    <?php } ?>
 		</td>
 		<td align="center">
 		    <?php if ($dp->JustSecretaria != '') { ?>
-                    <a title="<?php echo $dp->JustSecretaria; ?>" class="tooltip" style="text-decoration: none; cursor: pointer">
+                    <a title="<?php echo strip_tags($dp->JustSecretaria); ?>" class="tooltip" style="text-decoration: none; cursor: pointer">
                         <span title=" "><?php echo substr($dp->JustSecretaria, 0, 50); ?>...</span>
                     </a>
 		    <?php } ?>
