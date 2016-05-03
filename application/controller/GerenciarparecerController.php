@@ -378,7 +378,7 @@ class GerenciarparecerController extends GenericControllerNew {
 		    $orgaos = new Orgaos();
 		    $orgao = $orgaos->pesquisarNomeOrgao($codOrgao);
 		    
-		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para ' . $orgao->NomeOrgao . '.');
+		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para <strong>' . $orgao->NomeOrgao . '</strong>.');
                 }
                 else {
                     $msg = "Distribuição Realizada com sucesso!";
@@ -575,7 +575,7 @@ class GerenciarparecerController extends GenericControllerNew {
 		    $orgaos = new Orgaos();
 		    $orgao = $orgaos->pesquisarNomeOrgao($codOrgao);
 		    
-		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para ' . $orgao->NomeOrgao . '.');
+		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para <strong>' . $orgao->NomeOrgao . '</strong>.');
 		    
                     parent::message("Enviado os Produtos/Projeto para a entidade!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
                 }
@@ -605,7 +605,7 @@ class GerenciarparecerController extends GenericControllerNew {
 
                     $insere = $tbDistribuirParecer->inserir($dadosD);
 
-		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Produto ' . $dp->Produto . ' encaminhado ao perito para análise técnica e emissão de parecer.');
+		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Produto <strong>' . $dp->Produto . '</strong> encaminhado ao perito para análise técnica e emissão de parecer.');
 		    
                     parent::message("Distribuição Realizada com sucesso!  ", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
                 }
