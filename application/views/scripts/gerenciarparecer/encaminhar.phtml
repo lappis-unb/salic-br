@@ -1,84 +1,98 @@
 <script type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
+
+//Contador e limitadores de caracteres
+var ExecucaoDaFuncaoLimiterPag = function(fieldName, minchar){
+    var minchar,
+	countChars  = CountCharacters(fieldName);
+    
+    //Atualização para os contadores de caracteres
+    $('#contador-' + fieldName).html("Caracteres: " + countChars);
+    //document.getElementById("contador-" + fieldName).innerHTML = "Caracteres: " + countChars;
+    
+    //mudança de cor caso ultrapasse o numero de caracteres
+    if (countChars <= minchar){
+	$('#contador-' + fieldName).css('color', 'red');
+    } else{
+	$('#contador-' + fieldName).css('color', 'black');
+    }
+}
+
+//Onde é feita a contagem do elemento do contador
+var CountCharacters = function(contador) {
+    var bodyHTML = tinymce.get(contador).getBody(),
+        contentHTML = tinymce.trim(bodyHTML.innerText || bodyHTML.textContent);
+    
+    return contentHTML.length;
+};
+
+// verifica tipo - se distribuir ou encaminhar
+var verificaTipo = function(tipo, count){
+    if(tipo =='1'){
+        $('#parecerista'+count).show();
+        $('#entidades'+count).hide();
+    } else {
+        $('#parecerista'+count).hide();
+        $('#entidades'+count).show();
+    }
+}
+
+// consulta parecerista para verificar se está habilitado 
+var infoparecerista = function(idAgente){
+    var idpronac = $("#idpronac").val();
+    
+    if(idAgente != 0){
+        $("#infoparecerista").hide();
+        $("#infopareceristal").show();
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            data: {
+                idAgente: idAgente,
+                idpronac: idpronac,
+		idArea: '<?php echo $this->idAreaProduto; ?>',
+		idSegmento: '<?php echo $this->idSegmentoProduto; ?>'
+            },
+            url: '<?php echo $this->url(array("controller"=>"gerenciarparecer", "action"=>"infoparecerista")); ?>' ,
+            success: function (data){
+                $("#infoparecerista").show();
+                $("#infopareceristal").hide();
+                $("#infoparecerista").html(data[0].situacaoTexto);
+                if (data[0].situacao == '1'){
+                    $("#btnenviar").show();
+                } else if (data[0].situacao == '0') {
+                    $("#btnenviar").hide();
+                }
+            },
+            error: function (data){
+                $("#infoparecerista").html("Falha na recuperação dos dados.\nNão foi possível carregar agente!");
+            }
+        });
+    } else {
+        $("#infoparecerista").hide();
+        $("#infopareceristal").hide();
+        $("#btnenviar").hide();
+    }
+}
+
+// inicializa funções
  $(document).ready(function(){    
-     //Contador e limitadores de caracteres
-     function ExecucaoDaFuncaoLimiterPag(fieldName, minchar){
-	 var minchar;
-	 
-         countChars  = CountCharacters(fieldName);
-         //Atualização para os contadores de caracteres
-	 $('#contador-' + fieldName).html("Caracteres: " + countChars);
-         //document.getElementById("contador-" + fieldName).innerHTML = "Caracteres: " + countChars;
-         
-         //mudança de cor caso ultrapasse o numero de caracteres
-         if (countChars <= minchar){
-	     $('#contador-' + fieldName).css('color', 'red');
-         } else{
-	     $('#contador-' + fieldName).css('color', 'black');
-         }
-     }
-     
-     //Onde é feita a contagem do elemento do contador
-     function CountCharacters(contador) {
-         var bodyHTML = tinymce.get(contador).getBody();
-         var contentHTML = tinymce.trim(bodyHTML.innerText || bodyHTML.textContent);
-         return contentHTML.length;
-     };
-     
-
-     function tipo(tipo, count){
-         if(tipo =='1'){
-             $('#parecerista'+count).show();
-             $('#entidades'+count).hide();
-         } else {
-             $('#parecerista'+count).hide();
-             $('#entidades'+count).show();
-         }
-     }
-     
-     function infoparecerista(idAgente){
-         var idpronac = $("#idpronac").val();
-         if(idAgente != 0){
-             $("#infoparecerista").hide();
-             $("#infopareceristal").show();
-             $.ajax({
-                 type: "POST",
-                 dataType: "json",
-                 data: {
-                     idAgente: idAgente,
-                     idpronac: idpronac,
-		     idArea: '<?php echo $this->idAreaProduto; ?>',
-		     idSegmento: '<?php echo $this->idSegmentoProduto; ?>'
-                 },
-                 url: '<?php echo $this->url(array("controller"=>"gerenciarparecer", "action"=>"infoparecerista")); ?>' ,
-                 success: function (data){
-                     $("#infoparecerista").show();
-                     $("#infopareceristal").hide();
-                     $("#infoparecerista").html(data[0].situacaoTexto);
-                     if (data[0].situacao == '1'){
-                         $("#btnenviar").show();
-                     } else if (data[0].situacao == '0') {
-                         $("#btnenviar").hide();
-                     }
-                 },
-                 error: function (data){
-                     $("#infoparecerista").html("Falha na recuperação dos dados.\nNão foi possível carregar agente!");
-                 }
-             });
-         } else {
-             $("#infoparecerista").hide();
-             $("#infopareceristal").hide();
-             $("#btnenviar").hide();
-         }
-     }
-     
      $('#idAgenteParecerista').change(function() {
-	   infoparecerista(this.value);
+	 infoparecerista(this.value);
      });
-
-     <?php // inicializa todos os campos de textarea ?>
+     
+     <?php // inicializa loop ?>
      <?php $c = 0; ?>
      <?php foreach($this->dadosProjeto as $p) { ?>
+     // associa eventos a botão distribuir
+     $('#distribuir<?php echo $c; ?>').click(function() {
+	 verificaTipo(1, <?php echo $c; ?>);
+     });
+
+     $('#encaminhar<?php echo $c; ?>').click(function() {
+	 verificaTipo(2, <?php echo $c; ?>);
+     });
+     
      //inicializao e configuração do editor tinyMCE
      tinymce.init({
 	 plugins:"paste,textcolor",
@@ -96,6 +110,7 @@
 	     });
          }
      });
+     <?php $c++; ?>
      <?php } ?>
  });
  
@@ -158,10 +173,10 @@
                 </tr>
                 <tr>
                     <td width="250" align="center" class="destacar bold">
-                        <input type="radio" value="1" name="tipodistribuir" id="distribuir<?php echo $count; ?>" checked="checked" onclick="tipo(1, <?php echo $count; ?>);" />
+                        <input type="radio" value="1" name="tipodistribuir" id="distribuir<?php echo $count; ?>" checked="checked" />
                         <label for="distribuir<?php echo $count; ?>">Distribuir</label>
                         <b style="margin-left: 15px; margin-right: 15px;">|</b>
-                        <input type="radio" value="2" name="tipodistribuir" id="encaminhar<?php echo $count; ?>"  onclick="tipo(2 , <?php echo $count; ?>);" />
+                        <input type="radio" value="2" name="tipodistribuir" id="encaminhar<?php echo $count; ?>" />
                         <label for="encaminhar<?php echo $count; ?>">Encaminhar</label>
                     </td>
                     <td width="320">
