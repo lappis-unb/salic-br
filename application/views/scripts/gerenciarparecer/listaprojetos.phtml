@@ -10,7 +10,16 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-    <div>Gerenciar Pareceres <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+<?php
+$filtros = array(
+		 'aguardando_distribuicao' => 'Aguardando distribuição',
+		 'em_analise' => 'Em análise',
+		 'em_validacao' => 'Em validação',
+		 'validados' => 'Validados',
+		 'devolvida' => 'Devolvidas para análise'
+);
+?>
+    <div>Gerenciar Pareceres - <?php echo $filtros[$this->tipoFiltro]; ?><span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
 
 
@@ -27,7 +36,7 @@
                     <option value="em_analise" <?php echo isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] == 'em_analise' ? 'selected="selected"':''; ?>>Em an&aacute;lise</option>
                     <option value="em_validacao" <?php echo isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] == 'em_validacao' ? 'selected="selected"':''; ?>>Em valida&ccedil;&atilde;o</option>
                     <option value="validados" <?php echo isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] == 'validados' ? 'selected="selected"':''; ?>>Validados</option>
-                    <option value="devolvida" <?php echo isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] == 'devolvida' ? 'selected="selected"':''; ?>>Devolvida para nova an&aacute;lise</option>
+                    <option value="devolvida" <?php echo isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] == 'devolvida' ? 'selected="selected"':''; ?>>Devolvidas para nova an&aacute;lise</option>
                 </select>
             </td>
             <td align="center"><?php if($this->qtdDocumentos != 0){echo $this->qtdDocumentos.' Projetos listados';}else{ echo 'Nenhum Registro encontrado!';}?></td>
