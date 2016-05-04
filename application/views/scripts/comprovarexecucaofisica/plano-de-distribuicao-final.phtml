@@ -62,7 +62,7 @@
                             vlPatrocinador = parseInt(vlPatrocinador)+parseInt($(this).val());
                         }
                     });
-                    if($('#totalPatrocinador'+id).val() < vlPatrocinador){
+                    if(parseInt($('#totalPatrocinador'+id).val()) < vlPatrocinador){
                         alertaModal('Ultrapassou a quantidade de Produtos aprovados destinados ao Patrocinador.');
                         return false;
                     }
@@ -72,7 +72,7 @@
                             vlDivulgacao = parseInt(vlDivulgacao)+parseInt($(this).val());
                         }
                     });
-                    if($('#totalDivulgacao'+id).val() < vlDivulgacao){
+                    if(parseInt($('#totalDivulgacao'+id).val()) < vlDivulgacao){
                         alertaModal('Ultrapassou a quantidade de Produtos aprovados destinados à Divulgação.');
                         return false;
                     }
@@ -82,7 +82,7 @@
                             vlBeneficiario = parseInt(vlBeneficiario)+parseInt($(this).val());
                         }
                     });
-                    if(vlBeneficiario > $('#totalBeneficiario'+id).val()){
+                    if(vlBeneficiario > parseInt($('#totalBeneficiario'+id).val())){
                         alertaModal('Ultrapassou a quantidade de Produtos aprovados destinados ao Beneficiário.');
                         return false;
                     }
