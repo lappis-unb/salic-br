@@ -1,0 +1,232 @@
+<?php require_once "inc/menu.dados.bancarios.php"; // menu de consultar dados do projeto - dados bancarios ?>
+
+<?php
+
+function mascara ($val, $mask) {
+    $maskared = '';
+    $k = 0;
+
+    for($i = 0; $i<=strlen($mask)-1; $i++) {
+  
+        if($mask[$i] == '#') {
+           if(isset($val[$k])){
+            $maskared .= $val[$k++];
+           }
+        } else {
+              if(isset($mask[$i])){
+                 $maskared .= $mask[$i];
+              }
+        }
+    }
+   return $maskared;
+}
+
+?>
+
+
+<script type="text/javascript">
+
+    function abrirDinamico(elemento, obj) {
+        if($(elemento).css('display') == 'none') {
+            $(elemento).fadeIn('fast', function() {
+                $('img', $(obj)).attr('src','<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png');
+            });
+        } else {
+            $(elemento).fadeOut('fast', function() {
+                $('img', $(obj)).attr('src','<?php echo $this->baseUrl(); ?>/public/img/navigation-baixo.PNG');
+            });
+        }
+    }
+    
+    $(document).ready(function(){
+        $("#btn_pesquisar").click(function(){
+            $('#formPesquisa').submit();
+        });
+        
+        $('.btn_imprimir').click(function(){
+            $('#formImpressao').submit();
+        });
+        
+    });
+    
+</script>
+
+<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<div id="breadcrumb">
+    <ul>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
+        <li class="second"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'), '', true); ?>?idPronac=<?php echo $this->idPronac; ?>" title="Consultar dados projeto">Consultar dados projeto</a></li>
+        <li>Dados banc&aacute;rios</li>
+        <li class="last">Concilia&ccedil;&atilde;o Banc&aacute;ria</li>
+    </ul>
+</div>
+<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
+
+
+
+<!-- ========== INÍCIO TÍTULO ========== -->
+<div id="titulo">
+    <div>Concilia&ccedil;&atilde;o Banc&aacute;ria</div>
+</div>
+
+<!-- ========== FIM TÍTULO ========== -->
+
+
+<!-- ========== INÍCIO CONTEÚDO ========== -->
+
+<div id="conteudo">
+    <table class="tabela">
+        <tr class="destacar">
+            <td align="center"><b>PRONAC</b></td>
+	    <td align="center"><b>Nome do Projeto</b></td>
+	</tr>
+        <tr>
+            <td align="center"><?php echo $this->projeto->AnoProjeto.$this->projeto->Sequencial; ?></td>
+            <td align="center"><?php echo $this->projeto->NomeProjeto; ?></td>
+        </tr>
+    </table>
+</br>
+
+<?php if(count($this->dados)>0){ ?>
+    <!-- ============ PAGINAÇÃO ============ -->
+    <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td align="center">
+                <form name="form1" id="form1" action="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria'));?>" method="get">
+                    <?php if($this->paginacao['pag']>1) { ?>
+                    <input class="btn_inicio" id="btn_inicio" type="button" class="btn_inicio"
+                           onclick="location.href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1'."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&dtLancamento='.$this->dtLancamento.'&dtLancamento='.$this->dtLancamento.'&idPronac='.$this->idPronac.'&tpConta='.$this->tpConta; ?>'">
+                    <?php } ?>
+                    <input id="btn_p_anterior" type="button"
+                    <?php if($this->paginacao['pag']<=1) { ?> class="btn_p_anterior-off"
+                    <?php }else { ?>
+                           class="btn_p_anterior" onclick="location.href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag='.($this->paginacao['pag'] - 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&dtLancamento='.$this->dtLancamento.'&dtLancamentoFim='.$this->dtLancamentoFim.'&idPronac='.$this->idPronac.'&tpConta='.$this->tpConta ?>'"
+                    <?php } ?>>
+                    <input id="btn_p_proximo" type="button"
+                           <?php if($this->paginacao['pag']+1 > $this->paginacao['totalPag']) { ?>
+                           class="btn_p_proximo-off"
+                    <?php }else { ?>
+                           class="btn_p_proximo" onclick="location.href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag='.($this->paginacao['pag'] + 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&dtLancamento='.$this->dtLancamento.'&dtLancamentoFim='.$this->dtLancamentoFim.'&idPronac='.$this->idPronac.'&tpConta='.$this->tpConta; ?>'"
+                    <?php } ?>>
+                    <?php if($this->paginacao['pag'] < $this->paginacao['totalPag']) { ?>
+                    <input class="btn_ultimo" id="btn_ultimo" type="button"
+                           onclick="location.href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&dtLancamento='.$this->dtLancamento.'&dtLancamentoFim='.$this->dtLancamentoFim.'&idPronac='.$this->idPronac.'&tpConta='.$this->tpConta;?>'">
+                    <?php } ?>
+                    Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                        <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
+                        <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
+                        <?php endfor; ?>
+                    </select>
+                    &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                    <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
+                    <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
+                    <input type="hidden" name="tpConta" value="<?php echo $this->tpConta;?>">
+                    <input type="hidden" name="idPronac" value="<?php echo $this->idPronac;?>">
+                    <input type="button" class="btn_imprimir">
+                 </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <center>
+        <?php
+            echo $this->paginacao['inicio']." a ";
+            echo ($this->paginacao['pag']-1)*$this->paginacao['Itenspag'] + $this->paginacao['tamanho'];
+            echo " de ". $this->paginacao['total']. " Projetos listados";
+        ?>
+    </center>
+    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <?php } ?>
+
+
+
+    <?php if($this->qtd > 0){ ?>
+    <table class="tabela tablesorter">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th colspan="2">Fornecedor</th>
+                <th colspan="3">Dados do Pagamento</th>
+                <th>&nbsp;</th>
+                <th colspan="3">Informações do Banco do Brasil</th>
+                <th>&nbsp;</th>
+            </tr>
+            <tr class="titulo_tabela">
+                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">Item Or&ccedil;ament&aacute;rio</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">CNPJ / CPF</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo3=&ordem='.$this->paginacao['novaOrdem'];?>">Nome</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">N&uacute;mero</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=9&ordem='.$this->paginacao['novaOrdem'];?>">Data</a></th>
+                <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Valor</a></th>
+                <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=11&ordem='.$this->paginacao['novaOrdem'];?>">Vl. Comprovado</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=12&ordem='.$this->paginacao['novaOrdem'];?>">Lan&ccedil;amento</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=13&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Lan&ccedil;amento</a></th>
+                <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=14&ordem='.$this->paginacao['novaOrdem'];?>">Vl. Debitado</a></th>
+                <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=15&ordem='.$this->paginacao['novaOrdem'];?>">Vl. Diferen&ccedil;a</a></th>
+ </tr>
+        </thead>
+    <tbody>
+        <?php
+            foreach ($this->dados as $d){
+            $style = ""; 
+                      
+                if ($d->dsLancamento==="SEM INFORMAÇÕES BANCÁRIAS") {
+                    $d->vlDiferenca = "<center>-</center>";
+                    $d->vlDebitado = "<center>-</center>";
+                    $d->dtLancamento = "<center>-</center>";
+                }
+              
+                if ((strlen($d->CNPJCPF === '14' ))) {
+                   $d->CNPJCPF = mascara($d->CNPJCPF,'##.###.###/####-##');            
+                } else {
+                   $d->CNPJCPF = mascara($d->CNPJCPF,'###.###.###-##');
+                }
+
+                if ($d->vlDiferenca <> 0) {
+                    $style = "style=\"color:red;font-weight:bold\""; 
+                }
+            
+                if ($d->vlDebitado <> '<center>-</center>') {
+                    $d->vlDebitado = 'R$ '. @number_format(($d->vlDebitado),2, ",", ".");
+                    $d->vlDiferenca = 'R$ '. @number_format(($d->vlDiferenca),2, ",", ".");
+                }
+
+                if ($d->dtLancamento <> "<center>-</center>") {
+                    $d->dtLancamento = Data::tratarDataZend($d->dtLancamento,'Brasileira');
+                }
+             
+         ?>
+         <tr>
+             <td align="center"><?php echo $d->ItemOrcamentario; ?></td>
+             <td><?php echo $d->CNPJCPF; ?></td>
+             <td align="center"><?php echo $d->NomeProjeto; ?></td>
+             <td><?php echo $d->nrDocumentoDePagamento; ?></td>
+             <td><?php echo Data::tratarDataZend($d->dtPagamento,'Brasileira'); ?></td>
+             <td align="right"><b><?php echo 'R$ '. @number_format(($d->vlPagamento),2, ",", "."); ?></b></td>
+             <td align="right"><b><?php echo 'R$ '. @number_format(($d->vlComprovado),2, ",", "."); ?></b></td>
+             <td align="center"><?php echo $d->dsLancamento; ?></td>
+             <td align="center"><?php echo $d->dtLancamento; ?></td>
+             <td align="right"><?php echo $d->vlDebitado; ?></td>
+             <td align="right" <?php echo $style; ?>><?php echo $d->vlDiferenca; ?></td>
+         </tr>
+       <?php  } ?> 
+       
+      </tbody>
+    </table>
+ 
+<?php } else { ?>
+   <table class="tabela">
+        <tr>
+            <td align="center">Nenhum registro encontrado.</td>
+        </tr>
+    </table> 
+<?php } ?>
+<br clear="all" />
+
+</div>
+    <form target="_blank" class="form" name="formImpressao" id="formImpressao" method="post" action='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'imprimir-conciliacao-bancaria')).'?pag='.$this->paginacao['pag'].'&qtde='.$this->paginacao['qtde'].'&dtLancamento='.$this->dtLancamento.'&dtLancamentoFim='.$this->dtLancamentoFim.'&idPronac='.$this->idPronac.'&campo='.$this->paginacao['campo'].'&ordem='.$this->paginacao['novaOrdem'].'&tpConta='.$this->tpConta;?>'>
+    </form>
+
+<div id="rodapeConteudo"><span></span></div>
+<br clear="all" />

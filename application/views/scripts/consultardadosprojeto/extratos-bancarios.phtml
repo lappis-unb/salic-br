@@ -222,9 +222,9 @@ function mascara ($val, $mask) {
             foreach ($this->dados as $d){
 
             if($d->stLancamento==="C"){
-               $style= "style=\"color:blue;\""; 
+               $style= "style=\"color:blue\""; 
             } else{
-               $style= "style=\"color:red;\"";
+               $style= "style=\"color:red\"";
             }
          ?>
          <tr>
@@ -234,8 +234,8 @@ function mascara ($val, $mask) {
              <td><p align="center"><?php echo $d->Lancamento = ucfirst(strtolower($d->Lancamento)); ?></p></td>
              <td><p align="center"><?php echo $d->nrLancamento; ?></p></td>
              <td><p align="center"><?php echo Data::tratarDataZend($d->dtLancamento,'Brasileira'); ?></p></td>
-             <td><p align="right" <?php echo $style ?>><?php echo 'R$ '. @number_format(($d->vlLancamento), 2, ",", "."); ?></p></td>
-             <td><p align="center" <?php echo $style?>><?php echo $d->stLancamento; ?></p></td>
+             <td><p align="right" <?php echo $style; ?>><?php echo 'R$ '. @number_format(($d->vlLancamento), 2, ",", "."); ?></p></td>
+             <td><p align="center" <?php echo $style; ?>><?php echo $d->stLancamento; ?></p></td>
          </tr>
        <?php  } ?> 
        
