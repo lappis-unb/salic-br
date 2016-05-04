@@ -6965,8 +6965,9 @@ class Projetos extends GenericModel
 
         //xd($select->assemble());
         return $this->fetchAll($select);
-    } 
-   public function painelDadosBancariosExtrato($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){     
+    }
+  
+     public function painelDadosBancariosExtrato($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){     
          $select = $this->select();
          $select->setIntegrityCheck(false);
          $select->from('vwExtratoDaMovimentacaoBancaria');                                                     
@@ -6993,7 +6994,36 @@ class Projetos extends GenericModel
              $select->limit($tamanho, $tmpInicio);
          }   
          return $this->fetchAll($select);
-     }   
+     }
+        
+     public function painelDadosConciliacaoBancaria($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){     
+         $select = $this->select();
+         $select->setIntegrityCheck(false);
+         $select->from('vwConciliacaoBancaria');                                                     
+        
+        //adiciona quantos filtros foram enviados                                                              
+         foreach ($where as $coluna => $valor) {                                                               
+             $select->where($coluna, $valor);                                                                  
+         }                                                                                                     
+         
+         if ($qtdeTotal) {
+             
+             return $this->fetchAll($select)->count();
+         }   
+         
+         //adicionando linha order ao select
+         $select->order($order);
+         
+         // paginacao
+         if ($tamanho > -1) {
+             $tmpInicio = 0;
+             if ($inicio > -1) {
+                 $tmpInicio = $inicio;
+             }   
+             $select->limit($tamanho, $tmpInicio);
+         }   
+         return $this->fetchAll($select);
+     }
 
 
 }

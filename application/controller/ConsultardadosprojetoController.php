@@ -6112,5 +6112,171 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
         }
     }
 
+    public function conciliacaoBancariaAction(){
+ 
+        $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        $this->view->idPronac = $idPronac;
+        
+        if(!empty($idPronac)){
+            $Projetos = new Projetos();
+            $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
+            
+            //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+            if($this->_request->getParam("qtde")) {
+                $this->intTamPag = $this->_request->getParam("qtde");
+            }
+            $order = array();
+
+            //==== parametro de ordenacao  ======//
+            if($this->_request->getParam("ordem")) {
+                $ordem = $this->_request->getParam("ordem");
+                if($ordem == "ASC") {
+                    $novaOrdem = "DESC";
+                }else {
+                    $novaOrdem = "ASC";
+                }
+            }else {
+                $ordem = "ASC";
+                $novaOrdem = "ASC";
+            }
+
+            //==== campo de ordenacao  ======//
+            if($this->_request->getParam("campo")) {
+                $campo = $this->_request->getParam("campo");
+                $order = array($campo." ".$ordem);
+                $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+
+            } else {
+                $campo = null;
+                $order = array(1); //NomeProjeto, Dt.Recibo
+                $ordenacao = null;
+            }
+
+            $pag = 1;
+            $get = Zend_Registry::get('get');
+            if (isset($get->pag)) $pag = $get->pag;
+            $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+
+            /* ================== PAGINACAO ======================*/
+            $where = array();
+            $where['idPronac = ?'] = $idPronac;
+
+            $DadosConciliacao = new Projetos();
+            $total = $DadosConciliacao->painelDadosConciliacaoBancaria($where, $order, null, null, true);
+            $fim = $inicio + $this->intTamPag;
+
+            $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
+
+            $busca = $DadosConciliacao->painelDadosConciliacaoBancaria($where, $order, $tamanho, $inicio);
+            $paginacao = array(
+                    "pag"=>$pag,
+                    "qtde"=>$this->intTamPag,
+                    "campo"=>$campo,
+                    "ordem"=>$ordem,
+                    "ordenacao"=>$ordenacao,
+                    "novaOrdem"=>$novaOrdem,
+                    "total"=>$total,
+                    "inicio"=>($inicio+1),
+                    "fim"=>$fim,
+                    "totalPag"=>$totalPag,
+                    "Itenspag"=>$this->intTamPag,
+                    "tamanho"=>$tamanho
+             );
+
+            $this->view->paginacao = $paginacao;
+            $this->view->qtd       = $total;
+            $this->view->dados     = $busca; 
+            $this->view->intTamPag = $this->intTamPag;
+        }
+    }
+
+    public function imprimirConciliacaoBancariaAction(){
+ 
+        $this->_helper->layout->disableLayout();
+
+        $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        $this->view->idPronac = $idPronac;
+        
+        if(!empty($idPronac)){
+            $Projetos = new Projetos();
+            $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
+            
+            //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+            if($this->_request->getParam("qtde")) {
+                $this->intTamPag = $this->_request->getParam("qtde");
+            }
+            $order = array();
+
+            //==== parametro de ordenacao  ======//
+            if($this->_request->getParam("ordem")) {
+                $ordem = $this->_request->getParam("ordem");
+                if($ordem == "ASC") {
+                    $novaOrdem = "DESC";
+                }else {
+                    $novaOrdem = "ASC";
+                }
+            }else {
+                $ordem = "ASC";
+                $novaOrdem = "ASC";
+            }
+
+            //==== campo de ordenacao  ======//
+            if($this->_request->getParam("campo")) {
+                $campo = $this->_request->getParam("campo");
+                $order = array($campo." ".$ordem);
+                $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+
+            } else {
+                $campo = null;
+                $order = array(1); //NomeProjeto, Dt.Recibo
+                $ordenacao = null;
+            }
+
+            $pag = 1;
+            $get = Zend_Registry::get('get');
+            if (isset($get->pag)) $pag = $get->pag;
+            $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+
+            /* ================== PAGINACAO ======================*/
+            $where = array();
+            $where['idPronac = ?'] = $idPronac;
+
+            $DadosConciliacao = new Projetos();
+            $total = $DadosConciliacao->painelDadosConciliacaoBancaria($where, $order, null, null, true);
+            $fim = $inicio + $this->intTamPag;
+
+            $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
+
+            $busca = $DadosConciliacao->painelDadosConciliacaoBancaria($where, $order, $tamanho, $inicio);
+            $paginacao = array(
+                    "pag"=>$pag,
+                    "qtde"=>$this->intTamPag,
+                    "campo"=>$campo,
+                    "ordem"=>$ordem,
+                    "ordenacao"=>$ordenacao,
+                    "novaOrdem"=>$novaOrdem,
+                    "total"=>$total,
+                    "inicio"=>($inicio+1),
+                    "fim"=>$fim,
+                    "totalPag"=>$totalPag,
+                    "Itenspag"=>$this->intTamPag,
+                    "tamanho"=>$tamanho
+             );
+
+            $this->view->paginacao = $paginacao;
+            $this->view->qtd       = $total;
+            $this->view->dados     = $busca; 
+            $this->view->intTamPag = $this->intTamPag;
+        }
+    }
+
    
 }
