@@ -133,6 +133,7 @@ $filtros = array(
 		<th width="50">Justificativa do componente</th>
 		<th width="50">Justificativa do atendimento</th>
 		<th width="50">Justificativa da Secretaria</th>
+		<th width="50">Parecerista</th>		
 		<?php } ?>
 		
 		<th width="50">Distribuir / Encaminhar</th>
@@ -141,7 +142,7 @@ $filtros = array(
                 <th width="50">Hist&oacute;rico</th>
 		<?php } ?>
 
-		<?php if ($this->tipoFiltro == 'validados' || $this->tipoFiltro == 'em_validacao') { ?>
+		<?php if ($this->tipoFiltro == 'validados' || $this->tipoFiltro == 'em_validacao' || $this->tipoFiltro == 'devolvida') { ?>
                 <th width="50">Concluir</th>
 		<?php } ?>
             </tr>
@@ -215,6 +216,7 @@ $filtros = array(
                     </a>
 		    <?php } ?>
 		</td>
+		<td align="center"><strong><?php echo $dp->Parecerista; ?></strong></td>
 		<?php } ?>
 
 		<td align="center">
@@ -229,7 +231,7 @@ $filtros = array(
                 <td align="center"><img style="cursor:pointer;" title="Hist&oacute;rico" src="<?php echo $this->baseUrl(); ?>/public/img/edit_ico.gif" onclick="redirecionar('<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'historico'));?>?idPronac=<?php echo $dp->IdPRONAC; ?>&idProduto=<?php echo $dp->idProduto; ?>&stPrincipal=<?php echo $dp->stPrincipal;?>&tipoFiltro=<?php echo $this->tipoFiltro; ?>')">
 		<?php } ?>
 
-		<?php if ($this->tipoFiltro == 'validados' || $this->tipoFiltro == 'em_validacao') { ?>
+		<?php if ($this->tipoFiltro == 'validados' || $this->tipoFiltro == 'em_validacao' || $this->tipoFiltro == 'devolvida') { ?>
 		<td align="center">
 		  <!-- concluir analise -->
 
