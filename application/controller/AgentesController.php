@@ -349,7 +349,83 @@ class AgentesController extends GenericControllerNew {
         
     }
 
+
 // fecha método indexAction()
+
+    public function buscaPessoaAction() {
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        #Instancia a Classe de Serviço do WebService da Receita Federal
+        $wsServico = new ServicosReceitaFederal();
+
+        $retorno        = array();
+        $cpf            = str_replace('.', '', str_replace('-', '', $this->getRequest()->getParam('cpf')));
+        $teste          = $this->getRequest()->getParam('teste');
+        $tipoPessoa          = $this->getRequest()->getParam('tipoPessoa');
+        $erro           = 0;
+        #x( $cpf );
+        #xd( strlen( $cpf ) );
+        try {
+            if(11 == strlen( $cpf )) {
+                if (!validaCPF($cpf)) {
+                    $retorno['error'] = utf8_encode('CPF inválido');
+                    $erro = 1;
+                } else {
+                    $arrResultado = $wsServico->consultarPessoaFisicaReceitaFederal($cpf);
+
+                    if (empty($arrResultado)) {
+                        $retorno['error'] = utf8_encode('Pessoa não encontrada!');
+                        $erro = 1;
+                    }
+                    #xd($arrResultado);
+                    #xd($arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep']);
+                    if ($erro == 0 && count($arrResultado) > 0) {
+                        #xd( $arrResultado );
+                        $retorno['dados']['idPessoa'] = $arrResultado['idPessoaFisica'];
+                        $retorno['dados']['nome'] = utf8_encode($arrResultado['nmPessoaFisica']);
+                        $retorno['dados']['cep'] = $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'];
+                        $retorno['error'] = '';
+
+                    } else {
+                        $retorno['error'] = utf8_encode('Pessoa não encontrada!');
+                    }
+                }
+            } else if(15 == strlen($cpf)){
+                if (!isCnpjValid($cpf)) {
+                    $retorno['error'] = utf8_encode('CNPJ inválido');
+                    $erro = 1;
+                } else {
+                    $arrResultado = $wsServico->consultarPessoaFisicaReceitaFederal($cpf, false, true);
+
+                    if (empty($arrResultado)) {
+                        $retorno['error'] = utf8_encode('Pessoa não encontrada!');
+                        $erro = 1;
+                    }
+                    #xd($arrResultado['pessoa']['enderecos'][0]['logradouro']);
+                    #xd($arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep']);
+                    if ($erro == 0 && count($arrResultado) > 0) {
+                        #xd( $arrResultado );
+                        $retorno['dados']['idPessoa'] = $arrResultado['idPessoaFisica'];
+                        $retorno['dados']['nome'] = utf8_encode($arrResultado['nmPessoaFisica']);
+                        $retorno['dados']['cep'] = $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'];
+                        $retorno['error'] = '';
+
+                    } else {
+                        $retorno['error'] = utf8_encode('Pessoa não encontrada!');
+                    }
+                }
+            }
+
+        } catch (InvalidArgumentException $exc) {
+            $retorno['error'] = utf8_encode('Pessoa não encontrada!');
+        } catch (Exception $exc) {
+            $retorno['error'] = utf8_encode('Pessoa não encontrada!');
+        }
+
+        echo json_encode($retorno);
+    }
 
     /**
      * Método incluiragente()
@@ -360,12 +436,27 @@ class AgentesController extends GenericControllerNew {
     public function incluiragenteAction() {
         $this->autenticacao();
 
+        #$wsServico = new ServicosReceitaFederal();
+        #$arrResultado = $wsServico->consultarPessoaFisicaReceitaFederal('11010601660' );
+        #x();
+        #xd( $arrResultado );
+
+
+        #$wsWebServiceSEI = new ServicosSEI();
+        #$txSiglaSistema = "INTRANET";
+        #$txIdentificacaoServico = "SALIC";
+        #$arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento($txSiglaSistema, $txIdentificacaoServico);
+        #x($arrRetornoGerarProcedimento->ProcedimentoFormatado);
+        #$chars = array(".","/","-");
+        #$nrProcessoSemFormatacao = str_replace($chars,"",$arrRetornoGerarProcedimento->ProcedimentoFormatado);
+        #x($nrProcessoSemFormatacao);
+        #xd($arrRetornoGerarProcedimento->ProcedimentoFormatado);
+
         $modal  = $this->_request->getParam("modal");
         $modulo = $this->_request->getParam("modulo");
         $this->view->modulo = $modulo;
         
         if (!empty($modal)) {
-            
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             header("Content-Type: text/html; charset=ISO-8859-1");
             $this->view->modal = "s";
@@ -609,7 +700,7 @@ class AgentesController extends GenericControllerNew {
             }
 
             if(count($_FILES) > 0) {
-
+            #$ERROR = '';
             foreach ($_FILES['arquivo']['name'] as $key=>$val) {
                 $arquivoNome     = $_FILES['arquivo']['name'][$key];
                 $arquivoTemp     = $_FILES['arquivo']['tmp_name'][$key];
