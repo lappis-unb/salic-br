@@ -687,14 +687,14 @@ class GerenciarpareceresController extends GenericControllerNew
             $auth = Zend_Auth::getInstance(); // instancia da autenticação
             $idusuario 	= $auth->getIdentity()->usu_codigo;
             /******************************************************************/
-
+	    
             $idpronac   = $this->_request->getParam("idpronac");
             $idorgao    = $this->_request->getParam("idorgao");
             $observacao = $this->_request->getParam("observacao");
 
             $db = Zend_Registry :: get('db');
             $db->setFetchMode(Zend_DB :: FETCH_OBJ);
-
+	    
             try {
                 $db->beginTransaction();
 
@@ -708,12 +708,11 @@ class GerenciarpareceresController extends GenericControllerNew
 
                     $dadosE = array(
                             'idOrgao'       		=> $dp->idOrgao,
-//                            'DtEnvio'       		=> $dp->DtEnvio,
+			    'idAgenteParecerista'       => $dp->idAgenteParecerista,
+			    'DtDistribuicao'            => $dp->DtDistribuicao,
+			    'DtDevolucao'               => $dp->DtDevolucao,
                             'DtEnvio'       		=> new Zend_Db_Expr("GETDATE()"),
-                            'idAgenteParecerista'	=> null,
-                            'DtDistribuicao'		=> null,
-                            'DtDevolucao'   		=> null,
-                            'DtRetorno'     		=> new Zend_Db_Expr("GETDATE()"),
+                            'DtRetorno'     		=> null,
                             'FecharAnalise' 		=> 2,
                             'Observacao'    		=> $observacao,
                             'idUsuario'     		=> $idusuario,
@@ -729,7 +728,12 @@ class GerenciarpareceresController extends GenericControllerNew
                     $salvar = $tbDistribuirParecer->alterar(array('stEstado' => 1), $where);
                     $insere = $tbDistribuirParecer->inserir($dadosE);
                 }
-                $atualizaProjeto = GerenciarPareceresDAO::atualizaProjeto($idpronac, 'B11');
+		
+		$orgaos = new Orgaos();
+
+		$orgao = $orgaos->pesquisarNomeOrgao($idorgao);
+		$projetos = new Projetos();
+		$projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Devolvido para unidade ' . $orgao[0]->NomeOrgao . ' para revisão do parecer técnico.');
                 $db->commit();
                 parent::message("Devolvido com sucesso!", "gerenciarpareceres/index", "CONFIRM");
 
