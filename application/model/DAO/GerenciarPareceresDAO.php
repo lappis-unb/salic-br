@@ -475,16 +475,6 @@ FROM         SAC.dbo.Projetos AS a
 		return $db->query($sql);			
 	}
 
-	
-	public static function atualizaProjeto($idpronac, $situacao)
-	{
-		$sql = "UPDATE SAC.dbo.Projetos SET Situacao = '".$situacao."' WHERE IdPRONAC = ".$idpronac;
-					
-		$db = Zend_Registry::get('db');
-		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		return $db->query($sql);			
-	}
-	
 	//-- Gravar o idParecer nas tabelas tbAnaliseDeConteudo
 	public static function updatetbAnaliseDeConteudo($idpronac)
 	{
