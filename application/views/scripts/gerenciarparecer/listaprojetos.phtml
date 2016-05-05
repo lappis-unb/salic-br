@@ -187,8 +187,8 @@ $filtros = array(
 		<td align="center"><?php echo $dp->TempoDiligencia; ?></td>
 
 		<?php if ($this->tipoFiltro == 'em_analise') { ?>
-		<td align="center"><?php echo Data::tratarDataZend($dp->dtEnvioDiligencia, 'Brasileira'); ?></td>
-		<td align="center"><?php echo Data::tratarDataZend($dp->dtRespostaDiligencia, 'Brasileira'); ?></td>
+		<td align="center"><?php if ($dp->dtEnvioDiligencia != null) { ?><?php echo Data::tratarDataZend($dp->dtEnvioDiligencia, 'Brasileira'); ?><?php } ?></td>
+		<td align="center"><?php if ($dp->dtEnvioDiligencia != null) { ?><?php echo Data::tratarDataZend($dp->dtRespostaDiligencia, 'Brasileira'); ?><?php } ?></td>
 		<?php } ?>
 
 		<?php } else if ($this->tipoFiltro == 'validados') { ?>
