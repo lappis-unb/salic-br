@@ -388,7 +388,7 @@ class GerenciarparecerController extends GenericControllerNew {
                             'stPrincipal'   		=> $dp->stPrincipal,
                             'stDiligenciado'   		=> null
                     );
-
+		    
                     $where['idDistribuirParecer = ?']  = $dp->idDistribuirParecer;
                     $salvar = $tbDistribuirParecer->alterar(array('stEstado' => 1), $where);
 
@@ -397,7 +397,7 @@ class GerenciarparecerController extends GenericControllerNew {
 		    $orgaos = new Orgaos();
 		    $orgao = $orgaos->pesquisarNomeOrgao($codOrgao);
 		    
-		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para <strong>' . $orgao->NomeOrgao . '</strong>.');
+		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para <strong>' . $orgao[0]->NomeOrgao . ' para análise e emissão de parecer técnico</strong>.');
                 }
                 else {
                     $msg = "Distribuição Realizada com sucesso!";
@@ -602,7 +602,7 @@ class GerenciarparecerController extends GenericControllerNew {
 		    $orgaos = new Orgaos();
 		    $orgao = $orgaos->pesquisarNomeOrgao($codOrgao);
 		    
-		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para <strong>' . $orgao->NomeOrgao . '</strong>.');
+		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para <strong>' . $orgao[0]->NomeOrgao . ' para análise e emissão de parecer técnico</strong>.');		    
 		    
                     parent::message("Enviado os Produtos/Projeto para a entidade!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
                 }
