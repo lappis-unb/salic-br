@@ -31,6 +31,51 @@ class ServicosReceitaFederal {
     /**
      * @author Alysson Vicuña de Oliveira
      *
+     * @param $cnpj - CNPJ a ser consultado
+     * @param bool $returnJSON - Define se o retorno sera um JSON ou Array de Objetos
+     * @param bool $forcarBuscaReceita - Define se deve ir na Base da receita federal, mesmo já existindo o CPF na base do MINC
+     * @return ArrayObject|mixed - Resultado da consulta em Json ou ArrayObject
+     */
+    public function consultarPessoaJuridicaReceitaFederal($cnpj, $forcarBuscaReceita = false, $returnJSON = false)
+    {
+        $chars = array(".","/","-");
+        $cnpj = str_replace($chars,"",$cnpj);
+
+        if (15 == strlen($cnpj) && !isCnpjValid($cnpj)) {
+            throw new InvalidArgumentException("CPF/CNPJ inválido");
+        }
+
+        $url = self::urlServico . self::urlPessoaJuridica . $cnpj;
+        if ($forcarBuscaReceita) {
+            $url .= self::urlForcar;
+        }
+
+        #xd($url);
+        $username = self::username;
+        $password = self::password;
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $resultCurl = curl_exec($curl);
+        curl_close($curl);
+        $result = new ArrayObject(json_decode($resultCurl, true));
+
+        if($returnJSON){
+            $retornoResultado = $resultCurl; #Retorno do Formato JSON
+        } else{
+            $retornoResultado = $result; #Retorno no Formato ArrayObject
+        }
+        #xd($retornoResultado);
+
+        return $retornoResultado;
+    }
+
+    /**
+     * @author Alysson Vicuña de Oliveira
+     *
      * @param $cpf - CPF a ser consultado
      * @param bool $returnJSON - Define se o retorno sera um JSON ou Array de Objetos
      * @param bool $forcarBuscaReceita - Define se deve ir na Base da receita federal, mesmo já existindo o CPF na base do MINC

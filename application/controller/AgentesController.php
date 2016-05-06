@@ -363,7 +363,7 @@ class AgentesController extends GenericControllerNew {
         $retorno        = array();
         $cpf            = str_replace('.', '', str_replace('-', '', $this->getRequest()->getParam('cpf')));
         $teste          = $this->getRequest()->getParam('teste');
-        $tipoPessoa          = $this->getRequest()->getParam('tipoPessoa');
+        $tipoPessoa     = $this->getRequest()->getParam('tipoPessoa');
         $erro           = 0;
         #x( $cpf );
         #xd( strlen( $cpf ) );
@@ -389,26 +389,28 @@ class AgentesController extends GenericControllerNew {
                         $retorno['error'] = '';
 
                     } else {
-                        $retorno['error'] = utf8_encode('Pessoa não encontrada!');
+                        $retorno['error'] = utf8_encode('Pessoa não encontrada!!');
                     }
                 }
             } else if(15 == strlen($cpf)){
+                #xd('ihihiohihohh');
                 if (!isCnpjValid($cpf)) {
                     $retorno['error'] = utf8_encode('CNPJ inválido');
                     $erro = 1;
                 } else {
-                    $arrResultado = $wsServico->consultarPessoaFisicaReceitaFederal($cpf, false, true);
-
+                    $arrResultado = $wsServico->consultarPessoaJuridicaReceitaFederal($cpf);
+                    #xd($arrResultado);
                     if (empty($arrResultado)) {
-                        $retorno['error'] = utf8_encode('Pessoa não encontrada!');
+                        $retorno['error'] = utf8_encode('Pessoa não encontrada!!');
                         $erro = 1;
                     }
                     #xd($arrResultado['pessoa']['enderecos'][0]['logradouro']);
-                    #xd($arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep']);
+                    #xd($arrResultado);
+                    #xd($arrResultado['pessoa']);#['enderecos'][0]['logradouro']['nrCep']);
                     if ($erro == 0 && count($arrResultado) > 0) {
                         #xd( $arrResultado );
-                        $retorno['dados']['idPessoa'] = $arrResultado['idPessoaFisica'];
-                        $retorno['dados']['nome'] = utf8_encode($arrResultado['nmPessoaFisica']);
+                        $retorno['dados']['idPessoa'] = $arrResultado['idPessoaJuridica'];
+                        $retorno['dados']['nome'] = utf8_encode($arrResultado['nmRazaoSocial']);
                         $retorno['dados']['cep'] = $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'];
                         $retorno['error'] = '';
 
@@ -700,7 +702,7 @@ class AgentesController extends GenericControllerNew {
             }
 
             if(count($_FILES) > 0) {
-            #$ERROR = '';
+            $ERROR = ''; //Criado para corrigir erro.
             foreach ($_FILES['arquivo']['name'] as $key=>$val) {
                 $arquivoNome     = $_FILES['arquivo']['name'][$key];
                 $arquivoTemp     = $_FILES['arquivo']['tmp_name'][$key];
@@ -2091,7 +2093,8 @@ class AgentesController extends GenericControllerNew {
             // ================ FIM SALVAR VINCULO DO RESPONSAVEL COM ELE MESMO (PROPONENTE) ================
             // Caso venha do UC 89 Solicitar Vinculo
             $acao = $this->_request->getParam('acao');
-            $idResponsavel = $this->idResponsavel;
+            #$idResponsavel = $this->idResponsavel;
+            $idResponsavel = 0;
 
             // ============== VINCULA O RESPONSAVEL COM O PROPONENTE CADASTRADO =============================
 
@@ -2519,7 +2522,7 @@ class AgentesController extends GenericControllerNew {
 
             $vincular = new Vinculacao();
 
-            $where = "Idcaptacao = " . $where;
+            #$where = "Idcaptacao = " . $where;
 
             $where = array('idAgente = ' . $idDirigente,
                 'idVinculado = ' . $idAgenteGeral);
