@@ -122,11 +122,11 @@
     <div align="center">
         <img id="brasao" src="<?php echo $this->baseUrl(); ?>/public/img/brasaoArmas.jpg" alt="Ministério da Cultura"/>
         <br clear="all" /><span class="TituloMinC">Ministério da Cultura</span>
-        <br clear="all" /><span class="TituloDoDocumento">Extratos Banc&aacute;rio</span>
+        <br clear="all" /><span class="TituloDoDocumento">Extrato Banc&aacute;rio</span>
         <br clear="all" /><span class="TituloDoDocumento">PRONAC: <?php echo $this->projeto->AnoProjeto.$this->projeto->Sequencial; ?> - <?php echo $this->projeto->NomeProjeto; ?></span>
         <br clear="all" /><span class="TituloDoDocumento">AG&Ecirc;ncia: <?php echo mascara($this->dados[0]['Agencia'],'####-#');?></span>
         <br clear="all" /><span class="DataDoDocumento">Data da impressão: <?php echo date('d/m/Y - H:i:s'); ?></span>
-        <br clear="all" /><br clear="all" /><span class="QntdRegistros"><?php echo count($this->dados).' projetos listados'; ?></span>
+        <br clear="all" /><br clear="all" /><span class="QntdRegistros"><?php echo count($this->dados).' Registros listados'; ?></span>
     </div>
     
 <!--    <table class="tabela">
@@ -155,16 +155,24 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach($this->dados as $d){ ?>
+            <?php foreach($this->dados as $d){ 
+                      
+                     if($d->stLancamento==="C"){
+                         $style = "style=\"color:blue\"";
+                     } else {
+                         $style = "style=\"color:red\"";
+                     }
+            
+            ?>
             <tr>
                 <td align="center"><?php echo $d->Tipo; ?></td>
                 <td align="center"><?php echo mascara($d->NrConta,'##.###.###.###-#'); ?></td>
                 <td align="center"><?php echo $d->cdLancamento; ?></td>
-                <td><p align="center"><?php echo $d->Lancamento = ucfirst(strtolower($d->Lancamento)); ?></p></td>
+                <td><p align="center"><?php echo $d->Lancamento; ?></p></td>
                 <td><p align="center"><?php echo $d->nrLancamento; ?></p></td>
                 <td><p align="center"><?php echo Data::tratarDataZend($d->dtLancamento,'Brasileira'); ?></p></td>
-                <td><p align="right"><?php echo 'R$ '. @number_format(($d->vlLancamento), 2, ",", "."); ?></p></td>
-                <td><p align="center"><?php echo $d->stLancamento; ?></p></td>
+                <td><p align="right"<?php $style ?>><?php echo 'R$ '. @number_format(($d->vlLancamento), 2, ",", "."); ?></p></td>
+                <td><p align="center"<?php $style ?>><?php echo $d->stLancamento; ?></p></td>
             </tr>
             <?php } ?>
         </tbody>
