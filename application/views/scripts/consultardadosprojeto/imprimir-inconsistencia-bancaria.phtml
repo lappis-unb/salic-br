@@ -126,7 +126,7 @@
         <br clear="all" /><span class="TituloDoDocumento">Inconsist&ecirc;ncia Banc&aacute;ria</span>
         <br clear="all" /><span class="TituloDoDocumento">PRONAC: <?php echo $this->projeto->AnoProjeto.$this->projeto->Sequencial; ?> - <?php echo $this->projeto->NomeProjeto; ?></span>
         <br clear="all" /><span class="DataDoDocumento">Data da impressão: <?php echo date('d/m/Y - H:i:s'); ?></span>
-        <br clear="all" /><br clear="all" /><span class="QntdRegistros"><?php echo count($this->dados).' projetos listados'; ?></span>
+        <br clear="all" /><br clear="all" /><span class="QntdRegistros"><?php echo count($this->dados).' Registros listados'; ?></span>
     </div>
     
 <!--    <table class="tabela">
@@ -207,7 +207,7 @@
               <td align="center"><?php echo $d->dsLancamento; ?></td>
               <td align="center"><?php echo $d->dtLancamento; ?></td>
               <td align="right"><?php echo $d->vlDebitado; ?></td>
-              <td align="right"<?php echo $style; ?>><?php echo $d->vlDiferenca; ?></td> 
+              <td align="right"><?php echo $d->vlDiferenca; ?></td> 
             </tr>
             <?php } ?>
         </tbody>

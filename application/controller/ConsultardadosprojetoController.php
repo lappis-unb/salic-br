@@ -6151,7 +6151,7 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
 
             } else {
                 $campo = null;
-                $order = array(1); //NomeProjeto, Dt.Recibo
+                $order = array(8,4);
                 $ordenacao = null;
             }
 
@@ -6235,7 +6235,7 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
 
             } else {
                 $campo = null;
-                $order = array(1); //NomeProjeto, Dt.Recibo
+                $order = array(8,4); //NomeProjeto, Dt.Recibo
                 $ordenacao = null;
             }
 
@@ -6446,7 +6446,7 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
     
     public function extratoContaMovimentoConsolidadoAction(){
 
-        $idPronac = $this->_request->getParam("idPronac");
+    $idPronac = $this->_request->getParam("idPronac");
         if (strlen($idPronac) > 7) {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
@@ -6483,7 +6483,7 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
 
             } else {
                 $campo = null;
-                $order = array(1); //NomeProjeto, Dt.Recibo
+                $order = array(5,9); 
                 $ordenacao = null;
             }
 
@@ -6495,6 +6495,20 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
             /* ================== PAGINACAO ======================*/
             $where = array();
             $where['idPronac = ?'] = $idPronac;
+  
+            if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["TipoConta= ?"] = $tpConta;
+                $this->view->TipoConta = $_GET['TipoConta'];
+            }
+ 
+             if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["TipoConta = ?"] = $tpConta ;
+                $this->view->TipoConta = $_GET['TipoConta'];
+            }
+
+            
 
             $Dados = new Projetos();
             $total = $Dados->extratoContaMovimentoConsolidado($where, $order, null, null, true);
@@ -6521,9 +6535,10 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
 
             $this->view->paginacao = $paginacao;
             $this->view->qtd       = $total;
-            $this->view->dados     = $busca; 
+            $this->view->dados     = $busca;
             $this->view->intTamPag = $this->intTamPag;
         }
+
     }
 
      public function imprimirExtratoContaMovimentoConsolidadoAction(){
@@ -6567,10 +6582,9 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
 
             } else {
                 $campo = null;
-                $order = array(1); //NomeProjeto, Dt.Recibo
+                $order = array(5,9); 
                 $ordenacao = null;
             }
-
             $pag = 1;
             $get = Zend_Registry::get('get');
             if (isset($get->pag)) $pag = $get->pag;
@@ -6579,6 +6593,19 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
             /* ================== PAGINACAO ======================*/
             $where = array();
             $where['idPronac = ?'] = $idPronac;
+
+            if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["TipoConta = ?"] = $tpConta;
+                $this->view->tpConta = $_GET['TipoConta'];
+            }
+ 
+             if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["TipoConta = ?"] = $tpConta ;
+                $this->view->tpConta = $_GET['TipoConta'];
+            }
+
 
             $Dados = new Projetos();
             $total = $Dados->extratoContaMovimentoConsolidado($where, $order, null, null, true);
@@ -6605,9 +6632,10 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
 
             $this->view->paginacao = $paginacao;
             $this->view->qtd       = $total;
-            $this->view->dados     = $busca; 
+            $this->view->dados     = $busca;
             $this->view->intTamPag = $this->intTamPag;
         }
+
     }
 
      public function extratoDeSaldoBancarioAction(){
@@ -6650,7 +6678,7 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
 
             } else {
                 $campo = null;
-                $order = array(1); //NomeProjeto, Dt.Recibo
+                $order = array(4,9,8);
                 $ordenacao = null;
             }
 
@@ -6663,6 +6691,17 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
             $where = array();
             $where['idPronac = ?'] = $idPronac;
 
+            if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["Tipo= ?"] = $tpConta;
+                $this->view->TipoConta = $_GET['TipoConta'];
+            }
+ 
+             if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["Tipo = ?"] = $tpConta ;
+                $this->view->TipoConta = $_GET['TipoConta'];
+            }
             $Dados = new Projetos();
             $total = $Dados->extratoDeSaldoBancario($where, $order, null, null, true);
             $fim = $inicio + $this->intTamPag;
@@ -6693,7 +6732,7 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
         }
     }
 
-    public function imprimirExtratoDeSaldoBancarioAction(){
+    public function imprimirExtratoDeSaldoBancarioAction(){  
 
         $this->_helper->layout->disableLayout();
 
@@ -6734,7 +6773,7 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
 
             } else {
                 $campo = null;
-                $order = array(1); //NomeProjeto, Dt.Recibo
+                $order = array(4,9,8); 
                 $ordenacao = null;
             }
 
@@ -6747,6 +6786,17 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
             $where = array();
             $where['idPronac = ?'] = $idPronac;
 
+            if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["Tipo= ?"] = $tpConta;
+                $this->view->TipoConta = $_GET['TipoConta'];
+            }
+ 
+             if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["Tipo = ?"] = $tpConta ;
+                $this->view->TipoConta = $_GET['TipoConta'];
+            }
             $Dados = new Projetos();
             $total = $Dados->extratoDeSaldoBancario($where, $order, null, null, true);
             $fim = $inicio + $this->intTamPag;
@@ -6775,6 +6825,7 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
             $this->view->dados     = $busca; 
             $this->view->intTamPag = $this->intTamPag;
         }
+
     }
 
    

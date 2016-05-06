@@ -7065,7 +7065,6 @@ class Projetos extends GenericModel
          }                                                                                                     
          
          if ($qtdeTotal) {
-             
              return $this->fetchAll($select)->count();
          }   
          
@@ -7079,7 +7078,7 @@ class Projetos extends GenericModel
                  $tmpInicio = $inicio;
              }   
              $select->limit($tamanho, $tmpInicio);
-         }   
+         }
          return $this->fetchAll($select);
      }
       
@@ -7108,7 +7107,7 @@ class Projetos extends GenericModel
                  $tmpInicio = $inicio;
              }   
              $select->limit($tamanho, $tmpInicio);
-         }   
+         }
          return $this->fetchAll($select);
      }
 
