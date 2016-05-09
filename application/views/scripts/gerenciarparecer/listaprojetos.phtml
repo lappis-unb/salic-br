@@ -175,7 +175,7 @@ $filtros = array(
 		<td align="center"><?php echo Data::tratarDataZend($dp->DtEnvioMincVinculada, 'Brasileira'); ?></td>
 		
 		<?php } else if ($this->tipoFiltro == 'em_analise' || $this->tipoFiltro == 'em_validacao') { ?>
-		<td align="center"><?php echo Data::tratarDataZend($dp->DtDistribuicao, 'Brasileira'); ?></td>
+		<td align="center"><<?php echo Data::tratarDataZend($dp->DtDistribuicao, 'Brasileira'); ?></td>
 		
 		<?php if ($this->tipoFiltro == 'em_validacao') { ?>
 		<td align="center"><?php echo Data::tratarDataZend($dp->DtDevolucao, 'Brasileira'); ?></td>
@@ -188,7 +188,7 @@ $filtros = array(
 
 		<?php if ($this->tipoFiltro == 'em_analise') { ?>
 		<td align="center"><?php if ($dp->dtEnvioDiligencia != null) { ?><?php echo Data::tratarDataZend($dp->dtEnvioDiligencia, 'Brasileira'); ?><?php } ?></td>
-		<td align="center"><?php if ($dp->dtEnvioDiligencia != null) { ?><?php echo Data::tratarDataZend($dp->dtRespostaDiligencia, 'Brasileira'); ?><?php } ?></td>
+		<td align="center"><?php if ($dp->dtRespostaDiligencia != null) { ?><?php echo Data::tratarDataZend($dp->dtRespostaDiligencia, 'Brasileira'); ?><?php } ?></td>
 		<?php } ?>
 
 		<?php } else if ($this->tipoFiltro == 'validados') { ?>
