@@ -13,8 +13,8 @@
 class ServicosSEI {
 
     # Constante usada na classe para conexao com o WS
-    const CAMINHO_WSDL_SEI 		= "http://sei.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Produção
-    #const CAMINHO_WSDL_SEI 		= "http://seihomolog.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Homologação
+    #const CAMINHO_WSDL_SEI 		= "http://sei.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Produção
+    const CAMINHO_WSDL_SEI 		= "http://seihomolog.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Homologação
 
     # Atributos da classe
     private static $objSoapCliente;
@@ -73,27 +73,27 @@ class ServicosSEI {
      * @return mixed
      * @throws Exception
      */
-    public function wsGerarProcedimento( $txSiglaSistema, $txIdentificacaoServico )
+    public function wsGerarProcedimento( $txSiglaSistema = "INTRANET", $txIdentificacaoServico = "SALIC", $nrIdUnidade = '110000142' )
     {
         $objSoapCliente = self::getSoapClient();
 
         //Sigla do Sistema
-        $txSiglaSistema = "INTRANET";
+        #$txSiglaSistema = "INTRANET";
 
         //Identificação do Procedimento
-        $txIdentificacaoServico = "SALIC";
+        #$txIdentificacaoServico = "SALIC";
 
         //Numero da Unidade
-        #$nrIdUnidade = '110000069'; //COSIS
-        $nrIdUnidade = '110000142'; //SEFIC
+        #$nrIdUnidade = '110000142'; //SEFIC
 
         #Inicio dos Dados do Procedimento
         //Procedimento
         $Procedimento = array();
         #$Procedimento['IdTipoProcedimento'] = '100000316';
         #$Procedimento['Especificacao'] = utf8_encode('Gestão de Contrato: Acompanhamento da Execução'); //Verificar se tem que usar UTF-8 Em Produção
-        $Procedimento['IdTipoProcedimento'] = '1';
-        $Procedimento['Especificacao'] = utf8_encode('Projetos Culturais'); //Verificar se tem que usar UTF-8 Em Produção
+        #$Procedimento['IdTipoProcedimento'] = '1'; #Alysson - Código do Tipo de Processo "Projetos Culturais em Homologação";
+        $Procedimento['IdTipoProcedimento'] = '100000520'; #Alysson - Código do Tipo de Processo "Apoio Cultural: Projeto Cultural" em Produção;
+        $Procedimento['Especificacao'] = utf8_encode('Apoio Cultural: Projeto Cultural'); //Verificar se tem que usar UTF-8 Em Produção
 
         //Assuntos
         $arrAssuntos = array();
@@ -220,24 +220,6 @@ class ServicosSEI {
         return $mixResult;
     }
 
-
-    /**
-     * Carrega o dados resumidos da pessoa fisica pelo CPF
-     *
-     * @param INTEGER $intNuCpf
-     * @return MIX
-     */
-    /*public function solicitarDadosResumidoPessoaFisicaPorCpf( $intNuCpf = NULL )
-    {
-        # Verificando se possui 11 digitos
-        $intNuCpf = str_pad( $intNuCpf , 11 , "0" , STR_PAD_LEFT );
-        if ( ( is_null( $intNuCpf ) ) || ( empty( $intNuCpf ) ) || ( $intNuCpf == " " ) || ( $intNuCpf == "" ) ) $intNuCpf = 0;
-        $objSoapCliente = self::getSoapClient();
-        $mixResult = ( is_null( $intNuCpf ) ) ? NULL : $objSoapCliente->solicitarDadosResumidoPessoaFisicaPorCpf( $intNuCpf );
-        if(is_null($mixResult)) return $mixResult;
-        else return ( self::convertXmlToArray( "/*" , $mixResult ) );
-    }*/
-
     /**
      * Metodo chamado quando o objeto da classe e instanciado
      *
@@ -282,11 +264,11 @@ class ServicosSEI {
 
     /*
      ###Exemplo de Instancia do WebService
-        #$wsWebServiceSEI = new ServicosSEI();
-        #$txSiglaSistema = "INTRANET";
-        #$txIdentificacaoServico = "SALIC";
-        #$arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento($txSiglaSistema, $txIdentificacaoServico);
-        #xd($arrRetornoGerarProcedimento->ProcedimentoFormatado);
+        $wsWebServiceSEI = new ServicosSEI();
+        $arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento();
+        $chars = array(".","/","-");
+        $nrProcessoSemFormatacao = str_replace($chars,"",$arrRetornoGerarProcedimento->ProcedimentoFormatado);
+        $nrProcesso = $nrProcessoSemFormatacao;
      */
 
 } // end Utils_Wsdne

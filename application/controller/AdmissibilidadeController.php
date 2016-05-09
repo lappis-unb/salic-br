@@ -644,13 +644,12 @@ class AdmissibilidadeController extends GenericControllerNew {
         $cnpjcpf = $rsAgente->CNPJCPF;
 
         $wsWebServiceSEI = new ServicosSEI();
-        $txSiglaSistema = "INTRANET";
-        $txIdentificacaoServico = "SALIC";
-        $arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento($txSiglaSistema, $txIdentificacaoServico);
+        $arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento();
 
         $chars = array(".","/","-");
         $nrProcessoSemFormatacao = str_replace($chars,"",$arrRetornoGerarProcedimento->ProcedimentoFormatado);
         $nrProcesso = $nrProcessoSemFormatacao;
+        #xd( $nrProcesso );
         try{
             $aux = new paTransformarPropostaEmProjeto();
             #$aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario);

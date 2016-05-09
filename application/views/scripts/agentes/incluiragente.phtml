@@ -12,6 +12,65 @@ if (empty($_GET['acao'])) {
     <?php require_once "inc/menu.inc.php"; ?>
 <?php endif; ?>
 
+<!-- Alysson - Adicionando Chamada ao WebService do Corporativo -->
+<script type="text/javascript">
+    $( document ).ready(function() {
+        // Vamos buscar os dados do CPF Agora!
+        $('#cpf').focusout(function(){
+            //alert( 'cxdcdcd' );
+            $('#nome').val('');
+            $('#cep').val('');
+            $('#msgAjax').hide();
+            $('#imgPF').show();
+            $('#erroCpf').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
+
+/*
+            $('#RESPONSAVEL_NOME').val('');
+
+
+            var txt = $(this).val();
+
+            if(txt == '___.___.___-__'){
+                $('#imgPF').hide();
+            }else{*/
+
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo $this->url(array('controller' => 'agentes', 'action' => 'busca-pessoa')); ?>',
+                    data: {cpf: $(this).val(), teste: 'xxxx', tipoPessoa:'fisica'},
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.error != ''){
+                            $('#msgAjax').html(data.error);
+                            $('#msgAjax').show();
+                            $('#imgPF').hide();
+                            $('#erroCpf').html("Pessoa não encontrada...[ "+data.error+" ]");
+                        }else{
+                            // Preenche os dados
+                            $('#idPessoa').val(data.dados.idPessoa);
+                            $('#nome').val(data.dados.nome);
+                            $('#cep').val(format_cep(data.dados.cep));
+                            $('#erroCpf').html("");
+                            //$('#RESPONSAVEL_CARGO').focus();
+                            $('#imgPF').hide();
+                            $('#cep').blur();
+                        }
+
+                    },error: function(data) {
+                        $('#msgAjax').html(data.error);
+                        $('#msgAjax').show();
+                        $('#erroCpf').html(data.error);
+                        $('#imgPF').hide();
+                    }
+                });
+            //}
+
+        });
+
+    });
+
+</script>
+
 <script type="text/javascript">
 
     function filtroCPF()
@@ -414,6 +473,7 @@ if (empty($_GET['acao'])) {
                     <td>
                         <label for="nome">Nome *</label>
                         <br />
+                        <input type="hidden" id="idPessoa" name="idPessoa" />
                         <input class="input_simples" type="text" name="nome" id="nome" maxlength="70" size="50" 
                                onclick="limpar_campo(this, '');" onkeypress="limpar_campo(this, '');"
                                onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');" />

@@ -195,7 +195,7 @@ function mascara ($val, $mask) {
         <?php
             echo $this->paginacao['inicio']." a ";
             echo ($this->paginacao['pag']-1)*$this->paginacao['Itenspag'] + $this->paginacao['tamanho'];
-            echo " de ". $this->paginacao['total']. " Projetos listados";
+            echo " de ". $this->paginacao['total']. " Registros listados";
         ?>
     </center>
     <!-- ========== FIM PAGINAÇÃO ========== -->
@@ -221,17 +221,17 @@ function mascara ($val, $mask) {
         <?php
             foreach ($this->dados as $d){
 
-            if($d->stLancamento==="C"){
-               $style= "style=\"color:blue\""; 
-            } else{
-               $style= "style=\"color:red\"";
-            }
+                if($d->stLancamento==="C"){
+                   $style= "style=\"color:blue\""; 
+                } else {
+                   $style= "style=\"color:red\"";
+                }
          ?>
          <tr>
              <td><p align="center"><?php echo $d->Tipo; ?></p></td>
              <td><p align="center"><?php echo mascara($d->NrConta,'##.###.###.###-#'); ?></p></td>
              <td><p align="center"><?php echo $d->cdLancamento; ?></p></td>
-             <td><p align="center"><?php echo $d->Lancamento = ucfirst(strtolower($d->Lancamento)); ?></p></td>
+             <td><p align="center"><?php echo $d->Lancamento; ?></p></td>
              <td><p align="center"><?php echo $d->nrLancamento; ?></p></td>
              <td><p align="center"><?php echo Data::tratarDataZend($d->dtLancamento,'Brasileira'); ?></p></td>
              <td><p align="right" <?php echo $style; ?>><?php echo 'R$ '. @number_format(($d->vlLancamento), 2, ",", "."); ?></p></td>
