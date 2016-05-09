@@ -52,19 +52,23 @@
                             <td align='center' style="font-size: 11pt"><?php echo "<b>".$distribuicao->Produto."</b>";?> <?php if($distribuicao->stPrincipal == 1) echo "<font color='red'>(principal)</font>";?></td>
                         </tr>-->
                         <tr>
-                            <td align='center' width="20%" class="destacar"><b>Produto</b></td>
+                            <td colspan="2" align='center' width="20%" class="destacar"><b>Produto</b></td>
                         </tr>
                         <tr>
-                            <td align='center' width="80%" style="font-size: 11pt"><?php echo "<b>".$distribuicao->Produto."</b>";?></td>
+                            <td colspan="2" align='center' width="80%" style="font-size: 11pt"><?php echo "<b>".$distribuicao->Produto."</b>";?></td>
                         </tr>
                         <tr>
-                            <td align='center' width="20%" class="destacar"><b>Logomarca</b></td>
+                            <td align='center' class="destacar"><b>&Aacute;rea</b></td>
+			    <td align='center' class="destacar"><b>Segmento</b></td>
+			                               
                         </tr>
                         <tr>
-                            <td align='center' width="80%"><?php echo $distribuicao->PosicaoDaLogo; ?></td>
-                        </tr>
+			    <td align='center'><?php echo $distribuicao->Area; ?></td>
+                            <td align='center'><?php echo $distribuicao->Segmento; ?></td>
+                        </tr>			
+
                         <tr>
-                            <td align= 'center' style='padding:0;'>
+                            <td colspan="2" align= 'center' style='padding:0;'>
                                 <table class='tabela'>
                                     <tr class="destacar">
                                         <td align="center"><b>Distribui&ccedil;&atilde;o Gratuita (Qtde)</b></td>

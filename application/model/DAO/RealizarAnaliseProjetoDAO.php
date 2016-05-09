@@ -1130,30 +1130,36 @@ public static function divulgacaoProjetosCadastrados($pronac){
 
 
 public static function planodedistribuicao ($pronac, $idproduto=null) {
-
+  
 	$sql="SELECT idPlanoDistribuicao,
-			 	 x.idProjeto,
-                                 x.idProduto,
-                                 x.stPrincipal,
-			 	 p.Descricao as Produto,
-			 	 v.Descricao as PosicaoDaLogo,
-			 	 y.Localizacao,
-			 	 QtdeProduzida,
-			 	 QtdeProponente,
-			 	 QtdePatrocinador,
-                                 QtdeOutros,
-                                 QtdeVendaNormal,
-                                 QtdeVendaPromocional,
-                                 PrecoUnitarioNormal,
-                                 PrecoUnitarioPromocional,
-                                 QtdeVendaNormal*PrecoUnitarioNormal as ReceitaNormal,
-                                 QtdeVendaPromocional*PrecoUnitarioPromocional as ReceitaPro,
-                                (QtdeVendaNormal*PrecoUnitarioNormal) +(QtdeVendaPromocional*PrecoUnitarioPromocional) as ReceitaPrevista
-		FROM SAC.dbo.PlanoDistribuicaoProduto x
-		INNER JOIN SAC.dbo.Projetos y on (x.idProjeto = y.idProjeto)
-		INNER JOIN SAC.dbo.Produto p on (x.idProduto = p.Codigo)
-		INNER JOIN SAC.dbo.Verificacao v on (x.idPosicaoDaLogo = v.idVerificacao)
-		WHERE y.IdPRONAC='$pronac' AND x.stPlanoDistribuicaoProduto = 1";
+           x.idProjeto,
+       x.idProduto,
+       x.stPrincipal,
+           p.Descricao as Produto,
+           v.Descricao as PosicaoDaLogo,
+           y.Localizacao,
+           QtdeProduzida,
+           QtdeProponente,
+           QtdePatrocinador,
+       QtdeOutros,
+       QtdeVendaNormal,
+       QtdeVendaPromocional,
+       PrecoUnitarioNormal,
+       PrecoUnitarioPromocional,
+       QtdeVendaNormal*PrecoUnitarioNormal as ReceitaNormal,
+       QtdeVendaPromocional*PrecoUnitarioPromocional as ReceitaPro,
+       (QtdeVendaNormal*PrecoUnitarioNormal)
+       +(QtdeVendaPromocional*PrecoUnitarioPromocional) as ReceitaPrevista,
+       a.Descricao as Area,b.Descricao as Segmento
+       
+       FROM SAC.dbo.PlanoDistribuicaoProduto x
+       INNER JOIN SAC.dbo.Projetos y on (x.idProjeto = y.idProjeto)
+       INNER JOIN SAC.dbo.Produto p on (x.idProduto = p.Codigo)
+       INNER JOIN SAC.dbo.Area a on (x.Area = a.Codigo)
+       INNER JOIN SAC.dbo.Segmento b on (x.Segmento = b.Codigo)
+       INNER JOIN SAC.dbo.Verificacao v on (x.idPosicaoDaLogo = v.idVerificacao)
+       WHERE y.IdPRONAC='$pronac' AND x.stPlanoDistribuicaoProduto = 1";
+	
                 if ($idproduto) {
                     $sql .= " and x.idProduto = $idproduto ";
                 }
