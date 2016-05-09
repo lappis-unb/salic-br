@@ -717,7 +717,7 @@ class GerenciarparecerController extends GenericControllerNew {
 		    
 		    if ($tipoFiltro == 'em_validacao') {
 		      $fecharAnalise 	= 3;	    
-		    } else if ($tipoFiltro == 'validados') {
+		    } else if ($tipoFiltro == 'validados' || $tipoFiltro == 'devolvida') {
 		      $fecharAnalise 	= 1;
 		    }
                 }
@@ -761,7 +761,7 @@ class GerenciarparecerController extends GenericControllerNew {
                 if(count($buscaInabilitado == 0)) {
   		    // dentro das unidades abaixo
                     if(in_array($dp->idOrgao, array(91,92,93,94,95,160,171,335))){
-		      if ($tipoFiltro == 'validados') {
+		      if ($tipoFiltro == 'validados' || $tipoFiltro == 'devolvida') {
 			$projeto->alterarSituacao($idPronac, null, 'C20', 'Análise técnica concluída');
 		      } else if ($tipoFiltro == 'em_validacao') {
 			$projeto->alterarSituacao($idPronac, null, 'B11', 'Aguardando validação do parecer técnico');
