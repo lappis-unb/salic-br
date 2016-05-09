@@ -5854,7 +5854,9 @@ class Projetos extends GenericModel
                                 INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
                                 INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao or a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacaoPai)
                                 WHERE c1.stAtivo = 'S' AND (c1.idPronac = $idPronac)
-                                GROUP BY c1.idPronac) AS vlComprovado
+                                GROUP BY c1.idPronac) AS vlComprovado,
+                                CONVERT(varchar(10),sac.dbo.fnInicioCaptacao(p.AnoProjeto,p.Sequencial),103) as DtInicioCaptacao,
+                                CONVERT(varchar(10),sac.dbo.fnFimCaptacao(p.AnoProjeto,p.Sequencial),103) as DtFimCaptacao
                             ")
                 )
         );
