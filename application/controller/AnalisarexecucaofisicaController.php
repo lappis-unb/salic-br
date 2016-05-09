@@ -202,7 +202,7 @@ class AnalisarexecucaofisicaController extends GenericControllerNew {
 
         }else {
             $campo = null;
-            $order = array('a.NomeProjeto','a.nrComprovanteTrimestral');
+            $order = array('NomeProjeto','nrComprovanteTrimestral');
             $ordenacao = null;
         }
 
