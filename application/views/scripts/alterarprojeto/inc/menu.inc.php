@@ -254,6 +254,10 @@ if($menu != 0){ ?>
                 <a class="no_seta" href="<?php echo $this->url(array('controller' => 'alterarprojeto', 'action' => 'areasegmento'), '', true); ?>?pronac=<?php echo $this->pronac ?>" title="Ir para alterar &aacute;rea/segmento">&Aacute;rea / Segmento</a>
                 <?php } ?>
 
+                <?php if(in_array($this->grupoAtivo, array(97,103,110,121,122,123,127))){ ?>
+                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'alterarprojeto', 'action' => 'planodistribuicao'), '', true); ?>?pronac=<?php echo $this->pronac ?>" title="Ir para plano de distribui&ccedil;&atilde;o">Plano de distribui&ccedil;&atilde;o</a>
+                <?php } ?>
+		
                 <?php if(in_array($this->grupoAtivo, array(97))){ ?>
                 <a class="no_seta" href="<?php echo $this->url(array('controller' => 'alterarprojeto', 'action' => 'orgao'), '', true); ?>?pronac=<?php echo $this->pronac ?>" title="Ir para alterar &oacute;rg&atilde;o">&Oacute;rg&atilde;o</a>
                 <?php } ?>
