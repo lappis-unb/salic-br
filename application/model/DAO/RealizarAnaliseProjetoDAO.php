@@ -1150,7 +1150,8 @@ public static function planodedistribuicao ($pronac, $idproduto=null) {
        QtdeVendaPromocional*PrecoUnitarioPromocional as ReceitaPro,
        (QtdeVendaNormal*PrecoUnitarioNormal)
        +(QtdeVendaPromocional*PrecoUnitarioPromocional) as ReceitaPrevista,
-       a.Descricao as Area,b.Descricao as Segmento
+       a.Descricao as Area,b.Descricao as Segmento,
+       a.Codigo as idArea, b.Codigo as idSegmento
        
        FROM SAC.dbo.PlanoDistribuicaoProduto x
        INNER JOIN SAC.dbo.Projetos y on (x.idProjeto = y.idProjeto)
