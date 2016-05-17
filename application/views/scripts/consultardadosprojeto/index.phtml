@@ -200,10 +200,18 @@ $urlPronac = (isset($this->idPronac)) ? "?idPronac=".Seguranca::encrypt($this->i
             ?>
             <table class="tabela">
                     <tr class="destacar">
-                        <td class="centro"><b>Dt. In&iacute;cio de Execu&ccedil;&atilde;o</b></td>
-                        <td class="centro"><b>Dt. Final de Execu&ccedil;&atilde;o</b></td>
+		      <td colspan="2" class="centro bold">Per&iacute;odo de capta&ccedil;&atilde;o</td>
+		      <td colspan="2" class="centro bold">Per&iacute;odo de execu&ccedil;&atilde;o</td>
+		    </tr>
+	            <tr class="destacar">
+                        <td class="centro"><b>Dt. In&iacute;cio</b></td>
+                        <td class="centro"><b>Dt. Final</b></td>
+                        <td class="centro"><b>Dt. In&iacute;cio</b></td>
+                        <td class="centro"><b>Dt. Final</b></td>
                     </tr>
                     <tr>
+                        <td align="center" class="bold" style="color: blue"><?php echo !empty($this->projeto->DtInicioCaptacao) ? $this->projeto->DtInicioCaptacao : '<em>Dados n&atilde;o informados!</em>'; ?></td>
+                        <td align="center" class="bold" style="color: blue"><?php echo !empty($this->projeto->DtFimCaptacao) ? $this->projeto->DtFimCaptacao : '<em>Dados n&atilde;o informados!</em>'; ?></td>
                         <td align="center" class="bold" <?php echo $classRed; ?>><?php echo !empty($this->dadosProjeto->DtInicioExecucao) ? Data::tratarDataZend($this->dadosProjeto->DtInicioExecucao, 'Brasileira') : '<em>Dados n&atilde;o informados!</em>'; ?></td>
                         <td align="center" class="bold" <?php echo $classRed; ?>><?php echo !empty($this->dadosProjeto->DtInicioExecucao) ? Data::tratarDataZend($this->dadosProjeto->DtFimExecucao, 'Brasileira') : '<em>Dados n&atilde;o informados!</em>'; ?></td>
                     </tr>

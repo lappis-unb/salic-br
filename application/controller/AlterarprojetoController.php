@@ -1706,6 +1706,122 @@ class AlterarprojetoController extends GenericControllerNew {
         //xd("<script>windows.parent.inserir();alert('".$dadosarquivo."')</script>");
     }
 
+    public function alterarplanodistribuicaoAction() {
+        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+	$post = Zend_Registry::get('post');
+
+	$pronac = $post->pronac;
+        //verficia se o pronac esta criptografado
+        if (strlen($pronac) > 12) {
+            $pronac = Seguranca::dencrypt($pronac);
+        }
+
+        if (!empty($post->Situacao)) {
+            $providenciaTomada = $post->justificativa;
+        } else {
+            $providenciaTomada = '';
+        }
+
+        $ano = addslashes(substr($pronac, 0, 2));
+        $sequencial = addslashes(substr($pronac, 2, strlen($pronac)));
+
+        $arrBusca = array(
+            'tbr.anoprojeto =?' => $ano,
+            'tbr.sequencial =?' => $sequencial,
+        );
+        $tblProjeto = new Projetos();
+        $validapronac = $tblProjeto->VerificaPronac($arrBusca);
+	$idPronac = $validapronac[0]->IdPRONAC;
+	
+        if (count($validapronac) == 0) {
+            parent::message("Dados obrigat&oacute;rios n&atilde;o informados", "/alterarprojeto/planodistribuicao?pronac=" . $pronac, "ERROR");
+        }
+	
+	$dados = Null;
+	$dados = array(//Monta dados para o historico
+		       'idPlanoDistribuicao'       => $post->idPlanoDistribuicao,
+		       'idProjeto'                 => $post->idProjeto,
+		       'Area'                      => $post->areaCultural,
+		       'Segmento'                  => $post->segmentoCultural,
+		       'QtdePatrocinador'          => $post->qtdPatrocinador,
+		       'QtdeProponente'            => $post->qtdDivulgacao,
+		       'QtdeOutros'                => $post->qtdBeneficiarios,
+		       'QtdeVendaNormal'           => $post->qtdenormal,
+		       'QtdeVendaPromocional'      => $post->qtdepromocional,
+		       'QtdeProduzida'             => $post->qtdenormal+$post->qtdePromocional + $post->qtdePatrocinador + $post->qtdBeneficiarios + $post->qtdDivulgacao,
+		       'PrecoUnitarioNormal'       => str_replace(",", ".", str_replace('/\./g', "", $post->preconormal)),
+		       'PrecoUnitarioPromocional'  => str_replace(",", ".", str_replace('/\./g', "", $post->precopromocional)),
+		       );
+	$tblPlanoDistribuicao = new PlanoDistribuicao();
+	$planoDistribuicao = RealizarAnaliseProjetoDAO::planodedistribuicao($idPronac);
+	
+	$retorno = $tblPlanoDistribuicao->salvar($dados);
+	$pronac = Seguranca::encrypt($pronac);
+	if($retorno > 0){
+	  $this->view->pronac = $pronac;
+	  parent::message("Operação realizada com sucesso!", "/alterarprojeto/planodistribuicao?pronac=" . $pronac, "CONFIRM");
+	} else {
+	  $this->view->pronac = $pronac;
+	  parent::message("Não foi possível realizar a operação!", "/alterarprojeto/planodistribuicao?pronac=" . $pronac, "ERROR");
+	}
+    }
+
+    
+    /*
+     *
+     */
+    public function planodistribuicaoAction() {
+        $pronac = $this->_request->getParam("pronac");
+
+        if (strlen($pronac) > 12) {
+            $pronac = Seguranca::dencrypt($pronac);
+        } elseif (strlen($pronac) <= 12 && !isset($post->pesquisa) && $post->pesquisa != "true") {
+            parent::message("PRONAC n&atilde;o localizado!", "alterarprojeto/consultarprojeto", "ALERT");
+        }
+
+        $ano = addslashes(substr($pronac, 0, 2));
+        $sequencial = addslashes(substr($pronac, 2, strlen($pronac)));
+        $this->view->pagina = "alterarprojeto";
+
+        $arrBusca = array(
+            'tbr.anoprojeto =?' => $ano,
+            'tbr.sequencial =?' => $sequencial,
+        );
+        $Projetos = new Projetos();
+        $validapronac = $Projetos->VerificaPronac($arrBusca);
+
+        if (count($validapronac) > 0) {
+
+            $tblAprovacao = new Aprovacao();
+            $rsAprovacao = $tblAprovacao->buscar(array("AnoProjeto = ?" => $ano, "Sequencial = ?" => $sequencial));
+
+            $listaparecer = $Projetos->buscarTodosDadosProjeto($validapronac[0]->IdPRONAC);
+            $this->view->parecer = $listaparecer[0];
+            $this->view->pronac = Seguranca::encrypt($listaparecer[0]->pronac);
+
+            $documentoDao = new tbHistoricoAlteracaoProjeto();
+            $where = array(
+                "P.idPRONAC =?" => $listaparecer[0]->IdPRONAC,
+                "nmProjeto is not null" => '?'
+            );
+
+	    $buscarIdPronac = $Projetos->buscarIdPronac($pronac);
+	    $idPronac = $buscarIdPronac->IdPRONAC;
+	    
+	    if(!empty($idPronac)){
+	      $planoDistribuicao = RealizarAnaliseProjetoDAO::planodedistribuicao($idPronac);
+	      $this->view->planoDistribuicao = $planoDistribuicao[0];
+	    }
+    
+        } else {
+            parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ALERT");
+        }
+        //xd($listaparecer[0]->Orgao." != ".$this->codOrgao);
+        if ($listaparecer[0]->Orgao != $this->codOrgao) {
+            parent::message("Usu&aacute;rio sem autoriza&ccedil;&atilde;o no org&atilde;o do projeto!", "Alterarprojeto/consultarprojeto", "ALERT");
+        }
+    }
+
     private function validasituacao($dadosProjeto) {
 
         $post = Zend_Registry::get('post');
