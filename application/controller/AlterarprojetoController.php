@@ -1810,7 +1810,7 @@ class AlterarprojetoController extends GenericControllerNew {
 	    
 	    if(!empty($idPronac)){
 	      $planoDistribuicao = RealizarAnaliseProjetoDAO::planodedistribuicao($idPronac);
-	      $this->view->planoDistribuicao = $planoDistribuicao[0];
+	      $this->view->planoDistribuicao = $planoDistribuicao;
 	    }
     
         } else {
