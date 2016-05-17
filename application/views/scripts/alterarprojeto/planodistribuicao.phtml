@@ -76,75 +76,75 @@ include_once 'scripts/alterarprojeto/inc/menu.inc.php';
         <?php endif; ?>
 
         $("#qtdenormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>").keyup(function(){
-            somaValores('qtdenormal', 'qtdepromocional', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'patrocinador', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'divulgacao', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'beneficiarios', 'nexemplares', 0, true);
-            multiplicaValores('qtdenormal', 'preconormal', 'previstonormal', 2, true);
-            somaValores('previstonormal', 'previstopromocional', 'totalprevisto', 2, true);
+            somaValores('qtdenormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'qtdepromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'patrocinador-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'divulgacao-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'beneficiarios-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            multiplicaValores('qtdenormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'preconormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstonormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
+            somaValores('previstonormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'totalprevisto-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
         });
 
         $("#qtdepromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>").keyup(function(){
-            somaValores('qtdenormal', 'qtdepromocional', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'patrocinador', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'divulgacao', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'beneficiarios', 'nexemplares', 0, true);
-            multiplicaValores('qtdepromocional', 'precopromocional', 'previstopromocional', 2, true);
-            somaValores('previstonormal', 'previstopromocional', 'totalprevisto', 2, true);
+            somaValores('qtdenormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'qtdepromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'patrocinador-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'divulgacao-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'beneficiarios-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            multiplicaValores('qtdepromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'precopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
+            somaValores('previstonormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'totalprevisto-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
         });
 
         $("#patrocinador-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>,#divulgacao-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>,#beneficiarios-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>").keyup(function(){
-            somaValores('qtdenormal', 'qtdepromocional', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'patrocinador', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'divulgacao', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'beneficiarios', 'nexemplares', 0, true);
+            somaValores('qtdenormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'qtdepromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'patrocinador-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'divulgacao-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'beneficiarios-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
         });
 
         $("#preconormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>").keyup(function(){
-            multiplicaValores('qtdenormal', 'preconormal', 'previstonormal', 2, true);
-            somaValores('previstonormal', 'previstopromocional', 'totalprevisto', 2, true);
+            multiplicaValores('qtdenormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'preconormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstonormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
+            somaValores('previstonormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'totalprevisto-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
         });
 
         $("#precopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>").keyup(function(){
-            multiplicaValores('qtdepromocional', 'precopromocional', 'previstopromocional', 2, true);
-            somaValores('previstonormal', 'previstopromocional', 'totalprevisto', 2, true);
+            multiplicaValores('qtdepromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'precopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
+            somaValores('previstonormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'totalprevisto-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
         });
 
         //===========================================================================================================
 
         $("#qtdenormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>").blur(function(){
-            somaValores('qtdenormal', 'qtdepromocional', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'patrocinador', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'divulgacao', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'beneficiarios', 'nexemplares', 0, true);
-            multiplicaValores('qtdenormal', 'preconormal', 'previstonormal', 2, true);
-            somaValores('previstonormal', 'previstopromocional', 'totalprevisto', 2, true);
+            somaValores('qtdenormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'qtdepromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'patrocinador-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'divulgacao-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'beneficiarios-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            multiplicaValores('qtdenormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'preconormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstonormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
+            somaValores('previstonormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'totalprevisto-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
         });
 
         $("#qtdepromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>").blur(function(){
-            somaValores('qtdenormal', 'qtdepromocional', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'patrocinador', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'divulgacao', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'beneficiarios', 'nexemplares', 0, true);
-            multiplicaValores('qtdepromocional', 'precopromocional', 'previstopromocional', 2, true);
-            somaValores('previstonormal', 'previstopromocional', 'totalprevisto', 2, true);
+            somaValores('qtdenormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'qtdepromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'patrocinador-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'divulgacao-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'beneficiarios-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            multiplicaValores('qtdepromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'precopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
+            somaValores('previstonormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'totalprevisto-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
         });
 
         $("#patrocinador-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>,#divulgacao-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>,#beneficiarios-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>").blur(function(){
-            somaValores('qtdenormal', 'qtdepromocional', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'patrocinador', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'divulgacao', 'nexemplares', 0, true);
-            somaValores('nexemplares', 'beneficiarios', 'nexemplares', 0, true);
+            somaValores('qtdenormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'qtdepromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'patrocinador-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'divulgacao-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
+            somaValores('nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'beneficiarios-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 0, true);
         });
 
         $("#preconormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>").blur(function(){
-            multiplicaValores('qtdenormal', 'preconormal', 'previstonormal', 2, true);
-            somaValores('previstonormal', 'previstopromocional', 'totalprevisto', 2, true);
+            multiplicaValores('qtdenormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'preconormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstonormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
+            somaValores('previstonormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'totalprevisto-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
         });
 
         $("#precopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>").blur(function(){
-            multiplicaValores('qtdepromocional', 'precopromocional', 'previstopromocional', 2, true);
-            somaValores('previstonormal', 'previstopromocional', 'totalprevisto', 2, true);
+            multiplicaValores('qtdepromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'precopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
+            somaValores('previstonormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 'totalprevisto-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>', 2, true);
         });
         
         $('#btn_salvar-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>').click(function(){
