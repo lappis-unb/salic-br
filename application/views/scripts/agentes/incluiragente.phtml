@@ -22,7 +22,8 @@ if (empty($_GET['acao'])) {
             $('#cep').val('');
             $('#msgAjax').hide();
             $('#imgPF').show();
-            $('#erroCpf').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
+            //$('#erroCpf').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
+            $('#erroCpf').html("<img src='<?php echo $this->baseUrl(); ?>/public/img/ajax.gif' alt='' /> Aguarde...");
 
 /*
             $('#RESPONSAVEL_NOME').val('');
