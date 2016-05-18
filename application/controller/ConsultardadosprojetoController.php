@@ -6671,7 +6671,7 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
             }
 
             //==== campo de ordenacao  ======//
-            if($this->_request->getParam("campo")) {
+        /*    if($this->_request->getParam("campo")) {
                 $campo = $this->_request->getParam("campo");
                 $order = array($campo." ".$ordem);
                 $ordenacao = "&campo=".$campo."&ordem=".$ordem;
@@ -6681,7 +6681,11 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
                 $order = array(4,9,8);
                 $ordenacao = null;
             }
+*/
+            
+            $order = ("9 DESC");                
 
+ 
             $pag = 1;
             $get = Zend_Registry::get('get');
             if (isset($get->pag)) $pag = $get->pag;
@@ -6713,9 +6717,9 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
             $paginacao = array(
                     "pag"=>$pag,
                     "qtde"=>$this->intTamPag,
-                    "campo"=>$campo,
+                   // "campo"=>$campo,
                     "ordem"=>$ordem,
-                    "ordenacao"=>$ordenacao,
+                  //  "ordenacao"=>$ordenacao,
                     "novaOrdem"=>$novaOrdem,
                     "total"=>$total,
                     "inicio"=>($inicio+1),
@@ -6765,7 +6769,7 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
                 $novaOrdem = "ASC";
             }
 
-            //==== campo de ordenacao  ======//
+/*            //==== campo de ordenacao  ======//
             if($this->_request->getParam("campo")) {
                 $campo = $this->_request->getParam("campo");
                 $order = array($campo." ".$ordem);
@@ -6776,7 +6780,8 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
                 $order = array(4,9,8); 
                 $ordenacao = null;
             }
-
+*/
+            $order = ("9 DESC");                
             $pag = 1;
             $get = Zend_Registry::get('get');
             if (isset($get->pag)) $pag = $get->pag;
