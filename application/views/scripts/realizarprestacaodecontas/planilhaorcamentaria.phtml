@@ -175,7 +175,7 @@
 	                        <td class="destacar bold">Situa&ccedil;&atilde;o</td>
 	                        <td>
 	                            <select name="itemAvaliadoFilter" style="width: 245px;" class="input_simples">
-	                                <option value="0">Selecione</option>
+	                                <option value="0">Todos</option>
 					                <?php if ($this->codGrupo != 132 && $this->codGrupo != 125) : ?>
 		                                <option value="1" <?php echo $this->itemAvaliadoFilter == 1 ? 'selected="true"' : null; ?>>Aguardando Análise</option>
 		                                <option value="2" <?php echo $this->itemAvaliadoFilter == 2 ? 'selected="true"' : null; ?>>Analisados</option>
@@ -239,6 +239,11 @@
                                                                 'idRelatorio' => $this->idRelatorio, #Alysson - Adicionado
                                                             )
                                                         );
+							$itemAvaliadoParam = Zend_Controller_Front::getInstance()->getRequest()->getParam('itemAvaliadoFilter');
+                                                        if ($itemAvaliadoParam) {
+                                                            $itemAvaliadoParam = "?itemAvaliadoFilter=".$itemAvaliadoParam;
+            						}
+                                                        $href .= $itemAvaliadoParam;
                                                         $html .= "<a href='{$href}' class='editarIco'>Analisar item</a>";
                                                         $html .= '</td>';
                                                         $html .= "<td>{$valor[0]}</td>";
@@ -308,6 +313,11 @@
                                                                 'idPlanilhaItem' => $valor[6],
                                                             )
                                                         );
+  							$itemAvaliadoParam = Zend_Controller_Front::getInstance()->getRequest()->getParam('itemAvaliadoFilter');
+                                                        if ($itemAvaliadoParam) {
+                                                            $itemAvaliadoParam = "?".$itemAvaliadoParam;
+            						}
+                                                        $href .= $itemAvaliadoParam;
                                                         $html .= "<a href='{$href}' class='editarIco'>Analisar item</a>";
                                                         $html .= '</td>';
                                                         $html .= "<td>".htmlentities($valor[0])."</td>";
