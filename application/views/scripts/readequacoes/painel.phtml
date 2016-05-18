@@ -7,12 +7,12 @@
         $('.btn_imprimir').click(function(){
             $('#formImpressao').submit();
         });
-        
+
         $('.btn_ver').click(function(){
             var id = $(this).attr('idReadequacao');
             window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'visualizar-readequacao')); ?>?id="+id;
         });
-        
+
         $('.finalizarAnaliseReadequacao').click(function(){
             var id = $(this).attr('idReadequacao');
             $("#alerta").dialog("destroy");
@@ -33,7 +33,7 @@
             });
             $('.ui-dialog-titlebar-close').remove();
         });
-        
+
         $('.devolverReadequacao').click(function(){
             var id = $(this).attr('idReadequacao');
             $("#alerta").dialog("destroy");
@@ -55,12 +55,12 @@
             });
             $('.ui-dialog-titlebar-close').remove();
         });
-        
-        $('.btn_avaliar').click(function(){
+
+        $('.btn_encaminhar').click(function(){
             var id = $(this).attr('readequacao');
             window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'avaliar-readequacao')); ?>?id="+id;
         });
-        
+
         $('.imgRegularidade').click(function(){
             var cpfcnpj = $(this).attr('cgccpf'),
                 pronac = $(this).attr('pronac');
@@ -68,7 +68,7 @@
             $('#pronacEnviado').val(pronac);
             $('#formRegularidade').submit();
         });
-        
+
         $('.finalizarReadequacao').click(function(){
             var componente = $(this).parent().parent().find('select.comboComponente').val(),
                 idReadequacao = $(this).attr('idReadequacao');
@@ -88,7 +88,7 @@
                     }
                 });
                 $('.ui-dialog-titlebar-close').remove();
-                
+
             } else {
                 $("#alerta").dialog("destroy");
                 $("#alerta").html('Deseja realmente enviar a readequação para a análise da CNIC?<br /><br />Ao enviar a readequação será removida do seu painel.');
@@ -182,7 +182,7 @@
             </tr>
         </table>
     </form>
-    
+
     <?php if(count($this->dados)>0){ ?>
     <!-- ============ PAGINAÇÃO ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
@@ -245,22 +245,22 @@
                 <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">Nome do Projeto</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Solicita&ccedil;&atilde;o</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=6&ordem='.$this->paginacao['novaOrdem'];?>">Tipo Readequa&ccedil;&atilde;o</a></th>
-                
-                <?php if($this->filtro == 'analisados'){ ?>
-                <th style="width: 130px;">Visualizar</th>
-                <th>Componente da Comissão</th>
-                <?php } ?>
-                
-                <?php if($this->filtro == 'analisados'){ ?>
-                <th>Ação</th>
-                <?php } else if($this->filtro != 'encaminhados'){ ?>
-                <th>Avaliar</th>
-                <?php } ?>
-                
-                <?php if($this->filtro == 'analisados'){ ?>
-                <th>Devolver</th>
-                <th>Regularidade</th>
-                <?php } ?>
+
+                <?php if($this->filtro == 'analisados'): ?>
+                    <th style="width: 130px;">Visualizar</th>
+                    <th>Componente da Comissão</th>
+                <?php endif; ?>
+
+                <?php if($this->filtro == 'analisados'): ?>
+                    <th>Ação</th>
+                <?php elseif($this->filtro != 'encaminhados'): ?>
+                    <th>Encaminhar</th>
+                <?php endif; ?>
+
+                <?php if($this->filtro == 'analisados'): ?>
+                    <th>Devolver</th>
+                    <th>Regularidade</th>
+                <?php endif; ?>
             </tr>
         </thead>
         <tbody>
@@ -275,7 +275,7 @@
                 <td><?php echo $d->NomeProjeto; ?></td>
                 <td align="center"><?php echo Data::tratarDataZend($d->dtSolicitacao, 'Brasileira'); ?></td>
                 <td><?php echo $d->dsReadequacao; ?></td>
-                
+
                 <?php if($this->filtro == 'analisados'){ ?>
                 <td align="center">
                     <input type="button" class="btn_ver" idReadequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>" />
@@ -293,19 +293,21 @@
                     <?php } else { echo '-'; } ?>
                 </td>
                 <?php } ?>
-                
-                <?php if($this->filtro != 'encaminhados'){ ?>
-                <td align="left" style="width: 1px;" nowrap>
-                    <?php if($this->filtro == 'analisados'){ ?>
-                        <?php if($d->siEncaminhamento == 6 || $d->siEncaminhamento == 10){ ?>
-                        <input type="button" name="btn_encaminhar" class="btn_finalizar finalizarAnaliseReadequacao" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Finalizar a análise">
-                        <?php } ?>
-                    <?php } else { ?>
-                        <input type="button" name="btn_avaliar" id="btn_avaliar" class="btn_avaliar" readequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>" pronac="<?php echo $d->PRONAC; ?>" nomeprojeto="<?php echo $d->NomeProjeto; ?>" title="Avaliar">
-                    <?php } ?>
-                </td>
-                <?php } ?>
-                
+
+                <?php if($this->filtro != 'encaminhados'): ?>
+                    <td align="left" style="width: 1px;" nowrap>
+                        <?php if($this->filtro == 'analisados'): ?>
+                            <?php if($d->siEncaminhamento == 6 || $d->siEncaminhamento == 10): ?>
+                            <input type="button" name="btn_encaminhar" class="btn_finalizar finalizarAnaliseReadequacao" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Finalizar a análise">
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <input type="button" name="btn_avaliar" id="btn_avaliar" class="btn_encaminhar" readequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>"
+                                    pronac="<?php echo $d->PRONAC; ?>"
+                                    nomeprojeto="<?php echo $d->NomeProjeto; ?>" title="Encaminhar">
+                        <?php endif; ?>
+                    </td>
+                <?php endif; ?>
+
                 <?php if($this->filtro == 'analisados'){ ?>
                 <td align="center" style="width: 1px;">
                     <img src="<?php echo $this->baseUrl().'/public/img/desarquivar.gif'; ?>" style="cursor: pointer;" class="devolverReadequacao" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Devolver para nova análise">
@@ -383,7 +385,7 @@
     </table>
     <?php } ?>
     <br clear="all" />
-    
+
     <form target="_blank" class="form" name="formRegularidade" id="formRegularidade" method="post" action='<?php echo $this->url(array('controller' => 'manterregularidadeproponente', 'action' => 'manterregularidadeproponente')); ?>'>
         <input type="hidden" name="cpfCnpj" id="cpfCnpj" value="" />
         <input type="hidden" name="pronacEnviado" id="pronacEnviado" value="" />
@@ -420,7 +422,7 @@
                 <td colspan="2" id="xRecurso"></td>
             </tr>
         </table>
-        
+
         <table class="tabela">
             <tr>
                 <td class="destacar bold" colspan="2">Resposta</td>

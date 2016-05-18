@@ -15,6 +15,4 @@ class tbDistribuirReadequacao extends GenericModel
 	protected $_banco  = "SAC";
 	protected $_schema = "dbo";
 	protected $_name   = "tbDistribuirReadequacao";
-
-	
-} // fecha class
+}
