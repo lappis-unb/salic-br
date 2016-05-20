@@ -1,3 +1,51 @@
+Release 1.7.0
+  * Novo: [Alterar projeto] possibilidade de alterar plano de distribuicao de múltiplos produtos
+  * Novo: [Gerenciar pareceres] Novo filtro de gerenciar pareceres - "em validação"
+  * Novo: [SQL] Organizando código de SQL em pasta versionada
+  * Novo: [Movimentação bancária] Adicionada a funcionalidade extrato bancário
+  * Novo: [Movimentação bancária] Adicionada a funcionalidade extrato bancário consolidado
+  * Novo: [Movimentação bancária] Adicionada funcionalidade Conciliação Bancaria
+  * Novo: [Movimentação bancária] Adicionado tela de inconsistência bancaria
+  * Novo: [Movimentação bancária] Adicionado tela de saldo das contas
+  * Novo: [Consultar dados projeto] exibindo informações sobre área e segmento e suprimindo de logomarca
+  * Novo: [Consultar dados projeto] adicionando período de captação
+  * Novo: Implementação completa do WebService da Receita para Pessoa Fisica ou Juridica
+  * Fix: [Comprovar execução física] Correção da query de paginação em relatorios trimestrais
+  * Fix: [Webservice SEI]Realizando ajustes no WebService do SEI
+  * Fix: [Avaliar acompanhamento] corrigindo texto de cumprimento dos objetos
+  * Fix: [Gerenciar pareceres] ajustes no relatorio final
+  * Fix: [Gerenciar pareceres] devolvida para análise não listava botão de concluir
+  * Fix: [Gerenciar pareceres] ajuste de estilo nos órgãos, produtos e listagem de projetos
+  * Fix: [Gerenciar pareceres] correções na devolução de parecer do minc para vinculada
+  * Fix: [gerenciar pareceres] coordenador de analise - ajuste nas colunas da tramitação
+  * Fix: [Gerenciar parecer] colocando nome do filtro no título da página
+  * Fix: [Gerenciar parecer] grava valor da flag FecharAnalise conforme o filtro ativo
+  * Fix: [Gerenciar parecer] consertando textos tooltip de justificativa no filtro de parecer devolvido
+  * Fix: [Gerenciar parecer] ajustes ao distribuir / encaminhar produto
+  * Fix: [Gerenciar parecer] verifica se produtos secundários foram fechados para poder concluir produto principal
+  * Fix: [Gerenciar parecer] gravando mensagens de providências tomadas
+  * Fix: [Gerenciar parecer] gravando observações em texto rico
+  * Fix: [Gerenciar parecer] corrigindo nome do órgão na providência tomada
+  * Fix: [Gerenciar parecer] adicionando colunas na listagem de "devolvidas para análise"
+  * Fix: [Gerenciar parecer] análises devolvidas agora com situação e providência correta
+  * Fix: [Movimentação bancária] enviando valor correto & otimizando validação de cpf/valores
+  * Fix: [Integração com SEI] Criando o serviço para Integrar o SALIC ao SEI. Será gerado um número de processo no SEI e repassado ao SALIC. Adicionando os Arquivos SQL que implementam a modificacao no banco de dados. Versao Final]
+  * Fix: [Gerenciar parecer] Diversas correções no fluxo entre pareceristas e coordenadores
+  * Fix: [Gerenciar parecer] Filtros de gerenciar pareceres - correções nos filtros existentes
+  * Fix: [Gerenciar parecer] Verificação de parecerista agora puxa código de área e segmento do produto e não do projeto
+  * Fix: [Gerenciar parecer] consertando busca por PRONAC
+  * Fix: [Consulta cidadão] Melhorando desempenho da busca geral
+  * Fix: [Consulta cidadão] Corrigindo menu drop down na busca
+  * Fix: [Comprovaçãoo pagamento] pequeno fix de melhoria de código
+  * Fix: [Realizar prestação de contas] Agora é mantido o filtro de busca na mudança de pagina em realizarprestacao de contas durante a análise
+  * Fix: [Analisar execução física] Adicionado o campo data de execução em analisar execução física técnico
+
+[Release 1.6.0] Planejamento de Release
+  * Novo: [SEI] Realizando correções no WebService do SEI para garantir a exibição correta do número do processo dentro do SALIC.
+  * Novo: [DOC] Adicionando documentação de desenvolvimento
+  * Fix: [Projeto] Correção dos parâmetros de entrada na procedure que transforma proposta em projeto
+  * Fix: [Consulta cidadão] Correção do dropdown de mudança de página
+
 Release 1.5.1
   * Fix: [Gerenciar parecer] remoção de lixo no código e correção da validação de caracteres na controller
 

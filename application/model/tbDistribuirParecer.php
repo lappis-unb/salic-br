@@ -570,7 +570,7 @@ class tbDistribuirParecer extends GenericModel
             $select->distinct('t.idDistribuirParecer');
 
             $select->order('t.stPrincipal desc');
-
+	    
             return $this->fetchAll($select);
 
         } // fecha método dadosParaDistribuir()
@@ -1710,75 +1710,194 @@ public function analisePorParecerista($where){
      * @param Int
      * @return List
      */
-    public function painelAnaliseTecnica($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
-        
-        $select = $this->select();
-        $select->setIntegrityCheck(false);
-        $select->from( array('t' => $this->_name), array(
-                        "DATEDIFF(DAY, t.DtDistribuicao, GETDATE()) AS DIAS",
-                        "t.idDistribuirParecer",
-                        "t.idOrgao",
-                        "t.idAgenteParecerista",
-                        "t.DtDistribuicao",
-                        "t.idProduto",
-                        "t.DtDevolucao",
-                        "t.TipoAnalise",
-                        "t.FecharAnalise",
-                        "t.DtEnvio",
-                        "t.stPrincipal",
-                        new Zend_Db_Expr('CASE WHEN t.stPrincipal = 1 THEN 20 ELSE 10 END AS tempoFimParecer'),
-                        new Zend_Db_Expr('CONVERT(CHAR(10),t.DtEnvio,103) AS DtEnvioPT'),
-                        "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs")
-        );
+    public function painelAnaliseTecnica($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $tipoFiltro='') {
+        $from = "";
+        $slct = $this->select();
+        $slct->setIntegrityCheck(false);
+	
+	switch ($tipoFiltro) {
+            case 'aguardando_distribuicao':
 
-        $select->joinInner(
-                array('p' => 'Projetos'), 't.idPRONAC = p.IdPRONAC',
-                array(
-                    'IdPRONAC',
-                    'NomeProjeto',
-                    new Zend_Db_Expr('AnoProjeto + Sequencial AS NrProjeto'),
-                    new Zend_Db_Expr('(Select SUM(x.Ocorrencia*x.Quantidade*x.ValorUnitario) FROM SAC.dbo.tbPlanilhaProjeto x WHERE p.IdPRONAC = x.idPRONAC and x.FonteRecurso = 109 and x.idProduto = t.idProduto) as Valor'),
-                    new Zend_Db_Expr('(SELECT COUNT(*) FROM tbDistribuirParecer AS z WHERE z.stEstado = 0 AND z.FecharAnalise IN (0,2) AND z.TipoAnalise in (1, 3) AND z.IdPRONAC = t.IdPRONAC  AND z.stPrincipal = 0 AND z.DtDistribuicao is not null) as QtdeSecundarios')
-                )
-        );
+	      $slct->from(
+			  array('dbo.vwPainelCoordenadorVinculadasAguardandoAnalise'),
+			  array('IdPRONAC',
+				'NrProjeto',
+				'NomeProjeto',
+				'idProduto',
+				'Produto',
+				'stPrincipal',
+				'idArea',
+				'Area',
+				'idSegmento',
+				'Segmento',
+				'idDistribuirParecer',
+				'idOrgao',
+				'FecharAnalise',
+				'DtEnvioMincVinculada',
+				'qtDiasDistribuir',
+			  'Valor')
+			  );
+		$from = ' FROM sac.dbo.vwPainelCoordenadorVinculadasAguardandoAnalise';	      
+                break;
+            case 'em_analise':
 
-        $select->joinInner(
-                array('r' => 'Produto'), 't.idProduto = r.Codigo', array('r.Descricao AS Produto')
-        );
+	      $slct->from(
+			  array('dbo.vwPainelCoordenadorVinculadasEmAnalise'),
+			  array('IdPRONAC',
+				'NrProjeto',
+				'NomeProjeto',
+				'idProduto',
+				'Produto',
+				'stPrincipal',
+				'idArea',
+				'Area',
+				'idSegmento',
+				'Segmento',
+				'idDistribuirParecer',
+				'Parecerista',
+				'idOrgao',
+				'DtEnvioMincVinculada',
+				'DtDistribuicao',
+				'qtDiasParaDistribuir',
+				'TempoTotalAnalise',
+				'TempoParecerista',
+				'TempoDiligencia',
+				'idAgenteParecerista',
+				'dtEnvioDiligencia',
+				'dtRespostaDiligencia',
+				'qtDiligenciaProduto',
+				'QtdeSecundarios',
+				'Valor',
+				'FecharAnalise')
+			  );
 
-        $select->joinInner(
-                array('a' => 'Area'), 'p.Area = a.Codigo', array('a.Descricao AS Area')
-        );
+		$from = ' FROM sac.dbo.vwPainelCoordenadorVinculadasEmAnalise';
+                break;
+            case 'em_validacao':
 
-        $select->joinInner(
-                array('s' => 'Segmento'), 'p.Segmento = s.Codigo', array('s.Descricao AS Segmento')
-        );
+	        $slct->from(
+			    array('dbo.vwPainelCoordenadorVinculadasEmValidacao'),
+			    array('IdPRONAC',
+				  'NrProjeto',
+				  'NomeProjeto',
+				  'idProduto',
+				  'Produto',
+				  'stPrincipal',
+				  'idArea',
+				  'Area',
+				  'idSegmento',
+				  'Segmento',
+				  'idDistribuirParecer',
+				  'Parecerista',
+				  'idOrgao',
+				  'FecharAnalise',
+				  'DtEnvioMincVinculada',
+				  'DtDistribuicao',
+				  'DtDevolucao',
+				  'TempoTotalAnalise',
+				  'TempoParecerista',
+				  'TempoDiligencia',
+				  'qtDiligenciaProduto',
+				  'Valor')
+			    );
+		
+		$from = ' FROM sac.dbo.vwPainelCoordenadorVinculadasEmValidacao';
+                break;
+            case 'validados':
+	      
+	        $slct->from(
+			    array('dbo.vwPainelCoordenadorVinculadasValidados'),
+			    array('IdPRONAC',
+				  'NrProjeto',
+				  'NomeProjeto',
+				  'idProduto',
+				  'Produto',
+				  'stPrincipal',
+				  'idArea',
+				  'Area',
+				  'idSegmento',
+				  'Segmento',
+				  'DtEnvioMincVinculada',
+				  'idDistribuirParecer',
+				  'Parecerista',
+				  'idOrgao',
+				  'qtDiligenciaProduto',
+				  'Valor',
+				  'FecharAnalise',
+				  'TecnicoValidador',
+				  'DtValidacao')
+			    );
+		
+		  $from = ' FROM sac.dbo.vwPainelCoordenadorVinculadasValidados';
+                break;
+            case 'devolvida':
 
-       //adiciona quantos filtros foram enviados
-        foreach ($where as $coluna => $valor) {
-            $select->where($coluna, $valor);
-        }
+	        $slct->from(
+			    array('dbo.vwPainelCoordenadorVinculadasReanalisar'),
+			    array('IdPRONAC',
+				  'NrProjeto',
+				  'NomeProjeto',
+				  'idProduto',
+				  'Produto',
+				  'stPrincipal', 
+				  'idArea',
+				  'Area',
+				  'idSegmento',
+				  'Segmento',
+				  'idDistribuirParecer',
+				  'idOrgao',
+				  'FecharAnalise',
+				  'idAgenteParecerista',
+				  'Parecerista',
+				  'DtEnvioMincVinculada',
+				  'qtDiasDistribuir',
+				  'CAST (JustComponente AS TEXT) AS JustComponente',
+				  'JustDevolucaoPedido',
+				  'JustSecretaria',
+				  'Valor')
+			    );
+		$from = 'FROM sac.dbo.vwPainelCoordenadorVinculadasReanalisar';
+                break;
+	}
 
-        if ($qtdeTotal) {
-            return $this->fetchAll($select)->count();
-        }
+	// se for totalizador
+	if ($qtdeTotal) {
 
-        //adicionando linha order ao select
-        $select->order($order);
-
-        // paginacao
-        if ($tamanho > -1) {
+	    $db = Zend_Registry::get('db');
+	    $db->setFetchMode(Zend_DB::FETCH_OBJ);
+	    $whereSql = '';
+	    if (!empty($where)) {
+	      $whereSql = ' WHERE ';
+	      foreach ($where as $coluna => $valor) {
+		if ($whereSql != ' WHERE ') {
+		  $whereSql .= ' AND ';
+		}
+		$whereSql .= str_replace('?', "'$valor'" , $coluna);
+	      }
+	    }
+            $sql = "SELECT COUNT(IdPRONAC) " . $from . $whereSql;
+	    return $db->fetchOne($sql);
+        } else {
+	  //adiciona quantos filtros foram enviados
+	  foreach ($where as $coluna => $valor) {
+	    $slct->where($coluna, $valor);
+	  }	  
+	  
+	  //adicionando linha order ao select
+	  $slct->order($order);
+	  
+	  //paginacao
+	  if ($tamanho > -1) {
             $tmpInicio = 0;
             if ($inicio > -1) {
-                $tmpInicio = $inicio;
+	      $tmpInicio = $inicio;
             }
-            $select->limit($tamanho, $tmpInicio);
-        }
-
-//        xd($select->assemble());
-        
-        return $this->fetchAll($select);
-        
+            $slct->limit($tamanho, $tmpInicio);
+	  }
+	  
+	  //xd($slct->assemble());
+	  return $this->fetchAll($slct);
+	}
     } // fecha método listarProjetos()
     
     public function buscarHistoricoEncaminhamento($where=array())
@@ -1835,4 +1954,12 @@ public function analisePorParecerista($where){
         return $this->fetchAll($slct)->count();
     }
 
+    public function checarValidacaoProdutosSecundarios($idPronac) {
+      $sql = "SELECT SAC.dbo.fnchecarValidacaoProdutoSecundario($idPronac)";
+
+      $db = Zend_Registry::get('db');
+      $db->setFetchMode(Zend_DB::FETCH_OBJ);
+      return $db->fetchOne($sql);
+    }
+    
 }

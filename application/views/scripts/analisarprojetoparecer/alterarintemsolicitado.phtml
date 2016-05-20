@@ -147,9 +147,10 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                             function calcula_planilha_projeto(cont)
                             {
                                 // recebe os valores do formulário
-                                qtd        = $('#qtd' + cont).val();
-                                ocorrencia = $('#ocorrencia' + cont).val();
-                                valor      = $('#vlunitario' + cont).val();
+                                var qtd        = $('#qtd' + cont).val(),
+                                    ocorrencia = $('#ocorrencia' + cont).val(),
+                                    valor      = $('#vlunitario' + cont).val(),
+				    resultado  = '';
         
                                 // retira os pontos e as vírgulas, deixando somente números
                                 valor = valor.replace(/\D/g, "")

@@ -5854,7 +5854,9 @@ class Projetos extends GenericModel
                                 INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
                                 INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao or a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacaoPai)
                                 WHERE c1.stAtivo = 'S' AND (c1.idPronac = $idPronac)
-                                GROUP BY c1.idPronac) AS vlComprovado
+                                GROUP BY c1.idPronac) AS vlComprovado,
+                                CONVERT(varchar(10),sac.dbo.fnInicioCaptacao(p.AnoProjeto,p.Sequencial),103) as DtInicioCaptacao,
+                                CONVERT(varchar(10),sac.dbo.fnFimCaptacao(p.AnoProjeto,p.Sequencial),103) as DtFimCaptacao
                             ")
                 )
         );
@@ -6235,15 +6237,15 @@ class Projetos extends GenericModel
                             WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorável'
                             WHEN pr.ParecerFavoravel = '2' THEN 'Favorável'
                         END AS descAvaliacao,
-                        p.SolicitadoReal AS vlSolicitado,
+                        SolicitadoReal AS vlSolicitado,
                         CASE
                             WHEN p.Mecanismo ='2' OR p.Mecanismo ='6'
                                 THEN sac.dbo.fnValorAprovadoConvenio(p.AnoProjeto,p.Sequencial)
-                            ELSE sac.dbo.fnValorAprovado(p.AnoProjeto,p.Sequencial)
+                            ELSE sac.dbo.fnTotalAprovadoProjeto(p.AnoProjeto,p.Sequencial)
                         END AS vlAprovado,
                         sac.dbo.fnCustoProjeto (p.AnoProjeto,p.Sequencial) AS vlCaptado,
 
-                        p.ResumoProjeto,
+                        ResumoProjeto,
 			DtInicioExecucao,
 			DtFimExecucao
 
@@ -6271,9 +6273,6 @@ class Projetos extends GenericModel
         );
         $select->joinInner(
             array('se' => 'Segmento'), 'p.Segmento = se.Codigo', array(''), 'SAC.dbo'
-        );
-        $select->joinInner(
-            array('n' => 'Nomes'), 'z.idAgente = n.idAgente', array(''), 'AGENTES.dbo'
         );
         $select->joinInner(
             array('x' => 'Agentes'), 'p.CgcCpf = x.CNPJCPF', array(''), 'AGENTES.dbo'
@@ -6315,6 +6314,63 @@ class Projetos extends GenericModel
             $select->limit($tamanho, $tmpInicio);
         }
         return $this->fetchAll($select);
+    }
+
+    public function countProjetosCnicOpinioesPorIdReuniao($idNrReuniao = null, $where = array(), $order = array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false)
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('t' => 'tbPauta'), array(
+            new Zend_Db_Expr("
+                      count ( p.IdPRONAC) as total
+                    ")
+        ), 'BDCORPORATIVO.scSAC'
+        );
+
+        $select->joinInner(
+            array('z' => 'tbDistribuicaoProjetoComissao'), 't.IdPRONAC = z.idPRONAC', array(''), 'BDCORPORATIVO.scSAC'
+        );
+        $select->joinInner(
+            array('p' => 'Projetos'), 't.idPronac = p.idPronac', array(''), 'SAC.dbo'
+        );
+        $select->joinInner(
+            array('pr' => 'Parecer'), 'pr.idPronac = p.idPronac', array(''), 'SAC.dbo'
+        );
+        $select->joinInner(
+            array('x' => 'Agentes'), 'p.CgcCpf = x.CNPJCPF', array(''), 'AGENTES.dbo'
+        );
+        $select->joinInner(
+            array('y' => 'Nomes'), 'x.idAgente = y.idAgente', array(''), 'AGENTES.dbo'
+        );
+
+        if (!is_null($idNrReuniao)) {
+            $select->joinInner(
+                array('r' => 'tbReuniao'), 't.idNrReuniao = r.idNrReuniao', array(''), 'SAC.dbo'
+            );
+            $select->where('r.idNrReuniao = ?', $idNrReuniao);
+        }
+
+        $select->where('z.stDistribuicao = ?', 'A');
+        $select->where('pr.idTipoAgente = ?', 6);
+        $select->where('pr.stAtivo = ?', 1);
+        #$select->where('r.stEstado = ?', 0);
+        $select->where('y.Status = ?', 0);
+
+        // adiciona quantos filtros foram enviados
+        foreach ($where as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
+
+        // paginacao
+        if ($tamanho > -1) {
+            $tmpInicio = 0;
+            if ($inicio > -1) {
+                $tmpInicio = $inicio;
+            }
+            $select->limit($tamanho, $tmpInicio);
+        }
+        return $this->fetchRow($select);
     }
 
     public function cidadaoDadosProjeto($where = array())
@@ -6506,7 +6562,6 @@ class Projetos extends GenericModel
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
         return $this->fetchAll($select);
     }
 
@@ -6913,5 +6968,151 @@ class Projetos extends GenericModel
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
+  
+     public function painelDadosBancariosExtrato($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){     
+         $select = $this->select();
+         $select->setIntegrityCheck(false);
+         $select->from('vwExtratoDaMovimentacaoBancaria');                                                     
+        
+        //adiciona quantos filtros foram enviados                                                              
+         foreach ($where as $coluna => $valor) {                                                               
+             $select->where($coluna, $valor);                                                                  
+         }                                                                                                     
+         
+         if ($qtdeTotal) {
+             
+             return $this->fetchAll($select)->count();
+         }   
+         
+         //adicionando linha order ao select
+         $select->order($order);
+         
+         // paginacao
+         if ($tamanho > -1) {
+             $tmpInicio = 0;
+             if ($inicio > -1) {
+                 $tmpInicio = $inicio;
+             }   
+             $select->limit($tamanho, $tmpInicio);
+         }   
+         return $this->fetchAll($select);
+     }
+        
+     public function painelDadosConciliacaoBancaria($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){     
+         $select = $this->select();
+         $select->setIntegrityCheck(false);
+         $select->from('vwConciliacaoBancaria');                                                     
+        
+        //adiciona quantos filtros foram enviados                                                              
+         foreach ($where as $coluna => $valor) {                                                               
+             $select->where($coluna, $valor);                                                                  
+         }                                                                                                     
+         
+         if ($qtdeTotal) {
+             
+             return $this->fetchAll($select)->count();
+         }   
+         
+         //adicionando linha order ao select
+         $select->order($order);
+         
+         // paginacao
+         if ($tamanho > -1) {
+             $tmpInicio = 0;
+             if ($inicio > -1) {
+                 $tmpInicio = $inicio;
+             }   
+             $select->limit($tamanho, $tmpInicio);
+         }   
+         return $this->fetchAll($select);
+     }
 
+     public function inconsistenciasComprovacao($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){     
+         $select = $this->select();
+         $select->setIntegrityCheck(false);
+         $select->from('vwInconsistenciaNaComprovacao');                                                     
+        
+        //adiciona quantos filtros foram enviados                                                              
+         foreach ($where as $coluna => $valor) {                                                               
+             $select->where($coluna, $valor);                                                                  
+         }                                                                                                     
+         
+         if ($qtdeTotal) {
+             
+             return $this->fetchAll($select)->count();
+         }   
+         
+         //adicionando linha order ao select
+         $select->order($order);
+         
+         // paginacao
+         if ($tamanho > -1) {
+             $tmpInicio = 0;
+             if ($inicio > -1) {
+                 $tmpInicio = $inicio;
+             }   
+             $select->limit($tamanho, $tmpInicio);
+         }   
+         return $this->fetchAll($select);
+     }
+  
+     public function extratoDeSaldoBancario($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){     
+         $select = $this->select();
+         $select->setIntegrityCheck(false);
+         $select->from('vwExtratoDeSaldoDasContasBancarias');                                                     
+        
+        //adiciona quantos filtros foram enviados                                                              
+         foreach ($where as $coluna => $valor) {                                                               
+             $select->where($coluna, $valor);                                                                  
+         }                                                                                                     
+         
+         if ($qtdeTotal) {
+             return $this->fetchAll($select)->count();
+         }   
+         
+         //adicionando linha order ao select
+         $select->order($order);
+         
+         // paginacao
+         if ($tamanho > -1) {
+             $tmpInicio = 0;
+             if ($inicio > -1) {
+                 $tmpInicio = $inicio;
+             }   
+             $select->limit($tamanho, $tmpInicio);
+         }
+         return $this->fetchAll($select);
+     }
+      
+     public function extratoContaMovimentoConsolidado($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){     
+         $select = $this->select();
+         $select->setIntegrityCheck(false);
+         $select->from('vwExtratoDaContaMovimentoConsolidado');                                                     
+        
+        //adiciona quantos filtros foram enviados                                                              
+         foreach ($where as $coluna => $valor) {                                                               
+             $select->where($coluna, $valor);                                                                  
+         }                                                                                                     
+         
+         if ($qtdeTotal) {
+             
+             return $this->fetchAll($select)->count();
+         }   
+         
+         //adicionando linha order ao select
+         $select->order($order);
+         
+         // paginacao
+         if ($tamanho > -1) {
+             $tmpInicio = 0;
+             if ($inicio > -1) {
+                 $tmpInicio = $inicio;
+             }   
+             $select->limit($tamanho, $tmpInicio);
+         }
+         return $this->fetchAll($select);
+     }
+
+
+        
 }

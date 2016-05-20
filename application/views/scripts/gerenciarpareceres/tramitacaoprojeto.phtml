@@ -11,10 +11,10 @@
     });
 </script>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INÃCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''),'',true); ?>" title="Ir para Início">Início</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''),'',true); ?>" title="Ir para InÃ­cio">InÃ­cio</a></li>
         <li><a href="<?php echo $this->url(array('controller' => 'gerenciarpareceres', 'action' => 'index'),'',true); ?>" title="Gerenciar Pareceres">Gerenciar Pareceres T&eacute;cnicos</a></li>
         <li class="last">Tramita&ccedil;&atilde;o do projeto</li>
     </ul>
@@ -22,14 +22,14 @@
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INÃCIO TÃTULO ========== -->
 <div id="titulo">
     <div>Tramita&ccedil;&atilde;o do projeto <span class="voltar"><a href="javascript:voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM TÃTULO ========== -->
 
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INÃCIO CONTEÃšDO ========== -->
 <div id="conteudo">
     <form id="formxls" action="<?php echo $this->url(array('controller' => 'gerenciarpareceres', 'action' => 'gerarxls')); ?>" method="post">
         <textarea name="html" class="sumir"><?php echo $this->html; ?></textarea>
@@ -59,7 +59,6 @@
     <table class="tabela">
         <tr>
             <th width="30%" align="left">Produto</th>
-            <th width="10%" align="left">Tipo An&aacute;lise</th>
             <th width="10%" align="left">Unidade</th>
             <th width="5%" align="center">Data de Envio</th>
             <th width="5%" align="center">Data de Retorno</th>
@@ -69,13 +68,12 @@
         <?php $idproduto = ''; $unidade = '';?>
         <?php foreach($this->dados as $d) { ?>
         <tr>
-            <td><?php if($idproduto != $d->idProduto)  echo $d->Produto; ?></td>
-            <td><?php echo $d->TipoAnalise; ?></td>
-            <td><?php if($unidade != $d->Unidade)echo $d->Unidade; ?></td>
-            <td align="center" nowrap><?php echo $d->DtEnvio; ?></td>
-            <td align="center" nowrap><?php echo $d->DtDevolucao; ?></td>
+            <td style="vertical-align: top"><?php if($idproduto != $d->idProduto)  echo $d->Produto; ?></td>
+            <td style="vertical-align: top"><?php if($unidade != $d->Unidade)echo $d->Unidade; ?></td>
+            <td style="vertical-align: top" align="center" nowrap><?php echo $d->DtEnvio; ?></td>
+            <td style="vertical-align: top" align="center" nowrap><?php echo $d->DtDevolucao; ?></td>
             <td><?php echo $d->Observacao; ?></td>
-            <td><?php echo $d->Usuario; ?></td>
+            <td style="vertical-align: top"><?php echo $d->Usuario; ?></td>
         </tr>
         <?php $idproduto = $d->idProduto; $unidade = $d->Unidade;?>
         <?php } ?>
@@ -89,10 +87,10 @@
     </table>
     <?php } ?>
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEÃšDO ========== -->
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÃCIO RODAPÃ‰ DO CONTEÃšDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPÃ‰ DO CONTEÃšDO ========== -->
 
 <br clear="all" />

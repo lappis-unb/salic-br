@@ -1,0 +1,292 @@
+<?php require_once "inc/menu.dados.bancarios.php"; // menu de consultar dados do projeto - dados bancarios ?>
+
+<?php
+
+function mascara ($val, $mask) {
+    $maskared = '';
+    $k = 0;
+
+    for($i = 0; $i<=strlen($mask)-1; $i++) {
+
+        if($mask[$i] == '#') {
+           if(isset($val[$k])){
+            $maskared .= $val[$k++];
+           }
+        } else {
+              if(isset($mask[$i])){
+                 $maskared .= $mask[$i];
+              }
+        }
+    }
+   return $maskared;
+}
+
+?>
+
+
+<script type="text/javascript">
+
+    function abrirDinamico(elemento, obj) {
+        if($(elemento).css('display') == 'none') {
+            $(elemento).fadeIn('fast', function() {
+                $('img', $(obj)).attr('src','<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png');
+            });
+        } else {
+            $(elemento).fadeOut('fast', function() {
+                $('img', $(obj)).attr('src','<?php echo $this->baseUrl(); ?>/public/img/navigation-baixo.PNG');
+            });
+        }
+    }
+
+    $(document).ready(function(){
+        $("#btn_pesquisar").click(function(){
+            $('#formPesquisa').submit();
+        });
+
+        $('.btn_imprimir').click(function(){
+            $('#formImpressao').submit();
+        });
+
+
+    });
+
+</script>
+
+<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<div id="breadcrumb">
+    <ul>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
+        <li class="second"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'), '', true); ?>?idPronac=<?php echo $this->idPronac; ?>" title="Consultar dados projeto">Consultar dados projeto</a></li>
+        <li>Dados banc&aacute;rios</li>
+        <li class="last">Extrato Banc&aacute;rio Consolidado</li>
+    </ul>
+</div>
+<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
+
+
+
+<!-- ========== INÍCIO TÍTULO ========== -->
+<div id="titulo">
+    <div>Extrato Banc&aacute;rio Consolidado</div>
+</div>
+
+<!-- ========== FIM TÍTULO ========== -->
+
+
+<!-- ========== INÍCIO CONTEÚDO ========== -->
+
+<div id="conteudo">
+    <table class="tabela">
+        <tr class="destacar">
+            <td align="center"><b>PRONAC</b></td>
+	    <td align="center"><b>Nome do Projeto</b></td>
+            <td align="center"><b>Ag&ecirc;ncia</b></td>
+	</tr>
+        <tr>
+            <td align="center"><?php echo $this->projeto->AnoProjeto.$this->projeto->Sequencial; ?></td>
+            <td align="center"><?php echo $this->projeto->NomeProjeto; ?></td>
+            <td align="center"><?php echo mascara($this->dados[0]['Agencia'],'####-#');?></td>
+        </tr>
+    </table>
+<!-- ========== INÍCIO MENU PESQUISA ========= -->
+    <form name="formPesquisa" id="formPesquisa" action="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'extrato-conta-movimento-consolidado'));?>" method="get">
+        <table class="tabela">
+            <tr >
+                <th colspan="8">
+                    Filtro de Pesquisa
+                </th>
+            </tr>
+            <tr class="divFiltroPesquisa">
+                <td class="destacar bold w100">Tipo da Conta</td>
+                <td>
+                   <?php
+                    $tipo = Zend_Controller_Front::getInstance()->getRequest()->getParam('TipoConta');
+                    $selecione = "";
+                    $captacao = "";
+                    $movimentacao = "";
+                    if($tipo == ""){
+                        $selecione = "selected";
+                    }
+
+		    if($tipo == "Captação"){
+                        $captacao = "selected";
+                    }
+
+		    if($tipo == "Movimentação"){
+                        $movimentacao = "selected";
+                    }
+
+
+
+                   ?>
+                    <select name="TipoConta">
+                        <option value="" <?php echo $selecione; ?>>Selecione</option>
+                        <option value="Captação" <?php echo $captacao; ?>>Captação</option>
+                        <option value="Movimentação"<?php echo $movimentacao; ?>>Movimentação</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+            <center><input type="button" name="btn_pesquisar" id="btn_pesquisar" class="btn_pesquisar" value=""></center>
+         <input type="hidden" class="input_simples" name="idPronac" value="<?php echo $this->idPronac; ?>">
+    </form>
+</br>
+<!-- ============= FIM MENU PESQUISA ======== -->
+
+
+
+<?php if(count($this->dados)>0){ ?>
+    <!-- ============ PAGINAÇÃO ============ -->
+    <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td align="center">
+                <form name="form1" id="form1" action="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'extrato-conta-movimento-consolidado'));?>" method="get">
+                    <?php if($this->paginacao['pag']>1) { ?>
+                    <input class="btn_inicio" id="btn_inicio" type="button" class="btn_inicio"
+                           onclick="location.href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'extrato-conta-movimento-consolidado')).'?pag=1'."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&idPronac='.$this->idPronac.'&TipoConta='.$tipo; ?>'">
+                    <?php } ?>
+                    <input id="btn_p_anterior" type="button"
+                    <?php if($this->paginacao['pag']<=1) { ?> class="btn_p_anterior-off"
+                    <?php }else { ?>
+                           class="btn_p_anterior" onclick="location.href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'extrato-conta-movimento-consolidado')).'?pag='.($this->paginacao['pag'] - 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&idPronac='.$this->idPronac.'&TipoConta='.$tipo; ?>'"
+                    <?php } ?>>
+                    <input id="btn_p_proximo" type="button"
+                           <?php if($this->paginacao['pag']+1 > $this->paginacao['totalPag']) { ?>
+                           class="btn_p_proximo-off"
+                    <?php }else { ?>
+                           class="btn_p_proximo" onclick="location.href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'extrato-conta-movimento-consolidado')).'?pag='.($this->paginacao['pag'] + 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&idPronac='.$this->idPronac.'&TipoConta='.$tipo; ?>'"
+                    <?php } ?>>
+                    <?php if($this->paginacao['pag'] < $this->paginacao['totalPag']) { ?>
+                    <input class="btn_ultimo" id="btn_ultimo" type="button"
+                           onclick="location.href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'extrato-conta-movimento-consolidado')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&idPronac='.$this->idPronac.'&TipoConta='.$tipo; ?>'">
+                    <?php } ?>
+                    Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                        <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
+                        <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
+                        <?php endfor; ?>
+                    </select>
+                    &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                    <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
+                    <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
+                    <input type="hidden" name="TipoConta" value="<?php echo $tipo;?>">
+                    <input type="hidden" name="idPronac" value="<?php echo $this->idPronac;?>">
+                    <input type="button" class="btn_imprimir">
+                 </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <center>
+        <?php
+            echo $this->paginacao['inicio']." a ";
+            echo ($this->paginacao['pag']-1)*$this->paginacao['Itenspag'] + $this->paginacao['tamanho'];
+            echo " de ". $this->paginacao['total']. " Registros listados";
+        ?>
+    </center>
+    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <?php } ?>
+
+
+
+    <?php if($this->qtd > 0){ ?>
+    <table class="tabela tablesorter">
+        <thead>
+            <tr class="titulo_tabela">
+                <th>Tipo da Conta</th>
+                <th>Nr. Conta</th>
+                <th>C&oacute;digo</th>
+                <th>Lan&ccedil;amento</th>
+                <th>Vl. Lan&ccedil;amento</a></th>
+                <th>D/C</th>
+            </tr>
+        </thead>
+    <tbody>
+        <?php
+            foreach ($this->dados as $d){
+            if($d->stLancamento==="C"){
+               $style= "style=\"color:blue\"";
+            } else{
+               $style= "style=\"color:red\"";
+            }
+         ?>
+         <tr>
+             <td><p align="center"><?php echo $d->TipoConta; ?></p></td>
+             <td><p align="center"><?php echo mascara($d->NrConta,'##.###.###.###-#'); ?></p></td>
+             <td><p align="center"><?php echo $d->Codigo; ?></p></td>
+             <td><p align="center"><?php echo $d->Lancamento; ?></p></td>
+             <td><p align="right" <?php echo $style; ?>><?php echo 'R$ '. @number_format(($d->vlLancamento), 2, ",", "."); ?></p></td>
+             <td><p align="center" <?php echo $style; ?>><?php echo $d->stLancamento; ?></p></td>
+         </tr>
+       <?php  } ?>
+
+      </tbody>
+    </table>
+
+ <?php if(count($this->dados)>0){ ?>
+    <!-- ============ PAGINAÇÃO ============ -->
+    <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td align="center">
+                <form name="form1" id="form1" action="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'extrato-conta-movimento-consolidado'));?>" method="get">
+                    <?php if($this->paginacao['pag']>1) { ?>
+                    <input class="btn_inicio" id="btn_inicio" type="button" class="btn_inicio"
+                           onclick="location.href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'extrato-conta-movimento-consolidado')).'?pag=1'."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&idPronac='.$this->idPronac.'&TipoConta='.$tipo; ?>'">
+                    <?php } ?>
+                    <input id="btn_p_anterior" type="button"
+                    <?php if($this->paginacao['pag']<=1) { ?> class="btn_p_anterior-off"
+                    <?php }else { ?>
+                           class="btn_p_anterior" onclick="location.href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'extrato-conta-movimento-consolidado')).'?pag='.($this->paginacao['pag'] - 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&idPronac='.$this->idPronac.'&TipoConta='.$tipo; ?>'"
+                    <?php } ?>>
+                    <input id="btn_p_proximo" type="button"
+                           <?php if($this->paginacao['pag']+1 > $this->paginacao['totalPag']) { ?>
+                           class="btn_p_proximo-off"
+                    <?php }else { ?>
+                           class="btn_p_proximo" onclick="location.href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'extrato-conta-movimento-consolidado')).'?pag='.($this->paginacao['pag'] + 1)."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&idPronac='.$this->idPronac.'&TipoConta='.$tipo; ?>'"
+                    <?php } ?>>
+                    <?php if($this->paginacao['pag'] < $this->paginacao['totalPag']) { ?>
+                    <input class="btn_ultimo" id="btn_ultimo" type="button"
+                           onclick="location.href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'extrato-conta-movimento-consolidado')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&idPronac='.$this->idPronac.'&TipoConta='.$tipo; ?>'">
+                    <?php } ?>
+                    Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                        <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
+                        <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
+                        <?php endfor; ?>
+                    </select>
+                    &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                    <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
+                    <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
+                    <input type="hidden" name="TipoConta" value="<?php echo $tipo;?>">
+                    <input type="hidden" name="idPronac" value="<?php echo $this->idPronac;?>">
+                    <input type="button" class="btn_imprimir">
+                 </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <center>
+        <?php
+            echo $this->paginacao['inicio']." a ";
+            echo ($this->paginacao['pag']-1)*$this->paginacao['Itenspag'] + $this->paginacao['tamanho'];
+            echo " de ". $this->paginacao['total']. " Registros listados";
+        ?>
+    </center>
+    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <?php } ?>
+
+<?php } else { ?>
+   <table class="tabela">
+        <tr>
+            <td align="center">Nenhum registro encontrado.</td>
+        </tr>
+    </table>
+<?php } ?>
+<br clear="all" />
+
+</div>
+    <form target="_blank" class="form" name="formImpressao" id="formImpressao" method="post" action='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'imprimir-extrato-conta-movimento-consolidado')).'?pag='.$this->paginacao['pag'].'&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo='.$this->paginacao['campo'].'&ordem='.$this->paginacao['ordem'].'&TipoConta='.$tipo;?>'>
+    </form>
+
+<div id="rodapeConteudo"><span></span></div>
+<br clear="all" />

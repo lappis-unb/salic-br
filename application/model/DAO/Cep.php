@@ -50,7 +50,7 @@ class Cep
 	 */
 	public static function buscarCepDB($cep)
 	{
-		$sql = "SELECT 
+		/*$sql = "SELECT
 					LTRIM(RTRIM(lor.cdCep)) AS cep,
 					LTRIM(RTRIM(
 					 LTRIM(RTRIM(CAST(ISNULL(lor.nmLogradouro, '')   AS VARCHAR))) + ' ' +  
@@ -98,10 +98,24 @@ class Cep
 					LEFT JOIN BDCORPORATIVO.scDNE.tbBairro bro 
 						ON bro.nrBairro = lor.nrInicioBairro 
 						OR bro.nrBairro = lor.nrFimBairro
-                                WHERE lor.cdCep = '$cep' OR loc.cdCep = '$cep' ";
+                                WHERE lor.cdCep = '$cep' OR loc.cdCep = '$cep' ";*/
+
+            $sql = "SELECT CEP,
+                           logradouro,
+                           tipo_logradouro,
+                           bairro,
+                           cidade,
+                           uf,
+                           idCidadeMunicipios,
+                           dsCidadeMunicipios,
+                           idCidadeUF,
+                           DSCIDADEMUNICIPIOS AS dsCidadeUF
+                    FROM BDDNE.scDNE.VW_ENDERECO
+                    WHERE CEP = '$cep'";
 
 			$db = Zend_Registry::get('db');
 			$db->setFetchMode(Zend_DB::FETCH_ASSOC);
+            #xd($sql);
 
 			return $db->fetchRow($sql);
 	} // fecha método buscarCepDB()

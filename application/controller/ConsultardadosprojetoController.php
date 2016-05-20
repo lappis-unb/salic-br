@@ -5889,5 +5889,949 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
     	$this->view->dataDevolucaoInicio = $this->getRequest()->getParam('dtDevolucaoInicio');
     	$this->view->dataDevolucaoFim = $this->getRequest()->getParam('dtDevolucaoFim');
     }
+
+    public function extratosBancariosAction(){
+ 
+        $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        $this->view->idPronac = $idPronac;
+        
+        if(!empty($idPronac)){
+            $Projetos = new Projetos();
+            $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
+            
+            //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+            if($this->_request->getParam("qtde")) {
+                $this->intTamPag = $this->_request->getParam("qtde");
+            }
+            $order = array();
+
+            //==== parametro de ordenacao  ======//
+            if($this->_request->getParam("ordem")) {
+                $ordem = $this->_request->getParam("ordem");
+                if($ordem == "ASC") {
+                    $novaOrdem = "DESC";
+                }else {
+                    $novaOrdem = "ASC";
+                }
+            }else {
+                $ordem = "ASC";
+                $novaOrdem = "ASC";
+            }
+
+            //==== campo de ordenacao  ======//
+            if($this->_request->getParam("campo")) {
+                $campo = $this->_request->getParam("campo");
+                $order = array($campo." ".$ordem);
+                $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+
+            } else {
+                $campo = null;
+                $order = array(4,11); //NomeProjeto, Dt.Recibo
+                $ordenacao = null;
+            }
+
+            $pag = 1;
+            $get = Zend_Registry::get('get');
+            if (isset($get->pag)) $pag = $get->pag;
+            $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+
+            /* ================== PAGINACAO ======================*/
+            $where = array();
+            $where['idPronac = ?'] = $idPronac;
+
+            if(isset($_GET['dtLancamento']) && !empty($_GET['dtLancamento']) && isset($_GET['dtLancamentoFim']) && empty($_GET['dtLancamentoFim'])){
+                $di = ConverteData($_GET['dtLancamento'], 13)." 00:00:00";
+                $df = ConverteData($_GET['dtLancamentoFim'], 13)." 00:00:00";
+                $where["dtLancamento BETWEEN '$di' AND '$df'"] = '';
+                $this->view->dtLancamento = $_GET['dtLancamento'];
+                $this->view->dtLancamentoFim = $_GET['dtLancamentoFim'];
+            }
+            
+            if(isset($_GET['dtLancamento']) && !empty($_GET['dtLancamento']) && isset($_GET['dtLancamentoFim']) && !empty($_GET['dtLancamentoFim'])){
+                $di = ConverteData($_GET['dtLancamento'], 13)." 00:00:00";
+                $df = ConverteData($_GET['dtLancamentoFim'], 13)." 00:00:00";
+                $where["dtLancamento BETWEEN '$di' AND '$df'"] = '';
+                $this->view->dtLancamento = $_GET['dtLancamento'];
+                $this->view->dtLancamentoFim = $_GET['dtLancamentoFim'];
+            }
+            
+            if(isset($_GET['tpConta']) && !empty($_GET['tpConta'])){
+                $tpConta = $_GET['tpConta'];
+                $where["Tipo = ?"] = $tpConta;
+                $this->view->tpConta = $_GET['tpConta'];
+            }
+ 
+             if(isset($_GET['tpConta']) && !empty($_GET['tpConta'])){
+                $tpConta = $_GET['tpConta'];
+                $where["Tipo = ?"] = $tpConta ;
+                $this->view->tpConta = $_GET['tpConta'];
+            }
+
+
+            $DadosExtrato = new Projetos();
+            $total = $DadosExtrato->painelDadosBancariosExtrato($where, $order, null, null, true);
+            $fim = $inicio + $this->intTamPag;
+
+            $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
+
+            $busca = $DadosExtrato->painelDadosBancariosExtrato($where, $order, $tamanho, $inicio);
+            $paginacao = array(
+                    "pag"=>$pag,
+                    "qtde"=>$this->intTamPag,
+                    "campo"=>$campo,
+                    "ordem"=>$ordem,
+                    "ordenacao"=>$ordenacao,
+                    "novaOrdem"=>$novaOrdem,
+                    "total"=>$total,
+                    "inicio"=>($inicio+1),
+                    "fim"=>$fim,
+                    "totalPag"=>$totalPag,
+                    "Itenspag"=>$this->intTamPag,
+                    "tamanho"=>$tamanho
+             );
+
+            $this->view->paginacao = $paginacao;
+            $this->view->qtd       = $total;
+            $this->view->dados     = $busca;
+            $this->view->intTamPag = $this->intTamPag;
+        }
+    }
+    public function imprimirExtratosBancariosAction(){
+        $this->_helper->layout->disableLayout();
+
+        $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        $this->view->idPronac = $idPronac;
+        
+        if(!empty($idPronac)){
+            $Projetos = new Projetos();
+            $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
+            
+            //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+            if($this->_request->getParam("qtde")) {
+                $this->intTamPag = $this->_request->getParam("qtde");
+            }
+            $order = array();
+
+            //==== parametro de ordenacao  ======//
+            if($this->_request->getParam("ordem")) {
+                $ordem = $this->_request->getParam("ordem");
+                if($ordem == "ASC") {
+                    $novaOrdem = "DESC";
+                }else {
+                    $novaOrdem = "ASC";
+                }
+            }else {
+                $ordem = "ASC";
+                $novaOrdem = "ASC";
+            }
+
+            //==== campo de ordenacao  ======//
+            if($this->_request->getParam("campo")) {
+                $campo = $this->_request->getParam("campo");
+                $order = array($campo." ".$ordem);
+                $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+
+            } else {
+                $campo = null;
+                $order = array(4,11); //NomeProjeto, Dt.Recibo
+                $ordenacao = null;
+            }
+
+            $pag = 1;
+            $get = Zend_Registry::get('get');
+            if (isset($get->pag)) $pag = $get->pag;
+            $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+
+            /* ================== PAGINACAO ======================*/
+            $where = array();
+            $where['idPronac = ?'] = $idPronac;
+
+            if(isset($_GET['dtLancamento']) && !empty($_GET['dtLancamento']) && isset($_GET['dtLancamentoFim']) && empty($_GET['dtLancamentoFim'])){
+                $di = ConverteData($_GET['dtLancamento'], 13)." 00:00:00";
+                $df = ConverteData($_GET['dtLancamentoFim'], 13)." 00:00:00";
+                $where["dtLancamento BETWEEN '$di' AND '$df'"] = '';
+                $this->view->dtLancamento = $_GET['dtLancamento'];
+                $this->view->dtLancamentoFim = $_GET['dtLancamentoFim'];
+            }
+            
+            if(isset($_GET['dtLancamento']) && !empty($_GET['dtLancamento']) && isset($_GET['dtLancamentoFim']) && !empty($_GET['dtLancamentoFim'])){
+                $di = ConverteData($_GET['dtLancamento'], 13)." 00:00:00";
+                $df = ConverteData($_GET['dtLancamentoFim'], 13)." 00:00:00";
+                $where["dtLancamento BETWEEN '$di' AND '$df'"] = '';
+                $this->view->dtLancamento = $_GET['dtLancamento'];
+                $this->view->dtLancamentoFim = $_GET['dtLancamentoFim'];
+            }
+            
+            if(isset($_GET['tpConta']) && !empty($_GET['tpConta'])){
+                $tpConta = $_GET['tpConta'];
+                $where["Tipo = ?"] = $tpConta;
+                $this->view->tpConta = $_GET['tpConta'];
+            }
+ 
+             if(isset($_GET['tpConta']) && !empty($_GET['tpConta'])){
+                $tpConta = $_GET['tpConta'];
+                $where["Tipo = ?"] = $tpConta ;
+                $this->view->tpConta = $_GET['tpConta'];
+            }
+
+
+            $DadosExtrato = new Projetos();
+            $total = $DadosExtrato->painelDadosBancariosExtrato($where, $order, null, null, true);
+            $fim = $inicio + $this->intTamPag;
+
+            $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
+
+            $busca = $DadosExtrato->painelDadosBancariosExtrato($where, $order, $tamanho, $inicio);
+            $paginacao = array(
+                    "pag"=>$pag,
+                    "qtde"=>$this->intTamPag,
+                    "campo"=>$campo,
+                    "ordem"=>$ordem,
+                    "ordenacao"=>$ordenacao,
+                    "novaOrdem"=>$novaOrdem,
+                    "total"=>$total,
+                    "inicio"=>($inicio+1),
+                    "fim"=>$fim,
+                    "totalPag"=>$totalPag,
+                    "Itenspag"=>$this->intTamPag,
+                    "tamanho"=>$tamanho
+             );
+
+            $this->view->paginacao = $paginacao;
+            $this->view->qtd       = $total;
+            $this->view->dados     = $busca;
+            $this->view->intTamPag = $this->intTamPag;
+        }
+    }
+
+    public function conciliacaoBancariaAction(){
+ 
+        $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        $this->view->idPronac = $idPronac;
+        
+        if(!empty($idPronac)){
+            $Projetos = new Projetos();
+            $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
+            
+            //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+            if($this->_request->getParam("qtde")) {
+                $this->intTamPag = $this->_request->getParam("qtde");
+            }
+            $order = array();
+
+            //==== parametro de ordenacao  ======//
+            if($this->_request->getParam("ordem")) {
+                $ordem = $this->_request->getParam("ordem");
+                if($ordem == "ASC") {
+                    $novaOrdem = "DESC";
+                }else {
+                    $novaOrdem = "ASC";
+                }
+            }else {
+                $ordem = "ASC";
+                $novaOrdem = "ASC";
+            }
+
+            //==== campo de ordenacao  ======//
+            if($this->_request->getParam("campo")) {
+                $campo = $this->_request->getParam("campo");
+                $order = array($campo." ".$ordem);
+                $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+
+            } else {
+                $campo = null;
+                $order = array(8,4);
+                $ordenacao = null;
+            }
+
+            $pag = 1;
+            $get = Zend_Registry::get('get');
+            if (isset($get->pag)) $pag = $get->pag;
+            $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+
+            /* ================== PAGINACAO ======================*/
+            $where = array();
+            $where['idPronac = ?'] = $idPronac;
+
+            $DadosConciliacao = new Projetos();
+            $total = $DadosConciliacao->painelDadosConciliacaoBancaria($where, $order, null, null, true);
+            $fim = $inicio + $this->intTamPag;
+
+            $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
+
+            $busca = $DadosConciliacao->painelDadosConciliacaoBancaria($where, $order, $tamanho, $inicio);
+            $paginacao = array(
+                    "pag"=>$pag,
+                    "qtde"=>$this->intTamPag,
+                    "campo"=>$campo,
+                    "ordem"=>$ordem,
+                    "ordenacao"=>$ordenacao,
+                    "novaOrdem"=>$novaOrdem,
+                    "total"=>$total,
+                    "inicio"=>($inicio+1),
+                    "fim"=>$fim,
+                    "totalPag"=>$totalPag,
+                    "Itenspag"=>$this->intTamPag,
+                    "tamanho"=>$tamanho
+             );
+
+            $this->view->paginacao = $paginacao;
+            $this->view->qtd       = $total;
+            $this->view->dados     = $busca; 
+            $this->view->intTamPag = $this->intTamPag;
+        }
+    }
+
+    public function imprimirConciliacaoBancariaAction(){
+ 
+        $this->_helper->layout->disableLayout();
+
+        $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        $this->view->idPronac = $idPronac;
+        
+        if(!empty($idPronac)){
+            $Projetos = new Projetos();
+            $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
+            
+            //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+            if($this->_request->getParam("qtde")) {
+                $this->intTamPag = $this->_request->getParam("qtde");
+            }
+            $order = array();
+
+            //==== parametro de ordenacao  ======//
+            if($this->_request->getParam("ordem")) {
+                $ordem = $this->_request->getParam("ordem");
+                if($ordem == "ASC") {
+                    $novaOrdem = "DESC";
+                }else {
+                    $novaOrdem = "ASC";
+                }
+            }else {
+                $ordem = "ASC";
+                $novaOrdem = "ASC";
+            }
+
+            //==== campo de ordenacao  ======//
+            if($this->_request->getParam("campo")) {
+                $campo = $this->_request->getParam("campo");
+                $order = array($campo." ".$ordem);
+                $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+
+            } else {
+                $campo = null;
+                $order = array(8,4); //NomeProjeto, Dt.Recibo
+                $ordenacao = null;
+            }
+
+            $pag = 1;
+            $get = Zend_Registry::get('get');
+            if (isset($get->pag)) $pag = $get->pag;
+            $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+
+            /* ================== PAGINACAO ======================*/
+            $where = array();
+            $where['idPronac = ?'] = $idPronac;
+
+            $DadosConciliacao = new Projetos();
+            $total = $DadosConciliacao->painelDadosConciliacaoBancaria($where, $order, null, null, true);
+            $fim = $inicio + $this->intTamPag;
+
+            $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
+
+            $busca = $DadosConciliacao->painelDadosConciliacaoBancaria($where, $order, $tamanho, $inicio);
+            $paginacao = array(
+                    "pag"=>$pag,
+                    "qtde"=>$this->intTamPag,
+                    "campo"=>$campo,
+                    "ordem"=>$ordem,
+                    "ordenacao"=>$ordenacao,
+                    "novaOrdem"=>$novaOrdem,
+                    "total"=>$total,
+                    "inicio"=>($inicio+1),
+                    "fim"=>$fim,
+                    "totalPag"=>$totalPag,
+                    "Itenspag"=>$this->intTamPag,
+                    "tamanho"=>$tamanho
+             );
+
+            $this->view->paginacao = $paginacao;
+            $this->view->qtd       = $total;
+            $this->view->dados     = $busca; 
+            $this->view->intTamPag = $this->intTamPag;
+        }
+    }
+
+    public function inconsistenciaBancariaAction(){
+ 
+        $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        $this->view->idPronac = $idPronac;
+        
+        if(!empty($idPronac)){
+            $Projetos = new Projetos();
+            $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
+            
+            //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+            if($this->_request->getParam("qtde")) {
+                $this->intTamPag = $this->_request->getParam("qtde");
+            }
+            $order = array();
+
+            //==== parametro de ordenacao  ======//
+            if($this->_request->getParam("ordem")) {
+                $ordem = $this->_request->getParam("ordem");
+                if($ordem == "ASC") {
+                    $novaOrdem = "DESC";
+                }else {
+                    $novaOrdem = "ASC";
+                }
+            }else {
+                $ordem = "ASC";
+                $novaOrdem = "ASC";
+            }
+
+            //==== campo de ordenacao  ======//
+            if($this->_request->getParam("campo")) {
+                $campo = $this->_request->getParam("campo");
+                $order = array($campo." ".$ordem);
+                $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+
+            } else {
+                $campo = null;
+                $order = array(1); //NomeProjeto, Dt.Recibo
+                $ordenacao = null;
+            }
+
+            $pag = 1;
+            $get = Zend_Registry::get('get');
+            if (isset($get->pag)) $pag = $get->pag;
+            $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+
+            /* ================== PAGINACAO ======================*/
+            $where = array();
+            $where['idPronac = ?'] = $idPronac;
+
+            $Dados = new Projetos();
+            $total = $Dados->inconsistenciasComprovacao($where, $order, null, null, true);
+            $fim = $inicio + $this->intTamPag;
+
+            $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
+
+            $busca = $Dados->inconsistenciasComprovacao($where, $order, $tamanho, $inicio);
+            $paginacao = array(
+                    "pag"=>$pag,
+                    "qtde"=>$this->intTamPag,
+                    "campo"=>$campo,
+                    "ordem"=>$ordem,
+                    "ordenacao"=>$ordenacao,
+                    "novaOrdem"=>$novaOrdem,
+                    "total"=>$total,
+                    "inicio"=>($inicio+1),
+                    "fim"=>$fim,
+                    "totalPag"=>$totalPag,
+                    "Itenspag"=>$this->intTamPag,
+                    "tamanho"=>$tamanho
+             );
+
+            $this->view->paginacao = $paginacao;
+            $this->view->qtd       = $total;
+            $this->view->dados     = $busca; 
+            $this->view->intTamPag = $this->intTamPag;
+        }
+    }
+
+    public function imprimirInconsistenciaBancariaAction(){
+ 
+        $this->_helper->layout->disableLayout();
+
+        $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        $this->view->idPronac = $idPronac;
+        
+        if(!empty($idPronac)){
+            $Projetos = new Projetos();
+            $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
+            
+            //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+            if($this->_request->getParam("qtde")) {
+                $this->intTamPag = $this->_request->getParam("qtde");
+            }
+            $order = array();
+
+            //==== parametro de ordenacao  ======//
+            if($this->_request->getParam("ordem")) {
+                $ordem = $this->_request->getParam("ordem");
+                if($ordem == "ASC") {
+                    $novaOrdem = "DESC";
+                }else {
+                    $novaOrdem = "ASC";
+                }
+            }else {
+                $ordem = "ASC";
+                $novaOrdem = "ASC";
+            }
+
+            //==== campo de ordenacao  ======//
+            if($this->_request->getParam("campo")) {
+                $campo = $this->_request->getParam("campo");
+                $order = array($campo." ".$ordem);
+                $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+
+            } else {
+                $campo = null;
+                $order = array(1); //NomeProjeto, Dt.Recibo
+                $ordenacao = null;
+            }
+
+            $pag = 1;
+            $get = Zend_Registry::get('get');
+            if (isset($get->pag)) $pag = $get->pag;
+            $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+
+            /* ================== PAGINACAO ======================*/
+            $where = array();
+            $where['idPronac = ?'] = $idPronac;
+
+            $Dados = new Projetos();
+            $total = $Dados->inconsistenciasComprovacao($where, $order, null, null, true);
+            $fim = $inicio + $this->intTamPag;
+
+            $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
+
+            $busca = $Dados->inconsistenciasComprovacao($where, $order, $tamanho, $inicio);
+            $paginacao = array(
+                    "pag"=>$pag,
+                    "qtde"=>$this->intTamPag,
+                    "campo"=>$campo,
+                    "ordem"=>$ordem,
+                    "ordenacao"=>$ordenacao,
+                    "novaOrdem"=>$novaOrdem,
+                    "total"=>$total,
+                    "inicio"=>($inicio+1),
+                    "fim"=>$fim,
+                    "totalPag"=>$totalPag,
+                    "Itenspag"=>$this->intTamPag,
+                    "tamanho"=>$tamanho
+             );
+
+            $this->view->paginacao = $paginacao;
+            $this->view->qtd       = $total;
+            $this->view->dados     = $busca; 
+            $this->view->intTamPag = $this->intTamPag;
+        }
+    }
     
+    public function extratoContaMovimentoConsolidadoAction(){
+
+    $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        $this->view->idPronac = $idPronac;
+        
+        if(!empty($idPronac)){
+            $Projetos = new Projetos();
+            $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
+            
+            //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+            if($this->_request->getParam("qtde")) {
+                $this->intTamPag = $this->_request->getParam("qtde");
+            }
+            $order = array();
+
+            //==== parametro de ordenacao  ======//
+            if($this->_request->getParam("ordem")) {
+                $ordem = $this->_request->getParam("ordem");
+                if($ordem == "ASC") {
+                    $novaOrdem = "DESC";
+                }else {
+                    $novaOrdem = "ASC";
+                }
+            }else {
+                $ordem = "ASC";
+                $novaOrdem = "ASC";
+            }
+
+            //==== campo de ordenacao  ======//
+            if($this->_request->getParam("campo")) {
+                $campo = $this->_request->getParam("campo");
+                $order = array($campo." ".$ordem);
+                $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+
+            } else {
+                $campo = null;
+                $order = array(5,9); 
+                $ordenacao = null;
+            }
+
+            $pag = 1;
+            $get = Zend_Registry::get('get');
+            if (isset($get->pag)) $pag = $get->pag;
+            $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+
+            /* ================== PAGINACAO ======================*/
+            $where = array();
+            $where['idPronac = ?'] = $idPronac;
+  
+            if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["TipoConta= ?"] = $tpConta;
+                $this->view->TipoConta = $_GET['TipoConta'];
+            }
+ 
+             if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["TipoConta = ?"] = $tpConta ;
+                $this->view->TipoConta = $_GET['TipoConta'];
+            }
+
+            
+
+            $Dados = new Projetos();
+            $total = $Dados->extratoContaMovimentoConsolidado($where, $order, null, null, true);
+            $fim = $inicio + $this->intTamPag;
+
+            $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
+
+            $busca = $Dados->extratoContaMovimentoConsolidado($where, $order, $tamanho, $inicio);
+            $paginacao = array(
+                    "pag"=>$pag,
+                    "qtde"=>$this->intTamPag,
+                    "campo"=>$campo,
+                    "ordem"=>$ordem,
+                    "ordenacao"=>$ordenacao,
+                    "novaOrdem"=>$novaOrdem,
+                    "total"=>$total,
+                    "inicio"=>($inicio+1),
+                    "fim"=>$fim,
+                    "totalPag"=>$totalPag,
+                    "Itenspag"=>$this->intTamPag,
+                    "tamanho"=>$tamanho
+             );
+
+            $this->view->paginacao = $paginacao;
+            $this->view->qtd       = $total;
+            $this->view->dados     = $busca;
+            $this->view->intTamPag = $this->intTamPag;
+        }
+
+    }
+
+     public function imprimirExtratoContaMovimentoConsolidadoAction(){
+
+        $this->_helper->layout->disableLayout();
+
+        $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        $this->view->idPronac = $idPronac;
+        
+        if(!empty($idPronac)){
+            $Projetos = new Projetos();
+            $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
+            
+            //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+            if($this->_request->getParam("qtde")) {
+                $this->intTamPag = $this->_request->getParam("qtde");
+            }
+            $order = array();
+
+            //==== parametro de ordenacao  ======//
+            if($this->_request->getParam("ordem")) {
+                $ordem = $this->_request->getParam("ordem");
+                if($ordem == "ASC") {
+                    $novaOrdem = "DESC";
+                }else {
+                    $novaOrdem = "ASC";
+                }
+            }else {
+                $ordem = "ASC";
+                $novaOrdem = "ASC";
+            }
+
+            //==== campo de ordenacao  ======//
+            if($this->_request->getParam("campo")) {
+                $campo = $this->_request->getParam("campo");
+                $order = array($campo." ".$ordem);
+                $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+
+            } else {
+                $campo = null;
+                $order = array(5,9); 
+                $ordenacao = null;
+            }
+            $pag = 1;
+            $get = Zend_Registry::get('get');
+            if (isset($get->pag)) $pag = $get->pag;
+            $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+
+            /* ================== PAGINACAO ======================*/
+            $where = array();
+            $where['idPronac = ?'] = $idPronac;
+
+            if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["TipoConta = ?"] = $tpConta;
+                $this->view->tpConta = $_GET['TipoConta'];
+            }
+ 
+             if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["TipoConta = ?"] = $tpConta ;
+                $this->view->tpConta = $_GET['TipoConta'];
+            }
+
+
+            $Dados = new Projetos();
+            $total = $Dados->extratoContaMovimentoConsolidado($where, $order, null, null, true);
+            $fim = $inicio + $this->intTamPag;
+
+            $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
+
+            $busca = $Dados->extratoContaMovimentoConsolidado($where, $order, $tamanho, $inicio);
+            $paginacao = array(
+                    "pag"=>$pag,
+                    "qtde"=>$this->intTamPag,
+                    "campo"=>$campo,
+                    "ordem"=>$ordem,
+                    "ordenacao"=>$ordenacao,
+                    "novaOrdem"=>$novaOrdem,
+                    "total"=>$total,
+                    "inicio"=>($inicio+1),
+                    "fim"=>$fim,
+                    "totalPag"=>$totalPag,
+                    "Itenspag"=>$this->intTamPag,
+                    "tamanho"=>$tamanho
+             );
+
+            $this->view->paginacao = $paginacao;
+            $this->view->qtd       = $total;
+            $this->view->dados     = $busca;
+            $this->view->intTamPag = $this->intTamPag;
+        }
+
+    }
+
+     public function extratoDeSaldoBancarioAction(){
+
+
+        $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        $this->view->idPronac = $idPronac;
+        
+        if(!empty($idPronac)){
+            $Projetos = new Projetos();
+            $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
+            
+            //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+            if($this->_request->getParam("qtde")) {
+                $this->intTamPag = $this->_request->getParam("qtde");
+            }
+            $order = array();
+
+            //==== parametro de ordenacao  ======//
+            if($this->_request->getParam("ordem")) {
+                $ordem = $this->_request->getParam("ordem");
+                if($ordem == "ASC") {
+                    $novaOrdem = "DESC";
+                }else {
+                    $novaOrdem = "ASC";
+                }
+            }else {
+                $ordem = "ASC";
+                $novaOrdem = "ASC";
+            }
+
+            //==== campo de ordenacao  ======//
+        /*    if($this->_request->getParam("campo")) {
+                $campo = $this->_request->getParam("campo");
+                $order = array($campo." ".$ordem);
+                $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+
+            } else {
+                $campo = null;
+                $order = array(4,9,8);
+                $ordenacao = null;
+            }
+*/
+            
+            $order = ("9 DESC");                
+
+ 
+            $pag = 1;
+            $get = Zend_Registry::get('get');
+            if (isset($get->pag)) $pag = $get->pag;
+            $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+
+            /* ================== PAGINACAO ======================*/
+            $where = array();
+            $where['idPronac = ?'] = $idPronac;
+
+            if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["Tipo= ?"] = $tpConta;
+                $this->view->TipoConta = $_GET['TipoConta'];
+            }
+ 
+             if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["Tipo = ?"] = $tpConta ;
+                $this->view->TipoConta = $_GET['TipoConta'];
+            }
+            $Dados = new Projetos();
+            $total = $Dados->extratoDeSaldoBancario($where, $order, null, null, true);
+            $fim = $inicio + $this->intTamPag;
+
+            $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
+
+            $busca = $Dados->extratoDeSaldoBancario($where, $order, $tamanho, $inicio);
+            $paginacao = array(
+                    "pag"=>$pag,
+                    "qtde"=>$this->intTamPag,
+                   // "campo"=>$campo,
+                    "ordem"=>$ordem,
+                  //  "ordenacao"=>$ordenacao,
+                    "novaOrdem"=>$novaOrdem,
+                    "total"=>$total,
+                    "inicio"=>($inicio+1),
+                    "fim"=>$fim,
+                    "totalPag"=>$totalPag,
+                    "Itenspag"=>$this->intTamPag,
+                    "tamanho"=>$tamanho
+             );
+
+            $this->view->paginacao = $paginacao;
+            $this->view->qtd       = $total;
+            $this->view->dados     = $busca; 
+            $this->view->intTamPag = $this->intTamPag;
+        }
+    }
+
+    public function imprimirExtratoDeSaldoBancarioAction(){  
+
+        $this->_helper->layout->disableLayout();
+
+        $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        $this->view->idPronac = $idPronac;
+        
+        if(!empty($idPronac)){
+            $Projetos = new Projetos();
+            $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
+            
+            //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+            if($this->_request->getParam("qtde")) {
+                $this->intTamPag = $this->_request->getParam("qtde");
+            }
+            $order = array();
+
+            //==== parametro de ordenacao  ======//
+            if($this->_request->getParam("ordem")) {
+                $ordem = $this->_request->getParam("ordem");
+                if($ordem == "ASC") {
+                    $novaOrdem = "DESC";
+                }else {
+                    $novaOrdem = "ASC";
+                }
+            }else {
+                $ordem = "ASC";
+                $novaOrdem = "ASC";
+            }
+
+/*            //==== campo de ordenacao  ======//
+            if($this->_request->getParam("campo")) {
+                $campo = $this->_request->getParam("campo");
+                $order = array($campo." ".$ordem);
+                $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+
+            } else {
+                $campo = null;
+                $order = array(4,9,8); 
+                $ordenacao = null;
+            }
+*/
+            $order = ("9 DESC");                
+            $pag = 1;
+            $get = Zend_Registry::get('get');
+            if (isset($get->pag)) $pag = $get->pag;
+            $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+
+            /* ================== PAGINACAO ======================*/
+            $where = array();
+            $where['idPronac = ?'] = $idPronac;
+
+            if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["Tipo= ?"] = $tpConta;
+                $this->view->TipoConta = $_GET['TipoConta'];
+            }
+ 
+             if(isset($_GET['TipoConta']) && !empty($_GET['TipoConta'])){
+                $tpConta = $_GET['TipoConta'];
+                $where["Tipo = ?"] = $tpConta ;
+                $this->view->TipoConta = $_GET['TipoConta'];
+            }
+            $Dados = new Projetos();
+            $total = $Dados->extratoDeSaldoBancario($where, $order, null, null, true);
+            $fim = $inicio + $this->intTamPag;
+
+            $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
+
+            $busca = $Dados->extratoDeSaldoBancario($where, $order, $tamanho, $inicio);
+            $paginacao = array(
+                    "pag"=>$pag,
+                    "qtde"=>$this->intTamPag,
+                    "campo"=>$campo,
+                    "ordem"=>$ordem,
+                    "ordenacao"=>$ordenacao,
+                    "novaOrdem"=>$novaOrdem,
+                    "total"=>$total,
+                    "inicio"=>($inicio+1),
+                    "fim"=>$fim,
+                    "totalPag"=>$totalPag,
+                    "Itenspag"=>$this->intTamPag,
+                    "tamanho"=>$tamanho
+             );
+
+            $this->view->paginacao = $paginacao;
+            $this->view->qtd       = $total;
+            $this->view->dados     = $busca; 
+            $this->view->intTamPag = $this->intTamPag;
+        }
+
+    }
+
+   
 }
