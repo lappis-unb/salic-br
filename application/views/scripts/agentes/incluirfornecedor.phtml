@@ -108,6 +108,7 @@ if (empty($_GET['acao'])) {
                     else if (data[0].msgCPF == 'novo') 
                     { //Alysson - Adicionado para realizar Chamada AJAX
                         $('#novo').html('Preencha os dados abaixo!');
+
                         $('#nome').val(data[0].Nome);
                         cep = data[0].Cep;
                         cep = cep.replace(/\D/g, "");
@@ -115,6 +116,7 @@ if (empty($_GET['acao'])) {
                         cep = cep.replace(/(\d{3})(\d)/, "$1-$2");
                         $('#cep').val(cep);
                         $('#cep').blur();
+
                         $('.novo').show();
                     } 
                 

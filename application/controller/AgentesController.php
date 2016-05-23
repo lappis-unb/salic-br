@@ -1823,12 +1823,13 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
+     * @author Alysson Vicuña de Oliveira
      * Método agentecadastrado()
      * @access public
      * @param void
      * @return void
      */
-    public function agentecadastradoAction() {
+    public function agentecadastradoAction() { //Método chamado pela Modal
         //$this->autenticacao();
         $this->_helper->layout->disableLayout(); // desabilita o layout
         $this->_helper->viewRenderer->setNoRender(true);
