@@ -9,7 +9,8 @@ Release 1.7.0
   * Novo: [Movimentação bancária] Adicionado tela de saldo das contas
   * Novo: [Consultar dados projeto] exibindo informações sobre área e segmento e suprimindo de logomarca
   * Novo: [Consultar dados projeto] adicionando período de captação
-  * Novo: Implementação completa do WebService da Receita para Pessoa Fisica ou Juridica
+  * Novo: [Webservice Receita] Implementação completa do WebService da Receita para Pessoa Fisica ou Juridica
+  * Novo: [Webservice Receita] Implementação do Serviço de Consulta a Receita Federal no Cadastro do Proponente na Comprovação da Execução Financeira
   * Fix: [Comprovar execução física] Correção da query de paginação em relatorios trimestrais
   * Fix: [Webservice SEI]Realizando ajustes no WebService do SEI
   * Fix: [Avaliar acompanhamento] corrigindo texto de cumprimento dos objetos
