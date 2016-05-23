@@ -1,0 +1,74 @@
+<thead>
+    <tr class="titulo_tabela">
+        <th>#</th>
+        <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=3&ordem='.$this->paginacao['novaOrdem'];?>">PRONAC</a></th>
+        <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">Nome do Projeto</a></th>
+        <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Solicita&ccedil;&atilde;o</a></th>
+        <th>Dt. Encaminhamento</th>
+        <th>Qt. Dias Encaminhar</th>
+        <th>Readequação</th>
+        <th>Encaminhamento</th>
+        <th>Dt. Envio Avaliador</th>
+        <th>Qt Dias Avaliador</th>
+        <th>Receptor</th>
+        <th>Tecnico</th>
+        <th>Unidade</th>
+    </tr>
+</thead>
+    <?php $count=1; foreach($this->dados as $d): ?>
+<tbody>
+    <tr>
+        <td align="center" style="width: 1px;"><?php echo $count; ?></td>
+        <td align="center">
+            <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($d->idPronac); ?>" target="_blank">
+                <?php echo $d->PRONAC; ?>
+            </a>
+        </td>
+        <td><?php echo $d->NomeProjeto; ?></td>
+        <td align="center"><?php echo Data::tratarDataZend($d->dtSolicitacao, 'Brasileira'); ?></td>
+        <td align="center"><?php echo Data::tratarDataZend($d->DtEncaminhamento, 'Brasileira'); ?></td>
+        <td align="center"><?php echo $d->qtDiasEncaminhar ?></td>
+        <td align="center"><?php echo $d->dsReadequacao ?></td>
+        <td align="center"><?php echo $d->dsEncaminhamento ?></td>
+        <td align="center"><?php echo Data::tratarDataZend($d->DtEnvioAvaliador, 'Brasileira'); ?></td>
+        <td align="center"><?php echo ($d->qtDiasAvaliar); ?></td>
+        <td><?php echo $d->Receptor; ?></td>
+        <td><?php echo $d->Tecnico; ?></td>
+        <td><?php echo $d->Unidade; ?></td>
+
+        <?php if($this->filtro == 'analisados'): ?>
+        <td align="center">
+            <input type="button" class="btn_ver" idReadequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>" />
+        </td>
+
+        <td align="left">
+            <?php if($this->filtro == 'analisados'){ ?>
+            <select name="tecnico" class="select_simples comboComponente">
+                <option value=""> - Selecione - </option>
+                <?php foreach ($this->conselheiros as $conselheiro) { ?>
+                <option value="<?php echo $conselheiro->id; ?>"><?php echo $conselheiro->nome; ?></option>
+                <?php } ?>
+                <input style="margin-left: 10px;" type="button" name="btn_enviar" class="btn_enviar finalizarReadequacao" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar para Componente da Comissão">
+            </select>
+            <?php } else { echo '-'; } ?>
+        </td>
+        <?php endif; ?>
+
+        <?php if($this->filtro != 'encaminhados'): ?>
+            <td align="left" style="width: 1px;" nowrap>
+                <?php if($this->filtro == 'analisados'): ?>
+                    <?php if($d->siEncaminhamento == 6 || $d->siEncaminhamento == 10): ?>
+                    <input type="button" name="btn_encaminhar"
+                            class="btn_finalizar finalizarAnaliseReadequacao" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Finalizar a análise">
+                    <?php endif; ?>
+                <?php else: ?>
+                    <input type="button" name="btn_avaliar" id="btn_avaliar" class="btn_encaminhar" readequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>"
+                            pronac="<?php echo $d->PRONAC; ?>"
+                            nomeprojeto="<?php echo $d->NomeProjeto; ?>" title="Encaminhar">
+                <?php endif; ?>
+            </td>
+        <?php endif; ?>
+    </tr>
+    <?php $count++;  ?>
+    <?php endforeach; ?>
+</tbody>

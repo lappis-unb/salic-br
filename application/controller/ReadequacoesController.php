@@ -1872,7 +1872,8 @@ class ReadequacoesController extends GenericControllerNew {
     /*
      * Alterada em 15/05/15
      */
-    public function painelAction(){
+    public function painelAction()
+    {
         //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
         if($this->idPerfil != 122 && $this->idPerfil != 123){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
@@ -1917,29 +1918,30 @@ class ReadequacoesController extends GenericControllerNew {
         /* ================== PAGINACAO ======================*/
         $where = array();
 
+        $filtro = null;
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
             $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
             $this->view->filtro = $filtro;
             switch ($filtro) {
                 case '':
-                    $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    $where['a.siEncaminhamento = ?'] = 1; // 1=Solicitado pelo proponente
+                    //$where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
+                    //$where['a.siEncaminhamento = ?'] = 1; // 1=Solicitado pelo proponente
                     break;
                 case 'encaminhados':
-                    $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    $where['a.siEncaminhamento in (?)'] = array(3,4,5,7); // 4=Encaminhado para Parecerista/Técnico; 5=Devolvido do Parecerista para o Coordenador da Unidade de Análise; 7=Encaminhado para o Componente da Comissão
+                    //$where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
+                    //$where['a.siEncaminhamento in (?)'] = array(3,4,5,7); // 4=Encaminhado para Parecerista/Técnico; 5=Devolvido do Parecerista para o Coordenador da Unidade de Análise; 7=Encaminhado para o Componente da Comissão
                     $this->view->nmPagina = 'Em análise';
                     break;
                 case 'analisados':
-                    $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    $where['a.siEncaminhamento in (?)'] = array(6,10); // 6=Devolvido da Unidade de Analise para o MinC; 10=Devolvido pelo Tecnico para o Coordenador
+                    //$where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
+                    //$where['a.siEncaminhamento in (?)'] = array(6,10); // 6=Devolvido da Unidade de Analise para o MinC; 10=Devolvido pelo Tecnico para o Coordenador
                     $this->view->nmPagina = 'Analisados';
                     break;
             }
         } else {
             $this->view->nmPagina = 'Aguardando Análise';
-            $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-            $where['a.siEncaminhamento = ?'] = 1; // 1=Solicitado pelo proponente
+            //$where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
+            //$where['a.siEncaminhamento = ?'] = 1; // 1=Solicitado pelo proponente
         }
 
         if((isset($_GET['pronac']) && !empty($_GET['pronac']))){
@@ -1952,20 +1954,37 @@ class ReadequacoesController extends GenericControllerNew {
 
         if(isset($idSecretaria) && !empty($idSecretaria)){
             if($idSecretaria->idSecretaria == 251){
-                $where['b.Area <> ?'] = 2;
+                //$where['b.Area <> ?'] = 2;
             } else if($idSecretaria->idSecretaria == 160){
-                $where['b.Area = ?'] = 2;
+                //$where['b.Area = ?'] = 2;
             }
         }
 
         $tbReadequacao = New tbReadequacao();
-        $total = $tbReadequacao->painelReadequacoes($where, $order, null, null, true);
+
+        $total = null;
+
+        switch($filtro){
+            case '':
+                $total = $tbReadequacao->aguardandoAnaliseTotal();
+                break;
+            case 'encaminhados':
+                $total = $tbReadequacao->emAnaliseTotal();
+                break;
+            case 'analisados':
+                $total = $tbReadequacao->analisadosTotal();
+                break;
+        }
+        //$total = $tbReadequacao->painelReadequacoes($where, $order, null, null, true, $filtro);
+
         $fim = $inicio + $this->intTamPag;
 
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
-        $busca = $tbReadequacao->painelReadequacoes($where, $order, $tamanho, $inicio);
+
+        $busca = $tbReadequacao->painelReadequacoes($where, $order, $tamanho, $inicio, null, $filtro);
+
         $paginacao = array(
             "pag"=>$pag,
             "qtde"=>$this->intTamPag,

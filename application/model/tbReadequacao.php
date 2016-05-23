@@ -29,16 +29,16 @@ class tbReadequacao extends GenericModel
 		$where = "idRecurso = " . $where;
 		return $this->update($dados, $where);
 	} // fecha método alterarDados()
-    
 
-    /* 
+
+    /*
      * Criada em 03/14
      * @author: Jefferson Alessandro
      */
     public function readequacoesCadastradasProponente($where=array(), $order=array()) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             array(
                 new Zend_Db_Expr("a.idReadequacao, a.idPronac, a.dtSolicitacao, CAST(a.dsSolicitacao AS TEXT) AS dsSolicitacao, CAST(a.dsJustificativa AS TEXT) AS dsJustificativa, b.dsReadequacao, c.idArquivo, d.nmArquivo, a.idTipoReadequacao"),
@@ -70,36 +70,49 @@ class tbReadequacao extends GenericModel
         return $this->fetchAll($select);
     }
 
-    /* 
+    /*
      * Alterada em 06/03/14
      * @author: Jefferson Alessandro
      */
-    public function painelReadequacoes($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
-        $select = $this->select();
-        $select->setIntegrityCheck(false);
-        $select->from( 
-            array('a' => $this->_name),
-            array(
-                new Zend_Db_Expr("b.idPronac, a.idReadequacao, b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto, a.dtSolicitacao, c.dsReadequacao, a.siEncaminhamento")
-            )
-        );
-        $select->joinInner(
-            array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
-            array('b.CgcCpf'), 'SAC.dbo'
-        );
-        $select->joinInner(
-            array('c' => 'tbTipoReadequacao'), 'c.idTipoReadequacao = a.idTipoReadequacao',
-            array(''), 'SAC.dbo'
-        );
+    public function painelReadequacoes($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $filtro = null)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $select= array();
+        $result= array();
+        $total= array();
+
+        switch($filtro){
+            case '':
+                $select = $this->selectView('vwPainelCoordenadorReadequacaoAguardandoAnalise');
+                break;
+            case 'encaminhados':
+                $select = $this->selectView('vwPainelCoordenadorReadequacaoEmAnalise');
+                break;
+            case 'analisados':
+                $select = $this->selectView('vwPainelCoordenadorReadequacaoAnalisados');
+                break;
+        }
+
+        //$select = $this->select();
+        //$select->setIntegrityCheck(false);
+        //$select->from(
+            //array('a' => $this->_name),
+            //array(
+                //new Zend_Db_Expr("b.idPronac, a.idReadequacao, b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto, a.dtSolicitacao, c.dsReadequacao, a.siEncaminhamento")
+            //)
+        //);
+        //$select->joinInner(
+            //array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
+            //array('b.CgcCpf'), 'SAC.dbo'
+        //);
+        //$select->joinInner(
+            //array('c' => 'tbTipoReadequacao'), 'c.idTipoReadequacao = a.idTipoReadequacao',
+            //array(''), 'SAC.dbo'
+        //);
 
        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
-        }
-
-        if ($qtdeTotal) {
-            //xd($select->assemble());
-            return $this->fetchAll($select)->count();
         }
 
         //adicionando linha order ao select
@@ -114,17 +127,75 @@ class tbReadequacao extends GenericModel
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
-        return $this->fetchAll($select);
+        $stmt = $db->query($select);
+
+        while ($o = $stmt->fetchObject()) {
+            $result[] = $o;
+        }
+
+        //return $stmt->fetchAll();
+        return $result;
     }
-    
-    /* 
+
+    private function selectView($vw){
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $select = $db->select()->from(
+            array('a' => $vw),
+            array('*'),
+            $this->_banco.'.'.$this->_schema
+        );
+
+        return $select;
+    }
+
+
+    public function aguardandoAnaliseTotal($count = false){
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $select = $db->select()->from(
+            array('a' => 'vwPainelCoordenadorReadequacaoAguardandoAnalise'),
+            array('*'),
+            $this->_banco.'.'.$this->_schema
+        );
+
+        $result = $db->query($select)->fetchAll();
+        return count($result);
+    }
+
+    public function emAnaliseTotal(){
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $select = $db->select()->from(
+            array('a' => 'vwPainelCoordenadorReadequacaoEmAnalise'),
+            array('*'),
+            $this->_banco.'.'.$this->_schema
+        );
+
+        $result = $db->query($select)->fetchAll();
+        return  count($result);
+    }
+
+    public function analisadosTotal()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $select = $db->select()->from(
+            array('a' => 'vwPainelCoordenadorReadequacaoAnalisados'),
+            array('*'),
+            $this->_banco.'.'.$this->_schema
+        );
+
+        return count($db->query($select)->fetchAll());
+    }
+
+    /*
      * Busca os dados da readequacao com os campos de VARCHAR(MAX) convertidos e completos.
      */
     public function buscarReadequacao($idReadequacao) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             array(
                 'idReadequacao',
@@ -151,15 +222,15 @@ class tbReadequacao extends GenericModel
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
-    /* 
+
+    /*
      * Alterada em 06/03/14
      * @author: Jefferson Alessandro
      */
     public function buscarDadosReadequacoes($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             new Zend_Db_Expr("
                 a.idReadequacao,
@@ -205,15 +276,15 @@ class tbReadequacao extends GenericModel
 
         //adicionando linha order ao select
         $select->order($order);
-        
+
             //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
+
     public function visualizarReadequacao($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             new Zend_Db_Expr("
                 a.idReadequacao,
@@ -263,12 +334,12 @@ class tbReadequacao extends GenericModel
 
         //adicionando linha order ao select
         $select->order($order);
-        
+
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
 
-    /* 
+    /*
      * Criada em 16/03/2014
      * @author: Jefferson Alessandro
      * Função usada para detalhar a readequação para análise do componente da comissão.
@@ -276,7 +347,7 @@ class tbReadequacao extends GenericModel
     public function buscarDadosReadequacoesCnic($where=array(), $order=array()) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             new Zend_Db_Expr("
                 a.idReadequacao,
@@ -331,8 +402,8 @@ class tbReadequacao extends GenericModel
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
-    /* 
+
+    /*
      * Criada em 12/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
      */
@@ -342,10 +413,10 @@ class tbReadequacao extends GenericModel
         } else {
             $nome = 'd.Descricao AS Tecnico';
         }
-        
+
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => 'tbDistribuirReadequacao'),
             array(
                 new Zend_Db_Expr("a.idDistribuirReadequacao, c.IdPRONAC, c.AnoProjeto+c.Sequencial AS Pronac, c.NomeProjeto, a.DtEncaminhamento, $nome, a.idAvaliador AS idTecnico, CAST(b.dsSolicitacao as TEXT) AS dsSolicitacao, b.idReadequacao, e.dsReadequacao as tipoReadequacao")
@@ -359,7 +430,7 @@ class tbReadequacao extends GenericModel
             array('c' => 'Projetos'), 'c.IdPRONAC = b.IdPRONAC',
             array('c.CgcCpf'), 'SAC.dbo'
         );
-        
+
         if($idPerfil == 121){
             $select->joinLeft(
                 array('d' => 'Usuarios'), 'a.idAvaliador = d.usu_codigo',
@@ -371,7 +442,7 @@ class tbReadequacao extends GenericModel
                 array(''), 'AGENTES.dbo'
             );
         }
-        
+
         $select->joinInner(
             array('e' => 'tbTipoReadequacao'), 'e.idTipoReadequacao = b.idTipoReadequacao',
             array(''), 'SAC.dbo'
@@ -397,12 +468,12 @@ class tbReadequacao extends GenericModel
             }
             $select->limit($tamanho, $tmpInicio);
         }
-        
+
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
-    /* 
+
+    /*
      * Criada em 14/03/2014
      * @author: Jefferson Alessandro
      * Função acessada pelo componente da comissão.
@@ -410,7 +481,7 @@ class tbReadequacao extends GenericModel
     public function painelReadequacoesComponente($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             array(
                 new Zend_Db_Expr("b.idPronac, a.idReadequacao, b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto, a.dtSolicitacao, c.dsReadequacao, a.siEncaminhamento, d.idDistribuirReadequacao")
@@ -454,11 +525,11 @@ class tbReadequacao extends GenericModel
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
+
     public function readequacoesNaoSubmetidas($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             array(
                 new Zend_Db_Expr("b.idPronac, a.idReadequacao, b.AnoProjeto+b.Sequencial AS PRONAC, b.NomeProjeto, a.dtSolicitacao, a.idTipoReadequacao, f.dsReadequacao, c.usu_nome AS Componente, d.Descricao AS dsArea, e.Descricao AS dsSegmento"),
@@ -511,11 +582,11 @@ class tbReadequacao extends GenericModel
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
+
     public function buscarDadosParecerReadequacao($where=array(), $order=array()) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             new Zend_Db_Expr("
                 a.idReadequacao, c.DtParecer, c.ResumoParecer, c.ParecerFavoravel, c.Logon as idAvaliador, d.usu_nome as nmAvaliador
@@ -533,7 +604,7 @@ class tbReadequacao extends GenericModel
             array('d' => 'Usuarios'), 'd.usu_codigo = c.Logon',
             array(''), 'TABELAS.dbo'
         );
-        
+
        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
@@ -545,18 +616,18 @@ class tbReadequacao extends GenericModel
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
+
     public function buscarReadequacoesEnviadosPlenaria($idNrReuniao) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             new Zend_Db_Expr("
                 a.stAnalise,
-                (b.AnoProjeto+b.Sequencial) AS pronac, 
-                b.NomeProjeto, 
-                b.IdPRONAC, 
-                c.Descricao AS area, 
+                (b.AnoProjeto+b.Sequencial) AS pronac,
+                b.NomeProjeto,
+                b.IdPRONAC,
+                c.Descricao AS area,
                 d.Descricao AS segmento,
                 h.usu_nome AS nomeComponente,
                 a.idReadequacao,
@@ -588,7 +659,7 @@ class tbReadequacao extends GenericModel
             array('i' => 'tbTipoReadequacao'), 'i.idTipoReadequacao = a.idTipoReadequacao',
             array(''), 'SAC.dbo'
         );
-        
+
         $select->where('a.stEstado = ? ', 0);
         $select->where('a.idNrReuniao = ? ', $idNrReuniao);
         $select->where('a.siEncaminhamento = ? ', 8);
@@ -598,7 +669,7 @@ class tbReadequacao extends GenericModel
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
+
     public function atualizarReadequacoesProximaPlenaria($idNrReuniao) {
         $sql = "UPDATE SAC.dbo.tbReadequacao
                      SET idNrReuniao = idNrReuniao + 1
@@ -611,7 +682,7 @@ class tbReadequacao extends GenericModel
         $resultado = $db->fetchAll($sql);
         return $resultado;
     } // fecha método buscarPlanilhaDeCustos()
-    
+
     public function atualizarStatusReadequacoesNaoSubmetidos($idNrReuniao) {
         $sql = "UPDATE SAC.dbo.tbReadequacao
                     SET stEstado = 1
@@ -626,5 +697,5 @@ class tbReadequacao extends GenericModel
         $resultado = $db->fetchAll($sql);
         return $resultado;
     } // fecha método buscarPlanilhaDeCustos()
-    
+
 } // fecha class
