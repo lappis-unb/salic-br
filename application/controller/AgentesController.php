@@ -1864,8 +1864,7 @@ class AgentesController extends GenericControllerNew {
                             $novos_valores[0]['msgCPF'] = utf8_encode('novo');
                             $novos_valores[0]['idAgente'] = $arrResultado['idPessoaFisica'];
                             $novos_valores[0]['Nome'] = utf8_encode($arrResultado['nmPessoaFisica']);
-                            $novos_valores[0]['Cep'] = $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'];
-                            #$novos_valores[0]['agente'] = $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'];
+                            $novos_valores[0]['Cep'] = isset($arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep']) && $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] ? $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] : '';
                         }
                 } else if(15 == strlen($cpf)){
                         $arrResultado = $wsServico->consultarPessoaJuridicaReceitaFederal($cpf);
@@ -1873,8 +1872,7 @@ class AgentesController extends GenericControllerNew {
                             $novos_valores[0]['msgCPF'] = utf8_encode('novo');
                             $novos_valores[0]['idAgente'] = $arrResultado['idPessoaJuridica'];
                             $novos_valores[0]['Nome'] = utf8_encode($arrResultado['nmRazaoSocial']);
-                            $novos_valores[0]['Cep'] = $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'];
-                            #$novos_valores[0]['agente'] = $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'];
+                            $novos_valores[0]['Cep'] = isset($arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep']) && $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] ? $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] : '';;
                         }
                 }
 
