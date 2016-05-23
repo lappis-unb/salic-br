@@ -157,6 +157,22 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
         </tr>
     </table>
 
+    </br>
+
+    <table class="tabela">
+        <tr>
+            <th colspan="2">Período de Execução</th>
+        <tr>
+        <tr>
+            <th align="center" width="50%">Dt. Início:</th>
+            <th align="center">Dt. Fim:</th>
+        </tr>
+  
+        <tr class="linha">
+            <td align="center"><?php echo Data::tratarDataZend($this->DadosRelatorio[0]->dtInicioExecucao, 'Brasileiro'); ?></td>
+            <td align="center"><?php echo Data::tratarDataZend($this->DadosRelatorio[0]->dtFimExecucao, 'Brasileiro'); ?></td>
+
+    </table>
     <br clear="all" />
 
     <form id="formParecer" action="<?php echo $this->url(array('controller' => 'analisarexecucaofisicatecnico', 'action' => 'avaliar-relatorio-trimestral'), '', true); ?>?idpronac=<?php echo $this->idPronac; ?>" method="post">

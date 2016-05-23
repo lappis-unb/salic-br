@@ -39,6 +39,7 @@ class Ddd extends Zend_Db_Table
 			$this->view->message = "Erro ao buscar DDDs: " . $e->getMessage();
 		}
 
+        #xd( $sql );
 		return $db->fetchAll($sql);
 	} // fecha buscar()
 } // fecha class

@@ -365,8 +365,7 @@ class AgentesController extends GenericControllerNew {
         $teste          = $this->getRequest()->getParam('teste');
         $tipoPessoa     = $this->getRequest()->getParam('tipoPessoa');
         $erro           = 0;
-        #x( $cpf );
-        #xd( strlen( $cpf ) );
+
         try {
             if(11 == strlen( $cpf )) {
                 if (!validaCPF($cpf)) {
@@ -379,13 +378,11 @@ class AgentesController extends GenericControllerNew {
                         $retorno['error'] = utf8_encode('Pessoa não encontrada!');
                         $erro = 1;
                     }
-                    #xd($arrResultado);
-                    #xd($arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep']);
                     if ($erro == 0 && count($arrResultado) > 0) {
                         #xd( $arrResultado );
                         $retorno['dados']['idPessoa'] = $arrResultado['idPessoaFisica'];
                         $retorno['dados']['nome'] = utf8_encode($arrResultado['nmPessoaFisica']);
-                        $retorno['dados']['cep'] = $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'];
+                        $retorno['dados']['cep'] = isset($arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep']) && $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] ? $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] : '';
                         $retorno['error'] = '';
 
                     } else {
@@ -393,25 +390,20 @@ class AgentesController extends GenericControllerNew {
                     }
                 }
             } else if(15 == strlen($cpf)){
-                #xd('ihihiohihohh');
                 if (!isCnpjValid($cpf)) {
                     $retorno['error'] = utf8_encode('CNPJ inválido');
                     $erro = 1;
                 } else {
                     $arrResultado = $wsServico->consultarPessoaJuridicaReceitaFederal($cpf);
-                    #xd($arrResultado);
                     if (empty($arrResultado)) {
                         $retorno['error'] = utf8_encode('Pessoa não encontrada!!');
                         $erro = 1;
                     }
-                    #xd($arrResultado['pessoa']['enderecos'][0]['logradouro']);
-                    #xd($arrResultado);
-                    #xd($arrResultado['pessoa']);#['enderecos'][0]['logradouro']['nrCep']);
                     if ($erro == 0 && count($arrResultado) > 0) {
                         #xd( $arrResultado );
                         $retorno['dados']['idPessoa'] = $arrResultado['idPessoaJuridica'];
                         $retorno['dados']['nome'] = utf8_encode($arrResultado['nmRazaoSocial']);
-                        $retorno['dados']['cep'] = $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'];
+                        $retorno['dados']['cep'] = isset($arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep']) && $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] ? $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] : '';
                         $retorno['error'] = '';
 
                     } else {
@@ -440,14 +432,11 @@ class AgentesController extends GenericControllerNew {
 
         #$wsServico = new ServicosReceitaFederal();
         #$arrResultado = $wsServico->consultarPessoaFisicaReceitaFederal('11010601660' );
-        #x();
         #xd( $arrResultado );
 
 
         #$wsWebServiceSEI = new ServicosSEI();
-        #$txSiglaSistema = "INTRANET";
-        #$txIdentificacaoServico = "SALIC";
-        #$arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento($txSiglaSistema, $txIdentificacaoServico);
+        #$arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento();
         #x($arrRetornoGerarProcedimento->ProcedimentoFormatado);
         #$chars = array(".","/","-");
         #$nrProcessoSemFormatacao = str_replace($chars,"",$arrRetornoGerarProcedimento->ProcedimentoFormatado);
@@ -1834,21 +1823,24 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
+     * @author Alysson Vicuña de Oliveira
      * Método agentecadastrado()
      * @access public
      * @param void
      * @return void
      */
-    public function agentecadastradoAction() {
+    public function agentecadastradoAction() { //Método chamado pela Modal
         //$this->autenticacao();
         $this->_helper->layout->disableLayout(); // desabilita o layout
         $this->_helper->viewRenderer->setNoRender(true);
-        $cpf = $_REQUEST['cpf'];
+        #$cpf = $_REQUEST['cpf'];
+        $cpf = preg_replace('/\.|-|\//','',$_REQUEST['cpf']);
 
         $novos_valores = array();
 
         $dados = ManterAgentesDAO::buscarAgentes($cpf);
 
+        #xd( (strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) || (strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf)) );
         if ((strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) || (strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf))) {
             $novos_valores[0]['msgCPF'] = utf8_encode('invalido');
         } else {
@@ -1864,7 +1856,28 @@ class AgentesController extends GenericControllerNew {
                     $novos_valores[0]['agente'] = $dado;
                 }
             } else {
-                $novos_valores[0]['msgCPF'] = utf8_encode('novo');
+                #Instancia a Classe de Serviço do WebService da Receita Federal
+                $wsServico = new ServicosReceitaFederal();
+                if(11 == strlen( $cpf )) {
+                        $arrResultado = $wsServico->consultarPessoaFisicaReceitaFederal($cpf);
+                        if (count($arrResultado) > 0) {
+                            $novos_valores[0]['msgCPF'] = utf8_encode('novo');
+                            $novos_valores[0]['idAgente'] = $arrResultado['idPessoaFisica'];
+                            $novos_valores[0]['Nome'] = utf8_encode($arrResultado['nmPessoaFisica']);
+                            $novos_valores[0]['Cep'] = $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'];
+                            #$novos_valores[0]['agente'] = $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'];
+                        }
+                } else if(15 == strlen($cpf)){
+                        $arrResultado = $wsServico->consultarPessoaJuridicaReceitaFederal($cpf);
+                        if (count($arrResultado) > 0) {
+                            $novos_valores[0]['msgCPF'] = utf8_encode('novo');
+                            $novos_valores[0]['idAgente'] = $arrResultado['idPessoaJuridica'];
+                            $novos_valores[0]['Nome'] = utf8_encode($arrResultado['nmRazaoSocial']);
+                            $novos_valores[0]['Cep'] = $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'];
+                            #$novos_valores[0]['agente'] = $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'];
+                        }
+                }
+
             }
         }
 

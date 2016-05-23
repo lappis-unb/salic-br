@@ -93,7 +93,7 @@ if (empty($_GET['acao'])) {
 
                     if (data[0].msgCPF == 'cadastrado')
                     {   
-                    
+
                         $('#novocadastro').hide();
                         $('#carregando').show();
                     <?php if ($this->modulo != "movimentacaobancaria") { ?>
@@ -106,8 +106,17 @@ if (empty($_GET['acao'])) {
                         $('#erroCpf').html('CPF/CNPJ Inválido');
                     }
                     else if (data[0].msgCPF == 'novo') 
-                    {
+                    { //Alysson - Adicionado para realizar Chamada AJAX
                         $('#novo').html('Preencha os dados abaixo!');
+
+                        $('#nome').val(data[0].Nome);
+                        cep = data[0].Cep;
+                        cep = cep.replace(/\D/g, "");
+                        cep = cep.replace(/(\d{2})(\d)/, "$1.$2");
+                        cep = cep.replace(/(\d{3})(\d)/, "$1-$2");
+                        $('#cep').val(cep);
+                        $('#cep').blur();
+
                         $('.novo').show();
                     } 
                 

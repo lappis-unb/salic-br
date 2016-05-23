@@ -722,46 +722,6 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
-    
-    /**
-     * Author: Fernao Lopes Ginez de Lara
-     * Descrição: Função criada a pedido da Área Finalistica em 13/04/2016
-     */
-    public function enviarcomprovacaopagamentoAction() {
-      $idPronac = $this->getRequest()->getParam('idPronac');
-      
-      try {
-	  
-          $comprovantePagamentoModel = new ComprovantePagamento();
-	  $comprovantePagamento = $comprovantePagamentoModel->atualizarComprovanteRecusado($idPronac);
-	  
-	  $this->_helper->flashMessenger('Comprovantes enviados com sucesso!');
-	  $this->_redirect(
-                str_replace(
-                    $this->view->baseUrl(),
-                    '',
-                    $this->view->url(
-                        array(
-                            'controller' => 'comprovarexecucaofinanceira',
-                            'action' => 'comprovantes-recusados',
-                            'idusuario' => $this->view->idusuario,
-                            'idpronac' => $idPronac,
-                        )
-                    )
-                )
-          );
-	} catch (Exception $e) {
-	  $message = $e->getMessage();
-	  if (strpos($e->getMessage(), 'DateTime::__construct()') !== false) {
-	    $message = 'Não foi possível enviar os comprovantes de pagamento!';
-	  }
-	  $this->view->message = $message;
-	  $this->view->message_type = 'ERROR';
-	  $this->_forward('comprovacaopagamento-recusado');
-      }      
-    }
-    
-
     /**
      *
      */
@@ -772,8 +732,8 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             $request = $this->getRequest();
             $idComprovantePagamento = $this->getRequest()->getParam('idComprovantePagamento');
 
-            $comprovantePagamentoModel = new ComprovantePagamento();
-            $comprovantePagamento = $comprovantePagamentoModel->find($idComprovantePagamento)->current();
+            $comprovanteParamentoModel = new ComprovantePagamento();
+            $comprovanteParamento = $comprovanteParamentoModel->find($idComprovantePagamento)->current();
 
             # iniciando os trabalhos com objeto
             $comprovantePagamentoModel = new ComprovantePagamento(
@@ -784,14 +744,14 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                 $request->getParam('nrComprovante'),
                 $request->getParam('nrSerie'),
                 $request->getParam('dtEmissao') ? new DateTime(data::dataAmericana($request->getParam('dtEmissao'))) : null,
-                $comprovantePagamento->idArquivo,
+                $comprovanteParamento->idArquivo,
                 $request->getParam('tpFormaDePagamento'),
                 new DateTime(),
                 str_replace(',', '.', str_replace('.', '', $request->getParam('vlComprovado'))),
                 $request->getParam('nrDocumentoDePagamento'),
                 $request->getParam('dsJustificativa')
             );
-            $comprovantePagamentoModel->atualizar(3);
+            $comprovantePagamentoModel->atualizar();
 
             # View Parameters
             $this->view->comprovantePagamento = $comprovantePagamentoModel->toStdclass();
@@ -1730,6 +1690,7 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $comprovantePagamentoModel = new ComprovantePagamento();
         $comprovantesDePagamento = $comprovantePagamentoModel->pesquisarComprovante($idComprovantePagamento);
         $comprovantePagamento = (object)$comprovantesDePagamento[0]; 
+        //echo '<pre>'; print_r($comprovantePagamento); die;
 
         $this->view->idComprovantePagamento = $idComprovantePagamento;
         $this->view->vlComprovado = number_format($comprovantePagamento->vlComprovacao, 2, ',', '.');
@@ -2137,6 +2098,63 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         } else {
             $this->view->fornecedor = array('retorno'=>false, 'CNPJCPF'=>$cnpjcpf);
         }
+    }
+
+    public function buscarfornecedorDaReceitaAction()
+    {
+        $this->_helper->layout->disableLayout();
+
+        $post = Zend_Registry::get('post');
+        $cnpjcpf = preg_replace('/\.|-|\//','',$post->cnpjcpf);
+
+        #Instancia a Classe de Serviço do WebService da Receita Federal
+        $wsServico = new ServicosReceitaFederal();
+        $retorno        = array();
+        $erro           = 0;
+        if(11 == strlen( $cnpjcpf )) {
+            if (!validaCPF($cnpjcpf)) {
+                $retorno['error'] = utf8_encode('CPF inválido');
+                $erro = 1;
+            } else {
+                $arrResultado = $wsServico->consultarPessoaFisicaReceitaFederal($cnpjcpf);
+
+                if (empty($arrResultado)) {
+                    $retorno['error'] = utf8_encode('Pessoa não encontrada!');
+                    $erro = 1;
+                    $this->view->fornecedor = array('retorno'=>false, 'CNPJCPF'=>$cnpjcpf);
+                }
+
+                if ($erro == 0 && count($arrResultado) > 0) {
+                    $retorno['error'] = '';
+                    $this->view->fornecedor = array('retorno'=>true,'idAgente'=>$arrResultado['idPessoaFisica'],'descricao'=>utf8_encode($arrResultado['nmPessoaFisica']));
+                } else {
+                    $retorno['error'] = utf8_encode('Pessoa não encontrada!!');
+                    $this->view->fornecedor = array('retorno'=>false, 'CNPJCPF'=>$cnpjcpf);
+                }
+            }
+        } else if(15 == strlen($cnpjcpf)){
+            if (!isCnpjValid($cnpjcpf)) {
+                $retorno['error'] = utf8_encode('CNPJ inválido');
+                $erro = 1;
+            } else {
+                $arrResultado = $wsServico->consultarPessoaJuridicaReceitaFederal($cnpjcpf);
+                if (empty($arrResultado)) {
+                    $retorno['error'] = utf8_encode('Pessoa não encontrada!!');
+                    $erro = 1;
+                    $this->view->fornecedor = array('retorno'=>false, 'CNPJCPF'=>$cnpjcpf);
+                }
+
+                if ($erro == 0 && count($arrResultado) > 0) {
+                    $retorno['error'] = '';
+                    $this->view->fornecedor = array('retorno'=>true,'idAgente'=>$arrResultado['idPessoaJuridica'],'descricao'=>utf8_encode($arrResultado['nmRazaoSocial']));
+                } else {
+                    $retorno['error'] = utf8_encode('Pessoa não encontrada!');
+                    $this->view->fornecedor = array('retorno'=>false, 'CNPJCPF'=>$cnpjcpf);
+                }
+            }
+        }
+
+
     }
 
     /**

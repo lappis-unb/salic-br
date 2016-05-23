@@ -7,19 +7,9 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('#vlComprovado').priceFormat({limit: 8});
-
-	tinymce.init({
-	    plugins:"paste,textcolor",
-	    language: "pt_BR",
-	    paste_as_text: true,
-	    selector: '#dsJustificativa',
-	    height: 200,
-	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
-	    menubar:""
-        });
     });
 </script>
-<script type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>
+
 <?php
     $buscarFornecedorHref = $this->url(array('controller' => 'comprovarexecucaofinanceira', 'action' => 'buscarfornecedor')).'?idusuario='.$this->idusuario;
 
@@ -75,7 +65,9 @@
 
 <div id="titulo">
     <div>Comprovar Pagamento
+        <?php if (!$this->vrSituacao || !$this->pagCompRecusado) : ?>
         <span class="voltar"><a href="<?php echo $voltarHref; ?>" title="Ir para p&aacute;gina anterior">Voltar</a></span>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -106,7 +98,7 @@
                         <td class="destacar"><b>Itens de Custo</b></td>
                         <td class="destacar"><b>Valor Aprovado</b></td>
                         <td class="destacar"><b>Valor Comprovado</b></td>
-                        <td class="destacar"><b>Valor do Item</b><span style="color: red">*</span></td>
+                        <td class="destacar"><b>Valor do Item</b></td>
                     </tr>
                     </thead>
                     <tbody>
@@ -264,16 +256,12 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="destacar" align="right">
-                              <b>Anexar Documentos<span style='color:red'>*</span></b>
-                            </td>
+                            <td class="destacar" align="right"><b>Anexar Documentos<span style='color:red'>*</span></b></td>
                             <td colspan="2">
                                 <input type="file" name="arquivo" id="arquivo" value=""/>
                             </td>
                             <td colspan="3">
-                              Tipos de arquivo permitidos: pdf, jpg, png<br/>
-			      Tamanho máximo: 5MB
-                              <a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir'), '', true); ?>?id=<?php echo $this->idArquivo; ?>"><?php echo $this->nomeArquivo; ?></a>
+                                <a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir'), '', true); ?>?id=<?php echo $this->idArquivo; ?>"><?php echo $this->nomeArquivo; ?></a>
                             </td>
                         </tr>
                         <tr>
@@ -400,8 +388,7 @@
                     <?php if (!$this->vrSituacao || !$this->pagCompRecusado) : ?>
                     <a href="<?php echo $voltarHref; ?>" id="btnVoltar" style="text-decoration:none;"><input type="button" class="btn_voltar" /></a>
                     <?php endif; ?>
-                    
-		    <input type="button" name="frComprovarPagamentoSalvar" id="frComprovarPagamentoSalvar" value="" class="btn_salvar" />
+                    <input type="submit" name="frComprovarPagamentoSubmit" id="frComprovarPagamentoSubmit" value="" class="btn_incluir" />
                 </div>
             </form>
 
@@ -490,7 +477,6 @@
     $(document).ready(function(){
         // tratamento comum
         var form = '#incluircomprovacaoAjax';
-                
         $('input[type!=button][type!=submit]').addClass('input_simples');
         $('textarea').addClass('textarea_simples');
         $('select[id!=perfilXgrupo]').addClass('select_simples');
@@ -505,12 +491,10 @@
                     validaDataCorreta(este,$(este).val().substr(6,4),$(este).val().substr(3,2),$(este).val().substr(0,2));
                 }
             });
-
             $(this).datepicker({
                     showOn: 'button',
                     buttonImage: '<?php echo $this->baseUrl(); ?>/public/img/ico/calendar.gif',
                     buttonImageOnly: true,
-                    maxDate: getHoje(),
                     dateFormat:'dd/mm/yy'
             });
         });
@@ -551,24 +535,6 @@
                     $(este).val('');
             }
         }
-
-        function getHoje(delimiter) {
-            if (typeof delimiter == 'undefined') {
-                var delimiter = '/';
-            }
-            
-            // pega dia de hoje
-            var hoje = new Date(),
-                dia = hoje.getDate(),
-                mes = hoje.getMonth() + 1,
-                ano = hoje.getFullYear();
-
-            dia = (dia.toString().length == 1) ? '0' + dia : dia;
-            mes = (mes.toString().length == 1) ? '0' + mes : mes;
-            var hojeFormatado = dia + delimiter + mes + delimiter + ano;
-            
-            return hojeFormatado;
-        }
         
         function buscarRadioMarcado(este){
             var marcado = '';
@@ -594,6 +560,7 @@
                         $("body").append("<div id='divDinamicaAgentes'></div>");
                         $("#divDinamicaAgentes").html("");
                         $('#divDinamicaAgentes').html("<br><br><center>Carregando dados...</center>");
+                        //alert('<?php echo $this->url(array('controller' => 'agentes', 'action' => 'incluirfornecedor')); ?>');
                         $.ajax({
                             url : '<?php echo $this->url(array('controller' => 'agentes', 'action' => 'incluirfornecedor')); ?>',
                             data : {
@@ -645,6 +612,7 @@
             fornecedores();
         }
 
+        //Mensagem para Utilizar este fornecedor para Comprovação Financeira, sim ou não.
         function outroFornecedor(este){
             $("#divPerguntaFornecedor").dialog('close');
             $("#divPerguntaFornecedor").html('Deseja utilizar este fornecedor na comprovação do pagamento?');
@@ -755,55 +723,6 @@
             return ajaxObj;
         }
 
-	// thanks to: http://codeaid.net/javascript/convert-size-in-bytes-to-human-readable-format-%28javascript%29#comment-1
-	function bytesToSize(bytes) {
-	    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-	    if (bytes == 0) return '0 Byte';
-	    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-	    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
-	};
-	
-	// função que verifica o upload
-	
-	var uploadChangeEvent = function(e) {
-	    var arquivosPermitidos = ['pdf', 'jpg', 'png'],
-		tamanhoPermitido = '5000000',  // 5MB
-		ext = $('#arquivo').val().split('.').pop().toLowerCase(),
-		msgErro = '',
-		tamanhoArquivo = $('#arquivo')[0].files[0].size;
-
-	    // verifica tipo de arquiv
-	    if ($.inArray(ext, arquivosPermitidos) == -1) {
-		msgErro = "<h3>Arquivo não permitido!</h3><br> Enviar somente os seguintes tipos: <strong>" + arquivosPermitidos.toString() + "</strong>";
-	    }
-	    
-	    if (tamanhoArquivo > tamanhoPermitido) {
-		msgErro = "<h3>O arquivo anexado excede tamanho máximo!<h3> <br/>Seu arquivo: <strong>> " + bytesToSize(tamanhoArquivo) + "</strong><br/>Tamanho permitido: <strong>" + bytesToSize(tamanhoPermitido) + "</strong>";
-	    }
-	    
-	    if (msgErro != '') {
-		$('#arquivo').val('');
-		
-		$("#msgAlerta").dialog("destroy");
-                $("#msgAlerta").html('<center><p>' + msgErro + '</p></center>');
-                $("#msgAlerta").dialog({
-                    resizable: false,
-                    title: 'Alerta!',
-                    width: 500,
-                    height: 300,
-                    modal: true,
-                    buttons : {
-                        'OK' : function(){ $(this).dialog('close'); }
-                    }
-                });
-                $('.ui-dialog-titlebar-close').remove();
-	    }
-	}
-
-	// atribui função ao campo arquivo
-	$('#arquivo').change(uploadChangeEvent);
-
-		      
         $('#itens').change(function (){
             // Recupera o fornecedor e preenche os dados do mesmo.
             $.ajax({
@@ -827,24 +746,14 @@
             });
         });
 
-	$("#frComprovarPagamentoSalvar").click(function() {
-            var msg = '';
+        $("#frComprovarPagamentoSubmit").click(function() {
+            var msg = ';'
             if (isInvoice()) {
                 msg = validarParametrosDeComprovacaoDePagamentoInvoice();
             } else {
                 msg = validarParametrosDeComprovacaoDePagamento();
             }
 
-            // verifica se data do documento é maior que a de hoje
-            var [dtD, dtM, dtY] = $('#dtEmissao').val().split('/'),
-                dtEmissaoCheck = dtY + '-' + dtM + '-' + dtD,
-                [hjD, hjM, hjY] = getHoje().split('/'),
-                hjCheck = hjY + '-' + hjM + '-' + hjD;
-            
-            if (Date.parse(dtEmissaoCheck) > Date.parse(hjCheck)) {
-                msg += 'A data não pode ser superior ao dia de hoje';
-            }          
-            
             var valorItem = parseFloat($("#vlComprovado").val().replace(".", "").replace(".", "").replace(",", "."));
             var valorAprovado = parseFloat($('#tabelaItem tbody td:nth-child(4)').html().replace(".", "").replace(".", "").replace(",", ".").replace("R$", ""));
             var valorComprovado = parseFloat($('#tabelaItem tbody td:nth-child(5)').html().replace(".", "").replace(".", "").replace(",", ".").replace("R$", ""));
@@ -870,11 +779,9 @@
                 });
                 $('.ui-dialog-titlebar-close').remove();
                 return false;
-            } else {
-		$('#frComprovarPagamento').submit();
-	    }
-	});
-	
+            }
+        });
+
         function validarParametrosDeComprovacaoDePagamento() {
             var msg = '';
             if (!$("#vlComprovado").val()) { msg += 'Informe o valor do item.<br />'; }
@@ -948,10 +855,6 @@
                 }
             });
         };
-	
-	$('.btn_voltar').click(function() {
-	    window.location.href = "<?php echo $voltarHref; ?>";
-	});
     });
 
     function toggleTabelaComprovacaoPagamentoInvoice() {
