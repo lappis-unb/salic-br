@@ -1,3 +1,9 @@
+Release 1.7.1
+  * Fix: [Readequações] trocando planilhas corretamente em redução, complementação e readequação
+  * Fix: [SEI] Atualizando a Unidade de SEFIC para DINPC, no serviço do SEI para criação de Processos automaticamente
+  * Fix: [Webservice Receita] Corrigindo BUG de Agentes que nao possuia CEP cadastrado na Receita Federal
+  * Fix: [Gerenciar parecer] adicionando link ao produto em outros filtros
+
 Release 1.7.0
   * Novo: [Alterar projeto] possibilidade de alterar plano de distribuicao de múltiplos produtos
   * Novo: [Gerenciar pareceres] Novo filtro de gerenciar pareceres - "em validação"
