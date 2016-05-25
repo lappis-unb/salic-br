@@ -13,8 +13,8 @@
 class ServicosSEI {
 
     # Constante usada na classe para conexao com o WS
-    #const CAMINHO_WSDL_SEI 		= "http://sei.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Produção
-    const CAMINHO_WSDL_SEI 		= "http://seihomolog.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Homologação
+    const CAMINHO_WSDL_SEI 		= "http://sei.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Produção
+    #const CAMINHO_WSDL_SEI 		= "http://seihomolog.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Homologação
 
     # Atributos da classe
     private static $objSoapCliente;
@@ -73,7 +73,7 @@ class ServicosSEI {
      * @return mixed
      * @throws Exception
      */
-    public function wsGerarProcedimento( $txSiglaSistema = "INTRANET", $txIdentificacaoServico = "SALIC", $nrIdUnidade = '110000142' )
+    public function wsGerarProcedimento( $txSiglaSistema = "INTRANET", $txIdentificacaoServico = "SALIC", $nrIdUnidade = '110000151' )
     {
         $objSoapCliente = self::getSoapClient();
 
@@ -84,7 +84,7 @@ class ServicosSEI {
         #$txIdentificacaoServico = "SALIC";
 
         //Numero da Unidade
-        #$nrIdUnidade = '110000142'; //SEFIC
+        #$nrIdUnidade = '110000142'; //DINPC
 
         #Inicio dos Dados do Procedimento
         //Procedimento
