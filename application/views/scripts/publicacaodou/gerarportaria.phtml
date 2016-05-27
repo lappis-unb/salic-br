@@ -166,19 +166,19 @@ foreach ($this->portaria as $portaria)
         $txResumoProjeto = '';
     } else if($this->tipoPublicacao == 'complementacao'){
         $txProcesso = '';
-        $txValor = '<p class="saltoLinha">Valor Complementado R$:&nbsp;&nbsp;' . $this->formatarReal($vlapoio) . '</p>';
-        $txValor .= '<p class="saltoLinha">Valor total atual em R$:&nbsp;&nbsp;' . $this->formatarReal($novoValor) . '</p>';	
+        $txValor = '<p class="saltoLinha">Valor Complementado:&nbsp;&nbsp;' . $this->formatarReal($vlapoio) . '</p>';
+        $txValor .= '<p class="saltoLinha">Valor total atual:&nbsp;&nbsp;' . $this->formatarReal($novoValor) . '</p>';	
         $txPrazoCaptacao = '';
         $txResumoProjeto = '';
     } else if($this->tipoPublicacao == 'reducao'){
         $txProcesso = '';
-        $txValor = '<p class="saltoLinha">Valor Reduzido R$:&nbsp;&nbsp;' . $this->formatarReal($vlapoio) . '</p>';
-        $txValor .= '<p class="saltoLinha">Valor total anual em R$:&nbsp;&nbsp;' . $this->formatarReal($novoValor) . '</p>';		
+        $txValor = '<p class="saltoLinha">Valor Reduzido:&nbsp;&nbsp;' . $this->formatarReal($vlapoio) . '</p>';
+        $txValor .= '<p class="saltoLinha">Valor total anual:&nbsp;&nbsp;' . $this->formatarReal($novoValor) . '</p>';		
         $txPrazoCaptacao = '';
         $txResumoProjeto = '';
     } else {
         $txProcesso = '<p class="saltoLinha">Processo:&nbsp;&nbsp;' . $processo . '</p>';
-        $txValor = '<p class="saltoLinha">Valor Aprovado R$:&nbsp;&nbsp;' . $this->formatarReal($vlapoio) . '</p>';
+        $txValor = '<p class="saltoLinha">Valor Aprovado:&nbsp;&nbsp;' . $this->formatarReal($vlapoio) . '</p>';
         $txPrazoCaptacao = '<p class="saltoLinha">Prazo de Capta&ccedil;&atilde;o:&nbsp;&nbsp;' . $DtPublicacaoAprovacao . '&nbsp;&nbsp;&agrave;&nbsp;&nbsp;' . $DtFimPublicacaoAprovacao . '</p>';
         $txResumoProjeto = '<p class="saltoLinha">Resumo do Projeto:&nbsp;&nbsp;' . $resumoprojeto . '</p>';
     }
@@ -241,21 +241,21 @@ foreach ($this->portaria as $portaria)
         $txResumoProjeto = '';
     } else if($this->tipoPublicacao == 'complementacao'){
         $txProcesso = '';
-        $txValor = '<p class="saltoLinha">Valor Complementado: R$:&nbsp;&nbsp;' . $this->formatarReal($vlapoio) . '</p>';
-	$txValor .= '<p class="saltoLinha">Valor total atual em R$:&nbsp;&nbsp;' . $this->formatarReal($novoValor) . '</p>';
+        $txValor = '<p class="saltoLinha">Valor Complementado:&nbsp;&nbsp;' . $this->formatarReal($vlapoio) . '</p>';
+	$txValor .= '<p class="saltoLinha">Valor total atual:&nbsp;&nbsp;' . $this->formatarReal($novoValor) . '</p>';
         $txPrazoCaptacao = '';
         $txResumoProjeto = '';
     } else if($this->tipoPublicacao == 'reducao'){
         $txProcesso = '';
-        $txValor = '<p class="saltoLinha">Valor Reduzido: R$:&nbsp;&nbsp;' . $this->formatarReal($vlapoio) . '</p>';
-	$txValor .= '<p class="saltoLinha">Valor total atual em R$:&nbsp;&nbsp;' . $this->formatarReal($novoValor) . '</p>';	
+        $txValor = '<p class="saltoLinha">Valor Reduzido:&nbsp;&nbsp;' . $this->formatarReal($vlapoio) . '</p>';
+	$txValor .= '<p class="saltoLinha">Valor total atual:&nbsp;&nbsp;' . $this->formatarReal($novoValor) . '</p>';	
         $txPrazoCaptacao = '';
         $txResumoProjeto = '';
     } else {
         $txProcesso = '<p class="saltoLinha">Processo:&nbsp;&nbsp;' . $processo . '</p>';
-        $txValor = '<p class="saltoLinha">Valor Aprovado R$:&nbsp;&nbsp;' . $vlapoio . '</p>';
+        $txValor = '<p class="saltoLinha">Valor Aprovado:&nbsp;&nbsp;' . $this->formatarReal($vlapoio) . '</p>';
         $txPrazoCaptacao = '<p class="saltoLinha">Prazo de Capta&ccedil;&atilde;o:&nbsp;&nbsp;' . $DtPublicacaoAprovacao . '&nbsp;&nbsp;&agrave;&nbsp;&nbsp;' . $DtFimPublicacaoAprovacao . '</p>';
-        $txResumoProjeto = '<p class="saltoLinha">Resumo do Projeto:&nbsp;&nbsp;' . $resumoprojeto . '<p/>';
+        $txResumoProjeto = '<p class="saltoLinha">Resumo do Projeto:&nbsp;&nbsp;' . $resumoprojeto . '</p>';
     }
 
     if ($artigo == "Artigo 26")
