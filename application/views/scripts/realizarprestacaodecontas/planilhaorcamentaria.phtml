@@ -239,10 +239,10 @@
                                                                 'idRelatorio' => $this->idRelatorio, #Alysson - Adicionado
                                                             )
                                                         );
-							$itemAvaliadoParam = Zend_Controller_Front::getInstance()->getRequest()->getParam('itemAvaliadoFilter');
+					                            		$itemAvaliadoParam = Zend_Controller_Front::getInstance()->getRequest()->getParam('itemAvaliadoFilter');
                                                         if ($itemAvaliadoParam) {
                                                             $itemAvaliadoParam = "?itemAvaliadoFilter=".$itemAvaliadoParam;
-            						}
+            						                    }
                                                         $href .= $itemAvaliadoParam;
                                                         $html .= "<a href='{$href}' class='editarIco'>Analisar item</a>";
                                                         $html .= '</td>';
