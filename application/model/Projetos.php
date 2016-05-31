@@ -20,6 +20,37 @@ class Projetos extends GenericModel
     public $_totalRegistros;
     private $codOrgao = null;
 
+    public function buscarPorPronac($pronac)
+    {
+        $consulta = $this->select();
+        $consulta->setIntegrityCheck(false);
+        $consulta->from(array('a' => 'vwConsultaProjetoSimplificada'), array(
+            'IdPRONAC',
+            'Pronac',
+            'NomeProjeto',
+            'CodigoSituacao',
+            'Situacao',
+            'Enquadramento',
+            'stConta',
+            'dtFimCaptacao',
+            'DtFimExecucao',
+            'Agencia',
+            'Conta',
+            'ValorAprovado',
+            'ValorProjeto',
+            'ValorCaptado',
+            'VlComprovado',
+            'PercCaptado'
+            ),'SAC.dbo'
+        );
+
+        if (!empty($pronac)) {
+            $consulta->where('a.IdPRONAC = ?', $pronac);
+        }
+//xd($consulta->assemble());
+        return $this->fetchRow($consulta);
+    }
+    
     /**
      * M?todo para buscar os dados b?sicos de projetos e proponentes com projetos
      * @access public
@@ -5557,7 +5588,6 @@ class Projetos extends GenericModel
                 ->order('CgcCpf')
                 ->order('NomeProjeto');
 
-        //xd($slctUnion->assemble());
         return $this->fetchAll($slctUnion);
     }
 

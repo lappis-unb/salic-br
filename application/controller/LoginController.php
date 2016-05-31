@@ -639,4 +639,4 @@ class LoginController extends GenericControllerNew {
         }
     }
 }
-?>
+

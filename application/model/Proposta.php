@@ -1086,7 +1086,7 @@ class Proposta extends GenericModel
     /**
      * Método para buscar os Proponentes - Combo Listar Propostas
      * @access public
-     * @param integer $idResponsavel, $idAgente
+     * @param integer $idResponsavel
      * @return object
      */
     public function listarPropostasCombo($idResponsavel)
@@ -1128,7 +1128,7 @@ class Proposta extends GenericModel
                 WHERE b.IdUsuario = '$idResponsavel' 
             GROUP BY a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente)  
             ORDER BY 3 ASC ";
-
+//xd($sql);
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
