@@ -850,8 +850,36 @@
     
     function atualizarDadosPlanilha(){
         $('#valorEntrePlanilhas').html('&nbsp;');
-        jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'carregar-valor-entre-planilhas'), '', true) ?>?idPronac=<?php echo $this->idPronac; ?>', '', 'valorEntrePlanilhas');
-        jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'index', 'action' => 'montar-planilha-orcamentaria')) ?>?idPronac=<?php echo $this->idPronac; ?>&tipoPlanilha=6&link', '', 'planilhaOrcamentariaMontada');
+        
+<?php
+if(count($this->readequacoesCadastradas)>0){
+    foreach ($this->readequacoesCadastradas as $reCad){ 
+        $idReadequacao = $reCad->idReadequacao;
+    }
+} else {
+    $idReadequacao = 0;
+}
+?>
+	
+	// verifica se há planilha ativa; se falso, cria uma nova planilha
+        $.ajax({
+            url: "<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'verificar-planilha-ativa'), '', true) ?>",
+            type: 'POST',
+	    data: {
+		idPronac: '<?php echo $this->idPronac; ?>',
+		criarNovaPlanilha: 1,
+		idReadequacao: <?php echo $idReadequacao; ?>,
+		idTipoReadequacao: 6,
+	    },
+	    
+	    // após carregar a planilha, monta planilha
+	    success: function() {
+		console.log
+		jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'carregar-valor-entre-planilhas'), '', true) ?>?idPronac=<?php echo $this->idPronac; ?>', '', 'valorEntrePlanilhas');
+		jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'index', 'action' => 'montar-planilha-orcamentaria')) ?>?idPronac=<?php echo $this->idPronac; ?>&tipoPlanilha=6&link', '', 'planilhaOrcamentariaMontada');
+
+	    }
+        });
     }
     
     function atualizarDadosLocaisRealizacao(){
