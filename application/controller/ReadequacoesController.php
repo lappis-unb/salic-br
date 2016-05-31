@@ -149,6 +149,7 @@ class ReadequacoesController extends GenericControllerNew {
             
             $tbReadequacao = new tbReadequacao();
             $this->view->readequacoesCadastradas = $tbReadequacao->readequacoesCadastradasProponente(array('a.idPronac = ?'=>$idPronac, 'a.siEncaminhamento = ?'=>12), array(1));
+
         } else {
             parent::message("N&uacute;mero Pronac inv&aacute;lido!", "principalproponente", "ERROR");
         }
@@ -875,8 +876,7 @@ class ReadequacoesController extends GenericControllerNew {
         $where['a.IdPRONAC = ?'] = $idPronac;
         $where['a.stAtivo = ?'] = 'S';
         $PlanilhaAtiva = $tbPlanilhaAprovacao->valorTotalPlanilha($where)->current();
-        //x($PlanilhaAtiva->Total);
-                
+        
         //BUSCAR VALOR TOTAL DA PLANILHA DE READEQUADA
         $where = array();
         $where['a.IdPRONAC = ?'] = $idPronac;
@@ -884,7 +884,7 @@ class ReadequacoesController extends GenericControllerNew {
         $where['a.stAtivo = ?'] = 'N';
         $where['a.tpAcao != ?'] = 'E';
         $PlanilhaReadequada = $tbPlanilhaAprovacao->valorTotalPlanilha($where)->current();
-        
+
         if($PlanilhaReadequada->Total > 0){
             if($PlanilhaAtiva->Total == $PlanilhaReadequada->Total){
                 $statusPlanilha = 'neutro';
@@ -3901,5 +3901,94 @@ class ReadequacoesController extends GenericControllerNew {
         }
         parent::message("Readequação encaminhada com sucesso!", "readequacoes/painel?tipoFiltro=analisados", "CONFIRM");
     }
-    
+
+    /*
+     * Função para verificar e criar planilha orçamentária. Recebe flag opcional para criar a planilha
+     * Criada em 18/03/2014
+     * @author: Fernão Lopes Ginez de Lara fernao.lara@cultura.gov.br
+     * @access public
+     * @return Bool   True se foi possível criar a planilha ou se ela existe
+     */
+    public function verificarPlanilhaAtivaAction() {
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $this->_helper->viewRenderer->setNoRender();
+        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+        $post = Zend_Registry::get('post');
+
+        $idPronac = $post->idPronac;
+        $idReadequacao = $post->idReadequacao;
+        $criarNovaPlanilha = $post->criarNovaPlanilha;
+        
+        // Se não possui idReadequacao, cria entrada na tabela tbReadequacao
+        if ($idReadequacao == 0) {
+            
+            $tblAgente = new Agentes();
+            $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$auth->getIdentity()->Cpf))->current();
+            
+            $tbReadequacao = new tbReadequacao();
+            $dados = array();
+            $dados['idPronac'] = $idPronac;
+            $dados['idTipoReadequacao'] = 2;
+            $dados['dtSolicitacao'] = new Zend_Db_Expr('GETDATE()');
+            $dados['idSolicitante'] = $rsAgente->idAgente;
+            $dados['dsJustificativa'] = '';
+            $dados['dsSolicitacao'] = '';
+            $dados['idDocumento'] = null;
+            $dados['siEncaminhamento'] = 12;
+            $dados['stEstado'] = 0;
+            
+            try {
+                $idReadequacao = $tbReadequacao->inserir($dados);
+            } catch (Zend_Exception $e) {
+                echo json_encode(array('msg' => 'Houve um erro na criação do registro de tbReadequacao'));
+                die();                
+            }
+        }        
+        
+        //VERIFICA SE JA POSSUI A PLANILHA TIPO SR. SE NÃO TIVER, COPIA A ORIGINAL
+        $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
+        $verificarPlanilhaSR = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'SR'));
+
+        if ($criarNovaPlanilha && count($verificarPlanilhaSR) == 0 ){
+            $planilhaAtiva = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'StAtivo=?'=>'S'));
+            $planilhaSR = array();
+
+            try {
+                foreach ($planilhaAtiva as $value) {
+                    $planilhaSR['tpPlanilha'] = 'SR';
+                    $planilhaSR['dtPlanilha'] = new Zend_Db_Expr('GETDATE()');
+                    $planilhaSR['idPlanilhaProjeto'] = $value['idPlanilhaProjeto'];
+                    $planilhaSR['idPlanilhaProposta'] = $value['idPlanilhaProposta'];
+                    $planilhaSR['IdPRONAC'] = $value['IdPRONAC'];
+                    $planilhaSR['idProduto'] = $value['idProduto'];
+                    $planilhaSR['idEtapa'] = $value['idEtapa'];
+                    $planilhaSR['idPlanilhaItem'] = $value['idPlanilhaItem'];
+                    $planilhaSR['dsItem'] = $value['dsItem'];
+                    $planilhaSR['idUnidade'] = $value['idUnidade'];
+                    $planilhaSR['qtItem'] = $value['qtItem'];
+                    $planilhaSR['nrOcorrencia'] = $value['nrOcorrencia'];
+                    $planilhaSR['vlUnitario'] = $value['vlUnitario'];
+                    $planilhaSR['qtDias'] = $value['qtDias'];
+                    $planilhaSR['tpDespesa'] = $value['tpDespesa'];
+                    $planilhaSR['tpPessoa'] = $value['tpPessoa'];
+                    $planilhaSR['nrContraPartida'] = $value['nrContraPartida'];
+                    $planilhaSR['nrFonteRecurso'] = $value['nrFonteRecurso'];
+                    $planilhaSR['idUFDespesa'] = $value['idUFDespesa'];
+                    $planilhaSR['idMunicipioDespesa'] = $value['idMunicipioDespesa'];
+                    $planilhaSR['dsJustificativa'] = null;
+                    $planilhaSR['idAgente'] = 0;
+                    $planilhaSR['idPlanilhaAprovacaoPai'] = $value['idPlanilhaAprovacao'];
+                    $planilhaSR['idReadequacao'] = $value['idReadequacao'];
+                    $planilhaSR['tpAcao'] = 'N';
+                    $planilhaSR['idRecursoDecisao'] = $value['idRecursoDecisao'];
+                    $planilhaSR['stAtivo'] = 'N';
+                    $tbPlanilhaAprovacao->inserir($planilhaSR);
+                }
+                echo json_encode(array('msg' => 'Planilhas SR criadas'));
+            } catch (Zend_Exception $e) {
+                echo json_encode(array('msg' => 'Houve um erro na criação das planilhas SR'));
+            }
+            die();            
+        }
+    }    
 }
