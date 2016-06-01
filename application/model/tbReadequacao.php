@@ -70,9 +70,20 @@ class tbReadequacao extends GenericModel
         return $this->fetchAll($select);
     }
 
-    /*
-     * Alterada em 06/03/14
-     * @author: Jefferson Alessandro
+    /**
+     * painelReadequacoes
+     *
+     * @param bool $where
+     * @param bool $order
+     * @param mixed $tamanho
+     * @param mixed $inicio
+     * @param bool $qtdeTotal
+     * @param bool $filtro
+     * @since Alterada em 06/03/14
+     * @author Jefferson Alessandro
+     * @author wouerner <wouerner@gmail.com>
+     * @access public
+     * @return void
      */
     public function painelReadequacoes($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $filtro = null)
     {
@@ -93,24 +104,7 @@ class tbReadequacao extends GenericModel
                 break;
         }
 
-        //$select = $this->select();
-        //$select->setIntegrityCheck(false);
-        //$select->from(
-            //array('a' => $this->_name),
-            //array(
-                //new Zend_Db_Expr("b.idPronac, a.idReadequacao, b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto, a.dtSolicitacao, c.dsReadequacao, a.siEncaminhamento")
-            //)
-        //);
-        //$select->joinInner(
-            //array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
-            //array('b.CgcCpf'), 'SAC.dbo'
-        //);
-        //$select->joinInner(
-            //array('c' => 'tbTipoReadequacao'), 'c.idTipoReadequacao = a.idTipoReadequacao',
-            //array(''), 'SAC.dbo'
-        //);
-
-       //adiciona quantos filtros foram enviados
+        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
@@ -118,7 +112,7 @@ class tbReadequacao extends GenericModel
         //adicionando linha order ao select
         $select->order($order);
 
-        // paginacao
+        //paginacao
         if ($tamanho > -1) {
             $tmpInicio = 0;
             if ($inicio > -1) {
@@ -133,10 +127,16 @@ class tbReadequacao extends GenericModel
             $result[] = $o;
         }
 
-        //return $stmt->fetchAll();
         return $result;
     }
 
+    /**
+     * selectView - Retorna um select completo da tabela.
+     *
+     * @param string $vw
+     * @access private
+     * @return Zend_Db_Select
+     */
     private function selectView($vw){
         $db = Zend_Db_Table::getDefaultAdapter();
 
@@ -149,44 +149,29 @@ class tbReadequacao extends GenericModel
         return $select;
     }
 
-
-    public function aguardandoAnaliseTotal($count = false){
+    /**
+     * count - retorna quantidade de linhas de uma tabela.
+     *
+     * @param string $table
+     * @access public
+     * @return int
+     */
+    public function count($table, $where){
         $db = Zend_Db_Table::getDefaultAdapter();
 
         $select = $db->select()->from(
-            array('a' => 'vwPainelCoordenadorReadequacaoAguardandoAnalise'),
+            array('a' => $table),
             array('*'),
             $this->_banco.'.'.$this->_schema
         );
+
+        //adiciona quantos filtros foram enviados
+        foreach ($where as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
 
         $result = $db->query($select)->fetchAll();
         return count($result);
-    }
-
-    public function emAnaliseTotal(){
-        $db = Zend_Db_Table::getDefaultAdapter();
-
-        $select = $db->select()->from(
-            array('a' => 'vwPainelCoordenadorReadequacaoEmAnalise'),
-            array('*'),
-            $this->_banco.'.'.$this->_schema
-        );
-
-        $result = $db->query($select)->fetchAll();
-        return  count($result);
-    }
-
-    public function analisadosTotal()
-    {
-        $db = Zend_Db_Table::getDefaultAdapter();
-
-        $select = $db->select()->from(
-            array('a' => 'vwPainelCoordenadorReadequacaoAnalisados'),
-            array('*'),
-            $this->_banco.'.'.$this->_schema
-        );
-
-        return count($db->query($select)->fetchAll());
     }
 
     /*

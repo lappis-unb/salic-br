@@ -1869,8 +1869,14 @@ class ReadequacoesController extends GenericControllerNew {
         }
     }
 
-    /*
-     * Alterada em 15/05/15
+    /**
+     * painelAction - Lista dos Projetos em nas situações: Aguardando Análise, Em
+     * Analise, Analisados.
+     *
+     * @since Alterada em 27/05/16
+     * @author wouerner <wouerner@gmail.com>
+     * @access public
+     * @return void
      */
     public function painelAction()
     {
@@ -1922,30 +1928,12 @@ class ReadequacoesController extends GenericControllerNew {
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
             $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
             $this->view->filtro = $filtro;
-            switch ($filtro) {
-                case '':
-                    //$where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    //$where['a.siEncaminhamento = ?'] = 1; // 1=Solicitado pelo proponente
-                    break;
-                case 'encaminhados':
-                    //$where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    //$where['a.siEncaminhamento in (?)'] = array(3,4,5,7); // 4=Encaminhado para Parecerista/Técnico; 5=Devolvido do Parecerista para o Coordenador da Unidade de Análise; 7=Encaminhado para o Componente da Comissão
-                    $this->view->nmPagina = 'Em análise';
-                    break;
-                case 'analisados':
-                    //$where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    //$where['a.siEncaminhamento in (?)'] = array(6,10); // 6=Devolvido da Unidade de Analise para o MinC; 10=Devolvido pelo Tecnico para o Coordenador
-                    $this->view->nmPagina = 'Analisados';
-                    break;
-            }
         } else {
             $this->view->nmPagina = 'Aguardando Análise';
-            //$where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-            //$where['a.siEncaminhamento = ?'] = 1; // 1=Solicitado pelo proponente
         }
 
         if((isset($_GET['pronac']) && !empty($_GET['pronac']))){
-            $where['b.AnoProjeto+b.Sequencial = ?'] = $_GET['pronac'];
+            $where['a.PRONAC = ?'] = $_GET['pronac'];
             $this->view->pronac = $_GET['pronac'];
         }
 
@@ -1966,22 +1954,20 @@ class ReadequacoesController extends GenericControllerNew {
 
         switch($filtro){
             case '':
-                $total = $tbReadequacao->aguardandoAnaliseTotal();
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAguardandoAnalise' , $where);
                 break;
             case 'encaminhados':
-                $total = $tbReadequacao->emAnaliseTotal();
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoEmAnalise' , $where);
                 break;
             case 'analisados':
-                $total = $tbReadequacao->analisadosTotal();
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAnalisados' , $where);
                 break;
         }
-        //$total = $tbReadequacao->painelReadequacoes($where, $order, null, null, true, $filtro);
 
         $fim = $inicio + $this->intTamPag;
 
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-
 
         $busca = $tbReadequacao->painelReadequacoes($where, $order, $tamanho, $inicio, null, $filtro);
 
@@ -2007,7 +1993,7 @@ class ReadequacoesController extends GenericControllerNew {
         $this->view->qtdRegistros  = $total;
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
-	}
+    }
 
     /*
      * Alterada em 15/05/15

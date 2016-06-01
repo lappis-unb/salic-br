@@ -170,8 +170,8 @@
                 <td width="200">
                     <select name="tipoFiltro" style="width: 160px;" class="input_simples">
                         <option value="">Aguardando Análise</option>
-                        <option value="encaminhados" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] =='encaminhados') ? 'selected="selected"':''; ?>>Em análise</option>
-                        <option value="analisados" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] =='analisados') ? 'selected="selected"':''; ?>>Analisados</option>
+                        <option value="encaminhados" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] =='encaminhados') ? 'selected':''; ?>>Em análise</option>
+                        <option value="analisados" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] =='analisados') ? 'selected':''; ?>>Analisados</option>
                     </select>
                 </td>
                 <td colspan="6" align="rigth">
@@ -238,7 +238,7 @@
     <?php if($this->qtdRegistros > 0): ?>
         <table class="tabela tablesorter">
             <?php if($this->filtro == 'analisados'): ?>
-                <?php echo $this->partial('readequacoes/partial/analisados.phtml', array('dados' => $this->dados)); ?>
+                <?php echo $this->partial('readequacoes/partial/analisados.phtml', array('dados' => $this->dados, 'conselheiros' => $this->conselheiros)); ?>
             <?php elseif($this->filtro == 'encaminhados'): ?>
                 <?php echo $this->partial('readequacoes/partial/emAnalise.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro)); ?>
             <?php else: ?>
