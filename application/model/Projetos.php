@@ -20,6 +20,30 @@ class Projetos extends GenericModel
     public $_totalRegistros;
     private $codOrgao = null;
 
+    public function buscarExtrato($idPronac, $ano = NULL, $mes = NULL) {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(array('e' => 'vwExtratoDaMovimentacaoBancaria'), array(
+            'dtLancamento' => new Zend_Db_Expr('CONVERT(CHAR(10),e.dtLancamento,103)'),
+            'Lancamento',
+            'nrLancamento',
+            'vlLancamento',
+            'stLancamento'
+        ), 'dbo')
+        ->where('e.idPronac = ?', (int)$idPronac);
+        
+        # Filtros
+        if($ano){
+            $select->where('CONVERT(CHAR(4), dtLancamento, 120) = ?', $ano);
+        }
+        if($mes){
+            $select->where("CONVERT(CHAR(2), dtLancamento, 101) = ?", $mes);
+        }
+
+//xd($select->__toString());
+        return $this->fetchAll($select);
+    }
+    
     public function buscarPorPronac($pronac)
     {
         $consulta = $this->select();
@@ -5471,7 +5495,7 @@ class Projetos extends GenericModel
         $a = $this->select();
         $a->setIntegrityCheck(false);
         $a->from(
-                array('a' => $this->_name), array(
+            array('a' => $this->_name), array(
             new Zend_Db_Expr('0 as Ordem'),
             'IdPRONAC',
             'NomeProjeto',
@@ -5587,7 +5611,7 @@ class Projetos extends GenericModel
                 ->order('Ordem')
                 ->order('CgcCpf')
                 ->order('NomeProjeto');
-
+//xd($slctUnion->__toString());
         return $this->fetchAll($slctUnion);
     }
 

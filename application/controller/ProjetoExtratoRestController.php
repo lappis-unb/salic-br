@@ -13,26 +13,26 @@ class ProjetoExtratoRestController extends AbstractRestController {
 
     public function postAction(){}
     
-    public function indexAction(){}
-    
-    public function getAction(){
-        $projeto = $this->_request->getParam('id');
-        
-        $projetoExtrato = new stdClass();
-        $projetoExtrato->incentivador = utf8_encode('Sucoritrico Cutrale Ltda');
-        $projetoExtrato->numeroRecibo = 1499;
-        $projetoExtrato->tipoApoio = utf8_encode('Patrocínio');
-        $projetoExtrato->dataCaptacao = '29/12/2015';
-        $projetoExtrato->dataTransferencia = '31/12/2015';
-        $projetoExtrato->porcentagemCapitado = 419022.40;
-        $projetoExtrato->valorCapitado = number_format(419022.40, 2, ',', '.');
-        $projetoExtrato->bemServico = utf8_encode('Não');
-        $projetoExtrato->valorTotalCapitado = number_format(419022.40, 2, ',', '.');
-        $projetoExtrato->porcentagemTotalCapitado = 99.99;
+    public function indexAction(){
+        $projeto = $this->_request->getParam('projeto');
+        $ano = $this->_request->getParam('ano');
+        $mes = $this->_request->getParam('mes');
 
-        # Resposta da autenticação.
-        $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($projetoExtrato));
+        $modelProjetos = new Projetos();
+        $listaResult = $modelProjetos->buscarExtrato($projeto, $ano, $mes);
+        $listaExtrato = $listaResult->toArray();
+        if($listaExtrato){
+            foreach ($listaExtrato as $identificador => $lancamento) {
+                $lancamento['vlLancamento'] = number_format($lancamento['vlLancamento'], 2, ',', '.');
+                $listaExtrato[$identificador] = $lancamento;
+            }
+        }
+
+        # Resposta da autenticação
+        $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($listaExtrato));
     }
+    
+    public function getAction(){}
 
     public function putAction(){}
 
