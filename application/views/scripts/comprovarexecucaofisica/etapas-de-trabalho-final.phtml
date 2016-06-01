@@ -317,7 +317,15 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
                 $('#formCadastro').submit();
             }
         });
+
+        $("#totalEmpregosDiretos, #totalEmpregosIndiretos").numeric().keyup(function() {
+            var totalEmpregosDiretos = $("#totalEmpregosDiretos").val() ? $("#totalEmpregosDiretos").val() : 0;
+            var totalEmpregosIndiretos = $("#totalEmpregosIndiretos").val() ? $("#totalEmpregosIndiretos").val() : 0;
+            var total = parseInt(totalEmpregosDiretos, 10) + parseInt(totalEmpregosIndiretos, 10);
+            $("#totalEmpregosDiretosIndiretos").val(total);
+        }).keyup();
     });
+
 </script>
 <style>
     #conteudo ul li{ display: inline; float: left; width: 33%; text-align: center; }
