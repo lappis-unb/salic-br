@@ -154,6 +154,8 @@ class ReadequacoesController extends GenericControllerNew {
             parent::message("N&uacute;mero Pronac inv&aacute;lido!", "principalproponente", "ERROR");
         }
     }
+
+    
     
     /* 
      * Criada em 06/03/14
@@ -1590,7 +1592,7 @@ class ReadequacoesController extends GenericControllerNew {
     /* 
      * Criada em 14/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Essa função para cadastrar uma solicitação de readequação.
+     * Essa função para incluir uma solicitação de readequação.
      */
     public function incluirSolicitacaoReadequacaoAction() {
         //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
@@ -1603,23 +1605,33 @@ class ReadequacoesController extends GenericControllerNew {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
         
+        $idReadequacao = $this->_request->getParam("idReadequacao");
+        
         $post = Zend_Registry::get('post');
         $tbReadequacao = new tbReadequacao();
         $busca = array();
-        $busca['idPronac =?'] = $idPronac;
-        $busca['idTipoReadequacao =?'] = $post->tipoReadequacao;
-        $busca['siEncaminhamento =?'] = 12;
-        $dadosCadastrados = $tbReadequacao->buscar($busca)->current();
         
-        if(count($dadosCadastrados)>0){
-            parent::message('Tipo de solicitação de readequação já cadastrada!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+        // caso seja planilha orçamentária, faz update
+        if ($post->tipoReadequacao == 2) {
+                $busca['idReadequacao =?'] = $idReadequacao;
+                $dadosReadequacao = $tbReadequacao->buscar($busca)->current();
+        } else {
+            $busca['idPronac =?'] = $idPronac;
+            $busca['idTipoReadequacao =?'] = $post->tipoReadequacao;
+            $busca['siEncaminhamento =?'] = 12;
+            $dadosCadastrados = $tbReadequacao->buscar($busca)->current();
+            
+            if(count($dadosCadastrados)>0){
+                parent::message('Tipo de solicita<E7><E3>o de readequa<E7><E3>o j<E1> cadastrada!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+            }
         }
         
         if($post->tipoReadequacao == 2){ //Planilha Orçamentária
             $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
-            $planilhaReadequada = $tbPlanilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idPronac, 'tpPlanilha = ?'=>'SR' ,'idReadequacao is null'=>''));
+            $idReadequacao = $post->idReadequacao;
+            $planilhaReadequada = $tbPlanilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idPronac, 'tpPlanilha = ?'=>'SR', 'idReadequacao= ?' => $idReadequacao));
             if(count($planilhaReadequada)==0){
-                parent::message('Não houve nenhuma alteração na planilha orçamentária do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
+                parent::message('Não houve nenhuma alteração na planilha orçamentária do projeto!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
         } else if($post->tipoReadequacao == 9){ //Local de Realização
             $tbAbrangencia = new tbAbrangencia();
@@ -1704,29 +1716,44 @@ class ReadequacoesController extends GenericControllerNew {
             $auth = Zend_Auth::getInstance(); // pega a autenticação
             $tblAgente = new Agentes();
             $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$auth->getIdentity()->Cpf))->current();
+
+            if ($post->tipoReadequacao == 2) {
+                // se for tipo planilha orçamentaria, somente atualiza tbReadequacao
+                $dadosReadequacao['dsJustificativa'] = $_POST['descJustificativa'];
+                $dadosReadequacao['dsSolicitacao'] = $_POST['descSolicitacao'];
+                $dadosReadequacao['idDocumento'] = $idDocumento;            
+                $dadosReadequacaoWhere['idPronac'] = $idPronac;
                 
-            $dados = array();
-            $dados['idPronac'] = $idPronac;
-            $dados['idTipoReadequacao'] = $post->tipoReadequacao;
-            $dados['dtSolicitacao'] = new Zend_Db_Expr('GETDATE()');
-            $dados['idSolicitante'] = $rsAgente->idAgente;
-            $dados['dsJustificativa'] = $_POST['descJustificativa'];
-            $dados['dsSolicitacao'] = $_POST['descSolicitacao'];
-            $dados['idDocumento'] = $idDocumento;
-            $dados['siEncaminhamento'] = 12;
-            $dados['stEstado'] = 0;
-            $idReadequacao = $tbReadequacao->inserir($dados);
-            
-            $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
-            $dadosPlanilha = array();
-            $dadosPlanilha['idReadequacao'] = $idReadequacao;
-            $wherePlanilha = "IdPRONAC = $idPronac AND tpPlanilha = 'SR' AND idReadequacao is null";
-            $tbPlanilhaAprovacao->update($dadosPlanilha, $wherePlanilha);
+                $idReadequacao = $tbReadequacao->update($dadosReadequacao, $dadosReadequacaoWhere);
+                
+            } else {
+                // outros casos: insere tbReadequacao e altera tbPlanilhaAprovacao
+                $dados = array();
+                $dados['idPronac'] = $idPronac;
+                $dados['idTipoReadequacao'] = $post->tipoReadequacao;
+                $dados['dtSolicitacao'] = new Zend_Db_Expr('GETDATE()');
+                $dados['idSolicitante'] = $rsAgente->idAgente;
+                $dados['dsJustificativa'] = $_POST['descJustificativa'];
+                $dados['dsSolicitacao'] = $_POST['descSolicitacao'];
+                $dados['idDocumento'] = $idDocumento;
+                $dados['siEncaminhamento'] = 12;
+                $dados['stEstado'] = 0;
+                $idReadequacao = $tbReadequacao->inserir($dados);
+                
+                $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
+                $dadosPlanilha = array();
+                $dadosPlanilha['idReadequacao'] = $idReadequacao;
+                $wherePlanilha = "IdPRONAC = $idPronac AND tpPlanilha = 'SR' AND idReadequacao is null";
+                $tbPlanilhaAprovacao->update($dadosPlanilha, $wherePlanilha);
+            }
             
             if ($idReadequacao) {
-                parent::message('Solicitação cadastrada com sucesso!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                $acaoOk = ($post->tipoReadequacao == 2) ? 'alterada' : 'cadastrada';
+                $acaoErro = ($post->tipoReadequacao == 2) ? 'alterar' : 'cadastrar';
+                
+                parent::message("Solicitação $acaoOk com sucesso!", "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
             } else {
-                throw new Exception("Erro ao cadastrar a readequação!");
+                throw new Exception("Erro ao $acaoErro a readequação!");
             }
         } // fecha try
         catch(Exception $e) {
@@ -1778,6 +1805,7 @@ class ReadequacoesController extends GenericControllerNew {
             //Se for readequação de planilha orçamentária, exclui a planilha SR gerada.
             if($dados->idTipoReadequacao == 2){
                 $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
+                
                 $tbPlanilhaAprovacao->delete(array('IdPRONAC = ?'=>$idPronac, 'tpPlanilha = ?'=>'SR', 'idReadequacao = ?'=>$get->idReadequacao));
             }
 	    
@@ -3902,9 +3930,51 @@ class ReadequacoesController extends GenericControllerNew {
         parent::message("Readequação encaminhada com sucesso!", "readequacoes/painel?tipoFiltro=analisados", "CONFIRM");
     }
 
+
+    /*
+     * Página de criação de planilha orçamentária
+     * Criada em 02/06/2016
+     * @author: Fernão Lopes Ginez de Lara fernao.lara@cultura.gov.br
+     * @access public
+     * @return void
+     */
+    public function planilhaOrcamentariaAction() {
+        //FUNÇÃO ACESSADA SOMENTE PELO PROPONENTE.
+        $this->view->idPerfil = $this->idPerfil;
+        if($this->idPerfil != 1111){
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+        }
+        
+        $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+
+        $this->view->idPronac = $idPronac;
+        if(!empty($idPronac)){
+            $Projetos = new Projetos();
+            $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
+
+            //VERIFICA SE JA POSSUI A PLANILHA TIPO SR. SE NÃO TIVER, COPIA A ORIGINAL
+            //$tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
+            //$this->view->readequacao = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'SR'));
+            
+            $tbReadequacao = new tbReadequacao();
+            $this->view->readequacao = $tbReadequacao->readequacoesCadastradasProponente(array(
+                'a.idPronac = ?'=>$idPronac,
+                'a.siEncaminhamento = ?'=>12,
+                'a.idTipoReadequacao = ?' => 2,
+            ), array(1));
+            
+        } else {
+            parent::message("N&uacute;mero Pronac inv&aacute;lido!", "principalproponente", "ERROR");
+        }        
+    }
+    
+
     /*
      * Função para verificar e criar planilha orçamentária. Recebe flag opcional para criar a planilha
-     * Criada em 18/03/2014
+     * Criada em 31/05/2016
      * @author: Fernão Lopes Ginez de Lara fernao.lara@cultura.gov.br
      * @access public
      * @return Bool   True se foi possível criar a planilha ou se ela existe
@@ -3948,7 +4018,7 @@ class ReadequacoesController extends GenericControllerNew {
         //VERIFICA SE JA POSSUI A PLANILHA TIPO SR. SE NÃO TIVER, COPIA A ORIGINAL
         $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
         $verificarPlanilhaSR = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'SR'));
-
+        
         if ($criarNovaPlanilha && count($verificarPlanilhaSR) == 0 ){
             $planilhaAtiva = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'StAtivo=?'=>'S'));
             $planilhaSR = array();
@@ -3978,7 +4048,7 @@ class ReadequacoesController extends GenericControllerNew {
                     $planilhaSR['dsJustificativa'] = null;
                     $planilhaSR['idAgente'] = 0;
                     $planilhaSR['idPlanilhaAprovacaoPai'] = $value['idPlanilhaAprovacao'];
-                    $planilhaSR['idReadequacao'] = $value['idReadequacao'];
+                    $planilhaSR['idReadequacao'] = $idReadequacao;
                     $planilhaSR['tpAcao'] = 'N';
                     $planilhaSR['idRecursoDecisao'] = $value['idRecursoDecisao'];
                     $planilhaSR['stAtivo'] = 'N';
@@ -3989,6 +4059,9 @@ class ReadequacoesController extends GenericControllerNew {
                 echo json_encode(array('msg' => 'Houve um erro na criação das planilhas SR'));
             }
             die();            
+        } else {
+            echo json_encode(array('msg' => 'Planilha existente'));
         }
+        
     }    
 }
