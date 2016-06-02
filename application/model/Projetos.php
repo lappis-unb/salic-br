@@ -20,26 +20,38 @@ class Projetos extends GenericModel
     public $_totalRegistros;
     private $codOrgao = null;
 
-    public function listarProjetosDeUsuario($idUsuario, $idProponente = NULL){
+    public function listarProjetosDeUsuario($idUsuario = NULL, $idProponente = NULL, $pronac = NULL, $cgcCpf = NULL, $nomeProponente = NULL){
         $consulta = $this->select();
         $consulta->setIntegrityCheck(false);
         $consulta->from(array('p' => 'vwAgentesSeusProjetos'), array(
                 'IdPRONAC',
                 'Pronac',
                 'NomeProjeto'), 'SAC.dbo')
-            ->where('p.IdUsuario = ?', $idUsuario)
             ->group(array(
                 'IdPRONAC',
                 'Pronac',
                 'NomeProjeto'))
             ->order(array(
                 'Pronac',
-                'NomeProjeto'));
+                'NomeProjeto'))
+//            ->limit(5)
+        ;
+        if($idUsuario) {
+            $consulta->where('p.IdUsuario = ?', $idUsuario);
+        }
         if($idProponente) {
             $consulta->where('p.idAgente = ?', (int)$idProponente);
         }
-
-//xd($slctUnion->__toString());
+        if($pronac) {
+            $consulta->where('p.Pronac = ?', $pronac);
+        }
+        if($cgcCpf) {
+            $consulta->where('p.CgcCpf = ?', $cgcCpf);
+        }
+        if($nomeProponente) {
+            $consulta->where("p.NomeProponente LIKE '%$nomeProponente%'");
+        }
+//xd($consulta->__toString());
         return $this->fetchAll($consulta);
     }
     
@@ -122,7 +134,12 @@ class Projetos extends GenericModel
             'ValorProjeto',
             'ValorCaptado',
             'VlComprovado',
-            'PercCaptado'
+            'PercCaptado',
+            
+            'UFProjeto',
+            'Area',
+            'Segmento',
+            'ResumoProjeto',
             ),'SAC.dbo'
         );
 
