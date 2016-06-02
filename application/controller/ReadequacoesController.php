@@ -3481,53 +3481,53 @@ class ReadequacoesController extends GenericControllerNew {
                 $where['a.stAtivo = ?'] = 'N';
                 $PlanilhaReadequada = $tbPlanilhaAprovacao->valorTotalPlanilha($where)->current();
 
-		// chama SP que verifica o tipo do remanejamento
-		$spTipoDeReadequacaoOrcamentaria = new spTipoDeReadequacaoOrcamentaria();
-		$TipoDeReadequacao = $spTipoDeReadequacaoOrcamentaria->exec($read->idPronac);
-        #xd($TipoDeReadequacao);
-		// complementacao
-                if($TipoDeReadequacao[0]['computed0'] == 'CO'){
+                // chama SP que verifica o tipo do remanejamento
+                $spTipoDeReadequacaoOrcamentaria = new spTipoDeReadequacaoOrcamentaria();
+                $TipoDeReadequacao = $spTipoDeReadequacaoOrcamentaria->exec($read->idPronac);
+
+                // complementacao
+                if ($TipoDeReadequacao[0]['TipoDeReadequacao'] == 'CO') {
                     $TipoAprovacao = 2;
                     $dadosPrj->Situacao = 'D28';
-		    $dadosPrj->ProvidenciaTomada = 'Aguardando portaria de complementação';
-		    $dadosPrj->Logon = $auth->getIdentity()->usu_codigo;
-                } else if ($TipoDeReadequacao[0]['computed0'] == 'RE'){
-		  // reducao
+                    $dadosPrj->ProvidenciaTomada = 'Aguardando portaria de complementação';
+                    $dadosPrj->Logon = $auth->getIdentity()->usu_codigo;
+                } else if ($TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RE'){
+                    // reducao
                     $TipoAprovacao = 4;
                     $dadosPrj->Situacao = 'D29';
-		    $dadosPrj->ProvidenciaTomada = 'Aguardando portaria de redução';
-		    $dadosPrj->Logon = $auth->getIdentity()->usu_codigo;
+                    $dadosPrj->ProvidenciaTomada = 'Aguardando portaria de redução';
+                    $dadosPrj->Logon = $auth->getIdentity()->usu_codigo;
                 }
 
-		// insere somente em reducao ou complementacao
-		if ($TipoDeReadequacao[0]['computed0'] == 'CO' || $TipoDeReadequacao[0]['computed0'] == 'RE') {
+                // insere somente em reducao ou complementacao
+                if ($TipoDeReadequacao[0]['TipoDeReadequacao'] == 'CO' || $TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RE') {
 
-		  $dadosPrj->save();
-		  // reducao
-		  if ($TipoAprovacao == 4) {
-		    $AprovadoReal = number_format(($PlanilhaAtiva->Total-$PlanilhaReadequada->Total), 2, '.', '');
-		    // aprovacao
-		  } else if ($TipoAprovacao == 2) {
-		    $AprovadoReal = number_format(($PlanilhaReadequada->Total-$PlanilhaAtiva->Total), 2, '.', '');
-		  }
+                    $dadosPrj->save();
+                    // reducao
+                    if ($TipoAprovacao == 4) {
+                        $AprovadoReal = number_format(($PlanilhaAtiva->Total-$PlanilhaReadequada->Total), 2, '.', '');
+                        // aprovacao
+                    } else if ($TipoAprovacao == 2) {
+                        $AprovadoReal = number_format(($PlanilhaReadequada->Total-$PlanilhaAtiva->Total), 2, '.', '');
+                    }
 
-		  $tbAprovacao = new Aprovacao();
-		  $dadosAprovacao = array(
-					  'IdPRONAC' => $read->idPronac,
-					  'AnoProjeto' => $dadosPrj->AnoProjeto,
-					  'Sequencial' => $dadosPrj->Sequencial,
-					  'TipoAprovacao' => $TipoAprovacao,
-					  'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-					  'ResumoAprovacao' => 'Parecer favorável para readequação',
-					  #'AprovadoReal' => $AprovadoReal,
-					  'AprovadoReal' => $TipoDeReadequacao[0]['computed1'], //Alterado pelo valor retornado pela Store
-					  'Logon' => $this->idUsuario,
-					  'idReadequacao' => $idReadequacao
-					  );
-		  $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
-		}
+                    $tbAprovacao = new Aprovacao();
+                    $dadosAprovacao = array(
+                        'IdPRONAC' => $read->idPronac,
+                        'AnoProjeto' => $dadosPrj->AnoProjeto,
+                        'Sequencial' => $dadosPrj->Sequencial,
+                        'TipoAprovacao' => $TipoAprovacao,
+                        'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
+                        'ResumoAprovacao' => 'Parecer favorável para readequação',
+                        #'AprovadoReal' => $AprovadoReal,
+                        'AprovadoReal' => $TipoDeReadequacao[0]['computed1'], //Alterado pelo valor retornado pela Store
+                        'Logon' => $this->idUsuario,
+                        'idReadequacao' => $idReadequacao
+                    );
+                    $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
+                }
 
-            // READEQUAÇÃO DE ALTERAÇÃO DE RAZÃO SOCIAL
+                // READEQUAÇÃO DE ALTERAÇÃO DE RAZÃO SOCIAL
             } else if($read->idTipoReadequacao == 3){ //Se for readequação de alteração de razão social, atualiza os dados na AGENTES.dbo.Nomes.
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$read->idPronac))->current();
@@ -3874,17 +3874,15 @@ class ReadequacoesController extends GenericControllerNew {
 
         $tiposParaChecklist = array(2,3,10,12,15);
         if(in_array($read->idTipoReadequacao, $tiposParaChecklist)){
-	  // se remanejamento orcamentario
-	  if ($read->idTipoReadequacao == 2) {
-	    if ($TipoDeReadequacao[0]['computed0'] == 'RE') {
-	      $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publicação no DOU.
-	      $dados['stEstado'] = 1;
-	    }
-	  } else {
-	    // reducao ou complementacao orcamentaria
-            $dados['siEncaminhamento'] = 9; //Encaminhado pelo sistema para o Checklist de Publicação
-            $dados['stEstado'] = 0;
-	  }
+            // se remanejamento orcamentario
+            if ($read->idTipoReadequacao == 2 && $TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RM') {
+                $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publicação no DOU.
+                $dados['stEstado'] = 1;
+            } else {
+                // reducao ou complementacao orcamentaria
+                $dados['siEncaminhamento'] = 9; //Encaminhado pelo sistema para o Checklist de Publicação
+                $dados['stEstado'] = 0;
+            }
         }
 
         $dados['idNrReuniao'] = $idNrReuniao;
@@ -3892,13 +3890,11 @@ class ReadequacoesController extends GenericControllerNew {
 
         $return = $tbReadequacao->update($dados, $where);
 
-	if ($read->idTipoReadequacao == 2) {
-	  if ($TipoDeReadequacao[0]['computed0'] == 'RE') {
-	    // remanejamento: chama sp para trocar planilha ativa (desativa atual e ativa remanejada)
-	    $spAtivarPlanilhaOrcamentaria = new spAtivarPlanilhaOrcamentaria();
-	    $ativarPlanilhaOrcamentaria = $spAtivarPlanilhaOrcamentaria->exec($read->idPronac);
-	  }
-	}
+        if ($read->idTipoReadequacao == 2 && $TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RM') {
+            // remanejamento: chama sp para trocar planilha ativa (desativa atual e ativa remanejada)
+            $spAtivarPlanilhaOrcamentaria = new spAtivarPlanilhaOrcamentaria();
+            $ativarPlanilhaOrcamentaria = $spAtivarPlanilhaOrcamentaria->exec($read->idPronac);
+        }
 
         //Atualiza a tabela tbDistribuirReadequacao
         $dados = array();

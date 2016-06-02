@@ -1,3 +1,9 @@
+Release 1.7.1
+  * Fix: [Readequações] trocando planilhas corretamente em redução, complementação e readequação
+  * Fix: [SEI] Atualizando a Unidade de SEFIC para DINPC, no serviço do SEI para criação de Processos automaticamente
+  * Fix: [Webservice Receita] Corrigindo BUG de Agentes que nao possuia CEP cadastrado na Receita Federal
+  * Fix: [Gerenciar parecer] adicionando link ao produto em outros filtros
+
 Release 1.7.0
   * Novo: [Alterar projeto] possibilidade de alterar plano de distribuicao de múltiplos produtos
   * Novo: [Gerenciar pareceres] Novo filtro de gerenciar pareceres - "em validação"
@@ -11,8 +17,9 @@ Release 1.7.0
   * Novo: [Consultar dados projeto] adicionando período de captação
   * Novo: [Webservice Receita] Implementação completa do WebService da Receita para Pessoa Fisica ou Juridica
   * Novo: [Webservice Receita] Implementação do Serviço de Consulta a Receita Federal no Cadastro do Proponente na Comprovação da Execução Financeira
+  * Novo: [Webservice Receita] Implementando o WebService da Receita federal no Cadastro de Beneficiario dentro do Plano de Distribuição.
   * Fix: [Comprovar execução física] Correção da query de paginação em relatorios trimestrais
-  * Fix: [Webservice SEI]Realizando ajustes no WebService do SEI
+  * Fix: [Webservice SEI] Realizando ajustes no WebService do SEI
   * Fix: [Avaliar acompanhamento] corrigindo texto de cumprimento dos objetos
   * Fix: [Gerenciar pareceres] ajustes no relatorio final
   * Fix: [Gerenciar pareceres] devolvida para análise não listava botão de concluir
