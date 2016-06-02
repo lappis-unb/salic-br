@@ -20,24 +20,82 @@ class Projetos extends GenericModel
     public $_totalRegistros;
     private $codOrgao = null;
 
+    public function listarProjetosDeUsuario($idUsuario, $idProponente = NULL){
+        $consulta = $this->select();
+        $consulta->setIntegrityCheck(false);
+        $consulta->from(array('p' => 'vwAgentesSeusProjetos'), array(
+                'IdPRONAC',
+                'Pronac',
+                'NomeProjeto'), 'SAC.dbo')
+            ->where('p.IdUsuario = ?', $idUsuario)
+            ->group(array(
+                'IdPRONAC',
+                'Pronac',
+                'NomeProjeto'))
+            ->order(array(
+                'Pronac',
+                'NomeProjeto'));
+        if($idProponente) {
+            $consulta->where('p.idAgente = ?', (int)$idProponente);
+        }
+
+//xd($slctUnion->__toString());
+        return $this->fetchAll($consulta);
+    }
+    
+    public function buscarAnoExtratoDeProjeto($idPronac) {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(array('l' => 'vwExtratoDaMovimentacaoBancaria'), array(
+            'ano' => new Zend_Db_Expr('CONVERT(CHAR(4), l.dtLancamento, 120)')
+        ), 'dbo')
+        ->where('l.idPronac = ?', (int)$idPronac)
+        ->group(array(new Zend_Db_Expr('CONVERT(CHAR(4), l.dtLancamento, 120)')))
+        ->order(array('ano ASC'))
+        ;
+
+//xd($select->__toString());
+        return $this->fetchAll($select);
+    }
+    
+    public function buscarMesExtratoDeProjeto($idPronac, $ano) {
+        $this->getAdapter()->query('SET Language Brazilian');
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(array('l' => 'vwExtratoDaMovimentacaoBancaria'), array(
+            'numero' => new Zend_Db_Expr('CONVERT(CHAR(2), l.dtLancamento, 101)'),
+            'descricao' => new Zend_Db_Expr('DATENAME(MONTH,l.dtLancamento)')
+        ), 'dbo')
+        ->where('l.idPronac = ?', (int)$idPronac)
+        ->where('CONVERT(CHAR(4), l.dtLancamento, 120) = ?', (int)$ano)
+        ->group(array(
+            new Zend_Db_Expr('CONVERT(CHAR(2), l.dtLancamento, 101)'),
+            new Zend_Db_Expr('DATENAME(MONTH,l.dtLancamento)')
+        ))
+        ->order(array('numero ASC'));
+
+//xd($select->__toString());
+        return $this->fetchAll($select);
+    }
+    
     public function buscarExtrato($idPronac, $ano = NULL, $mes = NULL) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from(array('e' => 'vwExtratoDaMovimentacaoBancaria'), array(
-            'dtLancamento' => new Zend_Db_Expr('CONVERT(CHAR(10),e.dtLancamento,103)'),
+        $select->from(array('l' => 'vwExtratoDaMovimentacaoBancaria'), array(
+            'dtLancamento' => new Zend_Db_Expr('CONVERT(CHAR(10),l.dtLancamento,103)'),
             'Lancamento',
             'nrLancamento',
             'vlLancamento',
             'stLancamento'
         ), 'dbo')
-        ->where('e.idPronac = ?', (int)$idPronac);
+        ->where('l.idPronac = ?', (int)$idPronac);
         
         # Filtros
         if($ano){
-            $select->where('CONVERT(CHAR(4), dtLancamento, 120) = ?', $ano);
+            $select->where('CONVERT(CHAR(4), l.dtLancamento, 120) = ?', $ano);
         }
         if($mes){
-            $select->where("CONVERT(CHAR(2), dtLancamento, 101) = ?", $mes);
+            $select->where("CONVERT(CHAR(2), l.dtLancamento, 101) = ?", $mes);
         }
 
 //xd($select->__toString());

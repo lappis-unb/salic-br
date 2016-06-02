@@ -11,7 +11,7 @@
  */
 class ProjetoRestController extends AbstractRestController {
     
-    public function init() {
+    public function init(){
         $this->setPublicMethod('GET');
         parent::init();
     }
@@ -20,14 +20,21 @@ class ProjetoRestController extends AbstractRestController {
     
     public function indexAction(){
         $idProponente = $this->_request->getParam('proponente');
+        $listaProjeto = array();
         $modelProjeto = new Projetos();
-        $listaResult = $modelProjeto->listarProjetosConsulta((int)$this->usuario->IdUsuario, $idProponente, NULL);
-        $listaProjeto = $listaResult->toArray();
+        $objListaRs = $modelProjeto->listarProjetosDeUsuario((int)$this->usuario->IdUsuario, $idProponente, NULL);
+        $arrListaRs = $objListaRs->toArray();
+        if($arrListaRs){
+            foreach ($arrListaRs as $projeto) {
+                $projeto['NomeProjeto'] = utf8_encode($projeto['NomeProjeto']);
+                $listaProjeto[] = (object)$projeto;
+            }
+        }
 
         # Resposta do serviço.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($listaProjeto));
     }
-    
+
     public function getAction(){
         $pronac = $this->_request->getParam('id');
         $modelProjeto = new Projetos();
@@ -92,7 +99,7 @@ class ProjetoRestController extends AbstractRestController {
         
         return $resultado;
     }
-            
+
     public function putAction(){}
 
     public function deleteAction(){}

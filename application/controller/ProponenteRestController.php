@@ -14,12 +14,17 @@ class ProponenteRestController extends AbstractRestController {
     public function postAction(){}
     
     public function indexAction(){
-        $modelProposta = new Proposta();
-        $listaProponente = $modelProposta->listarPropostasCombo((int)$this->usuario->IdUsuario);
-        foreach ($listaProponente as $contador => $proponente) {
-            $proponente->CNPJCPF = Mascara::addMaskCpfCnpj($proponente->CNPJCPF);
-            $proponente->NomeProponente = utf8_encode( ucwords(strtolower($proponente->NomeProponente)));
-            $listaProponente[$contador] = $proponente;
+        $modelProponente = new Proponente();
+        $objResultado = $modelProponente->buscarProponenteProjetoDeUsuario((int)$this->usuario->IdUsuario);
+        $arrResultado = $objResultado->toArray();
+        $listaProponente = array();
+
+        if($arrResultado){
+            foreach ($arrResultado as $contador => $proponente) {
+//                $proponente->CNPJCPF = Mascara::addMaskCpfCnpj($proponente->CNPJCPF);
+                $proponente['NomeProponente'] = utf8_encode(ucwords(strtolower($proponente['NomeProponente'])));
+                $listaProponente[] = (object)$proponente;
+            }
         }
 
         # Resposta da autenticação.

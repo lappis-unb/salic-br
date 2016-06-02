@@ -26,7 +26,7 @@ class ProponenteAutenticacaoRestController extends AbstractRestController{
         $password = $post['senha'];
 
         if(empty($username) || empty($password)){
-            $result->msg = 'Senha ou login inv&aacute;lidos!';
+            $result->msg = 'Usu&aacute;rio ou Senha inv&aacute;lidos!';
         } else if (strlen($username) == 11 && !Validacao::validarCPF($username)){
             $result->msg = 'CPF inv&aacute;lido!';
         } else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)){
@@ -53,7 +53,7 @@ class ProponenteAutenticacaoRestController extends AbstractRestController{
                 }
 
                 if(!$buscar){
-                    $result->msg = 'Login ou Senha inv&aacute;lidos!';
+                    $result->msg = 'Usu&aacute;rio ou Senha inv&aacute;lidos!';
                 }
             } else {
                 $SenhaFinal = addslashes($password);
@@ -77,7 +77,7 @@ class ProponenteAutenticacaoRestController extends AbstractRestController{
                 }
 
             } else {
-                $result->msg = 'Senha ou login inv&aacute;lidos!';
+                $result->msg = 'Usu&aacute;rio ou Senha inv&aacute;lidos!';
             }
         }
         
