@@ -12,7 +12,7 @@
 class ProjetoRestController extends AbstractRestController {
     
     public function init(){
-        $this->setPublicMethod('GET');
+        $this->setPublicMethod('get');
         $this->setPublicMethod('index');
         parent::init();
     }
@@ -55,7 +55,6 @@ class ProjetoRestController extends AbstractRestController {
         $pronac = $this->_request->getParam('id');
         $modelProjeto = new Projetos();
         $resultado = $modelProjeto->buscarPorPronac($pronac);
-//        $resultado = $modelProjeto->buscarPorPronac(614); # TESTE
         $projeto = (object) $resultado->toArray();
         if($projeto){
             # Busca lancamentos no Extrato Bancário
@@ -65,23 +64,25 @@ class ProjetoRestController extends AbstractRestController {
             
             # Formatando dados
             $projeto->NomeProjeto = utf8_encode($projeto->NomeProjeto);
+            $projeto->CNPJCPF = mascara::addMaskCpfCnpj($projeto->CNPJCPF);
+            $projeto->Proponente = utf8_encode($projeto->Proponente);
+            $projeto->Area = utf8_encode($projeto->Area);
+            $projeto->Segmento = utf8_encode($projeto->Segmento);
             $projeto->Situacao = utf8_encode($projeto->Situacao);
             $projeto->Enquadramento = utf8_encode($projeto->Enquadramento);
             $projeto->stConta = $this->formatarSituacaoConta($projeto);
             $projeto->Conta = $this->formatarContaCorrente($projeto->Conta);
-            $projeto->dtFimCaptacao = date('d/m/Y',strtotime($projeto->dtFimCaptacao));
-            $projeto->DtFimExecucao = date('d/m/Y',strtotime($projeto->DtFimExecucao));
+            $projeto->dtFimCaptacao = $projeto->dtFimCaptacao? date('d/m/Y',strtotime($projeto->dtFimCaptacao)): NULL;
+            $projeto->DtFimExecucao = $projeto->DtFimExecucao? date('d/m/Y',strtotime($projeto->DtFimExecucao)): NULL;
             $projeto->ValorAprovado = number_format($projeto->ValorAprovado, 2, ',', '.');
             $projeto->ValorProjeto = number_format($projeto->ValorProjeto, 2, ',', '.');
             $projeto->ValorCaptado = number_format($projeto->ValorCaptado, 2, ',', '.');
             $projeto->VlComprovado = number_format($projeto->VlComprovado, 2, ',', '.');
             $projeto->PercCaptado = number_format($projeto->PercCaptado, 2, ',', '.');
-            $projeto->Area = utf8_encode($projeto->Area);
-            $projeto->Segmento = utf8_encode($projeto->Segmento);
             $projeto->ResumoProjeto = utf8_encode($projeto->ResumoProjeto);
             $projeto->nuLancamento = $numeroLancamentoExtrato;
         }
-//xd($projeto);
+
         # Resposta do serviço.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($projeto));
     }

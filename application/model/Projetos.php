@@ -122,6 +122,12 @@ class Projetos extends GenericModel
             'IdPRONAC',
             'Pronac',
             'NomeProjeto',
+            'CNPJCPF',
+            'Proponente',
+            'UFProjeto',
+            'Area',
+            'Segmento',
+            'ResumoProjeto',
             'CodigoSituacao',
             'Situacao',
             'Enquadramento',
@@ -134,12 +140,7 @@ class Projetos extends GenericModel
             'ValorProjeto',
             'ValorCaptado',
             'VlComprovado',
-            'PercCaptado',
-            
-            'UFProjeto',
-            'Area',
-            'Segmento',
-            'ResumoProjeto',
+            'PercCaptado'
             ),'SAC.dbo'
         );
 
