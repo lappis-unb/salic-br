@@ -147,7 +147,8 @@
                                     newOcorrencia: $('#newOcorrencia').val(),
                                     newValorUnitario: $('#newValorUnitario').val(),
                                     newDias: $('#newDias').val(),
-                                    newJustificativa: $('#newJustificativa').val()
+                                    newJustificativa: $('#newJustificativa').val(),
+				    idReadequacao: $('#idReadequacao').val(),
                                 },
                                 success: function(data){
                                     $("#modalInclusaoItem").dialog("destroy");
@@ -160,6 +161,60 @@
                 }
             });
             $('.ui-dialog-titlebar-close').remove();
+        });
+
+        $('#newUF').change(function(){
+            $("#newMunicipio").html('<option value=""> - Carregando - </option>');
+            if($(this).val() == 0){
+                $("#newMunicipio").html('<option value=""> - Selecione - </option>');
+            }
+            else{
+                $.ajax({
+                    url : '<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'index'), null, true); ?>?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>',
+                    type: "POST",
+                    data :{
+                        iduf : $(this).val()
+                    },
+                    success: function(valor){
+                        $("#newMunicipio").html('<option value=""> - Selecione - </option>');
+
+                        for(a in valor){
+                            $("#newMunicipio").append('<option value="'+valor[a].idCidade+'">'+valor[a].nomeCidade+'</option>');
+                        }
+                    },
+                    type : 'post'
+                    , dataType : 'json'
+                });
+            }
+        });
+        
+        $('#newEtapa').change(function(){
+            $('#newProduto').change();
+        });
+        
+        $('#newProduto').change(function(){
+            $("#newItem").html('<option value=""> - Carregando - </option>');
+            if($(this).val() == 0){
+                $("#newItem").html('<option value=""> - Selecione - </option>');
+            }
+            else{
+                $.ajax({
+                    url : '<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'index'), null, true); ?>?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>',
+                    type: "POST",
+                    data :{
+                        idEtapa : $('#newEtapa').val(),
+                        idProduto : $(this).val()
+                    },
+                    success: function(valor){
+                        $("#newItem").html('<option value=""> - Selecione - </option>');
+                        for(a in valor){
+                            $("#newItem").append('<option value="'+valor[a].idPlanilhaItens+'">'+valor[a].Item+'</option>');
+                        }
+                    },
+                    type : 'post'
+                    , dataType : 'json'
+                });
+            }
         });
         
         $('.btn_finalizar').click(function(){

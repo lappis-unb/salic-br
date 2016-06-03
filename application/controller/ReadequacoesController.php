@@ -421,6 +421,8 @@ class ReadequacoesController extends GenericControllerNew {
         $dadosInclusao['idAgente'] = $idAgente;
         $dadosInclusao['stAtivo'] = 'N';
         $dadosInclusao['tpAcao'] = 'I';
+        $dadosInclusao['idReadequacao'] = $_POST['idReadequacao'];
+        
         $insert = $tbPlanilhaAprovacao->inserir($dadosInclusao);
         
         if($insert){
@@ -3959,9 +3961,20 @@ class ReadequacoesController extends GenericControllerNew {
             $Projetos = new Projetos();
             $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
 
-            //VERIFICA SE JA POSSUI A PLANILHA TIPO SR. SE NÃO TIVER, COPIA A ORIGINAL
-            //$tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
-            //$this->view->readequacao = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'SR'));
+            $buscarRecurso = ManterorcamentoDAO::buscarFonteRecurso();
+            $this->view->Recursos = $buscarRecurso;
+            
+            $buscarEstado = EstadoDAO::buscar();
+            $this->view->UFs = $buscarEstado;
+            
+            $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+            $this->view->Produtos = $PlanoDistribuicaoProduto->comboProdutosParaInclusaoReadequacao($idPronac);
+            
+            $tbPlanilhaEtapa = new tbPlanilhaEtapa();
+            $this->view->Etapas = $tbPlanilhaEtapa->buscar(array('stEstado = ?'=>1));
+            
+            $buscarUnidade = ManterorcamentoDAO::buscarUnidade();
+            $this->view->Unidade = $buscarUnidade;
             
             $tbReadequacao = new tbReadequacao();
             $this->view->readequacao = $tbReadequacao->readequacoesCadastradasProponente(array(
