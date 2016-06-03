@@ -1731,7 +1731,7 @@ class ReadequacoesController extends GenericControllerNew {
                 // outros casos: insere tbReadequacao e altera tbPlanilhaAprovacao
                 $dados = array();
                 $dados['idPronac'] = $idPronac;
-                $dados['idTipoReadequacao'] = $idReadequacao;
+                $dados['idTipoReadequacao'] = $idTipoReadequacao;
                 $dados['dtSolicitacao'] = new Zend_Db_Expr('GETDATE()');
                 $dados['idSolicitante'] = $rsAgente->idAgente;
                 $dados['dsJustificativa'] = $_POST['descJustificativa'];
