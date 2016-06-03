@@ -1605,19 +1605,16 @@ class ReadequacoesController extends GenericControllerNew {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
         
-        $idReadequacao = $this->_request->getParam("idReadequacao");
+        $idReadequacao = filter_var($this->_request->getParam("idReadequacao"), FILTER_SANITIZE_NUMBER_INT);
+        $idTipoReadequacao = filter_var($this->_request->getParam("tipoReadequacao"), FILTER_SANITIZE_NUMBER_INT);
         
-        $post = Zend_Registry::get('post');
         $tbReadequacao = new tbReadequacao();
         $busca = array();
         
         // caso seja planilha orçamentária, faz update
-        if ($post->tipoReadequacao == 2) {
-                $busca['idReadequacao =?'] = $idReadequacao;
-                $dadosReadequacao = $tbReadequacao->buscar($busca)->current();
-        } else {
+        if ($idTipoReadequacao != 2) {
             $busca['idPronac =?'] = $idPronac;
-            $busca['idTipoReadequacao =?'] = $post->tipoReadequacao;
+            $busca['idTipoReadequacao =?'] = $idTipoReadequacao;
             $busca['siEncaminhamento =?'] = 12;
             $dadosCadastrados = $tbReadequacao->buscar($busca)->current();
             
@@ -1626,26 +1623,25 @@ class ReadequacoesController extends GenericControllerNew {
             }
         }
         
-        if($post->tipoReadequacao == 2){ //Planilha Orçamentária
+        if($idTipoReadequacao == 2){ //Planilha Orçamentária
             $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
-            $idReadequacao = $post->idReadequacao;
             $planilhaReadequada = $tbPlanilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idPronac, 'tpPlanilha = ?'=>'SR', 'idReadequacao= ?' => $idReadequacao));
             if(count($planilhaReadequada)==0){
                 parent::message('Não houve nenhuma alteração na planilha orçamentária do projeto!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
-        } else if($post->tipoReadequacao == 9){ //Local de Realização
+        } else if($idTipoReadequacao == 9){ //Local de Realização
             $tbAbrangencia = new tbAbrangencia();
             $locaisReadequados = $tbAbrangencia->buscar(array('idPronac = ?'=>$idPronac, 'idReadequacao is null'=>''));
             if(count($locaisReadequados)==0){
                 parent::message('Não houve nenhuma alteração nos locais de realização do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
-        } else if($post->tipoReadequacao == 11){ //Planos de Distribuição
+        } else if($idTipoReadequacao == 11){ //Planos de Distribuição
             $tbPlanoDistribuicao = new tbPlanoDistribuicao();
             $planosReadequados = $tbPlanoDistribuicao->buscar(array('idPronac = ?'=>$idPronac, 'idReadequacao is null'=>''));
             if(count($planosReadequados)==0){
                 parent::message('Não houve nenhuma alteração nos planos de distribuição do projeto!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
             }
-        } else if($post->tipoReadequacao == 14){ //Planos de Divulgação
+        } else if($idReadequacao == 14){ //Planos de Divulgação
             $tbPlanoDivulgacao = new tbPlanoDivulgacao();
             $planosReadequados = $tbPlanoDivulgacao->buscar(array('idPronac = ?'=>$idPronac, 'idReadequacao is null'=>''));
             if(count($planosReadequados)==0){
@@ -1716,21 +1712,26 @@ class ReadequacoesController extends GenericControllerNew {
             $auth = Zend_Auth::getInstance(); // pega a autenticação
             $tblAgente = new Agentes();
             $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$auth->getIdentity()->Cpf))->current();
-
-            if ($post->tipoReadequacao == 2) {
-                // se for tipo planilha orçamentaria, somente atualiza tbReadequacao
-                $dadosReadequacao['dsJustificativa'] = $_POST['descJustificativa'];
-                $dadosReadequacao['dsSolicitacao'] = $_POST['descSolicitacao'];
-                $dadosReadequacao['idDocumento'] = $idDocumento;            
-                $dadosReadequacaoWhere['idPronac'] = $idPronac;
+            
+            if ($idTipoReadequacao == 2) {
+                $descJustificativa = $this->_request->getParam('descJustificativa');
                 
-                $idReadequacao = $tbReadequacao->update($dadosReadequacao, $dadosReadequacaoWhere);
+                // se for tipo planilha orçamentaria, somente atualiza tbReadequacao
+                $dadosReadequacao = array();
+                $dadosReadequacao['dsJustificativa'] = $descJustificativa;
+                
+                if ($idDocumento) {
+                    $dadosReadequacao['idDocumento'] = $idDocumento;
+                }
+                
+                $readequacaoWhere = "idReadequacao = $idReadequacao";
+                $tbReadequacao->update($dadosReadequacao, $readequacaoWhere);
                 
             } else {
                 // outros casos: insere tbReadequacao e altera tbPlanilhaAprovacao
                 $dados = array();
                 $dados['idPronac'] = $idPronac;
-                $dados['idTipoReadequacao'] = $post->tipoReadequacao;
+                $dados['idTipoReadequacao'] = $idReadequacao;
                 $dados['dtSolicitacao'] = new Zend_Db_Expr('GETDATE()');
                 $dados['idSolicitante'] = $rsAgente->idAgente;
                 $dados['dsJustificativa'] = $_POST['descJustificativa'];
@@ -1747,11 +1748,14 @@ class ReadequacoesController extends GenericControllerNew {
                 $tbPlanilhaAprovacao->update($dadosPlanilha, $wherePlanilha);
             }
             
-            if ($idReadequacao) {
-                $acaoOk = ($post->tipoReadequacao == 2) ? 'alterada' : 'cadastrada';
-                $acaoErro = ($post->tipoReadequacao == 2) ? 'alterar' : 'cadastrar';
+            if ($idReadequacao && $idTipoReadequacao != 2) {
+                $acaoErro = 'cadastrar';
                 
-                parent::message("Solicitação $acaoOk com sucesso!", "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                parent::message("Solicitação cadastrada com sucesso!", "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+            }  else if ($idReadequacao && $idTipoReadequacao == 2) {
+                $acaoErro = 'alterar';
+                
+                parent::message("Solicitação alterada com sucesso!", "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");                                
             } else {
                 throw new Exception("Erro ao $acaoErro a readequação!");
             }
@@ -3965,7 +3969,6 @@ class ReadequacoesController extends GenericControllerNew {
                 'a.siEncaminhamento = ?'=>12,
                 'a.idTipoReadequacao = ?' => 2,
             ), array(1));
-            
         } else {
             parent::message("N&uacute;mero Pronac inv&aacute;lido!", "principalproponente", "ERROR");
         }        
