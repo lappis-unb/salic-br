@@ -738,6 +738,11 @@
             <tr>
                 <td class="destacar bold" style="font-size: 13px;">Anexo</td>
             </tr>
+	    <?php if(!empty($this->readequacao[0]->idArquivo)){ ?>
+	    <tr>
+              <td><a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $this->readequacao[0]->idArquivo; ?>"><?php echo $this->readequacao[0]->nmArquivo; ?></a></td>
+	    </tr>
+	    <?php } ?>
             <tr>
                 <td><input type="file" name="arquivo" class="input_simples"> <span style="margin-left: 10px;" class="red">Somente arquivos .pdf</span></td>
             </tr>
