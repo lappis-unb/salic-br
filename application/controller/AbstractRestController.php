@@ -62,7 +62,7 @@ abstract class AbstractRestController extends Zend_Rest_Controller{
             $this->_forward('error-forbiden');
         }
         if($this->authorization){
-            $this->carregarUsuario(Seguranca::dencrypt($this->authorization, $this->encryptHash));
+            $this->carregarUsuario();
         }
     }
     
@@ -72,10 +72,15 @@ abstract class AbstractRestController extends Zend_Rest_Controller{
      * @param integer $id
      * @return Zend_Db_Table_Rowset_Abstract
      */
-    protected function carregarUsuario($id) {
+    protected function carregarUsuario() {
+        $keyCpf = Seguranca::dencrypt($this->authorization, $this->encryptHash);
+        $cpf = str_replace($this->publicKey, '', $keyCpf);
         $modelSgcAcesso = new Sgcacesso();
-        $listaResult = $modelSgcAcesso->buscar(array('IdUsuario = ?' => $id));
-        $this->usuario = $listaResult[0];
+        $this->usuario = $modelSgcAcesso->fetchRow("Cpf = '{$cpf}'");
+        # Valida se o usuário é válido.
+        if(!$this->usuario){
+            $this->_forward('error-forbiden');
+        }
 
         return $this->usuario;
     }

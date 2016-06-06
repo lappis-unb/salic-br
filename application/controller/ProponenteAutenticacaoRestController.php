@@ -62,7 +62,8 @@ class ProponenteAutenticacaoRestController extends AbstractRestController{
             
             if($buscar){
                 $result->usuario = Zend_Auth::getInstance()->getIdentity();
-                $result->authorization = Seguranca::encrypt($result->usuario->IdUsuario, $this->encryptHash);
+                $result->authorization = $this->encryptAuthorization();
+//                $result->authorization = Seguranca::encrypt($result->usuario->IdUsuario, $this->encryptHash);
 
                 $verificaSituacao = $verificaStatus[0]->Situacao;
                 if($verificaSituacao == 1) {
@@ -83,6 +84,18 @@ class ProponenteAutenticacaoRestController extends AbstractRestController{
         
         # Resposta da autenticação.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($result));
+    }
+    
+    /**
+     * Gera a chave de acesso do usuário para utilizar os serviços que precisam de identificação de usuário.
+     * 
+     * @return string
+     */
+    protected function encryptAuthorization(){
+        $usuario = Zend_Auth::getInstance()->getIdentity();
+        $authorization = Seguranca::encrypt($this->publicKey. $usuario->Cpf. $this->publicKey, $this->encryptHash);
+
+        return $authorization;
     }
     
     public function indexAction(){}
