@@ -14,14 +14,29 @@ class ProjetoExtratoRestController extends AbstractRestController {
     public function postAction(){}
     
     public function indexAction(){
+        # Parametros da Paginação.
+        $next = $this->_request->getParam('next');
+        $offset = $this->_request->getParam('offset');
+        $total = $this->_request->getParam('total');
+        # Parametros da Consulta.
         $projeto = $this->_request->getParam('projeto');
         $ano = $this->_request->getParam('ano');
         $mes = $this->_request->getParam('mes');
 
         $modelProjetos = new Projetos();
-        $listaResult = $modelProjetos->buscarExtrato($projeto, $ano, $mes);
+        $objParam = (object) array(
+            'next' => $next,
+            'offset' => $offset,
+            'idPronac' => $projeto,
+            'ano' => $ano,
+            'mes' => $mes);
+        # Verifica se existe necessidade de buscar o número total de registros da consulta
+        if(!$total){
+            $total = $modelProjetos->buscarTotalExtrato($objParam);
+        }
+        # Busca os dados da lista
+        $listaResult = $modelProjetos->buscarExtrato($objParam);
         $listaExtrato = $listaResult->toArray();
-//xd($listaExtrato);
         if($listaExtrato){
             foreach ($listaExtrato as $identificador => $lancamento) {
                 $lancamento['vlLancamento'] = number_format($lancamento['vlLancamento'], 2, ',', '.');
@@ -30,7 +45,7 @@ class ProjetoExtratoRestController extends AbstractRestController {
         }
 
         # Resposta da autenticação
-        $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($listaExtrato));
+        $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode((object) array('list' => $listaExtrato, 'total' => $total)));
     }
     
     public function getAction(){}

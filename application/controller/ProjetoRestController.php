@@ -20,6 +20,9 @@ class ProjetoRestController extends AbstractRestController {
     public function postAction(){}
     
     public function indexAction(){
+        $next = $this->_request->getParam('next');
+        $offset = $this->_request->getParam('offset');
+        $total = $this->_request->getParam('total');
         $idProponente = $this->_request->getParam('proponente');
         $pronac = $this->_request->getParam('pronac');
         $cgcCpf = $this->_request->getParam('cgcCpf');
@@ -31,12 +34,20 @@ class ProjetoRestController extends AbstractRestController {
         
         $listaProjeto = array();
         $modelProjeto = new Projetos();
-        $objListaRs = $modelProjeto->listarProjetosDeUsuario(
-            (int)$idUsuario,
-            $idProponente,
-            $pronac,
-            $cgcCpf,
-            $nomeProponente);
+        $objParam = (object) array(
+            'next' => $next,
+            'offset' => $offset,
+            'idUsuario' => (int)$idUsuario,
+            'idProponente' => $idProponente,
+            'pronac' => $pronac,
+            'cgcCpf' => $cgcCpf,
+            'nomeProponente' => $nomeProponente);
+        # Verifica se existe necessidade de buscar o número total de registros da consulta
+        if(!$total){
+            $total = $modelProjeto->buscarTotalListarProjetosDeUsuario($objParam);
+        }
+        # Busca os dados da lista
+        $objListaRs = $modelProjeto->listarProjetosDeUsuario($objParam);
         if($objListaRs){
             $arrListaRs = $objListaRs->toArray();
             if($arrListaRs){
@@ -48,7 +59,10 @@ class ProjetoRestController extends AbstractRestController {
         }
 
         # Resposta do serviço.
-        $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($listaProjeto));
+        $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode(array(
+            'list' => $listaProjeto,
+            'total' => (int)$total)
+        ));
     }
 
     public function getAction(){

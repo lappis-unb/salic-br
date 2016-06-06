@@ -20,10 +20,35 @@ class Projetos extends GenericModel
     public $_totalRegistros;
     private $codOrgao = null;
 
-    public function listarProjetosDeUsuario($idUsuario = NULL, $idProponente = NULL, $pronac = NULL, $cgcCpf = NULL, $nomeProponente = NULL){
+    public function montarFiltrosListaProjetosDeUsuario($consulta, stdClass $objParam){
+        # Filtros
+        if($objParam->idUsuario) {
+            $consulta->where('p.IdUsuario = ?', $objParam->idUsuario);
+        }
+        if($objParam->idUsuario) {
+            $consulta->where('p.IdUsuario = ?', $objParam->idUsuario);
+        }
+        if($objParam->idProponente) {
+            $consulta->where('p.idAgente = ?', (int)$objParam->idProponente);
+        }
+        if($objParam->pronac) {
+            $consulta->where('p.Pronac = ?', $objParam->pronac);
+        }
+        if($objParam->cgcCpf) {
+            $consulta->where('p.CgcCpf = ?', $objParam->cgcCpf);
+        }
+        if($objParam->nomeProponente) {
+            $consulta->where("p.NomeProponente LIKE '%$objParam->nomeProponente%'");
+        }
+        
+        return $consulta;
+    }
+    
+    public function listarProjetosDeUsuario(stdClass $objParam){
         $consulta = $this->select();
         $consulta->setIntegrityCheck(false);
-        $consulta->from(array('p' => 'vwAgentesSeusProjetos'), array(
+        $consulta
+            ->from(array('p' => 'vwAgentesSeusProjetos'), array(
                 'IdPRONAC',
                 'Pronac',
                 'NomeProjeto'), 'SAC.dbo')
@@ -34,25 +59,37 @@ class Projetos extends GenericModel
             ->order(array(
                 'Pronac',
                 'NomeProjeto'))
-//            ->limit(5)
         ;
-        if($idUsuario) {
-            $consulta->where('p.IdUsuario = ?', $idUsuario);
+        # Filtros
+        $this->montarFiltrosListaProjetosDeUsuario($consulta, $objParam);
+
+        # Paginação
+        if($objParam->next) {
+            $consulta->limit($objParam->next, (int)$objParam->offset);
         }
-        if($idProponente) {
-            $consulta->where('p.idAgente = ?', (int)$idProponente);
-        }
-        if($pronac) {
-            $consulta->where('p.Pronac = ?', $pronac);
-        }
-        if($cgcCpf) {
-            $consulta->where('p.CgcCpf = ?', $cgcCpf);
-        }
-        if($nomeProponente) {
-            $consulta->where("p.NomeProponente LIKE '%$nomeProponente%'");
-        }
+
 //xd($consulta->__toString());
         return $this->fetchAll($consulta);
+    }
+    
+    public function buscarTotalListarProjetosDeUsuario(stdClass $objParam){
+        $total = 0;
+        $consulta = $this->select();
+        $consulta->setIntegrityCheck(false);
+        $consulta
+            ->from(array('p' => 'vwAgentesSeusProjetos'), array(
+                'total' => new Zend_Db_Expr('COUNT(DISTINCT IdPRONAC)')
+            ), 'SAC.dbo')
+        ;
+        # Filtros
+        $this->montarFiltrosListaProjetosDeUsuario($consulta, $objParam);
+
+        $rs = $this->fetchRow($consulta);
+        if($rs){
+            $total = (int)$rs->total;
+        }
+        
+        return $total;
     }
     
     public function buscarAnoExtratoDeProjeto($idPronac) {
@@ -90,7 +127,40 @@ class Projetos extends GenericModel
         return $this->fetchAll($select);
     }
     
-    public function buscarExtrato($idPronac, $ano = NULL, $mes = NULL) {
+    public function buscarTotalExtrato(stdClass $objParam) {
+        $total = 0;
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(array('l' => 'vwExtratoDaMovimentacaoBancaria'), array('total' => new Zend_Db_Expr('COUNT(l.idPronac)')), 'dbo')
+        ->where('l.idPronac = ?', (int)$objParam->idPronac);
+        
+        # Filtros
+        # Filtros
+        $select = $this->montarFiltrosExtrato($select, $objParam);
+        
+        # Busca o total de registros do banco.
+//xd($select->__toString());
+        $rs = $this->fetchRow($select);
+        if($rs){
+            $total = (int)$rs->total;
+        }
+        
+        return $total;
+    }
+    
+    public function montarFiltrosExtrato($select, stdClass $objParam) {
+        # Filtros
+        if($objParam->ano){
+            $select->where('CONVERT(CHAR(4), l.dtLancamento, 120) = ?', $objParam->ano);
+        }
+        if($objParam->mes){
+            $select->where("CONVERT(CHAR(2), l.dtLancamento, 101) = ?", $objParam->mes);
+        }
+        
+        return $select;
+    }
+    
+    public function buscarExtrato(stdClass $objParam) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('l' => 'vwExtratoDaMovimentacaoBancaria'), array(
@@ -100,17 +170,16 @@ class Projetos extends GenericModel
             'vlLancamento',
             'stLancamento'
         ), 'dbo')
-        ->where('l.idPronac = ?', (int)$idPronac);
+        ->where('l.idPronac = ?', (int)$objParam->idPronac);
         
         # Filtros
-        if($ano){
-            $select->where('CONVERT(CHAR(4), l.dtLancamento, 120) = ?', $ano);
+        $this->montarFiltrosExtrato($select, $objParam);
+        
+        # Paginação
+        if($objParam->next) {
+            $select->limit($objParam->next, (int)$objParam->offset);
         }
-        if($mes){
-            $select->where("CONVERT(CHAR(2), l.dtLancamento, 101) = ?", $mes);
-        }
-
-//xd($select->__toString());
+        
         return $this->fetchAll($select);
     }
     
