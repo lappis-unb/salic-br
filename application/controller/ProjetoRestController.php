@@ -84,8 +84,9 @@ class ProjetoRestController extends AbstractRestController {
             $projeto->Segmento = utf8_encode($projeto->Segmento);
             $projeto->Situacao = utf8_encode($projeto->Situacao);
             $projeto->Enquadramento = utf8_encode($projeto->Enquadramento);
-            $projeto->stConta = $this->formatarSituacaoConta($projeto);
+            $projeto->Agencia = $this->formatarAgencia($projeto->Agencia);
             $projeto->Conta = $this->formatarContaCorrente($projeto->Conta);
+            $projeto->stConta = $this->formatarSituacaoConta($projeto);
             $projeto->dtFimCaptacao = $projeto->dtFimCaptacao? date('d/m/Y',strtotime($projeto->dtFimCaptacao)): NULL;
             $projeto->DtFimExecucao = $projeto->DtFimExecucao? date('d/m/Y',strtotime($projeto->DtFimExecucao)): NULL;
             $projeto->ValorAprovado = number_format($projeto->ValorAprovado, 2, ',', '.');
@@ -133,10 +134,35 @@ class ProjetoRestController extends AbstractRestController {
      * @return string
      */
     protected function formatarContaCorrente($conta) {
-        $resultado = (int)$conta;
-        if($resultado){
-            $numero = strlen($resultado);
-            $resultado = substr($resultado, 0, ((int)$numero)-1). '-'. substr($resultado, ((int) $numero) -1, $numero);
+        $resultado = NULL;
+        if($conta){
+            # Retira os zeros à esquerda.
+            $resultado = (int)$conta;
+            # Numero de caracteres.
+            $qtdCarecteres = strlen($resultado);
+            # Numero principal da CC
+            $numeroPrincipal = substr($resultado, 0, ((int)$qtdCarecteres)-1);
+            $numero = number_format($numeroPrincipal, 0, '.', '.');
+            # Digito da CC
+            $digito = substr($resultado, ((int) $qtdCarecteres) -1, $qtdCarecteres);
+            # Inserindo traço
+            $resultado = $numero. '-'. $digito;
+        }
+        
+        return $resultado;
+    }
+    
+    /**
+     * Regra de visualização para formatar o número da Agência.
+     * 
+     * @param string $agencia
+     * @return string
+     */
+    protected function formatarAgencia($agencia) {
+        $resultado = NULL;
+        if($agencia){
+            $qtdNumero = strlen($agencia);
+            $resultado = substr($agencia, 0, ((int)$qtdNumero)-1). '-'. substr($agencia, ((int) $qtdNumero) -1, $qtdNumero);
         }
         
         return $resultado;

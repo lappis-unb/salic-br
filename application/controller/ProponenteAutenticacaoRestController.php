@@ -98,6 +98,15 @@ class ProponenteAutenticacaoRestController extends AbstractRestController{
         return $authorization;
     }
     
+    /**
+     * Define senha inicial para cadastros incompletos.
+     * 
+     * @return string
+     */
+    public static function validarSenhaInicial(){
+        return 'ae56f49edf70ec03b98f53ea6d2bc622';
+    }
+    
     public function indexAction(){}
     
     public function getAction(){}
@@ -105,9 +114,5 @@ class ProponenteAutenticacaoRestController extends AbstractRestController{
     public function putAction(){}
 
     public function deleteAction(){}
-    
-    public static function validarSenhaInicial(){
-        return 'ae56f49edf70ec03b98f53ea6d2bc622';
-    }
 
 }
