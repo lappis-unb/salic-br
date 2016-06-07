@@ -140,7 +140,7 @@
             <?php } ?>
         </tr>
         <tr>
-            <td align="center"><?php echo $this->pronac;?></td>
+            <td align="center"><a href="<?php echo $this->baseUrl().'/consultardadosprojeto/index?idPronac='.$this->idPronac; ?>" target="_blank"><?php echo $this->pronac;?></a></td>
             <td align="center"><?php echo $this->nomeProjeto;?></td>
             <?php if($this->itemAvaliadoFilter == 2 || $this->codGrupo == 132){ ?>
                 <td align="center"><?php echo $this->formatarReal($this->vlComprovacaoImpugnado); ?></td>
