@@ -1178,6 +1178,15 @@ div.plan span {
 	text-align:center;
 	cursor:pointer;
 }
+
+.btn_encaminhar
+{
+	width:20px;
+	height:21px;
+	text-align:center;
+	cursor:pointer;
+}
+
 .btn_vincular:hover,
 .btn_rejeitar:hover,
 .btn_desvincular:hover,
@@ -1290,7 +1299,7 @@ div.plan span {
 .btn_enviar_para_pagamento:hover,
 .btn_registrar_ordem_bancaria:hover,
 .btn_visualizar2:hover,
-.btn_historico:hover
+.btn_historico:hover,
 {
 	background-color:#fff;
 	border-top:1px solid #aaa;
@@ -1375,7 +1384,8 @@ div.plan span {
 .btn_desvincular,
 .btn_transferir,
 .btn_transferir-off,
-.btn_historico
+.btn_historico,
+.btn_encaminhar
 {
 	width:87px;
 }
@@ -1601,6 +1611,7 @@ div.plan span {
 .btn_enviar_para_pagamento                      { background:url(../img/buttons/enviar-para-pagamento.gif) center center no-repeat; }
 .btn_visualizar2                                { background:url(../img/buttons/visualizar.gif) center center no-repeat; }
 .btn_historico                                  { background:url(../img/buttons/historico.gif) center center no-repeat; }
+.btn_encaminhar                                 { background:url(../img/user_gray.png) center center no-repeat; }
 /* ========== FIM BOTÕES ========== */
 -->
 /*loader*/
