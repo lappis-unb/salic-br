@@ -109,10 +109,10 @@ class Usuario extends GenericModel
 		}
 	} // fecha m?todo login()
 
-     
+
      public function loginSemCript($username, $password)
 	{
-            
+
 		// busca o usu?rio de acordo com o login e a senha
                 $senha = $this->select();
                 $senha->from($this);
@@ -209,7 +209,7 @@ class Usuario extends GenericModel
                 return false;
             }
         }
-        
+
 	/**
 	 * Novo método para alterar a senha do usuário do sistema (Solicitação CGTI - Dia 15/01/2015)
 	 * @access public
@@ -232,12 +232,12 @@ class Usuario extends GenericModel
                              usu_data_validade,usu_limite_utilizacao,
                              Tabelas.dbo.fnEncriptaSenha( '$cpf' , '$password' ),usu_status),
                          usu_validacao = Tabelas.dbo.fnValidacaoUsuarios
-                                     (usu_codigo,usu_identificacao,usu_nome)                                    
+                                     (usu_codigo,usu_identificacao,usu_nome)
                          WHERE usu_identificacao = '$cpf' ";
-                
+
                 $db->fetchAssoc($sql);
                 return true;
-                
+
             } catch (Exception $e) {
                 $this->_db->rollBack();
                 return false;
@@ -253,7 +253,7 @@ class Usuario extends GenericModel
 		            "TABELAS.dbo"
 		           );
 		$sql->where('org_codigo = ?', $usu_orgao);
-		
+
 		return $this->fetchAll($sql)->current();
 	}
 
@@ -264,7 +264,7 @@ class Usuario extends GenericModel
 		$sql->where('Codigo = ?', $usu_orgao);
 		return $this->fetchRow($sql);
 	}
-	
+
 	public function buscarUsuario(){
 		$select = $this->select();
 		$select->setIntegrityCheck(false);
@@ -272,7 +272,7 @@ class Usuario extends GenericModel
 		$select->from($this->_name);
 		return $this->fetchAll($select);
 	}
-	
+
 
         public function pesquisarUsuarioOrgao($where=array(), $order=array(), $tamanho=-1, $inicio=-1){
         $select = $this->select();
@@ -310,7 +310,7 @@ class Usuario extends GenericModel
 		            "TABELAS.dbo"
 		           );
 		$sql->where('usu_codigo = ?', $usu_codigo);
-		
+
 		return $this->fetchAll($sql)->current();
 	}
 
@@ -425,7 +425,7 @@ class Usuario extends GenericModel
             //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
             $tmpTblUsuario = new Usuario();
 
-            
+
             $tmpTblUsuario = $tmpTblUsuario->createRow();
 
             //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
@@ -481,7 +481,7 @@ class Usuario extends GenericModel
         }
 
 
-            
+
 
             //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
             if(isset($dados['usu_codigo'])){ $tmpTblUsuario->usu_codigo = $dados['usu_codigo']; }
@@ -610,7 +610,7 @@ class Usuario extends GenericModel
                     array("org_superior"),
                     "TABELAS.dbo"
                     );
-       
+
         $slct->where("org_codigo = ? ", $idOrgao);
 
         $rows = $this->fetchRow($slct);

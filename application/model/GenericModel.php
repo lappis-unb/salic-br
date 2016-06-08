@@ -9,6 +9,7 @@
  *
  * @author augusto
  */
+require_once 'Zend/Db/Table/Abstract.php';
 class GenericModel extends Zend_Db_Table_Abstract {
 
     private $_config;
@@ -49,7 +50,7 @@ class GenericModel extends Zend_Db_Table_Abstract {
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
      */
-    public function buscar($where=array(), $order=array(), $tamanho=-1, $inicio=-1) { 
+    public function buscar($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
         $slct = $this->select();
 
         //adiciona quantos filtros foram enviados
