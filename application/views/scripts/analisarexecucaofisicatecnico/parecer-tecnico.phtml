@@ -161,16 +161,16 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
 
     <table class="tabela">
         <tr>
-            <th colspan="2">Período de Execução</th>
+            <th colspan="2">Período do Relatório</th>
         <tr>
         <tr>
             <th align="center" width="50%">Dt. Início:</th>
             <th align="center">Dt. Fim:</th>
         </tr>
-  
+
         <tr class="linha">
-            <td align="center"><?php echo Data::tratarDataZend($this->DadosRelatorio[0]->dtInicioExecucao, 'Brasileiro'); ?></td>
-            <td align="center"><?php echo Data::tratarDataZend($this->DadosRelatorio[0]->dtFimExecucao, 'Brasileiro'); ?></td>
+            <td align="center"><?php echo Data::tratarDataZend($this->DadosRelatorio[0]->DtInicioPeriodo, 'Brasileiro'); ?></td>
+            <td align="center"><?php echo Data::tratarDataZend($this->DadosRelatorio[0]->DtFimPeriodo, 'Brasileiro'); ?></td>
 
     </table>
     <br clear="all" />

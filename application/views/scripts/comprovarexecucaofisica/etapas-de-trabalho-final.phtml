@@ -4,10 +4,11 @@
  
   //Contador e limitadores de caracteres
 
+
 function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
 	var minchar;
  	if(typeof minchar === 'undefined'){
-	    minchar = 49;
+	    minchar = 19;
         }
 
         countChars  = CountCharacters(fieldName);
@@ -19,7 +20,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
             if (countChars <= minchar){
                 document.getElementById("contador" + fieldName).style.color = "red";
             }else{
-	        document.getElementById("contador" + fieldName).style.color = "black";
+	            document.getElementById("contador" + fieldName).style.color = "black";
             }
 }
 
@@ -31,86 +32,87 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
 	    plugins:"paste,textcolor",
 	    language: "pt_BR",
 	    paste_as_text: true,
-            selector: '#etapasConcluidas',
-            height: 350,
+        selector: '#etapasConcluidas',
+        height: 350,
 	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
 	    menubar:"",
             setup: function (ed) {
                 ed.on('init', function (e) {
-			ExecucaoDaFuncaoLimiterPag('etapasConcluidas');
+                    ExecucaoDaFuncaoLimiterPag('etapasConcluidas');
                 }).on('keyup',function (e) {
-		ExecucaoDaFuncaoLimiterPag('etapasConcluidas');
-		});
+                    ExecucaoDaFuncaoLimiterPag('etapasConcluidas');
+		        });
             }
         });
         
         tinymce.init({
 	    plugins:"paste,textcolor",
-            language: "pt_BR",
+        language: "pt_BR",
 	    paste_as_text: true,
-            selector: '#medidasAcessibilidade',
-            height: 350,
+        selector: '#medidasAcessibilidade',
+        height: 350,
 	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
 	    menubar:"",
             setup: function (ed) {
                 ed.on('init', function (e) {
-		ExecucaoDaFuncaoLimiterPag('medidasAcessibilidade');
+                    ExecucaoDaFuncaoLimiterPag('medidasAcessibilidade');
                 }).on('keyup',function (e) {
-		ExecucaoDaFuncaoLimiterPag('medidasAcessibilidade');
-		});
+                    ExecucaoDaFuncaoLimiterPag('medidasAcessibilidade');
+		        });
             }
         });
 
 	tinymce.init({
 	    plugins:"paste,textcolor",
-            language: "pt_BR",
+        language: "pt_BR",
 	    paste_as_text: true,
-            selector: '#medidasFruicao',
-            height: 350,
+        selector: '#medidasFruicao',
+        height: 350,
 	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
 	    menubar:"",
             setup: function (ed) {
                 ed.on('init', function (e) {
-		ExecucaoDaFuncaoLimiterPag('medidasFruicao');
+		            ExecucaoDaFuncaoLimiterPag('medidasFruicao');
                 }).on('keyup',function (e) {
-		ExecucaoDaFuncaoLimiterPag('medidasFruicao');
-		});
+		            ExecucaoDaFuncaoLimiterPag('medidasFruicao');
+		        });
             }
         });
 
 	tinymce.init({
 	    plugins:"paste,textcolor",
-            language: "pt_BR",
+        language: "pt_BR",
 	    paste_as_text: true,
-            selector: '#medidasPreventivas',
-            height: 350,
+        selector: '#medidasPreventivas',
+        height: 350,
 	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
 	    menubar:"",
-            setup: function (ed) {
+        setup: function (ed) {
                 ed.on('init', function (e) {
-		ExecucaoDaFuncaoLimiterPag('medidasPreventivas',-1);
+		            ExecucaoDaFuncaoLimiterPag('medidasPreventivas',-1);
                 }).on('keyup',function (e) {
-		ExecucaoDaFuncaoLimiterPag('medidasPreventivas',-1);
-		});
-            }
-        });
+		            ExecucaoDaFuncaoLimiterPag('medidasPreventivas',-1);
+		        });
+        }
+    });
 
 	tinymce.init({
 	    plugins:"paste,textcolor",
-            language: "pt_BR",
+        language: "pt_BR",
 	    paste_as_text: true,
-            selector: '#empregosGerados',
-            height: 350,
+        selector: '#empregosGerados',
+        height: 350,
 	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
 	    menubar:"",
-            setup: function (ed) {
+        setup: function (ed) {
                 ed.on('init', function (e) {
-		ExecucaoDaFuncaoLimiterPag('empregosGerados');
+                    ExecucaoDaFuncaoLimiterPag('empregosGerados');
                 }).on('keyup',function (e) {
-		ExecucaoDaFuncaoLimiterPag('empregosGerados');
-		});
+		            ExecucaoDaFuncaoLimiterPag('empregosGerados');
+                });
             }
         });
+
 
 
     });
@@ -124,26 +126,180 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
 
 
     $(document).ready(function(){
+
+
+        $('#btn_limpar').click(function(){
+            $("#camposObrigatorios").dialog("destroy");
+            $("#camposObrigatorios").html("Deseja realmente limpar?");
+            $("#camposObrigatorios").dialog({
+                resizable: false,
+                title: 'Alerta!',
+                width:320,
+//                    height:160,
+                modal: true,
+                buttons : {
+                    'Não' : function() {
+                        $(this).dialog('close');
+
+                    },
+                    'Sim' : function () {
+                        $(this).dialog('close');
+                        tinymce.get("medidasPreventivas").setContent("");
+                        tinymce.get("empregosGerados").setContent("");
+                        tinymce.get("medidasFruicao").setContent("");
+                        tinymce.get("etapasConcluidas").setContent("");
+                        tinymce.get("medidasAcessibilidade").setContent("");
+                        $("#arquivoImpactosAmbientais").val("");
+                        $("#arquivoAcessibilidadePublica").val("");
+                        $("#arquivoAcessibilidadeFisica").val("");
+
+                        $('#formCadastro').submit();
+                    }
+                }
+            });
+        });
+        $("#totalEmpregosDiretos, #totalEmpregosIndiretos").numeric().keyup(function() {
+            var totalEmpregosDiretos = $("#totalEmpregosDiretos").val() ? $("#totalEmpregosDiretos").val() : 0;
+            var totalEmpregosIndiretos = $("#totalEmpregosIndiretos").val() ? $("#totalEmpregosIndiretos").val() : 0;
+            var total = parseInt(totalEmpregosDiretos, 10) + parseInt(totalEmpregosIndiretos, 10);
+            $("#totalEmpregosDiretosIndiretos").val(total);
+        }).keyup();
+
+        //Funcionalidade de limpeza de campos arquivo
+
+        $("#btn_rmfile").hide();
+        $("#btn_rmfile2").hide();
+        $("#btn_rmfile3").hide();
+
+        $("#arquivoAcessibilidadeFisica").change(function() {
+
+            if($("#arquivoAcessibilidadeFisica").val() != null) {
+               $("#btn_rmfile").show();
+            } else {
+                $("#btn_rmfile").hide();
+            }
+
+        });
+
+        $("#arquivoAcessibilidadePublica").change(function() {
+
+            if($("#arquivoAcessibilidadePublica").val() != null) {
+                $("#btn_rmfile2").show();
+            } else {
+                $("#btn_rmfile2").hide();
+            }
+
+        });
+
+        $("#arquivoImpactosAmbientais").change(function() {
+
+            if($("#arquivoImpactosAmbientais").val() != null) {
+                $("#btn_rmfile3").show();
+            } else {
+                $("#btn_rmfile3").hide();
+            }
+
+        });
+
+        $("#btn_rmfile").click(function() {
+            $("#arquivoAcessibilidadeFisica").val("");
+            $(this).hide();
+        });
+        $("#btn_rmfile2").click(function() {
+            $("#arquivoAcessibilidadePublica").val("");
+            $(this).hide();
+        });
+        $("#btn_rmfile3").click(function() {
+            $("#arquivoImpactosAmbientais").val("");
+            $(this).hide();
+        });
+
+        //fim limpeza
+
+
         $('#btn_salvar').click(function() {
             var preenchimento = false,
+                preenchimentouploadcampo1 = false,
+                preenchimentouploadcampo2 = false,
+                preenchimentouploadcampo3 = false,
                 etapasConcluidas = CountCharacters('etapasConcluidas'),
+                medidasPreventivas = CountCharacters('medidasPreventivas'),
                 medidasAcessibilidade = CountCharacters('medidasAcessibilidade'),
                 medidasFruicao = CountCharacters('medidasFruicao'),
                 empregosGerados = CountCharacters('empregosGerados');
 
             if (
-		    etapasConcluidas >= 50 &&
-                    medidasAcessibilidade >= 50 &&
-                    medidasFruicao >= 50 &&
-                    empregosGerados >= 50
-                    ) 
+                etapasConcluidas >= 20 &&
+                medidasAcessibilidade >= 20 &&
+                medidasFruicao >= 20 &&
+                empregosGerados >= 20
+            )
             {
                 preenchimento = true;
             }
 
-            if(!preenchimento) {
+
+            if(medidasAcessibilidade >= 20) {
+                if ($('#arquivoAcessibilidadeFisica').val().length > 0 ){
+                    if ($('#arquivoAcessibilidadeFisica').val() != null) {
+                        preenchimentouploadcampo1 = true;
+
+                    }
+                }else{
+                    preenchimentouploadcampo1 = false;
+                }
+                if ($('#validacaoAcessibilidadeFisica').val() != undefined) {
+                    if ($('#validacaoAcessibilidadeFisica').val().length == 4) {
+                        preenchimentouploadcampo1 = true;
+                    }else{
+                        preenchimentouploadcampo1 = false;
+                    }
+                }
+            }
+
+            if(medidasFruicao >= 20) {
+                if ($('#arquivoAcessibilidadePublica').val().length > 0 ){
+                    if ($('#arquivoAcessibilidadePublica').val() != null) {
+                        preenchimentouploadcampo2 = true;
+                    }else{
+                        preenchimentouploadcampo2 = false;
+                    }
+                }
+                if ($('#validacaoAcessibilidadePublica').val() != undefined) {
+                    if ($('#validacaoAcessibilidadePublica').val().length == 4) {
+                        preenchimentouploadcampo2 = true;
+                    }else{
+                        preenchimentouploadcampo2 = false;
+                    }
+                }
+            }
+
+            if(medidasPreventivas > 0) {
+                if ($('#arquivoImpactosAmbientais').val().length > 0 ){
+                    if ($('#arquivoImpactosAmbientais').val() != null) {
+                        preenchimentouploadcampo3 = true;
+                    }else{
+                        preenchimentouploadcampo3 = false;
+                    }
+                }
+                if ($('#validacaoImpactosAmbientais').val() != undefined) {
+                    if ($('#validacaoImpactosAmbientais').val().length == 4) {
+                        preenchimentouploadcampo3 = true;
+                    }else{
+                        preenchimentouploadcampo3 = false;
+                    }
+                }
+            }
+
+
+
+            if(!preenchimento || !preenchimentouploadcampo1 || !preenchimentouploadcampo2 || !preenchimentouploadcampo3) {
                 $("#camposObrigatorios").dialog("destroy");
-                $("#camposObrigatorios").html("Favor preencher corretamente os campos obrigat&oacute;rios!");
+                if(!preenchimento) {
+                    $("#camposObrigatorios").html("Favor preencher corretamente os campos obrigat&oacute;rios!");
+                }else{
+                    $("#camposObrigatorios").html("Favor inserir o arquivo nos campos preenchidos!!");
+                }
                 $("#camposObrigatorios").dialog({
                     resizable: false,
                     title: 'Alerta!',
@@ -162,7 +318,6 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
             }
         });
 
-
         $("#totalEmpregosDiretos, #totalEmpregosIndiretos").numeric().keyup(function() {
             var totalEmpregosDiretos = $("#totalEmpregosDiretos").val() ? $("#totalEmpregosDiretos").val() : 0;
             var totalEmpregosIndiretos = $("#totalEmpregosIndiretos").val() ? $("#totalEmpregosIndiretos").val() : 0;
@@ -170,6 +325,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
             $("#totalEmpregosDiretosIndiretos").val(total);
         }).keyup();
     });
+
 </script>
 <style>
     #conteudo ul li{ display: inline; float: left; width: 33%; text-align: center; }
@@ -261,22 +417,36 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
             </tr>
             <tr>
                 <td>
-                    Documento:
-                    <br clear="all" />
 <!--                    <input class="input_simples" type="file" id="arquivoAcessibilidadeFisica" name="imagensMedidasAcessibilidadeFisica" style="width:350px;" />-->
                     <!-- Alysson - -->
-                    <input class="input_simples obrigatorio" type="file" id="arquivoAcessibilidadeFisica" name="imagensMedidasAcessibilidadeFisica" style="width:350px;" /> &nbsp; <span style="color: red;">*</span>
                     <?php
-                    if ($this->cumprimentoDoObjeto->getMedidasAcessibilidadeImagens()) :
+                    if ($this->cumprimentoDoObjeto->getMedidasAcessibilidadeImagens()){
                         echo $this->partial(
-                                '/comprovarexecucaofisica/partial/imagens-cumprimento-do-objeto.phtml',
-                                array(
-                                    'idPronac' => $idPronac,
-                                    'idCumprimentoDoObjeto' => $this->cumprimentoDoObjeto->getIdCumprimentoObjeto(),
-                                    'imagens' => $this->cumprimentoDoObjeto->getMedidasAcessibilidadeImagens(),
-                                    )
-                                );
-                    endif;
+                            '/comprovarexecucaofisica/partial/imagens-cumprimento-do-objeto.phtml',
+                            array(
+                                'idPronac' => $idPronac,
+                                'idCumprimentoDoObjeto' => $this->cumprimentoDoObjeto->getIdCumprimentoObjeto(),
+                                'imagens' => $this->cumprimentoDoObjeto->getMedidasAcessibilidadeImagens(),
+                            )
+                        );
+
+
+                        if(!$this->partial(
+                            '/comprovarexecucaofisica/partial/imagens-cumprimento-do-objeto.phtml',
+                            array(
+                                'idPronac' => $idPronac,
+                                'idCumprimentoDoObjeto' => $this->cumprimentoDoObjeto->getIdCumprimentoObjeto(),
+                                'imagens' => $this->cumprimentoDoObjeto->getMedidasAcessibilidadeImagens(),
+                            )
+                        )){
+                            echo 'Documento:
+                                  <br clear="all" />';
+                            echo '<input class="input_simples obrigatorio" type="file" id="arquivoAcessibilidadeFisica" name="imagensMedidasAcessibilidadeFisica" style="width:350px;"/> &nbsp; <input type="button" class="btn_excluir" id="btn_rmfile"><span style="color: red;">*</span>';
+                        }else{
+                            echo '<input id="validacaoAcessibilidadeFisica" value="true" hidden></input>';
+                            echo '<input class="input_simples obrigatorio" type="file" id="arquivoAcessibilidadeFisica" name="imagensMedidasAcessibilidadeFisica" style="width:350px;" value="" hidden/>';
+                        }
+                    }
                     ?>
                     <br clear="all" />
                     <textarea
@@ -297,32 +467,48 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
             </tr>
             <tr>
                 <td>
-                    Documento:
-                    <br clear="all" />
-<!--                    <input class="input_simples" type="file" id="arquivoAcessibilidadePublica" name="imagensMedidasAcessibilidadePublica" style="width:350px;" /> -->
-                    <!-- Alysson -->
-                    <input class="input_simples obrigatorio" type="file" id="arquivoAcessibilidadePublica" name="imagensMedidasAcessibilidadePublica" style="width:350px;" /> &nbsp; <span style="color: red;">*</span>
-                    <?php
-                    if ($this->cumprimentoDoObjeto->getMedidasFruicaoImagens()) :
-                        echo $this->partial(
+
+    <!--                    <input class="input_simples" type="file" id="arquivoAcessibilidadePublica" name="imagensMedidasAcessibilidadePublica" style="width:350px;" /> -->
+                        <!-- Alysson -->
+                        <?php
+                        if ($this->cumprimentoDoObjeto->getMedidasFruicaoImagens()){
+                            echo $this->partial(
+                                    '/comprovarexecucaofisica/partial/imagens-cumprimento-do-objeto.phtml',
+                                    array(
+                                        'idPronac' => $idPronac,
+                                        'idCumprimentoDoObjeto' => $this->cumprimentoDoObjeto->getIdCumprimentoObjeto(),
+                                        'imagens' => $this->cumprimentoDoObjeto->getMedidasFruicaoImagens(),
+                                        )
+                                    );
+
+                            if(!$this->partial(
                                 '/comprovarexecucaofisica/partial/imagens-cumprimento-do-objeto.phtml',
                                 array(
                                     'idPronac' => $idPronac,
                                     'idCumprimentoDoObjeto' => $this->cumprimentoDoObjeto->getIdCumprimentoObjeto(),
                                     'imagens' => $this->cumprimentoDoObjeto->getMedidasFruicaoImagens(),
-                                    )
-                                );
-                    endif;
-                    ?>
-                    <br clear="all" />
-                    <textarea
-                        name="medidasFruicao"
-                        id="medidasFruicao"
-                        cols=""
-                        rows="7"
-                        style="width: 99%;"
-                        class="textarea_simples obrigatorio"><?php echo $this->cumprimentoDoObjeto->getMedidasFruicao(); ?></textarea>
-		    <div id="contadormedidasFruicao"></div>
+                                )
+                            )){
+                                echo 'Documento:
+                                      <br clear="all" />';
+                                echo '<input class="input_simples obrigatorio" type="file" id="arquivoAcessibilidadePublica" name="imagensMedidasAcessibilidadePublica" style="width:350px;" /> &nbsp; <input type="button" class="btn_excluir" id="btn_rmfile2"><span style="color: red;">*</span>';
+                            }else{
+                                echo '<input id="validacaoAcessibilidadePublica" value="true" hidden></input>';
+                                echo '<input class="input_simples obrigatorio" type="file" id="arquivoAcessibilidadePublica" name="imagensMedidasAcessibilidadePublica" style="width:350px;" hidden/>';
+                            }
+
+
+                        }
+                        ?>
+                        <br clear="all" />
+                        <textarea
+                            name="medidasFruicao"
+                            id="medidasFruicao"
+                            cols=""
+                            rows="7"
+                            style="width: 99%;"
+                            class="textarea_simples obrigatorio"><?php echo $this->cumprimentoDoObjeto->getMedidasFruicao(); ?></textarea>
+                <div id="contadormedidasFruicao"></div>
                 </td>
             </tr>
             <tr align="center">
@@ -333,22 +519,40 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
             </tr>
             <tr>
                 <td>
-                    Documento:
-                    <br clear="all" />
+
 <!--                    <input class="input_simples" type="file" id="arquivoImpactosAmbientais" name="imagensImpactosAmbientais" style="width:350px;" />-->
                     <!-- Alysson -->
-                    <input class="input_simples obrigatorio" type="file" id="arquivoImpactosAmbientais" name="imagensImpactosAmbientais" style="width:350px;" /> &nbsp;
+
                     <?php
-                    if ($this->cumprimentoDoObjeto->getMedidasPreventivasImagens()) :
+                    if ($this->cumprimentoDoObjeto->getMedidasPreventivasImagens()) {
                         echo $this->partial(
-                                '/comprovarexecucaofisica/partial/imagens-cumprimento-do-objeto.phtml',
-                                array(
-                                    'idPronac' => $idPronac,
-                                    'idCumprimentoDoObjeto' => $this->cumprimentoDoObjeto->getIdCumprimentoObjeto(),
-                                    'imagens' => $this->cumprimentoDoObjeto->getMedidasPreventivasImagens(),
-                                    )
-                                );
-                    endif;
+                            '/comprovarexecucaofisica/partial/imagens-cumprimento-do-objeto.phtml',
+                            array(
+                                'idPronac' => $idPronac,
+                                'idCumprimentoDoObjeto' => $this->cumprimentoDoObjeto->getIdCumprimentoObjeto(),
+                                'imagens' => $this->cumprimentoDoObjeto->getMedidasPreventivasImagens(),
+                            )
+                        );
+
+
+                    }
+                    if(!$this->partial(
+                        '/comprovarexecucaofisica/partial/imagens-cumprimento-do-objeto.phtml',
+                        array(
+                            'idPronac' => $idPronac,
+                            'idCumprimentoDoObjeto' => $this->cumprimentoDoObjeto->getIdCumprimentoObjeto(),
+                            'imagens' => $this->cumprimentoDoObjeto->getMedidasPreventivasImagens(),
+                        )
+                    )){
+
+                        echo 'Documento:
+                    <br clear="all" />';
+                        echo '<input class="input_simples obrigatorio" type="file" id="arquivoImpactosAmbientais" name="imagensImpactosAmbientais" style="width:350px;" /> &nbsp; <input type="button" class="btn_excluir" id="btn_rmfile3">';
+                    }else{
+                        echo '<input id="validacaoImpactosAmbientais" value="true" hidden></input>';
+                        echo '<input class="input_simples obrigatorio" type="file" id="arquivoImpactosAmbientais" name="imagensImpactosAmbientais" style="width:350px;" hidden/>';
+                    }
+
                     ?>
                     <br clear="all" />
                     <textarea
@@ -408,6 +612,7 @@ function ExecucaoDaFuncaoLimiterPag(fieldName, minchar,maxchar){
 
     <p align="center">
         <input type="button" class="btn_salvar" id="btn_salvar">
+        <input type="button" class="btn_limpar" id="btn_limpar">
     </p>
 
     <br clear="all" />

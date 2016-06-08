@@ -159,22 +159,7 @@
             	foreach ($this->dados as $d) {
 			?>
             <tr>
-                <td>
-		    <?php if (!is_null($d->idAgente)) { ?>
-                	<a href="
-                		<?php
-                			echo $this->url(array(
-                				'controller' => 'agentes',
-								'action' => 'agentes',
-								'id' => $d->idAgente
-                			), null, true);
-                		?>" target="blank"
-                	>
-                		<?php echo($d->CgcCPfMecena != $cnpjcpf) ? $d->Nome : '';  ?>
-                	</a>
-		    <?php } else { ?>
-			<?php echo $d->Nome; ?>
-		    <?php } ?>
+                <td><a href="<?php echo $this->url(array('controller' => 'agentes' , 'action' => 'agentes' , 'id' => $d->idAgente ), null, true);?>"><?php echo $d->Nome; ?></a></td>
                 </td>
                 <td><?php echo $d->NumeroRecibo; ?></td>
                 <td><?php echo $d->TipoApoio; ?></td>
