@@ -120,8 +120,8 @@ class CaptacaoController extends GenericControllerNew
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
 
+        
         $post = Zend_Registry::get('post');
-
         $interessadoModel = new Interessado();
         $interessados = $interessadoModel->buscar(array('CgcCpf = ?' => $post->cpf));
 
@@ -154,12 +154,18 @@ class CaptacaoController extends GenericControllerNew
             ));
         }
 
+        $pronac = $post->anoProjeto.$post->sequencial;
+ 
+        $result = new Projetos();
+        $idprojeto = $result->buscarIdPronac($pronac); 
+
         $insert = new Captacao();
         $captado = $insert->inserir(array(
+            'IdProjeto' => $idprojeto->IdPRONAC,
             'AnoProjeto' => $post->anoProjeto,
             'Sequencial' => $post->sequencial,
             'isBemServico' => $this->_request->get('isBemServico'),
-            'NumeroRecibo' => 99999,
+            'NumeroRecibo' => $post->NumeroRecibo,
             'logon' => $post->logon,
             'CgcCpfMecena' => $post->cpf,
             'DtRecibo' => data::dataAmericana($post->dt_recibo),

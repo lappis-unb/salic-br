@@ -52,7 +52,33 @@
 
         }
     }
+
     $(document).ready(function() {
+
+        $('#NumeroRecibo').change(function(){
+              var NRtamanho = "";
+              NRtamanho = $('#NumeroRecibo').val();
+              while(NRtamanho.length < 5){
+                  NRtamanho = "0" + NRtamanho;
+              }
+
+              if(NRtamanho == "00000"){
+                  document.getElementById("NumeroRecibo").value = "";
+              } else{
+                  document.getElementById("NumeroRecibo").value = NRtamanho;
+              }
+        });
+
+ 
+        $('#NumeroRecibo').forceNumeric();
+     
+        window.onload = function() {
+            var myInput = document.getElementById('NumeroRecibo');
+            myInput.onpaste = function(e) {
+                 e.preventDefault();
+            }
+        }
+
     	$("#valor").maskMoney({showSymbol: true, symbol: "R$", decimal: ",", thousands: "."});
         $('#btn_salvar').click(function() {
             var valida = true;
@@ -67,6 +93,12 @@
                     return false;
                 } else {
                     $("#msgCpf").html('');
+                }
+
+                if ($("#NumeroRecibo").val() == ''){
+                    valida = false;
+                    $("#msgNumeroRecibo").html('<font color="red"><b>Informe o Número do Recibo!</b></font>');
+                    return false;
                 }
 
                 if ($("#dt_recibo").val() == '')
@@ -118,7 +150,6 @@
                 $("#cpf").val(cpf);
 		
                 var valor = parseFloat($("#valor").val().replace('.', '').replace(',', '.'));
-		
                 if (valor > vlCaptar) {
                     $('#alerta').dialog("destroy");
                     $("#alerta").html('Valor maior que o valor dispon&iacute;vel para Captar!');
@@ -368,9 +399,32 @@
         }
 
     }
+         jQuery.fn.forceNumeric = function () {
 
+             return this.each(function () {
+                 $(this).keydown(function (e) {
+                     var key = e.which || e.keyCode;
+
+                     if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
+                     // numeros  
+                         key >= 48 && key <= 57 ||
+                     // numeros keypad
+                         key >= 96 && key <= 105 ||
+                     // Backspace, Tab e Enter
+                        key == 8 || key == 9 || key == 13 ||
+                     // Home e End
+                        key == 35 || key == 36 ||
+                     // setas: esquerda/direita
+                        key == 37 || key == 39 ||
+                     // Del e Ins
+                        key == 46 || key == 45)
+                         return true;
+
+                     return false;
+                 });
+             });
+         }
 </script>
-
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
@@ -430,20 +484,25 @@
             <table class="tabela">
                 <tr>
                     <td colspan="0" align="center" width="10%"><label>CNPJ/CPF:</label></td>
-                    <td colspan="0" width="20%">
+                    <td colspan="2" width="10%">
                         <input type="text" name="cpf" id="cpf" value="" size="20" maxlength="18" class="input_simples required" onblur="TirarMarcara(this.value);" onkeydown="mascaraCnpjCpf(this);" onkeypress="mascaraCnpjCpf(this);" onkeyup="mascaraCnpjCpf(this);" onmouseout="mascaraCnpjCpf(this);"/>
                         <div id="msgCpf"></div>
-                    </td> 
-                    <td>
+                    </td>
+                    <td colspan="2">
                         <div id="cpfERROR" align="left" style="float:right margin-right: 10px;"></div>
                     </td> 
                 </tr>
                 <tr>
-                    <td colspan="0" align="center" width="10%"><label for="isBemServico">BEM / SERVIÇO</label></td>
-                    <td colspan="0" width="20%">
-                       	<input type="checkbox" name="isBemServico" id="isBemServico" value="1" class="input_simples" />
-                    </td> 
-                    <td>
+                    <td colspan="1" align="center" width="10%"><label for="isBemServico">BEM / SERVIÇO</label></td>
+                    <td colspan="2" width="10%">
+                       	Sim <input type="radio" name="isBemServico" id="isBemServico" value="1" class="input_simples" />  
+                       	Não <input type="radio" name="isBemServico" id="isBemServico" value="0" class="input_simples"  checked="checked"/>
+                    </td>
+                    <td width="12%">
+                        <label>NÚMERO DO RECIBO</label>
+                        <td>
+                            <input size="1" maxlength="5" type="text" name="NumeroRecibo" name="NumeroRecibo" id="NumeroRecibo" class="input_simples" ></input>
+                            <div id="msgNumeroRecibo"></div>
                         <div id="tipoCaptacaoERROR" align="left" style="float:right margin-right: 10px;"></div>
                     </td> 
                 </tr>
