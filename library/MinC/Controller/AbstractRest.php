@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
  */
-abstract class AbstractRestController extends Zend_Rest_Controller{
+abstract class Minc_Controller_AbstractRest extends Zend_Rest_Controller{
 
     /**
      * Chave secreta para criptografar e descriptografar os dados.
