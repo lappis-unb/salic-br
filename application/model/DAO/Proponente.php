@@ -1,11 +1,39 @@
 <?php
-Class Proponente extends Zend_Db_Table{
 
-       	protected $_name    = 'SAC.dbo.Projetos';
+Class Proponente extends GenericModel {
 
-       	public function buscarDados($pronac)
-       	{
-       		$sql = "SELECT a.idAgente, a.CNPJCPF,n.Descricao AS Proponente,  
+//    protected $_name = 'SAC.dbo.Projetos';
+
+//    protected $_banco = "SAC";
+//    protected $_schema = "dbo";
+//    protected $_name = "Projetos";
+//    protected $_primary = "IdPRONAC";
+    protected $_banco = 'SAC';
+    protected $_name = 'Projetos';
+    protected $_schema = 'dbo';
+    protected $_primary = 'idProjeto';
+    
+    public function buscarProponenteProjetoDeUsuario($idUsuario){
+        $consulta = $this->select();
+        $consulta->setIntegrityCheck(false);
+        $consulta->from(array('a' => 'vwAgentesSeusProjetos'), array(
+            'a.idAgente',
+            'a.NomeProponente'
+        ), 'SAC.dbo')
+        ->where('IdUsuario = ?', $idUsuario)
+        ->group(array('a.idAgente', 'a.NomeProponente'))
+        ->order(array('a.NomeProponente'))
+        ;
+//xd($consulta->__toString());
+//        $consulta->setFetchMode(Zend_DB::FETCH_OBJ);
+        
+        $listaResultado = $this->fetchAll($consulta);
+//xd($listaResultado->toArray());
+        return $listaResultado;
+    }
+
+    public function buscarDados($pronac) {
+        $sql = "SELECT a.idAgente, a.CNPJCPF,n.Descricao AS Proponente,  
 						   CASE   
 						     WHEN LEN(a.CNPJCPF) = 11  
 						       THEN 'Física'  
@@ -64,20 +92,18 @@ Class Proponente extends Zend_Db_Table{
 						   LEFT JOIN  SAC.dbo.vwNatureza nt on (a.idAgente = nt.idAgente)  
 						   LEFT JOIN SAC.dbo.Projetos Pr on a.CNPJCPF = Pr.CgcCpf 
 						  WHERE Pr.IdPronac = " . $pronac . "";
-       		
-       		
-       		
-       		
-			$db  = Zend_Registry::get('db');
-			$db->setFetchMode(Zend_DB::FETCH_OBJ);
-			$resultado = $db->fetchAll($sql);
 
-			return $resultado;
-       	}
-       
-	   
-        public function buscarEmail($pronac)
-        {
+
+
+
+        $db = Zend_Registry::get('db');
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $resultado = $db->fetchAll($sql);
+
+        return $resultado;
+    }
+
+    public function buscarEmail($pronac) {
         $sql1 = "SELECT
 CASE   
 WHEN It.TipoInternet = 28  
@@ -91,17 +117,15 @@ LEFT JOIN AGENTES.dbo.Agentes Ag on Ag.IdAgente = It.IdAgente
 LEFT JOIN SAC.dbo.Projetos Pr ON Ag.CNPJCPF = Pr.CgcCpf
 where Pr.IdPRONAC = " . $pronac . "";
 
-                $db  = Zend_Registry::get('db');
-                $db->setFetchMode(Zend_DB::FETCH_OBJ);
-                $resultado1 = $db->fetchAll($sql1);
+        $db = Zend_Registry::get('db');
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $resultado1 = $db->fetchAll($sql1);
 
-                return $resultado1;
-}
+        return $resultado1;
+    }
 
-
-        public function buscarTelefone($pronac)
-        {
-        $sql2 =  "SELECT
+    public function buscarTelefone($pronac) {
+        $sql2 = "SELECT
 CASE 
 WHEN Tl.TipoTelefone = 22 or Tl.TipoTelefone = 24
 THEN 'Residencial'
@@ -128,16 +152,14 @@ LEFT JOIN SAC.dbo.Projetos Pr On Ag.CNPJCPF = Pr.CgcCpf
 where Pr.IdPRONAC = " . $pronac . "";
 
 
-                $db  = Zend_Registry::get('db');
-                $db->setFetchMode(Zend_DB::FETCH_OBJ);
-                $resultado2 = $db->fetchAll($sql2);
+        $db = Zend_Registry::get('db');
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $resultado2 = $db->fetchAll($sql2);
 
-                return $resultado2;
-}
+        return $resultado2;
+    }
 
-
-        public function buscarArquivados($pronac)
-        {
+    public function buscarArquivados($pronac) {
         $sql3 = "SELECT
                                                 Pr.IdPRONAC,
                                                 Pr.NomeProjeto,
@@ -162,16 +184,14 @@ where Pr.IdPRONAC = " . $pronac . "";
                                                 LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
                                                 WHERE Pr.idPRONAC = " . $pronac . " and Ta.stEstado = '1'";
 
-        $db  = Zend_Registry::get('db');
-                $db->setFetchMode(Zend_DB::FETCH_OBJ);
-                $resultado1 = $db->fetchAll($sql3);
+        $db = Zend_Registry::get('db');
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $resultado1 = $db->fetchAll($sql3);
 
-                return $resultado1;
-}
+        return $resultado1;
+    }
 
-
-        public function buscarInativos($pronac)
-        {
+    public function buscarInativos($pronac) {
         $sql4 = "SELECT
                                                 Pr.IdPRONAC,
                                                 Pr.NomeProjeto,
@@ -196,17 +216,15 @@ where Pr.IdPRONAC = " . $pronac . "";
                                                 LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
                                                 WHERE Pr.idPRONAC = " . $pronac . " and St.StatusProjeto = '0'";
 
-                $db  = Zend_Registry::get('db');
-                $db->setFetchMode(Zend_DB::FETCH_OBJ);
-                $resultado1 = $db->fetchAll($sql4);
+        $db = Zend_Registry::get('db');
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $resultado1 = $db->fetchAll($sql4);
 
-                return $resultado1;
-}
+        return $resultado1;
+    }
 
-
-        public function buscarAtivos($pronac)
-       	{
-       		$sql5 = "SELECT 
+    public function buscarAtivos($pronac) {
+        $sql5 = "SELECT 
 							Pr.IdPRONAC,
 							Pr.NomeProjeto,
 							Ar.descricao dsArea,
@@ -230,17 +248,15 @@ where Pr.IdPRONAC = " . $pronac . "";
 							LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
 					  		WHERE Pr.idPRONAC = " . $pronac . " and St.StatusProjeto = '1'";
 
-			$db  = Zend_Registry::get('db');
-			$db->setFetchMode(Zend_DB::FETCH_OBJ);
-			$resultado1 = $db->fetchAll($sql5);
+        $db = Zend_Registry::get('db');
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $resultado1 = $db->fetchAll($sql5);
 
-			return $resultado1;
-       	}
-		
-		
-       	public function mostrar(){
-       		
-       	}
+        return $resultado1;
+    }
 
+    public function mostrar() {
         
+    }
+
 }

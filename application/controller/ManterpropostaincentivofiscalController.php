@@ -530,6 +530,7 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         if (!empty($idPreProjeto)) {
             $sp = new spValidarApresentacaoDeProjeto();
             $arrResultado = $sp->paChecklistDeEnvioDeProposta($idPreProjeto);
+//xd($arrResultado);
 //            $arrResultado = $this->validarEnvioPropostaAoMinc($idPreProjeto);
 
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
