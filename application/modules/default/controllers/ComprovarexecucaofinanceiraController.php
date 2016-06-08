@@ -9,6 +9,12 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
     private $tipoDocumento = array(' - Selecione - ','Boleto Banc&aacute;rio','Cupom Fiscal','Guia de Recolhimento','Nota Fiscal/Fatura','Recibo de Pagamento','RPA');
     private $_vrSituacao   = false;
 
+    /*
+     * Método init
+     * @access public
+     * @param void
+     * @return void
+     */
     public function init()
     {
         $idusuario = $this->_request->getParam('idusuario');
@@ -100,6 +106,12 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         ;
     } // fecha método init()
 
+    /*
+     * Página index
+     * @access public
+     * @param void
+     * @return void
+     */
     public function indexAction(){
         /* =============================================================================== */ 
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
@@ -117,6 +129,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
+    /*
+     * Página de menu
+     * * verificar real necessidade da função *
+     * @access public
+     * @param void
+     * @return void
+     */    
     public function menuAction(){
         //verificar data da licitação se antes de 2009
         $this->_helper->layout->disableLayout();
@@ -132,13 +151,20 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             $this->view->anoAntes = 'true';
             $this->view->veriCEF  = 'false';
         }
-        else{
+        else{ 
             $this->view->anoAntes = 'false';
             $this->view->veriCEF  = 'true';
         }
          * 
          */
     }
+
+    /*
+     * Função de dados do projeto
+     * @access public
+     * @param void
+     * @return void
+     */    
     public function dadosProjeto(){
         
         /* =============================================================================== */ 
@@ -154,8 +180,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->view->nomeProjeto    = $resposta[0]->NomeProjeto;
     }
 
-    /**
-     * 
+    /*
+     * Página de pagamento
+     * @access public
+     * @param void
+     * @return void
      */
     public function pagamentoAction()
     {
@@ -211,17 +240,14 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                 }
 
                 $itemComprovacao = $planilhaItemModel->pesquisar($val->idPlanilhaAprovacao);
-                #x($itemComprovacao);
+                
                 if ($val->tpCusto == 'A') {
                     $arrayA[$val->descEtapa][$val->uf.' '.$val->cidade][$val->idPlanilhaAprovacao] = array(
-                        #$val->descItem, $val->Total, $val->tpDocumento, $itemComprovacao->valorComprovado, $modalidade, $idmod
                         $val->descItem, $val->Total, $val->tpDocumento, $itemComprovacao->vlComprovado, $modalidade, $idmod
                     );
                 }
                 if ($val->tpCusto == 'P') {
-                    #x($itemComprovacao);
                     $arrayP[$val->Descricao][$val->descEtapa][$val->uf.' '.$val->cidade][$val->idPlanilhaAprovacao] = array(
-                        //$val->descItem, $val->Total, $val->tpDocumento, $itemComprovacao->valorComprovado, $modalidade, $idmod
                         $val->descItem, $val->Total, $val->tpDocumento, $itemComprovacao->vlComprovado, $modalidade, $idmod
                     );
                 }
@@ -234,14 +260,23 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
     public function vincularcomprovacaoAction(){
         
     }
-    
+
+    /*
+     * Página de licitação anterior
+     * @access public
+     * @param void
+     * @return void
+     */
     public function licitacaoanteriorAction(){
         $this->_helper->layout->disableLayout();
         $this->view->etapaconteudo = array(array('id'=>1,'nome'=>'aaaaaaaaa'),array('id'=>2,'nome'=>'bbbbbbb'));
     }
 
-    /**
-     * 
+    /*
+     * Página de cadastrar licitação
+     * @access public
+     * @param void
+     * @return void
      */
     public function cadastrarlicitacaoAction()
     {
@@ -302,8 +337,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
-    /**
-     * 
+    /*
+     * Página de cadastrar cotação
+     * @access public
+     * @param void
+     * @return void
      */
     public function cadastrarcotacaoAction()
     {
@@ -424,6 +462,12 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
+    /*
+     * Página de inserir fornecedor
+     * @access public
+     * @param void
+     * @return string Json contendo idAgente, mensagem e fechar
+     */           
     public function inserirfornecedorAction(){
 
         $this->_helper->layout->disableLayout();
@@ -464,6 +508,12 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
+    /*
+     * Página de cadastrar contrato
+     * @access public
+     * @param void
+     * @return void
+     */           
     public function cadastrarcontratoAction(){
         $this->_helper->layout->disableLayout();
         $post = Zend_Registry::get('post');
@@ -573,6 +623,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             }
         }
     }
+
+    /*
+     * Função de cadastrar vínculo com fornecedor
+     * @access private
+     * @param array $dados Array com dados de idAgente, idContrato, idCotacao, idLicitação ou dispensaLicitação
+     * @return mixed Retorna true/false ou idAgente
+     */        
     private function cadastrarVinculoFornecedor($dados){
         if($dados['idAgente'] == ''){
             $agentesDao =   new Agentes();
@@ -632,9 +689,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         return true;
     }
 
-    /**
-     * 
-     */
+    /*
+     * Página de cadastro de item de comprovação financeira
+     * @access public
+     * @return void
+     */    
     public function cadastrarcomprovacaopagamentoAction()
     {
         try {
@@ -645,7 +704,6 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             #if (empty($pais)) {
             #    throw new Exception('Favor preencher o campo "Nacionalidade do Fornecedor"');
             #}
-            #xd($this->getRequest()->getParams());
             #Este Campo sempre é Preenchido, porem quando se tenta enviar um arquivo muito grande A Requisição se perde
             #Podemos identificar esta perda pelo campo de pais.
             if (empty($pais)) {
@@ -722,8 +780,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
-    /**
-     *
+    /*
+     * Página de atualizar comprovação de pagamento
+     * @access public
+     * @param void
+     * @return void
      */
     public function atualizarcomprovacaopagamentoAction()
     {
@@ -784,6 +845,12 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
+    /*
+     * Página de excluir comprovação de pagamento
+     * @access public
+     * @param void
+     * @return void
+     */
     public function excluircomprovacaopagamentoAction(){
         $this->_helper->layout->disableLayout();
         $post = Zend_Registry::get('post');
@@ -827,7 +894,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         die();
 
     }
-
+    
+    /*
+     * Página de cadastrar dispensa
+     * @access public
+     * @param void
+     * @return void
+     */    
     public function cadastrardispensaAction(){
         
         /* =============================================================================== */ 
@@ -908,8 +981,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
-    /**
-     * 
+    /*
+     * Página de vincular item de custo
+     * @access public
+     * @param void
+     * @return void
      */
     public function vincularitemcustoAction()
     {
@@ -928,6 +1004,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             $this->cadastravinculoitemcusto();
         }
     }
+
+    /*
+     * Página de cadastrar vínculo de item de cust
+     * @access private
+     * @param array $dados
+     * @return void
+     */    
     private function cadastravinculoitemcusto($dados = array()){
        $post = Zend_Registry::get('post');
         if(count($dados)==0){
@@ -988,8 +1071,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
-    /**
-     * 
+    /*
+     * Página de incluir cotação
+     * @access public
+     * @param void
+     * @return void
      */
     public function incluircotacaoAction()
     {
@@ -1066,8 +1152,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
-    /**
-     * 
+    /*
+     * Página de incluir dispensa
+     * @access public
+     * @param void
+     * @return void
      */
     public function incluirdispensaAction()
     {
@@ -1102,8 +1191,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
-    /**
-     * 
+    /*
+     * Página de incluir contrato
+     * @access public
+     * @param void
+     * @return void
      */
     public function incluircontratoAction()
     {
@@ -1149,6 +1241,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             $this->view->itensVinculados = $tbContratoxplanilhaaprovacao->itensVinculados($this->view->idcontrato);
         }
     }
+
+    /*
+     * Página de incluir itens de custo
+     * @access public
+     * @param void
+     * @return void
+     */
     public function incluiritenscustoAction(){
         $this->_helper->layout->disableLayout();
 
@@ -1168,6 +1267,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->view->dataVingenciaFinal         = '12/12/2010';
         $this->view->dataAssinatura             = '01/01/2011';
     }
+
+    /*
+     * Página de detalhar licitação
+     * @access public
+     * @param void
+     * @return void
+     */    
     public function detalharlicitacaoAction(){
         //$this->_helper->layout->disableLayout();
         $this->view->modalidadeConteudo         = $this->modalidade;
@@ -1208,6 +1314,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->view->documentosAnexados = $ArquivoLicitacaoDao->buscarArquivos($this->view->idlicitacao);
 
     }
+
+    /*
+     * Página de detalhar cotação
+     * @access public
+     * @param void
+     * @return void
+     */    
     public function detalharcotacaoAction(){
         
         /* =============================================================================== */ 
@@ -1255,7 +1368,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $ArquivoCotacaoDao = new Arquivocotacao();
         $this->view->documentosAnexados = $ArquivoCotacaoDao->buscarArquivos($this->view->idcotacao);
     }
-    
+
+    /*
+     * Página de detalhar contrato
+     * @access public
+     * @param void
+     * @return void
+     */    
     public function detalharcontratoAction(){
         
         /* =============================================================================== */ 
@@ -1300,6 +1419,12 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->view->documentosAnexados = $ArquivoContrataoDao->buscarArquivos($this->view->idcontrato);
     }
     
+    /*
+     * Página de detalhar dispensa
+     * @access public
+     * @param void
+     * @return void
+     */
     public function detalhardispensaAction(){
         
         /* =============================================================================== */ 
@@ -1331,6 +1456,12 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->view->documentosAnexados = $ArquivoDispensaLicitacaoDao->buscarArquivos($this->view->iddispensa);
     }
 
+    /*
+     * Página de alterar licitação
+     * @access public
+     * @param void
+     * @return void
+     */    
     public function alterarlicitacaoAction(){
         /* =============================================================================== */ 
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
@@ -1380,13 +1511,17 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             $this->view->combocidades = $Municipios->combo(array('idUFIBGE = ?' => $resposta[0]->UF));
         }
     }
+
+    /*
+     * Página de excluir itens de custo
+     * @access public
+     * @param void
+     * @return void
+     */
     public function excluiritenscustoAction(){
         $this->_helper->layout->disableLayout();
         $post = Zend_Registry::get('post');
 
-        /*$planilhaAprovacaoDao = new PlanilhaAprovacao();
-        $resp = $planilhaAprovacaoDao->buscar(array(' IdPRONAC = ? '=>$post->idpronac,'idEtapa = ?'=>$post->idEtapa,'idProduto = ?'=>$post->idProduto,'idPlanilhaItem = ?'=>$post->idItem,'stAtivo = ?'=>'S'),array('dtPlanilha desc'));
-        $idPlanilhaAprovacao = $resp[0]->idPlanilhaAprovacao;*/
         $idPlanilhaAprovacao = $post->idItem;
 
         $delete = false;
@@ -1456,8 +1591,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
-    /**
-     * 
+    /*
+     * Página de cotação
+     * @access public
+     * @param void
+     * @return void
      */
     public function cotacaoAction()
     {
@@ -1484,8 +1622,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->view->listacotacao = $array;
     }
 
-    /**
-     * 
+    /*
+     * Página de licitação
+     * @access public
+     * @param void
+     * @return void
      */
     public function licitacaoAction()
     {
@@ -1513,8 +1654,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->view->listaLicitacao = $array;
     }
 
-    /**
-     * 
+    /*
+     * Página de dispensa
+     * @access public
+     * @param void
+     * @return void
      */
     public function dispensaAction()
     {
@@ -1542,8 +1686,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->view->listadispensa = $array;
     }
 
-    /**
-     * 
+    /*
+     * Página de contrato
+     * @access public
+     * @param void
+     * @return void
      */
     public function contratoAction()
     {
@@ -1570,8 +1717,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
     }
 
     /**
+     * Alteração realizada por pedido da Área Finalistica em 16/02/2016 as 10:48
      * Author: Alysson Vicuña de Oliveira
-     * Descrição: Alteração realizada por pedido da Área Finalistica em 16/02/2016 as 10:48
+     * @access public
+     * @param void
+     * @return void
      * @throws Zend_Db_Table_Exception
      */
     public function comprovacaopagamentoAction()
@@ -1582,7 +1732,6 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
 
         //Adicionado para ser usado como novo parametro do método pesquisarComprovantePorItem
         $idPronac = $this->getRequest()->getParam('idpronac');
-        #xd($this->getRequest());
         $planilhaItemModel = new PlanilhaItem();
         $produtoModel = new Produto();
         $etapaModel = new PlanilhaEtapa();
@@ -1592,9 +1741,6 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $produto = $produtoModel->find($itemPlanilhaAprovacao->idProduto)->current();
         $etapa = $etapaModel->find($itemPlanilhaAprovacao->idEtapa)->current();
         $item = $itemModel->find($itemPlanilhaAprovacao->idPlanilhaItem)->current();
-
-        #xd($itemPlanilhaAprovacao);
-        #xd($produto->Codigo);
 
         $fornecedorModel = new FornecedorModel();
         $fornecedor = $fornecedorModel->pesquisarFornecedorItem($idPlanilhaAprovacao);
@@ -1609,7 +1755,6 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
 
         $comprovanteParamentoModel = new ComprovantePagamento();
-        //$comprovantesDePagamento = $comprovanteParamentoModel->pesquisarComprovantePorItem($idPlanilhaAprovacao);
         $comprovantesDePagamento = $comprovanteParamentoModel->pesquisarComprovantePorItem($item->idPlanilhaItens, $idPronac, $etapa->idPlanilhaEtapa, $itemPlanilhaAprovacao->idProduto, $itemPlanilhaAprovacao->idUFDespesa, $itemPlanilhaAprovacao->idMunicipioDespesa); //ID Recuperado
         array_walk($comprovantesDePagamento, function(&$comprovanteDePagamento) use ($fornecedorModel) {
             $comprovanteDePagamento = (object) $comprovanteDePagamento;
@@ -1656,8 +1801,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->view->tipoDocumentoConteudo = $this->tipoDocumento;
     }
 
-    /**
-     * 
+    /*
+     * Página de comprovação de pagamento recusado
+     * @access public
+     * @param void
+     * @return void
      */
     public function comprovacaopagamentoRecusadoAction()
     {
@@ -1690,7 +1838,6 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $comprovantePagamentoModel = new ComprovantePagamento();
         $comprovantesDePagamento = $comprovantePagamentoModel->pesquisarComprovante($idComprovantePagamento);
         $comprovantePagamento = (object)$comprovantesDePagamento[0]; 
-        //echo '<pre>'; print_r($comprovantePagamento); die;
 
         $this->view->idComprovantePagamento = $idComprovantePagamento;
         $this->view->vlComprovado = number_format($comprovantePagamento->vlComprovacao, 2, ',', '.');
@@ -1718,12 +1865,25 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->render('comprovacaopagamento');
     }
 
+    /*
+     * Página de descrever item
+     * @access public
+     * @param void
+     * @return void
+     */
     public function descreveritemAction(){
         $this->_helper->layout->disableLayout();
         $post       = Zend_Registry::get('post');
         $this->view->ckItens                = $post->ckItens;
         $this->view->idpronac               = $post->idpronac;
     }
+
+    /*
+     * Página de descrição de item
+     * @access public
+     * @param void
+     * @return void
+     */
     public function descricaoitemAction()
     {
         /* =============================================================================== */
@@ -1743,6 +1903,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             echo json_encode(array('resp'=>false));
         }
     }
+
+    /*
+     * Página de cadastrar descrição de item
+     * @access public
+     * @param void
+     * @return void
+     */
     public function cadastrardescricaoitemAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->ViewRenderer->setNoRender(true);
@@ -1778,6 +1945,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
         echo json_encode($report);
     }
+
+    /*
+     * Página de anexar
+     * @access public
+     * @param void
+     * @return void
+     */
     public function anexarAction(){
         
         /* =============================================================================== */ 
@@ -1793,6 +1967,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->view->idcotacao      = $post->idcotacao;
         $this->view->idpronac       = $post->idpronac;
     }
+
+    /*
+     * Página de cadastro de anexos
+     * @access public
+     * @param void
+     * @return void
+     */
     public function cadastraranexoAction(){
         
         /* =============================================================================== */ 
@@ -1875,8 +2056,6 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                 $this->view->idpronac       = $idpronac;*/
 
             } else{
-                /*$this->view->erro = true;
-                $this->view->mensagemErro = 'Arquivo com extens&atilde;o invalida!';*/
                 if($idlicitacao){
                     parent::message('Arquivo com extens&atilde;o inválida!','/comprovarexecucaofinanceira/alterarlicitacao'.'?idusuario='.$this->view->idusuario.'&idpronac='.$idpronac.'&idlicitacao='.$idlicitacao,'ERROR');
                 }
@@ -1896,6 +2075,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             $this->view->mensagemErro = 'Selecione um arquivo para anexar!';
         }
     }
+
+    /*
+     * Página de descrever itens de custo
+     * @access public
+     * @param void
+     * @return void
+     */
     public function descreveritenscustoAction(){
         
         /* =============================================================================== */ 
@@ -1932,6 +2118,12 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
+    /*
+     * Página de verificar valores de comprovação
+     * @access public
+     * @param void
+     * @return void
+     */   
     public function verificarvaloresajaxAction(){
         
         /* =============================================================================== */ 
@@ -1979,6 +2171,12 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
+    /*
+     * Página de carregar select de planilha
+     * @access public
+     * @param void
+     * @return void
+     */
     public function carregaselectajaxAction(){
         $this->_helper->layout->disableLayout();
         $post = Zend_Registry::get('post');
@@ -2061,6 +2259,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
 
     }
+
+    /*
+     * Página de carregar contrato
+     * @access public
+     * @param void
+     * @return void
+     */    
     public function carregacontratoajaxAction(){
         
         /* =============================================================================== */ 
@@ -2080,8 +2285,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
-    /**
-     * 
+    /*
+     * Página de buscar fornecedor
+     * @access public
+     * @param void
+     * @return void
      */
     public function buscarfornecedorAction()
     {
@@ -2100,6 +2308,12 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
     }
 
+    /*
+     * Página de buscar fornecedor da base da receita
+     * @access public
+     * @param void
+     * @return void
+     */
     public function buscarfornecedorDaReceitaAction()
     {
         $this->_helper->layout->disableLayout();
@@ -2153,12 +2367,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                 }
             }
         }
-
-
     }
 
-    /**
-     * 
+    /*
+     * Página de remover fornecedor
+     * @access public
+     * @param void
+     * @return void
      */
     public function removerfornecedorAction()
     {
@@ -2178,6 +2393,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         }
         echo json_encode($resposta);
     }
+
+    /*
+     * Página de fornecedor vencedor
+     * @access public
+     * @param void
+     * @return void
+     */
     public function fornecedorvencedorAction(){
 
         $this->_helper->layout->disableLayout();
@@ -2198,9 +2420,12 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         echo json_encode($resposta);
     }
 
-    /**
-     * 
-     */
+    /*
+     * Página de finalizar comprovação
+     * @access public
+     * @param void
+     * @return void
+     */    
     public function finalizarAction()
     {
         $this->_helper->layout->disableLayout();
@@ -2230,9 +2455,12 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->_redirect(str_replace($this->view->baseUrl(), '', $url));
     }
 
-    /**
-     * 
-     */
+    /*
+     * Página de comprovação finalizada
+     * @access public
+     * @param void
+     * @return void
+     */    
     public function finalizadoAction()
     {
         $get = Zend_Registry::get('get');
@@ -2244,9 +2472,12 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->_redirect("comprovarexecucaofinanceira/pagamento?idusuario=".$_GET['idusuario']."&idpronac=".$_GET['idpronac']);
     }
 
-    /**
-     * 
-     */
+    /*
+     * Página de apagar licitação
+     * @access public
+     * @param void
+     * @return void
+     */    
     public function deletarLicitacaoAction()
     {
         try {
@@ -2268,6 +2499,12 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->_redirect(str_replace($this->view->baseUrl(), '', $url));
     }
 
+    /*
+     * Página de comprovantes recusados
+     * @access public
+     * @param void
+     * @return void
+     */    
     public function comprovantesRecusadosAction()
     {
         $this->verificarPermissaoAcesso(false, true, false);
