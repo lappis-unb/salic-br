@@ -112,10 +112,10 @@ class ProjetoRestController extends AbstractRestController {
         $descricao = '';
         switch($projeto->stConta) {
             case 'LIBE':
-                $descricao = 'Liberado';
+                $descricao = 'Liberada';
             break;
             case 'BLOQ':
-                $descricao = 'Bloqueado';
+                $descricao = 'Bloqueada';
             break;
             default:
                 $descricao = 'Conta Inexistente';
@@ -135,7 +135,7 @@ class ProjetoRestController extends AbstractRestController {
      */
     protected function formatarContaCorrente($conta) {
         $resultado = NULL;
-        if($conta){
+        if((int)$conta){
             # Retira os zeros à esquerda.
             $resultado = (int)$conta;
             # Numero de caracteres.
