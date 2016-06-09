@@ -158,6 +158,7 @@
                     <div class="sanfonaDiv" style="display:none;"></div>
                     <a href="#" title="Execução" class="ancoraPrestacaoContas" onclick="return false;">Presta&ccedil;&atilde;o de Contas</a>
                     <div class="sanfonaDiv" style="width: 90%; margin-left: 20px;">
+                        <a href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'extratos-bancarios'), '', true); ?>?idPronac=<?php echo $this->idPronac; ?>' target="_blank" class="no_seta" title="Ir para Dados Banc&aacute;rios">Dados Banc&aacute;rios</a>
                         <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'execucao-receita-despesa')); ?><?php echo $codPronac;?>','conteudo'); return false"  title="Ir para Execu&ccedil;&atilde;o da receita e despesa">Execu&ccedil;&atilde;o da receita e despesa</a>
                         <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'dados-relacao-pagamentos')); ?><?php echo $codPronac;?>','conteudo'); return false"  title="Ir para Rela&ccedil;&atilde;o de Pagamentos">Rela&ccedil;&atilde;o de pagamentos</a>
                         <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'relatorio-fisico')); ?><?php echo $codPronac;?>','conteudo'); return false"  title="Ir para Relat&oacute;rio f&iacute;sico">Relat&oacute;rio f&iacute;sico</a>
