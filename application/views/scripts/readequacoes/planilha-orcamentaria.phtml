@@ -697,11 +697,14 @@
 	    },
 	    
 	    // após carregar a planilha, monta planilha
-	    success: function() {
-		    jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'carregar-valor-entre-planilhas'), '', true) ?>?idPronac=<?php echo $this->idPronac; ?>', '', 'valorEntrePlanilhas');
-		    jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'index', 'action' => 'montar-planilha-orcamentaria')) ?>?idPronac=<?php echo $this->idPronac; ?>&tipoPlanilha=6&link', '', 'planilhaOrcamentariaMontada');
-		}
-            });
+	    success: function(data) {
+		jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'carregar-valor-entre-planilhas'), '', true) ?>?idPronac=<?php echo $this->idPronac; ?>', '', 'valorEntrePlanilhas');
+		jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'index', 'action' => 'montar-planilha-orcamentaria')) ?>?idPronac=<?php echo $this->idPronac; ?>&tipoPlanilha=6&link', '', 'planilhaOrcamentariaMontada');
+
+		data = JSON.parse(data);
+		$('#idReadequacao').val(data.idReadequacao);
+	    }
+        });
     }
     
 </script>
@@ -731,7 +734,7 @@
 
     <!-- ========== INÍCIO FORMULÁRIO ========== -->
     <form name="formReadequacao" id="formReadequacao" action="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'incluir-solicitacao-readequacao'), null, true); ?><?php echo '?idPronac='. Seguranca::encrypt($this->idPronac); ?>" method="post" enctype="multipart/form-data">
-        <input type="hidden" id="idReadequacao" name="idReadequacao" value="<?php echo $this->readequacao[0]->idReadequacao; ?>">
+        <input type="hidden" id="idReadequacao" name="idReadequacao" value="<?php if (count($this->readequacao) > 0) { echo $this->readequacao[0]->idReadequacao; } ?>">
     	<input type="hidden" id="tipoReadequacao" name="tipoReadequacao" value="2">
         <table class="tabela">
             <tr>
