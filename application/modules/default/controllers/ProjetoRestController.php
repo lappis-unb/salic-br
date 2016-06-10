@@ -94,7 +94,7 @@ class ProjetoRestController extends Minc_Controller_AbstractRest {
             $projeto->ValorCaptado = number_format($projeto->ValorCaptado, 2, ',', '.');
             $projeto->VlComprovado = number_format($projeto->VlComprovado, 2, ',', '.');
             $projeto->PercCaptado = number_format($projeto->PercCaptado, 2, ',', '.');
-            $projeto->ResumoProjeto = utf8_encode($projeto->ResumoProjeto);
+            $projeto->ResumoProjeto = html_entity_decode(utf8_encode($projeto->ResumoProjeto));
             $projeto->nuLancamento = $numeroLancamentoExtrato;
         }
 
