@@ -1,5 +1,9 @@
 <script type="text/javascript">
+    function marcador(idparam) {
+        document.getElementById('checkbox'+idparam).checked = true;
+    }
     $(document).ready(function(){
+
 
         $("#listaMarcas").tablesorter({
             headers: {3:{sorter: false}, 4:{sorter: false}, 5:{sorter: false}}
@@ -116,6 +120,7 @@
             if(count($this->lista) > 0) { ?>
         <thead>
             <tr>
+                <th>Marcador</th>
                 <th>Pronac</th>
                 <th>Nome do Projeto</th>
                 <th>Data de Envio</th>
@@ -125,21 +130,25 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->lista as $lista) { ?>
+            <?php $num = 0;
+                  foreach ($this->lista as $lista) {
+                      $num++;
+                ?>
             <tr class="linha<?php echo $lista->idDocumento; ?>">
-                <td class="bold">
+                <td align="center"><input id="<?php echo 'checkbox'.$num; ?>" type="checkbox"></input></td>
+                <td class="bold" >
                     <a target="_blank" href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $lista->idPronac; ?>"><?php echo $lista->Pronac; ?></a>
                 </td>
                 <td class="bold">
                     <?php //Verifica se o NomeProjeto já está no array (lista). Se estiver, não mostra o NomeProjeto.
 //                        if (!in_array($lista->NomeProjeto, $arrayNomeProjeto)) {
-                            echo $lista->NomeProjeto;;
+                            echo $lista->NomeProjeto;
 //                        }
                     ?>
                 </td>
                 <td nowrap><?php echo Data::tratarDataZend($lista->dtEnvio, 'brasileiro', true);?></td>
                 <td><?php echo $lista->dsDocumento; ?></td>
-                <td nowrap width="1px"><a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $lista->idArquivo; ?>"><?php echo $lista->nmArquivo; ?></a></td>
+                <td nowrap width="1px"><a onclick="marcador('<?php echo $num;?>')" href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $lista->idArquivo; ?>"><?php echo $lista->nmArquivo; ?></a></td>
                 <td align="center" width="1px">
                     <input class="btn_aprovar" type="button" value=" " documento="<?php echo $lista->idDocumento; ?>" st="D" pronacId="<?php echo $lista->idPronac; ?>" />
                 </td>
