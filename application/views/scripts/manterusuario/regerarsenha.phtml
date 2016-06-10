@@ -9,7 +9,7 @@ label.error{color:red;}
 		rules:{
                         cpf:{
 				// campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
-				required: true, 
+				required: true,
                                 minlength: 14,
                                 verificaCPF: true
 			},
@@ -29,7 +29,7 @@ label.error{color:red;}
 			nome:{
 				required: "&nbsp;Informe nome",
 				minlength: "&nbsp;Nome deve conter, no mínimo, 2 caracteres"
-			}			
+			}
 		}
 	});
 });
@@ -43,7 +43,7 @@ label.error{color:red;}
         });
 
         $("#cpf").keyup(function(){
-        
+
             if($("#cpf").val().length > 13){
 
                 var cpfLimpo = replaceAll(replaceAll(replaceAll($(this).val(),".",""),"-",""),"/","");
@@ -71,7 +71,7 @@ label.error{color:red;}
                             }
                             else if ( data.sememail )
                             {
-                                $('#cpfRetorno').html('<font color="red">Nenhum e-mail encontrado para o Usuario, <a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'agentes'));?>?cpf='+ cpfLimpo +'">clique aqui</a> e atualize seus dados!</font>');
+                                $('#cpfRetorno').html('<font color="red">Nenhum e-mail encontrado para o Usuario, <a href="<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'agentes'));?>?cpf='+ cpfLimpo +'">clique aqui</a> e atualize seus dados!</font>');
                                 $('#nome').val('');
                                 $('#lotacao').val('');
                             }

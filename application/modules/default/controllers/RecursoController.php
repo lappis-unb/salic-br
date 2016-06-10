@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * RecursoController
  * @author Equipe RUP - Politec
@@ -29,11 +29,11 @@ class RecursoController extends GenericControllerNew
 	{
         $auth = Zend_Auth::getInstance(); // pega a autenticação
         $this->idUsuario = $auth->getIdentity()->usu_codigo; // usuário logado
-        
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $this->idOrgao = $GrupoAtivo->codOrgao;
         $this->idPerfil = $GrupoAtivo->codGrupo;
-        
+
 		// autenticação e permissões zend (AMBIENTE MINC)
 		$PermissoesGrupo = array();
 		$PermissoesGrupo[] = 93; // Coordenador de Parecer
@@ -60,7 +60,7 @@ class RecursoController extends GenericControllerNew
         if($this->idPerfil != 103 && $this->idPerfil != 127){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -129,10 +129,10 @@ class RecursoController extends GenericControllerNew
             $where['b.AnoProjeto+b.Sequencial = ?'] = $_GET['pronac'];
             $this->view->pronac = $_GET['pronac'];
         }
-        
+
         $Orgaos = new Orgaos();
         $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$this->idOrgao))->current();
-        
+
         if(isset($idSecretaria) && !empty($idSecretaria)){
             if($idSecretaria->idSecretaria == 251){
                 $where['b.Area <> ?'] = 2;
@@ -142,11 +142,11 @@ class RecursoController extends GenericControllerNew
                 $where['b.Area = ?'] = 0;
             }
         }
-        
+
         $tbRecurso = New tbRecurso();
         $total = $tbRecurso->painelRecursos($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
-        
+
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
@@ -165,16 +165,16 @@ class RecursoController extends GenericControllerNew
             "Itenspag"=>$this->intTamPag,
             "tamanho"=>$tamanho
         );
-        
+
         $tbTitulacaoConselheiro = new tbTitulacaoConselheiro();
         $this->view->conselheiros = $tbTitulacaoConselheiro->buscarConselheirosTitulares();
-        
+
         $this->view->paginacao     = $paginacao;
         $this->view->qtdRegistros  = $total;
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
 	}
-    
+
     public function imprimirRecursosAction()
 	{
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -245,7 +245,7 @@ class RecursoController extends GenericControllerNew
             $where['b.AnoProjeto+b.Sequencial = ?'] = $_GET['pronac'];
             $this->view->pronac = $_GET['pronac'];
         }
-        
+
         $tbRecurso = New tbRecurso();
         $total = $tbRecurso->painelRecursos($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
@@ -254,15 +254,15 @@ class RecursoController extends GenericControllerNew
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
         $busca = $tbRecurso->painelRecursos($where, $order, $tamanho, $inicio);
-        
+
         $this->view->qtdRegistros = $total;
         $this->view->dados = $busca;
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
 	}
-    
+
     public function avaliarRecursoAction() {
         $idRecurso = $_GET['recurso'];
-        
+
         $tbRecurso = new tbRecurso();
         $r = $tbRecurso->buscarDadosRecursos(array('idRecurso = ?'=>$idRecurso))->current();
         if($r->tpSolicitacao == 'PI'){
@@ -270,7 +270,7 @@ class RecursoController extends GenericControllerNew
             $dadosParecer = $Parecer->statusDeAvaliacao($r->IdPRONAC);
             $this->view->statusDeAvaliacao = $dadosParecer;
        }
-        
+
         if($r){
             $Projetos = new Projetos();
             $p = $Projetos->buscarProjetoXProponente(array('idPronac = ?' => $r->IdPRONAC))->current();
@@ -281,33 +281,33 @@ class RecursoController extends GenericControllerNew
             parent::message('Nenhum registro encontrado.', "recurso", "ERROR");
         }
     }
-    
+
     public function salvarAvaliacaoAction() {
         $idRecurso = $_POST['idRecurso'];
-        
+
         $tbRecurso = new tbRecurso();
         $r = $tbRecurso->find(array('idRecurso = ?'=>$idRecurso))->current();
         $stEstado = 0;
         $stFecharAnalise = 0;
-        
+
         if($r){
             $Projetos = new Projetos();
             $dp = $Projetos->buscar(array('IdPRONAC = ?'=>$r->IdPRONAC))->current();
             $pronac = $dp->AnoProjeto.$dp->Sequencial;
-            
+
             $r->stAtendimento = $_POST['stAtendimento'];
             $r->dsAvaliacao = $_POST['dsAvaliacao'];
             $r->dtAvaliacao = new Zend_Db_Expr('GETDATE()');
             $r->idAgenteAvaliador = $this->idUsuario;
-            
+
             if($_POST['stAtendimento'] == 'I'){
                 $r->siRecurso = 2; //2=Solicitação indeferida
                 $r->stEstado = 1;
-                
+
                 //BUSCA A SITUAÇÃO ANTERIOR DO PROJETO ANTES DA SOLICITAÇÃO RECURSO
                 $historicoSituacao = new HistoricoSituacao();
                 $dadosHist = $historicoSituacao->buscarSituacaoAnterior($pronac);
-                
+
                 //ATUALIZA A SITUAÇÃO DO PROJETO
                 $w = array();
                 $w['situacao'] = $dadosHist->Situacao;
@@ -316,20 +316,20 @@ class RecursoController extends GenericControllerNew
                 $w['Logon'] = $this->idUsuario;
                 $where = "IdPRONAC = $dp->IdPRONAC";
                 $Projetos->update($w, $where);
-                
+
             } else {
                 if($_POST['vinculada'] == 262){
                     $r->siRecurso = 4; //4=Enviado para Análise Técnica (SEFIC)
-                    
+
                 } else if($_POST['vinculada'] == 400) {
                     $stEstado = 1;
                     $stFecharAnalise = 1;
                     $r->siRecurso = 7; //7=CNIC
                     $r->idAgenteAvaliador = $_POST['destinatario'];
-                    
+
                 } else {
                     $r->siRecurso = 3; //3=Enviado para o coordenador de parecer
-                    
+
                     //ATUALIZA A SITUAÇÃO DO PROJETO
                     $w = array();
                     $w['situacao'] = 'B11';
@@ -338,7 +338,7 @@ class RecursoController extends GenericControllerNew
                     $w['Logon'] = $this->idUsuario;
                     $where = "IdPRONAC = $dp->IdPRONAC";
                     $Projetos->update($w, $where);
-                    
+
                     //SE O RECURSO SE TRATAR DE PROJETO INDEFERIDO, OS DADOS DAS PLANILHAS ABAIXO DEVEM SER DELETADAS.
                     if($r->tpSolicitacao == 'PI'){
                         //DELETAR DADOS
@@ -357,7 +357,7 @@ class RecursoController extends GenericControllerNew
                 }
             }
             $r->save();
-            
+
             if($_POST['stAtendimento'] == 'D'){
                 $tbDistribuirProjeto = new tbDistribuirProjeto();
                 $dados = array(
@@ -372,31 +372,31 @@ class RecursoController extends GenericControllerNew
                 $tb = $tbDistribuirProjeto->inserir($dados);
             }
             parent::message('Dados salvos com sucesso!', "recurso", "CONFIRM");
-        
+
         } else {
             parent::message('Nenhum registro encontrado.', "recurso", "ERROR");
         }
-        
+
     }
-    
+
     public function buscarDestinatariosAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $vinculada = $_POST['vinculada'];
         $idPronac = $_POST['idPronac'];
-        
+
         $a = 0;
         $dadosUsuarios = array();
-        
+
         if($vinculada == 262){
             $dados = array();
             $dados['sis_codigo = ?'] = 21;
             $dados['uog_status = ?'] = 1;
             $dados['gru_codigo = ?'] = 110;
             $dados['org_superior = ?'] = 251;
-            
+
             $vw = new vwUsuariosOrgaosGrupos();
             $result = $vw->buscar($dados, array('usu_nome'));
-            
+
             if(count($result) > 0){
                 foreach ($result as $registro) {
                     $dadosUsuarios[$a]['id'] = $registro['usu_codigo'];
@@ -409,11 +409,11 @@ class RecursoController extends GenericControllerNew
             } else {
                 echo json_encode(array('resposta'=>false));
             }
-            
+
         } else { //CNIC
             $tbTitulacaoConselheiro = new tbTitulacaoConselheiro();
             $result = $tbTitulacaoConselheiro->buscarConselheirosTitulares();
-            
+
             if(count($result) > 0){
                 foreach ($result as $registro) {
                     $dadosUsuarios[$a]['id'] = $registro['id'];
@@ -429,13 +429,13 @@ class RecursoController extends GenericControllerNew
         }
         die();
     }
-    
+
     public function painelRecursosAction() { //Tela do Coordenador de Parecer
-        
+
         $auth = Zend_Auth::getInstance();
-        $ag = new Agentes();
+        $ag = new Agente_Model_Agentes();
         $dadosAgente = $ag->buscar(array('CNPJCPF = ?'=>$auth->getIdentity()->usu_identificacao))->current();
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -508,7 +508,7 @@ class RecursoController extends GenericControllerNew
                 $where['a.idAvaliador IS NULL'] = '';
             } else if($this->idPerfil == 94 || $this->idPerfil == 110){
                 $where['d.siRecurso = ?'] = 4;
-                
+
                 if($this->idPerfil == 110){
                     $where['a.idAvaliador = ?'] = $this->idUsuario;
                 } else {
@@ -516,12 +516,12 @@ class RecursoController extends GenericControllerNew
                 }
             }
         }
-        
+
         if((isset($_GET['pronac']) && !empty($_GET['pronac']))){
             $where['b.AnoProjeto+b.Sequencial = ?'] = $_GET['pronac'];
             $this->view->pronac = $_GET['pronac'];
         }
-        
+
         $tbDistribuirProjeto = New tbDistribuirProjeto();
         $total = $tbDistribuirProjeto->painelRecursos($where, $order, null, null, true, $this->idPerfil);
         $fim = $inicio + $this->intTamPag;
@@ -544,7 +544,7 @@ class RecursoController extends GenericControllerNew
             "Itenspag"=>$this->intTamPag,
             "tamanho"=>$tamanho
         );
-        
+
         $this->view->paginacao     = $paginacao;
         $this->view->qtdRegistros  = $total;
         $this->view->dados         = $busca;
@@ -552,16 +552,16 @@ class RecursoController extends GenericControllerNew
         $this->view->idPerfil      = $this->idPerfil;
         $this->view->idOrgao       = $this->idOrgao;
     }
-    
+
     public function encaminharRecursoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $vinculada = $this->idOrgao;
-        
+
         $post = Zend_Registry::get('post');
         $idAvaliador = (int) $post->parecerista;
         $idDistProj = (int) $post->idDistProj;
         $idRecurso = (int) $post->idRecurso;
-        
+
         //Atualiza a tabela tbDistribuirProjeto
         $dados = array();
         $dados['idAvaliador'] = $idAvaliador;
@@ -570,14 +570,14 @@ class RecursoController extends GenericControllerNew
         $where = "idDistribuirProjeto = $idDistProj";
         $tbDistribuirProjeto = new tbDistribuirProjeto();
         $return = $tbDistribuirProjeto->update($dados, $where);
-        
+
         //Atualiza a tabela tbRecurso
         $dados = array();
         $dados['siRecurso'] = 4; // Enviado para análise técnica
         $where = "idRecurso = $idRecurso";
         $tbRecurso = new tbRecurso();
         $return2 = $tbRecurso->update($dados, $where);
-        
+
         if($return && $return2){
             echo json_encode(array('resposta'=>true));
         } else {
@@ -585,21 +585,21 @@ class RecursoController extends GenericControllerNew
         }
         die();
     }
-    
+
     public function visualizarRecursoAction(){
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 103 && $this->idPerfil != 127){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-        
+
         $get = Zend_Registry::get('get');
         $idRecurso = (int) $get->id;
-        
+
         $tbRecurso = new tbRecurso();
         $dados = $tbRecurso->buscarDadosRecursos(array('idRecurso = ?'=>$idRecurso))->current();
         $this->view->dados = $dados;
-        
+
         $this->view->nmPagina = '';
-        
+
         if($dados->siFaseProjeto == 2){
             if($dados->tpSolicitacao == 'PI' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
                 $this->view->nmPagina = 'Projeto Indeferido';
@@ -608,24 +608,24 @@ class RecursoController extends GenericControllerNew
                 } else if($dados->tpSolicitacao == 'OR'){
                     $this->view->nmPagina = 'Orçamento';
                 }
-                
+
                 //ATUALIZA OS DADOS DA TABELA tbAnaliseAprovacao
 //                $e = array();
 //                $e['stDistribuicao'] = 'I'; // I=Inativo
 //                $w = "idPRONAC = $dados->IdPRONAC";
 //                $tbDistribuicaoProjetoComissao = new tbDistribuicaoProjetoComissao();
 //                $tbDistribuicaoProjetoComissao->update($e, $w);
-                
+
                 $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
                 $dadosProdutos = $PlanoDistribuicaoProduto->buscarProdutosProjeto($dados->IdPRONAC);
                 $this->view->produtos = $dadosProdutos;
-                
+
                 $tipoDaPlanilha = 2; // 2=Planilha Aprovada Parecerista
                 if($dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
                     $tipoDaPlanilha = 4; // 4=Cortes Orçamentários Aprovados
                 }
                 $spPlanilhaOrcamentaria = new spPlanilhaOrcamentaria();
-                $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($dados->IdPRONAC, $tipoDaPlanilha); 
+                $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($dados->IdPRONAC, $tipoDaPlanilha);
                 $this->view->planilha = $this->montarPlanilhaOrcamentaria($planilhaOrcamentaria, $tipoDaPlanilha);
             }
         }
@@ -639,35 +639,35 @@ class RecursoController extends GenericControllerNew
             } else {
                 $this->view->nmPagina = 'Projeto Indeferido';
             }
-            
+
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
-            
+
             $this->view->comboareasculturais = ManterAgentesDAO::buscarAreasCulturais();
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
-            
+
             $parecer = new Parecer();
             $this->view->Parecer = $parecer->buscar(array('IdPRONAC = ?' => $dados->IdPRONAC, 'TipoParecer in (?)' => array(1,7), 'stAtivo = ?' => 1))->current();
         }
-        
+
         //DADOS DO PROJETO
         $Projetos = new Projetos();
         $p = $Projetos->buscarProjetoXProponente(array('idPronac = ?' => $dados->IdPRONAC))->current();
         $this->view->projeto = $p;
     }
-    
+
     public function encaminharRecursoChecklistAction() {
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 103 && $this->idPerfil != 127){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-        
+
         $get = Zend_Registry::get('get');
         $idRecurso = (int) $get->id;
-        
+
         $reuniao = new Reuniao();
         $raberta = $reuniao->buscarReuniaoAberta();
         $idNrReuniao = $raberta['idNrReuniao'];
-                        
+
         //Atualiza a tabela tbRecurso
         $dados = array();
         $dados['siRecurso'] = 9; // Encaminhado pelo sistema para o Checklist de Publicação
@@ -675,28 +675,28 @@ class RecursoController extends GenericControllerNew
         $where = "idRecurso = $idRecurso";
         $tbRecurso = new tbRecurso();
         $return = $tbRecurso->update($dados, $where);
-        
+
         if(!$return){
             parent::message("Não foi possível encaminhar o recurso para o Checklist de Publicação", "recurso?tipoFiltro=analisados", "ERROR");
         }
         parent::message("Recurso encaminhado com sucesso!", "recurso?tipoFiltro=analisados", "CONFIRM");
     }
-    
+
     public function formAvaliarRecursoAction(){
 
         if($this->idPerfil != 94 && $this->idPerfil != 110){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-        
+
         $get = Zend_Registry::get('get');
         $idRecurso = (int) $get->id;
-        
+
         $tbRecurso = new tbRecurso();
         $dados = $tbRecurso->buscarDadosRecursos(array('idRecurso = ?'=>$idRecurso))->current();
         $this->view->dados = $dados;
-        
+
         $this->view->nmPagina = '';
-        
+
         if($dados->siFaseProjeto == 2){
             if($dados->tpSolicitacao == 'PI' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
                 $this->view->nmPagina = 'Projeto Indeferido';
@@ -705,24 +705,24 @@ class RecursoController extends GenericControllerNew
                 } else if($dados->tpSolicitacao == 'OR'){
                     $this->view->nmPagina = 'Orçamento';
                 }
-                
+
                 //ATUALIZA OS DADOS DA TABELA tbAnaliseAprovacao
                 $e = array();
                 $e['stDistribuicao'] = 'I'; // I=Inativo
                 $w = "idPRONAC = $dados->IdPRONAC";
                 $tbDistribuicaoProjetoComissao = new tbDistribuicaoProjetoComissao();
                 $tbDistribuicaoProjetoComissao->update($e, $w);
-                
+
                 $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
                 $dadosProdutos = $PlanoDistribuicaoProduto->buscarProdutosProjeto($dados->IdPRONAC);
                 $this->view->produtos = $dadosProdutos;
-                
+
                 $tipoDaPlanilha = 2; // 2=Planilha Aprovada Parecerista
                 if($dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
                     $tipoDaPlanilha = 4; // 4=Cortes Orçamentários Aprovados
                 }
                 $spPlanilhaOrcamentaria = new spPlanilhaOrcamentaria();
-                $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($dados->IdPRONAC, $tipoDaPlanilha); 
+                $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($dados->IdPRONAC, $tipoDaPlanilha);
                 $this->view->planilha = $this->montarPlanilhaOrcamentaria($planilhaOrcamentaria, $tipoDaPlanilha);
             }
         }
@@ -736,30 +736,30 @@ class RecursoController extends GenericControllerNew
             } else {
                 $this->view->nmPagina = 'Projeto Indeferido';
             }
-            
+
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
-            
+
             $this->view->comboareasculturais = ManterAgentesDAO::buscarAreasCulturais();
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
-            
+
             $parecer = new Parecer();
             $this->view->Parecer = $parecer->buscar(array('IdPRONAC = ?' => $dados->IdPRONAC, 'TipoParecer = ?' => 7, 'stAtivo = ?' => 1))->current();
         }
-        
+
         //DADOS DO PROJETO
         $Projetos = new Projetos();
         $p = $Projetos->buscarProjetoXProponente(array('idPronac = ?' => $dados->IdPRONAC))->current();
         $this->view->projeto = $p;
     }
-    
+
     public function salvarEnquadramentoAction()
 	{
         //ESSA FUNCAO TAMBEM E UTILIZADA A MESMA FUNCAO PARA AVALIAR O ENQUADRAMENTO DO PROJETO.
         if($this->idPerfil != 94 && $this->idPerfil != 110){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-        
+
         $auth = Zend_Auth::getInstance();
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idPronac = $_POST['idPronac'];
@@ -769,7 +769,7 @@ class RecursoController extends GenericControllerNew
         $enquadramentoProjeto = $_POST['enquadramentoProjeto'];
         $parecerProjeto = $_POST['parecerProjeto'];
         $dsParecer = $_POST['dsParecer'];
-        
+
         try {
             //ATUALIAZA A ÁREA E SEGMENTO DO PROJETO
             $d = array();
@@ -784,7 +784,7 @@ class RecursoController extends GenericControllerNew
             if($parecerProjeto == 2){
                 $Projetos->update($d, $where);
             }
-            
+
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac));
             if(count($dadosProjeto)>0){
                 //CADASTRA OU ATUALIZA O ENQUADRAMENTO DO PROJETO
@@ -827,7 +827,7 @@ class RecursoController extends GenericControllerNew
                     'idTipoAgente' => 1,
                     'Logon' => $idusuario
                 );
-                
+
                 foreach ($dadosParecer as $dp) {
                     $parecerAntigo = array(
                         'Atendimento' => 'S',
@@ -836,7 +836,7 @@ class RecursoController extends GenericControllerNew
                     $whereUpdateParecer = 'IdPRONAC = '.$idPronac;
                     $alteraParecer = $parecerDAO->alterar($parecerAntigo, $whereUpdateParecer);
                 }
-                
+
                 $buscarParecer = $parecerDAO->buscar(array('IdPRONAC = ?' => $idPronac, 'AnoProjeto = ?' => $dadosProjeto[0]->AnoProjeto, 'Sequencial = ?' => $dadosProjeto[0]->Sequencial, 'TipoParecer = ?' => 7, 'idTipoAgente = ?' =>1));
                 if(count($buscarParecer) > 0){
                     $buscarParecer = $buscarParecer->current();
@@ -846,12 +846,12 @@ class RecursoController extends GenericControllerNew
                     $insereParecer = $parecerDAO->inserir($dadosParecer);
                 }
             }
-            
+
             if(isset($_POST['finalizarAvaliacao']) && $_POST['finalizarAvaliacao'] == 1){
-                
+
                 $tbDistribuirProjeto = new tbDistribuirProjeto();
                 $dDP = $tbDistribuirProjeto->buscar(array('IdPRONAC = ?'=>$idPronac, 'stEstado = ?'=>0, 'tpDistribuicao = ?'=>'A'));
-                
+
                 if(count($dDP)>0){
                     //ATUALIZA A TABELA tbDistribuirProjeto
                     $dadosDP = array();
@@ -859,7 +859,7 @@ class RecursoController extends GenericControllerNew
                     $whereDP = "idDistribuirProjeto = ".$dDP[0]->idDistribuirProjeto;
                     $tbDistribuirProjeto = new tbDistribuirProjeto();
                     $x = $tbDistribuirProjeto->update($dadosDP, $whereDP);
-                    
+
                     $siRecurso = 5; //Devolvido da análise técnica
                     if($this->idPerfil == 110){
                         $siRecurso = 10; //Devolver para Coordenador do MinC
@@ -873,21 +873,21 @@ class RecursoController extends GenericControllerNew
                 }
                 parent::message("A avaliação do recurso foi finalizada com sucesso! ", "recurso/painel-recursos", "CONFIRM");
             }
-            
+
             parent::message("Dados salvos com sucesso!", "recurso/form-avaliar-recurso?id=$idRecurso", "CONFIRM");
-            
+
         } // fecha try
         catch (Exception $e) {
             parent::message($e->getMessage(), "recurso/form-avaliar-recurso?id=$idRecurso", "ERROR");
         }
 	}
-    
+
     public function componenteComissaoSalvarEnquadramentoAction()
 	{
         if($this->idPerfil != 118){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-        
+
         $auth = Zend_Auth::getInstance();
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idPronac = $_POST['idPronac'];
@@ -897,7 +897,7 @@ class RecursoController extends GenericControllerNew
         $enquadramentoProjeto = $_POST['enquadramentoProjeto'];
         $parecerProjeto = $_POST['parecerProjeto'];
         $dsParecer = $_POST['dsParecer'];
-        
+
         if($parecerProjeto == 1){ //1=Não; 2=Sim
             $situacaoProjeto = 'D14';
             $providenciaProjeto = 'Recurso indeferido na CNIC pelo componente da comissão.';
@@ -907,7 +907,7 @@ class RecursoController extends GenericControllerNew
             $providenciaProjeto = 'Recurso deferido na CNIC pelo componente da comissão.';
             $stAnalise = 'AC';
         }
-        
+
         try {
             //ATUALIAZA A SITUAÇÃO, ÁREA E SEGMENTO DO PROJETO
             $d = array();
@@ -924,7 +924,7 @@ class RecursoController extends GenericControllerNew
             $where = "IdPRONAC = $idPronac";
             $Projetos = new Projetos();
             $Projetos->update($d, $where);
-            
+
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac));
             if(count($dadosProjeto)>0){
                 //CADASTRA OU ATUALIZA O ENQUADRAMENTO DO PROJETO
@@ -967,7 +967,7 @@ class RecursoController extends GenericControllerNew
                     'idTipoAgente' => 1,
                     'Logon' => $idusuario
                 );
-                
+
                 $buscarParecer = $parecerDAO->buscar(array('IdPRONAC = ?' => $idPronac));
                 foreach ($dadosParecer as $dp) {
                     $parecerAntigo = array(
@@ -977,7 +977,7 @@ class RecursoController extends GenericControllerNew
                     $whereUpdateParecer = 'IdPRONAC = '.$idPronac;
                     $alteraParecer = $parecerDAO->alterar($parecerAntigo, $whereUpdateParecer);
                 }
-                
+
                 $buscarParecer = $parecerDAO->buscar(array('IdPRONAC = ?' => $idPronac, 'AnoProjeto = ?' => $dadosProjeto[0]->AnoProjeto, 'Sequencial = ?' => $dadosProjeto[0]->Sequencial, 'TipoParecer = ?' => 7, 'idTipoAgente = ?' =>1));
                 if(count($buscarParecer) > 0){
                     $buscarParecer = $buscarParecer->current();
@@ -987,12 +987,12 @@ class RecursoController extends GenericControllerNew
                     $insereParecer = $parecerDAO->inserir($dadosParecer);
                 }
             }
-            
+
             if(isset($_POST['finalizarAvaliacao']) && $_POST['finalizarAvaliacao'] == 1){
-                
+
                 $tbDistribuirProjeto = new tbDistribuirProjeto();
                 $dDP = $tbDistribuirProjeto->buscar(array('IdPRONAC = ?'=>$idPronac, 'stEstado = ?'=>1, 'stFecharAnalise = ?'=>1, 'tpDistribuicao = ?'=>'A'));
-                
+
                 if(count($dDP)>0){
                     //ATUALIZA A TABELA tbDistribuirProjeto
                     $dadosDP = array();
@@ -1000,11 +1000,11 @@ class RecursoController extends GenericControllerNew
                     $whereDP = "idDistribuirProjeto = ".$dDP[0]->idDistribuirProjeto;
                     $tbDistribuirProjeto = new tbDistribuirProjeto();
                     $x = $tbDistribuirProjeto->update($dadosDP, $whereDP);
-                    
+
                     $reuniao = new Reuniao();
                     $raberta = $reuniao->buscarReuniaoAberta();
                     $idNrReuniao = $raberta['idNrReuniao'];
-                    
+
                     if($_POST['plenaria']){
                         $campoSiRecurso = 8; // 8=Enviado à Plenária
                     } else {
@@ -1022,28 +1022,28 @@ class RecursoController extends GenericControllerNew
                 }
                 parent::message("A avaliação do recurso foi finalizada com sucesso!", "recurso/analisar-recursos-cnic", "CONFIRM");
             }
-            
+
             parent::message("Dados salvos com sucesso!", "recurso/form-avaliar-recurso-cnic?recurso=$idRecurso", "CONFIRM");
-            
+
         } // fecha try
         catch (Exception $e) {
             parent::message($e->getMessage(), "recurso/form-avaliar-recurso-cnic?recurso=$idRecurso", "ERROR");
         }
 	}
-    
+
     public function coordParecerFinalizarRecursoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        
+
         $post = Zend_Registry::get('post');
         $idRecurso = (int) $post->idRecurso;
-        
+
         //Atualiza a tabela tbRecurso
         $dados = array();
         $dados['siRecurso'] = 6; // Devolvido para o coordenador geral de análise
         $where = "idRecurso = $idRecurso";
         $tbRecurso = new tbRecurso();
         $return = $tbRecurso->update($dados, $where);
-        
+
         if($return){
             echo json_encode(array('resposta'=>true));
         } else {
@@ -1051,34 +1051,34 @@ class RecursoController extends GenericControllerNew
         }
         die();
     }
-    
+
     public function coordAnaliseFinalizarRecursoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $vinculada = $this->idOrgao;
-        
+
         $post = Zend_Registry::get('post');
         $idComponente = (int) $post->componente;
         $idRecurso = (int) $post->idRecurso;
-        
+
         $tbRecurso = new tbRecurso();
         $dadosRecurso = $tbRecurso->buscar(array('idRecurso = ?'=>$post->idRecurso))->current();
-        
+
         $idPronac = $dadosRecurso->IdPRONAC;
         $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
         $tbAnaliseAprovacao = new tbAnaliseAprovacao();
-        
+
         //VERIFICA SE JÁ POSSUI AS PLANILHA DO TIPO 'CO'. SE NÃO, INSERE FAZENDO A CÓPIA DOS DADOS
         $verificaPlanilhaAprovacao = $tbPlanilhaAprovacao->buscar(array('tpPlanilha=?'=>'CO', 'stAtivo=?'=>'S', 'IdPRONAC=?'=>$idPronac));
         if(count($verificaPlanilhaAprovacao)==0){
             $tbPlanilhaAprovacao->copiandoPlanilhaRecurso($idPronac);
         }
-        
+
         //VERIFICA SE JÁ POSSUI AS PLANILHA DO TIPO 'CO'. SE NÃO, INSERE FAZENDO A CÓPIA DOS DADOS
         $verificaAnaliseAprovacao = $tbAnaliseAprovacao->buscar(array('tpAnalise=?'=>'CO', 'IdPRONAC=?'=>$idPronac));
         if(count($verificaAnaliseAprovacao)==0){
             $tbAnaliseAprovacao->copiandoPlanilhaRecurso($idPronac);
         }
-        
+
         $tbDistribuirProjeto = new tbDistribuirProjeto();
         $dadosDistProj = $tbDistribuirProjeto->buscar(array('IdPRONAC=?'=>$idPronac, 'tpDistribuicao=?'=>'A', 'stFecharAnalise=?'=>0, 'stEstado=?'=>0));
         if(count($dadosDistProj)>0){
@@ -1092,7 +1092,7 @@ class RecursoController extends GenericControllerNew
             $tbDistribuirProjeto = new tbDistribuirProjeto();
             $tbDistribuirProjeto->update($dadosDP, $whereDP);
         }
-        
+
         //ATUALIZA A SITUAÇÃO DO PROJETO
         $Projetos = new Projetos();
         $w = array();
@@ -1102,10 +1102,10 @@ class RecursoController extends GenericControllerNew
         $w['Logon'] = $this->idUsuario;
         $where = "IdPRONAC = $idPronac";
         $Projetos->update($w, $where);
-        
+
         $reuniao = new Reuniao();
         $raberta = $reuniao->buscarReuniaoAberta();
-        
+
         //Atualiza a tabela tbRecurso
         $dados = array();
         $dados['idAgenteAvaliador'] = $idComponente; // Enviado para CNIC
@@ -1113,7 +1113,7 @@ class RecursoController extends GenericControllerNew
         $dados['idNrReuniao'] = $raberta['idNrReuniao'];
         $where = "idRecurso = $idRecurso";
         $return = $tbRecurso->update($dados, $where);
-        
+
         if($return){
             echo json_encode(array('resposta'=>true));
         } else {
@@ -1121,18 +1121,18 @@ class RecursoController extends GenericControllerNew
         }
         die();
     }
-    
+
     public function devolverRecursoAction() {
-        
+
         $dados = array();
         $get = Zend_Registry::get('get');
         $idRecurso = (int) $get->id;
-        
+
         $tbRecurso = new tbRecurso();
         $dadosRecurso = $tbRecurso->find(array('idRecurso=?'=>$idRecurso))->current();
-        
+
         $siRecurso = $dadosRecurso->siRecurso;
-        
+
         //RECURSOS TRATADOS POR PARECERISTA
         if($siRecurso == 6){
             //Atualiza a tabela tbRecurso
@@ -1143,16 +1143,16 @@ class RecursoController extends GenericControllerNew
             $where = "idRecurso = $idRecurso";
         }
         $return = $tbRecurso->update($dados, $where);
-        
+
         parent::message("Recurso devolvido com sucesso!", "recurso?tipoFiltro=analisados", "CONFIRM");
     }
-    
+
     public function analisarRecursosCnicAction()
 	{
         if($this->idPerfil != 118){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -1190,28 +1190,28 @@ class RecursoController extends GenericControllerNew
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
-        
+
         $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($this->idUsuario);
         $idagente = $idagente['idAgente'];
-        
+
 //        $reuniao = new Reuniao();
 //        $raberta = $reuniao->buscarReuniaoAberta();
-        
+
         $where = array();
         $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
         $where['a.siRecurso = ?'] = 7; // 7=Encaminhar para ao Componente da Comissão
         $where['a.idAgenteAvaliador = ?'] = $idagente;
 //        $where['a.idNrReuniao = ?'] = $raberta['idNrReuniao'];
-        
+
         if((isset($_GET['pronac']) && !empty($_GET['pronac']))){
             $where['b.AnoProjeto+b.Sequencial = ?'] = $_GET['pronac'];
             $this->view->pronac = $_GET['pronac'];
         }
-        
+
         $tbRecurso = New tbRecurso();
         $total = $tbRecurso->painelRecursos($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
-        
+
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
@@ -1230,29 +1230,29 @@ class RecursoController extends GenericControllerNew
             "Itenspag"=>$this->intTamPag,
             "tamanho"=>$tamanho
         );
-        
+
         $this->view->paginacao     = $paginacao;
         $this->view->qtdRegistros  = $total;
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
 	}
-    
-    
+
+
     public function formAvaliarRecursoCnicAction() {
 
         if($this->idPerfil != 118){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-        
+
         $get = Zend_Registry::get('get');
         $idRecurso = (int) $get->recurso;
-        
+
         $tbRecurso = new tbRecurso();
         $dados = $tbRecurso->buscarDadosRecursos(array('idRecurso = ?'=>$idRecurso))->current();
         $this->view->dados = $dados;
-        
+
         $this->view->nmPagina = '';
-                
+
         if($dados->siFaseProjeto == 2){
             if($dados->tpSolicitacao == 'PI' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
                 $this->view->nmPagina = 'Projeto Indeferido';
@@ -1261,17 +1261,17 @@ class RecursoController extends GenericControllerNew
                 } else if($dados->tpSolicitacao == 'OR'){
                     $this->view->nmPagina = 'Orçamento';
                 }
-                
+
                 $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
                 $dadosProdutos = $PlanoDistribuicaoProduto->buscarProdutosProjeto($dados->IdPRONAC);
                 $this->view->produtos = $dadosProdutos;
-                
+
                 $tipoDaPlanilha = 3; // 3=Planilha Orçamentária Aprovada
                 if($dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
                     $tipoDaPlanilha = 4; // 4=Cortes Orçamentários Aprovados
                 }
                 $spPlanilhaOrcamentaria = new spPlanilhaOrcamentaria();
-                $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($dados->IdPRONAC, $tipoDaPlanilha); 
+                $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($dados->IdPRONAC, $tipoDaPlanilha);
                 $this->view->planilha = $this->montarPlanilhaOrcamentaria($planilhaOrcamentaria, $tipoDaPlanilha);
             }
         }
@@ -1285,29 +1285,29 @@ class RecursoController extends GenericControllerNew
             } else {
                 $this->view->nmPagina = 'Projeto Indeferido';
             }
-            
+
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
-            
+
             $this->view->comboareasculturais = ManterAgentesDAO::buscarAreasCulturais();
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
-            
+
             $parecer = new Parecer();
             $this->view->Parecer = $parecer->buscar(array('IdPRONAC = ?' => $dados->IdPRONAC, 'TipoParecer = ?' => 7, 'stAtivo = ?' => 1))->current();
         }
-        
+
         //DADOS DO PROJETO
         $Projetos = new Projetos();
         $p = $Projetos->buscarProjetoXProponente(array('idPronac = ?' => $dados->IdPRONAC))->current();
         $this->view->projeto = $p;
     }
-    
+
     public function cnicSalvarEnquadramentoAction()
 	{
         if($this->idPerfil != 118){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-        
+
         $auth = Zend_Auth::getInstance();
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idPronac = $_POST['idPronac'];
@@ -1317,7 +1317,7 @@ class RecursoController extends GenericControllerNew
         $enquadramentoProjeto = $_POST['enquadramentoProjeto'];
         $parecerProjeto = $_POST['parecerProjeto'];
         $dsParecer = $_POST['dsParecer'];
-        
+
         try {
             //ATUALIAZA A SITUAÇÃO, ÁREA E SEGMENTO DO PROJETO
             $d = array();
@@ -1329,7 +1329,7 @@ class RecursoController extends GenericControllerNew
             $where = "IdPRONAC = $idPronac";
             $Projetos = new Projetos();
             $Projetos->update($d, $where);
-            
+
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac));
             if(count($dadosProjeto)>0){
                 //CADASTRA OU ATUALIZA O ENQUADRAMENTO DO PROJETO
@@ -1372,7 +1372,7 @@ class RecursoController extends GenericControllerNew
                     'idTipoAgente' => 6,
                     'Logon' => $idusuario
                 );
-                
+
                 $buscarParecer = $parecerDAO->buscar(array('IdPRONAC = ?' => $idPronac));
                 foreach ($dadosParecer as $dp) {
                     $parecerAntigo = array(
@@ -1382,7 +1382,7 @@ class RecursoController extends GenericControllerNew
                     $whereUpdateParecer = 'IdPRONAC = '.$idPronac;
                     $alteraParecer = $parecerDAO->alterar($parecerAntigo, $whereUpdateParecer);
                 }
-                
+
                 $buscarParecer = $parecerDAO->buscar(array('IdPRONAC = ?' => $idPronac, 'AnoProjeto = ?' => $dadosProjeto[0]->AnoProjeto, 'Sequencial = ?' => $dadosProjeto[0]->Sequencial, 'TipoParecer = ?' => 7, 'idTipoAgente = ?' =>6));
                 if(count($buscarParecer) > 0){
                     $buscarParecer = $buscarParecer->current();
@@ -1392,13 +1392,13 @@ class RecursoController extends GenericControllerNew
                     $insereParecer = $parecerDAO->inserir($dadosParecer);
                 }
             }
-            
+
             if(isset($_POST['finalizarAvaliacao']) && $_POST['finalizarAvaliacao'] == 1){
-                
+
                 $idNrReuniao = null;
                 if($_POST['plenaria']){
                     $campoSiRecurso = 8; // 8=Enviado à Plenária
-                    
+
                     $reuniao = new Reuniao();
                     $raberta = $reuniao->buscarReuniaoAberta();
                     $idNrReuniao = $raberta['idNrReuniao'];
@@ -1416,31 +1416,31 @@ class RecursoController extends GenericControllerNew
                 $tbRecurso->update($dados, $where);
                 parent::message("A avaliação do recurso foi finalizada com sucesso! ", "recurso/analisar-recursos-cnic", "CONFIRM");
             }
-            
+
             parent::message("Dados salvos com sucesso!", "recurso/form-avaliar-recurso-cnic?recurso=$idRecurso", "CONFIRM");
-            
+
         } // fecha try
         catch (Exception $e) {
             parent::message($e->getMessage(), "recurso/form-avaliar-recurso-cnic?recurso=$idRecurso", "ERROR");
         }
 	}
-    
+
     public function salvarAnaliseDeConteudoAction()
 	{
         if($this->idPerfil != 94 && $this->idPerfil != 110){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-        
+
         $idPronac = $_POST['idPronac'];
         $idProduto = $_POST['idProduto'];
         $idRecurso = $_POST['idRecurso'];
-        
+
         try {
 //            if (!$_POST['ParecerFavoravel_'.$idProduto]) {
 //                $planilhaProjeto = new PlanilhaProjeto();
 //                $atualizar = array('idUnidade' => 1, 'Quantidade' => 0, 'Ocorrencia' => 0, 'ValorUnitario' => 0, 'QtdeDias' => 0, 'idUsuario' => $idusuario, 'Justificativa' => '');
 //                $planilhaProjeto->alterar($atualizar, array('idPRONAC = ?' => $idPronac, 'idProduto = ?' => $idProduto));
-//                
+//
 //            } else {
 //                $analisedeConteudoDAO = new Analisedeconteudo();
 //                $whereB['idPronac  = ?'] = $idPronac;
@@ -1484,22 +1484,22 @@ class RecursoController extends GenericControllerNew
             );
             $analisedeConteudoDAO = new Analisedeconteudo();
             $where['idPRONAC = ?']  = $idPronac;
-            
+
             // Quando o parecer do produto principal é desfavorável, o parecer dos produtos secundários também devem ser desfavoráveis.
             if( (!$_POST['stPrincipal']) || ($_POST['stPrincipal'] && $_POST['ParecerFavoravel_'.$idProduto])){
                 $where['idProduto = ?'] = $idProduto;
             }
             $analisedeConteudoDAO->update($dados,$where);
-            
+
             parent::message("Dados salvos com sucesso!", "recurso/form-avaliar-recurso?id=$idRecurso", "CONFIRM");
-            
+
         } // fecha try
         catch (Exception $e) {
             parent::message($e->getMessage(), "recurso/form-avaliar-recurso?id=$idRecurso", "ERROR");
         }
 	}
-    
-    
+
+
     //COMPONENTE DA COMISSAO SALVANDOS OS DADOS DA ANALISE DE CONTEUDO
     public function cnicSalvarAnaliseDeConteudoAction()
 	{
@@ -1509,7 +1509,7 @@ class RecursoController extends GenericControllerNew
         $idPronac = $_POST['idPronac'];
         $idProduto = $_POST['idProduto'];
         $idRecurso = $_POST['idRecurso'];
-        
+
         try {
             $artigo18 = 0;
             $artigo26 = 0;
@@ -1543,21 +1543,21 @@ class RecursoController extends GenericControllerNew
             );
             $analisedeConteudoDAO = new Analisedeconteudo();
             $where['idPRONAC = ?']  = $idPronac;
-            
+
             // Quando o parecer do produto principal é desfavorável, o parecer dos produtos secundários também devem ser desfavoráveis.
             if( (!$_POST['stPrincipal']) || ($_POST['stPrincipal'] && $_POST['ParecerFavoravel_'.$idProduto])){
                 $where['idProduto = ?'] = $idProduto;
             }
             $analisedeConteudoDAO->update($dados,$where);
-            
+
             parent::message("Dados salvos com sucesso!", "recurso/form-avaliar-recurso-cnic?recurso=$idRecurso", "CONFIRM");
-            
+
         } // fecha try
         catch (Exception $e) {
             parent::message($e->getMessage(), "recurso/form-avaliar-recurso-cnic?recurso=$idRecurso", "ERROR");
         }
 	}
-    
+
     /**
      * Método alterarItem()
      * Altera os itens da planilha
@@ -1567,11 +1567,11 @@ class RecursoController extends GenericControllerNew
     public function alterarItemAction() {
         $this->_helper->layout->disableLayout();
         $idPlanilhaProjeto = $this->_request->getParam("idPlanilha");
-        
+
         /* ITEM */
         $PlanilhaProjeto = new PlanilhaProjeto();
         $planilha = $PlanilhaProjeto->buscarDadosAvaliacaoDeItem($idPlanilhaProjeto);
-        
+
         $dadosPlanilha = array();
         if(count($planilha) > 0){
             /* PROJETO */
@@ -1582,7 +1582,7 @@ class RecursoController extends GenericControllerNew
                 'PRONAC' => $projeto->AnoProjeto.$projeto->Sequencial,
                 'NomeProjeto' => utf8_encode($projeto->NomeProjeto)
             );
-            
+
             $PlanilhaProposta = new PlanilhaProposta();
             $dadosSolicitados = $PlanilhaProposta->buscarDadosAvaliacaoDeItem($planilha[0]->idPlanilhaProposta)->current();
             $dadosPlanilhaProposta = array();
@@ -1593,7 +1593,7 @@ class RecursoController extends GenericControllerNew
             $dadosPlanilhaProposta['QtdeDias'] = $dadosSolicitados->QtdeDias;
             $dadosPlanilhaProposta['TotalSolicitado'] = utf8_encode('R$ '.number_format(($dadosSolicitados->Quantidade*$dadosSolicitados->Ocorrencia*$dadosSolicitados->ValorUnitario), 2, ',', '.'));
             $dadosPlanilhaProposta['TotalSolicitadoValidacao'] = utf8_encode(number_format(($dadosSolicitados->Quantidade*$dadosSolicitados->Ocorrencia*$dadosSolicitados->ValorUnitario), 2, '', ''));
-            
+
             foreach ($planilha as $registro) {
                 $dadosPlanilhaProjeto['idPlanilhaProjeto'] = $registro['idPlanilhaProjeto'];
                 $dadosPlanilhaProjeto['idProduto'] = $registro['idProduto'];
@@ -1619,7 +1619,7 @@ class RecursoController extends GenericControllerNew
         }
         die();
     }
-    
+
     /**
      * Método alterarItem()
      * Altera os itens da planilha
@@ -1632,11 +1632,11 @@ class RecursoController extends GenericControllerNew
     public function cnicAlterarItemAction() {
         $this->_helper->layout->disableLayout();
         $idPlanilhaAprovacao = $this->_request->getParam("idPlanilha");
-        
+
         /* ITEM */
         $PlanilhaAprovacao = new PlanilhaAprovacao();
         $planilha = $PlanilhaAprovacao->buscarDadosAvaliacaoDeItem($idPlanilhaAprovacao);
-        
+
         $dadosPlanilhaAprovada = array();
         if(count($planilha) > 0){
             /* PROJETO */
@@ -1647,7 +1647,7 @@ class RecursoController extends GenericControllerNew
                 'PRONAC' => $projeto->AnoProjeto.$projeto->Sequencial,
                 'NomeProjeto' => utf8_encode($projeto->NomeProjeto)
             );
-            
+
             $PlanilhaProposta = new PlanilhaProposta();
             $dadosSolicitados = $PlanilhaProposta->buscarDadosAvaliacaoDeItem($planilha[0]->idPlanilhaProposta)->current();
             $dadosPlanilhaProposta = array();
@@ -1658,7 +1658,7 @@ class RecursoController extends GenericControllerNew
             $dadosPlanilhaProposta['QtdeDias'] = $dadosSolicitados->QtdeDias;
             $dadosPlanilhaProposta['TotalSolicitado'] = utf8_encode('R$ '.number_format(($dadosSolicitados->Quantidade*$dadosSolicitados->Ocorrencia*$dadosSolicitados->ValorUnitario), 2, ',', '.'));
             $dadosPlanilhaProposta['TotalSolicitadoValidacao'] = utf8_encode(number_format(($dadosSolicitados->Quantidade*$dadosSolicitados->Ocorrencia*$dadosSolicitados->ValorUnitario), 2, '', ''));
-            
+
             $PlanilhaProjeto = new PlanilhaProjeto();
             $dadosSugeridos = $PlanilhaProjeto->buscarDadosAvaliacaoDeItem($planilha[0]->idPlanilhaProjeto)->current();
             $dadosPlanilhaProjeto = array();
@@ -1668,7 +1668,7 @@ class RecursoController extends GenericControllerNew
             $dadosPlanilhaProjeto['ValorUnitario'] = utf8_encode('R$ '.number_format($dadosSugeridos->ValorUnitario, 2, ',', '.'));
             $dadosPlanilhaProjeto['QtdeDias'] = $dadosSugeridos->QtdeDias;
             $dadosPlanilhaProjeto['TotalSolicitado'] = utf8_encode('R$ '.number_format(($dadosSugeridos->Quantidade*$dadosSugeridos->Ocorrencia*$dadosSugeridos->ValorUnitario), 2, ',', '.'));
-            
+
             foreach ($planilha as $registro) {
                 $dadosPlanilhaAprovada['idPlanilhaAprovacao'] = $registro['idPlanilhaAprovacao'];
                 $dadosPlanilhaAprovada['idProduto'] = $registro['idProduto'];
@@ -1694,7 +1694,7 @@ class RecursoController extends GenericControllerNew
         }
         die();
     }
-    
+
     public function salvarAvaliacaoDoItemAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -1710,7 +1710,7 @@ class RecursoController extends GenericControllerNew
         $dados['Justificativa'] = utf8_decode($_POST['Justificativa']);
         $dados['idUsuario'] = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : 0;
         $vlTotal = @number_format(($_POST['Quantidade']*$_POST['Ocorrencia']*$dados['vlUnitario']), 2, '', '');
-        
+
         //O valor total dos valores não podem ultrapassar o valor solicitado na proposta.
         if($vlTotal > $_POST['valorSolicitado']){
             echo json_encode(array('resposta'=>false, 'msg'=> utf8_decode('O valor total n&atilde;o pode ser maior do que '.$_POST['valorSolicitado'].'.')));
@@ -1725,7 +1725,7 @@ class RecursoController extends GenericControllerNew
         }
         die();
     }
-    
+
     //Criado no dia 07/10/2013 - Jefferson Alessandro
     public function cnicSalvarAvaliacaoDoItemAction() {
         $this->_helper->layout->disableLayout();
@@ -1743,7 +1743,7 @@ class RecursoController extends GenericControllerNew
         $dados['dsJustificativa'] = utf8_decode($_POST['Justificativa']);
         $dados['idAgente'] = $idagente;
         $vlTotal = @number_format(($_POST['Quantidade']*$_POST['Ocorrencia']*$dados['vlUnitario']), 2, '', '');
-        
+
         //O valor total dos valores não podem ultrapassar o valor solicitado na proposta.
         if($vlTotal > $_POST['valorSolicitado']){
             echo json_encode(array('resposta'=>false, 'msg'=> utf8_decode('O valor total n&atilde;o pode ser maior do que '.$_POST['valorSolicitado'].'.')));
@@ -1758,9 +1758,9 @@ class RecursoController extends GenericControllerNew
         }
         die();
     }
-    
-    
-    
+
+
+
 
 
 	/**
@@ -1816,10 +1816,10 @@ class RecursoController extends GenericControllerNew
 			try
 			{
 				$dados = array(
-					'dtAvaliacao'       => new Zend_Db_Expr('GETDATE()'),	
-					'dsAvaliacao' 		=> Seguranca::tratarVarEditor($_POST['justificativa']), 
+					'dtAvaliacao'       => new Zend_Db_Expr('GETDATE()'),
+					'dsAvaliacao' 		=> Seguranca::tratarVarEditor($_POST['justificativa']),
 					'stAtendimento'   	=> $stAtendimento,
-					'dsAvaliacao'       => $justificativa, 
+					'dsAvaliacao'       => $justificativa,
 					'idAgenteAvaliador' => $idAgenteAvaliador);
 
 				// valida os dados
@@ -1877,7 +1877,7 @@ class RecursoController extends GenericControllerNew
 	 * @return void
 	 */
 	public function reenquadramentoAction()
-	{	
+	{
 		if ($this->getRequest()->isPost())
 		{
 			// recebe os dados via post
@@ -1890,16 +1890,16 @@ class RecursoController extends GenericControllerNew
 			$enquadramento      		= (int) $post->enquadramento;
 			$justificativa 				= Seguranca::tratarVarEditor($_POST['dsRecurso']); // recebe os dados do editor
 			$idAgenteAvaliador   	    = $this->getIdUsuario;
-			$idEnquadramento            = $post->idEnquadramento;			
+			$idEnquadramento            = $post->idEnquadramento;
 
 			try
 			{
 				// dados recurso
 				$dadosRecurso = array(
-					'dtAvaliacao'       => new Zend_Db_Expr('GETDATE()'),	
-					'dsAvaliacao' 		=> $justificativa, 
+					'dtAvaliacao'       => new Zend_Db_Expr('GETDATE()'),
+					'dsAvaliacao' 		=> $justificativa,
 					'stAtendimento'   	=> $stAtendimento,
-					'dsAvaliacao'       => $justificativa, 
+					'dsAvaliacao'       => $justificativa,
 					'idAgenteAvaliador' => $idAgenteAvaliador);
 
 				// dados enquadramento
@@ -1909,7 +1909,7 @@ class RecursoController extends GenericControllerNew
 					'Sequencial'           				=> $Sequencial,
 					'Enquadramento'           			=> $enquadramento,
 					'DtEnquadramento'           		=> new Zend_Db_Expr('GETDATE()'),
-					'Observacao' 						=> $justificativa, 
+					'Observacao' 						=> $justificativa,
 					'Logon'           			 		=> $idAgenteAvaliador);
 
 				// valida os dados
@@ -1949,7 +1949,7 @@ class RecursoController extends GenericControllerNew
 
 					// realiza o update na tabela de enquadramento
 					$alterarEnquadramento = RecursoDAO::recursoReenquadramento($dadosEnquadramento, $idEnquadramento);
-					
+
 					if ($alterarAtendimento && $alterarEnquadramento) // caso tenha sido alterado com sucesso
 					{
 						parent::message("Solicitação enviada com sucesso!", "recurso", "CONFIRM");
@@ -1973,13 +1973,13 @@ class RecursoController extends GenericControllerNew
 			$tbreenquadramento = RecursoDAO::buscarRecursoReenquadramento($idPronac);
 			$this->view->recursoreenquadramento = $tbreenquadramento;
 		}
-	
+
 	}// fecha método reenquadramentoAction()
 
-	
-	
 
-		
+
+
+
 
 	/**
 	 * Método com os Projetos Deferidos - Orçamento
@@ -2043,26 +2043,26 @@ class RecursoController extends GenericControllerNew
 
 	} // fecha método parecerAction()
 
-	
-	
-	
-	
-	
+
+
+
+
+
 	public function orcamentoAction()
 	{
 
 		$get = Zend_Registry::get('get');
 		$idPronac = $get->idPronac;
 		$idRecurso = $get->idRecurso;
-		
+
 		$tborcamento = RecursoDAO::buscarRecursoOrcamento($idPronac, $idRecurso);
 		$this->view->recursoorcamento = $tborcamento;
-		
+
 		$buscarProdutos = SolicitarRecursoDecisaoDAO::analiseDeCustosBuscarProduto($idPronac);
-					
+
 		///$buscarRecursos = RecursoDAO::buscarIdRecurso();
 
-			
+
 
 
 		// busca a planilha com as unidades
@@ -2070,8 +2070,8 @@ class RecursoController extends GenericControllerNew
 
 		// busca a planilha com as etapas
 		$buscarPlanilhaEtapa = PlanilhaEtapaDAO::buscar();
-		
-		
+
+
 
 		// busca o pronac
 		$pronac = ProjetoDAO::buscarPronac($idPronac);
@@ -2085,7 +2085,7 @@ class RecursoController extends GenericControllerNew
 		$this->view->planilhaUnidade = $buscarPlanilhaUnidade;
 		$this->view->planilhaEtapa   = $buscarPlanilhaEtapa;
 		$this->view->pronac          = $buscarPronac;
-		
+
 
 		$this->view->qtdItens        = count(RealizarAnaliseProjetoDAO::analiseDeConta($pronac)); // quantidade de ítens
 
@@ -2160,7 +2160,7 @@ class RecursoController extends GenericControllerNew
 			{
 				parent::message($e->getMessage(), "recurso/orcamento?idPronac=".$idPronac."&idRecurso=".$idRecurso, "ERROR");
 			}
-			
+
 		}// fecha if
 		else
 		{

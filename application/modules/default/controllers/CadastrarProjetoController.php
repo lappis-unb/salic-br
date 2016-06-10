@@ -31,7 +31,7 @@ class CadastrarProjetoController extends GenericControllerNew {
             $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visão
             $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visão
             $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o orgão ativo do usuï¿½rio para a visão
-            
+
             $this->Orgao = $GrupoAtivo->codOrgao;
             $this->Usuario = $auth->getIdentity()->usu_codigo;
         } // fecha if
@@ -43,7 +43,7 @@ class CadastrarProjetoController extends GenericControllerNew {
     }
 
     public function indexAction() {
-        
+
         $Modalidade = new tbModalidade();
         $mecanismo = new Mecanismo();
         $mecanismo2 = $mecanismo->buscar(array('Status = ?' => 1))->toArray();
@@ -58,7 +58,7 @@ class CadastrarProjetoController extends GenericControllerNew {
         $this->view->modalidade = $Modalidade->buscarModalidade();
 
 
-        //$this->view->Segmento       =   $SegmentoDAO->buscar(array('stEstado = ?'=>1));			
+        //$this->view->Segmento       =   $SegmentoDAO->buscar(array('stEstado = ?'=>1));
         if (isset($_POST['areacultura']) and $_POST['areacultura'] == 'ok') {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $post = Zend_Registry::get('post');
@@ -85,11 +85,11 @@ class CadastrarProjetoController extends GenericControllerNew {
 
         $sequencial = new tbSequencialProjetos();
         $projetos = new Projetos();
-        
+
 
         $dados = array();
 
-        
+
         $dados ['UfProjeto'] = $post->uf;
         $dados ['Area'] = $post->areacultural;
         $dados ['Segmento'] = $post->segmento;
@@ -127,16 +127,16 @@ class CadastrarProjetoController extends GenericControllerNew {
                 } else {
                    $nrSequencial = str_pad($nrSequencial, 4, "0", STR_PAD_LEFT);
                 }
-  
+
 
             }
-            
+
            $dados['AnoProjeto'] = date('y');
             $dados['Sequencial'] = $nrSequencial;
-            
+
             $projetos->inserir($dados);
-            
-            
+
+
             parent::message("Projeto cadastado com sucesso", "cadastrarprojeto/index", "CONFIRM");
         } catch (Exception $e) {
             xd($e->getTrace());
@@ -170,35 +170,35 @@ class CadastrarProjetoController extends GenericControllerNew {
                 } else {
                     $this->view->processo = 'Processo inexistente no SAD';
                 }
-                
+
             }
         } else {
             $this->view->processo = 'Digito verificador do processo incorreto!';
         }
     }
-    
+
     public function validaragenteAction(){
         header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         $post = Zend_Registry::get('post');
-        
-        $agentes = new Agentes();
-        
+
+        $agentes = new Agente_Model_Agentes();
+
         preg_match_all('#\d+#', $post->CgcCpf, $cgcCpf);
         $CgcCpf = implode('',$cgcCpf[0]);
-        
+
         $where = array('a.CNPJCPF = ?' =>$CgcCpf);
-        
+
         $agente = $agentes->buscarAgenteNome($where)->toArray();
-        
+
         if(count($agente) == 0 ){
             echo json_encode(array('agente'=>false));
         } else{
             echo json_encode(array('agente'=>true , 'descricao' => utf8_encode($agente[0]['Descricao']) ));
         }
-        
-        
+
+
     }
 
 }

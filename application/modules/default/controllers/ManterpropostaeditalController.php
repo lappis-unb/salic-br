@@ -18,7 +18,7 @@ class ManterpropostaeditalController extends GenericControllerNew {
     private $idAgente       = 0;
     private $idUsuario      = 0;
     private $cpfLogado      = null;
-	
+
     /**
      * Reescreve o método init()
      * @access public
@@ -36,47 +36,47 @@ class ManterpropostaeditalController extends GenericControllerNew {
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
         $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
 
-        if (isset($auth->getIdentity()->usu_codigo)) 
+        if (isset($auth->getIdentity()->usu_codigo))
         {
             parent::perfil(1, $PermissoesGrupo);
-        } 
-        else 
+        }
+        else
         {
             parent::perfil(4, $PermissoesGrupo);
         }
 
         /*********************************************************************************************************/
 
-        $cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;        
-        
+        $cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
+
         // Busca na SGCAcesso
         $sgcAcesso 	 = new Sgcacesso();
         $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
-        
+
         // Busca na Usuarios
         $usuarioDAO   = new Usuario();
         $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
         // Busca na Agentes
-        $agentesDAO  = new Agentes();
+        $agentesDAO  = new Agente_Model_Agentes();
         $buscaAgente = $agentesDAO->BuscaAgente($cpf);
-        
-    
+
+
         if( count($buscaAcesso) > 0){ $this->idResponsavel = $buscaAcesso[0]->IdUsuario; }
         if( count($buscaAgente) > 0 ){ $this->idAgente 	   = $buscaAgente[0]->idAgente; }
         if( count($buscaUsuario) > 0 ){ $this->idUsuario   = $buscaUsuario[0]->usu_codigo; }
-        
+
         if($this->idAgente != 0)
         {
         	$this->usuarioProponente = "S";
         }
-        
+
         /*********************************************************************************************************/
         $this->cpfLogado = $cpf;
-        
+
         parent::init();
-        
-        
+
+
         //VALIDA ITENS DO MENU (Documento pendentes)
         if (isset($_GET['idPreProjeto']) && !empty($_GET['idPreProjeto'])) {
             $get = Zend_Registry::get("get");
@@ -110,7 +110,7 @@ class ManterpropostaeditalController extends GenericControllerNew {
             } else {
                 $this->view->movimentacaoAtual = null;
             }
-            
+
             //VERIFICA SE A PROPOSTA FOI ENVIADA AO MINC ALGUMA VEZ
             $arrbusca = array();
             $arrbusca['idProjeto = ?'] 		= $get->idPreProjeto;
@@ -121,13 +121,13 @@ class ManterpropostaeditalController extends GenericControllerNew {
         //*****************
         //FIM DA VALIDAÇ?O
         //*****************
-        
+
     }
 
 // fecha método init()
 
     public function indexAction() {
-        
+
     }
     public function editalAction() {
 
@@ -162,8 +162,8 @@ class ManterpropostaeditalController extends GenericControllerNew {
     public function dadospropostaeditalAction() {
 
         if (isset($_REQUEST['idPreProjeto']) && !empty($_REQUEST['idPreProjeto'])) {
-            
-            /* =============================================================================== */ 
+
+            /* =============================================================================== */
             /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
             /* =============================================================================== */
             $this->verificarPermissaoAcesso(true, false, false);
@@ -219,10 +219,10 @@ class ManterpropostaeditalController extends GenericControllerNew {
                 $this->view->mensagem = 'Pré Projeto não encontrado.';
                 $this->view->tpmensagem = "msgERROR";
             }
-            
-            
-        	$ag = new Agentes();
-            $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $dados[0]->idPreProjeto, 
+
+
+        	$ag = new Agente_Model_Agentes();
+            $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $dados[0]->idPreProjeto,
             															 'vprp.siVinculoProposta = ?' => 2));
             if(count($verificarvinculo) > 0){
                 if($verificarvinculo[0]->siVinculo != 2) {
@@ -231,10 +231,10 @@ class ManterpropostaeditalController extends GenericControllerNew {
                     $this->view->siVinculoProponente = false;
                 }
             }
-            
-            
-            
-            
+
+
+
+
            $tblVinculo = new TbVinculo();
 
 	        $arrBuscaP['VP.idPreProjeto = ?'] 			= $dados[0]->idPreProjeto;
@@ -244,12 +244,12 @@ class ManterpropostaeditalController extends GenericControllerNew {
 	        $arrBuscaN['VI.siVinculo IN (0,2)'] 		= '';
 	        $arrBuscaN['VI.idUsuarioResponsavel = ?'] 	= $this->idResponsavel;
 	        $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
-            
+
             $this->view->listaProponentes = $rsVinculoN;
             $this->view->dadosVinculo = $rsVinculoP;
             /************************************/
-            
-            
+
+
         } else {
 
             $dados = array();
@@ -299,7 +299,7 @@ class ManterpropostaeditalController extends GenericControllerNew {
                 $array['NomeProjeto'] 			= TratarString::escapeString($_REQUEST['nomeProjeto']);
                 $array['stTipoDemanda'] 		= 'ED';
                 $array['ResumoDoProjeto'] 		= trim(TratarString::escapeString($_REQUEST['resumoProjeto']));
-                
+
                 // Salvar o responsável
                 $array['idUsuario'] 			= $this->idResponsavel;
 
@@ -321,17 +321,17 @@ class ManterpropostaeditalController extends GenericControllerNew {
 			                        "Usuario" 			=> $this->idUsuario); //$this->view->usuario->usu_codigo;
 
                     $tblMovimentacao->salvar($dados);
-                    
-                    
+
+
                     /*******************************************************************************************/
 	                // Salvando os dados na TbVinculoProposta
 	                $tbVinculoDAO 		  = new TbVinculo();
 	                $tbVinculoPropostaDAO = new tbVinculoPropostaResponsavelProjeto();
-	                
+
 	                $whereVinculo['idUsuarioResponsavel = ?'] = $this->idResponsavel;
 	                $whereVinculo['idAgenteProponente   = ?'] = $_REQUEST['idAgente'];
 	                $vinculo = $tbVinculoDAO->buscar($whereVinculo);
-	                
+
 	                if(count($vinculo) == 0)
 	                {
 						$dadosV = array( 'idAgenteProponente'		=> $_REQUEST['idAgente'],
@@ -339,26 +339,26 @@ class ManterpropostaeditalController extends GenericControllerNew {
 	    				   				'siVinculo' 				=> 2,
 	    				   				'idUsuarioResponsavel' 		=> $this->idResponsavel
 	    				);
-	
+
 	    				$insere = $tbVinculoDAO->inserir($dadosV);
 	                }
-	
-	                
+
+
 	                $vinculo2 = $tbVinculoDAO->buscar($whereVinculo);
 	                if(count($vinculo2) > 0)
 	                {
-		                $novosDadosV = array('idVinculo' 			=> $idVinculo = $vinculo2[0]->idVinculo, 
-		    								 'idPreProjeto' 		=> $array['idPreProjeto'], 
+		                $novosDadosV = array('idVinculo' 			=> $idVinculo = $vinculo2[0]->idVinculo,
+		    								 'idPreProjeto' 		=> $array['idPreProjeto'],
 		    								 'siVinculoProposta' 	=> 2
 		                );
-		    		
+
 		    			$insere = $tbVinculoPropostaDAO->inserir($novosDadosV, false);
 	                }
 	                /*******************************************************************************************/
-                    
-                    
-                    
-                    
+
+
+
+
                     $array['mensagem'] = 'Cadastro realizado com sucesso!';
                     $array['tpmensagem'] = 'msgCONFIRM';
                 }
@@ -373,17 +373,17 @@ class ManterpropostaeditalController extends GenericControllerNew {
     }
 
     public function localderealizacaoeditalAction() {
-        
+
     }
 
     public function responderquestionarioeditalAction() {
         if (isset($_REQUEST['idPreProjeto'])) {
-            
-            /* =============================================================================== */ 
+
+            /* =============================================================================== */
             /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
             /* =============================================================================== */
             $this->verificarPermissaoAcesso(true,false,false);
-            
+
 //            $_SESSION['idPreProjeto'] = $_REQUEST['idPreProjeto'];
 //            $dados                    = ManterpropostaeditalDAO::exibirDadosPropostaEditalCompleto($_SESSION);
 
@@ -415,16 +415,16 @@ class ManterpropostaeditalController extends GenericControllerNew {
     }
 
     public function enviararquivoeditalAction() {
-        
+
         ini_set('memory_limit', '-1');
-        
-        /* =============================================================================== */ 
+
+        /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-        
+
         $get = Zend_Registry::get('get');
-        
+
         $tbl = new tbDocumentosPreProjeto();
         $rs = $tbl->buscarDocumentos(array("idProjeto = ?" => $get->idPreProjeto));
         $this->view->arquivosProposta = $rs;
@@ -435,7 +435,7 @@ class ManterpropostaeditalController extends GenericControllerNew {
         $tbA = new tbDocumentosAgentes();
         $rsA = $tbA->buscarDadosDocumentos(array("idAgente = ?" => $dadosProjeto->idAgente));
         $this->view->arquivosProponente = $rsA;
-        
+
     }
 
     public function listararquivosAction() {
@@ -482,7 +482,7 @@ class ManterpropostaeditalController extends GenericControllerNew {
                 if($post->tipoDocumento == 1){
                     $tbPreProjeto = new PreProjeto();
                     $dadosProjeto = $tbPreProjeto->buscarAgentePreProjeto(array('idPreProjeto = ?'=>$post->idPreProjeto))->current();
-                    
+
                     $where['idAgente = ?'] = $dadosProjeto->idAgente;
                     $where['CodigoDocumento = ?'] = $post->documento;
                 } else {
@@ -491,11 +491,11 @@ class ManterpropostaeditalController extends GenericControllerNew {
                 }
 
                 if($post->tipoDocumento == 1){
-                    
+
                     if($tblTbDocumentoAgentes->buscar($where)->count() > 0){
                         parent::message("Tipo de documento já cadastrado!", "manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto, "ALERT");
                     }
-                    
+
                     $dadosArquivo = array(
                         'CodigoDocumento' => $post->documento,
                         'idAgente' => $dadosProjeto->idAgente,
@@ -506,11 +506,11 @@ class ManterpropostaeditalController extends GenericControllerNew {
                     );
                     $idUltimoArquivo = $tblTbDocumentoAgentes->inserir($dadosArquivo);
                 } else {
-                    
+
                     if($tblTbDocumentoPreProjeto->buscar($where)->count() > 0){
                         parent::message("Tipo de documento já cadastrado!", "manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto, "ALERT");
                     }
-                    
+
                     $dadosArquivo = array(
                         'CodigoDocumento' => $post->documento,
                         'idProjeto' => $post->idPreProjeto,
@@ -593,7 +593,7 @@ class ManterpropostaeditalController extends GenericControllerNew {
         // pega as informações do arquivo
         $idUltimoArquivo = 'null';
         $post = Zend_Registry::get('post');
-        
+
         if (is_file($_FILES['arquivo']['tmp_name'])) {
             $arquivoNome = $_FILES['arquivo']['name']; // nome
             $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporário
@@ -633,11 +633,11 @@ class ManterpropostaeditalController extends GenericControllerNew {
     }
 
     public function enviarpropostaaominceditalAction() {
-        
+
     }
 
     public function manteragentesAction() {
-        
+
     }
 
     public function dadosproponenteenderecoeditalAction() {
@@ -654,43 +654,43 @@ class ManterpropostaeditalController extends GenericControllerNew {
     }
 
     public function documentospendenteseditalAction() {
-        
-        /* =============================================================================== */ 
+
+        /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-        
+
         $get = Zend_Registry::get("get");
         $this->view->documentosPendentes = AnalisarPropostaDAO::buscarDocumentoPendente($get->idPreProjeto);
     }
 
     public function msnenviadasaominceditalAction() {
-        
+
     }
 
     public function acompanhesuapropostaeditalAction() {
-        
+
     }
 
     public function alterardtnascimentoeditalAction() {
-        
+
     }
 
     public function dadosenderecoeditalAction() {
-        
+
     }
 
     public function novodadosenderecoeditalAction() {
-        
+
     }
 
     public function exluirpropostaAction() {
 
-        /* =============================================================================== */ 
+        /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-        
+
         $get = Zend_Registry::get("get");
         $idPreProjeto = $get->idPreProjeto;
 
@@ -849,12 +849,12 @@ class ManterpropostaeditalController extends GenericControllerNew {
     }
 
     public function enviarPropostaAoMincAction() {
-        
-        /* =============================================================================== */ 
+
+        /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-        
+
         //recupera parametros
         $get = Zend_Registry::get('get');
         $idPreProjeto = $get->idPreProjeto;
@@ -918,7 +918,7 @@ class ManterpropostaeditalController extends GenericControllerNew {
         $tblProponente = new Proponente();
         //$rsProponente = $tblProponente->buscar(array("a.idAgente = ?"=>$rsPreProjeto->idAgente))->current();
 
-        $tblAgente = new Agentes();
+        $tblAgente = new Agente_Model_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsPreProjeto->idAgente))->current();
 
         $regularidade = Regularidade::buscarSalic($rsProponente->CNPJCPF);
@@ -934,13 +934,13 @@ class ManterpropostaeditalController extends GenericControllerNew {
         $dadosLocais = $tblLocaisRealizacao->buscar(array("a.idProjeto" => $idPreProjeto, "a.stAbrangencia" => 1));
 
         if (count($rsProponente) > 0) {
-        	
+
         //VERIFICA SE O PROPONENTE ESTÁ VINCULADO
 	        $vinculoProponente = new tbVinculoPropostaResponsavelProjeto();
 	        $whereProp['VP.idPreProjeto = ?'] 		= $idPreProjeto;
 	        $whereProp['VP.siVinculoProposta = ?'] 	= 2;
 	        $rsVinculo = $vinculoProponente->buscarResponsaveisProponentes($whereProp);
-	        
+
 			if($rsVinculo[0]->siVinculo == 2){
 				$arrResultado['erro'] = false;
 		        $arrResultado['vinculoproponente']['erro'] = false;
@@ -950,7 +950,7 @@ class ManterpropostaeditalController extends GenericControllerNew {
 		        $arrResultado['vinculoproponente']['erro'] = true;
 	    	    $arrResultado['vinculoproponente']['msg'] = "Vinculo do Proponente IRREGULAR";
 			}
-			
+
             //REGULARIDADE DO PROPONENTE
             if (count($regularidade) > 0) {
                 if ($regularidade[0]->Habilitado == "S") {
@@ -1057,12 +1057,12 @@ class ManterpropostaeditalController extends GenericControllerNew {
     }
 
     public function confirmarEnvioPropostaAoMincAction() {
-        
-        /* =============================================================================== */ 
+
+        /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-        
+
         //recupera parametros
         $get = Zend_Registry::get('get');
         $idPreProjeto = $get->idPreProjeto;
@@ -1179,7 +1179,7 @@ class ManterpropostaeditalController extends GenericControllerNew {
                     }
 
                     //PERSISTE DADOS DA MOVIMENTACAO
-                    
+
                     $tblMovimentacao = new Movimentacao();
                     $dados = array("idProjeto" => $idPreProjeto,
                         "Movimentacao" => $movimentacaoDestino, //satus

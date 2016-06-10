@@ -47,7 +47,7 @@ if (empty($_GET['acao'])) {
                 Tipo = document.formCadAgentes.Tipo[i].value;
             }
         }
-	
+
         value = $("#cpf").val();
 
         if (value == '')
@@ -92,33 +92,33 @@ if (empty($_GET['acao'])) {
                 {
 
                     if (data[0].msgCPF == 'cadastrado')
-                    {   
-                    
+                    {
+
                         $('#novocadastro').hide();
                         $('#carregando').show();
                     <?php if ($this->modulo != "movimentacaobancaria") { ?>
-                        
+
                         window.location = '<?php echo $this->url(array("controller" => "agentes", "action" => "agentes")); ?>/id/'+ data[0].idAgente;
                     <?php } ?>
-                    } 
+                    }
                     else if (data[0].msgCPF == 'invalido')
                     {
                         $('#erroCpf').html('CPF/CNPJ Inválido');
                     }
-                    else if (data[0].msgCPF == 'novo') 
+                    else if (data[0].msgCPF == 'novo')
                     {
                         $('#novo').html('Preencha os dados abaixo!');
                         $('.novo').show();
-                    } 
-                
+                    }
+
                 },
                 error: function (data)
                 {
                     alert("Falha na recuperação dos dados.\nNão foi possível carregar agente!");
                 }
-            }); 
+            });
 
-        } 
+        }
     }
 
     function buscarcep(cep)
@@ -146,19 +146,19 @@ if (empty($_GET['acao'])) {
             // enquanto estiver processando bloqueia os campos
             if (ajax.readyState > 0 && ajax.readyState <= 3 && cep.length == 10)
             {
-            
+
                 $("#logradouro").attr("disabled" , "disabled");
                 $("#tipoLogradouro").attr("disabled" , "disabled");
                 $("#bairro").attr("disabled" , "disabled");
                 $("#cidade").attr("disabled" , "disabled");
                 $("#uf").attr("disabled" , "disabled");
-			
+
                 logradouro.value               = "carregando...";
                 tipoLogradouro.options[0].text = "carregando...";
                 bairro.value                   = "carregando...";
                 cidade.options[0].text         = "carregando...";
                 uf.options[0].text             = "...";
-            
+
                 $('#erroCep').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
             }
             if (ajax.readyState == 4 && ajax.status == 200 && cep.length == 10)
@@ -264,7 +264,7 @@ if (empty($_GET['acao'])) {
                     {
                         // deixa apenas um elemento no combo, os outros são excluídos
                         document.getElementById("cidade").options.length = 0;
-	
+
                         // cria um novo option
                         var novo   = document.createElement("option");
                         novo.value = txtCodCidade; // atribui um valor ao option
@@ -272,22 +272,22 @@ if (empty($_GET['acao'])) {
                         document.getElementById("cidade").options.add(novo);
                     }
                 } // fecha if
-            
+
             } // fecha else
-        
+
         } // fecha onreadystatechange
 
         ajax.send(null);
-    
+
     } // fecha função buscar_cep()
 
 
     $(document).ready(function() {
 
-        var tipocpf = '<?php echo $this->tipocpf; ?>'; 
-        var cpf 	= '<?php echo $this->cpf; ?>'; 
+        var tipocpf = '<?php echo $this->tipocpf; ?>';
+        var cpf 	= '<?php echo $this->cpf; ?>';
 
-	
+
         if(tipocpf == 'cnpj')
         {
             filtroCNPJ();
@@ -298,9 +298,9 @@ if (empty($_GET['acao'])) {
         }
 
         $("#cpf").val(cpf);
-	
+
 	buscaragente($("#cpf").val());
-	
+
     });
 
 
@@ -320,10 +320,10 @@ if (empty($_GET['acao'])) {
     </div>
 
     <div id="novocadastro">
-        <form name="formCadAgentes" id="formCadAgentes" method="post" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'salvaagentegeral'), null, true); ?>">
+        <form name="formCadAgentes" id="formCadAgentes" method="post" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvaagentegeral'), null, true); ?>">
 
-            <input type="hidden" name="grupologado" id="grupologado" class="input_simples" value="<?php echo $this->grupoativo; ?>" />	
-            <input type="hidden" name="acao" id="acao" value="<?php echo $acao; ?>" />	
+            <input type="hidden" name="grupologado" id="grupologado" class="input_simples" value="<?php echo $this->grupoativo; ?>" />
+            <input type="hidden" name="acao" id="acao" value="<?php echo $acao; ?>" />
             <input type="hidden" name="idResponsavel" id="idResponsavel" value="<?php echo $this->idResponsavelKeyLog; ?>" />
 
             <input type="hidden" name="movimentacaobancaria" id="movimentacaobancaria" class="input_simples" value="true" />
@@ -349,12 +349,12 @@ if (empty($_GET['acao'])) {
                         <br />
                         <label for="cpf"> </label>
 
-                        <input class="input_simples" type="text" name="cpf" id="cpf" maxlength="14" 
-                               onkeyup="mascara(this, format_cpf);" 
-                               onclick="limpar_campo(this, '');" 
+                        <input class="input_simples" type="text" name="cpf" id="cpf" maxlength="14"
+                               onkeyup="mascara(this, format_cpf);"
+                               onclick="limpar_campo(this, '');"
                                onkeypress="limpar_campo(this, '');"
-                               onblur="buscaragente(this.value);"  
-                               onmouseout="restaurar_campo(this, '');" 
+                               onblur="buscaragente(this.value);"
+                               onmouseout="restaurar_campo(this, '');"
                                value="<?php echo $this->cpf; ?>"  />
 
                         &nbsp; <span id="erroCpf" class="spanError"></span>
@@ -363,7 +363,7 @@ if (empty($_GET['acao'])) {
                     <td>
                         <label for="nome">Nome *</label>
                         <br />
-                        <input class="input_simples" type="text" name="nome" id="nome" maxlength="70" size="50" 
+                        <input class="input_simples" type="text" name="nome" id="nome" maxlength="70" size="50"
                                onclick="limpar_campo(this, '');" onkeypress="limpar_campo(this, '');"
                                onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');" />
 
@@ -389,8 +389,8 @@ if (empty($_GET['acao'])) {
                     </tr>
                     <tr>
                         <td colspan="4" align="center">
-                            <input type="radio" name="titular" id="titularS" value="1" class="checkradio" checked="checked" style="background: none; border: 0%; float:none; clear:auto; display:inline;" /> 
-                            <label for="titularS">Titular</label> 
+                            <input type="radio" name="titular" id="titularS" value="1" class="checkradio" checked="checked" style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
+                            <label for="titularS">Titular</label>
                             <input type="radio" name="titular" id="titularN" value="0" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
                             <label for="titularN">Suplente</label>
                             &nbsp; <span id="erroTitular" class="spanError"></span>
@@ -398,7 +398,7 @@ if (empty($_GET['acao'])) {
                     </tr>
                     <tr>
                         <td colspan="2" valign="top">
-                            <label for="areaCultural">Área Cultural *</label> 
+                            <label for="areaCultural">Área Cultural *</label>
                             <select name="areaCultural" id="areaCultural" onchange="carregar_combo(this.value, 'segmentoCultural', '<?php echo $this->url(array('controller' => 'segmentocultural', 'action' => 'combo')); ?>', ' - Selecione uma Área Cultural - '), buscarareasegmento();" class="input_simples" style="width: 200px;">
 
                                 <?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
@@ -421,7 +421,7 @@ if (empty($_GET['acao'])) {
 
                         </td>
                         <td colspan="2" valign="top">
-                            <label for="segmentoCultural">Segmento Cultural *</label> 
+                            <label for="segmentoCultural">Segmento Cultural *</label>
                             <select name="segmentoCultural" id="segmentoCultural" onchange="buscarareasegmento();" class="input_simples" style="width: 200px;">
 
                                 <?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
@@ -459,7 +459,7 @@ if (empty($_GET['acao'])) {
                 <tr>
                     <td width="30%">
                         <label for="cep">CEP *</label><br />
-                        <input class="input_simples"  type="text" name="cep" id="cep" maxlength="10" onkeyup="mascara(this, format_cep);" onblur="buscarcep(this.value);" 
+                        <input class="input_simples"  type="text" name="cep" id="cep" maxlength="10" onkeyup="mascara(this, format_cep);" onblur="buscarcep(this.value);"
                                onclick="limpar_campo(this, '');" onkeypress="limpar_campo(this, '');"
                                onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');" value="" />
 
@@ -573,7 +573,7 @@ if (empty($_GET['acao'])) {
             </table>
 
             <!-- ========== FIM FORMULÁRIO ENDERECO ========== -->
-		
+
             <table class="tabela">
                 <tr>
                     <td class="centro"><input type="button" class="btn_salvar" value=" " onclick="validaAgenteNovo();"  /></td>

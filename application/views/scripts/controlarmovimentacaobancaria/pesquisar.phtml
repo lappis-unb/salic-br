@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    
+
 
     function paginar(pag){
         $("#pag").val(pag);
@@ -77,17 +77,17 @@ if($this->cabecalho == 0){
 
 
 	<!-- INÍCIO GERAÇÃO .PDF -->
-	<form id="formpdf" name="formpdf" method="post" 
-		action="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => 'gerarpdf'),'',true); ?>" 
+	<form id="formpdf" name="formpdf" method="post"
+		action="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => 'gerarpdf'),'',true); ?>"
 		enctype="multipart/form-data">
 		<input type="hidden" name="html" value="" id="htmlpdf" />
 	</form>
 	<!-- FIM GERAÇÃO .PDF -->
-        
-        
+
+
         <!-- INÍCIO GERAÇÃO .PDF -->
-	<form id="frmPaginacao" name="formfrmPaginacaopdf" method="post" 
-		action="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => 'pesquisar'),'',true); ?>" 
+	<form id="frmPaginacao" name="formfrmPaginacaopdf" method="post"
+		action="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => 'pesquisar'),'',true); ?>"
 		enctype="multipart/form-data">
             <input type="hidden" name="relPaginacao" value="1" />
             <input type="hidden" id="cabecalho" name="cabecalho" value="<?php echo $this->cabecalho ?>" />
@@ -124,7 +124,7 @@ if($this->cabecalho == 0){
 	<div class="msgALERT">
 		<div>
 			Consulta efetuada com sucesso, por&eacute;m, n&atilde;o existem movimenta&ccedil;&otilde;es banc&aacute;rias para o extrato solicitado!<br /><br />
-			Por favor, redefina o filtro de pesquisa!	
+			Por favor, redefina o filtro de pesquisa!
 		</div>
 	</div>
 	<?php } else { ?>
@@ -143,7 +143,7 @@ if($this->cabecalho == 0){
 		else if ($p[0] == 'H') $per = 'Últimos 12 meses';
 		else if ($p[0] == 'I') $per = 'Últimos 6 meses';
 		else if ($p[0] == 'J') $per = 'Últimos 3 meses';
-		else if ($p[0] == 'K') 
+		else if ($p[0] == 'K')
 		{
 			if (!empty($p[1]) && !empty($p[2]))
 			{
@@ -189,7 +189,7 @@ if($this->cabecalho == 0){
 
 				<?php
 				/* ========== INÍCIO IMPRESSÃO DO CABEÇALHO COM O PRONAC ========== */
-				if (!in_array($d->pronac, $array_pronacs_2)) : 
+				if (!in_array($d->pronac, $array_pronacs_2)) :
 				$i_2 = 0; // contador para cor de linhas (por pronac)
 				?>
 
@@ -245,11 +245,11 @@ if($this->cabecalho == 0){
 						if ($this->conta_rejeitada == true)
 						{
 							echo $this->inconsistenciaBancaria($d->idTipoInconsistencia);
-	
+
 							if ($d->idTipoInconsistencia == 3)
 							{
-								//$url = $this->url(array('controller' => 'agentes', 'action' => 'agentes'));
-                                                                $url = $this->url(array('controller' => 'agentes', 'action' => 'incluiragente', 'cpf' => $d->nrCNPJCPF )) . '?movimentacaobancaria=true';
+								//$url = $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'agentes'));
+                                                                $url = $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'incluiragente', 'cpf' => $d->nrCNPJCPF )) . '?movimentacaobancaria=true';
 							}
 							else if ($d->idTipoInconsistencia == 7)
 							{
@@ -307,7 +307,7 @@ if($this->cabecalho == 0){
 
 				<?php
 				/* ========== INÍCIO IMPRESSÃO DO CABEÇALHO COM O PRONAC ========== */
-				if (!in_array($d->pronac, $array_pronacs_3)) : 
+				if (!in_array($d->pronac, $array_pronacs_3)) :
 				$i_3 = 0; // contador para cor de linhas (por pronac)
 				?>
 
@@ -361,10 +361,10 @@ if($this->cabecalho == 0){
 						if ($this->conta_rejeitada == true)
 						{
 							echo $this->inconsistenciaBancaria($d->idTipoInconsistencia);
-	
+
 							if ($d->idTipoInconsistencia == 3)
 							{
-								$url = $this->url(array('controller' => 'agentes', 'action' => 'agentes'));
+								$url = $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'agentes'));
 							}
 							else if ($d->idTipoInconsistencia == 7)
 							{
@@ -435,21 +435,21 @@ if($this->cabecalho == 0){
             <input type="button" style="width: 88px" class="btn_ultimo" id="btn_ultimo" onclick="paginar('<?php echo $this->totalPag; ?>')"/>
             <!--<input type="button" style="width: 44px" class="btn_xls" id="btn_xls" onclick='$("#conteudoXLS").val($(".conteudoImprimivel").html()); $("#formGerarXls").submit();'/>
             <input type="button" style="width: 88px" class="btn_imprimir" id="btn_imprimir" onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'/> -->
-            Exibindo de <b><?php echo $this->inicio; ?></b> a <b><?php echo $this->fim; ?></b> de um total de <b><?php echo $this->total; ?></b> 
+            Exibindo de <b><?php echo $this->inicio; ?></b> a <b><?php echo $this->fim; ?></b> de um total de <b><?php echo $this->total; ?></b>
         </td>
     </tr>
 
     <?php if (count($this->dados) > 0) : ?>
-	
+
 		<tr>
                     <td align="center" colspan="11">
 				<form name="form" id="form" method="post" action="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => 'finalizar')); ?>">
-					<input type="submit" class="btn_finalizar" title="Finalizar" value=" " /> 
+					<input type="submit" class="btn_finalizar" title="Finalizar" value=" " />
 					<input type="button" title="Imprimir P&aacute;gina" class="btn_imprimir" value=" " onclick="pdf();" onkeypress="pdf(); imprimir();" />
-				</form>			
+				</form>
 			</td>
 		</tr>
-	
+
 	<?php endif; ?>
 
 	</table>
@@ -461,12 +461,12 @@ if($this->cabecalho == 0){
 	</div>
 	<!-- ========== FIM ÁREA DE IMPRESSÃO ========== -->
 <table class="tabela">
-    
+
 </table>
 
 
 	<!-- ========== INÍCIO BOTÕES ========== -->
-	
+
 	<!-- ========== FIM BOTÕES ========== -->
 
 

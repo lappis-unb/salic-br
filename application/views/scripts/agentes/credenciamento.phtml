@@ -70,7 +70,7 @@
     </table>
 
     <div id="formNovo" class="sumir">
-        <form id="form" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'salvacredenciamento'));?>" method="post">
+        <form id="form" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvacredenciamento'));?>" method="post">
             <table class="tabela">
                 <tr class="titulo_tabela">
                     <th colspan="6">LISTA DE ÁREA</th>
@@ -153,7 +153,7 @@
             <td><?php echo $c->Area;?></td>
             <td><?php echo $c->Segmento;?></td>
             <td align="center"><?php echo $c->Nivel;?></td>
-            <td align="center"><input type="button" value=" " class="btn_exclusao"  title="Descredenciar"  onclick="confirmaExclusao('Deseja realmente descredenciar?', '<?php echo $this->url(array('controller' => 'agentes', 'action' => 'descredenciamento', 'idcredenciamento' => $c->idCredenciamentoParecerista, 'sicredenciamento' =>$c->siCredenciamento)); ?>')" /></td>
+            <td align="center"><input type="button" value=" " class="btn_exclusao"  title="Descredenciar"  onclick="confirmaExclusao('Deseja realmente descredenciar?', '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'descredenciamento', 'idcredenciamento' => $c->idCredenciamentoParecerista, 'sicredenciamento' =>$c->siCredenciamento)); ?>')" /></td>
         </tr>
         <?php } ?>
     </table>

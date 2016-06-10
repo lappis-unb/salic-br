@@ -1,40 +1,51 @@
 <?php
 
 /**
- * AgentesController
+ * AgentesController Responsavel por manter os agentes e seus tipos.
  * @author Equipe RUP - Politec
+ * @author wouerner <woeurner@gmail.com>
  * @since 25/05/2011
- * @version 1.0
- * @package application
- * @subpackage application.controllers
- * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
+ * @package agente
+ * @subpackage controllers
  */
-require_once "GenericControllerNew.php";
-
-class AgentesController extends GenericControllerNew {
+class Agente_AgentesController extends GenericControllerNew {
 
     /**
-     * @var integer (vari·vel com o id do usu·rio logado)
+     * @var integer (vari√°vel com o id do usu√°rio logado)
      * @access private
      */
     private $getIdUsuario = 0;
 
     /**
-     * @var integer (vari·vel para Parecerista)
+     * @var integer (vari√°vel para Parecerista)
      * @access private
      */
     private $getParecerista = 'N';
 
     /**
-     * @var integer (vari·vel com o id do grupo ativo)
+     * @var integer (vari√°vel com o id do grupo ativo)
      * @access private
      */
     private $GrupoAtivoSalic = 0;
-    private $combovisoes = array();
-    private $modal = "n";
+
     /**
-     * Reescreve o mÈtodo init()
+     * combovisoes
+     *
+     * @var bool
+     * @access private
+     */
+    private $combovisoes = array();
+
+    /**
+     * modal
+     *
+     * @var string
+     * @access private
+     */
+    private $modal = "n";
+
+    /**
+     * Reescreve o m√©todo init()
      * @access public
      * @param void
      * @return void
@@ -47,16 +58,14 @@ class AgentesController extends GenericControllerNew {
         $this->view->combotipostelefones = Tipotelefone::buscar();
         $this->view->combotiposemails = Tipoemail::buscar();
 
-        /*         * ****************************************************************************************************** */
-        //Monta o combo das visıes disponiveis
-
+        //Monta o combo das vis√µes disponiveis
         $visoes = VisaoDAO::buscarVisao(null, null, true);
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess„o com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess√£o com o grupo ativo
         $GrupoAtivo = $GrupoAtivo->codGrupo;
 
         $a = 0;
         $select = null;
-        $auth = Zend_Auth::getInstance(); // pega a autenticaÁ„o
+        $auth = Zend_Auth::getInstance(); // pega a autentica√ß√£o
         if (isset($auth->getIdentity()->Cpf)) {
             $select[$a]['idVerificacao'] = 144; //PROPONENTE
             $select[$a]['Descricao'] = 'Proponente';
@@ -86,11 +95,6 @@ class AgentesController extends GenericControllerNew {
                     $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
                     $select[$a]['Descricao'] = $visaoGrupo->Descricao;
                 }
-                /* if($GrupoAtivo == 122 and $visaoGrupo->idVerificacao == 145)
-                  {
-                  $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                  $select[$a]['Descricao'] = $visaoGrupo->Descricao;
-                  } */
                 if ($GrupoAtivo == 123 and $visaoGrupo->idVerificacao == 145) {
                     $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
                     $select[$a]['Descricao'] = $visaoGrupo->Descricao;
@@ -136,9 +140,9 @@ class AgentesController extends GenericControllerNew {
 
         parent::init();
     }
-    
+
     /**
-     * FunÁ„o para tratar data
+     * Fun√ß√£o para tratar data
      * @access private
      * @param Date
      * @return Date
@@ -156,18 +160,24 @@ class AgentesController extends GenericControllerNew {
         return $dataformatada;
     }
 
+    /**
+     * autenticacao
+     *
+     * @access private
+     * @return void
+     */
     private function autenticacao() {
-        $auth = Zend_Auth::getInstance(); // pega a autenticaÁ„o
+        $auth = Zend_Auth::getInstance(); // pega a autentica√ß√£o
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
 
-        // define as permissıes
+        // define as permiss√µes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
         $PermissoesGrupo[] = 94;  // Parecerista
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
-        $PermissoesGrupo[] = 118; // Componente da Comiss„o
+        $PermissoesGrupo[] = 118; // Componente da Comiss√£o
         $PermissoesGrupo[] = 120; // Coordenador Administrativo CNIC
-        $PermissoesGrupo[] = 121; // TÈcnico de Acompanhamento
+        $PermissoesGrupo[] = 121; // T√©cnico de Acompanhamento
         $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
         $PermissoesGrupo[] = 123; // Coordenador Geral de Acompanhamento
         $PermissoesGrupo[] = 137; // Coordenador de PRONAC
@@ -180,7 +190,7 @@ class AgentesController extends GenericControllerNew {
                 !empty($auth->getIdentity()->Cpf) &&
                 isset($_GET['acao']) && $_GET['acao'] == 'cc' &&
                 isset($_GET['cpf']) &&
-                !empty($_GET['cpf'])) { // pega do readequaÁ„o
+                !empty($_GET['cpf'])) { // pega do readequa√ß√£o
             parent::perfil(2); // scriptcase
         }
 
@@ -188,15 +198,15 @@ class AgentesController extends GenericControllerNew {
                 !empty($auth->getIdentity()->Cpf) &&
                 !isset($_GET['acao']) &&
                 !isset($_GET['cpf']) &&
-                empty($_GET['cpf'])) { // pega do readequaÁ„o
-            parent::perfil(4, $PermissoesGrupo); // migraÁ„o e novo salic
+                empty($_GET['cpf'])) { // pega do readequa√ß√£o
+            parent::perfil(4, $PermissoesGrupo); // migra√ß√£o e novo salic
         } elseif (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo)) {
-            parent::perfil(1, $PermissoesGrupo); // migraÁ„o e novo salic
+            parent::perfil(1, $PermissoesGrupo); // migra√ß√£o e novo salic
         } else {
-            parent::perfil(4, $PermissoesGrupo); // migraÁ„o e novo salic
+            parent::perfil(4, $PermissoesGrupo); // migra√ß√£o e novo salic
         }
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticaÁ„o
+        $auth = Zend_Auth::getInstance(); // pega a autentica√ß√£o
         if (isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
             $this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
             $this->getIdUsuario = ($this->getIdUsuario) ? $this->getIdUsuario["idAgente"] : 0;
@@ -218,7 +228,7 @@ class AgentesController extends GenericControllerNew {
 
 
         /*         * ****************************************************************************************************** */
-        // Controle para carregar o menu lateral ou n„o 
+        // Controle para carregar o menu lateral ou n√£o
 
         $menuLateral = $this->_request->getParam("menuLateral");
 
@@ -245,7 +255,7 @@ class AgentesController extends GenericControllerNew {
             $dados = ManterAgentesDAO::buscarAgentes(null, null, $idAgente);
 
             if (!$dados) {
-                parent::message("Agente n„o encontrado!", "agentes/buscaragente", "ALERT");
+                parent::message("Agente n√£o encontrado!", "agentes/buscaragente", "ALERT");
             }
 
 
@@ -274,8 +284,12 @@ class AgentesController extends GenericControllerNew {
         }
     }
 
-// fecha mÈtodo autenticacao
-
+    /**
+     * incluir
+     *
+     * @access private
+     * @return void
+     */
     private function incluir() {
         $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf")));
 
@@ -297,7 +311,12 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo responsavel por vincular o Responsavel logado a seu proprio perfil de Proponente
+     * vincular M√©todo responsavel por vincular o Responsavel logado a seu proprio perfil de Proponente
+     *
+     * @param bool $cpfCadastrado
+     * @param bool $idAgenteCadastrado
+     * @access public
+     * @return void
      */
     public function vincular($cpfCadastrado = null, $idAgenteCadastrado = null) {
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
@@ -329,35 +348,32 @@ class AgentesController extends GenericControllerNew {
                 $tbVinculo->inserir($dadosVinculo);
             endif;
 
-        /**
-         * ==============================================================
-         * FIM DO VINCULO DO RESPONSAVEL COM ELE MESMO (PROPONENTE)
-         * ==============================================================
-         */
         endif;
     }
 
-// fecha metodo vincular()
-
     /**
-     * MÈtodo index()
+     * M√©todo index()
      * @access public
      * @param void
      * @return void
+     * @todo Verificar necessidade dessa action
      */
     public function indexAction() {
-        
+
     }
 
-
-// fecha mÈtodo indexAction()
-
+    /**
+     * buscaPessoaAction
+     *
+     * @access public
+     * @return void
+     */
     public function buscaPessoaAction() {
 
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        #Instancia a Classe de ServiÁo do WebService da Receita Federal
+        #Instancia a Classe de Servi√ßo do WebService da Receita Federal
         $wsServico = new ServicosReceitaFederal();
 
         $retorno        = array();
@@ -369,13 +385,13 @@ class AgentesController extends GenericControllerNew {
         try {
             if(11 == strlen( $cpf )) {
                 if (!validaCPF($cpf)) {
-                    $retorno['error'] = utf8_encode('CPF inv·lido');
+                    $retorno['error'] = utf8_encode('CPF inv√°lido');
                     $erro = 1;
                 } else {
                     $arrResultado = $wsServico->consultarPessoaFisicaReceitaFederal($cpf);
 
                     if (empty($arrResultado)) {
-                        $retorno['error'] = utf8_encode('Pessoa n„o encontrada!');
+                        $retorno['error'] = utf8_encode('Pessoa n√£o encontrada!');
                         $erro = 1;
                     }
                     if ($erro == 0 && count($arrResultado) > 0) {
@@ -386,17 +402,17 @@ class AgentesController extends GenericControllerNew {
                         $retorno['error'] = '';
 
                     } else {
-                        $retorno['error'] = utf8_encode('Pessoa n„o encontrada!!');
+                        $retorno['error'] = utf8_encode('Pessoa n√£o encontrada!!');
                     }
                 }
             } else if(15 == strlen($cpf)){
                 if (!isCnpjValid($cpf)) {
-                    $retorno['error'] = utf8_encode('CNPJ inv·lido');
+                    $retorno['error'] = utf8_encode('CNPJ inv√°lido');
                     $erro = 1;
                 } else {
                     $arrResultado = $wsServico->consultarPessoaJuridicaReceitaFederal($cpf);
                     if (empty($arrResultado)) {
-                        $retorno['error'] = utf8_encode('Pessoa n„o encontrada!!');
+                        $retorno['error'] = utf8_encode('Pessoa n√£o encontrada!!');
                         $erro = 1;
                     }
                     if ($erro == 0 && count($arrResultado) > 0) {
@@ -407,22 +423,22 @@ class AgentesController extends GenericControllerNew {
                         $retorno['error'] = '';
 
                     } else {
-                        $retorno['error'] = utf8_encode('Pessoa n„o encontrada!');
+                        $retorno['error'] = utf8_encode('Pessoa n√£o encontrada!');
                     }
                 }
             }
 
         } catch (InvalidArgumentException $exc) {
-            $retorno['error'] = utf8_encode('Pessoa n„o encontrada!');
+            $retorno['error'] = utf8_encode('Pessoa n√£o encontrada!');
         } catch (Exception $exc) {
-            $retorno['error'] = utf8_encode('Pessoa n„o encontrada!');
+            $retorno['error'] = utf8_encode('Pessoa n√£o encontrada!');
         }
 
         echo json_encode($retorno);
     }
 
     /**
-     * MÈtodo incluiragente()
+     * M√©todo incluiragente()
      * @access public
      * @param void
      * @return void
@@ -430,29 +446,16 @@ class AgentesController extends GenericControllerNew {
     public function incluiragenteAction() {
         $this->autenticacao();
 
-        #$wsServico = new ServicosReceitaFederal();
-        #$arrResultado = $wsServico->consultarPessoaFisicaReceitaFederal('11010601660' );
-        #xd( $arrResultado );
-
-
-        #$wsWebServiceSEI = new ServicosSEI();
-        #$arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento();
-        #x($arrRetornoGerarProcedimento->ProcedimentoFormatado);
-        #$chars = array(".","/","-");
-        #$nrProcessoSemFormatacao = str_replace($chars,"",$arrRetornoGerarProcedimento->ProcedimentoFormatado);
-        #x($nrProcessoSemFormatacao);
-        #xd($arrRetornoGerarProcedimento->ProcedimentoFormatado);
-
         $modal  = $this->_request->getParam("modal");
         $modulo = $this->_request->getParam("modulo");
         $this->view->modulo = $modulo;
-        
+
         if (!empty($modal)) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             header("Content-Type: text/html; charset=ISO-8859-1");
             $this->view->modal = "s";
             $this->view->cpf = $this->_request->getParam("cpfCnpj");
-            $this->view->caminho = $this->_request->getParam("caminho");            
+            $this->view->caminho = $this->_request->getParam("caminho");
         } else {
             $this->view->modal = "n";
             $this->view->caminho = "";
@@ -461,7 +464,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo incluirfonecedor()
+     * M√©todo incluirfonecedor()
      * @access public
      * @param void
      * @return void
@@ -470,20 +473,18 @@ class AgentesController extends GenericControllerNew {
         $this->autenticacao();
 
         $modal  = $this->_request->getParam("modal");
-//        $modulo = $this->_request->getParam("modulo");
-//        $this->view->modulo = $modulo;
 
-        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+        $this->_helper->layout->disableLayout();
         header("Content-Type: text/html; charset=ISO-8859-1");
         $this->view->modal = "s";
         $this->view->cpf = $this->_request->getParam("cpfCnpj");
         $this->view->caminho = $this->_request->getParam("caminho");
-        
+
         $this->incluir();
     }
 
     /**
-     * MÈtodo incluirprocurador()
+     * M√©todo incluirprocurador()
      * @access public
      * @param void
      * @return void
@@ -492,10 +493,8 @@ class AgentesController extends GenericControllerNew {
         $this->autenticacao();
 
         $modal  = $this->_request->getParam("modal");
-//        $modulo = $this->_request->getParam("modulo");
-//        $this->view->modulo = $modulo;
 
-        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+        $this->_helper->layout->disableLayout();
         header("Content-Type: text/html; charset=ISO-8859-1");
         $this->view->modal = "s";
         $this->view->cpf = $this->_request->getParam("cpfCnpj");
@@ -505,7 +504,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo incluirbeneficiario()
+     * M√©todo incluirbeneficiario()
      * @access public
      * @param void
      * @return void
@@ -514,10 +513,8 @@ class AgentesController extends GenericControllerNew {
         $this->autenticacao();
 
         $modal  = $this->_request->getParam("modal");
-//        $modulo = $this->_request->getParam("modulo");
-//        $this->view->modulo = $modulo;
 
-        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+        $this->_helper->layout->disableLayout();
         header("Content-Type: text/html; charset=ISO-8859-1");
         $this->view->modal = "s";
         $this->view->cpf = $this->_request->getParam("cpfCnpj");
@@ -526,20 +523,24 @@ class AgentesController extends GenericControllerNew {
         $this->incluir();
     }
 
+    /**
+     * incluiragenteexternoAction
+     *
+     * @access public
+     * @return void
+     */
     public function incluiragenteexternoAction() {
         Zend_Layout::startMvc(array('layout' => 'layout_login'));
         $this->incluir();
     }
 
     /**
-     * MÈtodo para visualizaÁ„o dos dados do agente
+     * M√©todo para visualiza√ß√£o dos dados do agente
      * @access public
      * @param void
      * @return List
      */
     public function agentesAction() {
-//        $this->verificarPermissaoAcesso(false, false, true);
-
         $this->autenticacao();
 
         if (($this->GrupoAtivoSalic != 1111) &&
@@ -553,13 +554,8 @@ class AgentesController extends GenericControllerNew {
                 ($this->GrupoAtivoSalic != 93) &&
                 ($this->GrupoAtivoSalic != 120) &&
                 ($this->GrupoAtivoSalic != 94)) {
-            parent::message("VocÍ n„o tem permiss„o para essa funcionalidade!", "agentes/sempermissao", "ALERT");
+            parent::message("Voc√™ n√£o tem permiss√£o para essa funcionalidade!", "agente/agentes/sempermissao", "ALERT");
         }
-        
-        /* Teste atestados
-          $projetoDAO = new projetos();
-          $projeto = $projetoDAO->buscaProjetosProdutosAnaliseInicial(array('idAgenteParecerista = ?' => 9626, 'DtDistribuicao >= ?' => '2011/05/15', 'DtDistribuicao <= ?' => '2011/05/26'));
-         */
 
         $idAgente = $this->_request->getParam("id");
 
@@ -568,13 +564,12 @@ class AgentesController extends GenericControllerNew {
         }
 
         if (($this->GrupoAtivoSalic == 93) && ($idAgente == '')) {
-            $this->_redirect('agentes/buscaragente');
+            $this->_redirect('agente/agentes/buscaragente');
         }
 
         if (($idAgente == '')) {
-            $this->_redirect('agentes/incluiragente');
+            $this->_redirect('agente/agentes/incluiragente');
         }
-        //xd($idAgente);
 
         $tbInfo = new TbInformacaoProfissional();
         $this->view->formacoes = $tbInfo->BuscarInfo($idAgente, null);
@@ -602,7 +597,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo dirigentes()
+     * M√©todo dirigentes()
      * @access public
      * @param void
      * @return void
@@ -612,7 +607,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo visualizadirigente()
+     * M√©todo visualizadirigente()
      * @access public
      * @param void
      * @return void
@@ -630,7 +625,7 @@ class AgentesController extends GenericControllerNew {
             $this->view->dadosD = $dados;
 
             if (!$dados) {
-                parent::message("Agente n„o encontrado!", "agentes/buscaragente", "ALERT");
+                parent::message("Agente n√£o encontrado!", "agentes/buscaragente", "ALERT");
             }
 
             $this->view->telefonesD = ManterAgentesDAO::buscarFones($idDirigente);
@@ -647,7 +642,6 @@ class AgentesController extends GenericControllerNew {
             $whereLista['idTipo = ?'] = 5;
             $rsTipodeDocumento = $tbTipodeDocumento->buscar($whereLista);
             $this->view->tipoDocumento = $rsTipodeDocumento;
-//            xd($rsTipodeDocumento);
 
             $tbDirigenteMandato = new tbAgentesxVerificacao();
             $buscarMandato = $tbDirigenteMandato->listarMandato(array('idEmpresa = ?' => $idAgente, 'idDirigente = ?' => $idDirigente, 'stMandato = ?' => 0));
@@ -655,14 +649,14 @@ class AgentesController extends GenericControllerNew {
             $mandatoAtual = $tbDirigenteMandato->listarMandato(array('idEmpresa = ?' => $idAgente,'idDirigente = ?' => $idDirigente, 'stMandato = ?' => 0), array('dtFimMandato DESC'))->current();
             $this->view->mandatosAtual = $mandatoAtual;
         }
-    } 
-    /*
-     * MÈtodo mandato()
+    }
+
+    /**
+     * M√©todo mandato()
      * @access public
      * @param void
      * @return void
      */
-
     public function mandatoAction() {
 
         $this->autenticacao();
@@ -670,7 +664,7 @@ class AgentesController extends GenericControllerNew {
         if (!empty($_POST)) {
             $idAgente = $this->_request->getParam("id");
             $idDirigente = $this->_request->getParam("idDirigente");
-                        
+
             $tbDirigenteMandato = new tbAgentesxVerificacao();
 
             $idVerificacao          = $this->_request->getParam("idVerificacao");
@@ -683,11 +677,11 @@ class AgentesController extends GenericControllerNew {
             $stMandato              = 0;
             $idArquivo              = $this->_request->getParam("idArquivo");
 
-            //validaÁ„o data do mandato            
+            //valida√ß√£o data do mandato
             $buscarMandato = $tbDirigenteMandato->mandatoRepetido($idAgente, $dtInicioVigencia, $dtTerminoVigencia);
 
             if (count($buscarMandato) > 0) {
-                parent::message("N„o poder· inserir um novo mandato, pois j· existe um mandato em vigor para esse dirigente!mandatos", "agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "ERROR");
+                parent::message("N√£o poder√° inserir um novo mandato, pois j√° existe um mandato em vigor para esse dirigente!mandatos", "agente/agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "ERROR");
             }
 
             if(count($_FILES) > 0) {
@@ -697,8 +691,8 @@ class AgentesController extends GenericControllerNew {
                 $arquivoTemp     = $_FILES['arquivo']['tmp_name'][$key];
                 $arquivoTipo     = $_FILES['arquivo']['type'][$key];
                 $arquivoTamanho  = $_FILES['arquivo']['size'][$key];
-                
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens„o
+
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens√£o
 
                 if($arquivoExtensao != "doc" && $arquivoExtensao != "docx"){
                     if(!empty($arquivoTemp)) {
@@ -736,9 +730,9 @@ class AgentesController extends GenericControllerNew {
                     'idEmpresa'             => $idAgente,
                     'idDirigente'           => $idDirigente
                 );
-                
+
                 if($idArquivo > 0){ $arrayMandato['idArquivo'] = $idArquivo;}
-                
+
                 $salvarMandato = $tbDirigenteMandato->inserir($arrayMandato);
 
                 $buscarMandato = $tbDirigenteMandato->buscar(array('idAgentexVerificacao = ?' => $salvarMandato));
@@ -753,9 +747,7 @@ class AgentesController extends GenericControllerNew {
                     $dadosBuscar['idEmpresa']           = $buscarMandato[0]->idEmpresa;
                     $dadosBuscar['idDirigente']         = $buscarMandato[0]->idDirigente;
                     $dadosBuscar['idArquivo']           = $buscarMandato[0]->idArquivo;
-//                echo json_encode($dadosBuscar);
-//                exit();
-                }                     
+                }
 
                 parent::message("Cadastro realizado com sucesso!", "agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "CONFIRM");
             } catch (Exception $e) {
@@ -764,13 +756,12 @@ class AgentesController extends GenericControllerNew {
         }
     }
 
-    /*
-     * MÈtodo excluirmandato()
+    /**
+     * M√©todo excluirmandato()
      * @access public
      * @param void
      * @return void
      */
-
     public function excluirmandatoAction() {
 
         $this->autenticacao();
@@ -787,17 +778,26 @@ class AgentesController extends GenericControllerNew {
             $whereMandato['idAgentexVerificacao = ?'] = $idMandato;
             $tbDirigenteMandato->alterar($arrayMandato, $whereMandato);
 
-            parent::message("Exclus„o realizada com sucesso!", "agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "CONFIRM");
+            parent::message("Exclus√£o realizada com sucesso!", "agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "CONFIRM");
         } catch (Exception $e) {
             parent::message("Erro ao excluir o mandato:" . $e->getMessage(), "agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "ERROR");
         }
     }
-    
-    
+
+    /**
+     * cadastraranexo
+     *
+     * @param mixed $arquivoNome
+     * @param mixed $arquivoTemp
+     * @param mixed $arquivoTipo
+     * @param mixed $arquivoTamanho
+     * @access public
+     * @return void
+     */
     public function cadastraranexo($arquivoNome,$arquivoTemp,$arquivoTipo,$arquivoTamanho) {
         if (!empty($arquivoNome) && !empty($arquivoTemp)) {
-            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens„o
-            $arquivoBinario  = Upload::setBinario($arquivoTemp); // bin·rio
+            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens√£o
+            $arquivoBinario  = Upload::setBinario($arquivoTemp); // bin√°rio
             $arquivoHash     = Upload::setHash($arquivoTemp); // hash
         }
 
@@ -812,11 +812,11 @@ class AgentesController extends GenericControllerNew {
                 'stAtivo'           => 'A');
         $cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);
 
-        // pega o id do ˙ltimo arquivo cadastrado
+        // pega o id do √∫ltimo arquivo cadastrado
         $idUltimoArquivo = ArquivoDAO::buscarIdArquivo();
         $idUltimoArquivo = (int) $idUltimoArquivo[0]->id;
 
-        // cadastra o bin·rio do arquivo
+        // cadastra o bin√°rio do arquivo
         $dadosBinario = array(
                 'idArquivo' => $idUltimoArquivo,
                 'biArquivo' => $arquivoBinario);
@@ -825,12 +825,9 @@ class AgentesController extends GenericControllerNew {
         return $idUltimoArquivo;
     }
 
-
-    /*     * ** ENDERE«OS ********************************************************************************** */
-
     /**
-     * MÈtodo enderecos()
-     * Visualiza, exclui e altera os endereÁos do agente
+     * M√©todo enderecos()
+     * Visualiza, exclui e altera os endere√ßos do agente
      * @access public
      * @param void
      * @return void
@@ -846,8 +843,8 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo salvaendereco()
-     * Salva o endereÁo do agente
+     * M√©todo salvaendereco()
+     * Salva o endere√ßo do agente
      * @access public
      * @param void
      * @return void
@@ -855,7 +852,7 @@ class AgentesController extends GenericControllerNew {
     public function salvaenderecoAction() {
         $this->autenticacao();
 
-        $Usuario = $this->getIdUsuario; // id do usu·rio logado
+        $Usuario = $this->getIdUsuario; // id do usu√°rio logado
         $idAgente = $this->_request->getParam("id");
         $this->view->id = $this->_request->getParam("id");
 
@@ -897,13 +894,13 @@ class AgentesController extends GenericControllerNew {
             $insere = EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
             parent::message("Cadastro realizado com sucesso!", "agentes/enderecos/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o endereÁo: " . $e->getMessage(), "agentes/enderecos/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao salvar o endere√ßo: " . $e->getMessage(), "agentes/enderecos/id/" . $idAgente, "ERROR");
         }
     }
 
     /**
-     * MÈtodo excluiendereco()
-     * Exclui o endereÁo do agente
+     * M√©todo excluiendereco()
+     * Exclui o endere√ßo do agente
      * @access public
      * @param void
      * @return void
@@ -917,7 +914,7 @@ class AgentesController extends GenericControllerNew {
         $enderecoCorrespondencia = $this->_request->getParam("enderecoCorrespondencia");
 
         if ($qtdEndereco <= 1) {
-            parent::message("VocÍ tem que ter pelo menos um endereÁo cadastrado!", "agentes/enderecos/id/" . $idAgente, "ALERT");
+            parent::message("Voc√™ tem que ter pelo menos um endere√ßo cadastrado!", "agentes/enderecos/id/" . $idAgente, "ALERT");
         }
 
         try {
@@ -927,18 +924,14 @@ class AgentesController extends GenericControllerNew {
                 $novaCorrespondencia = EnderecoNacionalDAO::novaCorrespondencia($idAgente);
             }
 
-            parent::message("Exclus„o realizada com sucesso!", "agentes/enderecos/id/" . $idAgente, "CONFIRM");
+            parent::message("Exclus√£o realizada com sucesso!", "agentes/enderecos/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao excluir o enderÁo: " . $e->getMessage(), "agentes/enderecos/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao excluir o ender√ßo: " . $e->getMessage(), "agentes/enderecos/id/" . $idAgente, "ERROR");
         }
     }
 
-    /*     * ** FIM ENDERE«OS ****************************************************************************** */
-
-    /*     * ** TELEFONES ********************************************************************************** */
-
     /**
-     * MÈtodo telefones()
+     * M√©todo telefones()
      * @access public
      * @param void
      * @return void
@@ -953,7 +946,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo salvatelefone()
+     * M√©todo salvatelefone()
      * Salva o tefefone do agente
      * @access public
      * @param void
@@ -961,7 +954,7 @@ class AgentesController extends GenericControllerNew {
      */
     public function salvatelefoneAction(){
         $this->autenticacao();
-        $Usuario = $this->getIdUsuario; // id do usu·rio logado
+        $Usuario = $this->getIdUsuario; // id do usu√°rio logado
 
         $idAgente = $this->_request->getParam("id");
         $tipoFone = $this->_request->getParam("tipoFone");
@@ -982,14 +975,14 @@ class AgentesController extends GenericControllerNew {
             );
             Telefone::cadastrar($arrayTelefones);
             parent::message("Cadastro realizado com sucesso!", "agentes/telefones/id/" . $idAgente, "CONFIRM");
-            
+
         } catch (Exception $e) {
             parent::message("Erro ao salvar o Telefone: " . $e->getMessage(), "agentes/telefones/id/" . $idAgente, "ERROR");
         }
     }
 
     /**
-     * MÈtodo excluitelefone()
+     * M√©todo excluitelefone()
      * Exclui o tefefone do agente
      * @access public
      * @param void
@@ -1002,26 +995,22 @@ class AgentesController extends GenericControllerNew {
         $qtdTel = $this->_request->getParam("qtdTel");
 
         if ($qtdTel <= 1) {
-            parent::message("VocÍ tem que ter pelo menos um telefone cadastrado!", "agentes/telefones/id/" . $idAgente, "ALERT");
+            parent::message("Voc√™ tem que ter pelo menos um telefone cadastrado!", "agentes/telefones/id/" . $idAgente, "ALERT");
         } else {
 
             try {
 
                 $excluir = Telefone::excluir($idTelefone);
 
-                parent::message("Exclus„o realizada com sucesso!", "agentes/telefones/id/" . $idAgente, "CONFIRM");
+                parent::message("Exclus√£o realizada com sucesso!", "agentes/telefones/id/" . $idAgente, "CONFIRM");
             } catch (Exception $e) {
                 parent::message("Erro ao excluir o telefone: " . $e->getMessage(), "agentes/telefones/id/" . $idAgente, "ERROR");
             }
         }
     }
 
-    /*     * ** FIM TELEFONES ****************************************************************************** */
-
-    /*     * ** E-MAILS ************************************************************************************ */
-
     /**
-     * MÈtodo emails()
+     * M√©todo emails()
      * @access public
      * @param void
      * @return void
@@ -1036,7 +1025,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo salvaemail()
+     * M√©todo salvaemail()
      * Salva o email do agente
      * @access public
      * @param void
@@ -1044,7 +1033,7 @@ class AgentesController extends GenericControllerNew {
      */
     public function salvaemailAction() {
         $this->autenticacao();
-        $Usuario = $this->getIdUsuario; // id do usu·rio logado
+        $Usuario = $this->getIdUsuario; // id do usu√°rio logado
 
         $idAgente = $this->_request->getParam("id");
         $tipoEmail = $this->_request->getParam("tipoEmail");
@@ -1071,7 +1060,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo excluiemail()
+     * M√©todo excluiemail()
      * Exclui o email do agente
      * @access public
      * @param void
@@ -1084,23 +1073,19 @@ class AgentesController extends GenericControllerNew {
         $qtdEmail = $this->_request->getParam("qtdEmail");
 
         if ($qtdEmail <= 1) {
-            parent::message("VocÍ tem que ter pelo menos um email cadastrado!", "agentes/emails/id/" . $idAgente, "ALERT");
+            parent::message("Voc√™ tem que ter pelo menos um email cadastrado!", "agentes/emails/id/" . $idAgente, "ALERT");
         } else {
             try {
                 $excluir = Email::excluir($idInternet);
-                parent::message("Exclus„o realizada com sucesso!", "agentes/emails/id/" . $idAgente, "CONFIRM");
+                parent::message("Exclus√£o realizada com sucesso!", "agentes/emails/id/" . $idAgente, "CONFIRM");
             } catch (Exception $e) {
                 parent::message("Erro ao excluir o e-mail: " . $e->getMessage(), "agentes/emails/id/" . $idAgente, "ERROR");
             }
         }
     }
 
-    /*     * ** FIM E-MAILS ******************************************************************************** */
-
-    /*     * ** ESCOLARIDADE ******************************************************************************* */
-
     /**
-     * MÈtodo escolaridade()
+     * M√©todo escolaridade()
      * @access public
      * @param void
      * @return void
@@ -1122,7 +1107,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo salvaescolaridade()
+     * M√©todo salvaescolaridade()
      * Salva a escolaridade do Parecerista
      * @access public
      * @param void
@@ -1149,17 +1134,17 @@ class AgentesController extends GenericControllerNew {
             $tbArquivo = new tbArquivo();
             $tbArquivoImagem = new tbArquivoImagem();
 
-            // pega as informaÁıes do arquivo
+            // pega as informa√ß√µes do arquivo
             $arquivoNome = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome tempor·rio
+            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome tempor√°rio
             $arquivoTipo = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
 
             if (!empty($arquivoNome)) {
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens„o
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens√£o
             }
             if (!empty($arquivoTemp)) {
-                $arquivoBinario = Upload::setBinario($arquivoTemp); // bin·rio
+                $arquivoBinario = Upload::setBinario($arquivoTemp); // bin√°rio
                 $arquivoHash = Upload::setHash($arquivoTemp); // hash
             }
         endif;
@@ -1185,7 +1170,7 @@ class AgentesController extends GenericControllerNew {
                     'biArquivo' => $arquivoBinario
                 );
 
-                $dadosAI = "Insert into BDCORPORATIVO.scCorp.tbArquivoImagem 
+                $dadosAI = "Insert into BDCORPORATIVO.scCorp.tbArquivoImagem
 				  (idArquivo, biArquivo) values (" . $idArquivo['idArquivo'] . ", " . $arquivoBinario . ") ";
 
                 $salvarArquivoImagem = $tbArquivoImagem->salvarDados($dadosAI);
@@ -1217,13 +1202,12 @@ class AgentesController extends GenericControllerNew {
             parent::message("Cadastrado realizado com sucesso!", "agentes/escolaridade/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
             $db->rollBack();
-//            xd($e->getMessage());
             parent::message("Erro ao cadastrar! " . $e->getMessage(), "agentes/escolaridade/id/" . $idAgente, "ERROR");
         }
     }
 
     /**
-     * MÈtodo formacao()
+     * M√©todo formacao()
      * @access public
      * @param void
      * @return void
@@ -1252,8 +1236,8 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo salvaformacao()
-     * Salva a formaÁ„o do Parecerista
+     * M√©todo salvaformacao()
+     * Salva a forma√ß√£o do Parecerista
      * @access public
      * @param void
      * @return void
@@ -1275,17 +1259,17 @@ class AgentesController extends GenericControllerNew {
         $tbArquivoImagem = new tbArquivoImagem();
 
 
-        // pega as informaÁıes do arquivo
+        // pega as informa√ß√µes do arquivo
         $arquivoNome = $_FILES['arquivo']['name']; // nome
-        $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome tempor·rio
+        $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome tempor√°rio
         $arquivoTipo = $_FILES['arquivo']['type']; // tipo
         $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
 
         if (!empty($arquivoNome)) {
-            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens„o
+            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens√£o
         }
         if (!empty($arquivoTemp)) {
-            $arquivoBinario = Upload::setBinario($arquivoTemp); // bin·rio
+            $arquivoBinario = Upload::setBinario($arquivoTemp); // bin√°rio
             $arquivoHash = Upload::setHash($arquivoTemp); // hash
         }
 
@@ -1309,7 +1293,7 @@ class AgentesController extends GenericControllerNew {
                 'biArquivo' => $arquivoBinario
             );
 
-            $dadosAI = "Insert into BDCORPORATIVO.scCorp.tbArquivoImagem 
+            $dadosAI = "Insert into BDCORPORATIVO.scCorp.tbArquivoImagem
 				  (idArquivo, biArquivo) values (" . $idArquivo['idArquivo'] . ", " . $arquivoBinario . ") ";
 
             $salvarArquivoImagem = $tbArquivoImagem->salvarDados($dadosAI);
@@ -1342,7 +1326,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo ferias()
+     * M√©todo ferias()
      * @access public
      * @param void
      * @return void
@@ -1369,35 +1353,9 @@ class AgentesController extends GenericControllerNew {
         $this->view->dadosferias = $dados;
     }
 
-    /*
-      /**
-     * MÈtodo salvaferias()
-     * Salva as fÈrias do Parecerista
-     * @access public
-     * @param void
-     * @return void
-
-      public function ausenciarepetidaAction()
-      {
-      $idAgente   = $this->_request->getParam("id");
-      $dtInicio   = $this->formatadata($this->_request->getParam("dtinicio"));
-      $dtFim   	= $this->formatadata($this->_request->getParam("dtfim"));
-
-      $tbAusencia = new TbAusencia();
-
-      $repetida = $tbAusencia->BuscarAusenciaRepetida($idAgente, $dtInicio, $dtFim);
-
-      if(count($repetida) > 0)
-      {
-      parent::message("N„o foi possÌvel agendar suas fÈrias!", "agentes/ferias/id/".$idAgente."?dtInicio=".$dtInicio."&dtFim".$dtFim, "ALERT");
-      }
-
-      }
-     */
-
     /**
-     * MÈtodo salvaferias()
-     * Salva as fÈrias do Parecerista
+     * M√©todo salvaferias()
+     * Salva as f√©rias do Parecerista
      * @access public
      * @param void
      * @return void
@@ -1415,7 +1373,7 @@ class AgentesController extends GenericControllerNew {
         $repetida = $tbAusencia->BuscarAusenciaRepetida($idAgente, $dtInicio, $dtFim);
 
         if (count($repetida) > 0) {
-            parent::message("J· existe agendamento de fÈrias para o perÌodo solicitado!", "agentes/ferias/id/" . $idAgente . "?dtInicio=" . $this->_request->getParam("dtinicio") . "&dtFim=" . $this->_request->getParam("dtfim"), "ALERT");
+            parent::message("J√° existe agendamento de f√©rias para o per√≠odo solicitado!", "agentes/ferias/id/" . $idAgente . "?dtInicio=" . $this->_request->getParam("dtinicio") . "&dtFim=" . $this->_request->getParam("dtfim"), "ALERT");
         }
 
         try {
@@ -1429,7 +1387,7 @@ class AgentesController extends GenericControllerNew {
                 'dtCadastroAusencia' => $dtAtual
             );
 
-            // salva o novo registro			
+            // salva o novo registro
             $salvar = $tbAusencia->inserir($dados);
 
             // Busca o id do registro cadastrado
@@ -1438,19 +1396,19 @@ class AgentesController extends GenericControllerNew {
             // Monta o array com o id do ultimo registro cadastrado
             $dados = array('idAlteracao' => $ultimoRegistro[0]->id);
 
-            // Alterar o ultimo registro cadastrado colocando o seu prÛprio id no campo idalteraÁ„o
+            // Alterar o ultimo registro cadastrado colocando o seu pr√≥prio id no campo idaltera√ß√£o
             $altera = $tbAusencia->alteraAusencia($dados, $ultimoRegistro[0]->id);
 
-            parent::message("Suas fÈrias foram agendas para " . $dtInicio . " ‡ " . $dtFim . ". Aguarde AprovaÁ„o do Coordenador. 
-							<br /> Caso n„o tenha resposta favor entre em contato com o mesmo!", "agentes/ferias/id/" . $idAgente, "CONFIRM");
+            parent::message("Suas f√©rias foram agendas para " . $dtInicio . " √† " . $dtFim . ". Aguarde Aprova√ß√£o do Coordenador.
+							<br /> Caso n√£o tenha resposta favor entre em contato com o mesmo!", "agentes/ferias/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
             parent::message("Error! " . $e->getMessage(), "agentes/ferias/id/" . $idAgente, "ERROR");
         }
     }
 
     /**
-     * MÈtodo alterarferias()
-     * Altera as fÈrias do Parecerista
+     * M√©todo alterarferias()
+     * Altera as f√©rias do Parecerista
      * @access public
      * @param void
      * @return void
@@ -1487,7 +1445,7 @@ class AgentesController extends GenericControllerNew {
                 $repetida = $tbAusencia->BuscarAusenciaRepetida($idAgente, $dtInicio, $dtFim);
 
                 if (count($repetida) > 0) {
-                    parent::message("J· existe fÈrias marcada dentro desse perÌodo!", "agentes/ferias/id/" . $idAgente, "ALERT");
+                    parent::message("J√° existe f√©rias marcada dentro desse per√≠odo!", "agentes/ferias/id/" . $idAgente, "ALERT");
                 }
 
 
@@ -1511,15 +1469,15 @@ class AgentesController extends GenericControllerNew {
                 $insere = $tbAusencia->inserirAusencia($dados);
             }
 
-            parent::message("AlteraÁ„o realizada com sucesso!", "agentes/ferias/id/" . $idAgente, "CONFIRM");
+            parent::message("Altera√ß√£o realizada com sucesso!", "agentes/ferias/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
             parent::message("Erro ao cadastrar! " . $e->getMessage(), "agentes/ferias/id/" . $idAgente, "ERROR");
         }
     }
 
     /**
-     * MÈtodo cancelaferias()
-     * Cancela as fÈrias do Parecerista
+     * M√©todo cancelaferias()
+     * Cancela as f√©rias do Parecerista
      * @access public
      * @param void
      * @return void
@@ -1539,15 +1497,15 @@ class AgentesController extends GenericControllerNew {
             );
 
             $altera = $tbAusencia->alteraAusencia($dados, $idferias);
-            parent::message("Exclus„o realizada com sucesso!", "agentes/painelferias", "CONFIRM");
+            parent::message("Exclus√£o realizada com sucesso!", "agentes/painelferias", "CONFIRM");
         } catch (Exception $e) {
             parent::message("Erro ao cadastrar! " . $e->getMessage(), "agentes/painelferias", "ERROR");
         }
     }
 
     /**
-     * MÈtodo confirmaferias()
-     * Confirma as fÈrias do Parecerista
+     * M√©todo confirmaferias()
+     * Confirma as f√©rias do Parecerista
      * @access public
      * @param void
      * @return void
@@ -1569,7 +1527,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo atestados()
+     * M√©todo atestados()
      * @access public
      * @param void
      * @return void
@@ -1586,7 +1544,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo salvaatestado()
+     * M√©todo salvaatestado()
      * Salva o atestado do Parecerista
      * @access public
      * @param void
@@ -1606,17 +1564,17 @@ class AgentesController extends GenericControllerNew {
         $tbArquivo = new tbArquivo();
         $tbArquivoImagem = new tbArquivoImagem();
 
-        // pega as informaÁıes do arquivo
+        // pega as informa√ß√µes do arquivo
         $arquivoNome = $_FILES['arquivo']['name']; // nome
-        $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome tempor·rio
+        $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome tempor√°rio
         $arquivoTipo = $_FILES['arquivo']['type']; // tipo
         $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
 
         if (!empty($arquivoNome)) {
-            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens„o
+            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens√£o
         }
         if (!empty($arquivoTemp)) {
-            $arquivoBinario = Upload::setBinario($arquivoTemp); // bin·rio
+            $arquivoBinario = Upload::setBinario($arquivoTemp); // bin√°rio
             $arquivoHash = Upload::setHash($arquivoTemp); // hash
         }
 
@@ -1640,7 +1598,7 @@ class AgentesController extends GenericControllerNew {
                 'biArquivo' => $arquivoBinario
             );
 
-            $dadosAI = "Insert into BDCORPORATIVO.scCorp.tbArquivoImagem 
+            $dadosAI = "Insert into BDCORPORATIVO.scCorp.tbArquivoImagem
 				  (idArquivo, biArquivo) values (" . $idArquivo['idArquivo'] . ", " . $arquivoBinario . ") ";
 
             $salvarArquivoImagem = $tbArquivoImagem->salvarDados($dadosAI);
@@ -1664,7 +1622,7 @@ class AgentesController extends GenericControllerNew {
             );
 
 
-            // salva o novo registro			
+            // salva o novo registro
             $salvar = $tbAusencia->inserir($dadosAusencia);
 
             // Busca o id do registro cadastrado
@@ -1673,14 +1631,14 @@ class AgentesController extends GenericControllerNew {
             // Monta o array com o id do ultimo registro cadastrado
             $dados = array('idAlteracao' => $ultimoRegistro[0]->id);
 
-            // Alterar o ultimo registro cadastrado colocando o seu prÛprio id no campo idalteraÁ„o	
+            // Alterar o ultimo registro cadastrado colocando o seu pr√≥prio id no campo idaltera√ß√£o
             $altera = $tbAusencia->alteraAusencia($dados, $ultimoRegistro[0]->id);
 
 
             /* ********************************************************************************************** */
             if ($impacto = 1) {
-                // Tem que pegar todos os produtos que est„o como Parecerista e devolver para o Coord.
-                // Criar uma funÁ„o para isso!
+                // Tem que pegar todos os produtos que est√£o como Parecerista e devolver para o Coord.
+                // Criar uma fun√ß√£o para isso!
 
 
                 $tbDistribuirParecer = new tbDistribuirParecer();
@@ -1688,7 +1646,7 @@ class AgentesController extends GenericControllerNew {
                 $projetos = $projetoDAO->buscaProjetosProdutosAnaliseInicial(array('idAgenteParecerista = ?' => $idAgente, 'DtDistribuicao >= ?' => '' . $dtInicio . '', 'DtDistribuicao <= ?' => '' . $dtFim . ''));
 
                 foreach ($projetos as $p) {
-                    $dados = array('Observacao' => 'Devolvido por motivo de atestado mÈdico.',
+                    $dados = array('Observacao' => 'Devolvido por motivo de atestado m√©dico.',
                             'idUsuario' => $this->getIdUsuario,
                             'DtDevolucao' => $dtAtual
                     );
@@ -1706,7 +1664,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo credenciamento()
+     * M√©todo credenciamento()
      * @access public
      * @param void
      * @return void
@@ -1715,7 +1673,7 @@ class AgentesController extends GenericControllerNew {
         $this->autenticacao();
 
         if (($this->GrupoAtivoSalic != 137) || ($this->getParecerista != 'sim')) {
-            parent::message("VocÍ n„o tem permiss„o para essa funcionalidade!", "agentes/sempermissao", "ALERT");
+            parent::message("Voc√™ n√£o tem permiss√£o para essa funcionalidade!", "agentes/sempermissao", "ALERT");
         }
 
         $idAgente = $this->_request->getParam("id");
@@ -1741,7 +1699,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo descredenciamento()
+     * M√©todo descredenciamento()
      * @access public
      * @param void
      * @return void
@@ -1765,7 +1723,6 @@ class AgentesController extends GenericControllerNew {
             $dados = array('siCredenciamento' => $novoSiCredenciamento);
 
             $exclui = $tbCredenciamentoParecerista->excluiCredenciamento($idCredenciamento);
-            //$altera = $tbCredenciamentoParecerista->alteraCredenciamento($dados, $idCredenciamento);
             parent::message("Descredenciamento realizado com sucesso!", "agentes/credenciamento/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
             parent::message("Erro ao alterar o credenciamento! " . $e->getMessage(), "agentes/credenciamento/id/" . $idAgente, "ERROR");
@@ -1773,7 +1730,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo salvacredenciamento()
+     * M√©todo salvacredenciamento()
      * Salva o credenciamento do Parecerista
      * @access public
      * @param void
@@ -1792,19 +1749,16 @@ class AgentesController extends GenericControllerNew {
         $idSegmento = substr($segmentoCultural, 0, 1);
 
         $qtdSegmento = $tbCredenciamentoParecerista->QtdSegmento($idAgente, $idArea);
-//        if (($qtdSegmento[0]->qtd) >= 3) {
-//            parent::message("VocÍ sÛ pode credenciar  3 (trÍs) ·reas culturais!", "agentes/credenciamento/id/" . $idAgente, "ALERT");
-//        }
 
         $qtdArea = $tbCredenciamentoParecerista->QtdArea($idAgente);
         if ((($qtdArea[0]->qtd) >= 3) and (($qtdSegmento[0]->qtd) == 0)) {
-            parent::message("VocÍ sÛ pode credenciar  3 (trÍs) ·reas culturais!", "agentes/credenciamento/id/" . $idAgente, "ALERT");
+            parent::message("Voc√™ s√≥ pode credenciar  3 (tr√™s) √°reas culturais!", "agentes/credenciamento/id/" . $idAgente, "ALERT");
         }
 
         $verificarCadastrado = $tbCredenciamentoParecerista->verificarCadastrado($idAgente, $segmentoCultural, $areaCultural);
 
         if (count($verificarCadastrado) > 0) {
-            parent::message("¡rea e segmento j· credenciado!", "agentes/credenciamento/id/" . $idAgente, "ALERT");
+            parent::message("√Årea e segmento j√° credenciado!", "agentes/credenciamento/id/" . $idAgente, "ALERT");
         }
 
         try {
@@ -1823,24 +1777,21 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * @author Alysson VicuÒa de Oliveira
-     * MÈtodo agentecadastrado()
+     * @author Alysson Vicu√±a de Oliveira
+     * M√©todo agentecadastrado()
      * @access public
      * @param void
      * @return void
      */
-    public function agentecadastradoAction() { //MÈtodo chamado pela Modal
-        //$this->autenticacao();
+    public function agentecadastradoAction() { //M√©todo chamado pela Modal
         $this->_helper->layout->disableLayout(); // desabilita o layout
         $this->_helper->viewRenderer->setNoRender(true);
-        #$cpf = $_REQUEST['cpf'];
         $cpf = preg_replace('/\.|-|\//','',$_REQUEST['cpf']);
 
         $novos_valores = array();
 
         $dados = ManterAgentesDAO::buscarAgentes($cpf);
 
-        #xd( (strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) || (strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf)) );
         if ((strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) || (strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf))) {
             $novos_valores[0]['msgCPF'] = utf8_encode('invalido');
         } else {
@@ -1856,7 +1807,7 @@ class AgentesController extends GenericControllerNew {
                     $novos_valores[0]['agente'] = $dado;
                 }
             } else {
-                #Instancia a Classe de ServiÁo do WebService da Receita Federal
+                #Instancia a Classe de Servi√ßo do WebService da Receita Federal
                 $wsServico = new ServicosReceitaFederal();
                 if(11 == strlen( $cpf )) {
                         $arrResultado = $wsServico->consultarPessoaFisicaReceitaFederal($cpf);
@@ -1883,16 +1834,19 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * 
+     * salvaragente
+     *
+     * @access private
+     * @return void
      */
     private function salvaragente()
     {
         /**/
-        $auth = Zend_Auth::getInstance(); // pega a autenticaÁ„o
+        $auth = Zend_Auth::getInstance(); // pega a autentica√ß√£o
         $Usuario = isset($auth->getIdentity()->IdUsuario) ? $auth->getIdentity()->IdUsuario : $auth->getIdentity()->usu_codigo;
-        // =============================================== INÕCIO SALVAR CPF/CNPJ ==================================================
+        // =============================================== IN√çCIO SALVAR CPF/CNPJ ==================================================
 
-        $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf"))); // retira as m·scaras
+        $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf"))); // retira as m√°scaras
         $Tipo = $this->_request->getParam("Tipo");
 
 
@@ -1902,8 +1856,8 @@ class AgentesController extends GenericControllerNew {
             'Usuario' => $Usuario
         );
 
-        $Agentes = new Agentes();
-        
+        $Agentes = new Agente_Model_Agentes();
+
         $salvaAgente = $Agentes->inserirAgentes($arrayAgente);
 
         $Agente = $Agentes->BuscaAgente($cpf);
@@ -1911,16 +1865,16 @@ class AgentesController extends GenericControllerNew {
         $idAgente = $Agente[0]->idAgente;
 
 
-        // ================================================ FIM SALVAR CPF/CNPJ =====================================================			
-        // ================================================ INÕCIO SALVAR NOME ======================================================
+        // ================================================ FIM SALVAR CPF/CNPJ =====================================================
+        // ================================================ IN√çCIO SALVAR NOME ======================================================
 
         $nome = $this->_request->getParam("nome");
-        $TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa fÌsica e 19 = pessoa jurÌdica
-        
+        $TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa f√≠sica e 19 = pessoa jur√≠dica
+
         if($this->modal == "s"){
             $nome = Seguranca::tratarVarAjaxUFT8($nome);
         }
-        
+
         try {
             $gravarNome = NomesDAO::gravarNome($idAgente, $TipoNome, $nome, 0, $Usuario);
         } catch (Exception $e) {
@@ -1928,14 +1882,14 @@ class AgentesController extends GenericControllerNew {
         }
 
         // ================================================ FIM SALVAR NOME ======================================================
-        // ================================================ INICIO SALVAR VIS√O ======================================================
+        // ================================================ INICIO SALVAR VIS√ÉO ======================================================
         $Visao = $this->_request->getParam("visao");
 
         $grupologado = $this->_request->getParam("grupologado");
 
         /*
-         * ValidaÁ„o - Se for componente da comiss„o ele n„o salva a vis„o
-         * Regra o componente da comiss„o n„o pode alterar sua vis„o.
+         * Valida√ß√£o - Se for componente da comiss√£o ele n√£o salva a vis√£o
+         * Regra o componente da comiss√£o n√£o pode alterar sua vis√£o.
          */
 
         if ($grupologado != 118):
@@ -1953,19 +1907,19 @@ class AgentesController extends GenericControllerNew {
                     $i = VisaoDAO::cadastrarVisao($GravarVisao);
                 }
             } catch (Exception $e) {
-                parent::message("Erro ao salvar a vis„o: " . $e->getMessage(), "agentes/incluiragente", "ERROR");
+                parent::message("Erro ao salvar a vis√£o: " . $e->getMessage(), "agentes/incluiragente", "ERROR");
             }
 
 
-            // ================================================ FIM SALVAR vis„o ======================================================
-            // ===================== INÕCIO SALVAR TITULA«√O (·rea/SEGMENTO DO COMPONENTE DA COMISS√O) ================================
+            // ================================================ FIM SALVAR vis√£o ======================================================
+            // ===================== IN√çCIO SALVAR TITULA√á√ÉO (√°rea/SEGMENTO DO COMPONENTE DA COMISS√ÉO) ================================
 
 
             $titular = $this->_request->getParam("titular");
             $areaCultural = $this->_request->getParam("areaCultural");
             $segmentoCultural = $this->_request->getParam("segmentoCultural");
 
-            // sÛ salva ·rea e segmento para a vis„o de Componente da Comiss„o e se os campos titular e areaCultural forem informados
+            // s√≥ salva √°rea e segmento para a vis√£o de Componente da Comiss√£o e se os campos titular e areaCultural forem informados
             if ((int) $Visao == 210 && ((int) $titular == 0 || (int) $titular == 1) && !empty($areaCultural)) {
                 $GravarComponente = array(// insert
                     'idAgente' => $idAgente,
@@ -1978,11 +1932,10 @@ class AgentesController extends GenericControllerNew {
                     'cdArea' => $areaCultural,
                     'cdSegmento' => $segmentoCultural,
                     'stTitular' => $titular
-                        //'stConselheiro' => 'A' -- Qual caso de uso vai ativa e desativar?										
                 );
 
                 try {
-                    // busca a titulaÁ„o do agente (titular/suplente de ·rea cultural)
+                    // busca a titula√ß√£o do agente (titular/suplente de √°rea cultural)
                     $busca = TitulacaoConselheiroDAO::buscarComponente($idAgente, $Visao);
 
                     if (!$busca) {
@@ -1991,14 +1944,14 @@ class AgentesController extends GenericControllerNew {
                         $i = TitulacaoConselheiroDAO::atualizaComponente($idAgente, $AtualizarComponente);
                     }
                 } catch (Exception $e) {
-                    parent::message("Erro ao salvar a ·rea e segmento: " . $e->getMessage(), "agentes/incluiragente", "ERROR");
+                    parent::message("Erro ao salvar a √°rea e segmento: " . $e->getMessage(), "agentes/incluiragente", "ERROR");
                 }
             }
 
-        // ============================= FIM SALVAR TITULA«√O (·rea/SEGMENTO DO COMPONENTE DA COMISS√O) ===========================
+        // ============================= FIM SALVAR TITULA√á√ÉO (√°rea/SEGMENTO DO COMPONENTE DA COMISS√ÉO) ===========================
 
-        endif; // Fecha o if da regra do componente da comiss„o
-        // =========================================== INICIO SALVAR ENDERE«OS ====================================================
+        endif; // Fecha o if da regra do componente da comiss√£o
+        // =========================================== INICIO SALVAR ENDERE√áOS ====================================================
 
         $cepEndereco = $this->_request->getParam("cep");
         $tipoEndereco = $this->_request->getParam("tipoEndereco");
@@ -2033,11 +1986,11 @@ class AgentesController extends GenericControllerNew {
 
             $insere = EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o endereÁo: " . $e->getMessage(), "agentes/incluiragente", "ERROR");
+            parent::message("Erro ao salvar o endere√ßo: " . $e->getMessage(), "agentes/incluiragente", "ERROR");
         }
 
 
-        // ============================================= FIM SALVAR ENDERE«OS ====================================================
+        // ============================================= FIM SALVAR ENDERE√áOS ====================================================
         // =========================================== INICIO SALVAR TELEFONES ====================================================
 
         $movimentacacaobancaria = $this->_request->getParam('movimentacaobancaria');
@@ -2068,7 +2021,7 @@ class AgentesController extends GenericControllerNew {
         }
 
         // =========================================== FIM SALVAR TELEFONES ====================================================
-        // =========================================== INICIO SALVAR EMAILS ====================================================			
+        // =========================================== INICIO SALVAR EMAILS ====================================================
 
 
         if (empty($movimentacacaobancaria)) {
@@ -2136,12 +2089,11 @@ class AgentesController extends GenericControllerNew {
     		);
     		$tbVinculo->inserir($dadosVinculo);
     	}
-        /**/
 
-        // Se vim do UC 10 - solicitar alteraÁ„o no Projeto
+        // Se vim do UC 10 - solicitar altera√ß√£o no Projeto
         // Chega aqui com o idpronac
         $idpronac = $this->_request->getParam('idpronac');
-        // Se vim do UC38 - MovimentaÁ„o bancaria - CaptaÁ„o
+        // Se vim do UC38 - Movimenta√ß√£o bancaria - Capta√ß√£o
         $projetofnc = $this->_request->getParam('cadastrarprojeto');
 
         # tratamento para disparar "js custom event" no dispatch
@@ -2150,17 +2102,17 @@ class AgentesController extends GenericControllerNew {
         $agente->id = $agente->idAgente;
         $agente->nome = $agente->Nome;
         $agente->cpfCnpj = $agente->CNPJCPF;
-        
+
         $agenteArray = (array) $agente;
         array_walk($agenteArray, function($value, $key) use ($agente){
             $agente->$key = utf8_encode($value);
         });
-        
+
         $this->salvarAgenteRedirect($agente, $idpronac, $projetofnc, $movimentacacaobancaria, $acao);
     }
 
     /**
-     * MÈtodo salvaagentegeral()
+     * M√©todo salvaagentegeral()
      * Salva os dados do agente
      * @access public
      * @param void
@@ -2176,13 +2128,21 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * Metodo para efetuar o redirecionamento apos o cadastro de agentes
+     * salvarAgenteRedirect Metodo para efetuar o redirecionamento apos o cadastro de agentes
+     *
+     * @param mixed $agente
+     * @param bool $idpronac
+     * @param bool $projetofnc
+     * @param bool $movimentacacaobancaria
+     * @param bool $acao
+     * @access private
+     * @return void
      */
     private function salvarAgenteRedirect($agente, $idpronac = null, $projetofnc = null, $movimentacacaobancaria = null, $acao = null)
     {
-        // Se vim do UC 10 - solicitar alteraÁ„o no Projeto
+        // Se vim do UC 10 - solicitar altera√ß√£o no Projeto
         $idpronac = $this->_request->getParam('idpronac');
-        // Se vim do UC38 - MovimentaÁ„o bancaria - CaptaÁ„o
+        // Se vim do UC38 - Movimenta√ß√£o bancaria - Capta√ß√£o
         $projetofnc = $this->_request->getParam('cadastrarprojeto');
 
         if ($this->getRequest()->isXmlHttpRequest()) {
@@ -2214,21 +2174,19 @@ class AgentesController extends GenericControllerNew {
             parent::message("Cadastro realizado com sucesso.", "cadastrarprojeto", "CONFIRM");
         } else if (($acao != '')) {
             parent::message(
-                'Proponente cadastrado com sucesso. Uma solicitaÁ„o de vÌnculo foi enviada a ele.',
+                'Proponente cadastrado com sucesso. Uma solicita√ß√£o de v√≠nculo foi enviada a ele.',
                 'manterpropostaincentivofiscal/listarproposta',
                 'CONFIRM'
             );
         } else {
-            // Caso n„o seja ele retorna para a visualizaÁ„o dos dados cadastrados do agente
+            // Caso n√£o seja ele retorna para a visualiza√ß√£o dos dados cadastrados do agente
             # editado para atender
             parent::message('Cadastro realizado com sucesso!', "agentes/agentes/id/{$agente->id}", 'CONFIRM');
         }
     }
 
-    /*     * ** DIRIGENTES ******************************************************************************** */
-
     /**
-     * MÈtodo incluirdirigente()
+     * M√©todo incluirdirigente()
      * @access public
      * @param void
      * @return void
@@ -2238,18 +2196,18 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo salvadirigentegeral()
+     * M√©todo salvadirigentegeral()
      * @access public
      * @param void
      * @return void
      */
     public function salvadirigentegeralAction() {
         $this->autenticacao();
-        $Usuario = $this->getIdUsuario; // id do usu·rio logado
+        $Usuario = $this->getIdUsuario; // id do usu√°rio logado
         $idAgenteGeral = $this->_request->getParam("id"); // id da instituicao
-        // =============================================== INÕCIO SALVAR CPF/CNPJ ==================================================
+        // =============================================== IN√çCIO SALVAR CPF/CNPJ ==================================================
 
-        $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf"))); // retira as m·scaras
+        $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf"))); // retira as m√°scaras
         $Tipo = $this->_request->getParam("Tipo");
 
 
@@ -2261,7 +2219,7 @@ class AgentesController extends GenericControllerNew {
 
         // Retorna o idAgente cadastrado
 
-        $Agentes = new Agentes();
+        $Agentes = new Agente_Model_Agentes();
 
         $salvaAgente = $Agentes->inserirAgentes($arrayAgente);
 
@@ -2270,11 +2228,11 @@ class AgentesController extends GenericControllerNew {
         $idAgente = $Agente[0]->idAgente;
 
 
-        // ================================================ FIM SALVAR CPF/CNPJ =====================================================			
-        // ================================================ INÕCIO SALVAR NOME ======================================================
+        // ================================================ FIM SALVAR CPF/CNPJ =====================================================
+        // ================================================ IN√çCIO SALVAR NOME ======================================================
 
         $nome = $this->_request->getParam("nome");
-        $TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa fÌsica e 19 = pessoa jurÌdica
+        $TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa f√≠sica e 19 = pessoa jur√≠dica
 
         try {
             $gravarNome = NomesDAO::gravarNome($idAgente, $TipoNome, $nome, 0, $Usuario);
@@ -2283,14 +2241,14 @@ class AgentesController extends GenericControllerNew {
         }
 
         // ================================================ FIM SALVAR NOME ======================================================
-        // ================================================ INICIO SALVAR VIS√O ======================================================
+        // ================================================ INICIO SALVAR VIS√ÉO ======================================================
         $Visao = $this->_request->getParam("visao");
 
         $grupologado = $this->_request->getParam("grupologado");
 
         /*
-         * ValidaÁ„o - Se for componente da comiss„o ele n„o salva a vis„o
-         * Regra o componente da comiss„o n„o pode alterar sua vis„o.
+         * Valida√ß√£o - Se for componente da comiss√£o ele n√£o salva a vis√£o
+         * Regra o componente da comiss√£o n√£o pode alterar sua vis√£o.
          */
 
         if ($grupologado != 118):
@@ -2308,19 +2266,19 @@ class AgentesController extends GenericControllerNew {
                     $i = VisaoDAO::cadastrarVisao($GravarVisao);
                 }
             } catch (Exception $e) {
-                parent::message("Erro ao salvar a vis„o: " . $e->getMessage(), "agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
+                parent::message("Erro ao salvar a vis√£o: " . $e->getMessage(), "agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
             }
 
 
-            // ================================================ FIM SALVAR vis„o ======================================================
-            // ===================== INÕCIO SALVAR TITULA«√O (·rea/SEGMENTO DO COMPONENTE DA COMISS√O) ================================
+            // ================================================ FIM SALVAR vis√£o ======================================================
+            // ===================== IN√çCIO SALVAR TITULA√á√ÉO (√°rea/SEGMENTO DO COMPONENTE DA COMISS√ÉO) ================================
 
 
             $titular = $this->_request->getParam("titular");
             $areaCultural = $this->_request->getParam("areaCultural");
             $segmentoCultural = $this->_request->getParam("segmentoCultural");
 
-            // sÛ salva ·rea e segmento para a vis„o de Componente da Comiss„o e se os campos titular e areaCultural forem informados
+            // s√≥ salva √°rea e segmento para a vis√£o de Componente da Comiss√£o e se os campos titular e areaCultural forem informados
             if ((int) $Visao == 210 && ((int) $titular == 0 || (int) $titular == 1) && !empty($areaCultural)) {
                 $GravarComponente = array(// insert
                     'idAgente' => $idAgente,
@@ -2333,11 +2291,10 @@ class AgentesController extends GenericControllerNew {
                     'cdArea' => $areaCultural,
                     'cdSegmento' => $segmentoCultural,
                     'stTitular' => $titular
-                        //'stConselheiro' => 'A' -- Qual caso de uso vai ativa e desativar?										
                 );
 
                 try {
-                    // busca a titulaÁ„o do agente (titular/suplente de ·rea cultural)
+                    // busca a titula√ß√£o do agente (titular/suplente de √°rea cultural)
                     $busca = TitulacaoConselheiroDAO::buscarComponente($idAgente, $Visao);
 
                     if (!$busca) {
@@ -2346,14 +2303,14 @@ class AgentesController extends GenericControllerNew {
                         $i = TitulacaoConselheiroDAO::atualizaComponente($idAgente, $AtualizarComponente);
                     }
                 } catch (Exception $e) {
-                    parent::message("Erro ao salvar a ·rea e segmento: " . $e->getMessage(), $e->getMessage(), "agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
+                    parent::message("Erro ao salvar a √°rea e segmento: " . $e->getMessage(), $e->getMessage(), "agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
                 }
             }
 
-        // ============================= FIM SALVAR TITULA«√O (·rea/SEGMENTO DO COMPONENTE DA COMISS√O) ===========================
+        // ============================= FIM SALVAR TITULA√á√ÉO (√°rea/SEGMENTO DO COMPONENTE DA COMISS√ÉO) ===========================
 
-        endif; // Fecha o if da regra do componente da comiss„o
-        // =========================================== INICIO SALVAR ENDERE«OS ====================================================
+        endif; // Fecha o if da regra do componente da comiss√£o
+        // =========================================== INICIO SALVAR ENDERE√áOS ====================================================
 
         $cepEndereco = $this->_request->getParam("cep");
         $tipoEndereco = $this->_request->getParam("tipoEndereco");
@@ -2388,11 +2345,11 @@ class AgentesController extends GenericControllerNew {
 
             $insere = EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o endereÁo: " . $e->getMessage(), "agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
+            parent::message("Erro ao salvar o endere√ßo: " . $e->getMessage(), "agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
         }
 
 
-        // ============================================= FIM SALVAR ENDERE«OS ====================================================
+        // ============================================= FIM SALVAR ENDERE√áOS ====================================================
         // =========================================== INICIO SALVAR TELEFONES ====================================================
 
         $tipoFone = $this->_request->getParam("tipoFone");
@@ -2421,7 +2378,7 @@ class AgentesController extends GenericControllerNew {
 
 
         // =========================================== FIM SALVAR TELEFONES ====================================================
-        // =========================================== INICIO SALVAR EMAILS ====================================================			
+        // =========================================== INICIO SALVAR EMAILS ====================================================
 
         $tipoEmail = $this->_request->getParam("tipoEmail");
         $Email = $this->_request->getParam("email");
@@ -2444,12 +2401,12 @@ class AgentesController extends GenericControllerNew {
         }
 
         // =========================================== FIM SALVAR EMAILS ====================================================
-        // =========================================== INICIO SALVAR VINCULO ====================================================					
+        // =========================================== INICIO SALVAR VINCULO ====================================================
         try {
             // busca o dirigente vinculado ao cnpj/cpf
             $dadosDirigente = ManterAgentesDAO::buscarVinculados(null, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
 
-            // caso o agente n„o esteja vinculado, realizar· a vinculaÁ„o
+            // caso o agente n√£o esteja vinculado, realizar√° a vincula√ß√£o
             if (!$dadosDirigente) {
                 // associa o dirigente ao cnpj/cpf
                 $dadosVinculacao = array(
@@ -2469,26 +2426,24 @@ class AgentesController extends GenericControllerNew {
         parent::message("Cadastro realizado com sucesso!", "agentes/dirigentes/id/" . $idAgenteGeral, "CONFIRM");
     }
 
-// Final da funÁ„o salvar dirigentes
-
     /**
-     * MÈtodo vinculadirigente()
+     * M√©todo vinculadirigente()
      * @access public
      * @param void
      * @return void
      */
     public function vinculadirigenteAction() {
         $this->autenticacao();
-        $auth = Zend_Auth::getInstance(); // pega a autenticaÁ„o
-        $Usuario = isset($auth->getIdentity()->IdUsuario) ? $auth->getIdentity()->IdUsuario : $auth->getIdentity()->usu_codigo ; // id do usu·rio logado
+        $auth = Zend_Auth::getInstance(); // pega a autentica√ß√£o
+        $Usuario = isset($auth->getIdentity()->IdUsuario) ? $auth->getIdentity()->IdUsuario : $auth->getIdentity()->usu_codigo ; // id do usu√°rio logado
         $idAgenteGeral = $this->_request->getParam("id");
         $idDirigente = $this->_request->getParam("idDirigente");
-        
+
         try {
             // busca o dirigente vinculado ao cnpj/cpf
             $dadosDirigente = ManterAgentesDAO::buscarVinculados(null, null, $idDirigente, $idAgenteGeral, $idAgenteGeral);
 
-            // caso o agente n„o esteja vinculado, realizar· a vinculaÁ„o
+            // caso o agente n√£o esteja vinculado, realizar√° a vincula√ß√£o
             if (count($dadosDirigente) == 0) {
                 // associa o dirigente ao cnpj/cpf
                 $dadosVinculacao = array(
@@ -2518,14 +2473,14 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo desvinculadirigente()
+     * M√©todo desvinculadirigente()
      * @access public
      * @param void
      * @return void
      */
     public function desvinculadirigenteAction() {
         $this->autenticacao();
-        $Usuario = $this->getIdUsuario; // id do usu·rio logado
+        $Usuario = $this->getIdUsuario; // id do usu√°rio logado
         $idAgenteGeral = $this->_request->getParam("id");
         $idDirigente = $this->_request->getParam("idDirigente");
 
@@ -2540,57 +2495,53 @@ class AgentesController extends GenericControllerNew {
 
             $desvincula = $vincular->Desvincular($where);
 
-            parent::message("Exclus„o realizada com sucesso! ", "agentes/dirigentes/id/" . $idAgenteGeral, "CONFIRM");
+            parent::message("Exclus√£o realizada com sucesso! ", "agentes/dirigentes/id/" . $idAgenteGeral, "CONFIRM");
         } catch (Exception $e) {
             parent::message("Erro ao vincular o dirigente: " . $e->getMessage(), "agentes/visualizadirigente/id/" . $idAgenteGeral . "/idDirigente/" . $idDirigente, "ERROR");
         }
     }
 
-    /*     * ** FIM DIRIGENTES **************************************************************************** */
-
     /**
-     * MÈtodo para realizar a buscar de agentes por cpf/cnpj ou por nome
+     * M√©todo para realizar a buscar de agentes por cpf/cnpj ou por nome
      * @access public
      * @param void
      * @return void
      */
     public function buscaragenteAction() {
         $this->autenticacao();
-// caso o formul·rio seja enviado via post
+        // caso o formul√°rio seja enviado via post
         if ($this->getRequest()->isPost()) {
-            // recebe os dados do formul·rio
+            // recebe os dados do formul√°rio
             $post = Zend_Registry::get('post');
-            $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($post->cpf)); // deleta a m·scara
+            $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($post->cpf)); // deleta a m√°scara
             $nome = $post->nome;
 
             try {
-                // validaÁ„o dos campos
+                // valida√ß√£o dos campos
                 if (empty($cpf) && empty($nome)) {
-                    throw new Exception("Dados obrigatÛrios n„o informados:<br /><br />È necess·rio informar o CPF/CNPJ ou o Nome!");
+                    throw new Exception("Dados obrigat√≥rios n√£o informados:<br /><br />√© necess√°rio informar o CPF/CNPJ ou o Nome!");
                 } else if (!empty($cpf) && strlen($cpf) != 11 && strlen($cpf) != 14) { // valida cnpj/cpf
-                    throw new Exception("O CPF/CNPJ informado È inv·lido!");
+                    throw new Exception("O CPF/CNPJ informado √© inv√°lido!");
                 } else if (!empty($cpf) && strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) { // valida cpf
-                    throw new Exception("O CPF informado È inv·lido!");
+                    throw new Exception("O CPF informado √© inv√°lido!");
                 } else if (!empty($cpf) && strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf)) { // valida cnpj
-                    throw new Exception("O CNPJ informado È inv·lido!");
+                    throw new Exception("O CNPJ informado √© inv√°lido!");
                 } else {
-                    // redireciona para a p·gina com a busca dos dados com paginaÁ„o
+                    // redireciona para a p√°gina com a busca dos dados com pagina√ß√£o
                     $this->_redirect("agentes/listaragente?cpf=" . $cpf . "&nome=" . $nome);
-                } // fecha else
-            } // fecha try
+                }
+            }
             catch (Exception $e) {
                 $this->view->message = $e->getMessage();
                 $this->view->message_type = "ERROR";
-                $this->view->cpf = !empty($cpf) ? Validacao::mascaraCPFCNPJ($cpf) : ''; // caso exista, adiciona a m·scara
+                $this->view->cpf = !empty($cpf) ? Validacao::mascaraCPFCNPJ($cpf) : ''; // caso exista, adiciona a m√°scara
                 $this->view->nome = $nome;
             }
-        } // fecha if
+        }
     }
 
-// fecha mÈtodo buscaragenteAction()
-
     /**
-     * MÈtodo listaragente()
+     * M√©todo listaragente()
      * @access public
      * @param void
      * @return List
@@ -2606,29 +2557,27 @@ class AgentesController extends GenericControllerNew {
         $buscar = ManterAgentesDAO::buscarAgentes($cpf, $nome);
 
         if (!$buscar) {
-            // redireciona para a p·gina de cadastro de agentes, e, exibe uma notificaÁ„o relativa ao cadastro
-            parent::message("Agente n„o cadastrado!<br /><br />Por favor, cadastre o mesmo no formul·rio abaixo!", "manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
+            // redireciona para a p√°gina de cadastro de agentes, e, exibe uma notifica√ß√£o relativa ao cadastro
+            parent::message("Agente n√£o cadastrado!<br /><br />Por favor, cadastre o mesmo no formul√°rio abaixo!", "manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
         } else {
-            // ========== INÕCIO PAGINA«√O ==========
-            // criando a paginaÁ„o
+            // ========== IN√çCIO PAGINA√á√ÉO ==========
+            // criando a pagina√ß√£o
             Zend_Paginator::setDefaultScrollingStyle('Sliding');
             Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
             $paginator = Zend_Paginator::factory($buscar); // dados a serem paginados
-            // p·gina atual e quantidade de Ìtens por p·gina
+            // p√°gina atual e quantidade de √≠tens por p√°gina
             $currentPage = $this->_getParam('page', 1);
-            $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(10); // 10 por p·gina
-            // ========== FIM PAGINA«√O ==========
+            $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(10); // 10 por p√°gina
+            // ========== FIM PAGINA√á√ÉO ==========
 
             $this->view->buscar = $paginator;
             $this->view->qtdAgentes = count($buscar); // quantidade de agentes
-        } // fecha else
+        }
     }
 
-// fecha mÈtodo listaragenteAction()
-
     /**
-     * MÈtodo abrirarquivo()
-     * Abrir arquivo em bin·rio
+     * M√©todo abrirarquivo()
+     * Abrir arquivo em bin√°rio
      * @access public
      * @param void
      * @return void
@@ -2637,7 +2586,7 @@ class AgentesController extends GenericControllerNew {
         $this->autenticacao();
         $id = $this->_request->getParam("id");
 
-        // ConfiguraÁ„o o php.ini para 10MB
+        // Configura√ß√£o o php.ini para 10MB
         @ini_set("mssql.textsize", 10485760);
         @ini_set("mssql.textlimit", 10485760);
         @ini_set("upload_max_filesize", "10M");
@@ -2651,10 +2600,10 @@ class AgentesController extends GenericControllerNew {
 
         // erro ao abrir o arquivo
         if (!$resultado) {
-            $this->view->message = 'N„o foi possÌvel abrir o arquivo!';
+            $this->view->message = 'N√£o foi poss√≠vel abrir o arquivo!';
             $this->view->message_type = 'ERROR';
         } else {
-            // lÍ os cabeÁalhos formatado
+            // l√™ os cabe√ßalhos formatado
             foreach ($resultado as $r) {
                 $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
                 $this->_helper->viewRenderer->setNoRender();    // Desabilita o Zend Render
@@ -2675,7 +2624,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo painelcredenciamento()
+     * M√©todo painelcredenciamento()
      * Painel do Coordenador de Pronac
      * @access public
      * @param void
@@ -2683,22 +2632,22 @@ class AgentesController extends GenericControllerNew {
      */
     public function painelcredenciamentoAction() {
         $this->autenticacao();
-        $agentes = new Agentes();
+        $agentes = new Agente_Model_Agentes();
 
         $nome = $this->_request->getParam('nome');
         $cpf = Mascara::delMaskCPF($this->_request->getParam('cpf'));
 
-        // ========== INÕCIO PAGINA«√O ==========
-        // criando a paginaÁ„o
+        // ========== IN√çCIO PAGINA√á√ÉO ==========
+        // criando a pagina√ß√£o
         $buscar = $agentes->consultaPareceristasPainel($nome, $cpf);
 
         Zend_Paginator::setDefaultScrollingStyle('Sliding');
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
         $paginator = Zend_Paginator::factory($buscar); // dados a serem paginados
-        // p·gina atual e quantidade de Ìtens por p·gina
+        // p√°gina atual e quantidade de √≠tens por p√°gina
         $currentPage = $this->_getParam('page', 1);
         $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(15);
-        // ========== FIM PAGINA«√O ==========
+        // ========== FIM PAGINA√á√ÉO ==========
 
         $this->view->qtdpareceristas = count($buscar);
         $this->view->pareceristas = $paginator;
@@ -2708,7 +2657,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo painelferias()
+     * M√©todo painelferias()
      * Painel do Coordenador de Parecer
      * @access public
      * @param void
@@ -2736,7 +2685,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo sempermissao()
+     * M√©todo sempermissao()
      * @access public
      * @param void
      * @return void
@@ -2746,7 +2695,7 @@ class AgentesController extends GenericControllerNew {
     }
 
     /**
-     * MÈtodo com a p·gina de alteraÁ„o de vis„o
+     * M√©todo com a p√°gina de altera√ß√£o de vis√£o
      * @access public
      * @param void
      * @return void
@@ -2756,7 +2705,7 @@ class AgentesController extends GenericControllerNew {
         $idAgente = $this->_request->getParam('id');
         $GrupoAtivo = $this->GrupoAtivoSalic;
 
-        // busca todas as visıes
+        // busca todas as vis√µes
         $visoes = VisaoDAO::buscarVisao(null, null, true);
         $a = 0;
         $select = null;
@@ -2802,7 +2751,7 @@ class AgentesController extends GenericControllerNew {
         }
         $this->view->visao = $select;
 
-        // busca todas as visıes do agente
+        // busca todas as vis√µes do agente
         $visoesAgente = VisaoDAO::buscarVisao($idAgente);
         $b = 0;
         $selectAgente = null;
@@ -2847,30 +2796,30 @@ class AgentesController extends GenericControllerNew {
         }
         $this->view->visaoAgente = $selectAgente;
 
-        // caso o formul·rio seja enviado via post
+        // caso o formul√°rio seja enviado via post
         if ($this->getRequest()->isPost()) {
-            // recebe os dados do formul·rio
+            // recebe os dados do formul√°rio
             $post = Zend_Registry::get('post');
             $visaoAgente = $post->visaoAgente;
 
             try {
 
-                // exclui todas as visıes do agente
+                // exclui todas as vis√µes do agente
                 VisaoDAO::excluirVisao($idAgente);
 
-                // cadastra todas as visıes do agente
+                // cadastra todas as vis√µes do agente
                 foreach ($visaoAgente as $visao) {
                     $dados = array(
                         'idAgente' => $idAgente,
                         'Visao' => $visao,
-                        'Usuario' => $this->getIdUsuario, // cÛdigo do usu·rio logado
+                        'Usuario' => $this->getIdUsuario, // c√≥digo do usu√°rio logado
                         'stAtivo' => 'A');
                     VisaoDAO::cadastrarVisao($dados);
                 }
 
-                parent::message("AlteraÁ„o realizada com sucesso!", "agentes/alterarvisao/id/" . $idAgente, "CONFIRM");
+                parent::message("Altera√ß√£o realizada com sucesso!", "agentes/alterarvisao/id/" . $idAgente, "CONFIRM");
             } catch (Exception $e) {
-                parent::message("Erro ao efetuar alteraÁ„o das visıes do agente! " . $e->getMessage(), "agentes/alterarvisao/id/" . $idAgente, "ERROR");
+                parent::message("Erro ao efetuar altera√ß√£o das vis√µes do agente! " . $e->getMessage(), "agentes/alterarvisao/id/" . $idAgente, "ERROR");
             }
         }
 
@@ -2879,8 +2828,8 @@ class AgentesController extends GenericControllerNew {
 
     public function infoAdicionaisAction() {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
-        $this->view->idPerfil = $GrupoAtivo->codGrupo; // Busca o perfil do usu·rio
-        
+        $this->view->idPerfil = $GrupoAtivo->codGrupo; // Busca o perfil do usu√°rio
+
         $this->autenticacao();
         $idAgente = $this->_request->getParam("id");
         $this->view->id = $idAgente;
@@ -2895,9 +2844,9 @@ class AgentesController extends GenericControllerNew {
 
         $data = explode('/', $post->dtNascimento);
         $dtNascimento = $data[2].'-'.$data[1].'-'.$data[0];
-        
+
         $processo = Mascara::delMaskProcesso($post->processo);
-        
+
         $dados = array(
             'idAgente'                  => $post->agente,
             'stSexo'                    => $post->sexo,
@@ -2909,13 +2858,13 @@ class AgentesController extends GenericControllerNew {
             'stCorRaca'                 => $post->raca,
             'nrIdentificadorProcessual' => $processo
         );
-        
+
         $tbAgenteFisico = new tbAgenteFisico();
-        
+
         $result = $tbAgenteFisico->buscar(array('idAgente = ?'=>$post->agente));
-        
+
         try {
-            
+
             if(count($result) > 0){
                 $msg = 'alterados';
                 $tbAgenteFisico->alterarDados($dados, $post->agente);
@@ -2923,15 +2872,21 @@ class AgentesController extends GenericControllerNew {
                 $msg = 'cadastrados';
                 $tbAgenteFisico->inserir($dados);
             }
-            
+
             parent::message("Dados $msg com sucesso!", "agentes/info-adicionais/id/" . $post->agente, "CONFIRM");
-            
+
         } catch (Exception $e) {
-            parent::message("Ocorreu um erro durante a operaÁ„o!", "agentes/info-adicionais/id/" . $post->agente, "ERROR");
+            parent::message("Ocorreu um erro durante a opera√ß√£o!", "agentes/info-adicionais/id/" . $post->agente, "ERROR");
         }
-        
+
     }
 
+    /**
+     * naturezaAction
+     *
+     * @access public
+     * @return void
+     */
     public function naturezaAction() {
         $this->autenticacao();
         $idAgente = $this->_request->getParam("id");
@@ -2955,13 +2910,18 @@ class AgentesController extends GenericControllerNew {
         $this->view->dadosNatureza = $result;
     }
 
+    /**
+     * salvarNaturezaAction
+     *
+     * @access public
+     * @return void
+     */
     public function salvarNaturezaAction() {
         $post = Zend_Registry::get('post');
-        $auth = Zend_Auth::getInstance(); // pega a autenticaÁ„o
+        $auth = Zend_Auth::getInstance(); // pega a autentica√ß√£o
         $idUsuario = isset($auth->getIdentity()->IdUsuario) ? $auth->getIdentity()->IdUsuario : $auth->getIdentity()->usu_codigo;
 
         $dados = array(
-//            'idNatureza' => $post->agente,
             'idAgente' => $post->agente,
             'Direito' => isset($post->direito) ? $post->direito : 0,
             'Esfera' => isset($post->esfera) ? $post->esfera : 0,
@@ -2969,7 +2929,7 @@ class AgentesController extends GenericControllerNew {
             'Administracao' => isset($post->administracao) ? $post->administracao : 0,
             'Usuario' => $idUsuario
         );
-        
+
         $Natureza = new Natureza();
         $result = $Natureza->buscar(array('idAgente = ?'=>$post->agente));
         try {
@@ -2983,10 +2943,16 @@ class AgentesController extends GenericControllerNew {
             }
             parent::message("Dados $msg com sucesso!", "agentes/natureza/id/" . $post->agente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Ocorreu um erro durante a operaÁ„o!", "agentes/natureza/id/" . $post->agente, "ERROR");
+            parent::message("Ocorreu um erro durante a opera√ß√£o!", "agentes/natureza/id/" . $post->agente, "ERROR");
         }
     }
 
+    /**
+     * areaCulturalAction
+     *
+     * @access public
+     * @return void
+     */
     public function areaCulturalAction() {
         $this->autenticacao();
         $idAgente = $this->_request->getParam("id");
@@ -3001,6 +2967,12 @@ class AgentesController extends GenericControllerNew {
         $this->view->AreaCadastrada = $areaCadastrada;
     }
 
+    /**
+     * salvarAreaCulturalAction
+     *
+     * @access public
+     * @return void
+     */
     public function salvarAreaCulturalAction() {
         $post = Zend_Registry::get('post');
 
@@ -3023,10 +2995,7 @@ class AgentesController extends GenericControllerNew {
             }
             parent::message("Dados $msg com sucesso!", "agentes/area-cultural/id/" . $post->agente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Ocorreu um erro durante a operaÁ„o!", "agentes/area-cultural/id/" . $post->agente, "ERROR");
+            parent::message("Ocorreu um erro durante a opera√ß√£o!", "agentes/area-cultural/id/" . $post->agente, "ERROR");
         }
     }
-
 }
-
-// fecha class

@@ -16,7 +16,7 @@ class OperacionalController extends GenericControllerNew {
 	private $intTamPag = 10;
     private $idPerfil = 0;
     private $idOrgao = 0;
-    
+
 
 	/**
 	 * Reescreve o m?todo init()
@@ -65,7 +65,7 @@ class OperacionalController extends GenericControllerNew {
 
 		parent::perfil(1, $PermissoesGrupo);
 		parent::init();
-        
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $this->idPerfil = $GrupoAtivo->codGrupo;
         $this->idOrgao = $GrupoAtivo->codOrgao;
@@ -152,7 +152,7 @@ class OperacionalController extends GenericControllerNew {
         }
 
         public function imprimirConsultaRegularidadeAction() {
-            
+
             if (isset($_POST['cpfCnpj']) || isset($_GET['cpfCnpj'])) {
                 if (isset($_POST['cpfCnpj'])) {
                     $cnpjcpf = str_replace("/", "", str_replace("-", "", str_replace(".", "", $_POST['cpfCnpj'])));
@@ -218,7 +218,7 @@ class OperacionalController extends GenericControllerNew {
 	 * @return objeto
 	 */
 	public function tabelasAction() {
-	
+
 		$get = Zend_Registry::get("get");
 
 		if(!empty($get->consulta)){
@@ -227,10 +227,10 @@ class OperacionalController extends GenericControllerNew {
 			$this->_helper->layout->disableLayout();
 
 			$post = Zend_Registry::get("post");
-			
+
 			if($get->consulta == "itens"){
 				$tbl = new Produto();
-				
+
                                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                                         //buscando os registros no banco de dados
                                         $tamanho = -1;
@@ -239,13 +239,13 @@ class OperacionalController extends GenericControllerNew {
                                         $totalPag = 0;
                                         $fim = 0;
                                         $rs = $tbl->buscar(array("stEstado = ?"=>0),array(), $tamanho, $inicio);
-                                        
+
                                         $this->_forward('preparar-xls-pdf', null, null, array(
                                                                                                 'dados'=>$rs,
                                                                                                 'view'=>'operacional/preparar-xls-pdf-itensproduto.phtml',
                                                                                                 'tipo'=> $post->tipo
                                                                                                 )
-                                        );                 
+                                        );
                                 } else {
                                     //controlando a paginacao
                                     $this->intTamPag = 10;
@@ -266,7 +266,7 @@ class OperacionalController extends GenericControllerNew {
                                     if ($fim>$total) $fim = $total;
                                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-                                    if ($fim>$total) $fim = $total;			
+                                    if ($fim>$total) $fim = $total;
 
                                     $rs2 = $tbl->buscar(array("stEstado = ?"=>0),$ordem, $tamanho, $inicio);
 
@@ -287,8 +287,8 @@ class OperacionalController extends GenericControllerNew {
 
 			if($get->consulta == "documentos"){
 				$tbl = new DocumentosExigidos();
-				
-                                
+
+
                                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                                         //buscando os registros no banco de dados
                                         $tamanho = -1;
@@ -299,13 +299,13 @@ class OperacionalController extends GenericControllerNew {
                                         $arrBusca = array();
                                         $arrBusca['Codigo > ?'] = 0;
                                         $rs = $tbl->buscar($arrBusca, array(), $tamanho, $inicio);
-                                        
+
                                         $this->_forward('preparar-xls-pdf', null, null, array(
                                                                                                 'dados'=>$rs,
                                                                                                 'view'=>'operacional/preparar-xls-pdf-documentosexigidos.phtml',
                                                                                                 'tipo'=> $post->tipo
                                                                                                 )
-                                        );                 
+                                        );
                                 } else {
                                     //controlando a paginacao
                                     $this->intTamPag = 10;
@@ -325,10 +325,10 @@ class OperacionalController extends GenericControllerNew {
                                     if ($fim>$total) $fim = $total;
                                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-                                    if ($fim>$total) $fim = $total;			
+                                    if ($fim>$total) $fim = $total;
                                     $arrBusca = array();
                                     $arrBusca['Codigo > ?'] = 0;
-                                    $rs2 = $tbl->buscar($arrBusca, $ordem, $tamanho, $inicio);				
+                                    $rs2 = $tbl->buscar($arrBusca, $ordem, $tamanho, $inicio);
 
                                     if($rs2->count() > 0){
                                             foreach($rs2 as $area){
@@ -360,7 +360,7 @@ class OperacionalController extends GenericControllerNew {
 
 			if($get->consulta == "produtos"){
 				$tbl = new Produto();
-				
+
                                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                                         //buscando os registros no banco de dados
                                         $tamanho = -1;
@@ -370,7 +370,7 @@ class OperacionalController extends GenericControllerNew {
                                         $fim = 0;
                                         $arrBusca = array();
                                         $rs = $tbl->buscar($arrBusca, array(), $tamanho, $inicio);
-                                        
+
                                         if($rs->count() > 0){
                                             foreach($rs as $produto){
                                                     $idsOrgaos[] = $produto->Idorgao;
@@ -382,14 +382,14 @@ class OperacionalController extends GenericControllerNew {
                                                     $arrOrgaos[$orgao->Codigo]["SiglaOrgao"] = $orgao->Sigla;
                                             }
                                     }
-                                        
+
                                         $this->_forward('preparar-xls-pdf', null, null, array(
                                                                                                 'dados'     =>$rs,
                                                                                                 'view'      =>'operacional/preparar-xls-pdf-produtos.phtml',
                                                                                                 'tipo'      => $post->tipo,
                                                                                                 'orgaos'    => $arrOrgaos,
                                                                                                 )
-                                        );                 
+                                        );
                                 } else {
                                     //controlando a paginacao
                                     $this->intTamPag = 10;
@@ -409,7 +409,7 @@ class OperacionalController extends GenericControllerNew {
                                     if ($fim>$total) $fim = $total;
                                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-                                    if ($fim>$total) $fim = $total;			
+                                    if ($fim>$total) $fim = $total;
                                     $arrBusca = array();
                                     $rs2 = $tbl->buscar($arrBusca, $ordem, $tamanho, $inicio);
 
@@ -452,13 +452,13 @@ class OperacionalController extends GenericControllerNew {
                                         $fim = 0;
                                         $arrBusca = array();
                                         $rs = $tbl->buscar($arrBusca, array(), $tamanho, $inicio);
-                                        
+
                                         $this->_forward('preparar-xls-pdf', null, null, array(
                                                                                                 'dados'=>$rs,
                                                                                                 'view'=>'operacional/preparar-xls-pdf-situacao.phtml',
                                                                                                 'tipo'=> $post->tipo
                                                                                                 )
-                                        );                 
+                                        );
                                 } else {
                                     //controlando a paginacao
                                     $this->intTamPag = 10;
@@ -478,7 +478,7 @@ class OperacionalController extends GenericControllerNew {
                                     if ($fim>$total) $fim = $total;
                                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-                                    if ($fim>$total) $fim = $total;			
+                                    if ($fim>$total) $fim = $total;
                                     $arrBusca = array();
                                     $rs2 = $tbl->buscar($arrBusca, $ordem, $tamanho, $inicio);
 
@@ -498,7 +498,7 @@ class OperacionalController extends GenericControllerNew {
 
 			if($get->consulta == "segmentos"){
 				$tbl = new Segmento();
-                                
+
 				if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                                         //buscando os registros no banco de dados
                                         $tamanho = -1;
@@ -508,7 +508,7 @@ class OperacionalController extends GenericControllerNew {
                                         $fim = 0;
                                         $arrBusca = array();
                                         $rs = $tbl->buscar($arrBusca, array(), $tamanho, $inicio);
-                                        
+
                                         if($rs->count() > 0){
                                             foreach($rs as $segmento){
                                                     $idsOrgaos[] = $segmento->idOrgao;
@@ -520,14 +520,14 @@ class OperacionalController extends GenericControllerNew {
                                                     $arrOrgaos[$orgao->Codigo]["SiglaOrgao"] = $orgao->Sigla;
                                             }
                                     }
-                                        
+
                                         $this->_forward('preparar-xls-pdf', null, null, array(
                                                                                                 'dados'         =>$rs,
                                                                                                 'view'          =>'operacional/preparar-xls-pdf-segmentos.phtml',
                                                                                                 'tipo'          => $post->tipo,
                                                                                                 'orgaos'        => $arrOrgaos,
                                                                                                 )
-                                        );                 
+                                        );
                                 } else {
                                     //controlando a paginacao
                                     $this->intTamPag = 10;
@@ -547,9 +547,9 @@ class OperacionalController extends GenericControllerNew {
                                     if ($fim>$total) $fim = $total;
                                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-                                    if ($fim>$total) $fim = $total;			
+                                    if ($fim>$total) $fim = $total;
                                     $arrBusca = array();
-                                    $rs2 = $tbl->buscar($arrBusca, $ordem, $tamanho, $inicio);	
+                                    $rs2 = $tbl->buscar($arrBusca, $ordem, $tamanho, $inicio);
 
                                     if($rs2->count() > 0){
                                             foreach($rs2 as $segmento){
@@ -581,7 +581,7 @@ class OperacionalController extends GenericControllerNew {
 
 			if($get->consulta == "tiposdocumento"){
 				$tbl = new tbTipoDocumento();
-				
+
                                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                                         //buscando os registros no banco de dados
                                         $tamanho = -1;
@@ -591,13 +591,13 @@ class OperacionalController extends GenericControllerNew {
                                         $fim = 0;
                                         $arrBusca = array();
                                         $rs = $tbl->buscar($arrBusca, array(), $tamanho, $inicio);
-                                        
+
                                         $this->_forward('preparar-xls-pdf', null, null, array(
                                                                                                 'dados'=>$rs,
                                                                                                 'view'=>'operacional/preparar-xls-pdf-tiposdocumento.phtml',
                                                                                                 'tipo'=> $post->tipo
                                                                                                 )
-                                        );                 
+                                        );
                                 } else {
                                     //controlando a paginacao
                                     $this->intTamPag = 10;
@@ -617,9 +617,9 @@ class OperacionalController extends GenericControllerNew {
                                     if ($fim>$total) $fim = $total;
                                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-                                    if ($fim>$total) $fim = $total;			
+                                    if ($fim>$total) $fim = $total;
                                     $arrBusca = array();
-                                    $rs2 = $tbl->buscar($arrBusca, $ordem, $tamanho, $inicio);			
+                                    $rs2 = $tbl->buscar($arrBusca, $ordem, $tamanho, $inicio);
 
                                     $arrDados = array(
                                             "dados"           => $rs2,
@@ -649,13 +649,13 @@ class OperacionalController extends GenericControllerNew {
                                         $arrBusca = array();
                                          $arrBusca = array("idTipo = ?"=>1, "stEstado = ?"=>1);
                                         $rs = $tbl->buscar($arrBusca, array(), $tamanho, $inicio);
-                                        
+
                                         $this->_forward('preparar-xls-pdf', null, null, array(
                                                                                                 'dados'=>$rs,
                                                                                                 'view'=>'operacional/preparar-xls-pdf-pecasdivulgacao.phtml',
                                                                                                 'tipo'=> $post->tipo
                                                                                                 )
-                                        );                 
+                                        );
                                 } else {
                                     //controlando a paginacao
                                     $this->intTamPag = 10;
@@ -675,9 +675,9 @@ class OperacionalController extends GenericControllerNew {
                                     if ($fim>$total) $fim = $total;
                                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-                                    if ($fim>$total) $fim = $total;			
+                                    if ($fim>$total) $fim = $total;
                                     $arrBusca = array("idTipo = ?"=>1, "stEstado = ?"=>1);
-                                    $rs2 = $tbl->buscar($arrBusca, $ordem, $tamanho, $inicio);		
+                                    $rs2 = $tbl->buscar($arrBusca, $ordem, $tamanho, $inicio);
 
                                     $arrDados = array(
                                             "dados"		=> $rs2,
@@ -696,7 +696,7 @@ class OperacionalController extends GenericControllerNew {
 
 			if($get->consulta == "veiculosdivulgacao"){
 				$tbl = new Verificacao();
-				
+
                                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                                         //buscando os registros no banco de dados
                                         $tamanho = -1;
@@ -707,13 +707,13 @@ class OperacionalController extends GenericControllerNew {
                                         $arrBusca = array();
                                         $arrBusca = array("idTipo = ?"=>2, "stEstado = ?"=>1);
                                         $rs = $tbl->buscar($arrBusca, array(), $tamanho, $inicio);
-                                        
+
                                         $this->_forward('preparar-xls-pdf', null, null, array(
                                                                                                 'dados'=>$rs,
                                                                                                 'view'=>'operacional/preparar-xls-pdf-veiculosdivulgacao.phtml',
                                                                                                 'tipo'=> $post->tipo
                                                                                                 )
-                                        );                 
+                                        );
                                 } else {
                                     //controlando a paginacao
                                     $this->intTamPag = 10;
@@ -733,9 +733,9 @@ class OperacionalController extends GenericControllerNew {
                                     if ($fim>$total) $fim = $total;
                                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-                                    if ($fim>$total) $fim = $total;			
+                                    if ($fim>$total) $fim = $total;
                                     $arrBusca = array("idTipo = ?"=>2, "stEstado = ?"=>1);
-                                    $rs2 = $tbl->buscar($arrBusca, $ordem, $tamanho, $inicio);	
+                                    $rs2 = $tbl->buscar($arrBusca, $ordem, $tamanho, $inicio);
 
                                     $arrDados = array(
                                             "dados"		=> $rs2,
@@ -747,13 +747,13 @@ class OperacionalController extends GenericControllerNew {
                                             "parametrosBusca"   => $_POST,
                                             "urlPaginacao"      => $this->_urlPadrao."/operacional/tabelas"
                                     );
-                                    
+
                                     $this->montaTela("operacional/veiculosdivulgacao.phtml", $arrDados);
                                 }
 			}
 		}
 	}
-	
+
 	/**
 	 * Metodo que mostra tela de consulta
 	 * @param void
@@ -765,7 +765,7 @@ class OperacionalController extends GenericControllerNew {
 		$tbl = new tbItensPlanilhaProduto();
 		$rs = $tbl->buscaItemProduto($where);
 		$this->view->dados = $rs;
-		
+
 	}
 
 	public function pedidoProrrogacaoAction(){
@@ -873,8 +873,8 @@ class OperacionalController extends GenericControllerNew {
 		//xd($pag);
 
 		$tblProrrogacao = new Prorrogacao();
-                
-                
+
+
                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                     //buscando os registros no banco de dados
                     $tamanho = -1;
@@ -889,7 +889,7 @@ class OperacionalController extends GenericControllerNew {
                                                                             'view'=>'operacional/preparar-xls-pdf-pedido-prorrogacao.phtml',
                                                                             'tipo'=> $post->tipo
                                                                             )
-                    );                 
+                    );
                 } else {
                     $total = $tblProrrogacao->pegaTotal($arrBusca);
                 $total = $total["total"];
@@ -918,7 +918,7 @@ class OperacionalController extends GenericControllerNew {
 
 	public function agenciaBancariaAction(){
 		$tblBancos 			= new Bancos();
-		$rsBancos  			= $tblBancos->buscar();		
+		$rsBancos  			= $tblBancos->buscar();
 		$this->view->bancos = $rsBancos;
 
 		$tblUf 			 = new Uf();
@@ -937,38 +937,38 @@ class OperacionalController extends GenericControllerNew {
 	public function resultadoAgenciaBancariaAction(){
 		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
-		
+
 		$post     = Zend_Registry::get('post');
 		$arrBusca = array();
-		
+
 		if(!empty($post->banco)){
 			$arrBusca["c.Banco = ?"] = $post->banco;
 		}
-		
+
 		if(!empty($post->uf)){
 			$tblUf = new Uf();
 			$rsUf = $tblUf->buscar(array("idUF = ?"=>$post->uf))->current();
 			$arrBusca["a.Uf = ?"] = $rsUf->Sigla;
 		}
-		
+
 		if(!empty($post->cidade)){
 			$tblMunicipio = new Municipios();
 			$rsMunicipio = $tblMunicipio->buscar(array("idMunicipioIBGE = ?"=>$post->cidade))->current();
 			$arrBusca["a.Cidade = ?"] = $rsMunicipio->Descricao;
 		}
-		
+
 		if(!empty($post->mecanismo)){
 			$arrBusca["c.Mecanismo = ?"] = $post->mecanismo;
 		}
-		
+
 		if(!empty($post->area)){
 			$arrBusca["p.Area = ?"] = $post->area;
 		}
-		
+
 		if(!empty($post->tipoPessoa)){
 			$arrBusca["i.tipoPessoa = ?"] = $post->tipoPessoa;
 		}
-		
+
 		if(!empty($post->agencia)){
 			$arrBusca["c.Agencia = ?"] = retiraMascara($post->agencia);
 		}
@@ -1067,7 +1067,7 @@ class OperacionalController extends GenericControllerNew {
                                                                             'view'=>'operacional/preparar-xls-pdf-agencia-bancaria.phtml',
                                                                             'tipo'=> $post->tipo
                                                                             )
-                    );                 
+                    );
                 } else {
                     $pag = 1;
                     //$get = Zend_Registry::get('get');
@@ -1116,10 +1116,10 @@ class OperacionalController extends GenericControllerNew {
 	public function resultadoExtratoPautaReuniaoCnicAction(){
 		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
-		
+
 		$post     = Zend_Registry::get('post');
 		$arrBusca = array("Mecanismo = ?"=>1);
-		
+
 		if(!empty($post->banco)){ $arrBusca["c.Banco = ?"] = $post->banco; }
 		if(!empty($post->nrReuniao)){ $arrBusca["pa.NumeroReuniao = ?"] = $post->nrReuniao; }
 		if(!empty($post->orgao)){ $arrBusca["o.Codigo = ?"] = $post->orgao; }
@@ -1149,7 +1149,7 @@ class OperacionalController extends GenericControllerNew {
 		//xd($campos);
 		//xd($_POST);
                  $tbl   = new Projetos();
-                
+
                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                     //buscando os registros no banco de dados
                     $tamanho = -1;
@@ -1159,12 +1159,12 @@ class OperacionalController extends GenericControllerNew {
                     $total = 0;
                     $fim = 0;
                     $rs = $tbl->buscarProjetosPautaReuniao($arrBusca, array(new Zend_Db_expr("Area ASC")), $tamanho, $inicio);
-                    
+
                     $this->_forward('preparar-xls-pdf', null, null, array(
                                                                             'dados'=>$rs,
                                                                             'view'=>'operacional/preparar-xls-pdf-extrato-pauta-reuniao-cnic.phtml',
                                                                             'tipo'=> $post->tipo
-                                                                            ) 
+                                                                            )
                     );
                 } else {
                     $pag = 1;
@@ -1175,7 +1175,7 @@ class OperacionalController extends GenericControllerNew {
                     $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
                     $fim    = $inicio + $this->intTamPag;
 
-                   
+
                     $total = $tbl->pegaTotalProjetosPautaReuniao($arrBusca);
                     $total = $total["total"];
 
@@ -1199,17 +1199,17 @@ class OperacionalController extends GenericControllerNew {
 	public function tramitacaoAction(){
 		$tblOrgao = new Orgaos();
 		$rsOrgao  = $tblOrgao->buscar(array(), array("Sigla ASC"));
-		
+
 		$this->view->orgaos = $rsOrgao;
-	
+
 	}
-	
+
 	public function resultadoTramitacaoDocumentosAction(){
 		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
-		
+
 		$post = Zend_Registry::get('post');
-	
+
 		//recuperando filtros do POST
 //		$arrBusca = array("hd.idDocumento <> ?"=>0, "hd.stEstado = ?"=>1, "hd.idDocumento is NOT NULL"=>'');
 		$arrBusca = array();
@@ -1218,23 +1218,23 @@ class OperacionalController extends GenericControllerNew {
 		if(!empty($post->lote)){ $arrBusca["hd.idLote = ?"] = $post->lote; }
 		if(!empty($post->situacao)){ if($post->formasituacao == "1"){ $arrBusca["hd.Acao = ?"] = $post->situacao; }else{ $arrBusca["hd.Acao <> ?"] = $post->situacao; } }
 		if(!empty($post->correio)){ $arrBusca["d.CodigoCorreio = ?"] = $post->correio; }
-		
+
 		//Varifica se foi solicitado a ordenação
 		if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('7');}
-		
+
 		//montando parametros de busca dos campos de data
 		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtDocumento", "dtDocumento", "d.dtDocumento", "dtDocumento_Final", $arrBusca);
 		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "hd.dtTramitacaoEnvio", "dtEnvio_Final", $arrBusca);
 		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtRecebido", "dtRecebido", "hd.dtTramitacaoRecebida", "dtRecebido_Final", $arrBusca);
-	
+
 		//instanciando modelo referente a tabela tbHistoricoDocumento
 		$tblTbHistoricoDocumento = new tbHistoricoDocumento();
-		
+
 		//pegando o total de registros na tabela, considerando os filtros passados
 		$total = $tblTbHistoricoDocumento->pegaTotalTramitacaoDocumento($arrBusca)->current()->toArray();
 		$total = $total["total"];
-	
-                
+
+
                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                     //buscando os registros no banco de dados
                     $tamanho = -1;
@@ -1248,7 +1248,7 @@ class OperacionalController extends GenericControllerNew {
                                                                             'view'=>'operacional/preparar-xls-pdf-documentos.phtml',
                                                                             'tipo'=> $post->tipo
                                                                             )
-                    );                 
+                    );
                 } else {
                     //controlando a paginacao
                     $pag = 1;
@@ -1260,12 +1260,12 @@ class OperacionalController extends GenericControllerNew {
                     $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
                     $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
                     if ($fim>$total) $fim = $total;
-                    
+
                     //buscando os registros no banco de dados
                     $rs = $tblTbHistoricoDocumento->buscarTramitacaoDocumento($arrBusca, $ordem, $tamanho, $inicio);
                 }
-		
-	
+
+
 		//mandando variaveis para a view
 		$this->view->tramitacoes 	 = $rs;
 		$this->view->pag 			 = $pag;
@@ -1275,13 +1275,13 @@ class OperacionalController extends GenericControllerNew {
 		$this->view->totalPag 		 = $totalPag;
 		$this->view->parametrosBusca = $_POST;
 	}
-	
+
 	public function resultadoTramitacaoProjetosAction(){
 		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
-		
+
 		$post = Zend_Registry::get('post');
-	
+
 		//recuperando filtros do POST
 		$arrBusca = array("hd.stEstado = ?"=>1, "((hd.idDocumento is NULL) OR (hd.idDocumento = ?))"=>0);
 		if(!empty($post->origem)){ if($post->formaorigem == "1"){ $arrBusca["oo.Codigo = ?"] = $post->origem; }else{ $arrBusca["oo.Codigo <> ?"] = $post->origem; } }
@@ -1289,22 +1289,22 @@ class OperacionalController extends GenericControllerNew {
 		if(!empty($post->lote)){ $arrBusca["hd.idLote = ?"] = $post->lote; }
 		if(!empty($post->situacao)){ if($post->formasituacao == "1"){ $arrBusca["hd.Acao = ?"] = $post->situacao; }else{ $arrBusca["hd.Acao <> ?"] = $post->situacao; } }
 		if(!empty($post->correio)){ $arrBusca["d.CodigoCorreio = ?"] = $post->correio; }
-		
+
 		//Varifica se foi solicitado a ordenação
 		if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('7');}
-		
+
 		//montando parametros de busca dos campos de data
 		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtDocumento", "dtDocumento", "d.dtDocumento", "dtDocumento_Final", $arrBusca);
 		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "hd.dtTramitacaoEnvio", "dtEnvio_Final", $arrBusca);
 		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtRecebido", "dtRecebido", "hd.dtTramitacaoRecebida", "dtRecebido_Final", $arrBusca);
-	
+
 		//instanciando modelo referente a tabela tbHistoricoDocumento
 		$tblTbHistoricoDocumento = new tbHistoricoDocumento();
-		
+
 		//pegando o total de registros na tabela, considerando os filtros passados
 		$total = $tblTbHistoricoDocumento->pegaTotalCompleto($arrBusca)->current()->toArray();
 		$total = $total["total"];
-	
+
                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                     //buscando os registros no banco de dados
                     $tamanho = -1;
@@ -1317,7 +1317,7 @@ class OperacionalController extends GenericControllerNew {
                                                                             'dados'=>$rs,
                                                                             'view'=>'operacional/preparar-xls-pdf-projetos.phtml',
                                                                             'tipo'=> $post->tipo
-                                                                            ) 
+                                                                            )
                     );
                 } else {
                     //controlando a paginacao
@@ -1344,28 +1344,28 @@ class OperacionalController extends GenericControllerNew {
 		$this->view->totalPag        = $totalPag;
 		$this->view->parametrosBusca = $_POST;
 	}
-	
+
 	public function editaisMincAction(){
 		$tblOrgao = new Orgaos();
 		$rsOrgao  = $tblOrgao->buscar(array(), array("Sigla ASC"));
 		$this->view->orgaos = $rsOrgao;
-	
+
 		$tblClassificacao = new tbClassificaDocumento();
 		$rsClassificacao  = $tblClassificacao->buscar(array(), array("dsClassificaDocumento ASC"));
 		$this->view->classificacoes = $rsClassificacao;
-	
+
 		$tblAvaliacao = new Verificacao();
 		$rsAvaliacao  = $tblAvaliacao->buscar(array("idTipo = ?"=>4));
 		$this->view->avaliacoes = $rsAvaliacao;
-	
+
 		$tblFundoSetorial = new Verificacao();
 		$rsFundoSetorial  = $tblFundoSetorial->buscar(array("idTipo = ?"=>15));
 		$this->view->fundossetoriais = $rsFundoSetorial;
-	
+
 		$tblUf = new Uf();
 		$rsUf  = $tblUf->buscar(array(), array("Descricao ASC"));
 		$this->view->ufs = $rsUf;
-		
+
 		$arrRegioes = array();
 		foreach($rsUf as $item){
 			$arrRegioes[] = $item->Regiao;
@@ -1378,7 +1378,7 @@ class OperacionalController extends GenericControllerNew {
 		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
 		$post   = Zend_Registry::get('post');
-	
+
 		//recuperando filtros do POST
 		$arrBusca = array();
 		if($post->fundo != ""){ $arrBusca["vr2.idVerificacao = ?"] = $post->fundo; }
@@ -1389,19 +1389,19 @@ class OperacionalController extends GenericControllerNew {
 		if($post->avaliacao != ""){ $arrBusca["mv.movimentacao = ?"] = $post->avaliacao; }
 		if($post->uf != ""){ $arrBusca["uf.idUF = ?"] = $post->uf; }
 		if($post->uf == "" && $post->regiao != ""){ $arrBusca["uf.Regiao = ?"] = $post->regiao; }
-		
+
 		//montando parametros de busca dos campos de data
 		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtCadastro", "dtCadastro", "p.dtAceite", "dtCadastro_Final", $arrBusca);
 		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "x1.DtEnvio", "dtEnvio_Final", $arrBusca);
-	
+
 		//instanciando modelo referente a tabela PreProjeto
 		$tbl = new Proposta();
-                
+
 		//pegando o total de registros na tabela, considerando os filtros passados
 		$total = $tbl->propostasPorEdital($arrBusca, array(), null, null, true);
 		//$total = $total["total"];
 		//$total = 1000;
-                
+
                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                     //buscando os registros no banco de dados
                     $tamanho = -1;
@@ -1411,17 +1411,17 @@ class OperacionalController extends GenericControllerNew {
                     $fim = 0;
                     $ordem = array("25 ASC", "18 ASC", "15 ASC", "21 ASC", "24 ASC");
                     $rs = $tbl->propostasPorEdital($arrBusca, $ordem, $tamanho, $inicio);
-                    
+
                     $arr = array();
                     foreach($rs as $item){
                             $arr[$item->FundoNome][$item->dsClassificaDocumento][$item->Edital][] = $item;
                     }
-                    
+
                     $this->_forward('preparar-xls-pdf', null, null, array(
                                                                             'dados'=>$rs,
                                                                             'view'=>'operacional/preparar-xls-pdf-resultado-editais-minc.phtml',
                                                                             'tipo'=> $post->tipo
-                                                                            ) 
+                                                                            )
                     );
                 } else {
                     //controlando a paginacao
@@ -1459,23 +1459,23 @@ class OperacionalController extends GenericControllerNew {
 	}
 
 	public function diagnosticoAction(){
-		
+
 		$tblOrgao = new Orgaos();
 		$rsOrgao  = $tblOrgao->buscar(array(), array("Sigla ASC"));
 		$this->view->orgaos = $rsOrgao;
-	
+
 		$tblSituacao = new Situacao();
 		$rsSituacao  = $tblSituacao->buscar(array(), array("Codigo ASC"));
 		$this->view->situacoes = $rsSituacao;
-	
+
 	}
 
 
-	public function resultadoDiagnosticoAction(){		
+	public function resultadoDiagnosticoAction(){
 		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
-		
-		$tbl = new Projetos();		
+
+		$tbl = new Projetos();
 		$post = Zend_Registry::get('post');
 
 		// verifica se foi solicitado a ordenação
@@ -1485,41 +1485,41 @@ class OperacionalController extends GenericControllerNew {
 			$arrBusca = array();
 			if($post->orgao != ""){ $arrBusca["pr.Orgao = ?"] = $post->orgao; }
 			if($post->situacao != ""){ $arrBusca["pr.Situacao = ?"] = $post->situacao; }
-			
+
 			$rs    = $tbl->diagnostico($arrBusca,$ordem);
 			//xd(count($rs));
-			$this->_forward('gerar-pdf-xls-diagnostico',null,null,array('valores'=>$rs,'gerar'=>'html'));			
+			$this->_forward('gerar-pdf-xls-diagnostico',null,null,array('valores'=>$rs,'gerar'=>'html'));
 		} else if(isset($post->xls) && !empty($post->xls) && $post->xls == 'xls'){
 			$arrBusca = array();
 			if($post->orgao != ""){ $arrBusca["pr.Orgao = ?"] = $post->orgao; }
 			if($post->situacao != ""){ $arrBusca["pr.Situacao = ?"] = $post->situacao; }
-			
+
 			$rs    = $tbl->diagnostico($arrBusca,$ordem);
 			//xd(count($rs));
-			$this->_forward('gerar-pdf-xls-diagnostico',null,null,array('valores'=>$rs,'gerar'=>'xls'));			
+			$this->_forward('gerar-pdf-xls-diagnostico',null,null,array('valores'=>$rs,'gerar'=>'xls'));
 		}
 		//$arrBusca = array("o.Status = ?"=>0, "s.StatusProjeto <> ?"=>0, "o.idSecretaria = ?"=>$this->codOrgaoSuperior);
 		$arrBusca = array();
 		if($post->orgao != ""){ $arrBusca["pr.Orgao = ?"] = $post->orgao; }
 		if($post->situacao != ""){ $arrBusca["pr.Situacao = ?"] = $post->situacao; }
-		
+
 		//controlando a paginacao
 //        $this->intTamPag = 10;
 //		$pag             = 1;
 //		if (isset($post->pag)) $pag = $post->pag;
 //		if (isset($post->tamPag)) $this->intTamPag = $post->tamPag;
-		
+
 //		$rs = $tbl->diagnostico($arrBusca);
 //		$total = count($rs);
-		
+
 //		$inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 //		$fim    = $inicio + $this->intTamPag;
-		
+
 //		if ($fim>$total) $fim = $total;
 //		$totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
 //		$tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-//		if ($fim>$total) $fim = $total;			
-	
+//		if ($fim>$total) $fim = $total;
+
 //		$rs = $tbl->diagnostico($arrBusca,$ordem, $tamanho, $inicio);
 		$rs = $tbl->diagnostico($arrBusca,$ordem);
 		$this->view->projetos        = $rs;
@@ -1529,9 +1529,9 @@ class OperacionalController extends GenericControllerNew {
 //		$this->view->fim 			 = $fim;
 //		$this->view->totalPag 		 = $totalPag;
 		$this->view->parametrosBusca = $_POST;
-		
+
 	}
-	
+
 	public function gerarPdfXlsDiagnosticoAction(){
 		Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
 		$this->_response->clearHeaders();
@@ -1544,23 +1544,23 @@ class OperacionalController extends GenericControllerNew {
 		$tblOrgao = new Orgaos();
 		$rsOrgao  = $tblOrgao->buscar(array(), array("Sigla ASC"));
 		$this->view->orgaos = $rsOrgao;
-	
+
 		$tblClassificacao = new tbClassificaDocumento();
 		$rsClassificacao  = $tblClassificacao->buscar(array(), array("dsClassificaDocumento ASC"));
 		$this->view->classificacoes = $rsClassificacao;
-	
+
 		$tblAvaliacao = new Verificacao();
 		$rsAvaliacao  = $tblAvaliacao->buscar(array("idTipo = ?"=>4));
 		$this->view->avaliacoes = $rsAvaliacao;
-	
+
 		$tblFundoSetorial = new Verificacao();
 		$rsFundoSetorial  = $tblFundoSetorial->buscar(array("idTipo = ?"=>15));
 		$this->view->fundossetoriais = $rsFundoSetorial;
-	
+
 		$tblUf = new Uf();
 		$rsUf  = $tblUf->buscar(array(), array("Descricao ASC"));
 		$this->view->ufs = $rsUf;
-		
+
 		$arrRegioes = array();
 		foreach($rsUf as $item){
 			$arrRegioes[] = $item->Regiao;
@@ -1572,25 +1572,25 @@ class OperacionalController extends GenericControllerNew {
 	public function resultadoExtratoPautaIntercambioAction(){
 		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
-                
+
                 $tbl   = new Projetos();
-		
+
 		$post = Zend_Registry::get('post');
-	
+
 		//recuperando filtros do POST
 		$arrBusca = array("pr.Mecanismo = ?"=>2, "pr.Orgao = ?"=>254, "pr.Modalidade = ?"=>"02"/*, "pr.Situacao = ?"=>"C23"*/);
 		if($post->fundo != ""){ $arrBusca["vr2.idVerificacao = ?"] = $post->fundo; }
 		if($post->classificacao != ""){ $arrBusca["cl.idClassificaDocumento = ?"] = $post->classificacao; }
 		if($post->edital != ""){ $arrBusca["e.idEdital = ?"] = $post->edital; }
 		if($post->uf != ""){ $arrBusca["uf.CodUfIbge = ?"] = $post->uf; }
-		
+
 		//Varifica se foi solicitado a ordenação
 		if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array("18 ASC", "4 ASC");}
-		
+
 		//montando parametros de busca dos campos de data
 		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "x1.DtEnvio", "dtEnvio_Final", $arrBusca);
 		//xd($arrBusca);
-	
+
 		foreach($_POST["visaoAgente"] as $campo){
 			$arrCampos = explode("_", $campo);
 			if($arrCampos[0] == "cmpsOrd"){
@@ -1625,7 +1625,7 @@ class OperacionalController extends GenericControllerNew {
                                                                             'view'=>'operacional/preparar-xls-pdf-extrato-pauta-intercambio.phtml',
                                                                             'tipo'=> $post->tipo
                                                                             )
-                    );                 
+                    );
                 } else {
                     $pag = 1;
                     //$get = Zend_Registry::get('get');
@@ -1635,7 +1635,7 @@ class OperacionalController extends GenericControllerNew {
                     $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
                     $fim    = $inicio + $this->intTamPag;
 
-                    
+
                     $total = $tbl->extratoPautaItercambio($arrBusca, $ordem, null, null, true);
 
                     //xd($total);
@@ -1658,7 +1658,7 @@ class OperacionalController extends GenericControllerNew {
 	public function resultadoProjetosPorSituacaoAction(){
 		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
-		
+
 		$get = Zend_Registry::get('get');
 
 		$filtro = $this->_request->getParam('situacao');
@@ -1735,7 +1735,7 @@ class OperacionalController extends GenericControllerNew {
 	/*===========================================================================*/
 
 	public function projetosEmPautaReuniaoCnicAction(){
-		$tblAgentes = new Agentes();
+		$tblAgentes = new Agente_Model_Agentes();
 		$rsAgentes  = $tblAgentes->BuscarComponente();
 		$this->view->agentes = $rsAgentes;
 
@@ -1747,12 +1747,12 @@ class OperacionalController extends GenericControllerNew {
 	public function resultadoProjetosEmPautaReuniaoCnicAction(){
 		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
-		
+
 		$post = Zend_Registry::get('post');
 
 		$arrBusca = array();
 		if(!empty($post->pronac)){ $arrBusca["pr.AnoProjeto + pr.Sequencial = ?"] = $post->pronac; }
-		
+
 		if(!empty($post->nomeProjeto)){
 			$projeto = utf8_decode($post->nomeProjeto);
 			if($post->tipoPesqNomeProjeto == 'QC'){
@@ -1763,7 +1763,7 @@ class OperacionalController extends GenericControllerNew {
 				if(!empty($post->nomeProjeto)){ $arrBusca["pr.NomeProjeto like (?)"] = "{$projeto}%"; }
 			}
 		}
-		
+
 		if(!empty($post->componente)){
 			if($post->tipoPesqComponente == 'EIG'){
 				if(!empty($post->componente)){ $arrBusca["dpc.idAgente = ?"] = $post->componente; }
@@ -1771,7 +1771,7 @@ class OperacionalController extends GenericControllerNew {
 				if(!empty($post->componente)){ $arrBusca["dpc.idAgente <> ?"] = $post->componente; }
 			}
 		}
-		
+
 		if(!empty($post->area)){
 			if($post->tipoPesqArea == 'EIG'){
 				if(!empty($post->area)){ $arrBusca["ar.Codigo = ?"] = $post->area; }
@@ -1779,9 +1779,9 @@ class OperacionalController extends GenericControllerNew {
 				if(!empty($post->area)){ $arrBusca["ar.Codigo <> ?"] = $post->area; }
 			}
 		}
-		
+
 		if(!empty($post->segmento)){ $arrBusca["pr.Segmento = ?"] = $post->segmento; }
-		
+
 		$statusAnalise = null;
 		if(!empty($post->statusAnalise)){
 			if($post->statusAnalise == "SA"){
@@ -1794,8 +1794,8 @@ class OperacionalController extends GenericControllerNew {
 		//BUSCA PARA DATAS
 		//$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtDistribuicao", "dtDistribuicao", "dpc.DtDistribuicao", "dtDistribuicao_Final", $arrBusca);
 		//xd($arrBusca);
-                
-                
+
+
                  $tbl   = new tbDistribuicaoProjetoComissao();
 
                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
@@ -1806,18 +1806,18 @@ class OperacionalController extends GenericControllerNew {
                     $totalPag = 0;
                     $total = 0;
                     $fim = 0;
-                    
+
                     $arrQtdeProjetosAnalisado    = array('total'=>0);
                     $arrQtdeProjetosNaoAnalisado = array('total'=>0);
                     $qtdeAnalisado 				 = 1;
                     $qtdeNaoAnalisado 			 = 1;
                     $qtdeNovaAnalisado 			 = 0;
                     $qtdeNovaNaoAnalisado 		 = 0;
-                    
+
                     $ordem = array("1 ASC", "23 ASC");
                     $rs  = $tbl->buscarProjetoEmPauta($arrBusca, $ordem, $tamanho, $inicio, null, $statusAnalise);
                     $arr = $tbl->buscarProjetoEmPauta($arrBusca, $ordem)->toArray();
-                    
+
                     foreach($arr as $projetos) {
 
                             $analise = $projetos['Analise'];
@@ -1847,17 +1847,17 @@ class OperacionalController extends GenericControllerNew {
                                     }
                             }
                     }
-                    
+
                     $landscape = (sizeof($post->visaoAgente) > 4)?true:false;
-                    
+
                     $this->_forward('preparar-xls-pdf', null, null, array(
                                                                             'dados'=>$rs,
                                                                             'view'=>'operacional/preparar-xls-pdf-projetos-em-pauta-reuniao-cnic.phtml',
                                                                             'tipo'=> $post->tipo,
                                                                             'orientacao'=>$landscape
                                                                             )
-                    );                 
-                } else {                
+                    );
+                } else {
                     $pag = 1;
                     //$get = Zend_Registry::get('get');
                     if (isset($post->pag)) $pag = $post->pag;
@@ -1866,7 +1866,7 @@ class OperacionalController extends GenericControllerNew {
                     $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
                     $fim    = $inicio + $this->intTamPag;
 
-                   
+
                     $total = $tbl->buscarProjetoEmPauta($arrBusca, array(), null, null, true, $statusAnalise);
 
                     //xd($total);
@@ -1886,7 +1886,7 @@ class OperacionalController extends GenericControllerNew {
                     $qtdeNaoAnalisado 			 = 1;
                     $qtdeNovaAnalisado 			 = 0;
                     $qtdeNovaNaoAnalisado 		 = 0;
-                
+
                     //UTIL PARA GERACAO DO GRAFICO
                     foreach($arr as $projetos) {
 
@@ -1919,8 +1919,8 @@ class OperacionalController extends GenericControllerNew {
                     }
 
                 }
-                
-                
+
+
                 if(isset($post->gerarResumo)){
 			$rs = $tbl->buscarProjetoEmPauta($arrBusca, $ordem);
 			$this->resumoProjetosAvaliadosCnic($rs);
@@ -2077,7 +2077,7 @@ class OperacionalController extends GenericControllerNew {
 		$rsTbReuniao  = $tblTbReuniao->buscar(array("NrReuniao >= ?"=>184), array("NrReuniao DESC"));
 		$this->view->reunioes = $rsTbReuniao;
 
-		$tblAgentes = new Agentes();
+		$tblAgentes = new Agente_Model_Agentes();
 		$rsAgentes  = $tblAgentes->BuscarComponente();
 		$this->view->agentes = $rsAgentes;
 
@@ -2097,7 +2097,7 @@ class OperacionalController extends GenericControllerNew {
 	public function resultadoProjetosAvaliadosCnicAction(){
 		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
-		
+
 		$post = Zend_Registry::get('post');
 		$this->intTamPag = 30;
 
@@ -2114,7 +2114,7 @@ class OperacionalController extends GenericControllerNew {
 				if(!empty($post->nomeProjeto)){ $arrBusca["p.NomeProjeto like (?)"] = "{$projeto}%"; }
 			}
 		}
-		
+
 		if(!empty($post->area)){
 			if($post->tipoPesqArea == 'EIG'){
 				if(!empty($post->area)){ $arrBusca["a.Codigo = ?"] = $post->area; }
@@ -2122,11 +2122,11 @@ class OperacionalController extends GenericControllerNew {
 				if(!empty($post->area)){ $arrBusca["a.Codigo <> ?"] = $post->area; }
 			}
 		}
-		
+
 		if(!empty($post->segmento)){ $arrBusca["p.Segmento = ?"] = $post->segmento; }
 		if(!empty($post->situacao)){ $arrBusca["s.Codigo = ?"] = $post->situacao; }
 		if(!empty($post->resultadoAvaliacao)){ $arrBusca["stAnalise = ?"] = $post->resultadoAvaliacao; }
-		
+
 		if(!empty($post->proponente)){
 			$proponente = utf8_decode($post->proponente);
 			if($post->tipoPesqProponente == 'QC'){
@@ -2137,7 +2137,7 @@ class OperacionalController extends GenericControllerNew {
 				if(!empty($post->proponente)){ $arrBusca["n.Descricao like (?)"] = "{$proponente}%"; }
 			}
 		}
-		
+
 		if(!empty($post->componente)){
 			if($post->tipoPesqComponente == 'EIG'){
 				if(!empty($post->componente)){ $arrBusca["z.idAgente = ?"] = $post->componente; }
@@ -2146,7 +2146,7 @@ class OperacionalController extends GenericControllerNew {
 			}
 		}
 		//xd($arrBusca);
-		
+
 		if(!empty($post->orgao)){
 			if($post->tipoPesqEntidade == 'EIG'){
 				if(!empty($post->orgao)){ $arrBusca["d.idOrgao = ?"] = $post->orgao; }
@@ -2154,7 +2154,7 @@ class OperacionalController extends GenericControllerNew {
 				if(!empty($post->orgao)){ $arrBusca["d.idOrgao <> ?"] = $post->orgao; }
 			}
 		}
-                
+
                 $tbl   = new tbPauta();
 
                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
@@ -2165,11 +2165,11 @@ class OperacionalController extends GenericControllerNew {
                     $totalPag   = 0;
                     $total      = 0;
                     $fim        = 0;
-                    
+
                     $ordem      = array("12 ASC");
                     $rs         = $tbl->buscarProjetosAvaliados($arrBusca, $ordem, $tamanho, $inicio);
-                    
-                    
+
+
                     $arr                = $tbl->buscarProjetosAvaliados($arrBusca, $ordem);
                     $arrQtdeRegistros   = array();
                     $qtde 		= 1;
@@ -2187,13 +2187,13 @@ class OperacionalController extends GenericControllerNew {
                                     $arrQtdeRegistros[$situacao] = $qtde;
                             }
                     }
-                    
+
                     $this->_forward('preparar-xls-pdf', null, null, array(
                                                                             'dados'=>$rs,
                                                                             'view'=>'operacional/preparar-xls-pdf-projetos-avaliados-cnic.phtml',
                                                                             'tipo'=> $post->tipo,
                                                                             )
-                    );                 
+                    );
                 }  else {
                     $pag = 1;
                     //$get = Zend_Registry::get('get');
@@ -2203,7 +2203,7 @@ class OperacionalController extends GenericControllerNew {
                     $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
                     $fim    = $inicio + $this->intTamPag;
 
-                    
+
                     $total = $tbl->buscarProjetosAvaliados($arrBusca, array(), null, null, true);
 
                     //xd($total);
@@ -2316,7 +2316,7 @@ class OperacionalController extends GenericControllerNew {
 		$rsTbReuniao  = $tblTbReuniao->buscar(array("NrReuniao >= ?"=>184), array("NrReuniao DESC"));
 		$this->view->reunioes = $rsTbReuniao;
 
-		$tblAgentes = new Agentes();
+		$tblAgentes = new Agente_Model_Agentes();
 		$rsAgentes  = $tblAgentes->BuscarComponente();
 		$this->view->agentes = $rsAgentes;
 
@@ -2336,14 +2336,14 @@ class OperacionalController extends GenericControllerNew {
 	public function resultadoProjetosVotoAlteradoAction(){
 		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
-		
+
 		$post = Zend_Registry::get('post');
 		$this->intTamPag = 30;
 
 		$arrBusca = array();
 		if(!empty($post->nrReuniao)){ $arrBusca["t.idNrReuniao = ?"] = $post->nrReuniao; }
 		if(!empty($post->pronac)){ $arrBusca["p.AnoProjeto + p.Sequencial = ?"] = $post->pronac; }
-		
+
 		if(!empty($post->nomeProjeto)){
 			$projeto = utf8_decode($post->nomeProjeto);
 			if($post->tipoPesqNomeProjeto == 'QC'){
@@ -2354,7 +2354,7 @@ class OperacionalController extends GenericControllerNew {
 				if(!empty($post->nomeProjeto)){ $arrBusca["p.NomeProjeto like (?)"] = "{$projeto}%"; }
 			}
 		}
-		
+
 		if(!empty($post->area)){
 			if($post->tipoPesqArea == 'EIG'){
 				if(!empty($post->area)){ $arrBusca["a.Codigo = ?"] = $post->area; }
@@ -2362,7 +2362,7 @@ class OperacionalController extends GenericControllerNew {
 				if(!empty($post->area)){ $arrBusca["a.Codigo <> ?"] = $post->area; }
 			}
 		}
-		
+
 		if(!empty($post->segmento)){ $arrBusca["p.Segmento = ?"] = $post->segmento; }
 		if(!empty($post->situacao)){ $arrBusca["s.Codigo = ?"] = $post->situacao; }
 		if(!empty($post->resultadoAvaliacao)){ $arrBusca["stAnalise = ?"] = $post->resultadoAvaliacao; }
@@ -2377,12 +2377,12 @@ class OperacionalController extends GenericControllerNew {
 				if(!empty($post->proponente)){ $arrBusca["n.Descricao like (?)"] = "{$proponente}%"; }
 			}
 		}
-		
+
 		if(!empty($post->componente)){ $arrBusca["z.idAgente = ?"] = $post->componente; }
 		if(!empty($post->orgao)){ $arrBusca["d.idOrgao = ?"] = $post->orgao; }
 
                 $tbl   = new tbPauta();
-                
+
                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                     //buscando os registros no banco de dados
                     $tamanho    = -1;
@@ -2391,11 +2391,11 @@ class OperacionalController extends GenericControllerNew {
                     $totalPag   = 0;
                     $total      = 0;
                     $fim        = 0;
-                    
+
                     $ordem = array("10 ASC", "13 ASC");
                     if(!empty($post->ordenacao)){ $ordem = array("10 ASC"); $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }
                     $rs = $tbl->buscarProjetosVotoAlterado($arrBusca, $ordem, $tamanho, $inicio);
-                    
+
                     //UTIL PARA GERACAO DO GRAFICO
                     $arr = $tbl->buscarProjetosVotoAlterado($arrBusca, $ordem);
                     $arrQtdeRegistros = array();
@@ -2414,14 +2414,14 @@ class OperacionalController extends GenericControllerNew {
                                     $arrQtdeRegistros[$situacao] = $qtde;
                             }
                     }
-                    
+
                     $this->_forward('preparar-xls-pdf', null, null, array(
                                                                             'dados'=>$rs,
                                                                             'view'=>'operacional/preparar-xls-pdf-projetos-voto-alterado.phtml',
                                                                             'tipo'=> $post->tipo
                                                                             )
                             );
-                    
+
                 } else {
                     $pag = 1;
                     //$get = Zend_Registry::get('get');
@@ -2431,7 +2431,7 @@ class OperacionalController extends GenericControllerNew {
                     $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
                     $fim    = $inicio + $this->intTamPag;
 
-                    
+
                     $total = $tbl->buscarProjetosVotoAlterado($arrBusca, array(), null, null, true);
 
                     //xd($total);
@@ -2540,7 +2540,7 @@ class OperacionalController extends GenericControllerNew {
 
 	/*====== NOVOS RELAROTIO =====*/
 	public function projetosEmPautaReuniaoCnicSemQuebraAction(){
-		$tblAgentes = new Agentes();
+		$tblAgentes = new Agente_Model_Agentes();
 		$rsAgentes  = $tblAgentes->BuscarComponente();
 		$this->view->agentes = $rsAgentes;
 
@@ -2610,8 +2610,8 @@ class OperacionalController extends GenericControllerNew {
                 $statusAnalise = 1; //Não Analisados
             }
         }
-        
-        
+
+
         $pag = 1;
         //$get = Zend_Registry::get('get');
         if (isset($post->pag))
@@ -2719,7 +2719,7 @@ class OperacionalController extends GenericControllerNew {
         $this->view->totalPag = $totalPag;
         $this->view->parametrosBusca = $_POST;
     }
-    
+
 	public function gerarXlsHtmlProjetosEmPautaReuniaoCnicSemQuebraAction() {
         header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
@@ -2773,7 +2773,7 @@ class OperacionalController extends GenericControllerNew {
         if (!empty($post->segmento)) {
             $arrBusca["Segmento"] = "p.Segmento = '$post->segmento'";
         }
-        
+
         $arrBusca["status"] = 0;
         if (!empty($post->statusAnalise)) {
             if ($post->statusAnalise == "SA") {
@@ -2782,7 +2782,7 @@ class OperacionalController extends GenericControllerNew {
                 $arrBusca["status"] = 1; //Não Analisados
             }
         }
-        
+
         Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
 //            $rs2 = $tbl->buscaProjetosEmPauta($arrBusca, $ordem, null, null, null, $statusAnalise);
         $tbl = new tbDistribuicaoProjetoComissao();
@@ -2794,8 +2794,8 @@ class OperacionalController extends GenericControllerNew {
 //            'valores' => $rs2,
 //            'gerar' => 'xls')
 //        );
-        
-        $this->view->excel = $rs2;	
+
+        $this->view->excel = $rs2;
 		$this->view->gerar = array(
             'gerar' => 'xls',
             'statusAnalise' => '',
@@ -2812,38 +2812,38 @@ class OperacionalController extends GenericControllerNew {
             'tipoOrdenacao' => '',
             'gerarXls' => 'xls'
         );
-        
+
         Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
 		ini_set('max_execution_time', 900);
         $this->_response->clearHeaders();
-        
+
 //        [gerar] => xls
-//        [statusAnalise] => 
-//        [pronac] => 
+//        [statusAnalise] =>
+//        [pronac] =>
 //        [tipoPesqNomeProjeto] => QC
-//        [nomeProjeto] => 
+//        [nomeProjeto] =>
 //        [tipoPesqArea] => EIG
-//        [area] => 
-//        [segmento] => 
+//        [area] =>
+//        [segmento] =>
 //        [tipoPesqComponente] => EIG
-//        [componente] => 
+//        [componente] =>
 //        [pag] => 1
-//        [ordenacao] => 
-//        [tipoOrdenacao] => 
+//        [ordenacao] =>
+//        [tipoOrdenacao] =>
 //        [gerarXls] => xls
     }
-	
+
 	/*
 	 * Recebe os dados de outra função pelo método _forward
 	 */
 //	public function gerarXlsHtmlProjetosEmPautaReuniaoCnicSemQuebraAction(){
 //		Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
 //		ini_set('max_execution_time', 900);
-//		$this->_response->clearHeaders();  
+//		$this->_response->clearHeaders();
 //		$dados = $this->_getAllParams();
 //		//xd($dados);
-//		$this->view->projetos 	= $dados;	
-//		$this->view->gerar 		= $dados;	
+//		$this->view->projetos 	= $dados;
+//		$this->view->gerar 		= $dados;
 //	}
 
 	public function resumoProjetosEmPautaReuniaoCnicSemQuebra($recordset){
@@ -2993,7 +2993,7 @@ class OperacionalController extends GenericControllerNew {
 		$rsUf  = $tblUf->buscar(array(), array("Descricao ASC"));
 
 		$this->view->ufs = $rsUf;
-		
+
 		$arrRegioes = array();
 		foreach($rsUf as $item){
 			$arrRegioes[] = $item->Regiao;
@@ -3014,7 +3014,7 @@ class OperacionalController extends GenericControllerNew {
 
 		$arrBusca = array();
 		//if(!empty($post->nrReuniao)){ $arrBusca["t.idNrReuniao = ?"] = $post->nrReuniao; }
-		
+
 		//Valida se o pronac foi passado
 		if(!empty($post->pronac)){ $arrBusca["p.AnoProjeto + p.Sequencial = ?"] = $post->pronac; }
 
@@ -3058,12 +3058,12 @@ class OperacionalController extends GenericControllerNew {
 		$pag = 1;
 		if (isset($post->pag)) $pag = $post->pag;
 		if (isset($post->tamPag)) $this->intTamPag = $post->tamPag;
-		
+
 		$inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 		$fim    = $inicio + $this->intTamPag;
 
 		$total = $tbl->buscarDemonstrativoDeCaptacao($arrBusca, array(), null, null, true,$arrBuscaValor);
-		//xd($total);		
+		//xd($total);
 
 		$totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
 		$tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
@@ -3090,7 +3090,7 @@ class OperacionalController extends GenericControllerNew {
 					$arrData['Ano <= ?']  = substr($arrBusca['ca.DtRecibo <= ?'], 2, 2);
 					$teto = $tetoRenuncia->buscarAnoTetoCaptacao($arrData);
 			 	}
-					
+
 			}elseif(!empty($post->dtCaptacao) && empty($post->dtCaptacao_Final))
 			{
 				$arrData['Ano >= ?'] = substr($post->dtCaptacao, 8, 2);
@@ -3102,7 +3102,7 @@ class OperacionalController extends GenericControllerNew {
 				$arrData['Ano <= ?']  = substr($post->dtCaptacao_Final, 8, 2);
 				$teto = $tetoRenuncia->buscarAnoTetoCaptacao($arrData);
 			}
-			
+
 			foreach ($teto as $valorRenuncia){$vlRenunciaTotal = $valorRenuncia->somatorioAnoBusca;}
 			foreach ($rsSomatorioCaptado as $valorCaptado)   {$vlCaptado = $valorCaptado->somatorioVlCaptado;}
 
@@ -3112,19 +3112,19 @@ class OperacionalController extends GenericControllerNew {
 			$this->view->valorRenunciaFiscal = $vlRenunciaTotal - $vlCaptado;
 		//}
 
-		
+
 		//CHAMA METODO DE QUE IRA GERAR TELA DE IMPRESSÃO HTML OU XLS
 		if(isset($post->imprimirResumo) && $post->imprimirResumo == 'html')
 		{
 			Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
-			
+
 			//Refaz a busca para envia via _forward
 			$rs    = $tbl->buscarDemonstrativoDeCaptacao($arrBusca, $ordem, null, null, null,$arrBuscaValor);
 			$i     = 0;
 			$lista = array();
 			//Envia a lista após buscar o valor total captado
 			foreach ($rs as $d)
-			{								
+			{
 				//$lista[$i]['DtRecibo'] 			= $d->DtRecibo;
 				$lista[$i]['CaptacaoReal'] 			= $d->CaptacaoReal;
 				$lista[$i]['vlAutorizado'] 			= $d->vlAutorizado;
@@ -3136,14 +3136,14 @@ class OperacionalController extends GenericControllerNew {
 				$lista[$i]['Proponente'] 			= $d->Proponente;
 				$lista[$i]['DescArea'] 				= $d->DescArea;
 				$lista[$i]['DescSegmento'] 			= $d->DescSegmento;
-				$lista[$i]['Sigla'] 				= $d->Sigla;			
+				$lista[$i]['Sigla'] 				= $d->Sigla;
 				$i++;
 			}
 			//xd($lista);
-			
+
 			$rsSomatorioAutorizado = $tbl->buscarDemonstrativoDeCaptacaoSomatorioValorAutorizado($arrBusca, $arrBuscaValor);
 			$rsSomatorioCaptado    = $tbl->buscarDemonstrativoDeCaptacaoSomatorioValorCaptado($arrBusca, $arrBuscaValor);
-			 
+
 			if(!empty($post->dtCaptacao) && empty($post->dtCaptacao_Final))
 			{
 				$arrData['Ano >= ?'] = substr($post->dtCaptacao, 8, 2);
@@ -3155,13 +3155,13 @@ class OperacionalController extends GenericControllerNew {
 				$arrData['Ano <= ?'] = substr($post->dtCaptacao_Final, 8, 2);
 				$teto = $tetoRenuncia->buscarAnoTetoCaptacao($arrData);
 			}
-			 
+
 			foreach ($teto as $valorRenuncia){$vlRenunciaTotal = $valorRenuncia->somatorioAnoBusca;}
 			foreach ($rsSomatorioCaptado as $valorCaptado)   {$vlCaptado = $valorCaptado->somatorioVlCaptado;}
-			
+
 			//xd($vlCaptado);
 			$valorRenunciaFiscal = $vlRenunciaTotal - $vlCaptado;
-			
+
 			//Envia os parâmetros para outra função sem a necessidade de criar uma tela .phtml
 			$this->_forward('gerar-tela-xls-html',null,null,array('valores'=>$lista,
 																  'SmAu'=>$rsSomatorioAutorizado,
@@ -3171,19 +3171,19 @@ class OperacionalController extends GenericControllerNew {
 																  'gerar'=>'html'));
 		//xd('sdf');
 		}
-		
+
 		if(isset($post->gerarXls) && $post->gerarXls == 'xls')
 		{
 			Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
-			
+
 			//Refaz a busca para envia via _forward
 			$rs    = $tbl->buscarDemonstrativoDeCaptacao($arrBusca, $ordem, null, null, null,$arrBuscaValor);
 			$i 	   = 0;
 			$lista = array();
-			
+
 			//Envia a lista após buscar o valor total captado
 			foreach ($rs as $d)
-			{								
+			{
 				//$lista[$i]['DtRecibo'] 			= $d->DtRecibo;
 				$lista[$i]['CaptacaoReal'] 			= $d->CaptacaoReal;
 				$lista[$i]['vlAutorizado'] 			= $d->vlAutorizado;
@@ -3195,13 +3195,13 @@ class OperacionalController extends GenericControllerNew {
 				$lista[$i]['Proponente'] 			= $d->Proponente;
 				$lista[$i]['DescArea'] 				= $d->DescArea;
 				$lista[$i]['DescSegmento'] 			= $d->DescSegmento;
-				$lista[$i]['Sigla'] 				= $d->Sigla;			
+				$lista[$i]['Sigla'] 				= $d->Sigla;
 				$i++;
 			}
-			
+
 			$rsSomatorioAutorizado = $tbl->buscarDemonstrativoDeCaptacaoSomatorioValorAutorizado($arrBusca, $arrBuscaValor);
-			$rsSomatorioCaptado    = $tbl->buscarDemonstrativoDeCaptacaoSomatorioValorCaptado($arrBusca, $arrBuscaValor);			 
-			
+			$rsSomatorioCaptado    = $tbl->buscarDemonstrativoDeCaptacaoSomatorioValorCaptado($arrBusca, $arrBuscaValor);
+
 			if(!empty($post->dtCaptacao) && empty($post->dtCaptacao_Final))
 			{
 				$arrData['Ano >= ?'] = substr($post->dtCaptacao, 8, 2);
@@ -3213,10 +3213,10 @@ class OperacionalController extends GenericControllerNew {
 				$arrData['Ano <= ?']  = substr($post->dtCaptacao_Final, 8, 2);
 				$teto = $tetoRenuncia->buscarAnoTetoCaptacao($arrData);
 			}
-						 
+
 			foreach ($teto as $valorRenuncia){$vlRenunciaTotal = $valorRenuncia->somatorioAnoBusca;}
-			foreach ($rsSomatorioCaptado as $valorCaptado)   {$vlCaptado = $valorCaptado->somatorioVlCaptado;}	
-					
+			foreach ($rsSomatorioCaptado as $valorCaptado)   {$vlCaptado = $valorCaptado->somatorioVlCaptado;}
+
 			$valorRenunciaFiscal = $vlRenunciaTotal - $vlCaptado;
 			//Envia os parâmetros para outra função sem a necessidade de criar uma tela .phtml
 			$this->_forward('gerar-tela-xls-html',null,null,array('valores'=>$lista,
@@ -3226,15 +3226,15 @@ class OperacionalController extends GenericControllerNew {
 																  'renuncia'=>$valorRenunciaFiscal,
 																  'gerar'=>'xls'));
 		}
-				
+
 		//Passa os valores para a view
 		$rs = $tbl->buscarDemonstrativoDeCaptacao($arrBusca, $ordem, $tamanho, $inicio, null,$arrBuscaValor);
 		//xd($rs);
-		
+
 		$i     = 0;
-		$lista = array();	
+		$lista = array();
 		//Envia a lista após buscar o valor total captado
-		foreach ($rs as $d){								
+		foreach ($rs as $d){
 			//$lista[$i]['DtRecibo'] 			= $d->DtRecibo;
 			$lista[$i]['CaptacaoReal'] 			= $d->CaptacaoReal;
 			$lista[$i]['vlAutorizado'] 			= $d->vlAutorizado;
@@ -3246,11 +3246,11 @@ class OperacionalController extends GenericControllerNew {
 			$lista[$i]['Proponente'] 			= $d->Proponente;
 			$lista[$i]['DescArea'] 				= $d->DescArea;
 			$lista[$i]['DescSegmento'] 			= $d->DescSegmento;
-			$lista[$i]['Sigla'] 				= $d->Sigla;			
+			$lista[$i]['Sigla'] 				= $d->Sigla;
 			$i++;
 		}
 		//xd($lista);
-				
+
 		//Dados para view e para a paginação
 		$this->view->registros       = $lista;
 		$this->view->pag             = $pag;
@@ -3261,31 +3261,31 @@ class OperacionalController extends GenericControllerNew {
 		$this->view->parametrosBusca = $_POST;
 		//$this->view->arrQtdeRegistros = $arrQtdeRegistros;
 	}
-	
+
 	/*
 	 * Gera PDF pelo PDFCreator
 	 */
-	public function gerarPdfTotalAction() 
+	public function gerarPdfTotalAction()
 	{
-            
+
             $this->_helper->layout->disableLayout();
             ini_set('max_execution_time', 900);
 
             $this->_helper->viewRenderer->setNoRender();
 
-            //$post = Zend_Registry::get('post');       
+            //$post = Zend_Registry::get('post');
             $pdf = new PDFCreator($_POST['html'],'L');
 
             $pdf->gerarPdf();
         }
-    
+
 	/*
 	 * Recebe os dados de outra função pelo método _forward
 	 */
 	public function gerarTelaXlsHtmlAction(){
 		Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
 		ini_set('max_execution_time', 900);
-		$this->_response->clearHeaders();  
+		$this->_response->clearHeaders();
 		$teste = $this->_getAllParams();
 		//xd($teste);
 		$this->view->registros 			 = $teste;
@@ -3293,21 +3293,21 @@ class OperacionalController extends GenericControllerNew {
 		$this->view->valorCaptado        = $teste;
 		$this->view->ValorTetoRenuncia   = $teste;
 		$this->view->valorRenunciaFiscal = $teste;
-		$this->view->gerar 				 = $teste;		
+		$this->view->gerar 				 = $teste;
 	}
 
 	public function resumoDemonstrativoCaptacaoRecurso($recordset){
 		$arrQtdeRegistros = array();
 		$qtde = 1;
 		//xd(count($recordset));
-		
+
 		//UTIL PARA GERACAO DO GRAFICO
 		foreach($recordset as $registros) {
-				
+
 			$pronac  	  = $registros['PRONAC'];
 			$vlautorizado = $registros['vlAutorizado'];
 			$vlcaptado 	  = $registros['vlCaptado'];
-			
+
 			if(array_key_exists($pronac,$arrQtdeRegistros))
 			{
 				//$arrQtdeRegistros[$pronac]  = $pronac;
@@ -3356,21 +3356,21 @@ class OperacionalController extends GenericControllerNew {
 		}
 
 	}
-    
+
     public function contaBancariaAction(){
         //FUNÇÃO ACESSADA SOMENTE PELO TEC., COORD. E COORD. GERAL DE ACOMPANHAMENTO
         if($this->idPerfil != 121 && $this->idPerfil != 122 && $this->idPerfil != 123){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-        
+
 	}
-        
+
     public function resultadoContaBancariaAction(){
         //FUNÇÃO ACESSADA SOMENTE PELO TEC., COORD. E COORD. GERAL DE ACOMPANHAMENTO
         if($this->idPerfil != 121 && $this->idPerfil != 122 && $this->idPerfil != 123){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -3409,22 +3409,22 @@ class OperacionalController extends GenericControllerNew {
 
         /* ================== PAGINACAO ======================*/
         $where = array();
-        
+
         if (!empty($_GET['pronac'])){
             $this->view->pronac = $_GET['pronac'];
             $where["(p.AnoProjeto+p.Sequencial) = ?"] = $_GET['pronac'];
         }
-        
+
         if (!empty($_GET['tpPessoa']) || $_GET['tpPessoa'] == '0'){
             $this->view->tpPessoa = $_GET['tpPessoa'];
             $where["a.TipoPessoa = ?"] = $_GET['tpPessoa'];
         }
-        
+
         if (!empty($_GET['ocorrencia']) && $_GET['ocorrencia'] != '000'){
             $this->view->ocorrencia = $_GET['ocorrencia'];
             $where["c.OcorrenciaCB = ?"] = $_GET['ocorrencia'];
         }
-        
+
         if (!empty($_GET['estadoConta'])){
             $this->view->estadoConta = $_GET['estadoConta'];
             if($_GET['estadoConta'] == 1){
@@ -3433,18 +3433,18 @@ class OperacionalController extends GenericControllerNew {
                 $where["c.ContaBloqueada <> ?"] = '000000000000';
             }
         }
-        
+
         if (!empty($_GET['tpDtLtCap'])){
-            
+
             //SE O USUARIO NÃO INFORMAR A DATA CORRETAMENTE, O SISTEMA RETORNA A MSG.
             if(empty($_GET['dtInicioLtCap'])){
                 parent::message("Faltou informar a data para a realizarmos a pesquisa!", "operacional/conta-bancaria", "ALERT");
-                
+
             } else {
-                
+
                 $d1 = Data::dataAmericana($_GET['dtInicioLtCap']);
                 $this->view->dtInicioLtCap = $_GET['dtInicioLtCap'];
-                
+
                 //SE O USUARIO INFORMAR QUE DESEJA FAZER UMA ANALISE ENTRE DUAS DATAS E NAO INFORMAR A SEGUNDA DATA, O SISTEMA RETORNA A MSG.
                 if($_GET['tpDtLtCap'] == "entre" && empty($_GET['dtFimLtCap'])){
                     parent::message("Faltou informar a data final para a realizarmos a pesquisa!", "operacional/conta-bancaria", "ALERT");
@@ -3464,10 +3464,10 @@ class OperacionalController extends GenericControllerNew {
                 $this->view->tpDtLtCap = $_GET['tpDtLtCap'];
             }
         }
-        
+
         $Orgaos = new Orgaos();
         $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$this->idOrgao))->current();
-        
+
         if(isset($idSecretaria) && !empty($idSecretaria)){
             if($idSecretaria->idSecretaria == 160){
                 $where['p.Area = ?'] = 2;
@@ -3475,11 +3475,11 @@ class OperacionalController extends GenericControllerNew {
                 $where['p.Area <> ?'] = 2;
             }
         }
-        
+
         $ContaBancaria = new ContaBancaria();
         $total = $ContaBancaria->painelContasBancarias($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
-        
+
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
@@ -3498,19 +3498,19 @@ class OperacionalController extends GenericControllerNew {
             "Itenspag"=>$this->intTamPag,
             "tamanho"=>$tamanho
         );
-        
+
         $this->view->paginacao     = $paginacao;
         $this->view->qtdRegistros  = $total;
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
 	}
-    
+
     public function imprimirResultadoContaBancariaAction(){
         //FUNÇÃO ACESSADA SOMENTE PELO TEC., COORD. E COORD. GERAL DE ACOMPANHAMENTO
         if($this->idPerfil != 121 && $this->idPerfil != 122 && $this->idPerfil != 123){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -3549,22 +3549,22 @@ class OperacionalController extends GenericControllerNew {
 
         /* ================== PAGINACAO ======================*/
         $where = array();
-        
+
         if (!empty($_POST['pronac'])){
             $this->view->pronac = $_POST['pronac'];
             $where["(p.AnoProjeto+p.Sequencial) = ?"] = $_POST['pronac'];
         }
-        
+
         if (!empty($_POST['tpPessoa']) || $_POST['tpPessoa'] == '0'){
             $this->view->tpPessoa = $_POST['tpPessoa'];
             $where["a.TipoPessoa = ?"] = $_POST['tpPessoa'];
         }
-        
+
         if (!empty($_POST['ocorrencia']) && $_POST['ocorrencia'] != '000'){
             $this->view->ocorrencia = $_POST['ocorrencia'];
             $where["c.OcorrenciaCB = ?"] = $_POST['ocorrencia'];
         }
-        
+
         if (!empty($_POST['estadoConta'])){
             $this->view->estadoConta = $_POST['estadoConta'];
             if($_POST['estadoConta'] == 1){
@@ -3573,18 +3573,18 @@ class OperacionalController extends GenericControllerNew {
                 $where["c.ContaBloqueada <> ?"] = '000000000000';
             }
         }
-        
+
         if (!empty($_POST['tpDtLtCap'])){
-            
+
             //SE O USUARIO NÃO INFORMAR A DATA CORRETAMENTE, O SISTEMA RETORNA A MSG.
             if(empty($_POST['dtInicioLtCap'])){
                 parent::message("Faltou informar a data para a realizarmos a pesquisa!", "operacional/conta-bancaria", "ALERT");
-                
+
             } else {
-                
+
                 $d1 = Data::dataAmericana($_POST['dtInicioLtCap']);
                 $this->view->dtInicioLtCap = $_POST['dtInicioLtCap'];
-                
+
                 //SE O USUARIO INFORMAR QUE DESEJA FAZER UMA ANALISE ENTRE DUAS DATAS E NAO INFORMAR A SEGUNDA DATA, O SISTEMA RETORNA A MSG.
                 if($_POST['tpDtLtCap'] == "entre" && empty($_POST['dtFimLtCap'])){
                     parent::message("Faltou informar a data final para a realizarmos a pesquisa!", "operacional/conta-bancaria", "ALERT");
@@ -3604,10 +3604,10 @@ class OperacionalController extends GenericControllerNew {
                 $this->view->tpDtLtCap = $_POST['tpDtLtCap'];
             }
         }
-        
+
         $Orgaos = new Orgaos();
         $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$this->idOrgao))->current();
-        
+
         if(isset($idSecretaria) && !empty($idSecretaria)){
             if($idSecretaria->idSecretaria == 160){
                 $where['p.Area = ?'] = 2;
@@ -3619,17 +3619,17 @@ class OperacionalController extends GenericControllerNew {
         $ContaBancaria = new ContaBancaria();
         $total = $ContaBancaria->painelContasBancarias($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
-        
+
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
         $busca = $ContaBancaria->painelContasBancarias($where, $order, $tamanho, $inicio);
-        
+
         $this->view->qtdRegistros  = $total;
         $this->view->dados         = $busca;
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
 	}
-        
-        
-        
+
+
+
 }

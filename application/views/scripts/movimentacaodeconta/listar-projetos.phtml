@@ -2,9 +2,9 @@
     header('Content-Type: text/plain; charset=ISO-8859-1');
 ?>
 <script>
-    
+
     function JSSolucionarInconsistencia(idTipoInconsistencia,cpfCnpjIncentivador,idColunaBotaoCorrigir){
-                
+
         if(idTipoInconsistencia == '3'){ //sem incentivador
             JSCadastarIncentivador(cpfCnpjIncentivador,idColunaBotaoCorrigir);
         }
@@ -12,15 +12,15 @@
             //JSManterContaBancaria(nrPronac);
         }
     }
-    
+
     function JSCadastarIncentivador(cpfCnpj,idColunaBotaoCorrigir){
-          
+
         $('html').css('overflow', 'hidden');
         $("body").append("<div id='divDinamicaAgentes'></div>");
         $("#divDinamicaAgentes").html("");
         $('#divDinamicaAgentes').html("<br><br><center>Carregando dados...</center>");
         $.ajax({
-            url : '<?php echo $this->url(array('controller' => 'agentes', 'action' => 'incluiragente')); ?>',
+            url : '<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'incluiragente')); ?>',
             data :
                 {
                 cpf : cpfCnpj,
@@ -32,7 +32,7 @@
                 if (data.error)
                 {
                     $('#divDinamicaAgentes').html(data.msg);
-                }else{                    
+                }else{
                     $('#divDinamicaAgentes').html(data);
                 }
             },
@@ -69,7 +69,7 @@
             }
         });
     }
-    
+
     function JSManterContaBancaria(nrPronac, caminho){
 
         $('html').css('overflow', 'hidden');
@@ -120,9 +120,9 @@
             }
         });
     }
-    
+
     function JSVerificaIncentivador(cpfCnpj,idColunaBotaoCorrigir){
-        
+
         $.ajax({
             url : '<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'verifica-incentivador')); ?>',
             data :
@@ -136,21 +136,21 @@
                 }
             },
             complete: function(){
-                
+
             },
             type : 'post',
             dataType : 'json'
 
         });
     }
-    
+
 </script>
 <table class="tabela">
     <?php if ($this->registros->count() <= 0) : ?>
     <tr>
         <td align="center" ><em>Consulta efetuada com sucesso, por&eacute;m, n&atilde;o existem contas com captações identificadas para o filtro solicitado!</em></td>
     </tr>
-    <?php else: ?>      
+    <?php else: ?>
         <?php $ct=1; $arrProjeto =array(); $arrIncentivador =array();
             foreach($this->registros as $projeto): //xd($projeto);?>
             <?php if($ct==1) { ?>
@@ -193,7 +193,7 @@
                 <td align="center"><?php echo $projeto->dtCredito; ?></td>
                 <td align="right" class="<?php echo ($projeto->vlValorCredito == 'D') ? 'red' : 'blue' ; ?>"><?php echo $this->formatarReal($projeto->vlValorCredito); ?></td>
                 <td class="centro" id="coluna_<?php echo $projeto->idTipoInconsistencia."_".$ct; ?>">
-                    <?php if($projeto->idTipoInconsistencia && in_array($projeto->idTipoInconsistencia,array('3'))): //tipo 3 = Sem Incentivador , tipo 7 = Sem agencia 
+                    <?php if($projeto->idTipoInconsistencia && in_array($projeto->idTipoInconsistencia,array('3'))): //tipo 3 = Sem Incentivador , tipo 7 = Sem agencia
                              if(!in_array($projeto->nrCpfCnpjIncentivador,$arrIncentivador)): $arrIncentivador[] = $projeto->nrCpfCnpjIncentivador; ?>
                                 <img src="<?php echo $this->baseUrl(); ?>/public/img/ok_16x16.png" class="corrigir" style="cursor: pointer" onclick="JSSolucionarInconsistencia('<?php echo $projeto->idTipoInconsistencia; ?>','<?php echo $projeto->nrCpfCnpjIncentivador; ?>','coluna_<?php echo $projeto->idTipoInconsistencia."_".$ct; ?>')"/>
                         <?php endif; ?>

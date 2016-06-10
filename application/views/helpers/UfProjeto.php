@@ -20,7 +20,7 @@ class Zend_View_Helper_UfProjeto
 	 */
 	public function ufProjeto($cnpjcpf)
 	{
-		$Agentes = new Agentes();
+		$Agentes = new Agente_Model_Agentes();
 		$buscarUF = $Agentes->buscarUfMunicioAgente(array('a.CNPJCPF = ?' => $cnpjcpf));
 		return $buscarUF[0]['Sigla'];
 	} // fecha método ufProjeto()

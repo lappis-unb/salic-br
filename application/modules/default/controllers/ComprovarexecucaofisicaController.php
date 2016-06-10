@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 //require_once "GenericControllerNew.php";
 class ComprovarexecucaofisicaController extends GenericControllerNew
@@ -7,7 +7,7 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
     private $getCgcCpf = 0;
 
     public function init()
-    { 
+    {
         parent::perfil(4);
 
         /** Usuario Logado *********************************************** */
@@ -185,7 +185,7 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
         $DadosItensOrcam = $projetos->buscarItensComprovados($idpronac);
         $this->view->DadosItensOrcam = $DadosItensOrcam;
     }
-    
+
     public function localDeRealizacaoAction() {
 
         //** Verifica se o usuário logado tem permissão de acesso **//
@@ -249,21 +249,21 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
                     $validacaoInicio = Data::validarData(filter_input(INPUT_POST, 'dtInicioRealizacao' . $abrangenciaId));
                     $dtFim = Data::dataAmericana(filter_input(INPUT_POST, 'dtFimRealizacao' . $abrangenciaId));
                     $validacaoFim = Data::validarData(filter_input(INPUT_POST, 'dtFimRealizacao' . $abrangenciaId));
-		    
+
                     if (!$validacaoInicio || !$validacaoFim) {
                         parent::message('Data inválida.', $redirectUrl, 'ERROR');
                     }
                 }
-		
+
                 $abrangenciaRow = $AbrangenciaDAO->find($abrangenciaId)->current();
-		
+
                 if ($abrangenciaRow) {
                     if ($abrangenciaRow->siAbrangencia != 2 && $abrangenciaSituacao == 2) {
                         $abrangenciaRow->dtInicioRealizacao = $dtInicio;
-                        $abrangenciaRow->dtFimRealizacao = $dtFim;			
+                        $abrangenciaRow->dtFimRealizacao = $dtFim;
                     } elseif ($abrangenciaSituacao != 2) {
                         $abrangenciaRow->dtInicioRealizacao = null;
-                        $abrangenciaRow->dtFimRealizacao = null;			
+                        $abrangenciaRow->dtFimRealizacao = null;
                     }
                     if ($abrangenciaSituacao == 1) {
                         $justificativa = filter_input(INPUT_POST, 'justificativa' . $abrangenciaId);
@@ -274,13 +274,13 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
                         $abrangenciaRow->dsJustificativa = null;
                     }
 
-                    
+
                     $abrangenciaRow->siAbrangencia = $abrangenciaSituacao;
                     $abrangenciaRow->Usuario = $this->IdUsuario;
                     $abrangenciaRow->save();
                 }
             }
-	    
+
             if (filter_input(INPUT_POST, 'novoPais')) {
                 if (31 == \filter_input(\INPUT_POST, 'novoPais')) { //31=Brasil
                     $idPais = filter_input(INPUT_POST, 'novoPais');
@@ -301,11 +301,11 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
 
                 $Abrangencia = new Abrangencia();
                 $abrangencias = $Abrangencia->verificarIgual($idPais, $idUF, $idMunicipio, $idProjeto);
-		
+
                 if (0 == count($abrangencias)) {
                     $dtInicioNovo = null;
                     $dtFimNovo = null;
-		    
+
                     if (filter_input(INPUT_POST, 'novoDtInicioRealizacao')) {
                         $dtInicioNovo = Data::dataAmericana(filter_input(INPUT_POST, 'novoDtInicioRealizacao'));
                         $dtFimNovo = Data::dataAmericana(filter_input(INPUT_POST, 'novoDtFimRealizacao'));
@@ -315,7 +315,7 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
                             parent::message('Data inválida.', $redirectUrl, 'ERROR');
                         }
                     }
-		    
+
                     $dados = array(
                         'idProjeto' => $idProjeto,
                         'idPais' => $idPais,
@@ -723,7 +723,7 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
         $dados = array();
         $dados['a.CNPJCPF = ?'] = $cnpjcpf;
 
-        $agentes = new Agentes();
+        $agentes = new Agente_Model_Agentes();
         $result = $agentes->buscarAgenteNome($dados);
 
         $a = 0;
@@ -1020,7 +1020,7 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
         $dadosComprovantes = $Arquivo->buscarComprovantesExecucao($idpronac);
         $this->view->DadosComprovantes = $dadosComprovantes;
     }
-    
+
     public function buscarDadosItensAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $idPlanilhaAprovacao = $_POST['idPlanilhaAprovacao'];
@@ -1032,7 +1032,7 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
         $a = 0;
         if(count($result) > 0){
             foreach ($result as $registro) {
-                
+
                 $tipoDocumento = null;
                 switch ($registro['tpDocumento']) {
                     case 1:
@@ -1051,7 +1051,7 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
                         $tipoDocumento = 'Autônomo';
                         break;
                 }
-                
+
                 $formaPagamento = '-';
                 switch ($registro['tpFormaDePagamento']) {
                     case 1:
@@ -1064,7 +1064,7 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
                         $formaPagamento = 'Saque/Dinheiro';
                         break;
                 }
-                     
+
                 $dadosItem[$a]['DtPagamento'] = Data::tratarDataZend($registro['DtPagamento'], 'Brasileira');
                 $dadosItem[$a]['vlComprovacao'] = !empty($registro['vlComprovacao']) ? 'R$ '.number_format($registro['vlComprovacao'], 2, ",", ".") : '';
                 $dadosItem[$a]['tpDocumento'] = !empty($tipoDocumento) ? utf8_encode($tipoDocumento) : '';
@@ -1759,19 +1759,19 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
     public function finalizarCadastroRelatorioAction() {
         //** Verifica se o usuário logado tem permissão de acesso **//
         $this->verificarPermissaoAcesso(false, true, false);
-        
+
         $idpronac = $this->_request->getParam("idpronac");
         $confirmacao = $this->_request->getParam("envio");
         if (strlen($idpronac) > 7) {
             $idpronac = Seguranca::dencrypt($idpronac);
         }
-        
+
         try{
             if ($confirmacao) {
-                
+
                 $auth = Zend_Auth::getInstance(); // pega a autenticação
                 $idUsuario = $auth->getIdentity()->IdUsuario; // usuário logado
-                
+
                 //ATUALIZA A SITUAÇÃO DO PROJETO
                 $Projetos = new Projetos();
                 $d = array();
@@ -1781,7 +1781,7 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
                 $d['Logon'] = $idUsuario;
                 $w = "IdPRONAC = $idpronac";
                 $Projetos->update($d, $w);
-                
+
                 $dados = array();
                 $dados['siCumprimentoObjeto'] = 2;
                 $where = "idPronac = $idpronac ";
@@ -1798,7 +1798,7 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
         } catch(Exception $e) {
             parent::message($e->getMessage(), "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idpronac), "ERROR");
         }
-        
+
     }
 
     public function deletarImagemCumprimentoDoObjetoAction()

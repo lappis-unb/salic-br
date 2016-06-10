@@ -13,7 +13,7 @@ class PesquisarprojetofiscalizacaoController extends GenericControllerNew {
     private $codOrgao = null;
     private $grupoAtivo = null;
     private $codUsuario = 0;
-    
+
     public function init() {
 
         $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
@@ -54,7 +54,7 @@ class PesquisarprojetofiscalizacaoController extends GenericControllerNew {
 // fecha método init()*/
 
     public function indexAction() {
-        
+
     }
 
     public function gridAction(){
@@ -101,7 +101,7 @@ class PesquisarprojetofiscalizacaoController extends GenericControllerNew {
             $where['pr.AnoProjeto+pr.Sequencial = ?'] = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
             $this->view->pronacProjeto = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
         }
-        
+
         if($this->grupoAtivo == 134 && (isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro']))){
             //Coordenador
             $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
@@ -125,7 +125,7 @@ class PesquisarprojetofiscalizacaoController extends GenericControllerNew {
             //$where['b.stFiscalizacaoProjeto in (?)'] = array('1');
             //$where['b.idUsuarioInterno = ?'] = $this->codUsuario;
         }
-        
+
         if( (isset($_POST['tecFiltro']) || isset($_GET['tecFiltro'])) && (!empty($_POST['tecFiltro']) || !empty($_GET['tecFiltro'])) ){
             $tecnico = isset($_POST['tecFiltro']) ? $_POST['tecFiltro'] : $_GET['tecFiltro'];
             $this->view->tecnico = $tecnico;
@@ -173,7 +173,7 @@ class PesquisarprojetofiscalizacaoController extends GenericControllerNew {
         $selectAp = $aprovacaoDao->totalAprovadoProjeto(true);
         /*$abrangenciaDao = new Abrangencia();
         $selectAb = $abrangenciaDao->abrangenciaProjeto(true);*/
-        $tblAgentes = new Agentes();
+        $tblAgentes = new Agente_Model_Agentes();
         $selectAb = $tblAgentes->buscarUfMunicioAgente(array(),null,null,null,true);
         $projetosDao = new Projetos();
 
@@ -304,7 +304,7 @@ class PesquisarprojetofiscalizacaoController extends GenericControllerNew {
         //$abrangenciaDao = new Abrangencia();
         //$selectAb = $abrangenciaDao->abrangenciaProjeto(true);
 
-        $tblAgentes = new Agentes();
+        $tblAgentes = new Agente_Model_Agentes();
         $selectAb = $tblAgentes->buscarUfMunicioAgente(array(),null,null,null,true);
 
         $projetosDao = new Projetos();
@@ -549,7 +549,7 @@ class PesquisarprojetofiscalizacaoController extends GenericControllerNew {
 
         if ($post->valorMaior != '')
             $where['(sac.dbo.fnTotalAprovadoProjeto(p.AnoProjeto, p.Sequencial)) <= ?'] = $post->valorMaior;
-        
+
 //        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess?o com o grupo ativo
 //        $codOrgao = $GrupoAtivo->codOrgao;
 //        $where['p.Orgao =?'] = $codOrgao;
@@ -652,7 +652,7 @@ class PesquisarprojetofiscalizacaoController extends GenericControllerNew {
 
             return $idUltimoArquivo;
         } else {
-            
+
         }
         /*
           else{
@@ -876,8 +876,8 @@ class PesquisarprojetofiscalizacaoController extends GenericControllerNew {
         }else{
             $where = array('U.gru_codigo = ?' => $perfil, 'A.Status = ?' => 0, 'U.uog_orgao = ?' => $this->view->orgaoAtivo);
         }
-        
-        $agentesDao = new Agentes();
+
+        $agentesDao = new Agente_Model_Agentes();
 
         $tecnicos = $agentesDao->buscarFornecedorFiscalizacao($where)->toArray();
         foreach ($tecnicos as $key1 => $val1) {

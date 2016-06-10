@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Controller Login
  * @author tisomar - Politec
@@ -75,7 +75,7 @@ class LoginController extends GenericControllerNew {
                 // realiza a busca do usuï¿½rio no banco, fazendo a autenticaç?o do mesmo
                 $Usuario = new Sgcacesso();
                 $verificaStatus = $Usuario->buscar(array ( 'Cpf = ?' => $username));
-                
+
                 $verificaSituacao = 0;
                 if(count($verificaStatus)>0){
                     $IdUsuario =  $verificaStatus[0]->IdUsuario;
@@ -124,18 +124,18 @@ class LoginController extends GenericControllerNew {
                     }
 
 
-                    $agentes = new Agentes();
+                    $agentes = new Agente_Model_Agentes();
                     $verificaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $username))->current();
 
                     if ( !empty ( $verificaAgentes ) ) {
 
-                        //                                        $this->_redirect("/agentes/incluiragenteexterno");
+                        //                                        $this->_redirect("/agente/agentes/incluiragenteexterno");
                         //                                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->IdUsuario}", "ALERT");
                         return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
                     }
                     else {
                         return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
-                        //$this->_redirect("/agentes/incluiragenteexterno");
+                        //$this->_redirect("/agente/agentes/incluiragenteexterno");
                         parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->IdUsuario}", "ALERT");
                     }
 
@@ -209,7 +209,7 @@ class LoginController extends GenericControllerNew {
                  * ==============================================================
                  */
                 /* ========== VERIFICA SE O RESPONSAVEL JA TEM CADASTRO COMO PROPONENTE ========== */
-                $Agentes = new Agentes();
+                $Agentes = new Agente_Model_Agentes();
                 $Visao   = new Visao();
                 $buscarAgente = $Agentes->buscar(array('CNPJCPF = ?' => $cpf));
                 $idAgenteProp = count($buscarAgente) > 0 ? $buscarAgente[0]->idAgente : 0;
@@ -261,7 +261,7 @@ class LoginController extends GenericControllerNew {
             $email = $post->email; // recebe email
             $sgcAcesso = new Sgcacesso();
             $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf, "Email = ?" => $email, "DtNascimento = ?" => $dataNasc));
-            
+
             $verificaUsuario = $sgcAcessoBuscaCpf->toArray();
             if ( empty ( $verificaUsuario ) ) {
                 parent::message("Dados incorretos!", "/login/index", "ALERT");
@@ -289,7 +289,7 @@ class LoginController extends GenericControllerNew {
             $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
             $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n?o responda.<br><br>";
             $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
-            
+
             $email = $sgcAcessoBuscaCpfArray[0]['Email'];
             $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
             parent::message("Senha gerada com sucesso. Verifique seu email!", "/login/index", "CONFIRM");
@@ -489,7 +489,7 @@ class LoginController extends GenericControllerNew {
 
             $comparaSenhaNova = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaNova);
             $senhaNovaCript = $comparaSenhaNova[0]->senha;
-            
+
             if ( trim($senhaAtualBanco) !=  trim($SenhaFinal)) {
                 parent::message("Por favor, digite a senha atual correta!", "/login/alterarsenhausuario?idUsuario=$idUsuario","ALERT");
             }

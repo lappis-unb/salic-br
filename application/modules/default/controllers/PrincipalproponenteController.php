@@ -13,7 +13,7 @@
 class PrincipalproponenteController extends GenericControllerNew {
 
     private $idAgente = null;
-    
+
     public function init() {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $GrupoAtivo->codGrupo = 1111;
@@ -24,20 +24,12 @@ class PrincipalproponenteController extends GenericControllerNew {
         $auth = Zend_Auth::getInstance(); // instancia da autenticação
         $this->idUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
         $Usuario = new Usuario(); // objeto usuário
-		//xd($auth->getIdentity());
-        //$idagente = $Usuario->getIdUsuario('',$auth->getIdentity()->Cpf);
-        //xd($idagente);
-        //$this->idAgente = $idagente['idAgente'];
-        $Agente = new Agentes();
-        //$buscarAgente = $Agente;
+        $Agente = new Agente_Model_Agentes();
         $this->idAgente = $auth->getIdentity()->IdUsuario;
-        //xd($idagente);
     }
 
-// fecha método init()
-
     public function indexAction() {
-        $a = new Agentes();
+        $a = new Agente_Model_Agentes();
         Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
         $this->view->saudacao = Data::saudacao() . "! " . Data::mostraData() . ".";
 
@@ -49,23 +41,23 @@ class PrincipalproponenteController extends GenericControllerNew {
         else{
             $this->view->vinculos = false;
         }
-        
-        
+
+
         // Comunicados
         $tbComunicados = new tbComunicados();
-		
+
 		$where['stEstado = ?'] = 1;
-		$where['stOpcao = ?'] = 1; 
+		$where['stOpcao = ?'] = 1;
 		$ordem = array();
-		
+
 		$rs = $tbComunicados->listarComunicados($where, $ordem);
-		
+
 		$this->view->comunicados = $rs;
-        
-        
+
+
     } // fecha método indexAction()
-    
-    
+
+
     /**
 	 * Método listarComunicados()
 	 * @access public
@@ -78,11 +70,11 @@ class PrincipalproponenteController extends GenericControllerNew {
 		$this->_helper->layout->disableLayout();
 		$post = Zend_Registry::get('post');
 		$this->intTamPag = 1;
-		
+
 		$tbComunicados = new tbComunicados();
-		
+
 		$where = array();
-			
+
 		$periodo1 = $this->_request->getParam("periodo1");
 		$periodo2 = $this->_request->getParam("periodo2");
 		$stEstado = $this->_request->getParam("stEstado");
@@ -93,25 +85,25 @@ class PrincipalproponenteController extends GenericControllerNew {
 			$where['dtInicioVigencia >= ?']  = $periodo1;
 			$where['dtTerminoVigencia <= ?'] = $periodo2;
 		}
-		
+
 		if($stEstado != '')
 		{
 			$where['stEstado = ?'] = $stEstado;
 		}
-		
+
 		if($stOpcao != '')
 		{
 			$where['stOpcao = ?'] = $stOpcao;
 		}
-	
-		
+
+
 		$pag = 1;
         //$get = Zend_Registry::get('get');
         if (isset($post->pag)) $pag = $post->pag;
         if (isset($post->tamPag)) $this->intTamPag = $post->tamPag;
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
         $fim    = $inicio + $this->intTamPag;
-        
+
         $total = $tbComunicados->listarComunicados($where, array(), null, null, true);
 
         //xd($total);
@@ -121,7 +113,7 @@ class PrincipalproponenteController extends GenericControllerNew {
 
         $ordem = array("6 DESC");
         $rs = $tbComunicados->listarComunicados($where, $ordem, $tamanho, $inicio);
-		
+
 		$this->view->registros 		  = $rs;
 		$this->view->pag 			  = $pag;
 		$this->view->total 			  = $total;
@@ -130,9 +122,9 @@ class PrincipalproponenteController extends GenericControllerNew {
 		$this->view->totalPag 		  = $totalPag;
 		$this->view->parametrosBusca  = $_POST;
 	}
-    
-    
-    
+
+
+
 }
 
 ?>

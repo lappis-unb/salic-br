@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -45,7 +45,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
     }
 
     public function indexAction(){
-        
+
     }
     public function aguardandoparecerAction(){
         $produtoDAO = new Produto();
@@ -86,7 +86,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
         $tela = 'resaguardandoparecer';
         $this->gerarAnexo($tela);
         $this->view->tudo   =   $this->gerarInfoPaginas($tela,$this->filtroGeral($tela),100);
-    }   
+    }
     public function resumoAction(){
         $tela   = 'resumo';
         $filtro = 'resaguardandoparecer';
@@ -108,7 +108,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
         $grafico->setTituloGrafico($tituloGrafico);
         $grafico->setTituloEixoXY("Parecerista","Analise");
         $grafico->configurar($_POST);
-        
+
         $where = $this->filtroGeral('resaguardandoparecer');
 
         $distribuirParecerDAO   =   new tbDistribuirParecer();
@@ -132,14 +132,14 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
         $this->gerarAnexo($tela);
         $this->view->projetos = $this->gerarInfoPaginas($tela,array(),10);
     }
-    
+
 
     public function parecerconsolidadoAction(){
         $tela   = 'parecerconsolidado';
         $this->gerarAnexo($tela);
         $this->view->projetos = $this->gerarInfoPaginas($tela,array(),10);
     }
-    
+
     public function geraldeanaliseAction(){
         $produtoDAO     =   new Produto();
         $OrgaosDAO      =   new Orgaos();
@@ -151,14 +151,14 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
         $this->view->Pareceristas   =   $NomesDAO->buscarPareceristas();
         $this->view->Areas          =   $AreaDAO->buscar();
         $this->view->Segmento       =   $SegmentoDAO->buscar(array('stEstado = ?'=>1));
-        
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
     }
-    
+
     public function resgeraldeanaliseAction(){
         $this->intTamPag = 20;
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -202,17 +202,17 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
             $where["p.AnoProjeto+p.Sequencial = ?"] = $_GET['pronac'];
             $this->view->pronac = $_GET['pronac'];
         }
-        
+
         if((isset($_GET['nmProjeto']) && !empty($_GET['nmProjeto']))){
             $where["p.NomeProjeto like '%".$_GET['nmProjeto']."%'"] = '';
             $this->view->nmProjeto = $_GET['nmProjeto'];
         }
-        
+
         if((isset($_GET['unVinculada']) && !empty($_GET['unVinculada']))){
             $where["d.idOrgao = ?"] = $_GET['unVinculada'];
             $this->view->unVinculada = $_GET['unVinculada'];
         }
-                
+
         if((isset($_GET['qtDiasDistribuir']) && !empty($_GET['qtDiasDistribuir']))){
             if(!empty($_GET['qtDiasDistribuirVl'])){
                 if($_GET['qtDiasDistribuir'] == 1){
@@ -224,7 +224,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                 $this->view->qtDiasDistribuirVl = $_GET['qtDiasDistribuirVl'];
             }
         }
-        
+
         if((isset($_GET['qtDiasAnalisar']) && !empty($_GET['qtDiasAnalisar']))){
             if(!empty($_GET['qtDiasAnalisarVl'])){
                 if($_GET['qtDiasDistribuir'] == 1){
@@ -244,7 +244,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                 $this->view->qtDiasAnalisarVl = $_GET['qtDiasAnalisarVl'];
             }
         }
-        
+
         if((isset($_GET['qtDiasCoord']) && !empty($_GET['qtDiasCoord']))){
             if(!empty($_GET['qtDiasCoordVl'])){
                 if($_GET['qtDiasCoord'] == 1){
@@ -256,7 +256,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                 $this->view->qtDiasCoordVl = $_GET['qtDiasCoordVl'];
             }
         }
-        
+
         if((isset($_GET['qtDiasIniExec']) && !empty($_GET['qtDiasIniExec']))){
             if(!empty($_GET['qtDiasIniExecVl'])){
                 if($_GET['qtDiasIniExec'] == 1){
@@ -268,11 +268,11 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                 $this->view->qtDiasIniExecVl = $_GET['qtDiasIniExecVl'];
             }
         }
-        
+
         $Projetos = New Projetos();
         $total = $Projetos->painelRelatoriosGeralAnalise($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
-        
+
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
@@ -291,15 +291,15 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
             "Itenspag"=>$this->intTamPag,
             "tamanho"=>$tamanho
         );
-        
+
         $this->view->paginacao     = $paginacao;
         $this->view->qtdRegistros  = $total;
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
     }
-    
+
     public function imprimirResgeraldeanaliseAction(){
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -343,17 +343,17 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
             $where["p.AnoProjeto+p.Sequencial = ?"] = $_POST['pronac'];
             $this->view->pronac = $_POST['pronac'];
         }
-        
+
         if((isset($_POST['nmProjeto']) && !empty($_POST['nmProjeto']))){
             $where["p.NomeProjeto like '%".$_POST['nmProjeto']."%'"] = '';
             $this->view->nmProjeto = $_POST['nmProjeto'];
         }
-        
+
         if((isset($_POST['unVinculada']) && !empty($_POST['unVinculada']))){
             $where["d.idOrgao = ?"] = $_POST['unVinculada'];
             $this->view->unVinculada = $_POST['unVinculada'];
         }
-                
+
         if((isset($_POST['qtDiasDistribuir']) && !empty($_POST['qtDiasDistribuir']))){
             if($_POST['qtDiasDistribuir'] == 1){
                 $where["DATEDIFF(day, d.DtEnvio, isnull(d.DtDistribuicao,GETDATE())) >= ?"] = $_POST['qtDiasDistribuirVl'];
@@ -363,7 +363,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
             $this->view->qtDiasDistribuir = $_POST['qtDiasDistribuir'];
             $this->view->qtDiasDistribuirVl = $_POST['qtDiasDistribuirVl'];
         }
-        
+
         if((isset($_POST['qtDiasAnalisar']) && !empty($_POST['qtDiasAnalisar']))){
             if($_POST['qtDiasDistribuir'] == 1){
                 $where["
@@ -381,7 +381,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
             $this->view->qtDiasAnalisar = $_POST['qtDiasAnalisar'];
             $this->view->qtDiasAnalisarVl = $_POST['qtDiasAnalisarVl'];
         }
-        
+
         if((isset($_POST['qtDiasCoord']) && !empty($_POST['qtDiasCoord']))){
             if($_POST['qtDiasCoord'] == 1){
                 $where["d.DtDevolucao is not null and d.DtRetorno is null AND d.FecharAnalise=0 and DATEDIFF(day, d.DtDevolucao,GETDATE()) >= ?"] = $_POST['qtDiasCoordVl'];
@@ -391,7 +391,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
             $this->view->qtDiasCoord = $_POST['qtDiasCoord'];
             $this->view->qtDiasCoordVl = $_POST['qtDiasCoordVl'];
         }
-        
+
         if((isset($_POST['qtDiasIniExec']) && !empty($_POST['qtDiasIniExec']))){
             if($_POST['qtDiasIniExec'] == 1){
                 $where["DATEDIFF(day,GETDATE(), p.DtInicioExecucao) >= ?"] = $_POST['qtDiasIniExecVl'];
@@ -401,11 +401,11 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
             $this->view->qtDiasIniExec = $_POST['qtDiasIniExec'];
             $this->view->qtDiasIniExecVl = $_POST['qtDiasIniExecVl'];
         }
-        
+
         $Projetos = New Projetos();
         $total = $Projetos->painelRelatoriosGeralAnalise($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
-        
+
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
         $busca = $Projetos->painelRelatoriosGeralAnalise($where, $order, $tamanho, $inicio);
@@ -430,7 +430,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
             $html .= '<th>Dt.Fim Execução</th>';
             $html .= '<th>Dias vencidos ou a vencer para execução do Projeto</th>';
             $html .= '</tr>';
-            
+
             foreach ($busca as $v) {
                 $html .= '<tr>';
                 $html .= '<td>'.$v->Pronac.'</td>';
@@ -451,19 +451,19 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                 $html .= '</tr>';
             }
             $html .= '</table>';
-            
+
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=file.xls;");
             echo $html; die();
-            
+
         } else {
             $this->view->qtdRegistros = $total;
             $this->view->dados = $busca;
             $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
         }
     }
-    
-    
+
+
     public function consolidacaopareceristaAction(){
         $OrgaosDAO      =   new Orgaos();
         $NomesDAO       =   new Nomes();
@@ -473,7 +473,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
         $this->view->Pareceristas   =   $NomesDAO->buscarPareceristas();
         	// O mesmo do Manter Agentes
        		$this->view->comboareasculturais   = ManterAgentesDAO::buscarAreasCulturais();
-        
+
         $this->view->Areas          =   $AreaDAO->buscar();
         $this->view->Segmento       =   $SegmentoDAO->buscar(array('stEstado = ?'=>1));
     }
@@ -490,12 +490,12 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
             $this->view->gerenciar = false;
         }
     }
-    
+
     private function ajustarData($data){
         $data = substr($data, 6,4).'-'.substr($data, 3,2).'-'.substr($data, 0,2);
         return $data;
     }
-    
+
     private function filtroGeral($tipo){
         $post = Zend_Registry::get('post');
         $get  = Zend_Registry::get('get');
@@ -508,18 +508,18 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                 }
                 if(!empty($post->nmprojeto))                         								$where["proj.NomeProjeto like ?"]   =   "%".$post->nmprojeto."%";
                 if(!empty($post->produto))                           								$where['dp.idProduto = ?']  		=   $post->produto;
-                
+
                 $dt_i_envio   =   $this->ajustarData($post->dt_i_envio);
                 $dt_f_envio   =   $this->ajustarData($post->dt_f_envio);
                 if(!empty($post->dt_i_envio) and $post->dt_i_envio!='00/00/0000')                   $where  =   $this->tipos($where,'dp.DtEnvio',$post->tp_dt_envio,$dt_i_envio,$dt_f_envio);
-                
+
                 $dt_i_distribuicao    =   $this->ajustarData($post->dt_i_distribuicao);
                 $dt_f_distribuicao    =   $this->ajustarData($post->dt_f_distribuicao);
                 if(!empty($post->dt_i_distribuicao) and $post->dt_i_distribuicao!='00/00/0000')     $where  =   $this->tipos($where,'dp.DtDistribuicao',$post->tp_dt_distribuicao,$dt_i_distribuicao,$dt_f_distribuicao);
-                
+
                 if(!empty($post->nrdias))                                                           $where  =   $this->tipos($where,new Zend_Db_Expr('DATEDIFF(day, dp.DtEnvio,dp.DtDistribuicao)'),$post->tpnrdias,$post->nrdias);
                 if(!empty($post->idOrgao))                                         $where['org.Codigo = ?'] = $post->idOrgao;
-			
+
             break;
             case    'resgeraldeanalise':
                 if(!empty ($post->pronac))          $where['p.AnoProjeto = ?']          =   substr($post->pronac, 0,2);
@@ -560,7 +560,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
         }
         return $where;
     }
-    
+
     private function gerarInfoPaginas($tipo,$where = array(),$paginacao = 0){
         $post = Zend_Registry::get('post');
         $retorno = array();
@@ -627,9 +627,9 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                     $retorno[$val['IdPRONAC']]['qtDiasConsolidado']                                                         =   $val['QtdeConsolidar'];
                     $retorno[$val['IdPRONAC']]['dtConsolidacao']                                                            =   $val['DtConsolidacaoParecer'];
                     $retorno[$val['IdPRONAC']]['stParecer']                                                                 =   'Emitido';
-                    
+
                     $resp2 = $distribuirParecerDAO->pareceremitido($val['pronac']);
-                    
+
                     foreach ($resp2 as $val2)
                     {
                         $retorno[$val['IdPRONAC']]['Orgaos'][$val2['idOrgao']]['nmOrgao']                                           =   $val2['Sigla'];
@@ -666,7 +666,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                     $retorno[$val['IdPRONAC']]['stParecer']                                                                 =   'Consolidado';
 
                     $resp2 = $distribuirParecerDAO->parecerconsolidado($val['pronac']);
-                    
+
                     foreach ($resp2 as $val2)
                     {
                         $retorno[$val['IdPRONAC']]['Orgaos'][$val2['idOrgao']]['nmOrgao']                                        		=   $val2['Sigla'];
@@ -738,9 +738,9 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                     foreach ($resp as $val){
                         if(!empty ($post->stAnalise))
                         {
-                            
-                        	
-                        	
+
+
+
                         	if($post->stAnalise==1)
                             {
                                 if ($val->DtSolicitacao && $val->DtResposta == NULL)
@@ -756,18 +756,18 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                                     $retorno = $this->dadosResconsolidacaoparecerista($val,$retorno);
                                 }
                             }
-                        	
+
                         	if($post->stAnalise==3)
                             {
-                                if ($val->DtSolicitacao && round(data::CompararDatas($val->DtDistribuicao)) > $val->tempoFimDiligencia) 
+                                if ($val->DtSolicitacao && round(data::CompararDatas($val->DtDistribuicao)) > $val->tempoFimDiligencia)
                                 {
                                     $retorno = $this->dadosResconsolidacaoparecerista($val,$retorno);
                                 }
                             }
-                            
+
                             if($post->stAnalise==0)
                             {
-                            	
+
                                 if (!($val->DtSolicitacao && round(data::CompararDatas($val->DtDistribuicao)) > $val->tempoFimDiligencia) and !($val->DtSolicitacao && $val->DtResposta == NULL))
                                 {
                                     $retorno = $this->dadosResconsolidacaoparecerista($val,$retorno);
@@ -802,7 +802,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                 }
 
                 if($zerado){
-                    $agentesDAO = new Agentes();
+                    $agentesDAO = new Agente_Model_Agentes();
 
                     $tela    = 'resconsolidacaoparecerista2';
                     $where   = $this->filtroGeral($tela);
@@ -1132,7 +1132,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                                             $cProduto++;
                                         }
                                     }
-                                    
+
                                 $html .= "</table>
 
                             </td>
@@ -1187,7 +1187,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                                             if($cProduto==1) $nmOrg = $Orgao['nmOrgao'];
                                             $Principal = '';
                                             if($produto['prodPrincipal']=='sim')$Principal = 'Principal';
-                                            
+
                                             $html .= "
                                             <tr>
                                                 <td>{$nmOrg}</td>
@@ -1246,7 +1246,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                                 foreach ($post->cpconsulta_dest as $t){
                                     $html .= $linha[$t-1];
                                 }
-                                
+
                             $html .="</tr>";
                             $cProduto++;
                         }
@@ -1289,7 +1289,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
                             <th>Provid?ncia Tomada</th>-->
                         </tr>
                         ";
-                    
+
                         foreach ($conteudo['projetos'] as $projeto) {
                             $cProduto = 1;
                             foreach ($projeto['produtos'] as $produto){

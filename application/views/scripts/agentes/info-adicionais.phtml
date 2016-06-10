@@ -6,7 +6,7 @@
         $("#dtNascimento").keyup(function(){
             mascara(this, format_data); // data
         });
-        
+
         $('#processo').mask('99999.999999/9999-99');
 
         // calendário
@@ -89,7 +89,7 @@
 
     <?php //require_once "inc/cabecalho.php";?>
     <div id="formNovo">
-        <form id="formInfoAdicionais" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'salvar-info-adicionais'));?>" method="post">
+        <form id="formInfoAdicionais" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvar-info-adicionais'));?>" method="post">
             <table class="tabela" style="width:40%;">
                 <input type="hidden" name="agente" id="agente" value="<?php echo $this->id; ?>" />
                 <th colspan="2">Dados do Proponente</th>

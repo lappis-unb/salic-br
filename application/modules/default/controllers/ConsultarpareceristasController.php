@@ -21,7 +21,7 @@ class ConsultarpareceristasController extends GenericControllerNew {
         }
         $auth = Zend_Auth::getInstance();
         self::$usu_identificacao = $auth->getIdentity()->usu_identificacao;
-        
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         self::$codOrgao = $GrupoAtivo->codOrgao;
 
@@ -57,10 +57,10 @@ class ConsultarpareceristasController extends GenericControllerNew {
     	$codGrupo = self::$codPerfil;
         $produtoDAO = new Produto();
         $OrgaosDAO = new Orgaos();
-        $AgentesDAO = new Agentes();
+        $AgentesDAO = new Agente_Model_Agentes();
         $AreaDAO = new Area();
         $SegmentoDAO = new Segmento();
-        
+
         if (self::$perfilAtual == 'CoordenadorParecerista') {
             $this->view->Orgaos = $OrgaosDAO->buscar(array('Status = ?' => 0));
             $this->view->Areas = $AreaDAO->buscar();
@@ -75,7 +75,7 @@ class ConsultarpareceristasController extends GenericControllerNew {
 //        	$this->view->Areas = $AreaDAO->buscar();
             $this->view->Segmentos = $SegmentoDAO->buscar(array('stEstado = ?' => 1));
         	$this->view->titulo = self::$titulo;
-        	$this->view->pareceristas = $AgentesDAO->consultaPareceristasDoOrgao(null);	
+        	$this->view->pareceristas = $AgentesDAO->consultaPareceristasDoOrgao(null);
         }
 
         if (self::$perfilAtual == 'Parecerista') {
@@ -87,11 +87,11 @@ class ConsultarpareceristasController extends GenericControllerNew {
             $pagamentos[2]['codigo'] = 0;
             $pagamentos[2]['descricao'] = "Pendentes";
             $this->view->Pagamentos = $pagamentos;
-            
+
             $this->view->Produtos = $produtoDAO->buscar(array('stEstado = ?' => 0));
             $this->view->titulo = self::$titulo;
         }
-        
+
         $this->view->perfilAtual = self::$perfilAtual;
         $this->view->codPerfil = self::$codPerfil;
     }
@@ -101,7 +101,7 @@ class ConsultarpareceristasController extends GenericControllerNew {
     	$idOrgao = self::$codOrgao;
         $OrgaosDAO = new Orgaos();
         $codGrupo = self::$codPerfil;
-        $AgentesDAO = new Agentes();
+        $AgentesDAO = new Agente_Model_Agentes();
         $AreaDAO = new Area();
         $SegmentoDAO = new Segmento();
         $this->view->Orgaos = $OrgaosDAO->buscar(array('Status = ?' => 0));
@@ -112,49 +112,49 @@ class ConsultarpareceristasController extends GenericControllerNew {
         if(self::$codPerfil == 137)
         {
         	$idOrgao = null;
-        }	
-        
+        }
+
         $this->view->pareceristas = $AgentesDAO->consultaPareceristasDoOrgao($idOrgao)->toArray();
         $this->view->titulo = 'Consultar Pagamento';
         $this->view->perfilAtual = self::$perfilAtual;
     }
-    
+
     public function relatoriomensaldepagamentoAction (){
     	$idOrgao = self::$codOrgao;
-    	$AgentesDAO = new Agentes();
-   		
+    	$AgentesDAO = new Agente_Model_Agentes();
+
     	if(self::$codPerfil == 137)
         {
         	$idOrgao = null;
         }
-    	
+
         $this->view->pareceristas = $AgentesDAO->consultaPareceristasDoOrgao($idOrgao)->toArray();
     	$this->view->perfilAtual = self::$perfilAtual;
     	$this->view->titulo = "Relat&oacute;rio Mensal de Pagamento";
-    	
+
     }
-    
+
    	public function consultarprodutospareceristasAction() {
 
-		$AgentesDAO = new Agentes();
+		$AgentesDAO = new Agente_Model_Agentes();
         $logado = $AgentesDAO->buscar(array('CNPJCPF = ?'=>self::$usu_identificacao))->toArray();
 		$idAgente = $logado[0]['idAgente'];
-		
+
    		if(self::$codPerfil == 137)
         {
         	$idOrgao = null;
         }
-        
+
 	   	$produtos = ConsultarPareceristasDAO::buscarProdutosPareceristas($idAgente);
 	   	$this->view->produtos = $produtos;
-        
+
         $this->view->titulo = 'Consultar Produtos do Parecerista';
         $this->view->perfilAtual = self::$perfilAtual;
-        
+
     }
-    
+
     public function tratardadosrelatorioAction() {
-        switch (self::$perfilAtual) { 
+        switch (self::$perfilAtual) {
             case 'CoordenadorParecerista':
             	$this->view->perfilAtual = self::$perfilAtual;
                 $titulo = $_REQUEST['titulo'];
@@ -173,11 +173,11 @@ class ConsultarpareceristasController extends GenericControllerNew {
         		$SegmentoDAO = new Segmento();
         		//$codOrgao = self::$codOrgao;
         		$codOrgao = $_POST['filtro']['orgao'];
-		                      
+
                 $parecerista = $NomesDAO->buscarNomePorCPFCNPJ(null, $_REQUEST['filtro']['parecerista']);
                 $area = $AreaDAO->buscar(array('Codigo = ?' => $idArea));
                 $segmento = $SegmentoDAO->buscar(array('Codigo = ?' => $idSegmento));
-                
+
                 if($idAgente == 0){
                 	parent::message("Dados obrigatórios não informados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
                 }
@@ -189,7 +189,7 @@ class ConsultarpareceristasController extends GenericControllerNew {
                 $feriasAgend = null;
                 $atestados = null;
                 $produtos = null;
-                	
+
                 /*-------------- AUSÊNCIAS  --------------*/
 	                /* 2 - Historico de Ferias*/
                 	if ($idTipoAusencia == 2){
@@ -198,7 +198,7 @@ class ConsultarpareceristasController extends GenericControllerNew {
                 	}
 	                //x($histFerias);
 	                /*-------------------*/
-	                
+
 	                /* 2 - Ferias Agendadas*/
                 	if ($idTipoAusencia == 2){
 		                $feriasAgend = ConsultarPareceristasDAO::buscarAusencias($idTipoAusencia, 2, $idAgente, $dataInicio, $dataFim);
@@ -206,7 +206,7 @@ class ConsultarpareceristasController extends GenericControllerNew {
                 	}
 	                //x($feriasAgend);
 	                /*-------------------*/
-	                
+
 	                /* 1 - Atestados Medicos*/
 	                if ($idTipoAusencia == 1){
 		                $atestados = ConsultarPareceristasDAO::buscarAusencias($idTipoAusencia, 3, $idAgente, $dataInicio, $dataFim);
@@ -214,25 +214,25 @@ class ConsultarpareceristasController extends GenericControllerNew {
 	                }
 	                //xd($atestados);
 	                /*-------------------*/
-	                
+
 	                /* 3 - Todos */
 	                if ($idTipoAusencia == 3){
 	                	$histFerias = ConsultarPareceristasDAO::buscarAusencias(2, 1, $idAgente, $dataInicio, $dataFim);
 		                $this->view->histFerias = $histFerias;
-		                
+
 		                $feriasAgend = ConsultarPareceristasDAO::buscarAusencias(2, 2, $idAgente, $dataInicio, $dataFim);
 		                $this->view->feriasAgend = $feriasAgend;
-		                
+
 		                $atestados = ConsultarPareceristasDAO::buscarAusencias(1, 3, $idAgente, $dataInicio, $dataFim);
 		                $this->view->atestados = $atestados;
 	                }
 	                /*-------------------*/
 //xd($this->view->feriasAgend);
                 /*--------------- FIM AUSENCIAS --------------*/
-                
+
                 /*-------------- PRODUTOS  --------------*/
 					   $cont = 0;
-		               $produtos = ConsultarPareceristasDAO::buscarProdutos($idAgente, $stPrincipal, $codOrgao, $idArea, $idSegmento, $dias); 
+		               $produtos = ConsultarPareceristasDAO::buscarProdutos($idAgente, $stPrincipal, $codOrgao, $idArea, $idSegmento, $dias);
 		               $dados = array();
 		                if($produtos){
 			                foreach ($produtos as $prod){
@@ -258,16 +258,16 @@ class ConsultarpareceristasController extends GenericControllerNew {
 					                		'Segmento'		=> $p[0]->Segmento,
 					                		'NomeProjeto'	=> $p[0]->NomeProjeto,
 					                		'Situacao'		=> $p[0]->Situacao,
-					                		'DtAnalise'		=> $p[0]->DtAnalise,			                	
+					                		'DtAnalise'		=> $p[0]->DtAnalise,
 					                	);
 				                	}
-				                }	
+				                }
 			                }
 		                }
 		                $this->view->projetos = $dados;
 		               	$this->view->produtos = $produtos;
 		               	//xd($produtos);
-	              
+
 //	               xd($this->view->projetos );
                 /*---------------------------------------*/
                 if((!$histFerias) && (!$feriasAgend) && (!$atestados) && (!$produtos)){
@@ -277,18 +277,18 @@ class ConsultarpareceristasController extends GenericControllerNew {
               	$this->view->parecerista = strtoupper($parecerista[0]['Nome']);
 
                 break;
-                
+
             case 'CoordenadorPRONAC':
 					$this->view->perfilAtual = self::$perfilAtual;
-					
+
 //					$orgao = $_REQUEST['filtro']['orgao'];
-//					$area = $_REQUEST['filtro']['area']; 
-//					$segmento = $_REQUEST['filtro']['segmento'];  
+//					$area = $_REQUEST['filtro']['area'];
+//					$segmento = $_REQUEST['filtro']['segmento'];
 	            	$idAgente = $_REQUEST['filtro']['parecerista'];
 	            	$parecer = $_REQUEST['filtro']['parecer'];
 	            	$dataInicio = $_REQUEST['filtro']['periodo']['dataInicio'];
 	            	$dataFim = $_REQUEST['filtro']['periodo']['datafim'];
-	            	
+
 	            	if($parecer == 'pago'){
 	            		$parecer = 4;
 	            	}else if($parecer == 'liberado'){
@@ -296,14 +296,14 @@ class ConsultarpareceristasController extends GenericControllerNew {
 	            	}else if($parecer == 'todos'){
 	            		$parecer = 5;
 	            	}
-	            	
+
 	                $NomesDAO = new Nomes();
 	                $parecerista = $NomesDAO->buscarNomePorCPFCNPJ(null, $_REQUEST['filtro']['parecerista']);
 	                $this->view->parecerista = strtoupper($parecerista[0]['Nome']);
         			if($idAgente == 0){
                 		parent::message("Dados obrigatórios não informados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
                 	}
-                	
+
 	                $produtos = null;
                 	$orgaos = null;
 	                 /*-------------- PRODUTOS  --------------*/
@@ -323,7 +323,7 @@ class ConsultarpareceristasController extends GenericControllerNew {
 				                foreach ($produtos as $prod){
 				                	$idPronac = $prod->idPronac;
 				                	$pronacs[] = ConsultarPareceristasDAO::buscarPronacs($idPronac);
-				                	
+
 				                	if($prod->TipoParecer == 4){
 				                		$pagos[] = ConsultarPareceristasDAO::buscarPronacs($idPronac);
 				                	}else if($prod->TipoParecer != 4){
@@ -341,12 +341,12 @@ class ConsultarpareceristasController extends GenericControllerNew {
 							                		'Segmento'		=> $p[0]->Segmento,
 							                		'NomeProjeto'	=> $p[0]->NomeProjeto,
 							                		'Situacao'		=> $p[0]->Situacao,
-							                		'DtAnalise'		=> $p[0]->DtAnalise		                	
+							                		'DtAnalise'		=> $p[0]->DtAnalise
 							                	);
 						                	}
-						                }	
+						                }
 				                	}
-	
+
 				                	if($liberados){
 					                 	foreach ($liberados as $l){
 						                	if($l){
@@ -357,7 +357,7 @@ class ConsultarpareceristasController extends GenericControllerNew {
 							                		'Segmento'		=> $l[0]->Segmento,
 							                		'NomeProjeto'	=> $l[0]->NomeProjeto,
 							                		'Situacao'		=> $l[0]->Situacao,
-							                		'DtAnalise'		=> $l[0]->DtAnalise			                	
+							                		'DtAnalise'		=> $l[0]->DtAnalise
 							                	);
 						                	}
 						                }
@@ -385,22 +385,22 @@ class ConsultarpareceristasController extends GenericControllerNew {
 		            $data_inicio = $_POST['filtro']['periodo']['dataInicio'];
 		            $data_fim = $_POST['filtro']['periodo']['datafim'];
 		            $idPronac = '';
-		            $AgentesDAO = new Agentes();
-			        $logado = $AgentesDAO->buscar(array('CNPJCPF = ?'=>self::$usu_identificacao))->toArray(); 
-					$idAgente = $logado[0]['idAgente']; 
-					
-					if($pronac){ 
+		            $AgentesDAO = new Agente_Model_Agentes();
+			        $logado = $AgentesDAO->buscar(array('CNPJCPF = ?'=>self::$usu_identificacao))->toArray();
+					$idAgente = $logado[0]['idAgente'];
+
+					if($pronac){
 						$ProjetosDAO = ProjetoDAO::buscar($pronac);
-						
+
 						if($ProjetosDAO){
 							$idPronac = $ProjetosDAO[0]->IdPRONAC;
 						}
 						else{
 							parent::message("Pronac Inexistente", "consultarpareceristas/consultarprodutospareceristas", "ALERT");
 						}
-						
+
 					}
-					
+
 		            /*-------------- PRODUTOS  --------------*/
 	                $produtos = ConsultarPareceristasDAO::buscarProdutosPareceristas($idAgente, $tipo_produto, $data_inicio, $data_fim, null, $idPronac, $tipo_pagamento);
 	               	$dados = array();
@@ -421,13 +421,13 @@ class ConsultarpareceristasController extends GenericControllerNew {
 				                		'Situacao'		=> $p[0]->Situacao,
 				                		'DtAnalise'		=> $p[0]->DtAnalise,
 				                		'vlPagamento'	=> $p[0]->vlPagamento,
-				                		'memorando'		=> $p[0]->memorando				                	
+				                		'memorando'		=> $p[0]->memorando
 				                	);
 			                	}
-			                }	
+			                }
 		                }
 	                }
-	
+
 	                $this->view->projetos = $dados;
 	                $this->view->produtos = $produtos;
                 /*---------------------------------------*/
@@ -443,15 +443,15 @@ class ConsultarpareceristasController extends GenericControllerNew {
 					if(isset($_POST['filtro']['periodo']['dataInicio'])){ $data_inicio = $_POST['filtro']['periodo']['dataInicio'];} else $data_inicio = null;
 					if(isset($_POST['filtro']['periodo']['datafim'])){ $data_fim = $_POST['filtro']['periodo']['datafim'];} else $data_fim = null;
 	            	$pronac = $_POST['pronac'];
-	            	
-		            $AgentesDAO = new Agentes();
-			        $logado = $AgentesDAO->buscar(array('CNPJCPF = ?'=>self::$usu_identificacao))->toArray(); 
-					$idAgente = $logado[0]['idAgente']; 
-					
+
+		            $AgentesDAO = new Agente_Model_Agentes();
+			        $logado = $AgentesDAO->buscar(array('CNPJCPF = ?'=>self::$usu_identificacao))->toArray();
+					$idAgente = $logado[0]['idAgente'];
+
 					$NomesDAO = new Nomes();
 	                $parecerista = $NomesDAO->buscarNomePorCPFCNPJ(null, $idAgente);
 	                $this->view->parecerista = strtoupper($parecerista[0]['Nome']);
-		            
+
 		            /*-------------- PRODUTOS  --------------*/
 	                $produtos = ConsultarPareceristasDAO::buscarProdutosPareceristas($idAgente, $produto, $data_inicio, $data_fim, null, null, $tipo_pagamento, $pronac);
 	               	$dados = array();
@@ -470,13 +470,13 @@ class ConsultarpareceristasController extends GenericControllerNew {
 				                		'Segmento'		=> $p[0]->Segmento,
 				                		'NomeProjeto'	=> $p[0]->NomeProjeto,
 				                		'Situacao'		=> $p[0]->Situacao,
-				                		'DtAnalise'		=> $p[0]->DtAnalise,			                	
+				                		'DtAnalise'		=> $p[0]->DtAnalise,
 				                	);
 			                	}
-			                }	
+			                }
 		                }
 	                }
-	
+
 	                $this->view->projetos = $dados;
 	                $this->view->produtos = $produtos;
                 /*---------------------------------------*/
@@ -486,7 +486,7 @@ class ConsultarpareceristasController extends GenericControllerNew {
             	}
                 break;
         }
-        
+
     }
 
     public function tratardadosrelatoriopagamentoAction() {
@@ -496,13 +496,13 @@ class ConsultarpareceristasController extends GenericControllerNew {
         	if(isset($_POST['prod'])){
 					$this->view->prod = $_POST['prod'];
 //					$orgao = $_REQUEST['filtro']['orgao'];
-//					$area = $_REQUEST['filtro']['area']; 
-//					$segmento = $_REQUEST['filtro']['segmento'];  
+//					$area = $_REQUEST['filtro']['area'];
+//					$segmento = $_REQUEST['filtro']['segmento'];
             		$idAgente = $_REQUEST['filtro']['parecerista'];
             		$parecer = $_REQUEST['filtro']['parecer'];
             		$dataInicio = $_REQUEST['filtro']['periodo']['dataInicio'];
 	            	$dataFim = $_REQUEST['filtro']['periodo']['datafim'];
-	            	
+
         			if($parecer == 'pago'){
 	            		$parecer = 4;
 	            	}else if($parecer == 'liberado'){
@@ -510,16 +510,16 @@ class ConsultarpareceristasController extends GenericControllerNew {
 	            	}else if($parecer == 'todos'){
 	            		$parecer = 5;
 	            	}
-	            	
+
 	            	$NomesDAO = new Nomes();
 	                $parecerista = $NomesDAO->buscarNomePorCPFCNPJ(null, $_REQUEST['filtro']['parecerista']);
 	                $this->view->parecerista = strtoupper($parecerista[0]['Nome']);
-	                
+
         			if($idAgente == 0){
                 		parent::message("Dados obrigatórios não informados!", "/consultarpareceristas/relatoriomensaldepagamento", "ALERT");
                 	}
 	                 /*-------------- PRODUTOS  --------------*/
-		                $produtos = ConsultarPareceristasDAO::buscarProdutosPareceristas($idAgente, null, $dataInicio, $dataFim, $parecer); 
+		                $produtos = ConsultarPareceristasDAO::buscarProdutosPareceristas($idAgente, null, $dataInicio, $dataFim, $parecer);
 		               	$dados = array();
 		               	$orgaos = 1;
 //        				if($orgao){
@@ -543,13 +543,13 @@ class ConsultarpareceristasController extends GenericControllerNew {
 						                		'Segmento'		=> $p[0]->Segmento,
 						                		'NomeProjeto'	=> $p[0]->NomeProjeto,
 						                		'Situacao'		=> $p[0]->Situacao,
-						                		'DtAnalise'		=> $p[0]->DtAnalise			                	
+						                		'DtAnalise'		=> $p[0]->DtAnalise
 						                	);
 					                	}
-					                }	
+					                }
 				                }
 			                }
-		
+
 		                $this->view->projetos = $dados;
 		                $this->view->produtos = $produtos;
 	                /*---------------------------------------*/
@@ -568,7 +568,7 @@ class ConsultarpareceristasController extends GenericControllerNew {
 		            $segmento = $_POST['filtro']['segmento'];
 		            $dataInicio = $_POST['filtro']['periodo']['dataInicio'];
 		            $dataFim = $_POST['filtro']['periodo']['datafim'];
-		            
+
 		            /*-------------- PRODUTOS  --------------*/
 		               $produtos = ConsultarPareceristasDAO::buscarProdutosPareceristas($idAgente,  null, $dataInicio, $dataFim);
 		//$produtos = ConsultarPareceristasDAO::buscarProdutosTeste($idAgente);
@@ -588,13 +588,13 @@ class ConsultarpareceristasController extends GenericControllerNew {
 					                		'Segmento'		=> $p[0]->Segmento,
 					                		'NomeProjeto'	=> $p[0]->NomeProjeto,
 					                		'Situacao'		=> $p[0]->Situacao,
-					                		'DtAnalise'		=> $p[0]->DtAnalise		                	
+					                		'DtAnalise'		=> $p[0]->DtAnalise
 					                	);
 				                	}
-				                }	
+				                }
 			                }
 		                }
-		
+
 		                $this->view->projetos = $dados;
 		                $this->view->produtos = $produtos;
             	    if(!$produtos){
@@ -615,11 +615,11 @@ class ConsultarpareceristasController extends GenericControllerNew {
 		            $data_inicio = $_POST['filtro']['periodo']['dataInicio'];
 		            $data_fim = $_POST['filtro']['periodo']['datafim'];
 		            $idPronac = '';
-		            $AgentesDAO = new Agentes();
-			        $logado = $AgentesDAO->buscar(array('CNPJCPF = ?'=>self::$usu_identificacao))->toArray(); 
-					$idAgente = $logado[0]['idAgente']; 
-	            	
-					if(!empty($pronac)){ 
+		            $AgentesDAO = new Agente_Model_Agentes();
+			        $logado = $AgentesDAO->buscar(array('CNPJCPF = ?'=>self::$usu_identificacao))->toArray();
+					$idAgente = $logado[0]['idAgente'];
+
+					if(!empty($pronac)){
 						$ProjetosDAO = ProjetoDAO::buscar($pronac);
 
 						if(!empty($ProjetosDAO)){
@@ -628,9 +628,9 @@ class ConsultarpareceristasController extends GenericControllerNew {
 						else{
 							parent::message("Pronac Inexistente", "consultarpareceristas/consultarprodutospareceristas", "ALERT");
 						}
-						
+
 					}
-					
+
 		            /*-------------- PRODUTOS  --------------*/
 	                $produtos = ConsultarPareceristasDAO::buscarProdutosPareceristas($idAgente, $tipo_produto, $data_inicio, $data_fim, null, $idPronac, $tipo_pagamento);
 //	                xd($produtos);
@@ -650,13 +650,13 @@ class ConsultarpareceristasController extends GenericControllerNew {
 				                		'Segmento'		=> $p[0]->Segmento,
 				                		'NomeProjeto'	=> $p[0]->NomeProjeto,
 				                		'Situacao'		=> $p[0]->Situacao,
-				                		'DtAnalise'		=> $p[0]->DtAnalise,			                	
+				                		'DtAnalise'		=> $p[0]->DtAnalise,
 				                	);
 			                	}
-			                }	
+			                }
 		                }
 	                }
-	
+
 	                $this->view->projetos = $dados;
 	                $this->view->produtos = $produtos;
                 /*---------------------------------------*/
@@ -668,25 +668,25 @@ class ConsultarpareceristasController extends GenericControllerNew {
     }
 
     public function carregarhistoricoAction() {
-	    	
+
 	    	$this->view->perfilAtual = self::$perfilAtual;
-	    	
+
 //	    	xd($_GET);
 	    	$Pronac = $_GET['Pronac'];
 	    	$idPronac = $_GET['idPronac'];
-	    	     	
+
 	    	$projeto = new ProjetoDAO();
 	    	$dadosProjeto = $projeto->buscar($Pronac);
-	    	
+
 	    	$this->view->PRONAC = $dadosProjeto[0]->pronac;
 	    	$this->view->nomeProjeto = $dadosProjeto[0]->NomeProjeto;
-	    	
+
 	    	$buscaHistorico = new tbDistribuirParecer();
 	    	$historico = $buscaHistorico->buscarHistoricoDeAnalise($idPronac, self::$codOrgao);
 
 	    	$this->view->Historico = $historico;
-//	    	xd($this->view->Historico); 
-            
+//	    	xd($this->view->Historico);
+
     }
 
     public function ajaxcarregarsegmentosAction() {
@@ -720,8 +720,8 @@ class ConsultarpareceristasController extends GenericControllerNew {
     public function ajaxcarregarpareceristasAction() {
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
-        if ($_REQUEST['idOrgao'] != '') { 
-            $agentes = new Agentes();
+        if ($_REQUEST['idOrgao'] != '') {
+            $agentes = new Agente_Model_Agentes();
             $dados = $agentes->consultaPareceristasDoOrgao($_REQUEST['idOrgao']);
             $html = '';
             if ($dados) {
@@ -731,7 +731,7 @@ class ConsultarpareceristasController extends GenericControllerNew {
             }
             echo $html;
         } else {
-        	$agentes = new Agentes();
+        	$agentes = new Agente_Model_Agentes();
             $dados = $agentes->consultaPareceristasDoOrgao();
             $html = '';
             if ($dados) {
@@ -742,7 +742,7 @@ class ConsultarpareceristasController extends GenericControllerNew {
             echo $html;
         }
     }
-    
+
     public function buscaprojetoAction() {
     	$this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout

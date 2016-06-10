@@ -30,7 +30,7 @@
             <td align="center"><?php echo $this->projeto->NomeProjeto; ?></td>
         </tr>
     </table>
-    
+
     <form name="formPesquisa" id="formPesquisa" method="get">
         <table class="tabela">
             <tr onclick="abrirDinamico('.divFiltroPesquisa', $(this))" style="cursor:pointer">
@@ -72,7 +72,7 @@
 	            	foreach ($this->dados as $d){ ?>
                         <tr>
                             <td>
-                                <a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'agentes', 'id' => $d->idAgente ), null, true);?>" target="blank">
+                                <a href="<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'agentes', 'id' => $d->idAgente ), null, true);?>" target="blank">
                                     <?php echo $d->Nome;  ?>
                                 </a>
                             </td>

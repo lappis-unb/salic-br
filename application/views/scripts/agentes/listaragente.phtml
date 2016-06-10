@@ -17,8 +17,8 @@
 <div id="breadcrumb">
 	<ul>
 		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Início">Início</a></li>
-		<li><a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'agentes')); ?>?acao=cc">Manter Agentes</a></li>
-		<li><a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'buscaragente')); ?>">Pesquisar Agentes</a></li>
+		<li><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes')); ?>?acao=cc">Manter Agentes</a></li>
+		<li><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'buscaragente')); ?>">Pesquisar Agentes</a></li>
 		<li class="last">Resultado da busca</li>
 	</ul>
 </div>
@@ -68,7 +68,7 @@
 				endforeach;
 				?>
 			</td>
-			<td class="centro"><input type="button" class="btn_ver" title=" Alterar Visão " value=" " onclick="redirecionar('<?php echo $this->url(array('controller' => 'agentes', 'action' => 'agentes','id' => $b->idAgente),'',true); ?>');" /></td>
+			<td class="centro"><input type="button" class="btn_ver" title=" Alterar Visão " value=" " onclick="redirecionar('<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes','id' => $b->idAgente),'',true); ?>');" /></td>
 		</tr>
 		<?php endif; ?>
 		<?php $idAgente = $b->idAgente; ?>
@@ -79,7 +79,7 @@
 	<!-- ========== PAGINAÇÃO ========== -->
 	<?php if ($this->qtdAgentes > 10) { echo "<br /><p>" . $this->buscar . "</p><br />"; } ?>
 
-	
+
 
 
 

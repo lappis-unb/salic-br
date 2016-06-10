@@ -61,7 +61,7 @@
         </tr>
     </table>
     <div id="formNovo" class="sumir">
-        <form id="formTel" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'salvatelefone'));?>" method="post">
+        <form id="formTel" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvatelefone'));?>" method="post">
 
             <table id="tabFone" class="tabela">
                 <tr>
@@ -144,7 +144,7 @@
                 <td align="center"><?php echo $t->DDD ;?></td>
                 <td><?php echo $t->Numero ;?></td>
                 <td><?php echo $t->Divulgar == "1" ? "SIM" : "NÃO"; ?></td>
-                <td width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('', '<?php echo $this->url(array('controller' => 'agentes', 'action' => 'excluitelefone','idTelefone' => $t->idTelefone, 'qtdTel' => $this->qtdTel));?>');" /></td>
+                <td width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('', '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluitelefone','idTelefone' => $t->idTelefone, 'qtdTel' => $this->qtdTel));?>');" /></td>
             </tr>
             <?php endforeach; ?>
         </table>

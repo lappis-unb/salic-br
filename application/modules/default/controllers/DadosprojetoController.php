@@ -2,7 +2,7 @@
 
 
 class DadosprojetoController extends GenericControllerNew {
-		
+
     /**
      * Reescreve o método init()
      * @access public
@@ -26,9 +26,9 @@ class DadosprojetoController extends GenericControllerNew {
                 $PermissoesGrupo[] = $grupo->gru_codigo;
             }
         }
-                        
+
         isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
-        
+
         /*if ($auth->hasIdentity()) // caso o usuario esteja autenticado
         {
             // verifica as permissoes
@@ -203,7 +203,7 @@ class DadosprojetoController extends GenericControllerNew {
             $aprovacao = new Aprovacao();
             $PlanilhaProposta = new PlanilhaProposta();
             $interessado      = new Interessado();
-            $agente           = new Agentes();
+            $agente           = new Agente_Model_Agentes();
 
             $dadosprojeto = $projetos->buscarTodosDadosProjeto($idpronac)->current()->toArray();
             $buscarInteressado = $interessado->buscar(array('CgcCpf = ?'=> $dadosprojeto['CgcCpf']));
@@ -242,7 +242,7 @@ class DadosprojetoController extends GenericControllerNew {
             {
                 $idpronac = $_POST['idpronac'];
   		$buscarObj = RealizarAnaliseProjetoDAO::outrasinformacoes($idpronac);
-                
+
 		$htmlGerado  = "<table class='tabela' >";
                 $htmlGerado .= "<th colspan='6' >Objetivos</th>";
                 if( count($buscarObj['Objetivos']) == 0)
@@ -258,7 +258,7 @@ class DadosprojetoController extends GenericControllerNew {
                 echo utf8_encode($htmlGerado);
                 die;
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'justificativa')
             {
                 $idpronac = $_POST['idpronac'];
@@ -279,7 +279,7 @@ class DadosprojetoController extends GenericControllerNew {
                 echo utf8_encode($htmlGerado);
                 die;
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'acessibilidade')
             {
                 $idpronac = $_POST['idpronac'];
@@ -300,7 +300,7 @@ class DadosprojetoController extends GenericControllerNew {
                 echo utf8_encode($htmlGerado);
                 die;
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'democratizacao')
             {
                 $idpronac = $_POST['idpronac'];
@@ -341,7 +341,7 @@ class DadosprojetoController extends GenericControllerNew {
                 echo utf8_encode($htmlGerado);
                 die;
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'ficha')
             {
                 $idpronac = $_POST['idpronac'];
@@ -362,7 +362,7 @@ class DadosprojetoController extends GenericControllerNew {
                 echo utf8_encode($htmlGerado);
                 die;
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'sinopse')
             {
                 $idpronac = $_POST['idpronac'];
@@ -383,7 +383,7 @@ class DadosprojetoController extends GenericControllerNew {
                 echo utf8_encode($htmlGerado);
                 die;
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'impacto')
             {
                 $idpronac = $_POST['idpronac'];
@@ -404,7 +404,7 @@ class DadosprojetoController extends GenericControllerNew {
                 echo utf8_encode($htmlGerado);
                 die;
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'estrategia')
             {
                 $idpronac = $_POST['idpronac'];
@@ -446,7 +446,7 @@ class DadosprojetoController extends GenericControllerNew {
                 echo utf8_encode($htmlGerado);
                 die;
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'localrealizacao')
             {
                 $idpronac = $_POST['idpronac'];
@@ -520,7 +520,7 @@ class DadosprojetoController extends GenericControllerNew {
                     }
                 }
                $htmlGerado .= "</table>";
-               
+
                echo utf8_encode($htmlGerado);
                die;
 
@@ -549,14 +549,14 @@ class DadosprojetoController extends GenericControllerNew {
                                         $htmlGerado .="<td align='center'>".$divulgacao->Peca."</td>";
                                         $htmlGerado .="<td align='center'>".$divulgacao->Veiculo."</td>";
                            $htmlGerado .= "</tr>";
- 
+
                     }
                 }
                $htmlGerado .= "</table>";
                echo utf8_encode($htmlGerado);
                die;
             }
-            
+
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'plano')
             {
                 $idpronac = $_POST['idpronac'];
@@ -580,8 +580,8 @@ class DadosprojetoController extends GenericControllerNew {
                             $htmlGerado .= "<td align='center' style='font-size:12pt; font-weight: 600;'>$distribuicao->Produto</td>";
                             $htmlGerado .= "<td align='center' style='font-size:12pt; font-weight: 600;'>$distribuicao->PosicaoDaLogo</td>";
                         $htmlGerado .= "</tr>";
-                    
-                    
+
+
                     $htmlGerado .= "<tr>";
                         $htmlGerado .= "<td	colspan='8'  align= 'center'>";
                         $htmlGerado .= "<table class='tabela' style='margin:0'>";
@@ -679,7 +679,7 @@ class DadosprojetoController extends GenericControllerNew {
                 $soma = RealizarAnaliseProjetoDAO::somarOrcamentoSolicitado($idpronac);
                 $buscarPlanilhaUnidade = PlanilhaUnidadeDAO::buscar();
                 $buscarPlanilhaEtapa = PlanilhaEtapaDAO::buscar();
-                
+
                 $buscarpronac = ProjetoDAO::buscarPronac($idpronac);
                 $buscarPronac = ProjetoDAO::buscar($buscarpronac['pronac']);
 
@@ -811,7 +811,7 @@ class DadosprojetoController extends GenericControllerNew {
             $htmlGerado .= "<tr class=\"IFF\">";
                     $htmlGerado .= "<td colspan=\"12\">&nbsp;</td>";
             $htmlGerado .= "</tr>";
-            $contadorProd++; 
+            $contadorProd++;
                     }
             //<!-- ========== FIM BUSCA POR PRODUTO ========== -->
             //<!-- ========== INICIO TOTAL GERAL ========== -->
@@ -823,7 +823,7 @@ class DadosprojetoController extends GenericControllerNew {
             $htmlGerado .= "<th class=\"left\" colspan=\"7\"><strong>Total Geral</strong></th>";
             $htmlGerado .= "<td class=\"direita red\"><strong>".number_format($soma['somatudo'],'2',',','.')."</strong></td>";
             $htmlGerado .= "</tr>";
-            
+
             //<!-- ========== FIM TOTAL GERAL ========== -->
          $htmlGerado .= "</table>";
        // <!-- ========== FIM PLANILHA ========== -->

@@ -12,24 +12,24 @@
             });
         }
     }
-    
+
     $(document).ready(function(){
         $("#btn_pesquisar").click(function(){
             $('#formPesquisa').submit();
         });
-        
+
         $('.btn_imprimir').click(function(){
             $('#formImpressao').submit();
         });
-        
+
         $('#dtReciboInicio, #dtReciboFim').keydown(function(event){
             if(event.keyCode == 13){
                 $("#btn_pesquisar").click();
             }
         });
-        
+
     });
-    
+
 </script>
 
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
@@ -62,8 +62,8 @@
             <td align="center"><?php echo $this->projeto->NomeProjeto; ?></td>
         </tr>
     </table>
-    
-    
+
+
     <form name="formPesquisa" id="formPesquisa" action="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'dados-bancarios-captacao'));?>" method="get">
         <table class="tabela">
             <tr onclick="abrirDinamico('.divFiltroPesquisa', $(this))" style="cursor:pointer">
@@ -159,7 +159,7 @@
             	foreach ($this->dados as $d) {
 			?>
             <tr>
-                <td><a href="<?php echo $this->url(array('controller' => 'agentes' , 'action' => 'agentes' , 'id' => $d->idAgente ), null, true);?>"><?php echo $d->Nome; ?></a></td>
+                <td><a href="<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes' , 'action' => 'agentes' , 'id' => $d->idAgente ), null, true);?>"><?php echo $d->Nome; ?></a></td>
                 </td>
                 <td><?php echo $d->NumeroRecibo; ?></td>
                 <td><?php echo $d->TipoApoio; ?></td>
@@ -172,7 +172,7 @@
             <?php $cnpjcpf=$d->CgcCPfMecena; $vlTotal=$vlTotal+$d->CaptacaoReal; } ?>
         </tbody>
     </table>
-    
+
     <br clear="all" />
 
     <table class="tabela">

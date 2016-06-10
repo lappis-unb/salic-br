@@ -8,7 +8,7 @@
 class ComprovantePagamentoService
 {
     /**
-     * 
+     *
      */
     const TIPO_DOCUMENTO_BOLETO_BANCARIO = 1;
     const TIPO_DOCUMENTO_CUPOM_FISCAL = 2;
@@ -16,7 +16,7 @@ class ComprovantePagamentoService
     const TIPO_DOCUMENTO_FATURA = 3;
     const TIPO_DOCUMENTO_RECIBO_PAGAMENTO = 4;
     const TIPO_DOCUMENTO_AUTONOMO = 5;
-    
+
     const TIPO_PAGAMENTO_CHEQUE = 1;
     const TIPO_PAGAMENTO_TRANSFERENCIA_BANCARIA = 2;
     const TIPO_PAGAMENTO_SAQUE = 3;
@@ -25,7 +25,7 @@ class ComprovantePagamentoService
     /**
      * Metodo que está disponivel para ser consumido como soap.
      * Responsavel por cadastrar um comprovante de pagamento
-     * 
+     *
      * @param string $fornecedorCpfCnpj
      * @param integer $itemId
      * @param string $tipo
@@ -63,7 +63,7 @@ class ComprovantePagamentoService
              *  @todo mover este trecho de buscar fornecedor para um model
              */
             $cnpjcpf = preg_replace('/\.|-|\//','', $fornecedorCpfCnpj);
-            $agentesDao = new Agentes();
+            $agentesDao = new Agente_Model_Agentes();
             $fornecedores = $agentesDao->buscarFornecedor(array(' A.CNPJCPF = ? ' => $cnpjcpf));
             if (!$fornecedores->count()) {
                 throw new Exception('Fornecedor não encontrado');

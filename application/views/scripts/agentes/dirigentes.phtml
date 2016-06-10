@@ -28,30 +28,30 @@
 			<tr>
 				<th style="font-size: 14px; font-family: sans-serif;">Dirigentes da instituição: <?php echo $this->dados[0] ->Nome; ?> CNPJ: <?php echo Mascara::addMaskCNPJ($this->dados[0] ->CNPJCPF); ?></th>
 			</tr>
-		</table>	
-	
+		</table>
+
 		<table class="tabela">
 			<tr>
 				<td>Para adicionar um novo dirigente, clique em novo ao lado!</td>
-				<th width="180" align="center"><input type="button" style="cursor: pointer;" class="incluir_dirigente" value=" " onclick="redirecionar('<?php echo $this->url(array('controller' => 'agentes', 'action' => 'incluirdirigente'));?>');"/></th>
+				<th width="180" align="center"><input type="button" style="cursor: pointer;" class="incluir_dirigente" value=" " onclick="redirecionar('<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'incluirdirigente'));?>');"/></th>
 			</tr>
 		</table>
-	
+
 		<table class="tabela">
 			<tr>
 				<th width="130">CPF</th>
 				<th>NOME</th>
 				<th width="120">AÇÃO</th>
-			</tr>	
+			</tr>
 			<?php foreach($this->dirigentes as $d):?>
 			<tr>
-				<td align="center"><a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'visualizadirigente', 'id' => $this->id, 'idDirigente' => $d->idAgente));?>"><?php echo Mascara::addMaskCpf($d->CNPJCPF); ?></a></td>
+				<td align="center"><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'visualizadirigente', 'id' => $this->id, 'idDirigente' => $d->idAgente));?>"><?php echo Mascara::addMaskCpf($d->CNPJCPF); ?></a></td>
 				<td><?php echo $d->Nome; ?></td>
 				<td align="center"><input type="button" class="btn_exclusao" value=" " onclick="confirmaExclusao('Deseja realmente desvincular o dirigente?', '<?php echo $this->url(array("controller"=>"agentes", "action"=>"desvinculadirigente","id" => $this->id, 'idDirigente' => $d->idAgente)); ?>');" /></td>
-			</tr>	
+			</tr>
 			<?php endforeach;?>
 		</table>
-	
+
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 

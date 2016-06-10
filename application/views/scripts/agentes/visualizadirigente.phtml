@@ -1,7 +1,7 @@
 <?php
 if ($this->grupoAtivo != 118) {
     require_once "inc/menu.inc.php";
-} // menu lateral 
+} // menu lateral
 ?>
 
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
@@ -13,31 +13,31 @@ if ($this->grupoAtivo != 118) {
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 <script type="text/javascript">
-  
+
     function excluir(idAgentexVerificacao){
-        
-        var dados = '<?php echo $this->url(array('controller' => 'agentes', 'action' => 'excluirmandato'));?>/idAgentexVerificacao/'+idAgentexVerificacao;
+
+        var dados = '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluirmandato'));?>/idAgentexVerificacao/'+idAgentexVerificacao;
         confirmaExclusao('Você tem certeza que deseja excluir o mandato?', dados)
-        
+
     }
-  
+
      function adicionar(){
         var documento       = $("#idVerificacao").val();
         var numeroDocumento = $("#dsNumeroDocumento").val();
         var dtinicio        = $("#dtInicioVigencia").val();
         var dtfim           = $("#dtTerminoVigencia").val();
-        var arquivo         = $("#idArquivo").val();           
-       
+        var arquivo         = $("#idArquivo").val();
+
        //validação campos do mandato
             if(documento == 0)
-            {                
+            {
                 $("#lbTipoDocumento").html("Dados obrigatórios não informados!");
                 return false;
             }else{
                 $("#lbTipoDocumento").html("");
             }
             if(documento == "")
-            {                
+            {
                 $("#lbTipoDocumento").html("Dados obrigatórios não informados!");
                 return false;
             }else{
@@ -45,42 +45,42 @@ if ($this->grupoAtivo != 118) {
             }
             if(numeroDocumento == "")
             {
-                $("#lbNumeroDoc").html("Dados obrigatórios não informados!");                   
+                $("#lbNumeroDoc").html("Dados obrigatórios não informados!");
                 return false;
             }else{
-                $("#lbNumeroDoc").html("");                   
+                $("#lbNumeroDoc").html("");
             }
             if(dtinicio == "")
             {
-                $("#lbPeriodo").html("Dados obrigatórios não informados!");                     
+                $("#lbPeriodo").html("Dados obrigatórios não informados!");
                 return false;
             }else{
-                $("#lbPeriodo").html(""); 
-            }            
+                $("#lbPeriodo").html("");
+            }
             if(dtfim == "")
             {
-                $("#lbPeriodo").html("Dados obrigatórios não informados!");                 
+                $("#lbPeriodo").html("Dados obrigatórios não informados!");
                 return false;
             }else{
-                $("#lbPeriodo").html("");                 
+                $("#lbPeriodo").html("");
             }
             if((!validarData(dtinicio)) || (!validarData(dtfim)))
             {
-                $("#lbPeriodo").html("Data inválida!"); 
+                $("#lbPeriodo").html("Data inválida!");
                 return false;
             }else{
                 $("#lbPeriodo").html("");
             }
             if(compararDataInicialDataFinal(dtinicio, dtfim) != 0)
             {
-                $("#lbPeriodo").html("A data final deve ser maior que a data inicial!");                 
+                $("#lbPeriodo").html("A data final deve ser maior que a data inicial!");
                 return false;
             }else{
                 $("#lbPeriodo").html("");
-            }     
+            }
             if(arquivo == "")
             {
-                $("#lbDocumentoAnexo").html("Dados obrigatórios não informados!"); 
+                $("#lbDocumentoAnexo").html("Dados obrigatórios não informados!");
                 return false;
             }else{
                 $("#lbDocumentoAnexo").html("");
@@ -89,10 +89,10 @@ if ($this->grupoAtivo != 118) {
             carregandoModal();
         $("#formmandato").submit();
     }
-    
+
     $(document).ready(function()
     {
-        
+
         // máscaras dos campos
         $("#periodo1, #periodo2").keyup(function()
         {
@@ -100,7 +100,7 @@ if ($this->grupoAtivo != 118) {
         });
 
         // calendário
-        $.datepicker.regional['pt-BR'] = 
+        $.datepicker.regional['pt-BR'] =
             {
             closeText: 'Fechar',
             prevText: '&#x3c;Anterior',
@@ -122,9 +122,9 @@ if ($this->grupoAtivo != 118) {
 
         // id dos campos que utilizarão o calendário
         $("#dtInicioVigencia, #dtTerminoVigencia").datepicker($.datepicker.regional['pt-BR']);
-        
-        
-		
+
+
+
     }); // fim $(document).ready()
 </script>
 
@@ -153,13 +153,13 @@ if ($this->grupoAtivo != 118) {
                     <?php else: ?>
                         <b>CPF:</b> <?php echo Mascara::addMaskCPF($this->dadosD[0]->CNPJCPF); ?>
                     <?php endif; ?>
-                </td>			
-                <td width="250"><b>NOME:</b> <?php echo $this->dadosD[0]->Nome; ?></td>			
+                </td>
+                <td width="250"><b>NOME:</b> <?php echo $this->dadosD[0]->Nome; ?></td>
                 <td><b>VISÕES:</b><?php
                     foreach ($this->visoesD as $v) {
                         echo " | " . $v->Descricao;
                     }
-                    ?></td>		
+                    ?></td>
             </tr>
         </table>
         <table id="tabEndereco" class="tabela ">
@@ -229,25 +229,25 @@ if ($this->grupoAtivo != 118) {
             <?php endforeach; ?>
         </table>
         <!-- ========== INICIO DO FORMULÁRIO DE MANDATO ========== -->
-        <form name="formmandato" id="formmandato" enctype="multipart/form-data" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'mandato')); ?>" method="POST">
+        <form name="formmandato" id="formmandato" enctype="multipart/form-data" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'mandato')); ?>" method="POST">
             <table id="tabMandato" class="tabela">
                 <tr>
                     <th colspan="5">MANDATO</th>
                 </tr>
                 <tr>
-                    <td colspan="5"><b>Para adicionar um novo documento, clique em incluir ao lado!</b></td>                                   
+                    <td colspan="5"><b>Para adicionar um novo documento, clique em incluir ao lado!</b></td>
                 </tr>
                 <tr>
-                    <td class="destacar bold">Tipo de Documento<p><span class="red" id="lbTipoDocumento"></span></td>                
+                    <td class="destacar bold">Tipo de Documento<p><span class="red" id="lbTipoDocumento"></span></td>
                     <td class="destacar bold">Num. Documento<p><span class="red" id="lbNumeroDoc"></span></td>
-                    <td class="destacar bold">Período de Vigência<p><span class="red" id="lbPeriodo"></span></td>                 
-                    <td class="destacar bold">Documento anexo<p><span class="red" id="lbDocumentoAnexo"></span></td>                                                     
-                    <td class="destacar bold">Ação</td>                                                     
+                    <td class="destacar bold">Período de Vigência<p><span class="red" id="lbPeriodo"></span></td>
+                    <td class="destacar bold">Documento anexo<p><span class="red" id="lbDocumentoAnexo"></span></td>
+                    <td class="destacar bold">Ação</td>
                 </tr>
                 <!--?php foreach ($this->mandatoM as $m): ?-->
                 <tr>
                     <td>
-                        <select class="select_simples" name="idVerificacao" id="idVerificacao" style="width: 300px;">    
+                        <select class="select_simples" name="idVerificacao" id="idVerificacao" style="width: 300px;">
                             <option value="0"> - Selecione - </option>
                             <?php foreach($this->tipoDocumento as $tipoDocumento): ?>
                             <option value="<?php echo $tipoDocumento->idVerificacao; ?>">
@@ -255,21 +255,21 @@ if ($this->grupoAtivo != 118) {
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                    </td>                        
+                    </td>
                     <td>
-                        <input class="select_simples" size="10" maxlength="12" name="dsNumeroDocumento" id="dsNumeroDocumento"  >                
-                    </td>  
-                    <td align="">                
-                        <input class="select_simples" type="text" name="dtInicioVigencia" id="dtInicioVigencia" maxlength="10" class="input_simples btn_calendario" onkeypress="mascara(this,format_num)"  style="width: 5em"> à                                
-                        <input class="select_simples" type="text" name="dtTerminoVigencia" id="dtTerminoVigencia" maxlength="10" class="input_simples btn_calendario" onkeypress="mascara(this,format_num)" style="width: 5em">                
-                    </td>  
+                        <input class="select_simples" size="10" maxlength="12" name="dsNumeroDocumento" id="dsNumeroDocumento"  >
+                    </td>
+                    <td align="">
+                        <input class="select_simples" type="text" name="dtInicioVigencia" id="dtInicioVigencia" maxlength="10" class="input_simples btn_calendario" onkeypress="mascara(this,format_num)"  style="width: 5em"> à
+                        <input class="select_simples" type="text" name="dtTerminoVigencia" id="dtTerminoVigencia" maxlength="10" class="input_simples btn_calendario" onkeypress="mascara(this,format_num)" style="width: 5em">
+                    </td>
                     <td class="centro">
                         <input type="file" class="multi" id="idArquivo" name="arquivo[]" accept="pdf" />
                     </td>
                         <td align="center">
                             <?php if(!empty($this->mandatosAtual)): ?>
                                 <?php if(date("Ymd", strtotime($this->mandatosAtual->dtFimMandato)) >= date("Ymd") ): //verifica se o mandato esta vencido?>
-                                    
+
                                 <?php else: ?>
                                     <input type="button" id="incluir" class="btn_incluir" value=" " onclick="adicionar();" />
                                 <?php endif; ?>
@@ -295,8 +295,8 @@ if ($this->grupoAtivo != 118) {
             </table>
         </form>
 
-        <form action="<?php echo $this->url(array('controller' => 'Agentes', 'action' => 'salvar-avaliacao-execucao-fisica')); ?>?idPronac=<?php echo $_GET['idPronac']; ?>" name="frmAvaliacaoRelatorioFinal" id="frmAvaliacaoRelatorioFinal" method="post">
-        </form>       
+        <form action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'Agentes', 'action' => 'salvar-avaliacao-execucao-fisica')); ?>?idPronac=<?php echo $_GET['idPronac']; ?>" name="frmAvaliacaoRelatorioFinal" id="frmAvaliacaoRelatorioFinal" method="post">
+        </form>
 
         <?php if ($this->vinculado == ''): ?>
             <table class="tabela">

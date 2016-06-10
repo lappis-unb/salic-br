@@ -25,9 +25,9 @@ $(function()
     $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
     $("#dtentrada").datepicker($.datepicker.regional['pt-BR']);
     $("#dtsaida").datepicker($.datepicker.regional['pt-BR']);
-    
-    
-    
+
+
+
 });
 
 	function validaForm()
@@ -37,20 +37,20 @@ $(function()
 		var endereco 	= $("#endereco").val();
 		var dtinicio 	= $("#dtentrada").val();
 		var dtfim 		= $("#dtsaida").val();
-		
+
 
 		var dtAtual = $("#dtatual").val();
-		  
+
 		var arrAtual = dtAtual.split("/");
   	  	dtAtual = arrAtual[2]+arrAtual[1]+arrAtual[0];
 
-			
-  
+
+
 			if(dtinicio != '')
 	        {
-	            var arrInicio = dtinicio.split("/");    
+	            var arrInicio = dtinicio.split("/");
 	            dtinicio = arrInicio[2]+arrInicio[1]+arrInicio[0];
-	            
+
 	        }
 	        else
 		    {
@@ -72,13 +72,13 @@ $(function()
 	        if((dtfim < dtinicio) || (dtfim == dtinicio))
 		    {
 				alertar('A data final deve ser maior que a data inicial!');
-		            
+
 	            return false;
 	        }
 	        else if(dtinicio < dtAtual)
 		    {
 				alertar('O período não pode ser inferior a data de hoje!');
-		            
+
 	            return false;
 	        }
 	        else if((instituicao == '') || (curso == '') || (endereco == ''))
@@ -90,10 +90,10 @@ $(function()
 				$("#form").submit();
 			}
 
-		
-		
-		
-		
+
+
+
+
 	}
 
 
@@ -124,8 +124,8 @@ $(function()
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 <div id="conteudo">
 
-		<?php require_once "inc/cabecalho.php";?>	
-	
+		<?php require_once "inc/cabecalho.php";?>
+
 	<?php if(($this->grupoativo == "137")): ?>
 	<table class="tabela">
 		<tr>
@@ -136,12 +136,12 @@ $(function()
 	<?php endif; ?>
 
 	<div id="formNovo" class="sumir">
-	
-	<form id="form" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'salvaformacao'));?>" method="post" enctype="multipart/form-data">
-		
+
+	<form id="form" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvaformacao'));?>" method="post" enctype="multipart/form-data">
+
 		<input type="hidden" value="<?php echo date('d/m/Y');?>" id="dtatual" name="dtatual" />
-		
-		<table class="tabela"> 
+
+		<table class="tabela">
 			<tr>
 				<th colspan="4">FORMAÇÃO PROFISSIONAL</th>
 			</tr>
@@ -174,7 +174,7 @@ $(function()
 				</td>
 			</tr>
 		</table>
-	</form>	
+	</form>
 	</div>
 
 	<?php if(count($this->formacoes) != 0):?>
@@ -197,13 +197,13 @@ $(function()
 			<td><?php echo $f->dsEndereco; ?></td>
 			<td align="center"><?php echo $f->dtInicio; ?></td>
 			<td align="center"><?php echo $f->dtFim; ?></td>
-			<td><a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'abrirarquivo','id' => $f->idArquivo)); ?>"><?php echo $f->nmArquivo;?></a></td>
+			<td><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'abrirarquivo','id' => $f->idArquivo)); ?>"><?php echo $f->nmArquivo;?></a></td>
 		</tr>
 		<?php endforeach; ?>
 	</table>
 	<?php endif; ?>
-	
-	
+
+
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->
 

@@ -7,7 +7,7 @@ $(".cmpCnpjCpf").attr("maxlength", "18").keyup(function(){
 
 
 $("#areacultural").change(function(){
-    
+
     var area = $(this).val();
     segmento(area,null);
 });
@@ -19,11 +19,11 @@ $("#areacultural").change(function(){
         $(this).attr("maxlength", "20");
     }
     //alert(data)
-    
-})*/
-    
 
-   
+})*/
+
+
+
 
 $('#nrprocesso').blur(function(){
         $('#validarProcesso').html('').css('display','block');
@@ -33,9 +33,9 @@ $('#nrprocesso').blur(function(){
             $('#nrprocesso').val(mascaraProcesso(nrprocesso));
         }
        nrprocesso = $('#nrprocesso').val();
-        
+
         $('#validarProcesso').html("<div class='carregando'><img src='public/img/ajax.gif' alt='Aguarde...' /><br />CARREGANDO</div>");
-        
+
         $.ajax({
             url : '<?php echo $this->url(array('controller' => 'cadastrarprojeto', 'action' => 'validacaoprocesso')); ?>',
             type: 'POST',
@@ -45,8 +45,8 @@ $('#nrprocesso').blur(function(){
                 $('#validarProcesso').html(data)
             }
         });
-        
-        
+
+
         if($('#validarProcesso').html() == 'ok'){
             $('#validarProcesso').css('display','none');
         } else {
@@ -60,7 +60,7 @@ $('#cnpfcpf').blur(function(){
     //if(CgcCpf.length == 14 || CgcCpf.length == 18 ){
         $('#nomeProponente').html('Carregando...');
         $.post('<?php echo $this->url(array('controller' => 'cadastrarprojeto', 'action' => 'validaragente')); ?>',
-                {CgcCpf : CgcCpf}, 
+                {CgcCpf : CgcCpf},
                 function(data){
                     if(data.agente){
                         $('#nomeProponente').html('');
@@ -76,7 +76,7 @@ $('#cnpfcpf').blur(function(){
                         modal: true,
                         buttons : {
                             'Sim' : function(){
-                                redirecionar('<?php echo $this->baseUrl() ?>' + '/agentes/incluiragente/cpf/' + CgcCpf.replace( /[^0-9]/g, '' ) + '/cadastrarprojeto/fnc');
+                                redirecionar('<?php echo $this->baseUrl() ?>' + '/agente/agentes/incluiragente/cpf/' + CgcCpf.replace( /[^0-9]/g, '' ) + '/cadastrarprojeto/fnc');
                             },
                             'Não' : function(){
                                 $('#cnpfcpf').val('');
@@ -126,7 +126,7 @@ $("#btn_salvar").click(function(){
     	if ($('#validarProcesso').html() != 'ok')
     	{
 			return false;
-    	}else{    	  	
+    	}else{
 			$('#formCadastraProjeto').submit();
         }
     }
@@ -193,7 +193,7 @@ $(function()
 
 });
 
-                    
+
 //-->
 </script>
 <link type="image/x-icon" rel="shortcut icon" href="/NovoSalic/public/img/favicon.ico" />
@@ -211,18 +211,18 @@ $(function()
         Cadastrar Projetos FNC
         <span>ID #23A</span>
         <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span>
-    </div> 
+    </div>
 </div>
 
 <div id="conteudo">
-    
-    
+
+
         <form action="<?php echo $this->url(array('controller' => 'cadastrarprojeto', 'action' => 'cadastrarprojetos')); ?>" name="formCadastraProjeto" method="POST" id="formCadastraProjeto">
         <!-- ========== INÍCIO TABELA DADOS ========== -->
         <?php //require_once "inc/menuabas.phtml"; // menu abas ?>
         <div id="tabDados">
             <table class="tabela">
-                
+
                 <tr>
                     <th colspan="4" class="centro">Cadastrar Projetos FNC</th>
                 </tr>
@@ -367,8 +367,8 @@ $(function()
         </form>
 </div>
 <!-- ========== FIM TABELA DADOS ========== -->
-    
-    
+
+
 <div id="erro" ></div>
 <div id="rodapeConteudo" ><span></span></div>
 <br clear="all" />

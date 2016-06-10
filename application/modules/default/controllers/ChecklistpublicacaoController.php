@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * CheckListPublicacaoController
  * @author Equipe RUP - Politec
@@ -43,12 +43,12 @@ class ChecklistPublicacaoController extends GenericControllerNew
             $PermissoesGrupo[] = 123;
             $PermissoesGrupo[] = 110;
             $PermissoesGrupo[] = 142;
-            
+
             if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo está no array de permissões
             {
                 parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
             }
-            
+
             if ( $GrupoAtivo->codGrupo == 103 || $GrupoAtivo->codGrupo == 122 || $GrupoAtivo->codGrupo == 127  || $GrupoAtivo->codGrupo == 123 )
             {
                  $this->view->coordenador = "true";
@@ -62,15 +62,15 @@ class ChecklistPublicacaoController extends GenericControllerNew
             $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
             $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
             $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
-            
+
             $this->getIdUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
 
-            $tblAgente = new Agentes();
+            $tblAgente = new Agente_Model_Agentes();
             $rsAgente = $tblAgente->buscar(array('CNPJCPF = ?'=>$auth->getIdentity()->usu_identificacao))->current();
             if(!empty($rsAgente)){
                 $this->getIdAgenteLogado = $rsAgente->idAgente;
             }
-            
+
         } // fecha if
         else // caso o usuário não esteja autenticado
         {
@@ -83,7 +83,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
         $this->view->codGrupo = $_SESSION['GrupoAtivo']['codGrupo'];
         $this->codOrgao       = $_SESSION['GrupoAtivo']['codOrgao'];
         $this->view->codOrgao = $_SESSION['GrupoAtivo']['codOrgao'];
-        
+
         if($this->codGrupo == 103 || $this->codGrupo == 110  || $this->codGrupo == 127 ){ //103=Coord. de Analise  110=Tecnico de Analise   127=Coord. Geral de Analise
             $this->view->tipoAnalise = "inicial";
             $this->tipoAnalise = "inicial";
@@ -99,13 +99,13 @@ class ChecklistPublicacaoController extends GenericControllerNew
                 $this->view->blnCoordenador = "true";
             }
         }
-        
+
         $this->codOrgaoSuperior = (!empty($auth->getIdentity()->usu_org_max_superior))?$auth->getIdentity()->usu_org_max_superior:$auth->getIdentity()->usu_orgao;
     }
 
     // fecha método init()
     public function indexAction(){
-        
+
     }
 
     public function listasAction(){
@@ -215,7 +215,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
             $where['tr.NrReuniao = ?'] = isset($_POST['nrReuniaoPesquisa']) ? $_POST['nrReuniaoPesquisa'] : $_GET['nrReuniaoPesquisa'];
             $this->view->nrReuniaoPesquisa = isset($_POST['nrReuniaoPesquisa']) ? $_POST['nrReuniaoPesquisa'] : $_GET['nrReuniaoPesquisa'];
         }
-        
+
         $projetos = New Projetos();
         $total = $projetos->painelAguardandoAnaliseDocumental($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
@@ -340,7 +340,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
     }
 
     public function localizarAction(){
-        
+
     }
 
     public function aguardandoAnaliseDocumentaloldAction()
@@ -408,7 +408,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
             $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
             $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
         }
-        
+
         $projetosReadequados = $projetos->buscarProjetosCheckList($arrBusca);
         $arrProjetosReadequados = $projetosReadequados->toArray();
         $this->view->BuscarAprovadosRegularesReadequados = $arrProjetosReadequados;
@@ -450,13 +450,13 @@ class ChecklistPublicacaoController extends GenericControllerNew
         //busca areas culturais
         $areaCultura = AreaSegmentoDAO::consultaAreaCultural();
         $this->view->BuscarAreaCultura = $areaCultura;
-        
+
     }
 
     //ESTE METODO DEIXOU DE SER UTILIZADO - MANTIDO AQUI COMO REFERENCIA ATE QUE A DEMANDA SEJA HOMOLOGADA
     public function coordenadoranaliseAction()
     {
-        
+
         $diligencia = New tbDiligencia();
         $projetos = New Projetos();
 
@@ -479,7 +479,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
         $projetosAprovadosInic = $projetos->buscarProjetosCheckList($arrBusca);
         $arrProjetosAprovadosInic = $projetosAprovadosInic->toArray();
         $this->view->BuscarAprovadosRegularesAprovadosInic = $arrProjetosAprovadosInic;
-        
+
         /* ================================================================================*/
         /* ============== PROPONENTE DILIGENCIADO - D25  ==================================*/
         /* ================================================================================*/
@@ -520,17 +520,17 @@ class ChecklistPublicacaoController extends GenericControllerNew
         $areaCultura = AreaSegmentoDAO::consultaAreaCultural();
         $this->view->BuscarAreaCultura = $areaCultura;
     }
-    
+
     public function proponenteDiligenciadoAction()
     {
-        
+
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $tipoAnalise = $this->_request->getParam("tipoAnalise");
         $post = Zend_Registry::get('post');
-        
+
         $projetos = New Projetos();
         $diligencia = New tbDiligencia();
-        
+
         /* ============== PROPONENTE DILIGENCIADO - D25  ==================================*/
         if($tipoAnalise == "inicial"){
             $arrBusca = array();
@@ -542,13 +542,13 @@ class ChecklistPublicacaoController extends GenericControllerNew
                 $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
                 $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
             }
-            
-            //calcula o total de registros 
+
+            //calcula o total de registros
             $totalProponenteDiligenciado = $projetos->buscarProjetosCheckList($arrBusca,null,null,null,true);
             $this->view->totalProponenteDiligenciado = $totalProponenteDiligenciado;
             $this->view->codDiligencia = 181;
         }
-        
+
         /* ============== PROPONENTE DILIGENCIADO - D33 ===================================*/
         if($tipoAnalise == "readequados"){
             $arrBusca = array();
@@ -562,24 +562,24 @@ class ChecklistPublicacaoController extends GenericControllerNew
             }
             $this->view->codDiligencia = 182;
         }
-        
+
         if(!empty($post->ordenacaoPD)){ $ordem[] = "{$post->ordenacaoPD} {$post->tipoOrdenacaoPD}"; }else{$ordem = array('1 ASC');}
         $rsDiligenciados = $projetos->buscarProjetosCheckList($arrBusca, $ordem);
         $arrDiligenciados = $rsDiligenciados->toArray();
         $this->view->proponenteDiligenciado = $arrDiligenciados;
         $this->view->parametrosBuscaPD = $_POST;
     }
-    
+
     public function proponenteIrregularAction()
     {
-        
+
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $tipoAnalise = $this->_request->getParam("tipoAnalise");
         $post = Zend_Registry::get('post');
-        
+
         $projetos = New Projetos();
         $diligencia = New tbDiligencia();
-        
+
         /* ============== PROPONENTE IRREGULAR - D11 - ANALISE INICIAL ====================*/
         if($tipoAnalise == "inicial"){
             $arrBusca = array();
@@ -593,7 +593,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
                 $arrBusca['vp.idUsuario = ?'] = $this->getIdUsuario;
                 $arrBusca['vp.stAnaliseProjeto NOT IN (?)'] = array('3','4'); //Analise Finalizada e Encaminhado para portaria
             }
-            
+
             //calcula o total e retorna para a tela original
             $totalProponenteIrregular = $projetos->buscarProjetosCheckList($arrBusca,null,null,null,true);
             $this->view->totalProponenteIrregular = $totalProponenteIrregular;
@@ -612,7 +612,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
             $this->view->codDiligencia = 182;
 
         }
-        
+
         if(!empty($post->ordenacaoPI)){ $ordem[] = "{$post->ordenacaoPI} {$post->tipoOrdenacaoPI}"; }else{$ordem = array('1 ASC');}
         $rsProponenteIrregular = $projetos->buscarProjetosCheckList($arrBusca);
         $arrProponenteIrregular = $rsProponenteIrregular->toArray();
@@ -620,25 +620,25 @@ class ChecklistPublicacaoController extends GenericControllerNew
         $this->view->parametrosBuscaPI = $_POST;
     }
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Método com a grid de readequação
      */
@@ -681,7 +681,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
                 }elseif($this->codGrupo == 122 || $this->codGrupo == 123 ){ //121=Cood. de Acompanhamento    123=Cood. Geral de Acompanhamento
                     $situacao = "D28";
                 }
-                
+
                 $providencia = '';
                 $tblSituacao = new Situacao();
                 $rsSituacao = $tblSituacao->buscar(array('Codigo=?'=>$situacao))->current();
@@ -693,7 +693,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
                 $rsProjeto = $tblProjeto->buscar(array('IdPRONAC=?'=>$idpronac))->current();
                 $nrPronac = $rsProjeto->AnoProjeto.$rsProjeto->Sequencial;
                 $tblProjeto->alterarSituacao($idpronac,'',$situacao,$providencia);
-                
+
                 //STATUS AVALIACAO
                 $tblVerificaProjeto = new tbVerificaProjeto();
                 $rsVP = $tblVerificaProjeto->buscar(array('idPronac=?'=>$idpronac))->current();
@@ -728,7 +728,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
         $this->view->nomeUsuario = $nomeUsuario;
         $this->view->idPronac = $this->_request->getParam("idPronac");
     }
-    
+
     function imprimirChecklistAction() {
         $Projetos = new Projetos();
         $dadosProjeto = $Projetos->buscarDadosUC75($_POST['idPronac'])->current();
@@ -737,11 +737,11 @@ class ChecklistPublicacaoController extends GenericControllerNew
         $this->view->dadosProjeto = $dadosProjeto;
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
     }
-    
+
     function gravarFinalizacaoAnaliseAction() {
         $auth = Zend_Auth::getInstance(); // pega a autenticação
         $usuario = $auth->getIdentity()->usu_codigo;
-        
+
         $idpronac = $this->_request->getParam("idpronac");
         $post        = Zend_Registry::get('post');
         $idAprovacao = $post->idAprovacao;
@@ -750,7 +750,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
         $dtFimCaptacao = Data::dataAmericana($post->dataCaptacaoFim);
 
         if(!empty ($idpronac)){
-            
+
             try
             {
                 $tblProjeto = new Projetos();
@@ -765,7 +765,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
                 $rsAprovacao->DtFimCaptacao    = $rsProjeto->DtFimCaptacao;
                 $rsAprovacao->Logon            = $usuario;
                 $rsAprovacao->save();
-        
+
                 //STATUS AVALIACAO
                 $tblVerificaProjeto = new tbVerificaProjeto();
                 $rsVP = $tblVerificaProjeto->buscar(array('idPronac=?'=>$idpronac))->current();
@@ -846,7 +846,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
             $rsAprovacao->DtFimCaptacao    = $dtfimcaptacao;
             $rsAprovacao->Logon            = $usuario;
             $rsAprovacao->save();
-            
+
             //STATUS AVALIACAO
             $tblVerificaProjeto = new tbVerificaProjeto();
             $rsVP = $tblVerificaProjeto->buscar(array('idPronac=?'=>$idpronac))->current();
@@ -887,17 +887,17 @@ class ChecklistPublicacaoController extends GenericControllerNew
         $idpronac = $post->idpronac;
         $dadosDoProjeto = array();
         $this->view->idpronac = $idpronac;
-        
+
         //$projetos = New Projetos();
         //$busca = $projetos->buscar(array('IdPRONAC = ?' => $idpronac));
-        
+
         $arrBusca = array();
         $arrBusca['pr.IdPRONAC = ?'] = $idpronac;
-        
+
         $tblProjeto = new Projetos();
         $rsProjeto = $tblProjeto->ProjetosCheckList($arrBusca)->current();
         $this->view->projetos = $rsProjeto;
-        
+
         /*$anoProjeto = $busca[0]['AnoProjeto'];
         $sequencial = $busca[0]['Sequencial'];
         $buscaTotalAprovadoProjeto = Aprovacao::buscaTotalAprovadoProjeto($anoProjeto, $sequencial);
@@ -951,7 +951,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
             $dadosDoProjeto['cnpj'] = Validacao::mascaraCPFCNPJ($projeto->CgcCpf);
             /*$aprovadoReal = AprovacaoDAO::SomarAprovacao($idpronac);
             $dadosDoProjeto['AprovadoReal'] = number_format($aprovadoReal['soma'], '2', ',', '.');*/
-            
+
             $tipoaprovacaoComplementacao = AprovacaoDAO::SomarReadeqComplementacao($idpronac, 2);
             $tipoaprovacaoReadequacao    = AprovacaoDAO::SomarReadeqComplementacao($idpronac, 4);
 
@@ -969,11 +969,11 @@ class ChecklistPublicacaoController extends GenericControllerNew
                 }
             }
             $this->view->dadosReadequacao = $dadosReadequacao;
-            
+
             //$dadosDoProjeto['idAprovacao'] = $projeto->idAprovacao;
-            
+
         /*}*/
-            
+
         //busca areas culturais
         $areaCultura = new Area();
         $this->view->BuscarAreaCultura = $areaCultura->buscar(array('Codigo != ?'=>7));
@@ -986,14 +986,14 @@ class ChecklistPublicacaoController extends GenericControllerNew
         $idpronac = $post->idpronac;
         $dadosDoProjeto = array();
         $this->view->idpronac = $idpronac;
-        
+
         $arrBusca = array();
         $arrBusca['pr.IdPRONAC = ?'] = $idpronac;
-        
+
         $tblProjeto = new tbPedidoAlteracaoProjeto();
         $rsProjeto = $tblProjeto->buscarProjetosCheckList($arrBusca)->current();
         $this->view->projetos = $rsProjeto;
-           
+
         $tipoaprovacaoComplementacao = AprovacaoDAO::SomarReadeqComplementacao($idpronac, 2);
         $tipoaprovacaoReadequacao    = AprovacaoDAO::SomarReadeqComplementacao($idpronac, 4);
 
@@ -1011,7 +1011,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
             }
         }
         $this->view->dadosReadequacao = $dadosReadequacao;
-            
+
         //busca areas culturais
         $areaCultura = AreaSegmentoDAO::consultaAreaCultural();
         $this->view->BuscarAreaCultura = $areaCultura;
@@ -1039,34 +1039,34 @@ class ChecklistPublicacaoController extends GenericControllerNew
         die;
 
     }
-    
+
     function formRedistribuirProjetoAction()
     {
         $arrBusca = array();
         if($this->tipoAnalise == "inicial"){
-            $arrBusca['g.gru_codigo = ?'] = 110; 
-            //$arrBusca['g.gru_codigo = ?'] = $this->codOrgao; 
+            $arrBusca['g.gru_codigo = ?'] = 110;
+            //$arrBusca['g.gru_codigo = ?'] = $this->codOrgao;
         }else{
-            $arrBusca['g.gru_codigo = ?'] = 121; 
+            $arrBusca['g.gru_codigo = ?'] = 121;
         }
         //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(o.org_codigo, 1) = ? "] = $this->codOrgaoSuperior;
         $arrBusca['ug.uog_orgao = ? '] = $this->codOrgao;
         $arrBusca['ug.uog_status = ?'] = 1; //usuarios ativos
-        
+
         $tblTecnicos = new Usuariosorgaosgrupos();
         $rsTecnicos = $tblTecnicos->buscarUsuariosOrgaosGrupos($arrBusca, array('u.usu_nome ASC', 'g.gru_nome ASC'));
         $this->view->tecnicos = $rsTecnicos;
-        
+
     }
-    
+
     function buscarTecnicosRedistribuicaoAction()
     {
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $post = Zend_Registry::get('post');
         $idTecnico = $post->tecnico;
         $pronac    = $post->pronac;
-        $nrReuniao = $post->reuniao; 
-        
+        $nrReuniao = $post->reuniao;
+
         $arrBusca = array();
         if(!empty($idTecnico)){
             $arrBusca['vp.idUsuario = ?'] = $idTecnico;}
@@ -1076,21 +1076,21 @@ class ChecklistPublicacaoController extends GenericControllerNew
             $arrBusca['tr.NrReuniao = ?'] = $nrReuniao;}
         $arrBusca['vp.stAnaliseProjeto IN (?)'] = array('1','2','3');
         $arrBusca['vp.stAnaliseProjeto in (SELECT TOP 1 max(stAnaliseProjeto) from SAC..tbVerificaProjeto where IdPRONAC = pr.IdPRONAC)'] = '?';
-        
+
         if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('32 ASC');}
-        
+
         $tblProjeto = new Projetos();
         $rsProjetos = $tblProjeto->buscarProjetosCheckList($arrBusca, $ordem);
         $this->view->projetos = $rsProjetos;
         $this->view->parametrosBusca = $_POST;
-        
+
         //BUSCAR TECNICOS PARA DISTRIBUIR
         $arrBusca = array();
         if($this->tipoAnalise == "inicial"){
-            $arrBusca['g.gru_codigo = ?'] = 110; 
-            //$arrBusca['g.gru_codigo = ?'] = $this->codOrgao; 
+            $arrBusca['g.gru_codigo = ?'] = 110;
+            //$arrBusca['g.gru_codigo = ?'] = $this->codOrgao;
         }else{
-            $arrBusca['g.gru_codigo = ?'] = 121; 
+            $arrBusca['g.gru_codigo = ?'] = 121;
         }
         //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(o.org_codigo, 1) = ? "] = $this->codOrgaoSuperior;
         $arrBusca['ug.uog_orgao = ? '] = $this->codOrgao;
@@ -1098,13 +1098,13 @@ class ChecklistPublicacaoController extends GenericControllerNew
         if(!empty($idTecnico)){
             $arrBusca['u.usu_codigo <> ?'] = $idTecnico; //tecnico atual
         }
-        
+
         $tblTecnicos = new Usuariosorgaosgrupos();
         $rsTecnicos = $tblTecnicos->buscarUsuariosOrgaosGrupos($arrBusca, array('u.usu_nome ASC', 'g.gru_nome ASC'));
         $this->view->tecnicos = $rsTecnicos;
         //xd($rsProjetos);
     }
-    
+
     function redistribuirProjetoAction()
     {
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
@@ -1112,7 +1112,7 @@ class ChecklistPublicacaoController extends GenericControllerNew
         $arrPronacs = $post->idpronac;
         $idTecnico = $post->novoTecnico;
         //xd($post);
-        
+
         $tblVerificaProjeto = new tbVerificaProjeto();
         try{
             foreach($arrPronacs as $idPronac){

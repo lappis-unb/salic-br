@@ -20,7 +20,7 @@
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true);?>" title="Início">Início</a></li>
-        <li><a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'agentes')); ?>">Manter Agentes</a></li>
+        <li><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes')); ?>">Manter Agentes</a></li>
         <li class="last">Pesquisar</li>
     </ul>
 </div>
@@ -40,7 +40,7 @@
 <div id="conteudo">
 
     <br clear="all" />
-    <form class="form" name="formBuscar" id="formBuscar" method="post" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'buscaragente')); ?>">
+    <form class="form" name="formBuscar" id="formBuscar" method="post" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'buscaragente')); ?>">
         <table class="tabela" style="width:50%;">
             <tr>
                 <td class="destacar bold" width="130">
@@ -107,7 +107,7 @@
                     }
                 });
                 return false;
-            
+
             } else if (Tipo == 0 && cpf.length != 14 && (nome == "" || nome == " ")){
                 msg = 'CPF inválido!';
                 $("#dialog").dialog("destroy");
@@ -124,7 +124,7 @@
                     }
                 });
                 return false;
-            
+
             } else if (Tipo == 1 && cpf.length != 18 && (nome == "" || nome == " ")){
                 msg = 'CNPJ inválido!';
                 $("#dialog").dialog("destroy");
@@ -141,7 +141,7 @@
                     }
                 });
                 return false;
-            
+
             } else {
                 return true;
             }

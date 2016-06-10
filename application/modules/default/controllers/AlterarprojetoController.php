@@ -96,13 +96,13 @@ class AlterarprojetoController extends GenericControllerNew {
 
             $tbProjeto = New Projetos();
             $buscaProjeto = $tbProjeto->buscar(array("AnoProjeto = ?" => $ano, "Sequencial = ?" => $sequencial));
-        
+
             if ( !empty( $buscaProjeto[0] ) ){
                 $CgcCpf = $buscaProjeto[0]->CgcCpf;
             }else{
                 parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ERROR");
             }
-            
+
             $agentes = New Agentes();
             $buscaTipoPessoa = $agentes->buscar(array('CNPJCPF = ?' => $CgcCpf));
 
@@ -155,7 +155,7 @@ class AlterarprojetoController extends GenericControllerNew {
                 $this->view->id = $idAgente;
             }
         }
-            
+
         $this->view->comboestados = Estado::buscar();
         $this->view->combotiposenderecos = Tipoendereco::buscar();
         $this->view->combotiposlogradouros = Tipologradouro::buscar();
@@ -222,7 +222,7 @@ class AlterarprojetoController extends GenericControllerNew {
         //$pronac = addslashes($post->pronac);
         $pronac = $this->_request->getParam("pronac");
         $idDirigente = $this->_request->getParam("idDirigente");
-        
+
         if ( !empty($idDirigente) ){
             $this->view->idDirigente = "true";
         }
@@ -293,12 +293,12 @@ class AlterarprojetoController extends GenericControllerNew {
 
         // Retorna o idAgente cadastrado
 
-        $Agentes = new Agentes();
+        $Agentes = new Agente_Model_Agentes();
         $salvaAgente = $Agentes->inserirAgentes($arrayAgente);
         $Agente = $Agentes->BuscaAgente($cpf);
         $idAgente = $Agente[0]->idAgente;
 
-        // ================================================ FIM SALVAR CPF/CNPJ =====================================================			
+        // ================================================ FIM SALVAR CPF/CNPJ =====================================================
         // ================================================ INÍCIO SALVAR NOME ======================================================
 
         $nome = $this->_request->getParam("nome");
@@ -359,7 +359,7 @@ class AlterarprojetoController extends GenericControllerNew {
                     'cdArea' => $areaCultural,
                     'cdSegmento' => $segmentoCultural,
                     'stTitular' => $titular
-                        //'stConselheiro' => 'A' -- Qual caso de uso vai ativa e desativar?										
+                        //'stConselheiro' => 'A' -- Qual caso de uso vai ativa e desativar?
                 );
 
                 try {
@@ -445,7 +445,7 @@ class AlterarprojetoController extends GenericControllerNew {
 
 
         // =========================================== FIM SALVAR TELEFONES ====================================================
-        // =========================================== INICIO SALVAR EMAILS ====================================================			
+        // =========================================== INICIO SALVAR EMAILS ====================================================
 
         $tipoEmail = $this->_request->getParam("tipoEmail");
         $Email = $this->_request->getParam("email");
@@ -468,7 +468,7 @@ class AlterarprojetoController extends GenericControllerNew {
         }
 
         // =========================================== FIM SALVAR EMAILS ====================================================
-        // =========================================== INICIO SALVAR VINCULO ====================================================			
+        // =========================================== INICIO SALVAR VINCULO ====================================================
 
         try {
             // busca o dirigente vinculado ao cnpj/cpf
@@ -593,7 +593,7 @@ class AlterarprojetoController extends GenericControllerNew {
             if ($dadosDirigenteD) {
                 $this->view->vinculado = "sim";
             }
-            
+
             $tbTipodeDocumento = new VerificacaoAGENTES();
             $whereLista['idTipo = ?'] = 5;
             $rsTipodeDocumento = $tbTipodeDocumento->buscar($whereLista);
@@ -626,7 +626,7 @@ class AlterarprojetoController extends GenericControllerNew {
             $stMandato          = 0;
             $idArquivo          = $this->_request->getParam("idArquivo");
 
-            //validação data do mandato            
+            //validação data do mandato
             $buscarMandato = $tbDirigenteMandato->mandatoRepetido($idAgente, $dtInicioVigencia, $dtTerminoVigencia);
 
             if (count($buscarMandato) > 0) {
@@ -877,7 +877,7 @@ class AlterarprojetoController extends GenericControllerNew {
 
         //$pronac = addslashes($post->pronac);
         $pronac = $this->_request->getParam("pronac");
-        
+
         if (strlen($pronac) > 12) {
             $pronac = Seguranca::dencrypt($pronac);
         } elseif (strlen($pronac) <= 12 && !isset($post->pesquisa) && $post->pesquisa != "true") {
@@ -1062,7 +1062,7 @@ class AlterarprojetoController extends GenericControllerNew {
             $listaparecer = $projeto->buscarTodosDadosProjeto($validapronac[0]->IdPRONAC);
             $this->view->parecer = $listaparecer[0];
             $this->view->pronac = Seguranca::encrypt($listaparecer[0]->pronac);
-            
+
             $this->view->comboareasculturais = ManterAgentesDAO::buscarAreasCulturais();
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($listaparecer[0]->Area);
 
@@ -1135,7 +1135,7 @@ class AlterarprojetoController extends GenericControllerNew {
         );
         $projeto = new Projetos();
         $validapronac = $projeto->VerificaPronac($arrBusca);
-        
+
         $tbTipoInabilitado = new tbTipoInabilitado();
         $combo = $tbTipoInabilitado->buscar(array('idTipoInabilitado <> ?' => 8), array(1));
         $this->view->combo = $combo;
@@ -1292,7 +1292,7 @@ class AlterarprojetoController extends GenericControllerNew {
 
         if (count($validapronac) > 0) {
             $listaparecer = $projeto->buscarTodosDadosProjeto($validapronac[0]->IdPRONAC);
-            $agente = new Agentes();
+            $agente = new Agente_Model_Agentes();
             $agente = $agente->buscarAgenteNome(array("CNPJCPF = ?" => $listaparecer[0]->CgcCpf));
             if (count($agente) > 0) {
                 $this->view->agente = $agente[0]['Descricao'];
@@ -1325,7 +1325,7 @@ class AlterarprojetoController extends GenericControllerNew {
         $cpf = str_replace("/", "", str_replace("-", "", str_replace(".", "", addslashes($get->cpf))));
 
         if (strlen($cpf) == 11 or strlen($cpf) == 14) {
-            $agente = new Agentes();
+            $agente = new Agente_Model_Agentes();
             $agente = $agente->buscarAgenteNome(array("CNPJCPF = ?" => $cpf));
 
             $inabilitados = new Inabilitado();
@@ -1471,7 +1471,7 @@ class AlterarprojetoController extends GenericControllerNew {
         }
 
         $tblHistoricoAlteracaoProjeto = new tbHistoricoAlteracaoProjeto();
-        $idHistAlteracaoProjeto = $tblHistoricoAlteracaoProjeto->inserir($dados); //salva historico 
+        $idHistAlteracaoProjeto = $tblHistoricoAlteracaoProjeto->inserir($dados); //salva historico
 
         if ($idHistAlteracaoProjeto > 1) { //Se tiver salvo o historico atualiza a tabela projeto
             $tblHistoricoAlteracaoDoc = new tbHistoricoAlteracaoDocumento();
@@ -1528,8 +1528,8 @@ class AlterarprojetoController extends GenericControllerNew {
                     }
                     $interessadoTb->inserir($dadosProponente);
                 }
-                
-                $Agentes = new Agentes();
+
+                $Agentes = new Agente_Model_Agentes();
                 $tbDocumentosAgentes = new tbDocumentosAgentes();
                 $ag = $Agentes->buscar(array('CNPJCPF = ?'=> Mascara::delMaskCPFCNPJ($post->CGCCPF)))->current();
                 $docs = $tbDocumentosAgentes->buscarDocumentos(array('a.idAgente = ?'=>$ag->idAgente));
@@ -1574,7 +1574,7 @@ class AlterarprojetoController extends GenericControllerNew {
              * ==============================================================
              */
             $Projetos = new Projetos();
-            $Agentes = new Agentes();
+            $Agentes = new Agente_Model_Agentes();
             $Visao = new Visao();
             $tbVinculo = new TbVinculo();
             $tbVinculoProposta = new tbVinculoProposta();
@@ -1732,11 +1732,11 @@ class AlterarprojetoController extends GenericControllerNew {
         $tblProjeto = new Projetos();
         $validapronac = $tblProjeto->VerificaPronac($arrBusca);
 	$idPronac = $validapronac[0]->IdPRONAC;
-	
+
         if (count($validapronac) == 0) {
             parent::message("Dados obrigat&oacute;rios n&atilde;o informados", "/alterarprojeto/planodistribuicao?pronac=" . $pronac, "ERROR");
         }
-	
+
 	$dados = Null;
 	$dados = array(//Monta dados para o historico
 		       'idPlanoDistribuicao'       => $post->idPlanoDistribuicao,
@@ -1754,7 +1754,7 @@ class AlterarprojetoController extends GenericControllerNew {
 		       );
 	$tblPlanoDistribuicao = new PlanoDistribuicao();
 	$planoDistribuicao = RealizarAnaliseProjetoDAO::planodedistribuicao($idPronac);
-	
+
 	$retorno = $tblPlanoDistribuicao->salvar($dados);
 	$pronac = Seguranca::encrypt($pronac);
 	if($retorno > 0){
@@ -1766,7 +1766,7 @@ class AlterarprojetoController extends GenericControllerNew {
 	}
     }
 
-    
+
     /*
      *
      */
@@ -1807,12 +1807,12 @@ class AlterarprojetoController extends GenericControllerNew {
 
 	    $buscarIdPronac = $Projetos->buscarIdPronac($pronac);
 	    $idPronac = $buscarIdPronac->IdPRONAC;
-	    
+
 	    if(!empty($idPronac)){
 	      $planoDistribuicao = RealizarAnaliseProjetoDAO::planodedistribuicao($idPronac);
 	      $this->view->planoDistribuicao = $planoDistribuicao;
 	    }
-    
+
         } else {
             parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ALERT");
         }

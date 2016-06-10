@@ -7,17 +7,17 @@
         $('.btn_imprimir').click(function(){
             $('#formImpressao').submit();
         });
-        
+
         $('.btn_ver').click(function(){
             var id = $(this).attr('idReadequacao');
             window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'visualizar-readequacao')); ?>?id="+id;
         });
-        
+
         $('.enviarReadequacao').click(function(){
             var parecerista = $(this).parent().parent().find('select').val(),
                 idDistRead = $(this).attr('idDistRead'),
                 idReadequacao = $(this).attr('idReadequacao');
-                
+
             if(parecerista==''){
                 $("#alerta").dialog("destroy");
                 $("#alerta").html('Favor selecionar o parecerista!');
@@ -34,7 +34,7 @@
                 });
                 $('.ui-dialog-titlebar-close').remove();
             } else {
-            
+
                 $("#alerta").dialog("destroy");
                 $("#alerta").html('Deseja realmente enviar a solicitação para o parecerista?');
                 $("#alerta").dialog({
@@ -81,11 +81,11 @@
                 $('.ui-dialog-titlebar-close').remove();
             }
         });
-        
+
         $('.btn_finalizar').click(function(){
             var idDistProj = $(this).attr('idDistProj'),
                 idReadequacao = $(this).attr('idReadequacao');
-                
+
             $("#alerta").dialog("destroy");
             $("#alerta").html('Deseja realmente finalizar a análise da readequação?<br /><br />Ao finalizar a readequação será devolvida ao MinC.');
             $("#alerta").dialog({
@@ -127,14 +127,14 @@
                 }
             });
             $('.ui-dialog-titlebar-close').remove();
-            
+
         });
-        
+
         $('.avaliacaoParecerista').click(function(){
             var id = $(this).attr('idReadequacao');
             window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'form-avaliar-readequacao')); ?>?id="+id;
         });
-        
+
         $('.imgRegularidade').click(function(){
             var cpfcnpj = $(this).attr('cgccpf'),
                 pronac = $(this).attr('pronac');
@@ -142,7 +142,7 @@
             $('#pronacEnviado').val(pronac);
             $('#formRegularidade').submit();
         });
-        
+
     });
 </script>
 
@@ -186,7 +186,7 @@
         </table>
     </form>
     <?php } ?>
-    
+
     <?php if(count($this->dados)>0){ ?>
     <!-- ============ PAGINAÇÃO ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
@@ -248,11 +248,11 @@
                 <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">Nome do Projeto</a></th>
                 <th style="width: 130px;" nowrap><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Encaminhamento</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Tipo Readequação</a></th>
-                
+
                 <?php if($this->idPerfil == 94 || $this->idPerfil == 121){ //FUNÇÃO CRIADA APENAS PARA O PARECERISTA E TECNICO DE ACOMPANHAMENTO ?>
                 <th>Diligência</th>
                 <?php } ?>
-                
+
                 <?php if($this->idPerfil == 93){ //FUNÇÃO CRIADA APENAS PARA O COORDENADOR DE PARECER ?>
                 <th style="width: 130px;">Visualizar</th>
                 <th style="width: 130px;">Parecerista</th>
@@ -274,7 +274,7 @@
                 <td><?php echo $d->NomeProjeto; ?></td>
                 <td align="center"><?php echo Data::tratarDataZend($d->DtEncaminhamento, 'Brasileira'); ?></td>
                 <td><?php echo $d->tipoReadequacao; ?></td>
-                
+
                 <?php if($this->idPerfil == 94 || $this->idPerfil == 121){ //FUNÇÃO CRIADA APENAS PARA O PARECERISTA E TECNICO DE ACOMPANHAMENTO ?>
                 <td align="center" style="width: 1px;">
                     <?php
@@ -284,29 +284,29 @@
                         } else if($this->idPerfil == 121){ //Técnico de Acompanhamento
                             $tpDiligencia = 171;
                         }
-                        
+
                         $arrPrazo = $this->prazoRespostaDiligencia($d->IdPRONAC, $tpDiligencia);
                         $icone = $arrPrazo['iconeDiligencia']['icone'];
                         $title = $arrPrazo['iconeDiligencia']['title']; ?>
                         <a target="_blank" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $d->IdPRONAC . '&situacao=E59&tpDiligencia='.$tpDiligencia; ?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
                 </td>
                 <?php } ?>
-                
+
                 <?php if($this->idPerfil == 93){ //FUNÇÃO CRIADA APENAS PARA O COORDENADORE DE PARECER ?>
                 <td align="center">
                     <input type="button" class="btn_ver" idReadequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>" />
                 </td>
                 <?php } ?>
-                
+
                 <?php if($this->idPerfil == 93){ //FUNÇÃO CRIADA APENAS PARA O COORDENADOR DE PARECER ?>
                 <td>
-                    <?php 
+                    <?php
                         $p = new Projetos();
                         $dadosProjetos = $p->buscar(array('IdPRONAC = ?'=>$d->IdPRONAC))->current();
 
                         $Pareceristas = array();
                         if(count($dadosProjetos)>0){
-                            $a = new Agentes();
+                            $a = new Agente_Model_Agentes();
                             $Pareceristas = $a->buscarPareceristas($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
                         }
                     ?>
@@ -321,11 +321,11 @@
                 <td align="center">
                     <?php if($this->idPerfil == 93){ ?>
                         <input type="button" name="btn_enviar" class="btn_enviar enviarReadequacao" idDistRead="<?php echo $d->idDistribuirReadequacao; ?>" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar">
-                        
+
                         <?php if($this->filtro == 'analisados'){ ?>
                         <input type="button" name="btn_finalizar" class="btn_finalizar" idDistProj="<?php echo $d->idDistribuirReadequacao; ?>" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Finalizar">
                         <?php } ?>
-                            
+
                     <?php } else if($this->idPerfil == 94 || $this->idPerfil == 121){ ?>
                         <input type="button" name="btn_avaliar" class="btn_avaliar avaliacaoParecerista" idReadequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>" title="Avaliar">
                     <?php } ?>
@@ -409,7 +409,7 @@
         <input type="hidden" name="cpfCnpj" id="cpfCnpj" value="" />
         <input type="hidden" name="pronacEnviado" id="pronacEnviado" value="" />
     </form>
-    
+
     <?php /* ?>
     <form target="_blank" class="form" name="formImpressao" id="formImpressao" method="post" action='<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'imprimir-readequacoes')); ?>'>
         <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">

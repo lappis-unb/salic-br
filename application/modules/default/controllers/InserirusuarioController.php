@@ -14,7 +14,7 @@ class InserirusuarioController extends GenericControllerNew {
 
     public function indexAction() {
         $cpf = $this->_request->getParam("cpf");
-        $agente = new Agentes();
+        $agente = new Agente_Model_Agentes();
         $usuario = new Usuario();
 
         $buscarDadosAgente = $agente->buscar(array('CNPJCPF = ?' => $cpf))->current()->toArray();

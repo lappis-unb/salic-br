@@ -62,7 +62,7 @@ class CaptacaoController extends GenericControllerNew
         $get = Zend_Registry::get('post');
         $pronac = $get->pronac;
 
-        $busca = new ProjetoDAO(); 
+        $busca = new ProjetoDAO();
         $projeto = $busca->buscarDadosProjeto($pronac);
 
         if ($projeto) {
@@ -94,7 +94,7 @@ class CaptacaoController extends GenericControllerNew
         $cpf = $get->cpf;
 
 //		$busca = new Interessado();
-        $busca = new Agentes();
+        $busca = new Agente_Model_Agentes();
         $agente = $busca->BuscaAgente($cpf)->toArray();
 
         $buscar = new Interessado();
@@ -120,13 +120,13 @@ class CaptacaoController extends GenericControllerNew
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
 
-        
+
         $post = Zend_Registry::get('post');
         $interessadoModel = new Interessado();
         $interessados = $interessadoModel->buscar(array('CgcCpf = ?' => $post->cpf));
 
         if (!$interessados->count()) {
-            $agenteModel = new Agentes();
+            $agenteModel = new Agente_Model_Agentes();
             $agentes = $agenteModel->buscar(array('CNPJCPF = ?' => $post->cpf));
             if (!$agentes->count()) {
                 parent::message("CNPJ/CPF não existe na tabela Interessado!", "captacao/index", "ALERT");
@@ -155,9 +155,9 @@ class CaptacaoController extends GenericControllerNew
         }
 
         $pronac = $post->anoProjeto.$post->sequencial;
- 
+
         $result = new Projetos();
-        $idprojeto = $result->buscarIdPronac($pronac); 
+        $idprojeto = $result->buscarIdPronac($pronac);
 
         $insert = new Captacao();
         $captado = $insert->inserir(array(

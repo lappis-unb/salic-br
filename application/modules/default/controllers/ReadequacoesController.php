@@ -388,7 +388,7 @@ class ReadequacoesController extends GenericControllerNew {
 
         $idAgente = 0;
         $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $tblAgente = new Agentes();
+        $tblAgente = new Agente_Model_Agentes();
         $rsAgente = $tblAgente->buscar(array('CNPJCPF = ?'=>$auth->getIdentity()->Cpf));
         if($rsAgente->count() > 0){
              $idAgente = $rsAgente[0]->idAgente;
@@ -446,7 +446,7 @@ class ReadequacoesController extends GenericControllerNew {
         $auth = Zend_Auth::getInstance(); // pega a autenticação
         $cpf = isset($auth->getIdentity()->Cpf) ? $auth->getIdentity()->Cpf : $auth->getIdentity()->usu_identificacao;
 
-        $tblAgente = new Agentes();
+        $tblAgente = new Agente_Model_Agentes();
         $rsAgente = $tblAgente->buscar(array('CNPJCPF = ?'=>$cpf));
         $idAgente = 0;
         if($rsAgente->count() > 0){
@@ -1712,7 +1712,7 @@ class ReadequacoesController extends GenericControllerNew {
             }
 
             $auth = Zend_Auth::getInstance(); // pega a autenticação
-            $tblAgente = new Agentes();
+            $tblAgente = new Agente_Model_Agentes();
             $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$auth->getIdentity()->Cpf))->current();
 
             if ($idTipoReadequacao == 2) {
@@ -4017,7 +4017,7 @@ class ReadequacoesController extends GenericControllerNew {
         // Se não possui idReadequacao, cria entrada na tabela tbReadequacao
         if ($idReadequacao == 0) {
 
-            $tblAgente = new Agentes();
+            $tblAgente = new Agente_Model_Agentes();
             $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$auth->getIdentity()->Cpf))->current();
 
             $tbReadequacao = new tbReadequacao();

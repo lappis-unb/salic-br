@@ -110,13 +110,13 @@ class GerenciarparecerController extends GenericControllerNew {
         /* ================== PAGINACAO ======================*/
         $where = array();
 	$where["idOrgao = ?"] = $codOrgao;
-	
+
         if((isset($_POST['pronac']) && !empty($_POST['pronac'])) || (isset($_GET['pronac']) && !empty($_GET['pronac']))){
 	    $pronac = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
             $where["NrProjeto = ?"] = $pronac;
             $this->view->pronacProjeto = $pronac;
         }
-	
+
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
             $tipoFiltro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
             $this->view->tipoFiltro = $tipoFiltro;
@@ -125,11 +125,11 @@ class GerenciarparecerController extends GenericControllerNew {
 	    $tipoFiltro = 'aguardando_distribuicao';
             $this->view->tipoFiltro = $tipoFiltro;
         }
-	
+
         $tbDistribuirParecer = new tbDistribuirParecer();
         $total = $tbDistribuirParecer->painelAnaliseTecnica($where, $order, null, null, true, $tipoFiltro);
         $fim = $inicio + $this->intTamPag;
-	
+
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
@@ -144,8 +144,8 @@ class GerenciarparecerController extends GenericControllerNew {
 	    }
 	  }
 	  $this->view->checarValidacaoSecundarios = $checarValidacaoSecundarios;
-	}	
-	
+	}
+
         $paginacao = array(
                 "pag"=>$pag,
                 "qtde"=>$this->intTamPag,
@@ -292,9 +292,9 @@ class GerenciarparecerController extends GenericControllerNew {
 
         $dadosWhere["IdPRONAC = ?"]               = $idPronac;
         $dadosWhere["idOrgao = ?"]                = $codOrgao;
-	$dadosWhere["stPrincipal = ?"]            = 1;       
+	$dadosWhere["stPrincipal = ?"]            = 1;
 	$buscaDadosProjeto = $tbDistribuirParecer->painelAnaliseTecnica($dadosWhere, null, null, null, null, $tipoFiltro);
-	
+
         $pareceristas = array();
         $spSelecionarParecerista = new spSelecionarParecerista();
         if(count($buscaDadosProjeto) > 0){
@@ -305,7 +305,7 @@ class GerenciarparecerController extends GenericControllerNew {
         $buscar = $orgaos->buscar(array("Codigo <> ?" => $codOrgao, "Status = ?" => 0, "Vinculo = ?" => 1), array(2));
 
 	$this->view->idSegmentoProduto = $buscaDadosProjeto[0]->idSegmento;
-	$this->view->idAreaProduto  = $buscaDadosProjeto[0]->idArea;	
+	$this->view->idAreaProduto  = $buscaDadosProjeto[0]->idArea;
         $this->view->orgaos         = $buscar;
         $this->view->pareceristas   = $pareceristas;
         $this->view->dadosProjeto   = $buscaDadosProjeto;
@@ -335,7 +335,7 @@ class GerenciarparecerController extends GenericControllerNew {
         if(strlen($observacao) < 11 ) {
             parent::message("Dados obrigatórios n&atilde;o informados.","gerenciarparecer/distribuir/idpronac/".$idPronac ,"ALERT");
         }
-	
+
         if((empty($idAgenteParecerista)) && ($tipoescolha == 1)) {
             parent::message("Dados obrigatórios n&atilde;o informados.",
                     "gerenciarparecer/encaminhar/idproduto/".$idProduto."/tipoanalise/".$TipoAnalise."/idpronac/".$idPronac  . "/tipoFiltro/" . $tipoFiltro,
@@ -346,7 +346,7 @@ class GerenciarparecerController extends GenericControllerNew {
         $dadosWhere["IdPRONAC = ?"]               = $idPronac;
         $dadosWhere["idOrgao = ?"]                = $codOrgao;
 	$buscaDadosProjeto = $tbDistribuirParecer->painelAnaliseTecnica($dadosWhere, null, null, null, null, $tipoFiltro);
-	
+
 	$error = "";
         $msg = "Distribuição Realizada com sucesso!";
 
@@ -354,18 +354,18 @@ class GerenciarparecerController extends GenericControllerNew {
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $db->beginTransaction();
 	$projetos = new Projetos();
-	
+
         try {
 
             foreach($buscaDadosProjeto as $dp) {
-	      
+
 	        // se forem validados ou em validação, zera fecharAnalise
 	        if ($tipoFiltro == 'devolvida' || $tipoFiltro == 'validados' || $tipoFiltro == 'em_validacao') {
 		  $dp->FecharAnalise = 0;
 		} else {
 		  $dp->FecharAnalise;
 		}
-	      
+
                 if($tipoescolha == 2) {
                     $msg = "Enviado os Produtos/Projeto para a entidade!";
 
@@ -388,7 +388,7 @@ class GerenciarparecerController extends GenericControllerNew {
                             'stPrincipal'   		=> $dp->stPrincipal,
                             'stDiligenciado'   		=> null
                     );
-		    
+
                     $where['idDistribuirParecer = ?']  = $dp->idDistribuirParecer;
                     $salvar = $tbDistribuirParecer->alterar(array('stEstado' => 1), $where);
 
@@ -396,7 +396,7 @@ class GerenciarparecerController extends GenericControllerNew {
 
 		    $orgaos = new Orgaos();
 		    $orgao = $orgaos->pesquisarNomeOrgao($codOrgao);
-		    
+
 		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para <strong>' . $orgao[0]->NomeOrgao . ' para análise e emissão de parecer técnico</strong>.');
                 }
                 else {
@@ -421,12 +421,12 @@ class GerenciarparecerController extends GenericControllerNew {
                             'stPrincipal'   		=> $dp->stPrincipal,
                             'stDiligenciado'   		=> null
                     );
-		    
+
                     $where['idDistribuirParecer = ?']  = $dp->idDistribuirParecer;
                     $salvar = $tbDistribuirParecer->alterar(array('stEstado' => 1), $where);
 
                     $insere = $tbDistribuirParecer->inserir($dadosD);
-		    $projetos = new Projetos();		    
+		    $projetos = new Projetos();
 		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para o perito para análise técnica e emissão de parecer.');
                 }
 
@@ -457,22 +457,22 @@ class GerenciarparecerController extends GenericControllerNew {
         $idProduto      = $this->_request->getParam("idproduto");
         $tipoFiltro     = $this->_request->getParam("tipoFiltro");
         $tbDistribuirParecer = new tbDistribuirParecer();
-	
+
 	//Produto Principal
         $dadosWhere["IdPRONAC = ?"]                   = $idPronac;
         $dadosWhere["idOrgao = ?"]                    = $codOrgao;
 	$dadosWhere["stPrincipal = ?"]  	      = 1;
         $dadosWhere["idProduto = ?"]                  = $idProduto;
-	
+
 	$buscaDadosProjeto = $tbDistribuirParecer->painelAnaliseTecnica($dadosWhere, null, null, null, null, $tipoFiltro);
-	
+
         //Produto Secundario
         $dadosWhereS["IdPRONAC = ?"]                   = $idPronac;
         $dadosWhereS["idOrgao = ?"]                    = $codOrgao;
         $dadosWhereS["stPrincipal = ?"] 		 = 0;
         $dadosWhereS["idProduto = ?"]                  = $idProduto;
 	$buscaDadosProjetoS = $tbDistribuirParecer->painelAnaliseTecnica($dadosWhereS, null, null, null, null, $tipoFiltro);
-	
+
         if( (count($buscaDadosProjetoS) == 0) && (count($buscaDadosProjeto) == 0) ) {
             parent::message("Todos os produtos foram distribuidos!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro ,"ALERT");
             //parent::message("Aguardando as análises dos produtos secundários!", "gerenciarparecer/listaprojetos" ,"ALERT");
@@ -502,11 +502,11 @@ class GerenciarparecerController extends GenericControllerNew {
             $pareceristas = $spSelecionarParecerista->exec($buscaDadosProjetoS[0]->idOrgao, $buscaDadosProjetoS[0]->idArea, $buscaDadosProjetoS[0]->idSegmento, $buscaDadosProjetoS[0]->Valor);
 	    $this->view->idSegmentoProduto = $buscaDadosProjetoS[0]->idSegmento;
 	    $this->view->idAreaProduto  = $buscaDadosProjetoS[0]->idArea;
-	
+
         } else if(count($buscaDadosProjetoSA) > 0) {
             $pareceristas = $spSelecionarParecerista->exec($buscaDadosProjetoSA[0]->idOrgao, $buscaDadosProjetoSA[0]->idArea, $buscaDadosProjetoSA[0]->idSegmento, $buscaDadosProjetoSA[0]->Valor);
 	    $this->view->idSegmentoProduto = $buscaDadosProjetoSA[0]->idSegmento;
-	    $this->view->idAreaProduto  = $buscaDadosProjetoSA[0]->idArea;	
+	    $this->view->idAreaProduto  = $buscaDadosProjetoSA[0]->idArea;
         } else {
             $pareceristas = $spSelecionarParecerista->exec($buscaDadosProjeto[0]->idOrgao, $buscaDadosProjeto[0]->idArea, $buscaDadosProjeto[0]->idSegmento, $buscaDadosProjeto[0]->Valor);
 	    $this->view->idSegmentoProduto = $buscaDadosProjeto[0]->idSegmento;
@@ -514,7 +514,7 @@ class GerenciarparecerController extends GenericControllerNew {
 	}
         $orgaos = new Orgaos();
         $buscar = $orgaos->buscar(array("Codigo <> ?" => $codOrgao, "Status = ?" => 0, "Vinculo = ?" => 1));
-	
+
         $this->view->orgaos         = $buscar;
         $this->view->idpronac       = $idPronac;
         $this->view->pareceristas   = $pareceristas;
@@ -531,13 +531,13 @@ class GerenciarparecerController extends GenericControllerNew {
         $idDistribuirParecer        = $this->_request->getParam("idDistribuirParecer");
         $idPronac                   = $this->_request->getParam("idpronac");
         $idProduto                  = $this->_request->getParam("idproduto");
-	
+
         $observacao                 = $this->_request->getParam("obs");
         $orgaoDestino               = $this->_request->getParam("orgao");
         $idAgenteParecerista        = $this->_request->getParam("idAgenteParecerista");
         $tipoescolha                = $this->_request->getParam("tipodistribuir");
         $tipoFiltro                 = $this->_request->getParam("tipoFiltro");
-	
+
         if(strlen($observacao) < 11) {
             parent::message("O campo observação deve ter no mínimo 11 caracteres!",
                     "gerenciarparecer/encaminhar/idproduto/".$idProduto."/idpronac/".$idPronac , "ALERT");
@@ -550,16 +550,16 @@ class GerenciarparecerController extends GenericControllerNew {
         }
 
         $tbDistribuirParecer = new tbDistribuirParecer();
-	
+
         $dadosWhere["idDistribuirParecer = ?"] = $idDistribuirParecer;
 	$buscaDadosProjeto = $tbDistribuirParecer->painelAnaliseTecnica($dadosWhere, null, null, null, null, $tipoFiltro);
-	
+
         $error = '';
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $db->beginTransaction();
 	$projetos = new Projetos();
-	
+
         try {
 
 
@@ -572,7 +572,7 @@ class GerenciarparecerController extends GenericControllerNew {
 	      } else {
 		$dp->FecharAnalise;
 	      }
-	      
+
                 if($tipoescolha == 2) {
                     // ALTERAR UNIDADE DE ANÁLISE ( COORDENADOR DE PARECER )
 
@@ -601,9 +601,9 @@ class GerenciarparecerController extends GenericControllerNew {
 
 		    $orgaos = new Orgaos();
 		    $orgao = $orgaos->pesquisarNomeOrgao($codOrgao);
-		    
-		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para <strong>' . $orgao[0]->NomeOrgao . ' para análise e emissão de parecer técnico</strong>.');		    
-		    
+
+		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para <strong>' . $orgao[0]->NomeOrgao . ' para análise e emissão de parecer técnico</strong>.');
+
                     parent::message("Enviado os Produtos/Projeto para a entidade!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
                 }
                 else {
@@ -632,7 +632,7 @@ class GerenciarparecerController extends GenericControllerNew {
                     $insere = $tbDistribuirParecer->inserir($dadosD);
 
 		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Produto <strong>' . $dp->Produto . '</strong> encaminhado ao perito para análise técnica e emissão de parecer.');
-		    
+
                     parent::message("Distribuição Realizada com sucesso!  ", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
                 }
             }
@@ -694,7 +694,7 @@ class GerenciarparecerController extends GenericControllerNew {
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 	$projetos = new Projetos();
-	
+
         try {
             $db->beginTransaction();
 
@@ -714,14 +714,14 @@ class GerenciarparecerController extends GenericControllerNew {
                     $fecharAnalise 	= 0;
                 } else {
                     $idOrgao 		= $dp->idOrgao;
-		    
+
 		    if ($tipoFiltro == 'em_validacao') {
-		      $fecharAnalise 	= 3;	    
+		      $fecharAnalise 	= 3;
 		    } else if ($tipoFiltro == 'validados' || $tipoFiltro == 'devolvida') {
 		      $fecharAnalise 	= 1;
 		    }
                 }
-		
+
                 $dados = array(
                         'DtEnvio'       		=> $dp->DtEnvio,
                         'idAgenteParecerista'	=> $dp->idAgenteParecerista,
@@ -739,7 +739,7 @@ class GerenciarparecerController extends GenericControllerNew {
                         'stPrincipal'   		=> $dp->stPrincipal,
                         'stDiligenciado'   		=> null
                 );
-		
+
                 $whereD['idDistribuirParecer = ?']  = $idDistribuirParecer;
                 $salvar = $tbDistribuirParecer->alterar(array('stEstado' => 1), $whereD);
                 $insere = $tbDistribuirParecer->inserir($dados);
@@ -756,7 +756,7 @@ class GerenciarparecerController extends GenericControllerNew {
 
                 $inabilitadoDAO = new Inabilitado();
                 $buscaInabilitado = $inabilitadoDAO->BuscarInabilitado($buscaDadosdoProjeto[0]->CgcCpf, $buscaDadosdoProjeto[0]->AnoProjeto, $buscaDadosdoProjeto[0]->Sequencial);
-		
+
 		// nao está inabilitado
                 if(count($buscaInabilitado == 0)) {
   		    // dentro das unidades abaixo
@@ -774,7 +774,7 @@ class GerenciarparecerController extends GenericControllerNew {
 		  // inabilitado
 		  $projeto->alterarSituacao($idPronac, null, 'C09', 'Projeto fora da pauta de reunião da CNIC porque o proponente está inabilitado no Ministério da Cultura.');
                 }
-		
+
                 /****************************************************************************************************************/
                 $parecerDAO = new Parecer();
                 $whereParecer['idPRONAC = ?'] = $idPronac;
@@ -843,7 +843,7 @@ class GerenciarparecerController extends GenericControllerNew {
         $idpronac = $this->_request->getParam("idpronac");
 	$idArea = $this->_request->getParam("idArea");
 	$idSegmento = $this->_request->getParam("idSegmento");
-		
+
         $situacao 		= '1';
         $situacaoTexto 	= 'Ativo';
 
@@ -875,19 +875,19 @@ class GerenciarparecerController extends GenericControllerNew {
         }
 
         // CREDENCIAMENTO
-	
+
         $projetosDAO 		= new Projetos();
         $credenciamentoDAO  = new TbCredenciamentoParecerista();
 
         $whereProjeto['IdPRONAC = ?'] = $idpronac;
         //$projeto = $projetosDAO->buscar($whereProjeto);
 	// se for produto pegar area e segmento do produto
-	
+
         $whereCredenciamento['idAgente = ?'] 			= $idAgente;
         $whereCredenciamento['idCodigoArea = ?'] 		= $idArea;
         $whereCredenciamento['idCodigoSegmento = ?']            = $idSegmento;
         $credenciamento = $credenciamentoDAO->buscar($whereCredenciamento)->count();
-	
+
         if($credenciamento == 0) {
             $situacao = '0';
             $situacaoTexto .= '<br /> Parecerista não credenciado na área e segmento do Produto!';
@@ -1276,7 +1276,7 @@ class GerenciarparecerController extends GenericControllerNew {
                 }
 
                 if($zerado) {
-                    $agentesDAO = new Agentes();
+                    $agentesDAO = new Agente_Model_Agentes();
 
                     $tela    = 'resconsolidacaoparecerista2';
                     $where   = $this->filtroGeral($tela);
@@ -1472,7 +1472,7 @@ class GerenciarparecerController extends GenericControllerNew {
         $tbDistribuirParecer = new tbDistribuirParecer();
         $dadosProduto = $tbDistribuirParecer->pagamentoParecerista(null, 137);
 
-        $agentes = new Agentes();
+        $agentes = new Agente_Model_Agentes();
 
         $whereAgente = array('a.idAgente = ?' => $idAgente[0] );
         $dadosAgente = $agentes->buscarAgenteNome($whereAgente);

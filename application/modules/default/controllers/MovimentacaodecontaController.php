@@ -102,7 +102,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 		/* ========== FIM ÓRGÃO ========== */
 
 		parent::init();
-                
+
                 //verifica se a funcionadade devera abrir em modal
                 if ($this->_request->getParam("modal") == "s") {
                     $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -191,7 +191,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 					// busca os dados do banco e manda para a visão
 					//$this->tbTmpCaptacao = new tbTmpCaptacao();
 					//$this->view->dados   = $this->tbTmpCaptacao->buscarDados($pronac, $data_recibo, $proponente, $incentivador, $data_credito);
-                                        
+
                                         $arrBusca = array();
                                         $arrBusca['idTipoInconsistencia IN (?)'] = array(2,3,7);
                                         $this->tbTipoInconsistencia = new tbTipoInconsistencia();
@@ -213,15 +213,15 @@ class MovimentacaodecontaController extends GenericControllerNew
 	} // fecha método gerarrelatorioAction()
 
 	/**
-	 * t.tpValidacao = 2 // Período de Captação Vencida 
-	 * t.tpValidacao = 3 // Sem Incentivador Cadastrado 
-	 * t.tpValidacao = 4 // Sem Tipo de Depósito 
-	 * t.tpValidacao = 5 // Proponente e Incentivador Iguais 
-	 * t.tpValidacao = 6 // Sem Proponente Cadastrado  
-	 * t.tpValidacao = 7 // Agência e Conta não Cadastrada  
-	 * t.tpValidacao = 8 // Sem Enquadramento   
+	 * t.tpValidacao = 2 // Período de Captação Vencida
+	 * t.tpValidacao = 3 // Sem Incentivador Cadastrado
+	 * t.tpValidacao = 4 // Sem Tipo de Depósito
+	 * t.tpValidacao = 5 // Proponente e Incentivador Iguais
+	 * t.tpValidacao = 6 // Sem Proponente Cadastrado
+	 * t.tpValidacao = 7 // Agência e Conta não Cadastrada
+	 * t.tpValidacao = 8 // Sem Enquadramento
 	 * t.tpValidacao = 9 // Sem saldo para captar
-	 * 
+	 *
 	 *  121646 109003 1112073 119157  1012107
 	 *  	   109003 1112073		  1012107
 	 */
@@ -233,7 +233,7 @@ class MovimentacaodecontaController extends GenericControllerNew
                 $this->intTamPag = $this->_request->getParam("qtde");
             }
             $order = array();
-            
+
             //==== parametro de ordenacao  ======//
             if($this->_request->getParam("ordem")) {
                 $ordem = $this->_request->getParam("ordem");
@@ -269,14 +269,14 @@ class MovimentacaodecontaController extends GenericControllerNew
             $where['t.nrAnoProjeto+t.nrSequencial IS NOT NULL'] = '';
             $where['p.Orgao = ?'] = $this->getIdOrgao;
             $where['t.tpValidacao in (?)'] = array('2', '3', '4', '5', '6', '7', '8', '9');
-            
+
             $pronac = $this->getRequest()->getParam('pronac');
-            
+
             if(isset($pronac) && !empty($pronac)){
                 $where['t.nrAnoProjeto+t.nrSequencial = ?'] = $pronac;
                 $this->view->pronac = $pronac;
             }
-            
+
             $tbTmpCaptacao = New tbTmpCaptacao();
             $total = $tbTmpCaptacao->listarProjetosInconsistentes($this->getIdOrgao, $pronac, null, null, null)->count();
             $fim = $inicio + $this->intTamPag;
@@ -307,7 +307,7 @@ class MovimentacaodecontaController extends GenericControllerNew
         }
 
         public function imprimirListaInconsistenciasCaptacaoAction() {
-        
+
             $this->intTamPag = 10;
 
             //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -315,7 +315,7 @@ class MovimentacaodecontaController extends GenericControllerNew
                 $this->intTamPag = $this->_request->getParam("qtde");
             }
             $order = array();
-            
+
             //==== parametro de ordenacao  ======//
             if($this->_request->getParam("ordem")) {
                 $ordem = $this->_request->getParam("ordem");
@@ -351,9 +351,9 @@ class MovimentacaodecontaController extends GenericControllerNew
             $where['t.nrAnoProjeto+t.nrSequencial IS NOT NULL'] = '';
             $where['p.Orgao = ?'] = $this->getIdOrgao;
             $where['t.tpValidacao in (?)'] = array('2', '3', '4', '5', '6', '7', '8', '9');
-            
+
             $pronac = $this->getRequest()->getParam('pronac');
-            
+
             if(isset($pronac) && !empty($pronac)){
                 $where['t.nrAnoProjeto+t.nrSequencial = ?'] = $pronac;
                 $this->view->pronac = $pronac;
@@ -391,25 +391,25 @@ class MovimentacaodecontaController extends GenericControllerNew
                     } else {
                         $pr = 'Conta sem PRONAC';
                     }
-                    
+
                     if (!empty($projeto->pronac)) {
                         $nm = $projeto->NomeProjeto;
                     } else {
                         $nm = 'Conta sem Nome de Projeto';
                     }
-                    
+
                     if(!empty($projeto->Agencia)){
                         $agencia = $projeto->Agencia;
                     } else {
                         $agencia = '<em>Não informada</em>';
                     }
-                    
+
                     if(!empty($projeto->ContaBloqueada)){
                         $conta = $projeto->ContaBloqueada;
                     } else {
                         $conta = '<em>Não informada</em>';
                     }
-                    
+
                     $html .= '<tr>';
                     $html .= '<td style="border: 1px dotted black;">'.$i.'</td>';
                     $html .= '<td style="border: 1px dotted black;">'.$pr.'</td>';
@@ -434,7 +434,7 @@ class MovimentacaodecontaController extends GenericControllerNew
         }
 
     /**
-     *  
+     *
      */
     public function listarInconsistenciaDetalheAction()
     {
@@ -469,14 +469,14 @@ class MovimentacaodecontaController extends GenericControllerNew
     }
 
 	/**
-	 *  
+	 *
 	 */
 	public function listarInconsistenciaDetalheResolvidoAction()
 	{
 	}
 
     /**
-     * 
+     *
      */
     public function updateTmpCaptacaoAction()
     {
@@ -497,7 +497,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	/**
 	 * Gera um aporte da captacao
 	 * Remove captacao
-	 * 
+	 *
 	 * Devido o fato de que esse caso nao possui um model, a regra esta sendo feita no controller(TA ERRADO)
 	 * Usando os parametros e chamando os metodos, para encapsular  esse negocio basta transferir para o model adequado
 	 */
@@ -582,24 +582,24 @@ class MovimentacaodecontaController extends GenericControllerNew
                             }
                     }
             } // fecha if data do recibo
-            
+
             //tipo de inconsistencia
             $arrBusca["i.idTipoInconsistencia = ?"]=$idTipoInconsistencia;
-            
+
             $arrTpInconsistenciaComPronac = array(7);
             if(in_array($idTipoInconsistencia,$arrTpInconsistenciaComPronac)){
                 $arrBusca["t.nrAnoProjeto+t.nrSequencial IS NULL"] = "(?)";
             }else{
                 $arrBusca["t.nrAnoProjeto+t.nrSequencial IS NOT NULL"] = "(?)";
             }
-            
+
             if($idTipoInconsistencia!="7" || $this->getIdOrgao!='272'){ //se a inconsistencia for 'Sem Agencia' nao incluir o orgao para que seja mostrado apenas na SEFIC
                 $arrBusca["p.Orgao = ?"] = $this->getIdOrgao; //so busca projetos do orgao do usuario logado
             }
 
             return $arrBusca;
         }
-        
+
         /**
 	 * Método para listar os projetos para grid de inconsistencias do tipo Execucao Nao Vigente
 	 * @access public
@@ -610,7 +610,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	{
             $this->_helper->layout->disableLayout(); // desabilita o layout
             $post = Zend_Registry::get('post');
-            
+
             $ordem = array();
             if(!empty($post->ordenacaoInc1)){ $ordem[] = "{$post->ordenacaoInc1} {$post->tipoOrdenacaoInc1}"; }else{$ordem = array('1 ASC');}
 
@@ -623,19 +623,19 @@ class MovimentacaodecontaController extends GenericControllerNew
 
 //            xd($post);
 //            xd($arrBusca);
-            
+
             //busca os dados do banco e manda para a visão
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
             $this->view->registros = $rs;
             $this->view->parametrosBuscaInc1 = $_POST;
-            
+
             $arrBusca = array();
             $arrBusca['idTipoInconsistencia IN (?)'] = array(2,3,7);
             $tbTipoInconsistencia = new tbTipoInconsistencia();
             $this->view->inconsistencias = $tbTipoInconsistencia->buscar($arrBusca);
-            
+
         }
         /**
 	 * Método para listar os projetos para grid de inconsistencias do tipo Captacao Nao Vigente
@@ -658,14 +658,14 @@ class MovimentacaodecontaController extends GenericControllerNew
                  'p.Orgao = ?' => $this->getIdOrgao,
                  't.tpValidacao = ?' => 2
             );
-            
+
             //busca os dados do banco e manda para a visão
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
             $this->view->registros = $rs;
             $this->view->parametrosBuscaInc2 = $_POST;
-            
+
         }
         /**
 	 * Método para listar os projetos para grid de inconsistencias do tipo Sem Incentivador
@@ -677,7 +677,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	{
             $this->_helper->layout->disableLayout(); // desabilita o layout
             $post = Zend_Registry::get('post');
-            
+
             $ordem = array();
             if(!empty($post->ordenacaoInc3)){ $ordem[] = "{$post->ordenacaoInc3} {$post->tipoOrdenacaoInc3}"; }else{$ordem = array('1 ASC');}
 
@@ -688,14 +688,14 @@ class MovimentacaodecontaController extends GenericControllerNew
                  'p.Orgao = ?' => $this->getIdOrgao,
                  't.tpValidacao = ?' => 3
             );
-            
+
             //busca os dados do banco e manda para a visão
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
             $this->view->registros = $rs;
             $this->view->parametrosBuscaInc3 = $_POST;
-            
+
         }
         /**
 	 * Método para listar os projetos para grid de inconsistencias do tipo Sem Tipo de Deposito
@@ -707,7 +707,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	{
             $this->_helper->layout->disableLayout(); // desabilita o layout
             $post = Zend_Registry::get('post');
-            
+
             $ordem = array();
             if(!empty($post->ordenacaoInc4)){ $ordem[] = "{$post->ordenacaoInc4} {$post->tipoOrdenacaoInc4}"; }else{$ordem = array('1 ASC');}
 
@@ -718,14 +718,14 @@ class MovimentacaodecontaController extends GenericControllerNew
                  'p.Orgao = ?' => $this->getIdOrgao,
                  't.tpValidacao = ?' => 4
             );
-            
+
             //busca os dados do banco e manda para a visão
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
             $this->view->registros = $rs;
             $this->view->parametrosBuscaInc4 = $_POST;
-            
+
         }
         /**
 	 * Método para listar os projetos para grid de inconsistencias do tipo Proponente e incentivador iguais
@@ -737,7 +737,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	{
             $this->_helper->layout->disableLayout(); // desabilita o layout
             $post = Zend_Registry::get('post');
-            
+
             $ordem = array();
             if(!empty($post->ordenacaoInc5)){ $ordem[] = "{$post->ordenacaoInc5} {$post->tipoOrdenacaoInc5}"; }else{$ordem = array('1 ASC');}
 
@@ -748,14 +748,14 @@ class MovimentacaodecontaController extends GenericControllerNew
                  'p.Orgao = ?' => $this->getIdOrgao,
                  't.tpValidacao = ?' => 5
             );
-            
+
             //busca os dados do banco e manda para a visão
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
             $this->view->registros = $rs;
             $this->view->parametrosBuscaInc5 = $_POST;
-            
+
         }
         /**
 	 * Método para listar os projetos para grid de inconsistencias do tipo Proponente incompativel
@@ -767,7 +767,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	{
             $this->_helper->layout->disableLayout(); // desabilita o layout
             $post = Zend_Registry::get('post');
-            
+
             $ordem = array();
             if(!empty($post->ordenacaoInc6)){ $ordem[] = "{$post->ordenacaoInc6} {$post->tipoOrdenacaoInc6}"; }else{$ordem = array('1 ASC');}
 
@@ -778,14 +778,14 @@ class MovimentacaodecontaController extends GenericControllerNew
                  'p.Orgao = ?' => $this->getIdOrgao,
                  't.tpValidacao = ?' => 6
             );
-            
+
             //busca os dados do banco e manda para a visão
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
             $this->view->registros = $rs;
             $this->view->parametrosBuscaInc6 = $_POST;
-            
+
         }
         /**
 	 * Método para listar os projetos para grid de inconsistencias do tipo Agencia e Conta nao Cadastrada
@@ -797,7 +797,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	{
             $this->_helper->layout->disableLayout(); // desabilita o layout
             $post = Zend_Registry::get('post');
-            
+
             $ordem = array();
             if(!empty($post->ordenacaoInc7)){ $ordem[] = "{$post->ordenacaoInc7} {$post->tipoOrdenacaoInc7}"; }else{$ordem = array('1 ASC');}
 
@@ -807,14 +807,14 @@ class MovimentacaodecontaController extends GenericControllerNew
                  't.nrAnoProjeto+t.nrSequencial IS NOT NULL' => '',
                  't.tpValidacao = ?' => 7
             );
-            
+
             //busca os dados do banco e manda para a visão
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
             $this->view->registros = $rs;
             $this->view->parametrosBuscaInc7 = $_POST;
-            
+
         }
         /**
 	 * Método para listar os projetos para grid de inconsistencias do tipo Sem enquadramento
@@ -826,7 +826,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	{
             $this->_helper->layout->disableLayout(); // desabilita o layout
             $post = Zend_Registry::get('post');
-            
+
             $ordem = array();
             if(!empty($post->ordenacaoInc8)){ $ordem[] = "{$post->ordenacaoInc8} {$post->tipoOrdenacaoInc8}"; }else{$ordem = array('1 ASC');}
 
@@ -838,14 +838,14 @@ class MovimentacaodecontaController extends GenericControllerNew
                  't.tpValidacao = ?' => 8
             );
 
-            
+
             //busca os dados do banco e manda para a visão
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem);
 
             $this->view->registros = $rs;
             $this->view->parametrosBuscaInc8 = $_POST;
-            
+
         }
         /**
 	 * Método para listar os projetos para grid de inconsistencias do tipo Sem saldo para captar
@@ -857,7 +857,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	{
             $this->_helper->layout->disableLayout(); // desabilita o layout
             $post = Zend_Registry::get('post');
-            
+
             $ordem = array();
             if(!empty($post->ordenacaoInc9)){ $ordem[] = "{$post->ordenacaoInc9} {$post->tipoOrdenacaoInc9}"; }else{$ordem = array('1 ASC');}
 
@@ -868,29 +868,29 @@ class MovimentacaodecontaController extends GenericControllerNew
                  'p.Orgao = ?' => $this->getIdOrgao,
                  't.tpValidacao = ?' => 9
             );
-            
+
             //busca os dados do banco e manda para a visão
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarProjetosRelatorioCaptacao($arrBusca,$ordem,5,0);
-            
+
             $idPronac = 0;
             $valorCredito = 0;
             $arrValores   = array();
             foreach($rs as $projeto){
-                
+
                 if($idPronac != $projeto->IdPRONAC){
                     $valorCredito = 0;
                     $idPronac     = $projeto->IdPRONAC;
                 }
-                
+
                 $valorCredito += $projeto->vlValorCredito;
                 $arrValores[$projeto->IdPRONAC] = $valorCredito;
             }
-            
+
             $this->view->registros = $rs;
             $this->view->arrValores = $arrValores;
             $this->view->parametrosBuscaInc9 = $_POST;
-            
+
         }
         /**
 	 * Método que monta tela com resumo de captacaoes e saldo para captar do projeto
@@ -906,7 +906,7 @@ class MovimentacaodecontaController extends GenericControllerNew
             $this->view->idPronac  = $idPronac;
             $this->view->idTmpCaptacao  = $post->idTmpCaptacao;
             $vlTotalCaptadoNoLote = $post->vlTotalCaptadoNoLote;
-            
+
             if(!empty($idPronac))
             {
                 $tbProjeto = new Projetos();
@@ -918,17 +918,17 @@ class MovimentacaodecontaController extends GenericControllerNew
                     $rsTotalAprovado = $tbAprovacao->fnTotalAprovadoProjeto($rsProjeto->AnoProjeto,$rsProjeto->Sequencial);
                     $totalAprovado = $rsTotalAprovado->totalAprovado;
                     //$totalAprovado = 150000;
-                    
+
                     $tbCaptacao  = new Captacao();
                     $rsTotalCaptado = $tbCaptacao->fnTotalCaptadoProjeto($rsProjeto->AnoProjeto,$rsProjeto->Sequencial);
                     $totalCaptado = $rsTotalCaptado->totalCaptado;
                     //$totalCaptado = 140000;
-                    
+
                     //$vlTotalCaptadoNoLote = 150000;
-                    
+
                     $vlAutorizadoCaptacao   = (($totalCaptado + $vlTotalCaptadoNoLote) > $totalAprovado) ? $totalAprovado-$totalCaptado : $vlTotalCaptadoNoLote;
                     $vlExcedenteCaptado     = (($totalCaptado + $vlTotalCaptadoNoLote) > $totalAprovado) ? $vlTotalCaptadoNoLote-($totalAprovado-$totalCaptado) : 0;
-                    
+
                     $this->view->totalAprovado = $totalAprovado;
                     $this->view->totalCaptado  = $totalCaptado;
                     $this->view->totalCaptadoNoLote     = $vlTotalCaptadoNoLote;
@@ -945,9 +945,9 @@ class MovimentacaodecontaController extends GenericControllerNew
 	 * @return void
 	 */
 	public function remanejarValorCaptadoAction(){
-            $this->_helper->layout->disableLayout(); 
+            $this->_helper->layout->disableLayout();
             $this->_helper->viewRenderer->setNoRender(true);
-            
+
             $auth = Zend_Auth::getInstance();
             $idUsuario = $auth->getIdentity()->usu_codigo;
             $count = 0;
@@ -957,16 +957,16 @@ class MovimentacaodecontaController extends GenericControllerNew
             $vlrDevolucao   = $this->getRequest()->getParam('vlrDevolucao');
             $tpApoio        = $this->getRequest()->getParam('tpApoio');
             $tpDevolucao    = $this->getRequest()->getParam('tpDevolucao');
-            
+
             $this->view->idTmpCaptacao = $idTmpCaptacao;
-            
+
             $tbTmpCaptacao = new tbTmpCaptacao();
             $rs = $tbTmpCaptacao->buscarDadosParaRemanejamento($idTmpCaptacao);
             try {
                 if(count($rs)>0){
 
                     if($vlrCaptacao > 0){
-                        
+
                         //INSERT NA TABELA SAC.dbo.Captacao
                         $dados = array(
                             'AnoProjeto'        => $rs->nrAnoProjeto,
@@ -1040,7 +1040,7 @@ class MovimentacaodecontaController extends GenericControllerNew
             } else {
                 echo json_encode(array('resposta'=>false, 'mensagem'=>'Ocorreu um erro no processo de atualização. Entre em contato com o administrador do sistema!'));
             }
-            
+
         }
 
 	/**
@@ -1118,21 +1118,21 @@ class MovimentacaodecontaController extends GenericControllerNew
                             }
                     }
             } // fecha if data do recibo
-            
+
             //tipo de inconsistencia
             $arrBusca["i.idTipoInconsistencia = ?"]=$idTipoInconsistencia;
-            
+
             $arrTpInconsistenciaComPronac = array(2,3);
             if(in_array($idTipoInconsistencia,$arrTpInconsistenciaComPronac)){
                 $arrBusca["t.nrAnoProjeto+t.nrSequencial IS NOT NULL"] = "(?)";
             }else{
                 $arrBusca["t.nrAnoProjeto+t.nrSequencial IS NULL"] = "(?)";
             }
-            
+
             if($idTipoInconsistencia!="7" || $this->getIdOrgao!='272'){ //se a inconsistencia for 'Sem Agencia' nao incluir o orgao para que seja mostrado apenas na SEFIC
                 $arrBusca["p.Orgao = ?"] = $this->getIdOrgao; //so busca projetos do orgao do usuario logado
             }
-            
+
             $ordem = array();
             if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}
 
@@ -1142,12 +1142,12 @@ class MovimentacaodecontaController extends GenericControllerNew
 
             $this->view->registros = $rs;
             $this->view->parametrosBusca = $_POST;
-            
+
             $arrBusca = array();
             $arrBusca['idTipoInconsistencia IN (?)'] = array(2,3,7);
             $this->tbTipoInconsistencia = new tbTipoInconsistencia();
             $this->view->inconsistencias = $this->tbTipoInconsistencia->buscar($arrBusca);
-                
+
 	} // fecha método listarProjetosAction()
 
 
@@ -1159,9 +1159,9 @@ class MovimentacaodecontaController extends GenericControllerNew
 	 */
 	public function formExtratoDeContaCaptacaoAction()
 	{
-                
+
 	} // fecha método formExtratoDeContaCaptacaoAction()
-        
+
 	/**
 	 * Método para listar os projetos para grid do relatorio conforme o tipo de inconsistencia
 	 * @access public
@@ -1266,7 +1266,7 @@ class MovimentacaodecontaController extends GenericControllerNew
             $this->view->qtdRegistros  = $total;
             $this->view->dados         = $busca;
             $this->view->intTamPag     = $this->intTamPag;
-            
+
 	} // fecha método listarProjetosAction()
 
 
@@ -1350,7 +1350,7 @@ class MovimentacaodecontaController extends GenericControllerNew
             } else {
                 $busca = $tbCaptacao->buscaExtratoCaptacao($where, $order, $tamanho, $inicio);
             }
-            
+
             if(isset($post->xls) && $post->xls){
                 $html = '';
                 $html .= '<table style="border: 1px">';
@@ -1375,15 +1375,15 @@ class MovimentacaodecontaController extends GenericControllerNew
 
                 $i=1;
                 foreach ($busca as $projeto){
-                    
+
                     if (isset($projeto->DtLiberacao) && !empty($projeto->DtLiberacao)) {
                         $DtLiberacao = 'Sim';
                     } else {
                         $DtLiberacao = '<span style="color:red; font-weight: bold;">Não</span>';
                     }
-                    
+
                     $CaptacaoReal = 'R$ '.number_format($projeto->CaptacaoReal,'2',',','.');
-                    
+
                     $html .= '<tr>';
                     $html .= '<td style="border: 1px dotted black;">'.$i.'</td>';
                     $html .= '<td style="border: 1px dotted black;">'.$projeto->PRONAC.'</td>';
@@ -1410,7 +1410,7 @@ class MovimentacaodecontaController extends GenericControllerNew
                 $this->view->dados = $busca;
                 $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
             }
-            
+
 	} // fecha método listarProjetosAction()
 
 
@@ -1423,7 +1423,7 @@ class MovimentacaodecontaController extends GenericControllerNew
             $idCaptacao = $_GET['id'];
             $captacao = new Captacao();
             $dadosCaptacao = $captacao->buscar(array('Idcaptacao = ?' => $idCaptacao));
-            
+
             if(count($dadosCaptacao)>0){
                 $auth = Zend_Auth::getInstance();
                 $idusuario = $auth->getIdentity()->usu_codigo;
@@ -1438,7 +1438,7 @@ class MovimentacaodecontaController extends GenericControllerNew
                 $dadosProjetos = $Projetos->buscar(array('AnoProjeto = ?'=>$dadosCaptacao[0]->AnoProjeto,'Sequencial = ?'=>$dadosCaptacao[0]->Sequencial));
                 $getdate = date('d/m/Y');
                 $valorTransferido = @number_format(($vlCaptado), 2, ",", ".");
-                
+
                 $dadosP = array(
                     'ProvidenciaTomada' => 'Transferência de recursos entre conta captação e conta movimento no valor de R$'.$valorTransferido.' em '.$getdate.'.',
                     'Logon' => $idusuario
@@ -1466,7 +1466,7 @@ class MovimentacaodecontaController extends GenericControllerNew
                     'Logon' => $idusuario,
                     'VlLiberado' => $vlCaptado
                 );
-                
+
                 $liberar = new Liberacao();
                 $buscar = $liberar->buscar(array('AnoProjeto = ?' => $AnoProjeto, 'Sequencial = ?' => $Sequencial))->toArray();
 
@@ -1502,7 +1502,7 @@ class MovimentacaodecontaController extends GenericControllerNew
                     $where = array('Idcaptacao = ?' => $d->Idcaptacao);
                     $captacao->update($dados, $where);
                 }
-                
+
                 $Projetos = new Projetos();
                 $dadosProjetos = $Projetos->buscar(array('AnoProjeto = ?'=>$dadosCaptacao[0]->AnoProjeto,'Sequencial = ?'=>$dadosCaptacao[0]->Sequencial));
                 $getdate = date('d/m/Y');
@@ -1548,7 +1548,7 @@ class MovimentacaodecontaController extends GenericControllerNew
             }
             die();
 	}
-        
+
 	/**
 	 * Método para gerar o pdf do extrato
 	 * @access public
@@ -1856,53 +1856,53 @@ class MovimentacaodecontaController extends GenericControllerNew
 	public function salvararquivobbAction()
 	{
     	$this->_helper->layout->disableLayout();
-    	
+
     	$arquivos = null;
-    	
+
     	//$dir = 'D:\\Usuarios\\96569433172\\Desktop\\Politec\\UC 38\\';
-		
+
 		//Diretorio onde se encontra os arquivos
     	$dir = getcwd() . $this->arquivoTXT;
-		
+
 		// Esse seria o 'handler' do diretório
 		$dh = opendir($dir);
-		
+
 		// Loop que busca todos os arquivos até que não encontre mais nada
-		while (false !== ($filename = readdir($dh))) 
+		while (false !== ($filename = readdir($dh)))
 		{
 			// Verificando se o arquivo é .txt
-			if ((substr($filename,-4) == '.TXT') or (substr($filename,-4) == '.txt')) 
+			if ((substr($filename,-4) == '.TXT') or (substr($filename,-4) == '.txt'))
 			{
 				// mostra o nome do arquivo e um link para ele - pode ser mudado para mostrar diretamente a imagem :)
-				$txt = $dir.'/'.$filename; 
-				$arquivos[] = $txt;				 
+				$txt = $dir.'/'.$filename;
+				$arquivos[] = $txt;
 			}
-			
+
 		}
-			
+
 		// Se tiver arquivos TXT no diretório...
 		if($arquivos)
 		{
-		
+
 			foreach($arquivos as $i)
 			{
 		    	$arquivoTxt = $i;
-		
+
 		    	/* Abrindo o arquivo */
 		    	$fp = fopen($arquivoTxt, 'r'); // $fp conterá o handle do arquivo que abrimos
-		   
+
 		   		/* Count para os dados */
 		   		$countD = 0;
 		   		$countH = 0;
 		   		$countT = 0;
-		   		
+
 		   		/* Varrendo o arquivo */
-		   		while (!feof($fp)) 
+		   		while (!feof($fp))
 		   		{
 		        	$buffer = fgets($fp, 4096);
 		        	echo $buffer.'<br />';
-		        	
-		        	/* Se o inicio da linha for igual a 1, então é Header */	
+
+		        	/* Se o inicio da linha for igual a 1, então é Header */
 		        	if(substr($buffer,0,1) == 1)
 		        	{
 		        		$movimentacaoH['Sequencial'][$countH]=substr($buffer,1,4);
@@ -1912,15 +1912,15 @@ class MovimentacaodecontaController extends GenericControllerNew
 			        	$dataChegadaRecibo = $movimentacaoH['dataGeracao'][$countH]=substr($buffer,10,8);
 			        	$countH ++;
 		        	}
-		        	
-		        	/* Se o inicio da linha for igual a 2, então é Detalhe */        	
+
+		        	/* Se o inicio da linha for igual a 2, então é Detalhe */
 		        	if(substr($buffer,0,1) == 2)
 		        	{
 		        		$movimentacaoD['cpf_cnpj'][$countD]=substr($buffer,1,14);
-		        		
+
 		        		/* Buscando os dados do proponente*/
 		        		$Proponente = MovimentacaoDeContaDAO::buscarProponente(substr($buffer,1,14));
-			        	
+
 			        	if($Proponente)
 			        	{
 			        		foreach($Proponente as $p)
@@ -1929,21 +1929,21 @@ class MovimentacaodecontaController extends GenericControllerNew
 			        			$movimentacaoD['EmailProponente'][$countD]= $p->email;
 			        			$emailProponente = $p->email;
 			        		}
-			        		
+
 			        	}
 			        	else
 			        	{
 			        		$movimentacaoD['NomeProponente'][$countD]= 'not';
 			        		$movimentacaoD['EmailProponente'][$countD]= 'not';
 			        	}
-			        	
+
 			        	$movimentacaoD['agencia'][$countD]=substr($buffer,15,4);
 			        	$movimentacaoD['DvAgencia'][$countD]=substr($buffer,19,1);
 			        	$movimentacaoD['conta'][$countD]=substr($buffer,21,11);
 			        	$movimentacaoD['DvConta'][$countD]=substr($buffer,32,1);
 			        	$movimentacaoD['cpf_cnpjPatrocinador'][$countD]=substr($buffer,33,14);
-			        	
-			        	
+
+
 			        	// Verificando se o Patrocinador está cadastrado
 			        	$Patrocinador = MovimentacaoDeContaDAO::buscarPatrocinador(substr($buffer,33,14));
 			        	if($Patrocinador)
@@ -1957,48 +1957,48 @@ class MovimentacaodecontaController extends GenericControllerNew
 			        	{
 			        		$movimentacaoD['Patrocinador'][$countD]= 'not';
 			        	}
-			    
+
 			        	$agencia = substr($buffer,15,4).substr($buffer,19,1);
 			        	$conta = substr($buffer,21,11).substr($buffer,32,1);
-			        	
+
 			        	/* Buscando o PRONAC pela agencia e conta do projeto */
 			        	$BuscaPRONAC = MovimentacaoDeContaDAO::buscarProjeto($agencia, $conta);
-			        	
+
 			        	/* Varrendo o array para pegar o PRONAC */
 			        	foreach($BuscaPRONAC as $i)
 						{
 							$AnoProjeto 		= $i->AnoProjeto;
 							$SequencialProjeto 	= $i->Sequencial;
 						}
-						
+
 						/* Se acharo pronac ele dá um ok */
 			        	if($BuscaPRONAC)
 			        	{
-			        		$movimentacaoD['AnoProjeto'][$countD]= $AnoProjeto;	
-			        		$movimentacaoD['SequencialProjeto'][$countD]= $SequencialProjeto;	
+			        		$movimentacaoD['AnoProjeto'][$countD]= $AnoProjeto;
+			        		$movimentacaoD['SequencialProjeto'][$countD]= $SequencialProjeto;
 			        	}
 			        	/* Se não achar ele manda um email pedindo para cadastrar */
 			        	else
 			        	{
-			        		$movimentacaoD['AnoProjeto'][$countD]= '';	
+			        		$movimentacaoD['AnoProjeto'][$countD]= '';
 			        		$movimentacaoD['SequencialProjeto'][$countD]= '';
 						}
-			        	
+
 			        	// Buscando o enquadramento do Projeto.
 			        	$Enquadramento = MovimentacaoDeContaDAO::buscarEnquadramento($AnoProjeto.$SequencialProjeto);
-			        	
+
 			        	if($Enquadramento)
 			        	{
 			        		foreach($Enquadramento as $eq)
 			        		{
 			        			$movimentacaoD['Enquadramento'][$countD] = $eq->Enquadramento;
-			        		}		
+			        		}
 			        	}
 			        	else
 			        	{
-			        		$movimentacaoD['Enquadramento'][$countD] = 'not';	
+			        		$movimentacaoD['Enquadramento'][$countD] = 'not';
 			        	}
-			        	
+
 			        	/* Pegando a data para verificação e transformando para BR */
 			        	$data = substr($buffer,47,8);
 			        	$dia = substr($data,0,2);
@@ -2008,9 +2008,9 @@ class MovimentacaodecontaController extends GenericControllerNew
 			        	$dataCreditoC = $ano.'/'.$mes.'/'.$dia;
 			        	$movimentacaoD['dataCredito'][$countD] = $dataCredito;
 			        	$movimentacaoD['dataCreditoC'][$countD] = $dataCreditoC;
-			        	
+
 			        	/* Fazer uma busca para ver se o projeto está com data de execução vigente */
-			        	$PExecucao = MovimentacaoDeContaDAO::buscarVigenciaExecucao($dataCreditoC, $AnoProjeto.$SequencialProjeto);	        		
+			        	$PExecucao = MovimentacaoDeContaDAO::buscarVigenciaExecucao($dataCreditoC, $AnoProjeto.$SequencialProjeto);
 			        	if($PExecucao)
 		        		{
 		        			$movimentacaoD['PExecucao'][$countD] = 'ok';
@@ -2019,9 +2019,9 @@ class MovimentacaodecontaController extends GenericControllerNew
 		        		{
 							$movimentacaoD['PExecucao'][$countD] = 'not';
 						}
-			        	
+
 			        	/* Fazer uma busca para ver se o projeto está com data de captação vigente */
-			        	$PCaptacao = MovimentacaoDeContaDAO::buscarVigenciaCaptacao($dataCreditoC, $AnoProjeto.$SequencialProjeto);	        		
+			        	$PCaptacao = MovimentacaoDeContaDAO::buscarVigenciaCaptacao($dataCreditoC, $AnoProjeto.$SequencialProjeto);
 			        	if($PCaptacao)
 		        		{
 		        			$movimentacaoD['PCaptacao'][$countD] = 'ok';
@@ -2030,42 +2030,42 @@ class MovimentacaodecontaController extends GenericControllerNew
 		        		{
 							$movimentacaoD['PCaptacao'][$countD] = 'not';
 						}
-			        	
-			        	
+
+
 			        	$movimentacaoD['valorCredito'][$countD]=(float)substr($buffer,55,17);
-			        	
-			        	/* Se o codigo de patrocinio for em branco transforma para 0 (Não informado) */	
+
+			        	/* Se o codigo de patrocinio for em branco transforma para 0 (Não informado) */
 			        	if(substr($buffer,94,1) == '')
 			        	{
-			        		$movimentacaoD['codPatrocinio'][$countD]= 0;	
+			        		$movimentacaoD['codPatrocinio'][$countD]= 0;
 			        	}
 			        	else
 			        	{
-			        		$movimentacaoD['codPatrocinio'][$countD]=substr($buffer,94,1);	
+			        		$movimentacaoD['codPatrocinio'][$countD]=substr($buffer,94,1);
 			        	}
-			        		        	
+
 			        	$countD ++;
 		        	} // fecha if
-		        	
+
 		        	/* Se o inicio da linha for igual a 3, então é Trailer */
 		        	if(substr($buffer,0,1) == 3)
 		        	{
 		        		$movimentacaoT['quantidadeRegistros'][$countT]=substr($buffer,1,8);
 			        	$countT ++;
 		        	}
-		        	
+
 		    	} // fecha while
-					
+
 				// Colocando as datas nas formatações certas
 		   		$dia = substr($dataChegadaRecibo,0,2);
 		    	$mes = substr($dataChegadaRecibo,2,2);
 		    	$ano = substr($dataChegadaRecibo,4,4);
 		    	$dataChegadaReciboM = $dia.'/'.$mes.'/'.$ano;
 		    	$dataChegadaReciboC = $ano.'/'.$mes.'/'.$dia;
-				
+
 		   		foreach($movimentacaoD['cpf_cnpj'] as $Key => $i)
 		   		{
-		   			   	
+
 		   			$dadosOK = array('AnoProjeto' 		=> $movimentacaoD['AnoProjeto'][$Key],
 								     'Sequencial' 		=> $movimentacaoD['SequencialProjeto'][$Key],
 								     'NumeroRecibo' 	=> '0',
@@ -2079,9 +2079,9 @@ class MovimentacaodecontaController extends GenericControllerNew
 								     'logon' 			=> '6764',
 								     //'Idcaptacao' 	=> '',
 								     'idProjeto' 		=> null
-								     );   	
-		
-		
+								     );
+
+
 		   			$dadosErro = array('nrAnoProjeto' 			=> $movimentacaoD['AnoProjeto'][$Key],
 									   'nrSequencial' 			=> $movimentacaoD['SequencialProjeto'][$Key],
 									   'dtChegadaRecibo'		=> $dataChegadaReciboC,
@@ -2090,17 +2090,17 @@ class MovimentacaodecontaController extends GenericControllerNew
 									   'dtCredito' 				=> $movimentacaoD['dataCreditoC'][$Key],
 									   'vlValorCredito' 		=> number_format($movimentacaoD['valorCredito'][$Key]/100, 2, '.', ''),
 									   'cdPatrocinio' 			=> $movimentacaoD['codPatrocinio'][$Key]
-								       );   	
-		   			   			
-		   		
+								       );
+
+
 		   			//Zend_Debug::dump($dadosErro);
-		   			
+
 		   			$dadosContigencia = array();
-		   			
+
 		   			$pendencias = 'PENDÊNCIAS NA CAPTAÇÃO DO PROJETO PRONAC: '.$movimentacaoD['AnoProjeto'][$Key].
 								     										   $movimentacaoD['SequencialProjeto'][$Key].
 																			 '<br /><br />';
-		
+
 		   			if($movimentacaoD['PExecucao'][$Key] == 'not')
 		   			{
 		   				array_push($dadosContigencia, '1');
@@ -2129,56 +2129,56 @@ class MovimentacaodecontaController extends GenericControllerNew
 		   			{
 		   				array_push($dadosContigencia, '6');
 		   			}
-		   			
+
 		   			/* Tipo de contigências
-		   			 * 
-		   			 * 1 - Execução não vigente 
+		   			 *
+		   			 * 1 - Execução não vigente
 		   			 * 2 - Captação não vigente
 		   			 * 3 - Incentivador não cadastrado
 		   			 * 4 - Patrocínio não informado
 		   			 * 5 - Email do proponente não cadastrado
 		   			 * 6 - Proponente não cadastrado
 		   			 */
-		   			
+
 					if(sizeof($dadosContigencia) > 0)
 		   			{
-		   				
+
 		   				$insereCaptacaoErro = MovimentacaoDeContaDAO::salvaCaptacaoErro($dadosErro);
-		   				
+
 		   				for($i = 0; $i < sizeof($dadosContigencia); $i++)
 		   				{
 		   					$dadosContigenciaErro = array('idTipoInconsistencia' => $dadosContigencia[$i], 'idTmpCaptacao' => $insereCaptacaoErro);
 		   					$insereContigencias = MovimentacaoDeContaDAO::salvaContigencia($dadosContigenciaErro);
 		   				}
-		   				
+
 		   				/****************************************************************************************************/
 
 					        $email = 'tarcisio.angelo@cultura.gov.br';
 
 					        // Quando subir para produção deve substituir o email acima por esse abaixo
 					        //$email = $emailProponente;
-					    
+
 					    	//$enviar = MovimentacaoDeContaDAO::enviarEmail($email, $pendencias);
-										
+
 		   				/****************************************************************************************************/
-		   				
-		   				
-		   				
+
+
+
 		   				//MovimentacaoDeContaController::enviarEmail($emailProponente);
-		   				
+
 		   			}
 		   			else
 		   			{
 		   				$insereCaptacaoOK = MovimentacaoDeContaDAO::salvaCaptacaoOK($dadosOK);
 		   			}
-		   			
+
 		   		} // fecha foreach
 
 		   		/* Fecha o arquivo */
-		   		fclose($fp); 
+		   		fclose($fp);
 
-				// Exclui o arquivo			
-				unlink($arquivoTxt);	
+				// Exclui o arquivo
+				unlink($arquivoTxt);
 
 			}
 
@@ -2203,7 +2203,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	{
     	$this->_helper->layout->disableLayout();
 
-	    $deletaContigencias = MovimentacaoDeContaDAO::deletaContigencia();		
+	    $deletaContigencias = MovimentacaoDeContaDAO::deletaContigencia();
 
 	    $DadosVerificacao = MovimentacaoDeContaDAO::verificacaoDados();
 
@@ -2221,8 +2221,8 @@ class MovimentacaodecontaController extends GenericControllerNew
 				$dtCredito 				= $dv->dtCredito;
 				$vlValorCredito 		= $dv->vlValorCredito;
 				$cdPatrocinio 			= $dv->cdPatrocinio;
-	    		
-	    		
+
+
 	    		$Proponente = MovimentacaoDeContaDAO::buscarProponente($nrCpfCnpjProponente);
 	        	if($Proponente)
 	        	{
@@ -2231,39 +2231,39 @@ class MovimentacaodecontaController extends GenericControllerNew
 	        			$NomeProponente  = $p->nome;
 	        			$EmailProponente = $p->email;
 	        		}
-	        		
+
 	        	}
 	        	else
 	        	{
 	        		$NomeProponente  = '';
 	        		$EmailProponente = '';
 	        	}
-	        	
-	        	
+
+
 	        	$Patrocinador = MovimentacaoDeContaDAO::buscarPatrocinador($nrCpfCnpjIncentivador);
 	        	if($Patrocinador)
 	        	{
-	        		$Incentivador = 'ok';		        		
+	        		$Incentivador = 'ok';
 	        	}
 	        	else
 	        	{
 					$Incentivador = 'not';
 	        	}
-	
+
 	        	/* Colocar como pedente */
 	        	$Enquadramento = MovimentacaoDeContaDAO::buscarEnquadramento($nrAnoProjeto.$nrSequencial);
-	        	
+
 	        	if($Enquadramento)
 	        	{
 	        		foreach($Enquadramento as $eq)
 	        		{
 	        			$Enquadramento = $eq->Enquadramento;
-	        		}		
+	        		}
 	        	}
-	        	
-	        	 	
+
+
 	        	/* Fazer uma busca para ver se o projeto está com data de execução vigente */
-	        	$PExecucao = MovimentacaoDeContaDAO::buscarVigenciaExecucao($dtCredito, $nrAnoProjeto.$nrSequencial);	        		
+	        	$PExecucao = MovimentacaoDeContaDAO::buscarVigenciaExecucao($dtCredito, $nrAnoProjeto.$nrSequencial);
 	        	if($PExecucao)
         		{
     				$PEx = 'ok';
@@ -2272,9 +2272,9 @@ class MovimentacaodecontaController extends GenericControllerNew
         		{
 					$PEx = 'not';
 				}
-	        	
+
 	        	/* Fazer uma busca para ver se o projeto está com data de captação vigente */
-	        	$PCaptacao = MovimentacaoDeContaDAO::buscarVigenciaCaptacao($dtCredito, $nrAnoProjeto.$nrSequencial);	        		
+	        	$PCaptacao = MovimentacaoDeContaDAO::buscarVigenciaCaptacao($dtCredito, $nrAnoProjeto.$nrSequencial);
 	        	if($PCaptacao)
         		{
     				$PCap = 'ok';
@@ -2283,8 +2283,8 @@ class MovimentacaodecontaController extends GenericControllerNew
         		{
 					$PCap = 'not';
 				}
-	        	
-	               	
+
+
 	   			$dadosOK = array('AnoProjeto' 		=> $nrAnoProjeto,
 							     'Sequencial' 		=> $nrSequencial,
 							     'NumeroRecibo' 	=> '0',
@@ -2298,9 +2298,9 @@ class MovimentacaodecontaController extends GenericControllerNew
 							     'logon' 			=> '6764',
 							     //'Idcaptacao' 	=> '',
 							     'idProjeto' 		=> null
-							     );   	
-	   		
-	   		
+							     );
+
+
 		   		$dadosErro = array('nrAnoProjeto' 			=> $nrAnoProjeto,
 								   'nrSequencial' 			=> $nrSequencial,
 								   'dtChegadaRecibo'		=> $dtChegadaRecibo,
@@ -2309,10 +2309,10 @@ class MovimentacaodecontaController extends GenericControllerNew
 								   'dtCredito' 				=> $dtCredito,
 								   'vlValorCredito' 		=> $vlValorCredito,
 								   'cdPatrocinio' 			=> $cdPatrocinio
-							       );   
-	   			
+							       );
+
 	   			$dadosContigencia = array();
-	   			
+
 	   			if($PEx == 'not')
 	   			{
 	   				array_push($dadosContigencia, '1');
@@ -2323,7 +2323,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	   			}
 	   			if($Incentivador == 'not')
 	   			{
-	   				array_push($dadosContigencia, '3');   				
+	   				array_push($dadosContigencia, '3');
 	   			}
 	   			if($cdPatrocinio == 0)
 	   			{
@@ -2337,19 +2337,19 @@ class MovimentacaodecontaController extends GenericControllerNew
 	   			{
 	   				array_push($dadosContigencia, '6');
 	   			}
-	   			
-	   		
+
+
 	   			Zend_Debug::dump($dadosErro);
-	   		
-	   		
+
+
 	   			if(sizeof($dadosContigencia) > 0)
 	   			{
 	   				foreach($dadosContigencia as $c)
 	   				{
 	   					$dadosContigenciaErro = array('idTipoInconsistencia' => $c, 'idTmpCaptacao' => $idTmpCaptacao);
-	   					
+
 	   					Zend_Debug::dump($dadosContigenciaErro);
-	   					
+
 	   					$insereContigencias = MovimentacaoDeContaDAO::salvaContigencia($dadosContigenciaErro);
 	   				}
 	   			}
@@ -2367,13 +2367,13 @@ class MovimentacaodecontaController extends GenericControllerNew
 
 
     /**
-	 * 
+	 *
 	 */
 	public function verificaIncentivadorAction()
 	{
 		$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 
-		$tbAgente = new Agentes();
+		$tbAgente = new Agente_Model_Agentes();
 		$rsAgente = $tbAgente->buscar(array('CNPJCPF = ?' => $this->_request->getParam('cpfCnpjIncentivador')));
 
 		# verifica se existe o agente
@@ -2401,7 +2401,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	}
 
     /**
-	 * 
+	 *
 	 */
 	public function imprimirExtratoCaptacaoAction()
 	{
@@ -2410,7 +2410,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	}
 
     /**
-	 * 
+	 *
 	 */
     public function formRelatorioReciboCaptacaoAction() {;}
 
@@ -2472,7 +2472,7 @@ class MovimentacaodecontaController extends GenericControllerNew
             if(!empty($get->incentivador)){
                $where["c.cgcCpfMecena = ?"] = retiraMascara($get->incentivador);
             }
-            
+
             if($get->tpDtLote != '') {
                 if(!empty ($get->dtLote)) {
                     $d1 = Data::dataAmericana($get->dtLote);
@@ -2507,7 +2507,7 @@ class MovimentacaodecontaController extends GenericControllerNew
                     }
                 }
             }
-            
+
             if($get->tpDtCaptacao != '') {
                 if(!empty ($get->dtCaptacao)) {
                     $d1 = Data::dataAmericana($get->dtCaptacao);
@@ -2542,7 +2542,7 @@ class MovimentacaodecontaController extends GenericControllerNew
                     }
                 }
             }
-            
+
             $tbCaptacao = new Captacao();
             $total = $tbCaptacao->buscaReciboCaptacao($where, $order, null, null, true);
 
@@ -2582,7 +2582,7 @@ class MovimentacaodecontaController extends GenericControllerNew
             $this->view->tpDtCaptacao = $get->tpDtCaptacao;
             $this->view->dtCaptacao_Final = $get->dtCaptacao_Final;
             $this->view->numLote = $get->numLote;
-            
+
 	} // fecha método listarProjetosAction()
 
         public function imprimirRelatorioReciboCaptacaoAction(){
@@ -2722,7 +2722,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	 */
 	public function corrigirInconsistenciasAction()
 	{
-		
+
 	} // fecha método corrigirInconsistenciaAction()
 
 } // fecha class

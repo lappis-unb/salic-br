@@ -123,7 +123,7 @@ class Vinculo extends GenericModel {
         //VERIFICA SE PROPONETE JA ESTA CADASTRADO
         $arrBusca = array();
         $arrBusca['a.idAgente = ?'] = $post->idAgente;
-        $tblAgente = new Agentes();
+        $tblAgente = new Agente_Model_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
 
         if (count($rsProponente) > 0) {
@@ -296,7 +296,7 @@ class Vinculo extends GenericModel {
         $arrBuscaProponete = array();
         $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto->idAgente;
 
-        $tblAgente = new Agentes();
+        $tblAgente = new Agente_Model_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
 
         //xd($rsPreProjeto);
@@ -406,7 +406,7 @@ class Vinculo extends GenericModel {
 
             $arrBuscaProponete = array();
             $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto->idAgente;
-            $tblAgente = new Agentes();
+            $tblAgente = new Agente_Model_Agentes();
             $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
 
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
@@ -504,7 +504,7 @@ class Vinculo extends GenericModel {
         $tblProponente = new Proponente();
         //$rsProponente = $tblProponente->buscar(array("a.idAgente = ?"=>$rsPreProjeto->idAgente))->current();
 
-        $tblAgente = new Agentes();
+        $tblAgente = new Agente_Model_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsPreProjeto->idAgente))->current();
 
         $regularidade = Regularidade::buscarSalic($rsProponente->CNPJCPF);
@@ -968,7 +968,7 @@ class Vinculo extends GenericModel {
         /** Usuario Logado *********************************************** */
         $auth = Zend_Auth::getInstance(); // instancia da autenticaç?o
         $usu_identificacao = isset($auth->getIdentity()->usu_identificacao) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
-        $agentes = new Agentes();
+        $agentes = new Agente_Model_Agentes();
 
         $idAgenteProponenteRs = $agentes->buscar(array("CNPJCPF = ?" => $usu_identificacao))->current();
         $idAgente = $idAgenteProponenteRs->idAgente;
@@ -998,7 +998,7 @@ class Vinculo extends GenericModel {
         $options = "";
         $optionsTemp = "";
         $idsProponente = 0;
-        $tblAgente = new Agentes();
+        $tblAgente = new Agente_Model_Agentes();
 
         //==== MONTA COMBO COM TODOS OS PROPONENTES //
         foreach ($rsVinculo as $cahve => $valor) {

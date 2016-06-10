@@ -51,16 +51,16 @@ class ManterAgentesDAO extends Zend_Db_Table
 					,T.cdSegmento
 					,SS.Descricao dsSegmento
 
-				FROM AGENTES.dbo.Agentes A 
-					LEFT JOIN AGENTES.dbo.Nomes N on N.idAgente = A.idAgente  
-					LEFT JOIN AGENTES.dbo.EnderecoNacional E on E.idAgente = A.idAgente 
-					LEFT JOIN AGENTES.dbo.Municipios M  on M.idMunicipioIBGE = E.Cidade 
-					LEFT JOIN AGENTES.dbo.UF U on U.idUF = E.UF 
-					LEFT JOIN AGENTES.dbo.Verificacao VE on VE.idVerificacao = E.TipoEndereco  
-					LEFT JOIN AGENTES.dbo.Verificacao VL on VL.idVerificacao = E.TipoLogradouro 
-					LEFT JOIN AGENTES.dbo.tbTitulacaoConselheiro T on T.idAgente = A.idAgente   
-					LEFT JOIN AGENTES.dbo.Visao V on V.idAgente = A.idAgente 
-					LEFT JOIN SAC.dbo.Area SA on SA.Codigo = T.cdArea 
+				FROM AGENTES.dbo.Agentes A
+					LEFT JOIN AGENTES.dbo.Nomes N on N.idAgente = A.idAgente
+					LEFT JOIN AGENTES.dbo.EnderecoNacional E on E.idAgente = A.idAgente
+					LEFT JOIN AGENTES.dbo.Municipios M  on M.idMunicipioIBGE = E.Cidade
+					LEFT JOIN AGENTES.dbo.UF U on U.idUF = E.UF
+					LEFT JOIN AGENTES.dbo.Verificacao VE on VE.idVerificacao = E.TipoEndereco
+					LEFT JOIN AGENTES.dbo.Verificacao VL on VL.idVerificacao = E.TipoLogradouro
+					LEFT JOIN AGENTES.dbo.tbTitulacaoConselheiro T on T.idAgente = A.idAgente
+					LEFT JOIN AGENTES.dbo.Visao V on V.idAgente = A.idAgente
+					LEFT JOIN SAC.dbo.Area SA on SA.Codigo = T.cdArea
 					LEFT JOIN SAC.dbo.Segmento SS on SS.Codigo = T.cdSegmento
 
 				WHERE (A.TipoPessoa = 0 OR A.TipoPessoa = 1) ";
@@ -102,7 +102,7 @@ class ManterAgentesDAO extends Zend_Db_Table
 	{
 		$sql = "SELECT a.idAgente
 				,a.CNPJCPF
-				,a.CNPJCPFSuperior 
+				,a.CNPJCPFSuperior
 				,n.Descricao AS Nome
 
 			FROM Agentes.dbo.Agentes a
@@ -117,8 +117,8 @@ class ManterAgentesDAO extends Zend_Db_Table
 				AND a.idAgente = vin.idAgente
 				AND tp.idTipo = ver.IdTipo
 				AND ver.idVerificacao = vis.Visao
-				AND (a.TipoPessoa = 0 OR a.TipoPessoa = 1) 
-				AND (n.TipoNome = 18 OR n.TipoNome = 19)  
+				AND (a.TipoPessoa = 0 OR a.TipoPessoa = 1)
+				AND (n.TipoNome = 18 OR n.TipoNome = 19)
 				AND vis.Visao = 198 ";
 
 		if (!empty($cnpjcpfSuperior)) // busca pelo cnpj/cpf com o vinculo principal
@@ -144,11 +144,11 @@ class ManterAgentesDAO extends Zend_Db_Table
 
 		$sql.= " ORDER BY n.Descricao";
 
-		
-		
+
+
 		$db = Zend_Registry::get('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		return $db->fetchAll($sql);		
+		return $db->fetchAll($sql);
 	} // fecha método buscarVinculados()
 
 
@@ -180,14 +180,14 @@ class ManterAgentesDAO extends Zend_Db_Table
                 M.idMunicipioIBGE CodMun,
 				U.Sigla UF,
                 U.idUF CodUF
-                        FROM AGENTES.dbo.EnderecoNacional E 
-							LEFT JOIN AGENTES.dbo.Verificacao VE on VE.idVerificacao = E.TipoEndereco 
-							LEFT JOIN AGENTES.dbo.Municipios M  on M.idMunicipioIBGE = E.Cidade 
+                        FROM AGENTES.dbo.EnderecoNacional E
+							LEFT JOIN AGENTES.dbo.Verificacao VE on VE.idVerificacao = E.TipoEndereco
+							LEFT JOIN AGENTES.dbo.Municipios M  on M.idMunicipioIBGE = E.Cidade
 							LEFT JOIN AGENTES.dbo.UF U on U.idUF = E.UF
 							LEFT JOIN AGENTES.dbo.Verificacao VL on VL.idVerificacao = E.TipoLogradouro
-					
+
 			WHERE E.idAgente = '".$idAgente."' ";
-		
+
 		$sql.= "ORDER BY Status DESC";
 
 		$db = Zend_Registry::get('db');
@@ -274,7 +274,7 @@ class ManterAgentesDAO extends Zend_Db_Table
 		if (!empty($idAgente)){ // busca de acordo com o id do agente
 			$sql.= " WHERE Tl.idAgente = $idAgente";
 		}
-        
+
 		$db = Zend_Registry::get('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
@@ -294,7 +294,7 @@ class ManterAgentesDAO extends Zend_Db_Table
 		$sql = "SELECT Codigo AS id
 					,Descricao AS descricao
 
-				FROM SAC.dbo.Area 
+				FROM SAC.dbo.Area
 
 				ORDER BY Descricao;";
 
@@ -336,7 +336,7 @@ class ManterAgentesDAO extends Zend_Db_Table
 		}
 	} // fecha método cadastrarAgente()
 
-	
+
 	/**
 	 * Método para cadastrar dados do agente
 	 * @access public
@@ -346,9 +346,9 @@ class ManterAgentesDAO extends Zend_Db_Table
 	 */
 	public static function cadastraAgente($dados)
 	{
-		
+
 		//INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
-        $Agentes = new Agentes();
+        $Agentes = new Agente_Model_Agentes();
 
         $rsAgente = $Agentes->createRow();
 
@@ -360,7 +360,7 @@ if(isset($dados['stTipoRespPergunta'])){ $rsAgente->stTipoRespPergunta = $dados[
 if(isset($dados['dtCadastramento'])){ $rsAgente->dtCadastramento = $dados['dtCadastramento']; }
 
 if(isset($dados['idPessoaCadastro'])){ $rsAgente->idPessoaCadastro = $dados['idPessoaCadastro']; }
-       
+
         //SALVANDO O OBJETO CRIADO
         $id = $rsAgente->save();
 
@@ -369,16 +369,16 @@ if(isset($dados['idPessoaCadastro'])){ $rsAgente->idPessoaCadastro = $dados['idP
         }else{
             return false;
         }
-		
-		
-		
+
+
+
 		$db = Zend_Registry::get('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		
-		$db->insert('AGENTES.dbo.Agentes', $dados); 
+
+		$db->insert('AGENTES.dbo.Agentes', $dados);
 		return $db->lastInsertId();
-		
-	} 
+
+	}
 
 
 

@@ -9,7 +9,7 @@ class VisaoModel implements ModelInterface
 {
 
     /**
-     * 
+     *
      */
     const SITUACAO_ATIVO = 'A';
 
@@ -20,7 +20,7 @@ class VisaoModel implements ModelInterface
     private $table = null;
 
     /**
-     * 
+     *
      */
     public function __construct()
     {
@@ -28,7 +28,7 @@ class VisaoModel implements ModelInterface
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     public function atualizar()
@@ -37,7 +37,7 @@ class VisaoModel implements ModelInterface
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @throws Exception
      */
@@ -47,7 +47,7 @@ class VisaoModel implements ModelInterface
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @throws Exception
      */
@@ -57,7 +57,7 @@ class VisaoModel implements ModelInterface
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     public function salvar()
@@ -66,13 +66,13 @@ class VisaoModel implements ModelInterface
     }
 
     /**
-     * 
+     *
      * @param type $cpfCnpjAgente
      * @param type $tipoVisao
      */
     public function adicionaVisao($cpfCnpjAgente, $tipoVisao)
     {
-        $agentesTable = new Agentes();
+        $agentesTable = new Agente_Model_Agentes();
 
         $select = $this->table->select()
           ->setIntegrityCheck(false)

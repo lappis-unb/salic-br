@@ -6,7 +6,7 @@
 //header("Pragma: no-cache");
 header("Content-Type: text/html; charset=ISO-8859-1", true);
 ?>
- 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
     <head>
@@ -237,7 +237,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                                         <?php if(in_array($this->grupoAtivo, array(93,97,103,137))){ ?>
                                             <li><a href="<?php echo $this->url(array('controller' => 'gerenciarpareceres', 'action' => 'imprimir-parecer-tecnico'), '', true); ?>" title="Ir para Imprimir Parecer Técnico">Imprimir Parecer Técnico</a></li>
                                         <?php } ?>
-                                            
+
                                         <?php if(in_array($this->grupoAtivo, array(103))){ ?>
                                             <li><a href="<?php echo $this->url(array('controller' => 'projetosgerenciar', 'action' => 'index'), '', true); ?>" title="Ir para Gerenciar Projeto Cultural">Gerenciar Componente da Comiss&atilde;o</a></li>
                                         <?php } ?>
@@ -279,21 +279,21 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                                         <?php if(in_array($this->grupoAtivo, array(141,142))){ ?>
                                         <li><a href="<?php echo $this->url(array('controller' => 'aprovacaoeparecer', 'action' => 'index'), '', true); ?>" title="Ir para Imprimir Parecer Técnico">Aprova&ccedil;&atilde;o FNC</a></li>
                                         <?php } ?>
-                                        
+
                                         <?php if(in_array($this->grupoAtivo, array(103,127))){ ?>
                                         <li><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index'), '', true); ?>" title="Ir para Recurso">Recurso</a></li>
                                         <?php } ?>
-                                        
+
                                         <?php if(in_array($this->grupoAtivo, array(93, 94, 110))){ ?>
                                         <li><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'painel-recursos'), '', true); ?>" title="Avaliar Recursos">Avaliar Recursos</a></li>
                                         <li><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes'), '', true); ?>" title="Avaliar Readequa&ccedil;&otilde;es">Avaliar Readequa&ccedil;&otilde;es</a></li>
                                         <?php } ?>
-                                        
+
                                         <?php if(in_array($this->grupoAtivo, array(118))){ ?>
                                         <li><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'analisar-recursos-cnic'), '', true); ?>" title="Avaliar Recursos">Avaliar Recursos</a></li>
                                         <li><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'analisar-readequacoes-cnic'), '', true); ?>" title="Avaliar Readequa&ccedil;&otilde;es">Avaliar Readequa&ccedil;&otilde;es</a></li>
                                         <?php } ?>
-                                        
+
                                         <?php if(in_array($this->grupoAtivo, array(128))){ ?>
                                         <li><a href="<?php echo $this->url(array('controller' => 'configuracoes', 'action' => 'secretarios'), '', true); ?>" title="Configurar Assinatura">Configurar Assinatura</a></li>
                                         <?php } ?>
@@ -342,7 +342,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                                     <li><a href="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'confirmacao-pagamento-parecerista'), '', true); ?>" title="Meus pagamentos">Meus Pagamentos</a></li>
                                     <li><a href="<?php echo $this->url(array('controller' => 'verificarreadequacaodeprojeto', 'action' => 'verificarreadequacaodeprojetoparecerista'), '', true); ?>" title="Verificar Readequação de Projetos">Verificar Readequação de Projeto</a></li>
                                     <?php endif;*/ ?>
-                                    
+
                                     <?php if(in_array($this->grupoAtivo, array(94))){ ?>
                                     <li><a href="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'confirmacao-pagamento-parecerista'), '', true); ?>" title="Meus pagamentos">Meus Pagamentos</a></li>
                                     <?php } ?>
@@ -408,11 +408,11 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                             <div id="menu-administrativo" class="hidden">
                                 <ul>
                                     <?php if ($this->grupoAtivo == 97 || $this->grupoAtivo == 120 || $this->grupoAtivo == 121 || $this->grupoAtivo == 122 || $this->grupoAtivo == 123) : ?>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'agentes'), '', true); ?>" title="Ir para Manter Agentes">Manter Agentes</a></li>
+                                    <li><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'module'=>'agente', 'action' => 'agentes'), '', true); ?>" title="Ir para Manter Agentes">Manter Agentes</a></li>
                                     <?php endif; ?>
 
                                     <?php if ($this->grupoAtivo == 94 || $this->grupoAtivo == 118) : ?>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'agentes'), '', true); ?>" title="Ir para Manter Agentes">Gerenciar meus dados</a></li>
+                                    <li><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes'), '', true); ?>" title="Ir para Manter Agentes">Gerenciar meus dados</a></li>
                                     <?php endif; ?>
 
                                     <?php if ($this->grupoAtivo == 103 || $this->grupoAtivo == 120 || $this->grupoAtivo == 122) : ?>
@@ -424,7 +424,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                                     <?php endif; ?>
 
                                     <?php if (($this->grupoAtivo == 137) || ($this->grupoAtivo == 93)) : ?>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'painelcredenciamento'), '', true); ?>" title="Pareceristas">Manter Parecerista</a></li>
+                                    <li><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'painelcredenciamento'), '', true); ?>" title="Pareceristas">Manter Parecerista</a></li>
                                     <?php endif; ?>
 
                                     <?php if ($this->grupoAtivo == 137) : ?>
@@ -645,7 +645,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 									<?php if ($this->grupoAtivo == 137) : ?>
 									<!--<li><a href="<?php echo $this->url(array('controller' => 'consultarpareceristas', 'action' => 'consultardadospareceristas'), '', true); ?>" title="Ir para Consultar Parecerista"> Relatório </a></li>-->
 									<?php endif; ?>
-									
+
 								</ul>
 							</div>
 
@@ -699,11 +699,11 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                                         <?php if ($this->grupoAtivo == 94 || ($this->grupoAtivo == 93)) : ?>
                                             <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'pareceristaprestacaocontas'), '', true); ?>" title="Ir para Prestação de Contas">Analisar Prestação de Contas</a></li>
                                         <?php endif; ?>
-                                            
+
                                         <?php if(in_array($this->grupoAtivo, array(126))){ ?>
                                             <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'analisar-laudo-final'), '', true); ?>" title="Ir para Analisar Laudo Final">Analisar Laudo Final</a></li>
                                         <?php } ?>
-                                            
+
                                         <?php if(in_array($this->grupoAtivo, array(124,125,132))){ ?>
                                             <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'consultar-laudo-final'), '', true); ?>" title="Ir para Imprimir Laudo Final">Imprimir Laudo Final</a></li>
                                         <?php } ?>
@@ -799,7 +799,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 									<?php if ($this->grupoAtivo == 114) : ?>
 									<li><a href="<?php echo $this->url(array('controller' => 'edital', 'action' => 'index'), '', true); ?>" title="Ir para Cadastrar Edital">Criar Edital</a></li>
 									<?php endif; ?>
-                                                                        
+
 									<?php //if ($this->grupoAtivo == 114) : ?>
 <!--									<li><a href="<?php //echo $this->url(array('controller' => 'Listareditais', 'action' => 'listarselecionados'), '', true); ?>" title="Ir para Listar Selecionados">Listar Selecionados</a></li>-->
 									<?php //endif; ?>
@@ -876,8 +876,8 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 				</li>
 				<?php //} ?>
 				<!-- ========== FIM MENU SEGURANCA ========== -->
-                                
-                                
+
+
                                 <!-- ========== INICIO MENU MANUAIS ========== -->
                                 <?php if ($this->grupoAtivo == 137 || $this->grupoAtivo == 94 ) { ?>
                                 <li>
@@ -890,11 +890,11 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                                                     <?php if ($this->grupoAtivo == 137 ) { ?>
                                                     <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Manual_Coordenador_Pronac-Pagamento-Parecerista.pdf', '_blank');" title="Ir para Pagamento Parecerista">Pagamento Parecerista</a></li>
                                                     <?php } ?>
-                                                    
+
                                                     <?php if ($this->grupoAtivo == 94 ) { ?>
                                                     <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Parecerista.pdf', '_blank');" title="Ir para Parecerista">Parecerista</a></li>
                                                     <?php } ?>
-                                                    
+
                                                     <?php if ($this->grupoAtivo == 94 ) { ?>
                                                     <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Manual_do_Parecerista-Confirmar-Pagamento.pdf', '_blank');" title="Ir para Parecerista - An&aacute;lise">Confirmar Pagamento Parecerista</a></li>
                                                     <?php } ?>
@@ -999,7 +999,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 				, dataType : 'json'
 			});
 		} // fecha função verificar_mensagens()
-                
+
         function verificarSemMensagens(){
 			$.ajax({
 				async: true,

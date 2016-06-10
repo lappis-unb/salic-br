@@ -113,7 +113,7 @@
             </div>
         </center>
 
-        <form id="form" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'salvaatestado'));?>" method="post" enctype="multipart/form-data">
+        <form id="form" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvaatestado'));?>" method="post" enctype="multipart/form-data">
             <input type="hidden" value="<?php echo date('d/m/Y');?>" id="dtatual" name="dtatual" />
             <table class="tabela">
                 <tr>
@@ -167,7 +167,7 @@
             <td align="center"><?php echo $at->dtFim;?></td>
             <td align="center"><?php echo $at->stImpacto == 1 ? 'SIM' : 'NÃO';?></td>
             <td>
-                <a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'abrirarquivo'), '', true); ?>?id=<?php echo $at->idArquivo; ?>"><?php echo $at->nmArquivo;?></a>
+                <a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'abrirarquivo'), '', true); ?>?id=<?php echo $at->idArquivo; ?>"><?php echo $at->nmArquivo;?></a>
             </td>
         </tr>
         <?php } ?>

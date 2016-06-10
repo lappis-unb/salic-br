@@ -30,7 +30,7 @@ class AdmissibilidadeController extends GenericControllerNew {
      */
     public function init() {
         $auth = Zend_Auth::getInstance(); // instancia da autenticação
-        
+
         // verifica as permissões
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 90;  // Protocolo - Documento
@@ -80,7 +80,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         //$this->idUsuario = $auth->getIdentity()->usu_codigo;
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         if(isset($auth->getIdentity()->usu_codigo)){
-            
+
             $this->codGrupo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
             $this->codOrgao = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
 
@@ -113,14 +113,14 @@ class AdmissibilidadeController extends GenericControllerNew {
         $idPreProjeto = $this->idPreProjeto;
         $dados = AnalisarPropostaDAO::buscarGeral($idPreProjeto);
         $this->view->itensGeral = $dados;
-        
+
         //========== inicio codigo dirigente ================
         /*==================================================*/
         $arrMandatos = array();
         $this->view->mandatos = $arrMandatos;
         $preProjeto = new PreProjeto();
         $rsDirigentes = array();
-        
+
         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
         $idEmpresa = $Empresa->idAgente;
 
@@ -132,9 +132,9 @@ class AdmissibilidadeController extends GenericControllerNew {
             $Pronac = $dadosProjeto->AnoProjeto.$dadosProjeto->Sequencial;
         }
         $this->view->Pronac = $Pronac;
-        
+
         if(isset($dados[0]->CNPJCPFdigirente) && $dados[0]->CNPJCPFdigirente != "") {
-            $tblAgente = new Agentes();
+            $tblAgente = new Agente_Model_Agentes();
             $tblNomes = new Nomes();
             foreach ($dados as $v) {
                 $rsAgente = $tblAgente->buscarAgenteNome(array('CNPJCPF=?'=>$v->CNPJCPFdigirente))->current();
@@ -155,7 +155,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         $this->view->mandatos   = $arrMandatos;
         //============== fim codigo dirigente ================
         /*==================================================*/
-        
+
         $propostaPorEdital = false;
         if($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0){
             $propostaPorEdital = true;
@@ -213,7 +213,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         $buscarItem = ManterorcamentoDAO::buscarItensProdutos($this->idPreProjeto);
         $this->view->Item = $buscarItem;
         $this->view->AnaliseCustos = PreProjeto::analiseDeCustos($this->idPreProjeto);
-        
+
         $this->view->idPreProjeto = $this->idPreProjeto;
         $pesquisaView = $this->_getParam('pesquisa');
         if($pesquisaView == 'proposta') {
@@ -224,12 +224,12 @@ class AdmissibilidadeController extends GenericControllerNew {
         if($propostaPorEdital){
             $tbFormDocumentoDAO = new tbFormDocumento();
             $edital = $tbFormDocumentoDAO->buscar(array('idEdital = ?'=>$this->view->itensGeral[0]->idEdital,'idClassificaDocumento = ?'=>$this->COD_CLASSIFICACAO_DOCUMENTO));
-            
+
             //busca o nome do EDITAL
             $edital = $tbFormDocumentoDAO->buscar(array('idEdital = ?'=>$this->view->itensGeral[0]->idEdital));
             $nmEdital = $edital[0]->nmFormDocumento;
             $this->view->nmEdital = $nmEdital;
-            
+
             $arrPerguntas = array();
             $arrRespostas = array();
             $tbPerguntaDAO = new tbPergunta();
@@ -344,7 +344,7 @@ class AdmissibilidadeController extends GenericControllerNew {
             exit();
         }
     }
-    
+
 
     public function incluiravaliacaoAction() {
 
@@ -428,7 +428,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         $rsProposta = $tblProposta->buscar(array("idPreProjeto = ?"=>$this->idPreProjeto))->current();
         $this->view->proposta = $rsProposta;
 
-        $tblAgente = new Agentes();
+        $tblAgente = new Agente_Model_Agentes();
         $rsAgente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsProposta->idAgente))->current();
         $this->view->agente = $rsAgente;
 
@@ -495,17 +495,17 @@ class AdmissibilidadeController extends GenericControllerNew {
             $docs = $tblAvaliacao->buscar($where);
 
             if(count($docs) == 1){ //So poder enviar um email
-                
+
                 $msg = new Zend_Config_Ini(getcwd().'/public/admissibilidade/mensagens_email_proponente.ini', 'pendencia_documental');
 
                 $this->eviarEmail($this->idPreProjeto,$msg->msg);
-                
+
             }
-            
-            
-             
+
+
+
             parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/admissibilidade/analisedocumental?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
-            
+
 //            // Retornando proposta para movimentacao 95
 //            $dadosMovimentacao['idProjeto'] = $this->idPreProjeto;
 //            $dadosMovimentacao['Movimentacao'] = 95;
@@ -519,7 +519,7 @@ class AdmissibilidadeController extends GenericControllerNew {
 //            $rsRetorno = $tblMovimentacao->update(array("stEstado"=>1), "idProjeto = {$this->idPreProjeto}");
 //
 //            $rsMovimentacao = $tblMovimentacao->inserir($dadosMovimentacao);
-            
+
             // Verificando se movimentacao ja existe
 //            $rsBuscaMovimentacao = $tblMovimentacao->buscar(array("Movimentacao = ?"=>97, "idProjeto = ?"=>$dadosMovimentacao['idProjeto']));
 //            if($rsBuscaMovimentacao->count() < 1){
@@ -531,7 +531,7 @@ class AdmissibilidadeController extends GenericControllerNew {
             parent::message("Erro ao realizar opera&ccedil;&atilde;o", "/admissibilidade/analisedocumental?idPreProjeto=".$this->idPreProjeto, "ERROR");
         }
 
-        
+
 
     }
 
@@ -609,7 +609,7 @@ class AdmissibilidadeController extends GenericControllerNew {
                 //entao pega-se o orgao do edital
                 $tblEdital = new Edital();
                 $rsEdital =  $tblEdital->buscar(array("idEdital = ?"=>$rsProposta->idEdital))->current();
-                
+
                 $rsOrgaos = $tblOrgaos->buscar(array("Codigo = ?"=>$rsEdital->idOrgao))->current();
             }
             //xd($rsOrgaos);
@@ -637,8 +637,8 @@ class AdmissibilidadeController extends GenericControllerNew {
             //$idOrgao = $rsOrgaos->Codigo;
             $idOrgao = $this->codOrgao;
         }
-        
-        $tblAgente = new Agentes();
+
+        $tblAgente = new Agente_Model_Agentes();
         $rsAgente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsProposta->idAgente))->current();
 
         $cnpjcpf = $rsAgente->CNPJCPF;
@@ -659,9 +659,9 @@ class AdmissibilidadeController extends GenericControllerNew {
 
             $rsProjeto = $tblProjeto->buscar(array("idProjeto = ?" => $this->idPreProjeto), "IdPRONAC DESC")->current();
             if(!empty($rsProjeto )){
-                
+
                 $nrPronac = $rsProjeto->AnoProjeto.$rsProjeto->Sequencial;
-                
+
                 echo "A Proposta ".$this->idPreProjeto." foi transformada no Projeto No. ".$nrPronac ;
                 echo '<br><br><a href="../gerenciarparecertecnico/dadosetiqueta?pronac='.$nrPronac.'&etiqueta=nao" target="_blank">Imprimir etiqueta</a>';
             }
@@ -669,7 +669,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         } catch (Exception $e){
             echo "Erro ao tentar transformar proposta em projeto!";
         }
-        
+
     }
 
     public function encaminharpropostaAction() {
@@ -719,9 +719,9 @@ class AdmissibilidadeController extends GenericControllerNew {
 //        $msg = new Zend_Config_Ini(getcwd().'/public/admissibilidade/mensagens_email_proponente.ini', 'sem_pendencia_documental');
 
 //        $this->eviarEmail($this->idPreProjeto,$msg->msg);
-        
+
         if(isset($post->devolver) && $post->devolver == 1){
-            
+
             parent::message("Mensagem enviada com sucesso!", "/admissibilidade/gerenciamentodepropostas", "CONFIRM");
             return true;
             exit();
@@ -744,13 +744,13 @@ class AdmissibilidadeController extends GenericControllerNew {
             $rsPreProjeto->DtArquivamento=date("Y/m/d H:i:s");
             $rsPreProjeto->stEstado = 0;
             $rsPreProjeto->save();
-            
+
             //Enviar e-mail informando arquivamento e a justificativa
             $tipo = ($rsPreProjeto->idEdital) ? 'arquivamento_proposta_Edital' : 'arquivamento_proposta_IF';
             $msg = new Zend_Config_Ini(getcwd().'/public/admissibilidade/mensagens_email_proponente.ini', $tipo);
 
             $this->eviarEmail($this->idPreProjeto,$msg->msg);
-            
+
             parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/admissibilidade/listar-propostas", "CONFIRM");
             return;
             die();
@@ -766,26 +766,26 @@ class AdmissibilidadeController extends GenericControllerNew {
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
         $this->view->nomeProjeto  = strip_tags($rsProposta->NomeProjeto);
-        
+
     }
-    
+
     public function arquivarAction(){
         $dao    = new AnalisarPropostaDAO();
         $post   = Zend_Registry::get('post');
         //xd($post);
         AnalisarPropostaDAO::deletePreProjeto($post->idprojeto);
         ///Enviar e-mail informando arquivamento e a justificativa
-        
-        
-        
+
+
+
 
 
     }
-    
+
     public function imprimirpropostaculturalAction() {
-        
+
         $this->_helper->layout->disableLayout();
-        
+
         $idPreProjeto = $this->idPreProjeto;
         $dao = new AnalisarPropostaDAO();
         $this->view->itensGeral = AnalisarPropostaDAO::buscarGeral($idPreProjeto);
@@ -878,12 +878,12 @@ class AdmissibilidadeController extends GenericControllerNew {
         $this->view->mandatos = $arrMandatos;
         $preProjeto = new PreProjeto();
         $rsDirigentes = array();
-        
+
         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
         $idEmpresa = $Empresa->idAgente;
-        
+
         if(isset($this->view->itensGeral[0]->CNPJCPFdigirente) && $this->view->itensGeral[0]->CNPJCPFdigirente != "") {
-            $tblAgente = new Agentes();
+            $tblAgente = new Agente_Model_Agentes();
             $tblNomes = new Nomes();
             foreach ($this->view->itensGeral as $v) {
                 $rsAgente = $tblAgente->buscarAgenteNome(array('CNPJCPF=?'=>$v->CNPJCPFdigirente))->current();
@@ -899,13 +899,13 @@ class AdmissibilidadeController extends GenericControllerNew {
                 $arrMandatos[$NomeDirigente] = $rsMandato;
             }
         }
-        
+
         //$tbDirigentes = $geral->buscarDirigentes($idPronac);
-        $this->view->dirigentes = $rsDirigentes;        
+        $this->view->dirigentes = $rsDirigentes;
         $this->view->mandatos   = $arrMandatos;
         //============== fim codigo dirigente ================
         /*==================================================*/
-        
+
 
         if($propostaPorEdital){
             $tbFormDocumentoDAO =   new tbFormDocumento();
@@ -936,15 +936,15 @@ class AdmissibilidadeController extends GenericControllerNew {
                     }
                 }
             }
-                        
+
             $this->view->perguntas = $arrPerguntas;
-            $this->view->respostas = $arrRespostas;            
+            $this->view->respostas = $arrRespostas;
 
             $this->montaTela("admissibilidade/imprimir-proposta-por-edital.phtml");
         }else{
             $this->montaTela("admissibilidade/imprimir-proposta-por-incentivo-fiscal.phtml");
-        }        
-        
+        }
+
 
     }
 
@@ -953,9 +953,9 @@ class AdmissibilidadeController extends GenericControllerNew {
 
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
-        
+
         //$post = Zend_Registry::get('post');
-        
+
         $pdf = new PDFCreator($_POST['html']);
         if (isset($_GET['quebra_linha'])) {
         	$pdf->gerarPdf($_GET['quebra_linha']);
@@ -1052,11 +1052,11 @@ class AdmissibilidadeController extends GenericControllerNew {
             //$this->view->mensagem = 'Alteração realizada com sucesso.';
             parent::message("An&aacute;lise redistribu&iacute;da com sucesso.", "/admissibilidade/redistribuiranalise", "CONFIRM");
         }
-        if($_REQUEST['idProjeto'] && $_REQUEST['fase']) { 
+        if($_REQUEST['idProjeto'] && $_REQUEST['fase']) {
             $params = new stdClass();
             $params->idProjeto    = $_REQUEST['idProjeto'];
             $params->fase         = $_REQUEST['fase'];
-            $this->view->analista = AdmissibilidadeDAO::consultarRedistribuirAnaliseItem($params); 
+            $this->view->analista = AdmissibilidadeDAO::consultarRedistribuirAnaliseItem($params);
             if($this->view->analista) {
                 $params = new stdClass();
                 $params->usu_nome   = $this->view->analista->Tecnico;
@@ -1069,9 +1069,9 @@ class AdmissibilidadeController extends GenericControllerNew {
     }
 
     public function gerenciaranalistasAction() {
-		
+
         if ($this->codOrgao) {
-            $params = new stdClass();            
+            $params = new stdClass();
             $params->cod_grupo = $this->codGrupo;
             $params->cod_orgao = $this->codOrgao;
             $this->view->analistas = AdmissibilidadeDAO::gerenciarAnalistas($params);
@@ -1087,7 +1087,7 @@ class AdmissibilidadeController extends GenericControllerNew {
             $params->usu_orgao    = $_REQUEST['usu_orgao'];
 
             $msgComplementar = "Altera&ccedil;&atilde;o realizada com sucesso!";
-            
+
             if((int)$params->uog_status === 0){
                 $tblPreProjeto = new PreProjeto();
                 $tecnicoTemProposta = $tblPreProjeto->tecnicoTemProposta($params->usu_cod);
@@ -1096,11 +1096,11 @@ class AdmissibilidadeController extends GenericControllerNew {
                     $msgComplementar = "O Analista foi desabilitado, por&eacute;m existem Propostas distribu&iacute;das para o mesmo!";
                 }
             }
-            
+
             $atualizar = AdmissibilidadeDAO::atualizarAnalista($params);
 			parent::message($msgComplementar, "/admissibilidade/gerenciaranalistas", "CONFIRM");
         }
-        
+
         if($_REQUEST['usu_cod'] && $_REQUEST['usu_orgao'] && $_REQUEST['gru_codigo']) {
             $params               = new stdClass();
             $params->usu_cod      = $_REQUEST['usu_cod'];
@@ -1214,7 +1214,7 @@ class AdmissibilidadeController extends GenericControllerNew {
             } else {
                 $array = array();
                 foreach($this->view->analistas as $analistas) {
-                    
+
                     $array[$analistas->Tecnico][$analistas->idProjeto]['NomeProposta']        = $analistas->NomeProposta;
                     $array[$analistas->Tecnico][$analistas->idProjeto]['idAgente']            = $analistas->idAgente;
                     $array[$analistas->Tecnico][$analistas->idProjeto]['CNPJCPF']             = $analistas->CNPJCPF;
@@ -1273,7 +1273,7 @@ class AdmissibilidadeController extends GenericControllerNew {
                 //Buscando movimentação desta proposta
                 $rsMovimentacao = $tblMovimentacao->buscar(array("idprojeto = ?"=>$proposta->idPreProjeto, "stestado = ?"=>0))->current();
                 $movimentacoes[$proposta->idPreProjeto]["tecnico"] = "";
-                
+
                 if(count($rsMovimentacao)){
                     //Descobrindo se esta proposta ja existe em projetos
                     $rsProjeto = $tblProjetos->buscar(array("idprojeto = ?"=>$proposta->idPreProjeto));
@@ -1289,12 +1289,12 @@ class AdmissibilidadeController extends GenericControllerNew {
                     }elseif ($rsMovimentacao->Movimentacao == 96)
                     {
                         $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta em Análise' . "</font>";
-                        
+
                         $rsAvaliacao = $tbAvaliacao->buscar(array("idProjeto = ?"=>$proposta->idPreProjeto, "ConformidadeOK =?"=> 9, "stEstado =?"=>0))->current();
 
                         if(count($rsAvaliacao)>0){
                             $rsUsuario = $tblUsuario->find($rsAvaliacao->idTecnico)->current();
-                            
+
                             if(count($rsUsuario)>0){
                                 $usuarioNome = $rsUsuario->usu_nome;
                                 $movimentacoes[$proposta->idPreProjeto]["tecnico"] = $usuarioNome;
@@ -1325,7 +1325,7 @@ class AdmissibilidadeController extends GenericControllerNew {
                         $usuarioNome = "";
                         $tipoUsuario = "";
                         $rsUsuario = null;
-                        
+
                         /*$rsUsuario = $tblUsuario->find($rsMovimentacao->Usuario)->current();
                         // Verificando se usuario e um coordenador
                         if(!empty($rsUsuario)>0){
@@ -1336,7 +1336,7 @@ class AdmissibilidadeController extends GenericControllerNew {
                             }
                             $usuarioNome = $rsUsuario->usu_nome;
                         }*/
-                        
+
                         $rsAvaliacao = $tbAvaliacao->buscar(array("idProjeto = ?"=>$proposta->idPreProjeto, "ConformidadeOK =?"=> 1, "stEstado =?"=>0))->current();
                         if($rsAvaliacao){
                             $rsUsuario = $tblUsuario->find($rsAvaliacao->idTecnico)->current();
@@ -1414,7 +1414,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         if(!empty($view)){
             header("Content-Type: text/html; charset=ISO-8859-1");
             $this->_helper->layout->disableLayout();
-            
+
             $this->montaTela($this->getRequest()->getParam("view"), $arrDados);
         }else{
             $this->montaTela("admissibilidade/listarpropostasanalisevisualtecnico.phtml", $arrDados);
@@ -1437,7 +1437,7 @@ class AdmissibilidadeController extends GenericControllerNew {
                 $nomeTec = $proposta->Tecnico;
             }
         }
-        
+
         $arrDados = array(
                         "propostas"=>$rsProposta,
                         "tecnicosPropostas"=>$arrTecnicosPropostas,
@@ -1720,7 +1720,7 @@ class AdmissibilidadeController extends GenericControllerNew {
     public function historicoAnaliseVisualAction(){
         $post = Zend_Registry::get("get");
         $usuario = $this->codOrgaoSuperior;
-		
+
         if(empty($post->busca)){
             $tblProposta = new Proposta();
             $rsTecnicos = $tblProposta->buscarTecnicosHistoricoAnaliseVisual($usuario);
@@ -1921,7 +1921,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         $rsPropostasNaoEnviadas = $tblProposta->buscarPropostaAdmissibilidadeZend($arrBusca, array("idProjeto DESC"), $this->intTamPag, $inicio); //m.Movimentacao = 95 >> NAO ENVIADA
 
         $total = $tblProposta->_totalRegistros;
-        
+
         if ($fim>$total) $fim = $total;
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
 
@@ -2417,7 +2417,7 @@ class AdmissibilidadeController extends GenericControllerNew {
             $where['idOrgao = ?'] = $get->orgao;
             $this->view->orgao = $get->orgao;
         }
-        
+
         $vwProjetoDistribuidoVinculada = New vwProjetoDistribuidoVinculada();
         $total = $vwProjetoDistribuidoVinculada->buscarUnidades($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;

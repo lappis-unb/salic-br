@@ -46,7 +46,7 @@ class ListarprojetosController extends GenericControllerNew {
         $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
         // Busca na Agentes
-        $agentesDAO = new Agentes();
+        $agentesDAO = new Agente_Model_Agentes();
         $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
 
@@ -105,7 +105,7 @@ class ListarprojetosController extends GenericControllerNew {
             $dadosCombo[$i]['Nome'] = $rs->NomeProponente;
             $i++;
         }
-        
+
         $this->view->buscaProponente = $dadosCombo;
         $this->view->idResponsavel = $this->idResponsavel;
         $this->view->idUsuario = $this->idUsuario;
@@ -177,7 +177,7 @@ class ListarprojetosController extends GenericControllerNew {
 
     public function gerarxlsAction() {
         $cpf = $_GET['cpf'];
-        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout  
+        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $listar = ListarprojetosDAO::buscarDadosListarProjetos($cpf);
         $this->view->listarprojetos = $listar;
     }

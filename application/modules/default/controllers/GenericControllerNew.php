@@ -48,11 +48,11 @@ class GenericControllerNew extends Zend_Controller_Action
 	private  $idResponsavel  		= 0;
     private  $idAgente 				= 0;
 	private  $idUsuario 			= 0;
-	
+
 	/**
-	 * Reescreve o método init() para aceitar 
-	 * as mensagens e redirecionamentos. 
-	 * Teremos que chamá-lo dentro do 
+	 * Reescreve o método init() para aceitar
+	 * as mensagens e redirecionamentos.
+	 * Teremos que chamá-lo dentro do
 	 * método init() da classe filha assim: parent::init();
 	 * @access public
 	 * @param void
@@ -83,38 +83,38 @@ class GenericControllerNew extends Zend_Controller_Action
                 $this->view->idAgente    = $idAgente;
             }
 
-                
+
 		/******************************************************************************************************************************/
 
-		  @$cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;        
-	      
+		  @$cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
+
 		  if ($cpf):
-		        
+
 		        // Busca na SGCAcesso
 		        $sgcAcesso 	 = new Sgcacesso();
 		        $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
-		        
+
 		        // Busca na Usuarios
 		        $usuarioDAO   = new Usuario();
 		        $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
-		
+
 		        // Busca na Agentes
-		        $agentesDAO  = new Agentes();
+		        $agentesDAO  = new Agente_Model_Agentes();
 		        $buscaAgente = $agentesDAO->BuscaAgente($cpf);
-		        
+
 		        if( count($buscaAcesso) > 0){ $this->idResponsavel = $buscaAcesso[0]->IdUsuario; }
 		        if( count($buscaAgente) > 0 ){ $this->idAgente 	   = $buscaAgente[0]->idAgente; }
 		        if( count($buscaUsuario) > 0 ){ $this->idUsuario   = $buscaUsuario[0]->usu_codigo; }
-		        
+
 		        $this->view->idAgenteKeyLog 		= $this->idAgente;
 		        $this->view->idResponsavelKeyLog 	= $this->idResponsavel;
 		        $this->view->idUsuarioKeyLog 		= $this->idUsuario;
-	        
-	      endif;
-		        
-        /****************************************************************************************************************************/                
 
-                
+	      endif;
+
+        /****************************************************************************************************************************/
+
+
 	} // fecha init()
 
 
@@ -139,7 +139,7 @@ class GenericControllerNew extends Zend_Controller_Action
 
 
 	/**
-	 * Reescreve o método postDispatch() que é responsável 
+	 * Reescreve o método postDispatch() que é responsável
 	 * por executar uma ação após a execução de um método
 	 * @access public
 	 * @param void
@@ -177,7 +177,7 @@ class GenericControllerNew extends Zend_Controller_Action
 		$Usuario      = new Usuario(); // objeto usuário
 		$UsuarioAtivo = new Zend_Session_Namespace('UsuarioAtivo'); // cria a sessão com o usuário ativo
 		$GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-	
+
 		// somente autenticação zend
 		if ($tipo == 0 || empty($tipo))
 		{
@@ -542,20 +542,20 @@ class GenericControllerNew extends Zend_Controller_Action
             header("Content-Disposition: inline; filename=file.xls;");
             echo $html;
         }
-        
-        
+
+
         public function html2PdfAction(){
             $orientacao = false;
-            
+
             $this->_helper->layout->disableLayout();
             $this->_helper->viewRenderer->setNoRender();
-        
+
             if($this->_getParam('orientacao') == 'L'){
                 $orientacao = true;
             }
-            
+
             $pdf = new PDFCreator($_POST['html'],$orientacao);
-        
+
             $pdf->gerarPdf();
         }
 
@@ -575,10 +575,10 @@ class GenericControllerNew extends Zend_Controller_Action
                     $arrBusca["{$cmpBD} <= ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
 
                 }elseif($post->__get($tpBuscaData) == "entre"){
-                    
+
                     $arrBusca["{$cmpBD} >= ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
                     $arrBusca["{$cmpBD} <= ?"] = ConverteData($post->__get($cmpDataFinal), 13)." 23:59:59";
-                    
+
                 }elseif($post->__get($tpBuscaData) == "OT"){
                     $arrBusca["{$cmpBD} = ?"] = date("Y-m-d",strtotime("-1 day"))." 00:00:00";
 
@@ -589,15 +589,15 @@ class GenericControllerNew extends Zend_Controller_Action
                 }elseif($post->__get($tpBuscaData) == "SP"){
                     /*$arrBusca["{$cmpBD} > ?"] = date("Y-m-").(date("d")-7)." 00:00:00";
                     $arrBusca["{$cmpBD} < ?"] = date("Y-m-d")." 23:59:59";*/
-                    
+
                    $dia_semana = date('w');
                    $primeiro_dia = date('Y-m-d', strtotime("-".$dia_semana."day"));
                    $domingo = date('Y-m-d',  strtotime($primeiro_dia."-1 week"));
                    $sabado =  date('Y-m-d',  strtotime($domingo."6 day"));
-                   
+
                    $arrBusca["{$cmpBD} >= ?"] = $domingo." 00:00:00";
                    $arrBusca["{$cmpBD} <= ?"] = $sabado." 23:59:59";
-                   
+
 
                 }elseif($post->__get($tpBuscaData) == "MM"){
                     $arrBusca["{$cmpBD} > ?"] = date("Y-m-01")." 00:00:00";
@@ -609,7 +609,7 @@ class GenericControllerNew extends Zend_Controller_Action
                     $arrBusca["{$cmpBD} <= ?"] = date("Y-m-d", mktime(0, 0, 0, date("m",  strtotime("-1 month"))+1, 0, date("Y")));
 
                 }elseif($post->__get($tpBuscaData) == ""){
-                    
+
                 }else{
                     $arrBusca["{$cmpBD} > ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
 
@@ -625,21 +625,21 @@ class GenericControllerNew extends Zend_Controller_Action
 
             return $arrBusca;
         }
-        
-        
+
+
         public function prepararXlsPdfAction(){
             Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
             ini_set('max_execution_time', 900);
-            $this->_response->clearHeaders();  
+            $this->_response->clearHeaders();
             $dados = $this->_getAllParams();
-            
+
             $this->view->dados = $dados;
             $this->view->tipo = $dados['tipo'];
-            
+
             if($dados['view']){
                 $this->montaTela($dados['view'],$dados);
             }
-            
+
         }
 
 
@@ -698,11 +698,11 @@ class GenericControllerNew extends Zend_Controller_Action
             }
 
 	} // fecha método verificarPermissaoAcesso()
-    
+
     public static function validarSenhaInicial(){
         return 'ae56f49edf70ec03b98f53ea6d2bc622';
     }
-    
+
     /**
 	 * Método para montar as Planilhas Orçamentárias
 	 * OBS: A planilha deve vir no padrão da spPlanilhaOrcamentaria

@@ -76,7 +76,7 @@
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 <div id="confirma" class="sumir"></div>
 <div id="modaljustificativa" class="sumir">
-    <form id="form" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'cancelaferias'));?>" method="post">
+    <form id="form" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'cancelaferias'));?>" method="post">
         <input type="hidden" name="idferias" id="idferias" class="input_simples" />
         <table class="tabela">
             <tr>
@@ -100,12 +100,10 @@
             <td style="<?php if($nome != $d->Nome); ?>" width="1" align="center">à</td>
             <td style="<?php if($nome != $d->Nome); ?>" align="center"><?php echo $d->dtFim; ?></td>
             <td style="<?php if($nome != $d->Nome); ?>" width="1" align="center">
-                <input type="button" name="btn_aprovar" id="btn_aprovar" class="btn_aprovar" onclick="confirmaferias('<?php echo $this->url(array('controller' => 'agentes', 'action' => 'confirmaferias', 'idferias' => $d->idAusencia),'',true);?>');">
-                <!--<img src="<?php //echo $this->baseUrl(); ?>/public/img/buttons/aprovar.gif" title="Cancelar" border="0" onclick="confirmaferias('<?php //echo $this->url(array('controller' => 'agentes', 'action' => 'confirmaferias', 'idferias' => $d->idAusencia),'',true);?>');"/>-->
+                <input type="button" name="btn_aprovar" id="btn_aprovar" class="btn_aprovar" onclick="confirmaferias('<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'confirmaferias', 'idferias' => $d->idAusencia),'',true);?>');">
             </td>
             <td style="<?php if($nome != $d->Nome); ?>" width="1" align="center">
                 <input type="button" name="btn_rejeitar" id="btn_rejeitar" class="btn_rejeitar" onclick="cancelarferias('<?php echo $d->idAusencia; ?>');">
-                <!--<img src="<?php //echo $this->baseUrl(); ?>/public/img/buttons/rejeitar.gif" title="Cancelar" border="0" onclick="cancelarferias('<?php //echo $d->idAusencia; ?>');"/>-->
             </td>
         </tr>
         <?php $nome = $d->Nome; } ?>

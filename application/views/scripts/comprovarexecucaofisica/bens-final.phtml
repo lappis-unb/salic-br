@@ -116,7 +116,7 @@
                             $("#divDinamicaAgentes").html("");
                             $('#divDinamicaAgentes').html("<br><br><center>Carregando dados...</center>");
                             $.ajax({
-                                url : '<?php echo $this->url(array('controller' => 'agentes', 'action' => 'incluirbeneficiario')); ?>',
+                                url : '<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'incluirbeneficiario')); ?>',
                                 data : {
                                     cpf : data.CNPJCPF,
                                     caminho: "",
@@ -186,7 +186,7 @@
                             $("#divDinamicaAgentes").html("");
                             $('#divDinamicaAgentes').html("<br><br><center>Carregando dados...</center>");
                             $.ajax({
-                                url : '<?php echo $this->url(array('controller' => 'agentes', 'action' => 'incluirbeneficiario')); ?>',
+                                url : '<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'incluirbeneficiario')); ?>',
                                 data : {
                                     cpf : data.CNPJCPF,
                                     caminho: "",

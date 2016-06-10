@@ -63,7 +63,7 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
         // Busca na Agentes
-        $agentesDAO = new Agentes();
+        $agentesDAO = new Agente_Model_Agentes();
         $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
 
@@ -163,7 +163,7 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         //VERIFICA SE PROPONETE JA ESTA CADASTRADO
         $arrBusca = array();
         $arrBusca['a.idAgente = ?'] = $post->idAgente;
-        $tblAgente = new Agentes();
+        $tblAgente = new Agente_Model_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
 
         if (count($rsProponente) > 0) {
@@ -202,12 +202,12 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
      */
     public function salvarAction() {
 
-        /* =============================================================================== */ 
+        /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
 
 //        $this->verificarPermissaoAcesso(false, false, false);
-        
+
         $post = Zend_Registry::get("post");
         $idPreProjeto = $post->idPreProjeto;
         $acao = $post->acao;
@@ -391,7 +391,7 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         $arrBuscaProponete = array();
         $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto->idAgente;
 
-        $tblAgente = new Agentes();
+        $tblAgente = new Agente_Model_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
 
         $arrDados = array("proposta" => $rsPreProjeto,
@@ -409,12 +409,12 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
      * @return objeto
      */
     public function editarAction() {
-        
-        /* =============================================================================== */ 
+
+        /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-        
+
         //recupera parametros
         $get = Zend_Registry::get('get');
         $idPreProjeto = $get->idPreProjeto;
@@ -428,10 +428,10 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
             $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
             $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto->idAgente;
-            $tblAgente = new Agentes();
+            $tblAgente = new Agente_Model_Agentes();
             $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
 
-            $ag = new Agentes();
+            $ag = new Agente_Model_Agentes();
             $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto,
                 'vprp.siVinculoProposta = ?' => 2));
 
@@ -454,7 +454,7 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
               //BUSCA idAgente DO USUARIO LOGADO, que ï¿½ o Responsavel ou o Proponente
               $auth = Zend_Auth::getInstance(); // instancia da autenticação
               $usu_identificacao = isset($auth->getIdentity()->usu_identificacao) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
-              $agentes = new Agentes();
+              $agentes = new Agente_Model_Agentes();
               $idAgenteProponenteRs = $agentes->buscar(array("CNPJCPF = ?" => $this->cpfLogado));
              */
             $idAgente = $this->idResponsavel;
@@ -491,12 +491,12 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
      * @return objeto
      */
     public function excluirAction() {
-        
-        /* =============================================================================== */ 
+
+        /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-        
+
         $get = Zend_Registry::get("get");
         $idPreProjeto = $get->idPreProjeto;
 
@@ -514,12 +514,12 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
     }
 
     public function enviarPropostaAoMincAction() {
-        
-        /* =============================================================================== */ 
+
+        /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-        
+
         //recupera parametros
         $get = Zend_Registry::get('get');
         $idPreProjeto = $get->idPreProjeto;
@@ -574,7 +574,7 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         $tblProponente = new Proponente();
         //$rsProponente = $tblProponente->buscar(array("a.idAgente = ?"=>$rsPreProjeto->idAgente))->current();
 
-        $tblAgente = new Agentes();
+        $tblAgente = new Agente_Model_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsPreProjeto->idAgente))->current();
 
         $regularidade = Regularidade::buscarSalic($rsProponente->CNPJCPF);
@@ -879,8 +879,8 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         }
         //=========== PLANO ANUAL==========
         if ($rsPreProjeto->stPlanoAnual <> 0) {
-            $ano_envio = date("Y");                                            
-            $ano_execucao = explode ('/',data::formatarDataMssql($rsPreProjeto->DtInicioDeExecucao));            
+            $ano_envio = date("Y");
+            $ano_execucao = explode ('/',data::formatarDataMssql($rsPreProjeto->DtInicioDeExecucao));
             $ano_execucao = $ano_execucao[2];
             $data_validacao = (int) date("Y") . '0930';
             if (($data_validacao <= date('Ymd')) && ($ano_envio >= $ano_execucao)) {
@@ -891,18 +891,18 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
                 $arrResultado['planoanual']['erro'] = false;
                 $arrResultado['planoanual']['msg'] = "Plano Anual";
             }
-            
+
         }
         return $arrResultado;
     }
 
     public function confirmarEnvioPropostaAoMincAction() {
-        
-        /* =============================================================================== */ 
+
+        /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-        
+
         //recupera parametros
         $get = Zend_Registry::get('get');
         $idPreProjeto = $get->idPreProjeto;
@@ -1083,7 +1083,7 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
                 $mensagem = "<br><font color='red'>O período de execução de projetos de plano anual dever ser posterior ao ano vigente</font>";
                 $bln = "false";
             }
-            
+
         }
 
         //VERIFICA SE DATA INICIO E MAIOR QUE 90 DIAS DA DATA ATUAL
@@ -1166,16 +1166,16 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
 
         $get = Zend_Registry::get('get');
         $idAgente = $get->idAgente;
-        
+
         $tblPreProjeto = new PreProjeto();
         $rsPreProjeto = $tblPreProjeto->listarPropostasResultado($this->idAgente, $this->idResponsavel, $idAgente);
-        
+
         $arrPropostas = array();
         $i = 0;
         $x = 0;
         $identificadores = array();
         foreach ($rsPreProjeto as $prop) {
-            if(!in_array($prop->idAgente.$prop->idPreProjeto, $identificadores)) { 
+            if(!in_array($prop->idAgente.$prop->idPreProjeto, $identificadores)) {
                 $arrPropostas[$x]['CNPJCPF'] = $prop->CNPJCPF;
                 $arrPropostas[$x]['idAgente'] = $prop->idAgente;
                 $arrPropostas[$x]['NomeProponente'] = utf8_encode($prop->NomeProponente);
@@ -1186,7 +1186,7 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
             $identificadores[$i] = $prop->idAgente.$prop->idPreProjeto;
             $i++;
         }
-        
+
         if(count($rsPreProjeto) > 0){
             $this->montaTela("manterpropostaincentivofiscal/localizarproposta.phtml", array("propostas" => $arrPropostas));
         } else {
@@ -1206,10 +1206,10 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         $idUsuario = $auth->getIdentity()->IdUsuario;
         $cpf = $auth->getIdentity()->Cpf;
 
-        $Agentes = new Agentes();
+        $Agentes = new Agente_Model_Agentes();
         $buscarpendentes = $Agentes->gerenciarResponsaveisListas('0', $idUsuario);
         $buscarvinculados = $Agentes->gerenciarResponsaveisListas('2', $idUsuario);
-        
+
         $this->view->pendentes = $buscarpendentes;
         $this->view->vinculados = $buscarvinculados;
         $this->view->cpfLogado = $cpf;
@@ -1227,7 +1227,7 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         $propostas = new PreProjeto();
 
 //        $proposta = new Proposta();
-        $agentes = new Agentes();
+        $agentes = new Agente_Model_Agentes();
         $dadosCombo = array();
         $rsVinculo = $agentes->listarVincularPropostaCombo($this->idResponsavel);
 
@@ -1299,7 +1299,7 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
      * @return void
      */
     public function novoresponsavelAction() {
-        
+
     }
 
     /**

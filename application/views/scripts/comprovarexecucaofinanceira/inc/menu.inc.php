@@ -5,7 +5,7 @@ $cotacaoHref = $this->url(array_merge($urlParams, array('action' => 'cotacao',))
 $dispensaHref = $this->url(array_merge($urlParams, array('action' => 'dispensa',)));
 $contratoHref = $this->url(array_merge($urlParams, array('action' => 'contrato',)));
 $finalizarHref = $this->url(array_merge($urlParams, array('action' => 'finalizar',)));
-$pagamentoHref = $this->url(array_merge($urlParams, array('action' => 'pagamento',)), null, true); 
+$pagamentoHref = $this->url(array_merge($urlParams, array('action' => 'pagamento',)), null, true);
 $licitacaoAnteriorHref = $this->url(array_merge($urlParams, array('action' => 'licitacaoanterior',)));
 $vincularCEFHref = $this->url(array_merge($urlParams, array('action' => 'vincularcomprovacao',)));
 
@@ -54,7 +54,7 @@ $finalizadoHref              =   $this->url(array('controller' => 'comprovarexec
             <div class="top"></div>
             <div id="qm0" class="qmmc">
                 <a href="<?php echo $pagamentoHref; ?>" title="Ir para Pagamento" class="no_seta">Pagamento</a>
-                <a href="<?php echo $this->url(array_merge($urlParams, array('action' => 'licitacao',)), null, true); ?>" 
+                <a href="<?php echo $this->url(array_merge($urlParams, array('action' => 'licitacao',)), null, true); ?>"
                     title="Ir para Licita&ccedil;&atilde;o" class="no_seta">Licita&ccedil;&atilde;o
                 </a>
                 <a href="<?php echo $cotacaoHref; ?>" title="Ir para Cota&ccedil;&atilde;o" class="no_seta">Cota&ccedil;&atilde;o</a>
@@ -64,7 +64,7 @@ $finalizadoHref              =   $this->url(array('controller' => 'comprovarexec
             </div>
             <div class="bottom"></div>
 
-            
+
         </div>
     </div>
 </div>
@@ -400,7 +400,7 @@ function listaPEI(info){
                         }
                     }
                 }
-            
+
             } else {
                 if(info.idEtapa == '' && info.idItem == ''){
                     var respostaEtapa    = buscarJson('<?php echo $carregarSelectHref;?>',{tpSelect:'etapa',idpronac:'<?php echo $this->idpronac;?>',idProduto:info.idProduto,contrato:info.contrato,ckItens:info.ckItens});
@@ -444,7 +444,7 @@ function listaPEI(info){
 //    carregarPgHtml('<?php //echo $carregarSelectHref;?>','#itens',{tpSelect:'itens',idpronac:'<?php //echo $this->idpronac?>',idProduto:$('#produto').val(),idEtapa:$('#etapa').val(),contrato:info.contrato,ckItens:info.ckItens});
     if(info.cotacao)
         $('#vlComprovado').val('');
-    
+
 }
 function janelaAlerta(mensagem,funcaoAdcional, fechar){
     if(funcaoAdcional==undefined){
@@ -495,7 +495,7 @@ function buscarNumeroSelect(id,valor){
         else{
             if($(this).val() == $(id).val())
                 valorRetorno = contador;
-        }     
+        }
         contador++;
     });
     return valorRetorno;
@@ -553,7 +553,7 @@ function carregarPgHtml(pagina,idSelect,dados,textoIni){
     var idRetorno = undefined;
     if(textoIni == undefined)
         textoIni = 'Todos';
-    
+
     var resposta    = buscarJson(pagina,dados);
     var cont = 0;
     for(var j in resposta){
@@ -700,14 +700,14 @@ function buscarFornecedor(este){
             if(fornecedor.retorno){
                $('#'+$(este).attr('idAgente')).val(fornecedor.idAgente);
                $('#'+$(este).attr('idDescricao')).val(fornecedor.descricao).attr('readonly',true);
-           
+
             } else {
                 $('html').css('overflow', 'hidden');
                 $("body").append("<div id='divDinamicaAgentes'></div>");
                 $("#divDinamicaAgentes").html("");
                 $('#divDinamicaAgentes').html("<br><br><center>Carregando dados...</center>");
                 $.ajax({
-                    url : '<?php echo $this->url(array('controller' => 'agentes', 'action' => 'incluirfornecedor')); ?>',
+                    url : '<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'incluirfornecedor')); ?>',
                     data : {
                         cpf : fornecedor.CNPJCPF,
                         caminho: "",
@@ -787,7 +787,7 @@ function outroFornecedor(este){
 
 function validarFormulario(form,mensagem){
     var validar = false;
-    
+
     var contador = 0;
     $('.linhaMaior1 tr').each(function(){
         contador++;
@@ -824,7 +824,7 @@ function validarFormulario(form,mensagem){
                     validar     =   true;
                     mensagem    +=   '<br />A "'+$(this).attr('title')+'" deve ser menor que a "'+$(menorid).attr('title')+'"';
                 }
-            }            
+            }
         }
         if($(this).attr('maiorque')!=undefined){
             var maiorid     =   '#'+$(this).attr('maiorque');
@@ -837,7 +837,7 @@ function validarFormulario(form,mensagem){
             }
         }
     });
-    
+
     $(form).find('[null=false]').each(function(){
         if($(this).attr('type')=='radio'){
             var validaRadio = true;
@@ -865,15 +865,15 @@ function validarFormulario(form,mensagem){
 
 function requisicaoAjaxObj(){
     var ajaxObj={
-        pagina          :   '',                     
+        pagina          :   '',
         parametros      :   {},
-        type            :   'post',                
-        dataType        :   '',                     
-        resposta        :   '#conteudo',           
-        async           :   true,                   
+        type            :   'post',
+        dataType        :   '',
+        resposta        :   '#conteudo',
+        async           :   true,
         funcaoRetorno   :   function (resposta){
             $(this.resposta).html(resposta);
-        }, 
+        },
         executar        :   function(dados){
             this.refineParametrosObj(dados);
             var esteObj = this;
@@ -893,7 +893,7 @@ function requisicaoAjaxObj(){
         refineParametrosObj : function(data){
             if(data!= undefined)
                 for(var j in data){
-                    
+
                     this[j]=data[j];
                 }
         }
@@ -910,7 +910,7 @@ function janelaObj(dados){
         parametros : {autoOpen: false},
         iniciarJanela : function(dados){
             this.refineParametrosObj(dados);
-            
+
             this.divConteudo.dialog(this.parametros);
         },
         abrirJanela:function(){
@@ -1005,7 +1005,7 @@ function fornecedores(){
             $('html').css('overflow', 'auto');
         });
     });
-    
+
     function executarPagina(info){
         var pagina = requisicaoAjaxObj();
         pagina.executar({

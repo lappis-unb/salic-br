@@ -111,7 +111,7 @@ class UploadController extends GenericControllerNew {
             $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
 
             // Busca na Agentes
-            $agentesDAO = new Agentes();
+            $agentesDAO = new Agente_Model_Agentes();
             $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
             if (count($buscaAcesso) > 0) {
@@ -124,7 +124,7 @@ class UploadController extends GenericControllerNew {
             $Usuario = new Usuario(); // objeto usuário
             $idagente = $Usuario->getIdUsuario('', $cpf);
             $this->idAgente = (isset($idagente['idAgente']) && !empty($idagente['idAgente'])) ? $idagente['idAgente'] : 0;
-            $ag = new Agentes();
+            $ag = new Agente_Model_Agentes();
             $buscarvinculo = $ag->buscarAgenteVinculoProponente(array('vp.idAgenteProponente = ?' => $this->idAgente, 'pr.idPRONAC = ?' => $idPronac, 'vprp.siVinculoProposta = ?' => 2));
             $this->view->vinculo = $buscarvinculo->count() > 0 ? true : false;
 

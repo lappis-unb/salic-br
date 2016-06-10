@@ -48,7 +48,7 @@
 
     <div id="formNovo" class="sumir">
 
-        <form id="formEmail" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'salvaemail'));?>" method="post">
+        <form id="formEmail" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvaemail'));?>" method="post">
 
             <table id="tabEmail" class="tabela">
                 <tr>
@@ -129,7 +129,7 @@
                 <td><?php echo $e->Descricao ;?></td>
                 <td><?php echo $e->Divulgar == "1" ? "SIM" : "NÃO" ;?></td>
                 <td><?php echo $e->Status == "1" ? "SIM" : "NÃO" ;?></td>
-                <td width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('','<?php echo $this->url(array('controller' => 'agentes', 'action' => 'excluiemail', 'idInternet' => $e->idInternet, 'qtdEmail' => $this->qtdEmail));?>');" /></td>
+                <td width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('','<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluiemail', 'idInternet' => $e->idInternet, 'qtdEmail' => $this->qtdEmail));?>');" /></td>
             </tr>
             <?php endforeach; ?>
         </table>

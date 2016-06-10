@@ -44,25 +44,25 @@ function buscaragente(cpf)
                         $('#novocadastro').hide();
                         $('#carregando').show();
                         window.location = '<?php echo $this->url(array("controller" => "agentes", "action" => "visualizadirigente", "id" => $this->id)); ?>/idDirigente/'+ data[0].idAgente;
-                    } 
+                    }
                     else if (data[0].msgCPF == 'invalido')
                     {
                         $('#erroCpf').html('CPF/CNPJ Inválido');
                     }
-                    else if (data[0].msgCPF == 'novo') 
+                    else if (data[0].msgCPF == 'novo')
                     {
                         $('#novo').html('Preencha os dados abaixo!');
                         $('.novo').show();
-                    } 
-                
+                    }
+
                 },
                 error: function (data)
                 {
                     alert("Falha na recuperação dos dados.\nNão foi possível carregar agente!");
                 }
-            }); 
+            });
 
-        } 
+        }
     }
 
     function buscarcep(cep)
@@ -90,19 +90,19 @@ function buscaragente(cpf)
             // enquanto estiver processando bloqueia os campos
             if (ajax.readyState > 0 && ajax.readyState <= 3 && cep.length == 10)
             {
-            
+
                 $("#logradouro").attr("disabled" , "disabled");
                 $("#tipoLogradouro").attr("disabled" , "disabled");
                 $("#bairro").attr("disabled" , "disabled");
                 $("#cidade").attr("disabled" , "disabled");
                 $("#uf").attr("disabled" , "disabled");
-			
+
                 logradouro.value               = "carregando...";
                 tipoLogradouro.options[0].text = "carregando...";
                 bairro.value                   = "carregando...";
                 cidade.options[0].text         = "carregando...";
                 uf.options[0].text             = "...";
-            
+
                 $('#erroCep').html("<img src='/public/img/ajax.gif' alt='' /> Aguarde...");
             }
             if (ajax.readyState == 4 && ajax.status == 200 && cep.length == 10)
@@ -208,7 +208,7 @@ function buscaragente(cpf)
                     {
                         // deixa apenas um elemento no combo, os outros são excluídos
                         document.getElementById("cidade").options.length = 0;
-	
+
                         // cria um novo option
                         var novo   = document.createElement("option");
                         novo.value = txtCodCidade; // atribui um valor ao option
@@ -216,13 +216,13 @@ function buscaragente(cpf)
                         document.getElementById("cidade").options.add(novo);
                     }
                 } // fecha if
-            
+
             } // fecha else
-        
+
         } // fecha onreadystatechange
 
         ajax.send(null);
-    
+
     } // fecha função buscar_cep()
 
 
@@ -265,9 +265,9 @@ function buscaragente(cpf)
     </div>
 
     <div id="novocadastro">
-        <form name="formCadAgentes" id="formCadAgentes" method="post" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'salvadirigentegeral')); ?>">
+        <form name="formCadAgentes" id="formCadAgentes" method="post" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvadirigentegeral')); ?>">
 
-            <input type="hidden" name="grupologado" id="grupologado" class="input_simples" value="<?php echo $this->grupoativo; ?>" />	
+            <input type="hidden" name="grupologado" id="grupologado" class="input_simples" value="<?php echo $this->grupoativo; ?>" />
 
             <table id="tabDados" class="tabela">
                 <tr>
@@ -277,12 +277,12 @@ function buscaragente(cpf)
                     <td>
                         <label for="cpf">CPF *</label>
                         <br />
-                        <input class="input_simples" type="text" name="cpf" id="cpf" maxlength="14" 
-                               onkeyup="mascara(this, format_cpf);" 
-                               onclick="limpar_campo(this, ' ');" 
+                        <input class="input_simples" type="text" name="cpf" id="cpf" maxlength="14"
+                               onkeyup="mascara(this, format_cpf);"
+                               onclick="limpar_campo(this, ' ');"
                                onkeypress="limpar_campo(this, ' ');"
-                               onblur="buscaragente(this.value);" 
-                               onmouseout="restaurar_campo(this, ' ');" 
+                               onblur="buscaragente(this.value);"
+                               onmouseout="restaurar_campo(this, ' ');"
                                value=""  />
 
                         &nbsp; <span id="erroCpf" class="spanError"></span>
@@ -291,7 +291,7 @@ function buscaragente(cpf)
                     <td>
                         <label for="nome">Nome *</label>
                         <br />
-                        <input class="input_simples" type="text" name="nome" id="nome" maxlength="70" size="50" 
+                        <input class="input_simples" type="text" name="nome" id="nome" maxlength="70" size="50"
                                onclick="limpar_campo(this, ' ');" onkeypress="limpar_campo(this, ' ');"
                                onblur="restaurar_campo(this, ' ');" onmouseout="restaurar_campo(this, ' ');" />
 
@@ -318,7 +318,7 @@ function buscaragente(cpf)
                 <tr>
                     <td width="30%">
                         <label for="cep">CEP *</label><br />
-                        <input class="input_simples"  type="text" name="cep" id="cep" maxlength="10" onkeyup="mascara(this, format_cep);" onblur="buscarcep(this.value);" 
+                        <input class="input_simples"  type="text" name="cep" id="cep" maxlength="10" onkeyup="mascara(this, format_cep);" onblur="buscarcep(this.value);"
                                onclick="limpar_campo(this, ' ');" onkeypress="limpar_campo(this, ' ');"
                                onblur="restaurar_campo(this, ' ');" onmouseout="restaurar_campo(this, ' ');" value=" " />
 
@@ -480,8 +480,8 @@ function buscaragente(cpf)
                     <td>
                         <label for="fone">Telefone *</label>
                         <br />
-                        <input type="text" name="fone" id="fone" maxlength="9" class="input_simples w100" onkeyup="mascara(this, format_tel);" 
-                               onclick="limpar_campo(this, ' ');" onkeypress="limpar_campo(this, ' ');" 
+                        <input type="text" name="fone" id="fone" maxlength="9" class="input_simples w100" onkeyup="mascara(this, format_tel);"
+                               onclick="limpar_campo(this, ' ');" onkeypress="limpar_campo(this, ' ');"
                                onblur="restaurar_campo(this, ' ');" onmouseout="restaurar_campo(this, ' ');" value=" " />
 
                         &nbsp; <span id="erroFone" class="spanError"></span>
@@ -489,9 +489,9 @@ function buscaragente(cpf)
                     <td>
                         <label>Divulgar? *</label>
                         <br />
-                        <input type="radio" name="divulgarFone" id="divulgarFoneS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" /> 
-                        <label for="divulgarFoneS">Sim</label> 
-                        <input type="radio" name="divulgarFone" id="divulgarFoneN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" /> 
+                        <input type="radio" name="divulgarFone" id="divulgarFoneS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
+                        <label for="divulgarFoneS">Sim</label>
+                        <input type="radio" name="divulgarFone" id="divulgarFoneN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
                         <label for="divulgarFoneN">Não</label>
                     </td>
                 </tr>
@@ -501,7 +501,7 @@ function buscaragente(cpf)
                 </tr>
                 <tr>
                     <td>
-                        <label for="tipoEmail">Tipo *</label> 
+                        <label for="tipoEmail">Tipo *</label>
                         <br />
                         <select name="tipoEmail" id="tipoEmail" class="input_simples">
                             <option value="0">- Selecione - </option>
@@ -517,28 +517,28 @@ function buscaragente(cpf)
                     <td>
                         <label for="email">E-mail *</label>
                         <br />
-                        <input type="text" name="email" id="email" class="input_simples w200" size="50" maxlength="70" 
-                               onclick="limpar_campo(this, ' ');" 
-                               onkeypress="limpar_campo(this, ' ');" 
-                               onblur="restaurar_campo(this, ' ');" 
-                               onmouseout="restaurar_campo(this, ' ');" 
+                        <input type="text" name="email" id="email" class="input_simples w200" size="50" maxlength="70"
+                               onclick="limpar_campo(this, ' ');"
+                               onkeypress="limpar_campo(this, ' ');"
+                               onblur="restaurar_campo(this, ' ');"
+                               onmouseout="restaurar_campo(this, ' ');"
                                value=" " />
 
-                        &nbsp; <span id="erroEmail" class="spanError"></span>	
+                        &nbsp; <span id="erroEmail" class="spanError"></span>
                     </td>
                     <td colspan="3">
-                        <label>Posso Divulgar? *</label> 
+                        <label>Posso Divulgar? *</label>
                         <br />
-                        <input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" style="background: none; border: 0%; float:none; clear:auto; display:inline;" /> 
-                        <label for="divulgarEmailS">Sim</label> 
-                        <input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked"   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/> 
+                        <input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
+                        <label for="divulgarEmailS">Sim</label>
+                        <input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked"   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
                         <label for="divulgarEmailN">Não</label>
                     </td>
                 </tr>
-                
-               
+
+
             <!-- ========== FIM FORMULÁRIO E-MAIL ========== -->
-            
+
             </table>
             <table class="tabela">
                 <tr>
@@ -548,7 +548,7 @@ function buscaragente(cpf)
 
         </form>
 
-    </div>		
+    </div>
 
 
 </div>

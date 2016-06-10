@@ -235,7 +235,7 @@
 
 
     <div id="formNovo" class="sumir">
-        <form id="form" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'salvaferias'));?>" method="post">
+        <form id="form" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvaferias'));?>" method="post">
 
             <table class="tabela">
                 <tr>
@@ -246,7 +246,7 @@
                     <td width="150" align="center">Data das férias: </td>
                     <td>
                         <input type="text" name="dtinicio" id="dtinicio" class="input_simples w100" maxlength="10" value="" onkeyup="mascara(this, format_data);" onclick="limpar_campo(this, '');" onchange="verDias();" type="text">
-					 à 
+					 à
                         <input type="text" name="dtfim" id="dtfim" class="input_simples w100" maxlength="10" value="" onkeyup="mascara(this, format_data);" onclick="limpar_campo(this, '');" onchange="verDias();"  type="text">
                     </td>
                     <td width="120" align="center"><input type="button" class="btn_incluir" value="" size="20" maxlength="10" onclick="validarForm();" /></td>
@@ -309,7 +309,7 @@
     <?php } ?>
 
     <div id="modal" class="sumir">
-        <form id="formAlteracao" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'alterarferias'));?>" method="post">
+        <form id="formAlteracao" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'alterarferias'));?>" method="post">
             <input type="hidden" value="" name="idferias" id="idferias"  />
             <input type="hidden" value="" name="diasmarcados" id="diasmarcados"  />
             <table class="tabela">

@@ -8,7 +8,7 @@
  * @link http://www.politec.com.br
  * @copyright © 2010 - Politec - Todos os direitos reservados.
  */
- 
+
 require_once "GenericControllerNew.php";
 
 class ManterreadequacaoController extends GenericControllerNew{
@@ -115,11 +115,11 @@ class ManterreadequacaoController extends GenericControllerNew{
             $where['b.AnoProjeto+b.Sequencial = ?'] = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
             $this->view->pronacProjeto = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
         }
-        
+
         $tbPedidoAlteracaoProjeto = New tbPedidoAlteracaoProjeto();
         if($stCombo == 'A'){
             $where['e.stVerificacao = 0 or e.stVerificacao is null'] = '';
-            
+
             $total = $tbPedidoAlteracaoProjeto->painelCoordAcomp($where, $order, null, null, true);
             $fim = $inicio + $this->intTamPag;
             $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
@@ -492,7 +492,7 @@ class ManterreadequacaoController extends GenericControllerNew{
                      * ==============================================================
                      */
                     $Projetos          = new Projetos();
-                    $Agentes           = new Agentes();
+                    $Agentes           = new Agente_Model_Agentes();
                     $Visao             = new Visao();
                     $tbVinculo         = new TbVinculo();
                     $tbVinculoProposta = new tbVinculoProposta();
@@ -832,5 +832,5 @@ class ManterreadequacaoController extends GenericControllerNew{
         }
 
     }
-	
+
 }

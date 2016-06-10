@@ -13,7 +13,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '<?php echo $this->url(array('controller' => 'agentes', 'action' => 'incluiragente')); ?>',
+                url: '<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'incluiragente')); ?>',
                 data: {
                     modal: 'true',
                     modulo: 'movimentacaobancaria',
@@ -69,9 +69,9 @@
               }
         });
 
- 
+
         $('#NumeroRecibo').forceNumeric();
-     
+
         window.onload = function() {
             var myInput = document.getElementById('NumeroRecibo');
             myInput.onpaste = function(e) {
@@ -144,11 +144,11 @@
 
             if (valida) {
                 var vlCaptar = parseFloat($("#aCaptar").val().replace(/\./g, '').replace("R$", "").replace(',','.'));
-		
+
                 var cpf = $("#cpf").val();
                 cpf = cpf.replace(/\./g, "").replace('-', '').replace('/', '');
                 $("#cpf").val(cpf);
-		
+
                 var valor = parseFloat($("#valor").val().replace('.', '').replace(',', '.'));
                 if (valor > vlCaptar) {
                     $('#alerta').dialog("destroy");
@@ -305,7 +305,7 @@
             recebe.css("color", "red");
             return false;
         }
-        
+
         if (((cpfValido) || (cnpjValido)) && !modalCadastroAberta) {
             var url = "<?php echo $this->url(array('controller' => 'captacao', 'action' => 'localizar-interessado')); ?>?cpf=" + cpf2;
 
@@ -406,7 +406,7 @@
                      var key = e.which || e.keyCode;
 
                      if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
-                     // numeros  
+                     // numeros
                          key >= 48 && key <= 57 ||
                      // numeros keypad
                          key >= 96 && key <= 105 ||
@@ -490,12 +490,12 @@
                     </td>
                     <td colspan="2">
                         <div id="cpfERROR" align="left" style="float:right margin-right: 10px;"></div>
-                    </td> 
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="1" align="center" width="10%"><label for="isBemServico">BEM / SERVIÇO</label></td>
                     <td colspan="2" width="10%">
-                       	Sim <input type="radio" name="isBemServico" id="isBemServico" value="1" class="input_simples" />  
+                       	Sim <input type="radio" name="isBemServico" id="isBemServico" value="1" class="input_simples" />
                        	Não <input type="radio" name="isBemServico" id="isBemServico" value="0" class="input_simples"  checked="checked"/>
                     </td>
                     <td width="12%">
@@ -504,7 +504,7 @@
                             <input size="1" maxlength="5" type="text" name="NumeroRecibo" name="NumeroRecibo" id="NumeroRecibo" class="input_simples" ></input>
                             <div id="msgNumeroRecibo"></div>
                         <div id="tipoCaptacaoERROR" align="left" style="float:right margin-right: 10px;"></div>
-                    </td> 
+                    </td>
                 </tr>
             </table>
             <fieldset style="float: left; width: 25%"><legend>Datas</legend>
@@ -515,18 +515,18 @@
                             <input name='dt_recibo' id='dt_recibo' readonly="readonly" maxlength="10" type='text' class='input_simples w200 focus input required' onkeyup="mascara(this, format_data);"/>
                             <div id="msgRecibo"></div>
                         </td>
-                    </tr>   
+                    </tr>
                     <tr>
                         <td colspan="0" align="center" width="20%"><label>CHEGADA AO MINC:</label></td>
                         <td colspan="0">
                             <input name='dt_minc' id='dt_minc' readonly="readonly" maxlength="10" type='text' class='input_simples w200 focus input required' onkeyup="mascara(this, format_data);"/>
                             <div id="msgMinc"></div>
                         </td>
-                    </tr>   
-                </table> 
-            </fieldset>  
+                    </tr>
+                </table>
+            </fieldset>
             <fieldset style="float: left; width: 30%"><legend>Apoio/Incentivo</legend>
-                <table class="tabela">       
+                <table class="tabela">
                     <tr>
                         <td colspan="0" align="center" width="20%"><label>TIPO DE APOIO:</label></td>
                         <td colspan="0">
@@ -571,7 +571,7 @@
                         <td colspan="0">
                             <input name='aCaptar' id='aCaptar' disabled = "disabled" readonly="readonly" value="<?php echo $this->formatarReal($aCaptar); ?>" type='text' class='input_simples w200 focus'/>
                         </td>
-                    </tr>               
+                    </tr>
                 </table>
             </fieldset>
             <table class="tabela" border="0" cellpadding="0" cellspacing="1" style="margin-top: 10px;">
@@ -582,7 +582,7 @@
                     </td>
                 </tr>
             </table>
-        </form>     
+        </form>
     </fieldset>
 </div>
 <!-- ========== FIM CONTEÚDO ========== -->

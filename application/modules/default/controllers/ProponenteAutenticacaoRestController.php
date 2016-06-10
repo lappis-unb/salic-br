@@ -2,7 +2,7 @@
 
 /**
  * Login e autenticação via REST
- * 
+ *
  * @version 1.0
  * @package application
  * @subpackage application.controller
@@ -10,7 +10,7 @@
  * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
  */
 class ProponenteAutenticacaoRestController extends AbstractRestController{
-    
+
     public function init() {
         $this->setPublicMethod('post');
         parent::init();
@@ -34,7 +34,7 @@ class ProponenteAutenticacaoRestController extends AbstractRestController{
         } else {
             $Usuario = new Sgcacesso();
             $verificaStatus = $Usuario->buscar(array ( 'Cpf = ?' => $username));
-            
+
             $verificaSituacao = 0;
             if(count($verificaStatus)>0) {
                 $IdUsuario =  $verificaStatus[0]->IdUsuario;
@@ -59,7 +59,7 @@ class ProponenteAutenticacaoRestController extends AbstractRestController{
                 $SenhaFinal = addslashes($password);
                 $buscar = $Usuario->loginSemCript($username, $SenhaFinal);
             }
-            
+
             if($buscar){
                 $result->usuario = Zend_Auth::getInstance()->getIdentity();
                 $result->authorization = $this->encryptAuthorization();
@@ -70,7 +70,7 @@ class ProponenteAutenticacaoRestController extends AbstractRestController{
                     $result->msg = 'Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha.';
                 }
 
-                $agentes = new Agentes();
+                $agentes = new Agente_Model_Agentes();
                 $verificaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $username))->current();
 
                 if(empty($verificaAgentes)){
@@ -81,14 +81,14 @@ class ProponenteAutenticacaoRestController extends AbstractRestController{
                 $result->msg = 'Usu&aacute;rio ou Senha inv&aacute;lidos!';
             }
         }
-        
+
         # Resposta da autenticação.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($result));
     }
-    
+
     /**
      * Gera a chave de acesso do usuário para utilizar os serviços que precisam de identificação de usuário.
-     * 
+     *
      * @return string
      */
     protected function encryptAuthorization(){
@@ -97,18 +97,18 @@ class ProponenteAutenticacaoRestController extends AbstractRestController{
 
         return $authorization;
     }
-    
+
     /**
      * Define senha inicial para cadastros incompletos.
-     * 
+     *
      * @return string
      */
     public static function validarSenhaInicial(){
         return 'ae56f49edf70ec03b98f53ea6d2bc622';
     }
-    
+
     public function indexAction(){}
-    
+
     public function getAction(){}
 
     public function putAction(){}

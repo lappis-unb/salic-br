@@ -1,7 +1,7 @@
-<?php 
- 
+<?php
+
 class ProcuracaoController extends GenericControllerNew {
-     
+
     private $idResponsavel = 0;
     private $idAgente      = 0;
     private $idUsuario     = 0;
@@ -15,8 +15,8 @@ class ProcuracaoController extends GenericControllerNew {
      * @param void
      * @return void
      */
-    
-    public function init() 
+
+    public function init()
     {
         // verifica as permissoes
         $PermissoesGrupo = array();
@@ -26,19 +26,19 @@ class ProcuracaoController extends GenericControllerNew {
 
         $auth = Zend_Auth::getInstance(); // instancia da autenticação
         $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo');
-        
+
         if (isset($auth->getIdentity()->usu_codigo)) {
             parent::perfil(1, $PermissoesGrupo);
-            
+
             $orgaoSuperiorLogado = $GrupoAtivo->codOrgao;
             $orgao = new Orgaos();
             $orgaoSuperior = $orgao->codigoOrgaoSuperior($orgaoSuperiorLogado);
             @$this->orgaoSuperior = $orgaoSuperior[0]->Superior;
-            
+
         } else {
             parent::perfil(4, $PermissoesGrupo);
         }
-        
+
         /*********************************************************************************************************/
         $cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
 
@@ -51,7 +51,7 @@ class ProcuracaoController extends GenericControllerNew {
         $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
         // Busca na Agentes
-        $agentesDAO = new Agentes();
+        $agentesDAO = new Agente_Model_Agentes();
         $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
         if( count($buscaAcesso) > 0){ $this->idResponsavel = $buscaAcesso[0]->IdUsuario; $this->view->nomeproponente = $buscaAcesso[0]->Nome; }
@@ -61,7 +61,7 @@ class ProcuracaoController extends GenericControllerNew {
         if($this->idAgente != 0){
             $this->usuarioProponente = "S";
         }
-            
+
 //        $this->view->nomeproponente = $buscaAcessos[0]->Nome;
         //x($this->idResponsavel);
         //x($this->idAgente);
@@ -70,7 +70,7 @@ class ProcuracaoController extends GenericControllerNew {
         parent::init();
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $p = new Projetos();
         $buscarprocuracao = $p->listarProjetosProcuracoes($this->idResponsavel);
@@ -78,10 +78,10 @@ class ProcuracaoController extends GenericControllerNew {
     }
 
     /* Médodo para cadastrar uma procuração
-     * 
-     * 
+     *
+     *
      */
-    public function cadastramentoAction() 
+    public function cadastramentoAction()
     {
         $tbVinculo = new TbVinculo();
         $dadosCombo = array();
@@ -89,61 +89,61 @@ class ProcuracaoController extends GenericControllerNew {
 
         $whereResponsavel['a.idAgente = ?'] = $this->idAgente;
         $buscaResponsavel = $tbVinculo->buscarProponenteResponsavel($whereResponsavel, $this->idResponsavel);
-        
+
         $whereProponente['a.idAgente != ?'] = $this->idAgente;
     	$buscaProponente = $tbVinculo->buscarProponenteResponsavel($whereProponente, $this->idResponsavel);
-    	
+
     	$this->view->responsaveis 	= $buscaResponsavel;
     	$this->view->proponentes 	= $buscaProponente;
     	$this->view->proponente 	= $this->idAgente;
-    	
+
     }
 
     public function listarprojetosAction()
     {
     	$this->_helper->layout->disableLayout();
-    	
+
     	$propostas = new PreProjeto();
     	$whereProjetos['pp.idAgente = ?'] 			=  $this->_request->getParam("idProponente");//$this->idAgente;
     	$whereProjetos['pr.idProjeto IS NOT NULL'] 	=  '';
     	$listaProjetos = $propostas->buscarPropostaProjetos($whereProjetos);
-    	
+
     	$procuracaoDAO = new Procuracao();
-    	
+
     	$listacerta = array();
     	$i = 0;
-    	
+
     	foreach($listaProjetos as $pj)
     	{
     		$where['p.siProcuracao IN (0,1)'] 	= '';
     		$where['vprp.idPreProjeto = ?'] 	= $pj->idPreProjeto ;
     		$buscaProcuracao = $procuracaoDAO->buscarProcuracaoAceita($where);
-    		
+
     		if(count($buscaProcuracao) > 0)
     		{
-    			$listacerta[$i]['visualiza'] 	=  'N';	
+    			$listacerta[$i]['visualiza'] 	=  'N';
     		}
-    		else 
+    		else
     		{
     			$listacerta[$i]['visualiza'] 	=  'S';
     		}
-    		
+
     		$listacerta[$i]['PRONAC'] 		= $pj->PRONAC;
     		$listacerta[$i]['NomeProjeto'] 	= $pj->NomeProjeto;
     		$listacerta[$i]['idProjeto'] 	= $pj->idProjeto;
     		$listacerta[$i]['idPreProjeto'] = $pj->idPreProjeto;
-    		
+
     		$i++;
     	}
-    	
+
     	$this->view->projetos 		= $listacerta;
     	//$this->view->projetos 		= $listaProjetos;
-    	
-    	
+
+
     }
-    
-    
-    public function uploadAction() 
+
+
+    public function uploadAction()
     {
     	//======================= INSTANCIA AS DAO ===========================
         $tbArquivoDAO 			= new tbArquivo();
@@ -153,7 +153,7 @@ class ProcuracaoController extends GenericControllerNew {
         $tbVinculoPropostaDAO 	= new tbVinculoPropostaResponsavelProjeto();
         $tbVinculoDAO 			= new TbVinculo();
         $Sgcacesso              = new Sgcacesso();
-        $Agentes                = new Agentes();
+        $Agentes                = new Agente_Model_Agentes();
         $Nomes                  = new Nomes();
         $Visao                  = new Visao();
         $Internet               = new Internet();
@@ -164,7 +164,7 @@ class ProcuracaoController extends GenericControllerNew {
         $dsObservacao 	= $this->_request->getParam("dsObservacao");
         $arrayProjetos 	= $this->_request->getParam("projetos");
 
-        // ==================== Dados do arquivo de upload ===============================			
+        // ==================== Dados do arquivo de upload ===============================
         $arquivoNome 	= $_FILES['divulgacao']['name']; // nome
         $arquivoTemp 	= $_FILES['divulgacao']['tmp_name']; // nome temporï¿½rio
         $arquivoTipo 	= $_FILES['divulgacao']['type']; // tipo
@@ -180,19 +180,19 @@ class ProcuracaoController extends GenericControllerNew {
         {
         	$responsavel = $this->idResponsavel;
         }
-        
+
         if($proponente == 0)
         {
         	$proponente = $this->idAgente;
         }
-        
+
         //========= BUSCA O IDVINCULO COM AS INFORMAÇÕES PASSADAS =============
         $whereVinculo['idUsuarioResponsavel = ?'] = $responsavel;
         $whereVinculo['idAgenteProponente = ?']   = $proponente;
         $buscarVinculo = $tbVinculoDAO->buscar($whereVinculo);
-        
+
         try{
-        
+
 	        // ==================== Insere na Tabela tbArquivo ===============================
 	        $dadosArquivo = array(
 						           'nmArquivo' 			=> $arquivoNome,
@@ -203,17 +203,17 @@ class ProcuracaoController extends GenericControllerNew {
 						           'dsHash' 			=> $arquivoHash,
 						           'stAtivo' 			=> 'A'
 	        );
-	        
+
 	        $idArquivo = $tbArquivoDAO->inserir($dadosArquivo);
-	        
+
 	        // ==================== Insere na Tabela tbArquivoImagem ===============================
 	        $dadosBinario = array(
 						          'idArquivo' => $idArquivo,
 						          'biArquivo' => new Zend_Db_Expr("CONVERT(varbinary(MAX), {$arquivoBinario})")
 	        );
-	        
+
 	        $idArquivo = $tbArquivoImagemDAO->inserir($dadosBinario);
-	
+
 	        // ==================== Insere na Tabela tbDocumento ===============================
 	        $dados = array(
 				           'idTipoDocumento' 		=> 17,
@@ -224,24 +224,24 @@ class ProcuracaoController extends GenericControllerNew {
 				           'idTipoEventoOrigem' 	=> NULL,
 				           'nmTitulo' 				=> 'Procuracao'
 	        );
-	        
+
 	        $idDocumento = $tbDocumentoDAO->inserir($dados);
 	        $idDocumento = $idDocumento['idDocumento'];
 
-        
+
 	        //======== MONTA UM ARRAY COM AS INFORMAÇÕES DO VINCULO PROPOSTA========
 	        for ($i = 0; $i < sizeof($arrayProjetos); $i++)
 			{
-					
+
 					$arrayVinculoProposta = array('idVinculo' 	  	  => $buscarVinculo[0]->idVinculo,
 												  'idPreProjeto' 	  => $arrayProjetos[$i],
-												  'siVinculoProposta' => 0		
-					);	
-					
+												  'siVinculoProposta' => 0
+					);
+
 					// Salva as informações retornando o idVinculo Proposta
 					$idVinculoProposta = $tbVinculoPropostaDAO->inserir($arrayVinculoProposta);
-					
-			        // ==================== Insere na Tabela Procuracao =============================== 
+
+			        // ==================== Insere na Tabela Procuracao ===============================
 			        $dadosVinculoProjeto = array(
 										         'idVinculoProposta' 	=> $idVinculoProposta,
 										         'idDocumento' 			=> $idDocumento,
@@ -249,9 +249,9 @@ class ProcuracaoController extends GenericControllerNew {
 										         'dsObservacao' 		=> $dsObservacao,
 										         'dsJustificativa'      => ''
 			        );
-			        
+
 		            $inserirproposta = $ProcuracaoDAO->inserir($dadosVinculoProjeto);
-	
+
 			}
 
 
@@ -321,7 +321,7 @@ class ProcuracaoController extends GenericControllerNew {
 	    	parent::message("Error".$e->getMessage(), "procuracao/cadastramento", "ERROR");
 //	            parent::message("&Eacute; necess&aacute;rio um v&iacute;nculo para enviar o cadastramento da procura&ccedil;&atilde;o", "procuracao/index?idPreProjeto=" . $idpreprojeto, "ERROR");
 		}
-	        
+
         exit();
     }
 
@@ -350,10 +350,10 @@ class ProcuracaoController extends GenericControllerNew {
     }
 
     public function verificarprocuracaoAction(){
-        
+
     	$p = new Procuracao();
     	$where = array();
-        
+
         if (isset($_POST) ) {
             if (!empty($_POST['nprojeto'])) {
                 $where['(vprp.idPreProjeto = ? or pr.AnoProjeto+pr.Sequencial = ?)'] = $_POST['nprojeto'];
@@ -396,7 +396,7 @@ class ProcuracaoController extends GenericControllerNew {
         $buscar = $projetos->visualizarProcuracoes($idDocumento);
         $this->view->procuracao = $buscar;
     }
-    
+
     public function aprovacaoAction()
     {
         $vinculoPropostaDAO     = new tbVinculoPropostaResponsavelProjeto();
@@ -414,7 +414,7 @@ class ProcuracaoController extends GenericControllerNew {
         $situacaoVI = 0;
         $situacaoPR = 0;
         $situacaoMSG = "";
-    	
+
     	if($situacao == 0) {
             $situacaoVI = 1;
             $situacaoPR = 2;
@@ -424,7 +424,7 @@ class ProcuracaoController extends GenericControllerNew {
             $situacaoPR = 1;
             $situacaoMSG = "Aprovada";
         }
-    	
+
     	try {
             for ($i = 0; $i < sizeof($idProcuracao); $i++) {
                 $dadosPR = array('siProcuracao' => $situacaoPR, 'dsJustificativa' => $justificativa);
@@ -459,7 +459,7 @@ class ProcuracaoController extends GenericControllerNew {
         if(!empty($cpf)){
             $dados['p.CgcCpf = ?'] = $cpf;
         }
-        
+
         $projetos = new Projetos();
         $result = $projetos->buscarProjProcuracao($dados);
 
@@ -490,7 +490,7 @@ class ProcuracaoController extends GenericControllerNew {
         $dados = array();
         $dados['a.CNPJCPF = ?'] = $cpf;
 
-        $agentes = new Agentes();
+        $agentes = new Agente_Model_Agentes();
         $result = $agentes->buscarAgenteNome($dados);
 
         $a = 0;
@@ -729,8 +729,8 @@ class ProcuracaoController extends GenericControllerNew {
         }
         die();
     }
-    
-    
+
+
 }
 
 

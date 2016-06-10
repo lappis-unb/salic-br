@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*
  * To change this template, choose Tools | Templates
@@ -8,16 +8,16 @@
 /**
  * Description of Agentes
  *
- * @author augusto 
+ * @author augusto
  */
 
-class Agentes extends GenericModel {
+class Agente_Model_Agentes extends GenericModel {
 
     protected $_banco = 'Agentes';
     protected $_name = 'Agentes';
     protected $_schema = 'dbo';
     protected $_primary = 'idAgente';
-    
+
     public function BuscarComponente() {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -92,7 +92,7 @@ class Agentes extends GenericModel {
         $select->group('A.CNPJCPF');
         $select->group('A.idAgente');
         $select->group('N.Descricao');
-        
+
         $select->order('N.Descricao');
 //        xd($select->assemble());
 
@@ -148,69 +148,69 @@ class Agentes extends GenericModel {
         return $this->fetchAll($slct);
     }
 
-    public function buscarAgenteVinculoProponente($where=array(), $order=array(), $tamanho=-1, $inicio=-1) 
+    public function buscarAgenteVinculoProponente($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
         $slct = $this->select();
         $slct->distinct();
         $slct->setIntegrityCheck(false);
         $slct->from(
-                array('ag' => $this->_name), 
+                array('ag' => $this->_name),
                 array('ag.CNPJCPF', 'ag.idAgente')
         );
         $slct->joinInner(
-                array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente", 
+                array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente",
                 array('nm.Descricao as NomeAgente')
         );
         $slct->joinLeft(
-                array('vp' => 'tbVinculo'), "vp.idAgenteProponente  = ag.idAgente", 
+                array('vp' => 'tbVinculo'), "vp.idAgenteProponente  = ag.idAgente",
                 array("vp.idVinculo as idVinculoProponente", "siVinculo", "idUsuarioResponsavel")
         );
         $slct->joinLeft(
-                array('vprp' => 'tbVinculoProposta'), "vprp.idVinculo = vp.idVinculo", 
+                array('vprp' => 'tbVinculoProposta'), "vprp.idVinculo = vp.idVinculo",
                 array("vprp.siVinculoProposta", "vprp.idPreProjeto", "vprp.idVinculo")
         );
-        
+
         $slct->joinLeft(
-                array('pr' => 'Projetos'), "pr.idProjeto = vprp.idPreProjeto", 
+                array('pr' => 'Projetos'), "pr.idProjeto = vprp.idPreProjeto",
                 array('pr.IdPRONAC'), 'SAC.dbo'
         );
-        
+
         $slct->joinLeft(
-                array('usu' => 'Usuarios'), "usu.usu_identificacao = ag.CNPJCPF", 
+                array('usu' => 'Usuarios'), "usu.usu_identificacao = ag.CNPJCPF",
                 array('usu.usu_identificacao as UsuarioVinculo'), 'TABELAS.dbo'
         );
-                
-        foreach ($where as $coluna => $valor) 
+
+        foreach ($where as $coluna => $valor)
         {
             $slct->where($coluna, $valor);
         }
 //        xd($slct->assemble());
         return $this->fetchAll($slct);
     }
-    
-    public function buscarNovoProponente($where=array(), $idResponsavel)  
+
+    public function buscarNovoProponente($where=array(), $idResponsavel)
     {
         $slct = $this->select();
         $slct->distinct();
         $slct->setIntegrityCheck(false);
         $slct->from(
-                array('ag' => $this->_name), 
+                array('ag' => $this->_name),
                 array('ag.CNPJCPF', 'ag.idAgente')
         );
         $slct->joinInner(
-                array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente", 
+                array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente",
                 array('nm.Descricao as NomeAgente')
         );
         $slct->joinLeft(
-                array('vp' => 'tbVinculo'), "vp.idAgenteProponente  = ag.idAgente AND vp.idUsuarioResponsavel = $idResponsavel", 
+                array('vp' => 'tbVinculo'), "vp.idAgenteProponente  = ag.idAgente AND vp.idUsuarioResponsavel = $idResponsavel",
                 array("vp.idVinculo as idVinculoProponente", "siVinculo", "idUsuarioResponsavel")
         );
         $slct->joinLeft(
-                array('v' => 'Visao'), "v.idAgente = ag.idAgente AND v.Visao = 146", 
+                array('v' => 'Visao'), "v.idAgente = ag.idAgente AND v.Visao = 146",
                 array('v.visao as UsuarioVinculo'), 'AGENTES.dbo'
         );
-                
-        foreach ($where as $coluna => $valor) 
+
+        foreach ($where as $coluna => $valor)
         {
             $slct->where($coluna, $valor);
         }
@@ -218,8 +218,8 @@ class Agentes extends GenericModel {
         return $this->fetchAll($slct);
     }
 
-    
-    
+
+
     public function todosPareceristas() {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -261,7 +261,7 @@ class Agentes extends GenericModel {
         //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
-    
+
     public function consultaPareceristasDoOrgao($idOrgao = null) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -269,9 +269,9 @@ class Agentes extends GenericModel {
         $slct->from(array('a' => $this->_name), array(), array(), 'Agentes.dbo');
 
         $slct->joinInner(array('n' => 'Nomes'), 'a.idAgente = n.idAgente', array('n.idAgente AS idParecerista', 'n.Descricao AS Nome'));
-		
+
         if($idOrgao == null){
-        	$slct->joinInner(array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_identificacao', array(), 'TABELAS.dbo');	
+        	$slct->joinInner(array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_identificacao', array(), 'TABELAS.dbo');
         }else{
         	$slct->joinInner(array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_identificacao', array('u.uog_orgao AS idOrgao'), 'TABELAS.dbo');
         }
@@ -302,7 +302,7 @@ class Agentes extends GenericModel {
 //        return $slct->assemble();
         return $this->fetchAll($slct);
     }
-    
+
     public function buscarPareceristas($idOrgao, $idArea, $idSegmento) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -335,14 +335,14 @@ class Agentes extends GenericModel {
         $dadosWhere["c.idverificacao = ?"] = 251;
         $dadosWhere["u.org_superior = ?"] = $idOrgao;
         $dadosWhere["NOT EXISTS(SELECT TOP 1 * FROM Agentes.dbo.tbAusencia WHERE Getdate() BETWEEN dtInicioAusencia AND dtFimAusencia AND idAgente = a.idAgente)"] = '';
-        
+
         foreach ($dadosWhere as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
 
         $slct->order('n.Descricao');
         //xd($slct->assemble());
-        
+
         return $this->fetchAll($slct);
     }
 
@@ -496,7 +496,7 @@ class Agentes extends GenericModel {
         {
             $slct->where($coluna, $valor);
         }
-        
+
         //adicionando linha order ao select
         $slct->order($order);
 //        xd($slct->assemble());
@@ -534,7 +534,7 @@ class Agentes extends GenericModel {
         {
             $slct->where($coluna, $valor);
         }
-        
+
         if($retornaSelect)
             return $slct;
         else
@@ -544,7 +544,7 @@ class Agentes extends GenericModel {
     /*===========================================================================*/
     /*====================== ABAIXO - METODOS DA CNIC ===========================*/
     /*===========================================================================*/
-    
+
     public function buscarAgenteVinculo($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
         $slct = $this->select();

@@ -35,7 +35,7 @@ class PublicacaoDouController extends GenericControllerNew {
      * @return void
      */
     public function indexAction() {
-        
+
         $tblOrgao = new Orgaos();
         $rsOrgao  = $tblOrgao->buscar(array(), array("Sigla ASC"));
         $this->view->orgaos = $rsOrgao;
@@ -101,12 +101,12 @@ class PublicacaoDouController extends GenericControllerNew {
             $this->view->pronac = $_GET['pronac'];
             $wherenaopublicados['pr.AnoProjeto+pr.Sequencial = ?'] = $_GET['pronac'];
         }
-        
+
         if((isset($_GET['orgaoFiltro']) && !empty($_GET['orgaoFiltro']))){
             $this->view->orgaoFiltro = $_GET['orgaoFiltro'];
             $wherenaopublicados['pr.Orgao = ?'] = $_GET['orgaoFiltro'];
         }
-        
+
         if(isset($_GET['situacao'])){
             $filtro = $_GET['situacao'];
             $this->view->filtro = $filtro;
@@ -403,7 +403,7 @@ class PublicacaoDouController extends GenericControllerNew {
 		      $dadosPortaria['DtInicioCaptacao'] = null;
 		      $dadosPortaria['DtFimCaptacao'] = null;
 		    }
-		    
+
                     $where = 'idAprovacao = ' . $idaprovacao;
                     $portariagerar = $ap->alterar($dadosPortaria, $where);
 
@@ -499,7 +499,7 @@ class PublicacaoDouController extends GenericControllerNew {
 
         if ($_GET['PortariaAprovacao']) {
             $PortariaAprovacao = $_GET['PortariaAprovacao'];
-            
+
             $dados = array();
             if(isset($_GET['tipo'])){
                 switch ($_GET['tipo']) {
@@ -535,7 +535,7 @@ class PublicacaoDouController extends GenericControllerNew {
                 $dados['Situacao'] = 'D27';
                 $tipoPublicacao = 1;
             }
-            
+
             $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
             $orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
 
@@ -547,16 +547,16 @@ class PublicacaoDouController extends GenericControllerNew {
                 foreach ($projetosPublicacao as $projetosretirar) {
                     $tbProjetos = new Projetos();
                     $dadosProjeto = $tbProjetos->buscar(array('IdPRONAC = ?'=>$projetosretirar->IdPRONAC))->current();
-                    
+
                     $dados['IdPRONAC'] = $projetosretirar->IdPRONAC;
                     $dados['DtSituacao'] = date('Y-m-d');
                     $dados['ProvidenciaTomada'] = 'Projeto encaminhado para a inclusão em portaria.';
-                    
+
                     if($tipoPublicacao == 8){ //Se for readequação, não altera os dados da Situação
                         $dados['Situacao'] = $dadosProjeto->Situacao;
                         $dados['DtSituacao'] = $dadosProjeto->DtSituacao;
                     }
-                    
+
                     $IdPRONAC = $projetosretirar->IdPRONAC;
                     $idAprovacao = $projetosretirar->idAprovacao;
 
@@ -581,7 +581,7 @@ class PublicacaoDouController extends GenericControllerNew {
 
         if ($_GET['PortariaAprovacao']) {
             $PortariaAprovacao = $_GET['PortariaAprovacao'];
-            
+
             if(isset($_GET['tipo'])){
                 switch ($_GET['tipo']) {
                     case '':
@@ -617,7 +617,7 @@ class PublicacaoDouController extends GenericControllerNew {
                 $TipoAprovacao = 1;
                 $situacaoAtual = 'D09';
             }
-            
+
             $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
             $orgaoLogado = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
 
@@ -626,7 +626,7 @@ class PublicacaoDouController extends GenericControllerNew {
 
             $auth = Zend_Auth::getInstance(); // pega a autenticação
             $usuarioLogado = $auth->getIdentity()->usu_codigo;
-	    
+
             try {
 	        // REDUÇÃO OU COMPLEMENTACAO
                 if($TipoAprovacao == 2 || $TipoAprovacao == 4) {
@@ -638,10 +638,10 @@ class PublicacaoDouController extends GenericControllerNew {
 		  }
 		  $where['b.TipoAprovacao = ?'] = $TipoAprovacao;
 		  $where['b.PortariaAprovacao = ?'] = $PortariaAprovacao;
-                    
+
 		  $ap = new Aprovacao();
 		  $projetos = $ap->consultaPortariaReadequacoes($where);
-		  
+
 		  foreach ($projetos as $p) {
 		    // entra em cada projeto e atualiza tbReadequacao e troca planilha
 		    $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
@@ -650,7 +650,7 @@ class PublicacaoDouController extends GenericControllerNew {
 		    $where['a.IdPRONAC = ?'] = $p->IdPRONAC;
 		    $where['a.stAtivo = ?'] = 'S';
 		    $PlanilhaAtiva = $tbPlanilhaAprovacao->valorTotalPlanilha($where)->current();
-		    		    
+
 		    //BUSCAR VALOR TOTAL DA PLANILHA DE READEQUADA
 		    $where = array();
 		    $where['a.IdPRONAC = ?'] = $p->IdPRONAC;
@@ -662,30 +662,30 @@ class PublicacaoDouController extends GenericControllerNew {
 		      // quando atualiza portaria na dou, troca planilhas e muda status na tbReadequacao
 		      //Atualiza a tabela tbReadequacao
 		      $tbReadequacao = new tbReadequacao();
-		      
+
 		      $dados = array();
 		      $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publicação no DOU.
 		      $dados['stEstado'] = 1;
 		      $where = "idReadequacao = " . $p->idReadequacao;
 		      $return = $tbReadequacao->update($dados, $where);
-		      
+
 		      $spAtivarPlanilhaOrcamentaria = new spAtivarPlanilhaOrcamentaria();
 		      $ativarPlanilhaOrcamentaria = $spAtivarPlanilhaOrcamentaria->exec($p->IdPRONAC);
 		    }
-		    
+
 		    // PUBLICA NO DOU
                     PublicacaoDouDAO::situcaopublicacaodou($TipoAprovacao, $PortariaAprovacao, 'E10', $situacaoAtual, $usuarioLogado, $orgaoSuperior->Superior);
                     PublicacaoDouDAO::situcaopublicacaodou($TipoAprovacao, $PortariaAprovacao, 'E12', $situacaoAtual, $usuarioLogado, $orgaoSuperior->Superior);
-		    
+
 		    // fim da atualizacao da complementacao / reducao
 		  }
-		    		    
+
                 } else if($TipoAprovacao == 5){
                     PublicacaoDouDAO::situcaopublicacaodou($TipoAprovacao, $PortariaAprovacao, 'E19', $situacaoAtual, $usuarioLogado, $orgaoSuperior->Superior);
                 } else if($TipoAprovacao == 6){
                     PublicacaoDouDAO::situcaopublicacaodou($TipoAprovacao, $PortariaAprovacao, 'L05', $situacaoAtual, $usuarioLogado, $orgaoSuperior->Superior);
                 } else if($TipoAprovacao == 8){
-                    
+
                     $where = array();
                     if($orgaoSuperior->Superior == 251){
                         $where['a.Area <> ?'] = 2;
@@ -694,7 +694,7 @@ class PublicacaoDouController extends GenericControllerNew {
                     }
                     $where['b.TipoAprovacao = ?'] = 8;
                     $where['b.PortariaAprovacao = ?'] = $PortariaAprovacao;
-                    
+
                     $ap = new Aprovacao();
                     $projetos = $ap->consultaPortariaReadequacoes($where);
                     foreach ($projetos as $p) {
@@ -703,10 +703,10 @@ class PublicacaoDouController extends GenericControllerNew {
 
                             $Projetos = new Projetos();
                             $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$p->IdPRONAC))->current();
-            
-                            $Agentes = new Agentes();
+
+                            $Agentes = new Agente_Model_Agentes();
                             $dadosAgente = $Agentes->buscar(array('CNPJCPF=?'=>$dadosPrj->CgcCpf))->current();
-                            
+
                             $Nomes = new Nomes();
                             $dadosNomes = $Nomes->buscar(array('idAgente=?'=>$dadosAgente->idAgente))->current();
                             $dadosNomes->Descricao = $p->dsSolicitacao;
@@ -721,20 +721,20 @@ class PublicacaoDouController extends GenericControllerNew {
                             $cnpjcpf = Mascara::delMaskCPFCNPJ($p->dsSolicitacao);
                             $dadosPrj->CgcCpf = $cnpjcpf;
                             $dadosPrj->save();
-                            
+
                         // READEQUAÇÃO DE NOME DO PROJETO
                         } else if($p->idTipoReadequacao == 12){
-                            
+
                             $Projetos = new Projetos();
                             $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$p->IdPRONAC))->current();
                             $dadosPrj->NomeProjeto = $p->dsSolicitacao;
                             $dadosPrj->ProvidenciaTomada = 'Projeto aprovado e publicado no Di&aacute;rio Oficial da Uni&atilde;o.';
                             $dadosPrj->Logon = $usuarioLogado;
                             $dadosPrj->save();
-                        
+
                         // READEQUAÇÃO DE RESUMO DO PROJETO
                         } else if($p->idTipoReadequacao == 15){
-                            
+
                             $Projetos = new Projetos();
                             $dadosPrj = $Projetos->find(array('IdPRONAC=?'=>$p->IdPRONAC))->current();
                             $dadosPrj->ResumoProjeto = $p->dsSolicitacao;
@@ -742,7 +742,7 @@ class PublicacaoDouController extends GenericControllerNew {
                             $dadosPrj->Logon = $usuarioLogado;
                             $dadosPrj->save();
                         }
-                        
+
                         $tbReadequacao = new tbReadequacao();
                         $dadosReadequacao = $tbReadequacao->buscar(array('idReadequacao = ?' => $p->idReadequacao))->current();
                         $dadosReadequacao->siEncaminhamento = 15;
@@ -750,7 +750,7 @@ class PublicacaoDouController extends GenericControllerNew {
                         $dadosReadequacao->save();
                     }
                     parent::message("Portaria publicada com sucesso!", "publicacaodou/index?pronac=&situacao=".$this->_getParam('tipo'), "CONFIRM");
-                    
+
                 } else {
                     PublicacaoDouDAO::situcaopublicacaodou($TipoAprovacao, $PortariaAprovacao, 'E10', $situacaoAtual, $usuarioLogado, $orgaoSuperior->Superior);
                     PublicacaoDouDAO::situcaopublicacaodou($TipoAprovacao, $PortariaAprovacao, 'E12', $situacaoAtual, $usuarioLogado, $orgaoSuperior->Superior);
@@ -779,14 +779,14 @@ class PublicacaoDouController extends GenericControllerNew {
 
         $numeroPortaria = $this->_getParam('portaria');
         $situacao = $this->_getParam('situacao');
-        
+
         //Se foi feito a pesquisa pelo filtro
         if($_GET){
-            
+
             if(isset($numeroPortaria) && empty($numeroPortaria)){
                 parent::message("Favor informar o número da portaria!", "publicacaodou/consultar-portaria", "ALERT");
             }
-            
+
             $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
             $orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
 
@@ -837,7 +837,7 @@ class PublicacaoDouController extends GenericControllerNew {
                 $where['b.TipoAprovacao = ?'] = 1;
             }
             $where['b.PortariaAprovacao = ?'] = $numeroPortaria;
-            
+
             // busca os projetos publicados
             $ap = new Aprovacao();
             if($filtro == 'readequacao'){
@@ -845,7 +845,7 @@ class PublicacaoDouController extends GenericControllerNew {
             } else {
                 $buscaportaria = $ap->consultaPortaria($where);
             }
-            
+
             $this->view->projetosPublicados = $buscaportaria;
             $this->view->portaria = $numeroPortaria;
 
@@ -860,7 +860,7 @@ class PublicacaoDouController extends GenericControllerNew {
     public function gerarArquivoRtfAction(){
         ini_set('memory_limit', '-1');
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        
+
         $tbManterPortaria = new tbManterPortaria();
         $dados = $tbManterPortaria->buscar(array('idManterPortaria = ?'=>$_POST['nome']))->current();
         $textoPortaria = trim(strip_tags($dados->dsPortaria));
@@ -870,7 +870,7 @@ class PublicacaoDouController extends GenericControllerNew {
         $this->view->nome = strtoupper(strtr($nm ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
         $this->view->tipoPublicacao = isset($_POST['imprimitipoPublicacao']) && !empty($_POST['imprimitipoPublicacao']) ? $_POST['imprimitipoPublicacao'] : '';
         $this->view->textoPortaria = $textoPortaria;
-        
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
 
@@ -884,14 +884,14 @@ class PublicacaoDouController extends GenericControllerNew {
         }
         $this->view->portaria = $portaria;
     }
-    
+
     public function imprimirTabelaPortariaAction(){
         ini_set('memory_limit', '-1');
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
-        
+
         $Orgaos = new Orgaos();
         $orgaoSuperior = $Orgaos->codigoOrgaoSuperior($orgaoAtivo)->current();
 

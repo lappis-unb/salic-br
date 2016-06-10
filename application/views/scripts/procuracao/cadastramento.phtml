@@ -85,7 +85,7 @@ $buscarFornecedorHref = $this->url(array('controller' => 'comprovarexecucaofinan
                             $("#divDinamicaAgentes").html("");
                             $('#divDinamicaAgentes').html("<br><br><center>Carregando dados...</center>");
                             $.ajax({
-                                url : '<?php echo $this->url(array('controller' => 'agentes', 'action' => 'incluirprocurador')); ?>',
+                                url : '<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'incluirprocurador')); ?>',
                                 data : {
                                     cpf : data.CNPJCPF,
                                     caminho: "",
@@ -127,7 +127,7 @@ $buscarFornecedorHref = $this->url(array('controller' => 'comprovarexecucaofinan
                     },
                     dataType : 'json'
                 });
-                
+
             } else {
                 $("#msgAlerta").dialog("destroy");
                 $("#msgAlerta").html("Favor informar o CPF do Procurador!");
@@ -170,7 +170,7 @@ $buscarFornecedorHref = $this->url(array('controller' => 'comprovarexecucaofinan
                     }
                 });
                 $('.ui-dialog-titlebar-close').remove();
-            
+
             } else {
                 $.ajax({
                     type: 'POST',
@@ -196,8 +196,8 @@ $buscarFornecedorHref = $this->url(array('controller' => 'comprovarexecucaofinan
                                 }
                             });
                             $('.ui-dialog-titlebar-close').remove();
-                        
-                        
+
+
                         } else {
 
                             var checks = false;
@@ -261,7 +261,7 @@ $buscarFornecedorHref = $this->url(array('controller' => 'comprovarexecucaofinan
         });
         $('.ui-dialog-titlebar-close').remove();
     }
-    
+
 </script>
 
 <div id="msgAlerta" class="sumir"></div>

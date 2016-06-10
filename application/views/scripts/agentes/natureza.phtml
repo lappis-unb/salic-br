@@ -90,7 +90,7 @@
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 <div id="conteudo">
 
-    <form id="formNatureza" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'salvar-natureza'));?>" method="post">
+    <form id="formNatureza" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvar-natureza'));?>" method="post">
         <table class="tabela" style="width:40%;">
             <input type="hidden" name="agente" id="agente" value="<?php echo $this->id; ?>" />
             <th colspan="2">Dados do Proponente</th>

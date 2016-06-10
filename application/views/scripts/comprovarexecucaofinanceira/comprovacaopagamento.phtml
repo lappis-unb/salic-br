@@ -14,8 +14,8 @@
     $buscarFornecedorHref = $this->url(array('controller' => 'comprovarexecucaofinanceira', 'action' => 'buscarfornecedor')).'?idusuario='.$this->idusuario;
 
     $urlArray = array(
-        'controller' => 'comprovarexecucaofinanceira', 
-            'action' => 'pagamento', 
+        'controller' => 'comprovarexecucaofinanceira',
+            'action' => 'pagamento',
             'idusuario' => $this->idusuario,
             'idpronac' => $this->idpronac,
         );
@@ -229,7 +229,7 @@
                         <tr>
                             <td class="destacar" align="right"><b>Dt. do Documento<span style='color:red'>*</span></b></td>
                             <td>
-                                <input type="text" name="dtEmissao" id="dtEmissao" null="false" data="true" 
+                                <input type="text" name="dtEmissao" id="dtEmissao" null="false" data="true"
                                     value="<?php echo $this->dtEmissao; ?>"/>
                             </td>
                             <td class="destacar" align="right"><b>Forma de Pagamento<span style='color:red'>*</span></b></td>
@@ -266,13 +266,13 @@
                         </tr>
                         <tr>
                             <td class="destacar" align="right"><b>
-                                <?php 
+                                <?php
                                     $auth = Zend_Auth::getInstance();
                                     if(isset($auth->getIdentity()->usu_codigo)){
                                         echo 'Justificativa do Proponente';
                                     } else {
                                         echo 'Justificativa';
-                                    } 
+                                    }
                                 ?>
                             </b>
                             </td>
@@ -350,7 +350,7 @@
                                     id="dtEmissaoInternacional"
                                     name="dtEmissaoInternacional"
                                     null="false"
-                                    data="true" 
+                                    data="true"
                                     value="<?php echo $this->dtEmissao; ?>"
                                     />
                             </td>
@@ -517,7 +517,7 @@
             mascaraCNPJCPF(this);
             buscarFornecedor(this);
         });
-        
+
         function mascaraCNPJCPF(este){
             var marcado = buscarRadioMarcado(este);
             switch(marcado){
@@ -535,7 +535,7 @@
                     $(este).val('');
             }
         }
-        
+
         function buscarRadioMarcado(este){
             var marcado = '';
             $('.'+$(este).attr('classaux')).each(function(){
@@ -545,7 +545,7 @@
             });
             return marcado;
         }
-        
+
         function buscarFornecedor(este){
             if($(este).attr('idAgente') != undefined && $(este).attr('idAgente') && $(este).attr('idDescricao') != undefined && $(este).attr('idDescricao')){
                 var marcado = buscarRadioMarcado(este);
@@ -560,9 +560,9 @@
                         $("body").append("<div id='divDinamicaAgentes'></div>");
                         $("#divDinamicaAgentes").html("");
                         $('#divDinamicaAgentes').html("<br><br><center>Carregando dados...</center>");
-                        //alert('<?php echo $this->url(array('controller' => 'agentes', 'action' => 'incluirfornecedor')); ?>');
+                        //alert('<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'incluirfornecedor')); ?>');
                         $.ajax({
-                            url : '<?php echo $this->url(array('controller' => 'agentes', 'action' => 'incluirfornecedor')); ?>',
+                            url : '<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'incluirfornecedor')); ?>',
                             data : {
                                 cpf : fornecedor.CNPJCPF,
                                 caminho: "",
@@ -639,7 +639,7 @@
             });
             $('.ui-dialog-titlebar-close').remove();
         }
-        
+
         function fornecedores(){
             var conteudo = '<option value="">Selecione</option>';
             conteudo += montagem(1);
@@ -647,7 +647,7 @@
             conteudo += montagem(3);
             $('#fornecedor').html(conteudo);
         }
-        
+
         function montagem(nr){
             var conteudo = '';
             if($('#Descricao'+nr).val()!=undefined){
@@ -684,18 +684,18 @@
             });
             return retorno;
         }
-        
+
         function requisicaoAjaxObj(){
             var ajaxObj={
-                pagina          :   '',                     
+                pagina          :   '',
                 parametros      :   {},
-                type            :   'post',                
-                dataType        :   '',                     
-                resposta        :   '#conteudo',           
-                async           :   true,                   
+                type            :   'post',
+                dataType        :   '',
+                resposta        :   '#conteudo',
+                async           :   true,
                 funcaoRetorno   :   function (resposta){
                     $(this.resposta).html(resposta);
-                }, 
+                },
                 executar        :   function(dados){
                     this.refineParametrosObj(dados);
                     var esteObj = this;

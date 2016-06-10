@@ -101,7 +101,7 @@
 
     <?php //require_once "inc/cabecalho.php";?>
     <div id="formNovo">
-        <form id="formAreaCultural" action="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'salvar-area-cultural'));?>" method="post">
+        <form id="formAreaCultural" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvar-area-cultural'));?>" method="post">
             <table class="tabela">
                 <input type="hidden" name="agente" id="agente" value="<?php echo $this->id; ?>" />
                 <th colspan="2">Dados do Proponente</th>

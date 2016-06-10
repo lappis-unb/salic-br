@@ -6,7 +6,7 @@
  *  2. O Projeto tem que estar Aprovado (SAC.dbo.Aprovacao):
  * 		2.1. Os dados da Portaria tem que estar preenchidos
  * 		2.2. O Tipo de Aprovação deve ser 1
- *  3. Os Projetos devem estar vinculados ao Proponente/Responsável/Procurador 
+ *  3. Os Projetos devem estar vinculados ao Proponente/Responsável/Procurador
  * @author emanuel.sampaio <emanuelonline@gmail.com>
  * @since 30/03/2012
  * @version 1.0
@@ -190,8 +190,8 @@ class ReadequacaoController extends GenericControllerNew
 
 
 	/**
-	 * Método que retorna o tipo de readequação.  
-	 * O tipo é definido com base no valor aprovado do projeto e no valor que está sendo solicitado pelo proponente na readequação: 
+	 * Método que retorna o tipo de readequação.
+	 * O tipo é definido com base no valor aprovado do projeto e no valor que está sendo solicitado pelo proponente na readequação:
 	 * - Caso o Valor Solicitado seja menor que o Valor Aprovado, o tipo será: redução;
 	 * - Caso o Valor Solicitado seja maior que o Valor Aprovado, o tipo será: complementação;
 	 * - Caso o Valor Solicitado seja igual ao Valor Aprovado, o tipo será: remanejamento.
@@ -362,7 +362,7 @@ class ReadequacaoController extends GenericControllerNew
 		ini_set('memory_limit', '-1');
 
 		// objetos pré-carregados inicialmente
-		$this->Agentes                  = new Agentes();
+		$this->Agentes                  = new Agente_Model_Agentes();
 		$this->Visao                    = new Visao();
 		$this->Projetos                 = new Projetos();
 		$this->tbVinculo                = new TbVinculo();
@@ -590,7 +590,7 @@ class ReadequacaoController extends GenericControllerNew
 	 * @return void
 	 */
 	public function proponenteAction() {
-            
+
             try {
                 // verifica se o usuário logado tem permissão para acessar o projeto
                 $this->verificarPermissaoAcesso(false, true, false);
