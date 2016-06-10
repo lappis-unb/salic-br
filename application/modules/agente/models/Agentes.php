@@ -1,23 +1,52 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Agentes
  *
  * @author augusto
+ * @author woeurner <wouerner@gmail.com>
  */
 
 class Agente_Model_Agentes extends GenericModel {
 
+    /**
+     * _banco
+     *
+     * @var bool
+     * @access protected
+     */
     protected $_banco = 'Agentes';
+
+    /**
+     * _name
+     *
+     * @var bool
+     * @access protected
+     */
     protected $_name = 'Agentes';
+
+    /**
+     * _schema
+     *
+     * @var string
+     * @access protected
+     */
     protected $_schema = 'dbo';
+
+    /**
+     * _primary
+     *
+     * @var bool
+     * @access protected
+     */
     protected $_primary = 'idAgente';
 
+    /**
+     * BuscarComponente
+     *
+     * @access public
+     * @return void
+     */
     public function BuscarComponente() {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -36,6 +65,13 @@ class Agente_Model_Agentes extends GenericModel {
         return $this->fetchAll($select);
     }
 
+    /**
+     * BuscaAgente
+     *
+     * @param bool $cnpjcpf
+     * @access public
+     * @return void
+     */
     public function BuscaAgente($cnpjcpf=null) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -44,10 +80,16 @@ class Agente_Model_Agentes extends GenericModel {
         );
 
         $select->where('A.CNPJCPF = ?', $cnpjcpf);
-//        xd($select->assemble());
         return $this->fetchAll($select);
     }
 
+    /**
+     * inserirAgentes
+     *
+     * @param mixed $dados
+     * @access public
+     * @return void
+     */
     public function inserirAgentes($dados) {
         $insert = $this->insert($dados);
         return $insert;
@@ -70,19 +112,23 @@ class Agente_Model_Agentes extends GenericModel {
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-//xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
+    /**
+     * buscarFornecedor
+     *
+     * @param mixed $where
+     * @access public
+     * @return void
+     */
     public function buscarFornecedor($where) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
                 array('A' => $this->_name), array('A.CNPJCPF', 'A.idAgente')
         );
-//        $select->joinInner(
-//                array('U' => 'vwUsuariosOrgaosGrupos'), 'U.usu_identificacao = A.CNPJCPF', array(), 'tabelas.dbo'
-//        );
+
         $select->joinInner(
                 array('N' => 'Nomes'), 'N.idAgente = A.idAgente', array('N.Descricao AS nome')
         );
@@ -94,11 +140,17 @@ class Agente_Model_Agentes extends GenericModel {
         $select->group('N.Descricao');
 
         $select->order('N.Descricao');
-//        xd($select->assemble());
 
         return $this->fetchAll($select);
     }
 
+    /**
+     * buscarFornecedorFiscalizacao
+     *
+     * @param mixed $where
+     * @access public
+     * @return void
+     */
     public function buscarFornecedorFiscalizacao($where) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -119,11 +171,20 @@ class Agente_Model_Agentes extends GenericModel {
         $select->group('N.Descricao');
 
         $select->order('N.Descricao');
-//        xd($select->assemble());
 
         return $this->fetchAll($select);
     }
 
+    /**
+     * buscarAgenteVinculoResponsavel
+     *
+     * @param bool $where
+     * @param bool $order
+     * @param mixed $tamanho
+     * @param mixed $inicio
+     * @access public
+     * @return void
+     */
     public function buscarAgenteVinculoResponsavel($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
         $slct = $this->select();
         $slct->distinct();
@@ -144,10 +205,19 @@ class Agente_Model_Agentes extends GenericModel {
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-//        xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
+    /**
+     * buscarAgenteVinculoProponente
+     *
+     * @param bool $where
+     * @param bool $order
+     * @param mixed $tamanho
+     * @param mixed $inicio
+     * @access public
+     * @return void
+     */
     public function buscarAgenteVinculoProponente($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
         $slct = $this->select();
@@ -184,10 +254,17 @@ class Agente_Model_Agentes extends GenericModel {
         {
             $slct->where($coluna, $valor);
         }
-//        xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
+    /**
+     * buscarNovoProponente
+     *
+     * @param bool $where
+     * @param mixed $idResponsavel
+     * @access public
+     * @return void
+     */
     public function buscarNovoProponente($where=array(), $idResponsavel)
     {
         $slct = $this->select();
@@ -214,12 +291,15 @@ class Agente_Model_Agentes extends GenericModel {
         {
             $slct->where($coluna, $valor);
         }
-        //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
-
-
+    /**
+     * todosPareceristas
+     *
+     * @access public
+     * @return void
+     */
     public function todosPareceristas() {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -235,10 +315,16 @@ class Agente_Model_Agentes extends GenericModel {
         $slct->where('n.TipoNome = ?', 18);
 
         $slct->order('n.Descricao');
-        //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
+    /**
+     * pareceristasDoOrgao
+     *
+     * @param mixed $idOrgao
+     * @access public
+     * @return void
+     */
     public function pareceristasDoOrgao($idOrgao) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -258,10 +344,16 @@ class Agente_Model_Agentes extends GenericModel {
         }
 
         $slct->order('n.Descricao');
-        //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
+    /**
+     * consultaPareceristasDoOrgao
+     *
+     * @param bool $idOrgao
+     * @access public
+     * @return void
+     */
     public function consultaPareceristasDoOrgao($idOrgao = null) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -290,19 +382,19 @@ class Agente_Model_Agentes extends GenericModel {
             $slct->where($coluna, $valor);
         }
 
-
-        /*$dadosOr['u.gru_codigo = ?'] = 105;
-
-        foreach ($dadosOr as $coluna => $valor) {
-            $slct->orWhere($coluna, $valor);
-        }*/
-
         $slct->order('n.Descricao');
-//        xd($slct->assemble());
-//        return $slct->assemble();
         return $this->fetchAll($slct);
     }
 
+    /**
+     * buscarPareceristas
+     *
+     * @param mixed $idOrgao
+     * @param mixed $idArea
+     * @param mixed $idSegmento
+     * @access public
+     * @return void
+     */
     public function buscarPareceristas($idOrgao, $idArea, $idSegmento) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -341,11 +433,18 @@ class Agente_Model_Agentes extends GenericModel {
         }
 
         $slct->order('n.Descricao');
-        //xd($slct->assemble());
 
         return $this->fetchAll($slct);
     }
 
+    /**
+     * consultaPareceristasPainel
+     *
+     * @param mixed $nome
+     * @param mixed $cpf
+     * @access public
+     * @return void
+     */
     public function consultaPareceristasPainel($nome, $cpf) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -369,11 +468,16 @@ class Agente_Model_Agentes extends GenericModel {
 
         $slct->distinct();
         $slct->order('n.Descricao');
-        //xd($slct->assemble());
-//        return $slct->assemble();
         return $this->fetchAll($slct);
     }
 
+    /**
+     * dadosParecerista
+     *
+     * @param mixed $where
+     * @access public
+     * @return void
+     */
     public function dadosParecerista($where) {
 
         $select = $this->select();
@@ -450,9 +554,15 @@ class Agente_Model_Agentes extends GenericModel {
         return $this->fetchRow($select);
     }
 
+    /**
+     * buscarAgentesCpfVinculo
+     *
+     * @param bool $where
+     * @access public
+     * @return void
+     */
     public function buscarAgentesCpfVinculo($where = array()) {
         $sl = $this->select();
-//        $sl->distinct();
         $sl->setIntegrityCheck(false);
         $sl->from(
                 array('ag' => $this->_name), array('ag.CNPJCPF', 'ag.idAgente')
@@ -467,10 +577,19 @@ class Agente_Model_Agentes extends GenericModel {
         foreach ($where as $key => $valor) {
             $sl->where($key, $valor);
         }
-//        xd($sl->assemble());
         return $this->fetchAll($sl);
     }
 
+    /**
+     * buscarDirigentes
+     *
+     * @param bool $where
+     * @param bool $order
+     * @param mixed $tamanho
+     * @param mixed $inicio
+     * @access public
+     * @return void
+     */
     public function buscarDirigentes($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
         $slct = $this->select();
@@ -499,10 +618,20 @@ class Agente_Model_Agentes extends GenericModel {
 
         //adicionando linha order ao select
         $slct->order($order);
-//        xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
+    /**
+     * buscarUfMunicioAgente
+     *
+     * @param bool $where
+     * @param bool $order
+     * @param mixed $tamanho
+     * @param mixed $inicio
+     * @param bool $retornaSelect
+     * @access public
+     * @return void
+     */
     public function buscarUfMunicioAgente($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $retornaSelect = false)
     {
         $slct = $this->select();
@@ -541,10 +670,17 @@ class Agente_Model_Agentes extends GenericModel {
             return $this->fetchAll($slct);
     }
 
-    /*===========================================================================*/
-    /*====================== ABAIXO - METODOS DA CNIC ===========================*/
-    /*===========================================================================*/
 
+    /**
+     * buscarAgenteVinculo
+     *
+     * @param bool $where
+     * @param bool $order
+     * @param mixed $tamanho
+     * @param mixed $inicio
+     * @access public
+     * @return void
+     */
     public function buscarAgenteVinculo($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
         $slct = $this->select();
@@ -559,10 +695,17 @@ class Agente_Model_Agentes extends GenericModel {
         {
             $slct->where($coluna, $valor);
         }
-        //xd($slct->query());
         return $this->fetchAll($slct);
     }
 
+    /**
+     * gerenciarResponsaveisListas
+     *
+     * @param mixed $siVinculo
+     * @param mixed $idUsuario
+     * @access public
+     * @return void
+     */
     public function gerenciarResponsaveisListas($siVinculo, $idUsuario)
     {
         $a = $this->select();
@@ -586,10 +729,6 @@ class Agente_Model_Agentes extends GenericModel {
         $a->where('c.IdUsuario = ?', $idUsuario);
         $a->where('b.siVinculo = ?', $siVinculo);
         $a->where(new Zend_Db_Expr('a.CNPJCPF <> c.Cpf'));
-        //************************************************//
-
-
-
 
         $b = $this->select();
         $b->setIntegrityCheck(false);
@@ -616,9 +755,6 @@ class Agente_Model_Agentes extends GenericModel {
         $b->where('c.IdUsuario = ?', $idUsuario);
         $b->where('b.siVinculo = ?', $siVinculo);
         $b->where(new Zend_Db_Expr('a.CNPJCPF = c.Cpf'));
-        //************************************************//
-
-
 
         $c = $this->select();
         $c->setIntegrityCheck(false);
@@ -658,18 +794,21 @@ class Agente_Model_Agentes extends GenericModel {
         $c->where('f.IdUsuario = ?', $idUsuario);
         $c->where('b.siVinculo = ?', $siVinculo);
         $c->where(new Zend_Db_Expr('a.CNPJCPF <> f.Cpf'));
-        //************************************************//
-
 
         $slctUnion = $this->select()
                             ->union(array('('.$a.')', '('.$b.')', '('.$c.')'))
                             ->order('Nome');
 
-//        xd($slctUnion->assemble());
         return $this->fetchAll($slctUnion);
     }
 
-
+    /**
+     * listarVincularPropostaCombo
+     *
+     * @param mixed $idResponsavel
+     * @access public
+     * @return void
+     */
     public function listarVincularPropostaCombo($idResponsavel)
     {
         $slct = $this->select();
@@ -697,60 +836,6 @@ class Agente_Model_Agentes extends GenericModel {
         $slct->where('c.IdUsuario = ?', $idResponsavel);
         $slct->where('b.siVinculo = ?', 2);
         $slct->where(new Zend_Db_Expr('a.CNPJCPF = c.Cpf'));
-//        xd($slct->assemble());
         return $this->fetchAll($slct);
     }
-
-//    public function gerenciarResponsaveisListas($siVinculo, $idUsuario)
-//    {
-//        $b = $this->select();
-//        $b->setIntegrityCheck(false);
-//        $b->from(
-//                array('a' => $this->_name),
-//                array('CNPJCPF as CNPJCPFProponente')
-//        );
-//        $b->joinInner(
-//                array('b' => 'tbVinculo'), "a.idAgente = b.idAgenteProponente",
-//                array('idVinculo', 'siVinculo', 'idUsuarioResponsavel'), 'AGENTES.dbo'
-//        );
-//        $b->joinInner(
-//                array('c' => 'Vinculacao'), "b.idAgenteProponente = c.idVinculoPrincipal",
-//                array(), 'AGENTES.dbo'
-//        );
-//        $b->joinInner(
-//                array('d' => 'Visao'), "c.idAgente = d.idAgente",
-//                array(), 'AGENTES.dbo'
-//        );
-//        $b->joinInner(
-//                array('e' => 'Agentes'), "d.idAgente = e.idAgente",
-//                array(), 'AGENTES.dbo'
-//        );
-//        $b->joinInner(
-//                array('f' => 'SGCacesso'), "e.CNPJCPF = f.Cpf",
-//                array('IdUsuario'), 'CONTROLEDEACESSO.dbo'
-//        );
-//        $b->joinInner(
-//                array('g' => 'SGCacesso'), "g.IdUsuario = b.idUsuarioResponsavel",
-//                array('Cpf as CPFResponsavel', 'Nome as NomeResponsavel'), 'CONTROLEDEACESSO.dbo'
-//        );
-//        $b->joinInner(
-//                array('h' => 'Nomes'), "c.idVinculoPrincipal = h.idAgente",
-//                array('Descricao as Proponente'), 'AGENTES.dbo'
-//        );
-//        $b->where('d.Visao = ?', 198);
-//        $b->where('f.IdUsuario = ?', $idUsuario);
-//        $b->where('b.siVinculo = ?', $siVinculo);
-//        $b->where(new Zend_Db_Expr('a.CNPJCPF <> f.Cpf'));
-//
-//
-//        $slctUnion = $this->select()
-//                            ->union(array('('.$a.')', '('.$b.')'))
-//                            ->order('Nome');
-
-//        xd($b->assemble());
-//        return $this->fetchAll($b);
-//    }
-
 }
-
-?>
