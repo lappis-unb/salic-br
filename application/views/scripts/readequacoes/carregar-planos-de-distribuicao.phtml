@@ -200,7 +200,6 @@
 		    type: 'POST',
 		    url: '<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'incluir-planos-de-distribuicao'), '', true); ?>?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>',
 		    data: {
-			idPlanoDistribuicao: idPlanoDistribuicao,
 			newPlanoDistribuicao: $('#idProduto-' + idPlanoDistribuicao).val(),
 			newArea: $('#areaCultural-' + idPlanoDistribuicao).val(),
 			newSegmento: $('#segmentoCultural-' + idPlanoDistribuicao).val(),
@@ -212,6 +211,7 @@
 			newVlNormal: $('#preconormal-' + idPlanoDistribuicao).val(),
 			newVlPromocional: $('#precopromocional-' + idPlanoDistribuicao).val(),
 			newPosicaoLogomarca: $('#newPosicaoLogomarca-' + idPlanoDistribuicao).val(),
+			idReadequacao: $('#idReadequacao').val()
   		    },
 		    success: function(data) {
 			var mensagem = "";
@@ -224,6 +224,9 @@
 			} else {
 			    mensagem = "<div>Erro na alteração do plano de distribuição.</div>";
 			    $('#mensagem').addClass('msgERROR');			    
+			}
+			if (data.hasOwnProperty("idReadequacao")) {
+			    $('#idReadequacao').val(data.idReadequacao);
 			}
 			$('#mensagem').html(mensagem);
 		    }
@@ -329,7 +332,7 @@
 		  <form name="frmPlanoDistribuicao-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>" id="frmPlanoDistribuicao-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>" method="post">
     <input type="hidden" name="idPlanoDistribuicao" id="idPlanoDistribuicao-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>" value="<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>">
     <input type="hidden" name="idProjeto" id="idProjeto-<?php echo $planoDistribuicao->idPlanoDistribuicao;?>" value="<?php echo $planoDistribuicao->idProjeto; ?>">
-    <input type="hidden" name="idProduto" id="idProduto-<?php echo $planoDistribuicao->idPlanoDistribuicao;?>" value="<?php echo $planoDistribuicao->idProduto; ?>">				   
+    <input type="hidden" name="idProduto" id="idProduto-<?php echo $planoDistribuicao->idPlanoDistribuicao;?>" value="<?php echo $planoDistribuicao->idProduto; ?>">
     <input type="hidden" name="pronac" id="pronac-<?php echo $planoDistribuicao->idPlanoDistribuicao;?>" value="<?php echo $this->pronac; ?>">
     <input type="hidden" name="newPosicaoLogomarca" id="newPosicaoLogomarca-<?php echo $planoDistribuicao->idPlanoDistribuicao;?>" value="<?php echo $planoDistribuicao->idPosicaoDaLogo; ?>">
 
