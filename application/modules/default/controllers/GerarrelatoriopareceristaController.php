@@ -472,7 +472,7 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
         $this->view->Orgaos         =   $OrgaosDAO->buscar(array('Status = ?'=>0,'Vinculo = ?'=>1));
         $this->view->Pareceristas   =   $NomesDAO->buscarPareceristas();
         	// O mesmo do Manter Agentes
-       		$this->view->comboareasculturais   = ManterAgentesDAO::buscarAreasCulturais();
+       		$this->view->comboareasculturais   = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
 
         $this->view->Areas          =   $AreaDAO->buscar();
         $this->view->Segmento       =   $SegmentoDAO->buscar(array('stEstado = ?'=>1));

@@ -2,15 +2,14 @@
 /**
  * ManterAgentesDAO
  * @author Equipe RUP - Politec
+ * @author wouerner <wouerner@gmail.com>
  * @since 09/08/2010
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
  */
 
-class ManterAgentesDAO extends Zend_Db_Table
+class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
 {
 	/**
 	 * Método para buscar agentes

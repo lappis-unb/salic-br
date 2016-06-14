@@ -63,7 +63,7 @@ class RastrearagenteController extends GenericControllerNew {
             parent::message("Por favor informe o CPF ou CNPJ.", "/Rastrearagente", "ERROR");
         }
         $CpfCnpj = str_replace(array(".", "-", "/"), array("", "", ""), $CpfCnpj); //removendo mascara de CPF e CNPJ
-        $agente = ManterAgentesDAO::buscarAgentes($CpfCnpj);
+        $agente = Agente_Model_ManterAgentesDAO::buscarAgentes($CpfCnpj);
         if(count($agente)<1) {
             parent::message("Nenhum agente encontrado com o CPF/CNPJ {$get->CpfCnpj}", "/Rastrearagente", "ALERT");
         }

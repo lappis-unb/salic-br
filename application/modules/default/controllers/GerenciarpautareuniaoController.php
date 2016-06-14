@@ -1,5 +1,5 @@
 <?php
-/*  
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -13,7 +13,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
 
     private $bln_readequacao = "false";
     private $intTamPag = 10;
-    
+
     /**
      * Reescreve o metodo init()
      * @access public
@@ -53,7 +53,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         parent::init(); // chama o init() do pai GenericControllerNew
         /**** CODIGO DE READEQUACAO ****/
         $this->view->bln_readequacao = "false";
-                
+
         $idpronac = null;
         $idpronac = $this->_request->getParam('idpronac');
         //VERIFICA SE O PROJETO ESTA NA FASE DE READEQUACAO
@@ -64,7 +64,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
             $arrBusca['pa.stPedidoAlteracao = ?'] = 'I'; //pedido enviado pelo proponente
             $arrBusca['pa.siVerificacao = ?']     = '2'; //pedido ja finalizado pelo componente
             $arrBusca['paxta.tpAlteracaoProjeto = ?']='10'; //tipo Readequacao de Itens de Custo
-            $rsPedidoAlteraco = $tbPedidoAlteracao->buscarPedidoAlteracaoPorTipoAlteracao($arrBusca, array('dtSolicitacao DESC'))->current(); 
+            $rsPedidoAlteraco = $tbPedidoAlteracao->buscarPedidoAlteracaoPorTipoAlteracao($arrBusca, array('dtSolicitacao DESC'))->current();
             if(!empty($rsPedidoAlteraco)){
                 $this->bln_readequacao = "true";
                 $this->view->bln_readequacao = "true";
@@ -76,9 +76,9 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
 // fecha metodo init()
 
     public function gerenciarpautareuniaoAction() {
-        
+
         $post = Zend_Registry::get('post');
-        
+
         $pauta = new Pauta();
         $reuniao = new Reuniao();
         $raberta = $reuniao->buscarReuniaoAberta();
@@ -120,7 +120,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $this->view->statusplenaria = $raberta['stPlenaria'] == 'N' ? 'Plen&aacute;ria N&atilde;o Iniciada' : 'Plen&aacute;ria Iniciada';
         $this->view->Plenaria = $raberta;
         $this->view->projetosnaoplenaria = $plenario['naoplenario'];
-        
+
         //BUSCAR PROJETOS DE READEQUACAO
         $readequacao = $this->_request->getParam('readequacao');
 
@@ -129,10 +129,10 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         }else{
             $this->view->readequacao = "false";
         };
-        
+
         //BUSCAR PROJETOS NAO SUBMETIDOS A PLENARIA
         $plenaria = $this->_request->getParam('plenaria');
-        
+
         if(empty($plenaria) || $plenaria == "true"){
             $this->view->plenaria = "true";
         }else{
@@ -152,7 +152,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
 
             //VERIFICA SE HA VOTANTES CADASTRADOS
             if ($buscarvotantes->count() > 0) {
-                
+
                 //VERIFICA SE ESTA ENCERRANDO A PELNARIA
                 if ($recebidoPost->reuniao == "E") {
                     $reuniaoatual = $reuniao->buscarReuniaoAberta();
@@ -189,33 +189,33 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                                 $dados = array('idNrReuniao' => $dadosproximareuniao->idNrReuniao);
                                 $alterarpauta = $pauta->alterar($dados, 'idNrReuniao = ' . $pautaproximareuniao->idNrReuniao . ' and IdPRONAC = ' . $pautaproximareuniao->IdPRONAC);
                             }
-                            
+
                             $tbRecurso = new tbRecurso();
                             $tbRecurso->atualizarRecursosProximaPlenaria($recebidoPost->idReuniao);
                             $tbRecurso->atualizarStatusRecursosNaoSubmetidos($recebidoPost->idReuniao);
-                            
+
                             $tbReadequacoes = new tbReadequacao();
                             $tbReadequacoes->atualizarReadequacoesProximaPlenaria($recebidoPost->idReuniao);
                             $tbReadequacoes->atualizarStatusReadequacoesNaoSubmetidos($recebidoPost->idReuniao);
-                            
+
                             //CHAMA SP DE ENCERRAMENTO DA CNIC
                             $this->paEncerrarCnic($_POST['idReuniao']);
-                            
+
                             parent::message("Vota&ccedil;&atilde;o encerrada com o sucesso!", "gerenciarpautareuniao/gerenciarpresidenteemreuniao", "CONFIRM");
 
                         }else{
                             parent::message("Ainda existe uma vota&ccedil;&atilde;o em aberto, favor esperar finaliza&ccedil;&atilde;o ou cancelar a vota&ccedil;&atilde;o do projeto!", "gerenciarpautareuniao/gerenciarpresidenteemreuniao", "ERROR");
                         }
-                        
+
                     }else{
                         parent::message("A pr&oacute;xima reuni&atilde;o ainda n&atilde;o foi cadastrada. &Eacute; necess&aacute;rio cadastr&aacute;-la para encerrar a Plen&aacute;ria.", "gerenciarpautareuniao/gerenciarpresidenteemreuniao", "ERROR");
                     }
 
                 //INICIANDO - ABRINDO A PLENARIA
                 }else{
-                    
+
                     try{
-                        
+
                         $dados = array(
                             'stPlenaria' => $recebidoPost->reuniao,
                             'stEstado' => $recebidoPost->reuniao == 'E' ? 1 : 0,
@@ -237,12 +237,12 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                         $escreve = fwrite($fp, json_encode($dadosPlenaria));
                         fclose($fp);
                         parent::message("Plen&aacute;ria iniciada com sucesso! Aguarde os 10 minutos para o in&iacute;cio da plen&aacute;ria!", "gerenciarpautareuniao/gerenciarpresidenteemreuniao", "CONFIRM");
-                        
+
                     } catch (Exception $e) {
-                        
+
                         parent::message("Erro ao iniciar a Plen&aacute;ria! ".$e->getMessage(), "gerenciarpautareuniao/gerenciarpresidenteemreuniao", "ERROR");
                     }
-                    
+
                 }
             } else {
                 parent::message("Favor solicitar ao Secret&aacute;rio CNIC que inclua os votantes e possa iniciar a Plen&aacute;ria!", "gerenciarpautareuniao/gerenciarpresidenteemreuniao", "ERROR");
@@ -330,7 +330,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
             $this->view->projetosplenaria = $plenario['plenario'];
             $this->view->projetosnaoplenaria = $plenario['naoplenario'];
         }
-            
+
         //BUSCAR PROJETOS DE READEQUACAO
         $readequacao = $this->_request->getParam('readequacao');
 
@@ -339,7 +339,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         }else{
             $this->view->readequacao = "false";
         };
-        
+
         //BUSCAR PROJETOS NAO SUBMETIDOS A PLENARIA
         $plenaria = $this->_request->getParam('plenaria');
 
@@ -349,7 +349,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
             $this->view->plenaria = "false";
         };
     }
-    
+
     public function projetosSubmetidosAPlenariaAction() {
         $pauta = new Pauta();
         $reuniao = new Reuniao();
@@ -382,19 +382,19 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
             try{
                 $sp = new paVoltarProjetoFinalizadoComponente();
                 $ret = $sp->execSP($pronac);
-                
+
                 if(!is_object($ret)){
                     throw new Exception ($ret);
                 }
-                
+
                 $arrRetorno['error'] = false;
                 $arrRetorno['msg']   = 'Projeto devolvido com sucesso!';
                 echo json_encode($arrRetorno);
                 die;
-                
+
             }
             catch(Exception $e){
-                
+
                 $arrRetorno['error'] = true;
                 $arrRetorno['msg']   = $e->getMessage();
                 echo json_encode($arrRetorno);
@@ -411,7 +411,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                 $r = $tbRecurso->find(array('idRecurso = ?'=>$idRecurso))->current();
                 $r->siRecurso = 7;
                 $r->save();
-                
+
                 $arrRetorno['error'] = false;
                 $arrRetorno['msg']   = 'Projeto devolvido com sucesso!';
                 echo json_encode($arrRetorno);
@@ -478,7 +478,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
 
         $this->view->projetosplenaria = $plenario['plenario'];
         $this->view->projetosnaoplenaria = $plenario['naoplenario'];
-        
+
         //BUSCAR PROJETOS DE READEQUACAO
         $readequacao = $this->_request->getParam('readequacao');
 
@@ -487,7 +487,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         }else{
             $this->view->readequacao = "false";
         };
-        
+
         //BUSCAR PROJETOS NAO SUBMETIDOS A PLENARIA
         $plenaria = $this->_request->getParam('plenaria');
 
@@ -502,7 +502,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 
         $idReuniao = $this->_request->getParam("idReuniao");
-        
+
         //RECUPERA ID DA REUNIAO ATUAL (ABERTA)
         $tblReuniao = new tbreuniao();
         $rsReuniao = $tblReuniao->buscar(array("stEstado=?"=>0))->current();
@@ -523,7 +523,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $arrIdAreas = explode(",", $idsAreas);
 
         $tblDistribuicao = new tbDistribuicaoProjetoComissao();
-        
+
         //ANALISADOS
         $arrBusca =array();
         $arrBusca['ar.Codigo IN (?)'] = $arrIdAreas;
@@ -586,7 +586,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $ordem = array('13'); //ORDENACAO: area cultural
         $tblPauta = new tbPauta();
         $rsProjAprovados = $tblPauta->buscarProjetosAvaliados($arrBusca, $ordem, null, null, null);
-        
+
         $arrGrid3 = array();
         $valorAprovado = 0;
         $valorTotalAprovado = 0;
@@ -619,7 +619,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                 {
                     $arrGrid4[$projeto->DescArea]['idPronac'][]     = $projeto->IdPronac;
                     $arrGrid4[$projeto->DescArea]['pronac'][]       = $projeto->Pronac;
-                    
+
 					/**** CODIGO DE READEQUACAO ****/
                     $rs = array();
                     $rsReadequacao = array();
@@ -630,14 +630,14 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                     $arrBuscaRead['pa.stPedidoAlteracao = ?'] = 'I'; //pedido enviado pelo proponente
                     $arrBuscaRead['pa.siVerificacao = ?']     = '1';
                     $arrBuscaRead['paxta.tpAlteracaoProjeto = ?']='10'; //tipo Readequacao de Itens de Custo
-                    $rsReadequacao = $tbPedidoAlteracao->buscarPedidoAlteracaoPorTipoAlteracao($arrBuscaRead)->current(); 
+                    $rsReadequacao = $tbPedidoAlteracao->buscarPedidoAlteracaoPorTipoAlteracao($arrBuscaRead)->current();
                     if(!empty($rsReadequacao)){
                         $arrBuscaProjRead = $arrBusca;
                         $arrBuscaProjRead['p.idPronac=?']=$projeto->IdPronac;
                         $rs = $tblPauta->buscarProjetosAvaliados($arrBuscaProjRead, $ordem, null, null, null, true)->current();
                     }
                     /***** fim - verifica se o projeto e de readequacao **************/
-                    
+
                     if(isset($rs) && !empty($rsReadequacao)){
                         $arrGrid4[$projeto->DescArea]['vlSolicitado'][] = $rs->VlSolicitado;
                         $arrGrid4[$projeto->DescArea]['vlSugerido'][]   = $rs->VlSugerido;
@@ -649,7 +649,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                     }
 					/**** FIM - CODIGO DE READEQUACAO ****/
                 }
-                
+
                 $valorAprovado = $projeto->VlAprovado;
                 $valorTotalAprovado = $valorTotalAprovado + $valorAprovado;
             }
@@ -667,7 +667,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
 
     public function paineisdareuniaoAction() {
 
-        
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess?o com o grupo ativo
         $reuniao = new Reuniao();
         $buscarReuniaoAberta = $reuniao->buscarReuniaoAberta();
@@ -765,39 +765,39 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
 
     public function votacaoAction() {
         $this->_helper->layout->disableLayout();
-        
+
         $votantes = new Votante();
         $votacao = new Votacao();
         $reuniao = new Reuniao();
         $raberta = $reuniao->buscarReuniaoAberta();
         $reuniaoaberta = $raberta['idNrReuniao'];
         $idpronac = $_POST['idpronac'];
-        
+
         if ($_POST['acao'] == 'iniciar') {
             $buscarvotantes = $votantes->selecionarvotantes($reuniaoaberta);
-            
+
             try {
                 //verifica se ja existe votacao para este projeto nesta reuniao
                 $where = array();
                 $where['IdPRONAC = ?'] = $idpronac;
                 $where['idNrReuniao = ?'] = $reuniaoaberta;
                 $rsVotacao = $votacao->buscar($where)->current();
-                
+
                 if(!empty($rsVotacao) && $this->_request->getParam("tipo") != 'readequacao'){
                     echo json_encode(array('error' => true, 'descricao' => 'J&aacute; existe uma vota&ccedil;&atildeo em aberto para este Pronac. Favor encerrar a vota&ccedil;&atildeo antes de iniciar uma outra.'));
 
                 }else{
-                    
+
                     $tpVotacao = 1;
                     $idtipo = NULL;
-                    
+
                     if($this->_request->getParam("tipo") == 'recurso'){
                         $tpVotacao = 2;
                     } else if($this->_request->getParam("tipo") == 'readequacao'){
                         $tpVotacao = 3;
                         $idtipo = $_POST['idtipo'];
                     }
-                    
+
                     //Inserindo registros na tabela tbVotacao para recber o voto de cada participante da plenaria
                     foreach ($buscarvotantes as $adicionarvotacao) {
                         $dadosinserirvotacao = array(
@@ -815,7 +815,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                     if (file_exists($arquivo)) {
                         unlink($arquivo);
                     }
-                    
+
                     $dadosvotacao = array(
                         'idpronac' => $_POST['idpronac'],
                         'status' => "aberta",
@@ -849,17 +849,17 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         }
         die;
     }
-    
+
     public function verificaArquivosVotacaoAction() {
-        
+
         $this->_helper->layout->disableLayout();
-        
+
         //********* VERIFICA QUANTOS ARQUIVOS DE VOTACAO FORAM CRIADOS (votacao_XXXXX.txt) *******/
         $qtdeArquivos = 0;
         $arrPronacs = array();
         $diretorio =  getcwd() . "/public/plenaria/";
         try {
-            if ($handle = opendir($diretorio)) { 
+            if ($handle = opendir($diretorio)) {
                 while (false !== ($file = readdir($handle))) {
                     if ($file != "." && $file != "..") {
                         $arq = strstr($file, 'votacao_');
@@ -868,15 +868,15 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                             $arr = explode('_',$arq);
                             $arr = explode('.',$arr[1]);
                             $arrPronacs[] = $arr[0]; //recupera valor do pronac que esta no nome do arquivo
-                        } 
+                        }
                     }
                 }
                 closedir($handle); //Fecha a manipulacao
             }
             echo json_encode(array('error' => false, 'qtdeArquivos' => $qtdeArquivos, 'arrPronacs' => $arrPronacs));
-            
+
         } catch (Exception $e) {
-            
+
             echo json_encode(array('error' => true, 'qtdeArquivos' => 0, 'arrPronacs' => $arrPronacs));
         }
         die;
@@ -1002,23 +1002,23 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
         $idagente = $idagente['idAgente'];
-        
+
         $reuniao = new Reuniao();
         $buscarReuniaoaberta = $reuniao->buscarReuniaoAberta();
         $reuniaoaberta = $buscarReuniaoaberta['idNrReuniao'];
-        
+
         $votacao = new Votacao();
         $consolidacaoVotacao = new Consolidacaovotacao();
-        
+
         $tbVotantes = new Votante();
         $rsVotante = $tbVotantes->buscar(array('idAgente=?'=>$idagente, 'idReuniao=?'=>$reuniaoaberta))->current();
-        
+
         if(!empty($rsVotante)){
             $bln_liberarVoto = true;
         }else{
             $bln_liberarVoto = false;
         }
-        
+
         $caminhoverificarvotacao = getcwd() . "/public/plenaria/votacao.txt";
         //$caminhoverificarvotacao = getcwd() . "/public/plenaria/votacao_".$_POST['idpronac'].".txt"; //codigo mantido para historico
         if (file_exists($caminhoverificarvotacao)) {
@@ -1032,7 +1032,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
             }
             $dados = json_decode($verificavotacao, true);
             $dados['bln_liberarvoto'] = $bln_liberarVoto; //adiciona informacao no array
-            
+
             $arrVotacao = array();
             $arrVotacao = $votacao->buscar(array('idAgente = ?' => $idagente, 'idNrReuniao = ?' => $reuniaoaberta, 'dtVoto is null' => '')); //dados da votacao aberta
             if ($arrVotacao->count() > 0)
@@ -1042,17 +1042,17 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                 }
                 $verificavotacao = json_encode($dados);
                 echo $verificavotacao;
-            } 
-            else 
+            }
+            else
             {
                 if(isset($dados['idtiporeadequacao'])){
                     $arrVotoComponenteLogado = $votacao->buscar(array('idAgente = ?' => $idagente, 'idNrReuniao = ?' => $reuniaoaberta, 'idPronac = ?' => $dados['idpronac'], 'tpTipoReadequacao = ?' => $dados['idtiporeadequacao']))->current(); //recupera voto do componente
                 } else {
                     $arrVotoComponenteLogado = $votacao->buscar(array('idAgente = ?' => $idagente, 'idNrReuniao = ?' => $reuniaoaberta, 'idPronac = ?' => $dados['idpronac']))->current(); //recupera voto do componente
                 }
-                
+
                 $arrVotacaoaberta = $votacao->buscar(array('idNrReuniao = ?' => $reuniaoaberta, 'dtVoto is null' => ''));
-                
+
                 $arrayBuscaConsolidacao = array();
                 $arrayBuscaConsolidacao['idNrReuniao = ?'] = $reuniaoaberta;
                 $arrayBuscaConsolidacao['IdPRONAC = ?'] = $dados['idpronac'];
@@ -1060,20 +1060,20 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                     $arrayBuscaConsolidacao['tpTipoReadequacao = ?'] = $dados['idtiporeadequacao'];
                 }
                 $ConsolidacaoVotacao = $consolidacaoVotacao->buscar($arrayBuscaConsolidacao);
-                
+
                 if ($arrVotacaoaberta->count() > 0){
                     $arrVotacaoaberta = $arrVotacaoaberta->current()->toArray();
                     if(isset($dados['idtiporeadequacao'])){
                         $dados['idpronac'] = $dados['idpronac'].'_'.$dados['idtiporeadequacao'];
                     }
                     echo json_encode(array('error' => false, 'stvoto' => 'ok', 'status' => 'aberta', 'idpronac' => $dados['idpronac'], 'tpvoto' => $arrVotoComponenteLogado['stVoto'], 'bln_liberarvoto' => $bln_liberarVoto));
-                    
+
                 } else if($ConsolidacaoVotacao->count() == 0) {
                     if(isset($dados['idtiporeadequacao'])){
                         $dados['idpronac'] = $dados['idpronac'].'_'.$dados['idtiporeadequacao'];
                     }
                     echo json_encode(array('error' => false, 'stvoto' => 'ok', 'status' => 'aberta', 'idpronac' => $dados['idpronac'], 'tpvoto' => $arrVotoComponenteLogado['stVoto'], 'bln_liberarvoto' => $bln_liberarVoto));
-                    
+
                 } else {
                     echo json_encode(array('error' => false, 'stvoto' => 'ok', 'status' => 'completa', 'idpronac' => $dados['idpronac'], 'tpvoto' => $arrVotoComponenteLogado['stVoto'], 'bln_liberarvoto' => $bln_liberarVoto));
                 }
@@ -1227,7 +1227,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $dadosparecerconsolidado['DtParecer'] = isset($analiseparecer[1]->DtParecer) ? $analiseparecer[1]->DtParecer : $analiseparecer[0]->DtParecer;
         $dadosparecerconsolidado['ParecerFavoravel'] = isset($analiseparecer[1]->ParecerFavoravel) ? $analiseparecer[1]->ParecerFavoravel : $analiseparecer[0]->ParecerFavoravel;
         $dadosparecerconsolidado['TipoParecer'] = isset($analiseparecer[1]->TipoParecer) ? $analiseparecer[1]->TipoParecer : $analiseparecer[0]->TipoParecer;
-        
+
         $dadosparecerconsolidado['ParecerParecerista'] = $analiseparecer[0]->ResumoParecer;
         $dadosparecerconsolidado['ParecerComponente'] = isset($analiseparecer[1]->ResumoParecer) ? $analiseparecer[1]->ResumoParecer : ' ';
         $dadosparecerconsolidado['Envioplenaria'] = trim(isset($buscarPauta['dsAnalise']) && $buscarPauta['dsAnalise']) == '' ? 'N&atilde;o existe justificativa para o envio deste projeto para plen&aacute;ria' : @$buscarPauta['dsAnalise'];
@@ -1236,7 +1236,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $this->view->idpronac = $idpronac;
         $this->view->projeto = $buscarPronac;
         $this->view->ResultRealizarAnaliseProjeto = $dadosparecerconsolidado;
-        
+
         /**** CODIGO DE READEQUACAO ****/
         /********** MODO ANTIGO ***************/
         //$fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
@@ -1249,14 +1249,14 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         //$this->view->valorcomponente = $valorplanilha['soma'];
         //$this->view->valorparecerista = $valorparecerista['soma'];
         /********** FIM - MODO ANTIGO ***************/
-        
+
         /********** MODO NOVO ***************/
         //TRATANDO SOMA DE PROJETO QUANDO ESTE FOR DE READEQUACAO
         $arrWhereSomaPlanilha = array();
         $arrWhereSomaPlanilha['idPronac = ?']=$idpronac;
         if($this->bln_readequacao == "false"){
             $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
-            $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);  
+            $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
             $valorparecerista = $planilhaprojeto->somarPlanilhaProjeto($idpronac, false);
             //$valorplanilha = $planilhaAprovacao->somarPlanilhaAprovacao($idpronac, 206, 'CO');
         }else{
@@ -1277,7 +1277,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
             $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
             $arrWhereOutrasFontes["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
             $outrasfontes = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereOutrasFontes);
-            
+
             $arrWherePlanilhaPA = $arrWhereSomaPlanilha;
             $arrWherePlanilhaPA['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
             $arrWherePlanilhaPA['tpPlanilha = ? ']='PA';
@@ -1287,7 +1287,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
             $arrWherePlanilhaPA["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
             $valorparecerista = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWherePlanilhaPA);
         }
-        
+
         $arrWhereSomaPlanilha = array();
         $arrWhereSomaPlanilha['idPronac = ?']=$idpronac;
         $arrWhereSomaPlanilha['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
@@ -1295,7 +1295,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $arrWhereSomaPlanilha['NrFonteRecurso = ? ']='109';
         $arrWhereSomaPlanilha['stAtivo = ? ']='S';
         $valorplanilha = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
-        
+
         $this->view->fontesincentivo = $fonteincentivo['soma'];
         $this->view->outrasfontes = $outrasfontes['soma'];
         $this->view->valorproposta = $fonteincentivo['soma'] + $outrasfontes['soma'];
@@ -1320,12 +1320,12 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $tbArea = new Area();
         $rsArea = $tbArea->buscar(array('Codigo=?'=>$buscarPronac['Area']))->current();
         $this->view->area = $rsArea->Descricao;
-        
+
         $tbSegmento = new Segmento();
         $rsSegmento = $tbSegmento->buscar(array('Codigo=?'=>$buscarPronac['Segmento']))->current();
         $this->view->segmento = $rsSegmento->Descricao;
     }
-    
+
     /**
      * Metodo com o parecer consolidado - Recursos
      * @access public
@@ -1335,14 +1335,14 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
     public function parecerconsolidadorecursosAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $idPronac = $_POST['idpronac'];
-        
+
         $tbRecurso = new tbRecurso();
         $dadosRecurso = $tbRecurso->buscar(array('IdPRONAC=?'=>$idPronac, 'siRecurso in (?)'=>array(8,9), 'stEstado=?'=>0))->current();
-        
+
         if($dadosRecurso){
             $dados = $tbRecurso->buscarDadosRecursos(array('idRecurso = ?'=>$dadosRecurso->idRecurso))->current();
             $this->view->dados = $dados;
-            
+
             $this->view->nmPagina = '';
             if($dados->siFaseProjeto == 2){
                 if($dados->tpSolicitacao == 'PI' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
@@ -1374,7 +1374,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                 $Projetos = new Projetos();
                 $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-                $this->view->comboareasculturais = ManterAgentesDAO::buscarAreasCulturais();
+                $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
                 $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
 
                 $parecer = new Parecer();
@@ -1388,10 +1388,10 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         } else {
             $this->view->dados = array();
         }
-        
+
     }
-    
-    /* 
+
+    /*
      * Alterada em 13/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
      * Função criada buscar os dados consolidados da readequação.
@@ -1400,14 +1400,14 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $idPronac = $_POST['idpronac'];
         $idReadequacao = $_POST['idreadequacao'];
-        
+
         $tbReadequacao = new tbReadequacao();
         $dadosReadequacao = $tbReadequacao->buscar(array('idPronac=?'=>$idPronac, 'idReadequacao=?'=>$idReadequacao, 'siEncaminhamento in (?)'=>array(8,9), 'stEstado=?'=>0))->current();
-        
+
         if($dadosReadequacao){
             $dados = $tbReadequacao->buscarDadosReadequacoes(array('idReadequacao = ?'=>$dadosReadequacao->idReadequacao))->current();
             $this->view->dados = $dados;
-            
+
             $tbReadequacaoXParecer = new tbReadequacaoXParecer();
             $pareceres = $tbReadequacaoXParecer->buscarPareceresReadequacao(array('a.idReadequacao =?'=>$dados->idReadequacao), array('1'));
             $this->view->Pareceres = $pareceres;
@@ -1534,9 +1534,9 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                     $totalItemRetirado++;
                 }
             }
-            
+
       }else{
-          
+
             /**** CODIGO DE READEQUACAO ****/
             $buscarplanilhaCO = $planilhaaprovacao->buscarAnaliseContaPlanilhaAprovacao($idpronac,'CO', array('pap.stAtivo=?'=>'S'));
             //xd($buscarplanilhaCO);
@@ -1564,7 +1564,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
             $arrBuscaPlanilha = array();
             $arrBuscaPlanilha["pap.stAtivo = ? "] = 'N';
             $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
-            
+
             $resuplanilha = null;  $cont = 0;
             $buscarplanilhaSR = $planilhaaprovacao->buscarAnaliseContaPlanilhaAprovacao($idpronac, 'SR', $arrBuscaPlanilha);
             foreach($buscarplanilhaSR as $resuplanilha){
@@ -1693,26 +1693,26 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                             $totalItemRetirado++;
                     }
             }//fecha foreach
-            
+
         }//fecha if bln_readequacao
-        
+
         $buscarPlanilhaUnidade = PlanilhaUnidadeDAO::buscar();
-        
+
         //ANTIGO MODELO DE SOMA
         //$buscarsomaaprovacao = $planilhaaprovacao->somarPlanilhaAprovacao($idpronac, 206, 'CO');
         //$buscarsomaproposta = $ppr->somarPlanilhaProposta($buscarprojeto['idProjeto']);
-        
+
         //NOVO MODELO DE SOMA
         /**********************************/
         $arrWhereSomaPlanilha = array();
         $arrWhereSomaPlanilha['idPronac = ?']=$idpronac;
         $arrWhereSomaPlanilha['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
         $arrWhereSomaPlanilha['NrFonteRecurso = ? ']='109';
-            
+
         if($this->bln_readequacao == "false"){
             //proponente
             $buscarsomaproposta = $tblPlanilhaProposta->somarPlanilhaProposta($buscarprojeto['idProjeto']);
-            
+
             //componente
             $arrWhereSomaPlanilha['stAtivo = ? ']='S';
             $arrWhereSomaPlanilha['tpPlanilha = ? ']='CO';
@@ -1725,7 +1725,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
             $arrWhereSomaSR["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
             $arrWhereSomaSR["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
             $buscarsomaproposta = $planilhaaprovacao->somarItensPlanilhaAprovacao($arrWhereSomaSR);
-            
+
             //componente
             $arrWhereSomaPlanilha['tpPlanilha = ? ']='CO';
             $arrWhereSomaPlanilha['stAtivo = ? ']='S';
@@ -1796,10 +1796,10 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         /*$pt = new Pauta();
         $buscaReadAprovacadoCnic = $pt->buscar(array('IdPRONAC = ?' => $idpronac, 'stAnalise = ?' => "AS"));
         $tipoplanilha = $buscaReadAprovacadoCnic->count() > 0 ? 'SE' : 'CO';*/
-        
+
         $rsPlanilhaAtual = $tblPlanilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idpronac), array('dtPlanilha DESC'))->current();
         $tipoplanilha = (!empty($rsPlanilhaAtual) && $rsPlanilhaAtual->tpPlanilha == 'SE') ? 'SE' : 'CO';
-        
+
         if($this->bln_readequacao == "false")
         {
             $buscarplanilha = $tblPlanilhaAprovacao->buscarAnaliseCustos($idpronac, $tipoplanilha, array('PAP.stAtivo=?'=>'S'));
@@ -1846,9 +1846,9 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
             //$buscarsomaaprovacao = $pa->somarPlanilhaAprovacao($idpronac, 206, $tipoplanilha);
             $buscarsomaproposta = $tblPlanilhaProposta->somarPlanilhaProposta($buscarprojeto->idProjeto);
             $buscarsomaprojeto = $tblPlanilhaProjeto->somarPlanilhaProjeto($idpronac);
-            
+
         }else{
-            
+
 			/**** CODIGO DE READEQUACAO ****/
             $buscarplanilhaCO = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'CO', array('PAP.stAtivo=?'=>'S'));
 
@@ -1878,7 +1878,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
             $arrBuscaPlanilha = array();
             $arrBuscaPlanilha["pap.stAtivo = ? "] = 'N';
             $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
-            
+
             $resuplanilha = null; $count = 0;
             $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'SR', $arrBuscaPlanilha);
             //xd($buscarplanilhaSR);
@@ -1925,12 +1925,12 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
              $arrWhereSomaPlanilha['stAtivo = ? ']='N';
              $arrWhereSomaPlanilha["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
              $arrWhereSomaPlanilha["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
-             
+
              $arrWhereSomaPlanilha['tpPlanilha = ? ']='SR';
              $buscarsomaproposta = $tblPlanilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
              $arrWhereSomaPlanilha['tpPlanilha = ? ']='PA';
              $buscarsomaprojeto = $tblPlanilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
-            
+
         }//feacha if bln_readequacao
         /**** FIM - CODIGO DE READEQUACAO ****/
 
@@ -1941,7 +1941,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $arrWhereSomaPlanilha['NrFonteRecurso = ? ']='109';
         $arrWhereSomaPlanilha['stAtivo = ? ']='S';
         $buscarsomaaprovacao = $tblPlanilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
-             
+
         $buscarPlanilhaUnidade = PlanilhaUnidadeDAO::buscar();
         $this->view->planilhaUnidade = $buscarPlanilhaUnidade;
         $this->view->planilha = $planilhaaprovacao;
@@ -1971,7 +1971,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $this->view->dirigentes = $tbDirigentes;
 
         $this->view->CgcCpf = $tbdados[0]->CgcCpf;
-        
+
         /*$tbarquivados = $geral->buscarArquivados($idpronac);
         $this->view->arquivados = $tbarquivados;
 
@@ -1983,9 +1983,9 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $this->view->idpronac = $idpronac;*/
     }
 
-    
+
     public function diligenciasAction(){
-        
+
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $idPronac = $this->_request->getParam("idpronac");
 		if (strlen($idPronac) > 7) {
@@ -2005,7 +2005,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $this->view->idPronac = $idPronac;
     }
 
-    
+
     /**
      * Metodo para aprovar parecer
      * @access public
@@ -2017,7 +2017,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $reuniao = new Reuniao();
         $reuniaoaberta = $reuniao->buscarReuniaoAberta();
         $idreuniaoaberta = $reuniaoaberta['idNrReuniao'];
-        
+
         if (isset($_POST['stEnvioPlenaria'])) {
             $dadosalterar = array(
                 'stEnvioPlenario' => $_POST['stEnvioPlenaria'],
@@ -2064,7 +2064,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $planilhaAprovacao = new PlanilhaAprovacao();
         $valorProjeto = $planilhaAprovacao->somarPlanilhaAprovacao($idpronac,206, 'CO');
         $this->view->totalsugerido = $valorProjeto['soma'] ? $valorProjeto['soma'] :0; //valor total do projeto (Planilha Aprovacao)
-        
+
         if ($buscarAnaliseAp->count() > 0) {
             $buscarAnaliseAp = $buscarAnaliseAp->current()->toArray();
             //$aprovacao['planilhaprovacao'] = 0;
@@ -2114,10 +2114,10 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $projetosReadequacoes = array();
         $rsProjetosEmPauta = array();
         $countProjetosEmPauta = 0;
-        
+
         $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
         $idagente = $idagente['idAgente'];
-        
+
         $tbPauta = new tbPauta();
         $reuniao = new Reuniao();
         $raberta = $reuniao->buscarReuniaoAberta();
@@ -2126,34 +2126,34 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         $tbReadequacao = new tbReadequacao();
         $idNrReuniao = $raberta['idNrReuniao'];
         $ordenacao = array(10,4); //ORDENANDO POR NOME DO COMPONENTE E PRONAC
-        
+
         //GRID - PROJETO SUBMETIDOS A PLENARIA - PLANO ANUAL
         if($grid == "planoanual")
         {
             $view = "listar-projetos-plenaria-planoanual.phtml";
             $stPlanoAnual = '1';
-            
+
         //GRID - PROJETO SUBMETIDOS A PLENARIA - RECURSO
         }else if($grid == "recurso"){
             $view = "listar-projetos-plenaria-recurso.phtml";
             $projetosRecursos = $tbRecurso->buscarRecursosEnviadosPlenaria($idNrReuniao);
             $qntdPlenariaRecursos = $projetosRecursos->count();
-        
+
         //GRID - PROJETO SUBMETIDOS A PLENARIA - READEQUAÇÃO
         }else if($grid == "readequacao"){
             $view = "listar-projetos-plenaria-readequacao.phtml";
             $projetosReadequacoes = $tbReadequacao->buscarReadequacoesEnviadosPlenaria($idNrReuniao);
             $qntdPlenariaReadequacoes = $projetosReadequacoes->count();
-            
+
         //GRID - PROJETOS VOTADOS
         }else if($grid == "votado"){
             $view = "listar-projetos-plenaria-votado.phtml";
             $stPlanoAnual = '0';
-                
+
             $arrBuscaVotados = array();
             $arrBuscaVotados['cv.idNrReuniao = ?'] = $idNrReuniao;
             $arrBuscaVotados['tp.idNrReuniao = ?'] = $idNrReuniao;
-            if($GrupoAtivo->codGrupo == '118' || $GrupoAtivo->codGrupo == '133') { //118 = componente da comissao  133 = membros natos 
+            if($GrupoAtivo->codGrupo == '118' || $GrupoAtivo->codGrupo == '133') { //118 = componente da comissao  133 = membros natos
                 $arrBuscaVotados['vt.idAgente = ?'] = $idagente;
             }else{
                 $arrBuscaVotados['vt.idAgente = (?)'] = new Zend_Db_Expr('(SELECT TOP 1 max(idAgente) from BDCORPORATIVO.scSAC.tbVotacao where IdPRONAC = pr.IdPRONAC)');
@@ -2162,15 +2162,15 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
             $arrBuscaVotados['vt.idNrReuniao = ?'] = $idNrReuniao;
             $arrBuscaVotados['par.stAtivo = ?'] = 1;
             if(!empty($readequacao) &&  $readequacao == 'true'){
-                $arrBuscaVotados['par.TipoParecer <> ?'] = 1; /**parecer de readequacao**/ 
+                $arrBuscaVotados['par.TipoParecer <> ?'] = 1; /**parecer de readequacao**/
             }else{
-                $arrBuscaVotados['par.TipoParecer = ?'] = 1; /**parecer de analise inicial**/ 
+                $arrBuscaVotados['par.TipoParecer = ?'] = 1; /**parecer de analise inicial**/
             }
             $rsProjetosVotados = $tbPauta->buscarProjetosVotadosCnic($arrBuscaVotados, $ordenacaoVotado->ordemVotado);
-            
+
         //GRID - PROJETO SUBMETIDOS A PLENARIA /OU/ NAO SUBMETIDOS
         }else{
-            
+
             if($grid == "pautaNaoPlenaria"){ //NAO SUBMETIDOS
                 $view = "listar-projetos-nao-plenaria.phtml";
 
@@ -2178,25 +2178,25 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                 $view = "listar-projetos-nao-pauta.phtml";
                 $tblDistribuicao = new tbDistribuicaoProjetoComissao();
                 $arrReuniao['idNrReuniao IS NULL ']= "?";
-                
+
                 $whereNaoAnalisados = array();
                 if(!empty($readequacao) &&  $readequacao == 'true'){
-                    $whereNaoAnalisados['par.TipoParecer <> ?'] = 1; /**parecer de readequacao**/ 
+                    $whereNaoAnalisados['par.TipoParecer <> ?'] = 1; /**parecer de readequacao**/
                 }else{
-                    $whereNaoAnalisados['par.TipoParecer = ?'] = 1; /**parecer de analise inicial**/ 
+                    $whereNaoAnalisados['par.TipoParecer = ?'] = 1; /**parecer de analise inicial**/
                 }
-                
+
                 $rsProjetosNaoAnalisados = $tblDistribuicao->buscarProjetoEmPauta($whereNaoAnalisados, $ordenacaoNaoPauta->ordemNaoPauta, null, null, false, "Não analisado", $arrReuniao);
-                
+
             }else{ //SUBMETIDOS
                 $view = "listar-projetos-plenaria.phtml";
                 $stPlanoAnual = '0';
             }
         }
         //$buscarProjetoPauta = $pauta->PautaReuniaoAtual($idNrReuniao);
-        
+
         if($grid != "recurso" && $grid != "readequacao"){
-            
+
             //RECUPERA PROJETOS INCLUIDOS NA PAUTA DA REUNIAO ATUAL - PLENARIA
             $where['tp.idNrReuniao = ?'] = $idNrReuniao;
             $where['par.stAtivo = ?'] = 1;
@@ -2226,7 +2226,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
             $rsProjetosEmPauta = $tbPauta->buscarProjetosEmPautaReuniaoCnic($where, $ordenacao);
             $countProjetosEmPauta = $rsProjetosEmPauta->count();
         }
-        
+
         /*
          * CODIGO NOVO PARA VERIFICAR SE UM PROJETO AINDA ESTA EM VOTACAO PARA MOSTRA O Play OU Stop NO PAINEL DO PRESIDENTE CNIC
          */
@@ -2271,7 +2271,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
             $arrBuscaConsolidacao['idNrReuniao = ?'] = $idNrReuniao;
             $arrBuscaConsolidacao['IdPRONAC = ?'] = $rsUltimoProjetoVotado->IdPRONAC;
             $rsConsolidacao = $tbConsolidacao->buscar($arrBuscaConsolidacao)->current();
-            
+
             if(empty($rsConsolidacao)){
                 if($rsUltimoProjetoVotado['tpVotacao'] == 3){ //Se for readequação
                     $idPronacEmVotacao = $rsUltimoProjetoVotado['IdPRONAC'].'_'.$rsUltimoProjetoVotado['tpTipoReadequacao'];
@@ -2280,7 +2280,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                 }
             }
         }
-        
+
         $grupoativo = $GrupoAtivo->codGrupo;
         $this->montaTela(
                 'gerenciarpautareuniao/'.$view, array(
@@ -2305,26 +2305,26 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
                 )
         );
     }
-    
+
     public function recursosNaoSubmetidosAction(){
-        
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
         $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuario para a visao
-            
+
         /* ================== PAGINACAO ======================*/
         $where = array();
         $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
         $where['a.siRecurso = ?'] = 9; // 9=Não submetidos a plenária - Checklist Publicação
-        
+
         $tbRecurso = New tbRecurso();
         $recursos = $tbRecurso->recursosNaoSubmetidos($where, array());
-        
+
         $tbTitulacaoConselheiro = new tbTitulacaoConselheiro();
         $this->view->conselheiros = $tbTitulacaoConselheiro->buscarConselheirosTitulares();
         $this->view->dados = $recursos;
     }
-    
-    /* 
+
+    /*
      * Alterada em 13/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
      * Função criada acessar as readequações que não foram submetidas à plenária.
@@ -2332,58 +2332,58 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
     public function readequacoesNaoSubmetidasAction(){
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
         $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuario para a visao
-            
+
         /* ================== PAGINACAO ======================*/
         $where = array();
         $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
         $where['a.siEncaminhamento = ?'] = 9; // 9=Não submetidos a plenária - Checklist Publicação
-        
+
         $tbReadequacao = New tbReadequacao();
         $readequacoes = $tbReadequacao->readequacoesNaoSubmetidas($where, array());
-        
+
         //$tbTitulacaoConselheiro = new tbTitulacaoConselheiro();
         //$this->view->conselheiros = $tbTitulacaoConselheiro->buscarConselheirosTitulares();
         $this->view->dados = $readequacoes;
     }
-    
+
     public function projetosvotadosAction(){
         $reuniao = new Reuniao();
         $raberta = $reuniao->buscarReuniaoAberta();
         $idNrReuniao = $raberta['idNrReuniao'];
-        
+
         $tbPauta = new tbPauta();
         $dados = $tbPauta->buscaProjetosAprovados($idNrReuniao);
         $this->view->projetos = $dados;
     }
-    
+
     public function paEncerrarCnic($idNrReuniao){
-        
+
         @set_time_limit(0);
         @ini_set('max_execution_time', '0');
         @ini_set('mssql.timeout', 10485760000);
-                        
+
         //passa o trabalho de executar a procedure para um arquivo externo a aplicacao
         //$cmd = "php /var/www/salic/public/plenaria/exec_paEncerrarCNIC.php idReuniao={$idNrReuniao} > /dev/null &"; //linux
         $cmd = "php ".getcwd()."/public/plenaria/exec_paEncerrarCNIC.php idReuniao={$idNrReuniao} > /dev/null &"; //linux
         exec($cmd);
-        
+
         //$cmd = "c:/xamp/php/php.exe c:/xamp/htdocs/procedure.php"; // windows
         //Proc_close(Proc_open("start /B ". $cmd, "r")); // windows
         // Executar em segundo plano em Windows
         //$shell = new COM('WScript.Shell');
         //$shell->run('php c:/xamp/htdocs/procedure.php', 0, false);
-        
+
         return true;
     }
-    
+
     public function paEncerrarCnicAction(){
-        
+
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $this->_helper->viewRenderer->setNoRender(true);
         $idNrReuniao = $this->_request->getParam('idReuniao');
         $sp = new paEncerrarCNIC();
         $sp->execSP($idNrReuniao);
-        
+
     }
 
 // fecha metodo aprovarparecerAction()

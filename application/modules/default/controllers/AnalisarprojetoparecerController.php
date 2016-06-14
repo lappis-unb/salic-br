@@ -450,7 +450,7 @@ class AnalisarprojetoparecerController extends GenericControllerNew {
 
         $this->view->itens = $itensCusto;
         $this->view->stPrincipal = $stPrincipal;
-        $this->view->comboareasculturais = ManterAgentesDAO::buscarAreasCulturais();
+        $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
         $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($projeto[0]->Area);
         $this->view->valorpossivel = $valorPossivel;
         $this->view->vlSolicitado = $valorSolicitado;
@@ -713,7 +713,7 @@ class AnalisarprojetoparecerController extends GenericControllerNew {
 
         $this->view->itens = $itensCusto;
         $this->view->stPrincipal = $stPrincipal;
-        $this->view->comboareasculturais   = ManterAgentesDAO::buscarAreasCulturais();
+        $this->view->comboareasculturais   = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
         $this->view->valorpossivel   = $valorPossivel;
         $this->view->vlSolicitado    = $valorSolicitado;
 

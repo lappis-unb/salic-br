@@ -80,7 +80,7 @@ class ManterAgentesController extends GenericControllerNew {
         $this->view->comboestados          = Estado::buscar();
         $this->view->combotiposenderecos   = Tipoendereco::buscar();
         $this->view->combotiposlogradouros = Tipologradouro::buscar();
-        $this->view->comboareasculturais   = ManterAgentesDAO::buscarAreasCulturais();
+        $this->view->comboareasculturais   = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
         $this->view->combotipostelefones   = Tipotelefone::buscar();
         $this->view->combotiposemails      = Tipoemail::buscar();
 
@@ -202,7 +202,7 @@ class ManterAgentesController extends GenericControllerNew {
         $nome = $get->nome;
 
         // realiza a busca por cpf e/ou nome
-        $buscar = ManterAgentesDAO::buscarAgentes($cpf, $nome);
+        $buscar = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf, $nome);
 
         if (!$buscar) {
             // redireciona para a página de cadastro de agentes, e, exibe uma notificação relativa ao cadastro
@@ -325,7 +325,7 @@ class ManterAgentesController extends GenericControllerNew {
         $this->view->visaoAgente = $visoes;
 
         // busca o agente pelo id
-        $this->view->agente = ManterAgentesDAO::buscarAgentes(null, null, $idAgente);
+        $this->view->agente = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idAgente);
 
         // caso o formulário seja enviado via post
         if ($this->getRequest()->isPost()) {
@@ -396,13 +396,13 @@ class ManterAgentesController extends GenericControllerNew {
 				$novos_valores[$i]['msgCPF'] = utf8_encode($v);
 
 				// busca os dados do agente
-				$dados = ManterAgentesDAO::buscarAgentes($cpf);
+				$dados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
 
 				// caso o agente não esteja cadastrado, realizará o cadastro de um novo
 				if (!$dados)
 				{
 					$arrayCNPJCPF = array('CNPJCPF' => $cpf);
-					$insere = ManterAgentesDAO::cadastrarAgente($arrayCNPJCPF);
+					$insere = Agente_Model_ManterAgentesDAO::cadastrarAgente($arrayCNPJCPF);
 					$novos_valores[$i]['Agente'] = utf8_encode('novo');
 				}
 				else // o agente já encontra-se cadastrado
@@ -411,7 +411,7 @@ class ManterAgentesController extends GenericControllerNew {
 				}
 
 				// busca os dados do agente pelo cpf/cnpj
-				$novosdados = ManterAgentesDAO::buscarAgentes($cpf);
+				$novosdados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
 
 				// busca as informações do agente
 				foreach ($novosdados as $dado) :
@@ -479,20 +479,20 @@ class ManterAgentesController extends GenericControllerNew {
 				$novos_valores[$i]['msgCPF'] = utf8_encode($v);
 
 				// busca os dados do dirigente
-				$dados = ManterAgentesDAO::buscarAgentes($cpf);
+				$dados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
 
 				// caso o dirigente não esteja cadastrado, realizará o cadastro de um novo
 				if (!$dados)
 				{
 					// busca os dados do vinculo do dirigente (idVinculoPrincipal)
-					//$buscarAgente = ManterAgentesDAO::buscarAgentes(null, null, $idAgenteGeral);
+					//$buscarAgente = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idAgenteGeral);
 
 					// cadastra o dirigente
 					$arrayCNPJCPF = array(
 						'CNPJCPF'          => $cpf
 						//,'CNPJCPFSuperior' => $buscarAgente[0]->CNPJCPF
 					);
-					$insere = ManterAgentesDAO::cadastrarAgente($arrayCNPJCPF);
+					$insere = Agente_Model_ManterAgentesDAO::cadastrarAgente($arrayCNPJCPF);
 					$novos_valores[$i]['Agente'] = utf8_encode('novo');
 				}
 				else // o agente já encontra-se cadastrado, realizará a alteração
@@ -501,7 +501,7 @@ class ManterAgentesController extends GenericControllerNew {
 				}
 
 				// busca os dados do agente pelo cpf/cnpj
-				$novosdados = ManterAgentesDAO::buscarAgentes($cpf);
+				$novosdados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
 
 				foreach ($novosdados as $dado) :
 					$novos_valores[$i]['idAgente']                = utf8_encode($dado->idAgente);
@@ -551,11 +551,11 @@ class ManterAgentesController extends GenericControllerNew {
 		// caso o id do agente esteja definido
 		if ($_REQUEST['idAgente'])
 		{
-			$Emails = ManterAgentesDAO::buscarEmails($_REQUEST['idAgente']); // busca os e-mails do agente
+			$Emails = Agente_Model_ManterAgentesDAO::buscarEmails($_REQUEST['idAgente']); // busca os e-mails do agente
 			$novos_emails = array();
 
 			$e = 0;
-			foreach ($Emails as $dado) : 
+			foreach ($Emails as $dado) :
 				$novos_emails[$e]['idInternet']   = utf8_encode($dado->idInternet);
 				$novos_emails[$e]['idAgente']     = utf8_encode($dado->idAgente);
 				$novos_emails[$e]['TipoInternet'] = utf8_encode($dado->TipoInternet);
@@ -587,7 +587,7 @@ class ManterAgentesController extends GenericControllerNew {
 		// caso o id do agente esteja definido
 		if ($_REQUEST['idAgente'])
 		{
-			$Fones = ManterAgentesDAO::buscarFones($_REQUEST['idAgente']); // busca todos os telefones do agente
+			$Fones = Agente_Model_ManterAgentesDAO::buscarFones($_REQUEST['idAgente']); // busca todos os telefones do agente
 			$novos_fones = array();
 
 			$f = 0;
@@ -617,7 +617,7 @@ class ManterAgentesController extends GenericControllerNew {
 		// caso o id do agente esteja definido
 		if ($_REQUEST['idAgente'])
 		{
-			$Enderecos = ManterAgentesDAO::buscarEnderecos($_REQUEST['idAgente']); // busca todos os endereços do agente
+			$Enderecos = Agente_Model_ManterAgentesDAO::buscarEnderecos($_REQUEST['idAgente']); // busca todos os endereços do agente
 			$novos_enderecos = array();
 
 			$E = 0;
@@ -673,8 +673,8 @@ class ManterAgentesController extends GenericControllerNew {
 		if (!empty($cnpjcpf) && !empty($idAgenteGeral))
 		{
 			// busca os dirigentes vinculados ao cnpj/cpf informado
-			//$Dirigentes = ManterAgentesDAO::buscarVinculados($cnpjcpf);
-			$Dirigentes = ManterAgentesDAO::buscarVinculados(null, null, null, null, $idAgenteGeral);
+			//$Dirigentes = Agente_Model_ManterAgentesDAO::buscarVinculados($cnpjcpf);
+			$Dirigentes = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $idAgenteGeral);
 			$this->view->Dirigentes = $Dirigentes;
 		}
 	} // fecha método buscardirigentesAction()
@@ -707,7 +707,7 @@ class ManterAgentesController extends GenericControllerNew {
 
 			// pega a quantidade de suplentes na área
 			$Q_suplentes = TitulacaoConselheiroDAO::buscaSuplentesArea($_REQUEST['area']);
-			$novos_dados[$i]['Q_suplentes'] = utf8_encode($Q_suplentes[0]->QTD);			
+			$novos_dados[$i]['Q_suplentes'] = utf8_encode($Q_suplentes[0]->QTD);
 
 			// caso não existam mais vagas para titular e suplentes
 			if ($Q_titulares[0]->QTD >= 1 && $Q_suplentes[0]->QTD >= 2)
@@ -788,7 +788,7 @@ class ManterAgentesController extends GenericControllerNew {
 			$cpf      = Mascara::delMaskCPF(Mascara::delMaskCNPJ($post->cpf)); // retira as máscaras
 			$TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa física e 19 = pessoa jurídica
 			$Usuario  = $this->getIdUsuario; // id do usuário logado
-			
+
 
 
 
@@ -801,15 +801,15 @@ class ManterAgentesController extends GenericControllerNew {
 				// busca o nome do agente
 				$busca = NomesDAO::buscarNome($idAgente);
 
-				if (!$busca) 
+				if (!$busca)
 				{
 					$i = NomesDAO::gravarNome($idAgente, $TipoNome, $nome, 0, $Usuario);
 				}
-				else 
+				else
 				{
 					$i = NomesDAO::atualizaNome($idAgente, $TipoNome, $nome, 0, $Usuario);
 				}
-			} 
+			}
 			catch (Exception $e)
 			{
 				parent::message("Erro ao salvar o nome: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
@@ -819,17 +819,17 @@ class ManterAgentesController extends GenericControllerNew {
 
 // ================================================ INICIO SALVAR VISÂO ======================================================
 			$Visao = $post->visao;
-			
+
 			$grupologado = $post->grupologado;
-			
-			
-			/* 
+
+
+			/*
 			 * Validação - Se for componente da comissão ele não salva a visão
 			 * Regra o componente da comissão não pode alterar sua visão.
 			 */
-			
+
 			if($grupologado != 118):
-			
+
 			$GravarVisao = array( // insert
 				'idAgente' => $idAgente,
 				'Visao'    => $Visao,
@@ -840,17 +840,17 @@ class ManterAgentesController extends GenericControllerNew {
 			{
 				$busca = VisaoDAO::buscarVisao($idAgente, $Visao);
 
-				if (!$busca) 
+				if (!$busca)
 				{
 					$i = VisaoDAO::cadastrarVisao($GravarVisao);
 				}
-			} 
+			}
 			catch(Exception $e)
 			{
 				parent::message("Erro ao salvar a visão: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
 			}
-			
-			
+
+
 // ================================================ FIM SALVAR VISÂO ======================================================
 
 
@@ -876,7 +876,7 @@ class ManterAgentesController extends GenericControllerNew {
 					'cdArea'        => $areaCultural,
 					'cdSegmento'    => $segmentoCultural,
 					'stTitular'     => $titular
-					//'stConselheiro' => 'A' -- Qual caso de uso vai ativa e desativar?										
+					//'stConselheiro' => 'A' -- Qual caso de uso vai ativa e desativar?
 					);
 
 				try
@@ -888,22 +888,22 @@ class ManterAgentesController extends GenericControllerNew {
 					{
 						$i = TitulacaoConselheiroDAO::gravarComponente($GravarComponente);
 					}
-					else 
+					else
 					{
 						$i = TitulacaoConselheiroDAO::atualizaComponente($idAgente, $AtualizarComponente);
 					}
-				} 
+				}
 				catch(Exception $e)
 				{
-					parent::message("Erro ao salvar a Área e Segmento: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");					
+					parent::message("Erro ao salvar a Área e Segmento: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
 				}
-			} 
-			
+			}
+
 // ============================= FIM SALVAR TITULAÇÃO (ÁREA/SEGMENTO DO COMPONENTE DA COMISSÃO) ===========================
 
 			endif; // Fecha o if da regra do componente da comissão
-			
-			
+
+
 // =========================================== INICIO SALVAR ENDEREÇOS ====================================================
 
             $cepEnderecos               = $post->ceps;
@@ -912,11 +912,11 @@ class ManterAgentesController extends GenericControllerNew {
 			$CidadeEnderecos            = $post->cidades;
 			$Enderecos                  = $post->logradouros;
 			$divulgarEnderecos          = $post->divulgarEnderecos;
-                        
-			
+
+
 			if (!empty($post->correspondenciaEnderecos))
-			{ 
-				$correspondenciaEnderecos = $post->correspondenciaEnderecos; 
+			{
+				$correspondenciaEnderecos = $post->correspondenciaEnderecos;
 			}
 			else
 			{
@@ -927,11 +927,11 @@ class ManterAgentesController extends GenericControllerNew {
 			$numeros                    = $post->numeros;
             $complementos               = $post->complementos;
             $bairros                    = $post->bairros;
-            
+
 			try
 			{
 				// exclui todos os telefones do agente
-				$delete = EnderecoNacionalDAO::deletarEnderecoNacional($idAgente);
+				$delete = Agente_Model_EnderecoNacionalDAO::deletarEnderecoNacional($idAgente);
 
 				// cadastra todos os telefones
 				for ($i = 0; $i < sizeof($cepEnderecos); $i++)
@@ -952,18 +952,18 @@ class ManterAgentesController extends GenericControllerNew {
 				                                                'Bairro'        => $bairros[$i],
 				                                                'Status'        => $correspondenciaEnderecos,
 																'Usuario'       => $Usuario);
-				                                                
 
-                                        $insere = EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
+
+                                        $insere = Agente_Model_EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
 
 				}
-				
-			} 
+
+			}
 			catch (Exception $e)
 			{
 				parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
 			}
-			
+
 // ============================================= FIM SALVAR ENDEREÇOS ====================================================
 
 
@@ -978,7 +978,7 @@ class ManterAgentesController extends GenericControllerNew {
 			try
 			{
 				// exclui todos os telefones do agente
-				$delete = Telefone::excluirTodos($idAgente);
+				$delete = Agente_Model_Telefone::excluirTodos($idAgente);
 
 				// cadastra todos os telefones
 				for ($i = 0; $i < sizeof($Fones); $i++)
@@ -992,9 +992,9 @@ class ManterAgentesController extends GenericControllerNew {
 											'Divulgar'     => $divulgarFones[$i],
 											'Usuario'      => $Usuario);
 
-					$insere = Telefone::cadastrar($arrayTelefones);
-				} 
-				
+					$insere = Agente_Model_Telefone::cadastrar($arrayTelefones);
+				}
+
 			}
 			catch (Exception $e)
 			{
@@ -1004,7 +1004,7 @@ class ManterAgentesController extends GenericControllerNew {
 
 
 
-// =========================================== INICIO SALVAR EMAILS ====================================================			
+// =========================================== INICIO SALVAR EMAILS ====================================================
 
 			$tipoEmails     = $post->tipoEmails;
 			$Emails         = $post->Emails;
@@ -1028,24 +1028,24 @@ class ManterAgentesController extends GenericControllerNew {
 										'Usuario'      => $Usuario);
 
 					$insere = Email::cadastrar($arrayEmail);
-				} 
-				
+				}
+
 			}
 			catch (Exception $e)
 			{
 				parent::message("Erro ao salvar o componente: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
 			}
-			
+
 // =========================================== FIM SALVAR EMAILS ====================================================
 
 
-		} 
+		}
 
 		parent::message("Cadastro realizado com sucesso!", "manteragentes/agentes?acao=cc", "CONFIRM");
 
-		
-		
-	} 
+
+
+	}
 
 
 
@@ -1085,7 +1085,7 @@ class ManterAgentesController extends GenericControllerNew {
 				else // faz a alteração do nome
 				{
 					$i = NomesDAO::atualizaNome($idAgente, $TipoNome, $nome, 0, $Usuario);
-				}	
+				}
 			} // fecha try
 			catch (Exception $e)
 			{
@@ -1140,15 +1140,15 @@ class ManterAgentesController extends GenericControllerNew {
 			try
 			{
 				// busca o endereço do agente
-				$busca = EnderecoNacionalDAO::buscarEnderecoNacional($idAgente);
+				$busca = Agente_Model_EnderecoNacionalDAO::buscarEnderecoNacional($idAgente);
 
 				if (!$busca) // faz a inserção do endereço
 				{
-					$i = EnderecoNacionalDAO::gravarEnderecoNacional($GravarEnderecoNacional);
+					$i = Agente_Model_EnderecoNacionalDAO::gravarEnderecoNacional($GravarEnderecoNacional);
 				}
 				else // faz a alteração do endereço
 				{
-					$i = EnderecoNacionalDAO::atualizaEnderecoNacional($idAgente, $AtualizarEnderecoNacional);
+					$i = Agente_Model_EnderecoNacionalDAO::atualizaEnderecoNacional($idAgente, $AtualizarEnderecoNacional);
 				}
 			} // fecha try
 			catch(Exception $e)
@@ -1197,7 +1197,7 @@ class ManterAgentesController extends GenericControllerNew {
 			try
 			{
 				// exclui todos os telefones
-				$delete = Telefone::excluirTodos($idAgente);
+				$delete = Agente_Model_Telefone::excluirTodos($idAgente);
 
 				// cadastra todos os telefones
 				for ($i = 0; $i < sizeof($Fones); $i++)
@@ -1211,7 +1211,7 @@ class ManterAgentesController extends GenericControllerNew {
 						'Divulgar'     => $divulgarFones[$i],
 						'Usuario'      => $Usuario);
 
-					$insere = Telefone::cadastrar($arrayTelefones);
+					$insere = Agente_Model_Telefone::cadastrar($arrayTelefones);
 				} // fecha for
 			} // fecha try
 			catch (Exception $e)
@@ -1258,11 +1258,11 @@ class ManterAgentesController extends GenericControllerNew {
 
 			// ========== INÍCIO DIRIGENTES ==========
 			// busca os dados do associado ao dirigente (idVinculoPrincipal)
-			//$buscarAgente = ManterAgentesDAO::buscarAgentes(null, null, $idAgenteGeral);
+			//$buscarAgente = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idAgenteGeral);
 
 			// busca o dirigente vinculado ao cnpj/cpf
-			//$dadosDirigente = ManterAgentesDAO::buscarVinculados($buscarAgente[0]->CNPJCPF, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
-			$dadosDirigente = ManterAgentesDAO::buscarVinculados(null, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
+			//$dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados($buscarAgente[0]->CNPJCPF, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
+			$dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
 
 			// caso o agente não esteja vinculado, realizará a vinculação
 			if (!$dadosDirigente)
@@ -1273,7 +1273,7 @@ class ManterAgentesController extends GenericControllerNew {
 					'idVinculado'        => $idAgenteGeral,
 					'idVinculoPrincipal' => $idAgenteGeral,
 					'Usuario'            => $Usuario);
-				$vincular = ManterAgentesDAO::cadastrarVinculados($dadosVinculacao);
+				$vincular = Agente_Model_ManterAgentesDAO::cadastrarVinculados($dadosVinculacao);
 			}
 			// ========== FIM DIRIGENTES ==========
 

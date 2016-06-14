@@ -1,49 +1,57 @@
-<?php  
+<?php
 
-class EnderecoNacionalDAO extends Zend_Db_Table
-{  
+/**
+ * Agente_Model_EnderecoNacionalDAO
+ *
+ * @uses Zend
+ * @uses _Db_Table
+ * @package Model
+ * @author  wouerner <wouerner@gmail.com>
+ */
+class Agente_Model_EnderecoNacionalDAO extends Zend_Db_Table
+{
 
-	protected $_name = 'AGENTES.dbo.EnderecoNacional';  
-	
-	
+	protected $_name = 'AGENTES.dbo.EnderecoNacional';
+
+
 	public static function buscarEnderecoNacional($idAgente)
 	{
-		
-		$sql = "Select  idEndereco, 
-						idAgente, 
-						TipoEndereco, 
-						TipoLogradouro, 
-						Logradouro, 
-						Numero, 
-						Bairro, 
-						Complemento, 
-						Cidade, 
-						UF, 
-						Cep, 
-						Municipio, 
-						UfDescricao , 
-						Status, 
-						Divulgar , 
-						Usuario 
-						From AGENTES.dbo.EnderecoNacional 
+
+		$sql = "Select  idEndereco,
+						idAgente,
+						TipoEndereco,
+						TipoLogradouro,
+						Logradouro,
+						Numero,
+						Bairro,
+						Complemento,
+						Cidade,
+						UF,
+						Cep,
+						Municipio,
+						UfDescricao ,
+						Status,
+						Divulgar ,
+						Usuario
+						From AGENTES.dbo.EnderecoNacional
 							Where idAgente = ".$idAgente;
-		
-		
+
+
 		$db = Zend_Registry::get('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		$dados =  $db->fetchAll($sql);	
-		
+		$dados =  $db->fetchAll($sql);
+
 		return $dados;
-		
+
 	}
-	
-	
+
+
 	public static function gravarEnderecoNacional($dados)
 	{
 		$db = Zend_Registry::get('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		$i =  $db->insert('AGENTES.dbo.EnderecoNacional', $dados);	
+		$i =  $db->insert('AGENTES.dbo.EnderecoNacional', $dados);
 	}
 
 
@@ -54,7 +62,7 @@ class EnderecoNacionalDAO extends Zend_Db_Table
 		$where = "idAgente=".$idAgente;
 		$i =  $db->update('AGENTES.dbo.EnderecoNacional', $dados, $where);
 	}
-	
+
 	public static function deletarEnderecoNacional($idEndereco)
 	{
 		try
@@ -71,7 +79,7 @@ class EnderecoNacionalDAO extends Zend_Db_Table
 
 		return $db->fetchAll($sql);
 	} // fecha excluir()
-	
+
 	public static function mudaCorrespondencia($idAgente)
 	{
 		try
@@ -87,14 +95,14 @@ class EnderecoNacionalDAO extends Zend_Db_Table
 		}
 
 		return $db->fetchAll($sql);
-	} 
-	
+	}
+
 	public static function novaCorrespondencia($idAgente)
 	{
 		try
 		{
-			$sql = "UPDATE AGENTES.dbo.EnderecoNacional set Status = 1 
-					WHERE idAgente = ".$idAgente." 
+			$sql = "UPDATE AGENTES.dbo.EnderecoNacional set Status = 1
+					WHERE idAgente = ".$idAgente."
 					AND idEndereco = (select MIN(idEndereco) as valor from AGENTES.dbo.EnderecoNacional  where idAgente = ".$idAgente.")";
 
 			$db = Zend_Registry :: get('db');
@@ -106,6 +114,6 @@ class EnderecoNacionalDAO extends Zend_Db_Table
 		}
 
 		return $db->fetchAll($sql);
-	} 
+	}
 
-}  
+}

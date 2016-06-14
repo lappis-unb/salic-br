@@ -123,14 +123,14 @@ class AlterarprojetoController extends GenericControllerNew {
             $qtdDirigentes = '';
             if (isset($idAgente)) {
 
-                $dados = ManterAgentesDAO::buscarAgentes(null, null, $idAgente);
+                $dados = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idAgente);
 
                 if (!$dados) {
                     parent::message("Agente não encontrado!", "agentes/buscaragente", "ALERT");
                 }
 
-                $this->view->telefones = ManterAgentesDAO::buscarFones($idAgente);
-                $this->view->emails = ManterAgentesDAO::buscarEmails($idAgente);
+                $this->view->telefones = Agente_Model_ManterAgentesDAO::buscarFones($idAgente);
+                $this->view->emails = Agente_Model_ManterAgentesDAO::buscarEmails($idAgente);
                 $visoes = VisaoDAO::buscarVisao($idAgente);
                 $this->view->visoes = $visoes;
 
@@ -142,7 +142,7 @@ class AlterarprojetoController extends GenericControllerNew {
 
                 if ($dados[0]->TipoPessoa == 1) {
 
-                    $dirigentes = ManterAgentesDAO::buscarVinculados(null, null, null, null, $idAgente);
+                    $dirigentes = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $idAgente);
                     $qtdDirigentes = count($dirigentes);
                     $this->view->dirigentes = $dirigentes;
                 }
@@ -159,7 +159,7 @@ class AlterarprojetoController extends GenericControllerNew {
         $this->view->comboestados = Estado::buscar();
         $this->view->combotiposenderecos = Tipoendereco::buscar();
         $this->view->combotiposlogradouros = Tipologradouro::buscar();
-        $this->view->comboareasculturais = ManterAgentesDAO::buscarAreasCulturais();
+        $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
         $this->view->combotipostelefones = Tipotelefone::buscar();
         $this->view->combotiposemails = Tipoemail::buscar();
         parent::init(); // chama o init() do pai GenericControllerNew
@@ -412,7 +412,7 @@ class AlterarprojetoController extends GenericControllerNew {
             );
 
 
-            $insere = EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
+            $insere = Agente_Model_EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
         } catch (Exception $e) {
             parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "alterarprojeto/incluirdirigente/pronac/" . $pronac, "ERROR");
         }
@@ -438,7 +438,7 @@ class AlterarprojetoController extends GenericControllerNew {
                 'Usuario' => $Usuario
             );
 
-            $insere = Telefone::cadastrar($arrayTelefones);
+            $insere = Agente_Model_Telefone::cadastrar($arrayTelefones);
         } catch (Exception $e) {
             parent::message("Erro ao salvar o telefone: " . $e->getMessage(), "alterarprojeto/incluirdirigente/pronac/" . $pronac, "ERROR");
         }
@@ -472,7 +472,7 @@ class AlterarprojetoController extends GenericControllerNew {
 
         try {
             // busca o dirigente vinculado ao cnpj/cpf
-            $dadosDirigente = ManterAgentesDAO::buscarVinculados(null, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
+            $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
 
             // caso o agente não esteja vinculado, realizará a vinculação
             if (!$dadosDirigente) {
@@ -484,7 +484,7 @@ class AlterarprojetoController extends GenericControllerNew {
                     'Usuario' => $Usuario
                 );
 
-                $vincular = ManterAgentesDAO::cadastrarVinculados($dadosVinculacao);
+                $vincular = Agente_Model_ManterAgentesDAO::cadastrarVinculados($dadosVinculacao);
             }
         } catch (Exception $e) {
             parent::message("Erro ao vincular o dirigente: " . $e->getMessage(), "alterarprojeto/incluirdirigente/pronac/" . $pronac, "ERROR");
@@ -575,16 +575,16 @@ class AlterarprojetoController extends GenericControllerNew {
 
         if (isset($idAgente)) {
 
-            $dadosDirigenteD = ManterAgentesDAO::buscarVinculados(null, null, $idDirigente, null, $idAgente);
-            $dados = ManterAgentesDAO::buscarAgentes(null, null, $idDirigente);
+            $dadosDirigenteD = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, $idDirigente, null, $idAgente);
+            $dados = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idDirigente);
             $this->view->dadosD = $dados;
 
             if (!$dados) {
                 parent::message("Agente não encontrado!", "alterarprojeto/buscaragentedirigente/pronac/" . $pronac, "ALERT");
             }
 
-            $this->view->telefonesD = ManterAgentesDAO::buscarFones($idDirigente);
-            $this->view->emailsD = ManterAgentesDAO::buscarEmails($idDirigente);
+            $this->view->telefonesD = Agente_Model_ManterAgentesDAO::buscarFones($idDirigente);
+            $this->view->emailsD = Agente_Model_ManterAgentesDAO::buscarEmails($idDirigente);
             $this->view->visoesD = VisaoDAO::buscarVisao($idDirigente);
             $this->view->Instituicao = "sim";
             $this->view->id = $this->_request->getParam("id");
@@ -809,7 +809,7 @@ class AlterarprojetoController extends GenericControllerNew {
 
         $novos_valores = array();
 
-        $dados = ManterAgentesDAO::buscarAgentes($cpf);
+        $dados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
 
         if ((strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) || (strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf))) {
             $novos_valores[0]['msgCPF'] = utf8_encode('invalido');
@@ -839,7 +839,7 @@ class AlterarprojetoController extends GenericControllerNew {
 
         try {
             // busca o dirigente vinculado ao cnpj/cpf
-            $dadosDirigente = ManterAgentesDAO::buscarVinculados(null, null, $idDirigente, $idAgenteGeral, $idAgenteGeral);
+            $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, $idDirigente, $idAgenteGeral, $idAgenteGeral);
 
             // caso o agente não esteja vinculado, realizará a vinculação
             if (count($dadosDirigente) == 0) {
@@ -852,7 +852,7 @@ class AlterarprojetoController extends GenericControllerNew {
                 );
 
 
-                $vincular = ManterAgentesDAO::cadastrarVinculados($dadosVinculacao);
+                $vincular = Agente_Model_ManterAgentesDAO::cadastrarVinculados($dadosVinculacao);
                 //xd($vincular);
             }
 
@@ -1063,7 +1063,7 @@ class AlterarprojetoController extends GenericControllerNew {
             $this->view->parecer = $listaparecer[0];
             $this->view->pronac = Seguranca::encrypt($listaparecer[0]->pronac);
 
-            $this->view->comboareasculturais = ManterAgentesDAO::buscarAreasCulturais();
+            $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($listaparecer[0]->Area);
 
             $documentoDao = new tbHistoricoAlteracaoProjeto();

@@ -509,11 +509,11 @@ class Vinculo extends GenericModel {
 
         $regularidade = Regularidade::buscarSalic($rsProponente->CNPJCPF);
 
-        $dadosEndereco = EnderecoNacionalDAO::buscarEnderecoNacional($rsPreProjeto->idAgente);
+        $dadosEndereco = Agente_Model_EnderecoNacionalDAO::buscarEnderecoNacional($rsPreProjeto->idAgente);
 
         $dadosEmail = Email::buscar($rsPreProjeto->idAgente);
 
-        $dadosDirigente = ManterAgentesDAO::buscarVinculados(null, null, null, null, $rsPreProjeto->idAgente);
+        $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $rsPreProjeto->idAgente);
         //$dadosDirigente = ManterAgentes::buscaDirigentes($rsProponente->CNPJCPF);
 
         $tblLocaisRealizacao = new Abrangencia();

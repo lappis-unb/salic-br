@@ -54,7 +54,7 @@ class Agente_AgentesController extends GenericControllerNew {
         $this->view->comboestados = Estado::buscar();
         $this->view->combotiposenderecos = Tipoendereco::buscar();
         $this->view->combotiposlogradouros = Tipologradouro::buscar();
-        $this->view->comboareasculturais = ManterAgentesDAO::buscarAreasCulturais();
+        $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
         $this->view->combotipostelefones = Tipotelefone::buscar();
         $this->view->combotiposemails = Tipoemail::buscar();
 
@@ -252,15 +252,15 @@ class Agente_AgentesController extends GenericControllerNew {
         $qtdDirigentes = '';
         if (isset($idAgente)) {
 
-            $dados = ManterAgentesDAO::buscarAgentes(null, null, $idAgente);
+            $dados = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idAgente);
 
             if (!$dados) {
-                parent::message("Agente não encontrado!", "agentes/buscaragente", "ALERT");
+                parent::message("Agente não encontrado!", "agente/agentes/buscaragente", "ALERT");
             }
 
 
-            $this->view->telefones = ManterAgentesDAO::buscarFones($idAgente);
-            $this->view->emails = ManterAgentesDAO::buscarEmails($idAgente);
+            $this->view->telefones = Agente_Model_ManterAgentesDAO::buscarFones($idAgente);
+            $this->view->emails = Agente_Model_ManterAgentesDAO::buscarEmails($idAgente);
             $visoes = VisaoDAO::buscarVisao($idAgente);
             $this->view->visoes = $visoes;
 
@@ -271,7 +271,7 @@ class Agente_AgentesController extends GenericControllerNew {
             }
 
             if ($dados[0]->TipoPessoa == 1) {
-                $dirigentes = ManterAgentesDAO::buscarVinculados(null, null, null, null, $idAgente);
+                $dirigentes = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $idAgente);
                 $qtdDirigentes = count($dirigentes);
                 $this->view->dirigentes = $dirigentes;
             }
@@ -620,16 +620,16 @@ class Agente_AgentesController extends GenericControllerNew {
 
         if (isset($idAgente)) {
 
-            $dadosDirigenteD = ManterAgentesDAO::buscarVinculados(null, null, $idDirigente, null, $idAgente);
-            $dados = ManterAgentesDAO::buscarAgentes(null, null, $idDirigente);
+            $dadosDirigenteD = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, $idDirigente, null, $idAgente);
+            $dados = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idDirigente);
             $this->view->dadosD = $dados;
 
             if (!$dados) {
-                parent::message("Agente não encontrado!", "agentes/buscaragente", "ALERT");
+                parent::message("Agente não encontrado!", "agente/agentes/buscaragente", "ALERT");
             }
 
-            $this->view->telefonesD = ManterAgentesDAO::buscarFones($idDirigente);
-            $this->view->emailsD = ManterAgentesDAO::buscarEmails($idDirigente);
+            $this->view->telefonesD = Agente_Model_ManterAgentesDAO::buscarFones($idDirigente);
+            $this->view->emailsD = Agente_Model_ManterAgentesDAO::buscarEmails($idDirigente);
             $this->view->visoesD = VisaoDAO::buscarVisao($idDirigente);
             $this->view->Instituicao = "sim";
             $this->view->id = $this->_request->getParam("id");
@@ -716,7 +716,7 @@ class Agente_AgentesController extends GenericControllerNew {
 
                     }
                 } else {
-                    parent::message("N&atilde;o s&atilde;o permitidos documentos de texto doc/docx!", "agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "ERROR");
+                    parent::message("N&atilde;o s&atilde;o permitidos documentos de texto doc/docx!", "agente/agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "ERROR");
                     }
                 }
             }
@@ -749,9 +749,9 @@ class Agente_AgentesController extends GenericControllerNew {
                     $dadosBuscar['idArquivo']           = $buscarMandato[0]->idArquivo;
                 }
 
-                parent::message("Cadastro realizado com sucesso!", "agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "CONFIRM");
+                parent::message("Cadastro realizado com sucesso!", "agente/agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "CONFIRM");
             } catch (Exception $e) {
-                parent::message("Erro ao salvar o mandato:" . $e->getMessage(), "agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "ERROR");
+                parent::message("Erro ao salvar o mandato:" . $e->getMessage(), "agente/agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "ERROR");
             }
         }
     }
@@ -778,9 +778,9 @@ class Agente_AgentesController extends GenericControllerNew {
             $whereMandato['idAgentexVerificacao = ?'] = $idMandato;
             $tbDirigenteMandato->alterar($arrayMandato, $whereMandato);
 
-            parent::message("Exclusão realizada com sucesso!", "agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "CONFIRM");
+            parent::message("Exclusão realizada com sucesso!", "agente/agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao excluir o mandato:" . $e->getMessage(), "agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "ERROR");
+            parent::message("Erro ao excluir o mandato:" . $e->getMessage(), "agente/agentes/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente, "ERROR");
         }
     }
 
@@ -836,7 +836,7 @@ class Agente_AgentesController extends GenericControllerNew {
         $this->autenticacao();
 
         $idAgente = $this->_request->getParam("id");
-        $lista = ManterAgentesDAO::buscarEnderecos($idAgente);
+        $lista = Agente_Model_ManterAgentesDAO::buscarEnderecos($idAgente);
 
         $this->view->endereco = $lista;
         $this->view->qtdEndereco = count($lista);
@@ -888,13 +888,13 @@ class Agente_AgentesController extends GenericControllerNew {
 
 
             if ($enderecoCorrespodencia == "1") {
-                $alteraEnderecoCorrespondencia = EnderecoNacionalDAO::mudaCorrespondencia($idAgente);
+                $alteraEnderecoCorrespondencia = Agente_Model_EnderecoNacionalDAO::mudaCorrespondencia($idAgente);
             }
 
-            $insere = EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
-            parent::message("Cadastro realizado com sucesso!", "agentes/enderecos/id/" . $idAgente, "CONFIRM");
+            $insere = Agente_Model_EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
+            parent::message("Cadastro realizado com sucesso!", "agente/agentes/enderecos/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "agentes/enderecos/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "agente/agentes/enderecos/id/" . $idAgente, "ERROR");
         }
     }
 
@@ -914,19 +914,19 @@ class Agente_AgentesController extends GenericControllerNew {
         $enderecoCorrespondencia = $this->_request->getParam("enderecoCorrespondencia");
 
         if ($qtdEndereco <= 1) {
-            parent::message("Você tem que ter pelo menos um endereço cadastrado!", "agentes/enderecos/id/" . $idAgente, "ALERT");
+            parent::message("Você tem que ter pelo menos um endereço cadastrado!", "agente/agentes/enderecos/id/" . $idAgente, "ALERT");
         }
 
         try {
-            $excluir = EnderecoNacionalDAO::deletarEnderecoNacional($idEndereco);
+            $excluir = Agente_Model_EnderecoNacionalDAO::deletarEnderecoNacional($idEndereco);
 
             if ($enderecoCorrespondencia == "1") {
-                $novaCorrespondencia = EnderecoNacionalDAO::novaCorrespondencia($idAgente);
+                $novaCorrespondencia = Agente_Model_EnderecoNacionalDAO::novaCorrespondencia($idAgente);
             }
 
-            parent::message("Exclusão realizada com sucesso!", "agentes/enderecos/id/" . $idAgente, "CONFIRM");
+            parent::message("Exclusão realizada com sucesso!", "agente/agentes/enderecos/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao excluir o enderço: " . $e->getMessage(), "agentes/enderecos/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao excluir o enderço: " . $e->getMessage(), "agente/agentes/enderecos/id/" . $idAgente, "ERROR");
         }
     }
 
@@ -939,7 +939,7 @@ class Agente_AgentesController extends GenericControllerNew {
     public function telefonesAction() {
         $this->autenticacao();
         $idAgente = $this->_request->getParam("id");
-        $lista = ManterAgentesDAO::buscarFones($idAgente);
+        $lista = Agente_Model_ManterAgentesDAO::buscarFones($idAgente);
 
         $this->view->telefones = $lista;
         $this->view->qtdTel = count($lista);
@@ -973,11 +973,11 @@ class Agente_AgentesController extends GenericControllerNew {
                 'Divulgar' => $divulgarFone,
                 'Usuario' => $Usuario
             );
-            Telefone::cadastrar($arrayTelefones);
-            parent::message("Cadastro realizado com sucesso!", "agentes/telefones/id/" . $idAgente, "CONFIRM");
+            Agente_Model_Telefone::cadastrar($arrayTelefones);
+            parent::message("Cadastro realizado com sucesso!", "agente/agentes/telefones/id/" . $idAgente, "CONFIRM");
 
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o Telefone: " . $e->getMessage(), "agentes/telefones/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao salvar o Telefone: " . $e->getMessage(), "agente/agentes/telefones/id/" . $idAgente, "ERROR");
         }
     }
 
@@ -995,16 +995,16 @@ class Agente_AgentesController extends GenericControllerNew {
         $qtdTel = $this->_request->getParam("qtdTel");
 
         if ($qtdTel <= 1) {
-            parent::message("Você tem que ter pelo menos um telefone cadastrado!", "agentes/telefones/id/" . $idAgente, "ALERT");
+            parent::message("Você tem que ter pelo menos um telefone cadastrado!", "agente/agentes/telefones/id/" . $idAgente, "ALERT");
         } else {
 
             try {
 
-                $excluir = Telefone::excluir($idTelefone);
+                $excluir = Agente_Model_Telefone::excluir($idTelefone);
 
-                parent::message("Exclusão realizada com sucesso!", "agentes/telefones/id/" . $idAgente, "CONFIRM");
+                parent::message("Exclusão realizada com sucesso!", "agente/agentes/telefones/id/" . $idAgente, "CONFIRM");
             } catch (Exception $e) {
-                parent::message("Erro ao excluir o telefone: " . $e->getMessage(), "agentes/telefones/id/" . $idAgente, "ERROR");
+                parent::message("Erro ao excluir o telefone: " . $e->getMessage(), "agente/agentes/telefones/id/" . $idAgente, "ERROR");
             }
         }
     }
@@ -1018,7 +1018,7 @@ class Agente_AgentesController extends GenericControllerNew {
     public function emailsAction() {
         $this->autenticacao();
         $idAgente = $this->_request->getParam("id");
-        $lista = ManterAgentesDAO::buscarEmails($idAgente);
+        $lista = Agente_Model_ManterAgentesDAO::buscarEmails($idAgente);
 
         $this->view->emails = $lista;
         $this->view->qtdEmail = count($lista);
@@ -1053,9 +1053,9 @@ class Agente_AgentesController extends GenericControllerNew {
 
             $insere = Email::cadastrar($arrayEmail);
 
-            parent::message("Cadastro realizado com sucesso!", "agentes/emails/id/" . $idAgente, "CONFIRM");
+            parent::message("Cadastro realizado com sucesso!", "agente/agentes/emails/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o e-mail: " . $e->getMessage(), "agentes/emails/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao salvar o e-mail: " . $e->getMessage(), "agente/agentes/emails/id/" . $idAgente, "ERROR");
         }
     }
 
@@ -1073,13 +1073,13 @@ class Agente_AgentesController extends GenericControllerNew {
         $qtdEmail = $this->_request->getParam("qtdEmail");
 
         if ($qtdEmail <= 1) {
-            parent::message("Você tem que ter pelo menos um email cadastrado!", "agentes/emails/id/" . $idAgente, "ALERT");
+            parent::message("Você tem que ter pelo menos um email cadastrado!", "agente/agentes/emails/id/" . $idAgente, "ALERT");
         } else {
             try {
                 $excluir = Email::excluir($idInternet);
-                parent::message("Exclusão realizada com sucesso!", "agentes/emails/id/" . $idAgente, "CONFIRM");
+                parent::message("Exclusão realizada com sucesso!", "agente/agentes/emails/id/" . $idAgente, "CONFIRM");
             } catch (Exception $e) {
-                parent::message("Erro ao excluir o e-mail: " . $e->getMessage(), "agentes/emails/id/" . $idAgente, "ERROR");
+                parent::message("Erro ao excluir o e-mail: " . $e->getMessage(), "agente/agentes/emails/id/" . $idAgente, "ERROR");
             }
         }
     }
@@ -1199,10 +1199,10 @@ class Agente_AgentesController extends GenericControllerNew {
             $salvarInfo = $tbEscolaridade->inserirEscolaridade($arrayDados);
 
             $db->commit();
-            parent::message("Cadastrado realizado com sucesso!", "agentes/escolaridade/id/" . $idAgente, "CONFIRM");
+            parent::message("Cadastrado realizado com sucesso!", "agente/agentes/escolaridade/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
             $db->rollBack();
-            parent::message("Erro ao cadastrar! " . $e->getMessage(), "agentes/escolaridade/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao cadastrar! " . $e->getMessage(), "agente/agentes/escolaridade/id/" . $idAgente, "ERROR");
         }
     }
 
@@ -1318,10 +1318,10 @@ class Agente_AgentesController extends GenericControllerNew {
             $salvarInfo = $tbInfoPro->inserirInfo($arrayDados);
 
             $db->commit();
-            parent::message("Cadastrado realizado com sucesso!", "agentes/formacao/id/" . $idAgente, "CONFIRM");
+            parent::message("Cadastrado realizado com sucesso!", "agente/agentes/formacao/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
             $db->rollBack();
-            parent::message("Erro ao cadastrar! " . $e->getMessage(), "agentes/formacao/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao cadastrar! " . $e->getMessage(), "agente/agentes/formacao/id/" . $idAgente, "ERROR");
         }
     }
 
@@ -1373,7 +1373,7 @@ class Agente_AgentesController extends GenericControllerNew {
         $repetida = $tbAusencia->BuscarAusenciaRepetida($idAgente, $dtInicio, $dtFim);
 
         if (count($repetida) > 0) {
-            parent::message("Já existe agendamento de férias para o período solicitado!", "agentes/ferias/id/" . $idAgente . "?dtInicio=" . $this->_request->getParam("dtinicio") . "&dtFim=" . $this->_request->getParam("dtfim"), "ALERT");
+            parent::message("Já existe agendamento de férias para o período solicitado!", "agente/agentes/ferias/id/" . $idAgente . "?dtInicio=" . $this->_request->getParam("dtinicio") . "&dtFim=" . $this->_request->getParam("dtfim"), "ALERT");
         }
 
         try {
@@ -1400,9 +1400,9 @@ class Agente_AgentesController extends GenericControllerNew {
             $altera = $tbAusencia->alteraAusencia($dados, $ultimoRegistro[0]->id);
 
             parent::message("Suas férias foram agendas para " . $dtInicio . " à " . $dtFim . ". Aguarde Aprovação do Coordenador.
-							<br /> Caso não tenha resposta favor entre em contato com o mesmo!", "agentes/ferias/id/" . $idAgente, "CONFIRM");
+							<br /> Caso não tenha resposta favor entre em contato com o mesmo!", "agente/agentes/ferias/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Error! " . $e->getMessage(), "agentes/ferias/id/" . $idAgente, "ERROR");
+            parent::message("Error! " . $e->getMessage(), "agente/agentes/ferias/id/" . $idAgente, "ERROR");
         }
     }
 
@@ -1445,7 +1445,7 @@ class Agente_AgentesController extends GenericControllerNew {
                 $repetida = $tbAusencia->BuscarAusenciaRepetida($idAgente, $dtInicio, $dtFim);
 
                 if (count($repetida) > 0) {
-                    parent::message("Já existe férias marcada dentro desse período!", "agentes/ferias/id/" . $idAgente, "ALERT");
+                    parent::message("Já existe férias marcada dentro desse período!", "agente/agentes/ferias/id/" . $idAgente, "ALERT");
                 }
 
 
@@ -1469,9 +1469,9 @@ class Agente_AgentesController extends GenericControllerNew {
                 $insere = $tbAusencia->inserirAusencia($dados);
             }
 
-            parent::message("Alteração realizada com sucesso!", "agentes/ferias/id/" . $idAgente, "CONFIRM");
+            parent::message("Alteração realizada com sucesso!", "agente/agentes/ferias/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao cadastrar! " . $e->getMessage(), "agentes/ferias/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao cadastrar! " . $e->getMessage(), "agente/agentes/ferias/id/" . $idAgente, "ERROR");
         }
     }
 
@@ -1497,9 +1497,9 @@ class Agente_AgentesController extends GenericControllerNew {
             );
 
             $altera = $tbAusencia->alteraAusencia($dados, $idferias);
-            parent::message("Exclusão realizada com sucesso!", "agentes/painelferias", "CONFIRM");
+            parent::message("Exclusão realizada com sucesso!", "agente/agentes/painelferias", "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao cadastrar! " . $e->getMessage(), "agentes/painelferias", "ERROR");
+            parent::message("Erro ao cadastrar! " . $e->getMessage(), "agente/agentes/painelferias", "ERROR");
         }
     }
 
@@ -1520,9 +1520,9 @@ class Agente_AgentesController extends GenericControllerNew {
             $dados = array('siAusencia' => 1);
 
             $altera = $tbAusencia->alteraAusencia($dados, $idferias);
-            parent::message("Aprovado com sucesso!", "agentes/painelferias", "CONFIRM");
+            parent::message("Aprovado com sucesso!", "agente/agentes/painelferias", "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao cadastrar! " . $e->getMessage(), "agentes/painelferias", "ERROR");
+            parent::message("Erro ao cadastrar! " . $e->getMessage(), "agente/agentes/painelferias", "ERROR");
         }
     }
 
@@ -1656,10 +1656,10 @@ class Agente_AgentesController extends GenericControllerNew {
             /* ********************************************************************************************** */
 
             $db->commit();
-            parent::message("Cadastro realizado com sucesso!", "agentes/atestados/id/" . $idAgente, "CONFIRM");
+            parent::message("Cadastro realizado com sucesso!", "agente/agentes/atestados/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
             $db->rollBack();
-            parent::message("Erro ao cadastrar! " . $e->getMessage(), "agentes/atestados/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao cadastrar! " . $e->getMessage(), "agente/agentes/atestados/id/" . $idAgente, "ERROR");
         }
     }
 
@@ -1673,7 +1673,7 @@ class Agente_AgentesController extends GenericControllerNew {
         $this->autenticacao();
 
         if (($this->GrupoAtivoSalic != 137) || ($this->getParecerista != 'sim')) {
-            parent::message("Você não tem permissão para essa funcionalidade!", "agentes/sempermissao", "ALERT");
+            parent::message("Você não tem permissão para essa funcionalidade!", "agente/agentes/sempermissao", "ALERT");
         }
 
         $idAgente = $this->_request->getParam("id");
@@ -1723,9 +1723,9 @@ class Agente_AgentesController extends GenericControllerNew {
             $dados = array('siCredenciamento' => $novoSiCredenciamento);
 
             $exclui = $tbCredenciamentoParecerista->excluiCredenciamento($idCredenciamento);
-            parent::message("Descredenciamento realizado com sucesso!", "agentes/credenciamento/id/" . $idAgente, "CONFIRM");
+            parent::message("Descredenciamento realizado com sucesso!", "agente/agentes/credenciamento/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao alterar o credenciamento! " . $e->getMessage(), "agentes/credenciamento/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao alterar o credenciamento! " . $e->getMessage(), "agente/agentes/credenciamento/id/" . $idAgente, "ERROR");
         }
     }
 
@@ -1752,13 +1752,13 @@ class Agente_AgentesController extends GenericControllerNew {
 
         $qtdArea = $tbCredenciamentoParecerista->QtdArea($idAgente);
         if ((($qtdArea[0]->qtd) >= 3) and (($qtdSegmento[0]->qtd) == 0)) {
-            parent::message("Você só pode credenciar  3 (três) áreas culturais!", "agentes/credenciamento/id/" . $idAgente, "ALERT");
+            parent::message("Você só pode credenciar  3 (três) áreas culturais!", "agente/agentes/credenciamento/id/" . $idAgente, "ALERT");
         }
 
         $verificarCadastrado = $tbCredenciamentoParecerista->verificarCadastrado($idAgente, $segmentoCultural, $areaCultural);
 
         if (count($verificarCadastrado) > 0) {
-            parent::message("Área e segmento já credenciado!", "agentes/credenciamento/id/" . $idAgente, "ALERT");
+            parent::message("Área e segmento já credenciado!", "agente/agentes/credenciamento/id/" . $idAgente, "ALERT");
         }
 
         try {
@@ -1770,9 +1770,9 @@ class Agente_AgentesController extends GenericControllerNew {
             );
             $credenciados = $tbCredenciamentoParecerista->inserirCredenciamento($dados);
 
-            parent::message("Credenciamento realizado com sucesso!", "agentes/credenciamento/id/" . $idAgente, "CONFIRM");
+            parent::message("Credenciamento realizado com sucesso!", "agente/agentes/credenciamento/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao cadastrar! " . $e->getMessage(), "agentes/credenciamento/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao cadastrar! " . $e->getMessage(), "agente/agentes/credenciamento/id/" . $idAgente, "ERROR");
         }
     }
 
@@ -1790,7 +1790,7 @@ class Agente_AgentesController extends GenericControllerNew {
 
         $novos_valores = array();
 
-        $dados = ManterAgentesDAO::buscarAgentes($cpf);
+        $dados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
 
         if ((strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) || (strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf))) {
             $novos_valores[0]['msgCPF'] = utf8_encode('invalido');
@@ -1878,7 +1878,7 @@ class Agente_AgentesController extends GenericControllerNew {
         try {
             $gravarNome = NomesDAO::gravarNome($idAgente, $TipoNome, $nome, 0, $Usuario);
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agentes/incluiragente", "ERROR");
+            parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
         }
 
         // ================================================ FIM SALVAR NOME ======================================================
@@ -1907,7 +1907,7 @@ class Agente_AgentesController extends GenericControllerNew {
                     $i = VisaoDAO::cadastrarVisao($GravarVisao);
                 }
             } catch (Exception $e) {
-                parent::message("Erro ao salvar a visão: " . $e->getMessage(), "agentes/incluiragente", "ERROR");
+                parent::message("Erro ao salvar a visão: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
             }
 
 
@@ -1944,7 +1944,7 @@ class Agente_AgentesController extends GenericControllerNew {
                         $i = TitulacaoConselheiroDAO::atualizaComponente($idAgente, $AtualizarComponente);
                     }
                 } catch (Exception $e) {
-                    parent::message("Erro ao salvar a área e segmento: " . $e->getMessage(), "agentes/incluiragente", "ERROR");
+                    parent::message("Erro ao salvar a área e segmento: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
                 }
             }
 
@@ -1984,9 +1984,9 @@ class Agente_AgentesController extends GenericControllerNew {
             );
 
 
-            $insere = EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
+            $insere = Agente_Model_EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "agentes/incluiragente", "ERROR");
+            parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
         }
 
 
@@ -2014,9 +2014,9 @@ class Agente_AgentesController extends GenericControllerNew {
 
 
 
-                $insere = Telefone::cadastrar($arrayTelefones);
+                $insere = Agente_Model_Telefone::cadastrar($arrayTelefones);
             } catch (Exception $e) {
-                parent::message("Erro ao salvar o telefone: " . $e->getMessage(), "agentes/incluiragente", "ERROR");
+                parent::message("Erro ao salvar o telefone: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
             }
         }
 
@@ -2042,7 +2042,7 @@ class Agente_AgentesController extends GenericControllerNew {
 
                 $insere = Email::cadastrar($arrayEmail);
             } catch (Exception $e) {
-                parent::message("Erro ao salvar o e-mail: " . $e->getMessage(), "agentes/incluiragente", "ERROR");
+                parent::message("Erro ao salvar o e-mail: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
             }
         }
         // =========================================== FIM SALVAR EMAILS ====================================================
@@ -2052,7 +2052,7 @@ class Agente_AgentesController extends GenericControllerNew {
             try {
                 $this->vincular($cpf, $idAgente);
             } catch (Exception $e) {
-                parent::message("Erro ao salvar o e-mail: " . $e->getMessage(), "agentes/incluiragente", "ERROR");
+                parent::message("Erro ao salvar o e-mail: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
             }
             // ================ FIM SALVAR VINCULO DO RESPONSAVEL COM ELE MESMO (PROPONENTE) ================
             // Caso venha do UC 89 Solicitar Vinculo
@@ -2097,7 +2097,7 @@ class Agente_AgentesController extends GenericControllerNew {
         $projetofnc = $this->_request->getParam('cadastrarprojeto');
 
         # tratamento para disparar "js custom event" no dispatch
-        $agente = ManterAgentesDAO::buscarAgentes($cpf);
+        $agente = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
         $agente = $agente[0];
         $agente->id = $agente->idAgente;
         $agente->nome = $agente->Nome;
@@ -2181,7 +2181,7 @@ class Agente_AgentesController extends GenericControllerNew {
         } else {
             // Caso não seja ele retorna para a visualização dos dados cadastrados do agente
             # editado para atender
-            parent::message('Cadastro realizado com sucesso!', "agentes/agentes/id/{$agente->id}", 'CONFIRM');
+            parent::message('Cadastro realizado com sucesso!', "agente/agentes/agentes/id/{$agente->id}", 'CONFIRM');
         }
     }
 
@@ -2237,7 +2237,7 @@ class Agente_AgentesController extends GenericControllerNew {
         try {
             $gravarNome = NomesDAO::gravarNome($idAgente, $TipoNome, $nome, 0, $Usuario);
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
+            parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
         }
 
         // ================================================ FIM SALVAR NOME ======================================================
@@ -2266,7 +2266,7 @@ class Agente_AgentesController extends GenericControllerNew {
                     $i = VisaoDAO::cadastrarVisao($GravarVisao);
                 }
             } catch (Exception $e) {
-                parent::message("Erro ao salvar a visão: " . $e->getMessage(), "agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
+                parent::message("Erro ao salvar a visão: " . $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
             }
 
 
@@ -2303,7 +2303,7 @@ class Agente_AgentesController extends GenericControllerNew {
                         $i = TitulacaoConselheiroDAO::atualizaComponente($idAgente, $AtualizarComponente);
                     }
                 } catch (Exception $e) {
-                    parent::message("Erro ao salvar a área e segmento: " . $e->getMessage(), $e->getMessage(), "agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
+                    parent::message("Erro ao salvar a área e segmento: " . $e->getMessage(), $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
                 }
             }
 
@@ -2343,9 +2343,9 @@ class Agente_AgentesController extends GenericControllerNew {
             );
 
 
-            $insere = EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
+            $insere = Agente_Model_EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
+            parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
         }
 
 
@@ -2371,9 +2371,9 @@ class Agente_AgentesController extends GenericControllerNew {
 
 
 
-            $insere = Telefone::cadastrar($arrayTelefones);
+            $insere = Agente_Model_Telefone::cadastrar($arrayTelefones);
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o telefone: " . $e->getMessage(), "agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
+            parent::message("Erro ao salvar o telefone: " . $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
         }
 
 
@@ -2397,14 +2397,14 @@ class Agente_AgentesController extends GenericControllerNew {
 
             $insere = Email::cadastrar($arrayEmail);
         } catch (Exception $e) {
-            parent::message("Erro ao salvar o e-mail: " . $e->getMessage(), "agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
+            parent::message("Erro ao salvar o e-mail: " . $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
         }
 
         // =========================================== FIM SALVAR EMAILS ====================================================
         // =========================================== INICIO SALVAR VINCULO ====================================================
         try {
             // busca o dirigente vinculado ao cnpj/cpf
-            $dadosDirigente = ManterAgentesDAO::buscarVinculados(null, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
+            $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
 
             // caso o agente não esteja vinculado, realizará a vinculação
             if (!$dadosDirigente) {
@@ -2416,14 +2416,14 @@ class Agente_AgentesController extends GenericControllerNew {
                     'Usuario' => $Usuario
                 );
 
-                $vincular = ManterAgentesDAO::cadastrarVinculados($dadosVinculacao);
+                $vincular = Agente_Model_ManterAgentesDAO::cadastrarVinculados($dadosVinculacao);
             }
         } catch (Exception $e) {
-            parent::message("Erro ao vincular o dirigente: " . $e->getMessage(), "agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
+            parent::message("Erro ao vincular o dirigente: " . $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
         }
 
 
-        parent::message("Cadastro realizado com sucesso!", "agentes/dirigentes/id/" . $idAgenteGeral, "CONFIRM");
+        parent::message("Cadastro realizado com sucesso!", "agente/agentes/dirigentes/id/" . $idAgenteGeral, "CONFIRM");
     }
 
     /**
@@ -2441,7 +2441,7 @@ class Agente_AgentesController extends GenericControllerNew {
 
         try {
             // busca o dirigente vinculado ao cnpj/cpf
-            $dadosDirigente = ManterAgentesDAO::buscarVinculados(null, null, $idDirigente, $idAgenteGeral, $idAgenteGeral);
+            $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, $idDirigente, $idAgenteGeral, $idAgenteGeral);
 
             // caso o agente não esteja vinculado, realizará a vinculação
             if (count($dadosDirigente) == 0) {
@@ -2452,7 +2452,7 @@ class Agente_AgentesController extends GenericControllerNew {
                     'idVinculoPrincipal' => $idAgenteGeral,
                     'Usuario' => $Usuario
                 );
-                $vincular = ManterAgentesDAO::cadastrarVinculados($dadosVinculacao);
+                $vincular = Agente_Model_ManterAgentesDAO::cadastrarVinculados($dadosVinculacao);
 
                 $Visao = 198; //Dirigente
                 $GravarVisao = array(// insert
@@ -2466,9 +2466,9 @@ class Agente_AgentesController extends GenericControllerNew {
                 }
             }
 
-            parent::message("Cadastrado realizado com sucesso! ", "agentes/dirigentes/id/" . $idAgenteGeral, "CONFIRM");
+            parent::message("Cadastrado realizado com sucesso! ", "agente/agentes/dirigentes/id/" . $idAgenteGeral, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao vincular o dirigente: " . $e->getMessage(), "agentes/visualizadirigente/id/" . $idAgenteGeral . "/idDirigente/" . $idDirigente, "ERROR");
+            parent::message("Erro ao vincular o dirigente: " . $e->getMessage(), "agente/agentes/visualizadirigente/id/" . $idAgenteGeral . "/idDirigente/" . $idDirigente, "ERROR");
         }
     }
 
@@ -2495,9 +2495,9 @@ class Agente_AgentesController extends GenericControllerNew {
 
             $desvincula = $vincular->Desvincular($where);
 
-            parent::message("Exclusão realizada com sucesso! ", "agentes/dirigentes/id/" . $idAgenteGeral, "CONFIRM");
+            parent::message("Exclusão realizada com sucesso! ", "agente/agentes/dirigentes/id/" . $idAgenteGeral, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao vincular o dirigente: " . $e->getMessage(), "agentes/visualizadirigente/id/" . $idAgenteGeral . "/idDirigente/" . $idDirigente, "ERROR");
+            parent::message("Erro ao vincular o dirigente: " . $e->getMessage(), "agente/agentes/visualizadirigente/id/" . $idAgenteGeral . "/idDirigente/" . $idDirigente, "ERROR");
         }
     }
 
@@ -2528,7 +2528,7 @@ class Agente_AgentesController extends GenericControllerNew {
                     throw new Exception("O CNPJ informado é inválido!");
                 } else {
                     // redireciona para a página com a busca dos dados com paginação
-                    $this->_redirect("agentes/listaragente?cpf=" . $cpf . "&nome=" . $nome);
+                    $this->_redirect("agente/agentes/listaragente?cpf=" . $cpf . "&nome=" . $nome);
                 }
             }
             catch (Exception $e) {
@@ -2554,7 +2554,7 @@ class Agente_AgentesController extends GenericControllerNew {
         $nome = $get->nome;
 
         // realiza a busca por cpf e/ou nome
-        $buscar = ManterAgentesDAO::buscarAgentes($cpf, $nome);
+        $buscar = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf, $nome);
 
         if (!$buscar) {
             // redireciona para a página de cadastro de agentes, e, exibe uma notificação relativa ao cadastro
@@ -2817,9 +2817,9 @@ class Agente_AgentesController extends GenericControllerNew {
                     VisaoDAO::cadastrarVisao($dados);
                 }
 
-                parent::message("Alteração realizada com sucesso!", "agentes/alterarvisao/id/" . $idAgente, "CONFIRM");
+                parent::message("Alteração realizada com sucesso!", "agente/agentes/alterarvisao/id/" . $idAgente, "CONFIRM");
             } catch (Exception $e) {
-                parent::message("Erro ao efetuar alteração das visões do agente! " . $e->getMessage(), "agentes/alterarvisao/id/" . $idAgente, "ERROR");
+                parent::message("Erro ao efetuar alteração das visões do agente! " . $e->getMessage(), "agente/agentes/alterarvisao/id/" . $idAgente, "ERROR");
             }
         }
 
@@ -2873,10 +2873,10 @@ class Agente_AgentesController extends GenericControllerNew {
                 $tbAgenteFisico->inserir($dados);
             }
 
-            parent::message("Dados $msg com sucesso!", "agentes/info-adicionais/id/" . $post->agente, "CONFIRM");
+            parent::message("Dados $msg com sucesso!", "agente/agentes/info-adicionais/id/" . $post->agente, "CONFIRM");
 
         } catch (Exception $e) {
-            parent::message("Ocorreu um erro durante a operação!", "agentes/info-adicionais/id/" . $post->agente, "ERROR");
+            parent::message("Ocorreu um erro durante a operação!", "agente/agentes/info-adicionais/id/" . $post->agente, "ERROR");
         }
 
     }
@@ -2941,9 +2941,9 @@ class Agente_AgentesController extends GenericControllerNew {
                 $msg = 'cadastrados';
                 $Natureza->inserir($dados);
             }
-            parent::message("Dados $msg com sucesso!", "agentes/natureza/id/" . $post->agente, "CONFIRM");
+            parent::message("Dados $msg com sucesso!", "agente/agentes/natureza/id/" . $post->agente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Ocorreu um erro durante a operação!", "agentes/natureza/id/" . $post->agente, "ERROR");
+            parent::message("Ocorreu um erro durante a operação!", "agente/agentes/natureza/id/" . $post->agente, "ERROR");
         }
     }
 
@@ -2993,9 +2993,9 @@ class Agente_AgentesController extends GenericControllerNew {
                 $msg = 'cadastrados';
                 $tbTitulacaoConselheiro->inserir($dados);
             }
-            parent::message("Dados $msg com sucesso!", "agentes/area-cultural/id/" . $post->agente, "CONFIRM");
+            parent::message("Dados $msg com sucesso!", "agente/agentes/area-cultural/id/" . $post->agente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Ocorreu um erro durante a operação!", "agentes/area-cultural/id/" . $post->agente, "ERROR");
+            parent::message("Ocorreu um erro durante a operação!", "agente/agentes/area-cultural/id/" . $post->agente, "ERROR");
         }
     }
 }

@@ -643,7 +643,7 @@ class RecursoController extends GenericControllerNew
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-            $this->view->comboareasculturais = ManterAgentesDAO::buscarAreasCulturais();
+            $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
 
             $parecer = new Parecer();
@@ -740,7 +740,7 @@ class RecursoController extends GenericControllerNew
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-            $this->view->comboareasculturais = ManterAgentesDAO::buscarAreasCulturais();
+            $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
 
             $parecer = new Parecer();
@@ -1289,7 +1289,7 @@ class RecursoController extends GenericControllerNew
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-            $this->view->comboareasculturais = ManterAgentesDAO::buscarAreasCulturais();
+            $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
 
             $parecer = new Parecer();
