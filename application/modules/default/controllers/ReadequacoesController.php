@@ -148,7 +148,7 @@ class ReadequacoesController extends GenericControllerNew {
             $this->view->TiposReadequacao = $tbTipoReadequacao->buscarTiposReadequacoesPermitidos($idPronac);
 
             $tbReadequacao = new tbReadequacao();
-            $this->view->readequacoesCadastradas = $tbReadequacao->readequacoesCadastradasProponente(array('a.idPronac = ?'=>$idPronac, 'a.siEncaminhamento = ?'=>12), array(1));
+            $this->view->readequacoesCadastradas = $tbReadequacao->readequacoesCadastradasProponente(array('a.idPronac = ?'=>$idPronac, 'a.siEncaminhamento = ?'=>12, 'a.idTipoReadequacao != ?' => 2), array(1));
             
         } else {
             parent::message("N&uacute;mero Pronac inv&aacute;lido!", "principalproponente", "ERROR");
@@ -1775,15 +1775,20 @@ class ReadequacoesController extends GenericControllerNew {
                 $wherePlanilha = "IdPRONAC = $idPronac AND tpPlanilha = 'SR' AND idReadequacao is null";
                 $tbPlanilhaAprovacao->update($dadosPlanilha, $wherePlanilha);
             }
-
-            if ($idReadequacao && $idTipoReadequacao != 2) {
+            
+            if ($idReadequacao && ($idTipoReadequacao != 2 && $idTipoReadequacao != 11)) {
                 $acaoErro = 'cadastrar';
-
+                
                 parent::message("Solicitação cadastrada com sucesso!", "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
-            }  else if ($idReadequacao && $idTipoReadequacao == 2) {
+            }  else if ($idReadequacao && ($idTipoReadequacao == 2 || $idTipoReadequacao == 11)) {
                 $acaoErro = 'alterar';
-
-                parent::message("Solicitação alterada com sucesso!", "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                
+                // lista de links de redirect
+                $redirect = array();
+                $redirect[2] = 'planilha-orcamentaria';
+                $redirect[11] = 'index';
+                
+                parent::message("Solicitação alterada com sucesso!", "readequacoes/" . $redirect[$idTipoReadequacao] . "?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
             } else {
                 throw new Exception("Erro ao $acaoErro a readequação!");
             }
