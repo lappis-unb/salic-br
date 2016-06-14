@@ -1363,13 +1363,48 @@ class ReadequacoesController extends GenericControllerNew {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
 
-        // busca registro na tabela temporária
+        // busca registro na tabela temporária e na original
         $tbPlanoDistribuicao = new tbPlanoDistribuicao();
-        $planosDistribuicao = $tbPlanoDistribuicao->buscarPlanosDistribuicaoReadequacao($idPronac, 'tbPlanoDistribuicao');
+        $planosDistribuicaoAlterado = $tbPlanoDistribuicao->buscarPlanosDistribuicaoReadequacao($idPronac, 'tbPlanoDistribuicao');
+        $planosDistribuicaoOriginal = $tbPlanoDistribuicao->buscarPlanosDistribuicaoReadequacao($idPronac, 'PlanoDistribuicaoProduto');
+
+        // flag para determinar se campo é copia ou não
+        $planoDistribuicaoCopia = array();
+        $planosDistribuicao = array();
         
-        // se não tem registro na temporária, busca na tabela original
-        if(count($planosDistribuicao)==0){
-            $planosDistribuicao = $tbPlanoDistribuicao->buscarPlanosDistribuicaoReadequacao($idPronac, 'PlanoDistribuicaoProduto');
+        // se o número de planos alterados for maior que o original e houver algum plano alterado, mescla lista
+        if (count($planosDistribuicaoOriginal) > count($planosDistribuicaoAlterado) && count($planosDistribuicaoAlterado) > 0) {
+            // mescla registros modificado e original, caso o usuário edite um plano e o outro não
+            
+            // itera lista de planos originais
+            foreach ($planosDistribuicaoOriginal as $planoOriginal) {
+                // itera lista de planos alterados e sobrescreve se encontrar igual
+                foreach($planosDistribuicaoAlterado as $planoAlterado) {
+                    if ($planoOriginal->idProduto == $planoAlterado->idProduto) {
+                        $planosDistribuicao[] = $planoAlterado;
+                        $planoDistribuicaoCopia[$planoOriginal->idProduto] = false;
+                        continue;
+                    } else {
+                        $planosDistribuicao[] = $planoOriginal;
+                        $planoDistribuicaoCopia[$planoOriginal->idProduto] = true;
+                    }
+                }
+            }     
+        } else if (count($planosDistribuicaoOriginal) == count($planosDistribuicaoAlterado)) {
+            // se for igual, exibe apenas os alterados           
+            $planosDistribuicao = $planosDistribuicaoAlterado;
+            foreach($planosDistribuicaoAlterado as $planoAlterado) {
+                $planoDistribuicaoCopia[$planoAlterado->idProduto] = false;
+                $planosDistribuicao[] = $planoAlterado;
+            }       
+            
+        } else {
+            // outros casos: exibe lista de planos de distribuição original
+            $planosDistribuicao = $planosDistribuicaoOriginal;
+            foreach($planosDistribuicaoOriginal as $planoOriginal) {
+                $planoDistribuicaoCopia[$planoOriginal->idProduto] = true;
+                $planosDistribuicao[] = $planoOriginal;
+            }            
         }
         
         $Produtos = new Produto();
@@ -1389,6 +1424,7 @@ class ReadequacoesController extends GenericControllerNew {
             array(
                 'idPronac' => $idPronac,
                 'planosDistribuicao' => $planosDistribuicao,
+                'planoDistribuicaoCopia' => $planoDistribuicaoCopia,
                 'produtos' => $produtos,
                 'posicoesLogomarca' => $posicoesLogomarca,
                 'areas' => $areas,
@@ -1396,7 +1432,7 @@ class ReadequacoesController extends GenericControllerNew {
             )
         );
     }
-
+    
     /*
      * Criada em 27/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
@@ -1449,6 +1485,10 @@ class ReadequacoesController extends GenericControllerNew {
         $idReadequacao = $this->_request->getParam("idReadequacao");
         $idPlanoDistribuicao = $this->_request->getParam("idPlanoDistribuicao");        
         
+        if (!is_numeric($idPlanoDistribuicao)) {
+            $idPlanoDistribuicao = null;
+        }
+        
         //VERIFICA SE JA POSSUI OS PLANOS DE DISTRIBUIÇÃO NA TABELA tbPlanoDistribuicao (READEQUACAO), SE NÃO TIVER, COPIA DA ORIGINAL, E DEPOIS INCLUI O ITEM DESEJADO.
         $tbPlanoDistribuicao = new tbPlanoDistribuicao();
         
@@ -1486,59 +1526,61 @@ class ReadequacoesController extends GenericControllerNew {
             }
         }
         
-        $verificaPlanoRepetido = $tbPlanoDistribuicao->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S', 'idProduto=?'=>$_POST['newPlanoDistribuicao']));
+        // dados para insert/update do plano de distribuição
+        $QtdeProduzida = $this->_request->getParam('newQntdNormal') + $this->_request->getParam('newQntdPromocional') + $this->_request->getParam('newQntdPatrocinador') + $this->_request->getParam('newQntdPopulacaoBaixaRenda') + $this->_request->getParam('newQntdDivulgacao');
+        $preconormal = str_replace(",", ".", str_replace(".", "", $this->_request->getParam("newVlNormal")));
+        $precopromocional = str_replace(",", ".", str_replace(".", "", $this->_request->getParam("newVlPromocional")));
+        /* DADOS DO PLANO PARA INCLUSÃO DA READEQUAÇÃO */
+        $dadosInclusao = array();
+        $dadosInclusao['idReadequacao'] = $idReadequacao;
+        $dadosInclusao['idProduto'] = $this->_request->getParam('newPlanoDistribuicao');
+        $dadosInclusao['cdArea'] = $this->_request->getParam('newArea');
+        $dadosInclusao['cdSegmento'] = $this->_request->getParam('newSegmento');
+        $dadosInclusao['idPosicaoLogo'] = $this->_request->getParam('newPosicaoLogomarca');
+        $dadosInclusao['qtProduzida'] = $QtdeProduzida;
+        $dadosInclusao['qtPatrocinador'] = $this->_request->getParam('newQntdPatrocinador');
+        $dadosInclusao['qtProponente'] = $this->_request->getParam('newQntdDivulgacao');
+        $dadosInclusao['qtOutros'] = $this->_request->getParam('newQntdPopulacaoBaixaRenda');
+        $dadosInclusao['qtVendaNormal'] = $this->_request->getParam('newQntdNormal');
+        $dadosInclusao['qtVendaPromocional'] = $this->_request->getParam('newQntdPromocional');
+        $dadosInclusao['vlUnitarioNormal'] = $preconormal;
+        $dadosInclusao['vlUnitarioPromocional'] = $precopromocional;
+        $dadosInclusao['stPrincipal'] = 0;
+        $dadosInclusao['tpSolicitacao'] = 'I';
+        $dadosInclusao['stAtivo'] = 'S';
+        $dadosInclusao['idPronac'] = $idPronac;
         
-        if(count($verificaPlanoRepetido)==0) {
-            $QtdeProduzida = $this->_request->getParam('newQntdNormal') + $this->_request->getParam('newQntdPromocional') + $this->_request->getParam('newQntdPatrocinador') + $this->_request->getParam('newQntdPopulacaoBaixaRenda') + $this->_request->getParam('newQntdDivulgacao');
-            $preconormal = str_replace(",", ".", str_replace(".", "", $this->_request->getParam("newVlNormal")));
-            $precopromocional = str_replace(",", ".", str_replace(".", "", $this->_request->getParam("newVlPromocional")));
-
-            /* DADOS DO PLANO PARA INCLUSÃO DA READEQUAÇÃO */
-            $dadosInclusao = array();
-            $dadosInclusao['idReadequacao'] = $idReadequacao;
-            $dadosInclusao['idProduto'] = $this->_request->getParam('newPlanoDistribuicao');
-            $dadosInclusao['cdArea'] = $this->_request->getParam('newArea');
-            $dadosInclusao['cdSegmento'] = $this->_request->getParam('newSegmento');
-            $dadosInclusao['idPosicaoLogo'] = $this->_request->getParam('newPosicaoLogomarca');
-            $dadosInclusao['qtProduzida'] = $QtdeProduzida;
-            $dadosInclusao['qtPatrocinador'] = $this->_request->getParam('newQntdPatrocinador');
-            $dadosInclusao['qtProponente'] = $this->_request->getParam('newQntdDivulgacao');
-            $dadosInclusao['qtOutros'] = $this->_request->getParam('newQntdPopulacaoBaixaRenda');
-            $dadosInclusao['qtVendaNormal'] = $this->_request->getParam('newQntdNormal');
-            $dadosInclusao['qtVendaPromocional'] = $this->_request->getParam('newQntdPromocional');
-            $dadosInclusao['vlUnitarioNormal'] = $preconormal;
-            $dadosInclusao['vlUnitarioPromocional'] = $precopromocional;
-            $dadosInclusao['stPrincipal'] = 0;
-            $dadosInclusao['tpSolicitacao'] = 'I';
-            $dadosInclusao['stAtivo'] = 'S';
-            $dadosInclusao['idPronac'] = $idPronac;
-
-            if ($idPlanoDistribuicao != null) {
-                $dadosWhere = 'idPlanoDistribuicao = ' . $this->_request->getParam('idPlanoDistribuicao');
-                $update = $tbPlanoDistribuicao->update($dadosInclusao, $dadosWhere);
-                if ($update) {
-                    echo json_encode(
-                        array(
-                            'resposta'=>true,
-                            'idReadequacao' => $idReadequacao                        
-                        )
-                    );
-                } else {
-                    echo json_encode(array('resposta'=>false));
-                }                
+        // update
+        if (!is_null($idPlanoDistribuicao)) {
+            $dadosWhere = 'idPlanoDistribuicao = ' . $this->_request->getParam('idPlanoDistribuicao');
+            $update = $tbPlanoDistribuicao->update($dadosInclusao, $dadosWhere);
+            
+            if ($update) {
+                echo json_encode(
+                    array(
+                        'resposta'=>true,
+                        'tipoOperacao' => 'update',
+                        'idReadequacao' => $idReadequacao                        
+                    )
+                );
             } else {
-                $idPlanoDistribuicao = $tbPlanoDistribuicao->inserir($dadosInclusao);
-                if($idPlanoDistribuicao){
-                    echo json_encode(
-                        array(
-                            'resposta'=>true,
-                            'idReadequacao' => $idReadequacao,
-                            'idPlanoDistribuicao' => $idPlanoDistribuicao
-                        )
-                    );
-                } else {
-                    echo json_encode(array('resposta'=>false));
-                }
+                echo json_encode(array('resposta'=>false));
+                }                
+        } else {
+            // insere novo registro
+            $idPlanoDistribuicao = $tbPlanoDistribuicao->inserir($dadosInclusao);
+            
+            if($idPlanoDistribuicao){
+                echo json_encode(
+                    array(
+                        'resposta'=>true,
+                        'tipoOperacao' => 'insert',                        
+                        'idReadequacao' => $idReadequacao,
+                        'idPlanoDistribuicao' => $idPlanoDistribuicao
+                    )
+                );
+            } else {
+                echo json_encode(array('resposta'=>false));
             }
         }
         die();

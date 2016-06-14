@@ -112,7 +112,7 @@
                 tipoRead = $('#tipoReadequacao').val(),
                 solicitacoesSimples = new Array(3,4,5,6,7,8,10,11,12,13,15,16,17,18,19,20,21),
                 solicitacoesSimplesCKEditor = new Array(5,6,7,8,16,17,18,19,20,21),
-		naoPedeConfirmacao = new Array(11);
+		naoPedeConfirmacao = new Array(2, 11);
                 
             if (descJustificativa == ''){
                 erro++;
@@ -122,7 +122,7 @@
                 erro++;
                 msg = 'O campo só permite 5.000 caracteres!';
             }
-            
+	    
             if(in_array(tipoRead, solicitacoesSimples)){
                 
                 if(tipoRead == 3 || tipoRead == 13){
@@ -208,7 +208,7 @@
 		// tipos de readequacao que não pedem confirmação
 		if ($.inArray(tipoRead, naoPedeConfirmacao)) {
 		    enviarformulario();
-		} else {		    
+		} else {
                     $("#msgAlerta").dialog("destroy");
                     $("#msgAlerta").html('Deseja incluir essa solicitação de readequação?');
                     $("#msgAlerta").dialog({
@@ -774,7 +774,7 @@
 		// se houver mais de uma readequacao pega a primeira
 		var readequacao = (typeof readequacoes.length != 'undefined') ? readequacoes[0] : readequacoes;
 		
-		if (readequacao.idReadequacao != '') {
+		if (typeof readequacao !== 'undefined') {
 		    $('#idReadequacao').val(readequacao.idReadequacao);
 		    CKEDITOR.instances['descJustificativa'].setData(readequacao.dsJustificativa);
 		}
