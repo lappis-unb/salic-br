@@ -170,7 +170,9 @@ class Projetos extends GenericModel
             'vlLancamento',
             'stLancamento'
         ), 'dbo')
-        ->where('l.idPronac = ?', (int)$objParam->idPronac);
+        ->where('l.idPronac = ?', (int)$objParam->idPronac)
+        ->order(array('dtLancamento ASC', 'nrLancamento ASC'))
+        ;
         
         # Filtros
         $this->montarFiltrosExtrato($select, $objParam);
