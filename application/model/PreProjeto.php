@@ -1,41 +1,78 @@
-<?php 
+<?php
 
+/**
+ * PreProjeto
+ *
+ * @uses   Zend
+ * @uses   _Db_Table
+ * @author wouerner <wouerner@gmail.com>
+ */
 class PreProjeto extends Zend_Db_Table
 {
-    //protected $_schema = "SAC";
     protected $_name = "PreProjeto";
     protected $_primary = "idPreProjeto";
+
+    /**
+     * __construct
+     *
+     * @access public
+     * @return void
+     */
     public function __construct() {
         $db = new Conexao(Zend_Registry::get('DIR_CONFIG'), "conexao_sac");
         parent::__construct();
     }
 
-    
+    /**
+     * retirarProjetos
+     *
+     * @param mixed $idUsuario
+     * @param mixed $idUsuarioR
+     * @param mixed $idAgente
+     * @static
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
     public static function retirarProjetos($idUsuario, $idUsuarioR, $idAgente)
     {
-
         $sql = "UPDATE SAC.dbo.PreProjeto SET idUsuario = ".$idUsuario." WHERE idUsuario = ".$idUsuarioR." and idAgente = ".$idAgente;
 
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->query($sql);
-
     }
 
+    /**
+     * retirarProjetosVinculos
+     *
+     * @param mixed $siVinculoProposta
+     * @param mixed $idVinculo
+     * @static
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
     public static function retirarProjetosVinculos($siVinculoProposta, $idVinculo)
     {
-
         $sql = "UPDATE Agentes.dbo.tbVinculoProposta SET siVinculoProposta = $siVinculoProposta WHERE idVinculo = $idVinculo";
 
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->query($sql);
-
     }
-    
-    
+
+    /**
+     * listaProjetos
+     *
+     * @param mixed $idUsuario
+     * @static
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
     public static function listaProjetos($idUsuario) {
 
         $sql = "SELECT p.idPreProjeto,idagente,NomeProjeto,Mecanismo,stTipoDemanda
@@ -59,9 +96,9 @@ class PreProjeto extends Zend_Db_Table
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
      */
-    public function buscar($where=array(), $order=array(), $tamanho=-1, $inicio=-1) 
+    public function buscar($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
-        
+
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from($this, array("*",
@@ -88,7 +125,7 @@ class PreProjeto extends Zend_Db_Table
         {
             $slct->where($coluna, $valor);
         }
-        
+
         //adicionando linha order ao select
         $slct->order($order);
 
@@ -148,20 +185,14 @@ class PreProjeto extends Zend_Db_Table
                          'a.idAgente = m.idAgente',
                          array("m.Descricao as NomeAgente"),
                          'AGENTES.dbo');
-                         
-                         //xd($slct);
 
-      /*  $slct->joinLeft(array('mc' => 'Mecanismo'),
-                         'a.Mecanismo = mc.Codigo',
-                         array("mc.Descricao as Mecanismo"));
-        */
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna=>$valor)
         {
             $slct->where($coluna, $valor);
         }
         $slct->where(new Zend_Db_Expr("NOT EXISTS(select 1 from SAC.dbo.Projetos pr where a.idPreProjeto = pr.idProjeto)"));
-        
+
         //adicionando linha order ao select
         $slct->order($order);
 
@@ -175,8 +206,7 @@ class PreProjeto extends Zend_Db_Table
                 }
                 $slct->limit($tamanho, $tmpInicio);
         }
-//        xd($slct->assemble());
-        //xd($this->fetchAll($slct));
+
         return $this->fetchAll($slct);
     }
 
@@ -187,7 +217,7 @@ class PreProjeto extends Zend_Db_Table
      */
     public function salvar($dados)
     {
-        
+
         //DECIDINDO SE INCLUI OU ALTERA UM REGISTRO
         if(isset($dados['idPreProjeto']) && !empty ($dados['idPreProjeto'])){
             //UPDATE
@@ -240,6 +270,17 @@ class PreProjeto extends Zend_Db_Table
        }
     }
 
+    /**
+     * consultaTodosProjetos
+     *
+     * @param mixed $idAgente
+     * @param mixed $idResponsavel
+     * @param mixed $arrBusca
+     * @static
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
     public static function consultaTodosProjetos($idAgente, $idResponsavel, $arrBusca) {
 
         $sql = "SELECT 0 as Ordem,a.idPreProjeto,a.NomeProjeto,ag.cnpjcpf AS CNPJCPF,m.descricao AS NomeAgente,a.idUsuario,a.idAgente
@@ -274,7 +315,15 @@ class PreProjeto extends Zend_Db_Table
         return $db->fetchAll($sql);
     }
 
-
+    /**
+     * consultaprojetos
+     *
+     * @param mixed $idagente
+     * @static
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
     public static function consultaprojetos($idagente) {
 
         $sql = "SELECT idPreProjeto, idagente, NomeProjeto, Mecanismo
@@ -288,10 +337,16 @@ class PreProjeto extends Zend_Db_Table
         return $db->fetchAll($sql);
     }
 
-    public static function inserirProposta($dados) {
-
-//        $sql = "INSERT into SAC.dbo.PreProjeto
-//                VALUES ('$idagente','".$NomeProjeto."','1','$AgenciaBancaria','0','".$DtInicioDeExecucao."','".$DtFinalDeExecucao."','".$Justificativa."','".$NrAtoTombamento."','".$DtAtoTombamento."','$EsferaTombamento','".$ResumoDoProjeto."','".$Objetivos."','".$Acessibilidade."','".$DemocratizacaoDeAcesso."','".$EtapaDeTrabalho."','".$FichaTecnica."','".$Sinopse."','".$ImpactoAmbiental."','".$EspecificacaoTecnica."','',GETDATE(),'','0','$stDataFixa','$stPlanoAnual','777','NA','')";
+    /**
+     * inserirProposta
+     *
+     * @param mixed $dados
+     * @static
+     * @access public
+     * @return void
+     */
+    public static function inserirProposta($dados)
+    {
 
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -307,10 +362,16 @@ class PreProjeto extends Zend_Db_Table
         }
     }
 
+    /**
+     * alterarDados
+     *
+     * @param mixed $dados
+     * @param mixed $where
+     * @static
+     * @access public
+     * @return void
+     */
     public static function alterarDados($dados, $where) {
-
-//        $sql = "INSERT into SAC.dbo.PreProjeto
-//                VALUES ('$idagente','".$NomeProjeto."','1','$AgenciaBancaria','0','".$DtInicioDeExecucao."','".$DtFinalDeExecucao."','".$Justificativa."','".$NrAtoTombamento."','".$DtAtoTombamento."','$EsferaTombamento','".$ResumoDoProjeto."','".$Objetivos."','".$Acessibilidade."','".$DemocratizacaoDeAcesso."','".$EtapaDeTrabalho."','".$FichaTecnica."','".$Sinopse."','".$ImpactoAmbiental."','".$EspecificacaoTecnica."','',GETDATE(),'','0','$stDataFixa','$stPlanoAnual','777','NA','')";
 
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -326,7 +387,14 @@ class PreProjeto extends Zend_Db_Table
         }
     }
 
-
+    /**
+     * listaUF
+     *
+     * @static
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
     public static function listaUF() {
 
         $sql = "SELECT * FROM AGENTES.dbo.UF ORDER BY Sigla";
@@ -338,6 +406,15 @@ class PreProjeto extends Zend_Db_Table
 
     }
 
+    /**
+     * buscaIdAgente
+     *
+     * @param mixed $CNPJCPF
+     * @static
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
     public static function buscaIdAgente($CNPJCPF) {
         $sql = "select * from Agentes.dbo.Agentes where CNPJCPF ='$CNPJCPF' ";
         $db = Zend_Registry::get('db');
@@ -345,30 +422,75 @@ class PreProjeto extends Zend_Db_Table
         return $db->fetchAll($sql);
     }
 
+    /**
+     * inserirAgentes
+     *
+     * @param mixed $dadosAgentes
+     * @static
+     * @access public
+     * @return void
+     * @todo Esse modelo não deveria fazer insert, essa função e do modelo Agente_Model_Agentes
+     */
     public static function inserirAgentes($dadosAgentes) {
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $Agentes = $db->insert("Agentes.dbo.Agentes", $dadosAgentes);
     }
 
+    /**
+     * inserirNomes
+     *
+     * @param mixed $dadosNomes
+     * @static
+     * @access public
+     * @return void
+     * @todo vericar model correta para inserir nomes
+     */
     public static function inserirNomes($dadosNomes) {
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $Nomes = $db->insert("Agentes.dbo.Nomes", $dadosNomes);
     }
 
+    /**
+     * inserirEnderecoNacional
+     *
+     * @param mixed $dadosEnderecoNacional
+     * @static
+     * @access public
+     * @return void
+     * @todo verificar model correta para inserir endereço
+     */
     public static function inserirEnderecoNacional($dadosEnderecoNacional) {
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $Nomes = $db->insert("Agentes.dbo.EnderecoNacional", $dadosEnderecoNacional);
     }
 
+    /**
+     * inserirVisao
+     *
+     * @param mixed $dadosVisao
+     * @static
+     * @access public
+     * @return void
+     * @todo verificar mode correta para visao
+     */
     public static function inserirVisao($dadosVisao) {
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $Nomes = $db->insert("Agentes.dbo.Visao", $dadosVisao);
     }
 
+    /**
+     * editarproposta
+     *
+     * @param mixed $idPreProjeto
+     * @static
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
     public static function editarproposta($idPreProjeto) {
 
         $sql = "SELECT * FROM SAC.dbo.PreProjeto WHERE idPreProjeto = $idPreProjeto ";
@@ -380,7 +502,16 @@ class PreProjeto extends Zend_Db_Table
 
     }
 
-    public function recuperarTecnicosOrgao($idOrgaoSuperior) {
+    /**
+     * recuperarTecnicosOrgao
+     *
+     * @param mixed $idOrgaoSuperior
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
+    public function recuperarTecnicosOrgao($idOrgaoSuperior)
+    {
 
         $sql = " SELECT usu_codigo,uog_orgao FROM tabelas.dbo.vwUsuariosOrgaosGrupos
                   WHERE sis_codigo=21 and gru_codigo=92 and uog_orgao = {$idOrgaoSuperior} and uog_status = 1";
@@ -389,10 +520,17 @@ class PreProjeto extends Zend_Db_Table
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
-
     }
 
-    function listarDiligenciasPreProjeto($consulta = array(),$retornaSelect = false){//AQUI
+    /**
+     * listarDiligenciasPreProjeto
+     *
+     * @param bool $consulta
+     * @param bool $retornaSelect
+     * @access public
+     * @return void
+     */
+    public function listarDiligenciasPreProjeto($consulta = array(),$retornaSelect = false){
 
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -400,15 +538,11 @@ class PreProjeto extends Zend_Db_Table
                         array('pre'=>$this->_name),
                         array(
                                 'nomeProjeto'=>'pre.NomeProjeto',
-                        
+
                                 'pronac'=>'pre.idPreProjeto'
                              )
                      );
-                     
-                     
-                     
-                     
-                     
+
         $select->joinInner(
                 array('aval' => 'tbAvaliacaoProposta'),
                 'aval.idProjeto = pre.idPreProjeto',
@@ -423,9 +557,9 @@ class PreProjeto extends Zend_Db_Table
                         'aval.stEnviado'
                     )
         );
-        
-       
-        	
+
+
+
         $select->joinLeft(
                 array('arq' => 'tbArquivo'),
                 'arq.idArquivo = aval.idArquivo',
@@ -435,7 +569,7 @@ class PreProjeto extends Zend_Db_Table
                     ),
                 'BDCORPORATIVO.scCorp'
         );
-        
+
         $select->joinLeft(
                 array('a' => 'AGENTES'),
                 'pre.idAgente = a.idAgente',
@@ -452,8 +586,7 @@ class PreProjeto extends Zend_Db_Table
                     ),
                 'AGENTES.dbo'
         );
- 
-        //$select->where('aval.stEstado = ?', 0);
+
         foreach ($consulta as $coluna=>$valor)
         {
             $select->where($coluna, $valor);
@@ -461,17 +594,22 @@ class PreProjeto extends Zend_Db_Table
 
         if($retornaSelect)
         {
-        	
+
             return $select;
         }
         else
         {
-        	//xd($select->assemble());
         	return $this->fetchAll($select);
         }
-            
     }
 
+    /**
+     * dadosPreProjeto
+     *
+     * @param bool $consulta
+     * @access public
+     * @return void
+     */
     function dadosPreProjeto($consulta = array()){
 
         $select = $this->select();
@@ -493,7 +631,14 @@ class PreProjeto extends Zend_Db_Table
 
     }
 
-    function buscarAgentePreProjeto($consulta = array()){
+    /**
+     * buscarAgentePreProjeto
+     *
+     * @param bool $consulta
+     * @access public
+     * @return void
+     */
+    public function buscarAgentePreProjeto($consulta = array()){
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -511,10 +656,14 @@ class PreProjeto extends Zend_Db_Table
         return $this->fetchAll($select);
     }
 
-
-
-
-        public function listaAvaliadores($where=array()) {
+    /**
+     * listaAvaliadores
+     *
+     * @param bool $where
+     * @access public
+     * @return void
+     */
+    public function listaAvaliadores($where=array()) {
 
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -536,14 +685,16 @@ class PreProjeto extends Zend_Db_Table
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-        //xd($slct->assemble());
-        //xd($this->fetchAll($slct));
         return $this->fetchAll($slct);
-
     }
 
-
-
+    /**
+     * listaApenasAvaliadores
+     *
+     * @param bool $where
+     * @access public
+     * @return void
+     */
     public function listaApenasAvaliadores($where=array()) {
 
         $slct = $this->select();
@@ -566,12 +717,16 @@ class PreProjeto extends Zend_Db_Table
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-        //xd($slct->assemble());
-        //xd($this->fetchAll($slct));
         return $this->fetchAll($slct);
-
     }
 
+    /**
+     * buscarPropostaEditalCompleto
+     *
+     * @param bool $where
+     * @access public
+     * @return void
+     */
     public function buscarPropostaEditalCompleto($where=array())
     {
         $slct = $this->select();
@@ -588,7 +743,7 @@ class PreProjeto extends Zend_Db_Table
                        p.stTipoDemanda,
                        p.idEdital,
                        CAST(p.ResumoDoProjeto as TEXT) as ResumoDoProjeto')
-                        
+
         );
         $slct->joinLeft(
                 array('fd' => 'tbFormDocumento'),
@@ -596,7 +751,7 @@ class PreProjeto extends Zend_Db_Table
                 array('fd.nrFormDocumento', 'fd.nrVersaoDocumento'),
                 'BDCORPORATIVO.scQuiz'
         );
-        
+
         $slct->joinInner(array('nm' => 'Nomes'),
                 'nm.idAgente = p.idAgente',
                 array('nm.Descricao as nomeAgente'),
@@ -605,12 +760,17 @@ class PreProjeto extends Zend_Db_Table
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-        //xd($slct->assemble());
-        //xd($this->fetchAll($slct));
-        return $this->fetchAll($slct);
 
+        return $this->fetchAll($slct);
     }
 
+    /**
+     * dadosProjetoDiligencia
+     *
+     * @param mixed $idProjeto
+     * @access public
+     * @return void
+     */
     public function dadosProjetoDiligencia($idProjeto){
 
         $slct = $this->select();
@@ -647,6 +807,14 @@ class PreProjeto extends Zend_Db_Table
         return $this->fetchAll($slct);
     }
 
+    /**
+     * analiseDeCustos
+     *
+     * @param mixed $idPreProjeto
+     * @static
+     * @access public
+     * @return void
+     */
     public static function analiseDeCustos($idPreProjeto)
     {
         $sql = "
@@ -696,6 +864,13 @@ class PreProjeto extends Zend_Db_Table
         return $db->fetchAll($sql);
     }
 
+    /**
+     * tecnicoTemProposta
+     *
+     * @param mixed $idTecnico
+     * @access public
+     * @return void
+     */
     public function tecnicoTemProposta($idTecnico){
 
         $slct = $this->select();
@@ -725,41 +900,54 @@ class PreProjeto extends Zend_Db_Table
 
         return false;
     }
-    
-    
-    
- 	public static function alteraproponente($idPreProjeto, $idAgente) 
- 	{
 
+    /**
+     * alteraproponente
+     *
+     * @param mixed $idPreProjeto
+     * @param mixed $idAgente
+     * @static
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
+    public static function alteraproponente($idPreProjeto, $idAgente)
+    {
         $sql = "UPDATE SAC.dbo.PreProjeto SET idAgente = ".$idAgente." WHERE idPreProjeto = $idPreProjeto ";
 
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
-
     }
-    
-    
- 	public static function alteraresponsavel($idPreProjeto, $idResponsavel) 
- 	{
 
+    /**
+     * alteraresponsavel
+     *
+     * @param mixed $idPreProjeto
+     * @param mixed $idResponsavel
+     * @static
+     * @access public
+     * @return void
+     */
+    public static function alteraresponsavel($idPreProjeto, $idResponsavel)
+    {
         $sql = "UPDATE SAC.dbo.PreProjeto SET idUsuario = ".$idResponsavel." WHERE idPreProjeto = $idPreProjeto ";
 
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
-
     }
-    
-    
-    
-    /* Busca as propostas/projetos vinculados ao proponente
-     * UC 89 Fluxo: FA6
-     * 
+
+    /**
+     * BuscarPropostaProjetos Busca as propostas/projetos vinculados ao proponente
+     *
+     * @param bool $where
+     * @access public
+     * @return void
      */
- 	public function buscarPropostaProjetos($where=array())
+    public function buscarPropostaProjetos($where=array())
     {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -776,37 +964,36 @@ class PreProjeto extends Zend_Db_Table
                        pp.idUsuario,
                        pp.idEdital,
                        CAST(pp.ResumoDoProjeto as TEXT) as ResumoDoProjeto')
-                        
+
         );
-        
+
         $slct->joinLeft(
                 array('resp' => 'SGCacesso'), 'resp.IdUsuario = pp.idUsuario',
                 array('resp.Nome','resp.Cpf'),'CONTROLEDEACESSO.dbo'
         );
-        
+
         $slct->joinLeft(
                 array('pr' => 'Projetos'), 'pp.idPreProjeto = pr.idProjeto',
                 array('pr.idProjeto','(pr.AnoProjeto+pr.Sequencial) as PRONAC')
         );
-        
-        /*
-        $slct->joinLeft(
-                array('vi' => 'tbVinculo'), 'pp.idAgente = vi.idAgenteProponente',
-                array('vi.siVinculo', 'vi.idVinculo'),'AGENTES.dbo'
-        );
-        */
+
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-        
+
         $slct->order('pp.idPreProjeto');
         $slct->order('pp.NomeProjeto');
-        //xd($slct->assemble());
-        
-        return $this->fetchAll($slct);
 
+        return $this->fetchAll($slct);
     }
 
+    /**
+     * buscarPropProjVinculados
+     *
+     * @param  mixed $idAgenteProponente
+     * @access public
+     * @return void
+     */
     public function buscarPropProjVinculados($idAgenteProponente){
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -836,9 +1023,15 @@ class PreProjeto extends Zend_Db_Table
         $slct->order('pp.NomeProjeto');
 
         return $this->fetchAll($slct);
-
     }
 
+    /**
+     * buscarVinculadosProponenteDirigentes
+     *
+     * @param mixed $arrayIdAgentes
+     * @access public
+     * @return void
+     */
     public function buscarVinculadosProponenteDirigentes($arrayIdAgentes){
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -871,6 +1064,15 @@ class PreProjeto extends Zend_Db_Table
 
     }
 
+    /**
+     * gerenciarResponsaveisPendentes
+     *
+     * @param mixed $siVinculo
+     * @param bool $idAgente
+     * @static
+     * @access public
+     * @return void
+     */
     public static function gerenciarResponsaveisPendentes($siVinculo, $idAgente = null) {
 
         $sql = "SELECT distinct k.Cpf, k.IdUsuario as idResponsavel, k.Nome AS NomeResponsavel, v.idVinculo, v.siVinculo, v.idUsuarioResponsavel,k.IdUsuario
@@ -882,11 +1084,20 @@ class PreProjeto extends Zend_Db_Table
 
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-//        xd($sql);
 
         return $db->fetchAll($sql);
     }
 
+    /**
+     * GerenciarResponsaveisVinculados
+     *
+     * @param mixed $siVinculo
+     * @param bool $idAgente
+     * @static
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
     public static function gerenciarResponsaveisVinculados($siVinculo, $idAgente = null) {
 
         $sql = "SELECT distinct k.Cpf, k.IdUsuario as idResponsavel, k.Nome AS NomeResponsavel, y.idVinculo, y.siVinculo, y.idUsuarioResponsavel,r.IdUsuario
@@ -905,13 +1116,24 @@ class PreProjeto extends Zend_Db_Table
         return $db->fetchAll($sql);
     }
 
-    public static function listarPropostasResultado($idAgente, $idResponsavel, $idAgenteCombo) {
-
+    /**
+     * listarPropostasResultado
+     *
+     * @param mixed $idAgente
+     * @param mixed $idResponsavel
+     * @param mixed $idAgenteCombo
+     * @static
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
+    public static function listarPropostasResultado($idAgente, $idResponsavel, $idAgenteCombo)
+    {
         $filtro = '';
-        if(!empty($idAgenteCombo)){
+        if (!empty($idAgenteCombo)){
             $filtro = " AND b.idAgente = $idAgenteCombo ";
         }
-        
+
         $sql = "
             SELECT b.CNPJCPF, b.idAgente, dbo.Fnnome(b.idAgente) AS NomeProponente, a.idPreProjeto, a.NomeProjeto--,'Proponente - Pessoa Física' as TipoDeAgente
                 FROM SAC.dbo.PreProjeto a
@@ -951,10 +1173,6 @@ class PreProjeto extends Zend_Db_Table
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        //xd($sql);
         return $db->fetchAll($sql);
     }
-    
 }
-
-?>

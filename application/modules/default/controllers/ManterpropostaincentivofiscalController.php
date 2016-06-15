@@ -1,13 +1,11 @@
 <?php
 
-/* VerificarReadequacaoDeProjetoController
+/** VerificarReadequacaoDeProjetoController
  * @author Equipe RUP - Politec
  * @since 17/05/2010
  * @version 1.0
  * @package application
  * @subpackage application.controllers
- * @link http://www.politec.com.br
- * @copyright ï¿½ 2010 - Politec - Todos os direitos reservados.
  */
 
 class ManterpropostaincentivofiscalController extends GenericControllerNew {
@@ -50,8 +48,6 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
             parent::perfil(4, $PermissoesGrupo);
         }
 
-        /*         * ****************************************************************************************************** */
-
         $cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
 
         // Busca na SGCAcesso
@@ -80,8 +76,6 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         if ($this->idAgente != 0) {
             $this->usuarioProponente = "S";
         }
-
-        /*         * ****************************************************************************************************** */
 
         $this->cpfLogado = $cpf;
         $this->idAgenteProponente = $this->idAgente;
@@ -206,8 +200,6 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
 
-//        $this->verificarPermissaoAcesso(false, false, false);
-
         $post = Zend_Registry::get("post");
         $idPreProjeto = $post->idPreProjeto;
         $acao = $post->acao;
@@ -223,19 +215,6 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         $dtFim = null;
         $dtFimTemp = explode("/", $post->dtFinalDeExecucao);
         $dtFim = $dtFimTemp[2] . "/" . $dtFimTemp[1] . "/" . $dtFimTemp[0] . date(" H:i:s");
-
-//        /* VALIDAÇÃO SUMULA 10 DATA EXECUÇÃO <> DE DATA ATUAL E > 30/09 DO ENVIO DA PROPOSTA */
-//        if ($post->stPlanoAnual <> 0) {
-//            $ano_vigente     = date("Y");
-//            $ano_execucao    = explode('/', $post->dtInicioDeExecucao);
-//            $ano_execucao    = $ano_execucao[2];
-//            $data_validacao = (int) date("Y").'0129';
-//            $data_vigente = (int) date("Ymd");
-//            xd($ano_vigente  .'-'.  $ano_execucao);
-//            if ($ano_execucao <= $ano_vigente) {
-//                parent::message('O perodo de execuo de projetos de plano anual dever ser posterior ao ano vigente', '/manterpropostaincentivofiscal/buscaproponente', 'ALERT');
-//            }
-//        }
 
         $dtAtoTombamento = null;
         if ($post->dtAtoTombamento) {
@@ -315,7 +294,6 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         $tblPreProjeto = new PreProjeto();
 
         $db = Zend_Db_Table::getDefaultAdapter();
-        //$db->beginTransaction();
 
         try {
             //persiste os dados do Pre Projeto
@@ -323,17 +301,6 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
             $this->view->idPreProjeto = $idPreProjeto;
 
             if ($acao == "incluir") {
-                //persiste os dados de Movimentacao
-//               $tblMovimentacao = new Movimentacao(); //CODIGO COMENTADO PARA DEIXAR A TRIGGER TRABALHAR EM PRODUCAO
-//                $dados = array("idProjeto" => $idPreProjeto,
-//                    "Movimentacao" => "95", //Status = Proposta com Proponente
-//                    "DtMovimentacao" => date("Y/m/d H:i:s"),
-//                    "stEstado" => "0",
-//                    "Usuario" => $this->idResponsavel
-//                );
-//                $tblMovimentacao->salvar($dados);
-
-                /* **************************************************************************************** */
                 // Salvando os dados na TbVinculoProposta
                 $tbVinculoDAO = new TbVinculo();
                 $tbVinculoPropostaDAO = new tbVinculoPropostaResponsavelProjeto();
@@ -450,15 +417,7 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
                 $this->view->siVinculoProponente = false;
             }
 
-            /*
-              //BUSCA idAgente DO USUARIO LOGADO, que ï¿½ o Responsavel ou o Proponente
-              $auth = Zend_Auth::getInstance(); // instancia da autenticação
-              $usu_identificacao = isset($auth->getIdentity()->usu_identificacao) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
-              $agentes = new Agente_Model_Agentes();
-              $idAgenteProponenteRs = $agentes->buscar(array("CNPJCPF = ?" => $this->cpfLogado));
-             */
             $idAgente = $this->idResponsavel;
-            /*             * *************************************************************** */
 
             $tblVinculo = new TbVinculo();
 
@@ -530,8 +489,6 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         if (!empty($idPreProjeto)) {
             $sp = new spValidarApresentacaoDeProjeto();
             $arrResultado = $sp->paChecklistDeEnvioDeProposta($idPreProjeto);
-//xd($arrResultado);
-//            $arrResultado = $this->validarEnvioPropostaAoMinc($idPreProjeto);
 
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
             $this->montaTela("manterpropostaincentivofiscal/enviarproposta.phtml", array("acao" => $this->_urlPadrao . "/manterpropostaincentivofiscal/salvar",
@@ -547,7 +504,6 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
         $tblPreProjeto = new PreProjeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
-//xd($rsPreProjeto);
         /* ======== VERIFICA TODAS AS INFORMACOES NECESSARIAS AO ENVIO DA PROPOSTA ======= */
 
         $arrResultado = array();
@@ -842,11 +798,6 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
 
                 //calcula percentual do custo administrativo
                 $quinzecentoprojeto = ($valorProjeto * 0.15);
-                /* if ($valorProjeto > 0) {
-                  $percentual = $valorCustoAdmin / $valorProjeto * 100;
-                  } else {
-                  $percentual = 100;
-                  } */
 
                 //if ($percentual > 15) {
                 if ($valorCustoAdmin > $quinzecentoprojeto) {
@@ -984,9 +935,6 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
             //INICIA PERSISTENCIA DOS DADOS
             if ($idTecnico) {
 
-//                $db = Zend_Db_Table::getDefaultAdapter();
-//                $db->beginTransaction();
-
                 try {
 
                     //======== PERSXISTE DADOS DA MOVIMENTACAO ==========/
@@ -1025,7 +973,6 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
                     die();
                 } catch (Exception $e) {
 //                    $db->rollback();
-                    // xd($e->getMessage());
                     parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/manterpropostaincentivofiscal/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
                     die();
                 }
@@ -1034,7 +981,6 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
                 die();
             }
         } else {
-            //xd($e->getMessage());
             parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/manterpropostaincentivofiscal/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
         }
     }
@@ -1150,12 +1096,10 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
             }
             $i++;
         }
-//        xd($dadosCombo);
 
         $this->view->dadosCombo = $dadosCombo;
         $this->view->idResponsavel = $this->idResponsavel;
         $this->view->idUsuario = $this->idUsuario;
-        /*         * ************************************************************** */
     }
 
 
@@ -1253,11 +1197,6 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
             }
         }
 
-//        $whereResponsavel['VI.idAgenteProponente in (?)'] = $dadosIdAgentes;
-//        $whereResponsavel['VI.siVinculo = ?'] = 2;
-//        $buscaResponsavel = $tbVinculo->buscarResponsaveis($whereResponsavel, $this->idAgenteProponente);
-
-
         //PROCURA AS PROPOSTAS DE TODOS OS IDAGENTE'S
         $listaPropostas = $propostas->buscarVinculadosProponenteDirigentes($dadosIdAgentes);
 
@@ -1288,7 +1227,6 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
         $listaProjetos = $propostas->buscarPropostaProjetos($whereProjetos);
 
         $this->view->projetos = $listaProjetos;
-        //$this->view->responsaveis 	= $buscaResponsavel;
     }
 
     /**
@@ -1309,9 +1247,9 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
      * @access public
      * @param void
      * @return void
+     * @todo retirar html
      */
     public function respnovoresponsavelAction() {
-        //ini_set('default_charset', 'utf-8');
 
         $this->_helper->layout->disableLayout();
 
@@ -1335,12 +1273,8 @@ class ManterpropostaincentivofiscalController extends GenericControllerNew {
 
         $busca = $tbVinculo->buscarResponsaveis($where, $this->idAgenteProponente);
 
-
         $this->view->dados = $busca;
         $this->view->dadoscount = count($busca);
         $this->view->idAgenteProponente = $this->idAgenteProponente;
     }
-
 }
-
-?>

@@ -1,10 +1,15 @@
 <?php
+/**
+ * Proposta
+ *
+ * @uses GenericModel
+ * @package Webdav
+ * @author  wouerner <wouerner@gmail.com>
+ */
 class Proposta extends GenericModel
 {
     protected $_banco = "SAC";
-    //protected $_schema = "dbo";
     protected $_name = "PreProjeto";
-    //protected $_primary = "idPlanoDistribuicao";
 
     public $_totalRegistros = null;
 
@@ -15,6 +20,7 @@ class Proposta extends GenericModel
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
+     * @todo colocar padrão orm
      */
     public function buscarPropostaAdmissibilidade($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
@@ -78,11 +84,11 @@ class Proposta extends GenericModel
 
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
-          
+
         // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
-       
-        
+
+
     }
 
     /**
@@ -125,7 +131,7 @@ class Proposta extends GenericModel
                         array("Situacao"=>"Descricao"),
                         "SAC.dbo"
                         );
-        
+
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
@@ -144,20 +150,20 @@ class Proposta extends GenericModel
             $slct->limit($tamanho, $tmpInicio);
         }
         return $this->fetchAll($slct);
-        
-      
+
+
     }
 
+    /**
+     * buscarTecnicosHistoricoAnaliseVisual
+     *
+     * @param mixed $idOrgao
+     * @access public
+     * @return void
+     */
     public function buscarTecnicosHistoricoAnaliseVisual($idOrgao){
-        /*$sql = "
-            select distinct a.idTecnico,SAC.dbo.fnNomeTecnicoMinc(a.idTecnico) as Tecnico
-            from SAC.dbo.tbAvaliacaoProposta a
-            inner join SAC.dbo.PreProjeto p on (p.idPreProjeto = a.idProjeto)
-            where ConformidadeOK<>1 and p.stEstado = 1 and SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) = {$idOrgao}
-            order by Tecnico ASC
-        ";*/
         $sql = "
-            SELECT distinct 
+            SELECT distinct
                     a.idTecnico,
                     u.usu_nome as Tecnico
             FROM SAC.dbo.tbAvaliacaoProposta a
@@ -166,7 +172,7 @@ class Proposta extends GenericModel
             INNER JOIN TABELAS.dbo.Usuarios u
                   ON u.usu_codigo = a.idTecnico
             WHERE
-                ConformidadeOK<>1 
+                ConformidadeOK<>1
                 and p.stEstado = 1
                 and SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) = {$idOrgao}
             ORDER BY u.usu_nome ASC
@@ -179,8 +185,20 @@ class Proposta extends GenericModel
         return $db->fetchAll($sql);
     }
 
-    public function buscarHistoricoAnaliseVisual($idOrgao,$idTecnico=null,$situacao=null,$dtInicio=null,$dtFim=null){
-
+    /**
+     * buscarHistoricoAnaliseVisual
+     *
+     * @param mixed $idOrgao
+     * @param bool $idTecnico
+     * @param bool $situacao
+     * @param bool $dtInicio
+     * @param bool $dtFim
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
+    public function buscarHistoricoAnaliseVisual($idOrgao,$idTecnico=null,$situacao=null,$dtInicio=null,$dtFim=null)
+    {
         $meuWhere = "";
         if($idTecnico){
             $meuWhere .= " AND a.idTecnico = {$idTecnico}";
@@ -222,6 +240,14 @@ class Proposta extends GenericModel
         return $db->fetchAll($sql);
     }
 
+    /**
+     * buscarAvaliacaoHistoricoAnaliseVisual
+     *
+     * @param mixed $idAvaliacao
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
     public function buscarAvaliacaoHistoricoAnaliseVisual($idAvaliacao){
         $sql = "
         select a.Avaliacao
@@ -243,6 +269,7 @@ class Proposta extends GenericModel
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
+     * @todo colocar padrão orm
      */
     public function buscarPropostaAnaliseVisualTecnico($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
@@ -283,11 +310,7 @@ class Proposta extends GenericModel
 
         // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
-        
-        
     }
-
-
 
     /**
      * Retorna registros do banco de dados
@@ -296,6 +319,7 @@ class Proposta extends GenericModel
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
+     * @todo colocar padrão orm
      */
     public function buscarPropostaAnaliseDocumentalTecnico($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
@@ -336,8 +360,9 @@ class Proposta extends GenericModel
 
         // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
-    
+
     }
+
     /**
      * Retorna registros do banco de dados
      * @param array $where - array com dados where no formato "nome_coluna_1"=>"valor_1","nome_coluna_2"=>"valor_2"
@@ -345,6 +370,7 @@ class Proposta extends GenericModel
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
+     * @todo colocar padrão orm
      */
     public function buscarPropostaAnaliseFinal($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
@@ -388,6 +414,14 @@ class Proposta extends GenericModel
         return $db->fetchAll($sql);
     }
 
+    /**
+     * buscarConformidadeVisualTecnico
+     *
+     * @param mixed $idPreProjeto
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
     public function buscarConformidadeVisualTecnico($idPreProjeto){
         $sql = "select tecnico from SAC.dbo.vwConformidadeVisualTecnico
                 where idprojeto={$idPreProjeto}";
@@ -406,6 +440,7 @@ class Proposta extends GenericModel
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
+     * @todo colocar padrão orm
      */
     public function buscarVisual($idUsuario = null, $order=array(), $tamanho=-1, $inicio=-1)
     {
@@ -465,7 +500,7 @@ class Proposta extends GenericModel
         )
         ".$meuOrder."
         ";
-        
+
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
@@ -480,6 +515,7 @@ class Proposta extends GenericModel
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
+     * @todo colocar padrão orm
      */
     public function buscarDocumental($idUsuario = null, $order=array(), $tamanho=-1, $inicio=-1)
     {
@@ -545,15 +581,23 @@ class Proposta extends GenericModel
 
         // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
-        
+
     }
 
-    #public function transformarPropostaEmProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario)
+    /**
+     * transformarPropostaEmProjeto
+     *
+     * @param mixed $idPreProjeto
+     * @param mixed $cnpjcpf
+     * @param mixed $idOrgao
+     * @param mixed $idUsuario
+     * @param mixed $nrProcesso
+     * @access public
+     * @return void
+     */
     public function transformarPropostaEmProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso)
     {
-        #$sql = "EXEC SAC.dbo.paPropostaParaProjeto {$idPreProjeto}, '{$cnpjcpf}', {$idOrgao}, {$idUsuario}";
         $sql = "EXEC SAC.dbo.paPropostaParaProjeto {$idPreProjeto}, '{$cnpjcpf}', {$idOrgao}, {$idUsuario}, {$nrProcesso}";
-        //xd($sql);
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
@@ -561,6 +605,14 @@ class Proposta extends GenericModel
         return $db->fetchAll($sql);
     }
 
+    /**
+     * buscaragencia
+     *
+     * @param mixed $codigo
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
     public function buscaragencia($codigo)
     {
         $sql = "SELECT Agencia FROM SAC.dbo.BancoAgencia where Agencia = '".$codigo."'";
@@ -572,6 +624,13 @@ class Proposta extends GenericModel
         return $db->fetchAll($sql);
     }
 
+    /**
+     * unidadeAnaliseProposta
+     *
+     * @param mixed $idPreProjeto
+     * @access public
+     * @return void
+     */
     public function unidadeAnaliseProposta($idPreProjeto)
     {
         $slct = $this->select();
@@ -585,6 +644,14 @@ class Proposta extends GenericModel
         return $this->fetchAll($slct);
     }
 
+    /**
+     * orgaoSecretaria
+     *
+     * @param mixed $idTecnico
+     * @access public
+     * @return void
+     * @todo colocar padrão orm
+     */
     public function orgaoSecretaria($idTecnico)
     {
         $sql = "select SAC.dbo.fnIdOrgaoSuperiorAnalista({$idTecnico}) as idOrgao,tabelas.dbo.fnDadosOrgao(SAC.dbo.fnIdOrgaoSuperiorAnalista({$idTecnico}),'nome completo') as secretaria";
@@ -596,11 +663,15 @@ class Proposta extends GenericModel
         return $db->fetchAll($sql);
     }
 
-
+    /**
+     * propostastransformadas
+     *
+     * @param mixed $idAgente
+     * @access public
+     * @return void
+     */
     public function propostastransformadas($idAgente)
     {
-
-
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(array("pj"=>$this->_name), array("*"));
@@ -610,6 +681,17 @@ class Proposta extends GenericModel
         return $this->fetchAll($slct);
     }
 
+    /**
+     * propostasPorEdital
+     *
+     * @param bool $where
+     * @param bool $order
+     * @param mixed $tamanho
+     * @param mixed $inicio
+     * @param bool $count
+     * @access public
+     * @return void
+     */
     public function propostasPorEdital($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false){
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -811,7 +893,6 @@ class Proposta extends GenericModel
             foreach ($where as $coluna => $valor) {
                 $slct2->where($coluna, $valor);
             }
-            //xd($slct2->__toString());
             $rs = $this->fetchAll($slct2)->current();
             if($rs){ return $rs->total; }else{ return 0; }
         }
@@ -824,7 +905,6 @@ class Proposta extends GenericModel
         //adicionando linha order ao select
         $slct->order($order);
 
-        //$this->_totalRegistros = $this->fetchAll($slct)->count();
         // paginacao
         if ($tamanho > -1) {
             $tmpInicio = 0;
@@ -833,7 +913,6 @@ class Proposta extends GenericModel
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
@@ -847,7 +926,7 @@ class Proposta extends GenericModel
             array("idProjeto"=>"idPreProjeto", "NomeProposta"=>"NomeProjeto", "idAgente", "p.stEstado", "p.DtArquivamento"),
             "SAC.dbo"
         );
-        
+
         $slct->joinInner(
             array("m"=>"tbMovimentacao"), "p.idPreProjeto = m.idProjeto AND m.stEstado = 0",
             array('m.Movimentacao', 'm.stEstado AS estadoMovimentacao'), "SAC.dbo"
@@ -867,21 +946,21 @@ class Proposta extends GenericModel
                 array(), "SAC.dbo"
             );
         }
-		
+
         if(isset($where['ab.idUF = ?'])){
             $slct->joinInner(
                 array("uf"=>"UF"), "uf.idUF = ab.idUF",
                 array(), "AGENTES.dbo"
             );
         }
-		
+
         if( isset($where['ab.idUF = ?']) || isset($where['ab.idMunicipioIBGE = ?'])){
             $slct->joinInner(
                 array("mu"=>"Municipios"), "mu.idMunicipioIBGE = ab.idMunicipioIBGE",
                 array(), "AGENTES.dbo"
             );
         }
-        
+
         if( isset($where['pdp.Area = ?']) || isset($where['pdp.Segmento = ?'])){
             $slct->joinInner(
                 array("pdp"=>"PlanoDistribuicaoProduto"), "pdp.idProjeto = p.idPreProjeto AND pdp.stPlanoDistribuicaoProduto = 1",
@@ -893,12 +972,12 @@ class Proposta extends GenericModel
             array("pp"=>"tbPlanilhaProposta"), "pp.idProjeto = p.idPreProjeto",
             array("valor"=>new Zend_Db_Expr("sum(Quantidade*Ocorrencia*ValorUnitario)")), "SAC.dbo"
         );
-        
+
         $slct->joinInner(
             array("ag"=>"agentes"), "ag.idAgente = p.idAgente",
             array("ag.CNPJCPF"), "AGENTES.dbo"
         );
-        
+
         $slct->joinInner(
             array("nm"=>"nomes"), "nm.idAgente = p.idAgente",
             array(
@@ -922,7 +1001,7 @@ class Proposta extends GenericModel
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-        
+
         $slct->where('NOT EXISTS (SELECT * FROM Projetos z WHERE z.idProjeto = p.idPreProjeto)');
         $slct->group(array("p.idPreProjeto", "p.NomeProjeto", "p.idAgente", "p.stEstado", "p.DtArquivamento", "m.Movimentacao", "m.stEstado", "x.ConformidadeOK", "x.stEstado", "ag.CNPJCPF", "nm.Descricao"));
 
@@ -930,7 +1009,7 @@ class Proposta extends GenericModel
         foreach ($having as $coluna => $valor) {
             $slct->having($coluna, $valor);
         }
-        
+
         if ($count) {
             //xd($slct->assemble());
             return $this->fetchAll($slct)->count();
@@ -947,11 +1026,11 @@ class Proposta extends GenericModel
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        
+
         //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
-    
+
     public function relatorioPropostas2($where=array(), $having=array(), $order=array(), $tamanho=-1, $inicio=-1, $count = false, $dados = null){
 
         $slct = $this->select();
@@ -962,7 +1041,7 @@ class Proposta extends GenericModel
                     array("idProjeto"=>"idPreProjeto", "NomeProposta"=>"NomeProjeto", "idAgente"),
                     "SAC.dbo"
                     );
-                    
+
 		if(!($dados->proposta)){
         $slct->joinInner(
                         array("m"=>"tbMovimentacao"),
@@ -982,9 +1061,9 @@ class Proposta extends GenericModel
                         array(),
                         "SAC.dbo"
                         );
-                        
+
 		}
-		if(($dados->uf) || ($dados->municipio)){     
+		if(($dados->uf) || ($dados->municipio)){
         $slct->joinInner(
                         array("ab"=>"Abrangencia"),
                         "p.idPreProjeto = ab.idProjeto AND ab.stAbrangencia = 1",
@@ -992,7 +1071,7 @@ class Proposta extends GenericModel
                         "SAC.dbo"
                         );
 		}
-		
+
 		if($dados->uf){
         $slct->joinInner(
                         array("uf"=>"UF"),
@@ -1001,7 +1080,7 @@ class Proposta extends GenericModel
                         "AGENTES.dbo"
                         );
 		}
-		
+
 		if(($dados->uf) || ($dados->municipio)){
         $slct->joinInner(
                         array("mu"=>"Municipios"),
@@ -1010,7 +1089,7 @@ class Proposta extends GenericModel
                         "AGENTES.dbo"
                         );
 		}
-		
+
         /*if($dados->area){
         $slct->joinInner(
                         array("ar"=>"Area"),
@@ -1019,7 +1098,7 @@ class Proposta extends GenericModel
                         "SAC.dbo"
                         );
         }*/
-        
+
         if(($dados->area) || ($dados->segmento)){
         $slct->joinInner(
                         array("pdp"=>"PlanoDistribuicaoProduto"),
@@ -1028,7 +1107,7 @@ class Proposta extends GenericModel
                         "SAC.dbo"
                         );
         }
-		
+
         //if($dados->valor){
         $slct->joinLeft(
                         array("pp"=>"tbPlanilhaProposta"),
@@ -1060,7 +1139,7 @@ class Proposta extends GenericModel
         foreach ($having as $coluna => $valor) {
             $slct->having($coluna, $valor);
         }
-	
+
         if($count){
             $this->_totalRegistros = $this->fetchAll($slct)->count();
             return $this->_totalRegistros;
@@ -1082,62 +1161,56 @@ class Proposta extends GenericModel
         return $this->fetchAll($slct);
     }
 
-
     /**
      * Método para buscar os Proponentes - Combo Listar Propostas
      * @access public
      * @param integer $idResponsavel
      * @return object
+     * @todo colocar padrão orm
      */
     public function listarPropostasCombo($idResponsavel)
     {
         $sql = "
-            SELECT b.CNPJCPF, b.idAgente, SAC.dbo.fnNome(b.idAgente) AS NomeProponente 
+            SELECT b.CNPJCPF, b.idAgente, SAC.dbo.fnNome(b.idAgente) AS NomeProponente
                 FROM SAC.dbo.PreProjeto AS a
                 INNER JOIN AGENTES.dbo.Agentes AS b ON a.idAgente = b.idAgente
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS c ON b.CNPJCPF = c.Cpf 
-            WHERE c.IdUsuario = '$idResponsavel' 
-            UNION 
-            SELECT b.CNPJCPF, b.idAgente, SAC.dbo.fnNome(b.idAgente) AS NomeProponente 
+                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS c ON b.CNPJCPF = c.Cpf
+            WHERE c.IdUsuario = '$idResponsavel'
+            UNION
+            SELECT b.CNPJCPF, b.idAgente, SAC.dbo.fnNome(b.idAgente) AS NomeProponente
                 FROM SAC.dbo.PreProjeto AS a
                 INNER JOIN AGENTES.dbo.Agentes AS b ON a.idAgente = b.idAgente
                 INNER JOIN AGENTES.dbo.tbVinculoProposta AS c ON a.idPreProjeto = c.idPreProjeto
                 INNER JOIN AGENTES.dbo.tbVinculo AS d ON c.idVinculo = d.idVinculo
                 INNER JOIN AGENTES.dbo.Agentes AS f ON d.idAgenteProponente = f.idAgente
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS e ON f.CNPJCPF = e.Cpf 
-                WHERE c.siVinculoProposta = 2 
+                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS e ON f.CNPJCPF = e.Cpf
+                WHERE c.siVinculoProposta = 2
                 AND e.IdUsuario = '$idResponsavel'
-            UNION 
-            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente 
+            UNION
+            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente
                 FROM AGENTES.dbo.Agentes AS a
                 INNER JOIN AGENTES.dbo.Vinculacao AS b ON a.idAgente = b.idVinculoPrincipal
                 INNER JOIN AGENTES.dbo.Agentes AS c ON b.idAgente = c.idAgente
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS d ON c.CNPJCPF = d.Cpf 
+                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS d ON c.CNPJCPF = d.Cpf
                 WHERE d.IdUsuario = '$idResponsavel'
-            UNION 
-            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente 
+            UNION
+            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente
                 FROM AGENTES.dbo.Agentes AS a
                 INNER JOIN AGENTES.dbo.tbVinculo AS b ON a.idAgente = b.idAgenteProponente
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS c ON b.idUsuarioResponsavel = c.IdUsuario 
-                WHERE b.siVinculo = 2 
-                AND c.IdUsuario = '$idResponsavel' 
-            UNION 
-            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente 
+                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS c ON b.idUsuarioResponsavel = c.IdUsuario
+                WHERE b.siVinculo = 2
+                AND c.IdUsuario = '$idResponsavel'
+            UNION
+            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente
                 FROM AGENTES.dbo.Agentes AS a
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS b ON a.CNPJCPF = b.cpf 
-                WHERE b.IdUsuario = '$idResponsavel' 
-            GROUP BY a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente)  
+                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS b ON a.CNPJCPF = b.cpf
+                WHERE b.IdUsuario = '$idResponsavel'
+            GROUP BY a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente)
             ORDER BY 3 ASC ";
-//xd($sql);
+
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        //xd($sql);
         return $db->fetchAll($sql);
-
-    } // fecha método buscarProponentes()
-    
-
+    }
 }
-
-?>

@@ -21,15 +21,15 @@ class PlanilhaProposta extends GenericModel {
         if ($outras) {
             $somar->where('FonteRecurso <> ?', $outras);
         }
-        
+
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $somar->where($coluna, $valor);
         }
-        
+
         return $this->fetchRow($somar);
     }
-    
+
     public function somarPlanilhaPropostaDivulgacao($idprojeto, $fonte=null, $outras=null) {
         $somar = $this->select();
         $somar->from($this,
@@ -48,7 +48,7 @@ class PlanilhaProposta extends GenericModel {
         //xd($somar->assemble());
         return $this->fetchRow($somar);
     }
-    
+
     //Criado no dia 07/10/2013 - Jefferson Alessandro
     public function buscarDadosAvaliacaoDeItem($idPlanilhaProposta){
         $select = $this->select();
@@ -79,7 +79,7 @@ class PlanilhaProposta extends GenericModel {
             array(), 'SAC.dbo'
         );
         $select->where('a.idPlanilhaProposta = ?', $idPlanilhaProposta);
-        
+
         return $this->fetchAll($select);
     }
 

@@ -1,9 +1,13 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
+/**
+ * AnalisarPropostaDAO
+ *
+ * @uses Zend
+ * @uses _Db_Table
+ * @package
+ * @author  wouerner <wouerner@gmail.com>
+ */
 class AnalisarPropostaDAO extends Zend_Db_Table{
 
     public static function buscarGeral($idPreProjeto){
@@ -177,7 +181,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                         sac.dbo.tbPlanilhaProposta
                     WHERE idProjeto = $idPreProjeto
                     ORDER BY idEtapa,Descricao
-                ";        
+                ";
         $resultado = $db->fetchAll($sql);
         return $resultado;
     }
@@ -335,7 +339,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
      public static function inserirAvaliacao($dado){
          try
         {
-            
+
             //insert da avaliação
             $sql = "INSERT INTO sac.dbo.tbAvaliacaoProposta
                    (idProjeto,idTecnico, DtEnvio, DtAvaliacao, Avaliacao, ConformidadeOK, stEstado, stEnviado)
@@ -343,7 +347,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
 
             $db = Zend_Registry::get('db');
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
-            
+
             $db->fetchRow($sql);
 
 
@@ -367,15 +371,15 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
     public static function updateEstadoAvaliacao($IdProjeto){
         try
         {
-            
+
             //update do estado das outras avaliações
             $sql = "UPDATE sac.dbo.tbAvaliacaoProposta
                     SET stEstado = 1
-                    WHERE idProjeto = $IdProjeto AND stEstado <> 1";       
+                    WHERE idProjeto = $IdProjeto AND stEstado <> 1";
 
             $db = Zend_Registry::get('db');
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
-            
+
             $db->fetchRow($sql);
 
         }
@@ -409,7 +413,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
     public static function inserirMovimentacao($dado){
          try
         {
-            
+
             $sql = "INSERT INTO sac.dbo.tbMovimentacao
                 (idProjeto,Movimentacao,DtMovimentacao,stEstado,Usuario)
                 VALUES (".$dado['idPreProjeto'].",".$dado['movimentacao'].",getdate(),0,".$dado['idTecnico'].");";
@@ -480,11 +484,11 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
     public static function updateEstadoDespacho($IdProjeto){
          try
         {
-            
+
             $sql = "UPDATE SAC.dbo.tbDespacho
                      SET stEstado = 1
                      WHERE idProposta = $IdProjeto AND stEstado <> 1;";
-            
+
             $db = Zend_Registry::get('db');
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
@@ -556,7 +560,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
             $sql = "INSERT INTO SAC.dbo.DocumentosProponente
                 (idProjeto,CodigoDocumento)
                 VALUES (".$dado['idPreProjeto'].",".$dado['CodigoDocumento'].");";
-            
+
             $db = Zend_Registry::get('db');
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
@@ -770,25 +774,19 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
      public static function deletePreProjeto($idPreProjeto){
          try
         {
-
-
             $sql = "DELETE FROM sac.dbo.PreProjeto WHERE idPreProjeto = $idPreProjeto";
 
 
             $db = Zend_Registry::get('db');
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
-
-
         }
         catch (Exception $e)
         {
             die("ERRO" . $e->getMessage());
         }
-
-
     }
-    
+
     public function recuperarQtdePropostaTecnicoOrgao($idTecnico,$idOrgao) {
 
         $sql = "
@@ -802,8 +800,5 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
-
     }
-       
 }
-?>
