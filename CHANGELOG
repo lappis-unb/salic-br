@@ -1,3 +1,6 @@
+Release 1.8.0
+  * Novo: [API DE SERVIÇOS] Adicionando API de Serviços para realizar Autenticação, Consultas de projetos, proponentes e extrato bancário.
+
 Release 1.7.1
   * Fix: [Readequações] trocando planilhas corretamente em redução, complementação e readequação
   * Fix: [SEI] Atualizando a Unidade de SEFIC para DINPC, no serviço do SEI para criação de Processos automaticamente
