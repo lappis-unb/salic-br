@@ -237,7 +237,9 @@
 			}
 			if (data.hasOwnProperty("idPlanoDistribuicao")) {
 			    $('#idPlanoDistribuicao-' + idProduto).val(data.idPlanoDistribuicao);
-			}			
+			}
+			
+			$('#plano-' + idProduto + '-alterado').removeClass('sumir');
 			$('#mensagem').html(mensagem);
 		    }
 		});
@@ -329,12 +331,12 @@
 </style>
 
     <?php foreach($this->planosDistribuicao as $planoDistribuicao): ?>
-
+    <?php $planoAlterado = ($this->planoDistribuicaoCopia[$planoDistribuicao->idProduto]) ? false : true; ?>
         <table class="tabela">
             <tr>
                 <td align="left">	
 		    <input type="button" onclick="mostraOcultaElemento('produto-<?php echo $planoDistribuicao->idProduto; ?>');" id="produto-<?php echo $planoDistribuicao->idProduto; ?>" class="btn_adicionar">
-		    <?php echo "<strong>".$planoDistribuicao->Produto."</strong>";?> <?php if($planoDistribuicao->stPrincipal == 1) echo "<span style='color:red'>(produto principal)</span>";?></b>
+		    <?php echo "<strong>".$planoDistribuicao->Produto."</strong>";?> <?php if($planoDistribuicao->stPrincipal == 1) echo "<span style='color:red'>(produto principal)</span>";?></b><span style='color: red' id='plano-<?php echo $planoDistribuicao->idProduto; ?>-alterado' class='<?php if (!$planoAlterado): ?>sumir<?php endif; ?>'> - alterado</span>
                 </td>
             </tr>
             <tr class="produto-<?php echo $planoDistribuicao->idProduto;?> sumir" align="left">
@@ -366,7 +368,7 @@
             </td>
             <td class="destacar bold" style="width: 1px;">Segmento <span style="color: red;">*</span></td>
             <td>
-                <select disabled class="input_simples" name="segmentoCultural" id="segmentoCultural-<?php echo $planoDistribuicao->idProduto; ?>">
+                <select class="input_simples" name="segmentoCultural" id="segmentoCultural-<?php echo $planoDistribuicao->idProduto; ?>">
                     <option value=""> <?php echo " - Selecione um segmento cultural - "; ?> </option>
                 </select>
             </td>
