@@ -196,7 +196,23 @@ class Mascara
 		return $s1 . "." . $s2 . "-" . $s3;
 	} // fecha método addMaskCEP()
 
-
+	/**
+	 * Formata texto para CPF ou CNPJ conforme a quantidade de n?meros.
+	 *
+	 * @access public
+	 * @static
+	 * @param string $texto
+	 * @return string
+	 */
+	public static function addMaskCpfCnpj($texto){ 
+        if(strlen(trim($texto)) > 11) {
+            $cpfCnpj = Mascara::addMaskCNPJ($texto);
+        } else {
+            $cpfCnpj = Mascara::addMaskCPF($texto);
+        }
+        
+        return $cpfCnpj;
+	}
 
 	/**
 	 * adiciona no cpf

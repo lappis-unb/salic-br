@@ -1,8 +1,30 @@
 <?php
-Class Proponente extends Zend_Db_Table{
+Class Proponente extends GenericModel{
 
-       	protected $_name    = 'SAC.dbo.Projetos';
+    protected $_banco = 'SAC';
+    protected $_name = 'Projetos';
+    protected $_schema = 'dbo';
+    protected $_primary = 'idProjeto';
 
+    public function buscarProponenteProjetoDeUsuario($idUsuario){
+        $consulta = $this->select();
+        $consulta->setIntegrityCheck(false);
+        $consulta->from(array('a' => 'vwAgentesSeusProjetos'), array(
+            'a.idAgente',
+            'a.NomeProponente'
+        ), 'SAC.dbo')
+        ->where('IdUsuario = ?', $idUsuario)
+        ->group(array('a.idAgente', 'a.NomeProponente'))
+        ->order(array('a.NomeProponente'))
+        ;
+//xd($consulta->__toString());
+//        $consulta->setFetchMode(Zend_DB::FETCH_OBJ);
+        
+        $listaResultado = $this->fetchAll($consulta);
+//xd($listaResultado->toArray());
+        return $listaResultado;
+    }
+        
        	public function buscarDados($pronac)
        	{
        		$sql = "SELECT a.idAgente, a.CNPJCPF,n.Descricao AS Proponente,  
