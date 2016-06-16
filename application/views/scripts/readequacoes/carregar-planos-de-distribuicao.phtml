@@ -17,40 +17,7 @@
         $("#qtdepromocional-<?php echo $planoDistribuicao->idProduto; ?>").numeric();
         $("#preconormal-<?php echo $planoDistribuicao->idProduto; ?>").priceFormat();
         $("#precopromocional-<?php echo $planoDistribuicao->idProduto; ?>").priceFormat();
-	
-        // carrega a combo de segmentos culturais
-        $('#areaCultural-<?php echo $planoDistribuicao->idProduto; ?>').change(function() {
-            $('#segmentoCultural-<?php echo $planoDistribuicao->idProduto; ?>').html('<option value=""> - Carregando - </option>');
-            $.ajax({
-                type: 'POST',
-                url: '<?php echo $this->url(array('controller' => 'segmento', 'action' => 'combo')); ?>',
-                data: {
-                    id: $('#areaCultural-<?php echo $planoDistribuicao->idProduto; ?>').val()
-                },
-                success: function(dados) {
-                    $('#segmentoCultural-<?php echo $planoDistribuicao->idProduto; ?>').find('option').remove();
-                    $('#segmentoCultural-<?php echo $planoDistribuicao->idProduto; ?>').append(dados);
-                }
-            });
-        });
 
-        $('#segmentoCultural-<?php echo $planoDistribuicao->idProduto; ?>').html('<option value=""> - Carregando - </option>');
-        $.ajax({
-            type: 'POST',
-            url: '<?php echo $this->url(array('controller' => 'segmento', 'action' => 'combo')); ?>',
-            data: {
-                id: $('#areaCultural-<?php echo $planoDistribuicao->idProduto; ?>').val()
-            },
-            success: function(dados) {
-                $('#segmentoCultural-<?php echo $planoDistribuicao->idProduto; ?>').find('option').remove();
-                $('#segmentoCultural-<?php echo $planoDistribuicao->idProduto; ?>').append(dados);
-                $('#segmentoCultural-<?php echo $planoDistribuicao->idProduto; ?> option').each(function(){
-                    if($(this).val() == '<?php echo $planoDistribuicao->idSegmento; ?>'){
-                        $(this).attr('selected',true);
-                    }
-                });
-            }
-        });
         <?php endif; ?>
 
         $("#qtdenormal-<?php echo $planoDistribuicao->idProduto; ?>").keyup(function(){
@@ -219,7 +186,7 @@
 		    success: function(data) {
 			var mensagem = "";
 			
-			$('#mensagem').removeClass();
+			$('.mensagem-' + idProduto).removeClass('sumir');
 			
 			if (data != '') {
 			    data = JSON.parse(data);
@@ -227,10 +194,10 @@
 			
 			if (data.resposta == true) {
 			    mensagem = "<div>Plano de distribuição alterado.</div>";
-			    $('#mensagem').addClass('msgCONFIRM');
+			    $('.mensagem-' + idProduto).addClass('msgCONFIRM');
 			} else {
 			    mensagem = "<div>Erro na alteração do plano de distribuição.</div>";
-			    $('#mensagem').addClass('msgERROR');			    
+			    $('.mensagem-' + idProduto).addClass('msgERROR');
 			}
 			if (data.hasOwnProperty("idReadequacao")) {
 			    $('#idReadequacao').val(data.idReadequacao);
@@ -240,7 +207,8 @@
 			}
 			
 			$('#plano-' + idProduto + '-alterado').removeClass('sumir');
-			$('#mensagem').html(mensagem);
+			$('.mensagem-' + idProduto).html(mensagem);
+			$('.mensagem-' + idProduto).prepend("<div class=\"float_right\"><input type=\"button\" onclick=\"$('.mensagem-" + idProduto + "').addClass('sumir');\" title=\"Fechar mensagem\" class=\"btn_close\"></div>");			
 		    }
 		});
             }                
@@ -308,22 +276,42 @@
         $('#'+idDestino).val(soma_valores).priceFormat();
     }
 
-    function mostraOcultaElemento(elemento)
-    {
-            $('.' + elemento).toggle();
+    // abre produtos do plano de distribuiçao e fecha o que estiver aberto
+    function mostraOcultaElemento(elemento) {
+	$('.produtos').each(
+	    function() {
+		var rowId = $(this).attr('id'),
+		    buttonId = $(this).attr('id').split('tr-')[1];
 
-            if ($('#' + elemento).hasClass('btn_adicionar'))
-            {
-                    $('#' + elemento).addClass('btn_remover');
-                    $('#' + elemento).removeClass('btn_adicionar');
-            }
-            else
-            {
-                    $('#' + elemento).addClass('btn_adicionar');
-                    $('#' + elemento).removeClass('btn_remover');
-            }
+		// clicou
+		if (elemento == buttonId) {
+		    // se esta fechado, abre
+		    if ($('#td-' + buttonId).hasClass('btn_adicionar')) {
+			// abre
+			$('#' + rowId).show();
+			$('#td-' + buttonId).removeClass('btn_adicionar');
+			$('#td-' + buttonId).addClass('btn_remover');
+		    } else {
+			// se esta aberto, fecha
+			$('#' + rowId).hide();
+			$('#td-' + buttonId).addClass('btn_adicionar');
+			$('#td-' + buttonId).removeClass('btn_remover');		
+		    }			  
+		} else {
+		    // outros campos
+		    if ($('#td-' + buttonId).hasClass('btn_adicionar')) {
+			// se esta fechado, permanece
+		    } else {
+			// se esta aberto, fecha
+			$('#' + rowId).hide();
+			$('#td-' + buttonId).addClass('btn_adicionar');
+			$('#td-' + buttonId).removeClass('btn_remover');		
+		    }
+		}
+	    }
+	);
     }
-
+				   
 </script>
 
 <style type="text/css">
@@ -335,11 +323,11 @@
         <table class="tabela">
             <tr>
                 <td align="left">	
-		    <input type="button" onclick="mostraOcultaElemento('produto-<?php echo $planoDistribuicao->idProduto; ?>');" id="produto-<?php echo $planoDistribuicao->idProduto; ?>" class="btn_adicionar">
+		    <input id="td-produto-<?php echo $planoDistribuicao->idProduto; ?>" type="button" onclick="mostraOcultaElemento('produto-<?php echo $planoDistribuicao->idProduto; ?>');" class="btn_adicionar">
 		    <?php echo "<strong>".$planoDistribuicao->Produto."</strong>";?> <?php if($planoDistribuicao->stPrincipal == 1) echo "<span style='color:red'>(produto principal)</span>";?></b><span style='color: red' id='plano-<?php echo $planoDistribuicao->idProduto; ?>-alterado' class='<?php if (!$planoAlterado): ?>sumir<?php endif; ?>'> - alterado</span>
                 </td>
             </tr>
-            <tr class="produto-<?php echo $planoDistribuicao->idProduto;?> sumir" align="left">
+            <tr class="sumir produtos" id="tr-produto-<?php echo $planoDistribuicao->idProduto;?>" align="left">
 		<td>
 		  <form name="frmPlanoDistribuicao-<?php echo $planoDistribuicao->idProduto; ?>" id="frmPlanoDistribuicao-<?php echo $planoDistribuicao->idProduto; ?>" method="post">
 				   <?php /* define idPlanoDistribuicao como novo se planos forem cópia */ ?>
@@ -367,10 +355,9 @@
 		<?php endforeach; ?>
             </td>
             <td class="destacar bold" style="width: 1px;">Segmento <span style="color: red;">*</span></td>
-            <td>
-                <select class="input_simples" name="segmentoCultural" id="segmentoCultural-<?php echo $planoDistribuicao->idProduto; ?>">
-                    <option value=""> <?php echo " - Selecione um segmento cultural - "; ?> </option>
-                </select>
+	    <td>
+	      <span><?php echo $planoDistribuicao->Segmento; ?></span>
+	      <input type="hidden" name="segmentoCultural" id="segmentoCultural-<?php echo $planoDistribuicao->idProduto; ?>" value="<?php echo $planoDistribuicao->idSegmento; ?>">
             </td>
         </tr>
     </table>
@@ -457,12 +444,11 @@
       <p align="center"><input type="button" value="" class="btn_salvar" id="btn_salvar-<?php echo $planoDistribuicao->idProduto; ?>" /></p>
     </div>
     <br clear="all" />
+    <div class="sumir mensagem-<?php echo $planoDistribuicao->idProduto; ?>"></div>    
 		    </form>
 		</td>
 	</tr>
 	</table>
-		    
 <?php endforeach; ?>
 
 <?php } ?>
-<div class="sumir" id="mensagem"></div>
