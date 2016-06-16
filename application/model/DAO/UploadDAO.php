@@ -24,18 +24,23 @@ class UploadDAO extends Zend_Db_Table {
      * @return object || bool
      */
     public static function abrir($id) {
+        $table = Zend_Db_Table::getDefaultAdapter();
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        // busca o arquivo
-        $sql = "SELECT a.dsTipoPadronizado, a.nmArquivo, b.biArquivo
-                FROM BDCORPORATIVO.scCorp.tbArquivo a
-                INNER JOIN BDCORPORATIVO.scCorp.tbArquivoImagem b
-                ON a.idArquivo = b.idArquivo
-                WHERE b.idArquivo = $id";
+        $select = $table->select()
+            ->from('tbArquivo',
+                array('dsTipoPadronizado', 'nmArquivo'),
+                'BDCORPORATIVO.scCorp')
+            ->where('tbArquivo.idArquivo = ?',  $id)
+            ->joinInner(
+                'tbArquivoImagem',
+                'tbArquivo.idArquivo = tbArquivoImagem.idArquivo',
+                array('biArquivo'),
+                'BDCORPORATIVO.scCorp');
+
         $resultado = $db->fetchAll('SET TEXTSIZE 2147483647');
-        $resultado = $db->fetchAll($sql);
-        return $resultado;
+        return $db->fetchAll($select);
     } // fecha método abrir()
 
 
