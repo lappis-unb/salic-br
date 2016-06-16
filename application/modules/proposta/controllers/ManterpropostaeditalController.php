@@ -177,7 +177,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
             $where['fd.idClassificaDocumento not in (?)'] = array(23, 24, 25);
             $where['p.idPreProjeto = ?'] = $_REQUEST['idPreProjeto'];
 
-            $tblPreProjeto = new PreProjeto();
+            $tblPreProjeto = new Proposta_Model_Preprojeto();
             $dados = $tblPreProjeto->buscarPropostaEditalCompleto($where);
 
             //$dados  = ManterpropostaeditalDAO::exibirDadosPropostaEditalCompleto($_REQUEST['idPreProjeto']);
@@ -394,7 +394,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
             $where['fd.idClassificaDocumento not in (?)'] = array(23, 24, 25);
             $where['p.idPreProjeto = ?'] = $_REQUEST['idPreProjeto'];
 
-            $tblPreProjeto = new PreProjeto();
+            $tblPreProjeto = new Proposta_Model_Preprojeto();
             $dados = $tblPreProjeto->buscarPropostaEditalCompleto($where);
         } else {
             parent::message("Projeto não informado!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
@@ -429,7 +429,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         $rs = $tbl->buscarDocumentos(array("idProjeto = ?" => $get->idPreProjeto));
         $this->view->arquivosProposta = $rs;
 
-        $tbPreProjeto = new PreProjeto();
+        $tbPreProjeto = new Proposta_Model_Preprojeto();
         $dadosProjeto = $tbPreProjeto->buscarAgentePreProjeto(array('idPreProjeto = ?'=>$get->idPreProjeto))->current();
 
         $tbA = new tbDocumentosAgentes();
@@ -480,7 +480,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                 //Verifica se tipo de documento ja esta cadastrado
                 $where = array();
                 if($post->tipoDocumento == 1){
-                    $tbPreProjeto = new PreProjeto();
+                    $tbPreProjeto = new Proposta_Model_Preprojeto();
                     $dadosProjeto = $tbPreProjeto->buscarAgentePreProjeto(array('idPreProjeto = ?'=>$post->idPreProjeto))->current();
 
                     $where['idAgente = ?'] = $dadosProjeto->idAgente;
@@ -688,7 +688,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         $idPreProjeto = $get->idPreProjeto;
 
         //BUSCANDO REGISTRO A SER ALTERADO
-        $tblPreProjeto = new PreProjeto();
+        $tblPreProjeto = new Proposta_Model_Preprojeto();
         $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
         $rsPreProjeto->stEstado = 0;
@@ -878,7 +878,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         //BUSCA DADOS DO PROJETO
         $arrBusca = array();
         $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
-        $tblPreProjeto = new PreProjeto();
+        $tblPreProjeto = new Proposta_Model_Preprojeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
         /* ======== VERIFICA TODAS AS INFORMACOES NECESSARIAS AO ENVIO DA PROPOSTA ======= */
@@ -1071,7 +1071,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         }
 
         if (!empty($idPreProjeto) && $valida == "s") {
-            $tblPreProjeto = new PreProjeto();
+            $tblPreProjeto = new Proposta_Model_Preprojeto();
             $tblAvaliacao = new AnalisarPropostaDAO();
 
             //recupera dados do projeto
@@ -1247,7 +1247,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
       {
       try{
 
-      $tblPreProjeto = new PreProjeto();
+      $tblPreProjeto = new Proposta_Model_Preprojeto();
       $tblAvaliacao = new AnalisarPropostaDAO();
 
       //atualiza status da ultima movimentacao

@@ -73,7 +73,7 @@ class DistribuirprojetosController extends GenericControllerNew {
     }
 
     public function distribuirAction(){
-        
+
         //$IdOrgao = $this->codOrgao;
         $IdOrgao = $this->codOrgaoSuperior;
         //$IdOrgao = 362; //Comentar essa linha!!!!!!!!!!!!!!
@@ -119,12 +119,12 @@ class DistribuirprojetosController extends GenericControllerNew {
                 'dis.stDistribuicao = ?' => $this->ST_DISTRIBUICAO_PENDENTE
             );
             $Distribuicao = $tbltbDistribuicao->listaDistribuicao($where);
-           
+
             $projetosDistribuidos[$i]['Selecionados'] = count($Distribuicao);
         }
 
         $this->view->projetosDistribuidos  = $projetosDistribuidos ;
-        
+
     }
 
 
@@ -175,12 +175,12 @@ class DistribuirprojetosController extends GenericControllerNew {
 
 
     }
-    
+
 
      public function projetosparaavaliadoresAction(){
          $this->_helper->layout->disableLayout ();
 
-         $tblPreProjeto = new PreProjeto();
+         $tblPreProjeto = new Proposta_Model_PreProjeto();
 
          $idPreProjeto = '';
          $PreProjetos = '';
@@ -194,7 +194,7 @@ class DistribuirprojetosController extends GenericControllerNew {
             }
 
          }
-         
+
          if($idPreProjeto != ''){
             $Avaliadores = $tblPreProjeto->listaAvaliadores(array('pp.idPreProjeto = ?' => $_POST['idPreProjeto'][0], 'ave.stAtivo = ?' => 'A'));
             $this->view->Avaliadores = $Avaliadores;
@@ -207,10 +207,10 @@ class DistribuirprojetosController extends GenericControllerNew {
 
      public function redistribuirprojetosparaavaliadoresAction(){
          $this->_helper->layout->disableLayout ();
-         
+
          $Avaliador = !empty($_POST['Avaliador']) ? $_POST['Avaliador'] : 0;
 
-         $tblPreProjeto = new PreProjeto();
+         $tblPreProjeto = new Proposta_Model_PreProjeto();
 
          $idPreProjeto = '';
          $PreProjetos = '';
@@ -226,12 +226,12 @@ class DistribuirprojetosController extends GenericControllerNew {
          }
 
          if($idPreProjeto != '' and $Avaliador != 0){
-             
+
              $where = array(
                  'pp.idPreProjeto = ?' => $_POST['idPreProjeto'][0],
                  'ave.stAtivo = ?' => 'A',
-                 '(ave.idAvaliador <> '.$Avaliador.') ' => ''  
-                 
+                 '(ave.idAvaliador <> '.$Avaliador.') ' => ''
+
              );
             $Avaliadores = $tblPreProjeto->listaAvaliadores($where);
             $this->view->antigoAvaliador = $Avaliador;
@@ -248,7 +248,7 @@ class DistribuirprojetosController extends GenericControllerNew {
         $retorno = "";
         $PreProjetos = array();
         $acao = !empty($_GET['acao']) ? $_GET['acao'] : null;
-       
+
         if(isset($_REQUEST['idPreProjeto'])){
             $PreProjetos = $_REQUEST['idPreProjeto'];
         }
@@ -264,7 +264,7 @@ class DistribuirprojetosController extends GenericControllerNew {
 
                 $dadosprojeto    = $tblProjetos->listaProjetosDistribuidos(array('idPreProjeto = ?' => $value))->current();
                 $Totalvinculados = $tbltbdistribuir->listaDistribuicao(array('idItemDistribuicao = ?' => $value,'tpDistribuicao = ?' => $this->TP_DISTRIBUICAO,'stDistribuicao = ?' => $this->ST_DISTRIBUICAO_PENDENTE));
-               
+
                  if($dadosprojeto->qtAvaliador == count($Totalvinculados)){
                      if($tblProjetos->alterarSituacao($dadosprojeto->idPronac, $dadosprojeto->AnoProjeto.$dadosprojeto->Sequencial, $this->COD_SITUACAO_PROJETO_ATUALIZA, "Projeto encaminhado para avaliadores")){
 
@@ -311,7 +311,7 @@ class DistribuirprojetosController extends GenericControllerNew {
         $tblProjetos     = new Projetos();
 
         if(!empty($_POST['idAvaliador']) and $_POST['idAvaliador'] != 0){
-            
+
             foreach ($PreProjetos as $key => $value) {
 
                 $dadosprojeto    = $tblProjetos->listaProjetosDistribuidos(array('idPreProjeto = ?' => $value))->current();
@@ -390,21 +390,21 @@ class DistribuirprojetosController extends GenericControllerNew {
                 //$Totalvinculados = $tbltbdistribuir->listaDistribuicao(array('idItemDistribuicao = ?' => $value,'tpDistribuicao = ?' => $this->TP_DISTRIBUICAO,'stDistribuicao = ?' => $this->ST_DISTRIBUICAO_REALIZADA));
 
                 $vinculado       = $tbltbdistribuir->buscar(array('idItemDistribuicao = ?' => $value,'idDestinatario = ?' => $_POST['idAvaliador'],'tpDistribuicao = ?' => $this->TP_DISTRIBUICAO,'stDistribuicao = ?' => $this->ST_DISTRIBUICAO_REALIZADA ));
-                
-                if(count($vinculado) > 0 and strlen($error) < 2){ 
+
+                if(count($vinculado) > 0 and strlen($error) < 2){
                    if(!$tblProjetos->alterarSituacao($dadosprojeto->idPronac,null, $this->COD_SITUACAO_PROJETO_ATUALIZA, 'Redistribuindo o projeto para avaliação')) {
                         $error = "Não foi possivel mudar a situação do projeto";
                    }
-                   
+
                      $tbAvaliacao = new tbAvaliacaoPreProjeto();
-                     $Avaliacao = $tbAvaliacao->buscar(array('idPreProjeto = ?' => $value, 'idAvaliador = ?' => $_POST['idAvaliadorAnt'])); 
+                     $Avaliacao = $tbAvaliacao->buscar(array('idPreProjeto = ?' => $value, 'idAvaliador = ?' => $_POST['idAvaliadorAnt']));
                      if(count($Avaliacao) > 0 and strlen($error) < 2){
                          if(!$tbAvaliacao->alterar(array('idAvaliador' => $_POST['idAvaliador'], 'stAvaliacao' => 'false'), array('idPreProjeto = ?' => $value, 'idAvaliador = ?' => $_POST['idAvaliadorAnt']))){
                            $error = "Não foi possivel distribuir a avaliação";
                          }
                      }
 
-                     if (strlen($error) < 2){ 
+                     if (strlen($error) < 2){
                              $dados = array (
                                             'idDestinatario' => $_POST['idAvaliador'],
                                           );
@@ -413,9 +413,9 @@ class DistribuirprojetosController extends GenericControllerNew {
                                  'idItemDistribuicao = ?' => $value
                              );
 
-                             if($tbltbdistribuir->alterar($dados, $where)){ 
+                             if($tbltbdistribuir->alterar($dados, $where)){
                                  $novosvinculos++;
-                             }else{ 
+                             }else{
                                  $error = "Não foi possivel distribuir a avaliação";
                              }
                      }
@@ -440,7 +440,7 @@ class DistribuirprojetosController extends GenericControllerNew {
         if($novosvinculos > 0){
 //        	parent::message("Projeto(s) enviado(s) com sucesso!", "/distribuirprojetos/redistribuir", "CONFIRM");
             $this->view->confirme = "Projeto(s) enviado(s) com sucesso!";
-        }elseif(strlen($this->view->alerta) < 2 and  $acao == 'add'){ 
+        }elseif(strlen($this->view->alerta) < 2 and  $acao == 'add'){
             $this->view->alerta = "Avaliador já vinculado ou quantidade máxima de avaliadores atingida";
         }
     }
@@ -475,7 +475,7 @@ class DistribuirprojetosController extends GenericControllerNew {
             foreach ($PreProjetos as $key => $value) {
 
                 $dadosprojeto    = $tblProjetos->listaProjetosDistribuidos(array('idPreProjeto = ?' => $value))->current();
-                
+
                  if(strlen($error) < 2){
 
                    if(!$tblProjetos->alterarSituacao($dadosprojeto->idPronac,null, $this->COD_SITUACAO_PROJETO_ATUALIZA, 'Redistribuindo o projeto para avaliação')) {
@@ -536,13 +536,13 @@ class DistribuirprojetosController extends GenericControllerNew {
         $idDistribuicao = !empty($_REQUEST['idDistribuicao']) ? (int)$_REQUEST['idDistribuicao'] : null;
         $dsObservacao   = !empty($_POST['dsObservacao']) ? $_POST['dsObservacao'] : null;
         if(!empty($idDistribuicao) and $idDistribuicao > 0){
-        
+
             $tbltbdistribuir = new tbDistribuicao();
             $where = "idDistribuicao = ".$idDistribuicao;
             $dados = array('dsObservacao' => $dsObservacao);
 
            if(strlen($dsObservacao) > 2){
-               
+
                     if($tbltbdistribuir->alterar($dados, $where)){
 //                    	parent::message("Cadastro realizado com sucesso!", "/distribuirprojetos/redistribuir", "CONFIRM");
                        $this->view->confirme = "Cadastro realizado com sucesso!";
@@ -553,7 +553,7 @@ class DistribuirprojetosController extends GenericControllerNew {
                 }
                 $dadosDistribuicao = array();
                 $dadosDistribuicao = $tbltbdistribuir->buscar(array('idDistribuicao = ?' => $idDistribuicao))->current();
-                
+
                 if(count($dadosDistribuicao) < 1){
                     $this->view->dadosDistribuicao = array();
                 }else{
@@ -574,7 +574,7 @@ class DistribuirprojetosController extends GenericControllerNew {
 
             $where = "idDistribuicao = ".$idDistribuicao;
             $tbltbdistribuir = new tbDistribuicao();
-            
+
             $tbltbdistribuir->delete($where);
         }
 
@@ -584,7 +584,7 @@ class DistribuirprojetosController extends GenericControllerNew {
     }
 
     public function listaavaliadoresAction(){
-            $tblPreProjeto = new PreProjeto();
+            $tblPreProjeto = new Proposta_Model_PreProjeto();
             $Avaliadores = $tblPreProjeto->listaApenasAvaliadores(array('pp.idEdital = ?' => $_GET['idEdital']));
             $idAvaliador = !empty($_GET['idAvaliador']) ? $_GET['idAvaliador'] : 0;
             foreach ($Avaliadores as $A) {

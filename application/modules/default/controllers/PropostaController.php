@@ -34,7 +34,7 @@ class PropostaController extends GenericControllerNew
             $get = Zend_Registry::get("get");
             $idAgente = $get->agente;
 
-            $tblProposta = new Proposta();
+            $tblProposta = new Proposta_Model_Proposta();
             $rsPropostas = $tblProposta->buscar(array("idagente = ?"=>$idAgente), array("nomeprojeto ASC"));
 
 
@@ -83,7 +83,7 @@ class PropostaController extends GenericControllerNew
                     {
                         $tblUsuario = new Usuario();
                         $rsUsuario = $tblUsuario->find($rsMovimentacao->Usuario)->current();
-                                
+
                         $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "Proposta com o Analista";
                         if(count($rsUsuario) > 0){ $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] .= " (<font color=blue>".$rsUsuario->usu_nome."</font>)"; }
                     }
@@ -102,7 +102,7 @@ class PropostaController extends GenericControllerNew
         public function listarPropostasAnaliseVisualTecnicoAction(){
             $usuario = $_SESSION['Zend_Auth']['storage']->usu_orgao;
 
-            $tblProposta = new Proposta();
+            $tblProposta = new Proposta_Model_Proposta();
             $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
             $arrTecnicos = array();
@@ -123,7 +123,7 @@ class PropostaController extends GenericControllerNew
         public function listarPropostasAnaliseFinalAction(){
             $usuario = $_SESSION['Zend_Auth']['storage']->usu_orgao;
 
-            $tblProposta = new Proposta();
+            $tblProposta = new Proposta_Model_Proposta();
             $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
             $arrTecnicos = array();
@@ -147,7 +147,7 @@ class PropostaController extends GenericControllerNew
 
             $usuario = $_SESSION['Zend_Auth']['storage']->usu_orgao;
 
-            $tblProposta = new Proposta();
+            $tblProposta = new Proposta_Model_Proposta();
             $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
             $html = "<table>
@@ -175,7 +175,7 @@ class PropostaController extends GenericControllerNew
 
             $usuario = $_SESSION['Zend_Auth']['storage']->usu_orgao;
 
-            $tblProposta = new Proposta();
+            $tblProposta = new Proposta_Model_Proposta();
             $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
             $html = "<table>
@@ -202,7 +202,7 @@ class PropostaController extends GenericControllerNew
             $this->_helper->viewRenderer->setNoRender();
             $usuario = $_SESSION['Zend_Auth']['storage']->usu_orgao;
 
-            $tblProposta = new Proposta();
+            $tblProposta = new Proposta_Model_Proposta();
             $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
             $arrTecnicos = array();
@@ -269,7 +269,7 @@ class PropostaController extends GenericControllerNew
             $this->_helper->viewRenderer->setNoRender();
             $usuario = $_SESSION['Zend_Auth']['storage']->usu_orgao;
 
-            $tblProposta = new Proposta();
+            $tblProposta = new Proposta_Model_Proposta();
             $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
             $arrTecnicos = array();
@@ -326,8 +326,8 @@ class PropostaController extends GenericControllerNew
 
             $html .= '
                     </table>
-                    ';            
-            
+                    ';
+
             $html .= '
                     <table width="100%">
                         <tr>
@@ -389,7 +389,7 @@ class PropostaController extends GenericControllerNew
             $usuario = $_SESSION['Zend_Auth']['storage']->usu_orgao;
 
             if(empty($post->busca)){
-                $tblProposta = new Proposta();
+                $tblProposta = new Proposta_Model_Proposta();
                 $rsTecnicos = $tblProposta->buscarTecnicosHistoricoAnaliseVisual($usuario);
 
                 $arrDados = array(
@@ -405,7 +405,7 @@ class PropostaController extends GenericControllerNew
 
                 $situacao = (!empty($post->situacao))?$post->situacao:null;
 
-                $tblProposta = new Proposta();
+                $tblProposta = new Proposta_Model_Proposta();
                 $rsProposta = $tblProposta->buscarHistoricoAnaliseVisual($usuario,$tecnico,$situacao,$dtInicio,$dtFim);
 
                 $arrTecnicosPropostas = array();
@@ -427,7 +427,7 @@ class PropostaController extends GenericControllerNew
             $this->_helper->layout->disableLayout();
             $this->_helper->viewRenderer->setNoRender();
 
-            $tblProposta = new Proposta();
+            $tblProposta = new Proposta_Model_Proposta();
             $rsAvaliacao = $tblProposta->buscarAvaliacaoHistoricoAnaliseVisual($get->idAvaliacao);
 
             echo $rsAvaliacao[0]->Avaliacao;
@@ -445,8 +445,8 @@ class PropostaController extends GenericControllerNew
             $rsPropostaDocumental = array();
             $rsPropostaFinal = array();
             $arrBusca['x.idTecnico = '] = $usuario;
-            
-            $tblProposta = new Proposta();
+
+            $tblProposta = new Proposta_Model_Proposta();
 
             if($post->numeroProposta != ""){
                 $arrBusca['p.idPreProjeto = '] = $post->numeroProposta;
@@ -526,4 +526,3 @@ class PropostaController extends GenericControllerNew
             $this->montaTela("admissibilidade/localizarpropostas.phtml", $arrDados);
         }
 }
-?>

@@ -693,7 +693,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->Sinopse;
@@ -706,7 +706,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->ImpactoAmbiental;
@@ -719,7 +719,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->EspecificacaoTecnica;
@@ -732,7 +732,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->EstrategiadeExecucao;
@@ -782,7 +782,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->Objetivos;
@@ -795,7 +795,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->Justificativa;
@@ -808,7 +808,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->Acessibilidade;
@@ -821,7 +821,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->DemocratizacaoDeAcesso;
@@ -834,7 +834,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->EtapaDeTrabalho;
@@ -847,7 +847,7 @@ class ReadequacoesController extends GenericControllerNew {
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$get->idPronac))->current();
 
             if($dadosProjeto){
-                $PreProjeto = new PreProjeto();
+                $PreProjeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PreProjeto->buscar(array('idPreProjeto = ?'=>$dadosProjeto->idProjeto))->current();
                 if($dadosPreProjeto){
                     $valorPreCarregado = $dadosPreProjeto->FichaTecnica;
@@ -3145,7 +3145,7 @@ class ReadequacoesController extends GenericControllerNew {
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->Sinopse = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
@@ -3155,7 +3155,7 @@ class ReadequacoesController extends GenericControllerNew {
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->ImpactoAmbiental = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
@@ -3165,7 +3165,7 @@ class ReadequacoesController extends GenericControllerNew {
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->EspecificacaoTecnica = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
@@ -3175,7 +3175,7 @@ class ReadequacoesController extends GenericControllerNew {
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->EstrategiadeExecucao = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
@@ -3380,7 +3380,7 @@ class ReadequacoesController extends GenericControllerNew {
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->Objetivos = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
@@ -3390,7 +3390,7 @@ class ReadequacoesController extends GenericControllerNew {
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->Justificativa = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
@@ -3400,7 +3400,7 @@ class ReadequacoesController extends GenericControllerNew {
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->Acessibilidade = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
@@ -3410,7 +3410,7 @@ class ReadequacoesController extends GenericControllerNew {
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->DemocratizacaoDeAcesso = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
@@ -3420,7 +3420,7 @@ class ReadequacoesController extends GenericControllerNew {
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->EtapaDeTrabalho = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
@@ -3430,7 +3430,7 @@ class ReadequacoesController extends GenericControllerNew {
                                 $Projetos = new Projetos();
                                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                                $PrePropojeto = new PreProjeto();
+                                $PrePropojeto = new Proposta_Model_PreProjeto();
                                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                                 $dadosPreProjeto->FichaTecnica = $read->dsSolicitacao;
                                 $dadosPreProjeto->save();
@@ -3608,7 +3608,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->Sinopse = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
@@ -3618,7 +3618,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->ImpactoAmbiental = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
@@ -3628,7 +3628,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->EspecificacaoTecnica = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
@@ -3638,7 +3638,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->EstrategiadeExecucao = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
@@ -3844,7 +3844,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->Objetivos = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
@@ -3854,7 +3854,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->Justificativa = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
@@ -3864,7 +3864,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->Acessibilidade = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
@@ -3874,7 +3874,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->DemocratizacaoDeAcesso = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
@@ -3884,7 +3884,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->EtapaDeTrabalho = $read->dsSolicitacao;
                 $dadosPreProjeto->save();
@@ -3894,7 +3894,7 @@ class ReadequacoesController extends GenericControllerNew {
                 $Projetos = new Projetos();
                 $dadosPrj = $Projetos->buscar(array('IdPRONAC=?'=>$read->idPronac))->current();
 
-                $PrePropojeto = new PreProjeto();
+                $PrePropojeto = new Proposta_Model_PreProjeto();
                 $dadosPreProjeto = $PrePropojeto->find(array('idPreProjeto=?'=>$dadosPrj->idProjeto))->current();
                 $dadosPreProjeto->FichaTecnica = $read->dsSolicitacao;
                 $dadosPreProjeto->save();

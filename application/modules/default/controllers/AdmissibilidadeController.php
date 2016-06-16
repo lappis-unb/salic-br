@@ -118,7 +118,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         /*==================================================*/
         $arrMandatos = array();
         $this->view->mandatos = $arrMandatos;
-        $preProjeto = new PreProjeto();
+        $preProjeto = new Proposta_Model_PreProjeto();
         $rsDirigentes = array();
 
         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
@@ -350,7 +350,7 @@ class AdmissibilidadeController extends GenericControllerNew {
 
         //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
         $this->view->nomeProjeto  = strip_tags($rsProposta->NomeProjeto);
@@ -387,7 +387,7 @@ class AdmissibilidadeController extends GenericControllerNew {
     private function eviarEmail($idProjeto,$Mensagem,$pronac = null){
         $auth = Zend_Auth::getInstance();
         $tbTextoEmailDAO    =   new tbTextoEmail();
-        $preProjetosDAO     =   new PreProjeto();
+        $preProjetosDAO     =   new Proposta_Model_PreProjeto();
 
         $dadosProjeto   =   $preProjetosDAO->dadosProjetoDiligencia($idProjeto);
 
@@ -424,7 +424,7 @@ class AdmissibilidadeController extends GenericControllerNew {
 
     public function analisedocumentalAction() {
 
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto = ?"=>$this->idPreProjeto))->current();
         $this->view->proposta = $rsProposta;
 
@@ -591,7 +591,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         $auth = Zend_Auth::getInstance(); // instancia da autenticação
         $idOrgao = $auth->getIdentity()->usu_orgao;
 
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto = ?"=>$this->idPreProjeto))->current();
 
         //O codigo deste IF serve apenas para mostrar a mensagem ao usuario
@@ -675,7 +675,7 @@ class AdmissibilidadeController extends GenericControllerNew {
     public function encaminharpropostaAction() {
         //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
         $this->view->nomeProjeto  = isset($rsProposta->NomeProjeto) ? strip_tags($rsProposta->NomeProjeto) : '';
@@ -739,7 +739,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         try{
             //Enviar e-mail informando arquivamento e a justificativa
             //$dao->deletePreProjeto($this->idPreProjeto);
-            $tblPreProjeto = new PreProjeto();
+            $tblPreProjeto = new Proposta_Model_PreProjeto();
             $rsPreProjeto = $tblPreProjeto->find($this->idPreProjeto)->current();
             $rsPreProjeto->DtArquivamento=date("Y/m/d H:i:s");
             $rsPreProjeto->stEstado = 0;
@@ -762,7 +762,7 @@ class AdmissibilidadeController extends GenericControllerNew {
 
     public function confirmararquivarpropostaAction() {
 
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
         $this->view->nomeProjeto  = strip_tags($rsProposta->NomeProjeto);
@@ -876,7 +876,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         /*==================================================*/
         $arrMandatos = array();
         $this->view->mandatos = $arrMandatos;
-        $preProjeto = new PreProjeto();
+        $preProjeto = new Proposta_Model_PreProjeto();
         $rsDirigentes = array();
 
         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
@@ -987,7 +987,7 @@ class AdmissibilidadeController extends GenericControllerNew {
 
     public function frmalterarunianalisepropostaAction() {
         $this->_helper->layout->disableLayout();
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsProposta = $tblProposta->unidadeAnaliseProposta($_POST["nrProposta"])->current();
         //xd($rsProposta->toArray());
         if($rsProposta){
@@ -1089,7 +1089,7 @@ class AdmissibilidadeController extends GenericControllerNew {
             $msgComplementar = "Altera&ccedil;&atilde;o realizada com sucesso!";
 
             if((int)$params->uog_status === 0){
-                $tblPreProjeto = new PreProjeto();
+                $tblPreProjeto = new Proposta_Model_PreProjeto();
                 $tecnicoTemProposta = $tblPreProjeto->tecnicoTemProposta($params->usu_cod);
 
                 if($tecnicoTemProposta){
@@ -1240,7 +1240,7 @@ class AdmissibilidadeController extends GenericControllerNew {
 
         //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
         $this->view->nomeProjeto  = strip_tags($rsProposta->NomeProjeto);
@@ -1251,7 +1251,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         $get = Zend_Registry::get("get");
         $idAgente = $get->agente;
 
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsPropostas = $tblProposta->buscar(array("idagente = ?"=>$idAgente), array("nomeprojeto ASC"));
 
 
@@ -1383,7 +1383,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         if(is_numeric($post->avaliacao)){ $arrBusca["ConformidadeOK = "] = "'$post->avaliacao'"; }
         if(!empty($post->tecnico)){ $arrBusca["Tecnico = "] = "'$post->tecnico'"; }
 
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico($arrBusca, array("Tecnico ASC"));
         //xd($rsProposta);
         $arrTecnicosPropostasReavaliacao = array();
@@ -1424,7 +1424,7 @@ class AdmissibilidadeController extends GenericControllerNew {
     public function listarPropostasAnaliseDocumentalTecnicoAction(){
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsProposta = $tblProposta->buscarPropostaAnaliseDocumentalTecnico(array("sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) = "=>$usuario, "ConformidadeOK = "=>1), array("Tecnico ASC"));
 
         $arrTecnicosPropostas = array();
@@ -1451,7 +1451,7 @@ class AdmissibilidadeController extends GenericControllerNew {
     public function listarPropostasAnaliseFinalAction(){
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $arrTecnicosPropostas = array();
@@ -1476,7 +1476,7 @@ class AdmissibilidadeController extends GenericControllerNew {
 
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $html = "<table>
@@ -1506,7 +1506,7 @@ class AdmissibilidadeController extends GenericControllerNew {
 
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $html = "<table>
@@ -1533,7 +1533,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         $this->_helper->viewRenderer->setNoRender();
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $arrTecnicos = array();
@@ -1602,7 +1602,7 @@ class AdmissibilidadeController extends GenericControllerNew {
 
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $arrTecnicos = array();
@@ -1722,7 +1722,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         $usuario = $this->codOrgaoSuperior;
 
         if(empty($post->busca)){
-            $tblProposta = new Proposta();
+            $tblProposta = new Proposta_Model_Proposta();
             $rsTecnicos = $tblProposta->buscarTecnicosHistoricoAnaliseVisual($usuario);
 
             $arrDados = array(
@@ -1738,7 +1738,7 @@ class AdmissibilidadeController extends GenericControllerNew {
 
             $situacao = (!empty($post->situacao))?$post->situacao:null;
 
-            $tblProposta = new Proposta();
+            $tblProposta = new Proposta_Model_Proposta();
             $rsProposta = $tblProposta->buscarHistoricoAnaliseVisual($usuario,$tecnico,$situacao,$dtInicio,$dtFim);
 
             $arrTecnicosPropostas = array();
@@ -1797,7 +1797,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rsAvaliacao = $tblProposta->buscarAvaliacaoHistoricoAnaliseVisual($get->idAvaliacao);
 
         $avaliacao = trim($rsAvaliacao[0]->Avaliacao);
@@ -1821,7 +1821,7 @@ class AdmissibilidadeController extends GenericControllerNew {
         $rsPropostaFinal = array();
         $arrBusca['x.idTecnico = '] = $usuario;
 
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
 
         if($post->numeroProposta != ""){
             $arrBusca['p.idPreProjeto = '] = $post->numeroProposta;
@@ -1914,7 +1914,7 @@ class AdmissibilidadeController extends GenericControllerNew {
 
         $rsPropostasNaoEnviadas = array();
 
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
 
         // =========== PROPOSTAS NAO ENVIADAS AO MINC AINDA =======================
         $arrBusca['m.Movimentacao = ?'] = 95;
@@ -2299,7 +2299,7 @@ class AdmissibilidadeController extends GenericControllerNew {
             $dados['idPreProjeto = ?'] = $nrProposta;
             $dados['stEstado = ?'] = 0;
             $dados['dtArquivamento is not null'] = '';
-            $PreProjeto = new PreProjeto();
+            $PreProjeto = new Proposta_Model_PreProjeto();
             $result = $PreProjeto->buscar($dados);
 
             $a = 0;
@@ -2334,7 +2334,7 @@ class AdmissibilidadeController extends GenericControllerNew {
             );
             $where = array('idPreProjeto = ?' => $post->nrProposta);
 
-            $PreProjeto = new PreProjeto();
+            $PreProjeto = new Proposta_Model_PreProjeto();
             $result = $PreProjeto->update($dados, $where);
 
             parent::message("Proposta desarquivada com sucesso!", "/admissibilidade/desarquivarpropostas", "CONFIRM");

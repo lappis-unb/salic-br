@@ -7,7 +7,7 @@
  * @uses   _Db_Table
  * @author wouerner <wouerner@gmail.com>
  */
-class PreProjeto extends Zend_Db_Table
+class Proposta_Model_PreProjeto extends Zend_Db_Table
 {
     protected $_name = "PreProjeto";
     protected $_primary = "idPreProjeto";

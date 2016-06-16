@@ -9,7 +9,7 @@
  * @copyright © 2010 - Politec - Todos os direitos reservados.
  */
 
-require_once "GenericControllerNew.php";
+//require_once "GenericControllerNew.php";
 
 class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
 
@@ -2323,7 +2323,7 @@ class VerificarReadequacaoDeProjetoController extends GenericControllerNew{
                         $DadosProj = $Projeto->buscar(array('IdPRONAC = ?' => $idPronac));
 
                         if(count($DadosProj) > 0 && !empty($DadosProj[0]->idProjeto)) {
-                            $PreProjeto = new PreProjeto();
+                            $PreProjeto = new Proposta_Model_PreProjeto();
                             $dados = array(
                                 'EstrategiadeExecucao' => $dadosSolicitado[0]['dsEstrategiaExecucao'],
                                 'EspecificacaoTecnica' => $dadosSolicitado[0]['dsEspecificacaoSolicitacao']

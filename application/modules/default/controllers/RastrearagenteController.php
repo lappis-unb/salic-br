@@ -75,7 +75,7 @@ class RastrearagenteController extends GenericControllerNew {
         $projetos2 = null;
         $projetos2 = $projeto->buscarTodosDadosProjeto(null,$CpfCnpj)->toArray();
 
-        $preprojeto = new Proposta();
+        $preprojeto = new Proposta_Model_Proposta();
         $preprojetos = $preprojeto->buscar(array("idAgente = ? " => $agente[0]->idAgente));
         $preprojetos = empty($preprojetos) ? array() : $preprojetos;
 
@@ -83,7 +83,7 @@ class RastrearagenteController extends GenericControllerNew {
         $vinculos = $vinculo->BuscarVinculos($agente[0]->idAgente);
         $vinculos = empty($vinculos) ? array() : $vinculos;
 
-        $proposta = new Proposta();
+        $proposta = new Proposta_Model_Proposta();
         $propostas = $proposta->propostastransformadas($agente[0]->idAgente);
         $propostas = empty($propostas) ? array() : $propostas;
 

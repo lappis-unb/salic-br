@@ -63,7 +63,7 @@ class Vinculo extends GenericModel {
     }
 
     public function verificaPermissaoAcessoProposta($idPreProjeto) {
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rs = $tblProposta->buscar(array("idPreProjeto = ? " => $idPreProjeto, "1=1 OR idEdital IS NULL OR idEdital > 0" => "?", "idUsuario =?" => $this->idUsuario));
         return $rs->count();
     }
@@ -73,7 +73,7 @@ class Vinculo extends GenericModel {
         $arrBusca['stEstado = ?'] = 1;
         $arrBusca['idUsuario = ?'] = $this->idUsuario;
         // Chama o SQL
-        $tblPreProjeto = new PreProjeto();
+        $tblPreProjeto = new Proposta_Model_Preprojeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca, array("idAgente ASC"));
 
         //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
@@ -146,7 +146,7 @@ class Vinculo extends GenericModel {
         $agencia = $get->agencia;
 
         if ($agencia > 0) {
-            $tblProposta = new Proposta();
+            $tblProposta = new Proposta_Model_Proposta();
             $agencia = $tblProposta->buscaragencia($agencia);
             if (count($agencia) > 0) {
                 echo "";
@@ -249,7 +249,7 @@ class Vinculo extends GenericModel {
         $db = new Conexao(Zend_Registry::get('DIR_CONFIG'), "conexao_sac");
 
         //instancia classe modelo
-        $tblPreProjeto = new PreProjeto();
+        $tblPreProjeto = new Proposta_Model_Preprojeto();
 
         //$db = Zend_Db_Table::getDefaultAdapter();
         //$db->beginTransaction();
@@ -290,7 +290,7 @@ class Vinculo extends GenericModel {
         $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
 
         // Chama o SQL
-        $tblPreProjeto = new PreProjeto();
+        $tblPreProjeto = new Proposta_Model_Preprojeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
         $arrBuscaProponete = array();
@@ -401,7 +401,7 @@ class Vinculo extends GenericModel {
             $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
 
             // Chama o SQL
-            $tblPreProjeto = new PreProjeto();
+            $tblPreProjeto = new Proposta_Model_Preprojeto();
             $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
             $arrBuscaProponete = array();
@@ -430,7 +430,7 @@ class Vinculo extends GenericModel {
         $idPreProjeto = $get->idPreProjeto;
 
         //BUSCANDO REGISTRO A SER ALTERADO
-        $tblPreProjeto = new PreProjeto();
+        $tblPreProjeto = new Proposta_Model_Preprojeto();
         $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
         $rsPreProjeto->stEstado = 0;
@@ -468,7 +468,7 @@ class Vinculo extends GenericModel {
         //BUSCA DADOS DO PROJETO
         $arrBusca = array();
         $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
-        $tblPreProjeto = new PreProjeto();
+        $tblPreProjeto = new Proposta_Model_Preprojeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
         /* ======== VERIFICA TODAS AS INFORMACOES NECESSARIAS AO ENVIO DA PROPOSTA ======= */
@@ -761,7 +761,7 @@ class Vinculo extends GenericModel {
         }
 
         if (!empty($idPreProjeto) && $valida == "s") {
-            $tblPreProjeto = new PreProjeto();
+            $tblPreProjeto = new Proposta_Model_Preprojeto();
             $tblAvaliacao = new AnalisarPropostaDAO();
 
             //recupera dados do projeto
@@ -1077,7 +1077,7 @@ class Vinculo extends GenericModel {
                     $arrBusca['a.idAgente = ?'] = $idAgente;
                 }
                 //xd($arrBusca);
-                $tblPreProjeto = new PreProjeto();
+                $tblPreProjeto = new Proposta_Model_Preprojeto();
                 //$rsPreProjeto = $tblPreProjeto->buscar($arrBusca,  array("idAgente ASC"));
                 $rsPreProjeto = $tblPreProjeto->buscaCompleta($arrBusca, array("a.idAgente ASC"));
 

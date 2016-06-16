@@ -1994,7 +1994,7 @@ class GerenciarPautaReuniaoController extends GenericControllerNew {
         if(!empty($idPronac))
         {
             $tblProjeto        = new Projetos();
-            $tblPreProjeto      = new PreProjeto();
+            $tblPreProjeto      = new Proposta_Model_PreProjeto();
             $projeto = $tblProjeto->buscar(array('IdPRONAC = ?' => $idPronac));
 
             if(isset($projeto[0]->idProjeto) && !empty($projeto[0]->idProjeto)){

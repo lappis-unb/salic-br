@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * RealizaranaliseprojetoController
  * @author Equipe RUP - Politec
@@ -61,7 +61,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 		parent::init(); // chama o init() do pai GenericControllerNew
                 /**** CODIGO DE READEQUACAO ****/
                 $this->view->bln_readequacao = "false";
-                
+
                 $idpronac = null;
                 $idpronac = $this->_request->getParam("idpronac");
                 //VERIFICA SE O PROJETO ESTA NA FASE DE READEQUACAO
@@ -72,7 +72,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                     $arrBusca['pa.stPedidoAlteracao = ?'] = 'I'; //pedido enviado pelo proponente
                     $arrBusca['pa.siVerificacao = ?']     = '1';
                     $arrBusca['paxta.tpAlteracaoProjeto = ?']='10'; //tipo Readequacao de Itens de Custo
-                    $rsPedidoAlteraco = $tbPedidoAlteracao->buscarPedidoAlteracaoPorTipoAlteracao($arrBusca, array('dtSolicitacao DESC'))->current(); 
+                    $rsPedidoAlteraco = $tbPedidoAlteracao->buscarPedidoAlteracaoPorTipoAlteracao($arrBusca, array('dtSolicitacao DESC'))->current();
                     if(!empty($rsPedidoAlteraco)){
                         $this->bln_readequacao = "true";
                         $this->view->bln_readequacao = "true";
@@ -126,21 +126,21 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 
 	$buscarPronac = $projeto->buscar(array('IdPRONAC = ?'=>$idpronac))->current()->toArray();
         $idprojeto = $buscarPronac['idProjeto'];
-        
+
         $this->view->idpronac = $idpronac;
         $this->view->projeto = $buscarPronac;
         //define tipo de planilha a ser utilizada baseado na ultima planilha criada
         $rsPlanilhaAtual = $planilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idpronac), array('dtPlanilha DESC'))->current();
         $tpPlanilha = (!empty($rsPlanilhaAtual) && $rsPlanilhaAtual->tpPlanilha == 'SE') ? 'SE' : 'CO';
         //antiga busca
-        //$analiseparecer = $parecer->buscarParecer(array(1), $idpronac )->current()->toArray(); 
+        //$analiseparecer = $parecer->buscarParecer(array(1), $idpronac )->current()->toArray();
         //nova busca
         $parecerAtivo = $tblParecer->buscar(array('idPronac=?'=>$idpronac,'stAtivo=?'=>'1'))->current();
         $analiseparecer = $tblParecer->buscar(array('idTipoAgente in (?)'=>array('1','6'), 'TipoParecer=?'=>$parecerAtivo->TipoParecer, 'idPronac=?'=>$idpronac))->current()->toArray();
-        
+
         $this->view->ResultRealizarAnaliseProjeto = $analiseparecer;
         $produtos = $analiseaprovacao->buscarAnaliseProduto($tpPlanilha, $idpronac);
-        
+
         /**** MODO ANTIGO ************/
         //$fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
         //$outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
@@ -150,7 +150,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
         //$this->view->valorproposta = $fonteincentivo['soma'] + $outrasfontes['soma'];
         //$this->view->valorparecerista = $parecerista['soma'];
         /***** FIM - MODO ANTIGO ******/
-        
+
 		/**** CODIGO DE READEQUACAO ****/
         /********** MODO NOVO ***************/
         //TRATANDO SOMA DE PROJETO QUANDO ESTE FOR DE READEQUACAO
@@ -158,7 +158,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
         $arrWhereSomaPlanilha['idPronac = ?']=$idpronac;
         if($this->bln_readequacao == "false"){
             $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
-            $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);  
+            $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
             $parecerista = $planilhaprojeto->somarPlanilhaProjeto($idpronac, 109);
         }else{
             $arrWhereFontesIncentivo = $arrWhereSomaPlanilha;
@@ -178,7 +178,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
             $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
             $arrWhereOutrasFontes["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
             $outrasfontes = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereOutrasFontes);
-            
+
             $arrWherePlanilhaPA = $arrWhereSomaPlanilha;
             $arrWherePlanilhaPA['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
             $arrWherePlanilhaPA['tpPlanilha = ? ']='PA';
@@ -208,7 +208,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
         } else{
             $this->view->enquadramento = 'NAO ENQUADRADO';
         }
-        
+
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
         $idagente = $idagente['idAgente'];
@@ -277,7 +277,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                 //novo modo
                                 $rsPlanilhaAtual = $planilhaaprovacao->buscar(array('IdPRONAC = ?'=>$idpronac), array('dtPlanilha DESC'))->current();
                                 $tpPlanilha = (!empty($rsPlanilhaAtual) && $rsPlanilhaAtual->tpPlanilha == 'SE') ? 'SE' : 'CO';
-                                
+
                                 $auth = Zend_Auth::getInstance(); // pega a autenticacao
                                 $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
                                 $idagente = $idagente['idAgente'];
@@ -289,7 +289,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 					'vlUnitario'      => $vlunitario,
 					'qtDias'          => $dias,
 					'dsJustificativa' => $justificativa,
-					'idAgente'        => $idagente); 
+					'idAgente'        => $idagente);
                                 $where = 'idPlanilhaAprovacao = '.$idPlanilha. "and TpPlanilha = '".$tpPlanilha."'";
 				$alterarPlanilha = $planilhaaprovacao->alterar($dados, $where);
 				if ($alterarPlanilha)
@@ -306,7 +306,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 			// recebe os dados via get
                                 $idpronac   = $this->_request->getParam("idpronac");
                                 $buscarprojeto = $projeto->buscar(array('IdPRONAC = ?'=>$idpronac))->current()->toArray();
-                                
+
                                 //antigo modo
                                 /*$buscaReadAprovacadoCnic = $tblPauta->buscar(array('IdPRONAC = ?'=>$idpronac, 'stAnalise = ?'=>"AS"));
                                 if($buscaReadAprovacadoCnic->count() > 0){
@@ -319,7 +319,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                 //define tipo de planilha a ser utilizada baseado na ultima planilha criada
                                 $rsPlanilhaAtual = $planilhaaprovacao->buscar(array('IdPRONAC = ?'=>$idpronac), array('dtPlanilha DESC'))->current();
                                 $tpplanilha = (!empty($rsPlanilhaAtual) && $rsPlanilhaAtual->tpPlanilha == 'SE') ? 'SE' : 'CO';
-                                
+
                                 $buscarAnaliseConta = $planilhaaprovacao->buscarAnaliseConta($idpronac,$tpplanilha,array('pap.stAtivo=?'=>'S'));
 
                                 // ===== TOTAL VALOR REDUZIDO E TOTAL DE ITENS =====
@@ -327,7 +327,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                 $itemRetirado       = false;
                                 $totalValorReduzido = 0;
                                 $totalItemReduzido  = 0;
-                                
+
                                 $totalValorRetirado = 0;
                                 $totalItemRetirado  = 0;
                                 $valores['reduzido'] = array();
@@ -347,14 +347,14 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                                 $valores['reduzido'][$totalItemReduzido]['Produto']                     = $b->produto;
                                                 $valores['reduzido'][$totalItemReduzido]['vlreduzidoComp']              = $valorproponente - $valorcomponente ;
                                                 $valores['reduzido'][$totalItemReduzido]['VlReduzidoParecerista']       = $valorparecerista - $valorproponente;
-                                                
+
                                                 $valores['reduzido'][$totalItemReduzido]['vltotalsolicitado']           = $valorproponente;
                                                 $valores['reduzido'][$totalItemReduzido]['UnidadeProposta']             = $b->UnidadeProposta;
                                                 $valores['reduzido'][$totalItemReduzido]['qtdSolicitado']               = $b->qtdSolicitado;
                                                 $valores['reduzido'][$totalItemReduzido]['ocoSolicitado']               = $b->ocoSolicitado;
                                                 $valores['reduzido'][$totalItemReduzido]['vlunitarioSolicitado']        = $b->vlSolicitado;
                                                 $valores['reduzido'][$totalItemReduzido]['diasSolicitado']              = $b->diasSolicitado;
-                                                
+
                                                 $valores['reduzido'][$totalItemReduzido]['idUnidade']                   = $b->idUnidade;
                                                 $valores['reduzido'][$totalItemReduzido]['Unidade']                     = $b->Unidade;
                                                 $valores['reduzido'][$totalItemReduzido]['diasRelator']                 = $b->diasRelator;
@@ -364,7 +364,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                                 $valores['reduzido'][$totalItemReduzido]['qtdRelator']                  = $b->qtdRelator;
                                                 $valores['reduzido'][$totalItemReduzido]['vltotalcomponente']           = $valorcomponente;
                                                 $valores['reduzido'][$totalItemReduzido]['justcomponente']              = $b->JSComponente;
-                                                
+
                                                 $valores['reduzido'][$totalItemReduzido]['UnidadeProjeto']              = $b->UnidadeProposta;
                                                 $valores['reduzido'][$totalItemReduzido]['qtdParecer']                  = $b->qtdParecer;
                                                 $valores['reduzido'][$totalItemReduzido]['ocoParecer']                  = $b->ocoParecer;
@@ -372,7 +372,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                                 $valores['reduzido'][$totalItemReduzido]['vltotalparecerista']          = $valorparecerista;
                                                 $valores['reduzido'][$totalItemReduzido]['vlunitarioparecerista']       = $b->vlParecer;
                                                 $valores['reduzido'][$totalItemReduzido]['justparecerista']             = $b->JSParecerista;
-                                                
+
                                                 $itemReduzido = true;
                                                 $reduzido = $valorproponente - $valorcomponente;
                                                 $totalValorReduzido += (float) $reduzido;
@@ -380,7 +380,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                         }
                                         if ($valorcomponente == 0 and $valorproponente > 0)
                                         {
-                                            
+
                                                 $valores['retirado'][$totalItemRetirado]['idPlanilhaAprovacao']         = $b->idPlanilhaAprovacao;
                                                 $valores['retirado'][$totalItemRetirado]['nrFonteRecurso']              = $b->nrFonteRecurso;
                                                 $valores['retirado'][$totalItemRetirado]['idProduto']                   = $b->idProduto;
@@ -390,14 +390,14 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                                 $valores['retirado'][$totalItemRetirado]['Produto']                     = $b->produto;
                                                 $valores['retirado'][$totalItemRetirado]['vlretiradoComp']              = $valorproponente - $valorcomponente ;
                                                 $valores['retirado'][$totalItemRetirado]['VlretiradoParecerista']       = $valorparecerista - $valorproponente;
-                                                
+
                                                 $valores['retirado'][$totalItemRetirado]['vltotalsolicitado']           = $valorproponente;
                                                 $valores['retirado'][$totalItemRetirado]['UnidadeProposta']             = $b->UnidadeProposta;
                                                 $valores['retirado'][$totalItemRetirado]['qtdSolicitado']               = $b->qtdSolicitado;
                                                 $valores['retirado'][$totalItemRetirado]['ocoSolicitado']               = $b->ocoSolicitado;
                                                 $valores['retirado'][$totalItemRetirado]['vlunitarioSolicitado']        = $b->vlSolicitado;
                                                 $valores['retirado'][$totalItemRetirado]['diasSolicitado']              = $b->diasSolicitado;
-                                                
+
                                                 $valores['retirado'][$totalItemRetirado]['idUnidade']                   = $b->idUnidade;
                                                 $valores['retirado'][$totalItemRetirado]['Unidade']                     = $b->Unidade;
                                                 $valores['retirado'][$totalItemRetirado]['diasRelator']                 = $b->diasRelator;
@@ -407,7 +407,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                                 $valores['retirado'][$totalItemRetirado]['diasRelator']                 = $b->diasRelator;
                                                 $valores['retirado'][$totalItemRetirado]['vltotalcomponente']           = $valorcomponente;
                                                 $valores['retirado'][$totalItemRetirado]['justcomponente']              = $b->JSComponente;
-                                                
+
                                                 $valores['retirado'][$totalItemRetirado]['UnidadeProjeto']              = $b->UnidadeProposta;
                                                 $valores['retirado'][$totalItemRetirado]['qtdParecer']                  = $b->qtdParecer;
                                                 $valores['retirado'][$totalItemRetirado]['ocoParecer']                  = $b->ocoParecer;
@@ -415,7 +415,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                                 $valores['retirado'][$totalItemRetirado]['vltotalparecerista']          = $valorparecerista;
                                                 $valores['retirado'][$totalItemRetirado]['vlunitarioparecerista']       = $b->vlParecer;
                                                 $valores['retirado'][$totalItemRetirado]['justparecerista']             = $b->JSParecerista;
-                                            
+
                                                 $itemRetirado = true;
                                                 $retirado = $valorproponente - $valorcomponente;
                                                 $totalValorRetirado += (float) $retirado;
@@ -433,7 +433,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                         $arrWhereSomaPlanilha['NrFonteRecurso = ? ']='109';
                                         $arrWhereSomaPlanilha['stAtivo = ? ']='S';
                                         $buscarsomaaprovacao = $planilhaaprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
-                                        
+
                                         $buscarsomaproposta = $tblPlanilhaProposta->somarPlanilhaProposta($buscarprojeto['idProjeto']);
                                         $this->view->planilhaUnidade         = $buscarPlanilhaUnidade;
 					$this->view->analiseReduzido         = $valores['reduzido'];
@@ -447,7 +447,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 					$this->view->totItemRed      = $totalItemReduzido;
 					$this->view->totValRet       = $totalValorRetirado;
 					$this->view->totItemRet      = $totalItemRetirado;
-                                        
+
                                         $this->view->totalproponente = $buscarsomaproposta['soma'];
                                         $this->view->totalcomponente = $buscarsomaaprovacao['soma'];
 
@@ -525,7 +525,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 
                         $rsPlanilhaAtual = $planilhaaprovacao->buscar(array('IdPRONAC = ?'=>$IdPRONAC), array('dtPlanilha DESC'))->current();
                         $tpAnalise = (!empty($rsPlanilhaAtual) && $rsPlanilhaAtual->tpPlanilha == 'SE') ? 'SE' : 'CO';
-                        
+
 			try
 			{
                             $auth = Zend_Auth::getInstance(); // pega a autenticacao
@@ -587,7 +587,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 			$idPronac   = $this->_request->getParam("idpronac");
                         $tblPauta = new Pauta();
                         $projeto = new Projetos();
-                        
+
                         $buscarprojeto = $projeto->buscar(array('IdPRONAC = ?'=>$idPronac))->current()->toArray();
                         $analise = new AnaliseAprovacao();
                         //antigo modo
@@ -620,7 +620,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                         $auth              = Zend_Auth::getInstance(); // pega a autenticacao
                         $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
                         $idagente = $idagente['idAgente'];
-                        
+
                         //-------------------------------------------------------------------------------------------------------------
                         $reuniao = new Reuniao();
                         $ConsultaReuniaoAberta = $reuniao->buscar(array("stEstado = ?" => 0));
@@ -647,7 +647,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                         }
                 } // fecha else
 	}*/ // fecha metodo analisedeconteudoAction()
-        
+
 	public function analisedeconteudoAction()
 	{
         $this->intTamPag = 1;
@@ -779,37 +779,37 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 	{
             $this->_helper->layout->disableLayout(); // desabilita o layout
             header("Content-Type: text/html; charset=ISO-8859-1");
-            
+
             $post = Zend_Registry::get('post');
             $idPronac = $this->_request->getParam("idpronac");
             $tpPlanilha = $this->_request->getParam("tpAnalise");
             $idAnaliseAprovacao = $this->_request->getParam("idAnaliseAprovacao");
-            
+
             $projeto = new Projetos();
             $tbAnaliseAprovacao  = new AnaliseAprovacao();
-            
+
             $rsProjeto = $projeto->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
             $this->view->dadosprojeto = $rsProjeto;
-                        
+
             $rs = $tbAnaliseAprovacao->buscarAnaliseProduto($tpPlanilha, $idPronac, null, array('aa.idAnaliseAprovacao=?'=>$idAnaliseAprovacao))->current();
             $this->view->analise = $rs;
             //xd($rs);
             $this->view->parametrosBusca  = $_POST;
         }
-        
+
         public function alterarAnaliseDeConteudoAction()
 	{
 //            $this->_helper->layout->disableLayout(); // desabilita o layout
-            
+
             $post                 = Zend_Registry::get('post');
-            
+
             $projeto = new Projetos();
             $tbPlanilhaAprovacao = new PlanilhaAprovacao();
             $tbAnaliseAprovacao  = new AnaliseAprovacao();
-            
+
             // recebe os dados via post
             $tpAnalise            = $post->tpAnalise;
-            
+
             $idPlanilha           = $post->idPlanilha;
             $IdPRONAC             = $post->IdPRONAC;
             $idProduto            = $post->idProduto;
@@ -864,7 +864,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                     // atualiza apenas o campo com a Lei 8313 caso o valor da mesma seja 0
                     else
                     {
-                        
+
                             $dados = array(
                                     'tpAnalise'            => $tpAnalise,
                                     'dtAnalise'            => new Zend_Db_Expr('GETDATE()'),
@@ -886,13 +886,13 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                     'idAgente'             => $idagente);
                             $alterarAnalise = AnaliseAprovacaoDAO::alterar($dados, $IdPRONAC, $idProduto, $idPlanilha, $tpAnalise);
                     }
-                    
+
                     //ZERA VALORES DOS ITENS DA PLANILHA DO PRODUTO DESFAVORECIDO
                     if($stAvaliacao != 1){
-                        
+
                         try{
                             $tblPlanilhaAprovacao = new PlanilhaAprovacao();
-                            
+
                             $dados = null;
                             $dados = array('qtItem'       => 0,
                                            'nrOcorrencia' => 0,
@@ -908,14 +908,14 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                 $where.= " AND stAtivo = 'S'";
                             }
                             $tblPlanilhaAprovacao->alterar($dados, $where);
-                            
+
                         } // fecha try
                         catch (Exception $e)
                         {
                             throw new Exception("Erro ao efetuar alteracao!");
                         }
                     }
-                    
+
                     if ($alterarAnalise)
                     {
 //                            $this->_forward('analisedeconteudo',null,null, array('error'=>'false','msg'=>'Dados alterados com sucesso!'));
@@ -933,7 +933,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                 parent::message($e->getMessage(), "realizaranaliseprojeto/analisedeconteudo/idpronac/".$IdPRONAC, "ERROR");
             }
         }
-        
+
 	/**
 	 * Metodo com a tabela de analise de custos
 	 * @access public
@@ -1099,7 +1099,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
             $this->view->totalproponente  = $buscarsomaproposta['soma'];
             $this->view->produtosFavoraveis  = $arrProdutosFavoraveis;
 		} // fecha else
-        
+
         $auth = Zend_Auth::getInstance(); // pega a autenticao
         $Usuario = new Usuario(); // objeto usuario
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
@@ -1159,7 +1159,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
             $tblPlanilhaAprovacao = new PlanilhaAprovacao();
             $auth = Zend_Auth::getInstance(); // pega a autenticacao
             $tblProjetos = new Projetos();
-            $tblPreProjeto = new PreProjeto();
+            $tblPreProjeto = new Proposta_Model_PreProjeto();
 
             $ConsultaReuniaoAberta = ReuniaoDAO::buscarReuniaoAberta();
             $NumeroReuniao = $ConsultaReuniaoAberta['NrReuniao'];
@@ -1196,14 +1196,14 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                     'idTipoAgente'=>$tipoAgente
                                   );
                     $idparecer = isset($buscarParecer['IdParecer']) ? $buscarParecer['IdParecer'] : $buscarParecer['idParecer'];
-                    
+
                     //se parecer ativo nao é o Componente, inativa os outros e grava o do Componente
                     if(!$buscarParecer or $buscarParecer['idTipoAgente'] != $tipoAgente )
                     {
                         try{
                             $dadosAtualizar = array('stAtivo'=>0);
                             $where = "idparecer = ".$idparecer;
-                     
+
                             $update = $tblParecer->alterar($dadosAtualizar, $where);
                             $inserir = $tblParecer->inserir($dados);
                             echo json_encode(array('error'=>false));
@@ -1226,7 +1226,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                         die;
                     }
                 }else{
-                    
+
                      echo json_encode(array('error'=>true, 'descricao'=>'N&atilde;o foi encontrado parecer v&aacute;lido da an&aacute;lise t&eacute;cnica.'));
                      die;
                 }
@@ -1283,24 +1283,24 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                     $rsParecerAtualizar->ResumoParecer = ($parecerAtualizado);
                     $rsParecerAtualizar->save();
                 }
-                
+
                 $tblSituacao = new Situacao();
                 $tblProjetos = new Projetos();
                 $tblPauta = new Pauta();
                 $tblReuniao = new tbreuniao();
-                
+
                 $idPronac               = $post->idPronac;
-                
+
                 //recupera tipo da planilha de acordo com o resultado da reuniao plenaria
                 /*$buscarnrreuniaoprojeto = $tblPauta->dadosiniciaistermoaprovacao(array($idPronac) )->current();
                 $rsReuniao = $tblReuniao->buscar(array('NrReuniao=?'=>$buscarnrreuniaoprojeto->NrReuniao))->current();
                 $buscaReadAprovacadoCnic = $tblPauta->buscar(array('IdPRONAC = ?'=>$idPronac, 'stAnalise = ?'=>'AS', 'idNrReuniao = ?'=>$rsReuniao->idNrReuniao));
                 if($buscaReadAprovacadoCnic->count() > 0){ $tpPlanilha = "SE"; } else{ $tpPlanilha = "CO"; }*/
-                
+
                 $tblPlanilhaAprovacao = new PlanilhaAprovacao();
                 $rsPlanilhaAtual = $tblPlanilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idPronac), array('dtPlanilha DESC'))->current();
                 $tpPlanilha = (!empty($rsPlanilhaAtual) && $rsPlanilhaAtual->tpPlanilha == 'SE') ? 'SE' : 'CO';
-                
+
                 //TRATANDO SITUACAO DO PROJETO QUANDO ESTE FOR DE READEQUACAO
                 $codSituacao = ($this->bln_readequacao == "false") ? 'D03' : 'D02';
                 $stEnvioPlenaria = isset($post->stEnvioPlenaria) ? 'S' : 'N';
@@ -1311,11 +1311,11 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                 $buscarsituacao         = $tblSituacao->listasituacao(array($situacao))->current()->toArray();
                 $providencia            = $post->situacao == null ? 'PROJETO APROVADO NA CNIC N '.$NumeroReuniao. ' - ' .$buscarsituacao['Descricao']: 'PROJETO INDEFERIDO NA CNIC N '.$NumeroReuniao. ' - ' .$buscarsituacao['Descricao'];
                 $stEnvioPlenaria        = $post->stEnvioPlenaria == null ? 'N' : 'S';
-				
+
 		/**** CODIGO DE READEQUACAO ****/
                 //SE O PROJETO FOR DE READEQUACAO e a DECISAO FOR DE APROVACAO - INATIVA A ANTIGA PLANILHA 'CO' e ATIVA A 'CO' READEQUADA
                 if($this->bln_readequacao == "true"){
-                    
+
                     //finaliza readequacao do projeto
                     if(!empty($this->idPedidoAlteracao) && $this->idPedidoAlteracao > 0){
                         //ReadequacaoProjetos::alterarPedido($this->idPedidoAlteracao, '2');
@@ -1327,16 +1327,16 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                         //$where = array('idPedidoAlteracao = ' => $this->idPedidoAlteracao);
                         //$rsPedidoAlteracao = $tbPedidoAlteracao->alterar($dados, $where);
                     }
-                    
+
                     //troca planilhas apenas se a decisao do componente for de aprovar a readequacao  //Se a planilha atual é SE significa que voltou da plenaria e nao entra na opcao de desativar a antiga e ativar a nova
                     if($post->decisao = 'AC' && $tpPlanilha != 'SE'){
-                        
+
                         try
                         {
                             //ATIVA PLANILHA CO READEQUADA
                             $tblPlanilhaAprovacao = new PlanilhaAprovacao();
                             $rsPlanilha_Ativa = $tblPlanilhaAprovacao->buscar(array('idPronac = ?'=>$idPronac, 'stAtivo = ?'=>'S', 'tpPlanilha=?'=>'CO')); //PLANILHA DA APROVACAO INICIAL
-                            
+
                             $arrBuscaPlanilha = array();
                             $arrBuscaPlanilha["idPronac = ? "]        = $idPronac;
                             $arrBuscaPlanilha["tpPlanilha = ? "]      = 'CO';
@@ -1345,13 +1345,13 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                             $rsPlanilha_Inativa = $tblPlanilhaAprovacao->buscar($arrBuscaPlanilha); //PLANILHA DA READEQUACAO
                             //inativa Planilha Aprovacao Inicial
                             foreach($rsPlanilha_Ativa as $planilhaI){
-                                $planilhaI->stAtivo = 'N'; 
+                                $planilhaI->stAtivo = 'N';
                                 $planilhaI->save();
                             }
                             //ativa Planilha Readequada
                             $planilha = null;
                             foreach($rsPlanilha_Inativa as $planilhaR){
-                                $planilhaR->stAtivo = 'S'; 
+                                $planilhaR->stAtivo = 'S';
                                 $planilhaR->save();
                             }
 
@@ -1477,7 +1477,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                             $planoDistribuicao = new PlanoDistribuicao();
                             $analiseaprovacao = new AnaliseAprovacao();
                             $planilhaAprovacao = new PlanilhaAprovacao();
-                            $tbPreProjeto = new PreProjeto();
+                            $tbPreProjeto = new Proposta_Model_PreProjeto();
                             //antigo modo
                             //$tblPauta = new Pauta();
                             //$buscaReadAprovacadoCnic = $tblPauta->buscar(array('IdPRONAC = ?'=>$idpronac, 'stAnalise = ?'=>"AS"));
@@ -1498,7 +1498,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 
                             $projetoAtual = $projeto->buscar(array('IdPRONAC = ?'=>$idpronac))->current()->toArray();
                             $idprojeto = $projetoAtual['idProjeto'];
-                            
+
                             $rsPreprojeto = $tbPreProjeto->buscar(array('idPreProjeto=?'=>$idprojeto))->current();
                             if(!empty($rsPreprojeto)){
                                 $stPlanoAnual = $rsPreprojeto->stPlanoAnual;
@@ -1513,11 +1513,11 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 
                             $arrWhereSomaPlanilha = array();
                             $arrWhereSomaPlanilha['idPronac = ?']=$idpronac;
-                            
+
                             //TRATANDO SOMA DE PROJETO QUANDO ESTE FOR DE READEQUACAO
                             if($this->bln_readequacao == "false"){
                                 $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
-                                $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);                                
+                                $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
                             }else{
                                 $arrWhereFontesIncentivo = $arrWhereSomaPlanilha;
                                 $arrWhereFontesIncentivo['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
@@ -1527,7 +1527,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                 $arrWhereFontesIncentivo["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
                                 $arrWhereFontesIncentivo["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
                                 $fonteincentivo = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereFontesIncentivo);
-                                
+
                                 $arrWhereOutrasFontes = $arrWhereSomaPlanilha;
                                 $arrWhereOutrasFontes['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
                                 $arrWhereOutrasFontes['tpPlanilha = ? ']='SR';
@@ -1535,35 +1535,35 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                 $arrWhereOutrasFontes['NrFonteRecurso <> ? ']='109';
                                 $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
                                 $arrWhereOutrasFontes["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
-                                $outrasfontes = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereOutrasFontes);                           
+                                $outrasfontes = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereOutrasFontes);
                             }
                             $this->view->fontesincentivo  = $fonteincentivo['soma'];
                             $this->view->outrasfontes  = $outrasfontes['soma'];
                             $this->view->valorproposta = $fonteincentivo['soma'] + $outrasfontes['soma'];
-                            
+
                             $arrWhereSomaPlanilha = array();
                             $arrWhereSomaPlanilha['idPronac = ?']=$idpronac;
                             $arrWhereSomaPlanilha['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
                             $arrWhereSomaPlanilha['tpPlanilha = ? ']=$tpPlanilha;
                             $arrWhereSomaPlanilha['NrFonteRecurso = ? ']='109';
-                            if($this->bln_readequacao == "true"){ 
+                            if($this->bln_readequacao == "true"){
                                 $arrWhereSomaPlanilha["idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
                                 $arrWhereSomaPlanilha["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
-                                $arrWhereSomaPlanilha['stAtivo = ? ']='N';     
-                            }else{ 
-                                $arrWhereSomaPlanilha['stAtivo = ? ']='S'; 
+                                $arrWhereSomaPlanilha['stAtivo = ? ']='N';
+                            }else{
+                                $arrWhereSomaPlanilha['stAtivo = ? ']='S';
                             }
-                            
+
                             //VALOR TOTAL DO PROJETO - V1
                             //antiga soma
                             //$valorProjeto = $planilhaAprovacao->somarPlanilhaAprovacao($idpronac,206, $tpPlanilha, $arrWhereReadequacao);
                             //nova soma
                             $valorProjeto = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
-                            
+
                             /**** FIM CODIGO DE READEQUACAO ****/
 
                             $this->view->totalsugerido = $valorProjeto['soma'] ? $valorProjeto['soma'] :0; //valor total do projeto (Planilha Aprovacao)
-                            
+
                             //CALCULO DOS 20% - ETAPA DIVULGACAO
                             //soma para calculo dos 20% etapada de Divulgacao
                             $arrWhereEtapa = array();
@@ -1572,18 +1572,18 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                             $arrWhereEtapa['pa.tpPlanilha = ? ']=$tpPlanilha;
                             $arrWhereEtapa['pa.NrFonteRecurso = ? ']='109';
                             $arrWhereEtapa['pa.idEtapa = ?']='3';
-                            if($this->bln_readequacao == "true"){ 
+                            if($this->bln_readequacao == "true"){
                                 $arrWhereEtapa["pa.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
                                 $arrWhereEtapa["pa.tpAcao <> ('E') OR pa.tpAcao IS NULL "]   = '(?)';
-                                $arrWhereEtapa['pa.stAtivo = ? ']='N'; 
-                            }else{ 
-                                $arrWhereEtapa['pa.stAtivo = ? ']='S'; 
+                                $arrWhereEtapa['pa.stAtivo = ? ']='N';
+                            }else{
+                                $arrWhereEtapa['pa.stAtivo = ? ']='S';
                             }
                             $arrWhereEtapa['aa.tpAnalise = ?']=$tpPlanilha;
                             $arrWhereEtapa['aa.stAvaliacao = ?']=1; // 1 = parecer favoravel, 0 = parecer nao favoravel
                             //$this->view->V2 = $valorProjetoDivulgacao['soma'];
                             $valorProjetoDivulgacao = $planilhaAprovacao->somarItensPlanilhaAprovacaoProdutosFavoraveis($arrWhereEtapa);
-                            
+
                             //CALCULO DOS 15% - CUSTOS ADMINISTRATIVOS
                             $arrWhereCustoAdm = array();
                             $arrWhereCustoAdm['idPronac = ?']        = $idpronac;
@@ -1592,79 +1592,79 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                             $arrWhereCustoAdm['idPlanilhaItem NOT IN (?)'] = array(5249, 206, 1238);//Remuneracao de captacao de recursos
                             $arrWhereCustoAdm['tpPlanilha = ? ']     = $tpPlanilha;
                             $arrWhereCustoAdm['NrFonteRecurso = ? '] ='109';
-                            if($this->bln_readequacao == "true"){ 
+                            if($this->bln_readequacao == "true"){
                                 $arrWhereCustoAdm["idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
                                 $arrWhereCustoAdm["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
-                                $arrWhereCustoAdm['stAtivo = ? ']='N'; 
-                            }else{ 
-                                $arrWhereCustoAdm['stAtivo = ? ']='S'; 
+                                $arrWhereCustoAdm['stAtivo = ? ']='N';
+                            }else{
+                                $arrWhereCustoAdm['stAtivo = ? ']='S';
                             }
                             //$this->view->V2.1 = $valoracustosadministrativos['soma'];
                             $valoracustosadministrativos = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereCustoAdm);
-                            
+
                             //CALCULO DOS 10% - REMUNERACAO PARA CAPTACAO DE RECURSO
                             $arrWhereItemCaptRecurso = array();
                             $arrWhereItemCaptRecurso['idPronac = ?']        = $idpronac;
                             $arrWhereItemCaptRecurso['idPlanilhaItem = ?']  = '5249'; //Item de Remuneracao de captacao de recursos
                             $arrWhereItemCaptRecurso['tpPlanilha = ? ']     = $tpPlanilha;
                             $arrWhereItemCaptRecurso['NrFonteRecurso = ? '] = '109';
-                            if($this->bln_readequacao == "true"){ 
+                            if($this->bln_readequacao == "true"){
                                 $arrWhereItemCaptRecurso["idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
                                 $arrWhereItemCaptRecurso["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
-                                $arrWhereItemCaptRecurso['stAtivo = ? ']='N'; 
-                            }else{ 
-                                $arrWhereItemCaptRecurso['stAtivo = ? ']='S'; 
+                                $arrWhereItemCaptRecurso['stAtivo = ? ']='N';
+                            }else{
+                                $arrWhereItemCaptRecurso['stAtivo = ? ']='S';
                             }
                             //$this->view->V2.2 = $valorItemCaptacaoRecurso['soma'];
                             $valorItemCaptacaoRecurso = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereItemCaptRecurso);
-                            
+
                             //Calcula os 20% do valor total do projeto V3
                             $porcentValorProjeto = ($valorProjeto['soma'] * 0.20);
-                            
+
                             //Calcula os 15% do valor total do projeto V3.1
                             $quinzecentoprojeto = ($valorProjeto['soma'] * 0.15);
-                            
+
                             //Calcula os 10% do valor total do projeto V3.2
                             $dezPercentValorProjeto = ($valorProjeto['soma'] * 0.10);
-                            
+
                             //Calculo do 20% -> V4
                             //Subtrai os custos da etapa divulgacao pelos 20% do projeto (V2 - V3)
                             $verificacaonegativo20porcento = $valorProjetoDivulgacao->soma - $porcentValorProjeto;
-                            
+
                             //Calculo do 15% -> V4.1
                             //Subtrai os custos administrativos pelos 15% do projeto (V2.1 - V3.1)
                             $verificacaonegativo = $valoracustosadministrativos['soma'] - $quinzecentoprojeto;
-                            
+
                             //Calculo do 10% -> V4.2
                             //Subtrai o item de captacao de recurso pelos 10% do projeto (V2.2 - V3.2)
                             $verificacaonegativo10porcento = $valorItemCaptacaoRecurso['soma'] - $dezPercentValorProjeto;
-                            
+
                             //if V4 e V4.1 maior que zero soma os dois V4
                             if($verificacaonegativo20porcento > 0 && $verificacaonegativo > 0 && $verificacaonegativo10porcento > 0){
-                            
+
                                 //V1 - (V4 + V4.1 + V4.2) = V5
                                 /*V5*/$novoValorProjeto = /*V1*/$valorProjeto['soma'] - (/*V4*/$verificacaonegativo20porcento + /*V4.1*/$verificacaonegativo + /*V4.2*/$verificacaonegativo10porcento);
-                                
+
                                 /*V6*/$vinteporcentovalorretirar = /*V5*/$novoValorProjeto * 0.20;
                                 //V2 - V6
                                 $valorretirarplanilhaEtapaDivulgacao = $valorProjetoDivulgacao->soma - $vinteporcentovalorretirar; //(correcao V2 - V6)
                                 //$this->view->verifica15porcento = $valorretirarplanilha;
                                 $this->view->valorReadequar20porcento = $valorretirarplanilhaEtapaDivulgacao;
                                 $this->view->totaldivulgacao = "true";
-                                
+
                                 /*V6.1*/$quinzecentovalorretirar = /*V5*/$novoValorProjeto * 0.15;
                                 //V2 - V6
                                 $valorretirarplanilha = $valoracustosadministrativos['soma'] - $quinzecentovalorretirar; //(correcao V2 - V6)
                                 $this->view->verifica15porcento = $valorretirarplanilha;
-                                
+
                                 /*V6.2*/$dezcentovalorretirar = /*V5*/$novoValorProjeto * 0.10;
                                 //V2 - V6
                                 $valorretirarplanilhaItemCaptacaoRecurso = $valorItemCaptacaoRecurso['soma'] - $dezcentovalorretirar; //(correcao V2 - V6)
                                 $this->view->valorReadequar10porcento = $valorretirarplanilhaItemCaptacaoRecurso;
                                 $this->view->totalcaptacaorecurso = "true";
-                                
+
                             }elseif($verificacaonegativo20porcento > 0 || $verificacaonegativo > 0 || $verificacaonegativo10porcento > 0){
-                                
+
                                 //Calculo dos 20%
                                 if($verificacaonegativo20porcento <= 0){
                                     $this->view->totaldivulgacao = "false";
@@ -1678,7 +1678,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                     $this->view->valorReadequar20porcento = $valorretirarplanilhaEtapaDivulgacao;
                                     $this->view->totaldivulgacao = "true";
                                 }
-                                
+
                                 //Calculo dos 10%
                                 if($verificacaonegativo10porcento <= 0){
                                     $this->view->totalcaptacaorecurso = "false";
@@ -1692,14 +1692,14 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                     $this->view->valorReadequar10porcento = $valorretirarplanilhaItemCaptacaoRecurso;
                                     $this->view->totalcaptacaorecurso = "true";
                                 }
-                                
+
                                 //Calculo dos 10% (complemento)
                                 $tetoCemMil = (int) '100000.00';
                                 if($valorItemCaptacaoRecurso['soma'] > $tetoCemMil){ //verfica se o valor do item de captacao de recurso é maior que R$100.000,00
                                     $this->view->totalcaptacaorecurso = "true";
                                     $this->view->valorReadequar10porcento = $valorItemCaptacaoRecurso['soma'] - $tetoCemMil;
                                 }
-                                
+
                                 //Calculo dos 15%
                                 if($valorProjeto['soma'] > 0 and $valoracustosadministrativos['soma'] < $valorProjeto['soma'])
                                 {
@@ -1716,12 +1716,12 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                 }else{
                                     $this->view->verifica15porcento = $valoracustosadministrativos['soma'];
                                 }
-                                
+
                             }else{
                                 //Calculo dos 20%
                                 $this->view->totaldivulgacao = "false";
                                 $this->view->valorReadequar20porcento = 0;
-                                
+
                                 //Calculo dos 10% (complemento)
                                 $tetoCemMil = (int) '100000.00';
                                 if($valorItemCaptacaoRecurso['soma'] > $tetoCemMil){ //verfica se o valor do item de captacao de recurso é maior que R$100.000,00
@@ -1735,7 +1735,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                 $this->view->verifica15porcento = 0;
                             }
                             //FIM - DOS CALCULO DOS 20% e 15%
-                            
+
                             $buscarPlano = $planoDistribuicao->buscar(array('idProjeto = ?'=>$projetoAtual['idProjeto'], 'stPrincipal= ?'=> 1))->current()->toArray();
                             $buscarAnaliseAp = $analiseaprovacao->buscar(array('IdPRONAC = ?'=>$idpronac, 'idProduto = ?'=>$buscarPlano['idProduto'], 'tpAnalise = ?'=>$tpAnalise));
 
@@ -1794,7 +1794,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                             $indeferidos                                = RealizarAnaliseProjetoDAO::retornaIndeferimento();
                             $this->view->indeferidos                    = $indeferidos;
                             $this->view->idpronac                       = $idpronac;
-                            
+
 			    /**** CODIGO DE READEQUACAO ****/
                             //antiga busca
                             //$buscarjustificativa = $tblParecer->buscarParecer($tpAgente,$idpronac);
@@ -1813,7 +1813,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                             else{
                                $this->view->valorJustificativa = null;
                             }
-                            
+
                             $auth = Zend_Auth::getInstance(); // pega a autenticao
                             $Usuario = new Usuario(); // objeto usuario
                             $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
@@ -1893,10 +1893,10 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 			$vlunitario    = Mascara::delMaskMoeda($post->vlunitario);
 			$dias          = $post->dias;
 			$justificativa = $post->justificativa;
-                                
+
                                 $rsPlanilhaAtual = $planilhaaprovacao->buscar(array('IdPRONAC = ?'=>$idpronac), array('dtPlanilha DESC'))->current();
                                 $tpPlanilha = (!empty($rsPlanilhaAtual) && $rsPlanilhaAtual->tpPlanilha == 'SE') ? 'SE' : 'CO';
-                                
+
                                 $auth = Zend_Auth::getInstance(); // pega a autenticacao
                                 $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
                                 $idagente = $idagente['idAgente'];
@@ -1909,7 +1909,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 					'qtDias'          => $dias,
 					'dsJustificativa' => $justificativa,
 					'idAgente'        => $idagente,
-					'stAtivo'         => 'N'); 
+					'stAtivo'         => 'N');
                                 $where = 'idPlanilhaAprovacao = '.$idPlanilha. "and TpPlanilha = '".$tpPlanilha."'";
 				$alterarPlanilha = $planilhaaprovacao->alterar($dados, $where);
 				if ($alterarPlanilha)
@@ -1926,16 +1926,16 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 			// recebe os dados via get
                                 $idpronac   = $this->_request->getParam("idpronac");
                                 $buscarprojeto = $projeto->buscar(array('IdPRONAC = ?'=>$idpronac))->current()->toArray();
-                                
+
                                 $rsPlanilhaAtual = $planilhaaprovacao->buscar(array('IdPRONAC = ?'=>$idpronac), array('dtPlanilha DESC'))->current();
                                 $tpplanilha = (!empty($rsPlanilhaAtual) && $rsPlanilhaAtual->tpPlanilha == 'SE') ? 'SE' : 'CO';
-                                
+
                                 //$buscarAnaliseConta = $planilhaaprovacao->buscarAnaliseConta($idpronac,$tpplanilha); //codigo antigo
                                 /********************************************************************************/
                                 $arrBuscaPlanilha = array();
                                 $arrBuscaPlanilha["pap.stAtivo = ? "] = 'N';
                                 $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
-                                
+
                                 $buscarplanilhaCO = $planilhaaprovacao->buscarAnaliseContaPlanilhaAprovacao($idpronac,$tpplanilha, $arrBuscaPlanilha);
                                 //xd($buscarplanilhaCO);
                                 $buscarAnaliseConta = array(); $cont = 0;
@@ -1950,19 +1950,19 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                     $buscarAnaliseConta[$cont]['idUnidade'] = $resuplanilha->idUnidade;
                                     $buscarAnaliseConta[$cont]['idEtapa'] = $resuplanilha->idEtapa;
                                     $buscarAnaliseConta[$cont]['JSComponente'] = $resuplanilha->dsJustificativa;
-                                    
+
                                     $buscarAnaliseConta[$cont]['Unidade'] = $resuplanilha->Unidade;
                                     $buscarAnaliseConta[$cont]['Item'] = $resuplanilha->Item;
                                     $buscarAnaliseConta[$cont]['Etapa'] = $resuplanilha->Etapa;
                                     $buscarAnaliseConta[$cont]['produto'] = $resuplanilha->produto;
                                     $cont++;
                                 }
-                                
+
                                 /******** Planilha aprovacao SR (Proponente - solicitada) ****************/
                                 $arrBuscaPlanilha = array();
                                 $arrBuscaPlanilha["pap.stAtivo = ? "] = 'N';
                                 $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
-                                
+
                                 $resuplanilha = null;  $cont = 0;
                                 $buscarplanilhaSR = $planilhaaprovacao->buscarAnaliseContaPlanilhaAprovacao($idpronac, 'SR', $arrBuscaPlanilha);
                                 foreach($buscarplanilhaSR as $resuplanilha){
@@ -1973,12 +1973,12 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                     $buscarAnaliseConta[$cont]['UnidadeProposta'] = $resuplanilha->Unidade;
                                     $cont++;
                                 }
-                                
+
                                 /******** Planilha aprovacao PA (Parecerista) ****************/
                                 $arrBuscaPlanilha = array();
                                 $arrBuscaPlanilha["pap.stAtivo = ? "] = 'N';
                                 $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
-                                
+
                                 $resuplanilha = null;  $cont = 0;
                                 $buscarplanilhaPA = $planilhaaprovacao->buscarAnaliseContaPlanilhaAprovacao($idpronac, 'PA', $arrBuscaPlanilha);
                                 foreach($buscarplanilhaPA as $resuplanilha){
@@ -1990,22 +1990,22 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                     $buscarAnaliseConta[$cont]['UnidadeProjeto'] = $resuplanilha->Unidade;
                                     $cont++;
                                 }
-                                
+
                                 /********************************************************************************/
-                                
+
                                 // ===== TOTAL VALOR REDUZIDO E TOTAL DE ITENS =====
                                 $itemReduzido       = false;
                                 $itemRetirado       = false;
                                 $totalValorReduzido = 0;
                                 $totalItemReduzido  = 0;
-                                
+
                                 $totalValorRetirado = 0;
                                 $totalItemRetirado  = 0;
                                 $valores['reduzido'] = array();
                                 $valores['retirado'] = array();
-                                
+
                                 foreach ($buscarAnaliseConta as $b){
-                                    
+
                                         $valorproponente = ($b['qtdSolicitado'] * $b['ocoSolicitado'] * $b['vlSolicitado']);
                                         $valorcomponente  = ($b['ocorrenciaRelator'] * $b['vlunitarioRelator'] * $b['qtdRelator']);
                                         $valorparecerista = ($b['ocoParecer'] * $b['vlParecer'] * $b['qtdParecer']);
@@ -2020,14 +2020,14 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                                 $valores['reduzido'][$totalItemReduzido]['Produto']                     = $b['produto'];
                                                 $valores['reduzido'][$totalItemReduzido]['vlreduzidoComp']              = $valorproponente - $valorcomponente ;
                                                 $valores['reduzido'][$totalItemReduzido]['VlReduzidoParecerista']       = $valorparecerista - $valorproponente;
-                                                
+
                                                 $valores['reduzido'][$totalItemReduzido]['vltotalsolicitado']           = $valorproponente;
                                                 $valores['reduzido'][$totalItemReduzido]['UnidadeProposta']             = $b['UnidadeProposta'];
                                                 $valores['reduzido'][$totalItemReduzido]['qtdSolicitado']               = $b['qtdSolicitado'];
                                                 $valores['reduzido'][$totalItemReduzido]['ocoSolicitado']               = $b['ocoSolicitado'];
                                                 $valores['reduzido'][$totalItemReduzido]['vlunitarioSolicitado']        = $b['vlSolicitado'];
                                                 $valores['reduzido'][$totalItemReduzido]['diasSolicitado']              = $b['diasSolicitado'];
-                                                
+
                                                 $valores['reduzido'][$totalItemReduzido]['idUnidade']                   = $b['idUnidade'];
                                                 $valores['reduzido'][$totalItemReduzido]['Unidade']                     = $b['Unidade'];
                                                 $valores['reduzido'][$totalItemReduzido]['diasRelator']                 = $b['diasRelator'];
@@ -2037,7 +2037,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                                 $valores['reduzido'][$totalItemReduzido]['qtdRelator']                  = $b['qtdRelator'];
                                                 $valores['reduzido'][$totalItemReduzido]['vltotalcomponente']           = $valorcomponente;
                                                 $valores['reduzido'][$totalItemReduzido]['justcomponente']              = $b['JSComponente'];
-                                                
+
                                                 $valores['reduzido'][$totalItemReduzido]['UnidadeProjeto']              = $b['UnidadeProjeto'];
                                                 $valores['reduzido'][$totalItemReduzido]['qtdParecer']                  = $b['qtdParecer'];
                                                 $valores['reduzido'][$totalItemReduzido]['ocoParecer']                  = $b['ocoParecer'];
@@ -2045,7 +2045,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                                 $valores['reduzido'][$totalItemReduzido]['vltotalparecerista']          = $valorparecerista;
                                                 $valores['reduzido'][$totalItemReduzido]['vlunitarioparecerista']       = $b['vlParecer'];
                                                 $valores['reduzido'][$totalItemReduzido]['justparecerista']             = $b['JSParecerista'];
-                                                
+
                                                 $itemReduzido = true;
                                                 $reduzido = $valorproponente - $valorcomponente;
                                                 $totalValorReduzido += (float) $reduzido;
@@ -2053,7 +2053,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                         }
                                         if ($valorcomponente == 0 and $valorproponente > 0)
                                         {
-                                            
+
                                                 $valores['retirado'][$totalItemRetirado]['idPlanilhaAprovacao']         = $b['idPlanilhaAprovacao'];
                                                 $valores['retirado'][$totalItemRetirado]['nrFonteRecurso']              = $b['nrFonteRecurso'];
                                                 $valores['retirado'][$totalItemRetirado]['idProduto']                   = $b['idProduto'];
@@ -2063,14 +2063,14 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                                 $valores['retirado'][$totalItemRetirado]['Produto']                     = $b['produto'];
                                                 $valores['retirado'][$totalItemRetirado]['vlretiradoComp']              = $valorproponente - $valorcomponente ;
                                                 $valores['retirado'][$totalItemRetirado]['VlretiradoParecerista']       = $valorparecerista - $valorproponente;
-                                                
+
                                                 $valores['retirado'][$totalItemRetirado]['vltotalsolicitado']           = $valorproponente;
                                                 $valores['retirado'][$totalItemRetirado]['UnidadeProposta']             = $b['UnidadeProposta'];
                                                 $valores['retirado'][$totalItemRetirado]['qtdSolicitado']               = $b['qtdSolicitado'];
                                                 $valores['retirado'][$totalItemRetirado]['ocoSolicitado']               = $b['ocoSolicitado'];
                                                 $valores['retirado'][$totalItemRetirado]['vlunitarioSolicitado']        = $b['vlSolicitado'];
                                                 $valores['retirado'][$totalItemRetirado]['diasSolicitado']              = $b['diasSolicitado'];
-                                                
+
                                                 $valores['retirado'][$totalItemRetirado]['idUnidade']                   = $b['idUnidade'];
                                                 $valores['retirado'][$totalItemRetirado]['Unidade']                     = $b['Unidade'];
                                                 $valores['retirado'][$totalItemRetirado]['diasRelator']                 = $b['diasRelator'];
@@ -2080,7 +2080,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                                 $valores['retirado'][$totalItemRetirado]['diasRelator']                 = $b['diasRelator'];
                                                 $valores['retirado'][$totalItemRetirado]['vltotalcomponente']           = $valorcomponente;
                                                 $valores['retirado'][$totalItemRetirado]['justcomponente']              = $b['JSComponente'];
-                                                
+
                                                 $valores['retirado'][$totalItemRetirado]['UnidadeProjeto']              = $b['UnidadeProjeto'];
                                                 $valores['retirado'][$totalItemRetirado]['qtdParecer']                  = $b['qtdParecer'];
                                                 $valores['retirado'][$totalItemRetirado]['ocoParecer']                  = $b['ocoParecer'];
@@ -2088,7 +2088,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                                 $valores['retirado'][$totalItemRetirado]['vltotalparecerista']          = $valorparecerista;
                                                 $valores['retirado'][$totalItemRetirado]['vlunitarioparecerista']       = $b['vlParecer'];
                                                 $valores['retirado'][$totalItemRetirado]['justparecerista']             = $b['JSParecerista'];
-                                            
+
                                                 $itemRetirado = true;
                                                 $retirado = $valorproponente - $valorcomponente;
                                                 $totalValorRetirado += (float) $retirado;
@@ -2098,7 +2098,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                         $buscarPlanilhaUnidade = PlanilhaUnidadeDAO::buscar();
                                         //$buscarsomaaprovacao = $planilhaaprovacao->somarPlanilhaAprovacao($idpronac, 206 , $tpplanilha);
                                         //$buscarsomaproposta = $tblPlanilhaProposta->somarPlanilhaProposta($buscarprojeto['idProjeto']);
-                                        
+
                                         //NOVO MODELO DE SOMA
                                         /**********************************/
                                         $arrWhereSomaPlanilha = array();
@@ -2115,7 +2115,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                         $arrWhereSomaPlanilha['tpPlanilha = ? ']='SR';
                                         $buscarsomaproposta = $planilhaaprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
                                         /************************************/
-                                         
+
                                         $this->view->planilhaUnidade         = $buscarPlanilhaUnidade;
 					$this->view->analiseReduzido         = $valores['reduzido'];
 					$this->view->analiseRetirado         = $valores['retirado'];
@@ -2128,7 +2128,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 					$this->view->totItemRed      = $totalItemReduzido;
 					$this->view->totValRet       = $totalValorRetirado;
 					$this->view->totItemRet      = $totalItemRetirado;
-                                        
+
                                         $this->view->totalproponente = $buscarsomaproposta['soma'];
                                         $this->view->totalcomponente = $buscarsomaaprovacao['soma'];
 
@@ -2163,7 +2163,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                                 }
 		} // fecha else
 	} // fecha Metodo analisedecontaAction()
-        
+
         /**
 	 * Metodo com a tabela de analise de custos - Projetos em Readequacao
 	 * @access public
@@ -2203,7 +2203,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                             $rsPlanilhaAtual = $tblPlanilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idPronac), array('dtPlanilha DESC'))->current();
                             $tpPlanilha = (!empty($rsPlanilhaAtual) && $rsPlanilhaAtual->tpPlanilha == 'SE') ? 'SE' : 'CO';
                             $this->view->tpPlanilha = $tpPlanilha;
-                            
+
                             $dados = array(
                                     'tpPlanilha'      => $tpPlanilha,
                                     'dtPlanilha'      => new Zend_Db_Expr('GETDATE()'),
@@ -2218,34 +2218,34 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 
                             $where = 'idPlanilhaAprovacao = '.$idplanilhaaprovacao;
                             $alterarPlanilha = $tblPlanilhaAprovacao->alterar($dados, $where);
-                            
+
                             //ATUALIZA ETAPA DO ITEM CASO TENHA SIDO ENVIADA
                             if(!empty($idEtapa)){
-                                
+
                                 //recupera informacoes do item de custo que esta sendo alterado
                                 $rsPlanCO = $tblPlanilhaAprovacao->buscar(array('idPlanilhaAprovacao = ? ' => $idplanilhaaprovacao))->current();
-                                
+
                                 //recupera item de custo correspondente na planilha PA
                                 $rsPlanPA = $tblPlanilhaAprovacao->buscar(array('idPlanilhaAprovacao = ? ' => $rsPlanCO->idPlanilhaAprovacaoPai))->current();
-                                
+
                                 //recupera item de custo correspondente na planilha SR
                                 $rsPlanSR = $tblPlanilhaAprovacao->buscar(array('idPlanilhaAprovacao = ? ' => $rsPlanPA->idPlanilhaAprovacaoPai))->current();
-                                
+
                                 //etapa a ser atualizada
                                 $dados = array('idEtapa' => $idEtapa);
-                                
+
                                 //ATUALIZA ETAPA - PLANILHA CO ou SE
                                 $where = 'idPlanilhaAprovacao = '.$idplanilhaaprovacao;
                                 $tblPlanilhaAprovacao->alterar($dados, $where);
-                                
+
                                 //ATUALIZA ETAPA - PLANILHA PA
                                 $wherePA = 'idPlanilhaAprovacao = '.$rsPlanPA->idPlanilhaAprovacao;
                                 $tblPlanilhaAprovacao->alterar($dados, $wherePA);
-                                
+
                                 //ATUALIZA ETAPA - PLANILHA SR
                                 $whereSR = 'idPlanilhaAprovacao = '.$rsPlanSR->idPlanilhaAprovacao;
                                 $tblPlanilhaAprovacao->alterar($dados, $whereSR);
-                                
+
                             }
 
                             if ($alterarPlanilha)
@@ -2270,7 +2270,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                         $tblPlanilhaProposta = new PlanilhaProposta();
                         $tblPlanilhaProjeto = new PlanilhaProjeto();
                         $tblProjetos = new Projetos();
-                        
+
                         $rsPlanilhaAtual = $tblPlanilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idpronac), array('dtPlanilha DESC'))->current();
                         $tipoplanilha = (!empty($rsPlanilhaAtual) && $rsPlanilhaAtual->tpPlanilha == 'SE') ? 'SE' : 'CO';
                         $this->view->tpPlanilha = $tipoplanilha;
@@ -2280,11 +2280,11 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
 
                         $rsProdutoPrincipal = $tblPlanoDistribuicao->buscar(array('idProjeto=?'=>$idPreProjeto, 'stPrincipal=?'=>1, 'stPlanoDistribuicaoProduto = ?'=>1))->current();
                         $rsAnaliseProdutoPrincipal = $tblAnaliseAprovacao->buscar(array('idPronac=?'=>$idpronac, 'idProduto=?'=>$rsProdutoPrincipal->idProduto, 'tpAnalise=?'=>$tipoplanilha))->current();
-                        
+
                         $arrBuscaPlanilha = array();
                         $arrBuscaPlanilha["pap.stAtivo = ? "] = 'N';
                         $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
-                        
+
                         $buscarplanilhaCO = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, $tipoplanilha, $arrBuscaPlanilha);
                         //xd($buscarplanilhaCO);
 
@@ -2329,7 +2329,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                         $arrBuscaPlanilha = array();
                         $arrBuscaPlanilha["pap.stAtivo = ? "] = 'N';
                         $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
-                        
+
                         $resuplanilha = null; $count = 0;
                         $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'SR', $arrBuscaPlanilha);
                         //xd($buscarplanilhaSR);
@@ -2355,7 +2355,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                         $arrBuscaPlanilha = array();
                         $arrBuscaPlanilha["pap.stAtivo = ? "] = 'N';
                         $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
-                        
+
                         $resuplanilha = null; $count = 0;
                         $buscarplanilhaPA = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'PA', $arrBuscaPlanilha);
                         //xd($buscarplanilhaSR);
@@ -2370,10 +2370,10 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                 $planilhaaprovacao[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa.' - '.$resuplanilha->Etapa][$resuplanilha->UF.' - '.$resuplanilha->Cidade][$count]['justificativaparecerista'] = $resuplanilha->dsJustificativa;
                             $count++;
                         }
-                                    
+
                          $buscarprojeto = $tblProjetos->buscar(array('IdPRONAC = ?'=>$idpronac))->current();
                          //$buscarsomaaprovacao = $tblPlanilhaAprovacao->somarPlanilhaAprovacao($idpronac, 206 , $tipoplanilha, array('PAP.stAtivo=?'=>'N'));
-                         
+
                          $arrWhereSomaPlanilha = array();
                          $arrWhereSomaPlanilha['idPronac = ?']=$idpronac;
                          $arrWhereSomaPlanilha['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
@@ -2397,28 +2397,28 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                          $this->view->totalparecerista = $buscarsomaprojeto['soma'];
                          $this->view->totalproponente  = $buscarsomaproposta['soma'];
                          $this->view->produtosFavoraveis  = $arrProdutosFavoraveis;
-                         
+
                          $this->montaTela("realizaranaliseprojeto/analisedecustos.phtml", array());
-                         
+
 		} // fecha else
 	} // fecha metodo analisedecustosAction()
-        
+
         public function formReintegrarEtapaAction()
 	{
             $this->_helper->layout->disableLayout(); // desabilita o layout
             header("Content-Type: text/html; charset=ISO-8859-1");
-            
+
             $post = Zend_Registry::get('post');
             $idPronac = $this->_request->getParam("idPronac");
             $idProduto = $this->_request->getParam("idProduto");
             $idEtapa = $this->_request->getParam("idEtapa");
             $tpPlanilha = $this->_request->getParam("tpPlanilha");
             $codEtapa = $this->_request->getParam("codEtapa");
-            
+
             $tblPlanilhaAprovacao = new PlanilhaAprovacao();
             $tblPlanilhaProposta = new PlanilhaProposta();
             $tblPlanilhaProjeto = new PlanilhaProjeto();
-                
+
             $arrBusca = array();
             $arrBusca['PAP.idProduto = ?'] = $idProduto;
             $arrBusca['PAP.idEtapa = ?'] = $idEtapa;
@@ -2429,7 +2429,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
             $tblProjetos = new Projetos();
             $rsProjeto = $tblProjetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
             $this->view->dadosProjeto = $rsProjeto;
-            
+
             if($this->bln_readequacao != "true") //projeto de analise inicial
             {
                 /*==== ETAPA - TOTAL SOLICITADO ====*/
@@ -2453,9 +2453,9 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                 $arrWhereSomaPlanilha['NrFonteRecurso = ? '] = '109';
                 $arrWhereSomaPlanilha['stAtivo = ? ']        = 'S';
                 $rsTotalComponente = $tblPlanilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
-                
+
             }else{ //projeto de readequacao
-                
+
                 $arrWhereSomaPlanilha = array();
                 $arrWhereSomaPlanilha["idPronac = ?"]         = $idPronac;
                 $arrWhereSomaPlanilha["tpPlanilha = ? "]      = $tpPlanilha;
@@ -2466,32 +2466,32 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                 $arrWhereSomaPlanilha["stAtivo = ? "]         = 'N';
                 $arrWhereSomaPlanilha["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idPronac}')");
                 $arrWhereSomaPlanilha["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
-                
+
                 /*==== ETAPA - TOTAL COMPONENTE =====*/
                 $rsTotalComponente = $tblPlanilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
-                
+
                 /*==== ETAPA - TOTAL SOLICITADO ====*/
                 $arrWhereSomaPlanilha['tpPlanilha = ? ']='SR';
                 $rsTotalSolicitado = $tblPlanilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
-                
+
                 /*==== ETAPA - TOTAL PARECERISTA ====*/
                 $arrWhereSomaPlanilha['tpPlanilha = ? ']='PA';
                 $rsTotalParecerista = $tblPlanilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
-                
+
             }
-            
+
             $this->view->totalEtapaSolicitado  = $rsTotalSolicitado['soma'];
             $this->view->totalEtapaParecerista = $rsTotalParecerista['soma'];
             $this->view->totalEtapaComponente  = $rsTotalComponente['soma'];
-            
+
             $this->view->idProduto  = $idProduto;
             $this->view->idEtapa    = $idEtapa;
             $this->view->tpPlanilha = $tpPlanilha;
             $this->view->codEtapa   = $codEtapa;
         }
-        
+
         function reintegrarValoresEtapaAction(){
-            
+
             $post = Zend_Registry::get('post');
             $idPronac   = $this->_request->getParam("idPronac");
             $idProduto  = $this->_request->getParam("idProduto");
@@ -2500,18 +2500,18 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
             $etapaAReintegrar = $this->_request->getParam("etapaAReintegrar");
             $codEtapa   = $this->_request->getParam("codEtapa");
             $justificativa = $this->_request->getParam("justificativa");
-            
+
             $tblPlanilhaAprovacao = new PlanilhaAprovacao();
-            
+
              if($this->bln_readequacao != "true"){
                  $url = "analisedecustos";
              }else{
                  $url = "analisedecustosreadequacao";
              }
-            
+
             try{
-                
-                
+
+
                 if($this->bln_readequacao != "true") //projeto de ANALISE INICIAL
                 {
                     $arrBusca = array();
@@ -2519,9 +2519,9 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                     $arrBusca['PAP.idEtapa = ?'] = $idEtapa;
                     $arrBusca['PAP.stAtivo = ?'] = 'S';
                     $rsPlanilha = $tblPlanilhaAprovacao->buscarAnaliseCustos($idPronac, $tpPlanilha, $arrBusca);
-                    
+
                     foreach($rsPlanilha as $planilha){
-                    
+
                         //reintegra valos do proponente (Solicitado)
                         if($etapaAReintegrar == "solicitado"){
 
@@ -2548,24 +2548,24 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                         $where.= " AND idPlanilhaAprovacao = '{$planilha->idPlanilhaAprovacao}'";
                         $tblPlanilhaAprovacao->alterar($dados, $where);
                     }
-                    
+
                 }else{ //projeto de READEQUACAO
-                    
+
                     $arrBusca = array();
                     $arrBusca['PAP.idProduto = ?'] = $idProduto;
                     $arrBusca['PAP.idEtapa = ?'] = $idEtapa;
                     $arrBusca['PAP.stAtivo = ?'] = 'N';
                     $arrBusca['PAP.idPedidoAlteracao = (?)'] = new Zend_Db_Expr('(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = PAP.IdPRONAC)');
                     $rsPlanilha = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idPronac, $tpPlanilha, $arrBusca);
-                    
+
                     foreach($rsPlanilha as $planilha){
-                            
+
                         //recupera item de custo correspondente na planilha PA
                         $rsPlanPA = $tblPlanilhaAprovacao->buscar(array('idPlanilhaAprovacao = ? ' => $planilha->idPlanilhaAprovacaoPai))->current();
-                        
+
                         //recupera item de custo correspondente na planilha SR
                         $rsPlanSR = $tblPlanilhaAprovacao->buscar(array('idPlanilhaAprovacao = ? ' => $rsPlanPA->idPlanilhaAprovacaoPai))->current();
-                    
+
                         //reintegra valores do proponente (Solicitado)
                         if($etapaAReintegrar == "solicitado"){
 
@@ -2575,7 +2575,7 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                            'vlUnitario'      => $rsPlanSR->vlUnitario,
                                            'dsJustificativa' => $justificativa);
                         }
-                        
+
                         //reintegra valos do parecerista
                         if($etapaAReintegrar == "parecerista"){
 
@@ -2585,19 +2585,19 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                                                'vlUnitario'      => $rsPlanPA->vlUnitario,
                                                'dsJustificativa' => $justificativa);
                         }
-                        
+
                         $where = "IdPRONAC = '{$idPronac}'";
                         $where.= " AND idProduto = '{$idProduto}'";
                         $where.= " AND idEtapa   = '{$idEtapa}'";
                         $where.= " AND tpPlanilha = '{$tpPlanilha}'";
                         $where.= " AND idPlanilhaAprovacao = '{$planilha->idPlanilhaAprovacao}'";
                         $tblPlanilhaAprovacao->alterar($dados, $where);
-                        
+
                     }//feach foreach (planilha)
                 }
-                
+
                 parent::message("Etapa reintegrada com sucesso!", "realizaranaliseprojeto/".$url."/idpronac/".$idPronac."/?ETP=".$codEtapa, "CONFIRM");
-                
+
             } // fecha try
             catch (Exception $e)
             {
@@ -2605,16 +2605,16 @@ class RealizarAnaliseProjetoController extends GenericControllerNew
                 parent::message("Erro ao efetuar altera&ccedil;&atilde;o! ".$e->getMessage(), "realizaranaliseprojeto/".$url."/idpronac/".$idPronac, "ERROR");
             }
         }
-        
+
         public function recuperarEtapasDoItemAction(){
-            
+
             $post = Zend_Registry::get('post');
             $this->_helper->layout->disableLayout(); // desabilita o layout
             $this->_helper->viewRenderer->setNoRender(true);
             //header("Content-Type: text/html; charset=ISO-8859-1");
             $idProduto = $post->idProduto;
             $idItem    = $post->idItem;
-            
+
             $arrEtapas = array();
             $tbItensXPlanXProduto = new tbItensPlanilhaProduto();
             $arrBusca = array();

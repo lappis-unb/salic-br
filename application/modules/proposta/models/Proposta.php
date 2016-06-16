@@ -6,7 +6,7 @@
  * @package Webdav
  * @author  wouerner <wouerner@gmail.com>
  */
-class Proposta extends GenericModel
+class Proposta_Model_Proposta extends GenericModel
 {
     protected $_banco = "SAC";
     protected $_name = "PreProjeto";

@@ -103,7 +103,7 @@ class ProcuracaoController extends GenericControllerNew {
     {
     	$this->_helper->layout->disableLayout();
 
-    	$propostas = new PreProjeto();
+    	$propostas = new Proposta_Model_PreProjeto();
     	$whereProjetos['pp.idAgente = ?'] 			=  $this->_request->getParam("idProponente");//$this->idAgente;
     	$whereProjetos['pr.idProjeto IS NOT NULL'] 	=  '';
     	$listaProjetos = $propostas->buscarPropostaProjetos($whereProjetos);
@@ -402,7 +402,7 @@ class ProcuracaoController extends GenericControllerNew {
         $vinculoPropostaDAO     = new tbVinculoPropostaResponsavelProjeto();
         $tbvinculoDAO 		= new TbVinculo();
         $procuracaoDAO 		= new Procuracao();
-        $preProjetoDAO 		= new PreProjeto();
+        $preProjetoDAO 		= new Proposta_Model_PreProjeto();
 
         $responsavel   		= $this->_request->getParam("responsavel");
         $idDocumento   		= $this->_request->getParam("idDocumento");

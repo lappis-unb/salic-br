@@ -74,7 +74,7 @@ class Proposta_DiligenciarController extends GenericControllerNew {
     {
         $verificacaodao     = new Verificacao();
         $Projetosdao        = new Projetos();
-        $PreProjetodao      = new PreProjeto();
+        $PreProjetodao      = new Proposta_Model_Preprojeto();
         $diligenciaDAO      = new Diligencia();
         $post               = Zend_Registry::get('post');
 
@@ -129,7 +129,7 @@ class Proposta_DiligenciarController extends GenericControllerNew {
     {
         $verificacaodao         = new Verificacao();
         $Projetosdao            = new Projetos();
-        $PreProjetodao          = new PreProjeto();
+        $PreProjetodao          = new Proposta_Model_Preprojeto();
         $DocumentosExigidosDao  = new DocumentosExigidos();
 
         $post = Zend_Registry::get('post');
@@ -189,7 +189,7 @@ class Proposta_DiligenciarController extends GenericControllerNew {
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $verificacaodao         = new Verificacao();
         $Projetosdao            = new Projetos();
-        $PreProjetodao          = new PreProjeto();
+        $PreProjetodao          = new Proposta_Model_Preprojeto();
         $DocumentosExigidosDao  = new DocumentosExigidos();
 
         $post = Zend_Registry::get('get');
@@ -300,7 +300,7 @@ class Proposta_DiligenciarController extends GenericControllerNew {
 
         $verificacaodao         = new Verificacao();
         $Projetosdao            = new Projetos();
-        $PreProjetodao          = new PreProjeto();
+        $PreProjetodao          = new Proposta_Model_Preprojeto();
         $DocumentosExigidosDao  = new DocumentosExigidos();
 
         //xd($post);
@@ -377,7 +377,7 @@ class Proposta_DiligenciarController extends GenericControllerNew {
         //$this->operacoesDiligencia();
         //$post                     = Zend_Registry::get('post');
         $Projetosdao                = new Projetos();
-        $PreProjetodao              = new PreProjeto();
+        $PreProjetodao              = new Proposta_Model_Preprojeto();
         //$dao                      = new DiligenciarDao();
         //$this->view->idPronac     = 118389;
         $this->view->idPronac       = $this->idPronac;
@@ -407,7 +407,7 @@ class Proposta_DiligenciarController extends GenericControllerNew {
     public function listardiligenciaanalistaAction()
     {
         $Projetosdao        = new Projetos();
-        $PreProjetodao      = new PreProjeto();
+        $PreProjetodao      = new Proposta_Model_Preprojeto();
 
         $this->view->idPronac           = $this->idPronac;
         $this->view->idPreProjeto       = $this->idPreProjeto;
@@ -488,7 +488,7 @@ class Proposta_DiligenciarController extends GenericControllerNew {
         $post = Zend_Registry::get('post');
         $diligenciaDAO = new Diligencia();
         $AvaliacaoPropostaDAO = new AvaliacaoProposta();
-        $tblPreProjeto = new PreProjeto();
+        $tblPreProjeto = new Proposta_Model_Preprojeto();
         $tblProjeto = new Projetos();
 
         $idArquivo = '';
@@ -679,7 +679,7 @@ class Proposta_DiligenciarController extends GenericControllerNew {
         $diligenciaDAO          = new Diligencia();
         $ProjetoDAO             = new Projetos();
         $AvaliacaoPropostaDAO   = new AvaliacaoProposta();
-        $PreProjetoDAO          = new PreProjeto();
+        $PreProjetoDAO          = new Proposta_Model_Preprojeto();
         $verificacaodao         = new Verificacao();
         $auth                   = Zend_Auth::getInstance();
 
@@ -869,7 +869,7 @@ class Proposta_DiligenciarController extends GenericControllerNew {
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $verificacaodao         = new Verificacao();
         $Projetosdao            = new Projetos();
-        $PreProjetodao          = new PreProjeto();
+        $PreProjetodao          = new Proposta_Model_Preprojeto();
         $DocumentosExigidosDao  = new DocumentosExigidos();
 
         $post = Zend_Registry::get('post');
@@ -1011,7 +1011,7 @@ class Proposta_DiligenciarController extends GenericControllerNew {
 	public function listardiligenciaadmissibilidadeAction()
 	{
 		$Projetosdao   = new Projetos();
-		$PreProjetodao = new PreProjeto();
+		$PreProjetodao = new Proposta_Model_Preprojeto();
 
 		ini_set('memory_limit', '-1');
 

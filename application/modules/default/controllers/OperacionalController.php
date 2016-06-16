@@ -1395,7 +1395,7 @@ class OperacionalController extends GenericControllerNew {
 		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "x1.DtEnvio", "dtEnvio_Final", $arrBusca);
 
 		//instanciando modelo referente a tabela PreProjeto
-		$tbl = new Proposta();
+		$tbl = new Proposta_Model_Proposta();
 
 		//pegando o total de registros na tabela, considerando os filtros passados
 		$total = $tbl->propostasPorEdital($arrBusca, array(), null, null, true);

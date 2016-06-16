@@ -763,7 +763,7 @@ class ReadequacaoController extends GenericControllerNew
                 $this->Produto                         = new Produto();
                 $this->Area                            = new Area();
                 $this->Verificacao                     = new Verificacao();
-                $this->PreProjeto                      = new PreProjeto();
+                $this->PreProjeto                      = new Proposta_Model_PreProjeto();
                 $this->tbPlanoDistribuicao             = new tbPlanoDistribuicao();
                 $this->tbPedidoAlteracaoXTipoAlteracao = new tbPedidoAlteracaoXTipoAlteracao();
                 $this->tbPedidoAltProjetoXArquivo      = new tbPedidoAltProjetoXArquivo();
@@ -982,7 +982,7 @@ class ReadequacaoController extends GenericControllerNew
 			$this->verificarPermissaoAcesso(false, true, false);
 
 			// objetos utilizados
-			$this->PreProjeto                      = new PreProjeto();
+			$this->PreProjeto                      = new Proposta_Model_PreProjeto();
 			$this->tbProposta                      = new tbProposta();
 			$this->tbPedidoAlteracaoXTipoAlteracao = new tbPedidoAlteracaoXTipoAlteracao();
 			$this->tbPedidoAltProjetoXArquivo      = new tbPedidoAltProjetoXArquivo();
@@ -1109,7 +1109,7 @@ class ReadequacaoController extends GenericControllerNew
 			// objetos utilizados
 			$this->Pais                            = new Pais();
 			$this->Uf                              = new Uf();
-			$this->PreProjeto                      = new PreProjeto();
+			$this->PreProjeto                      = new Proposta_Model_PreProjeto();
 			$this->tbAbrangencia                   = new tbAbrangencia();
 			$this->tbPedidoAlteracaoXTipoAlteracao = new tbPedidoAlteracaoXTipoAlteracao();
 			$this->tbPedidoAltProjetoXArquivo      = new tbPedidoAltProjetoXArquivo();
@@ -1270,7 +1270,7 @@ class ReadequacaoController extends GenericControllerNew
 			$this->verificarPermissaoAcesso(false, true, false);
 
 			// objetos utilizados
-			$this->PreProjeto                      = new PreProjeto();
+			$this->PreProjeto                      = new Proposta_Model_PreProjeto();
 			$this->tbProposta                      = new tbProposta();
 			$this->tbPedidoAlteracaoXTipoAlteracao = new tbPedidoAlteracaoXTipoAlteracao();
 			$this->tbPedidoAltProjetoXArquivo      = new tbPedidoAltProjetoXArquivo();
@@ -1653,7 +1653,7 @@ class ReadequacaoController extends GenericControllerNew
 			$this->verificarPermissaoAcesso(false, true, false);
 
 			// objetos utilizados
-			$this->PreProjeto                      = new PreProjeto();
+			$this->PreProjeto                      = new Proposta_Model_PreProjeto();
 			$this->tbProposta                      = new tbProposta();
 			$this->tbPedidoAlteracaoXTipoAlteracao = new tbPedidoAlteracaoXTipoAlteracao();
 			$this->tbPedidoAltProjetoXArquivo      = new tbPedidoAltProjetoXArquivo();

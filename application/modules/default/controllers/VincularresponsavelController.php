@@ -131,7 +131,7 @@ class VincularresponsavelController extends GenericControllerNew {
         $this->_helper->layout->disableLayout();
 
         $v 				= new TbVinculo();
-        $pp 			= new PreProjeto();
+        $pp 			= new Proposta_Model_PreProjeto();
         $vprp 			= new tbVinculoPropostaResponsavelProjeto();
         $emailDAO 		= new EmailDAO();
         $internetDAO 	= new Internet();
@@ -292,7 +292,7 @@ class VincularresponsavelController extends GenericControllerNew {
     {
     	$tbVinculo = new TbVinculo();
         $tbVinculoProposta = new tbVinculoPropostaResponsavelProjeto();
-        $PreProjetoDAO = new PreProjeto();
+        $PreProjetoDAO = new Proposta_Model_PreProjeto();
 
         $idVinculo = $this->_request->getParam("idVinculo");
         $siVinculo = $this->_request->getParam("siVinculo");
@@ -378,7 +378,7 @@ class VincularresponsavelController extends GenericControllerNew {
     public function trocarproponenteAction()
     {
     	$tbVinculoPropostaDAO 	= new tbVinculoPropostaResponsavelProjeto();
-    	$PreProjetoDAO 			= new PreProjeto();
+    	$PreProjetoDAO 			= new Proposta_Model_PreProjeto();
 
     	$dadosPropronente 		= $this->_request->getParam("propronente");
 
@@ -436,7 +436,7 @@ class VincularresponsavelController extends GenericControllerNew {
          */
         public function vincularpropostasAction() {
             $tbVinculoPropostaDAO = new tbVinculoPropostaResponsavelProjeto();
-            $PreProjetoDAO = new PreProjeto();
+            $PreProjetoDAO = new Proposta_Model_PreProjeto();
 
             $opcaovinculacao = $this->_request->getParam("opcaovinculacao");
             $idPreProjeto = $this->_request->getParam("propostas");
@@ -483,7 +483,7 @@ class VincularresponsavelController extends GenericControllerNew {
     public function vincularprojetosAction()
     {
     	$tbVinculoPropostaDAO 	= new tbVinculoPropostaResponsavelProjeto();
-    	$PreProjetoDAO 			= new PreProjeto();
+    	$PreProjetoDAO 			= new Proposta_Model_PreProjeto();
 
     	$idPreProjeto			= $this->_request->getParam("propostas");
 		$idResponsavel 			= $this->idResponsavel;

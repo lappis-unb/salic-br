@@ -278,7 +278,7 @@ class VerProjetosController extends GenericControllerNew {
                     $arrMandatos = array();
 
                     if(!empty($this->idPreProjeto)){
-                        $preProjeto = new PreProjeto();
+                        $preProjeto = new Proposta_Model_PreProjeto();
                         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
                         $idEmpresa = $Empresa->idAgente;
 
@@ -596,7 +596,7 @@ class VerProjetosController extends GenericControllerNew {
 
             if(is_object($rsProjeto) && count($rsProjeto) > 0)
             {
-                $tblProposta = new Proposta();
+                $tblProposta = new Proposta_Model_Proposta();
                 $rsProposta = $tblProposta->buscar(array('idPreProjeto=?'=>$rsProjeto->idProjeto))->current();
                 $this->view->proposta = $rsProposta;
 //                xd($rsProposta);
@@ -671,7 +671,7 @@ class VerProjetosController extends GenericControllerNew {
                     $arrMandatos = array();
 
                     if(!empty($this->idPreProjeto)){
-                        $preProjeto = new PreProjeto();
+                        $preProjeto = new Proposta_Model_PreProjeto();
                         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
                         $idEmpresa = $Empresa->idAgente;
 
@@ -828,7 +828,7 @@ class VerProjetosController extends GenericControllerNew {
 
             // objetos
             $Projetos      = new Projetos();
-            $PreProjeto    = new PreProjeto();
+            $PreProjeto    = new Proposta_Model_PreProjeto();
             $tbAbrangencia = new tbAbrangencia();
 
             // busca os dados aprovados do proponente e do nome do projeto
@@ -3845,7 +3845,7 @@ class VerProjetosController extends GenericControllerNew {
 
         if(!empty($idPronac)){
             $tblProjeto = new Projetos();
-            $tblPreProjeto = new PreProjeto();
+            $tblPreProjeto = new Proposta_Model_PreProjeto();
             $projeto = $tblProjeto->buscar(array('IdPRONAC = ?' => $idPronac))->current();
             $this->view->projeto = $projeto;
 
@@ -3869,7 +3869,7 @@ class VerProjetosController extends GenericControllerNew {
         if(!empty($idPronac) && !empty($idDiligencia))
         {
             $Projetosdao        = new Projetos();
-            $PreProjetodao      = new PreProjeto();
+            $PreProjetodao      = new Proposta_Model_PreProjeto();
             $DocumentosExigidosDao  = new DocumentosExigidos();
 
             if (!empty($idDiligencia) && empty($idDiligenciaPreProjeto)) {
@@ -3983,7 +3983,7 @@ class VerProjetosController extends GenericControllerNew {
                         if(in_array('dadoscomplementares',$arrConteudoImpressao))
                         {
                             //DADOS COMPLEMENTARES
-                            $tblProposta = new Proposta();
+                            $tblProposta = new Proposta_Model_Proposta();
                             $rsProposta = $tblProposta->buscar(array('idPreProjeto=?'=>$idPreProjeto))->current();
                             $this->view->proposta = $rsProposta;
                         }
@@ -4064,7 +4064,7 @@ class VerProjetosController extends GenericControllerNew {
                    }
 
                     //DILIGENCIAS
-                    $tblPreProjeto = new PreProjeto();
+                    $tblPreProjeto = new Proposta_Model_PreProjeto();
                     if(in_array('diligencias',$arrConteudoImpressao))
                     {
                         if(isset($_POST['diligenciasProposta']) && !empty($_POST['diligenciasProposta'])){
@@ -4903,7 +4903,7 @@ class VerProjetosController extends GenericControllerNew {
                         $this->view->itensGeral = AnalisarPropostaDAO::buscarGeral($idPreProjeto);
 
                         //DADOS COMPLEMENTARES
-                        $tblProposta = new Proposta();
+                        $tblProposta = new Proposta_Model_Proposta();
                         $rsProposta = $tblProposta->buscar(array('idPreProjeto=?'=>$idPreProjeto))->current();
                         $this->view->proposta = $rsProposta;
                     }
@@ -4966,7 +4966,7 @@ class VerProjetosController extends GenericControllerNew {
                         }
 
                         //DILIGENCIAS
-                        $tblPreProjeto      = new PreProjeto();
+                        $tblPreProjeto      = new Proposta_Model_PreProjeto();
                         if(!empty($idPreProjeto)){
                             $this->view->diligenciasProposta = $tblPreProjeto->listarDiligenciasPreProjeto(array('pre.idPreProjeto = ?' => $idPreProjeto,'aval.ConformidadeOK = ? '=>0));
                         }

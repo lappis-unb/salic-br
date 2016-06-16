@@ -1,9 +1,9 @@
-<?php 
+<?php
 
 class VotarProjetoCulturalController extends GenericControllerNew {
 
     private $bln_readequacao = "false";
-    
+
     /**
      * Reescreve o metodo init()
      * @access public
@@ -41,10 +41,10 @@ class VotarProjetoCulturalController extends GenericControllerNew {
         }
 
         parent::init(); // chama o init() do pai GenericControllerNew
-        
+
 		/**** CODIGO DE READEQUACAO ****/
         $this->view->bln_readequacao = "false";
-                
+
         $idpronac = null;
         $idpronac = $this->_request->getParam("idpronac");
         //VERIFICA SE O PROJETO ESTA NA FASE DE READEQUACAO
@@ -55,7 +55,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
             $arrBusca['pa.stPedidoAlteracao = ?'] = 'I'; //pedido enviado pelo proponente
             $arrBusca['pa.siVerificacao = ?']     = '1';
             $arrBusca['paxta.tpAlteracaoProjeto = ?']='10'; //tipo Readequacao de Itens de Custo
-            $rsPedidoAlteraco = $tbPedidoAlteracao->buscarPedidoAlteracaoPorTipoAlteracao($arrBusca, array('dtSolicitacao DESC'))->current(); 
+            $rsPedidoAlteraco = $tbPedidoAlteracao->buscarPedidoAlteracaoPorTipoAlteracao($arrBusca, array('dtSolicitacao DESC'))->current();
             if(!empty($rsPedidoAlteraco)){
                 $this->bln_readequacao = "true";
                 $this->view->bln_readequacao = "true";
@@ -84,14 +84,14 @@ class VotarProjetoCulturalController extends GenericControllerNew {
         //nova busca
         $parecerAtivo = $tblParecer->buscar(array('idPronac=?'=>$idpronac,'stAtivo=?'=>'1'))->current();
         $analiseparecer = $tblParecer->buscar(array('idTipoAgente in (?)'=>array('1','6'), 'TipoParecer=?'=>$parecerAtivo->TipoParecer, 'idPronac=?'=>$idpronac));
-        
+
         $dadosparecerconsolidado = array();
         $buscarPauta = $pt->buscar(array('idPronac = ?' => $idpronac), array('dtEnvioPauta DESC'))->current()->toArray();
 
         $dadosparecerconsolidado['DtParecer'] = isset($analiseparecer[1]->DtParecer) ? $analiseparecer[1]->DtParecer : $analiseparecer[0]->DtParecer;
         $dadosparecerconsolidado['ParecerFavoravel'] = isset($analiseparecer[1]->ParecerFavoravel) ? $analiseparecer[1]->ParecerFavoravel : $analiseparecer[0]->ParecerFavoravel;
         $dadosparecerconsolidado['TipoParecer'] = isset($analiseparecer[1]->TipoParecer) ? $analiseparecer[1]->TipoParecer : $analiseparecer[0]->TipoParecer;
-        
+
         $dadosparecerconsolidado['ParecerParecerista'] = $analiseparecer[0]->ResumoParecer;
         $dadosparecerconsolidado['ParecerComponente'] = isset($analiseparecer[1]->ResumoParecer) ? $analiseparecer[1]->ResumoParecer : ' ';
         $dadosparecerconsolidado['Envioplenaria'] = trim($buscarPauta['dsAnalise']) == '' ? 'N&atilde;o existe justificativa para o envio deste projeto para plen&aacute;ria' : $buscarPauta['dsAnalise'];
@@ -100,7 +100,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
         $this->view->idpronac = $idpronac;
         $this->view->projeto = $buscarPronac;
         $this->view->ResultRealizarAnaliseProjeto = $dadosparecerconsolidado;
-        
+
         /********** MODO ANTIGO ***************/
         //$fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
         //$outrasfontes = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
@@ -112,7 +112,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
         //$this->view->valorcomponente = $valorplanilha['soma'];
         //$this->view->valorparecerista = $valorparecerista['soma'];
         /********** FIM - MODO ANTIGO ***************/
-        
+
 		/**** CODIGO DE READEQUACAO ****/
 
         /********** MODO NOVO ***************/
@@ -121,7 +121,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
         $arrWhereSomaPlanilha['idPronac = ?']=$idpronac;
         if($this->bln_readequacao == "false"){
             $fonteincentivo = $planilhaproposta->somarPlanilhaProposta($idprojeto, 109);
-            $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);  
+            $outrasfontes   = $planilhaproposta->somarPlanilhaProposta($idprojeto, false, 109);
             $valorparecerista = $planilhaprojeto->somarPlanilhaProjeto($idpronac, false);
             //$valorplanilha = $planilhaAprovacao->somarPlanilhaAprovacao($idpronac, 206, 'CO');
         }else{
@@ -142,7 +142,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
             $arrWhereOutrasFontes["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
             $arrWhereOutrasFontes["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
             $outrasfontes = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereOutrasFontes);
-            
+
             $arrWherePlanilhaPA = $arrWhereSomaPlanilha;
             $arrWherePlanilhaPA['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
             $arrWherePlanilhaPA['tpPlanilha = ? ']='PA';
@@ -152,7 +152,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
             $arrWherePlanilhaPA["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
             $valorparecerista = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWherePlanilhaPA);
         }
-        
+
         $arrWhereSomaPlanilha = array();
         $arrWhereSomaPlanilha['idPronac = ?']=$idpronac;
         $arrWhereSomaPlanilha['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
@@ -160,7 +160,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
         $arrWhereSomaPlanilha['NrFonteRecurso = ? ']='109';
         $arrWhereSomaPlanilha['stAtivo = ? ']='S';
         $valorplanilha = $planilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
-        
+
         $this->view->fontesincentivo = $fonteincentivo['soma'];
         $this->view->outrasfontes = $outrasfontes['soma'];
         $this->view->valorproposta = $fonteincentivo['soma'] + $outrasfontes['soma'];
@@ -295,9 +295,9 @@ class VotarProjetoCulturalController extends GenericControllerNew {
                     $totalItemRetirado++;
                 }
             }
-            
+
       }else{
-          
+
             /**** CODIGO DE READEQUACAO ****/
             $buscarplanilhaCO = $planilhaaprovacao->buscarAnaliseContaPlanilhaAprovacao($idpronac,'CO', array('pap.stAtivo=?'=>'S'));
             //xd($buscarplanilhaCO);
@@ -454,26 +454,26 @@ class VotarProjetoCulturalController extends GenericControllerNew {
                             $totalItemRetirado++;
                     }
             }//fecha foreach
-            
+
         }//fecha if bln_readequacao
-        
+
         $buscarPlanilhaUnidade = PlanilhaUnidadeDAO::buscar();
-        
+
         //ANTIGO MODELO DE SOMA
         //$buscarsomaaprovacao = $planilhaaprovacao->somarPlanilhaAprovacao($idpronac, 206, 'CO');
         //$buscarsomaproposta = $ppr->somarPlanilhaProposta($buscarprojeto['idProjeto']);
-        
+
         //NOVO MODELO DE SOMA
         /**********************************/
         $arrWhereSomaPlanilha = array();
         $arrWhereSomaPlanilha['idPronac = ?']=$idpronac;
         $arrWhereSomaPlanilha['idPlanilhaItem <> ? ']='206'; //elaboracao e agenciamento
         $arrWhereSomaPlanilha['NrFonteRecurso = ? ']='109';
-            
+
         if($this->bln_readequacao == "false"){
             //proponente
             $buscarsomaproposta = $tblPlanilhaProposta->somarPlanilhaProposta($buscarprojeto['idProjeto']);
-            
+
             //componente
             $arrWhereSomaPlanilha['stAtivo = ? ']='S';
             $arrWhereSomaPlanilha['tpPlanilha = ? ']='CO';
@@ -487,7 +487,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
             $arrWhereSomaSR["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
             $arrWhereSomaSR["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
             $buscarsomaproposta = $planilhaaprovacao->somarItensPlanilhaAprovacao($arrWhereSomaSR);
-            
+
             //componente
             $arrWhereSomaPlanilha['tpPlanilha = ? ']='CO';
             $arrWhereSomaPlanilha['stAtivo = ? ']='S';
@@ -551,10 +551,10 @@ class VotarProjetoCulturalController extends GenericControllerNew {
         /*$pt = new Pauta();
         $buscaReadAprovacadoCnic = $pt->buscar(array('IdPRONAC = ?' => $idpronac, 'stAnalise = ?' => "AS"));
         $tipoplanilha = $buscaReadAprovacadoCnic->count() > 0 ? 'SE' : 'CO';*/
-        
+
         $rsPlanilhaAtual = $tblPlanilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idpronac), array('dtPlanilha DESC'))->current();
         $tipoplanilha = (!empty($rsPlanilhaAtual) && $rsPlanilhaAtual->tpPlanilha == 'SE') ? 'SE' : 'CO';
-        
+
         if($this->bln_readequacao == "false")
         {
             $buscarplanilha = $tblPlanilhaAprovacao->buscarAnaliseCustos($idpronac, $tipoplanilha, array('PAP.stAtivo=?'=>'S'));
@@ -601,9 +601,9 @@ class VotarProjetoCulturalController extends GenericControllerNew {
             //$buscarsomaaprovacao = $pa->somarPlanilhaAprovacao($idpronac, 206, $tipoplanilha);
             $buscarsomaproposta = $tblPlanilhaProposta->somarPlanilhaProposta($buscarprojeto->idProjeto);
             $buscarsomaprojeto = $tblPlanilhaProjeto->somarPlanilhaProjeto($idpronac);
-            
+
         }else{
-            
+
             /**** CODIGO DE READEQUACAO ****/
             $buscarplanilhaCO = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'CO', array('PAP.stAtivo=?'=>'S'));
 
@@ -633,7 +633,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
             $arrBuscaPlanilha = array();
             $arrBuscaPlanilha["pap.stAtivo = ? "] = 'N';
             $arrBuscaPlanilha["pap.idPedidoAlteracao = (SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')"] = '(?)';
-            
+
             $resuplanilha = null; $count = 0;
             $buscarplanilhaSR = $tblPlanilhaAprovacao->buscarAnaliseCustosPlanilhaAprovacao($idpronac, 'SR', $arrBuscaPlanilha);
             //xd($buscarplanilhaSR);
@@ -680,12 +680,12 @@ class VotarProjetoCulturalController extends GenericControllerNew {
              $arrWhereSomaPlanilha['stAtivo = ? ']='N';
              $arrWhereSomaPlanilha["idPedidoAlteracao = (?)"] = new Zend_Db_Expr("(SELECT TOP 1 max(idPedidoAlteracao) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC = '{$idpronac}')");
              $arrWhereSomaPlanilha["tpAcao <> ('E') OR tpAcao IS NULL "]   = '(?)';
-             
+
              $arrWhereSomaPlanilha['tpPlanilha = ? ']='SR';
              $buscarsomaproposta = $tblPlanilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
              $arrWhereSomaPlanilha['tpPlanilha = ? ']='PA';
              $buscarsomaprojeto = $tblPlanilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
-            
+
         }//feacha if bln_readequacao
         /**** fim - CODIGO DE READEQUACAO ****/
 
@@ -696,7 +696,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
         $arrWhereSomaPlanilha['NrFonteRecurso = ? ']='109';
         $arrWhereSomaPlanilha['stAtivo = ? ']='S';
         $buscarsomaaprovacao = $tblPlanilhaAprovacao->somarItensPlanilhaAprovacao($arrWhereSomaPlanilha);
-             
+
         $buscarPlanilhaUnidade = PlanilhaUnidadeDAO::buscar();
         $this->view->planilhaUnidade = $buscarPlanilhaUnidade;
         $this->view->planilha = $planilhaaprovacao;
@@ -726,7 +726,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
         $this->view->dirigentes = $tbDirigentes;
 
         $this->view->CgcCpf = $tbdados[0]->CgcCpf;
-        
+
         /*$tbarquivados = $geral->buscarArquivados($idpronac);
         $this->view->arquivados = $tbarquivados;
 
@@ -755,7 +755,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
                 $dtvoto = date('Y-m-d H:i:s');
                 $idpronac = explode('_', $_POST['idpronac']);
                 $idpronac = $idpronac[0];
-                
+
                 $dadosupdate = array(
                     'dtVoto' => $dtvoto,
                     'stVoto' => $voto
@@ -768,7 +768,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
             catch (Exception $e)
             {
                 echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
-            }  
+            }
             die;
         }
         $idpronac = $this->_request->getParam("idpronac");
@@ -799,13 +799,13 @@ class VotarProjetoCulturalController extends GenericControllerNew {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $this->view->idpronac = $_POST['idpronac'];
         $idpronac = explode('_', $_POST['idpronac']);
-        
+
         $tipoReadequacao = null;
         if(isset($idpronac[1]) && !empty($idpronac[1])){
             $tipoReadequacao = $idpronac[1];
         }
         $idpronac = $idpronac[0];
-        
+
         $votacao = new Votacao();
         $reuniao = new Reuniao();
 
@@ -930,10 +930,10 @@ class VotarProjetoCulturalController extends GenericControllerNew {
             $this->view->dadosprojeto = $buscardadosprojeto;
             $buscarcomponente = $dpc->AgenteDistribuido($idpronac)->current();
             $this->view->componente = isset($buscarcomponente) ? $buscarcomponente->nome : '';
-            
+
             //verifica se o projeto e de plano anual
             $rsProjeto = $tblProjetos->buscar(array('idPronac=?'=>$idpronac))->current();
-            $tbPreProjeto = new PreProjeto();
+            $tbPreProjeto = new Proposta_Model_PreProjeto();
             $rsPreProjeto = $tbPreProjeto->buscar(array('idPreProjeto=?'=>$rsProjeto->idProjeto))->current();
             $this->view->stPlanoAnual = $rsPreProjeto->stPlanoAnual;
         }
@@ -965,7 +965,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
                 unlink($arquivo);
             }
             $situacao = null;
-            
+
             if ($resultado == 'AS' and $_POST['situacao'] == null)
             {
                 //TRATANDO SITUACAO DO PROJETO QUANDO ESTE FOR DE READEQUACAO
@@ -974,11 +974,11 @@ class VotarProjetoCulturalController extends GenericControllerNew {
                 }else{
                     $situacao = 'D02';
                 }
-                
+
             } else if ($_POST['situacao'] != null) {
                 $situacao = $_POST['situacao'];
             }
-            
+
             if ($_POST['situacao'] != null)
             {
                 $dtsituacao = date('Y-m-d H:i:s');
@@ -997,7 +997,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
             }
 
             $planilhaaprovacao = $pa->buscar(array("IdPRONAC = ?" => $idpronac, "stAtivo = ?" => 'S', "tpPlanilha = ?" => 'CO'));
-            
+
             //Manteve o resultado igual
             if ($tpresultadovotacao == 1 and $resultado == 'AS')
             {
@@ -1008,7 +1008,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
             else if ($tpresultadovotacao == 2 and $resultado == 'AS')
             {
                 $consolidacao = $_POST['parecerconsolidado'];
-                
+
             }//Projeto indeferido pelo componente a aprovado pela plenaria
             else if ($tpresultadovotacao == 3 and $resultado == 'AS')
             {
@@ -1076,7 +1076,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
                 $where = 'IdPRONAC = ' . $idpronac;
                 $tblProjetos->alterar($dados, $where);
             }
-            
+
             //INATIVA DISTRIBUICAO DESSE PROJETO PARA O COMPONENTE POIS SUA ANALIZE FOI FINALIZADA
             try{
                 $tblDistribuicao = new tbDistribuicaoProjetoComissao();
@@ -1086,16 +1086,16 @@ class VotarProjetoCulturalController extends GenericControllerNew {
             {
                 //xd($e->getMessage());
                 parent::message("Ocorreu um erro ao inativar a distribuição desse Projeto feita ao Componente, mas as outras ações foram realizadas com sucesso.", "gerenciarpautareuniao/gerenciaradministrativo", "ALERT");
-            }  
+            }
             echo "<script>msg();</script>";
         }*/
     }
-    
+
     public function consolidarVotacaoAction() {
 
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $auth = Zend_Auth::getInstance(); // pega a autenticao
-        
+
         $post = Zend_Registry::get("post");
         $reuniao = new Reuniao();
         $reuniaoatual = $reuniao->buscarReuniaoAberta();
@@ -1106,7 +1106,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
         $tpConsolidacaoVotacao = $_POST['tpconsolidacaovotacao'];
         $idTipoReadequacao          = $_POST['resultadovotacao'];
         $parecerSecretario  = Seguranca::tratarVarAjaxUFT8($_POST['parecerconsolidado']);
-        
+
         //$idAbrangencia = $post->cod;
         $pauta = new Pauta();
         $votantes = new Votante();
@@ -1122,7 +1122,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
             $idTipoReadequacao = $idPronac[1];
         }
         $idPronac = $idPronac[0];
-        
+
         $idNrReuniao            = $idReuniaoatual;
         $nrReuniao              = $nrReuniaoatual;
         $tpResultadoVotacao     = $tpresultadovotacao;
@@ -1130,12 +1130,12 @@ class VotarProjetoCulturalController extends GenericControllerNew {
         $dsParecerConsolidado   = $parecerSecretario;
         $blnReadequacao         = ($this->bln_readequacao == "false") ? 0 : 1;
         $situacao               = ($_POST['situacao'] != null) ? $_POST['situacao'] : "NUL"; //a sp espera apenas 3 digitos para verificar se a situacao e null
-        
+
         try {
             // executa a sp
             $sp = new paConsolidarProjetoVotadoNaCnic();
             $arr = $sp->consolidarVotacaoProjeto($idPronac, $idNrReuniao, $nrReuniao, $tpResultadoVotacao, $resultadoVotacao, $dsParecerConsolidado, $blnReadequacao, $situacao, $tpConsolidacaoVotacao, $idTipoReadequacao);
-            
+
             if(!is_array($arr)) {
                 //x('com erro');
                 throw new Exception ($sp);
@@ -1155,7 +1155,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
                     throw new Exception ($sp);
                 }
             }
-            
+
         } // fecha try
         catch (Exception $e) {
             //xd($e->getMessage());
@@ -1163,7 +1163,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
             die;
         }
 
-        
+
         //GRAVA CONSOLIDACAO DO VOTACAO
         if (isset($_POST['resultadovotacao']))
         {
@@ -1174,7 +1174,7 @@ class VotarProjetoCulturalController extends GenericControllerNew {
             $parecerSecretario  = Seguranca::tratarVarAjaxUFT8($_POST['parecerconsolidado']);
             //$idpronac           = $_POST['dadosidpronac'];
             //$parecerSecretario = $_POST['parecerconsolidadoAtual']; //foi necessario essa alteracao pq o parecer nao estava sendo recuperado quando o salvamento era feito com ajax
-            
+
             try{
                 /************** SETA VALOR FINAL DA VOTACAO DO PROJETO *****************/
                 $where = "IdPRONAC = " . $idpronac . " and IdNrReuniao=" . $reuniaoatual;
@@ -1323,16 +1323,16 @@ class VotarProjetoCulturalController extends GenericControllerNew {
                     $where = 'IdPRONAC = ' . $idpronac;
                     $tblProjetos->alterar($dados, $where);
                 }
-                
+
                 echo json_encode(array('error' => false));
-                
+
             }// fecha try
             catch (Exception $e)
             {
                 echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
                 //parent::message("", "gerenciarpautareuniao/gerenciaradministrativo", "ALERT");
-            }  
-            
+            }
+
             //INATIVA DISTRIBUICAO DESSE PROJETO PARA O COMPONENTE POIS SUA ANALIZE FOI FINALIZADA
             /*try{
                 $tblDistribuicao = new tbDistribuicaoProjetoComissao();

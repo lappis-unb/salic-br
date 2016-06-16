@@ -102,14 +102,14 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
             $this->view->blnJaEnviadaAoMinc = $rsHistMov->count();
 
             //VERIFICA SE A PROPOSTA TEM DILIGENCIAS
-            $PreProjeto = new PreProjeto();
+            $PreProjeto = new Proposta_Model_PreProjeto();
             $rsDiligencias = $PreProjeto->listarDiligenciasPreProjeto(array('pre.idPreProjeto = ?' => $this->idPreProjeto));
             $this->view->blnPossuiDiligencias = $rsDiligencias->count();
         }
     }
 
     public function verificaPermissaoAcessoProposta($idPreProjeto) {
-        $tblProposta = new Proposta();
+        $tblProposta = new Proposta_Model_Proposta();
         $rs = $tblProposta->buscar(array("idPreProjeto = ? " => $idPreProjeto, "1=1 OR idEdital IS NULL OR idEdital > 0" => "?", "idUsuario =?" => $this->idResponsavel));
         return $rs->count();
     }
@@ -119,7 +119,7 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
         $arrBusca['stEstado = ?'] = 1;
         $arrBusca['idUsuario = ?'] = $this->idResponsavel;
         // Chama o SQL
-        $tblPreProjeto = new PreProjeto();
+        $tblPreProjeto = new Proposta_Model_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca, array("idAgente ASC"));
 
         //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
@@ -177,7 +177,7 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
         $agencia = $get->agencia;
 
         if ($agencia > 0) {
-            $tblProposta = new Proposta();
+            $tblProposta = new Proposta_Model_Proposta();
             $agencia = $tblProposta->buscaragencia($agencia);
             if (count($agencia) > 0) {
                 echo "";
@@ -291,7 +291,7 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
         $db = new Conexao(Zend_Registry::get('DIR_CONFIG'), "conexao_sac");
 
         //instancia classe modelo
-        $tblPreProjeto = new PreProjeto();
+        $tblPreProjeto = new Proposta_Model_PreProjeto();
 
         $db = Zend_Db_Table::getDefaultAdapter();
 
@@ -352,7 +352,7 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
         $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
         $this->view->idPreProjeto = $idPreProjeto;
         // Chama o SQL
-        $tblPreProjeto = new PreProjeto();
+        $tblPreProjeto = new Proposta_Model_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
         $arrBuscaProponete = array();
@@ -391,7 +391,7 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
             $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
 
             // Chama o SQL
-            $tblPreProjeto = new PreProjeto();
+            $tblPreProjeto = new Proposta_Model_PreProjeto();
             $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
             $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto->idAgente;
@@ -460,7 +460,7 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
         $idPreProjeto = $get->idPreProjeto;
 
         //BUSCANDO REGISTRO A SER ALTERADO
-        $tblPreProjeto = new PreProjeto();
+        $tblPreProjeto = new Proposta_Model_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
         $rsPreProjeto->stEstado = 0;
@@ -502,7 +502,7 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
         //BUSCA DADOS DO PROJETO
         $arrBusca = array();
         $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
-        $tblPreProjeto = new PreProjeto();
+        $tblPreProjeto = new Proposta_Model_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
         /* ======== VERIFICA TODAS AS INFORMACOES NECESSARIAS AO ENVIO DA PROPOSTA ======= */
 
@@ -867,7 +867,7 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
             $edital = "";
         }
         if (!empty($idPreProjeto) && $valida == "s") {
-            $tblPreProjeto = new PreProjeto();
+            $tblPreProjeto = new Proposta_Model_PreProjeto();
             $tblAvaliacao = new AnalisarPropostaDAO();
 
             //recupera dados do projeto
@@ -1073,7 +1073,7 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
     }
 
     public function listarpropostaAction() {
-        $proposta = new Proposta();
+        $proposta = new Proposta_Model_Proposta();
         $dadosCombo = array();
         $cpfCnpj = '';
 
@@ -1111,7 +1111,7 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
         $get = Zend_Registry::get('get');
         $idAgente = $get->idAgente;
 
-        $tblPreProjeto = new PreProjeto();
+        $tblPreProjeto = new Proposta_Model_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->listarPropostasResultado($this->idAgente, $this->idResponsavel, $idAgente);
 
         $arrPropostas = array();
@@ -1168,9 +1168,9 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
      */
     public function vincularpropostasAction() {
         $tbVinculo = new TbVinculo();
-        $propostas = new PreProjeto();
+        $propostas = new Proposta_Model_PreProjeto();
 
-//        $proposta = new Proposta();
+//        $proposta = new Proposta_Model_Proposta();
         $agentes = new Agente_Model_Agentes();
         $dadosCombo = array();
         $rsVinculo = $agentes->listarVincularPropostaCombo($this->idResponsavel);
@@ -1219,7 +1219,7 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
      */
     public function vincularprojetosAction() {
         $tbVinculo = new TbVinculo();
-        $propostas = new PreProjeto();
+        $propostas = new Proposta_Model_PreProjeto();
 
         $whereProjetos['pp.idAgente = ?'] = $this->idAgenteProponente;
         $whereProjetos['pp.idUsuario <> ?'] = $this->idResponsavel;

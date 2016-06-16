@@ -74,16 +74,16 @@ class RelatorioController extends GenericControllerNew {
 
 
     public function relatorioprojetopareceristaAction() {
-		
+
 		$tblUsuario = new Usuario();
 		$rsUsuario = $tblUsuario->buscarOrgao($_SESSION['Zend_Auth']['storage']->usu_orgao);
 		$this->view->idOrgao = $rsUsuario->org_codigo;
 		$this->view->idOrgaoSuperior = $rsUsuario->org_superior;
 
     }
-    
+
     public function buscarorgaoAction() {
-    	
+
     	 $auth = Zend_Auth::getInstance(); // instancia da autenticação
 
             $idusuario = $auth->getIdentity()->usu_codigo;
@@ -91,7 +91,7 @@ class RelatorioController extends GenericControllerNew {
             $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
 
             $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
-           
+
             $this->view->codOrgao = $codOrgao;
 
             $this->view->idUsuarioLogado = $idusuario;
@@ -106,26 +106,26 @@ class RelatorioController extends GenericControllerNew {
         $tblUf = new Uf();
         $rsUf = $tblUf->buscar(array(), array("Descricao ASC"));
         $this->view->ufs = $rsUf;
-        
+
     }
-	
+
     public function gerarPdfNewAction() {
 
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
-        
+
         //$post = Zend_Registry::get('post');
-        
+
         //xd($_POST['html']);
         $pdf = new PDFCreator($_POST['html']);
-        
+
         $pdf->gerarPdf();
- 
+
     }
-    
+
     public function resultadoPropostaAction(){
         $this->intTamPag = 30;
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -168,7 +168,7 @@ class RelatorioController extends GenericControllerNew {
 
         $where = array();
         $having = array();
-        
+
         if(isset($get->proposta) && !empty($get->proposta)){
             $where['p.idPreProjeto = ?'] = $get->proposta;
             $this->view->proposta = $get->proposta;
@@ -272,14 +272,14 @@ class RelatorioController extends GenericControllerNew {
             }
             $this->view->estado = $get->estado;
         }
-        
+
         $Proposta = New Proposta();
         $total = $Proposta->relatorioPropostas($where, $having, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
-        
+
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-        
+
         $busca = $Proposta->relatorioPropostas($where, $having, $order, $tamanho, $inicio);
         $paginacao = array(
             "pag"=>$pag,
@@ -295,14 +295,14 @@ class RelatorioController extends GenericControllerNew {
             "Itenspag"=>$this->intTamPag,
             "tamanho"=>$tamanho
         );
-        
+
         $this->view->paginacao     = $paginacao;
         $this->view->qtdRegistros  = $total;
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
-        
-        
-        
+
+
+
         /*****************************************/
 //        $this->_helper->layout->disableLayout();
 //        $post = Zend_Registry::get('post');
@@ -329,11 +329,11 @@ class RelatorioController extends GenericControllerNew {
 //        if($post->orgao != "") {
 //            $arrBusca["p.stEstado = ?"] = $post->orgao;
 //        }
-//        
+//
 //    	//Verifica se foi solicitado a ordenação
 //        if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1');}
 //
-//        $tbl = new Proposta();
+//        $tbl = new Proposta_Model_Proposta();
 //        $total = $tbl->relatorioPropostas($arrBusca, $arrHaving, $ordem, null, null, true, $post);
 //        $habRelatorio2 = false;
 //
@@ -341,7 +341,7 @@ class RelatorioController extends GenericControllerNew {
 //            $habRelatorio2 = true;
 //            $total = $tbl->relatorioPropostas2($arrBusca, $arrHaving, $ordem, null, null, true, $post);
 //        }
-//        
+//
 //        if($post->tipo == 'xls' || $post->tipo == 'pdf') {
 //            //buscando os registros no banco de dados
 //            $tamanho = -1;
@@ -391,10 +391,10 @@ class RelatorioController extends GenericControllerNew {
 //        $this->view->parametrosBusca = $_POST;
 //        header("Content-Type: text/html; charset=ISO-8859-1");
     }
-    
+
     public function imprimirRelatorioPropostaAction(){
         $this->intTamPag = 30;
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -437,7 +437,7 @@ class RelatorioController extends GenericControllerNew {
 
         $where = array();
         $having = array();
-        
+
         if(isset($get->proposta) && !empty($get->proposta)){
             $where['p.idPreProjeto = ?'] = $get->proposta;
             $this->view->proposta = $get->proposta;
@@ -541,14 +541,14 @@ class RelatorioController extends GenericControllerNew {
             }
             $this->view->estado = $get->estado;
         }
-        
+
         $Proposta = New Proposta();
         $total = $Proposta->relatorioPropostas($where, $having, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
-        
+
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-        
+
         $busca = $Proposta->relatorioPropostas($where, $having, $order, $tamanho, $inicio);
         if(isset($get->xls) && $get->xls){
             $html = '';
@@ -556,7 +556,7 @@ class RelatorioController extends GenericControllerNew {
             $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="7">Relatório de Propostas - Resultado da pesquisa</td></tr>';
             $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 10" colspan="7">Data do Arquivo: '. Data::mostraData() .'</td></tr>';
             $html .='<tr><td colspan="7"></td></tr>';
-                
+
             $html .= '<tr>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">&nbsp;</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">N&ordm; Proposta</th>';
@@ -566,11 +566,11 @@ class RelatorioController extends GenericControllerNew {
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Valor</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Estado</th>';
             $html .= '</tr>';
-            
+
             $i=1;
             foreach ($busca as $v) {
                 $cpfcnpj = (strlen($v->CNPJCPF) == 11) ? Mascara::addMaskCPF($v->CNPJCPF) : Mascara::addMaskCNPJ($v->CNPJCPF);
-                
+
                 if($v->stEstado == 0){
                     $estado = 'Proposta arquivada';
                 } else if($v->stEstado == '1' && $v->Movimentacao == '95' && $v->estadoMovimentacao == '0' && $v->ConformidadeOK == '0' && $v->estadoAvaliacao == '0'){
@@ -584,7 +584,7 @@ class RelatorioController extends GenericControllerNew {
                 } else {
                     $estado = 'Enviada ao MinC p/ avaliação';
                 }
-                        
+
                 $html .= '<tr>';
                 $html .= '<td style="border: 1px dotted black;">'.$i.'</td>';
                 $html .= '<td style="border: 1px dotted black;">'.$v->idProjeto.'</td>';
@@ -597,11 +597,11 @@ class RelatorioController extends GenericControllerNew {
                 $i++;
             }
             $html .= '</table>';
-            
+
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=Resultado_Relatorio_Propostas.xls;");
             echo $html; die();
-            
+
         } else {
             $this->view->qtdRegistros = $total;
             $this->view->dados = $busca;
@@ -635,9 +635,9 @@ class RelatorioController extends GenericControllerNew {
     }
 
     public function resultadoProjetoAction(){
-        
+
         $this->intTamPag = 30;
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -675,7 +675,7 @@ class RelatorioController extends GenericControllerNew {
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         $where = array();
-        
+
         if((isset($get->pronac) && !empty($get->pronac))){
             $where['pr.AnoProjeto+pr.Sequencial = ?'] = $get->pronac;
             $this->view->pronac = $get->pronac;
@@ -718,7 +718,7 @@ class RelatorioController extends GenericControllerNew {
         }
         $where = GenericControllerNew::montaBuscaData($get, "tpDtSituacao", "dtSituacao", "pr.DtSituacao", "dtSituacao_Final", $where);
         $where = GenericControllerNew::montaBuscaData($get, "tpDtPublicacao", "dtPublicacao", "ap.DtPublicacaoAprovacao", "dtPublicacao_Final", $where);
-        $where = GenericControllerNew::montaBuscaData($get, "tpDtPortaria", "dtPortaria", "ap.DtPortariaAprovacao", "dtPortaria_Final", $where);     
+        $where = GenericControllerNew::montaBuscaData($get, "tpDtPortaria", "dtPortaria", "ap.DtPortariaAprovacao", "dtPortaria_Final", $where);
 
         if((isset($get->dtInicioExec) && isset($get->dtFimExec) && !empty($get->dtInicioExec) && !empty($get->dtFimExec))){
             $di = data::dataAmericana($get->dtInicioExec);
@@ -740,11 +740,11 @@ class RelatorioController extends GenericControllerNew {
             $where['p.stDataFixa = ?'] = $get->datafixa;
             $this->view->datafixa = $get->datafixa;
         }
-                
+
         $Projetos = New Projetos();
         $total = $Projetos->relatorioProjeto($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
-        
+
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
@@ -763,19 +763,19 @@ class RelatorioController extends GenericControllerNew {
             "Itenspag"=>$this->intTamPag,
             "tamanho"=>$tamanho
         );
-        
+
         $this->view->paginacao     = $paginacao;
         $this->view->qtdRegistros  = $total;
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
-        
+
         //**************//
 //        header("Content-Type: text/html; charset=ISO-8859-1");
 //        $this->_helper->layout->disableLayout();
 //        $post = Zend_Registry::get('post');
-//        
+//
 //        $tbl = new Projetos();
-//        
+//
 //        //recuperando filtros do POST
 //        $arrBusca = array();
 //        //$arrBusca["pr.idProjeto is not null"] = "";
@@ -814,10 +814,10 @@ class RelatorioController extends GenericControllerNew {
 //        if($post->uf != ""){ $arrBusca["pr.UfProjeto = ?"] = $post->uf; }
 //        $arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtSituacao", "dtSituacao", "pr.DtSituacao", "dtSituacao_Final", $arrBusca);
 //        $arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtPublicacao", "dtPublicacao", "ap.DtPublicacaoAprovacao", "dtPublicacao_Final", $arrBusca);
-//        $arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtPortaria", "dtPortaria", "ap.DtPortariaAprovacao", "dtPortaria_Final", $arrBusca);     
+//        $arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtPortaria", "dtPortaria", "ap.DtPortariaAprovacao", "dtPortaria_Final", $arrBusca);
 //
 //        $total = $tbl->relatorioProjeto($arrBusca , null, null, null, true);
-//        
+//
 //        if($post->tipo == 'xls' || $post->tipo == 'pdf') {
 //            //Verifica se foi solicitado a ordenação
 //            if(!empty($post->ordenacao)) {
@@ -839,7 +839,7 @@ class RelatorioController extends GenericControllerNew {
 //                    'tipo'=> $post->tipo
 //                    )
 //            );
-//            
+//
 //        } else {
 //            //controlando a paginacao
 //            $this->intTamPag = 10;
@@ -871,11 +871,11 @@ class RelatorioController extends GenericControllerNew {
 //        $this->view->totalPag = $totalPag;
 //        $this->view->parametrosBusca = $_POST;
     }
-    
+
     public function imprimirRelatorioAction(){
-        
+
         $this->intTamPag = 30;
-        
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -913,7 +913,7 @@ class RelatorioController extends GenericControllerNew {
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         $where = array();
-        
+
         if((isset($get->pronac) && !empty($get->pronac))){
             $where['pr.AnoProjeto+pr.Sequencial = ?'] = $get->pronac;
             $this->view->pronac = $get->pronac;
@@ -956,7 +956,7 @@ class RelatorioController extends GenericControllerNew {
         }
         $where = GenericControllerNew::montaBuscaData($get, "tpDtSituacao", "dtSituacao", "pr.DtSituacao", "dtSituacao_Final", $where);
         $where = GenericControllerNew::montaBuscaData($get, "tpDtPublicacao", "dtPublicacao", "ap.DtPublicacaoAprovacao", "dtPublicacao_Final", $where);
-        $where = GenericControllerNew::montaBuscaData($get, "tpDtPortaria", "dtPortaria", "ap.DtPortariaAprovacao", "dtPortaria_Final", $where);     
+        $where = GenericControllerNew::montaBuscaData($get, "tpDtPortaria", "dtPortaria", "ap.DtPortariaAprovacao", "dtPortaria_Final", $where);
 
         if((isset($get->dtInicioExec) && isset($get->dtFimExec) && !empty($get->dtInicioExec) && !empty($get->dtFimExec))){
             $di = data::dataAmericana($get->dtInicioExec);
@@ -978,28 +978,28 @@ class RelatorioController extends GenericControllerNew {
             $where['p.stDataFixa = ?'] = $get->datafixa;
             $this->view->datafixa = $get->datafixa;
         }
-                
+
         $Projetos = New Projetos();
         $total = $Projetos->relatorioProjeto($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
-        
+
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
         $busca = $Projetos->relatorioProjeto($where, $order, $tamanho, $inicio);
-        
+
         if(isset($get->xls) && $get->xls){
             $colunas = 12;
             if($campo != 12){
                 $colunas++;
             }
-            
+
             $html = '';
             $html .= '<table style="border: 1px">';
             $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="'.$colunas.'">Relatório de Projetos - Resultado da pesquisa</td></tr>';
             $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 10" colspan="'.$colunas.'">Data do Arquivo: '. Data::mostraData() .'</td></tr>';
             $html .='<tr><td colspan="'.$colunas.'"></td></tr>';
-                
+
             $html .= '<tr>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">&nbsp;</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">PRONAC</th>';
@@ -1009,24 +1009,24 @@ class RelatorioController extends GenericControllerNew {
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Segmento</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">UF</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Município</th>';
-            
+
             if($campo != 12){
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situação</th>';
             }
-            
+
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Vl. Solicitado</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Vl. Aprovado</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Vl. Captado</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Habilitado</th>';
             $html .= '</tr>';
-            
+
             $ds = '';
             $i=1;
             foreach ($busca as $v) {
                 if($v->Situacao != $ds && $campo == 12){
                     $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD;" colspan="12">'.$v->Situacao.' - '.$v->dsSituacao.'</td></tr>';
                 }
-            
+
                 $html .= '<tr>';
                 $html .= '<td style="border: 1px dotted black;">'.$i.'</td>';
                 $html .= '<td style="border: 1px dotted black;">'.$v->Pronac.'</td>';
@@ -1036,26 +1036,26 @@ class RelatorioController extends GenericControllerNew {
                 $html .= '<td style="border: 1px dotted black;">'.$v->Segmento.'</td>';
                 $html .= '<td style="border: 1px dotted black;">'.$v->UfProjeto.'</td>';
                 $html .= '<td style="border: 1px dotted black;">'.$v->Municipio.'</td>';
-                
+
                 if($campo != 12){
                     $html .= '<td style="border: 1px dotted black;">'.$v->Situacao.' - '.$v->dsSituacao.'</td>';
                 }
-                
+
                 $html .= '<td style="border: 1px dotted black;">'.@number_format($v->ValorSolicitado, 2, ",", ".").'</td>';
                 $html .= '<td style="border: 1px dotted black;">'.@number_format($v->ValorAprovado, 2, ",", ".").'</td>';
                 $html .= '<td style="border: 1px dotted black;">'.@number_format($v->ValorCaptado, 2, ",", ".").'</td>';
                 $html .= '<td style="border: 1px dotted black;">'.$v->Habilitado.'</td>';
                 $html .= '</tr>';
-                
+
                 $i++;
                 $ds = $v->Situacao;
             }
             $html .= '</table>';
-            
+
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=Resultado_Relatorio_Projetos.xls;");
             echo $html; die();
-            
+
         } else {
             $this->view->qtdRegistros = $total;
             $this->view->dados = $busca;
@@ -1124,7 +1124,7 @@ class RelatorioController extends GenericControllerNew {
             $fim = 0;
 
             // verifica se foi solicitado a ordenação
-            if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}		
+            if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}
 
             $rs = $tbl->extratorProjeto($arrBusca, $ordem, null, null);
             $this->_forward('preparar-xls-pdf', null, null, array(
@@ -1133,7 +1133,7 @@ class RelatorioController extends GenericControllerNew {
                                                                     'tipo'=> $post->tipo,
                                                                     'orientacao'=>$landscape
                                                                     )
-            );                 
+            );
         } else {
             //controlando a paginacao
             $this->intTamPag = 10;
@@ -1148,7 +1148,7 @@ class RelatorioController extends GenericControllerNew {
             if ($fim>$total) $fim = $total;
 
             // verifica se foi solicitado a ordenação
-            if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}		
+            if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}
 
             $rs = $tbl->extratorProjeto($arrBusca, $ordem, $tamanho, $inicio);
         }
@@ -1162,7 +1162,7 @@ class RelatorioController extends GenericControllerNew {
     }
 
     public function desembolsoAction(){
-        
+
     }
 
     public function resultadoDesembolsoAction(){
@@ -1176,12 +1176,12 @@ class RelatorioController extends GenericControllerNew {
         if($post->nrParcela != ""){ $arrBusca["NrParcela = ?"] = $post->nrParcela; }
         if($post->liquidado != ""){ $arrBusca["Pagou = ?"] = $post->liquidado; }
         $arrBusca = GenericControllerNew::montaBuscaData($post, "tpDt", "dt", "Data", "dt_Final", $arrBusca);
-        
+
         //Varifica se foi solicitado a ordenação
-	if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('15');}        
+	if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('15');}
 
         $tbl = new EditalDesembolso();
-        
+
         $total = $tbl->editalDesembolsoXProjeto($arrBusca, $ordem, null, null, true);
 
         if($post->tipo == 'xls' || $post->tipo == 'pdf'){
@@ -1200,7 +1200,7 @@ class RelatorioController extends GenericControllerNew {
                                                                     'tipo'=> $post->tipo,
                                                                     'orientacao'=> $landscape
                                                                     )
-            );                 
+            );
         } else {
             //controlando a paginacao
             $this->intTamPag = 50;
@@ -1222,7 +1222,7 @@ class RelatorioController extends GenericControllerNew {
         $this->view->fim = $fim;
         $this->view->totalPag = $totalPag;
         $this->view->parametrosBusca = $_POST;
-        
+
     }
 
     public function pcRegiaoUfCidadeAction(){
@@ -1252,10 +1252,10 @@ class RelatorioController extends GenericControllerNew {
             $rsMunicipio = $tblMunicipio->buscar(array("idMunicipioIBGE = ?"=>$post->cidade))->current();
             $arrBusca["i.Cidade = ?"] = $rsMunicipio->Descricao;
         }
-		
+
     	//Varifica se foi solicitado a ordenação
 		if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array("5", "4", "3");}
-		
+
         $tbl = new Projetos();
 
         $total = $tbl->pontoCulturaRegiaoUfCidade($arrBusca, $ordem, null, null);
@@ -1274,8 +1274,8 @@ class RelatorioController extends GenericControllerNew {
                                                                     'view'=>'relatorio/preparar-xls-pdf-pc-regiao-uf-cidade.phtml',
                                                                     'tipo'=> $post->tipo
                                                                     )
-            ); 
-        } else  {   
+            );
+        } else  {
             //controlando a paginacao
             $this->intTamPag = 10;
             $pag = 1;
@@ -1320,36 +1320,36 @@ class RelatorioController extends GenericControllerNew {
         header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $post   = Zend_Registry::get('post');
-        
+
         $arrDados = array();
         $this->_forward("listar-propostas-analise-visual-tecnico", "admissibilidade", null, array("view"=>"/relatorio/listarpropostasanalisevisualtecnico.phtml"));
     }
-    
+
     public function prepararXlsAction(){
         Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
-        $this->_response->clearHeaders();  
+        $this->_response->clearHeaders();
         $dados = $this->_getAllParams();
         $this->view->registros = $dados['dados'];
-        
+
         if($dados['view']){
             $this->montaTela($dados['view']);
         }
     }
-    
+
     public function gerarXlsAction(){
-        
-         $_POST['html'] = str_replace('display:none', '', $_POST['html']); 
-        
+
+         $_POST['html'] = str_replace('display:none', '', $_POST['html']);
+
         parent::gerarXlsAction();
     }
-    
+
     public function gerarPdfAction(){
-        
+
 		$_POST['html'] = str_replace('display:none', '', $_POST['html']);
 	    $_POST['html'] = str_replace('<input type="button" name="grid1" id="g1_1" class="btn_adicionar" title="Expandir" />', '', $_POST['html']);
-        
+
         parent::gerarPdfAction();
-        
+
     }
 
 /*
@@ -1370,11 +1370,11 @@ class RelatorioController extends GenericControllerNew {
 
 	public function gerarPdfAction()
 	{
-        
+
 		$_POST['html'] = str_replace('display:none', '', $_POST['html']);
 	    $_POST['html'] = str_replace('type="button"', 'type="hidden"', $_POST['html']);
         //xd($_POST['html']);
-        
+
         $UF = new Uf();
         $b = $UF->buscar();
 
@@ -1435,7 +1435,7 @@ $startPos = 72;
        //header('Content-type: application/pdf');
         //echo $pdf->render();
         $pdf->save("chomp.pdf");
-        
+
     }
 */
 
@@ -1451,5 +1451,5 @@ $startPos = 72;
 //        $tbl = new Projetos();
 //        $rs = $tbl->parecerProjetos();
 //        xd($rs);
-//    }  
+//    }
 }
