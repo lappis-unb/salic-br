@@ -1,7 +1,4 @@
 <script type="text/javascript">
-    function marcador(idparam) {
-        document.getElementById('checkbox'+idparam).checked = true;
-    }
     $(document).ready(function(){
 
 
@@ -87,6 +84,17 @@
 
         $("#ListaMarcas").tablesorter();
 
+        //MARCADOR DE ROWS PARA ATENDER NECESSIDADE DE ANÁLISE DE TRABALHO DOS TÉCNICOS DE ACOMPANHAMENTO
+
+        $('[class^="linha"]').click(function(){
+            if($(this).hasClass('fundo_linha4')){
+                $('[class^="linha"]').removeClass('fundo_linha4');
+            }else{
+                $('[class^="linha"]').removeClass('fundo_linha4');
+                $(this).addClass('fundo_linha4');
+            }
+        });
+
     });
 </script>
 
@@ -120,7 +128,6 @@
             if(count($this->lista) > 0) { ?>
         <thead>
             <tr>
-                <th>Marcador</th>
                 <th>Pronac</th>
                 <th>Nome do Projeto</th>
                 <th>Data de Envio</th>
@@ -130,12 +137,9 @@
             </tr>
         </thead>
         <tbody>
-            <?php $num = 0;
-                  foreach ($this->lista as $lista) {
-                      $num++;
-                ?>
+            <?php foreach ($this->lista as $lista) { ?>
             <tr class="linha<?php echo $lista->idDocumento; ?>">
-                <td align="center"><input id="<?php echo 'checkbox'.$num; ?>" type="checkbox"></input></td>
+
                 <td class="bold" >
                     <a target="_blank" href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $lista->idPronac; ?>"><?php echo $lista->Pronac; ?></a>
                 </td>
