@@ -2137,6 +2137,7 @@ class Agente_AgentesController extends GenericControllerNew {
      * @param bool $acao
      * @access private
      * @return void
+     * @todo retirar html da controller
      */
     private function salvarAgenteRedirect($agente, $idpronac = null, $projetofnc = null, $movimentacacaobancaria = null, $acao = null)
     {
@@ -2175,7 +2176,7 @@ class Agente_AgentesController extends GenericControllerNew {
         } else if (($acao != '')) {
             parent::message(
                 'Proponente cadastrado com sucesso. Uma solicitação de vínculo foi enviada a ele.',
-                'manterpropostaincentivofiscal/listarproposta',
+                'proposta/manterpropostaincentivofiscal/listarproposta',
                 'CONFIRM'
             );
         } else {

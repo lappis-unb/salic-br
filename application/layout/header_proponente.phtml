@@ -198,7 +198,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                                 <ul>
                                     <li><a href="<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'incluiragente'), '', true); ?>?menuLateral=false&acao=prop" title="Ir para Manter Agentes">Cadastrar Proponente</a></li>
                                     <?php if($this->idAgenteKeyLog != 0){ ?>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'consultarresponsaveis'), '', true, '', true); ?>" title="Ir para Aceitar vinculo">Gerenciar responsáveis</a></li>
+                                    <li><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'consultarresponsaveis'), '', true, '', true); ?>" title="Ir para Aceitar vinculo">Gerenciar responsáveis</a></li>
                                     <?php } ?>
                                     <li><a href="<?php echo $this->url(array('controller' => 'procuracao', 'action' => 'index'),'',true); ?>">Procura&ccedil;&atilde;o</a></li>
 
@@ -221,7 +221,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                             <a href="#menu-proposta" title="Ir para Proposta" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Proposta</a>
                             <div id="menu-proposta" class="hidden">
                                 <ul>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listarproposta'), '', true); ?>" title="Ir para Manter Proposta por Incentivo Fiscal">Listar Propostas</a></li>
+                                    <li><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listarproposta'), '', true); ?>" title="Ir para Manter Proposta por Incentivo Fiscal">Listar Propostas</a></li>
                                 </ul>
                             </div>
                         </div>

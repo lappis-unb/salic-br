@@ -481,8 +481,8 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                             <div id="menu-proposta" class="hidden">
                                 <ul>
                                     <?php if ($this->grupoAtivo == 97) : ?>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas'), '', true); ?>" title="Ir para Manter Proposta por Incentivo Fiscal">Listar Propostas</a></li>
-                                    <!-- <li><a href="<?php echo $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'index'), '', true); ?>" title="Ir para Manter Proposta por Incentivo Fiscal">Manter Proposta por Incentivo Fiscal</a></li>
+                                    <li><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas'), '', true); ?>" title="Ir para Manter Proposta por Incentivo Fiscal">Listar Propostas</a></li>
+                                    <!-- <li><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'index'), '', true); ?>" title="Ir para Manter Proposta por Incentivo Fiscal">Manter Proposta por Incentivo Fiscal</a></li>
                                     <li><a href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'edital'), '', true); ?>" title="Ir para Manter Proposta por Edital">Manter Proposta por Edital</a></li> -->
                                     <?php endif; ?>
                                 </ul>
