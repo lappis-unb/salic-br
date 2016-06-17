@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="application/Bootstrap.php" convertWarningsToExceptions="true" colors="true">
+    <testsuite name="Salic br">
+        <directory>application/modules</directory>
+    </testsuite>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../application/</directory>
+            <exclude>
+                <file>../application/Bootstrap.php</file>
+                <directory suffix=".phtml">../application/</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-html" target="./log/report" charset="UTF-8"
+             yui="true" highlight="true" lowUpperBound="40"
+             highLowerBound="75" />
+        <log type="testdox-html" target="./log/testdox.html" />
+    </logging>
+</phpunit>
