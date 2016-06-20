@@ -273,7 +273,7 @@ class tbPlanoDistribuicao extends GenericModel
                         (b.qtVendaNormal+b.qtVendaPromocional+b.qtPatrocinador+b.qtOutros+b.qtProponente) as QtdeProduzida,
                         b.qtPatrocinador as QtdePatrocinador, b.qtProponente as QtdeProponente, b.qtOutros as QtdeOutros, b.qtVendaNormal as QtdeVendaNormal,
                         b.qtVendaPromocional as QtdeVendaPromocional, b.vlUnitarioNormal as PrecoUnitarioNormal, b.vlUnitarioPromocional as PrecoUnitarioPromocional,
-                        b.stPrincipal, '0' as Usuario, b.tpSolicitacao, c.Descricao as Produto
+                        b.stPrincipal, '0' as Usuario, b.tpSolicitacao, b.idProduto, c.Descricao as Produto
                     ")
                 ) ,'SAC.dbo'
             );

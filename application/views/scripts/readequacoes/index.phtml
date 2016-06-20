@@ -111,7 +111,8 @@
                 msg = 'Favor preencher os dados obrigatórios!',
                 tipoRead = $('#tipoReadequacao').val(),
                 solicitacoesSimples = new Array(3,4,5,6,7,8,10,11,12,13,15,16,17,18,19,20,21),
-                solicitacoesSimplesCKEditor = new Array(5,6,7,8,16,17,18,19,20,21);
+                solicitacoesSimplesCKEditor = new Array(5,6,7,8,16,17,18,19,20,21),
+		naoPedeConfirmacao = new Array(2, 11);
                 
             if (descJustificativa == ''){
                 erro++;
@@ -121,7 +122,7 @@
                 erro++;
                 msg = 'O campo só permite 5.000 caracteres!';
             }
-            
+	    
             if(in_array(tipoRead, solicitacoesSimples)){
                 
                 if(tipoRead == 3 || tipoRead == 13){
@@ -204,34 +205,39 @@
                 });
                 $('.ui-dialog-titlebar-close').remove();
             } else {
-                $("#msgAlerta").dialog("destroy");
-                $("#msgAlerta").html('Deseja incluir essa solicitação de readequação?');
-                $("#msgAlerta").dialog({
-		    resizable: false,
-		    title: 'Alerta!',
-		    width:360,
-		    height:170,
-		    modal: true,
-		    buttons : {
-                        'Não' : function(){
-			    $(this).dialog('close');
-                        },
-                        'Sim' : function(){
-			    $(this).dialog('close');
-			    $("#msgAlerta").dialog("destroy");
-			    $("#msgAlerta").html('<br /><div align="center"><img src="<?php echo $this->baseUrl().'/public/img/ajax.gif'; ?>"><br />Aguarde..</div>');
-			    $("#msgAlerta").dialog({
-                                resizable: false,
-                                width:320,
-                                modal: true,
-                                title: 'Carregando..'
-			    });
-			    $('.ui-dialog-titlebar-close').remove();
-			    window.setTimeout('enviarformulario()', 1000);
-                        }
-		    }
-                });
-                $('.ui-dialog-titlebar-close').remove();
+		// tipos de readequacao que não pedem confirmação
+		if ($.inArray(tipoRead, naoPedeConfirmacao)) {
+		    enviarformulario();
+		} else {
+                    $("#msgAlerta").dialog("destroy");
+                    $("#msgAlerta").html('Deseja incluir essa solicitação de readequação?');
+                    $("#msgAlerta").dialog({
+			resizable: false,
+			title: 'Alerta!',
+			width:360,
+			height:170,
+			modal: true,
+			buttons : {
+                            'Não' : function(){
+				$(this).dialog('close');
+                            },
+                            'Sim' : function(){
+				$(this).dialog('close');
+				$("#msgAlerta").dialog("destroy");
+				$("#msgAlerta").html('<br /><div align="center"><img src="<?php echo $this->baseUrl().'/public/img/ajax.gif'; ?>"><br />Aguarde..</div>');
+				$("#msgAlerta").dialog({
+                                    resizable: false,
+                                    width:320,
+                                    modal: true,
+                                    title: 'Carregando..'
+				});
+				$('.ui-dialog-titlebar-close').remove();
+				window.setTimeout('enviarformulario()', 1000);
+                            }
+			}
+                    });
+                    $('.ui-dialog-titlebar-close').remove();
+		}
 	    }
         });
 	
@@ -752,6 +758,28 @@
     
     function atualizarDadosPlanosDeDistribuicao(){
         jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'carregar-planos-de-distribuicao'), '', true) ?>?idPronac=<?php echo $this->idPronac; ?>', '', 'planosDeDistribuicao');
+	// adicionar verificação da readequacao
+        $.ajax({
+            url : '<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'consultar-readequacao'), '', true); ?>',
+            type: "POST",
+	    data: {
+		idPronac: <?php echo $this->idPronac; ?>,
+		idTipoReadequacao: 11,
+		idReadequacao: ''
+	    },
+	    success: function(data) {
+		var readequacoes = JSON.parse(data).readequacoes;
+
+		// @todo remove
+		// se houver mais de uma readequacao pega a primeira
+		var readequacao = (typeof readequacoes.length != 'undefined') ? readequacoes[0] : readequacoes;
+		
+		if (typeof readequacao !== 'undefined') {
+		    $('#idReadequacao').val(readequacao.idReadequacao);
+		    CKEDITOR.instances['descJustificativa'].setData(readequacao.dsJustificativa);
+		}
+	    }
+	});
     }
     
     function criarCampoTipoReadequacao(tpReadequacao){
@@ -784,7 +812,7 @@
 
     <!-- ========== INÍCIO FORMULÁRIO ========== -->
     <form name="formReadequacao" id="formReadequacao" action="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'incluir-solicitacao-readequacao'), null, true); ?><?php echo '?idPronac='. Seguranca::encrypt($this->idPronac); ?>" method="post" enctype="multipart/form-data">
-	<input type="hidden" id="idReadequacao" name="idReadequacao" value="">
+	<input type="hidden" id="idReadequacao" name="idReadequacao" value="<?php echo ''; ?>">
         <table class="tabela">
             <tr>
                 <th style="width: 30%">PRONAC</th>

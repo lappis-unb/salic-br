@@ -697,11 +697,14 @@
 	    },
 	    
 	    // após carregar a planilha, monta planilha
-	    success: function() {
-		    jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'carregar-valor-entre-planilhas'), '', true) ?>?idPronac=<?php echo $this->idPronac; ?>', '', 'valorEntrePlanilhas');
-		    jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'index', 'action' => 'montar-planilha-orcamentaria')) ?>?idPronac=<?php echo $this->idPronac; ?>&tipoPlanilha=6&link', '', 'planilhaOrcamentariaMontada');
-		}
-            });
+	    success: function(data) {
+		jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'carregar-valor-entre-planilhas'), '', true) ?>?idPronac=<?php echo $this->idPronac; ?>', '', 'valorEntrePlanilhas');
+		jqAjaxLinkSemLoading('<?php echo $this->Url(array('controller' => 'index', 'action' => 'montar-planilha-orcamentaria')) ?>?idPronac=<?php echo $this->idPronac; ?>&tipoPlanilha=6&link', '', 'planilhaOrcamentariaMontada');
+
+		data = JSON.parse(data);
+		$('#idReadequacao').val(data.idReadequacao);
+	    }
+        });
     }
     
 </script>
@@ -731,7 +734,7 @@
 
     <!-- ========== INÍCIO FORMULÁRIO ========== -->
     <form name="formReadequacao" id="formReadequacao" action="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'incluir-solicitacao-readequacao'), null, true); ?><?php echo '?idPronac='. Seguranca::encrypt($this->idPronac); ?>" method="post" enctype="multipart/form-data">
-        <input type="hidden" id="idReadequacao" name="idReadequacao" value="<?php echo $this->readequacao[0]->idReadequacao; ?>">
+        <input type="hidden" id="idReadequacao" name="idReadequacao" value="<?php if (count($this->readequacao) > 0) { echo $this->readequacao[0]->idReadequacao; } ?>">
     	<input type="hidden" id="tipoReadequacao" name="tipoReadequacao" value="2">
         <table class="tabela">
             <tr>
@@ -782,7 +785,13 @@
                 <td class="destacar bold" style="font-size: 13px;">Justificativa da Solicita&ccedil;&atilde;o <span class="red">*</span></td>
             </tr>
             <tr>
-                <td><textarea cols="80" id="descJustificativa" name="descJustificativa" rows="10"><?php echo $this->readequacao[0]->dsJustificativa; ?></textarea></td>
+              <td>
+		<textarea cols="80" id="descJustificativa" name="descJustificativa" rows="10">
+		  <?php if (count($this->readequacao) > 0): ?>
+		  <?php echo $this->readequacao[0]->dsJustificativa; ?>
+		  <?php endif; ?>
+		</textarea>
+	      </td>
             </tr>
             <tr>
                 <td><span class="red">* Campo obrigatório e permite o máximo de 5.000 caracteres</span></td>
@@ -793,11 +802,13 @@
             <tr>
                 <td class="destacar bold" style="font-size: 13px;">Anexo</td>
             </tr>
-	    <?php if(!empty($this->readequacao[0]->idArquivo)){ ?>
+	    <?php if (count($this->readequacao) > 0): ?>	    
+	    <?php if (!empty($this->readequacao[0]->idArquivo)): ?>
 	    <tr>
               <td><a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $this->readequacao[0]->idArquivo; ?>"><?php echo $this->readequacao[0]->nmArquivo; ?></a></td>
 	    </tr>
-	    <?php } ?>
+	    <?php endif; ?>
+	    <?php endif; ?>	    
             <tr>
                 <td><input type="file" name="arquivo" class="input_simples"> <span style="margin-left: 10px;" class="red">Somente arquivos .pdf</span></td>
             </tr>

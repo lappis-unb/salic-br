@@ -41,7 +41,14 @@ class tbReadequacao extends GenericModel
         $select->from(
             array('a' => $this->_name),
             array(
-                new Zend_Db_Expr("a.idReadequacao, a.idPronac, a.dtSolicitacao, CAST(a.dsSolicitacao AS TEXT) AS dsSolicitacao, CAST(a.dsJustificativa AS TEXT) AS dsJustificativa, b.dsReadequacao, c.idArquivo, d.nmArquivo, a.idTipoReadequacao"),
+                new Zend_Db_Expr("a.idReadequacao, a.idPronac, a.dtSolicitacao,
+CASE
+WHEN a.dsSolicitacao ='' 
+	THEN null
+WHEN a.dsSolicitacao != '' 
+	THEN CAST(a.dsSolicitacao AS TEXT)
+END dsSolicitacao,
+ CAST(a.dsJustificativa AS TEXT) AS dsJustificativa, b.dsReadequacao, c.idArquivo, d.nmArquivo, a.idTipoReadequacao"),
             )
         );
 
