@@ -3923,8 +3923,13 @@ class ReadequacoesController extends GenericControllerNew {
         $where = "idReadequacao = $idReadequacao";
 
         $return = $tbReadequacao->update($dados, $where);
-
-        if ($read->idTipoReadequacao == 2 && $TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RM') {
+        
+        if ($read->idTipoReadequacao == 2
+            &&
+            ($TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RM'   // se remanejamento soma zero
+             || $TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RE'  // redução
+             || $TipoDeReadequacao[0]['TipoDeReadequacao'] == 'CO'  // complementação
+            )) {
             // remanejamento: chama sp para trocar planilha ativa (desativa atual e ativa remanejada)
             $spAtivarPlanilhaOrcamentaria = new spAtivarPlanilhaOrcamentaria();
             $ativarPlanilhaOrcamentaria = $spAtivarPlanilhaOrcamentaria->exec($read->idPronac);
