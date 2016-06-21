@@ -15,7 +15,7 @@ class tbArquivamento extends GenericModel {
     protected $_name   = "tbArquivamento";
 
 
-    public function confirirArquivamentoProjeto($pronac) {
+    public function conferirArquivamentoProjeto($pronac) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(

@@ -278,7 +278,7 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
                     //VERIFICA OS DADOS DE ARQUIVAMENTO, CASO EXISTA //
                     $ArquivamentoProjeto = array();
                     $tbArquivamento = new tbArquivamento();
-                    $dadosArquivamentoProjeto = $tbArquivamento->confirirArquivamentoProjeto($pronac);
+                    $dadosArquivamentoProjeto = $tbArquivamento->conferirArquivamentoProjeto($pronac);
                     if(count($dadosArquivamentoProjeto)){
                         $ArquivamentoProjeto = $dadosArquivamentoProjeto;
                     }
