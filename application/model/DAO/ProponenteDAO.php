@@ -95,37 +95,51 @@ Class ProponenteDAO extends Zend_Db_Table
 
     public function buscarTelefone($idpronac)
     {
-        $sql2 = "SELECT
-                    CASE
-                    WHEN Tl.TipoTelefone = 22 or Tl.TipoTelefone = 24
-                    THEN 'Residencial'
-                    WHEN Tl.TipoTelefone = 23 or Tl.TipoTelefone = 25
-                    THEN 'Comercial'
-                    WHEN Tl.TipoTelefone = 26
-                    THEN 'Celular'
-                    WHEN Tl.TipoTelefone = 27
-                    THEN 'Fax'
-                    END as TipoTelefone,
-                    Uf.Descricao as UF,
-                    Tl.DDD as DDDTelefone,
-                    Tl.Numero as NumeroTelefone,
-                    CASE
-                    WHEN Tl.Divulgar = 1
-                    THEN 'Sim'
-                    WHEN Tl.Divulgar = 0
-                    THEN 'Não'
-                    end as Divulgar
-                FROM AGENTES.dbo.Telefones Tl
-                    INNER JOIN AGENTES.dbo.Uf as Uf on Uf.idUF = Tl.UF
-                    INNER JOIN AGENTES.dbo.Agentes Ag on Ag.IdAgente = Tl.IdAgente
-                    INNER JOIN SAC.dbo.Projetos Pr On Ag.CNPJCPF = Pr.CgcCpf
-                    WHERE Pr.IdPRONAC = " . $idpronac ;
-
+        $table = Zend_Db_Table::getDefaultAdapter();
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $resultado2 = $db->fetchAll($sql2);
 
-        return $resultado2;
+        $select = $table->select()
+            ->from('Telefones',
+                array(new Zend_db_Expr("
+                    CASE
+                        WHEN Telefones.TipoTelefone = 22 or Telefones.TipoTelefone = 24
+                            THEN 'Residencial'
+                        WHEN Telefones.TipoTelefone = 23 or Telefones.TipoTelefone = 25
+                            THEN 'Comercial'
+                        WHEN Telefones.TipoTelefone = 26
+                            THEN 'Celular'
+                        WHEN Telefones.TipoTelefone = 27
+                            THEN 'Fax'
+                        END as TipoTelefone,
+                        Uf.Descricao as UF,
+                        Telefones.DDD as DDDTelefone,
+                        Telefones.Numero as NumeroTelefone,
+                        CASE
+                        WHEN Telefones.Divulgar = 1
+                            THEN 'Sim'
+                        WHEN Telefones.Divulgar = 0
+                            THEN 'Não'
+                    end as Divulgar
+                ")),
+                'AGENTES.dbo')
+            ->where('Projetos.IdPRONAC = ?', $idpronac)
+            ->joinInner('Uf',
+                'Uf.idUF = Telefones.UF',
+                array(''),
+                'AGENTES.dbo')
+            ->joinInner('Agentes',
+                'Agentes.IdAgente = Telefones.IdAgente',
+                array(''),
+                'AGENTES.dbo')
+            ->joinInner('Projetos',
+                'Agentes.CNPJCPF = Projetos.CgcCpf',
+                array(''),
+                'SAC.dbo');
+
+        $resultado = $db->fetchAll($select);
+        
+        return $resultado;
     }
 
     public function dadospronacs($idpronac)
