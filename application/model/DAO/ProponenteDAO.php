@@ -62,25 +62,35 @@ Class ProponenteDAO extends Zend_Db_Table
 
     public function buscarEmail($idpronac)
     {
-        $sql1 = "SELECT
-                *,
-                CASE
-                WHEN It.TipoInternet = 28
-                    THEN 'Email Particular'
-                WHEN It.TipoInternet = 29
-                    THEN 'Email Institucional'
-                End as TipoInternet,
-                It.Descricao as Email
-            FROM AGENTES.dbo.Internet as It
-            LEFT JOIN AGENTES.dbo.Agentes Ag on Ag.IdAgente = It.IdAgente
-            LEFT JOIN SAC.dbo.Projetos Pr ON Ag.CNPJCPF = Pr.CgcCpf
-            where Pr.IdPRONAC = " . $idpronac ;
-
+        $table = Zend_Db_Table::getDefaultAdapter();
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $resultado1 = $db->fetchAll($sql1);
 
-        return $resultado1;
+        $select = $table->select()
+            ->from('Internet',
+                array(new Zend_db_Expr('*'),new Zend_db_Expr("
+                    CASE
+                    WHEN Internet.TipoInternet = 28
+                        THEN 'Email Particular'
+                    WHEN Internet.TipoInternet = 29
+                        THEN 'Email Institucional'
+                    End as TipoInternet,
+                    Internet.Descricao as Email    
+                ")),
+                'AGENTES.dbo')
+            ->where('Projetos.IdPRONAC = ?', $idpronac)
+            ->joinLeft('Agentes',
+                'Agentes.IdAgente = Internet.IdAgente',
+                array(''),
+                'AGENTES.dbo')
+            ->joinLeft('Projetos',
+                'Agentes.CNPJCPF = Projetos.CgcCpf',
+                array(''),
+                'SAC.dbo');
+
+        $resultado = $db->fetchAll($select);
+
+        return $resultado;
     }
 
     public function buscarTelefone($idpronac)
