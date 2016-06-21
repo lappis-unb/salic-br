@@ -1,6 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
+
         $("#listaMarcas").tablesorter({
             headers: {3:{sorter: false}, 4:{sorter: false}, 5:{sorter: false}}
         });
@@ -83,6 +84,17 @@
 
         $("#ListaMarcas").tablesorter();
 
+        //MARCADOR DE ROWS PARA ATENDER NECESSIDADE DE ANÁLISE DE TRABALHO DOS TÉCNICOS DE ACOMPANHAMENTO
+
+        $('[class^="linha"]').click(function(){
+            if($(this).hasClass('fundo_linha4')){
+                $('[class^="linha"]').removeClass('fundo_linha4');
+            }else{
+                $('[class^="linha"]').removeClass('fundo_linha4');
+                $(this).addClass('fundo_linha4');
+            }
+        });
+
     });
 </script>
 
@@ -127,19 +139,20 @@
         <tbody>
             <?php foreach ($this->lista as $lista) { ?>
             <tr class="linha<?php echo $lista->idDocumento; ?>">
-                <td class="bold">
+
+                <td class="bold" >
                     <a target="_blank" href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $lista->idPronac; ?>"><?php echo $lista->Pronac; ?></a>
                 </td>
                 <td class="bold">
                     <?php //Verifica se o NomeProjeto já está no array (lista). Se estiver, não mostra o NomeProjeto.
 //                        if (!in_array($lista->NomeProjeto, $arrayNomeProjeto)) {
-                            echo $lista->NomeProjeto;;
+                            echo $lista->NomeProjeto;
 //                        }
                     ?>
                 </td>
                 <td nowrap><?php echo Data::tratarDataZend($lista->dtEnvio, 'brasileiro', true);?></td>
                 <td><?php echo $lista->dsDocumento; ?></td>
-                <td nowrap width="1px"><a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $lista->idArquivo; ?>"><?php echo $lista->nmArquivo; ?></a></td>
+                <td nowrap width="1px"><a onclick="marcador('<?php echo $num;?>')" href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir')); ?>?id=<?php echo $lista->idArquivo; ?>"><?php echo $lista->nmArquivo; ?></a></td>
                 <td align="center" width="1px">
                     <input class="btn_aprovar" type="button" value=" " documento="<?php echo $lista->idDocumento; ?>" st="D" pronacId="<?php echo $lista->idPronac; ?>" />
                 </td>
