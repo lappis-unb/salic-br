@@ -83,7 +83,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
-    } // fecha método buscarAgentes()
+    }
 
     /**
      * Método para buscar agentes vinculados
