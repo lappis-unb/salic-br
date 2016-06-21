@@ -139,7 +139,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
                 }
                 $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
@@ -226,7 +225,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
             //INSERT
             $dados['idPreProjeto'] = null;
             return $this->insert($dados);
-            //$rsPreProjeto = $this->createRow();
         }
 
         //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
@@ -344,6 +342,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
+     * @todo colocar padrão orm
      */
     public static function inserirProposta($dados)
     {
@@ -370,6 +369,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
+     * @todo colocar padrão orm
      */
     public static function alterarDados($dados, $where) {
 
@@ -814,6 +814,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
+     * @todo colocar padrão orm
      */
     public static function analiseDeCustos($idPreProjeto)
     {
@@ -929,6 +930,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
+     * @todo colocar padrão orm
      */
     public static function alteraresponsavel($idPreProjeto, $idResponsavel)
     {
@@ -1072,6 +1074,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
+     * @todo colocar padrão orm
      */
     public static function gerenciarResponsaveisPendentes($siVinculo, $idAgente = null) {
 

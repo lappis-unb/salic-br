@@ -2,9 +2,9 @@
 /**
  * Controller Divulgação
  * @author Equipe RUP - Politec
+ * @author wouerner <wouerner@gmail.com>
  * @since 15/12/2010
- * @version 1.0
- * @package application
+ * @package
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
  * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
@@ -59,7 +59,7 @@ class Proposta_DivulgacaoController extends GenericControllerNew {
      * @param void
      * @return void
      */
-     public function indexAction() {
+    public function indexAction() {
         /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
@@ -68,6 +68,12 @@ class Proposta_DivulgacaoController extends GenericControllerNew {
         $this->_redirect("/proposta/divulgacao/planodivulgacao?idPreProjeto=".$this->idPreProjeto);
     }
 
+    /**
+     * planodivulgacaoAction
+     *
+     * @access public
+     * @return void
+     */
     public function planodivulgacaoAction() {
         /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
@@ -75,14 +81,18 @@ class Proposta_DivulgacaoController extends GenericControllerNew {
         $this->verificarPermissaoAcesso(true, false, false);
 
         $dao = new DivulgacaoDAO();
-        //$this->view->itensDivulgacao = $dao->buscarDigulgacao($this->idPreProjeto);
 
         $rsPlanoDivulgacao = $dao->buscar(array("pd.idProjeto = ?"=>$this->idPreProjeto));
-        //xd($rsPlanoDivulgacao->toArray());
         $this->view->itensDivulgacao = $rsPlanoDivulgacao;
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
+    /**
+     * consultarcomponenteAction
+     *
+     * @access public
+     * @return void
+     */
     public function consultarcomponenteAction() {
 
         $get = Zend_Registry::get('get');
@@ -98,19 +108,18 @@ class Proposta_DivulgacaoController extends GenericControllerNew {
         }
     }
 
+    /**
+     * editardivulgacaoAction
+     *
+     * @access public
+     * @return void
+     */
     public function editardivulgacaoAction() {
 
         /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-
-        /*$post = Zend_Registry::get('post');
-        $this->view->idpeca = $post->idpeca;
-        $this->view->idveiculo = $post->idveiculo;
-        $this->view->iddivulgacao = $post->iddivulgacao;
-        $dao = new DivulgacaoDAO();
-        $this->view->itensplano = $dao->consultarDivulgacao();*/
 
         $get = Zend_Registry::get('get');
         $idPlanoDivulgacao = $get->cod;
@@ -127,11 +136,14 @@ class Proposta_DivulgacaoController extends GenericControllerNew {
         $this->view->idveiculo = $rsDivulgacao->idVeiculo;
         $this->view->idDivulgacao = $idPlanoDivulgacao;
         $this->view->idPreProjeto = $this->idPreProjeto;
-
-        //Zend_Debug::dump($post->idpeca);
-        //die($post);
     }
 
+    /**
+     * novodivulgacaoAction
+     *
+     * @access public
+     * @return void
+     */
     public function novodivulgacaoAction() {
 
         /* =============================================================================== */
@@ -143,12 +155,14 @@ class Proposta_DivulgacaoController extends GenericControllerNew {
         $this->view->itensplano = $dao->consultarDivulgacao();
 
         $this->view->idPreProjeto = $this->idPreProjeto;
-
-        //$dados = array('idProjeto' => $idPronac, 'idPeca' => $idPeca, 'idVeiculo' => $idveiculo, 'Usuario' => $usuario);
     }
 
-
-
+    /**
+     * veiculoAction
+     *
+     * @access public
+     * @return void
+     */
     public function veiculoAction() {
 
         $this->_helper->viewRenderer->setNoRender(true);
@@ -169,14 +183,14 @@ class Proposta_DivulgacaoController extends GenericControllerNew {
             }
 
         echo $htmlOptions;
-
-
-
     }
 
-
-
-
+    /**
+     * excluirdivulgacaoAction
+     *
+     * @access public
+     * @return void
+     */
     public function excluirdivulgacaoAction() {
 
         /* =============================================================================== */
@@ -192,8 +206,14 @@ class Proposta_DivulgacaoController extends GenericControllerNew {
         $dao->excluirdivulgacao($idPlanoDivulgacao);
 
         parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
-        //$this->_redirect('divulgacao/planodivulgacao');
     }
+
+    /**
+     * updatedivulgacaoAction
+     *
+     * @access public
+     * @return void
+     */
     public function updatedivulgacaoAction() {
 
         /* =============================================================================== */
@@ -221,7 +241,12 @@ class Proposta_DivulgacaoController extends GenericControllerNew {
         }
     }
 
-
+    /**
+     * incluirdivulgacaoAction
+     *
+     * @access public
+     * @return void
+     */
     public function incluirdivulgacaoAction(){
 
         /* =============================================================================== */
@@ -242,14 +267,11 @@ class Proposta_DivulgacaoController extends GenericControllerNew {
 
         if(count($verifica) > 0){
             parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o Cancelada!", "/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "ERROR");
-        }else{
-        $dados = array('idProjeto' => $idPreProjeto, 'idPeca' => $idPeca, 'idVeiculo' => $idveiculo, 'Usuario' => $usuario);
-        $dao->inserirDivulgacao($dados);
+        } else {
+            $dados = array('idProjeto' => $idPreProjeto, 'idPeca' => $idPeca, 'idVeiculo' => $idveiculo, 'Usuario' => $usuario);
+            $dao->inserirDivulgacao($dados);
 
-        parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
-
+            parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
         }
     }
-
 }
-?>

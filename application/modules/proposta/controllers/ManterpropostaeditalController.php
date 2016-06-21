@@ -9,7 +9,6 @@
  * @link http://www.cultura.gov.br
  * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
-//require_once "GenericControllerNew.php";
 
 class Proposta_ManterpropostaeditalController extends GenericControllerNew {
 
@@ -124,11 +123,22 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
 
     }
 
-// fecha método init()
-
+    /**
+     * indexAction
+     *
+     * @access public
+     * @return void
+     */
     public function indexAction() {
 
     }
+
+    /**
+     * editalAction
+     *
+     * @access public
+     * @return void
+     */
     public function editalAction() {
 
         $get = Zend_Registry::get('get');
@@ -159,6 +169,12 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         $this->view->edital = $array;
     }
 
+    /**
+     * dadospropostaeditalAction
+     *
+     * @access public
+     * @return void
+     */
     public function dadospropostaeditalAction() {
 
         if (isset($_REQUEST['idPreProjeto']) && !empty($_REQUEST['idPreProjeto'])) {
@@ -179,8 +195,6 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
 
             $tblPreProjeto = new Proposta_Model_Preprojeto();
             $dados = $tblPreProjeto->buscarPropostaEditalCompleto($where);
-
-            //$dados  = ManterpropostaeditalDAO::exibirDadosPropostaEditalCompleto($_REQUEST['idPreProjeto']);
 
             $get = Zend_Registry::get("get");
             $this->view->documentosPendentes = AnalisarPropostaDAO::buscarDocumentoPendente($get->idPreProjeto);
@@ -232,9 +246,6 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                 }
             }
 
-
-
-
            $tblVinculo = new TbVinculo();
 
 	        $arrBuscaP['VP.idPreProjeto = ?'] 			= $dados[0]->idPreProjeto;
@@ -247,8 +258,6 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
 
             $this->view->listaProponentes = $rsVinculoN;
             $this->view->dadosVinculo = $rsVinculoP;
-            /************************************/
-
 
         } else {
 
@@ -263,8 +272,6 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
             } else {
                 $this->view->mensagem = "Agente n&atilde;o encontrado";
                 $this->view->tpmensagem = "msgERROR";
-                //$this->view->tpmensagem = msgCONFIRM;
-                //$this->view->tpmensagem = msgALERT;
             }
         }
         if (isset($_REQUEST['mensagem'])) {
@@ -275,6 +282,12 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         $this->view->editalpreprojeto = $tbeditalpreprojeto;
     }
 
+    /**
+     * inserirdadospropostaeditalAction
+     *
+     * @access public
+     * @return void
+     */
     public function inserirdadospropostaeditalAction() {
         $array = array('mensagem' => '');
 
@@ -354,10 +367,6 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
 
 		    			$insere = $tbVinculoPropostaDAO->inserir($novosDadosV, false);
 	                }
-	                /*******************************************************************************************/
-
-
-
 
                     $array['mensagem'] = 'Cadastro realizado com sucesso!';
                     $array['tpmensagem'] = 'msgCONFIRM';
@@ -372,10 +381,22 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         $this->_redirect('/manterpropostaedital/dadospropostaedital?idPreProjeto=' . $array['idPreProjeto'] . '&mensagem=' . $array['mensagem'] . '&tpmensagem=' . $array['tpmensagem']);
     }
 
+    /**
+     * localderealizacaoeditalAction
+     *
+     * @access public
+     * @return void
+     */
     public function localderealizacaoeditalAction() {
 
     }
 
+    /**
+     * responderquestionarioeditalAction
+     *
+     * @access public
+     * @return void
+     */
     public function responderquestionarioeditalAction() {
         if (isset($_REQUEST['idPreProjeto'])) {
 
@@ -383,9 +404,6 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
             /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
             /* =============================================================================== */
             $this->verificarPermissaoAcesso(true,false,false);
-
-//            $_SESSION['idPreProjeto'] = $_REQUEST['idPreProjeto'];
-//            $dados                    = ManterpropostaeditalDAO::exibirDadosPropostaEditalCompleto($_SESSION);
 
             $where = array();
             $where['p.stTipoDemanda NOT LIKE ?'] = 'NA';
@@ -411,9 +429,14 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
             parent::message("Pré Projeto não encontrado!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
         }
         $this->view->idUsuario = $this->idUsuario;
-        //xd($dados);
     }
 
+    /**
+     * enviararquivoeditalAction
+     *
+     * @access public
+     * @return void
+     */
     public function enviararquivoeditalAction() {
 
         ini_set('memory_limit', '-1');
@@ -438,6 +461,12 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
 
     }
 
+    /**
+     * listararquivosAction
+     *
+     * @access public
+     * @return void
+     */
     public function listararquivosAction() {
 
         $opcao = !empty($_GET['classificao']) ? $_GET['classificao'] : -1;
@@ -453,6 +482,12 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         exit(0);
     }
 
+    /**
+     * incluirAnexoAction
+     *
+     * @access public
+     * @return void
+     */
     public function incluirAnexoAction() {
 // pega as informações do arquivo
         $idUltimoArquivo = null;
@@ -471,7 +506,6 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
             {
                 parent::message("O arquivo não pode ser maior do que 10MB!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
             }
-            // cadastra dados do arquivo
             // cadastra dados do arquivo
 
             $tblTbDocumentoPreProjeto = new tbDocumentosPreProjeto();
@@ -545,6 +579,12 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         }
     }
 
+    /**
+     * incluirarquivoAction
+     *
+     * @access public
+     * @return void
+     */
     public function incluirarquivoAction() {
         $post = Zend_Registry::get('post');
 
@@ -556,7 +596,6 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                 'idTipoDocumento' => 0, //$post->tipodocumento,
                 'dsDocumento' => $post->observacao
             );
-            //xd($dados);
             $tabela = new tbDocumento();
             $idDocumento = $tabela->inserir($dados);
 
@@ -570,7 +609,6 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                     'idProposta' => $post->idPreProjeto,
                     'stAtivoDocumentoProposta' => 0
                 );
-                //xd($dados);
                 $DocumentoProposta = new tbDocumentoProposta();
                 $DocumentoProposta->inserir($dados);
             } else {
@@ -582,6 +620,12 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         }
     }
 
+    /**
+     * anexararquivo
+     *
+     * @access private
+     * @return void
+     */
     private function anexararquivo() {
         // pega as informações do arquivo
         $idUltimoArquivo = 'null';
@@ -625,14 +669,32 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         return $idUltimoArquivo;
     }
 
+    /**
+     * enviarpropostaaominceditalAction
+     *
+     * @access public
+     * @return void
+     */
     public function enviarpropostaaominceditalAction() {
 
     }
 
+    /**
+     * manteragentesAction
+     *
+     * @access public
+     * @return void
+     */
     public function manteragentesAction() {
 
     }
 
+    /**
+     * dadosproponenteenderecoeditalAction
+     *
+     * @access public
+     * @return void
+     */
     public function dadosproponenteenderecoeditalAction() {
 
         $get = Zend_Registry::get('get');
@@ -646,6 +708,12 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         $this->view->endereco = $tbeendereco;
     }
 
+    /**
+     * documentospendenteseditalAction
+     *
+     * @access public
+     * @return void
+     */
     public function documentospendenteseditalAction() {
 
         /* =============================================================================== */
@@ -657,26 +725,62 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         $this->view->documentosPendentes = AnalisarPropostaDAO::buscarDocumentoPendente($get->idPreProjeto);
     }
 
+    /**
+     * msnenviadasaominceditalAction
+     *
+     * @access public
+     * @return void
+     */
     public function msnenviadasaominceditalAction() {
 
     }
 
+    /**
+     * acompanhesuapropostaeditalAction
+     *
+     * @access public
+     * @return void
+     */
     public function acompanhesuapropostaeditalAction() {
 
     }
 
+    /**
+     * alterardtnascimentoeditalAction
+     *
+     * @access public
+     * @return void
+     */
     public function alterardtnascimentoeditalAction() {
 
     }
 
+    /**
+     * dadosenderecoeditalAction
+     *
+     * @access public
+     * @return void
+     */
     public function dadosenderecoeditalAction() {
 
     }
 
+    /**
+     * novodadosenderecoeditalAction
+     *
+     * @access public
+     * @return void
+     */
     public function novodadosenderecoeditalAction() {
 
     }
 
+    /**
+     * exluirpropostaAction
+     *
+     * @access public
+     * @return void
+     */
     public function exluirpropostaAction() {
 
         /* =============================================================================== */
@@ -700,10 +804,22 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         }
     }
 
+    /**
+     * editallocalizarAction
+     *
+     * @access public
+     * @return void
+     */
     public function editallocalizarAction() {
         $this->view->idAgente = $_REQUEST['idAgente'];
     }
 
+    /**
+     * editalconfirmarAction
+     *
+     * @access public
+     * @return void
+     */
     public function editalconfirmarAction() {
 
         if ($_REQUEST['idAgente']) {
@@ -735,6 +851,12 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         }
     }
 
+    /**
+     * editalconfirmarlocalizarAction
+     *
+     * @access public
+     * @return void
+     */
     public function editalconfirmarlocalizarAction() {
         if ($_REQUEST['idEdital']) {
             $this->view->dado = ManterpropostaeditalDAO::buscaEditalConfirmarLocalizar(array('idEdital' => $_REQUEST['idEdital']));
@@ -746,6 +868,12 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         }
     }
 
+    /**
+     * editalnovoAction
+     *
+     * @access public
+     * @return void
+     */
     public function editalnovoAction() {
 
         $post = Zend_Registry::get('post');
@@ -760,11 +888,24 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         $this->view->editalpreprojeto = $tbeditalpreprojeto;
     }
 
+    /**
+     * editalresumoAction
+     *
+     * @access public
+     * @return void
+     */
     public function editalresumoAction() {
         $array = array();
         $this->view->dados = ManterpropostaeditalDAO::listarEditalResumo($array);
     }
 
+    /**
+     * gerarpdfAction
+     *
+     * @access public
+     * @return void
+     * @todo retirar html da controller
+     */
     public function gerarpdfAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -838,9 +979,14 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
 
         $pdf = new PDF($output, 'pdf');
         $pdf->gerarRelatorio('h');
-        //$this->view->dados = ManterpropostaeditalDAO::listarEditalResumo(array());
     }
 
+    /**
+     * enviarPropostaAoMincAction
+     *
+     * @access public
+     * @return void
+     */
     public function enviarPropostaAoMincAction() {
 
         /* =============================================================================== */
@@ -862,7 +1008,6 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
             } elseif ($arrResultado['erro'] !== true) {
                 $arrResultado['erro'] = 0;
             }
-            //xd($arrResultado);
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
             $this->montaTela("manterpropostaedital/enviarproposta.phtml", array("acao" => $this->_urlPadrao . "/manterpropostaedital/salvar",
                 "erro" => $arrResultado['erro'],
@@ -873,6 +1018,13 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         }
     }
 
+    /**
+     * validarEnvioPropostaAoMinc
+     *
+     * @param mixed $idPreProjeto
+     * @access public
+     * @return void
+     */
     public function validarEnvioPropostaAoMinc($idPreProjeto) {
 
         //BUSCA DADOS DO PROJETO
@@ -886,13 +1038,6 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         $arrResultado = array();
 
         $arrResultado['erro'] = false;
-
-        //valida mes de envio da proposta
-        /* if(date("m") == "01" || date("m") == "12"){
-          $arrResultado['prazoenvioproposta']['erro'] = true;
-          $arrResultado['prazoenvioproposta']['msg'] = "Conforme Art 5º da Instrução Normativa nº 1, de 5 de outubro de 2010, nenhuma proposta poderá ser enviada ao MinC nos meses de DEZEMBRO e JANEIRO! - <font color='red'>PENDENTE</font>";
-          return $arrResultado;
-          } */
 
         /*         * ******* MOVIMENTACAO ******** */
         $tblMovimentacao = new Movimentacao();
@@ -909,7 +1054,6 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
 
         /*         * ******* DADOS DO PROPONENTE ******** */
         $tblProponente = new Proponente();
-        //$rsProponente = $tblProponente->buscar(array("a.idAgente = ?"=>$rsPreProjeto->idAgente))->current();
 
         $tblAgente = new Agente_Model_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsPreProjeto->idAgente))->current();
@@ -921,7 +1065,6 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         $dadosEmail = Email::buscar($rsPreProjeto->idAgente);
 
         $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $rsPreProjeto->idAgente);
-        //$dadosDirigente = ManterAgentes::buscaDirigentes($rsProponente->CNPJCPF);
 
         $tblLocaisRealizacao = new Abrangencia();
         $dadosLocais = $tblLocaisRealizacao->buscar(array("a.idProjeto" => $idPreProjeto, "a.stAbrangencia" => 1));
@@ -1049,6 +1192,12 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         return $arrResultado;
     }
 
+    /**
+     * confirmarEnvioPropostaAoMincAction
+     *
+     * @access public
+     * @return void
+     */
     public function confirmarEnvioPropostaAoMincAction() {
 
         /* =============================================================================== */
@@ -1157,16 +1306,13 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
 
                     if (count($rsMov) > 0) {
                         $ultimaMovimentacao = $rsMov->Movimentacao;
-                        //xd($ultimaMovimentacao);
                         //Pegando penultima movimentacao
                         $rsMov = $tblMovimentacao->buscar(array("idProjeto = ?" => $idPreProjeto, "Movimentacao <> ?" => $ultimaMovimentacao), array("idMovimentacao DESC"), 1, 0)->current();
-                        //xd($rsMov->toArray());
 
                         $movimentacaoDestino = 96;
                         if (count($rsMov) > 0) {
                             $movimentacaoDestino = $rsMov->Movimentacao;
                         }
-                        //xd($movimentacaoDestino);
                     } else {
                         $movimentacaoDestino = 96;
                     }
@@ -1199,23 +1345,9 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                     //PERSISTE DADOS DA AVALIACAO PROPOSTA
                     $tblAvaliacao->inserirAvaliacao($dados);
 
-//                    //REMOVER AS PENDENCIAS DE DOCUMENTO
-//                    $tblDocAnexados = new tbDocumentosPreProjeto();
-//                    $rsDocsAnexados = $tblDocAnexados->buscar(array("idProjeto = ?"=>$idPreProjeto));
-//                    $tblDocumentosPendentesProjeto = new DocumentosProjeto();
-//                    $tblDocumentosPendentesProponente = new DocumentosProponente();
-//                    //xd($rsDocsAnexados);
-//                    foreach($rsDocsAnexados as $anexo){
-//                        $tblDocumentosPendentesProjeto->delete("idProjeto = {$idPreProjeto} AND CodigoDocumento = {$anexo->CodigoDocumento}");
-//                        $tblDocumentosPendentesProponente->delete("idProjeto = {$idPreProjeto} AND CodigoDocumento = {$anexo->CodigoDocumento}");
-//                    }
-                    //$db->commit();
-
                     parent::message("A Proposta foi enviado com sucesso ao Minist&eacute;rio da Cultura!", "/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "CONFIRM");
                     die();
                 } catch (Exception $e) {
-                    //$db->rollback();
-                    //xd($e->getMessage());
                     parent::message("O Projeto n&atilde;o foi enviado ao Minist&eacute;rio da Cultura!", "/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
                     die();
                 }
@@ -1224,108 +1356,16 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                 die();
             }
         } else {
-            //xd($e->getMessage());
             parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
         }
     }
 
-    /*
-      public function confirmarEnvioPropostaAoMincAction()
-      {
-      //recupera parametros
-      $get = Zend_Registry::get('get');
-      $idPreProjeto = $get->idPreProjeto;
-      $valida = $get->valida;
-
-      if(isset($_REQUEST['edital'])){
-      $edital = "&edital=s";
-      }else{
-      $edital = "";
-      }
-
-      if(!empty ($idPreProjeto) && $valida == "s")
-      {
-      try{
-
-      $tblPreProjeto = new Proposta_Model_Preprojeto();
-      $tblAvaliacao = new AnalisarPropostaDAO();
-
-      //atualiza status da ultima movimentacao
-      $tblAvaliacao->updateEstadoMovimentacao($idPreProjeto);
-
-      //persiste os dados de Movimentacao
-      $tblMovimentacao = new Movimentacao();
-      $dados = array("idProjeto"=>$idPreProjeto,
-      "Movimentacao"=>"96",//satus
-      "DtMovimentacao"=>date("Y/m/d H:i:s"),
-      "stEstado"=>"0",//esta informacao estava fixa trigger
-      "Usuario"=>$this->idUsuario);
-
-      $tblMovimentacao->salvar($dados);
-
-
-      //recupera dados do projeto
-      $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
-
-      // Recuperando edital
-      $tblEdital = new Edital();
-      $rsEdital = $tblEdital->buscar(array("idEdital = ?"=>$rsPreProjeto->idEdital))->current();
-      $idOrgaoSuperior = $rsEdital->idOrgao;
-
-      //                if($rsPreProjeto->AreaAbrangencia == 0){
-      //                    $idOrgaoSuperior = 251;
-      //                }else{
-      //                    $idOrgaoSuperior = 160;
-      //                }
-      //recupera todos os tecnicos do orgao
-      $rsTecnicos = $tblPreProjeto->recuperarTecnicosOrgao($idOrgaoSuperior);
-
-      $arrTecnicosPropostas = array();
-      $tecnico = 0;
-      foreach($rsTecnicos as $tecnico){
-      $rsAvaliacaoPorTecnico = $tblAvaliacao->recuperarQtdePropostaTecnicoOrgao($tecnico->uog_orgao,$tecnico->usu_codigo);
-      $arrTecnicosPropostas[$tecnico->usu_codigo]= $rsAvaliacaoPorTecnico[0]->qtdePropostas;
-      }
-      asort($arrTecnicosPropostas);
-      //PEGA O ID DO TECNICO Q TEM MENOS PROPOSTAS
-      $ct=1;
-      foreach ($arrTecnicosPropostas as $chave => $valor) {
-      if($ct == 1){
-      $idTecnico = $chave;
-      $ct++;
-      }else{
-      break;
-      }
-      }
-
-      $dados = array();
-      $dados['idPreProjeto']  = $idPreProjeto;
-      $dados['idTecnico']     = $idTecnico;
-      $dados['dtEnvio']       = date("Y/m/d");
-      $dados['dtAvaliacao']   = date("Y/m/d");
-      $dados['avaliacao']     = "";
-      $dados['conformidade']  = 9;
-      $dados['estado']        = 0;
-      $dados['movimentacao']  = 96;
-
-      //insere primeira avaliaç?o da propsota
-      $tblAvaliacao->inserirAvaliacao($dados);
-
-      parent::message("O Projeto foi enviado com sucesso ao Minist&eacute;rio da Cultura!", "/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=".$idPreProjeto.$edital, "CONFIRM");
-
-      }catch (Exception $e){
-
-      parent::message("O Projeto n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=".$idPreProjeto.$edital, "ERROR");
-      }
-      }else{
-
-      parent::message("O Projeto n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=".$idPreProjeto.$edital, "ERROR");
-
-      }
-
-      }
+    /**
+     * validarAgenciaBancariaAction
+     *
+     * @access public
+     * @return void
      */
-
     public function validarAgenciaBancariaAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $ba = new BancoAgencia;
@@ -1339,9 +1379,12 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         exit();
     }
 
-
     /**
+     * excluiranexoAction
      * Método para efetuar a exclusão do arquivo
+     *
+     * @access public
+     * @return void
      */
     public function excluiranexoAction() {
         if (isset($_GET['idArquivo']) && !empty($_GET['idArquivo']) && isset($_GET['idPreProjeto']) && !empty($_GET['idPreProjeto']) && isset($_GET['tipoDocumento']) && !empty($_GET['tipoDocumento'])) :

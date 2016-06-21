@@ -119,7 +119,7 @@ class OperacionalController extends GenericControllerNew {
                 }
 
                 $this->view->cgccpf = $cnpjcpf;
-                $agentes = New Agentes();
+                $agentes = new Agente_Model_Agentes();
                 $interessados = New Interessado();
                 $buscaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $cnpjcpf));
 
@@ -179,7 +179,7 @@ class OperacionalController extends GenericControllerNew {
                 }
 
                 $this->view->cgccpf = $cnpjcpf;
-                $agentes = New Agentes();
+                $agentes = new Agente_Model_Agentes();
                 $interessados = New Interessado();
                 $buscaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $cnpjcpf));
 

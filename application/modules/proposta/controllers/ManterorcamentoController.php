@@ -10,12 +10,11 @@
  * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 
-//require_once "GenericControllerNew.php";
-
 class Proposta_ManterorcamentoController extends GenericControllerNew {
 
     private $idUsuario = null;
     private $idPreProjeto = null;
+
     /**
      * Reescreve o método init()
      * @access public
@@ -75,18 +74,20 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
         // Usuario Logado
         $auth = Zend_Auth::getInstance(); // instancia da autenticação
         $idusuario = $auth->getIdentity()->usu_codigo;
-        //$idorgao = $auth->getIdentity()->usu_orgao;
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
         $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
-        //$this->view->idorgao = $idorgao;
-
     }
 
+    /**
+     * produtoscadastradosAction
+     *
+     * @access public
+     * @return void
+     */
     public function produtoscadastradosAction() {
 
         $buscarEstado = EstadoDAO::buscar();
@@ -101,13 +102,15 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
         $buscarItem = ManterorcamentoDAO::buscarItensProdutos($this->idPreProjeto);
         $this->view->Item = $buscarItem;
 
-//        $ExcluirItem = ManterorcamentoDAO::excluirItemProdutos($this->idPreProjeto);
-//        $this->view->ExcluirItem = $ExcluirItem;
-
         $this->view->idPreProjeto = $this->idPreProjeto;
-
     }
 
+    /**
+     * custosadministrativosAction
+     *
+     * @access public
+     * @return void
+     */
     public function custosadministrativosAction() {
 
         $buscarEtapas = ManterorcamentoDAO::buscarCustosAdministrativos();
@@ -129,14 +132,32 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
 
     }
 
+    /**
+     * planilhaorcamentariaAction
+     *
+     * @access public
+     * @return void
+     */
     public function planilhaorcamentariaAction() {
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
+    /**
+     * planilhaorcamentariageralAction
+     *
+     * @access public
+     * @return void
+     */
     public function planilhaorcamentariageralAction(){
         $this->view->tipoPlanilha = 0; // 0=Planilha Orçamentária da Proposta
     }
 
+    /**
+     * consultarcomponenteAction
+     *
+     * @access public
+     * @return void
+     */
     public function consultarcomponenteAction() {
         $this->_helper->layout->disableLayout(); // desabilita o layout
 
@@ -174,13 +195,17 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
         }
     }
 
+    /**
+     * cadastrarprodutosAction
+     *
+     * @access public
+     * @return void
+     */
     public function cadastrarprodutosAction() {
         $this->_helper->layout->disableLayout();
 
         $this->view->idPreProjeto = $this->idPreProjeto;
 
-        /*if  ( isset ( $_GET['proposta'] ) ) {
-            $idProposta = $_GET['proposta'];*/
         if  ( isset ( $_GET['idPreProjeto'] ) && isset ( $_GET['produto'] )) {
             $idPreProjeto = $_GET['idPreProjeto'];
             $idProduto = $_GET['produto'];
@@ -240,15 +265,17 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
 
         $buscarProduto = ManterorcamentoDAO::buscarProdutos($this->idPreProjeto);
         $this->view->Produtos = $buscarProduto;
-
-
     }
 
+    /**
+     * cadastrarcustosAction
+     *
+     * @access public
+     * @return void
+     */
     public function cadastrarcustosAction() {
         $this->_helper->layout->disableLayout();
 
-        /*if  ( isset ( $_GET['proposta'] ) ) {
-            $idProposta = $_GET['proposta'];*/
         if  ( isset ( $_GET['idPreProjeto'] ) ) {
             $idPreProjeto = $_GET['idPreProjeto'];
 
@@ -291,7 +318,6 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
         	$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $idetapa = $_POST['idetapa'];
             $item = ManterorcamentoDAO::buscarItens($idetapa);
-            //xd($item);
             $a = 0;
             foreach($item as $Dadositem) {
                 $itemArray[$a]['idItem'] = $Dadositem->idPlanilhaItens;
@@ -356,21 +382,6 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
             $where = "idPlanilhaProposta = ".$_POST['proposta'];
 
             $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos(null, $idEtapa, $idProduto, $idItem, null, $idUf, $municipio,
-            														$unidade, $qtd, $ocorrencia, $valor, $qtdDias, $fonte);
-
-       /*     if(count($buscarProdutos)  0){
-            	//parent::message("Item já cadastrado com a mesma UF!", "manterorcamento/produtoscadastrados?idPreProjeto=".$idProposta,"ALERT");
-            	$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-	            echo "Cadastro duplicado de Produto na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada!";
-	            die;
-            }else{
-                xd($dados);*/
-	            ManterorcamentoDAO::editarPlanilhaProdutos($dados, $where);
-                    $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-	            //parent::message("Alteração realizada com sucesso!", "manterorcamento/produtoscadastrados?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
-	            echo "Altera&ccedil;&atilde;o realizada com sucesso!";
-	            die;
-        /*    } */
         }
 
         if  ( isset ( $_GET ) ) {
@@ -432,8 +443,6 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
         $buscarUnidade = ManterorcamentoDAO::buscarUnidade();
         $this->view->Unidade = $buscarUnidade;
 
-        //$buscarItem = ManterorcamentoDAO::buscarItensProdutos($idItem);
-
         $buscarItem = ManterorcamentoDAO::buscarItens($_GET['etapa']);
 
         $this->view->Item = $buscarItem;
@@ -444,6 +453,12 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
+    /**
+     * editarcustosAction
+     *
+     * @access public
+     * @return void
+     */
     public function editarcustosAction () {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 
@@ -451,8 +466,6 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
 
             $buscaDados = ManterorcamentoDAO::buscarDadosCustos($_GET);
             $this->view->Dados = $buscaDados;
-
-           // xd($buscaDados);
         }
 
         if(isset($_POST['iduf'])) {
@@ -516,6 +529,12 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
+    /**
+     * salvarprodutosAction
+     *
+     * @access public
+     * @return void
+     */
     public function salvarprodutosAction () {
 
         if  ( isset ( $_POST ) ) {
@@ -537,7 +556,6 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
             $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos($idProposta, $idEtapa, $idProduto, $idItem, null, $idUf);
 
             if($buscarProdutos){
-            	//parent::message("Item já cadastrado com a mesma UF!", "manterorcamento/produtoscadastrados?idPreProjeto=".$idProposta,"ALERT");
             	$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 	            echo "Cadastro duplicado de Produto na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada! Deseja cadastrar um novo item?";
 	            die;
@@ -545,7 +563,6 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
 	            $salvarProdutos = ManterorcamentoDAO::salvarNovoProduto($idProposta, $idProduto, $idEtapa, $idItem, $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $fonte, $idUf, $idMunicipio, $justificativa, $this->idUsuario);
 	            $this->view->SalvarNovo = $salvarProdutos;
 
-	            //parent::message("Cadastro realizado com sucesso!", "manterorcamento/produtoscadastrados?idPreProjeto=".$idProposta,"CONFIRM");
 	            $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 	            echo "Item cadastrado com sucesso. Deseja cadastrar um novo item?";
 	            die;
@@ -555,6 +572,12 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
+    /**
+     * salvarcustosAction
+     *
+     * @access public
+     * @return void
+     */
     public function salvarcustosAction () {
 
         if  ( isset ( $_POST ) ) {
@@ -599,19 +622,12 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
 
                 	$buscarCustos = ManterorcamentoDAO::buscarCustos($idProposta, $tipoCusto, $idEtapa, $idItem, $idUf, $idMunicipio,
                 								$fonte, $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $dsJustificativa);
-                	/*if($buscarCustos){
-                		$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-			            echo "Cadastro duplicado de Custo na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada!";
-			            die;
-                	}else{*/
 	                    $where = 'idPlanilhaProposta = ' . $_POST['idPlanilhaProposta'];
 
 	                    $db->update('SAC.dbo.tbPlanilhaProposta',$dados, $where);
-	                    //parent::message("Alteração realizada com sucesso!", "manterorcamento/custosadministrativos?idPreProjeto=".$idProposta ,"CONFIRM");
 	                    $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 	                    echo "Altera&ccedil;&atilde;o realizada com sucesso!";
 	                    die;
-                	/*}*/
                 }
                 else {
                 	$buscarCustos = ManterorcamentoDAO::buscarCustos($idProposta, $tipoCusto, $idEtapa, $idItem, $idUf, $idMunicipio);
@@ -630,7 +646,6 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
             }
             catch (Zend_Exception $e) {
 
-                //parent::message("Erro ao cadastrar dados", "manterorcamento/custosadministrativos?idPreProjeto=".$idProposta ,"ERROR");
                 $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
                 echo "Erro ao cadastrar dados";
                 die;
@@ -640,6 +655,12 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
+    /**
+     * salvarmesmoprodutoAction
+     *
+     * @access public
+     * @return void
+     */
     public function salvarmesmoprodutoAction () {
         if  ( isset ( $_POST ) ) {
             $dados = array(
@@ -667,9 +688,14 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
+    /**
+     * excluiritensprodutosAction
+     *
+     * @access public
+     * @return void
+     */
     public function excluiritensprodutosAction()
     {
-
         $idPlanilhaProposta = $_GET['idPlanilhaProposta'];
         $retorno = $_GET['retorno'];
 
@@ -682,5 +708,4 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
         }
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
-
 }

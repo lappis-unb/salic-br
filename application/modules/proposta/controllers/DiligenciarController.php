@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Proposta_DiligenciarController
+ *
+ * @uses GenericControllerNew
+ * @package Proposta
+ * @author  wouerner <wouerner@gmail.com>
+ */
 class Proposta_DiligenciarController extends GenericControllerNew {
 
     private $idPronac = null;
@@ -12,6 +19,12 @@ class Proposta_DiligenciarController extends GenericControllerNew {
     private $idAvaliacaoProposta = null;
     private $btnVoltar = null;// ajusta o link de voltar de acordo com o tipo de dilignecia
 
+    /**
+     * init
+     *
+     * @access public
+     * @return void
+     */
     public function init() {
         $this->view->title = "Salic - Sistema de Apoio �s Leis de Incentivo � Cultura"; // t�tulo da p�gina
 
@@ -61,14 +74,20 @@ class Proposta_DiligenciarController extends GenericControllerNew {
     }
 
     /**
+     * indexAction
      *
+     * @access public
+     * @return void
      */
     public function indexAction() {
         $this->_forward("listardiligenciaproponente");
     }
 
     /**
+     * cadastrardiligenciaAction
      *
+     * @access public
+     * @return void
      */
     public function cadastrardiligenciaAction()
     {
@@ -185,6 +204,12 @@ class Proposta_DiligenciarController extends GenericControllerNew {
         }
     }
 
+    /**
+     * imprimirdiligenciaAction
+     *
+     * @access public
+     * @return void
+     */
     public function imprimirdiligenciaAction() {
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $verificacaodao         = new Verificacao();
@@ -224,14 +249,11 @@ class Proposta_DiligenciarController extends GenericControllerNew {
                 $this->view->stEnviado      = $resp[0]->stEnviado;
                 $this->view->pronac         = $resp[0]->pronac;
                 $this->view->nomeProjeto    = $resp[0]->nomeProjeto;
-            //$this->view->Proponente = $rd[0]->Proponente;
                 $this->view->dataSolicitacao    = date('d/m/Y H:i', strtotime($resp[0]->dataSolicitacao));
             if ($resp[0]->dataResposta          != '')
                 $this->view->dataResposta       = date('d/m/Y H:i', strtotime($resp[0]->dataResposta));
                 $this->view->solicitacao        = $resp[0]->Solicitacao;
                 $this->view->resposta           = $resp[0]->Resposta;
-//                $this->view->nmArquivo          = $resp[0]->nmArquivo;
-//                $this->view->idArquivo          = $resp[0]->idArquivo;
             if ($resp[0]->idCodigoDocumentosExigidos) {
                 $documento                      = $DocumentosExigidosDao->listarDocumentosExigido($resp[0]->idCodigoDocumentosExigidos);
                 $this->view->DocumentosExigido  = $documento[0]->Descricao;
@@ -245,6 +267,12 @@ class Proposta_DiligenciarController extends GenericControllerNew {
         }
     }
 
+    /**
+     * cadastrarrespostadiligenciaAction
+     *
+     * @access public
+     * @return void
+     */
     public function cadastrarrespostadiligenciaAction() {
 
         $post = Zend_Registry::get('post');
@@ -358,6 +386,12 @@ class Proposta_DiligenciarController extends GenericControllerNew {
         $this->view->comprovantesDePagamento = $comprovantePagamentoModel->pesquisarComprovanteRecusado($this-> idPronac);
     }
 
+    /**
+     * excluirarquivoAction
+     *
+     * @access public
+     * @return void
+     */
     public function excluirarquivoAction(){
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 
@@ -445,6 +479,15 @@ class Proposta_DiligenciarController extends GenericControllerNew {
     private $situacaoProjetoResposta = array('C30' => 'anterior', 'E62' => 'anterior', 'E61' => 'anterior', 'E60' => 'anterior', 'E59' => 'anterior', 'E17' => 'E30', 'G18' => 'G54', 'D25' => 'anterior','D33'=>'anterior', 'B14' => 'anterior', 'E12' => 'anterior', 'E13' => 'anterior', 'E50' => 'anterior');
     private $situacaoProjetoNaoResposta = array('C30' => 'anterior', 'E62' => 'E66', 'E61' => 'E71', 'E60' => 'E69', 'E59' => 'anterior', 'E17' => 'E20', 'G18' => 'G20', 'D25' => 'mantem', 'B14' => 'anterior', 'E12' => 'anterior', 'E13' => 'anterior', 'E50' => 'anterior');
 
+    /**
+     * situacaoProjeto
+     *
+     * @param mixed $situacoes
+     * @param mixed $idPronac
+     * @param string $texto
+     * @access private
+     * @return void
+     */
     private function situacaoProjeto($situacoes, $idPronac, $texto = '') {
 
 
@@ -484,6 +527,12 @@ class Proposta_DiligenciarController extends GenericControllerNew {
         }
     }
 
+    /**
+     * updatediligenciaAction
+     *
+     * @access public
+     * @return void
+     */
     public function updatediligenciaAction() {
         $post = Zend_Registry::get('post');
         $diligenciaDAO = new Diligencia();
@@ -618,7 +667,10 @@ class Proposta_DiligenciarController extends GenericControllerNew {
     }
 
     /**
+     * inserirdiligenciaAction
      *
+     * @access public
+     * @return void
      */
     public function inserirdiligenciaAction()
     {
@@ -673,6 +725,12 @@ class Proposta_DiligenciarController extends GenericControllerNew {
         $this->view->mensagem = 'Dilig&ecirc;ncia enviada com sucesso!';
     }
 
+    /**
+     * salvardiligenciaAction
+     *
+     * @access public
+     * @return void
+     */
     public function salvardiligenciaAction() {
 
         $post                   = Zend_Registry::get('post');
@@ -732,6 +790,14 @@ class Proposta_DiligenciarController extends GenericControllerNew {
 
     }
 
+    /**
+     * eviarEmail
+     *
+     * @param mixed $idPronac
+     * @param mixed $tpDiligencia
+     * @access private
+     * @return void
+     */
     private function eviarEmail($idPronac,$tpDiligencia){
         $auth = Zend_Auth::getInstance();
         $tbTextoEmailDAO    =   new tbTextoEmail();
@@ -744,10 +810,7 @@ class Proposta_DiligenciarController extends GenericControllerNew {
 
         $dadosProjeto   =   $projetosDAO->dadosProjetoDiligencia($idPronac)->current();
 
-        //para Produ�?o comentar linha abaixo e para teste descomente ela
         $email  =   'bruno.alexandre@cultura.gov.br';
-        //para Produ�?o descomentar linha abaixo e para teste comente ela
-        //$email   =  $dadosProjeto->Email;
 
         $mens = '<b>Projeto: ' . $dadosProjeto->pronac . ' - ' . $dadosProjeto->NomeProjeto . '<br> Proponente: ' .
          $dadosProjeto->Destinatario . '<br> </b>' . $textoEmail->dsTexto;
@@ -810,10 +873,22 @@ class Proposta_DiligenciarController extends GenericControllerNew {
 
     }
 
+    /**
+     * operacoesDiligencia
+     *
+     * @access private
+     * @return void
+     */
     private function operacoesDiligencia() {
 
     }
 
+    /**
+     * anexararquivo
+     *
+     * @access private
+     * @return void
+     */
     private function anexararquivo() {
         // pega as informa��es do arquivo
         $idArquivo = '';
@@ -865,6 +940,12 @@ class Proposta_DiligenciarController extends GenericControllerNew {
         return array('idArquivo'=>$idArquivo,'Mensagem'=>$Mensagem);
     }
 
+    /**
+     * imprimirAction
+     *
+     * @access public
+     * @return void
+     */
     public function imprimirAction() {
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $verificacaodao         = new Verificacao();
@@ -919,6 +1000,12 @@ class Proposta_DiligenciarController extends GenericControllerNew {
         $this->view->arquivos = $arquivos;
     }
 
+    /**
+     * prorrogarAction
+     *
+     * @access public
+     * @return void
+     */
     public function prorrogarAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -961,12 +1048,15 @@ class Proposta_DiligenciarController extends GenericControllerNew {
         }
     }
 
-    /*
-      Descri�?o: checar os prazos para resposta de dilig?ncia.
-      O cursor � utilizado por a trigger que altera a situa�?o do projeto, quando o
-      propoenente responde a dilig?ncia, atua atrav�s do atribuito idPronac.
+    /**
+     * checarprazorespostaAction
+     * Descri�?o: checar os prazos para resposta de dilig?ncia.
+     * O cursor � utilizado por a trigger que altera a situa�?o do projeto, quando o
+     * propoenente responde a dilig?ncia, atua atrav�s do atribuito idPronac.
+     *
+     * @access public
+     * @return void
      */
-
     public function checarprazorespostaAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -1007,15 +1097,20 @@ class Proposta_DiligenciarController extends GenericControllerNew {
           $dao->checarprazorespostaProposta(); */
     }
 
+    /**
+     * listardiligenciaadmissibilidadeAction
+     *
+     * @access public
+     * @return void
+     */
+    public function listardiligenciaadmissibilidadeAction()
+    {
+        $Projetosdao   = new Projetos();
+        $PreProjetodao = new Proposta_Model_Preprojeto();
 
-	public function listardiligenciaadmissibilidadeAction()
-	{
-		$Projetosdao   = new Projetos();
-		$PreProjetodao = new Proposta_Model_Preprojeto();
+        ini_set('memory_limit', '-1');
 
-		ini_set('memory_limit', '-1');
-
-		$this->view->diligencias         = $Projetosdao->listarDiligencias(array('dil.idTipoDiligencia = ?' => 124, 'dil.stEnviado = ?' => 'S', 'dil.stEstado = ?' => '0', 'dil.DtResposta ?' => new Zend_Db_Expr('IS NOT NULL'), 'dil.idProponente ?' => new Zend_Db_Expr('IS NOT NULL')));
-		$this->view->diligenciasProposta = $PreProjetodao->listarDiligenciasPreProjeto(array('aval.dtResposta ?' => new Zend_Db_Expr('IS NOT NULL'), 'aval.stEnviado = ?' => 'S'));
-	}
+        $this->view->diligencias         = $Projetosdao->listarDiligencias(array('dil.idTipoDiligencia = ?' => 124, 'dil.stEnviado = ?' => 'S', 'dil.stEstado = ?' => '0', 'dil.DtResposta ?' => new Zend_Db_Expr('IS NOT NULL'), 'dil.idProponente ?' => new Zend_Db_Expr('IS NOT NULL')));
+        $this->view->diligenciasProposta = $PreProjetodao->listarDiligenciasPreProjeto(array('aval.dtResposta ?' => new Zend_Db_Expr('IS NOT NULL'), 'aval.stEnviado = ?' => 'S'));
+    }
 }

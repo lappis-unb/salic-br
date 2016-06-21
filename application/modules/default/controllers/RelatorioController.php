@@ -273,7 +273,7 @@ class RelatorioController extends GenericControllerNew {
             $this->view->estado = $get->estado;
         }
 
-        $Proposta = New Proposta();
+        $Proposta = new Proposta_Model_Proposta();
         $total = $Proposta->relatorioPropostas($where, $having, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
 
@@ -542,7 +542,7 @@ class RelatorioController extends GenericControllerNew {
             $this->view->estado = $get->estado;
         }
 
-        $Proposta = New Proposta();
+        $Proposta = new Proposta_Model_Proposta();
         $total = $Proposta->relatorioPropostas($where, $having, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
 

@@ -2,6 +2,7 @@
 /**
  * LocalDeRealizacaoController
  * @author Equipe RUP - Politec
+ * @author wouerner <wouerner@gmail.com>
  * @since 15/12/2010
  * @version 1.0
  * @package application
@@ -49,7 +50,6 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
             $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
         }else {
-            //xd($_REQUEST['idPreProjeto']);
             if($_REQUEST['idPreProjeto'] != '0'){
                 parent::message("Necessário informar o número da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
             }
@@ -160,7 +160,6 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
     public function salvarAction() {
         $post = Zend_Registry::get("post");
         $idAbrangencia = $post->cod;
-        //xd($idAbrangencia);
         //instancia classe modelo
         $tblAbrangencia = new Abrangencia();
 
@@ -194,18 +193,13 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
                 }
             }else {
                 parent::message("Registro já cadastrado, transação cancelada!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
-                //xd("registro ja cadastrado");
-                //return;
             }
             $locaisinvalidos[$i] = $local_c;
 
         }
 
-        //$db = Zend_Registry :: get('db');
-        //$db->setFetchMode(Zend_DB :: FETCH_OBJ);
         try {
             $global = 0;
-            //$db->beginTransaction();
 
             //incluindo novos registros
             if(empty($idAbrangencia)) {
@@ -241,7 +235,6 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
             for ($i=1; $i<=count($locais); $i++) {
                 $dados = array( "idProjeto"=>$this->idPreProjeto,
                 		"stAbrangencia" => 1,
-                        //"Usuario"  =>$this->view->usuario->IdUsuario,
                         "Usuario"  =>$this->usuarioLogado,
                         "idPais"   =>$locais[$i]["idPais"],
                         "idUF"     =>($locais[$i]["idPais"]==31)?$locais[$i]["idUF"]:0,
@@ -249,13 +242,11 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
 
                 $dados['stAbrangencia']=1;
                 $dados['idAbrangencia']=$idAbrangencia;
-                //x($dados);
                 if (!empty($dados["idProjeto"]) && !empty($dados["idPais"])) {
 
                     $retorno = $tblAbrangencia->salvar($dados);
                 }
             }
-            //$db->commit();
             if($idAbrangencia) {
                 parent::message("Alteração realizada com sucesso!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
             }
@@ -265,7 +256,6 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
             }
 
         }catch(Zend_Exception $ex) {
-            //$db->rollback();
             parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o! <br>", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ERROR");
         }
 
@@ -322,6 +312,12 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
         }
     }
 
+    /**
+     * formInserirAction
+     *
+     * @access public
+     * @return void
+     */
     public function formInserirAction() {
         $get = Zend_Registry::get('get');
         $idProjeto = $get->idPreProjeto;
@@ -336,6 +332,12 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
         $this->view->estados = $rsEstados;
     }
 
+    /**
+     * cidadesAction
+     *
+     * @access public
+     * @return void
+     */
     public function cidadesAction() {
         $this->_helper->layout->disableLayout();
         $post = Zend_Registry::get('post');
@@ -356,6 +358,12 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
         die();
     }
 
+    /**
+     * salvarLocalRealizacaoAction
+     *
+     * @access public
+     * @return void
+     */
     public function salvarLocalRealizacaoAction() {
         $post = Zend_Registry::get("post");
         $idAbrangencia = $post->cod;
@@ -406,6 +414,5 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
         }
 
         parent::message("Cadastro realizado com sucesso!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
-
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-include_once 'GenericController.php';
+//include_once 'GenericController.php';
 
 class AlterarprojetoController extends GenericControllerNew {
 
@@ -103,7 +103,7 @@ class AlterarprojetoController extends GenericControllerNew {
                 parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ERROR");
             }
 
-            $agentes = New Agentes();
+            $agentes = new Agente_Model_Agentes();
             $buscaTipoPessoa = $agentes->buscar(array('CNPJCPF = ?' => $CgcCpf));
 
             if ($buscaTipoPessoa[0]->TipoPessoa == 1) {
@@ -112,7 +112,7 @@ class AlterarprojetoController extends GenericControllerNew {
                 $this->view->pj = "false";
             }
 
-            $agentes = New Agentes();
+            $agentes = new Agente_Model_Agentes();
             $buscaTipoPessoa = $agentes->buscar(array('CNPJCPF = ?' => $CgcCpf));
             $this->idAgente = $buscaTipoPessoa[0]->idAgente;
 

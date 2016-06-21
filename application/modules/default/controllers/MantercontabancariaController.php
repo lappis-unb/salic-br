@@ -14,7 +14,7 @@
 class MantercontabancariaController extends GenericControllerNew {
 
     private $modal = "n";
-    
+
     public function init() {
         $PermissoesGrupo[] = 121; // Técnico de Acompanhamento
         $PermissoesGrupo[] = 129; // Técnico de Acompanhamento
@@ -22,7 +22,7 @@ class MantercontabancariaController extends GenericControllerNew {
         $PermissoesGrupo[] = 123; // Coordenador Geral de Acompanhamento
         parent::perfil(1, $PermissoesGrupo);
         parent::init();
-                
+
         //verifica se a funcionadade devera abrir em modal
         if ($this->_request->getParam("modal") == "s") {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -76,7 +76,7 @@ class MantercontabancariaController extends GenericControllerNew {
         $this->view->DadosBancarios = $resp;
 
         $tblProjeto = new Projetos();
-        $rsProjeto = $tblProjeto->buscar(array('AnoProjeto+Sequencial=?'=>$pronac))->current();                
+        $rsProjeto = $tblProjeto->buscar(array('AnoProjeto+Sequencial=?'=>$pronac))->current();
         if(empty($rsProjeto)){
             if ($this->modal == "s") {
                 echo "<br/><br/><br/><br/><center><font color='red'>N&uacute;mero de Pronac inv&aacute;lido!!</font></center>";
@@ -85,7 +85,7 @@ class MantercontabancariaController extends GenericControllerNew {
                 parent::message("N&uacute;mero de Pronac inv&aacute;lido!", "mantercontabancaria/consultar", "ALERT");
             }
         }
-        
+
         if(count($resp) < 1 && count($PronacExistente) > 0){
             if ($this->modal == "s") {
                 echo "<br/><br/><br/><br/><center><font color='red'>Você não tem acesso a esta unidade!</font></center>";
@@ -111,7 +111,7 @@ class MantercontabancariaController extends GenericControllerNew {
         $cap = new Captacao();
         $resultado = $cap->buscar(array('AnoProjeto+Sequencial = ?' => $pronac));
         $resultado2 = $cap->TotalCaptacaoReal($pronac)->current();
-        
+
         if(count($resultado)>0){
             if($resultado2->Soma > 0){
                 $this->view->captacao = true;
@@ -119,7 +119,7 @@ class MantercontabancariaController extends GenericControllerNew {
         }
 
     }
-    
+
     public function imprimirContaBancariaCadastradaAction() {
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
@@ -177,7 +177,7 @@ class MantercontabancariaController extends GenericControllerNew {
                 'ContaLivre' => '000000000000'
             );
             $reg = $cb->alterar($dadosUpdate);
-            
+
             if ( !empty($caminho) ){
                 parent::message("Exclus&atilde;o da(s) Conta(s) Banc&aacute;ria(s) realizada com sucesso!", $caminho, "CONFIRM");
             }else{
@@ -215,7 +215,7 @@ class MantercontabancariaController extends GenericControllerNew {
                 $id = $cb->alterar($dados, array('idContaBancaria = ?' => $resp->IdContaBancaria));
 
                 //parent::message("Cadastro realizado com sucesso!", "mantercontabancaria/alterar?pronac=$pronac", "CONFIRM");
-                
+
                 if ( !empty($caminho) ){
                     parent::message("Cadastro realizado com sucesso!", $caminho, "CONFIRM");
                 }else{
@@ -230,12 +230,12 @@ class MantercontabancariaController extends GenericControllerNew {
                 }
             }
 
-            
+
         }
     }
 
     public function regularidadeProponenteAction(){
-        
+
     }
 
     public function consultarregularidadeproponenteAction() {
@@ -266,7 +266,7 @@ class MantercontabancariaController extends GenericControllerNew {
             }
 
             $this->view->cgccpf = $cnpjcpf;
-            $agentes = New Agentes();
+            $agentes = new Agente_Model_Agentes();
             $interessados = New Interessado();
             $buscaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $cnpjcpf));
 
@@ -326,7 +326,7 @@ class MantercontabancariaController extends GenericControllerNew {
             }
 
             $this->view->cgccpf = $cnpjcpf;
-            $agentes = New Agentes();
+            $agentes = new Agente_Model_Agentes();
             $interessados = New Interessado();
             $buscaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $cnpjcpf));
 

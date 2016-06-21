@@ -75,7 +75,7 @@ class ManterRegularidadeProponenteController extends GenericControllerNew {
         else :
             $this->view->dsMod = 'Acompanhamento';
         endif;
-        
+
         $cnpjcpf = $this->_request->getParam("cpfCnpj");
         if(strlen(retiraMascara($cnpjcpf)) > 11){
             $this->proponente = "PJ";
@@ -124,7 +124,7 @@ class ManterRegularidadeProponenteController extends GenericControllerNew {
      * @return void
      */
     public function indexAction() {
-        
+
     }
 
 // fecha método indexAction()
@@ -140,7 +140,7 @@ class ManterRegularidadeProponenteController extends GenericControllerNew {
         if (isset($_POST['pronacEnviado']) || isset($_GET['pronacEnviado'])) {
             $this->view->pronacEnviado = isset($_POST['pronacEnviado']) ? $_POST['pronacEnviado'] : $_GET['pronacEnviado'];
         }
-        
+
         if ($this->_request->getParam("modal") == "s") {
             header("Content-Type: text/html; charset=ISO-8859-1");
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -170,7 +170,7 @@ class ManterRegularidadeProponenteController extends GenericControllerNew {
             if(count($buscaDados)>0){
                 $this->view->habilitarCepim = 1;
             }
-            
+
             if (empty($cnpjcpf)) {
                 if ($this->_request->getParam("modal") == "s") {
                     echo "<br/><br/><br/><br/><center><font color='red'>Por favor, informe o campo CPF/CNPJ!</font></center>";
@@ -178,7 +178,7 @@ class ManterRegularidadeProponenteController extends GenericControllerNew {
                 } else {
                     parent::message('Por favor, informe o campo CPF/CNPJ!', 'manterregularidadeproponente/index' . $this->queryString, 'ALERT');
                 }
-            } 
+            }
             if ($this->proponente == "PF" && !Validacao::validarCPF($cnpjcpf)) {
                 if ($this->_request->getParam("modal") == "s") {
                     echo "<br/><br/><br/><br/><center><font color='red'>Por favor, informe um CPF v&aacute;lido!</font></center>";
@@ -186,7 +186,7 @@ class ManterRegularidadeProponenteController extends GenericControllerNew {
                 } else {
                     parent::message('Por favor, informe um CPF v&aacute;lido!', 'manterregularidadeproponente/index' . $this->queryString, 'ALERT');
                 }
-            } 
+            }
             if ($this->proponente == "PJ" && !Validacao::validarCNPJ($cnpjcpf)) {
                 if ($this->_request->getParam("modal") == "s") {
                     echo "<br/><br/><br/><br/><center><font color='red'>Por favor, informe um CNPJ v&aacute;lido!</font></center>";
@@ -194,16 +194,16 @@ class ManterRegularidadeProponenteController extends GenericControllerNew {
                 } else {
                     parent::message('Por favor, informe um CNPJ v&aacute;lido!', 'manterregularidadeproponente/index' . $this->queryString, 'ALERT');
                 }
-            } 
+            }
 
                 $this->view->cgccpf = $_REQUEST['cpfCnpj'];
-                $agentes = New Agentes();
+                $agentes = new Agente_Model_Agentes();
                 $interessados = New Interessado();
                 $certidoesNegativas = New CertidoesNegativas();
                 $buscaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $cnpjcpf));
 
                 $buscaInteressados = $interessados->buscar(array('CgcCpf = ?' => $cnpjcpf));
-                
+
                 if (!$buscaAgentes[0] or !$buscaInteressados[0]) {
                     if ($this->_request->getParam("modal") == "s") {
                         echo "<br/><br/><br/><br/><center>O Agente n&atilde;o est&aacute; cadastrado!</font></center>";
@@ -458,7 +458,7 @@ class ManterRegularidadeProponenteController extends GenericControllerNew {
         $verificacadin = $this->_request->getParam("verificacadin");
         $verificacepim = $this->_request->getParam("verificacepim");
         $cgccpf = Mascara::delMaskCNPJ($this->_request->getParam("cgcCpf"));
-        
+
         $certidoesNegativas = New CertidoesNegativas();
 
         if ($verificaqf == 1) {
@@ -662,7 +662,7 @@ class ManterRegularidadeProponenteController extends GenericControllerNew {
                 $insereCertidao = $certidoesNegativas->inserir($arraycepim);
             }
         }
-        
+
         $caminho = $this->_request->getParam("caminho");
         if ( !empty($caminho) ){
             parent::message("Cadastro realizado com sucesso!", $caminho, "CONFIRM");
@@ -704,7 +704,7 @@ class ManterRegularidadeProponenteController extends GenericControllerNew {
             } else {
 
                 $this->view->cgccpf = $_REQUEST['cpfCnpj'];
-                $agentes                        = New Agentes();
+                $agentes                        = new Agente_Model_Agentes();
                 $nomes                          = New Nomes();
                 $interessados                   = New Interessado();
                 $certidoesNegativas             = New CertidoesNegativas();
@@ -717,8 +717,8 @@ class ManterRegularidadeProponenteController extends GenericControllerNew {
                 $this->view->nomeproponente     = $nomeProponente;
 //                $this->view->NrProjeto          = $rst[0]->NrProjeto;
 //                $this->view->NomeProjeto        = $tblProjetos->buscarTodosDadosProjeto(array('CgcCpf = ?' => $buscaAgentes));
-                
-//                $rsProjeto = $tblProjeto->buscar(array("idPronac = ?"=>$get->idPronac))->current();                
+
+//                $rsProjeto = $tblProjeto->buscar(array("idPronac = ?"=>$get->idPronac))->current();
 //                $this->view->projeto = $rsProjeto;
 
                 $buscaInteressados = $interessados->buscar(array('CgcCpf = ?' => $cnpjcpf));
@@ -940,11 +940,11 @@ class ManterRegularidadeProponenteController extends GenericControllerNew {
             parent::message('Dados obrigat&oacute;rios n&atilde;o informados!', 'manterregularidadeproponente/index' . $this->queryString, 'ERROR');
         }
     }
-    
+
     public function excluirCertidaoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $post = Zend_Registry::get('post');
-        
+
         $CertidoesNegativas = new CertidoesNegativas();
         $exclusao = $CertidoesNegativas->delete(array('CgcCpf = ?' => $post->cpfcnpj, 'CodigoCertidao = ?' => $post->cod));
         if($exclusao){
@@ -1047,7 +1047,7 @@ class ManterRegularidadeProponenteController extends GenericControllerNew {
                     $qtdDias = $this->FGTS;
                 }
             }
-            
+
             $dtEmissao = $arrDtTemp[0].'-'.$arrDtTemp[1].'-'.$arrDtTemp[2];
             $dtEmissao = date('d/m/Y', strtotime("+".$qtdDias." days", strtotime($dtEmissao)));
 

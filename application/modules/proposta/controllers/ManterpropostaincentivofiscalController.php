@@ -2,6 +2,7 @@
 
 /** VerificarReadequacaoDeProjetoController
  * @author Equipe RUP - Politec
+ * @author wouerner <wouerner@gmail.com>
  * @since 17/05/2010
  * @version 1.0
  * @package application
@@ -108,12 +109,25 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
         }
     }
 
+    /**
+     * verificaPermissaoAcessoProposta
+     *
+     * @param mixed $idPreProjeto
+     * @access public
+     * @return void
+     */
     public function verificaPermissaoAcessoProposta($idPreProjeto) {
         $tblProposta = new Proposta_Model_Proposta();
         $rs = $tblProposta->buscar(array("idPreProjeto = ? " => $idPreProjeto, "1=1 OR idEdital IS NULL OR idEdital > 0" => "?", "idUsuario =?" => $this->idResponsavel));
         return $rs->count();
     }
 
+    /**
+     * indexAction
+     *
+     * @access public
+     * @return void
+     */
     public function indexAction() {
         $arrBusca = array();
         $arrBusca['stEstado = ?'] = 1;
@@ -128,6 +142,12 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
             "dados" => $rsPreProjeto));
     }
 
+    /**
+     * declaracaonovapropostaAction
+     *
+     * @access public
+     * @return void
+     */
     public function declaracaonovapropostaAction() {
 
         $this->_helper->viewRenderer->setNoRender(true);
@@ -146,6 +166,12 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
             "agente" => $post->propronente));
     }
 
+    /**
+     * buscaproponenteAction
+     *
+     * @access public
+     * @return void
+     */
     public function buscaproponenteAction() {
         $post = Zend_Registry::get('post');
 
@@ -169,6 +195,12 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
         }
     }
 
+    /**
+     * validaagenciaAction
+     *
+     * @access public
+     * @return void
+     */
     public function validaagenciaAction() {
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
@@ -472,6 +504,12 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
         }
     }
 
+    /**
+     * enviarPropostaAoMincAction
+     *
+     * @access public
+     * @return void
+     */
     public function enviarPropostaAoMincAction() {
 
         /* =============================================================================== */
@@ -498,7 +536,15 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
         }
     }
 
+    /**
+     * validarEnvioPropostaAoMinc
+     *
+     * @param mixed $idPreProjeto
+     * @access public
+     * @return void
+     */
     public function validarEnvioPropostaAoMinc($idPreProjeto) {
+    /* }}} */
         //BUSCA DADOS DO PROJETO
         $arrBusca = array();
         $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
@@ -1066,12 +1112,24 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
             "script" => $script));
     }
 
+    /**
+     * listarPropostasAction
+     *
+     * @access public
+     * @return void
+     */
     public function listarPropostasAction() {
 
         // Desativei essa view para a outra abaixo
         $this->_redirect("proposta/manterpropostaincentivofiscal/listarproposta");
     }
 
+    /**
+     * listarpropostaAction
+     *
+     * @access public
+     * @return void
+     */
     public function listarpropostaAction() {
         $proposta = new Proposta_Model_Proposta();
         $dadosCombo = array();
@@ -1102,7 +1160,13 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
         $this->view->idUsuario = $this->idUsuario;
     }
 
-
+    /**
+     * localizarPropostaAction
+     *
+     * @access public
+     * @return void
+     * @todo retirar html
+     */
     public function localizarPropostaAction() {
 
         $this->_helper->viewRenderer->setNoRender(true);

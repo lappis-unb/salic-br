@@ -4319,7 +4319,7 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
                         $consultaRegularidade = $paRegularidade->exec($rs->CgcCpf);
                         $this->view->regularidadeproponente = $consultaRegularidade;
 
-                        $agentes = New Agentes();
+                        $agentes = new Agente_Model_Agentes();
                         $buscaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $rs->CgcCpf));
                         $this->view->regularidadeCgccpf = $rs->CgcCpf;
 

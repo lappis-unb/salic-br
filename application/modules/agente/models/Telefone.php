@@ -39,6 +39,7 @@ class Agente_Model_Telefone extends Zend_Db_Table
      * @access public
      * @param array $dados
      * @return boolean
+     * @todo colocar orm
      */
     public static function cadastrar($dados)
     {
@@ -63,6 +64,7 @@ class Agente_Model_Telefone extends Zend_Db_Table
      * @access public
      * @param integer $id
      * @return object $db->fetchAll($sql)
+     * @todo colocar orm
      */
     public static function excluir($id)
     {
@@ -80,12 +82,12 @@ class Agente_Model_Telefone extends Zend_Db_Table
 
         return $db->fetchAll($sql);
     }
-
     /**
      * Método para excluir todos os telefones de um conselheiro
      * @access public
      * @param integer $id
      * @return object $db->fetchAll($sql)
+     * @todo colocar orm
      */
     public static function excluirTodos($idAgente)
     {

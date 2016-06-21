@@ -3,7 +3,7 @@
  * Proposta
  *
  * @uses GenericModel
- * @package Webdav
+ * @package
  * @author  wouerner <wouerner@gmail.com>
  */
 class Proposta_Model_Proposta extends GenericModel
@@ -160,6 +160,7 @@ class Proposta_Model_Proposta extends GenericModel
      * @param mixed $idOrgao
      * @access public
      * @return void
+     * @todo colocar no padrão orm
      */
     public function buscarTecnicosHistoricoAnaliseVisual($idOrgao){
         $sql = "
@@ -1011,7 +1012,6 @@ class Proposta_Model_Proposta extends GenericModel
         }
 
         if ($count) {
-            //xd($slct->assemble());
             return $this->fetchAll($slct)->count();
         }
 
@@ -1027,7 +1027,6 @@ class Proposta_Model_Proposta extends GenericModel
             $slct->limit($tamanho, $tmpInicio);
         }
 
-        //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 
@@ -1148,7 +1147,6 @@ class Proposta_Model_Proposta extends GenericModel
         //adicionando linha order ao select
         $slct->order($order);
 
-        //$this->_totalRegistros = $this->fetchAll($slct)->count();
         // paginacao
         if ($tamanho > -1) {
             $tmpInicio = 0;
@@ -1157,7 +1155,6 @@ class Proposta_Model_Proposta extends GenericModel
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 

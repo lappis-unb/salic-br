@@ -2,6 +2,7 @@
 /**
  * MantertabelaitensController
  * @author Equipe RUP - Politec
+ * @author wouerner <wouerner@gmail.com>
  * @since 10/12/2010
  * @version 1.0
  * @package application
@@ -10,7 +11,6 @@
  * @copyright ? 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
 set_time_limit(0);
-//require_once "GenericControllerNew.php";
 
 class Proposta_MantertabelaitensController extends GenericControllerNew {
 
@@ -24,8 +24,6 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
      * @param void
      * @return void
      */
-
-
     public function init() {
 
         // autenticaç?o e permiss?es zend (AMBIENTE MINC)
@@ -38,7 +36,6 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
         parent::init(); // chama o init() do pai GenericControllerNew
         $auth = Zend_Auth::getInstance(); // instancia da autenticaç?o
 
-//        $this->idUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
         if(isset($auth->getIdentity()->usu_codigo)){
             $this->idUsuario = $auth->getIdentity()->usu_codigo;
         } else {
@@ -54,8 +51,7 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
             $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
         }
-    } // fecha método init()
-
+    }
 
     /**
      * Redireciona para o fluxo inicial
@@ -64,12 +60,15 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
      * @return void
      */
     public function indexAction() {
-        //$this->_forward("solicitacoes", "mantertabelaitens");
         $this->_forward("consultartabelaitens", "mantertabelaitens");
-    } // fecha método indexAction()
+    }
 
-
-
+    /**
+     * produtosetapasitensAction
+     *
+     * @access public
+     * @return void
+     */
     public function produtosetapasitensAction() {
 
 
@@ -81,8 +80,14 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
 
         $tbitem = MantertabelaitensDAO::buscaitem();
         $this->view->item = $tbitem;
-    } // fecha método produtosetapasitensAction()
+    }
 
+    /**
+     * solicitaritensAction
+     *
+     * @access public
+     * @return void
+     */
     public function solicitaritensAction() {
 
         $tbproduto = MantertabelaitensDAO::buscaproduto();
@@ -127,17 +132,6 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
                     'DtSolicitacao' => new Zend_Db_Expr('GETDATE()'),
                     'stEstado' => '0'
                 );
-                 /*{
-                $dadosincluir = array(
-                            //	'idPlanilhaItens' 	=> $idPlanilhaItens,
-                            'Descricao'   		=> $Descricao,
-                            'idUsuario'			=> $this->idUsuario);
-                            }*/
-
-                /*$dadosassociar = array(
-                        'idPlanilhaItens'		=> $idPlanilhaItens,
-                        'idProduto'			=> $produto,
-                        'idEtapa'			=> $etapa);*/
 
                 $dadosincluir = array(
                     'idPlanilhaItens' => 0,
@@ -164,7 +158,7 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
 
                 if(count($res)>0) {
                     throw new Exception("Cadastro duplicado de Produto na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada!");
-                }//fecha if se registro repedito
+                }
 
                 if (empty($justificativa)) {
                     throw new Exception("Por favor, informe a justificativa!");
@@ -196,8 +190,6 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
                     if ($incluiritem) {
                         $NovoItem = MantertabelaitensDAO::buscarItem($this->idUsuario);
                         $dadosassociar['idPlanilhaItens'] = $NovoItem['idPlanilhaItens'];
-                        //$dadosassociar->idPlanilhaItens = $NovoItem->idPlanilhaItens;
-                        //$associaritem = MantertabelaitensDAO::associaritem($dadosassociar);
 
                         parent::message("Cadastro realizado com sucesso!", "mantertabelaitens/solicitacoes?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
                         return;
@@ -205,16 +197,21 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
                     else {
                         throw new Exception("Erro ao cadastrar o Item!");
                     }
-                } // fecha else
+                }
             }catch (Exception $e) {
 
                 parent::message($e->getMessage(), "mantertabelaitens/solicitaritens?idPreProjeto=".$this->idPreProjeto, "ERROR");
                 return;
             }
-        } // fecha if
-
+        }
     }
 
+    /**
+     * minhasSolicitacoesAction
+     *
+     * @access public
+     * @return void
+     */
     public function minhasSolicitacoesAction() {
         $this->intTamPag = 10;
 
@@ -319,6 +316,12 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
         $this->view->solicitacao = $tbsolicitacao;
     }
 
+    /**
+     * imprimirMinhasSolicitacoesAction
+     *
+     * @access public
+     * @return void
+     */
     public function imprimirMinhasSolicitacoesAction() {
         $this->intTamPag = 10;
 
@@ -403,21 +406,32 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
 
     }
 
-
-
+    /**
+     * associaritemAction
+     *
+     * @access public
+     * @return void
+     */
     public function associaritemAction() {
 
     }
 
-
-
-
+    /**
+     * cadastraritemAction
+     *
+     * @access public
+     * @return void
+     */
     public function cadastraritemAction() {
 
     }
 
-
-
+    /**
+     * solicitacoesAction
+     *
+     * @access public
+     * @return void
+     */
     public function solicitacoesAction() {
 
         $tbsolicitacao = MantertabelaitensDAO::solicitacoes($this->idUsuario);
@@ -426,13 +440,6 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
     	if($_POST)
         {
         	$tbsolicitacaos = MantertabelaitensDAO::solicitacoes($this->idUsuario);
-
-//        	$produto			= $tbsolicitacao->Produto;
-//        	$etapa      		= $tbsolicitacao->Etapa;
-//        	$item       		= $tbsolicitacao->ItemSolicitado;
-//        	$Justificativa   	= $tbsolicitacao->Justificativa;
-//        	$estado       		= $tbsolicitacao->Estado;
-//        	$resposta       	= $tbsolicitacao->Resposta;
 
         	$html = '<table class="tabela">
 			            <tr>
@@ -459,19 +466,20 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
 			            endforeach;
 			$html .= '</table>';
 
-			//xd($html);
-
 			$this->_helper->layout->disableLayout();
 	        $this->_helper->viewRenderer->setNoRender();
 
 	        $pdf = new PDF($html, 'pdf');
 	        $pdf->gerarRelatorio();
-
         }
+    }
 
-    } // fecha método solicitaritensAction()
-
-
+    /**
+     * exibirdadosAction
+     *
+     * @access public
+     * @return void
+     */
     public function exibirdadosAction() {
 
         if ($this->getRequest()->isPost()) {
@@ -518,13 +526,15 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
             {
                 parent::message($e->getMessage(), "mantertabelaitens/exibirdados?idPreProjeto=".$this->idPreProjeto, "ERROR");
             }
-
-
-
-        } // fecha método solicitaritensAction()
-
+        }
     }
 
+	/**
+	 * buscaetapasAction
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function buscaetapasAction()
 	{
 		$this->_helper->layout->disableLayout();
@@ -534,10 +544,14 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
 		$this->view->etapas = MantertabelaitensDAO::exibirEtapa($idProduto);
 
 		$this->view->idProduto = $idProduto;
-
-
 	}
 
+	/**
+	 * buscaitensAction
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function buscaitensAction()
 	{
 		$this->_helper->layout->disableLayout();
@@ -545,15 +559,17 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
 		$idProduto 	= $_POST['idProduto'];
 		$idEtapa 	= $_POST['idEtapa'];
 
-		//die(MantertabelaitensDAO::exibirItem($idProduto, $idEtapa));
-
 		$this->view->itens = MantertabelaitensDAO::exibirItem($idProduto, $idEtapa);
 		$this->view->idProduto = $idProduto;
 		$this->view->idEtapa = $idEtapa;
-
 	}
 
-
+    /**
+     * consultartabelaitensAction
+     *
+     * @access public
+     * @return void
+     */
     public function consultartabelaitensAction() {
         $post = Zend_Registry::get('post');
 
@@ -573,10 +589,14 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
 
         $buscardados =  MantertabelaitensDAO:: buscaprodutoetapaitem();
         $this->view->buscardados = $buscardados;
+    }
 
-
-    } // fecha método consultartabelaitensAction()
-
+    /**
+     * imprimirAction
+     *
+     * @access public
+     * @return void
+     */
     public function imprimirAction(){
 
         $this->_helper->layout->disableLayout();
@@ -667,22 +687,16 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
         }
     }
 
-//
-//    	public function gerarpdfAction() {
-//			$this->_helper->layout->disableLayout ();
-//			$html = $_POST ['html'];
-//                        $formato = $_POST ['formato'];
-//                        //xd($html);
-//                        $pdf = new PDF($html, $formato,"Relatorio");
-//                        $pdf->gerarRelatorio();
-//
-//
-//	}
-//
-        public function gerarpdfAction() {
+    /**
+     * gerarpdfAction
+     *
+     * @access public
+     * @return void
+     * @todo retirar html
+     */
+    public function gerarpdfAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
-
 
         $output = '
 			<style>
@@ -728,8 +742,6 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
 
 			</style>';
 
-
-
         $output .= $_POST['html'];
 
         $patterns = array();
@@ -754,7 +766,5 @@ class Proposta_MantertabelaitensController extends GenericControllerNew {
 
         $pdf = new PDF($output, 'pdf');
         $pdf->gerarRelatorio('h');
-        //$this->view->dados = ManterpropostaeditalDAO::listarEditalResumo(array());
     }
-
-} // fecha class
+}
