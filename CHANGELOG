@@ -1,3 +1,9 @@
+Release 1.8.2
+  * Fix: [API DE SERVIÇOS] Corrigindo erros de caracteres UTF8 na síntese do projeto.
+
+Release 1.8.1
+  * Fix: Inserindo a classe abastrata para implementar o webservice provider do Salic.
+
 Release 1.8.0
   * Novo: [API DE SERVIÇOS] Adicionando API de Serviços para realizar Autenticação, Consultas de projetos, proponentes e extrato bancário.
 
