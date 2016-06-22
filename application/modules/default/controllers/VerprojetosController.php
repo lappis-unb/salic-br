@@ -54,12 +54,6 @@ class VerProjetosController extends GenericControllerNew {
                 $idPronac = Seguranca::dencrypt($idPronac);
             }
 
-            $verificaCompravacaoFinanceira = ConsultarDadosProjetoDAO::verificaComprovarExecucaoFinanceira($idPronac);
-            if (!empty($verificaCompravacaoFinanceira)) {
-                $this->view->menuCompExecFin = true;
-            } else {
-                $this->view->menuCompExecFin = false;
-            }
 
             $dados = array();
             $dados['idPronac'] = (int) $idPronac;
@@ -309,96 +303,6 @@ class VerProjetosController extends GenericControllerNew {
         }
     }
 
-    public function index2Action() {
-
-
-        if (isset($_REQUEST['idPronac'])) {
-
-            $idPronac = $_GET['idPronac'];
-			if (strlen($idPronac) > 7) {
-				$idPronac = Seguranca::dencrypt($idPronac);
-			}
-            $verificaCompravacaoFinanceira = ConsultarDadosProjetoDAO::verificaComprovarExecucaoFinanceira($idPronac);
-
-            if (!empty($verificaCompravacaoFinanceira)) {
-                $this->view->menuCompExecFin = true;
-            } else {
-                $this->view->menuCompExecFin = false;
-            }
-
-            $dados = array();
-            $dados['idPronac'] = (int) $_REQUEST['idPronac'];
-            if (is_numeric($dados['idPronac'])) {
-
-                if (isset($dados['idPronac'])) {
-                    $idPronac = $dados['idPronac'];
-                    //UC 13 - MANTER MENSAGENS (Habilitar o menu superior)
-                    $this->view->idPronac = $idPronac;
-                    $this->view->menumsg = 'true';
-                }
-                $rst = ConsultarDadosProjetoDAO::obterDadosProjeto($dados);
-
-                if (count($rst) > 0) {
-                    $this->view->projeto = $rst[0];
-                    $this->view->idpronac = $_REQUEST['idPronac'];
-                    $this->view->idprojeto = $rst[0]->idProjeto;
-                    if ($rst[0]->codSituacao == 'E12' || $rst[0]->codSituacao == 'E13' || $rst[0]->codSituacao == 'E15' || $rst[0]->codSituacao == 'E50' || $rst[0]->codSituacao == 'E59' || $rst[0]->codSituacao == 'E61' || $rst[0]->codSituacao == 'E62') {
-                        $this->view->menuCompExec = 'true';
-                    }
-
-                    $geral = new ProponenteDAO();
-                    $tblProjetos = new Projetos();
-
-                    $arrBusca['IdPronac = ?']=$idPronac;
-                    $rsProjeto = $tblProjetos->buscar($arrBusca)->current();
-
-                    $idPreProjeto = $rsProjeto->idProjeto;
-
-                    $tbdados = $geral->buscarDadosProponente($idPronac);
-                    $this->view->dados = $tbdados;
-
-                    $tbemail = $geral->buscarEmail($idPronac);
-                    $this->view->email = $tbemail;
-
-                    $tbtelefone = $geral->buscarTelefone($idPronac);
-                    $this->view->telefone = $tbtelefone;
-
-                    $tblAgente = new Agentes();
-                    $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$tbdados[0]->CgcCpf))->current();
-
-                    $rsDirigentes = $tblAgente->buscarDirigentes(array('v.idVinculoPrincipal =?'=>$rsAgente->idAgente));
-                    //$tbDirigentes = $geral->buscarDirigentes($idPronac);
-                    $this->view->dirigentes = $rsDirigentes;
-                    $arrMandatos = array();
-                    
-                    $tbMandato = new tbMandato();
-                    foreach($rsDirigentes as $dirigente){
-                        $rsMandato = $tbMandato->listarMandato(array('idAgente = ?' => $dirigente->idAgente, 'stMandatoCancelado = ?' => 0));
-                        $arrMandatos[$dirigente->idAgente] = $rsMandato;
-                    }
-                    
-                    xd($arrMandatos);
-                    $this->view->mandatos = $buscarMandato;
-                    
-                    
-
-                    $this->view->CgcCpf = $tbdados[0]->CgcCpf;
-
-                    if(!empty ($idPreProjeto)){
-                        //OUTROS DADOS PROPONENTE
-                        $this->view->itensGeral = AnalisarPropostaDAO::buscarGeral($idPreProjeto);
-                    }
-
-                } else {
-                    parent::message("Nenhum projeto encontrado com o n&uacute;mero de Pronac informado.", "listarprojetos/listarprojetos", "ERROR");
-                }
-            } else {
-                parent::message("N&uacute;mero Pronac inv&aacute;lido!", "listarprojetos/listarprojetos", "ERROR");
-            }
-        } else {
-            parent::message("N&uacute;mero Pronac inv&aacute;lido!", "listarprojetos/listarprojetos", "ERROR");
-        }
-    }
 
     public function gerarpdfAction() {
 

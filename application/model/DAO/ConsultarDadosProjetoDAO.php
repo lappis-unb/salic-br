@@ -57,30 +57,5 @@ class ConsultarDadosProjetoDAO extends Zend_Db_Table {
         }
         return $retorno;
     }
-    
-    public static function verificaComprovarExecucaoFinanceira($idPronac) 
-    {
-        $sql = "SELECT CAST(dtfimexecucao AS DATE),
-       Dateadd(DAY, 30, CAST(dtfimexecucao AS DATE)),
-       Situacao
-        FROM   sac.dbo.projetos
-        WHERE  CAST(Getdate() AS DATE) <= Dateadd(DAY, 30, CAST(dtfimexecucao AS DATE))
-               AND dtfimexecucao IS NOT NULL
-       AND ( situacao = 'E12'
-             OR situacao = 'E13'
-            OR situacao = 'E15'
-            OR situacao = 'D40'
-            OR situacao = 'E60'
-            OR situacao = 'E61'
-            OR situacao = 'E62'
-            OR situacao = 'E59' 
-            OR situacao = 'D34'
-            OR situacao = 'D35'
-            OR situacao = 'D28'
-            OR situacao = 'D29'
-            OR situacao = 'E60'
-            OR situacao = 'E61'
-            OR situacao = 'E62' )
-       AND idpronac = $idPronac  ";
-    }
+
 }

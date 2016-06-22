@@ -201,12 +201,6 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
                 $idPronac = Seguranca::dencrypt($idPronac);
             }
 
-            $verificaCompravacaoFinanceira = ConsultarDadosProjetoDAO::verificaComprovarExecucaoFinanceira($idPronac);
-            if (!empty($verificaCompravacaoFinanceira)) {
-                $this->view->menuCompExecFin = true;
-            } else {
-                $this->view->menuCompExecFin = false;
-            }
 
             $dados = array();
             $dados['idPronac'] = (int) $idPronac;
