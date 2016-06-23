@@ -305,13 +305,18 @@ class PublicacaoDouController extends GenericControllerNew {
     public function gerarportariaAction() {
         ini_set('memory_limit', '-1');
 //        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $ap = new Aprovacao();
-        $pr = new Projetos();
+        $aprovacao = new Aprovacao();
+        $projeto = new Projetos();
         if ($this->getRequest()->isPost()) {
-            // recebe os dados via post
 
-            $post = Zend_Registry::get('post');
-            $id = $post->idAprovacao;
+            // variaveis oriundas de request
+            $idsAprovacao = $this->_request->getParam("idAprovacao");
+            $tipoPublicacao = $this->_request->getParam('tipoPublicacao');
+            $nrPortaria = $this->_request->getParam('nrPortaria');
+            $nome = $this->_request->getParam('nome');
+            $cargo = $this->_request->getParam('cargo');
+
+            // variaveis definidas localmente
             $dia = (int) date("d");
             $mes = (int) date("m");
             $ano = date("Y");
@@ -362,16 +367,16 @@ class PublicacaoDouController extends GenericControllerNew {
 
             try {
                 // manda todos os pronac para publicacao (alteracao)
-                foreach ($id as $idaprovacao) {
+                foreach ($idsAprovacao as $idAprovacao) {
                     //busca o idPronac do projeto
-                    $buscaridpronac = $ap->buscar(array('idAprovacao = ?' => $idaprovacao))->current();
-
+                    $buscaridpronac = $aprovacao->buscar(array('idAprovacao = ?' => $idAprovacao))->current();
+                    
                     //busca a data final de execução do projeto em questão
-                    $resultado = $pr->buscar(array('IdPRONAC = ?'=>$buscaridpronac->IdPRONAC))->current();
+                    $resultado = $projeto->buscar(array('IdPRONAC = ?'=>$buscaridpronac->IdPRONAC))->current();
                     $dtFimCaptacao = $resultado->DtFimExecucao; //É isso mesmo que vc vê. A data fim captação vai receber o mesmo valor da fim de execução.
                     $dtFimExecucao = $resultado->DtFimExecucao;
                     $dtInicioExecucao = $resultado->DtInicioExecucao;
-
+                    
                     //se a data final de execução estiver em branco (projetos antigos) o sistema considera o 31/12/ano em questão
                     if($resultado->DtFimExecucao == '' || empty($resultado->DtFimExecucao)){
                         $dtFimCaptacao = date("Y", strtotime($DtPublicacaoAprovacao)) . '-12-31 ' . date("H:i:s");
@@ -383,42 +388,43 @@ class PublicacaoDouController extends GenericControllerNew {
                     }
                     // dados para realizar a publicacao
                     $dadosPortaria = array(
-                        'PortariaAprovacao' => $post->nrPortaria.'/'.date('y'),
+                        'PortariaAprovacao' => $this->_request->getParam('nrPortaria') .'/'.date('y'),
                         'DtPortariaAprovacao' => $DtPortariaAprovacao,
                         'DtPublicacaoAprovacao' => $DtPublicacaoAprovacao,
                         'DtInicioCaptacao' => $DtPublicacaoAprovacao,
                         'DtFimCaptacao' => $dtFimCaptacao
                     );
-
-                    if($post->tipoPublicacao == 'prorrogacao'){
+                    
+                    if($tipoPublicacao == 'prorrogacao'){
                         $pronac = $resultado->AnoProjeto.$resultado->Sequencial;
-                        $datas = $ap->buscarDatasCaptacao($pronac, $buscaridpronac->idProrrogacao);
-			$dadosPortaria['DtInicioCaptacao'] = $datas[0]->DtInicio;
+                        $datas = $aprovacao->buscarDatasCaptacao($pronac, $buscaridpronac->idProrrogacao);
+                        $dadosPortaria['DtInicioCaptacao'] = $datas[0]->DtInicio;
                         $dadosPortaria['DtFimCaptacao'] = $datas[0]->DtFinal;
-
+                        
                         if(strtotime($dtFimExecucao) < strtotime($datas[0]->DtFinal)){
                             $dtFimExecucao = $datas[0]->DtFinal;
                         }
-                    } else if ($post->tipoPublicacao == 'reducao' || $post->tipoPublicacao == 'complementacao') {
-		      $dadosPortaria['DtInicioCaptacao'] = null;
-		      $dadosPortaria['DtFimCaptacao'] = null;
-		    }
-		    
-                    $where = 'idAprovacao = ' . $idaprovacao;
-                    $portariagerar = $ap->alterar($dadosPortaria, $where);
+                    } else if ($tipoPublicacao == 'reducao' || $tipoPublicacao == 'complementacao') {
+                        $dadosPortaria['DtInicioCaptacao'] = null;
+                        $dadosPortaria['DtFimCaptacao'] = null;
+                    }
 
+                    $where = array();
+                    $where['idAprovacao = ?'] = $idAprovacao;
+                    $portariagerar = $aprovacao->alterar($dadosPortaria, $where);
+                    
                     if ($portariagerar) {
                         $dadosSituacao = array(
                             'dtSituacao' => date('Y-m-d'),
                             'DtFimExecucao' => $dtFimExecucao
                         );
-
-                        if($post->tipoPublicacao == 'prorrogacao' && (empty($dtInicioExecucao) || $dtInicioExecucao == '')){
+                        
+                        if($tipoPublicacao == 'prorrogacao' && (empty($dtInicioExecucao) || $dtInicioExecucao == '')){
                             $dadosSituacao['DtInicioExecucao'] = $datas[0]->DtInicio;
                         }
-
-                        if(isset($post->tipoPublicacao)){
-                            switch ($post->tipoPublicacao) {
+                        
+                        if(isset($tipoPublicacao)){
+                            switch ($tipoPublicacao) {
                                 case '':
                                     $dadosSituacao['Situacao'] = 'D09';
                                     $dadosSituacao['ProvidenciaTomada'] = 'Portaria de aprovação inicial encaminhada à Imprensa Nacional para publicação no Diário Oficial da União.';
@@ -448,25 +454,25 @@ class PublicacaoDouController extends GenericControllerNew {
                             $dadosSituacao['Situacao'] = 'D09';
                             $dadosSituacao['ProvidenciaTomada'] = 'Portaria de aprovação inicial encaminhada à Imprensa Nacional para publicação no Diário Oficial da União.';
                         }
-
-                        $where = 'IdPRONAC = ' . $buscaridpronac->IdPRONAC;
-                        $pr->alterar($dadosSituacao, $where);
+                        
+                        $projeto->alterarSituacao($buscaridpronac->IdPRONAC, null, $dadosSituacao['Situacao'], $dadosSituacao['ProvidenciaTomada']);                        
                     } // fecha if
                 } // fecha foreach
 
-                if($post->nome == 1){ //Ana Cristina da Cunha Wanzeler
+                // @todo pelo amor dos meus filhinhos, tirar esse if bizarro abaixo e armazenar numa tabela!
+                if($nome == 1){ //Ana Cristina da Cunha Wanzeler
                     $textoPortaria = '426 de 28 de maio de 2014 e o art. 4&ordm; da Portaria n&ordm; 120, de 30 de mar&ccedil;o de 2010';
                     $nm = 'Ivan Domingues das Neves';
 
-                } else if($post->nome == 2) { //João Batista da Silva
+                } else if($nome == 2) { //João Batista da Silva
                     $textoPortaria = '805 de 09 de outubro de 2013, e em cumprimento ao disposto na Lei 8.313, de 23 de dezembro de 1991, Decreto nº 5.761, de 27 de abril de 2006, Medida Provisória nº 2.228-1, de 06 de setembro de 2001, alterada pela Lei nº 10.454 de 13 de maio de 2002';
                     $nm = 'João Batista da Silva';
 
-                } else if($post->nome == 3) { //Kleber da Silva Rocha
+                } else if($nome == 3) { //Kleber da Silva Rocha
                     $textoPortaria = '909 de 19 de novembro de 2013 e o art. 4&ordm; da Portaria n&ordm; 120, de 30 de Mar&ccedil;o de 2010';
                     $nm = 'Kleber da Silva Rocha';
 
-                } else if($post->nome == 4) { //Mário Henrique Costa Borgneth
+                } else if($nome == 4) { //Mário Henrique Costa Borgneth
                     $textoPortaria = '846 de 07 de novembro de 2013, e em cumprimento ao disposto na Lei 8.313, de 23 de dezembro de 1991, Decreto nº 5.761, de 27 de abril de 2006, Medida Provisória nº 2.228-1, de 06 de setembro de 2001, alterada pela Lei nº 10.454 de 13 de maio de 2002';
                     $nm = 'Mário Henrique Costa Borgneth';
 
@@ -475,19 +481,16 @@ class PublicacaoDouController extends GenericControllerNew {
                     $nm = 'Ivan Domingues das Neves';
                 }
 
-                $this->view->cargo = strtoupper(strtr($post->cargo ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+                $this->view->cargo = strtoupper(strtr($cargo ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
                 $this->view->nome = strtoupper(strtr($nm ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
-                $this->view->tipoPublicacao = $post->tipoPublicacao;
+                $this->view->tipoPublicacao = $tipoPublicacao;
                 $this->view->textoPortaria = $textoPortaria;
 
-                parent::message("Portaria nº ".$_POST['nrPortaria']."/".$ano2Digitos." foi gerada com sucesso!", "publicacaodou/consultar-portaria?portaria=".$_POST['nrPortaria']."/".$ano2Digitos."&situacao=".$post->tipoPublicacao, "CONFIRM");
-
-                // pega a portaria gerada
-//                $portaria = PublicacaoDouDAO::ProjetoPortaria($_POST['nrPortaria'].'/'.date('y'), $dadosSituacao['Situacao']);
-//                $this->view->portaria = $portaria;
+                parent::message("Portaria nº ".$nrPortaria."/".$ano2Digitos." foi gerada com sucesso!", "publicacaodou/consultar-portaria?portaria=".$nrPortaria."/".$ano2Digitos."&situacao=".$tipoPublicacao, "CONFIRM");
+                
             } // fecha try
             catch (Exception $e) {
-                parent::message($e->getMessage(), "publicacaodou?situacao=".$post->tipoPublicacao, "ERROR");
+                parent::message($e->getMessage(), "publicacaodou?situacao=".$tipoPublicacao, "ERROR");
             }
         } // fecha if
     }
