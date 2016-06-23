@@ -414,7 +414,8 @@ class Aprovacao extends GenericModel {
         {
             $db = Zend_Registry::get('db');
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
-            $where = "idpronac = $idpronac";
+            $where = array();
+            $where["idpronac = ?"] = $idpronac;
             $alterar = $db->update("SAC.dbo.Aprovacao", $dados, $where);
         }
         catch (Exception $e)
