@@ -7,16 +7,12 @@ Class ProponenteDAO extends Zend_Db_Table
 
     public function execPaProponente($idPronac)
     {
-        $sql = "exec SAC.dbo.paAgente $idPronac";
-//        $sql = "exec SAC.dbo.paProponente $idPronac ";
-//        $sql = "exec SAC.dbo.paProponente $pronac ";
-//        $sql = "SELECT SAC.dbo.fnLiberarLinks(1,'23969156149',236,159062) as links";
-//        $sql = "Select top 1000 * from SAC.dbo.Projetos";
+        $sql = sprintf("exec SAC.dbo.paAgente %d",$idPronac);
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-//        x($sql);
+       // x($sql);
         $resultado = $db->fetchAll($sql);
-//        xd($resultado);
+       // xd($resultado);
         return $resultado;
     }
 
