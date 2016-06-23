@@ -13,8 +13,7 @@ class paDocumentos extends GenericModel {
     protected $_name  = 'paDocumentos';
 
     public function marcasAnexadas($idPronac){
-        $sql = "exec ".$this->_banco.".dbo.".$this->_name." $idPronac ";
-//        $sql = " select top 100 * from sac.dbo.projetos ";
+        $sql = sprintf('exec '.$this->_banco.'.dbo.'.$this->_name.' %d',$idPronac);
 //        xd($sql);
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
