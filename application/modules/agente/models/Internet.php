@@ -26,7 +26,7 @@ class Internet extends GenericModel
      * @param string $perfil
      * @param string $formato
      * @return void
-     * @todo retirar SP
+     * @todo retirar SP, não foi encontrada uso do metodo no sistema, proposta de remoção.
      */
     public function enviarEmail($email, $assunto, $texto, $perfil = "PerfilGrupoPRONAC", $formato = "HTML")
     {
@@ -113,20 +113,19 @@ class Internet extends GenericModel
      * @param integer $idAgente (excluir todos os e-mails de um agente)
      * @param integer $idInternet (excluir um determinado e-mail)
      * @return integer (quantidade de registros excluídos)
-     * @todo colocar padrão orm
      */
     public function excluirEmailAgente($idAgente = null, $idInternet = null)
     {
         // exclui todos os e-mails de um agente
         if (!empty($idAgente))
         {
-            $where = "idAgente = " . $idAgente;
+            $where['idAgente = ?'] = $idAgente;
         }
 
         // exclui um determinado e-mail
         else if (!empty($idInternet))
         {
-            $where = "idInternet = " . $idInternet;
+            $where['idInternet = ?'] = $idInternet;
         }
 
         return $this->delete($where);

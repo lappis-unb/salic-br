@@ -264,6 +264,7 @@ class Agente_Model_Agentes extends GenericModel {
      * @param mixed $idResponsavel
      * @access public
      * @return void
+     * @todo padrão orm
      */
     public function buscarNovoProponente($where=array(), $idResponsavel)
     {

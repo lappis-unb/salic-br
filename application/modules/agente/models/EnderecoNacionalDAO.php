@@ -11,6 +11,12 @@
 class Agente_Model_EnderecoNacionalDAO extends Zend_Db_Table
 {
 
+	/**
+	 * _name
+	 *
+	 * @var bool
+	 * @access protected
+	 */
 	protected $_name = 'AGENTES.dbo.EnderecoNacional';
 
 
@@ -21,38 +27,39 @@ class Agente_Model_EnderecoNacionalDAO extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
     public static function buscarEnderecoNacional($idAgente)
     {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $e = [
+            'idEndereco',
+            'idAgente',
+            'TipoEndereco',
+            'TipoLogradouro',
+            'Logradouro',
+            'Numero',
+            'Bairro',
+            'Complemento',
+            'Cidade',
+            'UF',
+            'Cep',
+            'Municipio',
+            'UfDescricao' ,
+            'Status',
+            'Divulgar' ,
+            'Usuario'
+        ];
 
-        $sql = "Select  idEndereco,
-                        idAgente,
-                        TipoEndereco,
-                        TipoLogradouro,
-                        Logradouro,
-                        Numero,
-                        Bairro,
-                        Complemento,
-                        Cidade,
-                        UF,
-                        Cep,
-                        Municipio,
-                        UfDescricao ,
-                        Status,
-                        Divulgar ,
-                        Usuario
-                        From AGENTES.dbo.EnderecoNacional
-                            Where idAgente = ".$idAgente;
+        $sql = $db->select()
+            ->from('EnderecoNacional', $e, 'AGENTES.dbo')
+            ->where('idAgente = ?', $idAgente)
+            ;
 
-
-        $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $dados =  $db->fetchAll($sql);
 
         return $dados;
-
     }
 
     /**
@@ -62,11 +69,10 @@ class Agente_Model_EnderecoNacionalDAO extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar orm
      */
     public static function gravarEnderecoNacional($dados)
     {
-        $db = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $i =  $db->insert('AGENTES.dbo.EnderecoNacional', $dados);
     }
@@ -82,9 +88,11 @@ class Agente_Model_EnderecoNacionalDAO extends Zend_Db_Table
      */
     public static function atualizaEnderecoNacional($idAgente, $dados)
     {
-        $db = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $where = "idAgente=".$idAgente;
+
+        $where['idAgente = ?'] = $idAgente;
+
         $i =  $db->update('AGENTES.dbo.EnderecoNacional', $dados, $where);
     }
 
@@ -100,17 +108,14 @@ class Agente_Model_EnderecoNacionalDAO extends Zend_Db_Table
     {
         try
         {
-            $sql = "DELETE FROM AGENTES.dbo.EnderecoNacional WHERE idEndereco = ".$idEndereco;
+            $db = Zend_Db_Table::getDefaultAdapter();
+            return $resultado = $db->delete('AGENTES.dbo.EnderecoNacional', ['idEndereco = ? '=> $idEndereco]);
 
-            $db = Zend_Registry :: get('db');
-            $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         }
-        catch (Zend_Exception_Db $e)
+        catch (Zend_Exception $e)
         {
-            $this->view->message = "Erro ao excluir Telefone do Proponente: " . $e->getMessage();
+            throw new Zend_Db_Exception("Erro ao excluir Telefone do Proponente: " . $e->getMessage());
         }
-
-        return $db->fetchAll($sql);
     }
 
     /**
@@ -120,23 +125,19 @@ class Agente_Model_EnderecoNacionalDAO extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar orm
      */
     public static function mudaCorrespondencia($idAgente)
     {
         try
         {
-            $sql = "UPDATE AGENTES.dbo.EnderecoNacional set Status = 0 WHERE idAgente = ".$idAgente;
+            $db = Zend_Db_Table::getDefaultAdapter();
 
-            $db = Zend_Registry :: get('db');
-            $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+            return $resultado = $db->update('AGENTES.dbo.EnderecoNacional', ['Status = ?' => 0],['idAgente = ?' => $idAgente]);
         }
-        catch (Zend_Exception_Db $e)
+        catch (Zend_Exception $e)
         {
-            $this->view->message = "Erro ao alterar o Status dos endereços: " . $e->getMessage();
+            throw new Zend_Db_Exception("Erro ao alterar o Status dos endereços: " . $e->getMessage());
         }
-
-        return $db->fetchAll($sql);
     }
 
     /**
@@ -146,12 +147,13 @@ class Agente_Model_EnderecoNacionalDAO extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar orm
+     * @todo colocar orm, verificar existencia de trigger no sistema, não foi possivel testar.
      */
     public static function novaCorrespondencia($idAgente)
     {
         try
         {
+            $db = Zend_Db_Table::getDefaultAdapter();
             $sql = "UPDATE AGENTES.dbo.EnderecoNacional set Status = 1
                     WHERE idAgente = ".$idAgente."
                     AND idEndereco = (select MIN(idEndereco) as valor from AGENTES.dbo.EnderecoNacional  where idAgente = ".$idAgente.")";

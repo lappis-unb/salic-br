@@ -19,74 +19,75 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
      * @param string $nome
      * @param integer $idAgente
      * @return object
-     * @todo colocar orm
      */
     public static function buscarAgentes($cnpjcpf = null, $nome = null, $idAgente = null)
     {
-        $sql = "SELECT DISTINCT A.idAgente
-                    ,A.CNPJCPF
-                    ,A.CNPJCPFSuperior
-                    ,A.TipoPessoa
-                    ,N.Descricao Nome
-                    ,E.Cep CEP
-                    ,E.UF
-                    ,E.Status
-                    ,U.Sigla dsUF
-                    ,E.Cidade
-                    ,M.Descricao dsCidade
-                    ,E.TipoEndereco
-                    ,E.idEndereco
-                    ,VE.Descricao dsTipoEndereco
-                    ,E.TipoLogradouro
-                    ,VL.Descricao dsTipoLogradouro
-                    ,E.Logradouro
-                    ,E.Numero
-                    ,E.Complemento
-                    ,E.Bairro
-                    ,T.stTitular
-                    ,E.Divulgar DivulgarEndereco
-                    ,E.Status EnderecoCorrespondencia
-                    ,T.cdArea
-                    ,SA.Descricao dsArea
-                    ,T.cdSegmento
-                    ,SS.Descricao dsSegmento
+        $db = Zend_Registry::get('db');
+        $a = [
+            'A.idAgente'
+            ,'A.CNPJCPF'
+            ,'A.CNPJCPFSuperior'
+            ,'A.TipoPessoa'
+        ];
 
-                FROM AGENTES.dbo.Agentes A
-                    LEFT JOIN AGENTES.dbo.Nomes N on N.idAgente = A.idAgente
-                    LEFT JOIN AGENTES.dbo.EnderecoNacional E on E.idAgente = A.idAgente
-                    LEFT JOIN AGENTES.dbo.Municipios M  on M.idMunicipioIBGE = E.Cidade
-                    LEFT JOIN AGENTES.dbo.UF U on U.idUF = E.UF
-                    LEFT JOIN AGENTES.dbo.Verificacao VE on VE.idVerificacao = E.TipoEndereco
-                    LEFT JOIN AGENTES.dbo.Verificacao VL on VL.idVerificacao = E.TipoLogradouro
-                    LEFT JOIN AGENTES.dbo.tbTitulacaoConselheiro T on T.idAgente = A.idAgente
-                    LEFT JOIN AGENTES.dbo.Visao V on V.idAgente = A.idAgente
-                    LEFT JOIN SAC.dbo.Area SA on SA.Codigo = T.cdArea
-                    LEFT JOIN SAC.dbo.Segmento SS on SS.Codigo = T.cdSegmento
+        $e = [
+            'E.TipoLogradouro'
+            ,'E.Cidade'
+            ,'E.Cep as CEP'
+            ,'E.UF'
+            ,'E.Status'
+            ,'E.TipoEndereco'
+            ,'E.idEndereco'
+            ,'E.Logradouro'
+            ,'E.Numero'
+            ,'E.Complemento'
+            ,'E.Bairro'
+            ,'E.Divulgar as DivulgarEndereco'
+            ,'E.Status as EnderecoCorrespondencia'
+        ];
 
-                WHERE (A.TipoPessoa = 0 OR A.TipoPessoa = 1) ";
+        $t = [
+            'T.stTitular'
+            ,'T.cdArea'
+            ,'T.cdSegmento'
+        ];
+
+        $sql = $db->select()->distinct()->from(['A' => 'Agentes'], $a, 'AGENTES.dbo')
+            ->joinLeft(['N' => 'Nomes'], 'N.idAgente = A.idAgente', ['N.Descricao as Nome'], 'AGENTES.dbo')
+            ->joinLeft(['E' => 'EnderecoNacional'], 'E.idAgente = A.idAgente', $e, 'AGENTES.dbo')
+            ->joinLeft(['M' => 'Municipios'], 'M.idMunicipioIBGE = E.Cidade', '*', 'AGENTES.dbo')
+            ->joinLeft(['U' => 'UF'], 'U.idUF = E.UF', 'U.Sigla as dsUF', 'AGENTES.dbo')
+            ->joinLeft(['VE' => 'Verificacao'], 'VE.idVerificacao = E.TipoEndereco', 'VE.Descricao as dsTipoEndereco', 'AGENTES.dbo')
+            ->joinLeft(['VL' => 'Verificacao'], 'VL.idVerificacao = E.TipoLogradouro', 'VL.Descricao as dsTipoLogradouro', 'AGENTES.dbo')
+            ->joinLeft(['T' => 'tbTitulacaoConselheiro'], 'T.idAgente = A.idAgente', $t, 'AGENTES.dbo')
+            ->joinLeft(['V' => 'Visao'], 'V.idAgente = A.idAgente', '*', 'AGENTES.dbo')
+            ->joinLeft(['SA' => 'Area'], 'SA.Codigo = T.cdArea', 'SA.Descricao as dsArea', 'SAC.dbo')
+            ->joinLeft(['SS' => 'Segmento'], 'SS.Codigo = T.cdSegmento', 'SS.Descricao as dsSegmento', 'SAC.dbo')
+            ->where('A.TipoPessoa = 0 OR A.TipoPessoa = 1')
+            ;
 
         if (!empty($cnpjcpf)) // busca pelo cpf/cnpj
         {
-            $sql.= " AND A.CNPJCPF = '".$cnpjcpf."'";
+            $sql->where('A.CNPJCPF = ?', $cnpjcpf);
         }
         if (!empty($nome)) // filtra pelo nome
         {
-            $sql.= " AND N.Descricao LIKE '".$nome."%'";
+            $sql->where('N.Descricao LIKE ?', '%'.$nome.'%');
         }
         if (!empty($idAgente)) // busca de acordo com o id do agente
         {
-            $sql.= " AND A.idAgente =". $idAgente;
+            $sql->where('A.idAgente = ?',$idAgente);
         }
 
-        $sql.= " ORDER BY E.Status Desc, N.Descricao Asc ";
+        $sql->order(['E.Status Desc', 'N.Descricao Asc']);
 
-        $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
     /**
      * Método para buscar agentes vinculados
+     *
      * @access public
      * @static
      * @param string $cnpjcpfSuperior
@@ -95,155 +96,164 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
      * @param integer $idVinculado
      * @param integer $idVinculoPrincipal
      * @return object
-     * @todo colocar orm
      */
     public static function buscarVinculados($cnpjcpfSuperior = null, $nome = null, $idAgente = null, $idVinculado = null, $idVinculoPrincipal = null)
     {
-        $sql = "SELECT a.idAgente
-                ,a.CNPJCPF
-                ,a.CNPJCPFSuperior
-                ,n.Descricao AS Nome
+        $db = Zend_Registry::get('db');
 
-            FROM Agentes.dbo.Agentes a
-                ,Agentes.dbo.Nomes n
-                ,Agentes.dbo.Visao vis
-                ,Agentes.dbo.Verificacao ver
-                ,Agentes.dbo.Vinculacao vin
-                ,Agentes.dbo.Tipo tp
+        $a = [
+            'a.idAgente'
+            ,'a.CNPJCPF'
+            ,'a.CNPJCPFSuperior'
+        ];
 
-            WHERE a.idAgente = n.idAgente
-                AND a.idAgente = vis.idAgente
-                AND a.idAgente = vin.idAgente
-                AND tp.idTipo = ver.IdTipo
-                AND ver.idVerificacao = vis.Visao
-                AND (a.TipoPessoa = 0 OR a.TipoPessoa = 1)
-                AND (n.TipoNome = 18 OR n.TipoNome = 19)
-                AND vis.Visao = 198 ";
+        $sql = $db->select()
+            ->from(['a' => 'Agentes'], $a, 'AGENTES.dbo')
+            ->joinLeft(['n' => 'Nomes'], 'N.idAgente = A.idAgente', ['n.Descricao AS Nome'], 'AGENTES.dbo')
+            ->joinLeft(['vis' => 'Visao'], 'a.idAgente = vis.idAgente', null, 'AGENTES.dbo')
+            ->joinLeft(['ver' => 'Verificacao'], 'ver.idVerificacao = vis.Visao', null, 'AGENTES.dbo')
+            ->joinLeft(['vin' => 'Vinculacao'], 'a.idAgente = vin.idAgente', null, 'AGENTES.dbo')
+            ->joinLeft(['tp' => 'Tipo'], 'tp.idTipo = ver.IdTipo', null, 'AGENTES.dbo')
+            ->where('a.TipoPessoa = 0 OR a.TipoPessoa = 1')
+            ->where('n.TipoNome = 18 OR n.TipoNome = 19')
+            ->where('vis.Visao = 198')
+            ;
 
         if (!empty($cnpjcpfSuperior)) // busca pelo cnpj/cpf com o vinculo principal
         {
-            $sql.= " AND a.CNPJCPFSuperior = '$cnpjcpfSuperior'";
+            $sql->where('a.CNPJCPFSuperior = ?', $cnpjcpfSuperior);
         }
         if (!empty($nome)) // filtra pelo nome
         {
-            $sql.= " AND n.Descricao LIKE '$nome%'";
+            $sql->where('n.Descricao LIKE ?', "$nome%");
         }
         if (!empty($idAgente)) // busca pelo idAgente
         {
-            $sql.= " AND vin.idAgente = $idAgente";
+            $sql->where('vin.idAgente =  ?', $idAgente);
         }
         if (!empty($idVinculado)) // busca pelo idVinculado
         {
-            $sql.= " AND vin.idVinculado = $idVinculado";
+            $sql->where('vin.idVinculado =  ?', $idVinculado);
         }
-        if (!empty($idVinculoPrincipal)) // busca pelo idVinculoPrincipal
-        {
-            $sql.= " AND vin.idVinculoPrincipal = $idVinculoPrincipal";
+        if (!empty($idVinculoPrincipal)) {// busca pelo idVinculoPrincipal
+            $sql->where('vin.idVinculoPrincipal =  ?', $idVinculoPrincipal);
         }
 
-        $sql.= " ORDER BY n.Descricao";
+        $sql->order(['n.Descricao']);
 
-
-
-        $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
-    } // fecha método buscarVinculados()
+    }
 
     /**
      * Método para buscar os endereços do agente
+     *
      * @access public
      * @static
      * @param integer $idAgente
      * @return object
-     * @todo colocar orm
      */
     public static function buscarEnderecos($idAgente = null)
     {
-        $sql = "SELECT  idEndereco,
-                idAgente,
-                Logradouro,
-                TipoLogradouro,
-                VL.Descricao as dsTipoLogradouro,
-                Numero,
-                Bairro,
-                Complemento,
-                Cep,
-                Status,
-                Divulgar,
-                Usuario,
-                VE.Descricao TipoEndereco,
-                VE.idVerificacao as CodTipoEndereco,
-                M.Descricao Municipio,
-                M.idMunicipioIBGE CodMun,
-                U.Sigla UF,
-                U.idUF CodUF
-                        FROM AGENTES.dbo.EnderecoNacional E
-                            LEFT JOIN AGENTES.dbo.Verificacao VE on VE.idVerificacao = E.TipoEndereco
-                            LEFT JOIN AGENTES.dbo.Municipios M  on M.idMunicipioIBGE = E.Cidade
-                            LEFT JOIN AGENTES.dbo.UF U on U.idUF = E.UF
-                            LEFT JOIN AGENTES.dbo.Verificacao VL on VL.idVerificacao = E.TipoLogradouro
+        $db = Zend_Db_Table::getDefaultAdapter();
 
-            WHERE E.idAgente = '".$idAgente."' ";
+        $ve = [
+            'VE.Descricao as TipoEndereco',
+            'VE.idVerificacao as CodTipoEndereco',
+        ];
 
-        $sql.= "ORDER BY Status DESC";
+        $m = [
+            'M.Descricao as Municipio',
+            'M.idMunicipioIBGE as CodMun',
+        ];
 
-        $db = Zend_Registry::get('db');
+        $u = [
+            'U.Sigla as UF',
+            'U.idUF as CodUF'
+        ];
+
+        $e =[
+            'idEndereco',
+            'idAgente',
+            'Logradouro',
+            'TipoLogradouro',
+            'Numero',
+            'Bairro',
+            'Complemento',
+            'Cep',
+            'Status',
+            'Divulgar',
+            'Usuario',
+        ];
+
+        $sql = $db->select()
+            ->from(['E' => 'EnderecoNacional'], $e, 'AGENTES.dbo')
+            ->joinLeft(['VE' => 'Verificacao'], 'VE.idVerificacao = E.TipoEndereco', $ve, 'AGENTES.dbo')
+            ->joinLeft(['M' => 'Municipios'], 'M.idMunicipioIBGE = E.Cidade', $m, 'AGENTES.dbo')
+            ->joinLeft(['U' => 'UF'], 'U.idUF = E.UF', $u, 'AGENTES.dbo')
+            ->joinLeft(['VL' => 'Verificacao'], 'VL.idVerificacao = E.TipoLogradouro', ['VL.Descricao as dsTipoLogradouro'], 'AGENTES.dbo')
+            ->where('E.idAgente = ?', $idAgente)
+            ->order(['Status DESC'])
+            ;
+
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
-    } // fecha método buscarEnderecos()
+    }
 
-        /**
+    /**
      * Método para buscar os e-mails do agente
+     *
      * @access public
      * @static
      * @param integer $idAgente
      * @return object
-     * @todo colocar orm
      */
     public static function buscarEmails($idAgente = null)
     {
-        $sql = "SELECT I.idInternet
-                    ,I.idAgente
-                    ,I.TipoInternet
-                    ,V.Descricao tipo
-                    ,I.Descricao
-                    ,I.Status
-                    ,I.Divulgar
+        $db = Zend_Db_Table::getDefaultAdapter();
 
-                FROM AGENTES.dbo.Internet I
-                    ,AGENTES.dbo.Tipo T
-                    ,AGENTES.dbo.Verificacao V
+        $i = [
+            'I.idInternet'
+            ,'I.idAgente'
+            ,'I.TipoInternet'
+            ,'I.Descricao'
+            ,'I.Status'
+            ,'I.Divulgar'
+        ];
 
-                WHERE I.TipoInternet = V.idVerificacao
-                    AND T.idTipo = V.IdTipo ";
+        $sql = $db->select()
+            ->from(['I' => 'Internet'], $i, 'AGENTES.dbo')
+            ->join(['V' => 'Verificacao'], 'I.TipoInternet = V.idVerificacao', 'V.Descricao as tipo', 'AGENTES.dbo')
+            ->join(['T' => 'Tipo'], 'T.idTipo = V.IdTipo', null, 'AGENTES.dbo')
+        ;
 
-        if (!empty($idAgente)) // busca de acordo com o id do agente
-        {
-            $sql.= " AND I.idAgente = $idAgente";
+        if (!empty($idAgente)) {// busca de acordo com o id do agente
+
+            $sql->where('I.idAgente = ?', $idAgente);
         }
 
-        $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
-    } // fecha método buscarEmails()
+    }
 
     /**
      * Método para buscar os telefones do agente
+     *
      * @access public
      * @static
      * @param integer $idAgente
      * @return object
-     * @todo colocar orm
      */
     public static function buscarFones($idAgente = null)
     {
-        $sql = "SELECT
-                    Tl.idTelefone,
-                    ddd.Codigo as DDD,
-                    ddd.Codigo as Codigo,
-                    Ag.IdAgente,
-                    Tl.TipoTelefone,
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $tl = [
+            'Tl.idTelefone',
+            'Tl.TipoTelefone',
+            'Tl.Numero',
+            'Tl.Divulgar',
+            new Zend_Db_Expr("
                     CASE
                     WHEN Tl.TipoTelefone = 22 or Tl.TipoTelefone = 24
                     THEN 'Residencial'
@@ -253,52 +263,51 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
                     THEN 'Celular'
                     WHEN Tl.TipoTelefone = 27
                     THEN 'Fax'
-                    END as dsTelefone,
-                    Uf.Sigla as ufSigla,
-                    Tl.Numero,
-                    Tl.Divulgar
-                FROM AGENTES.dbo.Telefones Tl
-                    INNER JOIN AGENTES.dbo.Uf as Uf on Uf.idUF = Tl.UF
-                    INNER JOIN AGENTES.dbo.Agentes Ag on Ag.IdAgente = Tl.IdAgente
-                    LEFT JOIN AGENTES.dbo.DDD ddd On Tl.DDD = ddd.Codigo ";
+                    END as dsTelefone
+            ")
+        ];
 
-        if (!empty($idAgente)){ // busca de acordo com o id do agente
-            $sql.= " WHERE Tl.idAgente = $idAgente";
+        $ddd = [
+            'ddd.Codigo as DDD',
+            'ddd.Codigo as Codigo',
+        ];
+
+        $sql = $db->select()
+            ->from(['Tl' => 'Telefones'], $tl, 'AGENTES.dbo')
+            ->join(['Uf' => 'Uf'], 'Uf.idUF = Tl.UF', ['Uf.Sigla as ufSigla'], 'AGENTES.dbo')
+            ->join(['Ag' => 'Agentes'], 'Ag.IdAgente = Tl.IdAgente', ['Ag.IdAgente'], 'AGENTES.dbo')
+            ->joinLeft(['ddd' => 'DDD'], 'Tl.DDD = ddd.Codigo', $ddd, 'AGENTES.dbo')
+            ;
+
+        if (!empty($idAgente)) { // busca de acordo com o id do agente
+            $sql->where('Tl.idAgente = ?',$idAgente);
         }
 
-        $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
-    } // fecha método buscaFones()
+    }
 
     /**
      * Método para buscar as áreas culturais
+     *
+     * @param void
+     *
      * @access public
      * @static
-     * @param void
      * @return object
-     * @todo colocar orm
      */
     public static function buscarAreasCulturais()
     {
-        $sql = "SELECT Codigo AS id
-                    ,Descricao AS descricao
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-                FROM SAC.dbo.Area
+        $sql = $db->select()
+            ->from(['Area'], ['Codigo AS id' ,'Descricao AS descricao'], 'SAC.dbo')
+            ->order(['Descricao'])
+            ;
 
-                ORDER BY Descricao;";
-
-        try
-        {
-            $db = Zend_Registry::get('db');
-            $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        }
-        catch (Zend_Exception_Db $e)
-        {
-            $this->view->message = "Erro ao buscar Área Cultural: " . $e->getMessage();
-        }
         return $db->fetchAll($sql);
-    } // fecha método buscarAreasCulturais()
+    }
 
     /**
      * Método para cadastrar dados do agente
@@ -306,7 +315,6 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
      * @static
      * @param array $dados
      * @return boolean
-     * @todo colocar orm
      */
     public static function cadastrarAgente($dados)
     {
@@ -340,13 +348,13 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
         $rsAgente = $Agentes->createRow();
 
         //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
+        if(isset($dados['stTipoRespPergunta'])){ $rsAgente->stTipoRespPergunta = $dados['stTipoRespPergunta']; }
 
-    if(isset($dados['stTipoRespPergunta'])){ $rsAgente->stTipoRespPergunta = $dados['stTipoRespPergunta']; }
         if(isset($dados['dsPergunta'])){ $rsAgente->dsPergunta = $dados['dsPergunta']; }
 
-    if(isset($dados['dtCadastramento'])){ $rsAgente->dtCadastramento = $dados['dtCadastramento']; }
+        if(isset($dados['dtCadastramento'])){ $rsAgente->dtCadastramento = $dados['dtCadastramento']; }
 
-    if(isset($dados['idPessoaCadastro'])){ $rsAgente->idPessoaCadastro = $dados['idPessoaCadastro']; }
+        if(isset($dados['idPessoaCadastro'])){ $rsAgente->idPessoaCadastro = $dados['idPessoaCadastro']; }
 
         //SALVANDO O OBJETO CRIADO
         $id = $rsAgente->save();
@@ -356,15 +364,6 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
         }else{
             return false;
         }
-
-
-
-        $db = Zend_Registry::get('db');
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
-        $db->insert('AGENTES.dbo.Agentes', $dados);
-        return $db->lastInsertId();
-
     }
 
     /**
@@ -374,7 +373,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
      * @param integer $idAgente
      * @param array $dados
      * @return boolean
-     * @todo colocar orm
+     * @todo Existe uma trigger no db que impede o acesso direto a atualização. Pendente de verificação
      */
     public static function alterarAgente($idAgente, $dados)
     {
@@ -393,7 +392,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
         {
             return false;
         }
-    } // fecha método alterarAgente()
+    }
 
     /**
      * Método para cadastrar o vínculo entre os agentes
@@ -409,13 +408,6 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
 
         $insert = $db->insert('AGENTES.dbo.Vinculacao', $dados); // cadastra
 
-        if ($insert)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return ($insert) ? true : false;
     }
 }
