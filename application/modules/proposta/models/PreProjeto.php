@@ -71,19 +71,31 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
-    public static function listaProjetos($idUsuario) {
-
-        $sql = "SELECT p.idPreProjeto,idagente,NomeProjeto,Mecanismo,stTipoDemanda
-                FROM SAC.dbo.PreProjeto p
-                WHERE stEstado = 1
-                AND stTipoDemanda like 'NA'
-                AND idUsuario =  $idUsuario
-                AND not exists (SELECT * FROM SAC.dbo.projetos pr WHERE pr.idProjeto = p.idPreProjeto) ";
-
-        $db = Zend_Registry::get('db');
+    public static function listaProjetos($idUsuario)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $subSql = $db->select()
+            ->from(['pr' => 'projetos'], ['*'], 'SAC.dbo')
+            ->where('pr.idProjeto = p.idPreProjeto');
+
+        $p = [
+            'p.idPreProjeto',
+            'idagente',
+            'NomeProjeto',
+            'Mecanismo',
+            'stTipoDemanda'
+        ];
+
+        $sql = $db->select()
+            ->from(['p' => 'PreProjeto'], $p, 'SAC.dbo')
+            ->where('stEstado = 1')
+            ->where("stTipoDemanda like 'NA'")
+            ->where('idUsuario = ?', $idUsuario)
+            ->where(new Zend_Db_Expr("not exists ($subSql)"))
+            ;
 
         return $db->fetchAll($sql);
     }
@@ -98,7 +110,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      */
     public function buscar($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
-
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from($this, array("*",

@@ -10,6 +10,7 @@ class Proposta_Model_Proposta extends GenericModel
 {
     protected $_banco = "SAC";
     protected $_name = "PreProjeto";
+    protected $_schema= "SAC.dbo";
 
     public $_totalRegistros = null;
 
@@ -20,10 +21,13 @@ class Proposta_Model_Proposta extends GenericModel
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @todo colocar padrão orm
+     * @todo colocar padrão orm. Passar função para php SAC.dbo.fnNomeTecnicoMinc()
      */
     public function buscarPropostaAdmissibilidade($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
+
+        $db = $this->getAdapter();
+
         $meuWhere = "";
         // adicionando clausulas where
         foreach ($where as $coluna=>$valor)
@@ -82,13 +86,10 @@ class Proposta_Model_Proposta extends GenericModel
         ".$meuOrder."
         ";
 
-        $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
-
-
     }
 
     /**
@@ -160,9 +161,12 @@ class Proposta_Model_Proposta extends GenericModel
      * @param mixed $idOrgao
      * @access public
      * @return void
-     * @todo colocar no padrão orm
+     * @todo colocar no padrão orm. Remover função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
      */
-    public function buscarTecnicosHistoricoAnaliseVisual($idOrgao){
+    public function buscarTecnicosHistoricoAnaliseVisual($idOrgao)
+    {
+        $db = $this->getAdapter();
+
         $sql = "
             SELECT distinct
                     a.idTecnico,
@@ -179,7 +183,6 @@ class Proposta_Model_Proposta extends GenericModel
             ORDER BY u.usu_nome ASC
         ";
 
-        $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // retornando os registros conforme objeto select
@@ -196,7 +199,7 @@ class Proposta_Model_Proposta extends GenericModel
      * @param bool $dtFim
      * @access public
      * @return void
-     * @todo colocar padrão orm
+     * @todo colocar padrão orm. Remover SAC.dbo.fnIdOrgaoSuperiorAnalista()
      */
     public function buscarHistoricoAnaliseVisual($idOrgao,$idTecnico=null,$situacao=null,$dtInicio=null,$dtFim=null)
     {
@@ -247,16 +250,17 @@ class Proposta_Model_Proposta extends GenericModel
      * @param mixed $idAvaliacao
      * @access public
      * @return void
-     * @todo colocar padrão orm
+     * @todo Esse metodo deve ser removido dessa model.
+     * @deprecated
      */
-    public function buscarAvaliacaoHistoricoAnaliseVisual($idAvaliacao){
-        $sql = "
-        select a.Avaliacao
-        from SAC.dbo.tbAvaliacaoProposta a
-        where a.idAvaliacaoProposta = {$idAvaliacao}
-        ";
+    public function buscarAvaliacaoHistoricoAnaliseVisual($idAvaliacao)
+    {
+        $db = $this->getAdapter();
 
-        $db = Zend_Registry :: get('db');
+        $sql = $db->select()
+            ->from(['a' => 'tbAvaliacaoProposta'], ['a.Avaliacao'], $this->_schema)
+            ->where('a.idAvaliacaoProposta = ?', $idAvaliacao);
+
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // retornando os registros conforme objeto select
@@ -270,44 +274,36 @@ class Proposta_Model_Proposta extends GenericModel
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @todo colocar padrão orm
+     * @todo Retirar esse metodo dessa model
+     * @deprecated
      */
     public function buscarPropostaAnaliseVisualTecnico($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
+        $db = $this->getAdapter();
+        $vw = [
+            'idProjeto',
+            'NomeProjeto',
+            'Tecnico',
+            'idOrgao',
+            new Zend_Db_Expr('CONVERT(CHAR(20),vw.DtEnvio, 120) AS DtEnvio'),
+            'ConformidadeOK',
+            new Zend_Db_Expr('CONVERT(CHAR(20),vw.DtMovimentacao, 120) AS DtMovimentacao'),
+            'QtdeDias'
+        ];
+
+        $sql = $db->select()
+            ->from(['vw' => 'vwAnaliseVisualPorTecnico'], $vw, $this->_schema);
+
+
+        ($order) ? $sql->order($order) : null;
+
         $meuWhere = "";
         // adicionando clausulas where
-        foreach ($where as $coluna=>$valor)
-        {
-            if($meuWhere == ""){ $meuWhere = " WHERE "; }else{ $meuWhere .= " AND "; }
-            $meuWhere .= $coluna.$valor;
+        foreach ($where as $coluna=>$valor) {
+            $sql->where($coluna.' = ?', $valor);
         }
 
-        $meuOrder = "";
-        // adicionando clausulas order
-        foreach ($order as $valor)
-        {
-            if($meuOrder != ""){ $meuOrder .= " , "; }else{ $meuOrder = " ORDER BY "; }
-            $meuOrder .= $valor;
-        }
-
-        $sql = "
-        SELECT
-            idProjeto,
-            NomeProjeto,
-            Tecnico,
-            idOrgao,
-            CONVERT(CHAR(20),DtEnvio, 120) AS DtEnvio,
-            ConformidadeOK,
-            CONVERT(CHAR(20),DtMovimentacao, 120) AS DtMovimentacao,
-            QtdeDias
-        FROM
-            SAC.dbo.vwAnaliseVisualPorTecnico
-        {$meuWhere}
-        {$meuOrder}
-        ";
-        $sql = utf8_decode($sql);
-        $db = Zend_Registry :: get('db');
-        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
@@ -320,7 +316,7 @@ class Proposta_Model_Proposta extends GenericModel
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @todo colocar padrão orm
+     * @todo colocar padrão orm. Retiar função sac.dbo.fnDtUltimaDiligenciaDocumental()
      */
     public function buscarPropostaAnaliseDocumentalTecnico($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
@@ -371,44 +367,36 @@ class Proposta_Model_Proposta extends GenericModel
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @todo colocar padrão orm
+     * @todo Retirar metodo dessa model
+     * @deprecated
      */
     public function buscarPropostaAnaliseFinal($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
-        $meuWhere = "";
+        $db = $this->getAdapter();
+        $vw = [
+            'idPreProjeto',
+            'NomeProjeto',
+            'Tecnico',
+            'DtEnvio',
+            'CONVERT(CHAR(20),DtMovimentacao, 120) AS DtMovimentacao',
+            'DtAvaliacao',
+            'Dias',
+            'idOrgao',
+            'ConformidadeOK',
+            'QtdeDiasAguardandoEnvio'
+        ];
+
+        $sql = $db->select()
+            ->from(['vw' => 'vwPropostaProjetoSecretaria'], $vw, $this->_schema);
+
         // adicionando clausulas where
-        foreach ($where as $coluna=>$valor)
-        {
-            if($meuWhere == ""){ $meuWhere = " WHERE "; }else{ $meuWhere .= " AND "; }
-            $meuWhere .= $coluna.$valor;
+        foreach ($where as $coluna => $valor) {
+            $sql->where($coluna.' = ?', $valor);
         }
 
-        $meuOrder = "";
         // adicionando clausulas order
-        foreach ($order as $valor)
-        {
-            if($meuOrder != ""){ $meuOrder .= " , "; }else{ $meuOrder = " ORDER BY "; }
-            $meuOrder .= $valor;
-        }
+        ($order) ? $sql->order($order) : null;
 
-        $sql = "
-        SELECT
-            idPreProjeto,
-            NomeProjeto,
-            Tecnico,
-            DtEnvio,
-            CONVERT(CHAR(20),DtMovimentacao, 120) AS DtMovimentacao,
-            DtAvaliacao,
-            Dias,
-            idOrgao,
-            ConformidadeOK,QtdeDiasAguardandoEnvio
-        FROM
-            SAC.dbo.vwPropostaProjetoSecretaria
-        {$meuWhere}
-        {$meuOrder}
-        ";
-
-        $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // retornando os registros conforme objeto select
@@ -421,17 +409,20 @@ class Proposta_Model_Proposta extends GenericModel
      * @param mixed $idPreProjeto
      * @access public
      * @return void
-     * @todo colocar padrão orm
+     * @todo Retirar metodo dessa model
      */
-    public function buscarConformidadeVisualTecnico($idPreProjeto){
-        $sql = "select tecnico from SAC.dbo.vwConformidadeVisualTecnico
-                where idprojeto={$idPreProjeto}";
+    public function buscarConformidadeVisualTecnico($idPreProjeto)
+    {
+        $db = $this->getAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $db = Zend_Registry :: get('db');
-        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+        $sql = $db->select()
+            ->from(['vw' => 'vwConformidadeVisualTecnico'], 'tecnico', $this->_schema)
+            ->where('idprojeto = ?', $idPreProjeto )
+            ->query();
 
         // retornando os registros conforme objeto select
-        return $db->fetchAll($sql);
+        return $sql->fetchAll();
     }
 
     /**
@@ -441,7 +432,7 @@ class Proposta_Model_Proposta extends GenericModel
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @todo colocar padrão orm
+     * @todo colocar padrão orm: SAC.dbo.fnIdOrgaoSuperiorAnalista(Tecnico)
      */
     public function buscarVisual($idUsuario = null, $order=array(), $tamanho=-1, $inicio=-1)
     {
@@ -612,17 +603,19 @@ class Proposta_Model_Proposta extends GenericModel
      * @param mixed $codigo
      * @access public
      * @return void
-     * @todo colocar padrão orm
+     * @todo Retirar metodo dessa model
      */
     public function buscaragencia($codigo)
     {
-        $sql = "SELECT Agencia FROM SAC.dbo.BancoAgencia where Agencia = '".$codigo."'";
+        $db = $this->getAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $db = Zend_Registry :: get('db');
-        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+        $sql = $db->select()
+            ->from(['b' => 'BancoAgencia'], 'Agencia', $this->_schema)
+            ->where('b.Agencia = ?', $codigo)
+            ->query();
 
-        // retornando os registros conforme objeto select
-        return $db->fetchAll($sql);
+        return $sql->fetchAll();
     }
 
     /**
@@ -651,7 +644,7 @@ class Proposta_Model_Proposta extends GenericModel
      * @param mixed $idTecnico
      * @access public
      * @return void
-     * @todo colocar padrão orm
+     * @todo colocar padrão orm. retirar função SAC.dbo.fnIdOrgaoSuperiorAnalista()
      */
     public function orgaoSecretaria($idTecnico)
     {
@@ -983,18 +976,6 @@ class Proposta_Model_Proposta extends GenericModel
             array("nm"=>"nomes"), "nm.idAgente = p.idAgente",
             array(
                 "nm.Descricao as Proponente"
-//                ,new Zend_Db_Expr("
-//                    (SELECT TOP 1 idTecnico FROM (
-//			SELECT idTecnico, convert(varchar(30),DtAvaliacao, 120 ) as DtAvaliacao
-//			FROM SAC.dbo.tbAvaliacaoProposta tba
-//			INNER JOIN tabelas.dbo.Usuarios u on (tba.idTecnico = u.usu_codigo)
-//			WHERE ConformidadeOK < 9 AND tba.idProjeto = p.idPreProjeto
-//			UNION ALL
-//			SELECT 0,convert(varchar(30),DtMovimentacao, 120 ) as DtMovimentacao
-//			FROM SAC.dbo.tbMovimentacao
-//			WHERE Movimentacao=96 AND idProjeto = p.idPreProjeto
-//                    ) as slctPrincipal
-//                    ORDER BY convert(varchar(30),DtAvaliacao, 120 ) DESC) as idUltimaDiligencia " )
             ), "AGENTES.dbo"
         );
 
@@ -1030,8 +1011,21 @@ class Proposta_Model_Proposta extends GenericModel
         return $this->fetchAll($slct);
     }
 
-    public function relatorioPropostas2($where=array(), $having=array(), $order=array(), $tamanho=-1, $inicio=-1, $count = false, $dados = null){
-
+    /**
+     * relatorioPropostas2
+     *
+     * @param bool $where
+     * @param bool $having
+     * @param bool $order
+     * @param mixed $tamanho
+     * @param mixed $inicio
+     * @param bool $count
+     * @param bool $dados
+     * @access public
+     * @return void
+     */
+    public function relatorioPropostas2($where=array(), $having=array(), $order=array(), $tamanho=-1, $inicio=-1, $count = false, $dados = null)
+    {
         $slct = $this->select();
         $slct->distinct();
         $slct->setIntegrityCheck(false);
@@ -1163,7 +1157,7 @@ class Proposta_Model_Proposta extends GenericModel
      * @access public
      * @param integer $idResponsavel
      * @return object
-     * @todo colocar padrão orm
+     * @todo colocar padrão orm. Retirar função SAC.dbo.fnNome()
      */
     public function listarPropostasCombo($idResponsavel)
     {
