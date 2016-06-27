@@ -947,21 +947,43 @@ public static  function outrasinformacoes($idpronac)
 	} // fecha class
 
 	public static function localrealizacao($idpronac)
-		{
-	$sql = "  		SELECT a.idPais ,
-				p.Descricao ,
-				u.Descricao as UF,
-				m.Descricao as Cidade,
-                                CONVERT(CHAR(10), x.DtInicioDeExecucao, 103) AS DtInicioDeExecucao,
-                                CONVERT(CHAR(10), x.DtFinalDeExecucao, 103) AS DtFinalDeExecucao
-				FROM  SAC.dbo.Abrangencia a
-				INNER JOIN SAC.dbo.PreProjeto x on (a.idProjeto = x.idPreProjeto)
-				INNER JOIN SAC.dbo.Projetos y on (x.idPreProjeto = y.idProjeto)
-				LEFT JOIN agentes.dbo.Pais p on (a.idPais=p.idPais)
-				LEFT JOIN agentes.dbo.Uf u on (a.idUF=u.idUF)
-				LEFT JOIN agentes.dbo.Municipios m on (a.idMunicipioIBGE=m.idMunicipioIBGE)
-				WHERE y.IdPRONAC = '$idpronac' AND a.stAbrangencia = 1 ";
-	
+    {
+        $table = Zend_Db_Table::getDefaultAdapter();
+
+        $select = $table->select()
+            ->from('Abrangencia',
+                array('idPais'),
+                'SAC.dbo')
+            ->where('Projetos.IdPRONAC = ? AND Abrangencia.stAbrangencia = \'1\'',  $idpronac)
+            ->joinInner('PreProjeto',
+                'Abrangencia.idProjeto = PreProjeto.idPreProjeto',
+                array(new Zend_Db_Expr('
+                    CONVERT(CHAR(10), PreProjeto.DtInicioDeExecucao, 103) AS DtInicioDeExecucao,
+                    CONVERT(CHAR(10), PreProjeto.DtFinalDeExecucao, 103) AS DtFinalDeExecucao
+                ')),
+                'SAC.dbo')
+            ->joinInner('Projetos',
+                'PreProjeto.idPreProjeto = Projetos.idProjeto',
+                array(''),
+                'SAC.dbo')
+            ->joinLeft('Pais',
+                'Abrangencia.idPais = Pais.idPais',
+                array('Descricao'),
+                'agentes.dbo')
+            ->joinLeft('Uf',
+                'Abrangencia.idUF= Uf.idUF',
+                array(new Zend_Db_Expr('
+                    Uf.Descricao AS UF
+                ')),
+                'agentes.dbo')
+            ->joinLeft('Municipios',
+                'Abrangencia.idMunicipioIBGE = Municipios.idMunicipioIBGE',
+                array(new Zend_Db_Expr('
+                    Municipios.Descricao AS Cidade
+                ')),
+                'agentes.dbo'
+                );
+
 		try
 			{
 				$db  = Zend_Registry::get('db');
@@ -971,7 +993,7 @@ public static  function outrasinformacoes($idpronac)
 			{
 				$this->view->message = $e->getMessage();
 			}
-			return $db->fetchAll($sql);
+			return $db->fetchAll($select);
 				
 	   
 	} // fecha class
