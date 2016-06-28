@@ -1049,18 +1049,29 @@ public static function deslocamento($pronac)
 			return $db->fetchAll($select);
 }
 
-public static function divulgacao($pronac){
-
-	$sql = "
-		    SELECT v1.Descricao as Peca,
-		    v2.Descricao as Veiculo
-			FROM sac.dbo.PlanoDeDivulgacao d
-			INNEr JOIN sac.dbo.Projetos p on (d.idProjeto = p.idProjeto)
-			INNER JOIN sac.dbo.Verificacao v1 on (d.idPeca = v1.idVerificacao)
-			INNER JOIN sac.dbo.Verificacao v2 on (d.idVeiculo = v2.idVerificacao)
-			WHERE p.IdPRONAC='$pronac' AND d.stPlanoDivulgacao = 1
-                        ORDER BY Peca ASC, Veiculo ASC";
-	
+public static function divulgacao($pronac)
+{
+    $table = Zend_Db_Table::getDefaultAdapter();
+    $select = $table->select()
+        ->from('PlanoDeDivulgacao',
+            array(''),
+            'SAC.dbo')
+        ->where('Projetos.IdPRONAC = ? AND PlanoDeDivulgacao.stPlanoDivulgacao = 1 ',$pronac)
+        ->joinInner('Projetos',
+            'PlanoDeDivulgacao.idProjeto = Projetos.idProjeto',
+            array(''),
+            'SAC.dbo')
+        ->joinInner('Verificacao',
+            'PlanoDeDivulgacao.idPeca = Verificacao.idVerificacao',
+            array(new Zend_Db_Expr('Verificacao.Descricao AS Peca')),
+            'SAC.dbo')
+        ->joinInner('Verificacao',
+            'PlanoDeDivulgacao.idVeiculo = Verificacao_2.idVerificacao',
+            array(new Zend_Db_Expr('Verificacao_2.Descricao AS Veiculo')),
+            'SAC.dbo')
+         ->order('Peca ASC')
+         ->order('Veiculo ASC');
+    
 	try
 			{
 				$db  = Zend_Registry::get('db');
@@ -1070,7 +1081,7 @@ public static function divulgacao($pronac){
 			{
 				$this->view->message = "Erro ao buscar os Tipos de Documentos: " . $e->getMessage();
 			}
-			return $db->fetchAll($sql);	
+			return $db->fetchAll($select);
 }
 
 
