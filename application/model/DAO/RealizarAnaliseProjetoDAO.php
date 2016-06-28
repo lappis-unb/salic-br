@@ -998,28 +998,44 @@ public static  function outrasinformacoes($idpronac)
 	   
 	} // fecha class
 	
-public static function deslocamento($pronac){
-	
-		$sql="SELECT
-		   idDeslocamento,
-		   d.idProjeto,
-		   p.Descricao as PaisOrigem,
-		   u.Descricao as UFOrigem,
-		   m.Descricao as MunicipioOrigem,
-		   p2.Descricao as PaisDestino,
-		   u2.Descricao as UFDestino,
-		   m2.Descricao as MunicipioDestino,
-		   Qtde
-		FROM
-		   Sac.dbo.tbDeslocamento d
-		INNER JOIN Sac.dbo.Projetos y on (d.idProjeto = y.idProjeto)
-		INNER JOIN Agentes..Pais p on (d.idPaisOrigem = p.idPais)
-		INNER JOIN Agentes..uf u on (d.idUFOrigem = u.iduf)
-		INNER JOIN Agentes..Municipios m on (d.idMunicipioOrigem = m.idMunicipioIBGE)
-		INNER JOIN Agentes..Pais p2 on (d.idPaisDestino = p2.idPais)
-		INNER JOIN Agentes..uf u2 on (d.idUFDestino = u2.iduf)
-		INNER JOIN Agentes..Municipios m2 on (d.idMunicipioDestino = m2.idMunicipioIBGE)
-		WHERE y.IdPRONAC = '$pronac'";
+public static function deslocamento($pronac)
+{
+        $table = Zend_Db_Table::getDefaultAdapter();
+
+        $select = $table->select()
+            ->from('tbDeslocamento',
+                array('idDeslocamento','idProjeto','Qtde'),
+                'SAC.dbo')
+            ->where('Projetos.IdPRONAC = ?',$pronac)
+            ->joinInner('Projetos',
+                'tbDeslocamento.idProjeto = Projetos.idProjeto',
+                array(''),
+                'SAC.dbo')
+            ->joinInner('Pais',
+                'tbDeslocamento.idPaisOrigem = Pais.idPais',
+                array(new Zend_Db_Expr('Pais.Descricao AS PaisOrigem')),
+                'Agentes.dbo')
+            ->joinInner('uf',
+                'tbDeslocamento.idUFOrigem = uf.iduf',
+                array(new Zend_Db_Expr('uf.Descricao AS UFOrigem')),
+                'Agentes.dbo')
+            ->joinInner('Municipios',
+                'tbDeslocamento.idMunicipioOrigem = Municipios.idMunicipioIBGE',
+                array(new Zend_Db_Expr('Municipios.Descricao AS MunicipioOrigem')),
+                'Agentes.dbo')
+            ->joinInner('Pais',
+                'tbDeslocamento.idPaisDestino = Pais_2.idPais',
+                array(new Zend_Db_Expr('Pais_2.Descricao AS PaisDestino')),
+                'Agentes.dbo')
+            ->joinInner('uf',
+                'tbDeslocamento.idUFDestino = uf_2.iduf',
+                array(new Zend_Db_Expr('uf_2.Descricao AS UFDestino')),
+                'Agentes.dbo')
+            ->joinInner('Municipios',
+                'tbDeslocamento.idMunicipioDestino = Municipios_2.idMunicipioIBGE',
+                array(new Zend_Db_Expr('Municipios_2.Descricao AS MunicipioDestino')),
+                'Agentes.dbo');
+
 		
 		try
 			{
@@ -1030,7 +1046,7 @@ public static function deslocamento($pronac){
 			{
 				$this->view->message = "Erro ao buscar os Tipos de Documentos: " . $e->getMessage();
 			}
-			return $db->fetchAll($sql);
+			return $db->fetchAll($select);
 }
 
 public static function divulgacao($pronac){
