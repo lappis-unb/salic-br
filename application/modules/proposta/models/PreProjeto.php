@@ -331,17 +331,15 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
-    public static function consultaprojetos($idagente) {
-
-        $sql = "SELECT idPreProjeto, idagente, NomeProjeto, Mecanismo
-                FROM SAC.dbo.PreProjeto
-                WHERE idagente = '$idagente'
-                ORDER BY nomeprojeto";
-
-        $db = Zend_Registry::get('db');
+    public static function consultaprojetos($idagente)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $sql = $db->select()->from('PreProjeto',['idPreProjeto', 'idagente', 'NomeProjeto', 'Mecanismo'],'SAC.dbo')
+            ->where('idagente = ?',$idagente)
+            ->order('nomeprojeto');
 
         return $db->fetchAll($sql);
     }
@@ -353,7 +351,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
     public static function inserirProposta($dados)
     {
@@ -380,7 +377,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
     public static function alterarDados($dados, $where) {
 
@@ -404,17 +400,16 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
-    public static function listaUF() {
-
-        $sql = "SELECT * FROM AGENTES.dbo.UF ORDER BY Sigla";
-
-        $db = Zend_Registry::get('db');
+    public static function listaUF()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        return $db->fetchAll($sql);
+        $sql = $db->select()->from('UF',['*'],'AGENTES.dbo')
+            ->order('Sigla');
 
+        return $db->fetchAll($sql);
     }
 
     /**
@@ -424,12 +419,13 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
     public static function buscaIdAgente($CNPJCPF) {
-        $sql = "select * from Agentes.dbo.Agentes where CNPJCPF ='$CNPJCPF' ";
-        $db = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $sql = $db->select()->from('Agentes',['*'],'Agentes.dbo')->where('CNPJCPF = ?', $CNPJCPF);
+
         return $db->fetchAll($sql);
     }
 
@@ -502,15 +498,14 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @return void
      * @todo colocar padrão orm
      */
-    public static function editarproposta($idPreProjeto) {
-
-        $sql = "SELECT * FROM SAC.dbo.PreProjeto WHERE idPreProjeto = $idPreProjeto ";
-
-        $db = Zend_Registry::get('db');
+    public static function editarproposta($idPreProjeto)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        return $db->fetchAll($sql);
+        $sql = $db->select()->from('PreProjeto',['*'],'SAC.dbo')->where('idPreProjeto = ?', $idPreProjeto);
 
+        return $db->fetchAll($sql);
     }
 
     /**
@@ -519,16 +514,18 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param mixed $idOrgaoSuperior
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
     public function recuperarTecnicosOrgao($idOrgaoSuperior)
     {
-
-        $sql = " SELECT usu_codigo,uog_orgao FROM tabelas.dbo.vwUsuariosOrgaosGrupos
-                  WHERE sis_codigo=21 and gru_codigo=92 and uog_orgao = {$idOrgaoSuperior} and uog_status = 1";
-
-        $db = Zend_Registry::get('db');
+        $db = $this->getAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $sql = $db->select()->from('vwUsuariosOrgaosGrupos', ['usu_codigo', 'uog_orgao'], 'tabelas.dbo')
+            ->where('sis_codigo=21')
+            ->where('gru_codigo=92')
+            ->where('uog_status = 1')
+            ->where('uog_orgao = ?', $idOrgaoSuperior)
+            ;
 
         return $db->fetchAll($sql);
     }
@@ -541,8 +538,8 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @access public
      * @return void
      */
-    public function listarDiligenciasPreProjeto($consulta = array(),$retornaSelect = false){
-
+    public function listarDiligenciasPreProjeto($consulta = array(),$retornaSelect = false)
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -568,8 +565,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
                         'aval.stEnviado'
                     )
         );
-
-
 
         $select->joinLeft(
                 array('arq' => 'tbArquivo'),
@@ -825,54 +820,57 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
     public static function analiseDeCustos($idPreProjeto)
     {
-        $sql = "
-            SELECT a.idPreProjeto,
-            a.NomeProjeto,
-            z.idProduto,
-            --PAP.dsJustificativa dsJustificativaConselheiro,
-            --(PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario) AS VlSugeridoConselheiro,
-            CASE WHEN z.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END AS Produto,
-            CONVERT(varchar(8),d.idPlanilhaEtapa) + ' - ' + d.Descricao AS Etapa,
-            d.idPlanilhaEtapa,
-            i.Descricao AS Item,
-            z.Quantidade * z.Ocorrencia * z.ValorUnitario AS VlSolicitado,
-            e.Descricao AS Unidade,
-            z.Quantidade,
-            z.Ocorrencia,
-            z.ValorUnitario,
-            z.QtdeDias,
-            z.TipoDespesa,
-            z.TipoPessoa,
-            z.Contrapartida,
-            z.dsJustificativa as JustificativaProponente,
-            z.FonteRecurso AS idFonte,
-            x.Descricao AS FonteRecurso,
-            f.UF,
-            f.idUF,
-            f.Municipio,
-            f.idMunicipio,
-            ROUND(z.Quantidade * z.Ocorrencia * z.ValorUnitario, 2) AS Sugerido,
-            --CAST(z.Justificativa AS TEXT) AS Justificativa,
-            z.idUsuario
-            FROM SAC.dbo.PreProjeto AS a
-            --INNER JOIN SAC.dbo.tbPlanilhaProjeto AS b ON a.IdPRONAC = b.idPRONAC
-            INNER JOIN SAC.dbo.tbPlanilhaProposta AS z ON z.idProjeto = a.idPreProjeto
-            --left JOIN SAC.dbo.tbPlanilhaAprovacao PAP on (PAP.idPlanilhaProposta = z.idPlanilhaProposta)
-            LEFT OUTER JOIN SAC.dbo.Produto AS c ON c.Codigo = z.idProduto
-            INNER JOIN SAC.dbo.tbPlanilhaEtapa AS d ON d.idPlanilhaEtapa = z.idEtapa
-            INNER JOIN SAC.dbo.tbPlanilhaUnidade AS e ON e.idUnidade = z.Unidade
-            INNER JOIN SAC.dbo.tbPlanilhaItens AS i ON i.idPlanilhaItens = z.idPlanilhaItem
-            INNER JOIN SAC.dbo.Verificacao AS x ON x.idVerificacao = z.FonteRecurso
-            INNER JOIN AGENTES.dbo.vUFMunicipio AS f ON f.idUF = z.UfDespesa AND f.idMunicipio = z.MunicipioDespesa
-            WHERE a.idPreProjeto = {$idPreProjeto}
-            ORDER BY x.Descricao, Produto, Etapa, UF, Item";
-
-        $db = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $a = [
+            'a.idPreProjeto',
+            'a.NomeProjeto',
+        ];
+
+        $d = [
+            new Zend_Db_Expr("CONVERT(varchar(8),d.idPlanilhaEtapa) + ' - ' + d.Descricao AS Etapa"),
+            'd.idPlanilhaEtapa'
+        ];
+
+        $z = [
+            'z.idProduto',
+            new Zend_Db_Expr("CASE WHEN z.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END AS Produto"),
+            new Zend_Db_Expr('z.Quantidade * z.Ocorrencia * z.ValorUnitario AS VlSolicitado'),
+            'z.Quantidade',
+            'z.Ocorrencia',
+            'z.ValorUnitario',
+            'z.QtdeDias',
+            'z.TipoDespesa',
+            'z.TipoPessoa',
+            'z.Contrapartida',
+            'z.dsJustificativa as JustificativaProponente',
+            'z.FonteRecurso AS idFonte',
+            new Zend_Db_Expr('ROUND(z.Quantidade * z.Ocorrencia * z.ValorUnitario, 2) AS Sugerido'),
+            'z.idUsuario'
+        ];
+
+        $f = [
+            'f.UF',
+            'f.idUF',
+            'f.Municipio',
+            'f.idMunicipio',
+        ];
+
+        $sql = $db->select()->from(['a' => 'PreProjeto'], $a, 'SAC.dbo')
+            ->join(['z' => 'tbPlanilhaProposta'],'z.idProjeto = a.idPreProjeto', $z, 'SAC.dbo')
+            ->joinLeft(['c' => 'Produto'],'c.Codigo = z.idProduto', [],'SAC.dbo')
+            ->join(['d' => 'tbPlanilhaEtapa'],'d.idPlanilhaEtapa = z.idEtapa', $d,'SAC.dbo')
+            ->join(['e' => 'tbPlanilhaUnidade'],'e.idUnidade = z.Unidade', ['e.Descricao AS Unidade'],'SAC.dbo')
+            ->join(['i' => 'tbPlanilhaItens'],'i.idPlanilhaItens = z.idPlanilhaItem', ['i.Descricao AS Item'],'SAC.dbo')
+            ->join(['x' => 'Verificacao'], 'x.idVerificacao = z.FonteRecurso', ['x.Descricao AS FonteRecurso'],'SAC.dbo')
+            ->join(['f' => 'vUFMunicipio'], 'f.idUF = z.UfDespesa AND f.idMunicipio = z.MunicipioDespesa', $f, 'AGENTES.dbo')
+            ->where('a.idPreProjeto = ?', $idPreProjeto)
+            ->order(['x.Descricao', 'Produto', 'Etapa', 'UF', 'Item']);
+
         return $db->fetchAll($sql);
     }
 
@@ -1074,7 +1072,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
         $slct->order('pp.NomeProjeto');
 
         return $this->fetchAll($slct);
-
     }
 
     /**
@@ -1085,19 +1082,33 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
-    public static function gerenciarResponsaveisPendentes($siVinculo, $idAgente = null) {
-
-        $sql = "SELECT distinct k.Cpf, k.IdUsuario as idResponsavel, k.Nome AS NomeResponsavel, v.idVinculo, v.siVinculo, v.idUsuarioResponsavel,k.IdUsuario
-                FROM AGENTES.dbo.Agentes  a
-                LEFT JOIN AGENTES.dbo.tbVinculo v          on (a.idAgente = v.idAgenteProponente)
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso k on (k.IdUsuario = v.idUsuarioResponsavel)
-                WHERE (a.idAgente= $idAgente) AND (v.siVinculo = $siVinculo) and a.CNPJCPF <> k.Cpf
-                ORDER BY k.Nome  ASC";
-
-        $db = Zend_Registry::get('db');
+    public static function gerenciarResponsaveisPendentes($siVinculo, $idAgente = null)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $k = [
+            'k.Cpf',
+            'k.IdUsuario as idResponsavel',
+            'k.Nome AS NomeResponsavel',
+            'k.IdUsuario',
+        ];
+
+        $v = [
+            'v.idVinculo',
+            'v.siVinculo',
+            'v.idUsuarioResponsavel',
+        ];
+
+        $sql = $db->select()->distinct()
+            ->from(['a'=>'Agentes'], [],'AGENTES.dbo')
+            ->joinLeft(['v' => 'tbVinculo'], 'a.idAgente = v.idAgenteProponente', $v,'AGENTES.dbo')
+            ->join(['k' => 'SGCacesso'], 'k.IdUsuario = v.idUsuarioResponsavel',$k,'CONTROLEDEACESSO.dbo')
+            ->where('a.idAgente= ?', $idAgente)
+            ->where('v.siVinculo = ?', $siVinculo)
+            ->where('a.CNPJCPF <> k.Cpf')
+            ->order('k.Nome  ASC');
 
         return $db->fetchAll($sql);
     }
@@ -1112,20 +1123,23 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @return void
      * @todo colocar padrão orm
      */
-    public static function gerenciarResponsaveisVinculados($siVinculo, $idAgente = null) {
-
-        $sql = "SELECT distinct k.Cpf, k.IdUsuario as idResponsavel, k.Nome AS NomeResponsavel, y.idVinculo, y.siVinculo, y.idUsuarioResponsavel,r.IdUsuario
-                FROM SAC.dbo.PreProjeto j
-                INNER JOIN AGENTES.dbo.Agentes  a           on (j.idAgente = a.idAgente)
-                INNER JOIN AGENTES.dbo.tbVinculoProposta v  on (j.idPreProjeto = v.idPreProjeto)
-                INNER JOIN AGENTES.dbo.tbVinculo y          on (v.idVinculo = y.idVinculo)
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso k on (k.IdUsuario = y.idUsuarioResponsavel)
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso r on (r.Cpf = a.CNPJCPF)
-                WHERE (j.idAgente= $idAgente) AND (y.siVinculo = $siVinculo) and a.CNPJCPF <> k.Cpf
-                ORDER BY k.Nome  ASC ";
-
-        $db = Zend_Registry::get('db');
+    public static function gerenciarResponsaveisVinculados($siVinculo, $idAgente = null)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $sql = $db->select()->distinct()
+            ->from(['j'=>'PreProjeto'], [],'SAC.dbo')
+            ->join(['a' => 'Agentes'], 'j.idAgente = a.idAgente', [],'AGENTES.dbo')
+            ->join(['v' => 'tbVinculoProposta'], 'j.idPreProjeto = v.idPreProjeto', [],'AGENTES.dbo')
+            ->join(['y' => 'tbVinculo'], 'v.idVinculo = y.idVinculo', ['y.idVinculo', 'y.siVinculo', 'y.idUsuarioResponsavel'],'AGENTES.dbo')
+            ->join(['k' => 'SGCacesso'], 'k.IdUsuario = y.idUsuarioResponsavel', ['k.Cpf', 'k.IdUsuario as idResponsavel', 'k.Nome AS NomeResponsavel'],'CONTROLEDEACESSO.dbo')
+            ->join(['r' => 'SGCacesso'], 'r.Cpf = a.CNPJCPF', ['r.IdUsuario'],'CONTROLEDEACESSO.dbo')
+            ->where('j.idAgente= ?', $idAgente)
+            ->where('y.siVinculo = ?', $siVinculo)
+            ->where('a.CNPJCPF <> k.Cpf')
+            ->order(['k.Nome  ASC'])
+            ;
 
         return $db->fetchAll($sql);
     }

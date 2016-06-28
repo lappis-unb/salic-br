@@ -261,7 +261,7 @@ class Proposta_Model_Proposta extends GenericModel
             ->from(['a' => 'tbAvaliacaoProposta'], ['a.Avaliacao'], $this->_schema)
             ->where('a.idAvaliacaoProposta = ?', $idAvaliacao);
 
-        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
