@@ -104,6 +104,7 @@ class IndexController extends GenericControllerNew
 	{
 		$auth = Zend_Auth::getInstance();
 		$auth->clearIdentity(); // limpa a autenticação
+        Zend_Session::destroy();
                 unset($_SESSION);
 		$this->_redirect('index');
 	} // fecha logoutAction
