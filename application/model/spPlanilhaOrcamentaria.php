@@ -10,7 +10,7 @@ class spPlanilhaOrcamentaria extends GenericModel {
     protected $_name  = 'spPlanilhaOrcamentaria';
 
     public function exec($idPronac, $tipoPlanilha){
-        
+
         // tipoPlanilha = 0 : Planilha Orçamentária da Proposta
         // tipoPlanilha = 1 : Planilha Orçamentária do Proponente
         // tipoPlanilha = 2 : Planilha Orçamentária do Parecerista
@@ -18,10 +18,12 @@ class spPlanilhaOrcamentaria extends GenericModel {
         // tipoPlanilha = 4 : Cortes Orçamentários Aprovados
         // tipoPlanilha = 5 : Remanejamento menor que 20%
         // tipoPlanilha = 6 : Readequação
-        
-        $sql = "exec ".$this->_banco.".dbo.".$this->_name." $idPronac, $tipoPlanilha";
+
+        $sql = sprintf("exec $this->_banco.dbo.$this->_name %d, %d",$idPronac,$tipoPlanilha);
+
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+
         return $db->fetchAll($sql);
     }
 }
