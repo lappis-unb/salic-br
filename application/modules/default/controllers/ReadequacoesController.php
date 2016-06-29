@@ -2024,26 +2024,28 @@ class ReadequacoesController extends GenericControllerNew {
         }
 
         $pag = 1;
-        $get = Zend_Registry::get('get');
-        if (isset($get->pag)) $pag = $get->pag;
+        
+        if ($this->_request->getParam('pag') !== null) {
+            $pag = $this->_request->getParam('pag');
+        }
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
         $where = array();
 
         $filtro = null;
-        if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
-            $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
+        if ($this->_request->getParam('tipoFiltro') !== null) {
+            $filtro = $this->_request->getParam('tipoFiltro');
             $this->view->filtro = $filtro;
         } else {
             $this->view->nmPagina = 'Aguardando Análise';
         }
 
-        if((isset($_GET['pronac']) && !empty($_GET['pronac']))){
-            $where['a.PRONAC = ?'] = $_GET['pronac'];
-            $this->view->pronac = $_GET['pronac'];
+        if ($this->_request->getParam('pronac') !== null) {
+            $where['a.PRONAC = ?'] = $this->_request->getParam('pronac');
+            $this->view->pronac = $this->_request->getParam('pronac');
         }
-
+        
         $Orgaos = new Orgaos();
         $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$this->idOrgao))->current();
 
@@ -2065,6 +2067,9 @@ class ReadequacoesController extends GenericControllerNew {
                 break;
             case 'encaminhados':
                 $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoEmAnalise' , $where);
+                break;
+            case 'em_analise':
+                // TODO
                 break;
             case 'analisados':
                 $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAnalisados' , $where);
@@ -2404,66 +2409,51 @@ class ReadequacoesController extends GenericControllerNew {
         }
 
         $pag = 1;
-        $get = Zend_Registry::get('get');
-        if (isset($get->pag)) $pag = $get->pag;
+        
+        if ($this->_request->getParam('pag')) {
+            $pag = $this->_request->getParam("pag");
+        }
+        
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
         $where = array();
-        $where['b.stEstado = ?'] = 0;
-        $where['a.stValidacaoCoordenador = ?'] = 0;
-
-        if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
-            $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
-            $this->view->filtro = $filtro;
-            switch ($filtro) {
-                case '':
-                    if($this->idPerfil == 93){ //Coord. de Parecer
-                        $where['b.siEncaminhamento = ?'] = 3;
-                    } else if($this->idPerfil == 94 || $this->idPerfil == 121){
-                        $where['b.siEncaminhamento = ?'] = 4;
-                        $where['a.idAvaliador = ?'] = $this->idUsuario;
-                    }
-                    break;
-                case 'analisados':
-                    $where['b.siEncaminhamento = ?'] = 5;
-                    $this->view->nmPagina = 'Analisados';
-                    break;
-            }
+        
+        if ($this->_request->getParam('tipoFiltro') !== null) {
+            $filtro = $this->_request->getParam('tipoFiltro');
+            $this->view->filtro = $filtro;            
         } else {
+            $filtro = 'aguardando_distribuicao';
             $this->view->nmPagina = 'Aguardando Análise';
-            if($this->idPerfil == 93){
-                $where['b.siEncaminhamento = ?'] = 3;
-            } else if($this->idPerfil == 94 || $this->idPerfil == 121){
-                $where['b.siEncaminhamento = ?'] = 4;
-                    $where['a.idAvaliador = ?'] = $this->idUsuario;
-                }
-            }
-
-        if((isset($_GET['pronac']) && !empty($_GET['pronac']))){
-            $where['c.AnoProjeto+c.Sequencial = ?'] = $_GET['pronac'];
-            $this->view->pronac = $_GET['pronac'];
         }
 
-        $Orgaos = new Orgaos();
-        $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$this->idOrgao))->current();
-
-        if(isset($idSecretaria) && !empty($idSecretaria)){
-            if($idSecretaria->idSecretaria == 251){
-                $where['c.Area <> ?'] = 2;
-            } else if($idSecretaria->idSecretaria == 160){
-                $where['c.Area = ?'] = 2;
-            }
+        if($this->_request->getParam('pronac') !== null){
+            $where['c.AnoProjeto+c.Sequencial = ?'] = $this->_request->getParam('pronac');
+            $this->view->pronac = $this->_request->getParam('pronac');
         }
 
+        $where['idOrgao = ?'] = $this->idOrgao;
+        
         $tbReadequacao = New tbReadequacao();
-        $total = $tbReadequacao->painelReadequacoesAnalise($where, $order, null, null, true, $this->idPerfil);
+        switch($filtro){
+            case 'aguardando_distribuicao':
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAguardandoAnalise' , $where);
+                break;
+            case 'em_analise':
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoEmAnalise' , $where);
+                break;
+            case 'analisados':
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAnalisados' , $where);
+                break;
+        }
+        
         $fim = $inicio + $this->intTamPag;
 
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-
-        $busca = $tbReadequacao->painelReadequacoesAnalise($where, $order, $tamanho, $inicio, false, $this->idPerfil);
+        
+        $busca = $tbReadequacao->painelReadequacoes($where, $order, $tamanho, $inicio, null, $filtro);
+        
         $paginacao = array(
             "pag"=>$pag,
             "qtde"=>$this->intTamPag,

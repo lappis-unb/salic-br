@@ -100,17 +100,17 @@ END dsSolicitacao,
         $total= array();
 
         switch($filtro){
-            case '':
-                $select = $this->selectView('vwPainelCoordenadorReadequacaoAguardandoAnalise');
+            case 'aguardando_distribuicao':
+                $select = $this->selectView('vwPainelReadequacaoCoordenadorParecerAguardandoAnalise');
                 break;
-            case 'encaminhados':
-                $select = $this->selectView('vwPainelCoordenadorReadequacaoEmAnalise');
+            case 'em_analise':
+                $select = $this->selectView('vwPainelReadequacaoCoordenadorParecerEmAnalise');
                 break;
             case 'analisados':
-                $select = $this->selectView('vwPainelCoordenadorReadequacaoAnalisados');
+                $select = $this->selectView('vwPainelReadequacaoCoordenadorParecerAnalisados');
                 break;
         }
-
+        
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
@@ -127,13 +127,13 @@ END dsSolicitacao,
             }
             $select->limit($tamanho, $tmpInicio);
         }
-
+        
         $stmt = $db->query($select);
 
         while ($o = $stmt->fetchObject()) {
             $result[] = $o;
         }
-
+        
         return $result;
     }
 
@@ -269,7 +269,7 @@ END dsSolicitacao,
         //adicionando linha order ao select
         $select->order($order);
 
-            //xd($select->assemble());
+        //xd($select->assemble());
         return $this->fetchAll($select);
     }
 
