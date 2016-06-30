@@ -138,7 +138,7 @@
     }
 </script>
 
-<?php if(isset($_REQUEST['id'])) { require_once "scripts/manterpropostaincentivofiscal/inc/menu.inc.php"; } ?>
+<?php if(isset($_REQUEST['id'])) { $this->partial("/manterpropostaincentivofiscal/inc/menu.inc.php"); } ?>
 <?php if ( isset ( $_GET['s'] ) ) {?>
 <!-- ========== INULO ========== -->
 <div id="titulo">
@@ -153,7 +153,7 @@
     <div id="confirm" title="Confirma&ccedil;&atilde;o" style="display: none">Tem certeza que deseja excluir o registro?</div>
     <div id="miolo">
 
-        <form name="form" id="form" action="<?php echo $this->url(array('controller'=>'deslocamento', 'action'=>'salvar')); ?>" method="post">
+        <form name="form" id="form" action="<?php echo $this->url(array('module'=>'default','controller'=>'deslocamento', 'action'=>'salvar')); ?>" method="post">
             <input type="hidden" name="idDeslocamento" value="<?php echo $this->idDeslocamento; ?>" style="border:red solid 1px;" />
             <input type="hidden" name="idPreProjeto" value="<?php echo $this->idPreProjeto; ?>" style="border:red solid 1px;" />
 
@@ -195,7 +195,7 @@
                         <label id="Luf" <?php if(($this->idPaisO) && ($this->idPaisO != 31)) echo 'style="display:none"'; ?>>UF de Origem</label>
                         <br />
                         <select name="uf" id="uf" class="w100 select_simples" <?php if(($this->idPaisO) && ($this->idPaisO != 31))  echo 'style="display:none"'; ?>
-                                onchange="carregar_combo(this.value,'cidade','<?php echo $this->url(array('controller'=>'cidade', 'action'=>'combo')); ?>',' - Selecione primeiro o UF - ');">
+                                onchange="carregar_combo(this.value,'cidade','<?php echo $this->url(array('module'=>'default','controller'=>'cidade', 'action'=>'combo')); ?>',' - Selecione primeiro o UF - ');">
                             <?php if (!isset($this->uf) || empty($this->uf)) {?>
                             <option value="0"> -- </option>
                             <?php } ?>
@@ -248,7 +248,7 @@
                         <label id="LudD" <?php if(($this->idPaisD) && ($this->idPaisD != 31))echo 'style="display:none;"'; ?>>UF de Destino</label>
                         <br />
                         <select name="ufD" id="ufD" class="w100 input_simples"
-                            onchange="carregar_combo(this.value,'cidadeD','<?php echo $this->url(array('controller'=>'cidade', 'action'=>'combo')); ?>',' - Selecione primeiro o UF - ');"
+                            onchange="carregar_combo(this.value,'cidadeD','<?php echo $this->url(array('module'=>'default', 'controller'=>'cidade', 'action'=>'combo')); ?>',' - Selecione primeiro o UF - ');"
                             <?php if(($this->idPaisD) && ($this->idPaisD != 31))echo 'style="display:none; width:50px;"'; ?> class="select_simples" >
                             <?php if (!isset($this->uf) || empty($this->uf)) { ?>
                             <option value="0"> -- </option>

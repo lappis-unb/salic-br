@@ -3,8 +3,7 @@
 /**
  * PreProjeto
  *
- * @uses   Zend
- * @uses   _Db_Table
+ * @uses   Zend_Db_Table
  * @author wouerner <wouerner@gmail.com>
  */
 class Proposta_Model_PreProjeto extends Zend_Db_Table

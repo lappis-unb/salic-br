@@ -6,13 +6,10 @@
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-<div id="titulo"> 
+<div id="titulo">
     <div>Lista de Propostas<span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-
 <!-- ========== FIM TITULO ========== -->
-
 <script type="text/javascript">
     $(document).ready(function(){
         $('.expandir').live('click', function(){
@@ -28,7 +25,6 @@
                 elemento.removeClass('btn_remover');
             }
         });
-
 
         $("#frmNovaProposta").validate({
             rules: {
@@ -72,15 +68,8 @@
             });
 
                 $("#propostasCadastradas").html("<br><br>Carregando dados...<br><img src='<?php echo $this->baseUrl(); ?>/public/img/ajax.gif'>");
-                //$("#tblResultPropostas").show();
-                //jqAjaxLinkSemLoading("<?php echo $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'localizar-proposta')); ?>?idAgente="+$('#propronente').val()+"&mecanismo="+$('#mecanismo').val(), "", "propostasCadastradas");
         });
-
-        //POPULA COMBO DE PROPONENTES
-        //jqAjaxLinkSemLoading("<?php echo $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'buscar-proponentes-vinculados')); ?>?idResponsavel=<?php echo $this->idResponsavel; ?>", "", "propronente");
-
     });
-   
 </script>
 <style type="text/css">
     label.error{ color:red; font-weight: normal; }

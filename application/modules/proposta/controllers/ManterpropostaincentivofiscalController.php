@@ -222,16 +222,12 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
     }
 
     /**
-     * Metodo responsavel por gravar a proposta em banco (INSERT e UPDATE)
+     * Metodo responsavel por gravar a Proposta (INSERT e UPDATE)
      * @param void
      * @return objeto
      */
-    public function salvarAction() {
-
-        /* =============================================================================== */
-        /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
-
+    public function salvarAction()
+    {
         $post = Zend_Registry::get("post");
         $idPreProjeto = $post->idPreProjeto;
         $acao = $post->acao;
@@ -319,9 +315,6 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
             $mesagem = "Cadastro realizado com sucesso!";
         }
 
-        //CONECTA COM BANCO SAC
-        $db = new Conexao(Zend_Registry::get('DIR_CONFIG'), "conexao_sac");
-
         //instancia classe modelo
         $tblPreProjeto = new Proposta_Model_PreProjeto();
 
@@ -351,7 +344,6 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
                     $insere = $tbVinculoDAO->inserir($dadosV);
                 }
 
-
                 $vinculo2 = $tbVinculoDAO->buscar($whereVinculo);
                 if (count($vinculo2) > 0) {
                     $novosDadosV = array('idVinculo' => $idVinculo = $vinculo2[0]->idVinculo,
@@ -363,13 +355,11 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
                 }
                 /* **************************************************************************************** */
             }
-            //$db->commit();
             if ($acao != 'atualizacao_automatica') {
                 parent::message($mesagem, "/proposta/manterpropostaincentivofiscal/editar?idPreProjeto=" . $idPreProjeto, "CONFIRM");
             }
             return;
         } catch (Zend_Exception $ex) {
-            //$db->rollback();
             parent::message("Não foi possível realizar a operação!" . $ex->getMessage(), "/proposta/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
         }
     }
@@ -1130,7 +1120,8 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
      * @access public
      * @return void
      */
-    public function listarpropostaAction() {
+    public function listarpropostaAction()
+    {
         $proposta = new Proposta_Model_Proposta();
         $dadosCombo = array();
         $cpfCnpj = '';

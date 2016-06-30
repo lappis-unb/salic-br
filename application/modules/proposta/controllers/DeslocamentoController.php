@@ -1,7 +1,7 @@
 <?php
-require_once "GenericControllerNew.php";
+//require_once "GenericControllerNew.php";
 
-class DeslocamentoController extends GenericControllerNew {
+class Proposta_DeslocamentoController extends GenericControllerNew {
 
     private $idPreProjeto = null;
 
@@ -52,15 +52,21 @@ class DeslocamentoController extends GenericControllerNew {
             $this->view->movimentacaoAtual = $rsStatusAtual->Movimentacao;
         }else {
             if($_REQUEST['idPreProjeto'] != '0'){
-                parent::message("Necessário informar o número da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
+                parent::message("Necessário informar o número da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
             }
         }
 
     }
 
-    public function indexAction() {
-        if (empty ( $_GET['verifica'] ))
-        {
+    /**
+     * indexAction
+     *
+     * @access public
+     * @return void
+     */
+    public function indexAction()
+    {
+        if (empty($_GET['verifica'])) {
             $this->_helper->layout->disableLayout();
         }
         if($_GET) {
@@ -101,9 +107,6 @@ class DeslocamentoController extends GenericControllerNew {
             $this->view->idPreProjeto	= $idPreProjeto;
             $this->view->deslocamentos = DeslocamentoDAO::buscarDeslocamentos($idPreProjeto, null);
         }
-
-        //Zend_Debug::dump(Cidade::buscar($idO));
-        //exit();
     }
 
     public function salvarAction() {

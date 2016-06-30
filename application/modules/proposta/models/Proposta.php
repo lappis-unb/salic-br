@@ -263,7 +263,6 @@ class Proposta_Model_Proposta extends GenericModel
 
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
     }
 
