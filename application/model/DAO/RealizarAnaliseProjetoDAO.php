@@ -1071,7 +1071,7 @@ public static function divulgacao($pronac)
             'SAC.dbo')
          ->order('Peca ASC')
          ->order('Veiculo ASC');
-    
+
 	try
 			{
 				$db  = Zend_Registry::get('db');
@@ -1178,40 +1178,47 @@ public static function divulgacaoProjetosCadastrados($pronac){
 }
 
 
-public static function planodedistribuicao ($pronac, $idproduto=null) {
-  
-	$sql="SELECT idPlanoDistribuicao,
-           x.idProjeto,
-       x.idProduto,
-       x.stPrincipal,
-           p.Descricao as Produto,
-           v.Descricao as PosicaoDaLogo,
-           y.Localizacao,
-           QtdeProduzida,
-           QtdeProponente,
-           QtdePatrocinador,
-       QtdeOutros,
-       QtdeVendaNormal,
-       QtdeVendaPromocional,
-       PrecoUnitarioNormal,
-       PrecoUnitarioPromocional,
-       QtdeVendaNormal*PrecoUnitarioNormal as ReceitaNormal,
-       QtdeVendaPromocional*PrecoUnitarioPromocional as ReceitaPro,
-       (QtdeVendaNormal*PrecoUnitarioNormal)
-       +(QtdeVendaPromocional*PrecoUnitarioPromocional) as ReceitaPrevista,
-       a.Descricao as Area,b.Descricao as Segmento,
-       a.Codigo as idArea, b.Codigo as idSegmento
-       
-       FROM SAC.dbo.PlanoDistribuicaoProduto x
-       INNER JOIN SAC.dbo.Projetos y on (x.idProjeto = y.idProjeto)
-       INNER JOIN SAC.dbo.Produto p on (x.idProduto = p.Codigo)
-       INNER JOIN SAC.dbo.Area a on (x.Area = a.Codigo)
-       INNER JOIN SAC.dbo.Segmento b on (x.Segmento = b.Codigo)
-       INNER JOIN SAC.dbo.Verificacao v on (x.idPosicaoDaLogo = v.idVerificacao)
-       WHERE y.IdPRONAC='$pronac' AND x.stPlanoDistribuicaoProduto = 1";
+public static function planodedistribuicao ($pronac, $idproduto=null)
+{
+
+    $table = Zend_Db_Table::getDefaultAdapter();
+
+    $sql = $table->select()
+        ->from(['x' =>'PlanoDistribuicaoProduto'],
+            [new Zend_Db_Expr('idPlanoDistribuicao'),'idProjeto','idProduto','stPrincipal','QtdeProduzida','QtdeProponente','QtdeVendaNormal','QtdePatrocinador','QtdeOutros', 'QtdeVendaPromocional','PrecoUnitarioNormal','PrecoUnitarioPromocional',
+                new Zend_Db_Expr('
+                 QtdeVendaNormal*PrecoUnitarioNormal as ReceitaNormal,
+                 QtdeVendaPromocional*PrecoUnitarioPromocional as ReceitaPro,
+                 (QtdeVendaNormal*PrecoUnitarioNormal)
+                 +(QtdeVendaPromocional*PrecoUnitarioPromocional) as ReceitaPrevista
+                ')],
+            'SAC.dbo')
+        ->joinInner(['y' => 'Projetos'],
+             'x.idProjeto = y.idProjeto',
+             ['Localizacao'],
+             'SAC.dbo')
+        ->joinInner(['p' => 'Produto'],
+            'x.idProduto = p.Codigo',
+            [new Zend_Db_Expr('p.Descricao AS Produto')],
+            'SAC.dbo')
+        ->joinInner(['a' => 'Area'],
+            'x.Area = a.Codigo',
+            [new Zend_Db_Expr('a.Descricao AS Area'),new Zend_Db_Expr('b.Descricao AS Segmento')],
+            'SAC.dbo')
+        ->joinInner(['b' => 'Segmento'],
+            'x.Segmento = b.Codigo',
+            [],
+            'SAC.dbo')
+        ->joinInner(['v' => 'Verificacao'],
+            'x.idPosicaoDaLogo = v.idVerificacao',
+            [new Zend_Db_Expr('v.Descricao AS PosicaoDaLogo')],
+            'SAC.dbo')
+        ->where('y.IdPRONAC = ?',$pronac)
+        ->where('x.stPlanoDistribuicaoProduto = 1');
+
 	
                 if ($idproduto) {
-                    $sql .= " and x.idProduto = $idproduto ";
+                    $sql .= sprintf(' AND x.idProduto = %d', $idproduto);
                 }
                 $sql .= " order by x.stPrincipal DESC";
 
