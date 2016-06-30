@@ -741,8 +741,9 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 	
 	public static function buscarDoc($id)
 	{
-		$sql = "SELECT * FROM SAC.dbo.tbDocumento WHERE idDocumento = ".$id;
-							
+
+		$sql = sprintf('SELECT * FROM SAC.dbo.tbDocumento WHERE idDocumento = %d',$id);
+
 		$db = Zend_Registry::get('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
