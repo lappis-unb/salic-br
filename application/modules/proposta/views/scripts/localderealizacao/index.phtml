@@ -4,8 +4,7 @@ if(isset($_GET['edital'])) {
     $this->partial('manterpropostaedital/inc/menu.inc.php'); // menu de manter proposta por edital
     $edital = "&edital=s";
 }else {
-    //require_once "/manterpropostaincentivofiscal/inc/menu.inc.php"; // menu de manter proposta por incentivo fiscal
-    $this->partial("/manterpropostaincentivofiscal/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
+    $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
 }
 ?>
 <script type="text/javascript">
@@ -16,18 +15,13 @@ if(isset($_GET['edital'])) {
         <?php endif; ?>
 
         $('#btn_novo').click(function(){
-            redirecionar('<?php echo $this->url(array('controller'=>'localderealizacao', 'action'=>'form-inserir')); ?>?idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>');
+            redirecionar('<?php echo $this->url(array('module'=>'proposta','controller'=>'localderealizacao', 'action'=>'form-inserir')); ?>?idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>');
         });
 
     });
 
     function excluir(cod)
     {
-        /*if(confirm("Tem certeza que deseja excluir o registro?"))
-        {
-           window.location.href="<?php echo $this->url(array('controller'=>'localderealizacao', 'action'=>'excluir')); ?>?cod="+cod+"&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>";
-        }*/
-
         $("#modalConfirmaExclusao").html("Tem certeza que deseja excluir o registro?");
         // modal com os ddos do dirigente
         $("#modalConfirmaExclusao").dialog("destroy");
@@ -45,7 +39,7 @@ if(isset($_GET['edital'])) {
                 },
                 'Confirmar':function()
                 {
-                    window.location.href="<?php echo $this->url(array('controller'=>'localderealizacao', 'action'=>'excluir')); ?>?cod="+cod+"&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>";
+                    window.location.href="<?php echo $this->url(array('module'=>'proposta', 'controller'=>'localderealizacao', 'action'=>'excluir')); ?>?cod="+cod+"&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>";
                     $(this).dialog('close'); // fecha a modal
                 }
             }
@@ -62,7 +56,7 @@ if(isset($_GET['edital'])) {
 
         }else {
             $('#deslocamento').html('&ensp;&ensp;&ensp;Carregando...');
-            jqAjaxLinkSemLoading("<?php echo $this->url(array('controller' => 'deslocamento', 'action' => 'index')).$codProjeto; ?>", "", "deslocamento");
+            jqAjaxLinkSemLoading("<?php echo $this->url(array('controller' => 'deslocamento', 'action' => 'index')).'?idPreProjeto='.$_GET['idPreProjeto']; ?>", "", "deslocamento");
             $('#deslocamento').show();
             $('#localderealizacao').hide();
 
@@ -73,7 +67,7 @@ if(isset($_GET['edital'])) {
 <?php
         $controller = "localderealizacao";
         $links = array(
-            array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal','action' => 'listar-propostas')),
+            array('Lista de Propostas' => array('module'=>'proposta', 'controller' => 'manterpropostaincentivofiscal','action' => 'listar-propostas')),
             array('Local de Realiza&ccedil;&atilde;o' => array())
         );
 montaGuiaLinks($controller, $links);
@@ -122,7 +116,7 @@ montaGuiaLinks($controller, $links);
                 <td class="centro"><?php echo $localizacao->uf; ?></td>
                 <td class="centro"><?php echo $localizacao->cidade; ?></td>
                 <td class="centro" nowrap>
-                <input type="button" id="btn_editar" name="sair" style="width: 88px" class="btn_editar" onclick="window.location.href='<?php echo $this->url(array('controller'=>'localderealizacao', 'action'=>'form-local-de-realizacao')); ?>?cod=<?php echo $localizacao->idAbrangencia;?>&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>&edit=1'">
+                <input type="button" id="btn_editar" name="sair" style="width: 88px" class="btn_editar" onclick="window.location.href='<?php echo $this->url(array('module'=>'default', 'controller'=>'localderealizacao', 'action'=>'form-local-de-realizacao')); ?>?cod=<?php echo $localizacao->idAbrangencia;?>&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>&edit=1'">
                 <input type="button" id="btn_excluir" name="sair" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $localizacao->idAbrangencia;?>);"></td>
             </tr>
                 <?php } ?>

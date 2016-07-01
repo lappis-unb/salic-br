@@ -1,9 +1,9 @@
 <?php $edital = "";
     if(isset($_GET['edital'])) {
-        require_once 'scripts/manterpropostaedital/inc/menu.inc.php'; // menu de manter proposta por edital
+        $this->partial('/manterpropostaedital/inc/menu.inc.php'); // menu de manter proposta por edital
         $edital = "&edital=s";
     } else {
-        require_once "scripts/manterpropostaincentivofiscal/inc/menu.inc.php"; // menu de manter proposta por incentivo fiscal
+        $this->partial("/manterpropostaincentivofiscal/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
     }
 ?>
 <script type="text/javascript">
@@ -13,7 +13,7 @@
              //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
              JSBloquearAlteracaoFormulario();
         <?php endif; ?>
-            
+
         $('#pais').change(function(){
             if($(this).val() != '31'){ //Diferente do Brasil
                 $("#estados").attr("disabled", true);

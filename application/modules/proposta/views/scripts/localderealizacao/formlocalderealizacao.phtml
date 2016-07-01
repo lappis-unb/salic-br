@@ -1,10 +1,10 @@
 <?php
 $edital = "";
 if(isset($_GET['edital'])) {
-    require_once 'scripts/manterpropostaedital/inc/menu.inc.php'; // menu de manter proposta por edital
+    $this->partial('manterpropostaedital/inc/menu.inc.php'); // menu de manter proposta por edital
     $edital = "&edital=s";
 }else {
-    require_once "scripts/manterpropostaincentivofiscal/inc/menu.inc.php"; // menu de manter proposta por incentivo fiscal
+    $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
 }
 $cod = null;
 if(isset($_GET['cod'])){
@@ -87,7 +87,7 @@ if(isset($_GET['cod'])){
                                          "</select>"+
                                     "</td>" +
                                     "<td>"+
-                                        "<select id='uf_" + numLocais + "' name='uf_" + numLocais + "' class='select_simples w240' onchange='carregar_combo(this.value,\"cidade_" + numLocais + "\",\"<?php echo $this->url(array('controller'=>'cidade', 'action'=>'combo')); ?>\",\" - Selecione uma UF - \");'>"+
+                                        "<select id='uf_" + numLocais + "' name='uf_" + numLocais + "' class='select_simples w240' onchange='carregar_combo(this.value,\"cidade_" + numLocais + "\",\"<?php echo $this->url(array('module'=>'default','controller'=>'cidade', 'action'=>'combo')); ?>\",\" - Selecione uma UF - \");'>"+
                                             "<option value='' selected>- Selecione -</option>"+
                                             "<?php foreach ($this->estados as $estado): ?>"+
                                                 "<option value='<?php echo $estado->id;?>'>"+
@@ -115,7 +115,7 @@ if(isset($_GET['cod'])){
         $("#uf_" + numLocais).val(idUf);
 
         //ATRIBUI VALOR DA COMBO CIDADE
-        var url = "<?php echo $this->url(array("controller"=>"cidade", "action"=>"combo")); ?>";
+        var url = "<?php echo $this->url(array('module'=> 'default',"controller"=>"cidade", "action"=>"combo")); ?>";
 
         if(idUf !="" || idUf >0){
             setTimeout("carregar_combo(\""+ idUf +"\", \"cidade_" + numLocais + "\" ,\""+ url +"\",\"\",\""+ idCidade +"\");",ct);
@@ -194,7 +194,7 @@ if(isset($_GET['cod'])){
             $("#cidade_"+indice).show();
 
             //RECARRGA COMBO DE CIDADE
-            carregar_combo("0","cidade_" + indice,"<?php echo $this->url(array('controller'=>'cidade', 'action'=>'combo')); ?>"," - Selecione uma UF - ");
+            carregar_combo("0","cidade_" + indice,"<?php echo $this->url(array('module'=>'default','controller'=>'cidade', 'action'=>'combo')); ?>"," - Selecione uma UF - ");
         }
         else
         {
@@ -256,10 +256,10 @@ if(isset($_GET['cod'])){
 <?php
     $edital = "";
     if(isset($_GET['edital'])){
-        require_once 'scripts/manterpropostaedital/inc/menu.inc.php'; // menu de manter proposta por edital
+        $this->partial('manterpropostaedital/inc/menu.inc.php'); // menu de manter proposta por edital
         $edital = "&edital=s";
     }else{
-        require_once "scripts/manterpropostaincentivofiscal/inc/menu.inc.php"; // menu de manter proposta por incentivo fiscal
+        $this->partial('manterpropostaincentivofiscal/inc/menu.inc.php'); // menu de manter proposta por incentivo fiscal
     }
 ?>
 <!-- ========== INICIO TITULO ========== -->
@@ -271,7 +271,7 @@ if(isset($_GET['cod'])){
 <!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
 
-<form action="<?php echo $this->acao; ?>?edit=<?php if($_GET['edit'])echo $_GET['edit'];?>&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>" name="frmLocalDeRealizacao" id="frmLocalDeRealizacao" method="post">
+<form action="<?php echo '/proposta'.$this->acao; ?>?edit=<?php if($_GET['edit'])echo $_GET['edit'];?>&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>" name="frmLocalDeRealizacao" id="frmLocalDeRealizacao" method="post">
     <input type="hidden" name="qtdeLocais" id="qtdeLocais" value="0">
     <input type="hidden" name="indiceFinal" id="indiceFinal" value="0">
     <input type="hidden" name="cod" id="cod" value="<?php echo $this->idAbrangencia;?>">

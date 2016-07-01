@@ -192,7 +192,7 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
                     $locais[$i]["idMunicipioIBGE"] = "0";
                 }
             }else {
-                parent::message("Registro já cadastrado, transação cancelada!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
+                parent::message("Registro já cadastrado, transação cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
             }
             $locaisinvalidos[$i] = $local_c;
 
@@ -225,7 +225,7 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
                 $resultado = $tblAbrangencia->verificarIgual($p, $u, $m, $this->idPreProjeto);
 
                 if(count($resultado)>0){
-                    parent::message("Registro já cadastrado, transação cancelada!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
+                    parent::message("Registro já cadastrado, transação cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
                     return;
                 }
 
@@ -248,15 +248,15 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
                 }
             }
             if($idAbrangencia) {
-                parent::message("Alteração realizada com sucesso!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
+                parent::message("Alteração realizada com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
             }
             else {
-                parent::message("Cadastro realizado com sucesso!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
+                parent::message("Cadastro realizado com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
 
             }
 
         }catch(Zend_Exception $ex) {
-            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o! <br>", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ERROR");
+            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o! <br>", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ERROR");
         }
 
     }
@@ -386,7 +386,7 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
         $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
 
         if(count($rsAbrangencia)>0 && empty($idAbrangencia)){
-            parent::message("Local de Realização já cadastrado!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
+            parent::message("Local de Realização já cadastrado!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
         }
 
         if(isset($_REQUEST['edital'])) {
@@ -413,6 +413,6 @@ class Proposta_LocalderealizacaoController extends GenericControllerNew {
             $retorno = $tblAbrangencia->insert($dados);
         }
 
-        parent::message("Cadastro realizado com sucesso!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
+        parent::message("Cadastro realizado com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
     }
 }
