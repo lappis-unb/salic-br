@@ -14,14 +14,14 @@
 define('APPLICATION_PATH', realpath(__DIR__ . '/../..' . DIRECTORY_SEPARATOR . 'application'));
 
 /* configuração do caminho dos includes */
-set_include_path('.'. PATH_SEPARATOR . './library/'
-                                     . PATH_SEPARATOR . get_include_path());
+// Include path
+set_include_path(implode(PATH_SEPARATOR, array(
+    realpath(APPLICATION_PATH . '/../library'),
+    realpath(APPLICATION_PATH . '/../tests'),
+    get_include_path(),
+)));
+
 /** Zend_Application */
-require_once APPLICATION_PATH.'/../library/Zend/Application.php';
+require_once 'Zend/Application.php';
 
 require_once APPLICATION_PATH . '/../vendor/autoload.php';
-
-
-// Create application, bootstrap, and run
-
-require_once __DIR__ . '/../library/BaseTestCase.php';

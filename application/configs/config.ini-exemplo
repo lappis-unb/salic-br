@@ -8,25 +8,34 @@
 ;; @link http://www.cultura.gov.br
 
 [default]
-bootstrap.path = APPLICATION_PATH "/Bootstrap.php"
-bootstrap.class = "Bootstrap"
-; Library
-includePaths.library = APPLICATION_PATH "/../library"
-autoloaderNamespaces[] = "Minc"
-autoloaderNamespaces[] = "Zend"
+; bootstrap
+autoloaderNamespaces[]               = "MinC"
+bootstrap.path                       = APPLICATION_PATH "/Bootstrap.php"
+bootstrap.class                      = "Bootstrap"
+pluginPaths.MinC_Application_Resource = "MinC/Application/Resource"
+
 
 ; Options for Zend_View
 resources.view.encoding = "ISO-8859-1"
 resources.view.escape = "htmlentities"
-resources.view.basePath = APPLICATION_PATH "/views"
-resources.view.helperPath.MinC_View_Helper = APPLICATION_PATH "/../library/MinC/View/Helper"
+resources.view.basePath = APPLICATION_PATH "/module/default/views"
+resources.view.helperPath.MinC_View_Helper_ = APPLICATION_PATH "/../library/MinC/View/Helper"
+resources.layout.layoutPath                = APPLICATION_PATH "/layout"
+resources.layout.layout                    = "layout"
+
+; Options for Mobile
+resources.view.service.salicMobileHash = "b66113b1d84a1008b8ffea5fe9f51fc2"
+resources.view.service.encryptHash = "e@75e9R!3450otZ"
 
 ; front controller
-resources.frontController.moduleDirectory = APPLICATION_PATH"/modules" 
+resources.frontController.moduleDirectory = APPLICATION_PATH"/modules"
 resources.frontController.defaultModule   = "default"
 ;resources.frontController.controllerDirectory = APPLICATION_PATH "/controllers"
 ;resources.frontController.controllerDirectory[foo] = APPLICATION_PATH "/foo/controller"
-resources.modules[]   = 
+resources.modules[]   =
+
+; minc resources
+resources.paginator     = ; configura paginação
 
 [conexao_01:default]
 db.adapter = PDO_MSSQL

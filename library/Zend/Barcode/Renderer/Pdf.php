@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Barcode
  * @subpackage Renderer
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Pdf.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id$
  */
 
 /** @see Zend_Barcode_Renderer_RendererAbstract */
@@ -37,7 +37,7 @@ require_once 'Zend/Pdf/Color/Rgb.php';
  *
  * @category   Zend
  * @package    Zend_Barcode
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Barcode_Renderer_Pdf extends Zend_Barcode_Renderer_RendererAbstract
@@ -62,9 +62,11 @@ class Zend_Barcode_Renderer_Pdf extends Zend_Barcode_Renderer_RendererAbstract
 
     /**
      * Set an image resource to draw the barcode inside
-     * @param resource $value
+     *
+     * @param Zend_Pdf $pdf
+     * @param int      $page
      * @return Zend_Barcode_Renderer
-     * @throw Zend_Barcode_Renderer_Exception
+     * @throws Zend_Barcode_Renderer_Exception
      */
     public function setResource($pdf, $page = 0)
     {
@@ -148,10 +150,10 @@ class Zend_Barcode_Renderer_Pdf extends Zend_Barcode_Renderer_RendererAbstract
             }
         }
 
-        $color = new Zend_Pdf_Color_RGB(
-            ($color & 0xFF0000) >> 16,
-            ($color & 0x00FF00) >> 8,
-            $color & 0x0000FF
+        $color = new Zend_Pdf_Color_Rgb(
+            (($color & 0xFF0000) >> 16) / 255.0,
+            (($color & 0x00FF00) >> 8) / 255.0,
+            ($color & 0x0000FF) / 255.0
         );
 
         $page->setLineColor($color);
@@ -166,14 +168,15 @@ class Zend_Barcode_Renderer_Pdf extends Zend_Barcode_Renderer_RendererAbstract
     }
 
     /**
-     * Draw a polygon in the rendering resource
-     * @param string $text
-     * @param float $size
-     * @param array $position
-     * @param string $font
-     * @param integer $color
-     * @param string $alignment
-     * @param float $orientation
+     * Draw a text in the rendering resource
+     *
+     * @param string    $text
+     * @param float     $size
+     * @param array     $position
+     * @param string    $font
+     * @param integer   $color
+     * @param string    $alignment
+     * @param float|int $orientation
      */
     protected function _drawText(
         $text,
@@ -185,10 +188,10 @@ class Zend_Barcode_Renderer_Pdf extends Zend_Barcode_Renderer_RendererAbstract
         $orientation = 0
     ) {
         $page  = $this->_resource->pages[$this->_page];
-        $color = new Zend_Pdf_Color_RGB(
-            ($color & 0xFF0000) >> 16,
-            ($color & 0x00FF00) >> 8,
-            $color & 0x0000FF
+        $color = new Zend_Pdf_Color_Rgb(
+            (($color & 0xFF0000) >> 16) / 255.0,
+            (($color & 0x00FF00) >> 8) / 255.0,
+            ($color & 0x0000FF) / 255.0
         );
 
         $page->setLineColor($color);

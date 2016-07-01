@@ -1,20 +1,20 @@
 <?php
 /**
- * Controle Genérico (Utilizado por todos os controles)
+ * Controle Genï¿½rico (Utilizado por todos os controles)
  * Trata as mensagens do sistema
  * @author Equipe RUP - Politec
  * @since 12/08/2010
  * @version 2.0
  * @package application
  * @subpackage application.controllers
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class GenericControllerNew extends Zend_Controller_Action
 {
 	/**
-	 * Variável com a mensagem
+	 * Variï¿½vel com a mensagem
 	 * @var $_msg
 	 */
 	protected $_msg;
@@ -22,7 +22,7 @@ class GenericControllerNew extends Zend_Controller_Action
 
 
 	/**
-	 * Variável com a página de redirecionamento
+	 * Variï¿½vel com a pï¿½gina de redirecionamento
 	 * @var $_url
 	 */
 	protected $_url;
@@ -30,7 +30,7 @@ class GenericControllerNew extends Zend_Controller_Action
 
 
 	/**
-	 * Variável com o tipo de mensagem
+	 * Variï¿½vel com o tipo de mensagem
 	 * Valores: ALERT, CONFIRM, ERROR ou vazio
 	 * @var $_type
 	 */
@@ -39,7 +39,7 @@ class GenericControllerNew extends Zend_Controller_Action
 
 
 	/**
-	 * Variável com a URL padrao do sistema
+	 * Variï¿½vel com a URL padrao do sistema
 	 * @var $_urlPadrao
 	 */
 	protected $_urlPadrao;
@@ -50,10 +50,10 @@ class GenericControllerNew extends Zend_Controller_Action
 	private  $idUsuario 			= 0;
 
 	/**
-	 * Reescreve o método init() para aceitar
+	 * Reescreve o mï¿½todo init() para aceitar
 	 * as mensagens e redirecionamentos.
-	 * Teremos que chamá-lo dentro do
-	 * método init() da classe filha assim: parent::init();
+	 * Teremos que chamï¿½-lo dentro do
+	 * mï¿½todo init() da classe filha assim: parent::init();
 	 * @access public
 	 * @param void
 	 * @return void
@@ -61,7 +61,7 @@ class GenericControllerNew extends Zend_Controller_Action
 	public function init()
 	{
             //SE CAIU A SECAO REDIRECIONA
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
+            $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 //            xd($_SERVER['PHP_SELF']);
 //            if(!$auth->hasIdentity()){
 //                $url = Zend_Controller_Front::getInstance()->getBaseUrl();
@@ -76,10 +76,10 @@ class GenericControllerNew extends Zend_Controller_Action
             $this->_urlPadrao = Zend_Controller_Front::getInstance()->getBaseUrl();
             if (isset($auth->getIdentity()->usu_codigo))
             {
-                $Usuario      = new Usuario(); // objeto usuário
+                $Usuario      = new Usuario(); // objeto usuï¿½rio
                 $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
                 $idAgente = $Agente['idAgente'];
-                // manda os dados para a visão
+                // manda os dados para a visï¿½o
                 $this->view->idAgente    = $idAgente;
             }
 
@@ -120,7 +120,7 @@ class GenericControllerNew extends Zend_Controller_Action
 
 
 	/**
-	 * Método para chamar as mensagens e fazer o redirecionamento
+	 * Mï¿½todo para chamar as mensagens e fazer o redirecionamento
 	 * @access protected
 	 * @param string $msg
 	 * @param string $url
@@ -139,8 +139,8 @@ class GenericControllerNew extends Zend_Controller_Action
 
 
 	/**
-	 * Reescreve o método postDispatch() que é responsável
-	 * por executar uma ação após a execução de um método
+	 * Reescreve o mï¿½todo postDispatch() que ï¿½ responsï¿½vel
+	 * por executar uma aï¿½ï¿½o apï¿½s a execuï¿½ï¿½o de um mï¿½todo
 	 * @access public
 	 * @param void
 	 * @return void
@@ -155,35 +155,35 @@ class GenericControllerNew extends Zend_Controller_Action
 		{
 			$this->view->message_type = implode("<br />", $this->_type->getMessages());
 		}
-		parent::postDispatch(); // chama o método pai
+		parent::postDispatch(); // chama o mï¿½todo pai
 	} // fecha postDispatch()
 
 
 
 	/**
-	 * Método responsável pela autenticação e perfis
+	 * Mï¿½todo responsï¿½vel pela autenticaï¿½ï¿½o e perfis
 	 * @access protected
 	 * @param integer $tipo
-	 * 		0 => somente autenticação zend
-	 * 		1 => autenticação e permissões zend (AMBIENTE MINC)
-	 * 		2 => autenticação scriptcase (AMBIENTE PROPONENTE)
-	 * 		3 => autenticação scriptcase e autenticação/permissão zend (AMBIENTE PROPONENTE E MINC)
-	 * @param array $permissoes (array com as permissões para acesso)
+	 * 		0 => somente autenticaï¿½ï¿½o zend
+	 * 		1 => autenticaï¿½ï¿½o e permissï¿½es zend (AMBIENTE MINC)
+	 * 		2 => autenticaï¿½ï¿½o scriptcase (AMBIENTE PROPONENTE)
+	 * 		3 => autenticaï¿½ï¿½o scriptcase e autenticaï¿½ï¿½o/permissï¿½o zend (AMBIENTE PROPONENTE E MINC)
+	 * @param array $permissoes (array com as permissï¿½es para acesso)
 	 * @return void
 	 */
 	protected function perfil($tipo = 0, $permissoes = null)
 	{
-		$auth         = Zend_Auth::getInstance(); // pega a autenticação
-		$Usuario      = new Usuario(); // objeto usuário
-		$UsuarioAtivo = new Zend_Session_Namespace('UsuarioAtivo'); // cria a sessão com o usuário ativo
-		$GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+		$auth         = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+		$Usuario      = new Usuario(); // objeto usuï¿½rio
+		$UsuarioAtivo = new Zend_Session_Namespace('UsuarioAtivo'); // cria a sessï¿½o com o usuï¿½rio ativo
+		$GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
 
-		// somente autenticação zend
+		// somente autenticaï¿½ï¿½o zend
 		if ($tipo == 0 || empty($tipo))
 		{
-			if ($auth->hasIdentity()) // caso o usuário esteja autenticado
+			if ($auth->hasIdentity()) // caso o usuï¿½rio esteja autenticado
 			{
-				// pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+				// pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
 				if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo))
 				{
 					$grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
@@ -196,53 +196,53 @@ class GenericControllerNew extends Zend_Controller_Action
 					return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
 				}
 
-				// manda os dados para a visão
+				// manda os dados para a visï¿½o
                                 $this->view->idAgente    = $idAgente;
-				$this->view->usuario     = $auth->getIdentity(); // manda os dados do usuário para a visão
-				$this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-				$this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-				$this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+				$this->view->usuario     = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+				$this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+				$this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+				$this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
 			} // fecha if
-			else // caso o usuário não esteja autenticado
+			else // caso o usuï¿½rio nï¿½o esteja autenticado
 			{
 				return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
 			}
 		} // fecha if
-		// autenticação e permissões zend (AMBIENTE MINC)
+		// autenticaï¿½ï¿½o e permissï¿½es zend (AMBIENTE MINC)
 		else if ($tipo === 1)
 		{
-			if ($auth->hasIdentity()) // caso o usuário esteja autenticado
+			if ($auth->hasIdentity()) // caso o usuï¿½rio esteja autenticado
 			{
-				if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo está no array de permissões
+				if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo estï¿½ no array de permissï¿½es
 				{
-					$this->message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+					$this->message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
 				}
 
-				// pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+				// pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
 				$grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-				// manda os dados para a visão
+				// manda os dados para a visï¿½o
                                 $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
                                 $idAgente = $Agente['idAgente'];
-				$this->view->usuario     = $auth->getIdentity(); // manda os dados do usuário para a visão
-				$this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-				$this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-				$this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+				$this->view->usuario     = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+				$this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+				$this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+				$this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
 			} // fecha if
-			else // caso o usuário não esteja autenticado
+			else // caso o usuï¿½rio nï¿½o esteja autenticado
 			{
 				return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
 			}
 		} // fecha else if
 
 
-		// autenticação scriptcase (AMBIENTE PROPONENTE)
+		// autenticaï¿½ï¿½o scriptcase (AMBIENTE PROPONENTE)
 		else if ($tipo == 2)
 		{
-			// configurações do layout padrão para o scriptcase
+			// configuraï¿½ï¿½es do layout padrï¿½o para o scriptcase
 			Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
 
-			// pega o id do usuário logado pelo scriptcase (sessão)
+			// pega o id do usuï¿½rio logado pelo scriptcase (sessï¿½o)
 			//$codUsuario = isset($_SESSION['gusuario']['id']) ? $_SESSION['gusuario']['id'] : $UsuarioAtivo->codUsuario;
 			$codUsuario = isset($_GET['idusuario']) ? (int) $_GET['idusuario'] : $UsuarioAtivo->codUsuario;
 			//$codUsuario = 366;
@@ -250,142 +250,142 @@ class GenericControllerNew extends Zend_Controller_Action
 			{
 				$UsuarioAtivo->codUsuario = $codUsuario;
 			}
-			else // caso o usuário não esteja autenticado
+			else // caso o usuï¿½rio nï¿½o esteja autenticado
 			{
-				$this->message("Você não tem permissão para acessar essa área do sistema!", "index", "ALERT");
+				$this->message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "index", "ALERT");
 			}
 
-			// tenta fazer a autenticação do usuário logado no scriptcase para o zend
+			// tenta fazer a autenticaï¿½ï¿½o do usuï¿½rio logado no scriptcase para o zend
 			$autenticar = UsuarioDAO::loginScriptcase($codUsuario);
 
-			if ($autenticar && $auth->hasIdentity()) // caso o usuário seja passado pelo scriptcase e esteja autenticado
+			if ($autenticar && $auth->hasIdentity()) // caso o usuï¿½rio seja passado pelo scriptcase e esteja autenticado
 			{
-				// manda os dados para a visão
-				$this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
+				// manda os dados para a visï¿½o
+				$this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
 			} // fecha if
-			else // caso o usuário não esteja autenticado
+			else // caso o usuï¿½rio nï¿½o esteja autenticado
 			{
-				$this->message("Você não tem permissão para acessar essa área do sistema!", "index", "ALERT");
+				$this->message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "index", "ALERT");
 			}
 		} // fecha else if
 
 
-		// autenticação scriptcase e autenticação/permissão zend (AMBIENTE PROPONENTE E MINC)
+		// autenticaï¿½ï¿½o scriptcase e autenticaï¿½ï¿½o/permissï¿½o zend (AMBIENTE PROPONENTE E MINC)
 		else if ($tipo == 3)
 		{
 
-			// ========== INÍCIO AUTENTICAÇÃO SCRIPTCASE ==========
-			// pega o id do usuário logado pelo scriptcase
+			// ========== INï¿½CIO AUTENTICAï¿½ï¿½O SCRIPTCASE ==========
+			// pega o id do usuï¿½rio logado pelo scriptcase
 			//$codUsuario = isset($_SESSION['gusuario']['id']) ? $_SESSION['gusuario']['id'] : $UsuarioAtivo->codUsuario;
 			$codUsuario = isset($_GET['idusuario']) ? (int) $_GET['idusuario'] : $UsuarioAtivo->codUsuario;
 			//$codUsuario = 366;
 			if (isset($codUsuario) && !empty($codUsuario))
 			{
-				// configurações do layout padrão para o scriptcase
+				// configuraï¿½ï¿½es do layout padrï¿½o para o scriptcase
 				Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
 
 				$UsuarioAtivo->codUsuario = $codUsuario;
 
-				// tenta fazer a autenticação do usuário logado no scriptcase para o zend
+				// tenta fazer a autenticaï¿½ï¿½o do usuï¿½rio logado no scriptcase para o zend
 				$autenticar = UsuarioDAO::loginScriptcase($codUsuario);
 
-				if ($autenticar && $auth->hasIdentity()) // caso o usuário seja passado pelo scriptcase e esteja autenticado
+				if ($autenticar && $auth->hasIdentity()) // caso o usuï¿½rio seja passado pelo scriptcase e esteja autenticado
 				{
-					// manda os dados para a visão
-					$this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
+					// manda os dados para a visï¿½o
+					$this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
 				} // fecha if
-				else // caso o usuário não esteja autenticado
+				else // caso o usuï¿½rio nï¿½o esteja autenticado
 				{
-					$this->message("Você não tem permissão para acessar essa área do sistema!", "index", "ALERT");
+					$this->message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "index", "ALERT");
 				}
 			} // fecha if
-			// ========== FIM AUTENTICAÇÃO SCRIPTCASE ==========
+			// ========== FIM AUTENTICAï¿½ï¿½O SCRIPTCASE ==========
 
 
-			// ========== INÍCIO AUTENTICAÇÃO ZEND ==========
-			else // caso o usuário não esteja autenticado pelo scriptcase
+			// ========== INï¿½CIO AUTENTICAï¿½ï¿½O ZEND ==========
+			else // caso o usuï¿½rio nï¿½o esteja autenticado pelo scriptcase
 			{
-				if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo está no array de permissões
+				if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo estï¿½ no array de permissï¿½es
 				{
-					$this->message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+					$this->message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
 				}
 
-				// pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+				// pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
 				if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo))
 				{
 					$grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 				}
 				else
 				{
-					$this->message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+					$this->message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
 				}
 
-				// manda os dados para a visão
-				$this->view->usuario     = $auth->getIdentity(); // manda os dados do usuário para a visão
-				$this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-				$this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-				$this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+				// manda os dados para a visï¿½o
+				$this->view->usuario     = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+				$this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+				$this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+				$this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
 			} // fecha else
 		} // fecha else if
 
-		// autenticação migracao e autenticação/permissão zend (AMBIENTE DE MIGRAÇ?O E MINC)
+		// autenticaï¿½ï¿½o migracao e autenticaï¿½ï¿½o/permissï¿½o zend (AMBIENTE DE MIGRAï¿½?O E MINC)
 		else if ($tipo == 4)
 		{
 
-			// ========== INÍCIO AUTENTICAÇÃO MIGRAÇ?O ==========
-			// pega o id do usuário logado pelo scriptcase
+			// ========== INï¿½CIO AUTENTICAï¿½ï¿½O MIGRAï¿½?O ==========
+			// pega o id do usuï¿½rio logado pelo scriptcase
 			//$codUsuario = isset($_SESSION['gusuario']['id']) ? $_SESSION['gusuario']['id'] : $UsuarioAtivo->codUsuario;
 			$codUsuario = isset($auth->getIdentity()->IdUsuario) ? (int) $auth->getIdentity()->IdUsuario : $UsuarioAtivo->codUsuario;
 			//$codUsuario = 366;
 			if (isset($codUsuario) && !empty($codUsuario))
 			{
-				// configurações do layout padrão para o proponente
+				// configuraï¿½ï¿½es do layout padrï¿½o para o proponente
 				Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
 				$UsuarioAtivo->codUsuario = $codUsuario;
 
-				// tenta fazer a autenticação do usuário logado no scriptcase para o zend
+				// tenta fazer a autenticaï¿½ï¿½o do usuï¿½rio logado no scriptcase para o zend
 				$autenticar = UsuarioDAO::loginScriptcase($codUsuario);
 
-				if ($autenticar && $auth->hasIdentity()) // caso o usuário seja passado pelo scriptcase e esteja autenticado
+				if ($autenticar && $auth->hasIdentity()) // caso o usuï¿½rio seja passado pelo scriptcase e esteja autenticado
 				{
-					// manda os dados para a visão
-					$this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
+					// manda os dados para a visï¿½o
+					$this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
 				} // fecha if
-				else // caso o usuário não esteja autenticado
+				else // caso o usuï¿½rio nï¿½o esteja autenticado
 				{
-					$this->message("Você não tem permissão para acessar essa área do sistema!", "index", "ALERT");
+					$this->message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "index", "ALERT");
 				}
 			} // fecha if
-			// ========== FIM AUTENTICAÇÃO MIGRAÇ?O ==========
+			// ========== FIM AUTENTICAï¿½ï¿½O MIGRAï¿½?O ==========
 
 
-			// ========== INÍCIO AUTENTICAÇÃO ZEND ==========
-			else // caso o usuário não esteja autenticado pelo scriptcase
+			// ========== INï¿½CIO AUTENTICAï¿½ï¿½O ZEND ==========
+			else // caso o usuï¿½rio nï¿½o esteja autenticado pelo scriptcase
 			{
-				if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo está no array de permissões
+				if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo estï¿½ no array de permissï¿½es
 				{
-					$this->message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+					$this->message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
 				}
 
-				// pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+				// pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
 				if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo))
 				{
 					$grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 				}
 				else
 				{
-					$this->message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+					$this->message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
 				}
 
-				// manda os dados para a visão
-				$this->view->usuario     = $auth->getIdentity(); // manda os dados do usuário para a visão
-				$this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-				$this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-				$this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+				// manda os dados para a visï¿½o
+				$this->view->usuario     = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+				$this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+				$this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+				$this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
 			} // fecha else
 		} // fecha else if
-		// ========== FIM AUTENTICAÇÃO ZEND ==========
+		// ========== FIM AUTENTICAï¿½ï¿½O ZEND ==========
 
                 if(!empty($grupos)){
                     $tblSGCacesso = new Sgcacesso();
@@ -395,7 +395,7 @@ class GenericControllerNew extends Zend_Controller_Action
                     }
                 }
 
-	} // fecha método perfil()
+	} // fecha mï¿½todo perfil()
 
         /**
          * Monta a tela de retorno ao usuario
@@ -644,8 +644,8 @@ class GenericControllerNew extends Zend_Controller_Action
 
 
 	/**
-	 * Método para verificar se o usuário logado tem permissão para acessar o projeto
-	 * OBS: SERVE APENAS PARA RESPONSÁVEL E AGENTE (PROPONENTE E PROCURADOR)
+	 * Mï¿½todo para verificar se o usuï¿½rio logado tem permissï¿½o para acessar o projeto
+	 * OBS: SERVE APENAS PARA RESPONSï¿½VEL E AGENTE (PROPONENTE E PROCURADOR)
 	 * @access public
 	 * @param bool $obrigatoriedadeIdProjeto
 	 * @param bool $obrigatoriedadeIdPronac
@@ -654,13 +654,13 @@ class GenericControllerNew extends Zend_Controller_Action
 	public function verificarPermissaoAcesso($proposta = false, $projeto = false, $administrativo = false)
 	{
             $msgERRO = '';
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
+            $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 
             if (!isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
 
-                //Verifica Permissão de Projeto
+                //Verifica Permissï¿½o de Projeto
                 if($projeto){
-                    $msgERRO = 'Você não tem permissão para acessar esse Projeto!';
+                    $msgERRO = 'Vocï¿½ nï¿½o tem permissï¿½o para acessar esse Projeto!';
                     $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
                     $idPronac  = $this->_request->getParam('idpronac')  ? $this->_request->getParam('idpronac')  : $this->_request->getParam('idPronac');
                     if (strlen($idPronac) > 7){
@@ -671,9 +671,9 @@ class GenericControllerNew extends Zend_Controller_Action
                     $permissao = $consulta->Permissao;
                 }
 
-                //Verifica Permissão de Proposta
+                //Verifica Permissï¿½o de Proposta
                 if($proposta){
-                    $msgERRO = 'Você não tem permissão para acessar essa Proposta!';
+                    $msgERRO = 'Vocï¿½ nï¿½o tem permissï¿½o para acessar essa Proposta!';
                     $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
                     $idPreProjeto = $this->_request->getParam('idPreProjeto');
 
@@ -697,15 +697,15 @@ class GenericControllerNew extends Zend_Controller_Action
 
             }
 
-	} // fecha método verificarPermissaoAcesso()
+	} // fecha mï¿½todo verificarPermissaoAcesso()
 
     public static function validarSenhaInicial(){
         return 'ae56f49edf70ec03b98f53ea6d2bc622';
     }
 
     /**
-	 * Método para montar as Planilhas Orçamentárias
-	 * OBS: A planilha deve vir no padrão da spPlanilhaOrcamentaria
+	 * Mï¿½todo para montar as Planilhas Orï¿½amentï¿½rias
+	 * OBS: A planilha deve vir no padrï¿½o da spPlanilhaOrcamentaria
 	 * @access public
 	 * @param array
 	 */
@@ -855,6 +855,6 @@ class GenericControllerNew extends Zend_Controller_Action
         }
         //xd($planilha);
         return $planilha;
-	} // fecha método verificarPermissaoAcesso()
+	} // fecha mï¿½todo verificarPermissaoAcesso()
 
 } // fecha class

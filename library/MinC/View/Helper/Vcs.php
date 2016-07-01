@@ -1,7 +1,5 @@
 <?php
 
-require_once 'Zend/View/Helper/Abstract.php';
-
 class MinC_View_Helper_Vcs extends Zend_View_Helper_Abstract
 {
     public function vcs() {

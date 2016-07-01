@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="application/Bootstrap.php" convertWarningsToExceptions="true" colors="true">
+<phpunit bootstrap="application/Bootstrap.php" onvertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true" colors="true">
     <testsuite name="Salic br">
         <directory>application/modules</directory>
     </testsuite>

@@ -47,10 +47,9 @@ class LoginController extends GenericControllerNew {
      * @return void
      */
     public function loginAction() {
-        // recebe os dados do formulï¿½rio via post
-        $post     = Zend_Registry::get('post');
-        $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->Login)); // recebe o login sem mï¿½scaras
-        $password = $post->Senha; // recebe a senha
+        // recebe os dados do formulário via post
+        $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
+        $password = $this->getParam('Senha', null);
 
         $password = str_replace("##menor##", "<", $password);
         $password = str_replace("##maior##", ">", $password);
