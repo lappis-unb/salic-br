@@ -22,7 +22,7 @@ class IndexController extends GenericControllerNew
      */
     public function indexAction()
     {
-        $this->_forward("index", "login");
+        $this->forward("index", "login");
     }
 
     public function loginUsuarioAction()
