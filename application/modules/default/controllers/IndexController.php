@@ -39,13 +39,11 @@ class IndexController extends GenericControllerNew
 	 */
 	public function loginAction(){
             $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
-
-            // recebe os dados do formulário via post
-            $post     = Zend_Registry::get('post');
-            $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->Login)); // recebe o login sem mêscaras
-            $password = $post->Senha; // recebe a senha
+            $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
+            $password = $this->getParam('Senha', null);
 
             try {
+                
                 // valida os dados
                 if (empty($username) || empty($password)) // verifica se os campos foram preenchidos
                 {
@@ -104,8 +102,9 @@ class IndexController extends GenericControllerNew
 	{
 		$auth = Zend_Auth::getInstance();
 		$auth->clearIdentity(); // limpa a autenticação
-                unset($_SESSION);
-		$this->_redirect('index');
+        Zend_Session::destroy();
+        unset($_SESSION);
+		$this->redirect('index');
 	} // fecha logoutAction
 
 

@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_Debug
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Debug.php 20096 2010-01-06 02:05:09Z bkarwin $
+ * @version    $Id$
  */
 
 /**
@@ -24,7 +24,7 @@
  *
  * @category   Zend
  * @package    Zend_Debug
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -72,34 +72,40 @@ class Zend_Debug
      * @param  bool   $echo  OPTIONAL Echo output if true.
      * @return string
      */
-    public static function dump($var, $stop=null, $echo=true)
+    public static function dump($var, $label=null, $echo=true)
     {
+        // format the label
+        $label = ($label===null) ? '' : rtrim($label) . ' ';
 
         // var_dump the variable into a buffer and keep the output
         ob_start();
-        print_r($var);
+        var_dump($var);
         $output = ob_get_clean();
 
         // neaten the newlines and indents
         $output = preg_replace("/\]\=\>\n(\s+)/m", "] => ", $output);
         if (self::getSapi() == 'cli') {
-            $output = PHP_EOL . $output
+            $output = PHP_EOL . $label
+                    . PHP_EOL . $output
                     . PHP_EOL;
         } else {
             if(!extension_loaded('xdebug')) {
-                $output = htmlspecialchars($output, ENT_QUOTES);
+                $flags = ENT_QUOTES;
+                // PHP 5.4.0+
+                if (defined('ENT_SUBSTITUTE')) {
+                    $flags = ENT_QUOTES | ENT_SUBSTITUTE;
+                }
+                $output = htmlspecialchars($output, $flags);
             }
 
-            $output = '<pre style="background-color:black;color:white">'
+            $output = '<pre>'
+                    . $label
                     . $output
                     . '</pre>';
         }
 
         if ($echo) {
             echo($output);
-        }
-        if($stop) {
-            die;
         }
         return $output;
     }

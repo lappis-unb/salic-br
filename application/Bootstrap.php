@@ -16,42 +16,30 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      * @access public
      * @return void
      */
-    public function _initPath(){
-
-        $DIR_BANCO      = "bancos_treinamento";
-        $DIR_BANCOP     = "conexao_02";
-        $DIR_LIB        = "./library/";                       // bibliotecas
-        $DIR_CONFIG     = "./application/configs/$DIR_BANCO.ini"; // configuraççes
-        $DIR_CONFIGP    = "./application/configs/config.ini"; // configurações
-        $DIR_MODELS     = "./application/model";              // models
-        $DIR_SERVICE    = "./application/model/Servico";     // services
-        $DIR_TO         = "./application/model/TO/";          // tos
-        $DIR_DAO        = "./application/model/DAO/";         // daos
-        $DIR_DOMAIN     = "./application/model/domain/";         // domain
-        $DIR_TABLE      = "./application/model/Table/";         // table
-        $DIR_CONTROLLER = "./application/modules/default/controllers/";        // controles
+    public function _initPath()
+    {
+        $strBancoAmbiente      = "bancos_treinamento";
 
         /* configuração do caminho dos includes */
         set_include_path('.'
-                             . PATH_SEPARATOR . $DIR_MODELS
-                             . PATH_SEPARATOR . $DIR_SERVICE
-                             . PATH_SEPARATOR . $DIR_TO
-                             . PATH_SEPARATOR . $DIR_DAO
-                             . PATH_SEPARATOR . $DIR_DOMAIN
-                             . PATH_SEPARATOR . $DIR_TABLE
-                             . PATH_SEPARATOR . $DIR_CONTROLLER
-                             . PATH_SEPARATOR . './library/Zend'
-                             . PATH_SEPARATOR . './application/views'
-                             . PATH_SEPARATOR . get_include_path());
+                            . PATH_SEPARATOR . APPLICATION_PATH . '/modules/default/controllers'
+                            . PATH_SEPARATOR . APPLICATION_PATH . '/modules/default/models'
+                            . PATH_SEPARATOR . APPLICATION_PATH . '/modules/default/models/DAO'
+                            . PATH_SEPARATOR . APPLICATION_PATH . '/modules/default/models/Exception'
+                            . PATH_SEPARATOR . APPLICATION_PATH . '/modules/default/models/Servico'
+                            . PATH_SEPARATOR . APPLICATION_PATH . '/modules/default/models/Table'
+                            . PATH_SEPARATOR . APPLICATION_PATH . '/modules/default/models/TO'
+                            . PATH_SEPARATOR . get_include_path()
+        );
 
         /* componente obrigatorio para carregar arquivos, classes e recursos */
-        Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
+        Zend_Loader_Autoloader::getInstance()->suppressNotFoundWarnings(true)->setFallbackAutoloader(true);
 
         /* classes pessoais do ministçrio da cultura */
         require_once "MinC/Loader.php";
 
         //Registrando variçveis
-        Zend_Registry::set('DIR_CONFIG', $DIR_CONFIG); // registra
+        Zend_Registry::set('DIR_CONFIG', APPLICATION_PATH . '/configs/' . $strBancoAmbiente . '.ini'); // registra
 
         /* ambientes: (DES: desenvolvimento - TES: teste - PRO: producao) */
         $AMBIENTE = 'DES';
@@ -112,24 +100,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Registry::set('post', new Zend_Filter_Input(NULL, NULL, $_POST, $options));
         Zend_Registry::set('get',  new Zend_Filter_Input(NULL, NULL, $_GET,  $options));
     }
-
-    /**
-     * _initView
-     *
-     * @access public
-     * @return void
-     */
-    public function _initView()
-    {
-        /* configuraççes do layout padrão do sistema */
-        Zend_Layout::startMvc(array(
-                'layout'     => 'layout',
-                'layoutPath' => APPLICATION_PATH.'/layout/',
-                'contentKey' => 'content'));
-
-        # paginacao
-        Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacaoMinc.phtml');
-    }
+    
 
     /**
      * _initRegistry
@@ -139,11 +110,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     public function _initRegistry()
     {
-        $DIR_CONFIGP    = "./application/configs/config.ini";
-        $DIR_BANCOP     = "conexao_02";
+        $strConexao     = "conexao_02";
 
         /* configurações do banco de dados */
-        $config = new Zend_Config_Ini($DIR_CONFIGP, $DIR_BANCOP);
+        $config = new Zend_Config_Ini(APPLICATION_PATH. '/configs/config.ini', $strConexao);
         $registry = Zend_Registry::getInstance();
         $registry->set('config', $config); // registra
 
@@ -154,6 +124,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $profiler->setEnabled(false);
 
         /* registra a conexão para mudar em ambiente scriptcase */
-        Zend_Registry::set('conexao_banco', $DIR_BANCOP);
+        Zend_Registry::set('conexao_banco', $strConexao);
+    }
+
+    public function _initRouteRest()
+    {
+        $controller = Zend_Controller_Front::getInstance();
+        $restRoute = new Zend_Rest_Route(
+            $controller,
+            array(),
+            array(
+                'default' => array(
+                    'proponente-autenticacao-rest',
+                    'proponente-rest',
+                    'projeto-rest',
+                    'projeto-extrato-rest',
+                    'projeto-extrato-ano-rest',
+                    'projeto-extrato-mes-rest'
+                )));
+        $controller->getRouter()->addRoute('rest', $restRoute);
     }
 }

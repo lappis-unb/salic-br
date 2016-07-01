@@ -9,19 +9,19 @@
  * @link http://www.cultura.gov.br
  * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
  */
-class ProjetoExtratoRestController extends AbstractRestController {
+class ProjetoExtratoRestController extends MinC_Controller_Rest_Abstract {
 
     public function postAction(){}
     
     public function indexAction(){
         # Parametros da Paginação.
-        $next = $this->_request->getParam('next');
-        $offset = $this->_request->getParam('offset');
-        $total = $this->_request->getParam('total');
+        $next = $this->getRequest()->getParam('next');
+        $offset = $this->getRequest()->getParam('offset');
+        $total = $this->getRequest()->getParam('total');
         # Parametros da Consulta.
-        $projeto = $this->_request->getParam('projeto');
-        $ano = $this->_request->getParam('ano');
-        $mes = $this->_request->getParam('mes');
+        $projeto = $this->getRequest()->getParam('projeto');
+        $ano = $this->getRequest()->getParam('ano');
+        $mes = $this->getRequest()->getParam('mes');
 
         $modelProjetos = new Projetos();
         $objParam = (object) array(

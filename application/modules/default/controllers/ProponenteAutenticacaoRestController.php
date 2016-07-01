@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
  */
-class ProponenteAutenticacaoRestController extends AbstractRestController{
+class ProponenteAutenticacaoRestController extends MinC_Controller_Rest_Abstract{
 
     public function init() {
         $this->setPublicMethod('post');
@@ -61,7 +61,7 @@ class ProponenteAutenticacaoRestController extends AbstractRestController{
             }
 
             if($buscar){
-                $result->usuario = Zend_Auth::getInstance()->getIdentity();
+                //$result->usuario = Zend_Auth::getInstance()->getIdentity();
                 $result->authorization = $this->encryptAuthorization();
 //                $result->authorization = Seguranca::encrypt($result->usuario->IdUsuario, $this->encryptHash);
 

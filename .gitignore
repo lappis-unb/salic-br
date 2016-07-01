@@ -9,3 +9,6 @@ application/configs/config_desenv.ini
 application/configs/config_treinamento.ini
 .directory
 tags
+vendor
+tests/log/*
+composer.lock

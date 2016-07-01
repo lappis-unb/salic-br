@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
  */
-class ProjetoRestController extends AbstractRestController {
+class ProjetoRestController extends MinC_Controller_Rest_Abstract {
     
     public function init(){
         $this->setPublicMethod('get');
