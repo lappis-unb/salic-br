@@ -39,7 +39,7 @@
                     $(this).dialog('close'); // fecha a modal
                 },
                 'Confirmar':function(){
-                    location.href ='<?php echo $this->baseUrl(); ?>/deslocamento/excluir?idPreProjeto='+idPreProjeto+'&id='+id;;
+                    location.href ='<?php echo $this->baseUrl(); ?>/proposta/deslocamento/excluir?idPreProjeto='+idPreProjeto+'&id='+id;;
                 }
             }
         });
@@ -59,11 +59,11 @@
         qtd = $("#quantidade").val();
 
         if(paisOrigem == 0){
-            alerta('Selecione o País de origem!');
+            alerta('Selecione o PaÃ­s de origem!');
             $("#LpaisOrigem").css("color","red");
         }
         else if(paisDestino == 0){
-            alerta('Selecione o País de destino!');
+            alerta('Selecione o PaÃ­s de destino!');
             $("#LpaisDestino").css("color","red");
         }
         else if((uf == 0) && (paisOrigem == 31)){
@@ -153,7 +153,7 @@
     <div id="confirm" title="Confirma&ccedil;&atilde;o" style="display: none">Tem certeza que deseja excluir o registro?</div>
     <div id="miolo">
 
-        <form name="form" id="form" action="<?php echo $this->url(array('module'=>'default','controller'=>'deslocamento', 'action'=>'salvar')); ?>" method="post">
+        <form name="form" id="form" action="<?php echo $this->url(array('module'=>'proposta','controller'=>'deslocamento', 'action'=>'salvar')); ?>" method="post">
             <input type="hidden" name="idDeslocamento" value="<?php echo $this->idDeslocamento; ?>" style="border:red solid 1px;" />
             <input type="hidden" name="idPreProjeto" value="<?php echo $this->idPreProjeto; ?>" style="border:red solid 1px;" />
 
@@ -216,11 +216,13 @@
                                 echo 'style="width:300px;"';
                         }?>>
                             <option value="0"> - Selecione - </option>
-                            <?php foreach ($this->combocidadesO as $combocidade){ ?>
-                            <option value="<?php echo $combocidade->id; ?>" id="<?php echo $combocidade->idUF; ?>" <?php if ($this->idCidadeO == $combocidade->id) echo "selected=\"selected\""; ?>>
-                                <?php echo $combocidade->descricao; ?>
-                            </option>
-                            <?php } ?>
+                            <?php if ($this->combocidadesO): ?>
+                                <?php foreach ($this->combocidadesO as $combocidade){ ?>
+                                <option value="<?php echo $combocidade->id; ?>" id="<?php //echo $combocidade->idUF; ?>" <?php if ($this->idCidadeO == $combocidade->id) echo "selected=\"selected\""; ?>>
+                                    <?php echo $combocidade->descricao; ?>
+                                </option>
+                                <?php } ?>
+                            <?php endif; ?>
                         </select>
                     </td>
                 </tr>
@@ -271,11 +273,13 @@
                             }?>>
                             <option value="0"> - Selecione - </option>
 
-                            <?php foreach ($this->combocidadesD as $combocidade){ ?>
-                                <option value="<?php echo $combocidade->id; ?>" id="<?php echo $combocidade->idUF; ?>" <?php if ($this->idCidadeD == $combocidade->id) echo "selected=\"selected\""; ?>>
-                                <?php echo $combocidade->descricao; ?>
-                                </option>
-                            <?php } ?>
+                            <?php if ($this->combocidadesD): ?>
+                                <?php foreach ($this->combocidadesD as $combocidade){ ?>
+                                    <option value="<?php echo $combocidade->id; ?>" id="<?php //echo $combocidade->idUF; ?>" <?php if ($this->idCidadeD == $combocidade->id) echo "selected=\"selected\""; ?>>
+                                    <?php echo $combocidade->descricao; ?>
+                                    </option>
+                                <?php } ?>
+                            <?php endif; ?>
                         </select>
                     </td>
                 </tr>
@@ -318,15 +322,15 @@
                 </tr>
                 <?php foreach($this->deslocamentos as $desloca){ ?>
                 <tr>
-                    <td class="centro"><?php echo utf8_decode(htmlentities($desloca->PO));?></td>
-                    <td class="centro"><?php echo utf8_decode(htmlentities($desloca->UFO));?></td>
-                    <td class="centro"><?php echo utf8_decode(htmlentities($desloca->MUO));?></td>
-                    <td class="centro"><?php echo utf8_decode(htmlentities($desloca->PD));?></td>
-                    <td class="centro"><?php echo utf8_decode(htmlentities($desloca->UFD));?></td>
-                    <td class="centro"><?php echo utf8_decode(htmlentities($desloca->MUD));?></td>
-                    <td class="centro"><?php echo utf8_decode(htmlentities($desloca->Qtde));?></td>
+                    <td class="centro"><?php echo utf8_encode($desloca->PO);?></td>
+                    <td class="centro"><?php echo utf8_encode($desloca->UFO);?></td>
+                    <td class="centro"><?php echo utf8_encode( $desloca->MUO );?></td>
+                    <td class="centro"><?php echo utf8_encode($desloca->PD);?></td>
+                    <td class="centro"><?php echo utf8_encode($desloca->UFD);?></td>
+                    <td class="centro"><?php echo utf8_encode( $desloca->MUD );?></td>
+                    <td class="centro"><?php echo utf8_encode($desloca->Qtde);?></td>
                     <td class="centro" width="200px">
-                        <input id="" type="button" title="Editar" class="btn_editar" value=" " onclick="location.href ='<?php echo $this->baseUrl(); ?>/deslocamento/index?s=s&verifica=S&idPreProjeto=<?php echo $this->idPreProjeto; ?>&id=<?php echo $desloca->idDeslocamento; ?>'" />
+                        <input id="" type="button" title="Editar" class="btn_editar" value=" " onclick="location.href ='<?php echo $this->baseUrl(); ?>/proposta/deslocamento/index?s=s&verifica=S&idPreProjeto=<?php echo $this->idPreProjeto; ?>&id=<?php echo $desloca->idDeslocamento; ?>'" />
                         <input id="" type="button" title="Excluir" class="btn_exclusao" value=" " onclick="confirma(<?php echo $this->idPreProjeto; ?>,<?php echo $desloca->idDeslocamento; ?>);" />
                     </td>
                 </tr>

@@ -112,9 +112,9 @@ montaGuiaLinks($controller, $links);
             </tr>
             <?php foreach ($this->localizacoes as $localizacao) { ?>
             <tr class="fundo">
-                <td class="centro"><?php echo $localizacao->pais; ?></td>
-                <td class="centro"><?php echo $localizacao->uf; ?></td>
-                <td class="centro"><?php echo $localizacao->cidade; ?></td>
+                <td class="centro"><?php echo utf8_enconde($localizacao->pais); ?></td>
+                <td class="centro"><?php echo utf8_enconde($localizacao->uf); ?></td>
+                <td class="centro"><?php echo utf8_enconde($localizacao->cidade); ?></td>
                 <td class="centro" nowrap>
                 <input type="button" id="btn_editar" name="sair" style="width: 88px" class="btn_editar" onclick="window.location.href='<?php echo $this->url(array('module'=>'default', 'controller'=>'localderealizacao', 'action'=>'form-local-de-realizacao')); ?>?cod=<?php echo $localizacao->idAbrangencia;?>&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>&edit=1'">
                 <input type="button" id="btn_excluir" name="sair" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $localizacao->idAbrangencia;?>);"></td>
@@ -126,7 +126,6 @@ montaGuiaLinks($controller, $links);
             <tr>
                 <td align="center">
                     <input type="button" id="btn_novo" name="sair" style="width: 88px" class="btn_novo">
-<!--                    <input type="button" id="btn_sair" name="sair" style="width: 88px" class="btn_voltar" onclick="voltar()">-->
                 </td>
             </tr>
         </table>
