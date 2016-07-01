@@ -133,8 +133,20 @@
                 $('.ui-dialog-titlebar-close').remove();
             }
         });
+ 
+        $('.comboFiltro').change(function(){
+            window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')); ?>?tipoFiltro=" + $(this).val();
+        });	       
     });
 </script>
+
+<?php
+$situacoes = array(
+    'aguardando_distribuicao' => 'Aguardando distribuição',
+    'em_analise' => 'Em análise',
+    'analisados' => 'Analisados'
+);
+?>
 
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="alerta"></div>
@@ -143,14 +155,14 @@
     <ul>
         <li class="first">Início</li>
         <li>Readequa&ccedil;&otilde;es</li>
-        <li class="last"><?php echo ($this->nmPagina) ? $this->nmPagina : 'Aguardando Análise'; ?></li>
+        <li class="last"><?php echo $situacoes[$this->filtro]; ?></li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-    <div><?php echo ($this->nmPagina) ? $this->nmPagina : 'Aguardando Análise'; ?></div>
+    <div><?php echo $situacoes[$this->filtro]; ?></div>
 </div>
 
 <!-- ========== INÍCIO CONTEÚDO ========== -->
@@ -168,10 +180,10 @@
                 </td>
                 <td class="destacar bold" width="60">Situa&ccedil;&atilde;o</td>
                 <td width="200">
-                    <select name="tipoFiltro" style="width: 160px;" class="input_simples">
-                        <option value="">Aguardando Análise</option>
-                        <option value="encaminhados" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] =='encaminhados') ? 'selected':''; ?>>Em análise</option>
-                        <option value="analisados" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] =='analisados') ? 'selected':''; ?>>Analisados</option>
+                    <select name="tipoFiltro" style="width: 200px;" class="input_simples comboFiltro">
+		      <?php foreach ($situacoes as $chave => $valor): ?>
+		      <option value="<?php echo $chave; ?>" <?php echo ($this->filtro == $chave) ? "selected" : ""; ?>><?php echo $valor; ?></option>
+<?php endforeach; ?>                                                                              
                     </select>
                 </td>
                 <td colspan="6" align="rigth">
@@ -238,11 +250,11 @@
     <?php if($this->qtdRegistros > 0): ?>
         <table class="tabela tablesorter">
             <?php if($this->filtro == 'analisados'): ?>
-                <?php echo $this->partial('readequacoes/partial/analisados.phtml', array('dados' => $this->dados, 'conselheiros' => $this->conselheiros)); ?>
-            <?php elseif($this->filtro == 'encaminhados'): ?>
-                <?php echo $this->partial('readequacoes/partial/emAnalise.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro)); ?>
+                <?php echo $this->partial('readequacoes/partial/analisados.phtml', array('dados' => $this->dados, 'conselheiros' => $this->conselheiros, 'paginacao' => $this->paginacao)); ?>
+            <?php elseif($this->filtro == 'em_analise'): ?>
+                <?php echo $this->partial('readequacoes/partial/emAnalise.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao)); ?>
             <?php else: ?>
-                <?php echo $this->partial('readequacoes/partial/aguardandoAnalise.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro)); ?>
+                <?php echo $this->partial('readequacoes/partial/aguardandoDistribuicao.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao)); ?>
             <?php endif;?>
         </table>
 
