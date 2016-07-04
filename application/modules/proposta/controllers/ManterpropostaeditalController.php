@@ -7,7 +7,7 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright ÔøΩ 2010 - MinistÔøΩrio da Cultura - Todos os direitos reservados.
+ * @copyright √Ø¬ø¬Ω 2010 - Minist√Ø¬ø¬Ωrio da Cultura - Todos os direitos reservados.
  */
 
 class Proposta_ManterpropostaeditalController extends GenericControllerNew {
@@ -19,7 +19,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
     private $cpfLogado      = null;
 
     /**
-     * Reescreve o mÈtodo init()
+     * Reescreve o m√©todo init()
      * @access public
      * @param void
      * @return void
@@ -27,7 +27,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
     public function init() {
         ini_set('memory_limit', '128M');
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticaÁ„o
+        $auth = Zend_Auth::getInstance(); // pega a autentica√ß√£o
         $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo');
 
 	    // verifica as permissoes
@@ -118,7 +118,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
             $this->view->blnJaEnviadaAoMinc = $rsHistMov->count();
         }
         //*****************
-        //FIM DA VALIDA«?O
+        //FIM DA VALIDA√á?O
         //*****************
 
     }
@@ -230,7 +230,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                 $this->view->DtFinalDeExecucao 	= $dados[0]->DtFinalDeExecucao;
                 $this->view->idEdital 			= $dados[0]->idEdital;
             } else {
-                $this->view->mensagem = 'PrÈ Projeto n„o encontrado.';
+                $this->view->mensagem = 'Pr√© Projeto n√£o encontrado.';
                 $this->view->tpmensagem = "msgERROR";
             }
 
@@ -313,13 +313,13 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                 $array['stTipoDemanda'] 		= 'ED';
                 $array['ResumoDoProjeto'] 		= trim(TratarString::escapeString($_REQUEST['resumoProjeto']));
 
-                // Salvar o respons·vel
+                // Salvar o respons√°vel
                 $array['idUsuario'] 			= $this->idResponsavel;
 
                 if (isset($_REQUEST['idPreProjeto']) ) {
                     $array['idPreProjeto'] 	= $_REQUEST['idPreProjeto'];
                     $dados = ManterpropostaeditalDAO::alterarDadosProposta($array);
-                    $array['mensagem'] 		= 'AlteraÁ„o realizada com sucesso!';
+                    $array['mensagem'] 		= 'Altera√ß√£o realizada com sucesso!';
                     $array['tpmensagem'] 	= 'msgCONFIRM';
                     $array['mensagem'] 		= htmlspecialchars($array['mensagem']);
                     parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/manterpropostaedital/dadospropostaedital?idPreProjeto=" . $array['idPreProjeto'], "CONFIRM");
@@ -372,7 +372,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                     $array['tpmensagem'] = 'msgCONFIRM';
                 }
             } catch (Zend_Exception $ex) {
-                parent::message("N„o foi possÌvel realizar a operaÁ„o!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+                parent::message("N√£o foi poss√≠vel realizar a opera√ß√£o!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
             }
         } else {
             $array['mensagem'] 	 = 'Dados incorretos.';
@@ -415,7 +415,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
             $tblPreProjeto = new Proposta_Model_Preprojeto();
             $dados = $tblPreProjeto->buscarPropostaEditalCompleto($where);
         } else {
-            parent::message("Projeto n„o informado!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            parent::message("Projeto n√£o informado!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
         }
         if ($dados) {
             $this->view->idPreProjeto = $dados[0]->idPreProjeto;
@@ -426,7 +426,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
             $this->view->idEdital = $dados[0]->idEdital;
             $this->view->dados = $dados[0];
         } else {
-            parent::message("PrÈ Projeto n„o encontrado!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            parent::message("Pr√© Projeto n√£o encontrado!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
         }
         $this->view->idUsuario = $this->idUsuario;
     }
@@ -452,7 +452,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         $rs = $tbl->buscarDocumentos(array("idProjeto = ?" => $get->idPreProjeto));
         $this->view->arquivosProposta = $rs;
 
-        $tbPreProjeto = new Proposta_Model_Preprojeto();
+        $tbPreProjeto = new Proposta_Model_PreProjeto();
         $dadosProjeto = $tbPreProjeto->buscarAgentePreProjeto(array('idPreProjeto = ?'=>$get->idPreProjeto))->current();
 
         $tbA = new tbDocumentosAgentes();
@@ -489,22 +489,22 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
      * @return void
      */
     public function incluirAnexoAction() {
-// pega as informaÁıes do arquivo
+// pega as informa√ß√µes do arquivo
         $idUltimoArquivo = null;
         $post = Zend_Registry::get('post');
         if (is_file($_FILES['arquivo']['tmp_name'])) {
             $arquivoNome = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome tempor·rio
+            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome tempor√°rio
             $arquivoTipo = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
             if (!empty($arquivoNome) && !empty($arquivoTemp)) {
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens„o
-                $arquivoBinario = Upload::setBinario($arquivoTemp); // bin·rio
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens√£o
+                $arquivoBinario = Upload::setBinario($arquivoTemp); // bin√°rio
                 $arquivoHash = Upload::setHash($arquivoTemp); // hash
             }
             if ($arquivoTamanho > 10485760) // tamanho do arquivo: 10MB
             {
-                parent::message("O arquivo n„o pode ser maior do que 10MB!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
+                parent::message("O arquivo n√£o pode ser maior do que 10MB!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
             }
             // cadastra dados do arquivo
 
@@ -527,7 +527,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                 if($post->tipoDocumento == 1){
 
                     if($tblTbDocumentoAgentes->buscar($where)->count() > 0){
-                        parent::message("Tipo de documento j· cadastrado!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto, "ALERT");
+                        parent::message("Tipo de documento j√° cadastrado!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto, "ALERT");
                     }
 
                     $dadosArquivo = array(
@@ -542,7 +542,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                 } else {
 
                     if($tblTbDocumentoPreProjeto->buscar($where)->count() > 0){
-                        parent::message("Tipo de documento j· cadastrado!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto, "ALERT");
+                        parent::message("Tipo de documento j√° cadastrado!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto, "ALERT");
                     }
 
                     $dadosArquivo = array(
@@ -566,7 +566,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
             } catch (Zend_Exception $e) {
                 parent::message("Falha ao anexar arquivo!<br>{$e->getMessage()}", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
             } catch (Exception $e){
-                parent::message("Tipo de documento j· cadastrado!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
+                parent::message("Tipo de documento j√° cadastrado!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
             }
 
             if ($idUltimoArquivo) {
@@ -575,7 +575,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                 parent::message("Falha ao anexar arquivo!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
             }
         }else{
-            parent::message("Falha ao anexar arquivo! O tamanho m·ximo permitido È de 10MB.", "proposta/manterpropostaincentivofiscal/listarproposta?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
+            parent::message("Falha ao anexar arquivo! O tamanho m√°ximo permitido √© de 10MB.", "proposta/manterpropostaincentivofiscal/listarproposta?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
         }
     }
 
@@ -627,23 +627,23 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
      * @return void
      */
     private function anexararquivo() {
-        // pega as informaÁıes do arquivo
+        // pega as informa√ß√µes do arquivo
         $idUltimoArquivo = 'null';
         $post = Zend_Registry::get('post');
 
         if (is_file($_FILES['arquivo']['tmp_name'])) {
             $arquivoNome = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome tempor·rio
+            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome tempor√°rio
             $arquivoTipo = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
             if (!empty($arquivoNome) && !empty($arquivoTemp)) {
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens„o
-                $arquivoBinario = Upload::setBinario($arquivoTemp); // bin·rio
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens√£o
+                $arquivoBinario = Upload::setBinario($arquivoTemp); // bin√°rio
                 $arquivoHash = Upload::setHash($arquivoTemp); // hash
             }
             if ($arquivoTamanho > 10485760) // tamanho do arquivo: 10MB
             {
-                parent::message("O arquivo n„o pode ser maior do que 10MB!", "manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
+                parent::message("O arquivo n√£o pode ser maior do que 10MB!", "manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
             }
             // cadastra dados do arquivo
             $dadosArquivo = array(
@@ -656,11 +656,11 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                 'stAtivo' => 'I');
             $cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);
 
-            // pega o id do ˙ltimo arquivo cadastrado
+            // pega o id do √∫ltimo arquivo cadastrado
             $idUltimoArquivo = ArquivoDAO::buscarIdArquivo();
             $idUltimoArquivo = (int) $idUltimoArquivo[0]->id;
 
-            // cadastra o bin·rio do arquivo
+            // cadastra o bin√°rio do arquivo
             $dadosBinario = array(
                 'idArquivo' => $idUltimoArquivo,
                 'biArquivo' => $arquivoBinario);
@@ -800,7 +800,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
         if ($rsPreProjeto->save()) {
             parent::message("Exclus&atilde;o realizada com sucesso!", "/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
         } else {
-            parent::message("N&atilde;o foi possÌvel realizar a opera&ccedil;&atilde;o!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            parent::message("N&atilde;o foi poss√≠vel realizar a opera&ccedil;&atilde;o!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
         }
     }
 
@@ -847,7 +847,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
             $this->view->dados = $array;
             $this->view->idAgente = $_REQUEST['idAgente'];
         } else {
-            $this->view->mensagem = "CPF n„o encontrado.";
+            $this->view->mensagem = "CPF n√£o encontrado.";
         }
     }
 
@@ -862,7 +862,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
             $this->view->dado = ManterpropostaeditalDAO::buscaEditalConfirmarLocalizar(array('idEdital' => $_REQUEST['idEdital']));
         }
         if (!$this->view->dado || !$_REQUEST['idEdital']) {
-            $this->view->message = 'Edital n„o encontrado.';
+            $this->view->message = 'Edital n√£o encontrado.';
         } else {
             $this->view->dado = $this->view->dado[0];
         }
@@ -1014,7 +1014,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                 "resultado" => $arrResultado));
         } else {
 
-            parent::message("Necess·rio informar o n˙mero da proposta.", "/manterpropostaedital/index", "ERROR");
+            parent::message("Necess√°rio informar o n√∫mero da proposta.", "/manterpropostaedital/index", "ERROR");
         }
     }
 
@@ -1071,7 +1071,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
 
         if (count($rsProponente) > 0) {
 
-        //VERIFICA SE O PROPONENTE EST¡ VINCULADO
+        //VERIFICA SE O PROPONENTE EST√Å VINCULADO
 	        $vinculoProponente = new tbVinculoPropostaResponsavelProjeto();
 	        $whereProp['VP.idPreProjeto = ?'] 		= $idPreProjeto;
 	        $whereProp['VP.siVinculoProposta = ?'] 	= 2;
@@ -1381,7 +1381,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
 
     /**
      * excluiranexoAction
-     * MÈtodo para efetuar a exclus„o do arquivo
+     * M√©todo para efetuar a exclus√£o do arquivo
      *
      * @access public
      * @return void
@@ -1397,7 +1397,7 @@ class Proposta_ManterpropostaeditalController extends GenericControllerNew {
                 $tbDocumentosAgentes->apagar(array('idDocumentosAgentes = ?' => $_GET['idArquivo']));
             }
 
-            parent::message('Exclus„o efetuada com sucesso!', 'manterpropostaedital/enviararquivoedital?idPreProjeto=' . $_GET['idPreProjeto'], 'CONFIRM');
+            parent::message('Exclus√£o efetuada com sucesso!', 'manterpropostaedital/enviararquivoedital?idPreProjeto=' . $_GET['idPreProjeto'], 'CONFIRM');
         endif;
     }
 }

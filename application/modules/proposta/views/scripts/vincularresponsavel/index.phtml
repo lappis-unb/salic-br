@@ -24,7 +24,7 @@
                         async: true,
                         dataType: 'json',
                         type: "post",
-                        url: "<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'vinculo')); ?>",
+                        url: "<?php echo $this->url(array('module'=>'default', 'controller' => 'vincularresponsavel', 'action' => 'vinculo')); ?>",
                         data:{
                             idAgente: idAgente,
                             solicitarvinculo : '1'
@@ -152,7 +152,7 @@
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">Início</a></li>
-        <li><a href="<?php echo $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
+        <li><a href="<?php echo $this->url(array('module'=>'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
         <li class="last">Solicitar v&iacute;nculo</li>
     </ul>
 </div>

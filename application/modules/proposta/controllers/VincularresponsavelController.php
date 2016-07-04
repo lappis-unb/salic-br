@@ -1,16 +1,12 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of VincularresponsavelController
  *
  * @author tisomar
+ * @author wouerner <wouerner@gmail.com>
  */
-class VincularresponsavelController extends GenericControllerNew {
+class Proposta_VincularresponsavelController extends GenericControllerNew {
 
     private $emailResponsavel  	= null;
     private $idResponsavel  	= 0;
@@ -525,5 +521,3 @@ class VincularresponsavelController extends GenericControllerNew {
 
 
 }
-
-?>

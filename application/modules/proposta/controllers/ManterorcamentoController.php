@@ -381,7 +381,7 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
 
             $where = "idPlanilhaProposta = ".$_POST['proposta'];
 
-            $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos(null, $idEtapa, $idProduto, $idItem, null, $idUf, $municipio,
+            $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos(null, $idEtapa, $idProduto, $idItem, null, $idUf, $municipio);
         }
 
         if  ( isset ( $_GET ) ) {

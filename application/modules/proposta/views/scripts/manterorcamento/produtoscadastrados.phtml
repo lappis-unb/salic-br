@@ -82,25 +82,26 @@ montaGuiaLinks($controller, $links);
 	<tr>
         <td><input type="button" id="" class="btn_adicionar produto" />
             <?php
-                $texto = strtr(strtoupper($produtos->DescricaoProduto), array(
-                    "à" => "À",
-                    "è" => "È",
-                    "ì" => "Ì",
-                    "ò" => "Ò",
-                    "ù" => "Ù",
-                    "á" => "Á",
-                    "é" => "É",
-                    "í" => "Í",
-                    "ó" => "Ó",
-                    "ú" => "Ú",
-                    "â" => "Â",
-                    "ê" => "Ê",
-                    "î" => "Î",
-                    "ô" => "Ô",
-                    "û" => "Û",
-                    "ç" => "Ç",
+                $texto = strtr(strtoupper(utf8_encode($produtos->DescricaoProduto)), array(
+                    "Ã " => "Ã€",
+                    "Ã¨" => "Ãˆ",
+                    "Ã¬" => "ÃŒ",
+                    "Ã²" => "Ã’",
+                    "Ã¹" => "Ã™",
+                    "Ã¡" => "Ã",
+                    "Ã©" => "Ã‰",
+                    "Ã­" => "Ã",
+                    "Ã³" => "Ã“",
+                    "Ãº" => "Ãš",
+                    "Ã¢" => "Ã‚",
+                    "Ãª" => "ÃŠ",
+                    "Ã®" => "ÃŽ",
+                    "Ã´" => "Ã”",
+                    "Ã»" => "Ã›",
+                    "Ã§" => "Ã‡",
+                    "Ã£" => "Ãƒ",
                 ));
-                echo $texto;
+                echo ($texto);
             ?>
         </td>
 	</tr>
@@ -112,9 +113,10 @@ montaGuiaLinks($controller, $links);
             <table width="95%" summary="Produto">
                 <?php if ($produtos->CodigoProduto){ ?>
                 <tr>
-                    <td width="4%" onclick="$('#itens_<?php echo $produtos->CodigoProduto."_".$etapa->idEtapa; ?>').toggle();" align="center" style="cursor: pointer;"><img style="cursor: pointer; width: 14px; height: 14px; border: 0px" class="btn_adicionar" src="<?php echo $this->baseUrl(); ?>/public/img/buttons/btn_adicionar.gif" alt="Adicionar" /></td>
-                 <td width="88%" style="text-align:left; padding-left:2%;"> <?php echo $etapa->DescricaoEtapa; ?></td>
-                 <td align="center" style="width: 10%"><input type="button" class="btn_novo" onclick="abrirFrmCadastroItem('<?php echo $CadastrarProduto?>');" /></td>
+                    <td width="4%" onclick="$('#itens_<?php echo $produtos->CodigoProduto."_".$etapa->idEtapa; ?>').toggle();" align="center" style="cursor: pointer;">
+                        <img style="cursor: pointer; width: 14px; height: 14px; border: 0px" class="btn_adicionar" src="<?php echo $this->baseUrl(); ?>/public/img/buttons/btn_adicionar.gif" alt="Adicionar" /></td>
+                    <td width="88%" style="text-align:left; padding-left:2%;"> <?php echo utf8_encode($etapa->DescricaoEtapa); ?></td>
+                    <td align="center" style="width: 10%"><input type="button" class="btn_novo" onclick="abrirFrmCadastroItem('<?php echo $CadastrarProduto?>');" /></td>
                </tr>
                <?php }?>
             </table>
@@ -135,24 +137,17 @@ montaGuiaLinks($controller, $links);
                 <?php if ($produtos->CodigoProduto == $itens->CodigoProduto) {
                         if ($etapa->idEtapa == $itens->idEtapa){  ?>
                         <tr class='fundo'>
-                            <td class='centro'><?php echo $itens->DescricaoItem ?></td>
+                            <td class='centro'><?php echo utf8_encode($itens->DescricaoItem) ?></td>
                             <td class='centro'><?php echo $itens->Unidade ?></td>
                             <td class='centro'><?php echo number_format($itens->Quantidade,0) ?></td>
                             <td class='centro'><?php echo number_format($itens->Ocorrencia,0) ?></td>
                             <td class='centro'><?php echo number_format($itens->ValorUnitario, 2, ",", ".") ?></td>
                             <td class='centro'><?php echo number_format(($itens->Quantidade * $itens->ValorUnitario) * $itens->Ocorrencia, 2, ",", ".") ?></td>
-                            <td class='centro'><?php echo $itens->Municipio ?>/<?php echo $itens->SiglaUF ?></td>
-                            <!--<td class='centro'><?php echo $itens->DescricaoMecanismo ?></td>-->
+                            <td class='centro'><?php echo utf8_encode($itens->Municipio) ?>/<?php echo utf8_encode($itens->SiglaUF) ?></td>
                             <td class='centro' width="5%">
-                                <!--<a href='<?php //echo $this->baseurl();?>/manterorcamento/editarprodutos?item=<?php //echo $this->escape($itens->idItem); ?>&etapa=<?php //echo $this->escape($etapa->idEtapa);?>&produto=<?php //echo $this->escape($produtos->CodigoProduto);?>&idPreProjeto=<?php //echo $this->escape($produtos->idProposta);?> '>
-                                    <img title="Editar" class="editar" src="<?php echo $this->baseUrl(); ?>/public/img/ico/edit.png" style="width: 40%; height: 45%">
-                                </a>-->
                                 <input type="button" id="btn_editar" name="editar" style="width: 88px" class="btn_editar" onclick="abrirFrmCadastroItem('<?php echo $this->url(array('controller'=>'manterorcamento', 'action'=>'editarprodutos')); ?>?item=<?php echo $this->escape($itens->idItem); ?>&etapa=<?php echo $this->escape($etapa->idEtapa);?>&produto=<?php echo $this->escape($produtos->CodigoProduto);?>&idPlanilhaProposta=<?php echo $itens->idPlanilhaProposta;?>&idPreProjeto=<?php echo $this->escape($produtos->idProposta);?>');">
                             </td>
                             <td class='centro' width="5%">
-                                <!--<a href="<?php echo $this->url(array('controller'=>'manterorcamento','action'=>'excluiritensprodutos'))?>?idPlanilhaProposta=<?php echo $itens->idPlanilhaProposta?>&retorno=produtoscadastrados">
-                                    <img src="<?php echo $this->baseUrl(); ?>/public/img/btn_excluir.gif" style="width: 30%; height: 35%">
-                                </a>-->
                                 <input type="button" id="btn_excluir" name="excluir" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $itens->idPlanilhaProposta; ?>);">
                             </td>
                         </tr>
@@ -186,7 +181,7 @@ function excluir(idPlanilhaProposta)
         resizable: false,
         closeOnEscape: false,
         buttons: {
-            'Não': function()
+            'NÃ£o': function()
             {
                 $(this).dialog('close');
             },

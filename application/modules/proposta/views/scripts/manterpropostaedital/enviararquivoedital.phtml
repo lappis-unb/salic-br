@@ -147,9 +147,13 @@ if(isset($_GET['edital']) && $_GET['edital']=="s"){
         </tr>
         <?php foreach ($this->arquivosProposta as $arquivosProposta) { ?>
         <tr>
-            <td><?php echo $arquivosProposta->Descricao; ?></td>
+            <td><?php echo utf8_encode($arquivosProposta->Descricao); ?></td>
             <td align="center"><?php echo Data::tratarDataZend($arquivosProposta->Data, 'Brasileira'); ?></td>
-            <td><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir-documentos-pre-projeto')); ?>?id=<?php echo $arquivosProposta->idDocumentosPreprojetos; ?>"><?php echo $arquivosProposta->NoArquivo; ?></a></td>
+            <td>
+                <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir-documentos-pre-projeto')); ?>?id=<?php echo $arquivosProposta->idDocumentosPreprojetos; ?>">
+                    <?php echo utf8_encode($arquivosProposta->NoArquivo); ?>
+                </a>
+            </td>
             <td align="center"><input type="button" class="btn_exclusao" onclick="excluirAnexos(<?php echo $arquivosProposta->idDocumentosPreprojetos; ?>, <?php echo trim($_GET['idPreProjeto']); ?>, 'proposta');" /></td>
         <?php } ?>
     </table>
@@ -169,7 +173,7 @@ if(isset($_GET['edital']) && $_GET['edital']=="s"){
         </tr>
         <?php foreach ($this->arquivosProponente as $arquivosProponente) { ?>
         <tr>
-            <td><?php echo $arquivosProponente->Descricao; ?></td>
+            <td><?php echo utf8_encode($arquivosProponente->Descricao); ?></td>
             <td align="center"><?php echo Data::tratarDataZend($arquivosProponente->Data, 'Brasileira'); ?></td>
             <td><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir-documentos-agentes')); ?>?id=<?php echo $arquivosProponente->idDocumentosAgentes; ?>"><?php echo $arquivosProponente->NoArquivo; ?></a></td>
             <td align="center"><input type="button" class="btn_exclusao" onclick="excluirAnexos(<?php echo $arquivosProponente->idDocumentosAgentes; ?>, <?php echo trim($_GET['idPreProjeto']); ?>, 'proponente');" /></td>
