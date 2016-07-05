@@ -93,7 +93,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
     {
         $verificacaodao     = new Verificacao();
         $Projetosdao        = new Projetos();
-        $PreProjetodao      = new Proposta_Model_Preprojeto();
+        $PreProjetodao      = new Proposta_Model_PreProjeto();
         $diligenciaDAO      = new Diligencia();
         $post               = Zend_Registry::get('post');
 
@@ -148,7 +148,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
     {
         $verificacaodao         = new Verificacao();
         $Projetosdao            = new Projetos();
-        $PreProjetodao          = new Proposta_Model_Preprojeto();
+        $PreProjetodao          = new Proposta_Model_PreProjeto();
         $DocumentosExigidosDao  = new DocumentosExigidos();
 
         $post = Zend_Registry::get('post');
@@ -214,7 +214,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $verificacaodao         = new Verificacao();
         $Projetosdao            = new Projetos();
-        $PreProjetodao          = new Proposta_Model_Preprojeto();
+        $PreProjetodao          = new Proposta_Model_PreProjeto();
         $DocumentosExigidosDao  = new DocumentosExigidos();
 
         $post = Zend_Registry::get('get');
@@ -328,7 +328,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
 
         $verificacaodao         = new Verificacao();
         $Projetosdao            = new Projetos();
-        $PreProjetodao          = new Proposta_Model_Preprojeto();
+        $PreProjetodao          = new Proposta_Model_PreProjeto();
         $DocumentosExigidosDao  = new DocumentosExigidos();
 
         //xd($post);
@@ -411,7 +411,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         //$this->operacoesDiligencia();
         //$post                     = Zend_Registry::get('post');
         $Projetosdao                = new Projetos();
-        $PreProjetodao              = new Proposta_Model_Preprojeto();
+        $PreProjetodao              = new Proposta_Model_PreProjeto();
         //$dao                      = new DiligenciarDao();
         //$this->view->idPronac     = 118389;
         $this->view->idPronac       = $this->idPronac;
@@ -441,7 +441,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
     public function listardiligenciaanalistaAction()
     {
         $Projetosdao        = new Projetos();
-        $PreProjetodao      = new Proposta_Model_Preprojeto();
+        $PreProjetodao      = new Proposta_Model_PreProjeto();
 
         $this->view->idPronac           = $this->idPronac;
         $this->view->idPreProjeto       = $this->idPreProjeto;
@@ -537,7 +537,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $post = Zend_Registry::get('post');
         $diligenciaDAO = new Diligencia();
         $AvaliacaoPropostaDAO = new AvaliacaoProposta();
-        $tblPreProjeto = new Proposta_Model_Preprojeto();
+        $tblPreProjeto = new Proposta_Model_PreProjeto();
         $tblProjeto = new Projetos();
 
         $idArquivo = '';
@@ -737,7 +737,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $diligenciaDAO          = new Diligencia();
         $ProjetoDAO             = new Projetos();
         $AvaliacaoPropostaDAO   = new AvaliacaoProposta();
-        $PreProjetoDAO          = new Proposta_Model_Preprojeto();
+        $PreProjetoDAO          = new Proposta_Model_PreProjeto();
         $verificacaodao         = new Verificacao();
         $auth                   = Zend_Auth::getInstance();
 
@@ -950,7 +950,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $verificacaodao         = new Verificacao();
         $Projetosdao            = new Projetos();
-        $PreProjetodao          = new Proposta_Model_Preprojeto();
+        $PreProjetodao          = new Proposta_Model_PreProjeto();
         $DocumentosExigidosDao  = new DocumentosExigidos();
 
         $post = Zend_Registry::get('post');
@@ -1106,7 +1106,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
     public function listardiligenciaadmissibilidadeAction()
     {
         $Projetosdao   = new Projetos();
-        $PreProjetodao = new Proposta_Model_Preprojeto();
+        $PreProjetodao = new Proposta_Model_PreProjeto();
 
         ini_set('memory_limit', '-1');
 

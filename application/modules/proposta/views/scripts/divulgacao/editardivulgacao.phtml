@@ -1,7 +1,7 @@
 <?php
-require_once "scripts/manterpropostaincentivofiscal/inc/menu.inc.php"; // menu
-$UpdateDivulgacao  = $this->url(array('controller' => 'divulgacao', 'action' => 'updatedivulgacao'));
-$buscarVeiculo   = $this->url(array('controller' => 'divulgacao', 'action' => 'Veiculo')).'?veiculo='.$this->idveiculo;
+$this->partial("manterpropostaincentivofiscal/inc/menu.inc.php"); // menu
+$UpdateDivulgacao  = $this->url(array('module'=>'proposta', 'controller' => 'divulgacao', 'action' => 'updatedivulgacao'));
+$buscarVeiculo   = $this->url(array('module'=>'proposta', 'controller' => 'divulgacao', 'action' => 'Veiculo')).'?veiculo='.$this->idveiculo;
 ?>
 
 <script>
@@ -12,7 +12,7 @@ $buscarVeiculo   = $this->url(array('controller' => 'divulgacao', 'action' => 'V
              //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
              JSBloquearAlteracaoFormulario();
         <?php endif; ?>
-        
+
         /*$('#miolo #salvar').click(function(){
 
             //alert('teste');
@@ -24,7 +24,7 @@ $buscarVeiculo   = $this->url(array('controller' => 'divulgacao', 'action' => 'V
         $('#peca').click(function(){
             jqAjaxLinkSemLoading('<?php echo $buscarVeiculo; ?>&idOpcao='+$(this).val(), "", "veiculo");
         });
-        
+
 
         $("#formDivulgacao").validate({
             rules: {

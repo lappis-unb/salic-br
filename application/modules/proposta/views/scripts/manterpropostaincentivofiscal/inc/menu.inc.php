@@ -1,4 +1,4 @@
-<!-- ========== INÍCIO MENU ========== -->
+<!-- ========== INÃCIO MENU ========== -->
 <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
 <script type="text/javascript">
     function layout_fluido()
@@ -106,9 +106,9 @@
 
 </script>
 <div id="menu">
-    <!-- início: conteúdo principal #container -->
+    <!-- inÃ­cio: conteÃºdo principal #container -->
     <div id="container">
-        <!-- início: navegação local #qm0 -->
+        <!-- inÃ­cio: navegaÃ§Ã£o local #qm0 -->
         <?php
 
             $get = Zend_Registry::get("get");
@@ -126,11 +126,11 @@
             <div class="top"></div>
             <div id="qm0" class="qmmc sanfona">
                 <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar')).$codProjeto; ?>" title="Ir para Proposta Atual">Proposta Atual </a>
-                <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'index')).$codProjeto; ?>" title="Ir para Local de realização / deslocamento">Local de realização / Deslocamento</a>
+                <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'index')).$codProjeto; ?>" title="Ir para Local de realizaÃ§Ã£o / deslocamento">Local de realizaÃ§Ã£o / Deslocamento</a>
                 <!--a class="no_seta" href="<?php echo $this->url(array('controller' => 'deslocamento', 'action' => 'index')).$codProjeto; ?>" title="Ir para Deslocamento">Deslocamento</a-->
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'divulgacao', 'action' => 'index')).$codProjeto; ?>" title="Ir para Plano de divulgação">Plano de divulgação</a>
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'plano-distribuicao', 'action' => 'index')).$codProjeto; ?>" title="Ir para Plano de distribuição">Plano de distribuição</a>
-                <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'index')).$codProjeto; ?>" title="Ir para Orçamento">Orçamento</a>-->
+                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'divulgacao', 'action' => 'index')).$codProjeto; ?>" title="Ir para Plano de divulgaÃ§Ã£o">Plano de divulgaÃ§Ã£o</a>
+                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'plano-distribuicao', 'action' => 'index')).$codProjeto; ?>" title="Ir para Plano de distribuiÃ§Ã£o">Plano de distribuiÃ§Ã£o</a>
+                <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'index')).$codProjeto; ?>" title="Ir para OrÃ§amento">OrÃ§amento</a>-->
                 <a href="#" title="Orcamento" class="planilha">Planilha Or&ccedil;ament&aacute;ria</a>
                 <div id="qm0" class="sanfona sanfonaDiv" style="display: none;">
                     <a href="<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'produtoscadastrados')).$codProjeto; ?>" title="Custos por Produtos">Custos por Produtos</a>
@@ -172,7 +172,7 @@
             </div>
         </div>
         <div id="alertar"></div>
-        <!-- final: navegação local #qm0 -->
+        <!-- final: navegaÃ§Ã£o local #qm0 -->
     </div>
 </div>
 <div id="modalExcluirProposta" style="display:none"></div>

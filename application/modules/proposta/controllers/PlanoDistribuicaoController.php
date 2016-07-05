@@ -90,9 +90,9 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
                         "fim"=>$fim,
                         "totalPag"=>$totalPag,
                         "planosDistribuicao"=>$rsPlanoDistribuicao,
-                        "formulario"=>$this->_urlPadrao."/plano-distribuicao/frm-plano-distribuicao?idPreProjeto=".$this->_idPreProjeto,
-                        "urlApagar"=>$this->_urlPadrao."/plano-distribuicao/apagar?idPreProjeto=".$this->_idPreProjeto,
-                        "urlPaginacao"=>$this->_urlPadrao."/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto
+                        "formulario"=>$this->_urlPadrao."/proposta/plano-distribuicao/frm-plano-distribuicao?idPreProjeto=".$this->_idPreProjeto,
+                        "urlApagar"=>$this->_urlPadrao."/proposta/plano-distribuicao/apagar?idPreProjeto=".$this->_idPreProjeto,
+                        "urlPaginacao"=>$this->_urlPadrao."/prosposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto
                     );
 
         $this->montaTela("planodistribuicao/index.phtml", $arrDados);
@@ -159,9 +159,9 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $arrDados["combologomarcas"] = $rsLogomarcas;
         $arrDados["comboprodutos"] = $rsProdutos;
         $arrDados["comboareasculturais"] = ManterAgentes::buscarAreasCulturais();
-        $arrDados["acaoSalvar"] = $this->_urlPadrao."/plano-distribuicao/salvar?idPreProjeto=".$this->_idPreProjeto;
-        $arrDados["urlApagar"] = $this->_urlPadrao."/plano-distribuicao/apagar?idPreProjeto=".$this->_idPreProjeto;
-        $arrDados["acaoCancelar"] = $this->_urlPadrao."/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto;
+        $arrDados["acaoSalvar"] = $this->_urlPadrao."/proposta/plano-distribuicao/salvar?idPreProjeto=".$this->_idPreProjeto;
+        $arrDados["urlApagar"] = $this->_urlPadrao."/proposta/plano-distribuicao/apagar?idPreProjeto=".$this->_idPreProjeto;
+        $arrDados["acaoCancelar"] = $this->_urlPadrao."/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto;
         $arrDados["bln_exitePP"] = $bln_exitePP;
         $this->montaTela("planodistribuicao/formplanodistribuicao.phtml", $arrDados);
     }
@@ -210,25 +210,25 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
 
         if( $post->patrocinador!=0 || $post->divulgacao!=0 || $post->beneficiarios!=0 || $post->qtdenormal!=0 || $post->qtdepromocional!=0){
             if(!empty($arrPlanoDistribuicao) && $post->prodprincipal == "1"){
-                parent::message("J&aacute; existe um Produto Principal cadastrado. A opera&ccedil;&atilde;o foi cancelada.", "/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+                parent::message("J&aacute; existe um Produto Principal cadastrado. A opera&ccedil;&atilde;o foi cancelada.", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
             }
             if( $post->patrocinador > ($QtdeProduzida/10) ){
-                parent::message("A quantidade destinada ao patrocinador n&atilde;o pode ser maior do que 10% do n&uacute;mero Exemplares/Ingressos.", "/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+                parent::message("A quantidade destinada ao patrocinador n&atilde;o pode ser maior do que 10% do n&uacute;mero Exemplares/Ingressos.", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
             }
             if( $post->divulgacao > ($QtdeProduzida/10) ){
-                parent::message("A quantidade destinada &agrave; divulga&ccedil;&atilde;o n&atilde;o pode ser maior do que 10% do n&uacute;mero Exemplares/Ingressos.", "/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+                parent::message("A quantidade destinada &agrave; divulga&ccedil;&atilde;o n&atilde;o pode ser maior do que 10% do n&uacute;mero Exemplares/Ingressos.", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
             }
             if( $post->beneficiarios < ($QtdeProduzida/10) ){
-                parent::message("A quantidade destinada &agrave; popula&ccedil;&atilde;o de baixa renda n&atilde;o pode ser menor do que 10% do n&uacute;mero Exemplares/Ingressos.", "/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+                parent::message("A quantidade destinada &agrave; popula&ccedil;&atilde;o de baixa renda n&atilde;o pode ser menor do que 10% do n&uacute;mero Exemplares/Ingressos.", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
             }
             if( (int)str_replace(".", "",$precopromocional) > (int)str_replace(".", "",$preconormal) ){
-                parent::message("O valor normal n&atilde;o pode ser menor ou igual ao valor promocional!", "/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+                parent::message("O valor normal n&atilde;o pode ser menor ou igual ao valor promocional!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
             }
             if( $post->qtdenormal == null ){
-                parent::message("Favor preencher o campo Normal(Qntd).", "/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+                parent::message("Favor preencher o campo Normal(Qntd).", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
             }
             if( $post->qtdepromocional == null ){
-                parent::message("Favor preencher o campo Promocional(Qntd).", "/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+                parent::message("Favor preencher o campo Promocional(Qntd).", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
             }
         }
 
@@ -238,14 +238,14 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
             $arrBuscaProduto['a.idProduto = ?'] = $post->produto;
             $objProduto = $tblPlanoDistribuicao->buscar($arrBuscaProduto);
             if($objProduto[0]['idPlanoDistribuicao']){
-                parent::message("Produto já cadastrado no plano de distribuição desta proposta!", "/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+                parent::message("Produto já cadastrado no plano de distribuição desta proposta!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
             }
         }
         $retorno = $tblPlanoDistribuicao->salvar($dados);
         if($retorno > 0){
-            parent::message("Operação realizada com sucesso!", "/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "CONFIRM");
+            parent::message("Operação realizada com sucesso!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "CONFIRM");
         } else {
-            parent::message("Não foi possível realizar a operação!", "/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+            parent::message("Não foi possível realizar a operação!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
         }
     }
 
@@ -261,9 +261,9 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $retorno = $tblPlanoDistribuicao->apagar($get->idPlanoDistribuicao);
 
         if($retorno > 0){
-            parent::message("Operação realizada com sucesso!", "/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "CONFIRM");
+            parent::message("Operação realizada com sucesso!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "CONFIRM");
         }else{
-            parent::message("Não foi possível realizar a operação!", "/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+            parent::message("Não foi possível realizar a operação!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
         }
     }
 

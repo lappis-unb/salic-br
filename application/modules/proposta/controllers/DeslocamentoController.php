@@ -151,7 +151,7 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
             "de.idMunicipioOrigem = "=>$dados["idMunicipioOrigem"],"de.idMunicipioDestino = "=>$dados["idMunicipioDestino"], "de.idProjeto = "=>$idPreProjeto, "de.Qtde = "=>$dados["Qtde"]));
 
             if(!empty($deslocamentos)){
-                parent::message("Trecho j&aacute; cadastrado, transa&ccedil;&atilde;o cancelada!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
+                parent::message("Trecho j&aacute; cadastrado, transa&ccedil;&atilde;o cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
                 die;
             }
 
@@ -162,21 +162,19 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
             if($idDeslocamento == '') {
                 $salvar   = DeslocamentoDAO::salvaDeslocamento($dados);
                 $db->commit();
-                parent::message("Cadastro realizado com sucesso!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
+                parent::message("Cadastro realizado com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
             }
             else {
                 $atualizaaliza = DeslocamentoDAO::atualizaDeslocamento($paisOrigem,$uf,$cidade,$paisDestino,$ufD,$cidadeD,$quantidade,$idDeslocamento);
                 $db->commit();
-                parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
+                parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
             }
 
         }catch(Zend_Exception $ex) {
             $db->rollback();
             echo $ex->getMessage();
         }
-        parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o! <br>", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ERROR");
-        //$this->_redirect("deslocamento/index?idPreProjeto=".$idPreProjeto);
-
+        parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o! <br>", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ERROR");
     }
 
     public function excluirAction() {

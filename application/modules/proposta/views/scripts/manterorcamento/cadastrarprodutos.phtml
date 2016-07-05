@@ -1,27 +1,18 @@
 <?php
-    header("Content-Type: text/html; charset=ISO-8859-1");
-    //require_once "scripts/manterpropostaincentivofiscal/inc/menu.inc.php"; // menu
-    $SalvarProduto = $this->url(array('controller' => 'manterorcamento', 'action' => 'salvarprodutos'));
+    $SalvarProduto = $this->url(array('module'=>'proposta', 'controller' => 'manterorcamento', 'action' => 'salvarprodutos'));
 ?>
-
 <script type="text/javascript">
     //mascara('vlunitario', format_moeda);
     $('#vlunitario').priceFormat({limit: 8});
     $(document).ready(function(){
 
-        
+
 
         <?php if(isset($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
              //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
              JSBloquearAlteracaoFormulario();
         <?php endif; ?>
 
-        //$('#etapa').change(function(){
-//        if($('#etapa').val() == 0){
-//            $("#item").find('option').remove();
-//            $("#item").append('<option value=""> - Selecione - </option>');
-//        }
-//        else{
             $.ajax({
                 url : '<?php echo $this->url(array('controller' => 'Manterorcamento', 'action' => 'cadastrarprodutos')); ?>',
                 type: "POST",
@@ -40,36 +31,25 @@
                 }
                 , dataType : 'json'
             });
-        //}
-        //});
-        
+
         $('.soma').keyup(function(){
             var soma = 0;
-            /*var vlunitario = $("#vlunitario").val().replace('R$','');
-            var vlunitario = $.trim(vlunitario.replace('.',''));
-            var vlunitario = $.trim(vlunitario.replace(',',''));
-            soma = $("#quantidade").val()*$("#ocorrencia").val() * vlunitario;
-            soma = ((Math.round(soma*100))/100);
-            //soma = soma.toFixed(2).replace('.',',');
-            $("#total").val('R$ '+soma);*/
             var vlunitario = $("#vlunitario").val().replace('R$ ','');
-            
-        	// retira os pontos e as vírgulas, deixando somente números
+
+        	// retira os pontos e as vÃ­rgulas, deixando somente nÃºmeros
             vlunitario = vlunitario.replace(/\D/g, "");
             vlunitario = vlunitario.replace(/(\d{0})(\d)/, "$1$2");
 
         	// adiciona o ponto na casa decimal
             vlunitario = vlunitario.replace(/(\d)(\d{2})$/, "$1.$2");
 
-        	// converte para float e adiciona precisão decimal
+        	// converte para float e adiciona precisÃ£o decimal
         	qtd        = parseFloat($("#quantidade").val()).toFixed(2);
         	ocorrencia = parseFloat($("#ocorrencia").val()).toFixed(2);
         	valor      = parseFloat(vlunitario).toFixed(2);
-            
+
             soma = parseFloat(qtd * ocorrencia * valor).toFixed(2); // armazena o resultado
-            //soma = soma.toFixed(2).replace('.',',');
-            //$("#total").val('R$ '+soma);
-            
+
             if(soma >= 0){
                 $("#total").val(soma);
             }else{
@@ -83,27 +63,15 @@
         }
 
         if($('#uf').val() != '' &&  $('#municipio').val() != '' && $('#item').val() != '' && $('#etapa').val() != '' ){
-//            $('#uf').attr('disabled','disabled');
-//            $('#municipio').attr('disabled','disabled');
-//            $('#item').attr('disabled','disabled');
-//            $('#etapa').attr('disabled','disabled');
-
             somaValores();
         }
 
         $('.numero').keydown(function(event){
-            //		var texto = '';
-            //		 for(j in event){
-            //			 texto += j+' = '+event[j]+' | ';
-            //				}
-            //
-            //		alert(texto);return false;
             if((event.keyCode >= 96 && event.keyCode <= 105) || (event.keyCode >= 48 && event.keyCode <= 57) || event.keyCode == 8 || event.keyCode ==9 ){
                 return true;
             }
             else
                 return false;
-            //$(this).val($(this).val().replace(/\D/g,''));
         });
 
         $("#error").dialog({
@@ -129,7 +97,7 @@
             if(validar == false){
                 $("#error").html('Dados obrigat&oacute;rios n&atilde;o informados!');
                 $("#error").dialog('open');
-            
+
             } else {
             	if($("#quantidade").val() == 0){
                     $("#error").html('Quantidade n&atilde;o pode ser igual a zero');
@@ -144,30 +112,28 @@
                     $("#ocorrencia").val('');
                     return false;
                 }
-                
+
             	var vlunitario = $("#vlunitario").val();
             	vlunitario = vlunitario.replace(/\D/g, "");
             	vlunitario = vlunitario.replace(/(\d{0})(\d)/, "$1$2");
-            	
+
             	if(vlunitario == 0){
                     $("#error").html('Valor unit&aacute;rio n&atilde;o pode ser igual a zero');
                     $("#error").dialog('open');
                     $("#vlunitario").val('');
                     return false;
-                    //		$(".ui-dialog-titlebar-close").remove();
                 }
-                
+
                 if($("#qtdDias").val() == 0){
                     $("#error").html('Quantidade de dias n&atilde;o pode ser igual a zero');
                     $("#error").dialog('open');
                     $("#qtdDias").val('');
                     return false;
-                    //		$(".ui-dialog-titlebar-close").remove();
                 } else {
                     var jstv = $('#editor1').val();
                     if(jstv.length > 500){
                         $("#justificativaErro").dialog("destroy");
-                        $("#justificativaErro").html('O campo Justificativa não pode ultrapassar 500 caracteres!');
+                        $("#justificativaErro").html('O campo Justificativa nÃ£o pode ultrapassar 500 caracteres!');
                         $("#justificativaErro").dialog ({
                             width:320,
                             height:180,
@@ -187,7 +153,6 @@
                     $("#msg").html("");
                     $("#msg").dialog("destroy");
                     $("#msg").html("Carregando...");
-                    //jqAjaxForm(document.getElementById("form"), "msg");
                     $.ajax({
                         url : $("#form").attr('action'),
                         type: "POST",
@@ -206,7 +171,6 @@
                         modal:true,
                         close: function(){
                             $("#item").val("");
-                            //$("#fonterecurso").val("");
                             $("#unidade").val("");
                             $("#quantidade").val("");
                             $("#ocorrencia").val("");
@@ -279,26 +243,26 @@
         }
         return result;
     }
-    
-    //Formata número tipo moeda usando o evento onKeyDown
-    
+
+    //Formata nÃºmero tipo moeda usando o evento onKeyDown
+
     function Formata(campo,tammax,teclapres,decimal) {
         var tecla = teclapres.keyCode;
         vr = Limpar(campo.value,"0123456789");
         tam = vr.length;
         dec=decimal
-        
+
         if (tam < tammax && tecla != 8){ tam = vr.length + 1 ; }
-        
+
         if (tecla == 8 )
         { tam = tam - 1 ; }
-        
+
         if ( tecla == 8 || tecla >= 48 && tecla <= 57 || tecla >= 96 && tecla <= 105 )
         {
-            
+
             if ( tam <= dec )
             { campo.value = vr ; }
-            
+
             if ( (tam > dec) && (tam <= 5) ){
                 campo.value = vr.substr( 0, tam - 2 ) + "," + vr.substr( tam - dec, tam ) ; }
             if ( (tam >= 6) && (tam <= 8) ){
@@ -311,29 +275,12 @@
             if ( (tam >= 15) && (tam <= 17) ){
                 campo.value = vr.substr( 0, tam - 14 ) + "." + vr.substr( tam - 14, 3 ) + "." + vr.substr( tam - 11, 3 ) + "." + vr.substr( tam - 8, 3 ) + "." + vr.substr( tam - 5, 3 ) + "," + vr.substr( tam - 2, tam ) ;}
         }
-        
+
     }
 </script>
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <body>
-    <!-- ========== INCIO BREADCRUMB (LINKS TOPO) ========== -->
-    <!--<div id="breadcrumb">
-        <ul>
-            <li class="first"><a
-                    href="<?php echo $this->url(array('controller' => 'prototipos', 'action' => 'propostas')); ?>"
-                    title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-            <li class="last">Or&ccedil;amento</li>
-            <li class="first"><a
-                    href="<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'produtoscadastrados')); ?>"
-                    title="Ir para In&iacute;cio">Produtos Cadastrados</a></li>
-            <li class="last">Cadastrar Planilha por Produto</li>
-        </ul>
-    </div>-->
-    <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
     <!-- ========== INCIO TTULO ========== -->
     <div id="titulo" style="width: 97%">
         <div>Cadastrar Planilha por Produto</div>
@@ -345,7 +292,7 @@
     <!-- ========== INCIO CONTEDO ========== -->
     <div id="conteudo" style="width: 97%;"><!-- ========== INCIO TABELA DADOS ========== -->
         <?php foreach ($this->Dados as $dados):?>
-        <form name="form" id="form" method="post" action ="<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'salvarprodutos')); ?>">
+        <form name="form" id="form" method="post" action ="<?php echo $this->url(array('module'=>'proposta', 'controller' => 'manterorcamento', 'action' => 'salvarprodutos')); ?>">
             <input type="hidden" name="produto" id="produto" value="<?php echo $dados->CodigoProduto ?>" />
             <input type="hidden" name="proposta" id="proposta" value="<?php echo $dados->idProposta ?>" />
             <input type="hidden" name="idPreProjeto" id="idPreProjeto" value="<?php echo $this->idPreProjeto ?>" />
@@ -381,6 +328,7 @@
                                 <label for="cidade">MUNIC&Iacute;PIO*</label><br />
                                 <select class="select_simples valida" style="width:200px" id='municipio' name='municipio'>
                                     <option> - Selecione uma UF - </option>
+                                        <?php if($this->Cidades):  ?>
                                         <?php foreach($this->Cidades as $cidades) {
                                             if($dados->Municipio == $cidades->id) {?>
                                                 <option selected="selected" value="<?php echo $cidades->id ?>"><?php echo $cidades->descricao ?></option>
@@ -388,6 +336,7 @@
                                                 <option value="<?php echo $cidades->id ?>"><?php echo $cidades->descricao ?></option>
                                             <?php }
                                         } ?>
+                                        <?php endif; ?>
                                 </select>
                             </td>
                         </tr>
@@ -484,7 +433,7 @@
             </tr>
         </table>
         <?php endforeach;?>
-    </div>    
+    </div>
 <!-- ========== FIM CONTEDO ========== -->
 
 <!-- ========== INCIO RODAP DO CONTEDO ========== -->
