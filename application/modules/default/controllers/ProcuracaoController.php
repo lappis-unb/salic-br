@@ -1,6 +1,6 @@
 <?php
 
-class ProcuracaoController extends GenericControllerNew {
+class ProcuracaoController extends MinC_Controller_Action_Abstract {
 
     private $idResponsavel = 0;
     private $idAgente      = 0;
@@ -729,8 +729,4 @@ class ProcuracaoController extends GenericControllerNew {
         }
         die();
     }
-
-
 }
-
-

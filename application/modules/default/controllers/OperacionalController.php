@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class OperacionalController extends GenericControllerNew {
+class OperacionalController extends MinC_Controller_Action_Abstract {
 	private $idUsuario = null;
 	private $codOrgaoSuperior = null;
 	private $intTamPag = 10;
@@ -1223,9 +1223,9 @@ class OperacionalController extends GenericControllerNew {
 		if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('7');}
 
 		//montando parametros de busca dos campos de data
-		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtDocumento", "dtDocumento", "d.dtDocumento", "dtDocumento_Final", $arrBusca);
-		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "hd.dtTramitacaoEnvio", "dtEnvio_Final", $arrBusca);
-		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtRecebido", "dtRecebido", "hd.dtTramitacaoRecebida", "dtRecebido_Final", $arrBusca);
+		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtDocumento", "dtDocumento", "d.dtDocumento", "dtDocumento_Final", $arrBusca);
+		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "hd.dtTramitacaoEnvio", "dtEnvio_Final", $arrBusca);
+		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtRecebido", "dtRecebido", "hd.dtTramitacaoRecebida", "dtRecebido_Final", $arrBusca);
 
 		//instanciando modelo referente a tabela tbHistoricoDocumento
 		$tblTbHistoricoDocumento = new tbHistoricoDocumento();
@@ -1294,9 +1294,9 @@ class OperacionalController extends GenericControllerNew {
 		if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('7');}
 
 		//montando parametros de busca dos campos de data
-		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtDocumento", "dtDocumento", "d.dtDocumento", "dtDocumento_Final", $arrBusca);
-		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "hd.dtTramitacaoEnvio", "dtEnvio_Final", $arrBusca);
-		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtRecebido", "dtRecebido", "hd.dtTramitacaoRecebida", "dtRecebido_Final", $arrBusca);
+		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtDocumento", "dtDocumento", "d.dtDocumento", "dtDocumento_Final", $arrBusca);
+		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "hd.dtTramitacaoEnvio", "dtEnvio_Final", $arrBusca);
+		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtRecebido", "dtRecebido", "hd.dtTramitacaoRecebida", "dtRecebido_Final", $arrBusca);
 
 		//instanciando modelo referente a tabela tbHistoricoDocumento
 		$tblTbHistoricoDocumento = new tbHistoricoDocumento();
@@ -1313,7 +1313,7 @@ class OperacionalController extends GenericControllerNew {
                     $totalPag = 0;
                     $fim = 0;
                      $rs = $tblTbHistoricoDocumento->buscarCompleto($arrBusca, $ordem, $tamanho, $inicio);
-                    $this->_forward('preparar-xls-pdf', null, null, array(
+                    $this->forward('preparar-xls-pdf', null, null, array(
                                                                             'dados'=>$rs,
                                                                             'view'=>'operacional/preparar-xls-pdf-projetos.phtml',
                                                                             'tipo'=> $post->tipo
@@ -1391,8 +1391,8 @@ class OperacionalController extends GenericControllerNew {
 		if($post->uf == "" && $post->regiao != ""){ $arrBusca["uf.Regiao = ?"] = $post->regiao; }
 
 		//montando parametros de busca dos campos de data
-		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtCadastro", "dtCadastro", "p.dtAceite", "dtCadastro_Final", $arrBusca);
-		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "x1.DtEnvio", "dtEnvio_Final", $arrBusca);
+		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtCadastro", "dtCadastro", "p.dtAceite", "dtCadastro_Final", $arrBusca);
+		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "x1.DtEnvio", "dtEnvio_Final", $arrBusca);
 
 		//instanciando modelo referente a tabela PreProjeto
 		$tbl = new Proposta_Model_Proposta();
@@ -1588,7 +1588,7 @@ class OperacionalController extends GenericControllerNew {
 		if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array("18 ASC", "4 ASC");}
 
 		//montando parametros de busca dos campos de data
-		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "x1.DtEnvio", "dtEnvio_Final", $arrBusca);
+		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "x1.DtEnvio", "dtEnvio_Final", $arrBusca);
 		//xd($arrBusca);
 
 		foreach($_POST["visaoAgente"] as $campo){
@@ -1792,7 +1792,7 @@ class OperacionalController extends GenericControllerNew {
 		}
 
 		//BUSCA PARA DATAS
-		//$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtDistribuicao", "dtDistribuicao", "dpc.DtDistribuicao", "dtDistribuicao_Final", $arrBusca);
+		//$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtDistribuicao", "dtDistribuicao", "dpc.DtDistribuicao", "dtDistribuicao_Final", $arrBusca);
 		//xd($arrBusca);
 
 
@@ -3051,8 +3051,8 @@ class OperacionalController extends GenericControllerNew {
 		$arrBusca['n.Status = ?']='0';
 
 		//montando parametros de busca dos campos de data
-		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtCaptacao", "dtCaptacao", "ca.DtRecibo", "dtCaptacao_Final", $arrBusca);
-		$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtExecucao", "dtExecucao", "p.DtInicioExecucao", "dtExecucao_Final", $arrBusca);
+		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtCaptacao", "dtCaptacao", "ca.DtRecibo", "dtCaptacao_Final", $arrBusca);
+		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtExecucao", "dtExecucao", "p.DtInicioExecucao", "dtExecucao_Final", $arrBusca);
 
 		//Dados para paginação
 		$pag = 1;
@@ -3079,8 +3079,8 @@ class OperacionalController extends GenericControllerNew {
 			$rsSomatorioCaptado    = $tbl->buscarDemonstrativoDeCaptacaoSomatorioValorCaptado($arrBusca, $arrBuscaValor);
 			if(empty($post->dtCaptacao) && empty($post->dtCaptacao_Final)){
 				//montando parametros de busca dos campos de data
-				$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtCaptacao", "dtCaptacao", "ca.DtRecibo", "dtCaptacao_Final", $arrBusca);
-				$arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtExecucao", "dtExecucao", "p.DtInicioExecucao", "dtExecucao_Final", $arrBusca);
+				$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtCaptacao", "dtCaptacao", "ca.DtRecibo", "dtCaptacao_Final", $arrBusca);
+				$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtExecucao", "dtExecucao", "p.DtInicioExecucao", "dtExecucao_Final", $arrBusca);
 
 			 	if($post->tpDtCaptacao == 'OT'){
 			 		$arrData['Ano >= ?'] = substr($arrBusca['ca.DtRecibo = ?'], 2, 2);
@@ -3629,7 +3629,4 @@ class OperacionalController extends GenericControllerNew {
         $this->view->dados         = $busca;
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
 	}
-
-
-
 }

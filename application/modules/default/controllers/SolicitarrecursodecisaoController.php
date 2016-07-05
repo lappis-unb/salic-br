@@ -10,9 +10,7 @@
  * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
 
-require_once "GenericControllerNew.php";
-
-class SolicitarRecursoDecisaoController extends GenericControllerNew {
+class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract {
     /**
      * Variável com o id do usuário logado
      */

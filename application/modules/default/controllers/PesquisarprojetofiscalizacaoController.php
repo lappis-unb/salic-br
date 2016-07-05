@@ -5,9 +5,8 @@
  *
  * @author André Nogueira Pereira
  */
-require_once 'GenericControllerNew.php';
 
-class PesquisarprojetofiscalizacaoController extends GenericControllerNew {
+class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abstract {
 
     private $intTamPag = 10;
     private $codOrgao = null;
@@ -942,5 +941,3 @@ class PesquisarprojetofiscalizacaoController extends GenericControllerNew {
     }
 
 }
-
-?>

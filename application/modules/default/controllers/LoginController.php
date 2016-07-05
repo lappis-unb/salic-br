@@ -10,7 +10,7 @@
  * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
  */
 
-class LoginController extends GenericControllerNew {
+class LoginController extends MinC_Controller_Action_Abstract {
     /**
      * Reescreve o método init()
      * @access public
@@ -638,4 +638,3 @@ class LoginController extends GenericControllerNew {
         }
     }
 }
-

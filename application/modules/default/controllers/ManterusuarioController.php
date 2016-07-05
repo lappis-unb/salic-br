@@ -1,15 +1,11 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of GerarsenhaController
  *
  * @author tisomar
  */
-class ManterusuarioController extends GenericControllerNew {
+class ManterusuarioController extends MinC_Controller_Action_Abstract {
 private $intTamPag = 10;
 
     public function init()
@@ -891,4 +887,3 @@ private $intTamPag = 10;
     }
 
 }
-?>

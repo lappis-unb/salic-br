@@ -1,7 +1,6 @@
 <?php
-require_once "GenericControllerNew.php";
 
-class VerificarSolicitacaoDeReadequacoesController extends GenericControllerNew
+class VerificarSolicitacaoDeReadequacoesController extends MinC_Controller_Action_Abstract
 {
     public function init() {
         // verifica as permissões
@@ -400,5 +399,3 @@ class VerificarSolicitacaoDeReadequacoesController extends GenericControllerNew
     }
 
 }
-
-?>

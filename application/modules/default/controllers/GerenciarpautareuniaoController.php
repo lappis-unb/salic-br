@@ -1,15 +1,11 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of GerenciarPautaReuniao
  *
  * @author 01373930160
  */
-class GerenciarPautaReuniaoController extends GenericControllerNew {
+class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
     private $bln_readequacao = "false";
     private $intTamPag = 10;

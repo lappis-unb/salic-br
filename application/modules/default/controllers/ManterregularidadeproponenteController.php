@@ -4,7 +4,7 @@
  * Description of ManterRegularidadeProponenteController
  * @author Politec MinC
  */
-class ManterRegularidadeProponenteController extends GenericControllerNew {
+class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abstract {
 
     /**
      * cpf/cnpj pra consulta

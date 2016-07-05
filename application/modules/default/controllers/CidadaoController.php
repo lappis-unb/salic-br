@@ -1,7 +1,4 @@
 <?php
-
-//include_once 'GenericController.php';
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -13,7 +10,7 @@
  * @version 1.0 - 17/01/2014
  */
 
-class CidadaoController extends GenericControllerNew {
+class CidadaoController extends MinC_Controller_Action_Abstract {
 
     public function init() {
         parent::init(); // chama o init() do pai GenericControllerNew

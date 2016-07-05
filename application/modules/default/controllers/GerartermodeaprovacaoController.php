@@ -1,8 +1,6 @@
 <?php
 
-include_once 'GenericController.php';
-
-class GerartermodeaprovacaoController extends GenericControllerNew {
+class GerartermodeaprovacaoController extends MinC_Controller_Action_Abstract {
 
     private $codGrupo = null;
     private $codOrgao = null;

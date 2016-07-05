@@ -8,9 +8,8 @@
  * @package application
  * @subpackage application.controllers
  */
-require_once "GenericControllerNew.php";
 
-class ResolverInconsistenciaController extends GenericControllerNew {
+class ResolverInconsistenciaController extends MinC_Controller_Action_Abstract {
     
     public function incentivadorProponenteIguaisAction() {
         $this->_helper->layout->disableLayout();

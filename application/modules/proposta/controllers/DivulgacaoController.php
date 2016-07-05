@@ -10,9 +10,7 @@
  * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  */
 
-require_once "GenericControllerNew.php";
-
-class Proposta_DivulgacaoController extends GenericControllerNew {
+class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract {
 
     private $idPreProjeto =  null;
     private $idUsuario =  null;

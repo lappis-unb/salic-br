@@ -10,9 +10,7 @@
  * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
 
-require_once "GenericControllerNew.php";
-
-class ConfiguracoesController extends GenericControllerNew {
+class ConfiguracoesController extends MinC_Controller_Action_Abstract {
     
     private $idUsuario = 0;
     private $idOrgao = 0;

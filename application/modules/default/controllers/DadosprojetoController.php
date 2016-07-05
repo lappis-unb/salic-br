@@ -1,7 +1,6 @@
 <?php
 
-
-class DadosprojetoController extends GenericControllerNew {
+class DadosprojetoController extends MinC_Controller_Action_Abstract {
 
     /**
      * Reescreve o método init()

@@ -1,16 +1,11 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Principalproponente
  *
  * @author tisomar
  */
-class PrincipalproponenteController extends GenericControllerNew {
+class PrincipalproponenteController extends MinC_Controller_Action_Abstract {
 
     private $idAgente = null;
 
@@ -122,9 +117,4 @@ class PrincipalproponenteController extends GenericControllerNew {
 		$this->view->totalPag 		  = $totalPag;
 		$this->view->parametrosBusca  = $_POST;
 	}
-
-
-
 }
-
-?>

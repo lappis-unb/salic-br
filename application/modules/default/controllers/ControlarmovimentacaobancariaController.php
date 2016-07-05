@@ -10,9 +10,7 @@
  * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
  */
 
-require_once 'GenericControllerNew.php';
-
-class ControlarmovimentacaobancariaController extends GenericControllerNew
+class ControlarmovimentacaobancariaController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * @access private

@@ -1,6 +1,6 @@
-<?php  require_once 'GenericControllerNew.php';
+<?php
 
-class ComprovarexecucaofinanceiraController extends GenericControllerNew
+class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstract
 {
     private $modalidade    = array(' - Selecione - ','Convite','Tomada de Preços','Concorr&ecirc;ncia','Concurso','Preg&atilde;o');
     private $tipoLicitacao = array(' - Selecione - ','Eletrônico','Eletrônico para registro de preço','Eletrônico por desconto','Eletrônico por lote','Presencial','Presencial para registro de preço','Presencial para maior desconto');

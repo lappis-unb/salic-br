@@ -1,7 +1,6 @@
 <?php
-require_once "GenericControllerNew.php";
 
-class GerenciarparecerController extends GenericControllerNew {
+class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
     /**
      * @var integer (variável com o id do usuário logado)
@@ -1531,7 +1530,4 @@ class GerenciarparecerController extends GenericControllerNew {
 
 
     }
-
-
-
 }

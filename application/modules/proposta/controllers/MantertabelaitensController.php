@@ -12,7 +12,7 @@
  */
 set_time_limit(0);
 
-class Proposta_MantertabelaitensController extends GenericControllerNew {
+class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstract {
 
     private $getIdUsuario = 0;
     private $idUsuario = 0;

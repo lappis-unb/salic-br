@@ -11,9 +11,7 @@
  * @copyright © 2010 - Politec - Todos os direitos reservados.
  */
 
-require_once "GenericControllerNew.php";
-
-class GerarRelatoriosController extends GenericControllerNew {
+class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
     /**
      * @var integer (variável com o id do usuário logado)
      * @access private
@@ -215,9 +213,4 @@ class GerarRelatoriosController extends GenericControllerNew {
 
 
     }
-
-
-
-
-
 } // fecha class

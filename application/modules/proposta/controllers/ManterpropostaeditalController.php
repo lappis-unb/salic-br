@@ -10,7 +10,7 @@
  * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  */
 
-class Proposta_ManterpropostaeditalController extends GenericControllerNew {
+class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abstract {
 
     private $getIdUsuario   = 0;
     private $idResponsavel  = 0;

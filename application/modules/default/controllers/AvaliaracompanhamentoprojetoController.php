@@ -1,5 +1,6 @@
-<?php 
-class AvaliaracompanhamentoprojetoController extends GenericControllerNew {
+<?php
+
+class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abstract {
 
     private $intTamPag = 10;
     private $getIdOrgao = 0;

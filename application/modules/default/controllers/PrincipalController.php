@@ -10,9 +10,7 @@
  * @link http://www.cultura.gov.br
  */
 
-require_once "GenericControllerNew.php";
-
-class PrincipalController extends GenericControllerNew
+class PrincipalController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * Reescreve o método init()
@@ -178,9 +176,4 @@ class PrincipalController extends GenericControllerNew
 		}
 		
 	}
-
-
-
-
-
 } // fecha class

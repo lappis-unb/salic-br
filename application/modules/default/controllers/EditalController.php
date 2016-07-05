@@ -1,6 +1,6 @@
 <?php
 
-class EditalController extends GenericControllerNew {
+class EditalController extends MinC_Controller_Action_Abstract {
 
     public function init() {
         $auth = Zend_Auth::getInstance(); // instancia da autenticacao;

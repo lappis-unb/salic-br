@@ -10,9 +10,7 @@
  * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  */
 
-require_once "GenericControllerNew.php";
-
-class GerenciarparecertecnicoController extends GenericControllerNew {
+class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract {
 
     private $bln_readequacao = "false";
     /**

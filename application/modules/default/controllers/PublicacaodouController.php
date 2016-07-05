@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  * @copyright 2010 - Ministerio da Cultura - Todos os direitos reservados.
  */
-class PublicacaoDouController extends GenericControllerNew {
+class PublicacaoDouController extends MinC_Controller_Action_Abstract {
 
     /**
      * @var integer (variavel com o id do usuario logado)

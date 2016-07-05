@@ -10,7 +10,7 @@
  * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  */
 
-class Proposta_ManterorcamentoController extends GenericControllerNew {
+class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract {
 
     private $idUsuario = null;
     private $idPreProjeto = null;
@@ -381,7 +381,7 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
 
             $where = "idPlanilhaProposta = ".$_POST['proposta'];
 
-            $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos(null, $idEtapa, $idProduto, $idItem, null, $idUf, $municipio,
+            $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos(null, $idEtapa, $idProduto, $idItem, null, $idUf, $municipio);
         }
 
         if  ( isset ( $_GET ) ) {
@@ -665,7 +665,7 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
         if  ( isset ( $_POST ) ) {
             $dados = array(
                     'idProjeto'=>$_POST['proposta'],
-                    'idProduto'=>$POST['produto'],
+                    'idProduto'=> $_POST['produto'],
                     'idEtapa'=>$_POST['etapa'],
                     'idPlanilhaItem'=>$_POST['etapa'],
                     'Unidade'=>$_POST['unidade'],
@@ -679,7 +679,7 @@ class Proposta_ManterorcamentoController extends GenericControllerNew {
                     idUsuario=>462
             );
 
-            $where = "(pp.idProjeto = ". $_POST['proposta']." and pp.idProduto = ".$POST['produto']." and pp.idUsuario = 462)";
+            $where = "(pp.idProjeto = ". $_POST['proposta']." and pp.idProduto = ".$_POST['produto']." and pp.idUsuario = 462)";
             print_r($dados);
             die;
             $salvarProdutos = ManterorcamentoDAO::updateProdutos($dados, $where);

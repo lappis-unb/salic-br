@@ -10,7 +10,7 @@
  * @copyright  2010 - Ministerio da Cultura - Todos os direitos reservados.
  */
 
-class RealizarAnaliseProjetoController extends GenericControllerNew
+class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 {
         private $bln_readequacao   = "false";
         private $idPedidoAlteracao = 0;

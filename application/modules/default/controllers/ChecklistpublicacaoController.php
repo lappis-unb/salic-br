@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class ChecklistPublicacaoController extends GenericControllerNew
+class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
 {
     private $getIdUsuario = 0;
     private $getIdAgenteLogado = 0;

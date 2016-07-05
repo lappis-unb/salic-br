@@ -1,5 +1,6 @@
 <?php
-class AreadetrabalhoController extends GenericControllerNew {
+
+class AreadetrabalhoController extends MinC_Controller_Action_Abstract {
     private $idAgente = 0;
 
     /**

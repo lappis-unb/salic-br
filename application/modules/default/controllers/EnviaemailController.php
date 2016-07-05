@@ -10,7 +10,7 @@
  *
  * @author tisomar
  */
-class EnviaemailController extends GenericControllerNew {
+class EnviaemailController extends MinC_Controller_Action_Abstract {
 
     public static function enviaEmail($body, $from, $to) {
         
@@ -37,5 +37,3 @@ class EnviaemailController extends GenericControllerNew {
     }
 
 }
-
-?>

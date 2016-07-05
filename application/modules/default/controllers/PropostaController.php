@@ -1,5 +1,6 @@
 <?php
-class PropostaController extends GenericControllerNew
+
+class PropostaController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * Reescreve o método init()

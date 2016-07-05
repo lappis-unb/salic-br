@@ -11,7 +11,7 @@
  * @link http://www.cultura.gov.br
  * @copyright 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
-class MantercontabancariaController extends GenericControllerNew {
+class MantercontabancariaController extends MinC_Controller_Action_Abstract {
 
     private $modal = "n";
 
@@ -360,5 +360,3 @@ class MantercontabancariaController extends GenericControllerNew {
     }
 
 }
-
-?>

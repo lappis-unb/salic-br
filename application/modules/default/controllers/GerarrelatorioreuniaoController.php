@@ -1,18 +1,10 @@
 <?php
-
-include_once 'GenericController.php';
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of GerarRelatorioReuniao
  *
  * @author 01373930160
  */
-class GerarRelatorioReuniaoController extends GenericControllerNew {
+class GerarRelatorioReuniaoController extends MinC_Controller_Action_Abstract {
 
     public function init() {
         $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // t�tulo da p�gina
@@ -140,4 +132,3 @@ class GerarRelatorioReuniaoController extends GenericControllerNew {
     }
 
 }
-?>

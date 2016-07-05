@@ -10,9 +10,8 @@
  * @link http://www.cultura.gov.br
  * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
-require_once "GenericControllerNew.php";
 
-class AnexardocumentosController extends GenericControllerNew
+class AnexardocumentosController extends MinC_Controller_Action_Abstract
 {
 
     /**

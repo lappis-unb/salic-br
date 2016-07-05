@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  * @copyright 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
-class AnexardocumentosmincController extends GenericControllerNew {
+class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
 
     private $getIdAgente  = 0;
     private $getIdGrupo   = 0;

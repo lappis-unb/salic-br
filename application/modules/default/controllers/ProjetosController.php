@@ -10,7 +10,7 @@
  * @link http://www.politec.com.br
  * @copyright 2010 - Politec - Todos os direitos reservados.
  */
-class ProjetosController extends GenericControllerNew {
+class ProjetosController extends MinC_Controller_Action_Abstract {
 
     /**
      * Reescreve o metodo init()

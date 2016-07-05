@@ -1,8 +1,6 @@
 <?php
 
-require_once "GenericControllerNew.php";
-
-class ConsultarpareceristasController extends GenericControllerNew {
+class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 
     public static $perfil = array(93, 94, 137);
     public static $codPerfil = 0;

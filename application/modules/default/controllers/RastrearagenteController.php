@@ -10,9 +10,7 @@
  * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
 
-require_once "GenericControllerNew.php";
-
-class RastrearagenteController extends GenericControllerNew {
+class RastrearagenteController extends MinC_Controller_Action_Abstract {
     /**
      * @var integer (variável com o id do usuário logado)
      * @access privacte

@@ -1,8 +1,6 @@
 <?php
 
-require_once "GenericControllerNew.php";
-
-class ListarprojetosController extends GenericControllerNew {
+class ListarprojetosController extends MinC_Controller_Action_Abstract {
 
     private $getIdUsuario = 0;
     private $getCNPJCPF = 0;

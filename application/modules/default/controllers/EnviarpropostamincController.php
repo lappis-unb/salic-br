@@ -1,16 +1,10 @@
 <?php
-include_once 'GenericController.php';
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Enviarpropostaminc
  *
  * @author tisomar
  */
-class EnviarpropostamincController extends GenericControllerNew {
+class EnviarpropostamincController extends MinC_Controller_Action_Abstract {
 
 
     public function init() {
@@ -36,4 +30,3 @@ class EnviarpropostamincController extends GenericControllerNew {
 
 
 }
-?>

@@ -1,7 +1,7 @@
 <?php
 
 
-class VerificarAlteracaoProjetoController extends GenericControllerNew
+class VerificarAlteracaoProjetoController extends MinC_Controller_Action_Abstract
 {
 
     /**

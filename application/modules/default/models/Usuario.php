@@ -59,7 +59,7 @@ class Usuario extends GenericModel
                         );
                 $sql->where('usu_identificacao = ?', $username);
                 $sql->where('usu_status  = ?', 1);
-                if(md5($password) != GenericControllerNew::validarSenhaInicial()){
+                if(md5($password) != MinC_Controller_Action_Abstract::validarSenhaInicial()){
                 $sql->where("usu_senha  = ?",$auxSenha);
                 }$buscar = $this->fetchRow($sql);
 

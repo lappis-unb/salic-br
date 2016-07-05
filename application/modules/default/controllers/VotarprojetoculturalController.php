@@ -1,6 +1,6 @@
 <?php
 
-class VotarProjetoCulturalController extends GenericControllerNew {
+class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
 
     private $bln_readequacao = "false";
 

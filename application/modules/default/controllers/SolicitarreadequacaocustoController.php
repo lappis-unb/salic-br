@@ -5,9 +5,8 @@
  *
  * @author 01373930160
  */
-require_once 'GenericControllerNew.php';
 
-class SolicitarReadequacaoCustoController extends GenericControllerNew {
+class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstract {
 
     /**
      * Reescreve o método init()

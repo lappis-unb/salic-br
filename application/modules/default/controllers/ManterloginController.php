@@ -1,15 +1,11 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of ManterloginController
  *
  * @author tisomar
  */
-class ManterloginController extends GenericControllerNew {
+class ManterloginController extends MinC_Controller_Action_Abstract {
 
 
    public function init() {
@@ -377,4 +373,3 @@ class ManterloginController extends GenericControllerNew {
         }
 
 }
-?>

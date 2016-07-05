@@ -137,7 +137,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                     <?php endif; ?>
                     <!-- <li class="config"><a href="#" title="Configurações">Configurações</a></li>
 					<li class="ajuda"><a href="#" title="Ajuda">Ajuda</a></li> -->
-                    <li class="sair"><a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'logout'), '', true); ?>" id="sairSistema" title="Sair do Sistema" onclick="logout(); return false;">Sair</a></li>
+                    <li class="sair"><a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), '', true); ?>" id="sairSistema" title="Sair do Sistema" onclick="logout(); return false;">Sair</a></li>
                 </ul>
             </div>
         </div>
@@ -166,7 +166,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                         },
                         'Sim': function()
                         {
-                            redirecionar('<?php echo $this->url(array('controller' => 'index', 'action' => 'logout'), '', true); ?>');
+                            redirecionar('<?php echo $this->url(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), '', true); ?>');
                         }
                     }
                 });

@@ -6,7 +6,7 @@
  * @package
  * @author wouerner <wouerner@gmail.com>
  */
-class Proposta_PlanoDistribuicaoController extends GenericControllerNew
+class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstract
 {
         private $intTamPag;
         private $_idPreProjeto = null;

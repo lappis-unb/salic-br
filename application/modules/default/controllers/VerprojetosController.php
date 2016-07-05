@@ -11,7 +11,7 @@
  * @copyright  2010 - Ministerio da Cultura - Todos os direitos reservados.
  */
 
-class VerProjetosController extends GenericControllerNew {
+class VerProjetosController extends MinC_Controller_Action_Abstract {
 
     private $blnProponente  = false;
     private $blnProcurador  = false;

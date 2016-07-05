@@ -1,16 +1,6 @@
 <?php 
 
-/* ProjetosGerenciarController
- * @author Equipe RUP - Politec
- * @since 17/05/2010
- * @version 1.0
- * @package application
- * @subpackage application.controllers
- * @link http://www.politec.com.br
- * @copyright  2010 - Politec - Todos os direitos reservados.
-*/
-
-class ProjetosGerenciarController extends GenericControllerNew {
+class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
 
     private $bln_readequacao = "false";
     private $idAgente = 0;

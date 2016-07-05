@@ -10,7 +10,7 @@
  * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
  */
 
-class CadastrareditalController extends GenericControllerNew
+class CadastrareditalController extends MinC_Controller_Action_Abstract
 {
     public function init()
     {

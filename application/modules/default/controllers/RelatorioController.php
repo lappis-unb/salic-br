@@ -10,9 +10,8 @@
  * @link http://www.cultura.gov.br
  * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
-require_once "GenericControllerNew.php";
 
-class RelatorioController extends GenericControllerNew {
+class RelatorioController extends MinC_Controller_Action_Abstract {
 
     private $getIdUsuario = 0;
 
@@ -716,9 +715,9 @@ class RelatorioController extends GenericControllerNew {
             $where['pr.Situacao = ?'] = $get->situacao;
             $this->view->situacao = $get->situacao;
         }
-        $where = GenericControllerNew::montaBuscaData($get, "tpDtSituacao", "dtSituacao", "pr.DtSituacao", "dtSituacao_Final", $where);
-        $where = GenericControllerNew::montaBuscaData($get, "tpDtPublicacao", "dtPublicacao", "ap.DtPublicacaoAprovacao", "dtPublicacao_Final", $where);
-        $where = GenericControllerNew::montaBuscaData($get, "tpDtPortaria", "dtPortaria", "ap.DtPortariaAprovacao", "dtPortaria_Final", $where);
+        $where = MinC_Controller_Action_Abstract::montaBuscaData($get, "tpDtSituacao", "dtSituacao", "pr.DtSituacao", "dtSituacao_Final", $where);
+        $where = MinC_Controller_Action_Abstract::montaBuscaData($get, "tpDtPublicacao", "dtPublicacao", "ap.DtPublicacaoAprovacao", "dtPublicacao_Final", $where);
+        $where = MinC_Controller_Action_Abstract::montaBuscaData($get, "tpDtPortaria", "dtPortaria", "ap.DtPortariaAprovacao", "dtPortaria_Final", $where);
 
         if((isset($get->dtInicioExec) && isset($get->dtFimExec) && !empty($get->dtInicioExec) && !empty($get->dtFimExec))){
             $di = data::dataAmericana($get->dtInicioExec);
@@ -812,9 +811,9 @@ class RelatorioController extends GenericControllerNew {
 //        if($post->propRegular != ""){ $arrBusca["inab.Habilitado = ?"] = $post->propRegular; }
 //        if($post->situacao != ""){ $arrBusca["pr.Situacao = ?"] = $post->situacao; }
 //        if($post->uf != ""){ $arrBusca["pr.UfProjeto = ?"] = $post->uf; }
-//        $arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtSituacao", "dtSituacao", "pr.DtSituacao", "dtSituacao_Final", $arrBusca);
-//        $arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtPublicacao", "dtPublicacao", "ap.DtPublicacaoAprovacao", "dtPublicacao_Final", $arrBusca);
-//        $arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtPortaria", "dtPortaria", "ap.DtPortariaAprovacao", "dtPortaria_Final", $arrBusca);
+//        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtSituacao", "dtSituacao", "pr.DtSituacao", "dtSituacao_Final", $arrBusca);
+//        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtPublicacao", "dtPublicacao", "ap.DtPublicacaoAprovacao", "dtPublicacao_Final", $arrBusca);
+//        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtPortaria", "dtPortaria", "ap.DtPortariaAprovacao", "dtPortaria_Final", $arrBusca);
 //
 //        $total = $tbl->relatorioProjeto($arrBusca , null, null, null, true);
 //
@@ -954,9 +953,9 @@ class RelatorioController extends GenericControllerNew {
             $where['pr.Situacao = ?'] = $get->situacao;
             $this->view->situacao = $get->situacao;
         }
-        $where = GenericControllerNew::montaBuscaData($get, "tpDtSituacao", "dtSituacao", "pr.DtSituacao", "dtSituacao_Final", $where);
-        $where = GenericControllerNew::montaBuscaData($get, "tpDtPublicacao", "dtPublicacao", "ap.DtPublicacaoAprovacao", "dtPublicacao_Final", $where);
-        $where = GenericControllerNew::montaBuscaData($get, "tpDtPortaria", "dtPortaria", "ap.DtPortariaAprovacao", "dtPortaria_Final", $where);
+        $where = MinC_Controller_Action_Abstract::montaBuscaData($get, "tpDtSituacao", "dtSituacao", "pr.DtSituacao", "dtSituacao_Final", $where);
+        $where = MinC_Controller_Action_Abstract::montaBuscaData($get, "tpDtPublicacao", "dtPublicacao", "ap.DtPublicacaoAprovacao", "dtPublicacao_Final", $where);
+        $where = MinC_Controller_Action_Abstract::montaBuscaData($get, "tpDtPortaria", "dtPortaria", "ap.DtPortariaAprovacao", "dtPortaria_Final", $where);
 
         if((isset($get->dtInicioExec) && isset($get->dtFimExec) && !empty($get->dtInicioExec) && !empty($get->dtFimExec))){
             $di = data::dataAmericana($get->dtInicioExec);
@@ -1104,11 +1103,11 @@ class RelatorioController extends GenericControllerNew {
         if($post->situacao != ""){ $arrBusca["pr.Situacao = ?"] = $post->situacao; }
         if($post->uf != ""){ $arrBusca["pr.UFProjeto = ?"] = $post->uf; }
         if($post->orgaoOrigem != ""){ $arrBusca["pr.OrgaoOrigem = ?"] = $post->orgaoOrigem; }
-        $arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtSituacao", "dtSituacao", "pr.DtSituacao", "dtSituacao_Final", $arrBusca);
-        $arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtProtocolo", "dtProtocolo", "pr.DtProtocolo", "dtProtocolo_Final", $arrBusca);
-        $arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtLiberacao", "dtLiberacao", "SAC.dbo.fnDtLiberacaoConta(AnoProjeto,Sequencial)", "dtLiberacao_Final", $arrBusca);
-        $arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtPortaria", "dtPortaria", "SAC.dbo.fnDtPortariaAprovacao(AnoProjeto,Sequencial)", "dtPortaria_Final", $arrBusca);
-        $arrBusca = GenericControllerNew::montaBuscaData($post, "tpDtPublicacao", "dtPublicacao", "SAC.dbo.fnDtPortariaPublicacao(AnoProjeto,Sequencial)", "dtPublicacao_Final", $arrBusca);
+        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtSituacao", "dtSituacao", "pr.DtSituacao", "dtSituacao_Final", $arrBusca);
+        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtProtocolo", "dtProtocolo", "pr.DtProtocolo", "dtProtocolo_Final", $arrBusca);
+        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtLiberacao", "dtLiberacao", "SAC.dbo.fnDtLiberacaoConta(AnoProjeto,Sequencial)", "dtLiberacao_Final", $arrBusca);
+        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtPortaria", "dtPortaria", "SAC.dbo.fnDtPortariaAprovacao(AnoProjeto,Sequencial)", "dtPortaria_Final", $arrBusca);
+        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtPublicacao", "dtPublicacao", "SAC.dbo.fnDtPortariaPublicacao(AnoProjeto,Sequencial)", "dtPublicacao_Final", $arrBusca);
 //xd($arrBusca);
         $total = $tbl->extratorProjeto($arrBusca, array(), null, null);
         $total = count($total);
@@ -1175,7 +1174,7 @@ class RelatorioController extends GenericControllerNew {
         if($post->nrEdital != ""){ $arrBusca["idEdital = ?"] = $post->nrEdital; }
         if($post->nrParcela != ""){ $arrBusca["NrParcela = ?"] = $post->nrParcela; }
         if($post->liquidado != ""){ $arrBusca["Pagou = ?"] = $post->liquidado; }
-        $arrBusca = GenericControllerNew::montaBuscaData($post, "tpDt", "dt", "Data", "dt_Final", $arrBusca);
+        $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDt", "dt", "Data", "dt_Final", $arrBusca);
 
         //Varifica se foi solicitado a ordenação
 	if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('15');}

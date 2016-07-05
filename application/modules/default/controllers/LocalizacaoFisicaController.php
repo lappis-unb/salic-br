@@ -1,7 +1,6 @@
 <?php
-include_once 'GenericControllerNew.php';
 
-class LocalizacaoFisicaController extends GenericControllerNew
+class LocalizacaoFisicaController extends MinC_Controller_Action_Abstract
 {
     /**
      * Reescreve o metodo init()

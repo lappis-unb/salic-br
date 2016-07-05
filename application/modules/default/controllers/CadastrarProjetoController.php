@@ -1,6 +1,6 @@
 <?php
 
-class CadastrarProjetoController extends GenericControllerNew {
+class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
 
     public function init() {
 //recupera ID do pre projeto (proposta)

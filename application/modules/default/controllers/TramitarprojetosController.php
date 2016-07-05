@@ -1,16 +1,11 @@
 <?php
  
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of TramitarprojetosController
  *
  * @author gabriela
  */
-class TramitarprojetosController extends GenericControllerNew {
+class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
 	private $getIdUsuario = 0;
 	private $getIdGrupo   = 0;
@@ -1879,5 +1874,3 @@ class TramitarprojetosController extends GenericControllerNew {
     }
 
 }
-
-?>
