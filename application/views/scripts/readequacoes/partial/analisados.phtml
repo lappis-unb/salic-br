@@ -4,12 +4,12 @@
         <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=3&ordem='.$this->paginacao['novaOrdem'];?>">PRONAC</a></th>
         <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">Nome do Projeto</a></th>
         <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Tipo de readequa&ccedil;&atilde;o</a></th>
-	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">Dt Envio</a></th>
-	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Dt Distribui&ccedil;&atilde;o</a></th>
-	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=6&ordem='.$this->paginacao['novaOrdem'];?>">Dt Devolu&ccedil;&atilde;o</a></th>
-	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">Qt dias p/ distribuir</a></th>
-	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Qt dias p/ avaliar</a></th>
-	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=9&ordem='.$this->paginacao['novaOrdem'];?>">Total em dias p/ avaliar</a></th>
+	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Dt Envio</a></th>
+	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=6&ordem='.$this->paginacao['novaOrdem'];?>">Dt Distribui&ccedil;&atilde;o</a></th>
+	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">Dt Devolu&ccedil;&atilde;o</a></th>
+	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Qt dias p/ distribuir</a></th>
+	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=9&ordem='.$this->paginacao['novaOrdem'];?>">Qt dias p/ avaliar</a></th>
+	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Total em dias p/ avaliar</a></th>
 	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=12&ordem='.$this->paginacao['novaOrdem'];?>">T&eacute;cnico / parecerista</th>
         <th>Visualizar</th>
         <th>Encaminhar</th>
@@ -27,9 +27,9 @@
         </td>
         <td><?php echo $d->NomeProjeto; ?></td>
         <td><?php echo $d->tpReadequacao; ?></td>
-        <td align="center"><?php echo Data::tratarDataZend($d->dtEnvio, 'Brasileira'); ?></td>
-        <td align="center"><?php echo Data::tratarDataZend($d->dtDistribuicao, 'Brasileira'); ?></td>
-        <td align="center"><?php echo Data::tratarDataZend($d->dtDevolucao, 'Brasileira'); ?></td>
+        <td align="center"><?php if ($d->dtEnvio == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtEnvio, 'Brasileira'); } ?></td>
+        <td align="center"><?php if ($d->dtDistribuicao == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtDistribuicao, 'Brasileira'); } ?></td>
+        <td align="center"><?php if ($d->dtDevolucao == '') { echo '---'; } else {echo Data::tratarDataZend($d->dtDevolucao, 'Brasileira'); } ?></td>
         <td align="center"><?php echo $d->qtDiasDistribuir; ?></td>
         <td align="center"><?php echo $d->qtDiasAvaliar; ?></td>
         <td align="center"><?php echo $d->qtTotalDiasAvaliar; ?></td>

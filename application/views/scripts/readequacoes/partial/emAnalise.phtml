@@ -22,7 +22,7 @@
             </td>
             <td><?php echo $d->NomeProjeto; ?></td>
             <td align="center"><?php echo $d->tpReadequacao ?></td>
-            <td align="center"><?php echo Data::tratarDataZend($d->dtEncaminhamento, 'Brasileira'); ?></td>
+            <td align="center"><?php if ($d->dtEncaminhamento == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtEncaminhamento, 'Brasileira'); } ?></td>
             <td align="center"><?php echo $d->qtDiasEncaminhar ?></td>
             <td><?php echo $d->nmTecnicoParecerista; ?></td>
 	    

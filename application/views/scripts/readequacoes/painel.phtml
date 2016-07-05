@@ -250,7 +250,7 @@ $situacoes = array(
     <?php if($this->qtdRegistros > 0): ?>
         <table class="tabela tablesorter">
             <?php if($this->filtro == 'analisados'): ?>
-                <?php echo $this->partial('readequacoes/partial/analisados.phtml', array('dados' => $this->dados, 'conselheiros' => $this->conselheiros, 'paginacao' => $this->paginacao)); ?>
+	    <?php echo $this->partial('readequacoes/partial/analisados.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'conselheiros' => $this->conselheiros, 'paginacao' => $this->paginacao)); ?>
             <?php elseif($this->filtro == 'em_analise'): ?>
                 <?php echo $this->partial('readequacoes/partial/emAnalise.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao)); ?>
             <?php else: ?>
