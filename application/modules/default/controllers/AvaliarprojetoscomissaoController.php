@@ -1,8 +1,6 @@
 <?php
 
-
-
-class AvaliarprojetoscomissaoController extends GenericControllerNew {
+class AvaliarprojetoscomissaoController extends MinC_Controller_Action_Abstract {
 
 	private $intTamPag = 10;
 	private $idAgente = null;
@@ -262,6 +260,3 @@ class AvaliarprojetoscomissaoController extends GenericControllerNew {
     }
 
 }
-
-
-?>

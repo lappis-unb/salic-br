@@ -1,7 +1,6 @@
 <?php
-//require_once "GenericControllerNew.php";
 
-class Proposta_DeslocamentoController extends GenericControllerNew {
+class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
 
     private $idPreProjeto = null;
 

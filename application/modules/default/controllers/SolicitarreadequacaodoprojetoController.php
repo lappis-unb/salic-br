@@ -3,7 +3,7 @@
  * SolicitarReadequacaoDoProjetoController
  */
 
-class SolicitarReadequacaoDoProjetoController extends GenericControllerNew
+class SolicitarReadequacaoDoProjetoController extends MinC_Controller_Action_Abstract
 {
     /**
      * Reescreve o método init()

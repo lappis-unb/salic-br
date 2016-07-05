@@ -10,7 +10,7 @@
  * @copyright @ 2012 - Ministerio da Cultura - Todos os direitos reservados.
  */
 
-class ManterbloqueiocontaController extends GenericControllerNew {
+class ManterbloqueiocontaController extends MinC_Controller_Action_Abstract {
 
     private $getIdUsuario = 0; // código do usuário logado
     private $getIdGrupo   = 0; // código do grupo logado
@@ -381,4 +381,3 @@ class ManterbloqueiocontaController extends GenericControllerNew {
         $this->view->html = $_POST['html'];
     }
 }
-?>

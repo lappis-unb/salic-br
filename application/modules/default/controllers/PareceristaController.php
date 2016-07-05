@@ -1,8 +1,7 @@
 <?php
-require_once "GenericControllerNew.php";
 require_once "library/MinC/Currency/Currency.php";
  
-class PareceristaController extends GenericControllerNew {
+class PareceristaController extends MinC_Controller_Action_Abstract {
 
     /**
      * @var integer (variável com o id do usuário logado)
@@ -1745,6 +1744,4 @@ class PareceristaController extends GenericControllerNew {
         echo '&nbsp;';
 
     }
-    
-    
 }

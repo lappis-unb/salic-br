@@ -10,9 +10,7 @@
  * @copyright © 2010 - Politec - Todos os direitos reservados.
  */
 
-require_once "GenericControllerNew.php";
-
-class ManterAgentesController extends GenericControllerNew {
+class ManterAgentesController extends MinC_Controller_Action_Abstract {
     /**
      * @var integer (variável com o id do usuário logado)
      * @access private

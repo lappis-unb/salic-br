@@ -1,6 +1,6 @@
 <?php
 
-class CaptacaoController extends GenericControllerNew
+class CaptacaoController extends MinC_Controller_Action_Abstract
 {
 
     public function init()

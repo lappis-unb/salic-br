@@ -10,7 +10,7 @@
  * @link http://www.politec.com.br
  * @copyright © 2010 - Politec - Todos os direitos reservados.
  */
-class TramitardocumentosController extends GenericControllerNew {
+class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
     /**
      * @var integer (variável com o id do usuário logado)

@@ -16,9 +16,7 @@
  * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
  */
 
-require_once "GenericControllerNew.php";
-
-class ReadequacaoController extends GenericControllerNew
+class ReadequacaoController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * Variáveis globais utilizada em toda a controller

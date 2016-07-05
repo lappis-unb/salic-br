@@ -10,9 +10,7 @@
  * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  */
 
-//require_once "GenericControllerNew.php";
-
-class Proposta_DivulgacaoController extends GenericControllerNew {
+class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract {
 
     private $idPreProjeto =  null;
     private $idUsuario =  null;
@@ -205,7 +203,7 @@ class Proposta_DivulgacaoController extends GenericControllerNew {
         $dao = new DivulgacaoDAO();
         $dao->excluirdivulgacao($idPlanoDivulgacao);
 
-        parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
+        parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
     }
 
     /**
@@ -214,8 +212,8 @@ class Proposta_DivulgacaoController extends GenericControllerNew {
      * @access public
      * @return void
      */
-    public function updatedivulgacaoAction()
-    {
+    public function updatedivulgacaoAction() {
+
         /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
@@ -231,12 +229,13 @@ class Proposta_DivulgacaoController extends GenericControllerNew {
         $dados = array('idPlanoDivulgacao <>?' => $idPlanoDivulgacao, 'idProjeto =?' => $idPreProjeto, 'idPeca =?' => $peca, 'idVeiculo =?' => $veiculo);
 
         $verifica = $dao->localiza($dados);
-
         if(count($verifica) > 0){
-            parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o Cancelada!", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "ERROR");
+            parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o Cancelada!", "/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "ERROR");
         }else{
-            $dao->UpdateDivulgacao($idPlanoDivulgacao, $peca, $veiculo);
-            parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
+        $dao->UpdateDivulgacao($idPlanoDivulgacao, $peca, $veiculo);
+
+        parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
+
         }
     }
 
@@ -265,12 +264,12 @@ class Proposta_DivulgacaoController extends GenericControllerNew {
         $verifica = $dao->localiza($dados);
 
         if(count($verifica) > 0){
-            parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o Cancelada!", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "ERROR");
+            parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o Cancelada!", "/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "ERROR");
         } else {
             $dados = array('idProjeto' => $idPreProjeto, 'idPeca' => $idPeca, 'idVeiculo' => $idveiculo, 'Usuario' => $usuario);
             $dao->inserirDivulgacao($dados);
 
-            parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
+            parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
         }
     }
 }

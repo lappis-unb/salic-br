@@ -2,7 +2,7 @@
 /**
  * @author Caio Lucena <caioflucena@gmail.com>
  */
-class QuestaoController extends GenericControllerNew
+class QuestaoController extends MinC_Controller_Action_Abstract
 {
     /**
      * (non-PHPdoc)

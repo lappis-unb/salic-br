@@ -1,6 +1,6 @@
 <?php
 
-class ManteravaliadorController extends GenericControllerNew {
+class ManteravaliadorController extends MinC_Controller_Action_Abstract {
 	
 	public function init() {
         $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
@@ -225,4 +225,3 @@ class ManteravaliadorController extends GenericControllerNew {
         
     }
 }
-?>

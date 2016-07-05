@@ -4,9 +4,8 @@
  * Description of VincularresponsavelController
  *
  * @author tisomar
- * @author wouerner <wouerner@gmail.com>
  */
-class Proposta_VincularresponsavelController extends GenericControllerNew {
+class VincularresponsavelController extends MinC_Controller_Action_Abstract {
 
     private $emailResponsavel  	= null;
     private $idResponsavel  	= 0;

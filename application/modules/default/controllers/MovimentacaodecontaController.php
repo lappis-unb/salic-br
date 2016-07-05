@@ -10,19 +10,17 @@
  * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
 
-require_once 'GenericControllerNew.php';
-
-class MovimentacaodecontaController extends GenericControllerNew
+class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * @access private
 	 * @var integer (idAgente do usuário logado)
 	 */
-	private $getIdUsuario = 0; // código do usuário logado
+    private $getIdUsuario = 0; // código do usuário logado
 	private $getIdGrupo   = 0; // código do grupo logado
 	private $getIdOrgao   = 0; // código do órgão logado
-        private $intTamPag    = 10;
-        private $modal = "n";
+    private $intTamPag    = 10;
+    private $modal = "n";
 
 	/**
 	 * @access private
@@ -39,7 +37,7 @@ class MovimentacaodecontaController extends GenericControllerNew
 	private $Internet;
 	private $spMovimentacaoBancaria;
 	private $tbDepositoIdentificadoCaptacao;
-        private $tbTmpDepositoIdentificado;
+    private $tbTmpDepositoIdentificado;
 
 
 

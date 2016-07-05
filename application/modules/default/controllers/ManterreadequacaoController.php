@@ -1,17 +1,6 @@
 <?php
-/* ManterReadequacaoController
- * @author Equipe RUP - Politec
- * @since 20/05/2013
- * @version 1.0
- * @package application
- * @subpackage application.controllers
- * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
- */
 
-require_once "GenericControllerNew.php";
-
-class ManterreadequacaoController extends GenericControllerNew{
+class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
 
     private $getIdUsuario = 0;
     private $getIdOrgao = 0;

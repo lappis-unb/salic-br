@@ -1,6 +1,5 @@
 <?php
-include_once 'GenericController.php';
-class DistribuirprojetosController extends GenericControllerNew {
+class DistribuirprojetosController extends MinC_Controller_Action_Abstract {
 
     private $idusuario = 0;
     private $usu_identificacao = 0;

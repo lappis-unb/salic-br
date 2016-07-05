@@ -1,8 +1,8 @@
 <?php
 
-include_once 'GenericController.php';
-class MantercalendariocnicController extends GenericControllerNew {
-private $intTamPag = 10;
+class MantercalendariocnicController extends MinC_Controller_Action_Abstract {
+
+    private $intTamPag = 10;
 	 /**
      * Reescreve o método init()
      * @access public
@@ -104,8 +104,8 @@ private $intTamPag = 10;
 
 	}
 
-        public function reuniaoAction() {
-           if ($this->getRequest()->isPost()){
+    public function reuniaoAction() {
+        if ($this->getRequest()->isPost()){
               $dados = array(
                'idNrReuniao'  => $_POST['idNrReuniao'],
                'NrReuniao'    => $_POST['NrReuniao'],
@@ -115,8 +115,7 @@ private $intTamPag = 10;
                'Mecanismo'    => $_POST['Mecanismo'],
                'idUsuario'    => $this->getIdUsuario
                );
-
-              $tblReuniao =  new tbreuniao();
+            $tblReuniao =  new tbreuniao();
               if($_POST['idNrReuniao'] <= 0 or empty($_POST['idNrReuniao'])){
 
                 $dados = array(
@@ -136,21 +135,17 @@ private $intTamPag = 10;
                   $atualizar = $tblReuniao->atualizarreuniao($dados);
                    //$atualizar = tbreuniao::atualizarreuniao($dados);
               }
-              
-              
-              if ($atualizar)
-		{
 
-			parent::message("Alteração realizada com sucesso!", "mantercalendariocnic/index", "CONFIRM");
-		}
-		else
-		{
-			throw new Exception("Erro ao efetuar alteração da reunião");
-		}
-           }
 
-           
-            
+          if ($atualizar)
+        {
+
+            parent::message("Alteração realizada com sucesso!", "mantercalendariocnic/index", "CONFIRM");
         }
-
+        else
+        {
+            throw new Exception("Erro ao efetuar alteração da reunião");
+        }
+       }
+    }
 }

@@ -10,9 +10,7 @@
  * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  **/
 
-require_once "GenericControllerNew.php";
-
-class AdmissibilidadeController extends GenericControllerNew {
+class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
     private $idPreProjeto = null;
     private $idUsuario = null;

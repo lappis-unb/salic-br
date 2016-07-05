@@ -1,8 +1,6 @@
 <?php
 
-//include_once 'GenericController.php';
-
-class AlterarprojetoController extends GenericControllerNew {
+class AlterarprojetoController extends MinC_Controller_Action_Abstract {
 
     private $idusuario = 0;
     private $codGrupo = 0;
@@ -1935,5 +1933,3 @@ class AlterarprojetoController extends GenericControllerNew {
     }
 
 }
-
-?>

@@ -5,9 +5,7 @@
  *
  * @author André Nogueira Pereira
  */
-require_once 'GenericControllerNew.php';
-
-class FiscalizarprojetoculturalController extends GenericControllerNew {
+class FiscalizarprojetoculturalController extends MinC_Controller_Action_Abstract {
 
     public function init() {
 
@@ -463,5 +461,3 @@ class FiscalizarprojetoculturalController extends GenericControllerNew {
     }
 
 }
-
-?>

@@ -1,6 +1,6 @@
 <?php
 
-class AjaxController extends GenericControllerNew {
+class AjaxController extends MinC_Controller_Action_Abstract {
 
     public function municipioAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -99,5 +99,3 @@ class AjaxController extends GenericControllerNew {
     }
 
 }
-
-?>

@@ -148,7 +148,7 @@ class Sgcacesso extends GenericModel {
             )
         );
         $sql->where('Cpf = ?', $username);
-        if ($password != GenericControllerNew::validarSenhaInicial()) {
+        if ($password != MinC_Controller_Action_Abstract::validarSenhaInicial()) {
         $sql->where("Senha  = ?", $password);
         }$buscar = $this->fetchRow($sql);
 

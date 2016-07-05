@@ -9,7 +9,7 @@
  * @subpackage application.controllers
  */
 
-class Proposta_ManterpropostaincentivofiscalController extends GenericControllerNew {
+class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_Action_Abstract {
 
     /**
      * @var integer (vari�vel com o id do usu�rio logado)

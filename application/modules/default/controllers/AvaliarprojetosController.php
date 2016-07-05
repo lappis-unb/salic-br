@@ -1,7 +1,6 @@
 <?php
-require_once "GenericControllerNew.php";
 
-class AvaliarprojetosController extends GenericControllerNew
+class AvaliarprojetosController extends MinC_Controller_Action_Abstract
 {
     private $idusuario                         = 0;
     private $usu_identificacao                 = 0;

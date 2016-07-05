@@ -1,6 +1,6 @@
 <?php
 
-class ProponenteController extends GenericControllerNew
+class ProponenteController extends MinC_Controller_Action_Abstract
 {
     private $intTamPag = 300;
     

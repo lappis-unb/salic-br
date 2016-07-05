@@ -2,7 +2,7 @@
 /**
  * @author Caio Lucena <caioflucena@gmail.com>
  */
-class RespostaController extends GenericControllerNew
+class RespostaController extends MinC_Controller_Action_Abstract
 {
     /**
      * (non-PHPdoc)

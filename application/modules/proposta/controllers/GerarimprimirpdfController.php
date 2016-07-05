@@ -12,7 +12,7 @@
  */
 //require_once "GenericControllerNew.php";
 
-class Proposta_GerarimprimirpdfController extends GenericControllerNew
+class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstract
 {
     public function init()
     {

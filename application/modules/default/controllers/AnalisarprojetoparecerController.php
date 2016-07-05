@@ -1,5 +1,6 @@
 <?php
-class AnalisarprojetoparecerController extends GenericControllerNew {
+
+class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
 
 
     /**

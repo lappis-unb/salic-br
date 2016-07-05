@@ -1,5 +1,6 @@
 <?php
-class VerificarAlteracaoTecnicoController extends GenericControllerNew
+
+class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstract
 {
 
 

@@ -1,7 +1,6 @@
 <?php
 
-//require_once "GenericControllerNew.php";
-class ComprovarexecucaofisicaController extends GenericControllerNew
+class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
 {
 
     private $getCgcCpf = 0;

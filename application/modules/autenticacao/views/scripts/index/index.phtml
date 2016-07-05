@@ -67,7 +67,7 @@
 
     <fieldset>
         <legend>Login</legend>
-        <form name="inicial" id="inicial"  onsubmit="return validaSenha();" method="POST" action="<?php echo $this->url(array('controller' => 'index', 'action' => 'login'), 'default'); ?>">
+        <form name="inicial" id="inicial"  onsubmit="return validaSenha();" method="POST" action="<?php echo $this->url(array('controller' => 'index', 'action' => 'login', 'module' => 'autenticacao')); ?>">
             <table class="tabela" border="1" style="margin-bottom: 50px; margin-top: 20px;">
                 <thead>
                     <tr>
@@ -85,8 +85,8 @@
                     </tr>
                     <tr>
                         <td colspan="2" align="center">
-                            <a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'cadastrarusuario')); ?>" title="Cadastre-se">N&atilde;o sou cadastrado</a>&nbsp;&nbsp;&nbsp;
-                            <a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'solicitarsenha')); ?>" title="Lembrar senha">Esqueci a senha</a>
+                            <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'cadastrarusuario', 'module' => 'autenticacao')); ?>" title="Cadastre-se">N&atilde;o sou cadastrado</a>&nbsp;&nbsp;&nbsp;
+                            <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'solicitarsenha', 'module' => 'autenticacao')); ?>" title="Lembrar senha">Esqueci a senha</a>
                         </td>
                     </tr>
                     <tr>

@@ -1,435 +1,435 @@
 <?php
 /**
- * Controle Gen�rico (Utilizado por todos os controles)
+ * Controle Gen?rico (Utilizado por todos os controles)
  * Trata as mensagens do sistema
  * @author Equipe RUP - Politec
  * @since 12/08/2010
  * @version 2.0
  * @package application
  * @subpackage application.controllers
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
+ * @copyright ? 2010 - Minist?rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class GenericControllerNew extends Zend_Controller_Action
+class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 {
-	/**
-	 * Vari�vel com a mensagem
-	 * @var $_msg
-	 */
-	protected $_msg;
+    /**
+     * Vari?vel com a mensagem
+     * @var $_msg
+     */
+    protected $_msg;
 
 
 
-	/**
-	 * Vari�vel com a p�gina de redirecionamento
-	 * @var $_url
-	 */
-	protected $_url;
+    /**
+     * Vari?vel com a p?gina de redirecionamento
+     * @var $_url
+     */
+    protected $_url;
 
 
 
-	/**
-	 * Vari�vel com o tipo de mensagem
-	 * Valores: ALERT, CONFIRM, ERROR ou vazio
-	 * @var $_type
-	 */
-	protected $_type;
+    /**
+     * Vari?vel com o tipo de mensagem
+     * Valores: ALERT, CONFIRM, ERROR ou vazio
+     * @var $_type
+     */
+    protected $_type;
 
 
 
-	/**
-	 * Vari�vel com a URL padrao do sistema
-	 * @var $_urlPadrao
-	 */
-	protected $_urlPadrao;
+    /**
+     * Vari?vel com a URL padrao do sistema
+     * @var $_urlPadrao
+     */
+    protected $_urlPadrao;
 
 
-	private  $idResponsavel  		= 0;
+    private  $idResponsavel  		= 0;
     private  $idAgente 				= 0;
-	private  $idUsuario 			= 0;
+    private  $idUsuario 			= 0;
 
-	/**
-	 * Reescreve o m�todo init() para aceitar
-	 * as mensagens e redirecionamentos.
-	 * Teremos que cham�-lo dentro do
-	 * m�todo init() da classe filha assim: parent::init();
-	 * @access public
-	 * @param void
-	 * @return void
-	 */
-	public function init()
-	{
-            //SE CAIU A SECAO REDIRECIONA
-            $auth = Zend_Auth::getInstance(); // pega a autentica��o
+    /**
+     * Reescreve o m?todo init() para aceitar
+     * as mensagens e redirecionamentos.
+     * Teremos que cham?-lo dentro do
+     * m?todo init() da classe filha assim: parent::init();
+     * @access public
+     * @param void
+     * @return void
+     */
+    public function init()
+    {
+        //SE CAIU A SECAO REDIRECIONA
+        $auth = Zend_Auth::getInstance(); // pega a autentica??o
 //            xd($_SERVER['PHP_SELF']);
 //            if(!$auth->hasIdentity()){
 //                $url = Zend_Controller_Front::getInstance()->getBaseUrl();
 //                JS::redirecionarURL($url);
 //            }
 
-            $this->_msg  = $this->_helper->getHelper('FlashMessenger');
-            $this->_url  = $this->_helper->getHelper('Redirector');
-            $this->_type = $this->_helper->getHelper('FlashMessengerType');
+        $this->_msg  = $this->_helper->getHelper('FlashMessenger');
+        $this->_url  = $this->_helper->getHelper('Redirector');
+        $this->_type = $this->_helper->getHelper('FlashMessengerType');
 
 
-            $this->_urlPadrao = Zend_Controller_Front::getInstance()->getBaseUrl();
-            if (isset($auth->getIdentity()->usu_codigo))
-            {
-                $Usuario      = new Usuario(); // objeto usu�rio
-                $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-                $idAgente = $Agente['idAgente'];
-                // manda os dados para a vis�o
-                $this->view->idAgente    = $idAgente;
-            }
+        $this->_urlPadrao = Zend_Controller_Front::getInstance()->getBaseUrl();
+        if (isset($auth->getIdentity()->usu_codigo))
+        {
+            $Usuario      = new Usuario(); // objeto usu?rio
+            $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
+            $idAgente = $Agente['idAgente'];
+            // manda os dados para a vis?o
+            $this->view->idAgente    = $idAgente;
+        }
 
 
-		/******************************************************************************************************************************/
+        /******************************************************************************************************************************/
 
-		  @$cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
+        @$cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
 
-		  if ($cpf):
+        if ($cpf):
 
-		        // Busca na SGCAcesso
-		        $sgcAcesso 	 = new Sgcacesso();
-		        $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
+            // Busca na SGCAcesso
+            $sgcAcesso 	 = new Sgcacesso();
+            $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
 
-		        // Busca na Usuarios
-		        $usuarioDAO   = new Usuario();
-		        $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
+            // Busca na Usuarios
+            $usuarioDAO   = new Usuario();
+            $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
-		        // Busca na Agentes
-		        $agentesDAO  = new Agente_Model_Agentes();
-		        $buscaAgente = $agentesDAO->BuscaAgente($cpf);
+            // Busca na Agentes
+            $agentesDAO  = new Agente_Model_Agentes();
+            $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
-		        if( count($buscaAcesso) > 0){ $this->idResponsavel = $buscaAcesso[0]->IdUsuario; }
-		        if( count($buscaAgente) > 0 ){ $this->idAgente 	   = $buscaAgente[0]->idAgente; }
-		        if( count($buscaUsuario) > 0 ){ $this->idUsuario   = $buscaUsuario[0]->usu_codigo; }
+            if( count($buscaAcesso) > 0){ $this->idResponsavel = $buscaAcesso[0]->IdUsuario; }
+            if( count($buscaAgente) > 0 ){ $this->idAgente 	   = $buscaAgente[0]->idAgente; }
+            if( count($buscaUsuario) > 0 ){ $this->idUsuario   = $buscaUsuario[0]->usu_codigo; }
 
-		        $this->view->idAgenteKeyLog 		= $this->idAgente;
-		        $this->view->idResponsavelKeyLog 	= $this->idResponsavel;
-		        $this->view->idUsuarioKeyLog 		= $this->idUsuario;
+            $this->view->idAgenteKeyLog 		= $this->idAgente;
+            $this->view->idResponsavelKeyLog 	= $this->idResponsavel;
+            $this->view->idUsuarioKeyLog 		= $this->idUsuario;
 
-	      endif;
+        endif;
 
         /****************************************************************************************************************************/
 
 
-	} // fecha init()
+    } // fecha init()
 
 
 
-	/**
-	 * M�todo para chamar as mensagens e fazer o redirecionamento
-	 * @access protected
-	 * @param string $msg
-	 * @param string $url
-	 * @param string $type
-	 * @return void
-	 */
-	protected function message($msg, $url, $type = null)
-	{
-		$this->_helper->viewRenderer->setNoRender(true);
-		$this->_helper->flashMessenger->addMessage($msg);
-		$this->_helper->flashMessengerType->addMessage($type);
-		$this->_redirect($url);
-		exit();
-	} // fecha message()
+    /**
+     * M?todo para chamar as mensagens e fazer o redirecionamento
+     * @access protected
+     * @param string $msg
+     * @param string $url
+     * @param string $type
+     * @return void
+     */
+    protected function message($msg, $url, $type = null)
+    {
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->flashMessenger->addMessage($msg);
+        $this->_helper->flashMessengerType->addMessage($type);
+        $this->redirect($url);
+        //exit();
+    } // fecha message()
 
 
 
-	/**
-	 * Reescreve o m�todo postDispatch() que � respons�vel
-	 * por executar uma a��o ap�s a execu��o de um m�todo
-	 * @access public
-	 * @param void
-	 * @return void
-	 */
-	public function postDispatch()
-	{
-		if ($this->_msg->hasMessages())
-		{
-			$this->view->message = implode("<br />", $this->_msg->getMessages());
-		}
-		if ($this->_type->hasMessages())
-		{
-			$this->view->message_type = implode("<br />", $this->_type->getMessages());
-		}
-		parent::postDispatch(); // chama o m�todo pai
-	} // fecha postDispatch()
+    /**
+     * Reescreve o m?todo postDispatch() que ? respons?vel
+     * por executar uma a??o ap?s a execu??o de um m?todo
+     * @access public
+     * @param void
+     * @return void
+     */
+    public function postDispatch()
+    {
+        if ($this->_msg->hasMessages())
+        {
+            $this->view->message = implode("<br />", $this->_msg->getMessages());
+        }
+        if ($this->_type->hasMessages())
+        {
+            $this->view->message_type = implode("<br />", $this->_type->getMessages());
+        }
+        parent::postDispatch(); // chama o m?todo pai
+    } // fecha postDispatch()
 
 
 
-	/**
-	 * M�todo respons�vel pela autentica��o e perfis
-	 * @access protected
-	 * @param integer $tipo
-	 * 		0 => somente autentica��o zend
-	 * 		1 => autentica��o e permiss�es zend (AMBIENTE MINC)
-	 * 		2 => autentica��o scriptcase (AMBIENTE PROPONENTE)
-	 * 		3 => autentica��o scriptcase e autentica��o/permiss�o zend (AMBIENTE PROPONENTE E MINC)
-	 * @param array $permissoes (array com as permiss�es para acesso)
-	 * @return void
-	 */
-	protected function perfil($tipo = 0, $permissoes = null)
-	{
-		$auth         = Zend_Auth::getInstance(); // pega a autentica��o
-		$Usuario      = new Usuario(); // objeto usu�rio
-		$UsuarioAtivo = new Zend_Session_Namespace('UsuarioAtivo'); // cria a sess�o com o usu�rio ativo
-		$GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+    /**
+     * M?todo respons?vel pela autentica??o e perfis
+     * @access protected
+     * @param integer $tipo
+     * 		0 => somente autentica??o zend
+     * 		1 => autentica??o e permiss?es zend (AMBIENTE MINC)
+     * 		2 => autentica??o scriptcase (AMBIENTE PROPONENTE)
+     * 		3 => autentica??o scriptcase e autentica??o/permiss?o zend (AMBIENTE PROPONENTE E MINC)
+     * @param array $permissoes (array com as permiss?es para acesso)
+     * @return void
+     */
+    protected function perfil($tipo = 0, $permissoes = null)
+    {
+        $auth         = Zend_Auth::getInstance(); // pega a autentica??o
+        $Usuario      = new Usuario(); // objeto usu?rio
+        $UsuarioAtivo = new Zend_Session_Namespace('UsuarioAtivo'); // cria a sess?o com o usu?rio ativo
+        $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess?o com o grupo ativo
 
-		// somente autentica��o zend
-		if ($tipo == 0 || empty($tipo))
-		{
-			if ($auth->hasIdentity()) // caso o usu�rio esteja autenticado
-			{
-				// pega as unidades autorizadas, org�os e grupos do usu�rio (pega todos os grupos)
-				if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo))
-				{
-					$grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
-                                $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-                                $idAgente = $Agente['idAgente'];
-                                $Cpflogado = $Agente['usu_identificacao'];
-				}
-				else
-				{
-					return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
-				}
-
-				// manda os dados para a vis�o
-                                $this->view->idAgente    = $idAgente;
-				$this->view->usuario     = $auth->getIdentity(); // manda os dados do usu�rio para a vis�o
-				$this->view->arrayGrupos = $grupos; // manda todos os grupos do usu�rio para a vis�o
-				$this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu�rio para a vis�o
-				$this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
-			} // fecha if
-			else // caso o usu�rio n�o esteja autenticado
-			{
-				return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
-			}
-		} // fecha if
-		// autentica��o e permiss�es zend (AMBIENTE MINC)
-		else if ($tipo === 1)
-		{
-			if ($auth->hasIdentity()) // caso o usu�rio esteja autenticado
-			{
-				if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo est� no array de permiss�es
-				{
-					$this->message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal/index", "ALERT");
-				}
-
-				// pega as unidades autorizadas, org�os e grupos do usu�rio (pega todos os grupos)
-				$grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
-
-				// manda os dados para a vis�o
-                                $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-                                $idAgente = $Agente['idAgente'];
-				$this->view->usuario     = $auth->getIdentity(); // manda os dados do usu�rio para a vis�o
-				$this->view->arrayGrupos = $grupos; // manda todos os grupos do usu�rio para a vis�o
-				$this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu�rio para a vis�o
-				$this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
-			} // fecha if
-			else // caso o usu�rio n�o esteja autenticado
-			{
-				return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
-			}
-		} // fecha else if
-
-
-		// autentica��o scriptcase (AMBIENTE PROPONENTE)
-		else if ($tipo == 2)
-		{
-			// configura��es do layout padr�o para o scriptcase
-			Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
-
-			// pega o id do usu�rio logado pelo scriptcase (sess�o)
-			//$codUsuario = isset($_SESSION['gusuario']['id']) ? $_SESSION['gusuario']['id'] : $UsuarioAtivo->codUsuario;
-			$codUsuario = isset($_GET['idusuario']) ? (int) $_GET['idusuario'] : $UsuarioAtivo->codUsuario;
-			//$codUsuario = 366;
-			if (isset($codUsuario) && !empty($codUsuario))
-			{
-				$UsuarioAtivo->codUsuario = $codUsuario;
-			}
-			else // caso o usu�rio n�o esteja autenticado
-			{
-				$this->message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "index", "ALERT");
-			}
-
-			// tenta fazer a autentica��o do usu�rio logado no scriptcase para o zend
-			$autenticar = UsuarioDAO::loginScriptcase($codUsuario);
-
-			if ($autenticar && $auth->hasIdentity()) // caso o usu�rio seja passado pelo scriptcase e esteja autenticado
-			{
-				// manda os dados para a vis�o
-				$this->view->usuario = $auth->getIdentity(); // manda os dados do usu�rio para a vis�o
-			} // fecha if
-			else // caso o usu�rio n�o esteja autenticado
-			{
-				$this->message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "index", "ALERT");
-			}
-		} // fecha else if
-
-
-		// autentica��o scriptcase e autentica��o/permiss�o zend (AMBIENTE PROPONENTE E MINC)
-		else if ($tipo == 3)
-		{
-
-			// ========== IN�CIO AUTENTICA��O SCRIPTCASE ==========
-			// pega o id do usu�rio logado pelo scriptcase
-			//$codUsuario = isset($_SESSION['gusuario']['id']) ? $_SESSION['gusuario']['id'] : $UsuarioAtivo->codUsuario;
-			$codUsuario = isset($_GET['idusuario']) ? (int) $_GET['idusuario'] : $UsuarioAtivo->codUsuario;
-			//$codUsuario = 366;
-			if (isset($codUsuario) && !empty($codUsuario))
-			{
-				// configura��es do layout padr�o para o scriptcase
-				Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
-
-				$UsuarioAtivo->codUsuario = $codUsuario;
-
-				// tenta fazer a autentica��o do usu�rio logado no scriptcase para o zend
-				$autenticar = UsuarioDAO::loginScriptcase($codUsuario);
-
-				if ($autenticar && $auth->hasIdentity()) // caso o usu�rio seja passado pelo scriptcase e esteja autenticado
-				{
-					// manda os dados para a vis�o
-					$this->view->usuario = $auth->getIdentity(); // manda os dados do usu�rio para a vis�o
-				} // fecha if
-				else // caso o usu�rio n�o esteja autenticado
-				{
-					$this->message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "index", "ALERT");
-				}
-			} // fecha if
-			// ========== FIM AUTENTICA��O SCRIPTCASE ==========
-
-
-			// ========== IN�CIO AUTENTICA��O ZEND ==========
-			else // caso o usu�rio n�o esteja autenticado pelo scriptcase
-			{
-				if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo est� no array de permiss�es
-				{
-					$this->message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal/index", "ALERT");
-				}
-
-				// pega as unidades autorizadas, org�os e grupos do usu�rio (pega todos os grupos)
-				if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo))
-				{
-					$grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
-				}
-				else
-				{
-					$this->message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal/index", "ALERT");
-				}
-
-				// manda os dados para a vis�o
-				$this->view->usuario     = $auth->getIdentity(); // manda os dados do usu�rio para a vis�o
-				$this->view->arrayGrupos = $grupos; // manda todos os grupos do usu�rio para a vis�o
-				$this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu�rio para a vis�o
-				$this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
-			} // fecha else
-		} // fecha else if
-
-		// autentica��o migracao e autentica��o/permiss�o zend (AMBIENTE DE MIGRA�?O E MINC)
-		else if ($tipo == 4)
-		{
-
-			// ========== IN�CIO AUTENTICA��O MIGRA�?O ==========
-			// pega o id do usu�rio logado pelo scriptcase
-			//$codUsuario = isset($_SESSION['gusuario']['id']) ? $_SESSION['gusuario']['id'] : $UsuarioAtivo->codUsuario;
-			$codUsuario = isset($auth->getIdentity()->IdUsuario) ? (int) $auth->getIdentity()->IdUsuario : $UsuarioAtivo->codUsuario;
-			//$codUsuario = 366;
-			if (isset($codUsuario) && !empty($codUsuario))
-			{
-				// configura��es do layout padr�o para o proponente
-				Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
-
-				$UsuarioAtivo->codUsuario = $codUsuario;
-
-				// tenta fazer a autentica��o do usu�rio logado no scriptcase para o zend
-				$autenticar = UsuarioDAO::loginScriptcase($codUsuario);
-
-				if ($autenticar && $auth->hasIdentity()) // caso o usu�rio seja passado pelo scriptcase e esteja autenticado
-				{
-					// manda os dados para a vis�o
-					$this->view->usuario = $auth->getIdentity(); // manda os dados do usu�rio para a vis�o
-				} // fecha if
-				else // caso o usu�rio n�o esteja autenticado
-				{
-					$this->message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "index", "ALERT");
-				}
-			} // fecha if
-			// ========== FIM AUTENTICA��O MIGRA�?O ==========
-
-
-			// ========== IN�CIO AUTENTICA��O ZEND ==========
-			else // caso o usu�rio n�o esteja autenticado pelo scriptcase
-			{
-				if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo est� no array de permiss�es
-				{
-					$this->message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal/index", "ALERT");
-				}
-
-				// pega as unidades autorizadas, org�os e grupos do usu�rio (pega todos os grupos)
-				if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo))
-				{
-					$grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
-				}
-				else
-				{
-					$this->message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal/index", "ALERT");
-				}
-
-				// manda os dados para a vis�o
-				$this->view->usuario     = $auth->getIdentity(); // manda os dados do usu�rio para a vis�o
-				$this->view->arrayGrupos = $grupos; // manda todos os grupos do usu�rio para a vis�o
-				$this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu�rio para a vis�o
-				$this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
-			} // fecha else
-		} // fecha else if
-		// ========== FIM AUTENTICA��O ZEND ==========
-
-                if(!empty($grupos)){
-                    $tblSGCacesso = new Sgcacesso();
-                    $rsSGCacesso = $tblSGCacesso->buscar(array("Cpf = ? "=>$auth->getIdentity()->usu_identificacao));
-                    if($rsSGCacesso->count() > 0){
-                        $this->view->arrayGrupoProponente = array("gru_codigo"=>1111, "uog_orgao"=>2222, "gru_nome"=>"Proponente");
-                    }
+        // somente autentica??o zend
+        if ($tipo == 0 || empty($tipo))
+        {
+            if ($auth->hasIdentity()) // caso o usu?rio esteja autenticado
+            {
+                // pega as unidades autorizadas, org?os e grupos do usu?rio (pega todos os grupos)
+                if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo))
+                {
+                    $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
+                    $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
+                    $idAgente = $Agente['idAgente'];
+                    $Cpflogado = $Agente['usu_identificacao'];
+                }
+                else
+                {
+                    return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), null, true);
                 }
 
-	} // fecha m�todo perfil()
-
-        /**
-         * Monta a tela de retorno ao usuario
-         * @param string $corpo - arquivo tpl do corpo
-         * @param array $dados - array com os dados a serem inseridos na tela, no seguinte formato "nome"=>"valor"
-         * @param boolean $exibeHeader - true ou false para exibir header, menu e rodape
-         * @return void
-         */
-        public function montaTela($view, $dados=array())
-        {
-            // percorrendo array de dados e inserindo no template
-            foreach ($dados as $dado=>$valor)
+                // manda os dados para a vis?o
+                $this->view->idAgente    = $idAgente;
+                $this->view->usuario     = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
+                $this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
+                $this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
+            } // fecha if
+            else // caso o usu?rio n?o esteja autenticado
             {
-                    $this->view->assign($dado, $valor);
+                return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), null, true);
+            }
+        } // fecha if
+        // autentica??o e permiss?es zend (AMBIENTE MINC)
+        else if ($tipo === 1)
+        {
+            if ($auth->hasIdentity()) // caso o usu?rio esteja autenticado
+            {
+                if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo est? no array de permiss?es
+                {
+                    $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "principal/index", "ALERT");
+                }
+
+                // pega as unidades autorizadas, org?os e grupos do usu?rio (pega todos os grupos)
+                $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
+
+                // manda os dados para a vis?o
+                $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
+                $idAgente = $Agente['idAgente'];
+                $this->view->usuario     = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
+                $this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
+                $this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
+            } // fecha if
+            else // caso o usu?rio n?o esteja autenticado
+            {
+                return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), null, true);
+            }
+        } // fecha else if
+
+
+        // autentica??o scriptcase (AMBIENTE PROPONENTE)
+        else if ($tipo == 2)
+        {
+            // configura??es do layout padr?o para o scriptcase
+            Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
+
+            // pega o id do usu?rio logado pelo scriptcase (sess?o)
+            //$codUsuario = isset($_SESSION['gusuario']['id']) ? $_SESSION['gusuario']['id'] : $UsuarioAtivo->codUsuario;
+            $codUsuario = isset($_GET['idusuario']) ? (int) $_GET['idusuario'] : $UsuarioAtivo->codUsuario;
+            //$codUsuario = 366;
+            if (isset($codUsuario) && !empty($codUsuario))
+            {
+                $UsuarioAtivo->codUsuario = $codUsuario;
+            }
+            else // caso o usu?rio n?o esteja autenticado
+            {
+                $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "index", "ALERT");
             }
 
-            // retorna o tempalte master, com corpo e variaveis setadas
-            $this->renderScript($view);
+            // tenta fazer a autentica??o do usu?rio logado no scriptcase para o zend
+            $autenticar = UsuarioDAO::loginScriptcase($codUsuario);
+
+            if ($autenticar && $auth->hasIdentity()) // caso o usu?rio seja passado pelo scriptcase e esteja autenticado
+            {
+                // manda os dados para a vis?o
+                $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+            } // fecha if
+            else // caso o usu?rio n?o esteja autenticado
+            {
+                $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "index", "ALERT");
+            }
+        } // fecha else if
+
+
+        // autentica??o scriptcase e autentica??o/permiss?o zend (AMBIENTE PROPONENTE E MINC)
+        else if ($tipo == 3)
+        {
+
+            // ========== IN?CIO AUTENTICA??O SCRIPTCASE ==========
+            // pega o id do usu?rio logado pelo scriptcase
+            //$codUsuario = isset($_SESSION['gusuario']['id']) ? $_SESSION['gusuario']['id'] : $UsuarioAtivo->codUsuario;
+            $codUsuario = isset($_GET['idusuario']) ? (int) $_GET['idusuario'] : $UsuarioAtivo->codUsuario;
+            //$codUsuario = 366;
+            if (isset($codUsuario) && !empty($codUsuario))
+            {
+                // configura??es do layout padr?o para o scriptcase
+                Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
+
+                $UsuarioAtivo->codUsuario = $codUsuario;
+
+                // tenta fazer a autentica??o do usu?rio logado no scriptcase para o zend
+                $autenticar = UsuarioDAO::loginScriptcase($codUsuario);
+
+                if ($autenticar && $auth->hasIdentity()) // caso o usu?rio seja passado pelo scriptcase e esteja autenticado
+                {
+                    // manda os dados para a vis?o
+                    $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                } // fecha if
+                else // caso o usu?rio n?o esteja autenticado
+                {
+                    $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "index", "ALERT");
+                }
+            } // fecha if
+            // ========== FIM AUTENTICA??O SCRIPTCASE ==========
+
+
+            // ========== IN?CIO AUTENTICA??O ZEND ==========
+            else // caso o usu?rio n?o esteja autenticado pelo scriptcase
+            {
+                if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo est? no array de permiss?es
+                {
+                    $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "principal/index", "ALERT");
+                }
+
+                // pega as unidades autorizadas, org?os e grupos do usu?rio (pega todos os grupos)
+                if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo))
+                {
+                    $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
+                }
+                else
+                {
+                    $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "principal/index", "ALERT");
+                }
+
+                // manda os dados para a vis?o
+                $this->view->usuario     = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
+                $this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
+                $this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
+            } // fecha else
+        } // fecha else if
+
+        // autentica??o migracao e autentica??o/permiss?o zend (AMBIENTE DE MIGRA??O E MINC)
+        else if ($tipo == 4)
+        {
+
+            // ========== IN?CIO AUTENTICA??O MIGRA??O ==========
+            // pega o id do usu?rio logado pelo scriptcase
+            //$codUsuario = isset($_SESSION['gusuario']['id']) ? $_SESSION['gusuario']['id'] : $UsuarioAtivo->codUsuario;
+            $codUsuario = isset($auth->getIdentity()->IdUsuario) ? (int) $auth->getIdentity()->IdUsuario : $UsuarioAtivo->codUsuario;
+            //$codUsuario = 366;
+            if (isset($codUsuario) && !empty($codUsuario))
+            {
+                // configura??es do layout padr?o para o proponente
+                Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+
+                $UsuarioAtivo->codUsuario = $codUsuario;
+
+                // tenta fazer a autentica??o do usu?rio logado no scriptcase para o zend
+                $autenticar = UsuarioDAO::loginScriptcase($codUsuario);
+
+                if ($autenticar && $auth->hasIdentity()) // caso o usu?rio seja passado pelo scriptcase e esteja autenticado
+                {
+                    // manda os dados para a vis?o
+                    $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                } // fecha if
+                else // caso o usu?rio n?o esteja autenticado
+                {
+                    $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "index", "ALERT");
+                }
+            } // fecha if
+            // ========== FIM AUTENTICA??O MIGRA??O ==========
+
+
+            // ========== IN?CIO AUTENTICA??O ZEND ==========
+            else // caso o usu?rio n?o esteja autenticado pelo scriptcase
+            {
+                if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo est? no array de permiss?es
+                {
+                    $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "principal/index", "ALERT");
+                }
+
+                // pega as unidades autorizadas, org?os e grupos do usu?rio (pega todos os grupos)
+                if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo))
+                {
+                    $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
+                }
+                else
+                {
+                    $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "principal/index", "ALERT");
+                }
+
+                // manda os dados para a vis?o
+                $this->view->usuario     = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
+                $this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
+                $this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
+            } // fecha else
+        } // fecha else if
+        // ========== FIM AUTENTICA??O ZEND ==========
+
+        if(!empty($grupos)){
+            $tblSGCacesso = new Sgcacesso();
+            $rsSGCacesso = $tblSGCacesso->buscar(array("Cpf = ? "=>$auth->getIdentity()->usu_identificacao));
+            if($rsSGCacesso->count() > 0){
+                $this->view->arrayGrupoProponente = array("gru_codigo"=>1111, "uog_orgao"=>2222, "gru_nome"=>"Proponente");
+            }
         }
 
-        /**
-         * Recebe codigo em HTML e gera um PDF
-         * @return void
-         */
-        public function gerarPdfAction() {
-            @ini_set("memory_limit", "5000M");
-            @ini_set('max_execution_time', 3000);
-            @set_time_limit(9500);
-            @error_reporting(0);
+    } // fecha m?todo perfil()
 
-            $this->_helper->layout->disableLayout();
-            @$this->_helper->viewRenderer->setNoRender();
+    /**
+     * Monta a tela de retorno ao usuario
+     * @param string $corpo - arquivo tpl do corpo
+     * @param array $dados - array com os dados a serem inseridos na tela, no seguinte formato "nome"=>"valor"
+     * @param boolean $exibeHeader - true ou false para exibir header, menu e rodape
+     * @return void
+     */
+    public function montaTela($view, $dados=array())
+    {
+        // percorrendo array de dados e inserindo no template
+        foreach ($dados as $dado=>$valor)
+        {
+            $this->view->assign($dado, $valor);
+        }
 
-            @$output = '
+        // retorna o tempalte master, com corpo e variaveis setadas
+        $this->renderScript($view);
+    }
+
+    /**
+     * Recebe codigo em HTML e gera um PDF
+     * @return void
+     */
+    public function gerarPdfAction() {
+        @ini_set("memory_limit", "5000M");
+        @ini_set('max_execution_time', 3000);
+        @set_time_limit(9500);
+        @error_reporting(0);
+
+        $this->_helper->layout->disableLayout();
+        @$this->_helper->viewRenderer->setNoRender();
+
+        @$output = '
                             <style>
                                     th{
                                     background:#ABDA5D;
@@ -476,49 +476,49 @@ class GenericControllerNew extends Zend_Controller_Action
 
 
 
-            @$output .= $_POST['html'];
+        @$output .= $_POST['html'];
 
-            $patterns = array();
-            $patterns[] = '/<table.*?>/is';
-            $patterns[] = '/size="3px"/is';
-            $patterns[] = '/size="4px"/is';
-            $patterns[] = '/size="2px"/is';
-            $patterns[] = '/<thead>/is';
-            $patterns[] = '/<\/thead>/is';
-            $patterns[] = '/<tbody>/is';
-            $patterns[] = '/<\/tbody>/is';
-            $patterns[] = '/<col.*?>/is';
-            $patterns[] = '/<a.*?>/is';
-            $patterns[] = '/<img.*?>/is';
+        $patterns = array();
+        $patterns[] = '/<table.*?>/is';
+        $patterns[] = '/size="3px"/is';
+        $patterns[] = '/size="4px"/is';
+        $patterns[] = '/size="2px"/is';
+        $patterns[] = '/<thead>/is';
+        $patterns[] = '/<\/thead>/is';
+        $patterns[] = '/<tbody>/is';
+        $patterns[] = '/<\/tbody>/is';
+        $patterns[] = '/<col.*?>/is';
+        $patterns[] = '/<a.*?>/is';
+        $patterns[] = '/<img.*?>/is';
 
-            $replaces = array();
-            $replaces[] = '<table cellpadding="0" cellspacing="1" border="1" width="90%" align="center">';
-            $replaces[] = 'size="14px"';
-            $replaces[] = 'size="14px"';
-            $replaces[] = 'size="11px"';
-            $replaces[] = '';
-            $replaces[] = '';
-            $replaces[] = '';
-            $replaces[] = '';
-            $replaces[] = '';
-            $replaces[] = '';
-            $replaces[] = '';
+        $replaces = array();
+        $replaces[] = '<table cellpadding="0" cellspacing="1" border="1" width="90%" align="center">';
+        $replaces[] = 'size="14px"';
+        $replaces[] = 'size="14px"';
+        $replaces[] = 'size="11px"';
+        $replaces[] = '';
+        $replaces[] = '';
+        $replaces[] = '';
+        $replaces[] = '';
+        $replaces[] = '';
+        $replaces[] = '';
+        $replaces[] = '';
 
-            //ANTIGO METODO QUE GERAVA PDF UTILIZANDO A BIBLIOTECA DOMPDF
+        //ANTIGO METODO QUE GERAVA PDF UTILIZANDO A BIBLIOTECA DOMPDF
 //            $output = preg_replace($patterns,$replaces,$output);
 //            $pdf = new PDF($output, 'pdf');
 //            $pdf->gerarRelatorio('h');
-            //$this->view->dados = ManterpropostaeditalDAO::listarEditalResumo(array());
+        //$this->view->dados = ManterpropostaeditalDAO::listarEditalResumo(array());
 
-            //METODO QUE GERA PDF UTILIZANDO A BIBLIOTECA MPDF
-            @$output = preg_replace($patterns,$replaces,utf8_encode($output));
-            @$pdf=new mPDF('pt','A4',12,'',8,8,5,14,9,9,'P');
-            @$pdf->allow_charset_conversion = true;
-            @$pdf->charset_in='UTF-8';
-            @$pdf->WriteHTML($output);
-            @$pdf->Output();
+        //METODO QUE GERA PDF UTILIZANDO A BIBLIOTECA MPDF
+        @$output = preg_replace($patterns,$replaces,utf8_encode($output));
+        @$pdf=new mPDF('pt','A4',12,'',8,8,5,14,9,9,'P');
+        @$pdf->allow_charset_conversion = true;
+        @$pdf->charset_in='UTF-8';
+        @$pdf->WriteHTML($output);
+        @$pdf->Output();
 
-            //DEBUG
+        //DEBUG
 //            $mtime = microtime();
 //            $mtime = explode(" ",$mtime);
 //            $mtime = $mtime[1] + $mtime[0];
@@ -531,186 +531,186 @@ class GenericControllerNew extends Zend_Controller_Action
 //            $pdf->WriteHTML("PDF Gerado em ".$totaltime." segundos");
 
 
+    }
+
+    public function gerarXlsAction(){
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
+
+        $html = $_POST['html'];
+        header("Content-Type: application/vnd.ms-excel");
+        header("Content-Disposition: inline; filename=file.xls;");
+        echo $html;
+    }
+
+
+    public function html2PdfAction(){
+        $orientacao = false;
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+
+        if($this->_getParam('orientacao') == 'L'){
+            $orientacao = true;
         }
 
-        public function gerarXlsAction(){
-            $this->_helper->viewRenderer->setNoRender(true);
-            $this->_helper->layout->disableLayout();
+        $pdf = new PDFCreator($_POST['html'],$orientacao);
 
-            $html = $_POST['html'];
-            header("Content-Type: application/vnd.ms-excel");
-            header("Content-Disposition: inline; filename=file.xls;");
-            echo $html;
-        }
+        $pdf->gerarPdf();
+    }
 
+    public static function montaBuscaData(Zend_Filter_Input $post, $tpBuscaData, $cmpData, $cmpBD, $cmpDataFinal = null, Array $arrayJoin = null ){
+        $arrBusca = array();
+        $aux1 = $post->__get($cmpData);
+        $aux2 = $post->__get($tpBuscaData);
+        if(!empty ($aux1) || $aux2 != ''){
+            if($post->__get($tpBuscaData) == "igual"){
+                $arrBusca["{$cmpBD} >= ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
+                $arrBusca["{$cmpBD} <= ?"] = ConverteData($post->__get($cmpData), 13)." 23:59:59";
 
-        public function html2PdfAction(){
-            $orientacao = false;
+            }elseif($post->__get($tpBuscaData) == "maior"){
+                $arrBusca["{$cmpBD} >= ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
 
-            $this->_helper->layout->disableLayout();
-            $this->_helper->viewRenderer->setNoRender();
+            }elseif($post->__get($tpBuscaData) == "menor"){
+                $arrBusca["{$cmpBD} <= ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
 
-            if($this->_getParam('orientacao') == 'L'){
-                $orientacao = true;
-            }
+            }elseif($post->__get($tpBuscaData) == "entre"){
 
-            $pdf = new PDFCreator($_POST['html'],$orientacao);
+                $arrBusca["{$cmpBD} >= ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
+                $arrBusca["{$cmpBD} <= ?"] = ConverteData($post->__get($cmpDataFinal), 13)." 23:59:59";
 
-            $pdf->gerarPdf();
-        }
+            }elseif($post->__get($tpBuscaData) == "OT"){
+                $arrBusca["{$cmpBD} = ?"] = date("Y-m-d",strtotime("-1 day"))." 00:00:00";
 
-        public static function montaBuscaData(Zend_Filter_Input $post, $tpBuscaData, $cmpData, $cmpBD, $cmpDataFinal = null, Array $arrayJoin = null ){
-            $arrBusca = array();
-            $aux1 = $post->__get($cmpData);
-            $aux2 = $post->__get($tpBuscaData);
-            if(!empty ($aux1) || $aux2 != ''){
-                if($post->__get($tpBuscaData) == "igual"){
-                    $arrBusca["{$cmpBD} >= ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
-                    $arrBusca["{$cmpBD} <= ?"] = ConverteData($post->__get($cmpData), 13)." 23:59:59";
+            }elseif($post->__get($tpBuscaData) == "U7"){
+                $arrBusca["{$cmpBD} > ?"] = date("Y-m-d",strtotime("-7 day"))." 00:00:00";
+                $arrBusca["{$cmpBD} < ?"] = date("Y-m-d")." 23:59:59";
 
-                }elseif($post->__get($tpBuscaData) == "maior"){
-                    $arrBusca["{$cmpBD} >= ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
+            }elseif($post->__get($tpBuscaData) == "SP"){
+                /*$arrBusca["{$cmpBD} > ?"] = date("Y-m-").(date("d")-7)." 00:00:00";
+                $arrBusca["{$cmpBD} < ?"] = date("Y-m-d")." 23:59:59";*/
 
-                }elseif($post->__get($tpBuscaData) == "menor"){
-                    $arrBusca["{$cmpBD} <= ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
+                $dia_semana = date('w');
+                $primeiro_dia = date('Y-m-d', strtotime("-".$dia_semana."day"));
+                $domingo = date('Y-m-d',  strtotime($primeiro_dia."-1 week"));
+                $sabado =  date('Y-m-d',  strtotime($domingo."6 day"));
 
-                }elseif($post->__get($tpBuscaData) == "entre"){
-
-                    $arrBusca["{$cmpBD} >= ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
-                    $arrBusca["{$cmpBD} <= ?"] = ConverteData($post->__get($cmpDataFinal), 13)." 23:59:59";
-
-                }elseif($post->__get($tpBuscaData) == "OT"){
-                    $arrBusca["{$cmpBD} = ?"] = date("Y-m-d",strtotime("-1 day"))." 00:00:00";
-
-                }elseif($post->__get($tpBuscaData) == "U7"){
-                    $arrBusca["{$cmpBD} > ?"] = date("Y-m-d",strtotime("-7 day"))." 00:00:00";
-                    $arrBusca["{$cmpBD} < ?"] = date("Y-m-d")." 23:59:59";
-
-                }elseif($post->__get($tpBuscaData) == "SP"){
-                    /*$arrBusca["{$cmpBD} > ?"] = date("Y-m-").(date("d")-7)." 00:00:00";
-                    $arrBusca["{$cmpBD} < ?"] = date("Y-m-d")." 23:59:59";*/
-
-                   $dia_semana = date('w');
-                   $primeiro_dia = date('Y-m-d', strtotime("-".$dia_semana."day"));
-                   $domingo = date('Y-m-d',  strtotime($primeiro_dia."-1 week"));
-                   $sabado =  date('Y-m-d',  strtotime($domingo."6 day"));
-
-                   $arrBusca["{$cmpBD} >= ?"] = $domingo." 00:00:00";
-                   $arrBusca["{$cmpBD} <= ?"] = $sabado." 23:59:59";
+                $arrBusca["{$cmpBD} >= ?"] = $domingo." 00:00:00";
+                $arrBusca["{$cmpBD} <= ?"] = $sabado." 23:59:59";
 
 
-                }elseif($post->__get($tpBuscaData) == "MM"){
-                    $arrBusca["{$cmpBD} > ?"] = date("Y-m-01")." 00:00:00";
-                    $arrBusca["{$cmpBD} < ?"] = date("Y-m-d")." 23:59:59";
+            }elseif($post->__get($tpBuscaData) == "MM"){
+                $arrBusca["{$cmpBD} > ?"] = date("Y-m-01")." 00:00:00";
+                $arrBusca["{$cmpBD} < ?"] = date("Y-m-d")." 23:59:59";
 
-                }elseif($post->__get($tpBuscaData) == "UM"){
-                    $arrBusca["{$cmpBD} >= ?"] = date("Y-m",strtotime("-1 month"))."-01 00:00:00";
-                    //$arrBusca["{$cmpBD} <= ?"] = date("d/m/Y", mktime(0, 0, 0, date("m",  strtotime("-1 month"))+1, 0, date("Y")));
-                    $arrBusca["{$cmpBD} <= ?"] = date("Y-m-d", mktime(0, 0, 0, date("m",  strtotime("-1 month"))+1, 0, date("Y")));
+            }elseif($post->__get($tpBuscaData) == "UM"){
+                $arrBusca["{$cmpBD} >= ?"] = date("Y-m",strtotime("-1 month"))."-01 00:00:00";
+                //$arrBusca["{$cmpBD} <= ?"] = date("d/m/Y", mktime(0, 0, 0, date("m",  strtotime("-1 month"))+1, 0, date("Y")));
+                $arrBusca["{$cmpBD} <= ?"] = date("Y-m-d", mktime(0, 0, 0, date("m",  strtotime("-1 month"))+1, 0, date("Y")));
 
-                }elseif($post->__get($tpBuscaData) == ""){
+            }elseif($post->__get($tpBuscaData) == ""){
 
-                }else{
-                    $arrBusca["{$cmpBD} > ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
+            }else{
+                $arrBusca["{$cmpBD} > ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
 
-                    if($post->__get($cmpDataFinal) != ""){
-                        $arrBusca["{$cmpBD} < ?"] = ConverteData($post->__get($cmpDataFinal), 13)." 23:59:59";
-                    }
+                if($post->__get($cmpDataFinal) != ""){
+                    $arrBusca["{$cmpBD} < ?"] = ConverteData($post->__get($cmpDataFinal), 13)." 23:59:59";
                 }
             }
-
-            if(!empty($arrayJoin)){
-                $arrBusca = array_merge($arrayJoin, $arrBusca);
-            }
-
-            return $arrBusca;
         }
 
-
-        public function prepararXlsPdfAction(){
-            Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
-            ini_set('max_execution_time', 900);
-            $this->_response->clearHeaders();
-            $dados = $this->_getAllParams();
-
-            $this->view->dados = $dados;
-            $this->view->tipo = $dados['tipo'];
-
-            if($dados['view']){
-                $this->montaTela($dados['view'],$dados);
-            }
-
+        if(!empty($arrayJoin)){
+            $arrBusca = array_merge($arrayJoin, $arrBusca);
         }
 
+        return $arrBusca;
+    }
 
-	/**
-	 * M�todo para verificar se o usu�rio logado tem permiss�o para acessar o projeto
-	 * OBS: SERVE APENAS PARA RESPONS�VEL E AGENTE (PROPONENTE E PROCURADOR)
-	 * @access public
-	 * @param bool $obrigatoriedadeIdProjeto
-	 * @param bool $obrigatoriedadeIdPronac
-	 * @return void
-	 */
-	public function verificarPermissaoAcesso($proposta = false, $projeto = false, $administrativo = false)
-	{
-            $msgERRO = '';
-            $auth = Zend_Auth::getInstance(); // pega a autentica��o
 
-            if (!isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
+    public function prepararXlsPdfAction(){
+        Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
+        ini_set('max_execution_time', 900);
+        $this->_response->clearHeaders();
+        $dados = $this->_getAllParams();
 
-                //Verifica Permiss�o de Projeto
-                if($projeto){
-                    $msgERRO = 'Voc� n�o tem permiss�o para acessar esse Projeto!';
-                    $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
-                    $idPronac  = $this->_request->getParam('idpronac')  ? $this->_request->getParam('idpronac')  : $this->_request->getParam('idPronac');
-                    if (strlen($idPronac) > 7){
-                        $idPronac = Seguranca::dencrypt($idPronac);
-                    }
-                    $fnVerificarPermissao = new fnVerificarPermissao();
-                    $consulta = $fnVerificarPermissao->verificarPermissaoProjeto($idPronac, $idUsuarioLogado);
-                    $permissao = $consulta->Permissao;
+        $this->view->dados = $dados;
+        $this->view->tipo = $dados['tipo'];
+
+        if($dados['view']){
+            $this->montaTela($dados['view'],$dados);
+        }
+
+    }
+
+
+    /**
+     * M?todo para verificar se o usu?rio logado tem permiss?o para acessar o projeto
+     * OBS: SERVE APENAS PARA RESPONS?VEL E AGENTE (PROPONENTE E PROCURADOR)
+     * @access public
+     * @param bool $obrigatoriedadeIdProjeto
+     * @param bool $obrigatoriedadeIdPronac
+     * @return void
+     */
+    public function verificarPermissaoAcesso($proposta = false, $projeto = false, $administrativo = false)
+    {
+        $msgERRO = '';
+        $auth = Zend_Auth::getInstance(); // pega a autentica??o
+
+        if (!isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
+
+            //Verifica Permiss?o de Projeto
+            if($projeto){
+                $msgERRO = 'Voc? n?o tem permiss?o para acessar esse Projeto!';
+                $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
+                $idPronac  = $this->_request->getParam('idpronac')  ? $this->_request->getParam('idpronac')  : $this->_request->getParam('idPronac');
+                if (strlen($idPronac) > 7){
+                    $idPronac = Seguranca::dencrypt($idPronac);
                 }
+                $fnVerificarPermissao = new fnVerificarPermissao();
+                $consulta = $fnVerificarPermissao->verificarPermissaoProjeto($idPronac, $idUsuarioLogado);
+                $permissao = $consulta->Permissao;
+            }
 
-                //Verifica Permiss�o de Proposta
-                if($proposta){
-                    $msgERRO = 'Voc� n�o tem permiss�o para acessar essa Proposta!';
-                    $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
-                    $idPreProjeto = $this->_request->getParam('idPreProjeto');
+            //Verifica Permiss?o de Proposta
+            if($proposta){
+                $msgERRO = 'Voc? n?o tem permiss?o para acessar essa Proposta!';
+                $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
+                $idPreProjeto = $this->_request->getParam('idPreProjeto');
 
-                    $fnVerificarPermissao = new fnVerificarPermissao();
-                    $consulta = $fnVerificarPermissao->verificarPermissaoProposta($idPreProjeto, $idUsuarioLogado);
-                    $permissao = $consulta->Permissao;
-                }
+                $fnVerificarPermissao = new fnVerificarPermissao();
+                $consulta = $fnVerificarPermissao->verificarPermissaoProposta($idPreProjeto, $idUsuarioLogado);
+                $permissao = $consulta->Permissao;
+            }
 
-                if($administrativo){
+            if($administrativo){
 //                    $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
 //                    $fnVerificarPermissao = new fnVerificarPermissao();
 //                    $consulta = $fnVerificarPermissao->verificarPermissaoAdministrativo($idUsuarioLogado);
 //                    xd($consulta);
 //                    $permissao = $consulta->Permissao;
-                }
-
-                //Se o usuario nao tiver permissao pra acessar o Projeto / Proposta / Administrativo, exibe a msg de alerta.
-                if(!$permissao){
-                    $this->message($msgERRO, 'principalproponente', 'ALERT');
-                }
-
             }
 
-	} // fecha m�todo verificarPermissaoAcesso()
+            //Se o usuario nao tiver permissao pra acessar o Projeto / Proposta / Administrativo, exibe a msg de alerta.
+            if(!$permissao){
+                $this->message($msgERRO, 'principalproponente', 'ALERT');
+            }
+
+        }
+
+    } // fecha m?todo verificarPermissaoAcesso()
 
     public static function validarSenhaInicial(){
         return 'ae56f49edf70ec03b98f53ea6d2bc622';
     }
 
     /**
-	 * M�todo para montar as Planilhas Or�ament�rias
-	 * OBS: A planilha deve vir no padr�o da spPlanilhaOrcamentaria
-	 * @access public
-	 * @param array
-	 */
-	public function montarPlanilhaOrcamentaria($planilhaOrcamentaria, $tipoPlanilha = null)
-	{
+     * M?todo para montar as Planilhas Or?ament?rias
+     * OBS: A planilha deve vir no padr?o da spPlanilhaOrcamentaria
+     * @access public
+     * @param array
+     */
+    public function montarPlanilhaOrcamentaria($planilhaOrcamentaria, $tipoPlanilha = null)
+    {
         $planilha = array();
         $count = 0;
         $seq = 1;
@@ -855,6 +855,6 @@ class GenericControllerNew extends Zend_Controller_Action
         }
         //xd($planilha);
         return $planilha;
-	} // fecha m�todo verificarPermissaoAcesso()
+    } // fecha m?todo verificarPermissaoAcesso()
 
 } // fecha class

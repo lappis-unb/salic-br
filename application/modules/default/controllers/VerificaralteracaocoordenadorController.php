@@ -1,5 +1,5 @@
 <?php
-class VerificarAlteracaoCoordenadorController extends GenericControllerNew
+class VerificarAlteracaoCoordenadorController extends MinC_Controller_Action_Abstract
 {
 
     public function init()

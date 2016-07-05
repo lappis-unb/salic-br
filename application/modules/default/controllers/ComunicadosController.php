@@ -12,7 +12,7 @@
 
 
 
-class ComunicadosController extends GenericControllerNew
+class ComunicadosController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * @var integer (variável com o id do grupo ativo)

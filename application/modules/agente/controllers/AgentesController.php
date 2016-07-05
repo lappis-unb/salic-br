@@ -8,7 +8,7 @@
  * @package agente
  * @subpackage controllers
  */
-class Agente_AgentesController extends GenericControllerNew {
+class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
     /**
      * @var integer (variável com o id do usuário logado)

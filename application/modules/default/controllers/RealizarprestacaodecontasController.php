@@ -10,7 +10,7 @@
  * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
 
-class RealizarPrestacaoDeContasController extends GenericControllerNew {
+class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstract {
 	private $getIdUsuario = 0;
 	private $getIdAgenteLogado = 0;
 	private $codGrupo 	   = null;
@@ -169,7 +169,7 @@ class RealizarPrestacaoDeContasController extends GenericControllerNew {
                 }
             }
             //xd($arrBusca);
-            //$arrBusca = GenericControllerNew::montaBuscaData($post, "tpPeriodoExecucao", "dtExecucao", "p.DtInicioExecucao", "dtExecucao_Final", $arrBusca);
+            //$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpPeriodoExecucao", "dtExecucao", "p.DtInicioExecucao", "dtExecucao_Final", $arrBusca);
 
             if(!empty($post->area)){
                 if($post->tipoPesqArea == 'EIG'){

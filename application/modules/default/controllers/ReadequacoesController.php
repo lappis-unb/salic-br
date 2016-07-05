@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  * @copyright  2010 - Ministerio da Cultura - Todos os direitos reservados.
  */
-class ReadequacoesController extends GenericControllerNew {
+class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
     private $intTamPag = 10;
     private $idAgente = 0;

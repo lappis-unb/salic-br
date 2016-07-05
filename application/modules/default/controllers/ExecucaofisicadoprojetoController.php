@@ -10,9 +10,7 @@
  * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
 
-require_once "GenericControllerNew.php";
-
-class ExecucaofisicadoprojetoController extends GenericControllerNew
+class ExecucaofisicadoprojetoController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * Reescreve o método init()

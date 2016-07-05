@@ -10,9 +10,7 @@
  * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
  */
 
-require_once 'GenericControllerNew.php';
-
-class DbfController extends GenericControllerNew
+class DbfController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * @access private

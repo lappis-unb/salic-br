@@ -1,8 +1,6 @@
 <?php
-/**
- * 
- */
-class AporteCaptacaoController extends GenericControllerNew
+
+class AporteCaptacaoController extends MinC_Controller_Action_Abstract
 {
     /**
      * (non-PHPdoc)

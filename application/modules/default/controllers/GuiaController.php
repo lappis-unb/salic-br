@@ -2,7 +2,7 @@
 /**
  * @author Caio Lucena <caioflucena@gmail.com>
  */
-class GuiaController extends GenericControllerNew
+class GuiaController extends MinC_Controller_Action_Abstract
 {
     /**
      * (non-PHPdoc)

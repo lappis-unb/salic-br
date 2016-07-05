@@ -1,16 +1,10 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of inserirUsuarioController
  *
  * @author augusto
  */
-class InserirusuarioController extends GenericControllerNew {
+class InserirusuarioController extends MinC_Controller_Action_Abstract {
 
     public function indexAction() {
         $cpf = $this->_request->getParam("cpf");
@@ -55,7 +49,4 @@ class InserirusuarioController extends GenericControllerNew {
         $alterarSenha = $usuario->alterarSenha($cpf, $senha);
        die('OK');
     }
-
 }
-
-?>

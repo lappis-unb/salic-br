@@ -1,5 +1,6 @@
-<?php 
-class LiberarcontabancariaController extends GenericControllerNew {
+<?php
+
+class LiberarcontabancariaController extends MinC_Controller_Action_Abstract {
 
     private $intTamPag = 10;
 

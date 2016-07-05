@@ -1,6 +1,6 @@
 <?php 
  
-class MarcasController extends GenericControllerNew {
+class MarcasController extends MinC_Controller_Action_Abstract {
      
     /**
      * Reescreve o método init()
@@ -106,5 +106,3 @@ class MarcasController extends GenericControllerNew {
     }
     
 }
-
-

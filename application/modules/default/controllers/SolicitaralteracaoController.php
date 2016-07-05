@@ -3,7 +3,7 @@
  * SolicitarAlteracaoController
  */
 
-class SolicitarAlteracaoController extends GenericControllerNew
+class SolicitarAlteracaoController extends MinC_Controller_Action_Abstract
 {
 
 	public function init()

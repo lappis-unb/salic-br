@@ -1,16 +1,11 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Mantersecretarioorgao
  *
  * @author Tiago
  */
-class MantersecretarioorgaoController extends GenericControllerNew {
+class MantersecretarioorgaoController extends MinC_Controller_Action_Abstract {
 
     public function init() {
         // verifica as permissões
@@ -85,5 +80,3 @@ class MantersecretarioorgaoController extends GenericControllerNew {
         parent::message("{$acao} com sucesso! ", "mantersecretarioorgao/index?orgao=".$orgao, "CONFIRM");
     }
 }
-
-?>

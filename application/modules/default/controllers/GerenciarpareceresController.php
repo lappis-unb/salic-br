@@ -10,7 +10,7 @@
  * @copyright © 2010 - Politec - Todos os direitos reservados.
  */
 
-class GerenciarpareceresController extends GenericControllerNew
+class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 {
 	/**
 	 * @var integer (variável com o id do usuário logado)

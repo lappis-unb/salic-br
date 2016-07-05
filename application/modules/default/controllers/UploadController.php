@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
-class UploadController extends GenericControllerNew {
+class UploadController extends MinC_Controller_Action_Abstract {
 
     private $idPreProjeto = null;
     private $idPronac = null;

@@ -1,15 +1,10 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of GerarrelatoriopareceristaController
  *
  * @author 01610881125
  */
-class GerarrelatoriopareceristaController extends GenericControllerNew {
+class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstract {
     private $intTamPag = 100;
 
     public function init() {
@@ -1471,4 +1466,3 @@ class GerarrelatoriopareceristaController extends GenericControllerNew {
     }
 
 }
-?>
