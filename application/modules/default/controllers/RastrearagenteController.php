@@ -73,7 +73,7 @@ class RastrearagenteController extends MinC_Controller_Action_Abstract {
         $projetos2 = null;
         $projetos2 = $projeto->buscarTodosDadosProjeto(null,$CpfCnpj)->toArray();
 
-        $preprojeto = new Proposta_Model_Proposta();
+        $preprojeto = new Proposta_Model_PreProjeto();
         $preprojetos = $preprojeto->buscar(array("idAgente = ? " => $agente[0]->idAgente));
         $preprojetos = empty($preprojetos) ? array() : $preprojetos;
 
@@ -81,7 +81,7 @@ class RastrearagenteController extends MinC_Controller_Action_Abstract {
         $vinculos = $vinculo->BuscarVinculos($agente[0]->idAgente);
         $vinculos = empty($vinculos) ? array() : $vinculos;
 
-        $proposta = new Proposta_Model_Proposta();
+        $proposta = new Proposta_Model_PreProjeto();
         $propostas = $proposta->propostastransformadas($agente[0]->idAgente);
         $propostas = empty($propostas) ? array() : $propostas;
 

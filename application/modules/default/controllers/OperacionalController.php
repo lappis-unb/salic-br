@@ -1395,12 +1395,10 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtEnvio", "dtEnvio", "x1.DtEnvio", "dtEnvio_Final", $arrBusca);
 
 		//instanciando modelo referente a tabela PreProjeto
-		$tbl = new Proposta_Model_Proposta();
+		$tbl = new Proposta_Model_PreProjeto();
 
 		//pegando o total de registros na tabela, considerando os filtros passados
 		$total = $tbl->propostasPorEdital($arrBusca, array(), null, null, true);
-		//$total = $total["total"];
-		//$total = 1000;
 
                 if($post->tipo == 'xls' || $post->tipo == 'pdf'){
                     //buscando os registros no banco de dados

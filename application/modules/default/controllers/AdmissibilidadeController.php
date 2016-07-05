@@ -348,7 +348,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
         //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
         $this->view->nomeProjeto  = strip_tags($rsProposta->NomeProjeto);
@@ -422,7 +422,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
     public function analisedocumentalAction() {
 
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto = ?"=>$this->idPreProjeto))->current();
         $this->view->proposta = $rsProposta;
 
@@ -589,7 +589,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $auth = Zend_Auth::getInstance(); // instancia da autenticação
         $idOrgao = $auth->getIdentity()->usu_orgao;
 
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto = ?"=>$this->idPreProjeto))->current();
 
         //O codigo deste IF serve apenas para mostrar a mensagem ao usuario
@@ -673,7 +673,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
     public function encaminharpropostaAction() {
         //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
         $this->view->nomeProjeto  = isset($rsProposta->NomeProjeto) ? strip_tags($rsProposta->NomeProjeto) : '';
@@ -760,7 +760,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
     public function confirmararquivarpropostaAction() {
 
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
         $this->view->nomeProjeto  = strip_tags($rsProposta->NomeProjeto);
@@ -985,7 +985,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
     public function frmalterarunianalisepropostaAction() {
         $this->_helper->layout->disableLayout();
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsProposta = $tblProposta->unidadeAnaliseProposta($_POST["nrProposta"])->current();
         //xd($rsProposta->toArray());
         if($rsProposta){
@@ -1238,7 +1238,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
         //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
         $this->view->nomeProjeto  = strip_tags($rsProposta->NomeProjeto);
@@ -1249,7 +1249,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $get = Zend_Registry::get("get");
         $idAgente = $get->agente;
 
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsPropostas = $tblProposta->buscar(array("idagente = ?"=>$idAgente), array("nomeprojeto ASC"));
 
 
@@ -1381,7 +1381,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         if(is_numeric($post->avaliacao)){ $arrBusca["ConformidadeOK = "] = "'$post->avaliacao'"; }
         if(!empty($post->tecnico)){ $arrBusca["Tecnico = "] = "'$post->tecnico'"; }
 
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico($arrBusca, array("Tecnico ASC"));
         //xd($rsProposta);
         $arrTecnicosPropostasReavaliacao = array();
@@ -1422,7 +1422,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
     public function listarPropostasAnaliseDocumentalTecnicoAction(){
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseDocumentalTecnico(array("sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) = "=>$usuario, "ConformidadeOK = "=>1), array("Tecnico ASC"));
 
         $arrTecnicosPropostas = array();
@@ -1449,7 +1449,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
     public function listarPropostasAnaliseFinalAction(){
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $arrTecnicosPropostas = array();
@@ -1474,7 +1474,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $html = "<table>
@@ -1504,7 +1504,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $html = "<table>
@@ -1531,7 +1531,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $this->_helper->viewRenderer->setNoRender();
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $arrTecnicos = array();
@@ -1600,7 +1600,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $arrTecnicos = array();
@@ -1720,7 +1720,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $usuario = $this->codOrgaoSuperior;
 
         if(empty($post->busca)){
-            $tblProposta = new Proposta_Model_Proposta();
+            $tblProposta = new Proposta_Model_PreProjeto();
             $rsTecnicos = $tblProposta->buscarTecnicosHistoricoAnaliseVisual($usuario);
 
             $arrDados = array(
@@ -1736,7 +1736,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
             $situacao = (!empty($post->situacao))?$post->situacao:null;
 
-            $tblProposta = new Proposta_Model_Proposta();
+            $tblProposta = new Proposta_Model_PreProjeto();
             $rsProposta = $tblProposta->buscarHistoricoAnaliseVisual($usuario,$tecnico,$situacao,$dtInicio,$dtFim);
 
             $arrTecnicosPropostas = array();
@@ -1795,7 +1795,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rsAvaliacao = $tblProposta->buscarAvaliacaoHistoricoAnaliseVisual($get->idAvaliacao);
 
         $avaliacao = trim($rsAvaliacao[0]->Avaliacao);
@@ -1819,7 +1819,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $rsPropostaFinal = array();
         $arrBusca['x.idTecnico = '] = $usuario;
 
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
 
         if($post->numeroProposta != ""){
             $arrBusca['p.idPreProjeto = '] = $post->numeroProposta;
@@ -1912,7 +1912,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
         $rsPropostasNaoEnviadas = array();
 
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
 
         // =========== PROPOSTAS NAO ENVIADAS AO MINC AINDA =======================
         $arrBusca['m.Movimentacao = ?'] = 95;

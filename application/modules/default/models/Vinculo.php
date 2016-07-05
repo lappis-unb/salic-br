@@ -63,7 +63,7 @@ class Vinculo extends GenericModel {
     }
 
     public function verificaPermissaoAcessoProposta($idPreProjeto) {
-        $tblProposta = new Proposta_Model_Proposta();
+        $tblProposta = new Proposta_Model_PreProjeto();
         $rs = $tblProposta->buscar(array("idPreProjeto = ? " => $idPreProjeto, "1=1 OR idEdital IS NULL OR idEdital > 0" => "?", "idUsuario =?" => $this->idUsuario));
         return $rs->count();
     }
@@ -146,7 +146,7 @@ class Vinculo extends GenericModel {
         $agencia = $get->agencia;
 
         if ($agencia > 0) {
-            $tblProposta = new Proposta_Model_Proposta();
+            $tblProposta = new Proposta_Model_PreProjeto();
             $agencia = $tblProposta->buscaragencia($agencia);
             if (count($agencia) > 0) {
                 echo "";
@@ -1095,4 +1095,3 @@ class Vinculo extends GenericModel {
 
 }
 
-?>

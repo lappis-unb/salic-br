@@ -266,13 +266,12 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
                     break;
                 case 'arquivada':
                     $where['p.stEstado = ?'] = 0;
-                    //$where['p.DtArquivamento is not null'] = '';
                     break;
             }
             $this->view->estado = $get->estado;
         }
 
-        $Proposta = new Proposta_Model_Proposta();
+        $Proposta = new Proposta_Model_PreProjeto();
         $total = $Proposta->relatorioPropostas($where, $having, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
 
@@ -299,96 +298,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         $this->view->qtdRegistros  = $total;
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
-
-
-
-        /*****************************************/
-//        $this->_helper->layout->disableLayout();
-//        $post = Zend_Registry::get('post');
-//
-//        //recuperando filtros do POST
-//        $arrBusca = array();
-//        $arrHaving = array();
-//        if($post->proposta != ""){ $arrBusca["p.idPreProjeto = ?"] = $post->proposta; }
-//        if($post->nomeProposta != ""){ $arrBusca["p.nomeProjeto like ? "] = "%$post->nomeProposta%"; }
-//        if($post->cpfcnpj != ""){ $arrBusca["ag.CNPJCPF = ?"] = Mascara::delMaskCPFCNPJ($post->cpfcnpj); }
-//        if($post->nomeProponente != ""){ $arrBusca["nm.Descricao like ? "] = "%$post->nomeProponente%"; }
-//        if($post->area != ""){ $arrBusca["pdp.Area = ?"] = $post->area; }
-//        if($post->segmento != ""){ $arrBusca["pdp.Segmento = ?"] = $post->segmento; }
-//        if($post->uf != ""){ $arrBusca["ab.idUF = ?"] = $post->uf; }
-//        if($post->municipio != ""){ $arrBusca["ab.idMunicipioIBGE = ?"] = $post->municipio; }
-//        if($post->valor != "" && $post->valor2 != ""){
-//            $arrHaving["SUM(Quantidade*Ocorrencia*ValorUnitario) > ?"] = str_replace(",", ".", str_replace(".", "", $post->valor));
-//            $arrHaving["SUM(Quantidade*Ocorrencia*ValorUnitario) < ?"] = str_replace(",", ".", str_replace(".", "", $post->valor2));
-//        }elseif($post->valor != ""){
-//            $arrHaving["SUM(Quantidade*Ocorrencia*ValorUnitario) = ?"] = str_replace(",", ".", str_replace(".", "", $post->valor));
-//        }elseif($post->valor2 != ""){
-//            $arrHaving["SUM(Quantidade*Ocorrencia*ValorUnitario) = ?"] = str_replace(",", ".", str_replace(".", "", $post->valor2));
-//        }
-//        if($post->orgao != "") {
-//            $arrBusca["p.stEstado = ?"] = $post->orgao;
-//        }
-//
-//    	//Verifica se foi solicitado a ordenação
-//        if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1');}
-//
-//        $tbl = new Proposta_Model_Proposta();
-//        $total = $tbl->relatorioPropostas($arrBusca, $arrHaving, $ordem, null, null, true, $post);
-//        $habRelatorio2 = false;
-//
-//        if(!$total){
-//            $habRelatorio2 = true;
-//            $total = $tbl->relatorioPropostas2($arrBusca, $arrHaving, $ordem, null, null, true, $post);
-//        }
-//
-//        if($post->tipo == 'xls' || $post->tipo == 'pdf') {
-//            //buscando os registros no banco de dados
-//            $tamanho = -1;
-//            $inicio = -1;
-//            $pag = 0;
-//            $totalPag = 0;
-//            $fim = 0;
-//
-//            $rs = $tbl->relatorioPropostas($arrBusca, $arrHaving, $ordem, $tamanho, $inicio, false, $post);
-//            if (empty($rs->idProjeto) && $habRelatorio2) {
-//                $rs = $tbl->relatorioPropostas2($arrBusca, $arrHaving, $ordem, $tamanho, $inicio, false, $post);
-//            }
-//            $this->_forward('preparar-xls-pdf', null, null, array(
-//                    'dados'=>$rs,
-//                    'view'=>'relatorio/preparar-xls-pdf-resultado-proposta.phtml',
-//                    'tipo'=> $post->tipo
-//                )
-//            );
-//
-//        } else {
-//            //controlando a paginacao
-//            $this->intTamPag = 10;
-//            $pag = 1;
-//            if (isset($post->pag)) $pag = $post->pag;
-//            if (isset($post->tamPag)) $this->intTamPag = $post->tamPag;
-//            $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
-//            $fim = $inicio + $this->intTamPag;
-//
-//            $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
-//            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-//
-//            if($fim>$total) $fim = $total;
-//
-//            $rs = $tbl->relatorioPropostas($arrBusca, $arrHaving, $ordem, $tamanho, $inicio, false, $post);
-//
-//            if(empty($rs->idProjeto) && $habRelatorio2) {
-//                $rs = $tbl->relatorioPropostas2($arrBusca, $arrHaving, $ordem, $tamanho, $inicio, false, $post);
-//            }
-//        }
-//
-//        $this->view->registros = $rs;
-//        $this->view->pag = $pag;
-//        $this->view->total = $total;
-//        $this->view->inicio = ($inicio+1);
-//        $this->view->fim = $fim;
-//        $this->view->totalPag = $totalPag;
-//        $this->view->parametrosBusca = $_POST;
-//        header("Content-Type: text/html; charset=ISO-8859-1");
     }
 
     public function imprimirRelatorioPropostaAction(){
@@ -541,7 +450,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
             $this->view->estado = $get->estado;
         }
 
-        $Proposta = new Proposta_Model_Proposta();
+        $Proposta = new Proposta_Model_PreProjeto();
         $total = $Proposta->relatorioPropostas($where, $having, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
 

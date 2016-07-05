@@ -596,7 +596,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
 
             if(is_object($rsProjeto) && count($rsProjeto) > 0)
             {
-                $tblProposta = new Proposta_Model_Proposta();
+                $tblProposta = new Proposta_Model_PreProjeto();
                 $rsProposta = $tblProposta->buscar(array('idPreProjeto=?'=>$rsProjeto->idProjeto))->current();
                 $this->view->proposta = $rsProposta;
 //                xd($rsProposta);
@@ -3983,7 +3983,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                         if(in_array('dadoscomplementares',$arrConteudoImpressao))
                         {
                             //DADOS COMPLEMENTARES
-                            $tblProposta = new Proposta_Model_Proposta();
+                            $tblProposta = new Proposta_Model_PreProjeto();
                             $rsProposta = $tblProposta->buscar(array('idPreProjeto=?'=>$idPreProjeto))->current();
                             $this->view->proposta = $rsProposta;
                         }
@@ -4903,7 +4903,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                         $this->view->itensGeral = AnalisarPropostaDAO::buscarGeral($idPreProjeto);
 
                         //DADOS COMPLEMENTARES
-                        $tblProposta = new Proposta_Model_Proposta();
+                        $tblProposta = new Proposta_Model_PreProjeto();
                         $rsProposta = $tblProposta->buscar(array('idPreProjeto=?'=>$idPreProjeto))->current();
                         $this->view->proposta = $rsProposta;
                     }
