@@ -21,7 +21,7 @@ class Proposta_Model_Proposta extends GenericModel
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @todo colocar padrão orm. Passar função para php SAC.dbo.fnNomeTecnicoMinc()
+     * @todo colocar padrão orm. Passar função para php SAC.dbo.fnNomeTecnicoMinc(). Passar para model PreProjeto
      */
     public function buscarPropostaAdmissibilidade($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
@@ -1149,58 +1149,5 @@ class Proposta_Model_Proposta extends GenericModel
             $slct->limit($tamanho, $tmpInicio);
         }
         return $this->fetchAll($slct);
-    }
-
-    /**
-     * Método para buscar os Proponentes - Combo Listar Propostas
-     * @access public
-     * @param integer $idResponsavel
-     * @return object
-     * @todo colocar padrão orm. Retirar função SAC.dbo.fnNome()
-     */
-    public function listarPropostasCombo($idResponsavel)
-    {
-        $sql = "
-            SELECT b.CNPJCPF, b.idAgente, SAC.dbo.fnNome(b.idAgente) AS NomeProponente
-                FROM SAC.dbo.PreProjeto AS a
-                INNER JOIN AGENTES.dbo.Agentes AS b ON a.idAgente = b.idAgente
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS c ON b.CNPJCPF = c.Cpf
-            WHERE c.IdUsuario = '$idResponsavel'
-            UNION
-            SELECT b.CNPJCPF, b.idAgente, SAC.dbo.fnNome(b.idAgente) AS NomeProponente
-                FROM SAC.dbo.PreProjeto AS a
-                INNER JOIN AGENTES.dbo.Agentes AS b ON a.idAgente = b.idAgente
-                INNER JOIN AGENTES.dbo.tbVinculoProposta AS c ON a.idPreProjeto = c.idPreProjeto
-                INNER JOIN AGENTES.dbo.tbVinculo AS d ON c.idVinculo = d.idVinculo
-                INNER JOIN AGENTES.dbo.Agentes AS f ON d.idAgenteProponente = f.idAgente
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS e ON f.CNPJCPF = e.Cpf
-                WHERE c.siVinculoProposta = 2
-                AND e.IdUsuario = '$idResponsavel'
-            UNION
-            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente
-                FROM AGENTES.dbo.Agentes AS a
-                INNER JOIN AGENTES.dbo.Vinculacao AS b ON a.idAgente = b.idVinculoPrincipal
-                INNER JOIN AGENTES.dbo.Agentes AS c ON b.idAgente = c.idAgente
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS d ON c.CNPJCPF = d.Cpf
-                WHERE d.IdUsuario = '$idResponsavel'
-            UNION
-            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente
-                FROM AGENTES.dbo.Agentes AS a
-                INNER JOIN AGENTES.dbo.tbVinculo AS b ON a.idAgente = b.idAgenteProponente
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS c ON b.idUsuarioResponsavel = c.IdUsuario
-                WHERE b.siVinculo = 2
-                AND c.IdUsuario = '$idResponsavel'
-            UNION
-            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente
-                FROM AGENTES.dbo.Agentes AS a
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS b ON a.CNPJCPF = b.cpf
-                WHERE b.IdUsuario = '$idResponsavel'
-            GROUP BY a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente)
-            ORDER BY 3 ASC ";
-
-        $db = Zend_Registry::get('db');
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
-        return $db->fetchAll($sql);
     }
 }

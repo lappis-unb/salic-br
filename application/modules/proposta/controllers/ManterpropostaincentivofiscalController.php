@@ -191,7 +191,7 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
             $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("proponente" => $rsProponente,
                 "acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar"));
         } else {
-            $this->_redirect("/manteragentes/agentes");
+            $this->_redirect("/agente/manteragentes/agentes");
         }
     }
 
@@ -1122,7 +1122,7 @@ class Proposta_ManterpropostaincentivofiscalController extends GenericController
      */
     public function listarpropostaAction()
     {
-        $proposta = new Proposta_Model_Proposta();
+        $proposta = new Proposta_Model_PreProjeto();
         $dadosCombo = array();
         $cpfCnpj = '';
 

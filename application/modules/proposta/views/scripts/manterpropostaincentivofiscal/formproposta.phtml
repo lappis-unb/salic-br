@@ -23,7 +23,7 @@
                 dtInicioDeExecucao: { required: function(){ JSMostraOcultaObj('identificacao'); return "<br>Dado obrigat&oacute;rio n&atilde;o informado" } },
                 dtFinalDeExecucao: { required: function(){ JSMostraOcultaObj('identificacao'); return "<br>Dado obrigat&oacute;rio n&atilde;o informado" } },
                 resumoDoProjeto: { validarResumoDoProjeto: function(){ JSMostraOcultaObj('identificacao'); return "Dado obrigat&oacute;rio n&atilde;o informado" } },
-                stPlanoAnual: { required: function() { JSMostraOcultaObj('identificacao'); return "<br>A data da criac�o da proposta n�o pode ultrapassar 30/09 do ano anterior a execu��o do projeto." }}
+                stPlanoAnual: { required: function() { JSMostraOcultaObj('identificacao'); return "<br>A data da criacão da proposta não pode ultrapassar 30/09 do ano anterior a execução do projeto." }}
             },
             submitHandler: function(form) {
 
@@ -32,7 +32,7 @@
                 if(AgenciaValida != ""){
                     $('#tabs').tabs('select', 'identificacao');
                     $("#agenciaBancaria").focus();
-                    document.getElementById("ValidaAgencia").innerHTML = "<Br>Ag&ecirc;ncia inv�lida";
+                    document.getElementById("ValidaAgencia").innerHTML = "<Br>Ag&ecirc;ncia invï¿½lida";
                     JSMostraOcultaObj('identificacao');
                     return false;
                 }else{
@@ -71,7 +71,7 @@
                     ano_execucao    = new Number($('#dtInicioDeExecucao').val().substr(6, 4));
                     if (ano_vigente >= ano_execucao) {
 //                        JSMostraOcultaObj('identificacao');
-                        $("#ValidaPlanoAnual").html("<font color='red'>O per�odo de execu��o de projetos de plano anual dever ser posterior ao ano vigente</font>");
+                        $("#ValidaPlanoAnual").html("<font color='red'>O período de execução de projetos de plano anual dever ser posterior ao ano vigente</font>");
                         return false;
 
                     }else{
@@ -93,7 +93,7 @@
 
         if (texto.length > 0)
         {
-            // verifica se o usu�rio clicou no bot�o 'Reintegra��o'
+            // verifica se o usuï¿½rio clicou no botï¿½o 'Reintegraï¿½ï¿½o'
 
             $('#resumoDoProjeto').val(CKEDITOR.instances['resumoDoProjeto'].getData());
             return true;
@@ -278,8 +278,8 @@
 
 /* -----
         FUNcao QUE FAZ A TROCA (VISUAL) DE UM OBJETO NA TELA
-        CASO ID_STATUS SEJA UM, O OBJETO ANTERIOR N?O SER� RETIRADO DA TELA
-        DENTRO DA FUN��O ABAIXO ELE TAMB�M ALTERAR OS DADOS CONFORME A MUDAN�A NO DISPLAY
+        CASO ID_STATUS SEJA UM, O OBJETO ANTERIOR N?O SERï¿½ RETIRADO DA TELA
+        DENTRO DA FUNÇÃO ABAIXO ELE TAMBÉM ALTERAR OS DADOS CONFORME A MUDANÇA NO DISPLAY
         --------- */
 //function JSMostraOcultaObj(id_tbl,id_status){
 function JSMostraOcultaObj(idObjConteudo,obj){
@@ -302,17 +302,17 @@ function JSMostraOcultaObj(idObjConteudo,obj){
     }
 }
 /**
- * Fun��es que s�o chamadas ap�s a p�gina ser carregada
+ * Funï¿½ï¿½es que sï¿½o chamadas apï¿½s a pï¿½gina ser carregada
  */
 $(document).ready(function()
 {
-    // m�scaras dos campos
+    // mï¿½scaras dos campos
     $("#dtInicioDeExecucao, #dtFinalDeExecucao, #dtAtoTombamento").keyup(function()
     {
         mascara(this, format_data); // data
     });
 
-    // calend�rio
+    // calendï¿½rio
     $.datepicker.regional['pt-BR'] =
         {
         closeText: 'Fechar',
@@ -333,12 +333,11 @@ $(document).ready(function()
     };
     $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
 
-    // id dos campos que utilizar�o o calend�rio
+    // id dos campos que utilizarï¿½o o calendï¿½rio
     $("#dtInicioDeExecucao, #dtFinalDeExecucao, #dtAtoTombamento").datepicker($.datepicker.regional['pt-BR']);
 }); // fim $(document).ready()
 
 </script>
-
 
 <style type="text/css">
     .divChave{}
@@ -350,15 +349,9 @@ $(document).ready(function()
     if (isset($this->proposta->idPreProjeto)) {
         require_once "inc/menu.inc.php"; // menu
     }
-//    $controller = "Manterpropostaincentivofiscal";
-//    $links = array(
-//        array('Lista de Propostas' => array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')),
-//        array('Proposta' => array())
-//    );
-//    montaGuiaLinks($controller, $links);
 ?>
 
-<!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?>" title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>
@@ -367,7 +360,6 @@ $(document).ready(function()
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
 
 <!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
@@ -406,15 +398,12 @@ $(document).ready(function()
         </table>
         <div id="identificacaodiv" class="divChave">
             <table class="tabela" cellpadding="1" cellspacing="1">
-                <!--<tr class="titulo_tabela">
-                    <th colspan="5" onclick="javascript:JSMostraOcultaObj('identificacao')">Identifica&ccedil;&atilde;o da Proposta Cultural</th>
-                </tr>-->
                 <tr>
                     <td class="esquerda" colspan="5">
                         <div style="width: 95%">
                             <div style="float:left; width: 85%">
                                 Proponente:
-                                <span style="color: blue;"><?php echo $this->proponente->Descricao; ?></span>
+                                <span style="color: blue;"><?php echo utf8_encode($this->proponente->Descricao); ?></span>
                                 <input type="hidden" class="input_simples" name="idAgente" value="<?php
                if (isset($this->proponente->idAgente))
                    echo $this->proponente->idAgente;
@@ -603,7 +592,7 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     </td>
                 </tr>
                 <tr>
-                    <td><span style="color: #ff5050;">Limite m�ximo de 8000 caracteres.</span></td>
+                    <td><span style="color: #ff5050;">Limite máximo de 8000 caracteres.</span></td>
                 </tr>
             </table>
         </div>
@@ -629,7 +618,7 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     </td>
                 </tr>
                 <tr>
-                    <td><span style="color: #ff5050;">Limite m�ximo de 8000 caracteres.</span></td>
+                    <td><span style="color: #ff5050;">Limite máximo de 8000 caracteres.</span></td>
                 </tr>
             </table>
         </div>
@@ -644,7 +633,7 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
         <div id="acessibilidadediv" class="sumir divChave">
             <table class="tabela" cellpadding="1" cellspacing="1">
                 <tr>
-                    <td><b>Na acessibilidade</b>, o proponente deve informar <b><u>quais</b></u> <b><u>a&ccedil;&otilde;es </u></b>ser&atilde;o adotadas (ou que o local j&aacute; possui), no sentido de proporcionar condi&ccedil;&otilde;es de acessibilidade a pessoas idosas, nos termos do art. 23 da Lei no 10.741, de 1� de 2003(*), e portadoras de defici&ecirc;ncia, conforme o disposto no art. 46 do Decreto no 3.298, de 20 de dezembro de 1999(**). Os projetos culturais financiados com recursos federais, inclusive oriundos de programas especiais de incentivo &agrave; cultura, dever�o facilitar o livre acesso da pessoa portadora de defici&ecirc;ncia e pessoas idosas de modo a possibilitar-lhe o pleno exerc&iacute;o dos seus direitos culturais.  *</td>
+                    <td><b>Na acessibilidade</b>, o proponente deve informar <b><u>quais</b></u> <b><u>a&ccedil;&otilde;es </u></b>ser&atilde;o adotadas (ou que o local j&aacute; possui), no sentido de proporcionar condi&ccedil;&otilde;es de acessibilidade a pessoas idosas, nos termos do art. 23 da Lei no 10.741, de 1º de 2003(*), e portadoras de defici&ecirc;ncia, conforme o disposto no art. 46 do Decreto no 3.298, de 20 de dezembro de 1999(**). Os projetos culturais financiados com recursos federais, inclusive oriundos de programas especiais de incentivo &agrave; cultura, deverão facilitar o livre acesso da pessoa portadora de defici&ecirc;ncia e pessoas idosas de modo a possibilitar-lhe o pleno exerc&iacute;o dos seus direitos culturais.  *</td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -656,7 +645,7 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     </td>
                 </tr>
                 <tr>
-                    <td><span style="color: #ff5050;">Limite m�ximo de 8000 caracteres.</span></td>
+                    <td><span style="color: #ff5050;">Limite máximo de 8000 caracteres.</span></td>
                 </tr>
             </table>
         </div>
@@ -683,7 +672,7 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     </td>
                 </tr>
                 <tr>
-                    <td><span style="color: #ff5050;">Limite m�ximo de 8000 caracteres.</span></td>
+                    <td><span style="color: #ff5050;">Limite máximo de 8000 caracteres.</span></td>
                 </tr>
             </table>
         </div>
@@ -710,7 +699,7 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     </td>
                 </tr>
                 <tr>
-                    <td><span style="color: #ff5050;">Limite m�ximo de 8000 caracteres.</span></td>
+                    <td><span style="color: #ff5050;">Limite máximo de 8000 caracteres.</span></td>
                 </tr>
             </table>
         </div>
@@ -737,7 +726,7 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     </td>
                 </tr>
                 <tr>
-                    <td><span style="color: #ff5050;">Limite m�ximo de 8000 caracteres.</span></td>
+                    <td><span style="color: #ff5050;">Limite máximo de 8000 caracteres.</span></td>
                 </tr>
             </table>
         </div>
@@ -764,7 +753,7 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     </td>
                 </tr>
                 <tr>
-                    <td><span style="color: #ff5050;">Limite m�ximo de 8000 caracteres.</span></td>
+                    <td><span style="color: #ff5050;">Limite máximo de 8000 caracteres.</span></td>
                 </tr>
             </table>
         </div>
@@ -790,7 +779,7 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     </td>
                 </tr>
                 <tr>
-                    <td><span style="color: #ff5050;">Limite m�ximo de 8000 caracteres.</span></td>
+                    <td><span style="color: #ff5050;">Limite máximo de 8000 caracteres.</span></td>
                 </tr>
             </table>
         </div>
@@ -819,7 +808,7 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     </td>
                 </tr>
                 <tr>
-                    <td><span style="color: #ff5050;">Limite m�ximo de 8000 caracteres.</span></td>
+                    <td><span style="color: #ff5050;">Limite máximo de 8000 caracteres.</span></td>
                 </tr>
             </table>
 
@@ -842,7 +831,7 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     </td>
                 </tr>
                 <tr>
-                    <td><span style="color: #ff5050;">Limite m�ximo de 8000 caracteres.</span></td>
+                    <td><span style="color: #ff5050;">Limite máximo de 8000 caracteres.</span></td>
                 </tr>
             </table>
         </div>

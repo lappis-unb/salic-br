@@ -8,6 +8,7 @@
  */
 class Proposta_Model_PreProjeto extends Zend_Db_Table
 {
+    protected $_schema= "SAC.dbo";
     protected $_name = "PreProjeto";
     protected $_primary = "idPreProjeto";
 
@@ -31,7 +32,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
+     * @todo colocar padrÃ£o orm
      */
     public static function retirarProjetos($idUsuario, $idUsuarioR, $idAgente)
     {
@@ -51,7 +52,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
+     * @todo colocar padrÃ£o orm
      */
     public static function retirarProjetosVinculos($siVinculoProposta, $idVinculo)
     {
@@ -287,7 +288,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
+     * @todo colocar padrÃ£o orm
      */
     public static function consultaTodosProjetos($idAgente, $idResponsavel, $arrBusca) {
 
@@ -435,7 +436,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo Esse modelo não deveria fazer insert, essa função e do modelo Agente_Model_Agentes
+     * @todo Esse modelo nÃ£o deveria fazer insert, essa funÃ§Ã£o e do modelo Agente_Model_Agentes
      */
     public static function inserirAgentes($dadosAgentes) {
         $db = Zend_Registry::get('db');
@@ -465,7 +466,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo verificar model correta para inserir endereço
+     * @todo verificar model correta para inserir endereÃ§o
      */
     public static function inserirEnderecoNacional($dadosEnderecoNacional) {
         $db = Zend_Registry::get('db');
@@ -495,7 +496,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
+     * @todo colocar padrÃ£o orm
      */
     public static function editarproposta($idPreProjeto)
     {
@@ -837,7 +838,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
 
         $z = [
             'z.idProduto',
-            new Zend_Db_Expr("CASE WHEN z.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END AS Produto"),
+            new Zend_Db_Expr("CASE WHEN z.idProduto = 0 THEN 'AdministraÃ§Ã£o do Projeto' ELSE c.Descricao END AS Produto"),
             new Zend_Db_Expr('z.Quantidade * z.Ocorrencia * z.ValorUnitario AS VlSolicitado'),
             'z.Quantidade',
             'z.Ocorrencia',
@@ -918,7 +919,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
+     * @todo colocar padrÃ£o orm
      */
     public static function alteraproponente($idPreProjeto, $idAgente)
     {
@@ -938,7 +939,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
+     * @todo colocar padrÃ£o orm
      */
     public static function alteraresponsavel($idPreProjeto, $idResponsavel)
     {
@@ -1120,7 +1121,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
+     * @todo colocar padrÃ£o orm
      */
     public static function gerenciarResponsaveisVinculados($siVinculo, $idAgente = null)
     {
@@ -1152,7 +1153,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
+     * @todo colocar padrÃ£o orm
      */
     public static function listarPropostasResultado($idAgente, $idResponsavel, $idAgenteCombo)
     {
@@ -1162,7 +1163,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
         }
 
         $sql = "
-            SELECT b.CNPJCPF, b.idAgente, dbo.Fnnome(b.idAgente) AS NomeProponente, a.idPreProjeto, a.NomeProjeto--,'Proponente - Pessoa Física' as TipoDeAgente
+            SELECT b.CNPJCPF, b.idAgente, dbo.Fnnome(b.idAgente) AS NomeProponente, a.idPreProjeto, a.NomeProjeto--,'Proponente - Pessoa FÃ­sica' as TipoDeAgente
                 FROM SAC.dbo.PreProjeto a
                     INNER JOIN AGENTES.dbo.Agentes b ON ( a.idAgente = b.idAgente )
                 WHERE  a.idAgente = $idAgente
@@ -1183,7 +1184,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
                     AND NOT EXISTS(SELECT 1 FROM SAC.dbo.Projetos f WHERE a.idPreProjeto = f.idProjeto)
                     AND a.Mecanismo = '1'
             UNION ALL
-            SELECT  b.CNPJCPF, b.idAgente, dbo.Fnnome(b.idAgente) AS NomeProponente, a.idPreProjeto, a.NomeProjeto--,'Responsável' as TipoDeAgente
+            SELECT  b.CNPJCPF, b.idAgente, dbo.Fnnome(b.idAgente) AS NomeProponente, a.idPreProjeto, a.NomeProjeto--,'ResponsÃ¡vel' as TipoDeAgente
                 FROM SAC.dbo.PreProjeto a
                     INNER JOIN AGENTES.dbo.Agentes b ON ( a.idAgente = b.idAgente )
                     INNER JOIN AGENTES.dbo.Nomes c ON ( b.idAgente = c.idAgente )
@@ -1196,6 +1197,59 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
                     AND e.siVinculoProposta = 2
                     AND NOT EXISTS(SELECT 1 FROM SAC.dbo.Projetos z WHERE a.idPreProjeto = z.idProjeto)
                     AND a.Mecanismo = '1' ";
+
+        $db = Zend_Registry::get('db');
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        return $db->fetchAll($sql);
+    }
+
+    /**
+     * MÃ©todo para buscar os Proponentes - Combo Listar Propostas
+     * @access public
+     * @param integer $idResponsavel
+     * @return object
+     * @todo colocar padrÃ£o orm. Retirar funÃ§Ã£o SAC.dbo.fnNome()
+     */
+    public function listarPropostasCombo($idResponsavel)
+    {
+        $sql = "
+            SELECT b.CNPJCPF, b.idAgente, SAC.dbo.fnNome(b.idAgente) AS NomeProponente
+                FROM SAC.dbo.PreProjeto AS a
+                INNER JOIN AGENTES.dbo.Agentes AS b ON a.idAgente = b.idAgente
+                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS c ON b.CNPJCPF = c.Cpf
+            WHERE c.IdUsuario = '$idResponsavel'
+            UNION
+            SELECT b.CNPJCPF, b.idAgente, SAC.dbo.fnNome(b.idAgente) AS NomeProponente
+                FROM SAC.dbo.PreProjeto AS a
+                INNER JOIN AGENTES.dbo.Agentes AS b ON a.idAgente = b.idAgente
+                INNER JOIN AGENTES.dbo.tbVinculoProposta AS c ON a.idPreProjeto = c.idPreProjeto
+                INNER JOIN AGENTES.dbo.tbVinculo AS d ON c.idVinculo = d.idVinculo
+                INNER JOIN AGENTES.dbo.Agentes AS f ON d.idAgenteProponente = f.idAgente
+                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS e ON f.CNPJCPF = e.Cpf
+                WHERE c.siVinculoProposta = 2
+                AND e.IdUsuario = '$idResponsavel'
+            UNION
+            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente
+                FROM AGENTES.dbo.Agentes AS a
+                INNER JOIN AGENTES.dbo.Vinculacao AS b ON a.idAgente = b.idVinculoPrincipal
+                INNER JOIN AGENTES.dbo.Agentes AS c ON b.idAgente = c.idAgente
+                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS d ON c.CNPJCPF = d.Cpf
+                WHERE d.IdUsuario = '$idResponsavel'
+            UNION
+            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente
+                FROM AGENTES.dbo.Agentes AS a
+                INNER JOIN AGENTES.dbo.tbVinculo AS b ON a.idAgente = b.idAgenteProponente
+                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS c ON b.idUsuarioResponsavel = c.IdUsuario
+                WHERE b.siVinculo = 2
+                AND c.IdUsuario = '$idResponsavel'
+            UNION
+            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente
+                FROM AGENTES.dbo.Agentes AS a
+                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS b ON a.CNPJCPF = b.cpf
+                WHERE b.IdUsuario = '$idResponsavel'
+            GROUP BY a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente)
+            ORDER BY 3 ASC ";
 
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
