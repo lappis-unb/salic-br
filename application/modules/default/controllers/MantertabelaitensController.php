@@ -482,6 +482,9 @@ class MantertabelaitensController extends GenericControllerNew {
             $etapa          = $post->etapa;
             $produto        = $post->produto;
 
+
+
+
             $this->view->tipopesquisa 	= $post->TipoPesquisa;
             $this->view->produto 		= $post->produto;
             $this->view->etapa 			= $post->etapa;
@@ -490,15 +493,16 @@ class MantertabelaitensController extends GenericControllerNew {
             //CODIGO ANTIGO
             //$tbpretitem = MantertabelaitensDAO::exibirprodutoetapaitem($item);
             $where = null;
-            if($tipoPesquisa==1) {
+            if($tipoPesquisa == 01) {
                 $where = " LIKE '%".$item."%'";
-            }elseif($tipoPesquisa==2) {
+            }elseif($tipoPesquisa == 02) {
                 $where = " LIKE '%".$item."'";
-            }elseif($tipoPesquisa==3) {
+            }elseif($tipoPesquisa == 03) {
                 $where = " = '".$item."'";
-            }elseif($tipoPesquisa==4) {
+            }elseif($tipoPesquisa == 04) {
                 $where = " <> '%".$item."'";
             }
+
 
             $tbpretitem = MantertabelaitensDAO::exibirprodutoetapaitem($item=null,$where,$etapa,$produto);
             
@@ -553,7 +557,7 @@ class MantertabelaitensController extends GenericControllerNew {
 		
 	}
     
-    
+
     public function consultartabelaitensAction() {
         $post = Zend_Registry::get('post');
 
@@ -593,15 +597,17 @@ class MantertabelaitensController extends GenericControllerNew {
         $produto        = $post->produto;
 
         $where = null;
-        if($tipoPesquisa==1) {
+   
+        if($tipoPesquisa == 01) {
             $where = " LIKE '%".$item."%'";
-        }elseif($tipoPesquisa==2) {
+        }elseif($tipoPesquisa == 02) {
             $where = " LIKE '%".$item."'";
-        }elseif($tipoPesquisa==3) {
+        }elseif($tipoPesquisa == 03) {
             $where = " = '".$item."'";
-        }elseif($tipoPesquisa==4) {
+        }elseif($tipoPesquisa == 04) {
             $where = " <> '%".$item."'";
         }
+
 
         $tbpretitem = MantertabelaitensDAO::exibirprodutoetapaitem($item=null,$where,$etapa,$produto);
 
@@ -663,7 +669,7 @@ class MantertabelaitensController extends GenericControllerNew {
             $pdf = new PDF($html, 'pdf');
             $pdf->gerarRelatorio();
         }catch(Exception $e){
-            xd($e->getMessage());
+        //    xd($e->getMessage());
         }
     }
 
