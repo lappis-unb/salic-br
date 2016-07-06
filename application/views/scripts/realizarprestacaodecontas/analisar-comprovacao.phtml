@@ -1,3 +1,18 @@
+<?php
+
+function mascara($mask,$str){
+
+    $str = str_replace(" ","",$str);
+
+    for($i=0;$i<strlen($str);$i++){
+        $mask[strpos($mask,"#")] = $str[$i];
+    }
+
+    return $mask;
+
+}
+?>
+
 <script type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>
 <?php require_once"inc/menu.inc.php"; ?>
 <div id="breadcrumb">
@@ -175,6 +190,21 @@
                     </a>
                 </caption>
                 <tbody id="<?php echo $comprovanteNodeId; ?>" class="sumir">
+                    <tr>
+                        <td class="destacar" align="right"><b>Fornecedor</b></td>
+                        <td><?php  echo $comprovante->Descricao; ?></td>
+                        <td class="destacar" align="right"><b>CNPJ/CPF</b></td>
+                        <?php
+                            //Inserindo mascara de CPF ou CNPJ
+                            if(strlen($comprovante->CNPJCPF) <= 11){
+                                $cnpjcpf = mascara("###.###.###-##",$comprovante->CNPJCPF);
+                            } else {
+                                $cnpjcpf = mascara("##.###.###/####-##",$comprovante->CNPJCPF);
+                            }
+
+                        ?>
+                        <td colspan="3"><?php echo $cnpjcpf; ?></td>
+                    </tr>
                     <tr>
                         <td class="destacar" align="right"><b>Comprovante</b></td>
                         <td style="width: 175px;"><?php echo $this->tipoComprovante[$comprovante->tpDocumento];?></td>
