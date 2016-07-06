@@ -4,7 +4,7 @@
             voltar();
         });
 
-        $('#btn_salvar').click(function(){
+        $('#btn_enviar').click(function(){
             var dsAvaliacao = CKEDITOR.instances['dsAvaliacao'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,''),
                 texto = CKEDITOR.instances['dsAvaliacao'].getData(),
                 erros = 0,
@@ -173,7 +173,22 @@
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 <div id="conteudo">
     <form name="formAvaliacao" id="formAvaliacao" action="<?php echo $this->baseUrl(); ?>/readequacoes/salvar-avaliacao" method="post">
-
+      <input type="hidden" name="filtro" value="<?php echo $this->filtro; ?>" />
+      <table class="tabela">
+        <tr>
+          <td class="destacar bold centro" width="20%">PRONAC</td>
+          <td class="destacar bold centro">NOME DO PROJETO</td>
+        </tr>
+        <tr>
+          <td align="center">
+            <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->projeto->IdPRONAC; ?>" target="_blank">
+              <?php echo $this->projeto->pronac; ?>
+            </a>
+          </td>
+          <td align="center"><?php echo $this->projeto->NomeProjeto; ?></td>
+        </tr>
+      </table>
+      
         <table class="tabela">
             <tr>
                 <th>RESPOSTA <span class="red bold">*</span></th>
@@ -226,7 +241,7 @@
     </form>
 
     <p align="center">
-        <input type="button" class="btn_salvar" name="btn_salvar" id="btn_salvar">
+        <input type="button" class="btn_enviar" name="btn_enviar" id="btn_enviar">
         <input type="button" class="btn_voltar" name="btn_voltar" id="btn_voltar">
     </p>
 

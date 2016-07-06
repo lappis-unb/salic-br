@@ -2062,15 +2062,14 @@ class ReadequacoesController extends GenericControllerNew {
         }
 
         $pag = 1;
-        $get = Zend_Registry::get('get');
-        if (isset($get->pag)) $pag = $get->pag;
+        if (isset($get->pag)) $pag = $this->_request->getParam('pag');
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
         $where = array();
 
-        if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
-            $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
+        if (null !== $this->_request->getParam('tipoFiltro')) {
+            $filtro = $this->_request->getParam('tipoFiltro');
             $this->view->filtro = $filtro;
             switch ($filtro) {
                 case '':
@@ -2094,9 +2093,9 @@ class ReadequacoesController extends GenericControllerNew {
             $where['a.siEncaminhamento = ?'] = 1; // 1=Solicitado pelo proponente
         }
 
-        if((isset($_GET['pronac']) && !empty($_GET['pronac']))){
-            $where['b.AnoProjeto+b.Sequencial = ?'] = $_GET['pronac'];
-            $this->view->pronac = $_GET['pronac'];
+        if (null !== $this->_request->getParam('pronac')) {
+            $where['b.AnoProjeto+b.Sequencial = ?'] = $this->_request->getParam('pronac');
+            $this->view->pronac = $this->_request->getParam('pronac');
         }
 
         $Orgaos = new Orgaos();
@@ -2135,7 +2134,7 @@ class ReadequacoesController extends GenericControllerNew {
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
-        $idReadequacao = Seguranca::dencrypt($_GET['id']);
+        $idReadequacao = Seguranca::dencrypt($this->_request->getParam('id'));
 
         $tbReadequacao = new tbReadequacao();
         $r = $tbReadequacao->buscarDadosReadequacoes(array('idReadequacao = ?'=>$idReadequacao))->current();
@@ -2144,6 +2143,7 @@ class ReadequacoesController extends GenericControllerNew {
             $Projetos = new Projetos();
             $p = $Projetos->buscarProjetoXProponente(array('idPronac = ?' => $r->idPronac))->current();
 
+            $this->view->filtro = $this->_request->getParam('filtro');
             $this->view->readequacao = $r;
             $this->view->projeto = $p;
             $this->view->idPronac = $r->idPronac;
@@ -2158,8 +2158,8 @@ class ReadequacoesController extends GenericControllerNew {
      */
     public function buscarDestinatariosAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $vinculada = $_POST['vinculada'];
-        $idPronac = $_POST['idPronac'];
+        $vinculada = $this->_request->getParam('vinculada');
+        $idPronac = $this->_request->getParam('idPronac');
 
         $a = 0;
         $dadosUsuarios = array();
@@ -2227,54 +2227,55 @@ class ReadequacoesController extends GenericControllerNew {
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
-        $idReadequacao = $_POST['idReadequacao'];
-
+        $idReadequacao = $this->_request->getParam('idReadequacao');
+        $filtro = $this->_request->getParam('filtro');
+        
         $tbReadequacao = new tbReadequacao();
         $r = $tbReadequacao->find(array('idReadequacao = ?'=>$idReadequacao))->current();
         $stValidacaoCoordenador = 0;
         $dataEnvio = null;
 
         if($r){
-            $r->stAtendimento = $_POST['stAtendimento'];
-            $r->dsAvaliacao = $_POST['dsAvaliacao'];
+            $r->stAtendimento = $this->_request->getParam('stAtendimento');
+            $r->dsAvaliacao = $this->_request->getParam('dsAvaliacao');
             $r->dtAvaliador = new Zend_Db_Expr('GETDATE()');
             $r->idAvaliador = $this->idUsuario;
 
-            if($_POST['stAtendimento'] == 'I'){
+            if($this->_request->getParam('stAtendimento') == 'I'){
                 $r->siEncaminhamento = 2; //2=Solicitação indeferida
                 $r->stEstado = 1;
             } else {
-                if($_POST['vinculada'] == 262 || $_POST['vinculada'] == 171){
+                if($this->_request->getParam('vinculada') == 262 || $this->_request->getParam('vinculada') == 171){
                     $r->siEncaminhamento = 4; //4=Enviado para Análise Técnica (SAV, SEFIC)
                     $dataEnvio = new Zend_Db_Expr('GETDATE()');
-                } else if($_POST['vinculada'] == 400) {
+                } else if($this->_request->getParam('vinculada') == 400) {
                     $stValidacaoCoordenador = 1;
                     $r->siEncaminhamento = 7; //7=CNIC
-                    $r->idAvaliador = $_POST['destinatario'];
+                    $r->idAvaliador = $this->_request->getParam('destinatario');
                 } else {
                     $r->siEncaminhamento = 3; //3=Enviado para o coordenador de parecer
                 }
             }
             $r->save();
 
-            if($_POST['stAtendimento'] == 'D'){
+            if($this->_request->getParam('stAtendimento') == 'D'){
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dados = array(
                     'idReadequacao' => $r->idReadequacao,
-                    'idUnidade' => $_POST['vinculada'],
+                    'idUnidade' => $this->_request->getParam('vinculada'),
                     'DtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
-                    'idAvaliador' => isset($_POST['destinatario']) ? $_POST['destinatario'] : null,
+                    'idAvaliador' => (null !== $this->_request->getParam('destinatario')) ? $this->_request->getParam('destinatario') : null,
                     'dtEnvioAvaliador' => !empty($dataEnvio) ? $dataEnvio : null,
                     'stValidacaoCoordenador' => $stValidacaoCoordenador,
                     'dsOrientacao' => $r->dsAvaliacao
                 );
                 $tbDistribuirReadequacao->inserir($dados);
             }
-
-            parent::message('Dados salvos com sucesso!', "readequacoes/painel", "CONFIRM");
+            
+            parent::message('Dados salvos com sucesso!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
 
         } else {
-            parent::message('Nenhum registro encontrado.', "readequacoes/painel", "ERROR");
+            parent::message('Nenhum registro encontrado.', "readequacoes/painel?tipoFiltro=$filtro", "ERROR");
         }
     }
 
@@ -2416,8 +2417,7 @@ class ReadequacoesController extends GenericControllerNew {
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
-        $get = Zend_Registry::get('get');
-        $id = Seguranca::dencrypt($get->id);
+        $id = Seguranca::dencrypt($this->_request->getParam('id'));
 
         $tbReadequacao = new tbReadequacao();
         $d = $tbReadequacao->visualizarReadequacao(array('a.idReadequacao = ?'=>$id))->current();
@@ -2479,8 +2479,8 @@ class ReadequacoesController extends GenericControllerNew {
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
-        $get = Zend_Registry::get('get');
-        $idReadequacao = (int) Seguranca::dencrypt($get->id);
+        $idReadequacao = (int) Seguranca::dencrypt($this->_request->getParam('id'));
+        
         $this->view->idReadequacao = $idReadequacao;
 
         $tbReadequacao = new tbReadequacao();
