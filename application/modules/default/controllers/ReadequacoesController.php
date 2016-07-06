@@ -1919,7 +1919,7 @@ class ReadequacoesController extends GenericControllerNew {
         if($this->idPerfil != 122 && $this->idPerfil != 123){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-
+        
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -1972,18 +1972,7 @@ class ReadequacoesController extends GenericControllerNew {
             $where['a.PRONAC = ?'] = $this->_request->getParam('pronac');
             $this->view->pronac = $this->_request->getParam('pronac');
         }
-
-        $Orgaos = new Orgaos();
-        $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$this->idOrgao))->current();
-
-        if(isset($idSecretaria) && !empty($idSecretaria)){
-            if($idSecretaria->idSecretaria == 251){
-                //$where['b.Area <> ?'] = 2;
-            } else if($idSecretaria->idSecretaria == 160){
-                //$where['b.Area = ?'] = 2;
-            }
-        }
-
+        
         $tbReadequacao = New tbReadequacao();
         
         $total = null;
@@ -2306,7 +2295,7 @@ class ReadequacoesController extends GenericControllerNew {
             $this->intTamPag = $this->_request->getParam("qtde");
         }
         $order = array();
-
+        
         //==== parametro de ordenacao  ======//
         if($this->_request->getParam("ordem")) {
             $ordem = $this->_request->getParam("ordem");
@@ -2319,7 +2308,7 @@ class ReadequacoesController extends GenericControllerNew {
             $ordem = "ASC";
             $novaOrdem = "ASC";
         }
-
+        
         //==== campo de ordenacao  ======//
         if($this->_request->getParam("campo")) {
             $campo = $this->_request->getParam("campo");
@@ -2343,24 +2332,24 @@ class ReadequacoesController extends GenericControllerNew {
         if ($this->_request->getParam('tipoFiltro') !== null) {
             $filtro = $this->_request->getParam('tipoFiltro');
         } else {
-            $filtro = 'aguardando_distribuicao';
+            if ($this->idPerfil == 93) {
+                $filtro = 'aguardando_distribuicao';
+            } else {
+                $filtro = 'painel_do_tecnico';
+            }
         }
         $this->view->filtro = $filtro;
 
-        $Orgaos = new Orgaos();
-        $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$this->idOrgao))->current();
-
-        if(isset($idSecretaria) && !empty($idSecretaria)){
-            if($idSecretaria->idSecretaria == 251){
-                $where['c.Area <> ?'] = 2;
-            } else if($idSecretaria->idSecretaria == 160){
-                $where['c.Area = ?'] = 2;
-            }
+        // hack!
+        if ($this->idOrgao == 272) {
+            $where['idOrgao = ?'] = 262;
+        } else {
+            $where['idOrgao = ?'] = $this->idOrgao;
         }
 
         $tbReadequacao = New tbReadequacao();
-
-        if ($this->idPerfil == 93 || $this->idPerfil == 121) {
+        
+        if ($this->idPerfil == 93) {
             // coordenador parecer
             
             switch($filtro){
@@ -2374,6 +2363,12 @@ class ReadequacoesController extends GenericControllerNew {
                     $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerAnalisados' , $where);
                     break;
             }
+        } else if ($this->idPerfil == 121) {
+            // técnico de acompanhamento
+            
+            $total = $tbReadequacao->count('vwPainelReadequacaoTecnico', $where);
+            
+            $this->filtro = '';
         }
         
         $fim = $inicio + $this->intTamPag;
@@ -2381,7 +2376,12 @@ class ReadequacoesController extends GenericControllerNew {
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
-        $busca = $tbReadequacao->painelReadequacoesAnalise($where, $order, $tamanho, $inicio, false, $this->idPerfil);
+        if ($this->idPerfil == 93) {
+            $busca = $tbReadequacao->painelReadequacoesCoordenadorParecer($where, $order, $tamanho, $inicio, false, $filtro);
+        } else if ($this->idPerfil == 121) {
+            $busca = $tbReadequacao->painelReadequacoesTecnicoAcompanhamento($where, $order, $tamanho, $inicio, false);
+        }
+        
         $paginacao = array(
             "pag"=>$pag,
             "qtde"=>$this->intTamPag,

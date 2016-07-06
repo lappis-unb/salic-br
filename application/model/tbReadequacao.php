@@ -198,6 +198,114 @@ END dsSolicitacao,
     }
 
     /**
+     * painelReadequacoesTecnicoAcompanhamento
+     *
+     * @param bool $where
+     * @param bool $order
+     * @param mixed $tamanho
+     * @param mixed $inicio
+     * @param bool $qtdeTotal
+     * @param bool $filtro
+     * @since Alterada em 05/06/16
+     * @author Fernão <fernao.lara@cultura.gov.br>
+     * @access public
+     * @return void
+     */
+    public function painelReadequacoesTecnicoAcompanhamento($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $select= array();
+        $result= array();
+        $total= array();
+        
+        $select = $this->selectView('vwPainelReadequacaoTecnico');
+        
+        //adiciona quantos filtros foram enviados
+        foreach ($where as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
+
+        //adicionando linha order ao select
+        $select->order($order);
+
+        //paginacao
+        if ($tamanho > -1) {
+            $tmpInicio = 0;
+            if ($inicio > -1) {
+                $tmpInicio = $inicio;
+            }
+            $select->limit($tamanho, $tmpInicio);
+        }
+        
+        $stmt = $db->query($select);
+
+        while ($o = $stmt->fetchObject()) {
+            $result[] = $o;
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * painelReadequacoesCoordenadorParecer
+     *
+     * @param bool $where
+     * @param bool $order
+     * @param mixed $tamanho
+     * @param mixed $inicio
+     * @param bool $qtdeTotal
+     * @param bool $filtro
+     * @since Alterada em 05/06/16
+     * @author Fernão <fernao.lara@cultura.gov.br>
+     * @access public
+     * @return void
+     */
+    public function painelReadequacoesCoordenadorParecer($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $filtro = null)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $select= array();
+        $result= array();
+        $total= array();
+        
+        switch($filtro){
+            case 'aguardando_distribuicao':
+                $select = $this->selectView('vwPainelReadequacaoCoordenadorParecerAguardandoAnalise');
+                break;
+            case 'em_analise':
+                $select = $this->selectView('vwPainelReadequacaoCoordenadorParecerEmAnalise');
+                break;
+            case 'analisados':
+                $select = $this->selectView('vwPainelReadequacaoCoordenadorParecerAnalisados');
+                break;
+        }
+        
+        //adiciona quantos filtros foram enviados
+        foreach ($where as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
+
+        //adicionando linha order ao select
+        $select->order($order);
+        
+        //paginacao
+        if ($tamanho > -1) {
+            $tmpInicio = 0;
+            if ($inicio > -1) {
+                $tmpInicio = $inicio;
+            }
+            $select->limit($tamanho, $tmpInicio);
+        }
+        
+        $stmt = $db->query($select);
+
+        while ($o = $stmt->fetchObject()) {
+            $result[] = $o;
+        }
+        
+        return $result;
+    }
+    
+    /**
      * selectView - Retorna um select completo da tabela.
      *
      * @param string $vw
@@ -520,7 +628,7 @@ END dsSolicitacao,
             }
             $select->limit($tamanho, $tmpInicio);
         }
-
+        
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
