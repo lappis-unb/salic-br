@@ -1,16 +1,13 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of Sgcacesso
  *
  * @author augusto
+ * @author wouerner <wouerner@gmail.com>
  */
-class Sgcacesso extends GenericModel {
+class Autenticacao_Model_Sgcacesso extends GenericModel {
 
     protected $_banco = 'controledeacesso';
     protected $_name = 'dbo.SGCacesso';

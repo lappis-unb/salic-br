@@ -1,9 +1,9 @@
-<?php  
+<?php
 header('Content-Type: text/plain; charset=ISO-8859-1');
-?>  
+?>
 
 <div class="sumir" id="email">
-    Deseja solicitar o vÌnculo ao proponente?
+    Deseja solicitar o v√≠nculo ao proponente?
 </div>
 <fieldset>
     <legend>Vincular ao Proponente</legend>
@@ -14,21 +14,21 @@ header('Content-Type: text/plain; charset=ISO-8859-1');
         <tr class="destacar">
             <td tabindex="1"><b>CPF:</b></td>
             <td tabindex="1"><b>Nome:</b></td>
-            <td tabindex="1"><b>Solicitar VÌnculo:</b></td>
+            <td tabindex="1"><b>Solicitar V√≠nculo:</b></td>
         </tr>
         <?php $idAgente = null; ?>
-        
+
         <?php foreach ($this->vinculo as $vinculo): ?>
-        
+
             <?php if($vinculo->idAgente != $idAgente):?>
 	            <tr class="centro">
 	                <td align="left"> <?php echo Validacao::mascaraCPFCNPJ($vinculo->CNPJCPF); ?></td>
 	                <td align="left"><?php echo $vinculo->NomeAgente ?></td>
 	                <td style="font-weight: 600;">
-	                
-	                
+
+
 		                <?php if(($vinculo->UsuarioVinculo) == null): ?>
-		                
+
 		                	<?php if(($vinculo->siVinculo != '')): ?>
 
 		                		<?php echo $this->stVinculo($vinculo->siVinculo); ?>
@@ -36,20 +36,20 @@ header('Content-Type: text/plain; charset=ISO-8859-1');
 		                	<?php else:   ?>
 
 		                        <img style="cursor: pointer;" class="vincular" id="vincular" onclick="vincularproponente('<?php echo $vinculo->idAgente; ?>');" idAgente="<?php echo $vinculo->idAgente; ?>" src="<?php echo $this->baseUrl(); ?>/public/img/passed.gif" />
-		                    
+
 		                	<?php endif;?>
-		                    
-		                <?php else: ?>    
-		                	Servidor do MinistÈrio da Cultura n„o pode ser Proponente!
-		                <?php endif; ?>  
-		                  
-	                    
-	                    
+
+		                <?php else: ?>
+		                	Servidor do Minist√©rio da Cultura n√£o pode ser Proponente!
+		                <?php endif; ?>
+
+
+
 	                </td>
 	            </tr>
 	        <?php $idAgente = $vinculo->idAgente; ?>
 	        <?php endif;?>
-        
+
         <?php endforeach; ?>
     </table>
 </fieldset>

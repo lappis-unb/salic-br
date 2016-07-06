@@ -1,6 +1,6 @@
 <?php
 
-class fnVerificarPermissao extends GenericModel {
+class Autenticacao_Model_FnVerificarPermissao extends GenericModel {
 
     protected $_banco = 'SAC';
     protected $_name = 'dbo.fnVerificarPermissao';
@@ -37,7 +37,6 @@ class fnVerificarPermissao extends GenericModel {
         }
         return $db->fetchRow($select);
     }
-    
+
 }
 
-?>

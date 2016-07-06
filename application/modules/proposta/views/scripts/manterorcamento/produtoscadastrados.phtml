@@ -138,7 +138,7 @@ montaGuiaLinks($controller, $links);
                         if ($etapa->idEtapa == $itens->idEtapa){  ?>
                         <tr class='fundo'>
                             <td class='centro'><?php echo utf8_encode($itens->DescricaoItem) ?></td>
-                            <td class='centro'><?php echo $itens->Unidade ?></td>
+                            <td class='centro'><?php echo utf8_encode($itens->Unidade) ?></td>
                             <td class='centro'><?php echo number_format($itens->Quantidade,0) ?></td>
                             <td class='centro'><?php echo number_format($itens->Ocorrencia,0) ?></td>
                             <td class='centro'><?php echo number_format($itens->ValorUnitario, 2, ",", ".") ?></td>

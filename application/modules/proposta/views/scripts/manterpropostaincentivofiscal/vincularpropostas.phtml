@@ -1,13 +1,13 @@
 <script type="text/javascript">
- 
+
     function confirmaracao(){
 
         $(".opcaovinculacao").each(function(indice, elemento) {
             if($(elemento).attr('checked')) {
                 if($(elemento).val() == "0"){
-                    $("#confirmartroca").html("Deseja vincular o respons�vel � proposta?");
+                    $("#confirmartroca").html("Deseja vincular o responsável à proposta?");
                 } else {
-                    $("#confirmartroca").html("Deseja desvincular o respons�vel da proposta?");
+                    $("#confirmartroca").html("Deseja desvincular o responsável da proposta?");
                 }
             }
         });
@@ -21,7 +21,7 @@
             closeOnEscape : false,
             title : 'Alerta',
             buttons: {
-                'N�o': function(){
+                'Não': function(){
                     $(this).dialog('close');
                 },
                 'Sim': function(){
@@ -73,7 +73,7 @@
         }
 
         if($('#responsavel').val() == ''){
-            $("#confirma").html('Favor selecionar um respons�vel!');
+            $("#confirma").html('Favor selecionar um responsável!');
             $("#confirma").dialog({
                 resizable: false,
                 width:320,
@@ -98,21 +98,21 @@
 
 <?php require_once "inc/menu_responsavel.inc.php"; // menu ?>
 
-<!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In�cio">In&iacute;cio</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">In&iacute;cio</a></li>
         <li><a href="<?php echo $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
         <li class="last">Vincular Propostas </li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
-<!-- ========== IN�CIO T�TULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
     <div>Vincular Propostas <span class="voltar"><a href="#" onclick="voltar();"></a></span></div>
 </div>
-<!-- ========== FIM T�TULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 
 <div id="conteudo">
     <div id="confirmartroca"></div>
@@ -139,7 +139,7 @@
                     <select name="responsavel" id="responsavel" class="input_simples" style="width: 350px;">
                         <option value="">- Selecione -</option>
                         <?php foreach ($this->responsaveis as $v){ ?>
-                        <option value="<?php echo $v['idVinculo'];?>:<?php echo $v['idResponsavel'];?>"><?php echo $v['NomeResponsavel'];?></option>
+                        <option value="<?php echo $v['idVinculo'];?>:<?php echo $v['idResponsavel'];?>"><?php echo utf8_encode($v['NomeResponsavel']);?></option>
                         <?php } ?>
                     </select>&nbsp;<span id="msgValidaResponsavel"></span>&nbsp;&nbsp;&nbsp;
                 </td>
@@ -158,9 +158,9 @@
             <?php foreach ($this->propostas as $p){ ?>
             <tr>
                 <td align="center"><?php echo $p->idPreProjeto;?></td>
-                <td><?php echo $p->NomeProjeto;?></td>
+                <td><?php echo utf8_encode($p->NomeProjeto);?></td>
                 <td><?php echo Mascara::addMaskCPF($p->Cpf); ?></td>
-                <td><?php echo $p->Nome;?></td>
+                <td><?php echo utf8_encode($p->Nome);?></td>
                 <td align="center"><input type="radio" name="propostas" class="propostas" value="<?php echo $p->idPreProjeto;?>" /></td>
             </tr>
             <?php } ?>
@@ -220,7 +220,7 @@
 
     </form>
 </div>
-<!-- ========== IN�CIO RODAP� DO CONTE�DO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP� DO CONTE�DO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 <br clear="all" />

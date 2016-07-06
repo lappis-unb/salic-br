@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Proposta_DeslocamentoController
+ *
+ * @uses MinC_Controller_Action_Abstract
+ * @author  wouerner <wouerner@gmail.com>
+ */
 class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
 
     private $idPreProjeto = null;
@@ -10,11 +16,12 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
      * @param void
      * @return void
      */
-    public function init() {
-        $auth = Zend_Auth::getInstance(); // instancia da autenticaç?o
+    public function init()
+    {
+        $auth = Zend_Auth::getInstance();
         $PermissoesGrupo = array();
 
-	//Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
+        //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
             //Recupera todos os grupos do Usuario
             $Usuario = new Usuario(); // objeto usuário
@@ -54,7 +61,6 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
                 parent::message("Necessário informar o número da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
             }
         }
-
     }
 
     /**

@@ -333,7 +333,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
              * ==============================================================
              */
             /* ========== BUSCA O ID DO RESPONSAVEL ========== */
-            $Sgcacesso = new Sgcacesso();
+            $Sgcacesso = new Autenticacao_Model_Sgcacesso();
             $buscarResponsavel = $Sgcacesso->buscar(array('Cpf = ?' => $cpfCadastrado));
 
             /* ========== VINCULA O RESPONSAVEL A SEU PROPRIO PERFIL DE PROPONENTE ========== */

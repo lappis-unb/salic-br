@@ -176,7 +176,7 @@
 
             if(!preenchimento){
                 i++;
-                erros = erros + i+' - Favor preencher os campos obrigatórios.';
+                erros = erros + i+' - Favor preencher os campos obrigatÃ³rios.';
             }
 
             if(i>0){
@@ -272,7 +272,7 @@
 <form action="<?php echo $this->acaoSalvar; ?>" name="frmPlanoDistribuicao" id="frmPlanoDistribuicao" method="post">
     <input type="hidden" name="idPlanoDistribuicao" id="idPlanoDistribuicao" value="<?php echo $this->planoDistribuicao['idPlanoDistribuicao']; ?>">
     <input type="hidden" name="idProjeto" id="idProjeto" value="<?php echo $this->planoDistribuicao['idProjeto']; ?>">
-    <!-- ========== INÍCIO TABELA DADOS ========== -->
+    <!-- ========== INÃCIO TABELA DADOS ========== -->
     <table  class="tabela">
         <tr>
             <th colspan="4" align="center">Nome do Evento / Produto</th>
@@ -308,7 +308,7 @@
             <td class="destacar bold" style="width: 1px;">&Aacute;rea <span style="color: red;">*</span></td>
             <td>
                 <select class="input_simples obrigatorio" name="areaCultural" id="areaCultural">
-                    <option value=""> - Selecione uma área cultural - </option>
+                    <option value=""> - Selecione uma Ã¡rea cultural - </option>
                     <?php foreach ($this->comboareasculturais as $comboareacultural): ?>
                         <option value="<?php echo $comboareacultural->id; ?>" <?php echo ($comboareacultural->id == $this->planoDistribuicao['Area']) ? " selected='selected'" : ""; ?>>
                             <?php echo $comboareacultural->descricao; ?>

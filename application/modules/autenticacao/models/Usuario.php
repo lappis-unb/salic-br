@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class Usuario extends GenericModel
+class Autenticacao_Model_Usuario extends GenericModel
 {
 
         protected $_banco = "TABELAS";

@@ -4,8 +4,9 @@
  * Description of VincularresponsavelController
  *
  * @author tisomar
+ * @author wouerner <wouerner@gmail.com>
  */
-class VincularresponsavelController extends MinC_Controller_Action_Abstract {
+class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abstract {
 
     private $emailResponsavel  	= null;
     private $idResponsavel  	= 0;
@@ -36,11 +37,11 @@ class VincularresponsavelController extends MinC_Controller_Action_Abstract {
         /*********************************************************************************************************/
 
         // Busca na SGCAcesso
-        $sgcAcesso = new Sgcacesso();
+        $sgcAcesso = new Autenticacao_Model_Sgcacesso();
         $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
 
         // Busca na Usuarios
-        $usuarioDAO = new Usuario();
+        $usuarioDAO = new Autenticacao_Model_Usuario();
         $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
         // Busca na Agentes

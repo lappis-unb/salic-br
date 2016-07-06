@@ -156,9 +156,9 @@
                 $totalReceita += $receita;
                 ?>
             <tr class="fundo">
-                <td class="centro"><?php echo $planoDistribuicao->Produto; ?></td>
-                <td class="centro"><?php echo $planoDistribuicao->DescricaoArea; ?></td>
-                <td align="right"><?php echo $planoDistribuicao->DescricaoSegmento; ?></td>
+                <td class="centro"><?php echo utf8_encode($planoDistribuicao->Produto); ?></td>
+                <td class="centro"><?php echo utf8_encode($planoDistribuicao->DescricaoArea); ?></td>
+                <td align="right"><?php echo utf8_encode($planoDistribuicao->DescricaoSegmento); ?></td>
                 <td align="right"><?php echo ($planoDistribuicao->stPrincipal == 0) ? 'N&atilde;o' : 'Sim'; ?></td>
                 <td class="centro" nowrap>
                     <input type="button" class="btn_editar" id="btn_editar" onclick="editar(<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>)"/>&nbsp;

@@ -2,12 +2,12 @@
 /**
  * Login e autenticação
  * @author Equipe RUP - Politec
+ * @author wouerner <wouerner@gmail.com>
  * @since 20/07/2010
  * @version 1.0
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
 
 class Autenticacao_PerfilController extends MinC_Controller_Action_Abstract
@@ -31,7 +31,7 @@ class Autenticacao_PerfilController extends MinC_Controller_Action_Abstract
 
         if($GrupoAtivo->codGrupo == "1111" && $GrupoAtivo->codOrgao == "2222"){
             $auth   = Zend_Auth::getInstance();
-            $tblSGCacesso = new Sgcacesso();
+            $tblSGCacesso = new Autenticacao_Model_Sgcacesso();
             $rsSGCacesso = $tblSGCacesso->buscar(array("Cpf = ? "=>$auth->getIdentity()->usu_identificacao))->current()->toArray();
             $objAuth = $auth->getStorage()->write((object)$rsSGCacesso);
 
@@ -41,12 +41,11 @@ class Autenticacao_PerfilController extends MinC_Controller_Action_Abstract
         }
 
         //Reescreve a sessao com o novo orgao superior
-        $tblUsuario = new Usuario();
+        $tblUsuario = new Autenticacao_Model_Usuario();
         $codOrgaoMaxSuperior = $tblUsuario->recuperarOrgaoMaxSuperior($codOrgao);
         $_SESSION['Zend_Auth']['storage']->usu_org_max_superior = $codOrgaoMaxSuperior;
 
         // redireciona para a página inicial do sistema
         parent::message("Seu perfil foi alterado no sistema. Voc&ecirc; ter&aacute; acesso a outras funcionalidades!", "principal", "ALERT");
-    } // fecha alterarPerfilAction()
-
-} // fecha class
+    }
+}

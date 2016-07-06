@@ -1,4 +1,4 @@
-<!-- ========== INÕCIO MENU ========== -->
+<!-- ========== IN√çCIO MENU ========== -->
 <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
 <script type="text/javascript">
     function layout_fluido()
@@ -24,27 +24,18 @@
 
     });
 
-
 </script>
 <div id="menu">
-    <!-- inÌcio: conte˙do principal #container -->
     <div id="container">
         <div id="menuContexto">
             <div class="top"></div>
             <div id="qm0" class="qmmc sanfona">
 
                 <?php if(1 == 1):?>
-
-                	<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'consultarresponsaveis')); ?>" title="Novo Respons·vel">Gerenciar Respons·veis</a>
-                	<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'novoresponsavel')); ?>" title="Novo Respons·vel">Novo Respons·vel</a>
+                	<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'consultarresponsaveis')); ?>" title="Novo Respons√°vel">Gerenciar Respons√°veis</a>
+                	<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'novoresponsavel')); ?>" title="Novo Respons√°vel">Novo Respons√°vel</a>
                 	<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'vincularpropostas')); ?>" title="Vincular Propostas">Vincular Propostas</a>
-                	<!--
-                	<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'vincularprojetos')); ?>" title="Desvincular Projetos">Desvincular Projetos</a>
-                	<a class="no_seta" href="<?php echo $this->url(array('controller' => 'procuracao', 'action' => 'index')); ?>" title="ProcuraÁ„o">ProcuraÁ„o</a>
-	                 -->
                 <?php endif;?>
-
-
             </div>
             <div class="bottom">
             </div>
@@ -52,12 +43,8 @@
             </div>
         </div>
         <div id="alertar"></div>
-        <!-- final: navegaÁ„o local #qm0 -->
     </div>
 </div>
-
-
-<!-- ========== FIM MENU ========== -->
 
 
 

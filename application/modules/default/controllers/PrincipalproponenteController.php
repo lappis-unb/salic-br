@@ -18,7 +18,7 @@ class PrincipalproponenteController extends MinC_Controller_Action_Abstract {
         parent::init(); // chama o init() do pai GenericControllerNew
         $auth = Zend_Auth::getInstance(); // instancia da autenticação
         $this->idUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
-        $Usuario = new Usuario(); // objeto usuário
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
         $Agente = new Agente_Model_Agentes();
         $this->idAgente = $auth->getIdentity()->IdUsuario;
     }

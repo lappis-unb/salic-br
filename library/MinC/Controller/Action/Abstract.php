@@ -62,11 +62,6 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     {
         //SE CAIU A SECAO REDIRECIONA
         $auth = Zend_Auth::getInstance(); // pega a autentica??o
-//            xd($_SERVER['PHP_SELF']);
-//            if(!$auth->hasIdentity()){
-//                $url = Zend_Controller_Front::getInstance()->getBaseUrl();
-//                JS::redirecionarURL($url);
-//            }
 
         $this->_msg  = $this->_helper->getHelper('FlashMessenger');
         $this->_url  = $this->_helper->getHelper('Redirector');
@@ -76,26 +71,23 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         $this->_urlPadrao = Zend_Controller_Front::getInstance()->getBaseUrl();
         if (isset($auth->getIdentity()->usu_codigo))
         {
-            $Usuario      = new Usuario(); // objeto usu?rio
+            $Usuario      = new Autenticacao_Model_Usuario(); // objeto usu?rio
             $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
             $idAgente = $Agente['idAgente'];
             // manda os dados para a vis?o
             $this->view->idAgente    = $idAgente;
         }
 
-
-        /******************************************************************************************************************************/
-
         @$cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
 
         if ($cpf):
 
             // Busca na SGCAcesso
-            $sgcAcesso 	 = new Sgcacesso();
+            $sgcAcesso 	 = new Autenticacao_Model_Sgcacesso();
             $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
 
             // Busca na Usuarios
-            $usuarioDAO   = new Usuario();
+            $usuarioDAO   = new Autenticacao_Model_Usuario();
             $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
             // Busca na Agentes
@@ -111,13 +103,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             $this->view->idUsuarioKeyLog 		= $this->idUsuario;
 
         endif;
-
-        /****************************************************************************************************************************/
-
-
-    } // fecha init()
-
-
+    }
 
     /**
      * M?todo para chamar as mensagens e fazer o redirecionamento
@@ -133,10 +119,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         $this->_helper->flashMessenger->addMessage($msg);
         $this->_helper->flashMessengerType->addMessage($type);
         $this->redirect($url);
-        //exit();
-    } // fecha message()
-
-
+    }
 
     /**
      * Reescreve o m?todo postDispatch() que ? respons?vel
@@ -156,9 +139,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             $this->view->message_type = implode("<br />", $this->_type->getMessages());
         }
         parent::postDispatch(); // chama o m?todo pai
-    } // fecha postDispatch()
-
-
+    }
 
     /**
      * M?todo respons?vel pela autentica??o e perfis
@@ -174,7 +155,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     protected function perfil($tipo = 0, $permissoes = null)
     {
         $auth         = Zend_Auth::getInstance(); // pega a autentica??o
-        $Usuario      = new Usuario(); // objeto usu?rio
+        $Usuario      = new Autenticacao_Model_Usuario(); // objeto usu?rio
         $UsuarioAtivo = new Zend_Session_Namespace('UsuarioAtivo'); // cria a sess?o com o usu?rio ativo
         $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess?o com o grupo ativo
 
@@ -202,12 +183,12 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
                 $this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
                 $this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
-            } // fecha if
+            }
             else // caso o usu?rio n?o esteja autenticado
             {
                 return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), null, true);
             }
-        } // fecha if
+        }
         // autentica??o e permiss?es zend (AMBIENTE MINC)
         else if ($tipo === 1)
         {
@@ -336,7 +317,6 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             // pega o id do usu?rio logado pelo scriptcase
             //$codUsuario = isset($_SESSION['gusuario']['id']) ? $_SESSION['gusuario']['id'] : $UsuarioAtivo->codUsuario;
             $codUsuario = isset($auth->getIdentity()->IdUsuario) ? (int) $auth->getIdentity()->IdUsuario : $UsuarioAtivo->codUsuario;
-            //$codUsuario = 366;
             if (isset($codUsuario) && !empty($codUsuario))
             {
                 // configura??es do layout padr?o para o proponente
@@ -356,9 +336,8 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 {
                     $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "index", "ALERT");
                 }
-            } // fecha if
+            }
             // ========== FIM AUTENTICA??O MIGRA??O ==========
-
 
             // ========== IN?CIO AUTENTICA??O ZEND ==========
             else // caso o usu?rio n?o esteja autenticado pelo scriptcase
@@ -388,14 +367,14 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         // ========== FIM AUTENTICA??O ZEND ==========
 
         if(!empty($grupos)){
-            $tblSGCacesso = new Sgcacesso();
+            $tblSGCacesso = new Autenticacao_Model_Sgcacesso();
             $rsSGCacesso = $tblSGCacesso->buscar(array("Cpf = ? "=>$auth->getIdentity()->usu_identificacao));
             if($rsSGCacesso->count() > 0){
                 $this->view->arrayGrupoProponente = array("gru_codigo"=>1111, "uog_orgao"=>2222, "gru_nome"=>"Proponente");
             }
         }
 
-    } // fecha m?todo perfil()
+    }
 
     /**
      * Monta a tela de retorno ao usuario
@@ -504,12 +483,6 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         $replaces[] = '';
         $replaces[] = '';
 
-        //ANTIGO METODO QUE GERAVA PDF UTILIZANDO A BIBLIOTECA DOMPDF
-//            $output = preg_replace($patterns,$replaces,$output);
-//            $pdf = new PDF($output, 'pdf');
-//            $pdf->gerarRelatorio('h');
-        //$this->view->dados = ManterpropostaeditalDAO::listarEditalResumo(array());
-
         //METODO QUE GERA PDF UTILIZANDO A BIBLIOTECA MPDF
         @$output = preg_replace($patterns,$replaces,utf8_encode($output));
         @$pdf=new mPDF('pt','A4',12,'',8,8,5,14,9,9,'P');
@@ -517,20 +490,6 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         @$pdf->charset_in='UTF-8';
         @$pdf->WriteHTML($output);
         @$pdf->Output();
-
-        //DEBUG
-//            $mtime = microtime();
-//            $mtime = explode(" ",$mtime);
-//            $mtime = $mtime[1] + $mtime[0];
-//            $starttime = $mtime;
-//            $mtime = microtime();
-//            $mtime = explode(" ",$mtime);
-//            $mtime = $mtime[1] + $mtime[0];
-//            $endtime = $mtime;
-//            $totaltime = ($endtime - $starttime);
-//            $pdf->WriteHTML("PDF Gerado em ".$totaltime." segundos");
-
-
     }
 
     public function gerarXlsAction(){
@@ -542,7 +501,6 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         header("Content-Disposition: inline; filename=file.xls;");
         echo $html;
     }
-
 
     public function html2PdfAction(){
         $orientacao = false;
@@ -605,7 +563,6 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
             }elseif($post->__get($tpBuscaData) == "UM"){
                 $arrBusca["{$cmpBD} >= ?"] = date("Y-m",strtotime("-1 month"))."-01 00:00:00";
-                //$arrBusca["{$cmpBD} <= ?"] = date("d/m/Y", mktime(0, 0, 0, date("m",  strtotime("-1 month"))+1, 0, date("Y")));
                 $arrBusca["{$cmpBD} <= ?"] = date("Y-m-d", mktime(0, 0, 0, date("m",  strtotime("-1 month"))+1, 0, date("Y")));
 
             }elseif($post->__get($tpBuscaData) == ""){
@@ -666,7 +623,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 if (strlen($idPronac) > 7){
                     $idPronac = Seguranca::dencrypt($idPronac);
                 }
-                $fnVerificarPermissao = new fnVerificarPermissao();
+                $fnVerificarPermissao = new Autenticacao_Model_FnVerificarPermissao();
                 $consulta = $fnVerificarPermissao->verificarPermissaoProjeto($idPronac, $idUsuarioLogado);
                 $permissao = $consulta->Permissao;
             }
@@ -677,17 +634,12 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
                 $idPreProjeto = $this->_request->getParam('idPreProjeto');
 
-                $fnVerificarPermissao = new fnVerificarPermissao();
+                $fnVerificarPermissao = new Autenticacao_Model_FnVerificarPermissao();
                 $consulta = $fnVerificarPermissao->verificarPermissaoProposta($idPreProjeto, $idUsuarioLogado);
                 $permissao = $consulta->Permissao;
             }
 
             if($administrativo){
-//                    $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
-//                    $fnVerificarPermissao = new fnVerificarPermissao();
-//                    $consulta = $fnVerificarPermissao->verificarPermissaoAdministrativo($idUsuarioLogado);
-//                    xd($consulta);
-//                    $permissao = $consulta->Permissao;
             }
 
             //Se o usuario nao tiver permissao pra acessar o Projeto / Proposta / Administrativo, exibe a msg de alerta.

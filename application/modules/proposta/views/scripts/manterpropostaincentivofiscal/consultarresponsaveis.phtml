@@ -3,9 +3,9 @@
         if(siVinculo == 1) {
             $("#confirmaracao").html('Deseja realmente rejeitar o vinculo?');
         } else if(siVinculo == 2) {
-            $("#confirmaracao").html('Deseja realmente vincular o respons�vel?');
+            $("#confirmaracao").html('Deseja realmente vincular o responsável?');
         } else if(siVinculo == 3) {
-            $("#confirmaracao").html('Deseja realmente desvincular o respons�vel? <br /><br /> As propostas/projetos estar�o sob sua responsabilidade!');
+            $("#confirmaracao").html('Deseja realmente desvincular o responsável? <br /><br /> As propostas/projetos estarão sob sua responsabilidade!');
         }
 
         $("#confirmaracao").dialog({
@@ -17,7 +17,7 @@
             closeOnEscape : false,
             title : 'Alerta!',
             buttons: {
-                'N�o': function() {
+                'Não': function() {
                     $(this).dialog('close');
                 },
                 'Sim': function() {
@@ -31,21 +31,21 @@
 
 <?php require_once "inc/menu_responsavel.inc.php"; // menu ?>
 
-<!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In�cio">In�cio</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">Início</a></li>
         <li><a href="<?php echo $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
-        <li class="last">Gerenciar respons�veis</li>
+        <li class="last">Gerenciar responsáveis</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
-<!-- ========== IN�CIO T�TULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
-    <div>Gerenciar respons�veis<span class="voltar"><a href="#" onclick="voltar();"></a></span></div>
+    <div>Gerenciar responsáveis<span class="voltar"><a href="#" onclick="voltar();"></a></span></div>
 </div>
-<!-- ========== FIM T�TULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 
 <div id="conteudo">
     <div id="confirmaracao" class="sumir"></div>
@@ -65,9 +65,9 @@
             </tr>
             <?php foreach($this->pendentes as $p){ ?>
             <tr>
-                <td align="left"><?php echo $p->NomeResponsavel; ?></td>
+                <td align="left"><?php echo utf8_encode($p->NomeResponsavel); ?></td>
                 <td align="center"><?php echo Mascara::addMaskCPF($p->CPFResponsavel); ?></td>
-                <td align="left"><?php echo $p->Proponente; ?></td>
+                <td align="left"><?php echo utf8_encode($p->Proponente); ?></td>
                 <td align="center">
                     <?php echo (strlen($p->CNPJCPFProponente) == 11) ? Mascara::addMaskCPF($p->CNPJCPFProponente) : Mascara::addMaskCNPJ($p->CNPJCPFProponente); ?>
                 </td>
@@ -95,7 +95,7 @@
             </tr>
             <?php } ?>
         </table>
-		
+
         <table class="tabela">
             <tr>
                 <td colspan="5" class="titulo_tabela" tabindex="1">RESPONS&Aacute;VEIS VINCULADOS</td>
@@ -110,9 +110,9 @@
             </tr>
             <?php foreach($this->vinculados as $v){ ?>
             <tr>
-                <td align="left"><?php echo $v->NomeResponsavel; ?></td>
+                <td align="left"><?php echo utf8_encode($v->NomeResponsavel); ?></td>
                 <td align="center"><?php echo Mascara::addMaskCPF($v->CPFResponsavel); ?></td>
-                <td align="left"><?php echo $v->Proponente; ?></td>
+                <td align="left"><?php echo utf8_encode($v->Proponente); ?></td>
                 <td align="center">
                     <?php echo (strlen($v->CNPJCPFProponente) == 11) ? Mascara::addMaskCPF($v->CNPJCPFProponente) : Mascara::addMaskCNPJ($v->CNPJCPFProponente); ?>
                 </td>
@@ -141,7 +141,7 @@
         </table>
     </fieldset>
 </div>
-<!-- ========== IN�CIO RODAP� DO CONTE�DO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP� DO CONTE�DO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 <br clear="all" />

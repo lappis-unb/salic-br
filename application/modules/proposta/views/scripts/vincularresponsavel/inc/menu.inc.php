@@ -1,6 +1,6 @@
-<!-- ========== INÕCIO MENU ========== -->
+<!-- ========== IN√çCIO MENU ========== -->
 <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
-<div id="menu"> 
+<div id="menu">
 
     <script type="text/javascript">
         $(function(){
@@ -14,10 +14,10 @@
         });
     </script>
 
-    <!-- inÌcio: conte˙do principal #container -->
+    <!-- in√≠cio: conte√∫do principal #container -->
     <div id="container">
 
-        <!-- inÌcio: navegaÁ„o local #qm0 -->
+        <!-- in√≠cio: navega√ß√£o local #qm0 -->
         <script type="text/javascript">
             function layout_fluido()
             {
@@ -41,7 +41,7 @@
         <div id="menuContexto">
             <div class="top"></div>
             <div id="qm0" class="qmmc sanfona">
-                <a class="no_seta last" target="_blank" href="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'consultarresponsavel')); 	?>" title="Ir para Consultar Respons·vel">Consultar Respons·vel </a>
+                <a class="no_seta last" target="_blank" href="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'consultarresponsavel')); 	?>" title="Ir para Consultar Respons√°vel">Consultar Respons√°vel </a>
             </div>
             <div class="bottom">
             </div>
@@ -50,7 +50,7 @@
         </div>
 
         <div id="alertar"></div>
-        <!-- final: navegaÁ„o local #qm0 -->
+        <!-- final: navega√ß√£o local #qm0 -->
     </div>
 </div>
 <!-- ========== FIM MENU ========== -->
