@@ -9,34 +9,42 @@ class AporteCaptacaoController extends GenericControllerNew
      * @see Zend_Controller_Action::init()
      */
     public function init() {
-
-        /* ========== INÕCIO PERFIL ==========*/
-        // define os grupos que tem acesso
+        $auth              = Zend_Auth::getInstance(); // pega a autenticacao
+        $Usuario           = new UsuarioDAO(); // objeto usuario
+        $GrupoAtivo        = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
         $PermissoesGrupo = array();
-        $PermissoesGrupo[] = 121; // TÈcnico de Acompanhamento
-        $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
-        $PermissoesGrupo[] = 123; // Coordenador - Geral de Acompanhamento
-        $PermissoesGrupo[] = 129; // TÈcnico de Acompanhamento
-        parent::perfil(1, $PermissoesGrupo); // perfil novo salic
+        
+        //Da permissao de acesso a todos os grupos do usuario logado
+        if(isset($auth->getIdentity()->usu_codigo)){
+            //Recupera todos os grupos do Usuario
+            $Usuario = new Usuario(); // objeto usu√°rio
+            $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
+            foreach ($grupos as $grupo){
+                $PermissoesGrupo[] = $grupo->gru_codigo;
+            }
+        }
+        
+        if (isset($auth->getIdentity()->usu_codigo)) {
+            parent::perfil(1, $PermissoesGrupo);
+        } else {
+            parent::perfil(4, $PermissoesGrupo);
+        }
 
-        // pega o idAgente do usu·rio logado
-        $auth = Zend_Auth::getInstance(); // pega a autenticaÁ„o
-        if (isset($auth->getIdentity()->usu_codigo)) // autenticacao novo salic
-        {
+        if (isset($auth->getIdentity()->usu_codigo)) {
+            // autenticacao novo salic
             $this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
             $this->getIdUsuario = ($this->getIdUsuario) ? $this->getIdUsuario['idAgente'] : 0;
-        }
-        else // autenticacao espaco proponente
-        {
+        } else {
+             // autenticacao espaco proponente
             $this->getIdUsuario = 0;
         }
         /* ========== FIM PERFIL ==========*/
 
         
-        /* ========== INÕCIO ”RG√O ========== */
-        $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess„o com o grupo ativo
+        /* ========== IN√çCIO √ìRG√ÉO ========== */
+        $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess√£o com o grupo ativo
         $this->getIdGrupo = $GrupoAtivo->codGrupo; // id do grupo ativo
-        $this->getIdOrgao = $GrupoAtivo->codOrgao; // id do Ûrg„o ativo
+        $this->getIdOrgao = $GrupoAtivo->codOrgao; // id do √≥rg√£o ativo
         parent::init();
     }
 
