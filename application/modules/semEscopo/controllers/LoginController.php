@@ -72,7 +72,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
             else {
 
                 // realiza a busca do usuï¿½rio no banco, fazendo a autenticaç?o do mesmo
-                $Usuario = new Sgcacesso();
+                $Usuario = new Autenticacao_Model_Sgcacesso();
                 $verificaStatus = $Usuario->buscar(array ( 'Cpf = ?' => $username));
 
                 $verificaSituacao = 0;
@@ -184,7 +184,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
 //                xd($dados);
 
 
-            $sgcAcesso = new Sgcacesso();
+            $sgcAcesso = new Autenticacao_Model_Sgcacesso();
             $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf));
             $sgcAcessoBuscaCpfArray = $sgcAcessoBuscaCpf->toArray();
 
@@ -258,7 +258,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
             $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf)); // recebe cpf
             $dataNasc = data::dataAmericana($post->dataNasc); // recebe dataNasc
             $email = $post->email; // recebe email
-            $sgcAcesso = new Sgcacesso();
+            $sgcAcesso = new Autenticacao_Model_Sgcacesso();
             $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf, "Email = ?" => $email, "DtNascimento = ?" => $dataNasc));
 
             $verificaUsuario = $sgcAcessoBuscaCpf->toArray();
@@ -346,7 +346,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
             $senhaAtual = str_replace("##maior##", ">", $senhaAtual);
             $senhaAtual = str_replace("##aspa##", "'", $senhaAtual);
 
-            $sgcAcesso = new Sgcacesso();
+            $sgcAcesso = new Autenticacao_Model_Sgcacesso();
 
             if ( empty ($_POST['idUsuario']) ) {
                 $idUsuario = $_POST['idUsuarioGet'];
@@ -589,7 +589,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
         $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
         /* ========== FIM ID DO USUÁRIO LOGADO ========== */
 
-        $sgcAcesso = new Sgcacesso();
+        $sgcAcesso = new Autenticacao_Model_Sgcacesso();
         $auth = Zend_Auth::getInstance();// instancia da autenticação
         $cpf = Mascara::delMaskCPF($auth->getIdentity()->Cpf);
         $buscarDados =  $sgcAcesso->buscar(array ('Cpf = ?' => $cpf))->current();
