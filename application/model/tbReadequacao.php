@@ -138,6 +138,38 @@ END dsSolicitacao,
         return $result;
     }
 
+
+    /**
+     * painelReadequacoesCoordenadorAcompanhamentoCount
+     *
+     * @param bool $where
+     * @param bool $filtro
+     * @since Alterada em 07/07/16
+     * @author Fernão <fernao.lara@cultura.gov.br>
+     * @access public
+     * @return int
+     */
+    public function painelReadequacoesCoordenadorAcompanhamentoCount($where=array(), $filtro = null)
+    {
+        $tbReadequacao = New tbReadequacao();
+        $total = null;
+        
+        switch($filtro){
+            case 'aguardando_distribuicao':
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAguardandoAnalise' , $where);
+                break;
+            case 'em_analise':
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoEmAnalise' , $where);
+                break;
+            case 'analisados':
+                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAnalisados' , $where);
+                break;
+        }
+
+        return $total;
+    }
+    
+    
     /**
      * painelReadequacoesCoordenadorAcompanhamento
      *

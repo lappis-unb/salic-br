@@ -1972,23 +1972,11 @@ class ReadequacoesController extends GenericControllerNew {
             $where['a.PRONAC = ?'] = $this->_request->getParam('pronac');
             $this->view->pronac = $this->_request->getParam('pronac');
         }
-        
+
         $tbReadequacao = New tbReadequacao();
         
-        $total = null;
-
-        switch($filtro){
-            case 'aguardando_distribuicao':
-                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAguardandoAnalise' , $where);
-                break;
-            case 'em_analise':
-                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoEmAnalise' , $where);
-                break;
-            case 'analisados':
-                $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAnalisados' , $where);
-                break;
-        }
-
+        $total = $tbReadequacao->painelReadequacoesCoordenadorAcompanhamentoCount($where, $filtro);
+        
         $fim = $inicio + $this->intTamPag;
 
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
@@ -2029,7 +2017,7 @@ class ReadequacoesController extends GenericControllerNew {
         if($this->idPerfil != 122 && $this->idPerfil != 123){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-
+        
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -2066,58 +2054,30 @@ class ReadequacoesController extends GenericControllerNew {
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
+        
         $where = array();
-
-        if (null !== $this->_request->getParam('tipoFiltro')) {
-            $filtro = $this->_request->getParam('tipoFiltro');
-            $this->view->filtro = $filtro;
-            switch ($filtro) {
-                case '':
-                    $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    $where['a.siEncaminhamento = ?'] = 1; // 1=Solicitado pelo proponente
-                    break;
-                case 'encaminhados':
-                    $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    $where['a.siEncaminhamento in (?)'] = array(4,5,7); // 4=Encaminhado para Parecerista/Técnico; 5=Devolvido do Parecerista para o Coordenador da Unidade de Análise; 7=Encaminhado para o Componente da Comissão
-                    $this->view->nmPagina = 'Em análise';
-                    break;
-                case 'analisados':
-                    $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    $where['a.siEncaminhamento in (?)'] = array(6,10); // 6=Devolvido da Unidade de Analise para o MinC; 10=Devolvido pelo Tecnico para o Coordenador
-                    $this->view->nmPagina = 'Analisados';
-                    break;
-            }
-        } else {
-            $this->view->nmPagina = 'Aguardando Análise';
-            $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-            $where['a.siEncaminhamento = ?'] = 1; // 1=Solicitado pelo proponente
-        }
-
-        if (null !== $this->_request->getParam('pronac')) {
-            $where['b.AnoProjeto+b.Sequencial = ?'] = $this->_request->getParam('pronac');
+        if ($this->_request->getParam('pronac')) {           
+            $where['a.PRONAC = ?'] = $this->_request->getParam('pronac');
             $this->view->pronac = $this->_request->getParam('pronac');
         }
-
-        $Orgaos = new Orgaos();
-        $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$this->idOrgao))->current();
-
-        if(isset($idSecretaria) && !empty($idSecretaria)){
-            if($idSecretaria->idSecretaria == 251){
-                $where['b.Area <> ?'] = 2;
-            } else if($idSecretaria->idSecretaria == 160){
-                $where['b.Area = ?'] = 2;
-            }
-        }
+        
+        $filtro = null;
+        if ($this->_request->getParam('tipoFiltro')) {
+            $filtro = $this->_request->getParam('tipoFiltro');
+        } else {
+            $filtro = 'aguardando_distribuicao';
+        }        
 
         $tbReadequacao = New tbReadequacao();
-        $total = $tbReadequacao->painelReadequacoes($where, $order, null, null, true);
+        
+        $total = $tbReadequacao->painelReadequacoesCoordenadorAcompanhamentoCount($where, $filtro);
+        
         $fim = $inicio + $this->intTamPag;
-
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
-
-        $busca = $tbReadequacao->painelReadequacoes($where, $order, $tamanho, $inicio);
-
+        
+        $busca = $tbReadequacao->painelReadequacoesCoordenadorAcompanhamento($where, $order, $tamanho, $inicio, null, $filtro);
+        
         $this->view->qtdRegistros = $total;
         $this->view->dados = $busca;
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
@@ -3933,7 +3893,7 @@ class ReadequacoesController extends GenericControllerNew {
         if(!$return && !$return2){
             parent::message("Não foi possível encaminhar a readequação para o Checklist de Publicação", "readequacoes/painel?tipoFiltro=analisados", "ERROR");
         }
-        parent::message("Readequação encaminhada com sucesso!", "readequacoes/painel?tipoFiltro=analisados", "CONFIRM");
+        parent::message("Readequação finalizada com sucesso!", "readequacoes/painel?tipoFiltro=analisados", "CONFIRM");
     }
 
 
