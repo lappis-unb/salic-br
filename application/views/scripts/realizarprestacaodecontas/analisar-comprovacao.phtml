@@ -51,8 +51,9 @@ function mascara($mask,$str){
                 <th colspan="3">NOME DO PROJETO</th>
             </tr>
             <tr>
-                <td colspan="3"><?php echo $this->projeto->PRONAC;?></td>
-                <td colspan="3"><?php echo $this->projeto->NomeProjeto;?></td>
+                <td colspan="3" align="center"><a href="<?php echo $this->baseUrl(); ?>/consultardadosprojeto?idPronac=<?php echo $this->projeto->IdPRONAC; ?>"><?php echo $this->projeto->PRONAC;?></a></td>
+                <td colspan="3" align="center"><?php echo $this->projeto->NomeProjeto;?></td>
+
             </tr>
         </tbody>
     </table>
