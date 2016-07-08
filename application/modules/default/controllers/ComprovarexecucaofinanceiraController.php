@@ -1732,16 +1732,19 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
 
         //Adicionado para ser usado como novo parametro do método pesquisarComprovantePorItem
         $idPronac = $this->getRequest()->getParam('idpronac');
+        $idComprovantePagamento = $this->getRequest()->getParam('idComprovantePagamento');
+        
         $planilhaItemModel = new PlanilhaItem();
         $produtoModel = new Produto();
         $etapaModel = new PlanilhaEtapa();
         $itemModel = new PlanilhaItem();
         
         $itemPlanilhaAprovacao = $planilhaItemModel->pesquisar($idPlanilhaAprovacao);
+        
         $produto = $produtoModel->find($itemPlanilhaAprovacao->idProduto)->current();
         $etapa = $etapaModel->find($itemPlanilhaAprovacao->idEtapa)->current();
         $item = $itemModel->find($itemPlanilhaAprovacao->idPlanilhaItem)->current();
-
+        
         $fornecedorModel = new FornecedorModel();
         $fornecedor = $fornecedorModel->pesquisarFornecedorItem($idPlanilhaAprovacao);
         if ($fornecedor) {
@@ -1754,8 +1757,8 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             $this->view->fornecedor = $fornecedor;
         }
 
-        $comprovanteParamentoModel = new ComprovantePagamento();
-        $comprovantesDePagamento = $comprovanteParamentoModel->pesquisarComprovantePorItem($item->idPlanilhaItens, $idPronac, $etapa->idPlanilhaEtapa, $itemPlanilhaAprovacao->idProduto, $itemPlanilhaAprovacao->idUFDespesa, $itemPlanilhaAprovacao->idMunicipioDespesa); //ID Recuperado
+        $comprovantePagamentoModel = new ComprovantePagamento();
+        $comprovantesDePagamento = $comprovantePagamentoModel->pesquisarComprovantePorItem($item->idPlanilhaItens, $idPronac, $etapa->idPlanilhaEtapa, $itemPlanilhaAprovacao->idProduto, $itemPlanilhaAprovacao->idUFDespesa, $itemPlanilhaAprovacao->idMunicipioDespesa); //ID Recuperado
         array_walk($comprovantesDePagamento, function(&$comprovanteDePagamento) use ($fornecedorModel) {
             $comprovanteDePagamento = (object) $comprovanteDePagamento;
             $fornecedor = $fornecedorModel
@@ -1782,7 +1785,7 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->view->itemPlanilhaAprovacao = $itemPlanilhaAprovacao;
         $this->view->comprovantes = $comprovantesDePagamento;
         $this->view->paises = $paises;
-
+        
         if ($this->getRequest()->isPost()) {
             $this->view->vlComprovado = filter_input(INPUT_POST, 'vlComprovado');
             $this->view->idAgente = filter_input(INPUT_POST, 'idAgente');
@@ -1795,6 +1798,28 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             $this->view->tpFormaDePagamento = filter_input(INPUT_POST, 'tpFormaDePagamento');
             $this->view->nrDocumentoDePagamento = filter_input(INPUT_POST, 'nrDocumentoDePagamento');
             $this->view->dsJustificativa = filter_input(INPUT_POST, 'dsJustificativa');
+        } else if ($idComprovantePagamento) {
+            $comprovanteAtualizar = $comprovantePagamentoModel->pesquisarComprovante($idComprovantePagamento)[0];
+            
+            $this->view->idComprovantePagamento = $idComprovantePagamento;
+            $this->view->vlComprovado = $comprovanteAtualizar['valorComprovado'];
+            $this->view->idAgente = $comprovanteAtualizar['idFornecedor'];
+            
+            $fornecedorModel = new FornecedorModel();
+            $fornecedor = $fornecedorModel->pesquisarFornecedor($comprovanteAtualizar['idFornecedor']);
+            $fornecedor->usaCnpj = 14 == strlen($fornecedor->CNPJCPF);
+            $this->view->CNPJCPF = $fornecedor->CNPJCPF;
+            $this->view->fornecedor = $fornecedor;
+            $this->view->Descricao = $fornecedor->Descricao;
+            $this->view->tpDocumento = $comprovanteAtualizar['tpDocumento'];
+            $this->view->idArquivo = $comprovanteAtualizar['idArquivo'];
+            $this->view->nomeArquivo = $comprovanteAtualizar['nmArquivo'];          
+            $this->view->nrComprovante = $comprovanteAtualizar['nrComprovante'];
+            $this->view->nrSerie = $comprovanteAtualizar['nrSerie'];
+            $this->view->dtEmissao = $comprovanteAtualizar['dtEmissao'];
+            $this->view->tpFormaDePagamento = $comprovanteAtualizar['tpFormaDePagamento'];
+            $this->view->nrDocumentoDePagamento = $comprovanteAtualizar['nrDocumentoDePagamento'];
+            $this->view->dsJustificativa = $comprovanteAtualizar['dsJustificativa'];
         }
 
         $this->view->idpronac = $this->getRequest()->getParam('idpronac');
@@ -1848,7 +1873,7 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->view->CNPJCPF = (14 == strlen($fornecedor->CNPJCPF)) ?
         	Mascara::addMaskCNPJ($fornecedor->CNPJCPF) : Mascara::addMaskCPF($fornecedor->CNPJCPF);
         $this->view->Descricao = $fornecedor->Descricao;
-
+        
         $dataEmissao = new DateTime(data::dataAmericana($comprovantePagamento->dtEmissao));
         $this->view->tpDocumento = $comprovantePagamento->tpDocumento;
         $this->view->nrComprovante = $comprovantePagamento->nrComprovante;

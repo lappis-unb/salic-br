@@ -5,9 +5,9 @@
 </style>
 
 <script type="text/javascript">
-    $(document).ready(function(){
-        $('#vlComprovado').priceFormat({limit: 8});
-    });
+  $(document).ready(function(){
+        $('#vlComprovado').priceFormat({limit: 8});  
+  });
 </script>
 
 <?php
@@ -40,6 +40,7 @@
         $urlArray,
         array('action' => 'cadastrarcomprovacaopagamento', 'itemId' => $this->itemPlanilhaAprovacao->idPlanilhaAprovacao)
     ));
+
     if ($this->idComprovantePagamento) {
         $formUrl = $this->url(array_merge(
             $urlArray,
@@ -208,10 +209,10 @@
                             <td style="width: 175px;">
                                 <select name="tpDocumento" id="tpDocumento">
                                     <?php
-                                        foreach ($this->tipoDocumentoConteudo as $key => $value) :
+                                       foreach ($this->tipoDocumentoConteudo as $key => $value) :
                                             $selected = $this->tpDocumento == $key ? 'selected="selected"' : null;
                                             echo "<option value='{$key}' {$selected}>{$value}</option>";
-                                        endforeach
+                                    endforeach;
                                     ?>
                                 </select>
                             </td>
@@ -258,7 +259,10 @@
                         <tr>
                             <td class="destacar" align="right"><b>Anexar Documentos<span style='color:red'>*</span></b></td>
                             <td colspan="2">
-                                <input type="file" name="arquivo" id="arquivo" value=""/>
+                              <input type="file" name="arquivo" id="arquivo" value=""/>
+			      <?php if ($this->idComprovantePagamento): ?>
+			      <input type="hidden" name="arquivo_edit" id="arquivo_edit" value="<?php echo $this->idArquivo; ?>"/>		      
+			      <?php endif; ?>
                             </td>
                             <td colspan="3">
                                 <a href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'abrir'), '', true); ?>?id=<?php echo $this->idArquivo; ?>"><?php echo $this->nomeArquivo; ?></a>
@@ -388,7 +392,11 @@
                     <?php if (!$this->vrSituacao || !$this->pagCompRecusado) : ?>
                     <a href="<?php echo $voltarHref; ?>" id="btnVoltar" style="text-decoration:none;"><input type="button" class="btn_voltar" /></a>
                     <?php endif; ?>
+		    <?php if ($this->idComprovantePagamento): ?>
+		    <input type="submit" name="frComprovarPagamentoSubmit" id="frComprovarPagamentoSubmit" value="" class="btn_salvar" />
+		    <?php else: ?>
                     <input type="submit" name="frComprovarPagamentoSubmit" id="frComprovarPagamentoSubmit" value="" class="btn_incluir" />
+		    <?php endif; ?>
                 </div>
             </form>
 
@@ -439,6 +447,19 @@
                             </td>
                             <td><?php echo $this->currency($comprovante->vlComprovacao); ?></td>
                             <td>
+                                <a
+                                    href="
+                                        <?php echo $this->url(
+                                                array(
+                                                    'controller' => 'comprovarexecucaofinanceira',
+                                                    'action' => 'comprovacaopagamento',
+                                                    'idComprovantePagamento' => $comprovante->idComprovantePagamento,
+                                                )
+                                            );
+                                        ?>"
+                                        >
+                                    <input type="button" value="" class="btn_editar" />
+                                </a>
                                 <a
                                     href="
                                         <?php echo $this->url(
@@ -545,8 +566,9 @@
             });
             return marcado;
         }
-        
+	
         function buscarFornecedor(este){
+	    console.log('buscarFornecedor()');
             if($(este).attr('idAgente') != undefined && $(este).attr('idAgente') && $(este).attr('idDescricao') != undefined && $(este).attr('idDescricao')){
                 var marcado = buscarRadioMarcado(este);
                 if((marcado == 'cpf' && $(este).val().length == 14) || (marcado == 'cnpj' && $(este).val().length == 18)){
@@ -791,7 +813,12 @@
             if (!$("#dtEmissao").val()) { msg += 'Informe a data de emissão do comprovante.<br />'; }
             if (!$("#tpFormaDePagamento").val() || 0 == $("#tpFormaDePagamento").val()) { msg += 'Selecione a forma de pagamento.<br />'; }
             if (!$("#nrDocumentoDePagamento").val()) { msg += 'Informe o número do Documento de pagamento.<br />'; }
-            if (!$("#arquivo").val()) { msg += 'Selecione um arquivo comprovante para envio.<br />'; }
+
+	    if ($("#idComprovantePagamento").val()) {
+		if (!$("#arquivo_edit").val()) { msg += 'Selecione um arquivo comprovante para envio.<br />'; }
+	    } else {
+		if (!$("#arquivo").val()) { msg += 'Selecione um arquivo comprovante para envio.<br />'; }
+	    }
             return msg;
         }
 
@@ -872,4 +899,8 @@
     }
 
     toggleTabelaComprovacaoPagamentoInvoice();
+
+    var cnpjcpf = document.getElementById('CNPJCPF');
+    mascaraCNPJCPF(cnpjcpf);
+
 </script>
