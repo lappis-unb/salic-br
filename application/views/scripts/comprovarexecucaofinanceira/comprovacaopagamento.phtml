@@ -85,6 +85,9 @@
                 <input type='hidden' name='idComprovantePagamento' id='idComprovantePagamento' value='<?php echo $this->idComprovantePagamento; ?>' />
                 <input type='hidden' name='idpronac' id='idpronac' value='<?php echo $this->idpronac; ?>' />
 
+		<?php if ($this->idComprovantePagamento): ?>
+                <input type='hidden' name='paginaRedirecionar' id='paginaRedirecionar' value='comprovacaopagamento' />
+		<?php endif; ?>
                 <table class="tabela">
                     <tr>
                         <th colspan="3">Vincular Item de Custo</th>

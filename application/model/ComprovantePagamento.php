@@ -283,14 +283,20 @@ class ComprovantePagamento extends GenericModel
     /**
      * 
      */
-    public function atualizar($status = 4)
+    public function atualizar($status = 4, $atualizarArquivo = true)
     {
     	$this->validarCadastrar();
 
-        $arquivoModel = new ArquivoModel();
-        $arquivoModel->deletar($this->arquivo);
-        $arquivoModel->cadastrar('arquivo');
-
+        // somente mexer no arquivo se houver um arquivo
+        if ($atualizarArquivo) {
+            $arquivoModel = new ArquivoModel();
+            $arquivoModel->deletar($this->arquivo);
+            $arquivoModel->cadastrar('arquivo');
+            $arquivoId = $arquivoModel->getId();
+        } else {
+            $arquivoId = $this->arquivo;
+        }
+        
         $this->update(
         	array(
         		'idFornecedor' => $this->fornecedor,
@@ -298,7 +304,7 @@ class ComprovantePagamento extends GenericModel
         		'nrComprovante' => $this->numero,
         		'nrSerie' => $this->serie,
         		'dtEmissao' => $this->dataEmissao->format('Y-m-d h:i:s'),
-        		'idArquivo' => $arquivoModel->getId(),
+        		'idArquivo' => $arquivoId,
         		'vlComprovacao' => $this->comprovanteValor,
         		'dtPagamento' => $this->comprovanteData->format('Y-m-d h:i:s'),
         		'dsJustificativa' => $this->comprovanteJustificativa,
@@ -527,7 +533,6 @@ class ComprovantePagamento extends GenericModel
         #die($select);
         $statement = $this->getAdapter()->query($select, array($item));
 
-
         return $statement->fetchAll();
     }
 
@@ -625,7 +630,7 @@ class ComprovantePagamento extends GenericModel
         $comprovantePlanilha = new ComprovantePagamentoxPlanilhaAprovacao();
         $comprovantePlanilha->update(
             array('stItemAvaliado' => $status), //aguardando analise
-            array('idComprovantePagamento = ?' => $idComprovantePagamento,)
+            array('idComprovantePagamento = ?' => $idComprovantePagamento)
         );
     }
 }

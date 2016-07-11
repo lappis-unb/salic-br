@@ -791,8 +791,13 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         try {
             //$this->verificarPermissaoAcesso(false, true, false);
             $request = $this->getRequest();
-            $idComprovantePagamento = $this->getRequest()->getParam('idComprovantePagamento');
-
+            $idComprovantePagamento = $request->getParam('idComprovantePagamento');
+            $paginaRedirecionar = $request->getParam('paginaRedirecionar');
+            $redirectsValidos = array('comprovacaopagamento');
+            if (!in_array($paginaRedirecionar, $redirectsValidos)) {
+                $paginaRedirecionar = 'comprovantes-recusados';
+            }
+            
             $comprovanteParamentoModel = new ComprovantePagamento();
             $comprovanteParamento = $comprovanteParamentoModel->find($idComprovantePagamento)->current();
 
@@ -812,8 +817,14 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                 $request->getParam('nrDocumentoDePagamento'),
                 $request->getParam('dsJustificativa')
             );
-            $comprovantePagamentoModel->atualizar();
-
+            
+            if($_FILES['arquivo']) {
+                $comprovantePagamentoModel->atualizar();
+            } else {
+                // nao atualiza arquivo se não houver novo upload
+                $comprovantePagamentoModel->atualizar(4, false);                               
+            }            
+            
             # View Parameters
             $this->view->comprovantePagamento = $comprovantePagamentoModel->toStdclass();
 
@@ -826,7 +837,7 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                     $this->view->url(
                         array(
                             'controller' => 'comprovarexecucaofinanceira',
-                            'action' => 'comprovantes-recusados',
+                            'action' => $paginaRedirecionar,
                             'idusuario' => $this->view->idusuario,
                             'idpronac' => $request->getParam('idpronac'),
                             'idComprovantePagamento' => $this->view->comprovantePagamento->comprovantePagamento,
@@ -1759,6 +1770,7 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
 
         $comprovantePagamentoModel = new ComprovantePagamento();
         $comprovantesDePagamento = $comprovantePagamentoModel->pesquisarComprovantePorItem($item->idPlanilhaItens, $idPronac, $etapa->idPlanilhaEtapa, $itemPlanilhaAprovacao->idProduto, $itemPlanilhaAprovacao->idUFDespesa, $itemPlanilhaAprovacao->idMunicipioDespesa); //ID Recuperado
+        
         array_walk($comprovantesDePagamento, function(&$comprovanteDePagamento) use ($fornecedorModel) {
             $comprovanteDePagamento = (object) $comprovanteDePagamento;
             $fornecedor = $fornecedorModel
@@ -1799,7 +1811,7 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             $this->view->nrDocumentoDePagamento = filter_input(INPUT_POST, 'nrDocumentoDePagamento');
             $this->view->dsJustificativa = filter_input(INPUT_POST, 'dsJustificativa');
         } else if ($idComprovantePagamento) {
-            $comprovanteAtualizar = $comprovantePagamentoModel->pesquisarComprovante($idComprovantePagamento)[0];
+            $comprovanteAtualizar = current($comprovantePagamentoModel->pesquisarComprovante($idComprovantePagamento));
             
             $this->view->idComprovantePagamento = $idComprovantePagamento;
             $this->view->vlComprovado = $comprovanteAtualizar['valorComprovado'];
