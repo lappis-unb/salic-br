@@ -182,6 +182,7 @@ $situacoes = array(
                 <td class="destacar bold" width="60">Situa&ccedil;&atilde;o</td>
                 <td>
                     <select name="tipoFiltro" style="width: 200px;" class="input_simples comboFiltro">
+<?php unset($situacoes['painel_do_tecnico']); ?>
 		      <?php foreach ($situacoes as $chave => $valor): ?>
 		      <option value="<?php echo $chave; ?>" <?php echo ($this->filtro == $chave) ? "selected" : ""; ?>><?php echo $valor; ?></option>
                       <?php endforeach; ?>
@@ -246,136 +247,17 @@ $situacoes = array(
     <?php } ?>
 
 
-    <?php if($this->qtdRegistros > 0){ ?>
-    <table class="tabela tablesorter">
-        <thead>
-            <tr class="titulo_tabela">
-                <th style="width: 80px;"><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=3&ordem='.$this->paginacao['novaOrdem'];?>">PRONAC</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">Nome do Projeto</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Tipo Readequação</a></th>
-		
-		<?php if ($this->filtro == 'aguardando_distribuicao' || $this->filtro == 'analisados'): ?> 
-		<th style="width: 130px;" nowrap><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Data Envio</a></th>
-		<?php endif; ?>
-
-		<?php if ($this->filtro == 'em_analise' || $this->filtro == 'analisados' || $this->filtro == 'painel_do_tecnico'): ?> 
-		<th style="width: 130px;" nowrap><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Data Distribuição</a></th>
-		<?php endif; ?>
-
-		<?php if ($this->filtro == 'analisados'): ?> 
-		<th style="width: 130px;" nowrap><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Data Devolução</a></th>
-		<?php endif; ?>
-		
-		<?php if ($this->filtro == 'aguardando_distribuicao'): ?>
-		<th>Qtd dias aguardando distribuição</th>
-		<?php endif; ?>
-		
-		<?php if ($this->filtro == 'em_analise'): ?>
-		<th>Qtd dias aguardando análise</th>
-		<?php endif; ?>
-
-		<?php if ($this->filtro == 'painel_do_tecnico'): ?>
-		<th>Qtde dias em avalia&ccedil;atilde;o</th>
-		<th>Dilig&ecirc;ncia</th>
-		<th>Avaliar</th>
-		<?php endif; ?>
-		
-		<?php if ($this->filtro == 'analisados'): ?>
-		<th>Qtd dias para distribuir</th>
-		<th>Qtd dias para avaliar</th>
-		<th>Total em dias para avaliar</th>
-		<?php endif; ?>
-		
-                <th style="width: 130px;">Visualizar</th>
-                <th style="width: 130px;">Encaminhar</th>
-
-		<?php if ($this->filtro == 'analisados'): ?>
-		<th>Finalizar</th>
-		<?php endif; ?>
-            </tr>
-        </thead>
-        <tbody>
-          <?php foreach($this->dados as $d): ?>
-          <tr>
-                <td align="center">
-                    <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($d->idPronac); ?>" target="_blank">
-                        <?php echo $d->PRONAC; ?>
-                    </a>
-                </td>
-
-		<td><?php echo $d->NomeProjeto; ?></td>
-		
-		<td><?php echo $d->tpReadequacao; ?></td>
-		
-		<?php if ($this->filtro == 'aguardando_distribuicao' || $this->filtro == 'analisados'): ?>
-		
-                <td align="center"><?php if ($d->dtEnvio == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtEnvio, 'Brasileira'); } ?></td>
-		<?php endif; ?>	
-		
-		<?php if ($this->filtro == 'em_analise' || $this->filtro == 'analisados' || $this->filtro == 'painel_do_tecnico'): ?>
-                <td align="center"><?php if ($d->dtDistribuicao == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtDistribuicao, 'Brasileira'); } ?></td>
-		<?php endif; ?>
-		
-		<?php if ($this->filtro == 'aguardando_distribuicao'): ?>
-		<td><?php echo $d->qtDiasAguardandoDistribuicao; ?></td>
-		<?php endif; ?>
-		
-		<?php if ($this->filtro == 'em_analise'): ?>
-		<td><?php echo $d->qtDiasEmAnalise; ?></td>
-		<?php endif; ?>
-
-		<?php if ($this->filtro == 'painel_do_tecnico'): ?>
-		<td><?php echo $d->qtDiasAvaliacao; ?></td>
-		
-		<?php if($this->idPerfil == 121): //FUNO CRIADA APENAS PARA O PARECERISTA E TECNICO DE ACOMPANHAMENTO ?>
-                 <td align="center" style="width: 1px;">
-                     <?php
-                         $tpDiligencia = 0;
-                         if($this->idPerfil == 94){ //Parecerista
-                             $tpDiligencia = 179;
-                         } else if($this->idPerfil == 121){ //Tcnico de Acompanhamento
-                             $tpDiligencia = 171;
-                         }
-                         
-                         $arrPrazo = $this->prazoRespostaDiligencia($d->idPronac, $tpDiligencia);
-                         $icone = $arrPrazo['iconeDiligencia']['icone'];
-                         $title = $arrPrazo['iconeDiligencia']['title']; ?>
-                         <a target="_blank" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $d->idPronac . '&situacao=E59&tpDiligencia='.$tpDiligencia; ?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
-                 </td>
-                 <?php endif; ?>
-		 <td>
-		   <input type="button" name="btn_avaliar" class="btn_avaliar avaliacaoParecerista" idReadequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>" title="Avaliar">
-		 </td>
-		 
-		<?php endif; ?>
-		
-		<?php if ($this->filtro == 'analisados'): ?>
-		<td><?php echo $d->dtDevolucao; ?></td>
-		<td><?php echo $d->qtDiasDistribuir; ?></td>
-		<td><?php echo $d->qtDiasAvaliar; ?></td>
-		<td><?php echo $d->qtTotalDiasAvaliar; ?></td>
-		<?php endif; ?>
-		
-                <td align="center">
-                    <input type="button" class="btn_ver" idReadequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>" />
-                </td>		
-
-                <td align="center">
-                  <input type="button" name="btn_encaminhar" class="btn_encaminhar enviarReadequacao" idDistRead="<?php echo $d->idDistribuirReadequacao; ?>" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar">
-		</td>
-		
-		<?php if ($this->filtro == 'analisados'): ?>
-		<td align="center">
-                  <input type="button" name="btn_finalizar" class="btn_finalizar" idDistProj="<?php echo $d->idDistribuirReadequacao; ?>" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Finalizar">
-		</td>
-		<?php endif; ?>
-		<!------------------------------- -->
-                		
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-
+    <?php if($this->qtdRegistros > 0): ?>
+<?php if($this->filtro == 'analisados'): ?>
+<?php echo $this->partial('readequacoes/partial/painel-readequacoes-analisados.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'conselheiros' => $this->conselheiros, 'paginacao' => $this->paginacao)); ?>
+<?php elseif($this->filtro == 'em_analise'): ?>
+                <?php echo $this->partial('readequacoes/partial/painel-readequacoes-emAnalise.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao)); ?>
+<?php elseif($this->filtro == 'aguardando_distribuicao'): ?>
+                <?php echo $this->partial('readequacoes/partial/painel-readequacoes-aguardandoDistribuicao.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao)); ?>
+<?php elseif($this->filtro == 'painel_do_tecnico'): ?>
+                <?php echo $this->partial('readequacoes/partial/painel-readequacoes-tecnico.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao)); ?>
+            <?php endif;?>
+    
     <?php if(count($this->dados)>0){ ?>
 
         <!-- ============ PAGINAÇÃO ============ -->
@@ -432,13 +314,13 @@ $situacoes = array(
     <?php } } ?>
 
 
-    <?php } else { ?>
+    <?php else: ?>
     <table class="tabela">
         <tr>
             <td align="center">Nenhum registro encontrado.</td>
         </tr>
     </table>
-    <?php } ?>
+    <?php endif; ?>
     <br clear="all" />
 
 </div>

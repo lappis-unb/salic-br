@@ -2324,9 +2324,8 @@ class ReadequacoesController extends GenericControllerNew {
                     $total = $tbReadequacao->count('vwPainelReadequacaoCoordenadorParecerAnalisados' , $where);
                     break;
             }
-        } else if ($this->idPerfil == 121) {
-            // técnico de acompanhamento
-            
+        } else if ($this->idPerfil == 121 || $this->idPerfil == 94) {
+            // técnico de acompanhamento ou parecerista de vinculada
             $total = $tbReadequacao->count('vwPainelReadequacaoTecnico', $where);
             
             $this->filtro = '';
@@ -2337,9 +2336,11 @@ class ReadequacoesController extends GenericControllerNew {
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
+        // coordenador de parecer
         if ($this->idPerfil == 93) {
             $busca = $tbReadequacao->painelReadequacoesCoordenadorParecer($where, $order, $tamanho, $inicio, false, $filtro);
-        } else if ($this->idPerfil == 121) {
+        } else if ($this->idPerfil == 121 || $this->idPerfil == 94) {
+            // técnico de acompanhamento ou parecerista de vinculada
             $busca = $tbReadequacao->painelReadequacoesTecnicoAcompanhamento($where, $order, $tamanho, $inicio, false);
         }
         

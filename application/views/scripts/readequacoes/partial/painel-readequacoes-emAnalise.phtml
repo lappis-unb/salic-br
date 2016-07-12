@@ -1,0 +1,43 @@
+    <table class="tabela tablesorter">
+        <thead>
+            <tr class="titulo_tabela">
+                <th style="width: 80px;"><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=3&ordem='.$this->paginacao['novaOrdem'];?>">PRONAC</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">Nome do Projeto</a></th>
+		<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Tipo Readequa&ccedil;&atilde;o</a></th>
+		
+		<th style="width: 130px;" nowrap><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Data Distribui&ccedil;&atilde;o</a></th>
+
+		<th>Qtd dias aguardando an&aacute;lise</th>
+		<th style="width: 130px;">Encaminhar</th>
+		<th>Finalizar</th>
+            </tr>
+        </thead>
+        <tbody>
+          <?php foreach($this->dados as $d): ?>
+          <tr>
+                <td align="center">
+                    <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($d->idPronac); ?>" target="_blank">
+                        <?php echo $d->PRONAC; ?>
+                    </a>
+                </td>
+
+		<td><?php echo $d->NomeProjeto; ?></td>
+		
+		<td><?php echo $d->tpReadequacao; ?></td>
+		
+        <td align="center"><?php if ($d->dtDistribuicao == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtDistribuicao, 'Brasileira'); } ?></td>
+	
+		<td align="center"><?php echo $d->qtDiasEmAnalise; ?></td>
+
+        <td align="center">
+                  <input type="button" name="btn_encaminhar" class="btn_encaminhar enviarReadequacao" idDistRead="<?php echo $d->idDistribuirReadequacao; ?>" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar">
+		</td>
+		
+		<td align="center">
+                  <input type="button" name="btn_finalizar" class="btn_finalizar" idDistProj="<?php echo $d->idDistribuirReadequacao; ?>" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Finalizar">
+		</td>
+                		
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
