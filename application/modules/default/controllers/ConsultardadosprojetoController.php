@@ -68,7 +68,6 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
         $auth = Zend_Auth::getInstance(); // pega a autentica��o
         $this->view->usuarioInterno = false;
 
-        #xd('11111111111');
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
             
@@ -81,8 +80,7 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
                 $PermissoesGrupo[] = $grupo->gru_codigo;
             }
         }
-
-        #xd('2222222222222222222222');
+        
         if (isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
             parent::perfil(1, $PermissoesGrupo);
             $this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
