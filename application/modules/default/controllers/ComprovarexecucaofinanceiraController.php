@@ -2554,4 +2554,46 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         $this->view->idpronac = $this->getRequest()->getParam('idpronac');
         $this->view->idusuario = Zend_Auth::getInstance()->getIdentity()->IdUsuario;
     }
+
+ 
+     /**
+      * Função criada a pedido da Área Finalistica em 13/04/2016
+      * @author: Fernão Lopes Ginez de Lara
+      * @access public
+      * @param void
+      * @return void
+      */
+    public function enviarcomprovacaopagamentoAction() {
+        $idPronac = $this->getRequest()->getParam('idPronac');
+        
+        try {
+            
+            $comprovantePagamentoModel = new ComprovantePagamentoxPlanilhaAprovacao();
+            $comprovantePagamento = $comprovantePagamentoModel->atualizarComprovanteRecusado($idPronac);
+            
+            $this->_helper->flashMessenger('Comprovantes enviados com sucesso!');
+            $this->_redirect(
+                str_replace(
+                    $this->view->baseUrl(),
+                    '',
+                    $this->view->url(
+                        array(
+                            'controller' => 'comprovarexecucaofinanceira',
+                            'action' => 'comprovantes-recusados',
+                            'idusuario' => $this->view->idusuario,
+                            'idpronac' => $idPronac,
+                        )
+                    )
+                )
+            );
+        } catch (Exception $e) {
+            $message = $e->getMessage();
+            if (strpos($e->getMessage(), 'DateTime::__construct()') !== false) {
+                $message = 'Não foi possível enviar os comprovantes de pagamento!';
+            }
+            $this->view->message = $message;
+            $this->view->message_type = 'ERROR';
+            $this->_forward('comprovacaopagamento-recusado');
+        }      
+    }
 }

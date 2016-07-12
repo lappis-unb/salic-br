@@ -536,41 +536,6 @@ class ComprovantePagamento extends GenericModel
         return $statement->fetchAll();
     }
 
-
-    /**
-     * Author: Fernao Lopes Ginez de Lara
-     * Descrição: Função criada a pedido da Área Finalistica em 13/04/2016
-     * @param $idPronac
-     */
-    public function atualizarComprovanteRecusado($idPronac) {
-      $db = Zend_Registry::get('db');
-      $db->setFetchMode(Zend_DB::FETCH_ASSOC);
-
-      try {
-	
-	$update = "UPDATE bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao
-                   SET stItemAvaliado = 4
-                   FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a
-                   INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b ON b.idComprovantePagamento = a.idComprovantePagamento
-                   INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c ON c.idPlanilhaAprovacao = a.idPlanilhaAprovacao
-                   WHERE stItemAvaliado = 3
-                   AND IdPRONAC = $idPronac";
-	
-	$db->fetchRow($update);
-	
-	$update2 = "UPDATE sac.dbo.tbDiligencia
-                    SET DtResposta = GETDATE(),
-                    RESPOSTA  = 'O PROPONENTE JÁ REALIZOU O AJUSTE DOS COMPROVANTES QUE HAVIAM SIDO RECUSADOS PELO MINISTÉRIO DA CULTURA.'
-                    WHERE idTipoDiligencia = 174 and idPronac = $idPronac AND stEstado = 0";
-
-	$db->fetchRow($update2);
-
-      } catch (Exception $e) {
-	die("ERRO: " . $e->getMessage());
-      }      
-    }      
-    
-
     /**
      * 
      */
