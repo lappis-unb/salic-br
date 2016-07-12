@@ -7,7 +7,7 @@
         <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=6&ordem='.$this->paginacao['novaOrdem'];?>">Data Solicita&ccedil;&atilde;o</a></th>
 	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Qtd. de dias aguardando distribui&ccedil;&atilde;o</a></th>
 	<th>Visualizar</th>
-        <th>Encaminhar</th>
+        <th>Avaliar</th>
     </tr>
 </thead>
 <tbody>
@@ -27,9 +27,9 @@
                 <input type="button" class="btn_ver" idReadequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>" />
             </td>
             <td align="left" style="width: 1px;" nowrap>
-                <input type="button" name="btn_avaliar" id="btn_avaliar" class="btn_encaminhar" readequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>"
+                <input type="button" name="btn_avaliar" class="btn_avaliar" readequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>"
                         pronac="<?php echo $d->PRONAC; ?>"
-                        nomeprojeto="<?php echo $d->NomeProjeto; ?>" title="Encaminhar">
+                        nomeprojeto="<?php echo $d->NomeProjeto; ?>" title="Avaliar">
             </td>
         </tr>
         <?php $count++;  ?>

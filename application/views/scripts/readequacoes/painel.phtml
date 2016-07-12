@@ -61,6 +61,11 @@
             window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'avaliar-readequacao')); ?>?id="+id + "&filtro=<?php echo $this->filtro; ?>";
         });
 
+        $('.btn_avaliar').click(function(){
+            var id = $(this).attr('readequacao');
+            window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'avaliar-readequacao')); ?>?id="+id + "&filtro=<?php echo $this->filtro; ?>";
+        });        
+
         $('.imgRegularidade').click(function(){
             var cpfcnpj = $(this).attr('cgccpf'),
                 pronac = $(this).attr('pronac');
