@@ -1,12 +1,3 @@
-<?php
-//$gmtDate = gmdate("D, d M Y H:i:s");
-//header("Expires: {$gmtDate} GMT");
-//header("Last-Modified: {$gmtDate} GMT");
-//header("Cache-Control: no-cache, must-revalidate");
-//header("Pragma: no-cache");
-header("Content-Type: text/html; charset=UTF-8", true);
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
     <head>
@@ -29,10 +20,10 @@ header("Content-Type: text/html; charset=UTF-8", true);
         <!-- End Piwik Code -->
         <?php } ?>
 
-        <title>Salic - Sistema de Apoio ‡s Leis de Incentivo ‡ Cultura</title>
+        <title>Salic - Sistema de Apoio √†s Leis de Incentivo √† Cultura</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="title" content="Sistema Salic" />
-        <meta name="description" content="Sistema de Apoio ‡s Leis de Incentivo ‡ Cultura" />
+        <meta name="description" content="Sistema de Apoio √†s Leis de Incentivo √† Cultura" />
         <link type="image/x-icon" rel="shortcut icon" href="<?php echo $this->baseUrl(); ?>/public/img/favicon.ico" />
         <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/geral.css" />
         <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/chrome.css" />
@@ -92,7 +83,7 @@ header("Content-Type: text/html; charset=UTF-8", true);
         <!-- Novo Manter Agentes -->
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/agentes.js"></script>
 
-        <!-- Realizar An·lise Projeto -->
+        <!-- Realizar An√°lise Projeto -->
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/realizaranaliseprojeto.js"></script>
 
         <link type="text/css" rel="stylesheet" media="screen" href="<?php echo $this->baseUrl(); ?>/public/css/recursos/importar.css" />
@@ -117,7 +108,7 @@ header("Content-Type: text/html; charset=UTF-8", true);
 
     <body>
 
-        <!-- ========== INÕCIO TOPO ========== -->
+        <!-- ========== IN√çCIO TOPO ========== -->
         <div id="topo">
             <div class="barra_governo">
                 <div class="fl">
@@ -158,7 +149,7 @@ header("Content-Type: text/html; charset=UTF-8", true);
                     closeOnEscape: false,
                     buttons:
                         {
-                        'N„o': function()
+                        'N√£o': function()
                         {
                             $(this).dialog('close');
                         },
@@ -169,7 +160,7 @@ header("Content-Type: text/html; charset=UTF-8", true);
                     }
                 });
                 $('.ui-dialog-titlebar-close').remove();
-            } // fecha funÁ„o logout()
+            } // fecha fun√ß√£o logout()
         </script>
 
 
@@ -180,13 +171,13 @@ header("Content-Type: text/html; charset=UTF-8", true);
         ?>
 
         <!-- ================================= -->
-        <!-- ========== INÕCIO MENU ========== -->
+        <!-- ========== IN√çCIO MENU ========== -->
         <!-- ================================= -->
         <div id="navglobal">
             <ul>
-                <li class="noOverHere"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), '', true); ?>" class="home" title="InÌcio"><span>InÌcio</span></a></li>
+                <li class="noOverHere"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), '', true); ?>" class="home" title="In√≠cio"><span>In√≠cio</span></a></li>
 
-                <!-- ========== INÕCIO MENU ADMINISTRATIVO ========== -->
+                <!-- ========== IN√çCIO MENU ADMINISTRATIVO ========== -->
                 <li>
                     <div id="div">
                         <div id="divleft"></div>
@@ -196,7 +187,7 @@ header("Content-Type: text/html; charset=UTF-8", true);
                                 <ul>
                                     <li><a href="<?php echo $this->url(array('module' => 'agente', 'controller' => 'agentes', 'action' => 'incluiragente'), '', true); ?>?menuLateral=false&acao=prop" title="Ir para Manter Agentes">Cadastrar Proponente</a></li>
                                     <?php if($this->idAgenteKeyLog != 0){ ?>
-                                    <li><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'consultarresponsaveis'), '', true, '', true); ?>" title="Ir para Aceitar vinculo">Gerenciar respons·veis</a></li>
+                                    <li><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'consultarresponsaveis'), '', true, '', true); ?>" title="Ir para Aceitar vinculo">Gerenciar respons√°veis</a></li>
                                     <?php } ?>
                                     <li><a href="<?php echo $this->url(array('controller' => 'procuracao', 'action' => 'index'),'',true); ?>">Procura&ccedil;&atilde;o</a></li>
 
@@ -211,7 +202,7 @@ header("Content-Type: text/html; charset=UTF-8", true);
 
 
 
-                <!-- ========== INÕCIO MENU PROPOSTA ========== -->
+                <!-- ========== IN√çCIO MENU PROPOSTA ========== -->
                 <li>
                     <div id="div">
                         <div id="divleft"></div>
@@ -231,7 +222,7 @@ header("Content-Type: text/html; charset=UTF-8", true);
 
 
 
-                <!-- ========== INÕCIO MENU PROJETO ========== -->
+                <!-- ========== IN√çCIO MENU PROJETO ========== -->
                 <li>
                     <div id="div">
                         <div id="divleft"></div>
@@ -252,12 +243,12 @@ header("Content-Type: text/html; charset=UTF-8", true);
 
 
 
-                <!-- ========== INÕCIO MENU PROTOCOLO ========== -->
+                <!-- ========== IN√çCIO MENU PROTOCOLO ========== -->
                 <li>
                     <div id="div">
                         <div id="divleft"></div>
                         <div id="divmenuprincipalcenter">
-                            <a href="#menu-usuarios" title="Ir para Usu·rio" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Usu·rio</a>
+                            <a href="#menu-usuarios" title="Ir para Usu√°rio" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Usu√°rio</a>
                             <div id="menu-usuarios" class="hidden">
                                 <ul>
                                     <li><a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'alterarsenha'), '', true); ?>" title="Ir para Alterar Senha">Alterar Senha</a></li>
@@ -313,7 +304,7 @@ header("Content-Type: text/html; charset=UTF-8", true);
 
 
 
-        <!-- ========== INÕCIO MENSAGENS (ERROS, CONFIRMA«’ES E ADVERT NCIAS) ========== -->
+        <!-- ========== IN√çCIO MENSAGENS (ERROS, CONFIRMA√á√ïES E ADVERT√äNCIAS) ========== -->
         <?php if (isset($this->message)) : ?>
         <div class="msg<?php echo $this->message_type; ?>">
             <div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msg<?php echo $this->message_type; ?>" onclick="$('.msg<?php echo $this->message_type; ?>').hide();" onkeypress="$('.msg<?php echo $this->message_type; ?>').hide();"/></div>
@@ -321,12 +312,12 @@ header("Content-Type: text/html; charset=UTF-8", true);
         </div>
         <?php endif; ?>
         <div id="novas_mensagens"></div>
-        <!-- ========== FIM MENSAGENS (ERROS, CONFIRMA«’ES E ADVERT NCIAS) ========== -->
+        <!-- ========== FIM MENSAGENS (ERROS, CONFIRMA√á√ïES E ADVERT√äNCIAS) ========== -->
 
 
 
-        <!-- ========== INÕCIO MENSAGENS DO PROJETO PARA O USU¡RIO ========== -->
+        <!-- ========== IN√çCIO MENSAGENS DO PROJETO PARA O USU√ÅRIO ========== -->
         <div class="msgALERT sumir">
-            <div>H· uma nova mensagem referente ao Pronac <span id="pronac"></span>! <a id="link">Clique aqui</a> para acess·-la.</div>
+            <div>H√° uma nova mensagem referente ao Pronac <span id="pronac"></span>! <a id="link">Clique aqui</a> para acess√°-la.</div>
         </div>
-        <!-- ========== FIM MENSAGENS DO PROJETO PARA O USU¡RIO ========== -->
+        <!-- ========== FIM MENSAGENS DO PROJETO PARA O USU√ÅRIO ========== -->
