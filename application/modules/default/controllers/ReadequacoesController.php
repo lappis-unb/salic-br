@@ -4048,4 +4048,36 @@ class ReadequacoesController extends GenericControllerNew {
         }
 
     }
+
+
+    /*
+     * Encaminhar para análise técnica
+     * Criada em 13/06/2016
+     * @author: Fernão Lopes Ginez de Lara fernao.lara@cultura.gov.br
+     * @access public
+     * @return void
+     */    
+    public function encaminharAnaliseTecnicaAction() {
+        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        if($this->idPerfil != 122 && $this->idPerfil != 123){
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+        }
+
+        $idReadequacao = Seguranca::dencrypt($this->_request->getParam('id'));
+
+        $tbReadequacao = new tbReadequacao();
+        $r = $tbReadequacao->buscarDadosReadequacoes(array('idReadequacao = ?'=>$idReadequacao))->current();
+
+        if($r){
+            $Projetos = new Projetos();
+            $p = $Projetos->buscarProjetoXProponente(array('idPronac = ?' => $r->idPronac))->current();
+
+            $this->view->filtro = $this->_request->getParam('filtro');
+            $this->view->readequacao = $r;
+            $this->view->projeto = $p;
+            $this->view->idPronac = $r->idPronac;
+        } else {
+            parent::message('Nenhum registro encontrado.', "readequacoes/painel", "ERROR");
+        }       
+    }    
 }

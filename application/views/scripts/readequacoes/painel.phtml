@@ -58,7 +58,7 @@
 
         $('.btn_encaminhar').click(function(){
             var id = $(this).attr('readequacao');
-            window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'avaliar-readequacao')); ?>?id="+id + "&filtro=<?php echo $this->filtro; ?>";
+            window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'encaminhar-analise-tecnica')); ?>?id="+id + "&filtro=<?php echo $this->filtro; ?>";
         });
 
         $('.btn_avaliar').click(function(){
