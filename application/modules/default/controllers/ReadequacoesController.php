@@ -4079,5 +4079,43 @@ class ReadequacoesController extends GenericControllerNew {
         } else {
             parent::message('Nenhum registro encontrado.', "readequacoes/painel", "ERROR");
         }       
+    }
+
+
+    /**
+     * formEncaminharAnaliseTecnicaAction Função utilizada pleo Coord. de Acompanhamento para encaminhar readequacao
+     *
+     * @since  Criada em 13/06/2016
+     * @author Fernão Lopes Ginez de Lara <fernao.lara@cultura.gov.br>
+     * @access public
+     * @return void
+     */
+    public function formEncaminharAnaliseTecnicaAction() {       
+        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        if($this->idPerfil != 122 && $this->idPerfil != 123){
+            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+        }
+        
+        $idReadequacao = $this->_request->getParam('idReadequacao');
+        $filtro = $this->_request->getParam('filtro');
+        
+        try {
+            $tbDistribuirReadequacao = new tbDistribuirReadequacao();
+            $dados = array(
+                'idReadequacao' => $idReadequacao,
+                'idUnidade' => $this->_request->getParam('vinculada'),
+                'DtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
+                'idAvaliador' => (null !== $this->_request->getParam('destinatario')) ? $this->_request->getParam('destinatario') : null,
+                'dtEnvioAvaliador' => !empty($dataEnvio) ? $dataEnvio : null,
+                'stValidacaoCoordenador' => $stValidacaoCoordenador,
+                'dsOrientacao' => $r->dsAvaliacao
+            );
+            $tbDistribuirReadequacao->inserir($dados);
+
+            parent::message('Dados salvos com sucesso!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
+        }
+        catch(Exception $e) {
+            parent::message('Erro ao encaminhar readequação!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
+        }
     }    
 }
