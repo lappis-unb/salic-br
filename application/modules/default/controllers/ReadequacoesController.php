@@ -4098,6 +4098,10 @@ class ReadequacoesController extends GenericControllerNew {
         
         $idReadequacao = $this->_request->getParam('idReadequacao');
         $filtro = $this->_request->getParam('filtro');
+        $dsOrientacao = $this->_request->getParam('dsAvaliacao');
+        $stValidacaoCoordenador = 0;
+        $dataEnvio = null;
+        $destinatario = (null !== $this->_request->getParam('destinatario')) ? $this->_request->getParam('destinatario') : null;
         
         try {
             $tbDistribuirReadequacao = new tbDistribuirReadequacao();
@@ -4105,11 +4109,12 @@ class ReadequacoesController extends GenericControllerNew {
                 'idReadequacao' => $idReadequacao,
                 'idUnidade' => $this->_request->getParam('vinculada'),
                 'DtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
-                'idAvaliador' => (null !== $this->_request->getParam('destinatario')) ? $this->_request->getParam('destinatario') : null,
-                'dtEnvioAvaliador' => !empty($dataEnvio) ? $dataEnvio : null,
+                'idAvaliador' => $destinatario,
+                'dtEnvioAvaliador' => new Zend_Db_Expr('GETDATE()'),
                 'stValidacaoCoordenador' => $stValidacaoCoordenador,
-                'dsOrientacao' => $r->dsAvaliacao
+                'dsOrientacao' => $dsOrientacao
             );
+            
             $tbDistribuirReadequacao->inserir($dados);
 
             parent::message('Dados salvos com sucesso!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
