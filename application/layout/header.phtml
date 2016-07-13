@@ -1,12 +1,3 @@
-<?php
-//$gmtDate = gmdate("D, d M Y H:i:s");
-//header("Expires: {$gmtDate} GMT");
-//header("Last-Modified: {$gmtDate} GMT");
-//header("Cache-Control: no-cache, must-revalidate");
-//header("Pragma: no-cache");
-header("Content-Type: text/html; charset=ISO-8859-1", true);
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
     <head>
@@ -28,10 +19,10 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
         <!-- End Piwik Code -->
         <?php } ?>
 
-        <title>Salic - Sistema de Apoio ‡s Leis de Incentivo ‡ Cultura</title>
+        <title>Salic - Sistema de Apoio √†s Leis de Incentivo √† Cultura</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="title" content="Sistema Salic" />
-        <meta name="description" content="Sistema de Apoio ‡s Leis de Incentivo ‡ Cultura" />
+        <meta name="description" content="Sistema de Apoio √†s Leis de Incentivo √† Cultura" />
         <link type="image/x-icon" rel="shortcut icon" href="<?php echo $this->baseUrl(); ?>/public/img/favicon.ico" />
         <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/geral.css" />
         <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/chrome.css" />
@@ -96,7 +87,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
         <!-- Novo Manter Agentes -->
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/agentes.js"></script>
 
-        <!-- Realizar An·lise Projeto -->
+        <!-- Realizar An√°lise Projeto -->
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/realizaranaliseprojeto.js"></script>
 
         <!-- Analisar Projeto Parecer -->
@@ -118,7 +109,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
             });
 
             /**
-             * FunÁ„o para mudar o perfil (Ûrg„o) do usu·rio
+             * Fun√ß√£o para mudar o perfil (√≥rg√£o) do usu√°rio
              */
             function alterarPerfil(GrupoOrgao){
                 grupo = GrupoOrgao.substring(0, (i = GrupoOrgao.indexOf(':')));
@@ -128,7 +119,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                 url+= '?codGrupo=' + grupo;
                 url+= '&codOrgao=' + orgao;
                 redirecionar(url);
-            } // fecha funÁ„o alterarPerfil()
+            } // fecha fun√ß√£o alterarPerfil()
         </script>
     </head>
 
@@ -183,7 +174,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                     resizable: false,
                     closeOnEscape: false,
                     buttons: {
-                        'N„o': function(){
+                        'N√£o': function(){
                             $(this).dialog('close');
                         },
                         'Sim': function(){
@@ -192,7 +183,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                     }
                 });
                 $('.ui-dialog-titlebar-close').remove();
-            } // fecha funÁ„o logout()
+            } // fecha fun√ß√£o logout()
         </script>
 
 
@@ -209,7 +200,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                         <div id="div">
                             <div id="divleft"></div>
                             <div id="divmenuprincipalcenter">
-                                <a href="#menu-analise" title="Ir para An·lise" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">An·lise</a>
+                                <a href="#menu-analise" title="Ir para An√°lise" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">An√°lise</a>
                                 <div id="menu-analise" class="hidden">
                                     <ul>
                                         <!--======= INICIO - ITENS DE MENU DA CNIC ============-->
@@ -235,7 +226,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                                         <?php } ?>
 
                                         <?php if(in_array($this->grupoAtivo, array(93,97,103,137))){ ?>
-                                            <li><a href="<?php echo $this->url(array('controller' => 'gerenciarpareceres', 'action' => 'imprimir-parecer-tecnico'), '', true); ?>" title="Ir para Imprimir Parecer TÈcnico">Imprimir Parecer TÈcnico</a></li>
+                                            <li><a href="<?php echo $this->url(array('controller' => 'gerenciarpareceres', 'action' => 'imprimir-parecer-tecnico'), '', true); ?>" title="Ir para Imprimir Parecer T√©cnico">Imprimir Parecer T√©cnico</a></li>
                                         <?php } ?>
 
                                         <?php if(in_array($this->grupoAtivo, array(103))){ ?>
@@ -247,8 +238,8 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                                         <?php } ?>
 
                                         <?php if(in_array($this->grupoAtivo, array(103,110,127))){ ?>
-                                            <li><a href="<?php echo $this->url(array('controller' => 'checklistpublicacao', 'action' => 'listas'), '', true); ?>" title="Ir para CheckList de PublicaÁ„o">CheckList para PublicaÁ„o</a></li>
-                                            <li><a href="#" title="Ir para Certidıes Negativas" onclick="javascript:window.open('<?php echo $this->url(array('controller' => 'manterregularidadeproponente', 'action' => 'index')); ?>')" >Certidıes Negativas</a></li>
+                                            <li><a href="<?php echo $this->url(array('controller' => 'checklistpublicacao', 'action' => 'listas'), '', true); ?>" title="Ir para CheckList de Publica√ß√£o">CheckList para Publica√ß√£o</a></li>
+                                            <li><a href="#" title="Ir para Certid√µes Negativas" onclick="javascript:window.open('<?php echo $this->url(array('controller' => 'manterregularidadeproponente', 'action' => 'index')); ?>')" >Certid√µes Negativas</a></li>
                                         <?php } ?>
 
                                         <?php if(in_array($this->grupoAtivo, array(128))){ ?>
@@ -257,11 +248,11 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                                         <?php } ?>
 
                                         <?php if(in_array($this->grupoAtivo, array(142))){ ?>
-                                                <li><a href="<?php echo $this->url(array('controller' => 'cadastrar-projeto', 'action' => 'index'), '', true); ?>" title="Ir para Avaliar Projeto Comiss„o">Cadastrar Projetos FNC</a></li>
+                                                <li><a href="<?php echo $this->url(array('controller' => 'cadastrar-projeto', 'action' => 'index'), '', true); ?>" title="Ir para Avaliar Projeto Comiss√£o">Cadastrar Projetos FNC</a></li>
                                         <?php } ?>
 
                                         <?php if(in_array($this->grupoAtivo, array(120))){ ?>
-                                        <li><a href="<?php echo $this->url(array('controller' => 'mantercalendariocnic', 'action' => 'index'), '', true); ?>" title="Ir para Gerenciar Calend·rio CNIC">Calend·rio CNIC</a></li>
+                                        <li><a href="<?php echo $this->url(array('controller' => 'mantercalendariocnic', 'action' => 'index'), '', true); ?>" title="Ir para Gerenciar Calend√°rio CNIC">Calend√°rio CNIC</a></li>
                                         <?php } ?>
 
                                         <?php if(in_array($this->grupoAtivo, array(93))){ ?>
@@ -269,15 +260,15 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                                         <?php } ?>
 
                                         <?php if(in_array($this->grupoAtivo, array(94))){ ?>
-                                        <li><a href="<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'index'), '', true); ?>" title="Ir para An·lise TÈcnica">An·lise TÈcnica Inicial</a></li>
+                                        <li><a href="<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'index'), '', true); ?>" title="Ir para An√°lise T√©cnica">An√°lise T√©cnica Inicial</a></li>
                                         <?php } ?>
 
                                         <?php if(in_array($this->grupoAtivo, array(143))){ ?>
-                                        <li><a href="<?php echo $this->url(array('controller' => 'aprovacaoeparecer', 'action' => 'index'), '', true); ?>" title="Ir para Imprimir Parecer TÈcnico">Parecer TÈcnico FNC</a></li>
+                                        <li><a href="<?php echo $this->url(array('controller' => 'aprovacaoeparecer', 'action' => 'index'), '', true); ?>" title="Ir para Imprimir Parecer T√©cnico">Parecer T√©cnico FNC</a></li>
                                         <?php } ?>
 
                                         <?php if(in_array($this->grupoAtivo, array(141,142))){ ?>
-                                        <li><a href="<?php echo $this->url(array('controller' => 'aprovacaoeparecer', 'action' => 'index'), '', true); ?>" title="Ir para Imprimir Parecer TÈcnico">Aprova&ccedil;&atilde;o FNC</a></li>
+                                        <li><a href="<?php echo $this->url(array('controller' => 'aprovacaoeparecer', 'action' => 'index'), '', true); ?>" title="Ir para Imprimir Parecer T√©cnico">Aprova&ccedil;&atilde;o FNC</a></li>
                                         <?php } ?>
 
                                         <?php if(in_array($this->grupoAtivo, array(103,127))){ ?>
@@ -317,30 +308,30 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                             <div id="menu-acompanhamento" class="hidden">
                                 <ul>
                                     <?php if(in_array($this->grupoAtivo, array(103,110,121,122,123,127))){ ?>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'checklistpublicacao', 'action' => 'listas'), '', true); ?>" title="Ir para CheckList de PublicaÁ„o">CheckList para PublicaÁ„o</a></li>
+                                    <li><a href="<?php echo $this->url(array('controller' => 'checklistpublicacao', 'action' => 'listas'), '', true); ?>" title="Ir para CheckList de Publica√ß√£o">CheckList para Publica√ß√£o</a></li>
                                     <?php } ?>
 
-                                    <?php if (($this->orgaoAtivo == 272 || $this->orgaoAtivo == 166) && ($this->grupoAtivo == 121 || $this->grupoAtivo == 122 || $this->grupoAtivo == 123 || $this->grupoAtivo == 129)) : // restringe ao Ûrg„o SACAV && CAP ?>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'resultado-extrato-de-conta-captacao'), '', true); ?>" title="Ir para MovimentaÁ„o Banc·ria">MovimentaÁ„o Banc·ria</a></li>
+                                    <?php if (($this->orgaoAtivo == 272 || $this->orgaoAtivo == 166) && ($this->grupoAtivo == 121 || $this->grupoAtivo == 122 || $this->grupoAtivo == 123 || $this->grupoAtivo == 129)) : // restringe ao √≥rg√£o SACAV && CAP ?>
+                                    <li><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'resultado-extrato-de-conta-captacao'), '', true); ?>" title="Ir para Movimenta√ß√£o Banc√°ria">Movimenta√ß√£o Banc√°ria</a></li>
                                     <?php endif; ?>
 
                                       <!--=======  TEC. DE ACOMPANHAMENTO / COORD. ADMISSIBLIDADE / TECNICO ADMISSBILIDADE ============-->
                                     <?php if(in_array($this->grupoAtivo, array(108,121,122,123,124,125,134,135,138,139))){ ?>
-                                    <li><a href="#" title="Ir para Certidıes Negativas" onclick="javascript:window.open('<?php echo $this->url(array('controller' => 'manterregularidadeproponente', 'action' => 'index')); ?>')" >Certidıes Negativas</a></li>
+                                    <li><a href="#" title="Ir para Certid√µes Negativas" onclick="javascript:window.open('<?php echo $this->url(array('controller' => 'manterregularidadeproponente', 'action' => 'index')); ?>')" >Certid√µes Negativas</a></li>
                                     <?php } ?>
 
                                     <?php if(in_array($this->grupoAtivo, array(122,123))){ ?>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'analisarexecucaofisica', 'action' => 'projetos'), '', true); ?>" title="Analisar RelatÛrios Trimestrais">Analisar RelatÛrios Trimestrais</a></li>
+                                    <li><a href="<?php echo $this->url(array('controller' => 'analisarexecucaofisica', 'action' => 'projetos'), '', true); ?>" title="Analisar Relat√≥rios Trimestrais">Analisar Relat√≥rios Trimestrais</a></li>
                                     <?php } ?>
 
                                     <?php if(in_array($this->grupoAtivo, array(93))){ ?>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'verificarreadequacaodeprojeto', 'action' => 'verificarreadequacaodeprojetocoordparecerista'), '', true); ?>" title="Verificar ReadequaÁ„o de Projetos">Verificar ReadequaÁ„o de Projeto</a></li>
+                                    <li><a href="<?php echo $this->url(array('controller' => 'verificarreadequacaodeprojeto', 'action' => 'verificarreadequacaodeprojetocoordparecerista'), '', true); ?>" title="Verificar Readequa√ß√£o de Projetos">Verificar Readequa√ß√£o de Projeto</a></li>
                                     <li><a href="<?php echo $this->url(array('controller' => 'gerenciarparecer', 'action' => 'enviarpagamento'), '', true); ?>" title="Enviar Pareceres para Pagamento">Enviar Pareceres para Pagamento</a></li>
                                     <?php } ?>
 
                                     <?php /*if ($this->grupoAtivo == 94) : ?>
                                     <li><a href="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'confirmacao-pagamento-parecerista'), '', true); ?>" title="Meus pagamentos">Meus Pagamentos</a></li>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'verificarreadequacaodeprojeto', 'action' => 'verificarreadequacaodeprojetoparecerista'), '', true); ?>" title="Verificar ReadequaÁ„o de Projetos">Verificar ReadequaÁ„o de Projeto</a></li>
+                                    <li><a href="<?php echo $this->url(array('controller' => 'verificarreadequacaodeprojeto', 'action' => 'verificarreadequacaodeprojetoparecerista'), '', true); ?>" title="Verificar Readequa√ß√£o de Projetos">Verificar Readequa√ß√£o de Projeto</a></li>
                                     <?php endif;*/ ?>
 
                                     <?php if(in_array($this->grupoAtivo, array(94))){ ?>
@@ -348,7 +339,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                                     <?php } ?>
 
                                     <?php if(in_array($this->grupoAtivo, array(121,129))){ ?>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'analisarexecucaofisicatecnico', 'action' => 'index'), '', true); ?>" title="Analisar RelatÛrios Trimestrais">Analisar RelatÛrios Trimestrais</a></li>
+                                    <li><a href="<?php echo $this->url(array('controller' => 'analisarexecucaofisicatecnico', 'action' => 'index'), '', true); ?>" title="Analisar Relat√≥rios Trimestrais">Analisar Relat√≥rios Trimestrais</a></li>
                                     <?php } ?>
 
                                     <?php if(in_array($this->grupoAtivo, array(134,135))){ ?>
@@ -432,10 +423,10 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                                     <?php endif; ?>
 
                                     <?php if ($this->grupoAtivo == 97) : ?>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'mantertermodecisao', 'action' => 'index'), '', true); ?>" title="Pareceristas">Manter Termo de Decis„o</a></li>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'mantersecretarioorgao', 'action' => 'index'), '', true); ?>" title="Pareceristas">Manter Secret·rio</a></li>
+                                    <li><a href="<?php echo $this->url(array('controller' => 'mantertermodecisao', 'action' => 'index'), '', true); ?>" title="Pareceristas">Manter Termo de Decis√£o</a></li>
+                                    <li><a href="<?php echo $this->url(array('controller' => 'mantersecretarioorgao', 'action' => 'index'), '', true); ?>" title="Pareceristas">Manter Secret√°rio</a></li>
                                     <li><a href="<?php echo $this->url(array('controller' => 'comunicados', 'action' => 'index'), '', true); ?>" title="Ir para Comunicados">Comunicados</a></li>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'analisarsituacaoitem', 'action' => 'index'), '', true); ?>" title="Ir para An·lise de SolicitaÁ„o de Item">Analisar SolicitaÁ„o de Item</a></li>
+                                    <li><a href="<?php echo $this->url(array('controller' => 'analisarsituacaoitem', 'action' => 'index'), '', true); ?>" title="Ir para An√°lise de Solicita√ß√£o de Item">Analisar Solicita√ß√£o de Item</a></li>
                                     <?php endif; ?>
                                 </ul>
                             </div>
@@ -519,7 +510,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 
 
 
-				<!-- ========== INÕCIO MENU PROTOCOLO ========== -->
+				<!-- ========== IN√çCIO MENU PROTOCOLO ========== -->
 				<?php if(in_array($this->grupoAtivo, array(90,91,97,104,109,115))){ ?>
 				<li>
                     <div id="div">
@@ -563,7 +554,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                                     <li><a href="<?php echo $this->url(array('controller' => 'anexardocumentosminc', 'action' => 'index'), '', true); ?>" title="Anexar Documentos">Anexar Documentos</a></li>
                                     <li><a href="<?php echo $this->url(array('controller' => 'anexardocumentosminc', 'action' => 'excluir'), '', true); ?>" title="Excluir Documentos">Excluir Documentos</a></li>
                                     <li><a href="<?php echo $this->url(array('controller' => 'rastrearagente', 'action' => 'index'), '', true); ?>" title="Ir para Rastrear Agente">Rastrear Agente</a></li>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'localizacao-fisica', 'action' => 'index'), '', true); ?>" title="LocalizaÁ„o FÌsica do Projeto">LocalizaÁ„o FÌsica do Projeto</a></li>
+                                    <li><a href="<?php echo $this->url(array('controller' => 'localizacao-fisica', 'action' => 'index'), '', true); ?>" title="Localiza√ß√£o F√≠sica do Projeto">Localiza√ß√£o F√≠sica do Projeto</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -594,12 +585,12 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 
                                       <!--=======  TEC. DE ACOMPANHAMENTO / COORD. ADMISSIBLIDADE / TECNICO ADMISSBILIDADE ============-->
                                     <?php if(in_array($this->grupoAtivo, array(92,97,131))){ ?>
-                                    <li><a href="#" title="Ir para Certidıes Negativas" onclick="javascript:window.open('<?php echo $this->url(array('controller' => 'manterregularidadeproponente', 'action' => 'index')); ?>')" >Certidıes Negativas</a></li>
+                                    <li><a href="#" title="Ir para Certid√µes Negativas" onclick="javascript:window.open('<?php echo $this->url(array('controller' => 'manterregularidadeproponente', 'action' => 'index')); ?>')" >Certid√µes Negativas</a></li>
                                     <?php } ?>
 
                                     <?php if(in_array($this->grupoAtivo, array(97,131))){ ?>
                                     <li><a href='<?php echo $this->url(array('controller' => 'admissibilidade', 'action' => 'gerenciaranalistas')); ?>'>Gerenciar Analistas</a></li>
-                                    <li><a href='<?php echo $this->url(array('controller' => 'admissibilidade', 'action' => 'redistribuiranalise')); ?>'>Redistribuir An·lise</a></li>
+                                    <li><a href='<?php echo $this->url(array('controller' => 'admissibilidade', 'action' => 'redistribuiranalise')); ?>'>Redistribuir An√°lise</a></li>
                                     <li><a href='<?php echo $this->url(array('controller' => 'admissibilidade', 'action' => 'gerenciamentodepropostas')); ?>'>Gerenciar Proposta</a></li>
                                     <?php } ?>
 
@@ -627,7 +618,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 							<div id="menu-parecer" class="hidden">
 								<ul>
 									<?php if (($this->grupoAtivo == 137 || $this->grupoAtivo == 93)) : ?>
-									<li><a href="<?php echo $this->url(array('controller' => 'gerarrelatorioparecerista', 'action' => 'aguardandoparecer'), '', true); ?>" title="GERAR RELAT”RIOS DE PARECERISTA">Gerar RelatÛrios de Parecerista</a></li>
+									<li><a href="<?php echo $this->url(array('controller' => 'gerarrelatorioparecerista', 'action' => 'aguardandoparecer'), '', true); ?>" title="GERAR RELAT√ìRIOS DE PARECERISTA">Gerar Relat√≥rios de Parecerista</a></li>
 									<?php endif; ?>
 
 									<?php if (($this->grupoAtivo == 137)) : ?>
@@ -639,11 +630,11 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 									<?php endif; ?>
 
 									<?php /* if ($this->grupoAtivo == 93) : ?>
-									<li><a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'painelferias'), '', true); ?>" title="Pedidos de FÈrias dos Pareceristas">Pedidos de FÈrias dos Pareceristas</a></li>
+									<li><a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'painelferias'), '', true); ?>" title="Pedidos de F√©rias dos Pareceristas">Pedidos de F√©rias dos Pareceristas</a></li>
 									<?php endif; */ ?>
 
 									<?php if ($this->grupoAtivo == 137) : ?>
-									<!--<li><a href="<?php echo $this->url(array('controller' => 'consultarpareceristas', 'action' => 'consultardadospareceristas'), '', true); ?>" title="Ir para Consultar Parecerista"> RelatÛrio </a></li>-->
+									<!--<li><a href="<?php echo $this->url(array('controller' => 'consultarpareceristas', 'action' => 'consultardadospareceristas'), '', true); ?>" title="Ir para Consultar Parecerista"> Relat√≥rio </a></li>-->
 									<?php endif; ?>
 
 								</ul>
@@ -658,46 +649,46 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 
 
 
-				<!-- ========== INICIO MENU PRESTA«√O DE CONTAS ========== -->
+				<!-- ========== INICIO MENU PRESTA√á√ÉO DE CONTAS ========== -->
                 <?php if(in_array($this->grupoAtivo, array(100,124,125,126,132))){ ?>
                     <li>
                         <div id="div">
                             <div id="divleft"></div>
                             <div id="divmenuprincipalcenter">
-                                <a href="#menu-prestacaocontas" title="Ir para PrestaÁ„o de Contas" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">PrestaÁ„o de Contas</a>
+                                <a href="#menu-prestacaocontas" title="Ir para Presta√ß√£o de Contas" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Presta√ß√£o de Contas</a>
                                 <div id="menu-prestacaocontas" class="hidden">
                                     <ul>
                                         <?php if ($this->grupoAtivo == 126) : ?>
-                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'painel'), '', true); ?>" title="Ir para PrestaÁ„o de Contas">Analisar PrestaÁ„o de Contas</a></li>
+                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'painel'), '', true); ?>" title="Ir para Presta√ß√£o de Contas">Analisar Presta√ß√£o de Contas</a></li>
                                         <?php endif; ?>
 
                                         <?php if ($this->grupoAtivo == 125) : ?>
-                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'painel'), '', true); ?>" title="Ir para PrestaÁ„o de Contas">Analisar PrestaÁ„o de Contas</a></li>
+                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'painel'), '', true); ?>" title="Ir para Presta√ß√£o de Contas">Analisar Presta√ß√£o de Contas</a></li>
                                             <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'manter-assinantes'), '', true); ?>" title="Ir para Assinantes">Assinantes</a></li>
                                         <?php endif; ?>
 
                                         <?php if ($this->grupoAtivo == 124) : ?>
-                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'tecnicoprestacaocontas'), '', true); ?>" title="Ir para PrestaÁ„o de Contas">Analisar PrestaÁ„o de Contas</a></li>
+                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'tecnicoprestacaocontas'), '', true); ?>" title="Ir para Presta√ß√£o de Contas">Analisar Presta√ß√£o de Contas</a></li>
                                         <?php endif; ?>
 
                                         <?php if ($this->orgaoAtivo == 12) : ?>
-                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'conjurprestacaocontas'), '', true); ?>" title="Ir para PrestaÁ„o de Contas">Analisar PrestaÁ„o de Contas</a></li>
+                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'conjurprestacaocontas'), '', true); ?>" title="Ir para Presta√ß√£o de Contas">Analisar Presta√ß√£o de Contas</a></li>
                                         <?php endif; ?>
 
                                         <?php if ($this->orgaoAtivo == 177) : ?>
-                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'aeciprestacaocontas'), '', true); ?>" title="Ir para PrestaÁ„o de Contas">Analisar PrestaÁ„o de Contas</a></li>
+                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'aeciprestacaocontas'), '', true); ?>" title="Ir para Presta√ß√£o de Contas">Analisar Presta√ß√£o de Contas</a></li>
                                         <?php endif; ?>
 
                                         <?php if ($this->grupoAtivo == 132) : ?>
-                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'chefedivisaoprestacaocontas'), '', true); ?>" title="Ir para PrestaÁ„o de Contas">Analisar PrestaÁ„o de Contas</a></li>
+                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'chefedivisaoprestacaocontas'), '', true); ?>" title="Ir para Presta√ß√£o de Contas">Analisar Presta√ß√£o de Contas</a></li>
                                         <?php endif; ?>
 
                                         <?php if ($this->grupoAtivo == 93) : ?>
-                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'coordenadorpareceristaprestacaocontas'), '', true); ?>" title="Ir para PrestaÁ„o de Contas">Analisar PrestaÁ„o de Contas</a></li>
+                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'coordenadorpareceristaprestacaocontas'), '', true); ?>" title="Ir para Presta√ß√£o de Contas">Analisar Presta√ß√£o de Contas</a></li>
                                         <?php endif; ?>
 
                                         <?php if ($this->grupoAtivo == 94 || ($this->grupoAtivo == 93)) : ?>
-                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'pareceristaprestacaocontas'), '', true); ?>" title="Ir para PrestaÁ„o de Contas">Analisar PrestaÁ„o de Contas</a></li>
+                                            <li><a href="<?php echo $this->url(array('controller' => 'realizarprestacaodecontas', 'action' => 'pareceristaprestacaocontas'), '', true); ?>" title="Ir para Presta√ß√£o de Contas">Analisar Presta√ß√£o de Contas</a></li>
                                         <?php endif; ?>
 
                                         <?php if(in_array($this->grupoAtivo, array(126))){ ?>
@@ -714,9 +705,9 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                         </div>
                     </li>
                 <?php } ?>
-				<!-- ========== FIM MENU PRESTA«√O DE CONTAS ========== -->
+				<!-- ========== FIM MENU PRESTA√á√ÉO DE CONTAS ========== -->
 
-				<!-- ========== INICIO MENU MOVIMENTA«√O BANC¡RIA ========== -->
+				<!-- ========== INICIO MENU MOVIMENTA√á√ÉO BANC√ÅRIA ========== -->
 				<?php /*
 				if ($this->grupoAtivo    == 121
 					|| $this->grupoAtivo == 122
@@ -727,7 +718,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 					<div id="div">
 						<div id="divleft"></div>
 						<div id="divmenuprincipalcenter">
-							<a href="#menu-movimentacaobancaria" title="Ir para MovimentaÁ„o Banc·ria" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">MovimentaÁ„o Banc·ria</a>
+							<a href="#menu-movimentacaobancaria" title="Ir para Movimenta√ß√£o Banc√°ria" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Movimenta√ß√£o Banc√°ria</a>
 							<div id="menu-movimentacaobancaria" class="hidden">
 								<ul>
 									<?php if ($this->grupoAtivo == 121 || $this->grupoAtivo == 122 || $this->grupoAtivo == 123 || $this->grupoAtivo == 129) : ?>
@@ -735,7 +726,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 									<li><a href="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => 'upload'), '', true); ?>" title="Ir para Arquivo de movimenta&ccedil;&atilde;o banc&aacute;ria">Arquivo de Movimenta&ccedil;&atilde;o Banc&aacute;ria</a></li>
 									<li><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'upload'), '', true); ?>" title="Ir para Arquivo de capta&ccedil;&otilde;es n&atilde;o identificadas">Arquivo de Capta&ccedil;&otilde;es n&atilde;o Identificadas</a></li>
 									<li><a href="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => ''), '', true); ?>" title="Ir para Extrato da Movimenta&ccedil;&atilde;o Banc&aacute;ria">Extrato da Movimenta&ccedil;&atilde;o Banc&aacute;ria</a></li>
-									<li><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'relatorio'), '', true); ?>" title="Ir para Relat&oacute;rio de Capta&ccedil;&otilde;es n„o Identificadas">Relat&oacute;rio de Capta&ccedil;&otilde;es n&atilde;o Identificadas</a></li>
+									<li><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'relatorio'), '', true); ?>" title="Ir para Relat&oacute;rio de Capta&ccedil;&otilde;es n√£o Identificadas">Relat&oacute;rio de Capta&ccedil;&otilde;es n&atilde;o Identificadas</a></li>
 									<?php endif; ?>
 								</ul>
 							</div>
@@ -744,7 +735,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 					</div>
 				</li>
 				<?php endif; */?>
-				<!-- ========== FIM MENU MOVIMENTA«√O BANC¡RIA ========== -->
+				<!-- ========== FIM MENU MOVIMENTA√á√ÉO BANC√ÅRIA ========== -->
 
 				<!-- ========== INICIO MENU RELATORIOS ========== -->
                 <?php if(in_array($this->grupoAtivo, array(90,91,92,93,96,97,103,104,110,114,115,119,120,121,122,123,124,125,126,127,128,131,132,135,138,139))){ ?>
@@ -752,7 +743,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
                     <div id="div">
                         <div id="divleft"></div>
                         <div id="divmenuprincipalcenter">
-                            <a href="#menu-relatorios" title="Ir para RelatÛrios" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">RelatÛrios</a>
+                            <a href="#menu-relatorios" title="Ir para Relat√≥rios" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Relat√≥rios</a>
                             <div id="menu-relatorios" class="hidden">
                                 <ul>
                                     <?php if(in_array($this->grupoAtivo, array(92,93,97,103,110,114,118,119,127,131,133))){ ?>
@@ -850,13 +841,13 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 					<div id="div">
 						<div id="divleft"></div>
 						<div id="divmenuprincipalcenter">
-							<a href="#menu-seguranca" title="Ir para SeguranÁa" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">SeguranÁa</a>
+							<a href="#menu-seguranca" title="Ir para Seguran√ßa" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Seguran√ßa</a>
 							<div id="menu-seguranca" class="hidden">
 								<ul>
 									<?php if ($this->grupoAtivo == 97 ) { ?>
 									<li><a href="<?php echo $this->url(array('controller' => 'manterusuario', 'action' => 'gerarsenha')) ?>" title="Ir para Gerar Senha">Regerar Senha Proponente</a></li>
 									<li><a href="<?php echo $this->url(array('controller' => 'manterusuario', 'action' => 'regerarsenha')) ?>" title="Ir para Regerar Senha">Regerar Senha Usu&aacute;rio</a></li>
-									<li><a href="<?php echo $this->url(array('controller' => 'manterusuario', 'action' => 'cadastrarusuarioexterno')) ?>" title="Ir para Cadastrar Usu·rio Externo">Cadastrar Usu·rio Externo</a></li>
+									<li><a href="<?php echo $this->url(array('controller' => 'manterusuario', 'action' => 'cadastrarusuarioexterno')) ?>" title="Ir para Cadastrar Usu√°rio Externo">Cadastrar Usu√°rio Externo</a></li>
 									<li><a href="<?php echo $this->url(array('controller' => 'manterusuario', 'action' => 'permissoessalic')) ?>?session=x&pag=1" title="Ir para Permiss?es do SalicWeb">Permiss&otilde;es do SalicWeb</a></li>
 									<li><a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'alterarsenhausuario'), '', true); ?>" title="Ir para Alterar Senha">Alterar Senha</a></li>
 									<?php
@@ -942,7 +933,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 
 
 
-		<!-- ========== INICIO MENSAGENS DO PROJETO PARA O USU¡RIO ========== -->
+		<!-- ========== INICIO MENSAGENS DO PROJETO PARA O USU√ÅRIO ========== -->
 		<div class="msgALERT sumir" id="mensagensabertasprojeto">
 			<div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msgALERT" onclick="$('.msgALERT').hide();" onkeypress="$('.msgALERT').hide();"/></div>
 			<div>
@@ -951,24 +942,24 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 			</div>
 		</div>
 		<div id="novas_mensagens"></div>
-		<!-- ========== FIM MENSAGENS DO PROJETO PARA O USU¡RIO ========== -->
+		<!-- ========== FIM MENSAGENS DO PROJETO PARA O USU√ÅRIO ========== -->
 
 
 
-		<!-- ========== INICIO MENSAGENS (ERROS, CONFIRMA«’ES E ADVERT NCIAS) ========== -->
+		<!-- ========== INICIO MENSAGENS (ERROS, CONFIRMA√á√ïES E ADVERT√äNCIAS) ========== -->
 		<?php if (isset($this->message)) : ?>
 		<div class="msg<?php echo $this->message_type; ?>">
 			<div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msg<?php echo $this->message_type; ?>" onclick="$('.msg<?php echo $this->message_type; ?>').hide();" onkeypress="$('.msg<?php echo $this->message_type; ?>').hide();"/></div>
 			<div><?php echo $this->message; ?></div>
 		</div>
 		<?php endif; ?>
-		<!-- ========== FIM MENSAGENS (ERROS, CONFIRMA«’ES E ADVERT NCIAS) ========== -->
+		<!-- ========== FIM MENSAGENS (ERROS, CONFIRMA√á√ïES E ADVERT√äNCIAS) ========== -->
 
 
 
         <?php if(in_array($this->grupoAtivo, array(92,93,94,103,110,118,121,122,123,124,125,126,129,131,132,136))){ ?>
 		<script type="text/javascript">
-		/* FunÁ„o abaixo est· causando conflito em alguns navegadores Firefox e IE. */
+		/* Fun√ß√£o abaixo est√° causando conflito em alguns navegadores Firefox e IE. */
             verificar_mensagens();
             var verificarmensagens = window.setInterval(function(){
             verificar_mensagens();
@@ -998,7 +989,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 				}
 				, dataType : 'json'
 			});
-		} // fecha funÁ„o verificar_mensagens()
+		} // fecha fun√ß√£o verificar_mensagens()
 
         function verificarSemMensagens(){
 			$.ajax({
@@ -1012,6 +1003,6 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 				}
 				, dataType : 'json'
 			});
-		} // fecha funÁ„o verificar_mensagens()
+		} // fecha fun√ß√£o verificar_mensagens()
 		</script>
         <?php } ?>

@@ -1,8 +1,8 @@
-<?php header('Content-Type: text/plain; charset=ISO-8859-1'); ?> 
+<?php header('Content-Type: text/plain; charset=ISO-8859-1'); ?>
 <?php if($this->dadoscount > 0):?>
 <table class="tabela">
 	<tr>
-	    <td colspan="4" class="titulo_tabela"><?php echo $this->dadoscount; ?> RESPONS¡VEIS ENCONTRADOS</td>
+	    <td colspan="4" class="titulo_tabela"><?php echo $this->dadoscount; ?> RESPONS√ÅVEIS ENCONTRADOS</td>
 	</tr>
 	<tr>
 	    <th width="300">Nome</th>
@@ -10,17 +10,17 @@
 	    <th>Status</th>
 	    <th width="200"></th>
 	</tr>
-	<?php 
+	<?php
 	foreach ($this->dados as $d):
-	
-	$status = 'N„o vinculado';
-	
+
+	$status = 'N√£o vinculado';
+
 	if($d->idAgenteProponente == $this->idAgenteProponente)
 	{
-		
+
 		if($d->siVinculo == null)
 		{
-			$status = 'N„o vinculado';
+			$status = 'N√£o vinculado';
 		}
 		elseif($d->siVinculo == 0)
 		{
@@ -38,9 +38,9 @@
 		{
 			$status = 'Desvinculado';
 		}
-		
+
 	}
-	
+
 	//if(($d->idAgenteProponente == null) || ($d->idAgenteProponente == $this->idAgenteProponente)):
 	?>
 	<tr>
@@ -54,8 +54,8 @@
 	        <?php endif; ?>
 	        </td>
 	    <?php else: ?>
-	        <td colspan="2" align="center">Servidor do MinistÈrio da Cultura n„o pode ser Respons·vel!</td>
-	    <?php endif;?>    
+	        <td colspan="2" align="center">Servidor do Minist√©rio da Cultura n√£o pode ser Respons√°vel!</td>
+	    <?php endif;?>
 	</tr>
 	<?php //endif; ?>
 	<?php endforeach; ?>
@@ -63,7 +63,7 @@
 <?php else:?>
 <table class="tabela">
   <tr>
-    <td align="center">NENHUM RESPONS¡VEL ENCONTRADO!</td>
+    <td align="center">NENHUM RESPONS√ÅVEL ENCONTRADO!</td>
   </tr>
 </table>
 

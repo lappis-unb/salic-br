@@ -1,68 +1,68 @@
 <?php require_once "inc/menu.inc.php"; ?>
 
-<!-- ========== INÕCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== IN√çCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true);?>" title="Ir para InÌcio">InÌcio</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true);?>" title="Ir para In√≠cio">In√≠cio</a></li>
         <li class="last">Manter Agentes</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 
-<!-- ========== INÕCIO TÕTULO ========== -->
+<!-- ========== IN√çCIO T√çTULO ========== -->
 <div id="titulo">
     <div>Dados principais
         <span class="voltar">
-            <?php if (isset($_GET['acao']) && $_GET['acao'] == 'cc' && isset($_GET['cpf']) && !empty($_GET['cpf']) && isset($_GET['idpronac'])) { // pega do readequaÁ„o ?>
-            <a href="<?php echo $this->url(array('controller'=>'solicitaralteracao', 'action'=>'acaoprojeto')); ?>?idpronac=<?php echo $_GET['idpronac']; ?>" title="Voltar">Voltar para a SolicitaÁ„o de ReadequaÁ„o</a>
+            <?php if (isset($_GET['acao']) && $_GET['acao'] == 'cc' && isset($_GET['cpf']) && !empty($_GET['cpf']) && isset($_GET['idpronac'])) { // pega do readequa√ß√£o ?>
+            <a href="<?php echo $this->url(array('controller'=>'solicitaralteracao', 'action'=>'acaoprojeto')); ?>?idpronac=<?php echo $_GET['idpronac']; ?>" title="Voltar">Voltar para a Solicita√ß√£o de Readequa√ß√£o</a>
             <?php } else {?>
             <a href="javascript:voltar();">Voltar</a>
             <?php } ?>
         </span>
     </div>
 </div>
-<!-- ========== FIM TÕTULO ========== -->
+<!-- ========== FIM T√çTULO ========== -->
 
 
-<!-- ========== INÕCIO CONTE⁄DO ========== -->
+<!-- ========== IN√çCIO CONTE√öDO ========== -->
 <div id="conteudo">
     <div id="confirma"></div>
     <div>
         <?php require_once "inc/cabecalho.php";?>
         <table class="tabela <?php echo $this->dados[0]->idEndereco ? 'sumir' : ''; ?>">
             <tr>
-                <th>ENDERE«OS</th>
+                <th>ENDERE√áOS</th>
             </tr>
             <tr>
-                <td>Nenhum EndereÁo Cadastrado</td>
+                <td>Nenhum Endere√ßo Cadastrado</td>
             </tr>
         </table>
 
         <table id="tabEndereco" class="tabela <?php echo $this->dados[0]->idEndereco ? '' : 'sumir'; ?>">
             <tr>
-                <th colspan="3">ENDERE«OS</th>
+                <th colspan="3">ENDERE√áOS</th>
             </tr>
             <tr>
                 <td><label>CEP:</label> <?php echo Mascara::addMaskCep($this->dados[0] ->CEP); ?></td>
                 <td><label>UF:</label> <?php echo $this->dados[0] ->dsUF; ?></td>
-                <td><label>Cidade:</label> <?php echo $this->dados[0] ->dsCidade; ?></td>
+                <td><label>Cidade:</label> <?php echo !empty($this->dados[0]->dsCidade) ? $this->dados[0]->dsCidade : '' ?></td>
             </tr>
             <tr>
-                <td colspan="2"><label>Tipo de EndereÁo:</label> <?php echo $this->dados[0] ->dsTipoEndereco; ?></td>
+                <td colspan="2"><label>Tipo de Endere√ßo:</label> <?php echo $this->dados[0] ->dsTipoEndereco; ?></td>
                 <td><label>Tipo de Logradouro:</label> <?php echo $this->dados[0] ->dsTipoLogradouro; ?></td>
             </tr>
             <tr>
                 <td colspan="2"><label>Logradouro:</label> <?php echo $this->dados[0] ->Logradouro; ?></td>
-                <td><label>N˙mero:</label> <?php echo $this->dados[0] ->Numero; ?></td>
+                <td><label>N√∫mero:</label> <?php echo $this->dados[0] ->Numero; ?></td>
             </tr>
             <tr>
                 <td colspan="2"><label>Complemento:</label> <?php echo $this->dados[0] ->Complemento; ?></td>
                 <td><label>Bairro:</label> <?php echo $this->dados[0] ->Bairro; ?></td>
             </tr>
             <tr>
-                <td><label>EndereÁo para correspondÍncia:</label> <?php echo $this->dados[0] ->Status == "1" ? "SIM" : "N√O"; ?></td>
-                <td colspan="2"><label>Autorizo divulgar o endereÁo:</label> <?php echo $this->dados[0] ->DivulgarEndereco == "1" ? "SIM" : "N√O"; ?></td>
+                <td><label>Endere√ßo para correspond√™ncia:</label> <?php echo $this->dados[0] ->Status == "1" ? "SIM" : "N√ÉO"; ?></td>
+                <td colspan="2"><label>Autorizo divulgar o endere√ßo:</label> <?php echo $this->dados[0] ->DivulgarEndereco == "1" ? "SIM" : "N√ÉO"; ?></td>
             </tr>
         </table>
 
@@ -92,7 +92,7 @@
                 <td align="center"><?php echo $t->ufSigla ;?></td>
                 <td align="center"><?php echo $t->DDD ;?></td>
                 <td><?php echo $t->Numero ;?></td>
-                <td><?php echo $t->Divulgar == "1" ? "SIM" : "N√O"; ?></td>
+                <td><?php echo $t->Divulgar == "1" ? "SIM" : "N√ÉO"; ?></td>
             </tr>
             <?php endforeach; ?>
         </table>
@@ -114,14 +114,14 @@
                 <td><label>Tipo</label></td>
                 <td><label>E-mail</label></td>
                 <td><label>Divulgar?</label></td>
-                <td><label>Para correpondÍncia?</label></td>
+                <td><label>Para correpond√™ncia?</label></td>
             </tr>
             <?php foreach($this->emails as $e):?>
             <tr>
                 <td><?php echo $e->tipo ;?></td>
                 <td><?php echo $e->Descricao ;?></td>
-                <td><?php echo $e->Divulgar == "1" ? "SIM" : "N√O" ;?></td>
-                <td><?php echo $e->Status == "1" ? "SIM" : "N√O" ;?></td>
+                <td><?php echo $e->Divulgar == "1" ? "SIM" : "N√ÉO" ;?></td>
+                <td><?php echo $e->Status == "1" ? "SIM" : "N√ÉO" ;?></td>
             </tr>
             <?php endforeach; ?>
         </table>
@@ -132,14 +132,14 @@
                 <?php if(count($this->formacoes) != 0){ ?>
                     <table class="tabela">
                         <tr>
-                            <th colspan="5">INFORMA«’ES PROFISSIONAIS</th>
+                            <th colspan="5">INFORMA√á√ïES PROFISSIONAIS</th>
                         </tr>
                         <tr>
-                            <td width="140" align="center"><b>PROFISS√O</b></td>
+                            <td width="140" align="center"><b>PROFISS√ÉO</b></td>
                             <td width="140" align="center"><b>CARGO</b></td>
-                            <td width="170" align="center"><b>ENDERE«O</b></td>
+                            <td width="170" align="center"><b>ENDERE√áO</b></td>
                             <td width="120" align="center"><b>DATA ENTRADA</b></td>
-                            <td width="120" align="center"><b>DATA SAÕDA</b></td>
+                            <td width="120" align="center"><b>DATA SA√çDA</b></td>
                         </tr>
                         <?php foreach($this->formacoes as $f){ ?>
                         <tr>
@@ -156,7 +156,7 @@
                 <?php if(count($this->dadosferias) != 0){ ?>
                     <table class="tabela">
                         <tr>
-                            <th colspan="6">F…RIAS MARCADAS</th>
+                            <th colspan="6">F√âRIAS MARCADAS</th>
                         </tr>
                         <?php foreach($this->dadosferias as $d){
                             $siAusencia = '';
@@ -180,9 +180,9 @@
                         ?>
                         <tr>
                             <td width="180">Quantidade de dias: <span id="qtdDias"><?php echo $d->qtdDias; ?></span></td>
-                            <td align="center">Data das fÈrias: </td>
+                            <td align="center">Data das f√©rias: </td>
                             <td width="150" align="center"><?php echo $d->dtInicio; ?></td>
-                            <td width="10" align="center">‡</td>
+                            <td width="10" align="center">√†</td>
                             <td width="150" align="center"><?php echo $d->dtFim; ?></td>
                             <td width="50" align="center" style="background: white;"><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $siAusencia; ?>.gif" title="<?php echo $title; ?>" border="0" style="cursor: pointer;" /></td>
                         </tr>
@@ -199,12 +199,12 @@
         <?php if(count($this->credenciados) != 0){ ?>
         <table class="tabela">
             <tr>
-                <th colspan="3">¡reas e segmentos</th>
+                <th colspan="3">√Åreas e segmentos</th>
             </tr>
             <tr>
-                <td align="center" width="50%"><b>¡REA</b></td>
+                <td align="center" width="50%"><b>√ÅREA</b></td>
                 <td align="center"><b>SEGMENTO</b></td>
-                <td align="center"><b>NÕVEL</b></td>
+                <td align="center"><b>N√çVEL</b></td>
             </tr>
             <?php foreach($this->credenciados as $c){ ?>
             <tr>
@@ -217,17 +217,17 @@
         <?php } else { ?>
         <!--<table class="tabela" id="salvos">
             <tr>
-                <td>O Parecerista n„o est· credenciado a nenhuma ·rea e segmento!</td>
+                <td>O Parecerista n√£o est√° credenciado a nenhuma √°rea e segmento!</td>
             </tr>
         </table>-->
         <?php } ?>
     </div>
 </div>
-<!-- ========== FIM CONTE⁄DO ========== -->
+<!-- ========== FIM CONTE√öDO ========== -->
 
 
-<!-- ========== INÕCIO RODAP… DO CONTE⁄DO ========== -->
+<!-- ========== IN√çCIO RODAP√â DO CONTE√öDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP… DO CONTE⁄DO ========== -->
+<!-- ========== FIM RODAP√â DO CONTE√öDO ========== -->
 
 <br clear="all" />
