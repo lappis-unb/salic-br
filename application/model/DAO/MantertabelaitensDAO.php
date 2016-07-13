@@ -13,22 +13,17 @@
 class MantertabelaitensDAO extends Zend_Db_Table {
 
 	/*********************************************************************************************************/
-
-    /**
-     * @todo refatorar querys
-     */
 	
-    public static function exibirprodutoetapaitem($item=null,$where=null,$idEtapa=null,$idProduto=null) {
+    public static function exibirprodutoetapaitem($item=null,$nomeItem=null,$idEtapa=null,$idProduto=null) {
         $sql = "SELECT distinct pr.Codigo as idProduto, pr.Descricao as Produto
  				FROM SAC.dbo.tbItensPlanilhaProduto p
 				INNER JOIN SAC.dbo.Produto pr on (p.idProduto = pr.Codigo)
 				INNER JOIN SAC.dbo.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
 				INNER JOIN SAC.dbo.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)	";
         
-
-       
-        if(!empty($where)){
-            $sql .= " WHERE pr.Descricao".$where;
+        
+        if(!empty($nomeItem)){
+            $sql .=" AND i.Descricao ".$nomeItem;
         }
         if(!empty($item)){
             $sql .=" WHERE i.idPlanilhaItens = ".$item;
@@ -41,10 +36,8 @@ class MantertabelaitensDAO extends Zend_Db_Table {
         }
         $sql .=" ORDER BY pr.Codigo ASC";
 
-
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
 
         return $db->fetchAll($sql);
     } // fecha método buscaprodutoetapaitem()
