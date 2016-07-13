@@ -2202,9 +2202,16 @@ class ReadequacoesController extends GenericControllerNew {
             $r->idAvaliador = $this->idUsuario;
 
             if($this->_request->getParam('stAtendimento') == 'I'){
+                // indeferida                
                 $r->siEncaminhamento = 2; //2=Solicitação indeferida
                 $r->stEstado = 1;
+            } else if ($this->_request->getParam('stAtendimento') == 'DP') {
+                // devolvida ao proponente
+                $r->siEncaminhamento = 12;
+                $r->stEstado = 0;
+                $r->stAtendimento = 'E';
             } else {
+                // deferida
                 if($this->_request->getParam('vinculada') == 262 || $this->_request->getParam('vinculada') == 171){
                     $r->siEncaminhamento = 4; //4=Enviado para Análise Técnica (SAV, SEFIC)
                     $dataEnvio = new Zend_Db_Expr('GETDATE()');
