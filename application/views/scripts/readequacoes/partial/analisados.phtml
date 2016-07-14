@@ -13,6 +13,7 @@
 	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=12&ordem='.$this->paginacao['novaOrdem'];?>">T&eacute;cnico</th>
         <th>Visualizar</th>
         <th>Encaminhar</th>
+        <th>Enviar para CNIC</th>
         <th>Finalizar</th>
     </tr>
 </thead>
@@ -41,6 +42,9 @@
             <input type="button" name="btn_avaliar" id="btn_avaliar" class="btn_encaminhar" readequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>"
                     pronac="<?php echo $d->PRONAC; ?>"
                     nomeprojeto="<?php echo $d->NomeProjeto; ?>" title="Encaminhar">
+        </td>
+        <td align="center">
+            <input type="button" name="btn_enviar" class="btn_enviar enviarCNIC" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Finalizar a análise">
         </td>
         <td align="center">
             <input type="button" name="btn_encaminhar" class="btn_finalizar finalizarAnaliseReadequacao" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Finalizar a análise">
