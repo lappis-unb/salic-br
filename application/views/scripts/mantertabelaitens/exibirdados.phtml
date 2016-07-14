@@ -19,7 +19,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'buscaetapas')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto'];?>',
+            url: '<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'buscaetapas')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto']; echo '&tpEtapa='.$this->etapa; ?>',
             data:{
                 idProduto: id
             },
@@ -44,7 +44,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'buscaitens')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto'];?>',
+            url: '<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'buscaitens')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto']; echo '&tpPesquisa='.$this->tpPesquisa; echo '&NomeDoItem='.$this->item;?>',
             data:{
                 idProduto: idP,
                 idEtapa: idE
@@ -90,6 +90,7 @@
             <tr id="etapa_<?php echo $Produto->idProduto; ?>" class="mostraEtapas_<?php echo $Produto->idProduto; ?>" style="display:none;">
                 <td id="divMsg"></td>
             </tr>
+
             <?php } ?>
         </table>
 

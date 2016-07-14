@@ -486,6 +486,7 @@ class MantertabelaitensController extends GenericControllerNew {
             $this->view->produto 		= $post->produto;
             $this->view->etapa 			= $post->etapa;
             $this->view->item 			= $post->NomeDoItem;
+
             
             //CODIGO ANTIGO
             //$tbpretitem = MantertabelaitensDAO::exibirprodutoetapaitem($item);
@@ -503,6 +504,7 @@ class MantertabelaitensController extends GenericControllerNew {
             $tbpretitem = MantertabelaitensDAO::exibirprodutoetapaitem($item=null,$where,$etapa,$produto);
             
             $this->view->pretitem = $tbpretitem;
+            $this->view->tpPesquisa = $tipoPesquisa;
 
             try 
             {
@@ -530,10 +532,12 @@ class MantertabelaitensController extends GenericControllerNew {
 		$this->_helper->layout->disableLayout();
 		
 		$idProduto = $_POST['idProduto'];
+        $paramEtapa = $_GET['tpEtapa'];
 		
 		$this->view->etapas = MantertabelaitensDAO::exibirEtapa($idProduto);
 		
 		$this->view->idProduto = $idProduto;
+        $this->view->paramEtapa = $paramEtapa;
 		
 	 	
 	}
@@ -544,12 +548,16 @@ class MantertabelaitensController extends GenericControllerNew {
 		
 		$idProduto 	= $_POST['idProduto'];
 		$idEtapa 	= $_POST['idEtapa'];
-		
+        $tpPesquisa = $_GET['tpPesquisa'];
+		$NomeDoItem = $_GET['NomeDoItem'];
+
 		//die(MantertabelaitensDAO::exibirItem($idProduto, $idEtapa));
 		
 		$this->view->itens = MantertabelaitensDAO::exibirItem($idProduto, $idEtapa);
 		$this->view->idProduto = $idProduto;
 		$this->view->idEtapa = $idEtapa;
+        $this->view->tpPesquisa = $tpPesquisa;
+        $this->view->NomeDoItem = $NomeDoItem;
 		
 	}
     
