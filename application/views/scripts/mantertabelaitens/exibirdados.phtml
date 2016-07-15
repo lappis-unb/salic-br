@@ -19,7 +19,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'buscaetapas')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto']; echo '&tpEtapa='.$this->etapa; ?>',
+            url: '<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'buscaetapas')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto']; echo '&tpEtapa='.$this->etapa; echo '&tpPesquisa='.$this->tpPesquisa; echo '&NomeDoItem='.$this->item;?>',
             data:{
                 idProduto: id
             },
@@ -79,26 +79,35 @@
 <!-- ========== FIM TITULO ========== -->
 
 <div id="conteudo">
-
+   <?php if($this->item == "" AND $this->tipopesquisa == 04 ){ ?>
+        <br />
+        <div class="centro">Nenhum Produto/Etapa/Item</div>
+        <br />
+    <?php }else{ ?>
     <div class="conteudoImprimivel" id="conteudoImprimivel">
-        <?php if(count($this->pretitem)>0){ ?>
-        <table class="tabela">
-            <?php foreach($this->pretitem as $Produto){ ?>
-            <tr>
-                <td><input type="button" class="btn_adicionar" id="mostraEtapas_<?php echo $Produto->idProduto; ?>" onclick="mostraOcultaElemento('mostraEtapas_<?php echo $Produto->idProduto; ?>'), buscaEtabas('<?php echo $Produto->idProduto; ?>');" /><?php echo $Produto->Produto; ?></td>
-            </tr>
-            <tr id="etapa_<?php echo $Produto->idProduto; ?>" class="mostraEtapas_<?php echo $Produto->idProduto; ?>" style="display:none;">
-                <td id="divMsg"></td>
-            </tr>
+        <?php if (count($this->pretitem) > 0) { ?>
+            <table class="tabela">
+                <?php foreach ($this->pretitem as $Produto) { ?>
+                    <tr>
+                        <td><input type="button" class="btn_adicionar"
+                                   id="mostraEtapas_<?php echo $Produto->idProduto; ?>"
+                                   onclick="mostraOcultaElemento('mostraEtapas_<?php echo $Produto->idProduto; ?>'), buscaEtabas('<?php echo $Produto->idProduto; ?>');"/><?php echo $Produto->Produto; ?>
+                        </td>
+                    </tr>
+                    <tr id="etapa_<?php echo $Produto->idProduto; ?>"
+                        class="mostraEtapas_<?php echo $Produto->idProduto; ?>" style="display:none;">
+                        <td id="divMsg"></td>
+                    </tr>
 
-            <?php } ?>
-        </table>
+                <?php } ?>
+            </table>
 
         <?php } else { ?>
-            <br />
+            <br/>
             <div class="centro">Nenhum Produto/Etapa/Item</div>
-            <br />
-        <?php } ?>
+            <br/>
+        <?php }
+        }?>
         <br /><br />
 
         <form id="frmBusca" method="post" name="frmBusca" action="<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'gerarpdf')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto'];?>">
@@ -113,13 +122,13 @@
         <textarea name="html" id="conteudoImprimir"></textarea>
     </form>
 
-    <table class="tabela centro">
+   <!-- <table class="tabela centro">
         <tr>
             <td>
-                <!--<input type="button" name="voltar" class="btn_voltar" value="" onclick="window.location='<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'consultartabelaitens')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto'];?>'">-->
+                <<input type="button" name="voltar" class="btn_voltar" value="" onclick="window.location='<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'consultartabelaitens')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto'];?>'">
                 <input  type="button" name="imprimir" class="btn_imprimir" onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'>
             </td>
         </tr>
-    </table>
+    </table> -->
 </div>
 <br clear="all" />

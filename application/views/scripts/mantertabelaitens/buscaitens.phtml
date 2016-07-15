@@ -3,38 +3,10 @@
       	<tr>
         	<th align="left" style="padding-left: 50px;">Item(ns)</th>
         </tr>
-        <?php foreach($this->itens as $i):
-                  if($this->tpPesquisa == 01){
-                      if(preg_match("/$this->NomeDoItem/i",$i->NomeDoItem)){ ?>
-                    <tr>
-                        <td style="padding-left: 50px;"><?php echo utf8_decode(htmlentities($i->NomeDoItem));?></td>
-                    </tr>
-               <?php }
-                  } ?>
-
-            <?php if($this->tpPesquisa == 02){?>
-                <?php if(preg_match("/^$this->NomeDoItem/i",$i->NomeDoItem)){ ?>
-                    <tr>
-                        <td style="padding-left: 50px;"><?php echo utf8_decode(htmlentities($i->NomeDoItem));?></td>
-                    </tr>
-                <?php } ?>
-            <?php }
-
-                  if($this->tpPesquisa == 03){
-                     if(strcasecmp($this->NomeDoItem, $i->NomeDoItem) == 0){ ?>
-                    <tr>
-                        <td style="padding-left: 50px;"><?php echo utf8_decode(htmlentities($i->NomeDoItem));?></td>
-                    </tr>
-                <?php }
-                  } ?>
-
-            <?php if($this->tpPesquisa == 04){
-                      if(!preg_match("/$this->NomeDoItem/i",$i->NomeDoItem)){ ?>
-                          <tr>
-                            <td style="padding-left: 50px;"><?php echo utf8_decode(htmlentities($i->NomeDoItem));?></td>
-                          </tr>
-                <?php }
-                  }
-             endforeach; ?>
+        <?php foreach($this->itens as $i):?>
+            <tr>
+                <td style="padding-left: 50px;"><?php echo utf8_decode(htmlentities($i->NomeDoItem));?></td>
+            </tr>
+        <?php     endforeach; ?>
 </table>
 </td>

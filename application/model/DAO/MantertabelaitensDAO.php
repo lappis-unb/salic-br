@@ -35,7 +35,6 @@ class MantertabelaitensDAO extends Zend_Db_Table {
             $sql .=" AND pr.Codigo = ".$idProduto;
         }
         $sql .=" ORDER BY pr.Codigo ASC";
-
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -43,29 +42,30 @@ class MantertabelaitensDAO extends Zend_Db_Table {
     } // fecha método buscaprodutoetapaitem()
 
     
-    public static function exibirEtapa($idProduto) {
+    public static function exibirEtapa($idProduto, $where = null) {
+
         
     	$sql = "SELECT distinct  e.idPlanilhaEtapa as idEtapa, e.Descricao as Etapa
 					FROM SAC.dbo.tbItensPlanilhaProduto p
 					INNER JOIN SAC.dbo.Produto pr on (p.idProduto = pr.Codigo)
 					INNER JOIN SAC.dbo.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
 					INNER JOIN SAC.dbo.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)
-						Where  idProduto = ".$idProduto." 
+						Where  idProduto = ".$idProduto." and i.Descricao $where
 						 ORDER BY  e.Descricao  ASC ";
-        
-    	//die('<pre>'.$sql);
+
+
     	 $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     } 
 
-    public static function exibirItem($idProduto, $idEtapa) {
+    public static function exibirItem($idProduto, $idEtapa, $where=null) {
         $sql = "SELECT i.idPlanilhaItens as idItem,	i.Descricao as NomeDoItem
 				FROM SAC.dbo.tbItensPlanilhaProduto p
 				INNER JOIN SAC.dbo.Produto pr on (p.idProduto = pr.Codigo)
 				INNER JOIN SAC.dbo.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
 				INNER JOIN SAC.dbo.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)
-					Where  p.idProduto = ".$idProduto." and e.idPlanilhaEtapa = ".$idEtapa." 
+					Where  p.idProduto = ".$idProduto." and e.idPlanilhaEtapa = ".$idEtapa." and i.Descricao $where
 					ORDER BY  i.Descricao  ASC";
         
         $db = Zend_Registry::get('db');

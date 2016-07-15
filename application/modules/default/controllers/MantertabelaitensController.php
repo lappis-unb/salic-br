@@ -502,7 +502,7 @@ class MantertabelaitensController extends GenericControllerNew {
             }
 
             $tbpretitem = MantertabelaitensDAO::exibirprodutoetapaitem($item=null,$where,$etapa,$produto);
-            
+
             $this->view->pretitem = $tbpretitem;
             $this->view->tpPesquisa = $tipoPesquisa;
 
@@ -531,10 +531,23 @@ class MantertabelaitensController extends GenericControllerNew {
 	{
 		$this->_helper->layout->disableLayout();
 		
-		$idProduto = $_POST['idProduto'];
-        $paramEtapa = $_GET['tpEtapa'];
-		
-		$this->view->etapas = MantertabelaitensDAO::exibirEtapa($idProduto);
+		$idProduto    = $_POST['idProduto'];
+        $paramEtapa   = $_GET['tpEtapa'];
+        $tipoPesquisa = $_GET['tpPesquisa'];
+        $item         = $_GET['NomeDoItem'];
+
+        $where = null;
+        if($tipoPesquisa==1) {
+            $where = " LIKE '%".$item."%'";
+        }elseif($tipoPesquisa==2) {
+            $where = " LIKE '%".$item."'";
+        }elseif($tipoPesquisa==3) {
+            $where = " = '".$item."'";
+        }elseif($tipoPesquisa==4) {
+            $where = " <> '%".$item."'";
+        }
+
+		$this->view->etapas = MantertabelaitensDAO::exibirEtapa($idProduto, $where);
 		
 		$this->view->idProduto = $idProduto;
         $this->view->paramEtapa = $paramEtapa;
@@ -549,15 +562,27 @@ class MantertabelaitensController extends GenericControllerNew {
 		$idProduto 	= $_POST['idProduto'];
 		$idEtapa 	= $_POST['idEtapa'];
         $tpPesquisa = $_GET['tpPesquisa'];
-		$NomeDoItem = $_GET['NomeDoItem'];
+		$item       = $_GET['NomeDoItem'];
+
+
+        $where = null;
+        if($tpPesquisa==1) {
+            $where = " LIKE '%".$item."%'";
+        }elseif($tpPesquisa==2) {
+            $where = " LIKE '%".$item."'";
+        }elseif($tpPesquisa==3) {
+            $where = " = '".$item."'";
+        }elseif($tpPesquisa==4) {
+            $where = " <> '%".$item."'";
+        }
 
 		//die(MantertabelaitensDAO::exibirItem($idProduto, $idEtapa));
 		
-		$this->view->itens = MantertabelaitensDAO::exibirItem($idProduto, $idEtapa);
+		$this->view->itens = MantertabelaitensDAO::exibirItem($idProduto, $idEtapa,$where);
 		$this->view->idProduto = $idProduto;
 		$this->view->idEtapa = $idEtapa;
         $this->view->tpPesquisa = $tpPesquisa;
-        $this->view->NomeDoItem = $NomeDoItem;
+        $this->view->NomeDoItem = $item;
 		
 	}
     
