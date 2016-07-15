@@ -20,6 +20,7 @@ class Zend_View_Helper_CorLinha
 	 */
 	public function corLinha($i)
 	{
+        die(1);
 		if ($i % 2 == 0)
 		{
 			$bg = "fundo_linha1";

@@ -1160,49 +1160,59 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      */
     public static function listarPropostasResultado($idAgente, $idResponsavel, $idAgenteCombo)
     {
-        $filtro = '';
-        if (!empty($idAgenteCombo)){
-            $filtro = " AND b.idAgente = $idAgenteCombo ";
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $sql = $db->select()
+            ->from(['a'=>'PreProjeto'], ['a.idPreProjeto', 'a.NomeProjeto'],'SAC.dbo')
+            ->join(['b' => 'Agentes'], 'a.idAgente = b.idAgente', ['b.CNPJCPF', 'b.idAgente'],'AGENTES.dbo')
+            ->joinLeft(['n' => 'Nomes'], 'n.idAgente = b.idAgente', ['n.descricao as NomeProponente'], 'AGENTES.dbo')
+            ->where('a.idAgente = ? ', $idAgente)
+            ->where('a.stEstado = 1')
+            ->where(new Zend_Db_Expr('NOT EXISTS(SELECT 1 FROM SAC.dbo.Projetos pr WHERE a.idPreProjeto = pr.idProjeto)'))
+            ->where("a.Mecanismo = '1'")
+            ;
+
+        $sql2 = $db->select()
+            ->from(['a'=>'PreProjeto'], ['a.idPreProjeto', 'a.NomeProjeto'], 'SAC.dbo')
+            ->join(['b' => 'Agentes'], 'a.idAgente = b.idAgente', ['b.CNPJCPF', 'b.idAgente'],'AGENTES.dbo')
+            ->join(['c' => 'Vinculacao'], 'b.idAgente = c.idVinculoPrincipal', [],'AGENTES.dbo')
+            ->join(['d' => 'Agentes'], 'c.idAgente = d.idAgente', [],'AGENTES.dbo')
+            ->join(['e' => 'SGCacesso'], 'd.CNPJCPF = e.Cpf', [],'CONTROLEDEACESSO.dbo')
+            ->joinLeft(['n' => 'Nomes'], 'n.idAgente = b.idAgente', ['n.descricao as NomeProponente'], 'AGENTES.dbo')
+            ->where('e.IdUsuario = ?',$idResponsavel)
+            ->where('a.stEstado = 1')
+            ->where(new Zend_Db_Expr('NOT EXISTS(SELECT 1 FROM SAC.dbo.Projetos f WHERE a.idPreProjeto = f.idProjeto)'))
+            ->where("a.Mecanismo = '1'")
+            ;
+
+        $sql3 = $db->select()
+            ->from(['a'=>'PreProjeto'], ['a.idPreProjeto', 'a.NomeProjeto'], 'SAC.dbo')
+            ->join(['b' => 'Agentes'], 'a.idAgente = b.idAgente', ['b.CNPJCPF', 'b.idAgente'], 'AGENTES.dbo')
+            ->join(['c' => 'Nomes'], 'b.idAgente = c.idAgente', ['c.descricao as NomeProponente'], 'AGENTES.dbo')
+            ->join(['d' => 'SGCacesso'], 'a.idUsuario = d.IdUsuario', [], 'CONTROLEDEACESSO.dbo')
+            ->join(['e' => 'tbVinculoProposta'], 'a.idPreProjeto = e.idPreProjeto', [], 'AGENTES.dbo')
+            ->join(['f' => 'tbVinculo'], 'e.idVinculo = f.idVinculo', [], 'AGENTES.dbo')
+            ->where('a.stEstado = 1')
+            ->where(new Zend_Db_Expr('NOT EXISTS(SELECT 1 FROM SAC.dbo.Projetos z WHERE a.idPreProjeto = z.idProjeto)'))
+            ->where("a.Mecanismo = '1'")
+            ->where('e.siVinculoProposta = 2')
+            ->where('f.idUsuarioResponsavel = ?', $idResponsavel)
+            ;
+
+        if (!empty($idAgenteCombo)) {
+            $sql->where('b.idAgente = ?', $idAgenteCombo);
+            $sql2->where('b.idAgente = ?', $idAgenteCombo);
+            $sql3->where('b.idAgente = ?', $idAgenteCombo);
         }
 
         $sql = "
-            SELECT b.CNPJCPF, b.idAgente, dbo.Fnnome(b.idAgente) AS NomeProponente, a.idPreProjeto, a.NomeProjeto--,'Proponente - Pessoa Física' as TipoDeAgente
-                FROM SAC.dbo.PreProjeto a
-                    INNER JOIN AGENTES.dbo.Agentes b ON ( a.idAgente = b.idAgente )
-                WHERE  a.idAgente = $idAgente
-                    $filtro
-                    AND a.stEstado = 1
-                    AND NOT EXISTS(SELECT 1 FROM SAC.dbo.Projetos pr WHERE a.idPreProjeto = pr.idProjeto)
-                    AND a.Mecanismo = '1'
+            $sql
             UNION ALL
-            SELECT b.CNPJCPF, b.idAgente, dbo.Fnnome(b.idAgente) AS NomeProponente, a.idPreProjeto, a.NomeProjeto--,'Dirigente' as TipoDeAgente
-                FROM SAC.dbo.PreProjeto a
-                    INNER JOIN AGENTES.dbo.Agentes b ON ( a.idAgente = b.idAgente )
-                    INNER JOIN AGENTES.dbo.Vinculacao c ON ( b.idAgente = c.idVinculoPrincipal )
-                    INNER JOIN AGENTES.dbo.Agentes d ON ( c.idAgente = d.idAgente )
-                    INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso e ON ( d.CNPJCPF = e.Cpf )
-                WHERE e.IdUsuario = $idResponsavel
-                    $filtro
-                    AND a.stEstado = 1
-                    AND NOT EXISTS(SELECT 1 FROM SAC.dbo.Projetos f WHERE a.idPreProjeto = f.idProjeto)
-                    AND a.Mecanismo = '1'
+            $sql2
             UNION ALL
-            SELECT  b.CNPJCPF, b.idAgente, dbo.Fnnome(b.idAgente) AS NomeProponente, a.idPreProjeto, a.NomeProjeto--,'Responsável' as TipoDeAgente
-                FROM SAC.dbo.PreProjeto a
-                    INNER JOIN AGENTES.dbo.Agentes b ON ( a.idAgente = b.idAgente )
-                    INNER JOIN AGENTES.dbo.Nomes c ON ( b.idAgente = c.idAgente )
-                    INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso d ON ( a.idUsuario = d.IdUsuario )
-                    INNER JOIN AGENTES.dbo.tbVinculoProposta e ON ( a.idPreProjeto = e.idPreProjeto )
-                    INNER JOIN AGENTES.dbo.tbVinculo f ON ( e.idVinculo = f.idVinculo )
-                WHERE f.idUsuarioResponsavel = $idResponsavel
-                    $filtro
-                    AND a.stEstado = 1
-                    AND e.siVinculoProposta = 2
-                    AND NOT EXISTS(SELECT 1 FROM SAC.dbo.Projetos z WHERE a.idPreProjeto = z.idProjeto)
-                    AND a.Mecanismo = '1' ";
-
-        $db = Zend_Registry::get('db');
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+            $sql3
+            ";
 
         return $db->fetchAll($sql);
     }

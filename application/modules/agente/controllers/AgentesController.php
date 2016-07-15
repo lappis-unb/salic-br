@@ -2559,12 +2559,13 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         if (!$buscar) {
             // redireciona para a página de cadastro de agentes, e, exibe uma notificação relativa ao cadastro
-            parent::message("Agente não cadastrado!<br /><br />Por favor, cadastre o mesmo no formulário abaixo!", "manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
+            parent::message("Agente não cadastrado!<br /><br />Por favor, cadastre o mesmo no formulário abaixo!", "/agente/manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
         } else {
             // ========== INÍCIO PAGINAÇÃO ==========
             // criando a paginação
             Zend_Paginator::setDefaultScrollingStyle('Sliding');
-            Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
+            $this->view->addScriptPath(APPLICATION_PATH.'/modules/default/views/scripts/paginacao');
+            Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao.phtml');
             $paginator = Zend_Paginator::factory($buscar); // dados a serem paginados
             // página atual e quantidade de ítens por página
             $currentPage = $this->_getParam('page', 1);
