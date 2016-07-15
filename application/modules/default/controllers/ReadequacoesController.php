@@ -4064,6 +4064,7 @@ class ReadequacoesController extends GenericControllerNew {
         }
 
         $idReadequacao = Seguranca::dencrypt($this->_request->getParam('id'));
+        $cnic = $this->_request->getParam('cnic');
 
         $tbReadequacao = new tbReadequacao();
         $r = $tbReadequacao->buscarDadosReadequacoes(array('idReadequacao = ?'=>$idReadequacao))->current();
@@ -4076,6 +4077,8 @@ class ReadequacoesController extends GenericControllerNew {
             $this->view->readequacao = $r;
             $this->view->projeto = $p;
             $this->view->idPronac = $r->idPronac;
+            $this->view->cnic = $cnic;
+
         } else {
             parent::message('Nenhum registro encontrado.', "readequacoes/painel", "ERROR");
         }       
@@ -4110,13 +4113,13 @@ class ReadequacoesController extends GenericControllerNew {
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dados = array(
                     'idAvaliador' => $destinatario,
-                    'dtEnvioAvaliador' => new Zend_Db_Expr('GETDATE()'),
+                    'DtEnvioAvaliador' => new Zend_Db_Expr('GETDATE()'),
                     'dsOrientacao' => $dsOrientacao
                 );
-                $where = array(
-                    'idReadequacao' => $idReadequacao
-                );               
-                $tbDistribuirReadequacao->update($dados, $where);
+                $where = array();
+                $where['idReadequacao = ?'] = $idReadequacao;
+                
+                $u = $tbDistribuirReadequacao->update($dados, $where);
                 
                 parent::message('Dados salvos com sucesso!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
             } else {
@@ -4126,26 +4129,26 @@ class ReadequacoesController extends GenericControllerNew {
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dados = array(
                     'idUnidade' => $idUnidade,
+                    'DtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
                     'idAvaliador' => null,
-                    'idEnvioAvaliador' => null,
-                    'dtEnvioAvaliador' => new Zend_Db_Expr('GETDATE()'),
+                    'DtEnvioAvaliador' => null,
                     'dsOrientacao' => $dsOrientacao
                 );
-                $where = array(
-                    'idReadequacao' => $idReadequacao
-                );               
+                $where = array();
+                $where['idReadequacao = ?'] = $idReadequacao;
+                
                 $tbDistribuirReadequacao->update($dados, $where);                
-
+                
                 $tbReadequacao = new tbReadequacao();
                 $dadosReadequacao = array(
                     'stEncaminhamento' => 3
                 );
-                $tbReadequacao->update($dadosReadequacao, $where);
+                $u = $tbReadequacao->update($dadosReadequacao, $where);
                 
                 parent::message('Dados salvos com sucesso!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
             }            
         } catch(Exception $e) {
-            parent::message('Erro ao encaminhar readequação!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
+            parent::message('Erro ao encaminhar readequação!', "readequacoes/painel?tipoFiltro=$filtro", "ERROR");
         }
     }
 }
