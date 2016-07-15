@@ -4141,7 +4141,7 @@ class ReadequacoesController extends GenericControllerNew {
                 
                 $tbReadequacao = new tbReadequacao();
                 $dadosReadequacao = array(
-                    'stEncaminhamento' => 3
+                    'siEncaminhamento' => 3
                 );
                 $u = $tbReadequacao->update($dadosReadequacao, $where);
                 
