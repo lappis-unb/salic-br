@@ -44,7 +44,24 @@
 		<td><?php echo $d->qtTotalDiasAvaliar; ?></td>
 		
         <td align="center">
-                  <input type="button" name="btn_encaminhar" class="btn_encaminhar enviarReadequacao" idDistRead="<?php echo $d->idDistribuirReadequacao; ?>" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar">
+          <?php 
+             $p = new Projetos();
+             $dadosProjetos = $p->buscar(array('IdPRONAC = ?'=>$d->idPronac))->current();
+
+          $Pareceristas = array();
+          if(count($dadosProjetos)>0){
+          $a = new Agentes();
+          $Pareceristas = $a->buscarPareceristas($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
+          }
+          ?>
+          <select name="tecnico" class="select_simples comboTecnico">
+            <option value=""> - Selecione - </option>
+            <?php foreach ($Pareceristas as $Parecerista) : ?>
+              <option value='<?php echo $Parecerista->id; ?>' <?php echo ($d->nmParecerista == $Parecerista->nome) ? 'selected="selected"' : ''; ?> >
+	    <?php echo $Parecerista->nome; ?></option>
+<?php endforeach; ?>
+</select>
+<input type="button" name="btn_enviar" class="btn_enviar enviarReadequacao" idDistRead="<?php echo $d->idDistribuirReadequacao; ?>" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar">
 		</td>
 		
 		<td align="center">

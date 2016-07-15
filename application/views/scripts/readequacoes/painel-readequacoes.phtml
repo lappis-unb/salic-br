@@ -249,11 +249,11 @@ $situacoes = array(
 
     <?php if($this->qtdRegistros > 0): ?>
 <?php if($this->filtro == 'analisados'): ?>
-<?php echo $this->partial('readequacoes/partial/painel-readequacoes-analisados.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'conselheiros' => $this->conselheiros, 'paginacao' => $this->paginacao)); ?>
+<?php echo $this->partial('readequacoes/partial/painel-readequacoes-analisados.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'conselheiros' => $this->conselheiros, 'paginacao' => $this->paginacao, 'idOrgao' => $this->idOrgao, 'idPerfil' => $this->idPerfil)); ?>
 <?php elseif($this->filtro == 'em_analise'): ?>
-                <?php echo $this->partial('readequacoes/partial/painel-readequacoes-emAnalise.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao)); ?>
+<?php echo $this->partial('readequacoes/partial/painel-readequacoes-emAnalise.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao, 'idOrgao' => $this->idOrgao, 'idPerfil' => $this->idPerfil)); ?>
 <?php elseif($this->filtro == 'aguardando_distribuicao'): ?>
-                <?php echo $this->partial('readequacoes/partial/painel-readequacoes-aguardandoDistribuicao.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao)); ?>
+                <?php echo $this->partial('readequacoes/partial/painel-readequacoes-aguardandoDistribuicao.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao, 'idOrgao' => $this->idOrgao, 'idPerfil' => $this->idPerfil)); ?>
 <?php elseif($this->filtro == 'painel_do_tecnico'): ?>
                 <?php echo $this->partial('readequacoes/partial/painel-readequacoes-tecnico.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao)); ?>
             <?php endif;?>
