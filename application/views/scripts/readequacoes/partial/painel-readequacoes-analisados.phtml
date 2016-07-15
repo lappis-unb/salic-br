@@ -10,7 +10,8 @@
 		<th style="width: 130px;" nowrap><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Data Distribui&ccedil;&atilde;o</a></th>
 
 		<th style="width: 130px;" nowrap><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Data Devolu&ccedil;&atilde;o</a></th>
-		
+
+		<th>Parecerista</th>
 		<th>Qtd dias para distribuir</th>
 		<th>Qtd dias para avaliar</th>
 		<th>Total em dias para avaliar</th>
@@ -37,8 +38,8 @@
         <td align="center"><?php if ($d->dtEnvio == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtEnvio, 'Brasileira'); } ?></td>
 
         <td align="center"><?php if ($d->dtDistribuicao == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtDistribuicao, 'Brasileira'); } ?></td>
-		
 		<td><?php echo $d->dtDevolucao; ?></td>
+		<td><?php echo $d->nmParecerista; ?></td>
 		<td><?php echo $d->qtDiasDistribuir; ?></td>
 		<td><?php echo $d->qtDiasAvaliar; ?></td>
 		<td><?php echo $d->qtTotalDiasAvaliar; ?></td>
