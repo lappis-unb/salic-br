@@ -25,7 +25,9 @@
 		
 <td><?php echo $d->tpReadequacao; ?></td>
 <td align="center"><?php if ($d->dtDistribuicao == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtDistribuicao, 'Brasileira'); } ?></td>
-<td><?php echo $d->nmParecerista; ?></td>
+<td align="center"><?php echo $d->nmParecerista; ?></td>
+<td align="center"><?php echo $d->qtDiasEmAnalise; ?></td>
+
 <td>Parecerista</td>
 
         <td>
