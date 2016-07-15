@@ -44,7 +44,13 @@
                     nomeprojeto="<?php echo $d->NomeProjeto; ?>" title="Encaminhar">
         </td>
         <td align="center">
-            <input type="button" name="btn_enviar" class="btn_enviar enviarCNIC" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Finalizar a análise">
+	  <select name="tecnico" class="select_simples comboComponente">
+            <option value=""> - Selecione - </option>
+            <?php foreach ($this->conselheiros as $conselheiro) { ?>
+            <option value="<?php echo $conselheiro->id; ?>"><?php echo $conselheiro->nome; ?></option>
+            <?php } ?>
+            <input style="margin-left: 10px;" type="button" name="btn_enviar" class="btn_enviar finalizarReadequacao" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar para Componente da Comisso">
+          </select>
         </td>
         <td align="center">
             <input type="button" name="btn_encaminhar" class="btn_finalizar finalizarAnaliseReadequacao" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Finalizar a análise">
