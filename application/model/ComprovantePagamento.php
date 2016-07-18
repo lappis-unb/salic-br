@@ -475,6 +475,7 @@ class ComprovantePagamento extends GenericModel
         $select = "SELECT
                     comp.*,
                     arq.nmArquivo,
+                    cpxpa.stItemAvaliado,
                     convert(char(10), comp.dtEmissao, 103) as dtEmissao,
                     (
                         CASE pa.idProduto
