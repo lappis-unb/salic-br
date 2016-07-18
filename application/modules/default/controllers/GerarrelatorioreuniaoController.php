@@ -36,6 +36,7 @@ class GerarRelatorioReuniaoController extends GenericControllerNew {
             $PermissoesGrupo[] = 114; // Coord. de Editais
             $PermissoesGrupo[] = 115; // Atendimento Representacoes
             $PermissoesGrupo[] = 119; // Presidente da CNIC
+            $PermissoesGrupo[] = 120; // Coord. CNIC
             $PermissoesGrupo[] = 121; // Tec. de Acompanhamento
             $PermissoesGrupo[] = 122; // Coord. de Acompanhamento
             $PermissoesGrupo[] = 123; // Coord. Geral de Acompanhamento
