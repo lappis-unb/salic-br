@@ -450,7 +450,18 @@
                             </td>
                             <td><?php echo $this->currency($comprovante->vlComprovacao); ?></td>
                             <td>
-			    <?php if ($comprovante->stItemAvaliado == 4): ?>			      
+			      <?php
+				 $comprovacaoTexto = array(
+				 1 => 'Comprovação validada',
+			         3 => 'Comprovação recusada',
+			      );
+
+				 ?>
+			      <?php if ($comprovante->stItemAvaliado == 4 || $comprovante->stItemAvaliado == 3): /* não analisado ou recusado */  ?>
+
+			      <?php if ($comprovante->stItemAvaliado == 3): ?>
+			      <span class="bold"><?php echo $comprovacaoTexto[$comprovante->stItemAvaliado]; ?></span>
+			      <?php endif; ?>
                                 <a
                                     href="
                                         <?php echo $this->url(
@@ -478,7 +489,7 @@
                                     <input type="button" value="" class="btn_exclusao" />
                                 </a>
 				<?php else: ?>
-				<span class="bold">An&aacute;lise j&aacute; iniciada!</span>
+                                <span class="bold"><?php echo $comprovacaoTexto[$comprovante->stItemAvaliado]; ?></span>
 				<?php endif; ?>
                             </td>		    
                         </tr>
