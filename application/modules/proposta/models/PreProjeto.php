@@ -1156,7 +1156,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
     public static function listarPropostasResultado($idAgente, $idResponsavel, $idAgenteCombo)
     {
@@ -1206,13 +1205,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
             $sql3->where('b.idAgente = ?', $idAgenteCombo);
         }
 
-        $sql = "
-            $sql
-            UNION ALL
-            $sql2
-            UNION ALL
-            $sql3
-            ";
+        $sql = $db->select()->union(array($sql, $sql2,$sql3), Zend_Db_Select::SQL_UNION_ALL);
 
         return $db->fetchAll($sql);
     }
@@ -1222,50 +1215,60 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @access public
      * @param integer $idResponsavel
      * @return object
-     * @todo colocar padrão orm. Retirar função SAC.dbo.fnNome()
      */
     public function listarPropostasCombo($idResponsavel)
     {
-        $sql = "
-            SELECT b.CNPJCPF, b.idAgente, SAC.dbo.fnNome(b.idAgente) AS NomeProponente
-                FROM SAC.dbo.PreProjeto AS a
-                INNER JOIN AGENTES.dbo.Agentes AS b ON a.idAgente = b.idAgente
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS c ON b.CNPJCPF = c.Cpf
-            WHERE c.IdUsuario = '$idResponsavel'
-            UNION
-            SELECT b.CNPJCPF, b.idAgente, SAC.dbo.fnNome(b.idAgente) AS NomeProponente
-                FROM SAC.dbo.PreProjeto AS a
-                INNER JOIN AGENTES.dbo.Agentes AS b ON a.idAgente = b.idAgente
-                INNER JOIN AGENTES.dbo.tbVinculoProposta AS c ON a.idPreProjeto = c.idPreProjeto
-                INNER JOIN AGENTES.dbo.tbVinculo AS d ON c.idVinculo = d.idVinculo
-                INNER JOIN AGENTES.dbo.Agentes AS f ON d.idAgenteProponente = f.idAgente
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS e ON f.CNPJCPF = e.Cpf
-                WHERE c.siVinculoProposta = 2
-                AND e.IdUsuario = '$idResponsavel'
-            UNION
-            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente
-                FROM AGENTES.dbo.Agentes AS a
-                INNER JOIN AGENTES.dbo.Vinculacao AS b ON a.idAgente = b.idVinculoPrincipal
-                INNER JOIN AGENTES.dbo.Agentes AS c ON b.idAgente = c.idAgente
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS d ON c.CNPJCPF = d.Cpf
-                WHERE d.IdUsuario = '$idResponsavel'
-            UNION
-            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente
-                FROM AGENTES.dbo.Agentes AS a
-                INNER JOIN AGENTES.dbo.tbVinculo AS b ON a.idAgente = b.idAgenteProponente
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS c ON b.idUsuarioResponsavel = c.IdUsuario
-                WHERE b.siVinculo = 2
-                AND c.IdUsuario = '$idResponsavel'
-            UNION
-            SELECT a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente) AS NomeProponente
-                FROM AGENTES.dbo.Agentes AS a
-                INNER JOIN CONTROLEDEACESSO.dbo.SGCacesso AS b ON a.CNPJCPF = b.cpf
-                WHERE b.IdUsuario = '$idResponsavel'
-            GROUP BY a.CNPJCPF, a.idAgente, SAC.dbo.fnNome(a.idAgente)
-            ORDER BY 3 ASC ";
-
-        $db = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $sql = $db->select()
+            ->from(['a'=>'PreProjeto'], null,'SAC.dbo')
+            ->join(['b' => 'Agentes'], 'a.idAgente = b.idAgente', ['b.CNPJCPF', 'b.idAgente'], 'AGENTES.dbo')
+            ->joinLeft(['n' => 'Nomes'], 'n.idAgente = b.idAgente', ['n.descricao as NomeProponente'], 'AGENTES.dbo')
+            ->join(['c' => 'SGCacesso'], 'b.CNPJCPF = c.Cpf', [], 'CONTROLEDEACESSO.dbo')
+            ->where('c.IdUsuario = ?', $idResponsavel)
+        ;
+
+        $sql2 = $db->select()
+            ->from(['a'=>'PreProjeto'], null,'SAC.dbo')
+            ->join(['b' => 'Agentes'], 'a.idAgente = b.idAgente', ['b.CNPJCPF', 'b.idAgente'], 'AGENTES.dbo')
+            ->joinLeft(['n' => 'Nomes'], 'n.idAgente = b.idAgente', ['n.descricao as NomeProponente'], 'AGENTES.dbo')
+            ->join(['c' => 'tbVinculoProposta'], 'a.idPreProjeto = c.idPreProjeto', null, 'AGENTES.dbo')
+            ->join(['d' => 'tbVinculo'], 'c.idVinculo = d.idVinculo', null, 'AGENTES.dbo')
+            ->join(['f' => 'Agentes'], 'd.idAgenteProponente = f.idAgente', null, 'AGENTES.dbo')
+            ->join(['e' => 'SGCacesso'], 'f.CNPJCPF = e.Cpf', null, 'CONTROLEDEACESSO.dbo')
+            ->where('e.IdUsuario = ?', $idResponsavel)
+            ->where('c.siVinculoProposta = 2')
+            ;
+
+        $sql3 = $db->select()
+            ->from(['a'=>'Agentes'], ['a.CNPJCPF', 'a.idAgente'],'Agentes.dbo')
+            ->joinLeft(['n' => 'Nomes'], 'n.idAgente = a.idAgente', ['n.descricao as NomeProponente'], 'AGENTES.dbo')
+            ->join(['b' => 'Vinculacao'], 'a.idAgente = b.idVinculoPrincipal', null, 'AGENTES.dbo')
+            ->join(['c' => 'Agentes'], 'b.idAgente = c.idAgente', null, 'AGENTES.dbo')
+            ->join(['d' => 'SGCacesso'], 'c.CNPJCPF = d.Cpf', null, 'CONTROLEDEACESSO.dbo')
+            ->where('d.IdUsuario = ?', $idResponsavel)
+            ;
+
+        $sql4 = $db->select()
+            ->from(['a'=>'Agentes'], ['a.CNPJCPF', 'a.idAgente'],'Agentes.dbo')
+            ->joinLeft(['n' => 'Nomes'], 'n.idAgente = a.idAgente', ['n.descricao as NomeProponente'], 'AGENTES.dbo')
+            ->join(['b' => 'tbVinculo'], 'a.idAgente = b.idAgenteProponente', null, 'AGENTES.dbo')
+            ->join(['c' => 'SGCacesso'], 'b.idUsuarioResponsavel = c.IdUsuario', null, 'CONTROLEDEACESSO.dbo')
+            ->where('b.siVinculo = 2')
+            ->where('c.IdUsuario = ?', $idResponsavel)
+            ;
+
+        $sql5 = $db->select()
+            ->from(['a'=>'Agentes'], ['a.CNPJCPF', 'a.idAgente'],'Agentes.dbo')
+            ->joinLeft(['n' => 'Nomes'], 'n.idAgente = a.idAgente', ['n.descricao as NomeProponente'], 'AGENTES.dbo')
+            ->join(['b' => 'SGCacesso'], 'a.CNPJCPF = b.cpf', null, 'CONTROLEDEACESSO.dbo')
+            ->where('b.IdUsuario = ?', $idResponsavel)
+            ;
+
+        $sql = $db->select()->union(array($sql, $sql2, $sql3, $sql4, $sql5))
+            ->group(['a.CNPJCPF', 'a.idAgente', 'n.descricao'])
+            ->order(['3 ASC']);
 
         return $db->fetchAll($sql);
     }
@@ -1509,72 +1512,63 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @todo colocar padrão orm. Passar função para php SAC.dbo.fnNomeTecnicoMinc(). Passar para model PreProjeto
      */
     public function buscarPropostaAdmissibilidade($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
-
         $db = $this->getAdapter();
+        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-        $meuWhere = "";
+        $p = [
+            'p.idPreProjeto AS idProjeto',
+            'p.NomeProjeto AS NomeProposta',
+            'p.idAgente'
+        ];
+
+        $m =[
+            new Zend_Db_Expr('CONVERT(CHAR(20),m.DtMovimentacao, 120) AS DtMovimentacao'),
+            new Zend_Db_Expr('DATEDIFF(d, m.DtMovimentacao, GETDATE()) AS diasDesdeMovimentacao'),
+            'm.idMovimentacao',
+            'm.Movimentacao AS CodSituacao',
+        ];
+
+        $x =[
+            new Zend_Db_Expr('CONVERT(CHAR(20),x.DtAvaliacao, 120) AS DtAdmissibilidade'),
+            new Zend_Db_Expr('DATEDIFF(d, x.DtAvaliacao, GETDATE()) AS diasCorridos'),
+            'x.idTecnico AS idUsuario',
+            'x.DtAvaliacao',
+            'x.idAvaliacaoProposta',
+            new Zend_Db_Expr('SAC.dbo.fnNomeTecnicoMinc(x.idTecnico) AS Tecnico'),
+            new Zend_Db_Expr('SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) AS idSecretaria' ),
+        ];
+
+        $sql = $this->select()
+            ->setIntegrityCheck(false)
+            ->from(["p" => $this->_name], $p, "SAC.dbo")
+            ->join(["m" => "tbMovimentacao"], 'p.idPreProjeto = m.idProjeto AND m.stEstado = 0', $m, "SAC.dbo")
+            ->joinInner(["x" => "tbAvaliacaoProposta"], "p.idPreProjeto = x.idProjeto AND x.stEstado = 0", $x, "SAC.dbo")
+            ->joinInner(["a" => "Agentes"], 'p.idAgente = a.idAgente', ['a.CNPJCPF'], 'AGENTES.dbo')
+            ->joinInner(["y" => "Verificacao"], 'm.Movimentacao = y.idVerificacao', null, 'SAC.dbo')
+            ->joinLeft(["ap1" => 'tbAvaliacaoProposta'], "p.idPreProjeto = ap1.idProjeto AND ap1.stEnviado = 'S'", [new Zend_Db_Expr('DATEDIFF(d, ap1.DtEnvio, GETDATE()) AS diasDiligencia')], 'SAC.dbo')
+            ->joinLeft(["ap2" => 'tbAvaliacaoProposta'], "p.idPreProjeto = ap2.idProjeto AND ap2.stEnviado = 'S'", [new Zend_Db_Expr('DATEDIFF(d, ap2.dtResposta, GETDATE()) AS diasRespostaDiligencia')], 'SAC.dbo')
+            ->where(
+                new Zend_Db_Expr('NOT EXISTS
+                    (
+                    SELECT TOP (1) IdPRONAC, AnoProjeto, Sequencial, UfProjeto, Area, Segmento, Mecanismo, NomeProjeto, Processo, CgcCpf, Situacao, DtProtocolo, DtAnalise, Modalidade, Orgao, OrgaoOrigem, DtSaida, DtRetorno, UnidadeAnalise, Analista, DtSituacao, ResumoProjeto, ProvidenciaTomada, Localizacao, DtInicioExecucao, DtFimExecucao, SolicitadoUfir, SolicitadoReal, SolicitadoCusteioUfir, SolicitadoCusteioReal, SolicitadoCapitalUfir, SolicitadoCapitalReal, Logon, idProjeto
+                    FROM SAC.dbo.Projetos AS u
+                    WHERE (p.idPreProjeto = idProjeto)
+                    )'
+                )
+            )
+            ;
+
         // adicionando clausulas where
         foreach ($where as $coluna=>$valor)
         {
-            $meuWhere .= $coluna.$valor." AND ";
+            $sql->where($coluna.'?', $valor);
         }
 
-        $meuOrder = "";
         // adicionando clausulas order
-        foreach ($order as $valor)
-        {
-            if($meuOrder != ""){ $meuOrder .= " , "; }else{ $meuOrder = " ORDER BY "; }
-            $meuOrder .= $valor;
-        }
-
-        $sql = "
-        SELECT DISTINCT
-        p.idPreProjeto AS idProjeto,
-        p.NomeProjeto AS NomeProposta,
-        a.CNPJCPF,
-        p.idAgente,
-        x.idTecnico AS idUsuario,
-        SAC.dbo.fnNomeTecnicoMinc(x.idTecnico) AS Tecnico,
-        SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) AS idSecretaria,
-        CONVERT(CHAR(20),x.DtAvaliacao, 120) AS DtAdmissibilidade,
-        DATEDIFF(d, x.DtAvaliacao, GETDATE()) AS diasCorridos,
-        DATEDIFF(d, ap1.DtEnvio, GETDATE()) AS diasDiligencia,
-        DATEDIFF(d, ap2.dtResposta, GETDATE()) AS diasRespostaDiligencia,
-        CONVERT(CHAR(20),m.DtMovimentacao, 120) AS DtMovimentacao,
-        DATEDIFF(d, m.DtMovimentacao, GETDATE()) AS diasDesdeMovimentacao,
-        x.idAvaliacaoProposta,
-        m.idMovimentacao,
-        m.Movimentacao AS CodSituacao,
-        y.Descricao AS Situacao,
-        p.stTipoDemanda AS TipoDemanda,
-        x.DtAvaliacao
-        FROM SAC.dbo.PreProjeto AS p
-        INNER JOIN SAC.dbo.tbMovimentacao AS m ON p.idPreProjeto = m.idProjeto AND m.stEstado = 0
-        INNER JOIN SAC.dbo.tbAvaliacaoProposta AS x ON p.idPreProjeto = x.idProjeto AND x.stEstado = 0
-        INNER JOIN AGENTES.dbo.Agentes AS a ON p.idAgente = a.idAgente
-        INNER JOIN SAC.dbo.Verificacao AS y ON m.Movimentacao = y.idVerificacao
-        LEFT JOIN SAC.dbo.tbAvaliacaoProposta as ap1 ON p.idPreProjeto = ap1.idProjeto AND ap1.stEnviado = 'S'
-        LEFT JOIN SAC.dbo.tbAvaliacaoProposta as ap2 ON p.idPreProjeto = ap2.idProjeto AND ap2.stEnviado = 'S'
-        WHERE
-        {$meuWhere}
-        (p.stEstado = 1)
-        AND
-        (
-        NOT EXISTS
-            (
-            SELECT TOP (1) IdPRONAC, AnoProjeto, Sequencial, UfProjeto, Area, Segmento, Mecanismo, NomeProjeto, Processo, CgcCpf, Situacao, DtProtocolo, DtAnalise, Modalidade, Orgao, OrgaoOrigem, DtSaida, DtRetorno, UnidadeAnalise, Analista, DtSituacao, ResumoProjeto, ProvidenciaTomada, Localizacao, DtInicioExecucao, DtFimExecucao, SolicitadoUfir, SolicitadoReal, SolicitadoCusteioUfir, SolicitadoCusteioReal, SolicitadoCapitalUfir, SolicitadoCapitalReal, Logon, idProjeto
-            FROM SAC.dbo.Projetos AS u
-            WHERE (p.idPreProjeto = idProjeto)
-            )
-        )
-        ".$meuOrder."
-        ";
-
-        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+        $sql->order($order);
 
         // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
@@ -1649,29 +1643,23 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param mixed $idOrgao
      * @access public
      * @return void
-     * @todo colocar no padrão orm. Remover função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+     * @todo Remover função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
      */
     public function buscarTecnicosHistoricoAnaliseVisual($idOrgao)
     {
         $db = $this->getAdapter();
-
-        $sql = "
-            SELECT distinct
-                    a.idTecnico,
-                    u.usu_nome as Tecnico
-            FROM SAC.dbo.tbAvaliacaoProposta a
-            INNER JOIN SAC.dbo.PreProjeto p
-                  ON (p.idPreProjeto = a.idProjeto)
-            INNER JOIN TABELAS.dbo.Usuarios u
-                  ON u.usu_codigo = a.idTecnico
-            WHERE
-                ConformidadeOK<>1
-                and p.stEstado = 1
-                and SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) = {$idOrgao}
-            ORDER BY u.usu_nome ASC
-        ";
-
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+
+        $sql = $this->select()->distinct()
+            ->setIntegrityCheck(false)
+            ->from(['a' => 'tbAvaliacaoProposta'], ['a.idTecnico'], "SAC.dbo")
+            ->join(['p' => 'PreProjeto'], 'p.idPreProjeto = a.idProjeto', null, "SAC.dbo")
+            ->join(['u' => 'Usuarios'], 'u.usu_codigo = a.idTecnico', 'u.usu_nome as Tecnico', 'TABELAS.dbo')
+            ->where('ConformidadeOK<>1')
+            ->where('p.stEstado = 1')
+            ->where('SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) = ?', $idOrgao)
+            ->order('u.usu_nome ASC')
+            ;
 
         // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
@@ -1691,42 +1679,52 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      */
     public function buscarHistoricoAnaliseVisual($idOrgao,$idTecnico=null,$situacao=null,$dtInicio=null,$dtFim=null)
     {
-        $meuWhere = "";
+        $db = $this->getAdapter();
+        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+
+        $p = [
+            'p.idPreProjeto',
+            'p.NomeProjeto',
+        ];
+
+        $a =[
+            new Zend_Db_Expr('a.idTecnico,SAC.dbo.fnNomeTecnicoMinc(a.idTecnico) as Tecnico'),
+            'a.DtEnvio',
+            new Zend_Db_Expr('CONVERT(CHAR(20),a.DtAvaliacao, 120) AS DtAvaliacao'),
+            'a.idAvaliacaoProposta',
+            'a.ConformidadeOK',
+            'a.stEstado',
+            new Zend_Db_Expr('SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) as idOrgao')
+        ];
+
+        $sql = $this->select()
+            ->setIntegrityCheck(false)
+            ->from(['a' => 'tbAvaliacaoProposta'], $a, 'SAC.dbo')
+            ->join(['p' => 'PreProjeto'], 'p.idPreProjeto = a.idProjeto', $p, 'SAC.dbo')
+            ->where('ConformidadeOK<>1')
+            ->where('p.stEstado = 1')
+            ->where('SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) = ?', $idOrgao)
+            ->order('p.idPreProjeto DESC')
+            ->order('DtAvaliacao ASC')
+            ->limit(20)
+            ;
+
         if($idTecnico){
-            $meuWhere .= " AND a.idTecnico = {$idTecnico}";
+            $sql->where('a.idTecnico = ?', $idTecnico);
         }
         if($situacao){
-            $meuWhere .= " AND a.ConformidadeOK = {$situacao}";
+            $sql->where('a.ConformidadeOK = ?', $situacao);
         }
 
         if($dtInicio){
             if($dtFim){
-                $meuWhere .= " AND a.DtAvaliacao > '".$dtInicio." 00:00:00'";
-                $meuWhere .= " AND a.DtAvaliacao < '".$dtFim." 23:59:59'";
+                $sql->where('a.DtAvaliacao > ? 00:00:00', $dtInicio);
+                $sql->where('a.DtAvaliacao < ? 23:59:59', $dtFim);
             }else{
-                $meuWhere .= " AND a.DtAvaliacao > '".$dtInicio." 00:00:00'";
-                $meuWhere .= " AND a.DtAvaliacao < '".$dtInicio." 23:59:59'";
+                $sql->where('a.DtAvaliacao > ? 00:00:00', $dtInicio);
+                $sql->where('a.DtAvaliacao < ? 23:59:59', $dtInicio);
             }
         }
-
-        $sql = "
-        SELECT TOP 20 p.idPreProjeto,
-                p.NomeProjeto,
-                a.idTecnico,SAC.dbo.fnNomeTecnicoMinc(a.idTecnico) as Tecnico,
-                a.DtEnvio,
-                CONVERT(CHAR(20),a.DtAvaliacao, 120) AS DtAvaliacao,
-                a.idAvaliacaoProposta,
-                a.ConformidadeOK,a.stEstado,
-                SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) as idOrgao
-        from SAC.dbo.tbAvaliacaoProposta a
-        inner join SAC.dbo.PreProjeto p on (p.idPreProjeto = a.idProjeto)
-        where ConformidadeOK<>1 and p.stEstado = 1 and SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) = {$idOrgao}
-        {$meuWhere}
-        order by p.idPreProjeto DESC, DtAvaliacao ASC
-        ";
-
-        $db = Zend_Registry :: get('db');
-        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
@@ -1738,18 +1736,16 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param mixed $idAvaliacao
      * @access public
      * @return void
-     * @todo Esse metodo deve ser removido dessa model.
      * @deprecated
      */
     public function buscarAvaliacaoHistoricoAnaliseVisual($idAvaliacao)
     {
         $db = $this->getAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
             ->from(['a' => 'tbAvaliacaoProposta'], ['a.Avaliacao'], $this->_schema)
             ->where('a.idAvaliacaoProposta = ?', $idAvaliacao);
-
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
     }
@@ -1807,44 +1803,34 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      */
     public function buscarPropostaAnaliseDocumentalTecnico($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
-        $meuWhere = "";
+        $db = $this->getAdapter();
+        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+
+        $a =[
+            'a.idProjeto',
+            new Zend_Db_Expr('sac.dbo.fnNomeTecnicoMinc(a.idTecnico) as Tecnico'),
+            new Zend_Db_Expr('sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) as idOrgao'),
+            new Zend_Db_Expr('CONVERT(CHAR(20),sac.dbo.fnDtUltimaDiligenciaDocumental(a.idProjeto), 120) AS DtUltima')
+        ];
+
+        $sql = $this->select()
+            ->setIntegrityCheck(false)
+            ->from(['a' => 'tbAvaliacaoProposta'], $a,'sac.dbo')
+            ->join(['p' => 'PreProjeto'], 'a.idProjeto=p.idPreProjeto', ['p.NomeProjeto'], 'sac.dbo')
+            ->join(['d' => 'vwDocumentosPendentes'], 'a.idProjeto = d.idProjeto',['CodigoDocumento'], 'sac.dbo')
+            ->join(['de'=>'DocumentosExigidos'], 'd.CodigoDocumento = de.Codigo', ['Descricao as Documento'], 'sac.dbo')
+            ;
+
         // adicionando clausulas where
         foreach ($where as $coluna=>$valor)
         {
-            if($meuWhere == ""){ $meuWhere = " WHERE "; }else{ $meuWhere .= " AND "; }
-            $meuWhere .= $coluna.$valor;
+            $sql->where($coluna.'?',$valor);
         }
 
-        $meuOrder = "";
-        // adicionando clausulas order
-        foreach ($order as $valor)
-        {
-            if($meuOrder != ""){ $meuOrder .= " , "; }else{ $meuOrder = " ORDER BY "; }
-            $meuOrder .= $valor;
-        }
-
-        $sql = "
-                SELECT a.idProjeto,
-                       p.NomeProjeto,
-                       sac.dbo.fnNomeTecnicoMinc(a.idTecnico) as Tecnico,
-                       sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) as idOrgao,
-                       CodigoDocumento,
-                       Descricao as Documento,
-                       CONVERT(CHAR(20),sac.dbo.fnDtUltimaDiligenciaDocumental(a.idProjeto), 120) AS DtUltima
-                FROM sac.dbo.tbAvaliacaoProposta a
-                     INNER JOIN sac.dbo.PreProjeto p on (a.idProjeto=p.idPreProjeto)
-                     INNER JOIN sac.dbo.vwDocumentosPendentes d on (a.idProjeto = d.idProjeto)
-                     INNER JOIN sac.dbo.DocumentosExigidos on (CodigoDocumento = Codigo)
-                {$meuWhere}
-                {$meuOrder}
-                ";
-
-        $db = Zend_Registry :: get('db');
-        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+        $sql->order($order);
 
         // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
-
     }
 
     /**
