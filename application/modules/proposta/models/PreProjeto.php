@@ -1981,16 +1981,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
     public function buscarDocumental($idUsuario = null, $order=array(), $tamanho=-1, $inicio=-1)
     {
         $db = $this->getAdapter();
-        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
-
-
-        //$meuOrder = "";
-        //// adicionando clausulas order
-        //foreach ($order as $valor)
-        //{
-            //if($meuOrder != ""){ $meuOrder .= " , "; }else{ $meuOrder = " ORDER BY "; }
-            //$meuOrder .= $valor;
-        //}
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $p =[
             'p.idPreProjeto AS idProjeto',
@@ -2020,7 +2011,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
                     'DtProtocolo', 'DtAnalise', 'Modalidade', 'Orgao', 'OrgaoOrigem', 'DtSaida', 'DtRetorno', 'UnidadeAnalise', 'Analista', 'DtSituacao', 'ResumoProjeto',
                     'ProvidenciaTomada', 'Localizacao', 'DtInicioExecucao', 'DtFimExecucao', 'SolicitadoUfir', 'SolicitadoReal', 'SolicitadoCusteioUfir', 'SolicitadoCusteioReal',
                     'SolicitadoCapitalUfir', 'SolicitadoCapitalReal', 'Logon', 'idProjeto'
-
             ] ,'SAC.dbo')
             ->where('p.idPreProjeto = idProjeto')
             ->limit(1)
