@@ -3,9 +3,10 @@
     <tr class="titulo_tabela">
       <th style="width: 80px;"><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=3&ordem='.$this->paginacao['novaOrdem'];?>">PRONAC</a></th>
       <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">Nome do Projeto</a></th>
-      <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Tipo Readequa&ccedil;&atilde;o</a></th>
-      <th style="width: 130px;" nowrap><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Data Envio</a></th>
+      <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Tipo de Readequa&ccedil;&atilde;o</a></th>
+      <th style="width: 130px;" nowrap><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Dt Envio</a></th>
       <th>Qtd dias aguardando distribui&ccedil;&atilde;o</th>
+      <th style="width: 130px;">Parecerista</th>
       <th style="width: 130px;">Encaminhar</th>
   </thead>
   <tbody>
@@ -21,7 +22,7 @@
       <td align="center"><?php if ($d->dtEnvio == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtEnvio, 'Brasileira'); } ?></td>
       <td align="center"><?php echo $d->qtDiasAguardandoDistribuicao; ?></td>
 		
-      <td>
+      <td style="align: center">
 	<?php
 	   $p = new Projetos();
 	   $dadosProjetos = $p->buscar(array('IdPRONAC = ?'=>$d->idPronac))->current();
@@ -38,7 +39,9 @@
 	  <option value="<?php echo $Parecerista->id; ?>"><?php echo $Parecerista->nome; ?></option>
 	  <?php endforeach; ?>
 	</select>
-	<input type="button" name="btn_enviar" class="btn_enviar enviarReadequacao" idDistRead="<?php echo $d->idDistribuirReadequacao; ?>" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar">
+      </td>
+      <td>
+	  <input type="button" name="btn_enviar" class="btn_enviar enviarReadequacao" idDistRead="<?php echo $d->idDistribuirReadequacao; ?>" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar">
       </td>
     </tr>
     <?php endforeach; ?>
