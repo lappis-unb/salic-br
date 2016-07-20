@@ -9,6 +9,7 @@
 		<th>Parecerista</th>
 		
 		<th>Qtd dias aguardando an&aacute;lise</th>
+		<th>Nome do parecerista</th>
 		<th style="width: 130px;">Encaminhar</th>
             </tr>
         </thead>
@@ -46,9 +47,10 @@
 	    <?php echo $Parecerista->nome; ?></option>
 <?php endforeach; ?>
 </select>
-<input type="button" name="btn_enviar" class="btn_enviar enviarReadequacao" idDistRead="<?php echo $d->idDistribuirReadequacao; ?>" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar">
 		</td>
-		
+		<td>
+		    <input type="button" name="btn_enviar" class="btn_enviar enviarReadequacao" idDistRead="<?php echo $d->idDistribuirReadequacao; ?>" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar">		    
+		</td>
             </tr>
             <?php endforeach; ?>
         </tbody>
