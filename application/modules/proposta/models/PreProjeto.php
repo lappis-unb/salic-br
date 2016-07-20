@@ -2117,17 +2117,37 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param mixed $idTecnico
      * @access public
      * @return void
-     * @todo colocar padrão orm. retirar função SAC.dbo.fnIdOrgaoSuperiorAnalista()
      */
     public function orgaoSecretaria($idTecnico)
     {
-        $sql = "select SAC.dbo.fnIdOrgaoSuperiorAnalista({$idTecnico}) as idOrgao,tabelas.dbo.fnDadosOrgao(SAC.dbo.fnIdOrgaoSuperiorAnalista({$idTecnico}),'nome completo') as secretaria";
-
-        $db = Zend_Registry :: get('db');
+        $db = $this->getAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-        // retornando os registros conforme objeto select
-        return $db->fetchAll($sql);
+        $sql = $this->select()
+            ->setIntegrityCheck(false)
+            ->from(['vwUsuariosOrgaosGrupos'], ['org_superior AS idOrgao'], 'tabelas.dbo')
+            ->where('usu_codigo = ?', 4676)
+            ->where('sis_codigo=21')
+            ->where('gru_codigo = 92')
+            ->order('org_superior')
+            ;
+
+        $orgao = $db->fetchAll($sql);
+
+        $sql = $this->select()
+            ->setIntegrityCheck(false)
+            ->from(['Orgaos'], null, 'tabelas.dbo')
+            ->join(['Pessoa_Identificacoes'], 'pid_pessoa = org_pessoa', ['pid_identificacao'],'Tabelas.dbo')
+            ->where('pid_meta_dado = 1')
+            ->where('pid_sequencia = 1')
+            ->where('org_codigo = ?', 160)
+            ;
+
+        $identificacao = $db->fetchAll($sql);
+
+        $orgao[0]->secretaria = $identificacao[0]->pid_identificacao;
+
+        return $orgao;
     }
 
     /**
