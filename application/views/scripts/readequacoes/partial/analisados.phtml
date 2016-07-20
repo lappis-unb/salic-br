@@ -7,8 +7,8 @@
 	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Dt Envio</a></th>
 	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=6&ordem='.$this->paginacao['novaOrdem'];?>">Dt Distribui&ccedil;&atilde;o</a></th>
 	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">Dt Devolu&ccedil;&atilde;o</a></th>
-	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Qt dias p/ distribuir</a></th>
-	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=9&ordem='.$this->paginacao['novaOrdem'];?>">Qt dias p/ avaliar</a></th>
+<!--	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Qt dias p/ distribuir</a></th>-->
+<!--	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=9&ordem='.$this->paginacao['novaOrdem'];?>">Qt dias p/ avaliar</a></th>-->
 	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Total em dias p/ avaliar</a></th>
 	<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=12&ordem='.$this->paginacao['novaOrdem'];?>">T&eacute;cnico</th>
         <th>Visualizar</th>
@@ -31,8 +31,8 @@
         <td align="center"><?php if ($d->dtEnvio == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtEnvio, 'Brasileira'); } ?></td>
         <td align="center"><?php if ($d->dtDistribuicao == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtDistribuicao, 'Brasileira'); } ?></td>
         <td align="center"><?php if ($d->dtDevolucao == '') { echo '---'; } else {echo Data::tratarDataZend($d->dtDevolucao, 'Brasileira'); } ?></td>
-        <td align="center"><?php echo $d->qtDiasDistribuir; ?></td>
-        <td align="center"><?php echo $d->qtDiasAvaliar; ?></td>
+<!--        <td align="center"><?php echo $d->qtDiasDistribuir; ?></td>-->
+<!--        <td align="center"><?php echo $d->qtDiasAvaliar; ?></td>-->
         <td align="center"><?php echo $d->qtTotalDiasAvaliar; ?></td>
         <td align="center"><?php echo $d->nmTecnicoParecerista; ?></td>
         <td align="center">
@@ -43,14 +43,14 @@
                     pronac="<?php echo $d->PRONAC; ?>"
                     nomeprojeto="<?php echo $d->NomeProjeto; ?>" title="Encaminhar">
         </td>
-        <td align="center">
+        <td align="center" style="width: 290px">
 	  <select name="tecnico" class="select_simples comboComponente">
             <option value=""> - Selecione - </option>
             <?php foreach ($this->conselheiros as $conselheiro) { ?>
             <option value="<?php echo $conselheiro->id; ?>"><?php echo $conselheiro->nome; ?></option>
             <?php } ?>
-            <input style="margin-left: 10px;" type="button" name="btn_enviar" class="btn_enviar finalizarReadequacao" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar para Componente da Comisso">
           </select>
+	  <input style="margin-left: 10px" type="button" name="btn_enviar" class="btn_enviar finalizarReadequacao" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar para Componente da Comisso">
         </td>
         <td align="center">
             <input type="button" name="btn_encaminhar" class="btn_finalizar finalizarAnaliseReadequacao" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Finalizar a análise">

@@ -6,7 +6,7 @@
         <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Tipo Readequa&ccedil;&atilde;o</a></th>     
         <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=6&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Distribui&ccedil;&atilde;o</a></th>
         <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">Qtde Dias em an&aacute;lise</a></th>
-        <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=15&ordem='.$this->paginacao['novaOrdem'];?>">T&eacute;cnico</a></th>	
+        <th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=15&ordem='.$this->paginacao['novaOrdem'];?>">T&eacute;cnico / vinculada</a></th>	
 	<th>Visualizar</th>
         <th>Encaminhar</th>
     </tr>
@@ -24,7 +24,12 @@
             <td align="center"><?php echo $d->tpReadequacao ?></td>
             <td align="center"><?php if ($d->dtEncaminhamento == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtEncaminhamento, 'Brasileira'); } ?></td>
             <td align="center"><?php echo $d->qtDiasEncaminhar ?></td>
-            <td><?php echo $d->nmTecnicoParecerista; ?></td>
+            <td><?php if ($d->nmTecnicoParecerista != ''): ?>
+		<?php echo $d->nmTecnicoParecerista; ?>
+		<?php else: ?>
+		<strong><?php echo $d->sgUnidade; ?></strong>
+		<?php endif; ?>
+	    </td>
 	    
             <td align="center">
                 <input type="button" class="btn_ver" idReadequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>" />
