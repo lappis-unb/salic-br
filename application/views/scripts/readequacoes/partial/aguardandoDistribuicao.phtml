@@ -22,7 +22,7 @@
             <td><?php echo $d->NomeProjeto; ?></td>
             <td align="center"><?php echo $d->tpReadequacao; ?></td>
             <td align="center"><?php if ($d->dtSolicitacao == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtSolicitacao, 'Brasileira'); } ?></td>
-            <td align="center"><?php echo $d->qtAguardandoDistribuicao; ?></td>
+            <td style="width: 200px" align="center"><?php echo $d->qtAguardandoDistribuicao; ?></td>
             <td align="center">
                 <input type="button" class="btn_ver" idReadequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>" />
             </td>
