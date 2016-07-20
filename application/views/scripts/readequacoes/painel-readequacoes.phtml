@@ -81,7 +81,22 @@
                 $('.ui-dialog-titlebar-close').remove();
             }
         });
-        
+
+        $('.btn_avaliar').click(function(){
+            var id = $(this).attr('readequacao');
+            window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'avaliar-readequacao')); ?>?id="+id + "&filtro=<?php echo $this->filtro; ?>";
+        });        
+
+	$('.btn_encaminhar').click(function(){
+            var id = $(this).attr('readequacao');
+            window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'encaminhar-analise-tecnica')); ?>?id="+id + "&filtro=<?php echo $this->filtro; ?>";
+        });
+
+        $('.btn_analisar').click(function(){
+            var id = $(this).attr('idReadequacao');
+            window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'form-avaliar-readequacao')); ?>?id="+id + "&filtro=<?php echo $this->filtro; ?>";
+        });        
+	
         $('.btn_finalizar').click(function(){
             var idDistProj = $(this).attr('idDistProj'),
                 idReadequacao = $(this).attr('idReadequacao');

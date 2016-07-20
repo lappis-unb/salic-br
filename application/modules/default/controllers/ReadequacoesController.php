@@ -2090,7 +2090,9 @@ class ReadequacoesController extends GenericControllerNew {
      */
     public function avaliarReadequacaoAction() {
         //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
-        if($this->idPerfil != 122 && $this->idPerfil != 123){
+        $perfisAcesso = array(121, 122, 123);
+        
+        if(!in_array($this->idPerfil, $perfisAcesso)){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
@@ -2181,12 +2183,13 @@ class ReadequacoesController extends GenericControllerNew {
      * @return void
      */
     public function salvarAvaliacaoAction() {
-
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
-        if($this->idPerfil != 122 && $this->idPerfil != 123){
+        $perfisAcesso = array(121, 122, 123);
+        
+        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        if(!in_array($this->idPerfil, $perfisAcesso)){        
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-
+        
         $idReadequacao = $this->_request->getParam('idReadequacao');
         $filtro = $this->_request->getParam('filtro');
         
@@ -2238,11 +2241,18 @@ class ReadequacoesController extends GenericControllerNew {
                 );
                 $tbDistribuirReadequacao->inserir($dados);
             }
-            
-            parent::message('Dados salvos com sucesso!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
+            if ($this->idPerfil == 121) {
+                parent::message('Dados salvos com sucesso!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "CONFIRM");
+            } else {
+                parent::message('Dados salvos com sucesso!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
+            }
 
         } else {
-            parent::message('Nenhum registro encontrado.', "readequacoes/painel?tipoFiltro=$filtro", "ERROR");
+            if ($this->idPerfil == 121) {
+                parent::message('Nenhum registro encontrado.', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "ERROR");
+            } else {
+                parent::message('Nenhum registro encontrado.', "readequacoes/painel?tipoFiltro=$filtro", "ERROR");
+            }
         }
     }
 
@@ -2442,8 +2452,9 @@ class ReadequacoesController extends GenericControllerNew {
      * Função acessada pelo Parecerista ou Técnico de acompanhamento para avaliar a readequação.
     */
     public function formAvaliarReadequacaoAction(){
-
-        if($this->idPerfil != 94 && $this->idPerfil != 121){
+        $perfisAcesso = array(94, 121);
+        
+        if(!in_array($this->idPerfil, $perfisAcesso)){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
@@ -4058,8 +4069,10 @@ class ReadequacoesController extends GenericControllerNew {
      * @return void
      */    
     public function encaminharAnaliseTecnicaAction() {
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
-        if($this->idPerfil != 122 && $this->idPerfil != 123){
+        $perfisAcesso = array(121, 122, 123);
+
+        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        if(!in_array($this->idPerfil, $perfisAcesso)){        
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
 
@@ -4093,9 +4106,11 @@ class ReadequacoesController extends GenericControllerNew {
      * @access public
      * @return void
      */
-    public function formEncaminharAnaliseTecnicaAction() {       
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
-        if($this->idPerfil != 122 && $this->idPerfil != 123){
+    public function formEncaminharAnaliseTecnicaAction() {
+        $perfisAcesso = array(121, 122, 123);
+
+        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE ACOMPANHAMENTO, TECNICO DE ACOMPANHAMENTO E COORD. DE ACOMPANHAMENTO.
+        if(!in_array($this->idPerfil, $perfisAcesso)){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
         
@@ -4120,8 +4135,12 @@ class ReadequacoesController extends GenericControllerNew {
                 $where['idReadequacao = ?'] = $idReadequacao;
                 
                 $u = $tbDistribuirReadequacao->update($dados, $where);
-                
-                parent::message('Dados salvos com sucesso!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
+
+                if ($this->idPerfil == 121) {
+                    parent::message('Dados salvos com sucesso!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "CONFIRM");
+                } else {
+                    parent::message('Dados salvos com sucesso!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
+                }
             } else {
                 // MUDANÇA DE VINCULADA
 
@@ -4144,11 +4163,20 @@ class ReadequacoesController extends GenericControllerNew {
                     'siEncaminhamento' => 3
                 );
                 $u = $tbReadequacao->update($dadosReadequacao, $where);
+
+                if ($this->idPerfil == 121) {
+                    parent::message('Dados salvos com sucesso!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "CONFIRM");
+                } else {
+                    parent::message('Dados salvos com sucesso!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
+                }                
                 
-                parent::message('Dados salvos com sucesso!', "readequacoes/painel?tipoFiltro=$filtro", "CONFIRM");
             }            
         } catch(Exception $e) {
-            parent::message('Erro ao encaminhar readequação!', "readequacoes/painel?tipoFiltro=$filtro", "ERROR");
+            if ($this->idPerfil == 121) {
+                parent::message('Erro ao encaminhar readequação!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "ERROR");
+            } else {
+                parent::message('Erro ao encaminhar readequação!', "readequacoes/painel?tipoFiltro=$filtro", "ERROR");
+            }                
         }
     }
 }
