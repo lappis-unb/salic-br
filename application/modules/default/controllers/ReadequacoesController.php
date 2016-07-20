@@ -2343,6 +2343,9 @@ class ReadequacoesController extends GenericControllerNew {
             }
         } else if ($this->idPerfil == 121 || $this->idPerfil == 94) {
             // técnico de acompanhamento ou parecerista de vinculada
+            $auth = Zend_Auth::getInstance(); // pega a autenticação
+            $where['idTecnicoParecerista = ?'] = $auth->getIdentity()->usu_codigo;
+            
             $total = $tbReadequacao->count('vwPainelReadequacaoTecnico', $where);
             
             $this->filtro = '';
@@ -2357,7 +2360,7 @@ class ReadequacoesController extends GenericControllerNew {
         if ($this->idPerfil == 93) {
             $busca = $tbReadequacao->painelReadequacoesCoordenadorParecer($where, $order, $tamanho, $inicio, false, $filtro);
         } else if ($this->idPerfil == 121 || $this->idPerfil == 94) {
-            // técnico de acompanhamento ou parecerista de vinculada
+            // técnico de acompanhamento ou parecerista de vinculada           
             $busca = $tbReadequacao->painelReadequacoesTecnicoAcompanhamento($where, $order, $tamanho, $inicio, false);
         }
         
