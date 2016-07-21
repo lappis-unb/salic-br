@@ -102,7 +102,6 @@
                         <td class="destacar"><b>Itens de Custo</b></td>
                         <td class="destacar"><b>Valor Aprovado</b></td>
                         <td class="destacar"><b>Valor Comprovado</b></td>
-                        <td class="destacar"><b>Valor do Item</b></td>
                     </tr>
                     </thead>
                     <tbody>
@@ -113,10 +112,6 @@
                         <td><?php echo $this->currency($this->itemPlanilhaAprovacao->valorAprovado); ?></td>
 <!--                        <td>--><?php //echo $this->currency($this->itemPlanilhaAprovacao->valorComprovado ? $this->itemPlanilhaAprovacao->valorComprovado : '0'); ?><!--</td>-->
                         <td><?php echo $this->currency($this->itemPlanilhaAprovacao->vlComprovado ? $this->itemPlanilhaAprovacao->vlComprovado : '0'); ?></td>
-                        <td>
-                            <input type="text" name="vlComprovado" size="10" id="vlComprovado"
-                                value="<?php echo $this->vlComprovado; ?>" />
-                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -259,6 +254,14 @@
                                     value="<?php echo $this->nrDocumentoDePagamento; ?>"/>
                             </td>
                         </tr>
+                        <tr>
+			  <td class="destacar"><b>Valor do Item</b></td>
+                          <td>
+                            <input type="text" name="vlComprovado" size="10" id="vlComprovado"
+                                   value="<?php echo $this->vlComprovado; ?>" />
+                          </td>
+			  <td colspan="4"></td>
+			</tr>
                         <tr>
                             <td class="destacar" align="right"><b>Anexar comprovante<span style='color:red'>*</span></b></td>
                             <td colspan="2">
