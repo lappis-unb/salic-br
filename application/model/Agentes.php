@@ -332,7 +332,6 @@ class Agentes extends GenericModel {
         $dadosWhere["n.TipoNome = ?"] = 18;
         $dadosWhere["c.idCodigoArea = ?"] = $idArea;
         $dadosWhere["c.idCodigoSegmento = ?"] = $idSegmento;
-        $dadosWhere["c.idverificacao = ?"] = 251;
         $dadosWhere["u.org_superior = ?"] = $idOrgao;
         $dadosWhere["NOT EXISTS(SELECT TOP 1 * FROM Agentes.dbo.tbAusencia WHERE Getdate() BETWEEN dtInicioAusencia AND dtFimAusencia AND idAgente = a.idAgente)"] = '';
         
