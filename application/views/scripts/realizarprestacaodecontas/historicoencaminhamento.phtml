@@ -20,7 +20,7 @@
         <?php if(count($this->Historico)>0){
                 foreach ($this->Historico as $chave => $dadosHis ) { ?>
                 <tr>
-                    <td id="Pronac"><?php echo $dadosHis->dtInicioEncaminhamento; ?></td>
+                    <td id="Pronac"><?php if ($dadosHis->dtInicioEncaminhamento == '') { echo '---'; } else { echo Data::tratarDataZend($dadosHis->dtInicioEncaminhamento, 'Brasileira'); } ?></td>
                     <td id="nomeProjeto"><?php echo utf8_decode(htmlentities($dadosHis->NomeOrigem)); ?></td>
                     <td id="remetente"><?php echo utf8_decode(htmlentities($dadosHis->NomeDestino)); ?></td>
                     <td id="destinatario"><?php echo utf8_decode(htmlentities($dadosHis->dsJustificativa)); ?></td>
