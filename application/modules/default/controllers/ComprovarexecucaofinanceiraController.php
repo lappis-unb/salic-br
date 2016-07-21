@@ -798,8 +798,8 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                 $paginaRedirecionar = 'comprovantes-recusados';
             }
             
-            $comprovanteParamentoModel = new ComprovantePagamento();
-            $comprovanteParamento = $comprovanteParamentoModel->find($idComprovantePagamento)->current();
+            $comprovantePagamentoModel = new ComprovantePagamento();
+            $comprovantePagamento = $comprovantePagamentoModel->find($idComprovantePagamento)->current();
 
             # iniciando os trabalhos com objeto
             $comprovantePagamentoModel = new ComprovantePagamento(
@@ -810,7 +810,7 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                 $request->getParam('nrComprovante'),
                 $request->getParam('nrSerie'),
                 $request->getParam('dtEmissao') ? new DateTime(data::dataAmericana($request->getParam('dtEmissao'))) : null,
-                $comprovanteParamento->idArquivo,
+                $comprovantePagamento->idArquivo,
                 $request->getParam('tpFormaDePagamento'),
                 new DateTime(),
                 str_replace(',', '.', str_replace('.', '', $request->getParam('vlComprovado'))),
@@ -818,11 +818,11 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                 $request->getParam('dsJustificativa')
             );
             
-            if($_FILES['arquivo']) {
-                $comprovantePagamentoModel->atualizar();
+            if($_FILES['arquivo']['name'] != '') {
+                $comprovantePagamentoModel->atualizar(4, true);
             } else {
                 // nao atualiza arquivo se não houver novo upload
-                $comprovantePagamentoModel->atualizar(4, false);                               
+                $comprovantePagamentoModel->atualizar(4);                               
             }            
             
             # View Parameters
@@ -1831,6 +1831,7 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             $this->view->dtEmissao = $comprovanteAtualizar['dtEmissao'];
             $this->view->tpFormaDePagamento = $comprovanteAtualizar['tpFormaDePagamento'];
             $this->view->nrDocumentoDePagamento = $comprovanteAtualizar['nrDocumentoDePagamento'];
+            $this->view->JustificativaTecnico = $comprovanteAtualizar['JustificativaTecnico'];
             $this->view->dsJustificativa = $comprovanteAtualizar['dsJustificativa'];
         }
 

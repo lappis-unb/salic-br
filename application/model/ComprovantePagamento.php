@@ -283,10 +283,10 @@ class ComprovantePagamento extends GenericModel
     /**
      * 
      */
-    public function atualizar($status = 4, $atualizarArquivo = true)
+    public function atualizar($status = 4, $atualizarArquivo = false)
     {
     	$this->validarCadastrar();
-
+        
         // somente mexer no arquivo se houver um arquivo
         if ($atualizarArquivo) {
             $arquivoModel = new ArquivoModel();
