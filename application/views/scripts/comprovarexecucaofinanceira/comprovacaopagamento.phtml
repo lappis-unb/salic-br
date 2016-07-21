@@ -763,6 +763,15 @@
             return ajaxObj;
         }
 
+        // quando selecionar cheque, limita número de caracteres do nrDocumentoDePagamento
+        $('#tpFormaDePagamento').change(function() {
+            if ($(this).val() == 1) {
+                $('#nrDocumentoDePagamento').attr('maxlength', 6);
+            } else {
+                $('#nrDocumentoDePagamento').attr('maxlength', 10)
+            }             
+        });
+        
         $('#itens').change(function (){
             // Recupera o fornecedor e preenche os dados do mesmo.
             $.ajax({
