@@ -1,5 +1,4 @@
-
-<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== 
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ==========
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'prototipos', 'action' => 'index')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -45,7 +44,7 @@ montaGuiaLinks($controller, $links);
                 <td class="esquerda" ><label for="etapa" ><b>Etapa</b></label></td>
                 <td class="esquerda"><b>Exatamente igual </b></td>
                 <td class="esquerda">
-                    <select class="input_simples" name="etapa" id="etapa">
+                    <select class="input_simples" name="etapa" id="etapa" >
                         <option value="">- Todos - </option>
                         <?php foreach($this->etapa as $tbetapa) { ?>
                         <option value="<?php echo $tbetapa->codetapa; ?>"> <?php echo $tbetapa->Etapa; ?></option>
@@ -56,19 +55,13 @@ montaGuiaLinks($controller, $links);
             <tr  class="centro">
                 <td class="esquerda" ><label for="item" ><b>Item</b></label></td>
                 <td class="esquerda">
-                    <select class="input_simples" name="TipoPesquisa" id="TipoPesquisa">
+                    <select class="input_simples" name="TipoPesquisa" id="TipoPesquisa" >
                         <option value="01" selected="selected">Que contenha</option>
                         <option value="02" >In&iacute;cio Igual</option>
                         <option value="03">Exatamente Igual</option>
                         <option value="04">Diferente</option>
                     </select>
-                    <td class="esquerda"><input type="text" name="NomeDoItem" id="NomeDoItem" maxlength="70" style="width:600px;"
-                                            onclick="limpar_campo(this, 'Nome do Item');" value=" "
-                                            onkeypress=" "
-                                            onblur="restaurar_campo(this, 'Nome do Item');"
-                                            onmouseout="restaurar_campo(this, 'Nome do Item');"
-                                            class="input_simples w500"
-                                            />
+                    <td class="esquerda"><input type="text" name="NomeDoItem" id="NomeDoItem" maxlength="70" style="width:600px;" class="input_simples w500"/>
                     </td>
             </tr>
             <tr  class="centro">

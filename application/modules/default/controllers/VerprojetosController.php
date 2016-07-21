@@ -1334,27 +1334,6 @@ class VerProjetosController extends GenericControllerNew {
         }
     }
 
-    public function dadosBancariosAction()
-    {
-        $idPronac = $this->_request->getParam("idPronac");
-        if (strlen($idPronac) > 7) {
-            $idPronac = Seguranca::dencrypt($idPronac);
-        }
-        $this->view->idPronac = $idPronac;
-
-        if(!empty($idPronac)){
-            $Projetos = new Projetos();
-            $this->view->projeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac))->current();
-
-            $tblContaBancaria = new ContaBancaria();
-            $rsContaBancaria = $tblContaBancaria->contaPorProjeto($idPronac);
-            $this->view->dadosContaBancaria = $rsContaBancaria;
-
-            $tbLiberacao = new Liberacao();
-            $rsLiberacao = $tbLiberacao->liberacaoPorProjeto($idPronac);
-            $this->view->dadosLiberacao = $rsLiberacao;
-        }
-    }
     
     public function dadosBancariosLiberacaoAction(){
 

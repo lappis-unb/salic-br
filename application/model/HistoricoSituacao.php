@@ -116,7 +116,7 @@ class HistoricoSituacao extends GenericModel
                     )
                 );
 
-            $select->joinInner(
+            $select->joinLeft(
                 array('u' => 'Usuarios'), 'u.usu_codigo = h.Logon',
                 array(), 'TABELAS.dbo'
             );

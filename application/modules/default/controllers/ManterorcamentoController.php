@@ -534,8 +534,8 @@ class ManterorcamentoController extends GenericControllerNew {
             $qtdDias = $_POST['qtdDias'];
             $justificativa = utf8_decode(substr(trim(strip_tags($_POST['editor1'])),0,500));
 
-            $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos($idProposta, $idEtapa, $idProduto, $idItem, null, $idUf);
-            
+            $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos($idProposta, $idEtapa, $idProduto, $idItem, null, $idUf, $idMunicipio);
+
             if($buscarProdutos){
             	//parent::message("Item já cadastrado com a mesma UF!", "manterorcamento/produtoscadastrados?idPreProjeto=".$idProposta,"ALERT");
             	$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout

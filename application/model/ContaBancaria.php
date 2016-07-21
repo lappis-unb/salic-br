@@ -86,32 +86,31 @@ class ContaBancaria extends GenericModel {
         return $this->fetchAll($slct2)->current();
     }
 
-    public function contaPorProjeto($idPronac){
+    public function contaPorProjeto($idPronac)
+    {
+        $db  = Zend_Registry::get('db');
+        $table = Zend_Db_Table::getDefaultAdapter();
 
-	$select = "
-		SELECT DISTINCT c.Banco,
-                 		c.Agencia,
-                		c.ContaBloqueada,
-                		c.DtLoteRemessaCB,
-                		v.Descricao AS OcorrenciaCB,
-                		c.ContaLivre,
-                		c.DtLoteRemessaCL,
-                		x.Descricao AS OcorrenciaCL,
-                		p.AnoProjeto+p.Sequencial AS NrProjeto,
-                		p.NomeProjeto
-		FROM ContaBancaria AS c
-		INNER JOIN projetos AS p ON c.AnoProjeto = p.AnoProjeto
-		AND c.Sequencial = p.Sequencial
-		LEFT JOIN Verificacao AS v ON c.OcorrenciaCB = SUBSTRING(v.Descricao,1,3)
-		AND v.idTipo = 22
-		LEFT JOIN Verificacao AS x ON c.OcorrenciaCL = SUBSTRING(x.Descricao,1,3)
-		AND x.idTipo = 22
-		WHERE (p.IdPRONAC = '$idPronac')
-	      ";
+        $select = $table->select()
+            ->distinct()
+            ->from(['c' => 'ContaBancaria'],
+                ['Banco','Agencia','ContaBloqueada','DtLoteRemessaCB','ContaLivre','DtLoteRemessaCL'],
+                'SAC.dbo')
+            ->joinInner(['p' => 'projetos'],
+                new Zend_Db_Expr('c.AnoProjeto = p.AnoProjeto AND c.Sequencial = p.Sequencial'),
+                [new Zend_Db_Expr('p.AnoProjeto+p.Sequencial AS NrProjeto'),'NomeProjeto'],
+                'SAC.dbo')
+            ->joinLeft(['v' => 'Verificacao'],
+                 new Zend_Db_Expr('c.OcorrenciaCB = SUBSTRING(v.Descricao,1,3) AND v.idTipo = 22'),
+                 [new Zend_Db_Expr('v.Descricao AS OcorrenciaCB')],
+                 'SAC.dbo')
+            ->joinLeft(['x' => 'Verificacao'],
+                new Zend_Db_Expr('c.OcorrenciaCL = SUBSTRING(x.Descricao,1,3) AND x.idTipo = 22'),
+                [new Zend_Db_Expr('x.Descricao AS OcorrenciaCL')],
+                'SAC.dbo')
+            ->where('p.IdPRONAC = ?',$idPronac);
 
-	$statement = $this->getAdapter()->query($select);
-
-        return $statement->fetchObject();
+        return $db->fetchAll($select);
     }
 
     public function consultarDadosPorPronac($pronac, $orgao = NULL){

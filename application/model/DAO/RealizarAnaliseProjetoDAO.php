@@ -947,21 +947,43 @@ public static  function outrasinformacoes($idpronac)
 	} // fecha class
 
 	public static function localrealizacao($idpronac)
-		{
-	$sql = "  		SELECT a.idPais ,
-				p.Descricao ,
-				u.Descricao as UF,
-				m.Descricao as Cidade,
-                                CONVERT(CHAR(10), x.DtInicioDeExecucao, 103) AS DtInicioDeExecucao,
-                                CONVERT(CHAR(10), x.DtFinalDeExecucao, 103) AS DtFinalDeExecucao
-				FROM  SAC.dbo.Abrangencia a
-				INNER JOIN SAC.dbo.PreProjeto x on (a.idProjeto = x.idPreProjeto)
-				INNER JOIN SAC.dbo.Projetos y on (x.idPreProjeto = y.idProjeto)
-				LEFT JOIN agentes.dbo.Pais p on (a.idPais=p.idPais)
-				LEFT JOIN agentes.dbo.Uf u on (a.idUF=u.idUF)
-				LEFT JOIN agentes.dbo.Municipios m on (a.idMunicipioIBGE=m.idMunicipioIBGE)
-				WHERE y.IdPRONAC = '$idpronac' AND a.stAbrangencia = 1 ";
-	
+    {
+        $table = Zend_Db_Table::getDefaultAdapter();
+
+        $select = $table->select()
+            ->from('Abrangencia',
+                array('idPais'),
+                'SAC.dbo')
+            ->where('Projetos.IdPRONAC = ? AND Abrangencia.stAbrangencia = \'1\'',  $idpronac)
+            ->joinInner('PreProjeto',
+                'Abrangencia.idProjeto = PreProjeto.idPreProjeto',
+                array(new Zend_Db_Expr('
+                    CONVERT(CHAR(10), PreProjeto.DtInicioDeExecucao, 103) AS DtInicioDeExecucao,
+                    CONVERT(CHAR(10), PreProjeto.DtFinalDeExecucao, 103) AS DtFinalDeExecucao
+                ')),
+                'SAC.dbo')
+            ->joinInner('Projetos',
+                'PreProjeto.idPreProjeto = Projetos.idProjeto',
+                array(''),
+                'SAC.dbo')
+            ->joinLeft('Pais',
+                'Abrangencia.idPais = Pais.idPais',
+                array('Descricao'),
+                'agentes.dbo')
+            ->joinLeft('Uf',
+                'Abrangencia.idUF= Uf.idUF',
+                array(new Zend_Db_Expr('
+                    Uf.Descricao AS UF
+                ')),
+                'agentes.dbo')
+            ->joinLeft('Municipios',
+                'Abrangencia.idMunicipioIBGE = Municipios.idMunicipioIBGE',
+                array(new Zend_Db_Expr('
+                    Municipios.Descricao AS Cidade
+                ')),
+                'agentes.dbo'
+                );
+
 		try
 			{
 				$db  = Zend_Registry::get('db');
@@ -971,33 +993,49 @@ public static  function outrasinformacoes($idpronac)
 			{
 				$this->view->message = $e->getMessage();
 			}
-			return $db->fetchAll($sql);
+			return $db->fetchAll($select);
 				
 	   
 	} // fecha class
 	
-public static function deslocamento($pronac){
-	
-		$sql="SELECT
-		   idDeslocamento,
-		   d.idProjeto,
-		   p.Descricao as PaisOrigem,
-		   u.Descricao as UFOrigem,
-		   m.Descricao as MunicipioOrigem,
-		   p2.Descricao as PaisDestino,
-		   u2.Descricao as UFDestino,
-		   m2.Descricao as MunicipioDestino,
-		   Qtde
-		FROM
-		   Sac.dbo.tbDeslocamento d
-		INNER JOIN Sac.dbo.Projetos y on (d.idProjeto = y.idProjeto)
-		INNER JOIN Agentes..Pais p on (d.idPaisOrigem = p.idPais)
-		INNER JOIN Agentes..uf u on (d.idUFOrigem = u.iduf)
-		INNER JOIN Agentes..Municipios m on (d.idMunicipioOrigem = m.idMunicipioIBGE)
-		INNER JOIN Agentes..Pais p2 on (d.idPaisDestino = p2.idPais)
-		INNER JOIN Agentes..uf u2 on (d.idUFDestino = u2.iduf)
-		INNER JOIN Agentes..Municipios m2 on (d.idMunicipioDestino = m2.idMunicipioIBGE)
-		WHERE y.IdPRONAC = '$pronac'";
+public static function deslocamento($pronac)
+{
+        $table = Zend_Db_Table::getDefaultAdapter();
+
+        $select = $table->select()
+            ->from('tbDeslocamento',
+                array('idDeslocamento','idProjeto','Qtde'),
+                'SAC.dbo')
+            ->where('Projetos.IdPRONAC = ?',$pronac)
+            ->joinInner('Projetos',
+                'tbDeslocamento.idProjeto = Projetos.idProjeto',
+                array(''),
+                'SAC.dbo')
+            ->joinInner('Pais',
+                'tbDeslocamento.idPaisOrigem = Pais.idPais',
+                array(new Zend_Db_Expr('Pais.Descricao AS PaisOrigem')),
+                'Agentes.dbo')
+            ->joinInner('uf',
+                'tbDeslocamento.idUFOrigem = uf.iduf',
+                array(new Zend_Db_Expr('uf.Descricao AS UFOrigem')),
+                'Agentes.dbo')
+            ->joinInner('Municipios',
+                'tbDeslocamento.idMunicipioOrigem = Municipios.idMunicipioIBGE',
+                array(new Zend_Db_Expr('Municipios.Descricao AS MunicipioOrigem')),
+                'Agentes.dbo')
+            ->joinInner('Pais',
+                'tbDeslocamento.idPaisDestino = Pais_2.idPais',
+                array(new Zend_Db_Expr('Pais_2.Descricao AS PaisDestino')),
+                'Agentes.dbo')
+            ->joinInner('uf',
+                'tbDeslocamento.idUFDestino = uf_2.iduf',
+                array(new Zend_Db_Expr('uf_2.Descricao AS UFDestino')),
+                'Agentes.dbo')
+            ->joinInner('Municipios',
+                'tbDeslocamento.idMunicipioDestino = Municipios_2.idMunicipioIBGE',
+                array(new Zend_Db_Expr('Municipios_2.Descricao AS MunicipioDestino')),
+                'Agentes.dbo');
+
 		
 		try
 			{
@@ -1008,21 +1046,32 @@ public static function deslocamento($pronac){
 			{
 				$this->view->message = "Erro ao buscar os Tipos de Documentos: " . $e->getMessage();
 			}
-			return $db->fetchAll($sql);
+			return $db->fetchAll($select);
 }
 
-public static function divulgacao($pronac){
+public static function divulgacao($pronac)
+{
+    $table = Zend_Db_Table::getDefaultAdapter();
+    $select = $table->select()
+        ->from('PlanoDeDivulgacao',
+            array(''),
+            'SAC.dbo')
+        ->where('Projetos.IdPRONAC = ? AND PlanoDeDivulgacao.stPlanoDivulgacao = 1 ',$pronac)
+        ->joinInner('Projetos',
+            'PlanoDeDivulgacao.idProjeto = Projetos.idProjeto',
+            array(''),
+            'SAC.dbo')
+        ->joinInner('Verificacao',
+            'PlanoDeDivulgacao.idPeca = Verificacao.idVerificacao',
+            array(new Zend_Db_Expr('Verificacao.Descricao AS Peca')),
+            'SAC.dbo')
+        ->joinInner('Verificacao',
+            'PlanoDeDivulgacao.idVeiculo = Verificacao_2.idVerificacao',
+            array(new Zend_Db_Expr('Verificacao_2.Descricao AS Veiculo')),
+            'SAC.dbo')
+         ->order('Peca ASC')
+         ->order('Veiculo ASC');
 
-	$sql = "
-		    SELECT v1.Descricao as Peca,
-		    v2.Descricao as Veiculo
-			FROM sac.dbo.PlanoDeDivulgacao d
-			INNEr JOIN sac.dbo.Projetos p on (d.idProjeto = p.idProjeto)
-			INNER JOIN sac.dbo.Verificacao v1 on (d.idPeca = v1.idVerificacao)
-			INNER JOIN sac.dbo.Verificacao v2 on (d.idVeiculo = v2.idVerificacao)
-			WHERE p.IdPRONAC='$pronac' AND d.stPlanoDivulgacao = 1
-                        ORDER BY Peca ASC, Veiculo ASC";
-	
 	try
 			{
 				$db  = Zend_Registry::get('db');
@@ -1032,7 +1081,7 @@ public static function divulgacao($pronac){
 			{
 				$this->view->message = "Erro ao buscar os Tipos de Documentos: " . $e->getMessage();
 			}
-			return $db->fetchAll($sql);	
+			return $db->fetchAll($select);
 }
 
 
@@ -1129,40 +1178,47 @@ public static function divulgacaoProjetosCadastrados($pronac){
 }
 
 
-public static function planodedistribuicao ($pronac, $idproduto=null) {
-  
-	$sql="SELECT idPlanoDistribuicao,
-           x.idProjeto,
-       x.idProduto,
-       x.stPrincipal,
-           p.Descricao as Produto,
-           v.Descricao as PosicaoDaLogo,
-           y.Localizacao,
-           QtdeProduzida,
-           QtdeProponente,
-           QtdePatrocinador,
-       QtdeOutros,
-       QtdeVendaNormal,
-       QtdeVendaPromocional,
-       PrecoUnitarioNormal,
-       PrecoUnitarioPromocional,
-       QtdeVendaNormal*PrecoUnitarioNormal as ReceitaNormal,
-       QtdeVendaPromocional*PrecoUnitarioPromocional as ReceitaPro,
-       (QtdeVendaNormal*PrecoUnitarioNormal)
-       +(QtdeVendaPromocional*PrecoUnitarioPromocional) as ReceitaPrevista,
-       a.Descricao as Area,b.Descricao as Segmento,
-       a.Codigo as idArea, b.Codigo as idSegmento
-       
-       FROM SAC.dbo.PlanoDistribuicaoProduto x
-       INNER JOIN SAC.dbo.Projetos y on (x.idProjeto = y.idProjeto)
-       INNER JOIN SAC.dbo.Produto p on (x.idProduto = p.Codigo)
-       INNER JOIN SAC.dbo.Area a on (x.Area = a.Codigo)
-       INNER JOIN SAC.dbo.Segmento b on (x.Segmento = b.Codigo)
-       INNER JOIN SAC.dbo.Verificacao v on (x.idPosicaoDaLogo = v.idVerificacao)
-       WHERE y.IdPRONAC='$pronac' AND x.stPlanoDistribuicaoProduto = 1";
+public static function planodedistribuicao ($pronac, $idproduto=null)
+{
+
+    $table = Zend_Db_Table::getDefaultAdapter();
+
+    $sql = $table->select()
+        ->from(['x' =>'PlanoDistribuicaoProduto'],
+            [new Zend_Db_Expr('idPlanoDistribuicao'),'idProjeto','idProduto','stPrincipal','QtdeProduzida','QtdeProponente','QtdeVendaNormal','QtdePatrocinador','QtdeOutros', 'QtdeVendaPromocional','PrecoUnitarioNormal','PrecoUnitarioPromocional',
+                new Zend_Db_Expr('
+                 QtdeVendaNormal*PrecoUnitarioNormal as ReceitaNormal,
+                 QtdeVendaPromocional*PrecoUnitarioPromocional as ReceitaPro,
+                 (QtdeVendaNormal*PrecoUnitarioNormal)
+                 +(QtdeVendaPromocional*PrecoUnitarioPromocional) as ReceitaPrevista
+                ')],
+            'SAC.dbo')
+        ->joinInner(['y' => 'Projetos'],
+             'x.idProjeto = y.idProjeto',
+             ['Localizacao'],
+             'SAC.dbo')
+        ->joinInner(['p' => 'Produto'],
+            'x.idProduto = p.Codigo',
+            [new Zend_Db_Expr('p.Descricao AS Produto')],
+            'SAC.dbo')
+        ->joinInner(['a' => 'Area'],
+            'x.Area = a.Codigo',
+            [new Zend_Db_Expr('a.Descricao AS Area'),new Zend_Db_Expr('b.Descricao AS Segmento')],
+            'SAC.dbo')
+        ->joinInner(['b' => 'Segmento'],
+            'x.Segmento = b.Codigo',
+            [],
+            'SAC.dbo')
+        ->joinInner(['v' => 'Verificacao'],
+            'x.idPosicaoDaLogo = v.idVerificacao',
+            [new Zend_Db_Expr('v.Descricao AS PosicaoDaLogo')],
+            'SAC.dbo')
+        ->where('y.IdPRONAC = ?',$pronac)
+        ->where('x.stPlanoDistribuicaoProduto = 1');
+
 	
                 if ($idproduto) {
-                    $sql .= " and x.idProduto = $idproduto ";
+                    $sql .= sprintf(' AND x.idProduto = %d', $idproduto);
                 }
                 $sql .= " order by x.stPrincipal DESC";
 
