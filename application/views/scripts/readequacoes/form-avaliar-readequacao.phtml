@@ -15,11 +15,6 @@
                 erros++;
             }
             
-            if(texto.length > 20000){
-                erros++;
-                msg = 'O campo de resposta só permite 20.000 caracteres!';
-            }
-            
             if(erros > 0) {
                 $("#alerta").dialog("destroy");
                 $("#alerta").html(msg);
@@ -76,12 +71,7 @@
             if (dsParecer == ''){
                 erros++;
             }
-            
-            if(texto.length > 20.000){
-                erros++;
-                msg = 'O campo de resposta só permite 20.000 caracteres!';
-            }
-            
+
             if(erros > 0) {
                 $("#alerta").dialog("destroy");
                 $("#alerta").html(msg);
@@ -551,11 +541,6 @@
             <tr>
                 <td colspan="2">
                     <textarea cols="80" id="dsParecer" name="dsParecer" rows="6" class="textarea_simples" style="width: 99%"><?php echo (isset($this->Parecer->ResumoParecer) && !empty($this->Parecer->ResumoParecer)) ? $this->Parecer->ResumoParecer : ''; ?></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <span style="color: #c33; font-style: italic;">Quantidade m&aacute;xima de 20.000 caracteres.</span>
                 </td>
             </tr>
         </table>
