@@ -43,59 +43,7 @@ class CidadaoController extends GenericControllerNew {
     }
 
     public function indexAction() {
-        if(!$this->usuarioInterno){
-            Zend_Layout::startMvc(array('layout' => 'layout_login'));
-        }
-        
-        $reuniao = new Reuniao();
-        $raberta = $reuniao->buscarReuniaoAberta();
-        $this->view->reuniao = $raberta;
-        
-        $order = array();
-
-        //==== parametro de ordenacao  ======//
-        if($this->_request->getParam("ordem")) {
-            $ordem = $this->_request->getParam("ordem");
-            if($ordem == "ASC") {
-                $novaOrdem = "DESC";
-            }else {
-                $novaOrdem = "ASC";
-            }
-        }else {
-            $ordem = "ASC";
-            $novaOrdem = "ASC";
-        }
-
-        //==== campo de ordenacao  ======//
-        if($this->_request->getParam("campo")) {
-            $campo = $this->_request->getParam("campo");
-            $order = array($campo." ".$ordem);
-            $ordenacao = "&campo=".$campo."&ordem=".$ordem;
-
-        } else {
-            $campo = null;
-            $order = array('2 DESC'); //Vl.Aprovado
-            $ordenacao = null;
-        }
-
-        /* ================== PAGINACAO ======================*/
-        $where = array();
-        $where["b.idNrReuniao = ?"] = $raberta->idNrReuniao;
-        $where["h.stAtivo = ?"] = 1;
-                
-        $Projetos = new Projetos();
-        $busca = $Projetos->projetosCnicOpinioes($where, $order);
-        
-        $this->view->qtdRegistros = count($busca);
-        $this->view->dados = $busca;
-        $this->view->novaOrdem = $novaOrdem;
-        $this->view->ordem = $ordem;
-        $this->view->campo = $campo;
-        
-        $this->view->intranet = false;
-        if(isset($_GET['intranet'])){
-            $this->view->intranet = true;
-        }
+        $this->_redirect('/cidadao/consultar');
     }
 
     public function consultarAction() {
