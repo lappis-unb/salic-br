@@ -1,3 +1,6 @@
+Release 1.8.6
+  * Fix: [providência tomada] Correção em query de providencias tomadas
+
 Release 1.8.5
   * Fix: [prestação de contas] aumentando campo "nrDocumentoDePagamento" para comprovação financeira
 
