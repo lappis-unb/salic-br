@@ -1,5 +1,6 @@
 Release 1.8.8
   * Fix: [Cidadão] redirecionando consulta /cidadao para /cidadao/consultar (consulta estava incorreta)
+  * Fix: [consultar projetos] removendo link de valor aprovado, captado e comprovado caso sejam igual a zero
 
 Release 1.8.7
   * Fix: [readequações] aumentando campo de formulário de readequação
