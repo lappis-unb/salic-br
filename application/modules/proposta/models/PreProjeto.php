@@ -8,7 +8,6 @@
  */
 class Proposta_Model_PreProjeto extends Zend_Db_Table
 {
-    protected $_banco = "SAC";
     protected $_schema= "SAC.dbo";
     protected $_name = "PreProjeto";
     protected $_primary = "idPreProjeto";
@@ -22,7 +21,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @return void
      */
     public function __construct() {
-        $db = new Conexao(Zend_Registry::get('DIR_CONFIG'), "conexao_sac");
         parent::__construct();
     }
 
@@ -35,16 +33,15 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
     public static function retirarProjetos($idUsuario, $idUsuarioR, $idAgente)
     {
-        $sql = "UPDATE SAC.dbo.PreProjeto SET idUsuario = ".$idUsuario." WHERE idUsuario = ".$idUsuarioR." and idAgente = ".$idAgente;
+        $db = Zend_Db_Table::getDefaultAdapter();
 
-        $db = Zend_Registry::get('db');
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $where['idUsuario = ?'] = $idUsuarioR;
+        $where['idAgente = ?'] = $idAgente;
 
-        return $db->query($sql);
+        return $db->update('SAC.dbo.PreProjeto', ['idUsuario' => $idUsuario], $where);
     }
 
     /**
@@ -55,16 +52,14 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
     public static function retirarProjetosVinculos($siVinculoProposta, $idVinculo)
     {
-        $sql = "UPDATE Agentes.dbo.tbVinculoProposta SET siVinculoProposta = $siVinculoProposta WHERE idVinculo = $idVinculo";
+        $db = Zend_Db_Table::getDefaultAdapter();
 
-        $db = Zend_Registry::get('db');
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $where['idVinculo = ? '] = $idVinculo;
 
-        return $db->query($sql);
+        return $db->update('Agentes.dbo.tbVinculoProposta', ['siVinculoProposta' => $siVinculoProposta], $where);
     }
 
     /**
@@ -291,38 +286,63 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
-    public static function consultaTodosProjetos($idAgente, $idResponsavel, $arrBusca) {
-
-        $sql = "SELECT 0 as Ordem,a.idPreProjeto,a.NomeProjeto,ag.cnpjcpf AS CNPJCPF,m.descricao AS NomeAgente,a.idUsuario,a.idAgente
-                FROM   preprojeto AS a
-                       INNER JOIN AGENTES.dbo.agentes ag on (a.idagente = ag.idagente)
-                       INNER JOIN AGENTES.dbo.nomes    m on (a.idagente = m.idagente)
-                WHERE  a.idAgente = $idAgente ";
-
-        foreach ($arrBusca as $value) {
-            $sql .= ' AND '.$value.' ';
-        }
-
-        $sql .= " AND NOT EXISTS(SELECT 1 FROM   sac.dbo.projetos pr WHERE  a.idpreprojeto = pr.idprojeto)
-                UNION ALL
-                SELECT 1 as Ordem,a.idPreProjeto,a.NomeProjeto,ag.cnpjcpf AS CNPJCPF,m.descricao AS NomeAgente,a.idUsuario,a.idAgente
-                FROM   preprojeto AS a
-                       INNER JOIN AGENTES.dbo.agentes            ag on (a.idagente = ag.idagente)
-                       INNER JOIN AGENTES.dbo.nomes              m   on (a.idagente = m.idagente)
-                       INNER JOIN ControleDeAcesso.dbo.SGCacesso s  on (a.idUsuario = s.IdUsuario)
-                WHERE  a.idusuario = $idResponsavel and ag.CNPJCPF <> s.Cpf
-                       AND ( NOT EXISTS(SELECT 1 FROM   sac.dbo.projetos pr WHERE  a.idpreprojeto = pr.idprojeto) )";
-
-        foreach ($arrBusca as $value) {
-            $sql .= ' AND '.$value.' ';
-        }
-
-        $sql .= "ORDER  BY 1,m.Descricao ASC";
-
-        $db = Zend_Registry::get('db');
+    public static function consultaTodosProjetos($idAgente, $idResponsavel, $arrBusca)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $a = [
+            new Zend_Db_Expr('0 as Ordem'),
+            'a.idPreProjeto',
+            'a.NomeProjeto',
+            'a.idUsuario',
+            'a.idAgente'
+        ];
+
+        $subSql = $db->select()
+            ->from(['pr' => 'projetos'], new Zend_Db_Expr('1'), 'sac.dbo')
+            ->where('a.idpreprojeto = pr.idprojeto')
+            ;
+
+        $sql = $db->select()
+            ->from(['a' => 'preprojeto'], $a, 'SAC.dbo')
+            ->join(['ag' => 'agentes'], 'a.idagente = ag.idagente', 'ag.cnpjcpf AS CNPJCPF','AGENTES.dbo')
+            ->join(['m' => 'nomes'], 'a.idagente = m.idagente', 'm.descricao AS NomeAgente','AGENTES.dbo')
+            ->where('a.idAgente = ?', $idAgente)
+            ->where(new Zend_Db_Expr("NOT EXISTS($subSql)"))
+            ;
+
+        foreach ($arrBusca as $value) {
+            $sql->where($value);
+        }
+
+        $aSql = [
+            new Zend_Db_Expr('1 as Ordem'),
+            'a.idPreProjeto',
+            'a.NomeProjeto',
+            'a.idUsuario',
+            'a.idAgente'
+        ];
+
+        $sql2 = $db->select()
+            ->from(['a' => 'preprojeto'], $aSql, 'sac.dbo')
+            ->join(['ag' => 'agentes'], '(a.idagente = ag.idagente)', 'ag.cnpjcpf AS CNPJCPF', 'AGENTES.dbo')
+            ->join(['m' => 'nomes'], '(a.idagente = m.idagente)', 'm.descricao AS NomeAgente', 'AGENTES.dbo')
+            ->join(['s' => 'SGCacesso'], 'a.idUsuario = s.IdUsuario', null, 'ControleDeAcesso.dbo')
+            ->where('a.idusuario = ?', $idResponsavel)
+            ->where('ag.CNPJCPF <> s.Cpf')
+            ->where(new Zend_Db_Expr('NOT EXISTS(SELECT 1 FROM sac.dbo.projetos pr WHERE  a.idpreprojeto = pr.idprojeto)'))
+            ;
+
+        foreach ($arrBusca as $value) {
+            $sql2->where($value);
+        }
+
+        $sql = $db->select()->union(array($sql, $sql2), Zend_Db_Select::SQL_UNION_ALL)
+            ->order(new Zend_Db_Expr('1'))
+            ->order('m.Descricao ASC')
+            ;
 
         return $db->fetchAll($sql);
     }
@@ -1757,7 +1777,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @todo Retirar esse metodo dessa model
      * @deprecated
      */
     public function buscarPropostaAnaliseVisualTecnico($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
@@ -1777,18 +1796,14 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
         $sql = $db->select()
             ->from(['vw' => 'vwAnaliseVisualPorTecnico'], $vw, $this->_schema);
 
-
         ($order) ? $sql->order($order) : null;
 
-        $meuWhere = "";
-        // adicionando clausulas where
         foreach ($where as $coluna=>$valor) {
             $sql->where($coluna.' = ?', $valor);
         }
 
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
     }
 
@@ -2051,6 +2066,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param mixed $nrProcesso
      * @access public
      * @return void
+     * @todo padrão ORM
      */
     public function transformarPropostaEmProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso)
     {
@@ -2068,7 +2084,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param mixed $codigo
      * @access public
      * @return void
-     * @todo Retirar metodo dessa model
      */
     public function buscaragencia($codigo)
     {
