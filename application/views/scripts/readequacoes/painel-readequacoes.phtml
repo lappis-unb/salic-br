@@ -191,11 +191,16 @@ $situacoes = array(
     <form name="formPesquisa" id="formPesquisa" action="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes'));?>" method="get">
         <table class="tabela">
             <tr>
-                <th colspan="2">Filtro de Pesquisa</th>
+                <th colspan="4">Filtro de Pesquisa</th>
             </tr>
             <tr class="divFiltroPesquisa">
-                <td class="destacar bold" width="60">Situa&ccedil;&atilde;o</td>
-                <td>
+              <td class="destacar bold" width="60">PRONAC</td>
+              <td width="120">
+                <input type="text" class="input_simples" name="pronac" maxlength="7" style="width: 70px;" value="<?php echo $this->pronac;?>">
+                  <input type="hidden" name="qtde" value="<?php echo $this->intTamPag;?>">
+              </td>
+              <td class="destacar bold" width="60">Situa&ccedil;&atilde;o</td>
+              <td>
                     <select name="tipoFiltro" style="width: 200px;" class="input_simples comboFiltro">
 <?php unset($situacoes['painel_do_tecnico']); ?>
 		      <?php foreach ($situacoes as $chave => $valor): ?>

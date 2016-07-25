@@ -2318,6 +2318,11 @@ class ReadequacoesController extends GenericControllerNew {
         }
         $this->view->filtro = $filtro;
 
+        if ($this->_request->getParam('pronac')) {           
+            $where['PRONAC = ?'] = $this->_request->getParam('pronac');
+            $this->view->pronac = $this->_request->getParam('pronac');
+        }
+        
         // hack!
         if ($this->idOrgao == 272) {
             $where['idOrgao = ?'] = 262;
