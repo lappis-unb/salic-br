@@ -8,6 +8,7 @@
 		<th style="width: 130px;" nowrap><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Dt Distribui&ccedil;&atilde;o</a></th>
 		<th style="width: 130px;" nowrap><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=9&ordem='.$this->paginacao['novaOrdem'];?>">Parecerista</a></th>
 		<th style="width: 130px;" nowrap><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">Qtd dias aguardando an&aacute;lise</a></th>
+		<th>Visualizar</th>
 		<th>Selecionar parecerista</th>
 		<th style="width: 130px;">Encaminhar</th>
             </tr>
@@ -22,13 +23,14 @@
                 </td>
 
 		<td><?php echo $d->NomeProjeto; ?></td>
-		
-<td><?php echo $d->tpReadequacao; ?></td>
-<td align="center"><?php if ($d->dtDistribuicao == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtDistribuicao, 'Brasileira'); } ?></td>
-<td align="center"><?php echo $d->nmParecerista; ?></td>
-<td align="center"><?php echo $d->qtDiasEmAnalise; ?></td>
-
-        <td>
+		<td><?php echo $d->tpReadequacao; ?></td>
+		<td align="center"><?php if ($d->dtDistribuicao == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtDistribuicao, 'Brasileira'); } ?></td>
+		<td align="center"><?php echo $d->nmParecerista; ?></td>
+		<td align="center"><?php echo $d->qtDiasEmAnalise; ?></td>
+		<td align="center">
+		  <input type="button" class="btn_ver" idReadequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>" />
+		</td>	
+		<td>
           <?php 
              $p = new Projetos();
              $dadosProjetos = $p->buscar(array('IdPRONAC = ?'=>$d->idPronac))->current();

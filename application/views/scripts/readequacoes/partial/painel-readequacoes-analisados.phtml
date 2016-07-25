@@ -18,10 +18,9 @@
 		<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Qtd dias p/ avaliar</a></th>
 
 		<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=11&ordem='.$this->paginacao['novaOrdem'];?>">Total em dias p/ avaliar</a></th>
-		
+                <th>Visualizar</th>
 		<th>Selecionar parecerista</th>
 		<th>Encaminhar</th>
-
 		<th>Finalizar</th>
 
          </tr>
@@ -46,7 +45,9 @@
 		<td><?php echo $d->qtDiasDistribuir; ?></td>
 		<td><?php echo $d->qtDiasAvaliar; ?></td>
 		<td><?php echo $d->qtTotalDiasAvaliar; ?></td>
-		
+		<td align="center">
+		  <input type="button" class="btn_ver" idReadequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>" />
+		</td>			
         <td align="center">
           <?php 
              $p = new Projetos();
