@@ -752,7 +752,7 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                     $request->getParam('dtEmissaoInternacional') ? new DateTime(data::dataAmericana($request->getParam('dtEmissaoInternacional'))) : null,
                     $arquivoModel->getId(),
                     new DateTime(),
-                    str_replace(',', '.', str_replace('.', '', $request->getParam('vlComprovado'))),
+                    str_replace(',', '.', str_replace('.', '', $request->getParam('vlComprovadoInternacional'))),
                     $request->getParam('dsJustificativaInternacional')
                 );
             }

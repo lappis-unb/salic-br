@@ -6,7 +6,8 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-        $('#vlComprovado').priceFormat({limit: 8});  
+      $('#vlComprovado').priceFormat({limit: 8});
+      $('#vlComprovadoInternacional').priceFormat({limit: 8});  
   });
 </script>
 
@@ -88,6 +89,9 @@
 		<?php if ($this->idComprovantePagamento): ?>
                 <input type='hidden' name='paginaRedirecionar' id='paginaRedirecionar' value='comprovacaopagamento' />
 		<?php endif; ?>
+		<input type='hidden' name='valorAprovado' id='valorAprovado' value='<?php echo $this->itemPlanilhaAprovacao->valorAprovado; ?>' />
+		<input type='hidden' name='totalComprovado' id='totalComprovado' value='<?php echo $this->itemPlanilhaAprovacao->vlComprovado ? $this->itemPlanilhaAprovacao->vlComprovado : '0'; ?>' />
+
                 <table class="tabela">
                     <tr>
                         <th colspan="3">Vincular Item de Custo</th>
@@ -100,8 +104,8 @@
                         <td class="destacar"><b>Produto</b></td>
                         <td class="destacar"><b>Etapa</b></td>
                         <td class="destacar"><b>Itens de Custo</b></td>
-                        <td class="destacar"><b>Valor Aprovado</b></td>
-                        <td class="destacar"><b>Valor Comprovado</b></td>
+                        <td class="destacar" id="campoValorAprovado"><b>Valor Aprovado</b></td>
+                        <td class="destacar" id="campoValorComprovado"><b>Valor Comprovado</b></td>
                     </tr>
                     </thead>
                     <tbody>
@@ -365,7 +369,7 @@
                         <tr>
 			  <td class="destacar" align="right"><b>Valor do Item <span style='color:red'>*</span></b></td>
                           <td>
-                            <input type="text" name="vlComprovado" size="10" id="vlComprovado"
+                            <input type="text" name="vlComprovadoInternacional" size="10" id="vlComprovado"
                                    value="<?php echo $this->vlComprovado; ?>" />
                           </td>			  
                             <td class="destacar" align="right"><b>Anexar comprovante<span style='color:red'>*</span></b></td>
@@ -591,7 +595,6 @@
         }
 	
         function buscarFornecedor(este){
-	    console.log('buscarFornecedor()');
             if($(este).attr('idAgente') != undefined && $(este).attr('idAgente') && $(este).attr('idDescricao') != undefined && $(este).attr('idDescricao')){
                 var marcado = buscarRadioMarcado(este);
                 if((marcado == 'cpf' && $(este).val().length == 14) || (marcado == 'cnpj' && $(este).val().length == 18)){
@@ -807,14 +810,21 @@
             } else {
                 msg = validarParametrosDeComprovacaoDePagamento();
             }
-
-            var valorItem = parseFloat($("#vlComprovado").val().replace(".", "").replace(".", "").replace(",", "."));
-            var valorAprovado = parseFloat($('#tabelaItem tbody td:nth-child(4)').html().replace(".", "").replace(".", "").replace(",", ".").replace("R$", ""));
-            var valorComprovado = parseFloat($('#tabelaItem tbody td:nth-child(5)').html().replace(".", "").replace(".", "").replace(",", ".").replace("R$", ""));
+	    
+            if (isInvoice()) {
+		valorComprovado = $('#vlComprovadoInternacional').val();
+	    } else {
+		valorComprovado = $('#vlComprovado').val();
+	    }	    
+	    
+            var valorItem = parseFloat(valorComprovado.replace(".", "").replace(".", "").replace(",", "."));
+            var valorAprovado = parseFloat($("#valorAprovado").val());
+	    var valorComprovado = parseFloat($("#totalComprovado").val());
+	    
             if (
-                (!$("#idComprovantePagamento").val() && ($("#vlComprovado").val() && (valorItem + valorComprovado) > valorAprovado))
+                (!$("#idComprovantePagamento").val() && (valorComprovado && (valorItem + valorComprovado) > valorAprovado))
                 ||
-                ($("#idComprovantePagamento").val() && ($("#vlComprovado").val() && valorItem > valorAprovado))
+                ($("#idComprovantePagamento").val() && (valorComprovado && valorItem > valorAprovado))
             ) {
                 msg += 'Valor comprovado maior que o valor aprovado.<br />';
             }
@@ -856,7 +866,7 @@
 
         function validarParametrosDeComprovacaoDePagamentoInvoice() {
             var msg = '';
-            if (!$("#vlComprovado").val()) { msg += 'Informe o valor do item.<br />'; }
+            if (!$("#vlComprovadoInternacional").val()) { msg += 'Informe o valor do item.<br />'; }
             if (!$("#nomeRazaoSocialInternacional").val()) { msg += 'Informe o Nome/Razão Social.<br />'; }
             if (!$("#nif").val()) { msg += 'Informe o NIF.<br />'; }
             if (!$("#dtEmissaoInternacional").val()) { msg += 'Informe a data de emissão do comprovante.<br />'; }
@@ -894,8 +904,8 @@
                     // remove a linha
                     elementLink.closest('tr').remove();
                     // atualiza as informacoes do item
-                    $('#tabelaItem tbody tr td:nth-child(4)').html('000').toNumber().formatCurrency({region: 'pt-BR' });
-                    $('#tabelaItem tbody tr td:nth-child(5)').html('000').toNumber().formatCurrency({region: 'pt-BR' });
+		    $("campoValorAprovado").html('000').toNumber().formatCurrency({region: 'pt-BR' });
+		    $("#campoValorComprovado").html('000').toNumber().formatCurrency({region: 'pt-BR' });
                     // Recupera o item e preenche os valores aprovado e comprovado.
                     $.ajax({
                         url: '<?php echo $this->baseUrl();?>/planilha-item/pesquisar/format/json',
@@ -905,8 +915,8 @@
                         success: function(result){
                             if (result.item) {
                                 planilhaItem = result.item;
-                                $('#tabelaItem tbody tr td:nth-child(4)').html(result.item.valorAprovado).toNumber().formatCurrency({region: 'pt-BR' });
-                                $('#tabelaItem tbody tr td:nth-child(5)').html(result.item.valorComprovado).toNumber().formatCurrency({region: 'pt-BR' });
+				$("campoValorAprovado").html(result.item.valorAprovado).toNumber().formatCurrency({region: 'pt-BR' });
+				$("campoValorComprovado").html(result.item.valorComprovado).toNumber().formatCurrency({region: 'pt-BR' });
                             }
                             message('Exclusão realizada com sucesso!', 'CONFIRM');
                         }
