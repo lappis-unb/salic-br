@@ -92,24 +92,24 @@ class ContaBancaria extends GenericModel {
         $table = Zend_Db_Table::getDefaultAdapter();
 
         $select = $table->select()
-            ->distinct()
-            ->from(['c' => 'ContaBancaria'],
-                ['Banco','Agencia','ContaBloqueada','DtLoteRemessaCB','ContaLivre','DtLoteRemessaCL'],
-                'SAC.dbo')
-            ->joinInner(['p' => 'projetos'],
-                new Zend_Db_Expr('c.AnoProjeto = p.AnoProjeto AND c.Sequencial = p.Sequencial'),
-                [new Zend_Db_Expr('p.AnoProjeto+p.Sequencial AS NrProjeto'),'NomeProjeto'],
-                'SAC.dbo')
-            ->joinLeft(['v' => 'Verificacao'],
-                 new Zend_Db_Expr('c.OcorrenciaCB = SUBSTRING(v.Descricao,1,3) AND v.idTipo = 22'),
-                 [new Zend_Db_Expr('v.Descricao AS OcorrenciaCB')],
-                 'SAC.dbo')
-            ->joinLeft(['x' => 'Verificacao'],
-                new Zend_Db_Expr('c.OcorrenciaCL = SUBSTRING(x.Descricao,1,3) AND x.idTipo = 22'),
-                [new Zend_Db_Expr('x.Descricao AS OcorrenciaCL')],
-                'SAC.dbo')
-            ->where('p.IdPRONAC = ?',$idPronac);
-
+                        ->distinct()
+                        ->from(array('c' => 'ContaBancaria'),
+                        array('Banco','Agencia','ContaBloqueada','DtLoteRemessaCB','ContaLivre','DtLoteRemessaCL'),
+                        'SAC.dbo')
+                        ->joinInner(array('p' => 'projetos'),
+                        new Zend_Db_Expr('c.AnoProjeto = p.AnoProjeto AND c.Sequencial = p.Sequencial'),
+                        array(new Zend_Db_Expr('p.AnoProjeto+p.Sequencial AS NrProjeto'),'NomeProjeto'),
+                        'SAC.dbo')
+                        ->joinLeft(array('v' => 'Verificacao'),
+                        new Zend_Db_Expr('c.OcorrenciaCB = SUBSTRING(v.Descricao,1,3) AND v.idTipo = 22'),
+                        array(new Zend_Db_Expr('v.Descricao AS OcorrenciaCB')),
+                        'SAC.dbo')
+                        ->joinLeft(array('x' => 'Verificacao'),
+                        new Zend_Db_Expr('c.OcorrenciaCL = SUBSTRING(x.Descricao,1,3) AND x.idTipo = 22'),
+                        array(new Zend_Db_Expr('x.Descricao AS OcorrenciaCL')),
+                        'SAC.dbo')
+                        ->where('p.IdPRONAC = ?',$idPronac);
+        
         return $db->fetchAll($select);
     }
 
