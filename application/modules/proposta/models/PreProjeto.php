@@ -1645,21 +1645,28 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param mixed $idOrgao
      * @access public
      * @return void
-     * @todo Remover função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
      */
     public function buscarTecnicosHistoricoAnaliseVisual($idOrgao)
     {
-        $db = $this->getAdapter();
-        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = $this->select()->distinct()
-            ->setIntegrityCheck(false)
+        // Replace da função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        $subSql = $db->select()
+            ->from(['vwUsuariosOrgaosGrupos'], 'org_superior', 'tabelas.dbo')
+            ->where('usu_codigo = a.idTecnico')
+            ->where('sis_codigo = 21')
+            ->where('gru_codigo = 92')
+            ->group('org_superior');
+
+        $sql = $db->select()
+            ->distinct()
             ->from(['a' => 'tbAvaliacaoProposta'], ['a.idTecnico'], "SAC.dbo")
             ->join(['p' => 'PreProjeto'], 'p.idPreProjeto = a.idProjeto', null, "SAC.dbo")
             ->join(['u' => 'Usuarios'], 'u.usu_codigo = a.idTecnico', 'u.usu_nome as Tecnico', 'TABELAS.dbo')
             ->where('ConformidadeOK<>1')
             ->where('p.stEstado = 1')
-            ->where('SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) = ?', $idOrgao)
+            ->where("($subSql) = ?", $idOrgao)
             ->order('u.usu_nome ASC')
             ;
 
@@ -1677,11 +1684,10 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param bool $dtFim
      * @access public
      * @return void
-     * @todo colocar padrão orm. Remover SAC.dbo.fnIdOrgaoSuperiorAnalista()
      */
     public function buscarHistoricoAnaliseVisual($idOrgao,$idTecnico=null,$situacao=null,$dtInicio=null,$dtFim=null)
     {
-        $db = $this->getAdapter();
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
         $p = [
@@ -1689,23 +1695,38 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
             'p.NomeProjeto',
         ];
 
+        //replace função: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        $tecnico = $db->select()
+            ->from(['Usuarios'], 'usu_nome', 'tabelas.dbo')
+            ->where('usu_codigo = a.idTecnico')
+            ;
+
+        // Replace da função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        $subSql = $db->select()
+            ->from(['vwUsuariosOrgaosGrupos'], 'org_superior', 'tabelas.dbo')
+            ->where('usu_codigo = a.idTecnico')
+            ->where('sis_codigo = 21')
+            ->where('gru_codigo = 92')
+            ->group('org_superior');
+
         $a =[
-            new Zend_Db_Expr('a.idTecnico,SAC.dbo.fnNomeTecnicoMinc(a.idTecnico) as Tecnico'),
+            'a.idTecnico',
+            "($tecnico) as Tecnico",
             'a.DtEnvio',
             new Zend_Db_Expr('CONVERT(CHAR(20),a.DtAvaliacao, 120) AS DtAvaliacao'),
             'a.idAvaliacaoProposta',
             'a.ConformidadeOK',
             'a.stEstado',
-            new Zend_Db_Expr('SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) as idOrgao')
+            "($subSql) as idOrgao"
         ];
 
-        $sql = $this->select()
-            ->setIntegrityCheck(false)
+
+        $sql = $db->select()
             ->from(['a' => 'tbAvaliacaoProposta'], $a, 'SAC.dbo')
             ->join(['p' => 'PreProjeto'], 'p.idPreProjeto = a.idProjeto', $p, 'SAC.dbo')
             ->where('ConformidadeOK<>1')
             ->where('p.stEstado = 1')
-            ->where('SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) = ?', $idOrgao)
+            ->where("($subSql) = ?", $idOrgao)
             ->order('p.idPreProjeto DESC')
             ->order('DtAvaliacao ASC')
             ->limit(20)
@@ -1900,7 +1921,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @todo colocar padrão orm: SAC.dbo.fnIdOrgaoSuperiorAnalista(Tecnico)
      */
     public function buscarVisual($idUsuario = null, $order=array(), $tamanho=-1, $inicio=-1)
     {
@@ -1914,10 +1934,24 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
             'p.idAgente',
         ];
 
+        //replace função: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        $tecnico = $db->select()
+            ->from(['Usuarios'], 'usu_nome', 'tabelas.dbo')
+            ->where('usu_codigo = x.idTecnico')
+            ;
+
+        // Replace da função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        $orgao = $db->select()
+            ->from(['vwUsuariosOrgaosGrupos'], 'org_superior', 'tabelas.dbo')
+            ->where('usu_codigo = x.idTecnico')
+            ->where('sis_codigo = 21')
+            ->where('gru_codigo = 92')
+            ->group('org_superior');
+
         $x =[
             'x.idTecnico AS idUsuario',
-            new Zend_Db_Expr('SAC.dbo.fnNomeTecnicoMinc(x.idTecnico) AS Tecnico'),
-            new Zend_Db_Expr('SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) AS idSecretaria'),
+            "($tecnico) AS Tecnico",
+            "($orgao) AS idSecretaria",
             new Zend_Db_Expr('CONVERT(CHAR(20),x.DtAvaliacao, 120) AS DtAdmissibilidade'),
             new Zend_Db_Expr('DATEDIFF(d, x.DtAvaliacao, GETDATE()) AS diasCorridos'),
             'x.idAvaliacaoProposta',
@@ -1928,16 +1962,13 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
             'm.Movimentacao AS CodSituacao',
         ];
 
-        $subSql = $this->select()
-            ->setIntegrityCheck(false)
-            ->from('vwRedistribuirAnaliseVisual', ['idProjeto'], 'SAC.dbo');
+        $subSql = $db->select()->from('vwRedistribuirAnaliseVisual', ['idProjeto'], 'SAC.dbo');
 
-        if($idUsuario !== null){
-            $subSql->where(new Zend_Db_Expr('SAC.dbo.fnIdOrgaoSuperiorAnalista(Tecnico) = ?', $idUsuario));
+        if ($idUsuario !== null) {
+            $subSql->where("($orgao) = ?", $idUsuario);
         }
 
-        $subSql2 = $this->select()
-            ->setIntegrityCheck(false)
+        $subSql2 = $db->select()
             ->from(['u' =>'Projetos'],
                 ['IdPRONAC', 'AnoProjeto', 'Sequencial', 'UfProjeto', 'Area', 'Segmento', 'Mecanismo', 'NomeProjeto', 'Processo',
                 'CgcCpf', 'Situacao', 'DtProtocolo', 'DtAnalise', 'Modalidade', 'Orgao', 'OrgaoOrigem', 'DtSaida', 'DtRetorno', 'UnidadeAnalise',
@@ -1947,8 +1978,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
             ->where('p.idPreProjeto = idProjeto')
             ->limit(1);
 
-        $sql = $this->select()
-            ->setIntegrityCheck(false)
+        $sql = $db->select()
             ->from(['p' => 'PreProjeto'], null, 'SAC.dbo')
             ->join(['m' => 'tbMovimentacao'], 'p.idPreProjeto = m.idProjeto AND m.stEstado = 0', $m, 'SAC.dbo')
             ->join(['x' => 'tbAvaliacaoProposta'], 'p.idPreProjeto = x.idProjeto AND x.stEstado = 0', $x, 'SAC.dbo')
@@ -1985,10 +2015,32 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
             'p.stTipoDemanda AS TipoDemanda'
         ];
 
+        //replace função: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        $tecnico = $db->select()
+            ->from(['Usuarios'], 'usu_nome', 'tabelas.dbo')
+            ->where('usu_codigo = x.idTecnico')
+            ;
+
+        // Replace da função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        $orgao = $db->select()
+            ->from(['vwUsuariosOrgaosGrupos'], 'org_superior', 'tabelas.dbo')
+            ->where('usu_codigo = x.idTecnico')
+            ->where('sis_codigo = 21')
+            ->where('gru_codigo = 92')
+            ->group('org_superior');
+
+        // Replace da função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        $orgaoSub = $db->select()
+            ->from(['vwUsuariosOrgaosGrupos'], 'org_superior', 'tabelas.dbo')
+            ->where('usu_codigo = idTecnico')
+            ->where('sis_codigo = 21')
+            ->where('gru_codigo = 92')
+            ->group('org_superior');
+
         $x = [
             'x.idTecnico AS idUsuario',
-            new Zend_Db_Expr('SAC.dbo.fnNomeTecnicoMinc(x.idTecnico) AS Tecnico'),
-            new Zend_Db_Expr('SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) AS idSecretaria'),
+            "($tecnico) AS Tecnico",
+            "($orgao) AS idSecretaria",
             new Zend_Db_Expr('CONVERT(CHAR(20),x.DtAvaliacao, 120) AS DtAdmissibilidade'),
             new Zend_Db_Expr('DATEDIFF(d, x.DtAvaliacao, GETDATE()) AS diasCorridos'),
             'x.idAvaliacaoProposta',
@@ -1999,8 +2051,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
             'm.Movimentacao AS CodSituacao',
         ];
 
-        $subSql = $this->select()
-            ->setIntegrityCheck(false)
+        $subSql = $db->select()
             ->from(['u' => 'Projetos'],[
             'IdPRONAC', 'AnoProjeto', 'Sequencial', 'UfProjeto', 'Area', 'Segmento', 'Mecanismo', 'NomeProjeto', 'Processo', 'CgcCpf', 'Situacao',
                     'DtProtocolo', 'DtAnalise', 'Modalidade', 'Orgao', 'OrgaoOrigem', 'DtSaida', 'DtRetorno', 'UnidadeAnalise', 'Analista', 'DtSituacao', 'ResumoProjeto',
@@ -2011,16 +2062,14 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
             ->limit(1)
             ;
 
-        $subSql2 = $this->select()
-            ->setIntegrityCheck(false)
+        $subSql2 = $db->select()
             ->from(['vwConformidadeDocumentalTecnico'], ['idProjeto'], 'SAC.dbo');
 
         if($idUsuario !== null){
-            $subSql2->where(new Zend_Db_Expr('SAC.dbo.fnIdOrgaoSuperiorAnalista(idTecnico) = ?'), $idUsuario);
+            $subSql2->where(new Zend_Db_Expr("($orgaoSub) = ?"), $idUsuario);
         }
 
-        $sql = $this->select()
-            ->setIntegrityCheck(false)
+        $sql = $db->select()
             ->from(['p' => 'PreProjeto'], $p,'SAC.dbo')
             ->join(['m' => 'tbMovimentacao'], 'p.idPreProjeto = m.idProjeto AND m.stEstado = 0', $m, 'SAC.dbo')
             ->join(['x' => 'tbAvaliacaoProposta'], 'p.idPreProjeto = x.idProjeto AND x.stEstado = 0', $x, 'SAC.dbo')
