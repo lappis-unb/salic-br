@@ -377,9 +377,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      */
     public static function inserirProposta($dados)
     {
-
-        $db = Zend_Registry::get('db');
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db = Zend_Db_Table::getDefaultAdapter();
         $cadastrar = $db->insert("SAC.dbo.PreProjeto", $dados);
 
         if ($cadastrar)
@@ -401,10 +399,9 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @access public
      * @return void
      */
-    public static function alterarDados($dados, $where) {
-
-        $db = Zend_Registry::get('db');
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+    public static function alterarDados($dados, $where)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
         $cadastrar = $db->update("SAC.dbo.PreProjeto", $dados, $where);
 
         if ($cadastrar)
@@ -429,8 +426,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = $db->select()->from('UF',['*'],'AGENTES.dbo')
-            ->order('Sigla');
+        $sql = $db->select()->from('UF',['*'],'AGENTES.dbo')->order('Sigla');
 
         return $db->fetchAll($sql);
     }
@@ -459,11 +455,9 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo Esse modelo não deveria fazer insert, essa função e do modelo Agente_Model_Agentes
      */
     public static function inserirAgentes($dadosAgentes) {
-        $db = Zend_Registry::get('db');
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db = Zend_Db_Table::getDefaultAdapter();
         $Agentes = $db->insert("Agentes.dbo.Agentes", $dadosAgentes);
     }
 
@@ -474,11 +468,9 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo vericar model correta para inserir nomes
      */
     public static function inserirNomes($dadosNomes) {
-        $db = Zend_Registry::get('db');
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db = Zend_Db_Table::getDefaultAdapter();
         $Nomes = $db->insert("Agentes.dbo.Nomes", $dadosNomes);
     }
 
@@ -489,11 +481,9 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo verificar model correta para inserir endereço
      */
     public static function inserirEnderecoNacional($dadosEnderecoNacional) {
-        $db = Zend_Registry::get('db');
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db = Zend_Db_Table::getDefaultAdapter();
         $Nomes = $db->insert("Agentes.dbo.EnderecoNacional", $dadosEnderecoNacional);
     }
 
@@ -504,11 +494,9 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo verificar mode correta para visao
      */
     public static function inserirVisao($dadosVisao) {
-        $db = Zend_Registry::get('db');
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db = Zend_Db_Table::getDefaultAdapter();
         $Nomes = $db->insert("Agentes.dbo.Visao", $dadosVisao);
     }
 
@@ -519,7 +507,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
     public static function editarproposta($idPreProjeto)
     {
@@ -942,16 +929,14 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
     public static function alteraproponente($idPreProjeto, $idAgente)
     {
-        $sql = "UPDATE SAC.dbo.PreProjeto SET idAgente = ".$idAgente." WHERE idPreProjeto = $idPreProjeto ";
+        $db = Zend_Db_Table::getDefaultAdapter();
 
-        $db = Zend_Registry::get('db');
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $where['idPreProjeto = ?'] = $idPreProjeto;
 
-        return $db->fetchAll($sql);
+        return $db->update('SAC.dbo.PreProjeto', ['idAgente' => $idAgente], $where);
     }
 
     /**
@@ -962,16 +947,14 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
     public static function alteraresponsavel($idPreProjeto, $idResponsavel)
     {
-        $sql = "UPDATE SAC.dbo.PreProjeto SET idUsuario = ".$idResponsavel." WHERE idPreProjeto = $idPreProjeto ";
+        $db = Zend_Db_Table::getDefaultAdapter();
 
-        $db = Zend_Registry::get('db');
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $where['idPreProjeto = ?'] = $idPreProjeto;
 
-        return $db->fetchAll($sql);
+        return $db->update('SAC.dbo.PreProjeto', ['idUsuario' => $idResponsavel], $where);
     }
 
     /**
@@ -1144,7 +1127,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @static
      * @access public
      * @return void
-     * @todo colocar padrão orm
      */
     public static function gerenciarResponsaveisVinculados($siVinculo, $idAgente = null)
     {
@@ -1855,7 +1837,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @todo Retirar metodo dessa model
      * @deprecated
      */
     public function buscarPropostaAnaliseFinal($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
@@ -1897,7 +1878,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param mixed $idPreProjeto
      * @access public
      * @return void
-     * @todo Retirar metodo dessa model
      */
     public function buscarConformidadeVisualTecnico($idPreProjeto)
     {
@@ -1991,7 +1971,7 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @todo colocar padrão orm
+     * @todo retirar SAC.dbo.fnIdOrgaoSuperiorAnalista(idTecnico)
      */
     public function buscarDocumental($idUsuario = null, $order=array(), $tamanho=-1, $inicio=-1)
     {
@@ -2074,7 +2054,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-        // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
     }
 
