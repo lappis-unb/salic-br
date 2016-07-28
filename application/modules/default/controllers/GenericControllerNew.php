@@ -812,7 +812,7 @@ class GenericControllerNew extends Zend_Controller_Action
                 $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['Seq'] = $seq;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['idPlanilhaAprovacao'] = $resuplanilha->idPlanilhaAprovacao;
-                $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['idPlanilhaAprovacaoPai'] = $resuplanilha->idPlanilhaAprovacaoPai;
+                $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['idPlanilhaAprovacaoPai'] = property_exists($resuplanilha, 'idPlanilhaAprovacaoPai') ? $resuplanilha->idPlanilhaAprovacaoPai : 0;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['idEtapa'] = $resuplanilha->idEtapa;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['Item'] = $resuplanilha->Item;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['idFonte'] = $resuplanilha->idFonte;
@@ -824,8 +824,9 @@ class GenericControllerNew extends Zend_Controller_Action
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['vlAprovado'] = $resuplanilha->vlAprovado;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['vlComprovado'] = $resuplanilha->vlComprovado;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['QtdeDias'] = $resuplanilha->QtdeDias;
-                $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['dsJustificativa'] = $resuplanilha->dsJustificativa;
-                $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['idAgente'] = $resuplanilha->idAgente;
+                $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['dsJustificativa'] = property_exists($resuplanilha, 'dsJustificativa') ? $resuplanilha->dsJustificativa : '';
+                $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['idAgente'] = property_exists($resuplanilha, 'idAgente') ? $resuplanilha->idAgente : 0;
+                
                 $count++;
                 $seq++;
             }
