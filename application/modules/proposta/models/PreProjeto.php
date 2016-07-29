@@ -1533,18 +1533,31 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
             'm.Movimentacao AS CodSituacao',
         ];
 
+        // Replace da função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        $orgao = $db->select()
+            ->from(['vwUsuariosOrgaosGrupos'], 'org_superior', 'tabelas.dbo')
+            ->where('usu_codigo = x.idTecnico')
+            ->where('sis_codigo = 21')
+            ->where('gru_codigo = 92')
+            ->group('org_superior');
+
+        //replace função: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        $tecnico = $db->select()
+            ->from(['Usuarios'], 'usu_nome', 'tabelas.dbo')
+            ->where('usu_codigo = x.idTecnico')
+            ;
+
         $x =[
             new Zend_Db_Expr('CONVERT(CHAR(20),x.DtAvaliacao, 120) AS DtAdmissibilidade'),
             new Zend_Db_Expr('DATEDIFF(d, x.DtAvaliacao, GETDATE()) AS diasCorridos'),
             'x.idTecnico AS idUsuario',
             'x.DtAvaliacao',
             'x.idAvaliacaoProposta',
-            new Zend_Db_Expr('SAC.dbo.fnNomeTecnicoMinc(x.idTecnico) AS Tecnico'),
-            new Zend_Db_Expr('SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) AS idSecretaria' ),
+            "($tecnico) AS Tecnico",
+            "($orgao) AS idSecretaria",
         ];
 
-        $sql = $this->select()
-            ->setIntegrityCheck(false)
+        $sql = $db->select()
             ->from(["p" => $this->_name], $p, "SAC.dbo")
             ->join(["m" => "tbMovimentacao"], 'p.idPreProjeto = m.idProjeto AND m.stEstado = 0', $m, "SAC.dbo")
             ->joinInner(["x" => "tbAvaliacaoProposta"], "p.idPreProjeto = x.idProjeto AND x.stEstado = 0", $x, "SAC.dbo")
@@ -1817,22 +1830,39 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @todo colocar padrão orm. Retiar função sac.dbo.fnDtUltimaDiligenciaDocumental()
      */
     public function buscarPropostaAnaliseDocumentalTecnico($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
         $db = $this->getAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-        $a =[
+        //replace função: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        $tecnico = $db->select()
+            ->from(['Usuarios'], 'usu_nome', 'tabelas.dbo')
+            ->where('usu_codigo = a.idTecnico')
+            ;
+
+        // Replace da função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        $orgao = $db->select()
+            ->from(['vwUsuariosOrgaosGrupos'], 'org_superior', 'tabelas.dbo')
+            ->where('usu_codigo = a.idTecnico')
+            ->where('sis_codigo = 21')
+            ->where('gru_codigo = 92')
+            ->group('org_superior');
+
+        //Replace da função: sac.dbo.fnDtUltimaDiligenciaDocumental(a.idProjeto)
+        $diligencia = $db->select()->from(['tbMovimentacao'], "max(DtMovimentacao)")->where('Movimentacao = 97')
+            ->where('idProjeto = a.idProjeto')
+            ;
+
+        $a = [
             'a.idProjeto',
-            new Zend_Db_Expr('sac.dbo.fnNomeTecnicoMinc(a.idTecnico) as Tecnico'),
-            new Zend_Db_Expr('sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) as idOrgao'),
-            new Zend_Db_Expr('CONVERT(CHAR(20),sac.dbo.fnDtUltimaDiligenciaDocumental(a.idProjeto), 120) AS DtUltima')
+            "($tecnico) AS Tecnico",
+            "($orgao) as idOrgao",
+            new Zend_Db_Expr('CONVERT(CHAR(20), ($diligencia), 120) AS DtUltima')
         ];
 
-        $sql = $this->select()
-            ->setIntegrityCheck(false)
+        $sql = $db->select()
             ->from(['a' => 'tbAvaliacaoProposta'], $a,'sac.dbo')
             ->join(['p' => 'PreProjeto'], 'a.idProjeto=p.idPreProjeto', ['p.NomeProjeto'], 'sac.dbo')
             ->join(['d' => 'vwDocumentosPendentes'], 'a.idProjeto = d.idProjeto',['CodigoDocumento'], 'sac.dbo')
@@ -2001,7 +2031,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
-     * @todo retirar SAC.dbo.fnIdOrgaoSuperiorAnalista(idTecnico)
      */
     public function buscarDocumental($idUsuario = null, $order=array(), $tamanho=-1, $inicio=-1)
     {
