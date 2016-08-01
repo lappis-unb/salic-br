@@ -44,11 +44,26 @@ class GenericControllerNew extends Zend_Controller_Action
 	 */
 	protected $_urlPadrao;
 
+    /**
+     * Url do serviço GCM para enviar notificações.
+     * 
+     * @var string
+     */
+    protected $gcmUrl;
+    
+    /**
+     * Chave da aplicação para acessar o serviço GCM.
+     * 
+     * @var string
+     */
+    protected $gcmApiKey;
+    
 
-	private  $idResponsavel  		= 0;
+    private  $idResponsavel  		= 0;
     private  $idAgente 				= 0;
 	private  $idUsuario 			= 0;
 	
+    
 	/**
 	 * Reescreve o método init() para aceitar 
 	 * as mensagens e redirecionamentos. 
@@ -60,6 +75,9 @@ class GenericControllerNew extends Zend_Controller_Action
 	 */
 	public function init()
 	{
+        $this->gcmApiKey = Zend_Registry::get('config')->resources->view->service->gcmApiKey;
+        $this->gcmUrl = Zend_Registry::get('config')->resources->view->service->gcmUrl;
+        
             //SE CAIU A SECAO REDIRECIONA
             $auth = Zend_Auth::getInstance(); // pega a autenticação
 //            xd($_SERVER['PHP_SELF']);
@@ -117,7 +135,42 @@ class GenericControllerNew extends Zend_Controller_Action
                 
 	} // fecha init()
 
-
+    /**
+     * Envia notificação para para dispositivos registrados.
+     * 
+     * @param string $title Titulo da mensagem. 
+     * @param string $menssage Descrição da mensagem.
+     * @param array $listParameters Parametros para exibir os dados da notificação.
+     * @param array $listResgistrationIds Lista de Ids dos dispositivos dos usuários que receberão a notificação.
+     * 
+     * @return array Lista com metadados da notificação enviada.
+     */
+    public function sendNotification($title = 'Novidades no SALIC!', $menssage = '', $listParameters = array(), $listResgistrationIds = array()) {
+        $client = new Zend_Rest_Client($this->gcmUrl);
+        $client
+            ->getHttpClient()
+                ->setHeaders(
+                    array(
+                        'Authorization: key='. $this->gcmApiKey,
+                        'Content-Type: application/json'
+                ))
+                ->setRawData(json_encode(
+                    array(
+                        'priority' => 'high',
+                        'delay_while_idle' => true,
+                        'registration_ids' => $listResgistrationIds,
+                        'priority' => 'normal',
+                        'notification' => array(
+                            'icon' => 'icon',
+                            'title' => utf8_encode($title),
+                            'body' => utf8_encode($menssage)
+                        ),
+                        'data' => $listParameters
+                )))
+                ->setUri($this->gcmUrl);
+        $response = json_decode($client->getHttpClient()->request('POST')->getBody());
+        return $response;
+    }
 
 	/**
 	 * Método para chamar as mensagens e fazer o redirecionamento

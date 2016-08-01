@@ -25,6 +25,22 @@ class IndexController extends GenericControllerNew
         $this->_forward("index", "login");
     }
 
+    /**
+     * Método para o envio de notificações
+     * 
+     * @access public
+     * @param void
+     * @return void
+     */
+    public function notificationAction() {
+        $listResgistrationIds = array('eyqeXyxiPlY:APA91bGQZWyfya5Ly6XD3IgTMEgXWNStqVAT-n4KW7tWxZuU6up-w6-vws3jPq5sRiNU_40NdhDPPdQj1seXpgaZAO9rHTqwcEmoAD0JdYidMbI1HL1ZJGaqKiGdlbbQRGdO5XuCOp05');
+        $title = 'Olá msg yes delay yes priority, seu Projeto mudou de situação!';
+        $menssage = 'Olá proponente, o seu projeto 097788 mudou para a situação E12 - Autorizada a captação residual dos recursos.';
+        $listParameters = array('key1' => 119079,'key2' => 1);
+        $response = $this->sendNotification($title, $menssage, $listParameters, $listResgistrationIds);
+xd($response);
+    }
+
     public function loginUsuarioAction()
     {
         $this->_helper->layout->disableLayout();
