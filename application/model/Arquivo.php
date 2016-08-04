@@ -58,16 +58,19 @@ class Arquivo extends GenericModel {
         return $db->fetchAll($sql);
     }
 
-    public function buscarComprovantesExecucao($idPronac) {
+    public function buscarComprovantesExecucao($idPronac)
+    {
+        $table = Zend_Db_Table::getDefaultAdapter();
 
-        $sql = "SELECT idArquivo,nmArquivo,sgExtensao,dtEnvio,stAtivo,idTipoDocumento,dsDocumento,idPronac,stAtivoDocumentoProjeto
-                FROM SAC.dbo.vwAnexarComprovantes
-                WHERE idTipoDocumento in (22,23,24)
-                AND idPronac = $idPronac";
+        $select = $table->select()
+            ->from('vwAnexarComprovantes',
+                array(new Zend_Db_Expr('idArquivo,nmArquivo,sgextensao,dtEnvio,stAtivo,idTipoDocumento,dsDocumento,idPronac,stAtivoDocumentoProjeto')),
+                'SAC.dbo')
+            ->where('idTipoDocumento in (22,23,24) AND idPronac = ?',$idPronac);
 
         $db  = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
     }
 
     public function buscarAnexosDiligencias($idDiligencia) {
