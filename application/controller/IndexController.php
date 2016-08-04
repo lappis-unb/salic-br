@@ -33,11 +33,14 @@ class IndexController extends GenericControllerNew
      * @return void
      */
     public function notificationAction() {
-        $listResgistrationIds = array('eyqeXyxiPlY:APA91bGQZWyfya5Ly6XD3IgTMEgXWNStqVAT-n4KW7tWxZuU6up-w6-vws3jPq5sRiNU_40NdhDPPdQj1seXpgaZAO9rHTqwcEmoAD0JdYidMbI1HL1ZJGaqKiGdlbbQRGdO5XuCOp05');
-        $title = 'Olá msg yes delay yes priority, seu Projeto mudou de situação!';
-        $menssage = 'Olá proponente, o seu projeto 097788 mudou para a situação E12 - Autorizada a captação residual dos recursos.';
-        $listParameters = array('key1' => 119079,'key2' => 1);
-        $response = $this->sendNotification($title, $menssage, $listParameters, $listResgistrationIds);
+        $notification = new Minc_Notification_Mensage();
+        $response = $notification
+            ->setListResgistrationIds(array('eyqeXyxiPlY:APA91bGQZWyfya5Ly6XD3IgTMEgXWNStqVAT-n4KW7tWxZuU6up-w6-vws3jPq5sRiNU_40NdhDPPdQj1seXpgaZAO9rHTqwcEmoAD0JdYidMbI1HL1ZJGaqKiGdlbbQRGdO5XuCOp05'))
+            ->setTitle('O projeto 097788 recebeu Diligência!')
+            ->setText('Olá proponente, seu projeto 097788 recebeu Diligência.')
+            ->setListParameters(array('key1' => 119079,'key2' => 1))
+            ->send()
+        ;
 xd($response);
     }
 
