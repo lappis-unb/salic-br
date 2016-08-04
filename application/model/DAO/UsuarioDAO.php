@@ -198,13 +198,17 @@ class UsuarioDAO extends Zend_Db_Table
 
 	public static function buscarUsuario($cod)
 	{
-		$sql = "SELECT * 
-				FROM TABELAS.dbo.Usuarios 
-				WHERE usu_codigo = $cod";
+		$table = Zend_Db_Table::getDefaultAdapter();
+		$select = $table->select()
+			->from('Usuarios',
+				array('*'),
+				'TABELAS.dbo')
+			->where('usu_codigo = ?', $cod);
 
 		$db = Zend_Registry::get('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		return $db->fetchAll($sql);
+
+		return $db->fetchAll($select);
 	}
 	
 	public static function buscarUsuarioCpf($cpf)
