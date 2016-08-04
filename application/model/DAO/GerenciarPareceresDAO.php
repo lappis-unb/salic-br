@@ -103,41 +103,49 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 	
 	public static function projetosConsolidadosParte2($idPronac)
 	{
-		$sql = "SELECT idPRONAC,p.Descricao as Produto,
-				      CASE
-				         WHEN Artigo18 = 1
-				              THEN 'Artigo 18'
-				              ELSE 'Artigo 26'
-				         END as Enquadramento,
-				       CASE
-				          WHEN IncisoArtigo27_I = 0
-				               THEN 'Não'
-				               ELSE 'Sim'
-				          END as IncisoArtigo27_I,
-				       CASE
-				          WHEN IncisoArtigo27_II = 0
-				               THEN 'Não'
-				               ELSE 'Sim'
-				          END as IncisoArtigo27_II,
-				       CASE
-				          WHEN IncisoArtigo27_III = 0
-				               THEN 'Não'
-				               ELSE 'Sim'
-				          END as IncisoArtigo27_III,
-				       CASE
-				          WHEN IncisoArtigo27_IV = 0
-				               THEN 'Não'
-				               ELSE 'Sim'
-				          END as IncisoArtigo27_IV        
-				FROM SAC.dbo.tbAnaliseDeConteudo a
-				INNER JOIN SAC.dbo.Produto p on (a.idProduto = p.Codigo)
-				WHERE idPronac=".$idPronac;
-				
-		
-				
+
+		$table = Zend_Db_Table::getDefaultAdapter();
+
+		$select = $table->select()
+			->from(array('a' => 'tbAnaliseDeConteudo'),
+				array('idPRONAC', new Zend_Db_Expr('
+					CASE
+							 WHEN Artigo18 = 1
+								  THEN \'Artigo 18\'
+								  ELSE \'Artigo 26\'
+							 END as Enquadramento,
+						   CASE
+							  WHEN IncisoArtigo27_I = 0
+								   THEN \'Não\'
+								   ELSE \'Sim\'
+							  END as IncisoArtigo27_I,
+						   CASE
+							  WHEN IncisoArtigo27_II = 0
+								   THEN \'Não\'
+								   ELSE \'Sim\'
+							  END as IncisoArtigo27_II,
+						   CASE
+							  WHEN IncisoArtigo27_III = 0
+								   THEN \'Não\'
+								   ELSE \'Sim\'
+							  END as IncisoArtigo27_III,
+						   CASE
+							  WHEN IncisoArtigo27_IV = 0
+								   THEN \'Não\'
+								   ELSE \'Sim\'
+							  END as IncisoArtigo27_IV
+				')),
+				'SAC.dbo')
+			->joinInner(array('p' => 'Produto'),
+				'a.idProduto = p.Codigo',
+				array(new Zend_Db_Expr('p.Descricao as Produto')),
+			    'SAC.dbo')
+		 	->where('idPronac = ?',$idPronac);
+
+
 		$db = Zend_Registry::get('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		return $db->fetchAll($sql);
+		return $db->fetchAll($select);
 			
 	}
 	
