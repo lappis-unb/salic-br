@@ -388,7 +388,7 @@ class ReadequacoesController extends GenericControllerNew {
 
         $idAgente = 0;
         $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $tblAgente = new Agente_Model_Agentes();
+        $tblAgente = new Agentes();
         $rsAgente = $tblAgente->buscar(array('CNPJCPF = ?'=>$auth->getIdentity()->Cpf));
         if($rsAgente->count() > 0){
              $idAgente = $rsAgente[0]->idAgente;
