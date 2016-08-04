@@ -1612,19 +1612,7 @@ class ReadequacoesController extends GenericControllerNew {
 
         $tbReadequacao = new tbReadequacao();
         $busca = array();
-
-        // caso seja planilha orçamentária, faz update
-        if ($idTipoReadequacao != 2) {
-            $busca['idPronac =?'] = $idPronac;
-            $busca['idTipoReadequacao =?'] = $idTipoReadequacao;
-            $busca['siEncaminhamento =?'] = 12;
-            $dadosCadastrados = $tbReadequacao->buscar($busca)->current();
-
-            if(count($dadosCadastrados)>0){
-                parent::message('Tipo de solicita<E7><E3>o de readequa<E7><E3>o j<E1> cadastrada!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "ERROR");
-            }
-        }
-
+        
         if($idTipoReadequacao == 2){ //Planilha Orçamentária
             $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
             $planilhaReadequada = $tbPlanilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idPronac, 'tpPlanilha = ?'=>'SR', 'idReadequacao= ?' => $idReadequacao));
