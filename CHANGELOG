@@ -1,3 +1,6 @@
+Release 1.8.9
+  * Fix: [comprovação financeira] corrigindo problema de valor do item em compra internacional
+
 Release 1.8.8
   * Fix: [Cidadão] redirecionando consulta /cidadao para /cidadao/consultar (consulta estava incorreta)
   * Fix: [consultar projetos] removendo link de valor aprovado, captado e comprovado caso sejam igual a zero
