@@ -29,14 +29,29 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
      */
     public static function verificaEnquadramento($idpronac=null, $tpAnalise=null )
     {
-        $sql = "select taa.stArtigo18, taa.stArtigo26 from sac.dbo.tbAnaliseAprovacao taa
-                  inner join sac.dbo.projetos pr on pr.idpronac = taa.idpronac
-                  Inner join sac.dbo.PlanoDistribuicaoProduto pdp on pdp.idproduto=taa.idproduto and pdp.idprojeto = pr.idprojeto
-                  where taa.idpronac = $idpronac and pdp.stPrincipal = 1 and taa.tpanalise = '$tpAnalise' AND pdp.stPlanoDistribuicaoProduto = 1
-                  ";
+
+        $table = Zend_Db_Table::getDefaultAdapter();
+
+        $select = $table->select()
+            ->from(array('taa' =>'tbAnaliseAprovacao'),
+                array('stArtigo18','stArtigo26'),
+                'SAC.dbo')
+            ->joinInner(array('pr' => 'projetos'),
+                'pr.idpronac = taa.idpronac',
+                array(''),
+                'SAC.dbo')
+            ->joinInner(array('pdp' => 'PlanoDistribuicaoProduto'),
+                'pdp.idproduto=taa.idproduto and pdp.idprojeto = pr.idprojeto',
+                array(''),
+                'SAC.dbo')
+            ->where('taa.idpronac = ?', $idpronac)
+            ->where('pdp.stPrincipal = 1')
+            ->where('taa.tpanalise = ?', $tpAnalise)
+            ->where('pdp.stPlanoDistribuicaoProduto = 1');
+
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
 
     }
      /**
