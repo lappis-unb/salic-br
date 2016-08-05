@@ -17,7 +17,7 @@ class ProjetoRestController extends Minc_Controller_AbstractRest {
         parent::init();
     }
 
-    public function postAction(){}
+    public function postAction(){xd('Stop post');}
     
     public function indexAction(){
         $next = $this->_request->getParam('next');

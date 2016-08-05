@@ -38,7 +38,7 @@ class IndexController extends GenericControllerNew
             ->setListResgistrationIds(array('eyqeXyxiPlY:APA91bGQZWyfya5Ly6XD3IgTMEgXWNStqVAT-n4KW7tWxZuU6up-w6-vws3jPq5sRiNU_40NdhDPPdQj1seXpgaZAO9rHTqwcEmoAD0JdYidMbI1HL1ZJGaqKiGdlbbQRGdO5XuCOp05'))
             ->setTitle('O projeto 097788 recebeu Diligência!')
             ->setText('Olá proponente, seu projeto 097788 recebeu Diligência.')
-            ->setListParameters(array('key1' => 119079,'key2' => 1))
+            ->setListParameters(array('projeto' => 119079))
             ->send()
         ;
 xd($response);
