@@ -73,15 +73,23 @@ class Arquivo extends GenericModel {
         return $db->fetchAll($select);
     }
 
-    public function buscarAnexosDiligencias($idDiligencia) {
-        $sql = "SELECT a.idArquivo,a.nmArquivo,a.dtEnvio,b.idDiligencia
-                FROM  BDCORPORATIVO.scCorp.tbArquivo AS a
-                INNER JOIN SAC.dbo.tbDiligenciaxArquivo AS b on (a.idArquivo = b.idArquivo)
-                WHERE b.idDiligencia = $idDiligencia";
+    public function buscarAnexosDiligencias($idDiligencia)
+    {
+        $table = Zend_Db_Table::getDefaultAdapter();
+
+        $select = $table->select()
+            ->from(array('a' => 'tbArquivo'),
+                array('idArquivo', 'a.nmArquivo', 'dtEnvio'),
+                'BDCORPORATIVO.scCorp')
+            ->joinInner(array('b' => 'tbDiligenciaxArquivo'),
+                'a.idArquivo = b.idArquivo',
+                array('b.idDiligencia'),
+                'SAC.dbo')
+            ->where('b.idDiligencia = ? ', $idDiligencia);
 
         $db  = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
     }
 
 }
