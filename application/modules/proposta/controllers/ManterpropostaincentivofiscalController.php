@@ -12,7 +12,7 @@
 class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_Action_Abstract {
 
     /**
-     * @var integer (vari�vel com o id do usu�rio logado)
+     * @var integer (variï¿½vel com o id do usuï¿½rio logado)
      * @access private
      */
     private $idResponsavel = 0;
@@ -25,14 +25,14 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     private $usuarioProponente = "N";
 
     /**
-     * Reescreve o m�todo init()
+     * Reescreve o método init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
 
-        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth = Zend_Auth::getInstance(); // pega a autenticação
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
 
         // verifica as permissoes
@@ -360,7 +360,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             }
             return;
         } catch (Zend_Exception $ex) {
-            parent::message("N�o foi poss�vel realizar a opera��o!" . $ex->getMessage(), "/proposta/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
+            parent::message("Não foi possível realizar a operação!" . $ex->getMessage(), "/proposta/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
         }
     }
 
@@ -490,7 +490,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         if ($rsPreProjeto->save()) {
             parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
         } else {
-            parent::message("N&atilde;o foi poss�vel realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
         }
     }
 
@@ -500,29 +500,26 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @access public
      * @return void
      */
-    public function enviarPropostaAoMincAction() {
-
-        /* =============================================================================== */
-        /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
+    public function enviarPropostaAoMincAction()
+    {
+        //VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO
         $this->verificarPermissaoAcesso(true, false, false);
 
-        //recupera parametros
         $get = Zend_Registry::get('get');
         $idPreProjeto = $get->idPreProjeto;
 
-        $erro = "";
-        $msg = "";
-
         if (!empty($idPreProjeto)) {
-            $sp = new spValidarApresentacaoDeProjeto();
-            $arrResultado = $sp->paChecklistDeEnvioDeProposta($idPreProjeto);
+            $sp = new Proposta_Model_PreProjeto();
+
+            $arrResultado = $sp->checklistEnvioProposta($idPreProjeto);
 
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
-            $this->montaTela("manterpropostaincentivofiscal/enviarproposta.phtml", array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar",
-                "resultado" => $arrResultado));
+            $this->montaTela(
+                "manterpropostaincentivofiscal/enviarproposta.phtml",
+                array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar", "resultado" => $arrResultado)
+            );
         } else {
-            parent::message("Necess�rio informar o n�mero da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
+            parent::message("Necessário informar o número da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
         }
     }
 
@@ -590,7 +587,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
         if (count($rsProponente) > 0) {
 
-            //VERIFICA SE O PROPONENTE EST� VINCULADO
+            //VERIFICA SE O PROPONENTE ESTï¿½ VINCULADO
             $vinculoProponente = new tbVinculoPropostaResponsavelProjeto();
             $whereProp['VP.idPreProjeto = ?'] = $this->idPreProjeto;
             $whereProp['VP.siVinculoProposta = ?'] = 2;
@@ -599,9 +596,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             if ($rsVinculo->count() > 0) {
 
                 if (isset($rsVinculo[0]->siVinculo) && $rsVinculo[0]->siVinculo == 0) {
-                    $msgProponente = "Aguardando o v�nculo do Proponente";
+                    $msgProponente = "Aguardando o vínculo do Proponente";
                 } elseif (isset($rsVinculo[0]->siVinculo) && $rsVinculo[0]->siVinculo == 1) {
-                    $msgProponente = "O Proponente rejeitou o v�nculo";
+                    $msgProponente = "O Proponente rejeitou o vínculo";
                 } elseif (isset($rsVinculo[0]->siVinculo) && $rsVinculo[0]->siVinculo == 2) {
                     $msgProponente = "Proponente Vinculado";
                 } else {
@@ -643,7 +640,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                         trim($rsPreProjeto->Sinopse) == "" || trim($rsPreProjeto->ImpactoAmbiental) == "" || trim($rsPreProjeto->EspecificacaoTecnica) == "") {
                     $arrResultado['erro'] = true;
                     $arrResultado['dadosgeraisproposta']['erro'] = true;
-                    $arrResultado['dadosgeraisproposta']['msg'] = "Dados gerais da proposta pendente. Os campos Objetivos, Justificativa, Acessibilidade, Democratiza&ccedil;&atilde;o de Acesso, Etapas de Trabalho, Ficha T�cnica, Sinopse da obra, Impacto Ambiental e Especifica&ccedil;&atilde;o t�cnicas do produto, s�o de preenchimento obrigat�rio.";
+                    $arrResultado['dadosgeraisproposta']['msg'] = "Dados gerais da proposta pendente. Os campos Objetivos, Justificativa, Acessibilidade, Democratiza&ccedil;&atilde;o de Acesso, Etapas de Trabalho, Ficha Técnica, Sinopse da obra, Impacto Ambiental e Especifica&ccedil;&atilde;o técnicas do produto, são de preenchimento obrigatório.";
                 } else {
                     $arrResultado['dadosgeraisproposta']['erro'] = false;
                     $arrResultado['dadosgeraisproposta']['msg'] = "Dados gerais da proposta";
@@ -651,7 +648,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             } else {
                 $arrResultado['erro'] = true;
                 $arrResultado['dadosgeraisproposta']['erro'] = true;
-                $arrResultado['dadosgeraisproposta']['msg'] = "Dados gerais da proposta pendente. Os campos Objetivos, Justificativa, Acessibilidade, Democratiza&ccedil;&atilde;o de Acesso, Etapas de Trabalho, Ficha T�cnica, Sinopse da obra, Impacto Ambiental e Especifica&ccedil;&atilde;o t�cnicas do produto, s�o de preenchimento obrigat�rio.";
+                $arrResultado['dadosgeraisproposta']['msg'] = "Dados gerais da proposta pendente. Os campos Objetivos, Justificativa, Acessibilidade, Democratiza&ccedil;&atilde;o de Acesso, Etapas de Trabalho, Ficha Técnica, Sinopse da obra, Impacto Ambiental e Especifica&ccedil;&atilde;o técnicas do produto, são de preenchimento obrigatório.";
             }
 
             //E-MAIL
@@ -753,8 +750,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                     $valorRetirar = $valorPropostaDivulgacao - $porcentProposta;
                     $arrResultado['erro'] = true;
                     $arrResultado['planodivulgacao']['erro'] = true;
-                    //$arrResultado['planodivulgacao']['msg'] = "Custo de Divulga��o/Comercializa��o superior a 20% do valor total do projeto";
-                    $arrResultado['planodivulgacao']['msg'] = "Custo de Divulga&ccedil;&atilde;o/Comercializa&ccedil;&atilde;o superior a 20% do valor total da proposta. Favor readequar os custos em <b>R$ " . number_format($valorRetirar, '2', ',', '.') . "</b> para enviar a sua proposta ao Minist�rio da Cultura.";
+                    //$arrResultado['planodivulgacao']['msg'] = "Custo de Divulgaï¿½ï¿½o/Comercializaï¿½ï¿½o superior a 20% do valor total do projeto";
+                    $arrResultado['planodivulgacao']['msg'] = "Custo de Divulga&ccedil;&atilde;o/Comercializa&ccedil;&atilde;o superior a 20% do valor total da proposta. Favor readequar os custos em <b>R$ " . number_format($valorRetirar, '2', ',', '.') . "</b> para enviar a sua proposta ao Ministï¿½rio da Cultura.";
                 }
             } else {
                 $arrResultado['erro'] = true;
@@ -840,7 +837,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                     $valorRetirarCustoAdm = $valorCustoAdmin - $quinzecentoprojeto;
                     $arrResultado['erro'] = true;
                     $arrResultado['percentualcustoadmin']['erro'] = true;
-                    $arrResultado['percentualcustoadmin']['msg'] = "Custo administrativo  superior a 15% do valor total da proposta. Favor readequar os custos em <b>R$ " . number_format($valorRetirarCustoAdm, '2', ',', '.') . "</b> para enviar a sua proposta ao Minist�rio da Cultura.";
+                    $arrResultado['percentualcustoadmin']['msg'] = "Custo administrativo  superior a 15% do valor total da proposta. Favor readequar os custos em <b>R$ " . number_format($valorRetirarCustoAdm, '2', ',', '.') . "</b> para enviar a sua proposta ao Ministï¿½rio da Cultura.";
                 }
                 if ($qtdeProdutoPrincial <= 0) {
                     $arrResultado['erro'] = true;
@@ -873,7 +870,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             if (($data_validacao <= date('Ymd')) && ($ano_envio >= $ano_execucao)) {
                 $arrResultado['erro'] = true;
                 $arrResultado['planoanual']['erro'] = true;
-                $arrResultado['planoanual']['msg'] = "De acordo com a s�mula 10, projetos de plano anual s� poder�o ser enviados at� 30 de setembro do ano vigente, e o per�odo de execu��o dever� ser do ano seguinte a data de envio.";
+                $arrResultado['planoanual']['msg'] = "De acordo com a súmula 10, projetos de plano anual só poderão ser enviados até 30 de setembro do ano vigente, e o período de execução deverá ser do ano seguinte a data de envio.";
             }else  {
                 $arrResultado['planoanual']['erro'] = false;
                 $arrResultado['planoanual']['msg'] = "Plano Anual";
@@ -1062,7 +1059,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 $bln = "false";
             }
             if (!$objData->validarData($get->dtInicio)) {
-                $mensagem = "<br><font color='red'>O per�odo de execu��o de projetos de plano anual dever ser posterior ao ano vigente</font>";
+                $mensagem = "<br><font color='red'>O período de execução de projetos de plano anual dever ser posterior ao ano vigente</font>";
                 $bln = "false";
             }
 
@@ -1194,14 +1191,14 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * M�todo consultarresponsaveis()
+     * Método consultarresponsaveis()
      * UC 89 - Fluxo FA2 - Aceitar Vinculo
      * @access public
      * @param void
      * @return void
      */
     public function consultarresponsaveisAction() {
-        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth = Zend_Auth::getInstance(); // pega a autenticação
         $idUsuario = $auth->getIdentity()->IdUsuario;
         $cpf = $auth->getIdentity()->Cpf;
 
@@ -1215,7 +1212,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * M�todo vincularpropostas()
+     * Método vincularpropostas()
      * UC 89 - Fluxo FA6 - Vincular Propostas
      * @access public
      * @param void
@@ -1265,7 +1262,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * M�todo vincularpropostas()
+     * Método vincularpropostas()
      * UC 89 - Fluxo FA8 - Vincular Propostas
      * @access public
      * @param void
@@ -1284,8 +1281,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * M�todo novoresponsavel()
-     * UC 89 - Fluxo FA4 - Vincular Respons�vel
+     * Método novoresponsavel()
+     * UC 89 - Fluxo FA4 - Vincular Responsï¿½vel
      * @access public
      * @param void
      * @return void
@@ -1295,9 +1292,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * M�todo resnovoresponsavel()
+     * Método resnovoresponsavel()
      * Retorno do novoresponsavel
-     * UC 89 - Fluxo FA4 - Vincular Respons�vel
+     * UC 89 - Fluxo FA4 - Vincular Responsï¿½vel
      * @access public
      * @param void
      * @return void
@@ -1315,7 +1312,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         if ((empty($cnpjcpf)) && (empty($nome))) {
             echo "<table class='tabela'>
 					<tr>
-					    <td class='red' align='center'>Voc� deve preencher pelo menos um campo!</td>
+					    <td class='red' align='center'>Vocï¿½ deve preencher pelo menos um campo!</td>
 					</tr>
 				</table>";
             exit();
