@@ -17,19 +17,21 @@ class ConsultarDadosProjetoDAO extends Zend_Db_Table {
                         'ResumoProjeto',
                         'NomeProjeto',
                         'UfProjeto',
+                        'ProvidenciaTomada',
                         new Zend_Db_Expr('p.AnoProjeto+p.Sequencial AS NrProjeto'),
                         new Zend_Db_Expr('SAC.dbo.fnCustoProjeto (p.AnoProjeto,p.Sequencial) AS ValorCaptado'),
                         new Zend_Db_Expr('Nome as Proponente,sac.dbo.fnFormataProcesso(p.idPronac) AS Processo'),
                         new Zend_Db_Expr('p.Situacao + \' - \' + si.Descricao AS Situacao'),
                         new Zend_Db_Expr('SAC.dbo.fnNomeUsuario(idUsuarioEmissor)  AS Emissor'),
-                        new Zend_Db_Expr('SAC.dbo.fnNomeUsuario(idUsuarioReceptor) as Receptor'),
+                        new Zend_Db_Expr('SAC.dbo.fnNomeUsuario(idUsuarioReceptor) AS Receptor'),
                         new Zend_Db_Expr('TABELAS.dbo.fnEstruturaOrgao(p.Orgao,0) AS Origem'),
-                        new Zend_Db_Expr('convert(varchar(10),DtSituacao,103) as DtSituacao,ProvidenciaTomada'),
+                        new Zend_Db_Expr('convert(varchar(10),DtSituacao,103) AS DtSituacao'),
                         new Zend_Db_Expr('isnull(sac.dbo.fnValorDaProposta(idProjeto)'),
                         new Zend_Db_Expr('SAC.dbo.fnValorSolicitado(p.AnoProjeto,p.Sequencial)) AS ValorProposta'),
                         new Zend_Db_Expr('SAC.dbo.fnValorSolicitado(p.AnoProjeto,p.Sequencial) AS ValorSolicitado'),
                         new Zend_Db_Expr('SAC.dbo.fnOutrasFontes(p.idPronac) AS OutrasFontes'),
                         new Zend_Db_Expr('tabelas.dbo.fnEstruturaOrgao(p.Orgao,0) AS Origem'),
+                        new Zend_Db_Expr('p.Situacao AS codSituacao'),
                         new Zend_Db_Expr('
                             CASE
                                 WHEN p.Mecanismo =\'2\' OR p.Mecanismo =\'6\' THEN sac.dbo.fnValorAprovadoConvenio(p.AnoProjeto,p.Sequencial)
@@ -43,7 +45,7 @@ class ConsultarDadosProjetoDAO extends Zend_Db_Table {
                                 WHEN Enquadramento = \'1\' THEN \'Artigo 26\'
                                 WHEN Enquadramento = \'2\' THEN \'Artigo 18\'
                                 ELSE \'Não enquadrado\'
-                            END as Enquadramento, p.Situacao AS codSituacao')
+                            END as Enquadramento')
                          ),
                     'SAC.dbo')
                 ->joinLeft(array('e' => 'Enquadramento'),
