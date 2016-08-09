@@ -4,6 +4,9 @@ docker run --name salic-web -it -v /var/www/:/var/www/ --add-host local.salic:12
 # SALIC DB - Run container PostgreSQL | Debian
 docker run --name salic-db -p 5432:5432 -e POSTGRES_PASSWORD=123456 -e POSTGRES_USER=postgres -e PGDATA=/var/lib/postgresql/data -v /var/www/db/postgresql/data:/var/www/project/db/data -d culturagovbr/salic-db 
 
+# Run Dockerfile
+docker build -t salic-web .
+
 # Run compose
 docker-compose up -d
 
