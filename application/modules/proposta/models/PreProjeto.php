@@ -2467,6 +2467,14 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
         return $this->fetchAll($slct);
     }
 
+    /**
+     * checklistEnvioProposta - Checklist para enviar proposta para Minc
+     *
+     * @param mixed $idPreProjeto
+     * @access public
+     * @return void
+     * @author wouerner <wouerner@gmail.com>
+     */
     public function checklistEnvioProposta($idPreProjeto)
     {
         $validacao = new stdClass();
@@ -2910,7 +2918,6 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
             }
         }
 
-     //SELECT @IdProjeto = IdPreProjeto, @Usuario = idUsuario FROM PreProjeto WHERE idPreProjeto = @IdProjeto
         $sql = $db->select()
             ->from(['PreProjeto'], 'idUsuario', 'sac.dbo')
             ->where('idPreProjeto =  ?', $idPreProjeto)
@@ -2925,12 +2932,8 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
                 break;
             }
         }
-        //var_dump($validado);die;
 
         if($validado) {
-            //INSERT INTO tbMovimentacao
-                    //(idProjeto,Movimentacao,DtMovimentacao,stEstado,Usuario)
-                    //VALUES (@IdProjeto,96,getdate(),0,@Usuario)
             $insert = $db->insert('sac.dbo.tbMovimentacao', [$idPreProjeto, 96, new Zend_Db_Expr('getdate()'), 0,$usuario]);
 
             $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL FOI ENCAMINHADA COM SUCESSO AO MINISTÉRIO DA CULTURA.</b></font>';
