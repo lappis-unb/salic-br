@@ -669,12 +669,11 @@ class DiligenciarController extends GenericControllerNew {
             $dados['idSolicitante'] = $idagente;
             $dados['stEnviado'] = 'S';
         }
-//        $diligenciaDAO->inserir($dados);
+        $diligenciaDAO->inserir($dados);
         
         # Envia notificação para o usuário através do aplicativo mobile.
         $modelProjeto = new Projetos();
         $projeto = $modelProjeto->buscarPorPronac((int)$post->idPronac);
-//xd($projeto);
         $this->enviarNotificacao((object)array(
             'pronac' => $projeto->Pronac,
             'idPronac' => $projeto->IdPRONAC
@@ -716,7 +715,7 @@ class DiligenciarController extends GenericControllerNew {
             ->setListParameters(array('projeto' => $projeto->idPronac))
             ->send()
         ;
-xd($response);
+//xd($response);
     }
 
     public function salvardiligenciaAction() {
