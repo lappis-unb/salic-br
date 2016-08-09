@@ -499,6 +499,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      *
      * @access public
      * @return void
+     * @author wouerner <wouerner@gmail.com>
      */
     public function enviarPropostaAoMincAction()
     {
