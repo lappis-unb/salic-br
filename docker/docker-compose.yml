@@ -1,6 +1,7 @@
 version: '2'
 services:
   db:
+    container_name: salic-db
     image: culturagovbr/db-postgresql-debian
     volumes:
     - /var/www/db/postgresql/data:/var/www/project/db/data
@@ -15,7 +16,8 @@ services:
     labels:
       com.salic.description: "Banco de dados Postgres"
   web:
-    image: culturagovbr/web-apache-php5-debian
+    container_name: salic-web
+    image: culturagovbr/salic-web
     volumes:
     - /var/www:/var/www
     ports:
