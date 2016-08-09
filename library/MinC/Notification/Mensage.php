@@ -150,6 +150,10 @@ class Minc_Notification_Mensage{
      * @param array $listParameters Parametros para exibir os dados da notificação.
      */
     public function __construct($listResgistrationIds = NULL, $title = NULL, $text = NULL, $listParameters = NULL) {
+        $config = new Zend_Config_Ini("./application/configs/config.ini");
+        $this->gcmUrl = $config->get('default')->resources->view->service->gcmUrl;
+        $this->gcmApiKey = $config->get('default')->resources->view->service->gcmApiKey;
+
         $this->listResgistrationIds = $listResgistrationIds;
         $this->title = $title;
         $this->text = $text;
@@ -163,8 +167,6 @@ class Minc_Notification_Mensage{
      * @return \Minc_Notification_Mensage
      */
     protected function loadConfig(){
-        $this->gcmUrl = Zend_Registry::get('config')->resources->view->service->gcmUrl;
-        $this->gcmApiKey = Zend_Registry::get('config')->resources->view->service->gcmApiKey;
         $this->client = new Zend_Rest_Client($this->gcmUrl);
         $this->loadListParametersService();
         

@@ -1473,14 +1473,56 @@ class MovimentacaodecontaController extends GenericControllerNew
                 if (count($buscar)==0) {
                     $liberar->inserir($dados);
                 }
+                
+                # Envia notificação para o usuário através do aplicativo mobile.
+                $this->enviarNotificacaoCapitacao((object)array(
+                    'pronac' => $AnoProjeto. $Sequencial,
+                    'idPronac' => $dadosProjetos[0]->IdPRONAC,
+                    'vlCaptado' => number_format($vlCaptado, 2, ',', '.')
+                ));
+                
                 parent::message('Transferência executada com sucesso!', 'movimentacaodeconta/resultado-extrato-de-conta-captacao', 'CONFIRM');
 
             } else {
                 parent::message('Não foi possível realizar a transferência.', 'movimentacaodeconta/resultado-extrato-de-conta-captacao', 'ERROR');
             }
 	}
+    
+    /**
+     * Lista dispositivos que receberão a notificação.
+     * 
+     * @param integer $idPronac
+     * @return array
+     */
+    protected function listarDispositivoNotificacao($idPronac) {
+        $listaDispositivos = array();
+        $modelDispositivoMovel = new Dispositivomovel();
+        $listaResultadoDispositivo = $modelDispositivoMovel->listarPorIdPronac($idPronac);
+        foreach ($listaResultadoDispositivo as $dispositivo) {
+            $listaDispositivos[] = $dispositivo->idRegistration;
+        }
+        
+        return $listaDispositivos;
+    }
+    
+    /**
+     * Envia notificação para o usuário através do aplicativo mobile.
+     * 
+     * @param stdClass $projeto
+     */
+    protected function enviarNotificacaoCapitacao(stdClass $projeto) {
+        $listaDispositivos = $this->listarDispositivoNotificacao($projeto->idPronac);
+        $notification = new Minc_Notification_Mensage();
+        $response = $notification
+            ->setListResgistrationIds($listaDispositivos)
+            ->setTitle('Projeto '. $projeto->pronac)
+            ->setText('Recebeu R$'. $projeto->vlCaptado. ' de captação!')
+            ->setListParameters(array('projeto' => $projeto->idPronac))
+            ->send()
+        ;
+    }
 
-	public function transferenciaColetivaContaCaptacaoAction(){
+    public function transferenciaColetivaContaCaptacaoAction(){
 
             if(!is_array($_POST)){
                 parent::message('Não foi possível realizar a transferência.', 'movimentacaodeconta/resultado-extrato-de-conta-captacao', 'ERROR');

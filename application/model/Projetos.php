@@ -26,9 +26,6 @@ class Projetos extends GenericModel
         if($objParam->idUsuario) {
             $consulta->where('p.IdUsuario = ?', $objParam->idUsuario);
         }
-        if($objParam->idUsuario) {
-            $consulta->where('p.IdUsuario = ?', $objParam->idUsuario);
-        }
         if($objParam->idProponente) {
             $consulta->where('p.idAgente = ?', (int)$objParam->idProponente);
         }
