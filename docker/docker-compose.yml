@@ -27,6 +27,7 @@ services:
     links:
     - db
     extra_hosts:
+    - "salic.gov.br:127.0.0.1"
     - "localhost:127.0.0.1"
     - "local.salic:127.0.0.1"
     command: "/bin/bash apachectl -D FOREGROUND"
