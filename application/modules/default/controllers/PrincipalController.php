@@ -23,9 +23,9 @@ class PrincipalController extends MinC_Controller_Action_Abstract
         $Usuario           = new Autenticacao_Model_Usuario(); // objeto usuério
         $GrupoAtivo        = new Zend_Session_Namespace('GrupoAtivo'); // cria a sesséo com o grupo ativo
 
-        parent::perfil(); // autenticaééo zend
+        parent::perfil();
 
-        parent::init(); // chama o init() do pai GenericControllerNew
+        parent::init();
     }
 
     /**

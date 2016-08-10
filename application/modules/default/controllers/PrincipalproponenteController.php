@@ -29,14 +29,13 @@ class PrincipalproponenteController extends MinC_Controller_Action_Abstract {
         $this->view->saudacao = Data::saudacao() . "! " . Data::mostraData() . ".";
 
         $verificarvinculo = $a->buscarAgenteVinculoResponsavel(array('vr.idAgenteProponente = ?'=>$this->idAgente, 'vprp.siVinculoProposta = ?'=>0))->count();
-//        $verificarvinculo = $v->buscar(array('idAgenteProponente = ?'=>$this->idAgente, 'siVinculo = ?'=>'0'))->count();
+
         if($verificarvinculo > 0){
             $this->view->vinculos = true;
         }
         else{
             $this->view->vinculos = false;
         }
-
 
         // Comunicados
         $tbComunicados = new tbComunicados();
@@ -48,10 +47,7 @@ class PrincipalproponenteController extends MinC_Controller_Action_Abstract {
 		$rs = $tbComunicados->listarComunicados($where, $ordem);
 
 		$this->view->comunicados = $rs;
-
-
-    } // fecha método indexAction()
-
+    }
 
     /**
 	 * Método listarComunicados()

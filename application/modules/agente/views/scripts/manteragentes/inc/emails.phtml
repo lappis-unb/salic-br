@@ -1,12 +1,12 @@
 <?php
 /**
- * Formul·rio para Cadastro de Conselheiro
+ * Formul√°rio para Cadastro de Conselheiro
  * @author Equipe RUP - Politec
  * @since 29/03/2010
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.conselheiro.inc
- * @copyright © 2010 - MinistÈrio da Cultura - Todos os direitos reservados.
+ * @copyright ¬© 2010 - Minist√©rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
@@ -14,14 +14,14 @@
 
 
 
-<!-- ========== FORMUL¡RIO E-MAIL ========== -->
+<!-- ========== FORMUL√ÅRIO E-MAIL ========== -->
 <table id="tabEmail" width="800" align="center">
 
 	<tr>
-		<td class="titulo_tabela">ADICIONE E-MAILS ATRAV…S DO FORMUL¡RIO ABAIXO</td>
+		<td class="titulo_tabela">ADICIONE E-MAILS ATRAV√âS DO FORMUL√ÅRIO ABAIXO</td>
 	<tr>
 		<td>
-			<label for="tipoEmail">Tipo *</label> 
+			<label for="tipoEmail">Tipo *</label>
 			<br />
 			<select name="tipoEmail" id="tipoEmail">
 				<option value="0">- Selecione - </option>
@@ -33,28 +33,28 @@
 			</select>
 		</td>
 		<td>
-			<label for="email">E-mail *</label> 
+			<label for="email">E-mail *</label>
 			<br />
 			<input type="text" name="email" id="email" maxlength="70" />
 		</td>
 		<td>
-			<label>Posso Divulgar? *</label> 
+			<label>Posso Divulgar? *</label>
 			<br />
-			<input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" class="checkradio" /> 
-			<label for="divulgarEmailS">Sim</label> 
-			<input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked" /> 
-			<label for="divulgarEmailN">N„o</label>
+			<input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" class="checkradio" />
+			<label for="divulgarEmailS">Sim</label>
+			<input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked" />
+			<label for="divulgarEmailN">N√£o</label>
 		</td>
 		<td>
-			<label>Para correpondÍncia? *</label> 
+			<label>Para correpond√™ncia? *</label>
 			<br />
-			<input type="radio" name="enviarEmail" id="enviarEmailS" value="1" class="checkradio" checked="checked" /> 
-			<label for="enviarEmailS">Sim</label> 
-			<input type="radio" name="enviarEmail" id="enviarEmailN" value="0" class="checkradio" /> 
-			<label for="enviarEmailN">N„o</label>
+			<input type="radio" name="enviarEmail" id="enviarEmailS" value="1" class="checkradio" checked="checked" />
+			<label for="enviarEmailS">Sim</label>
+			<input type="radio" name="enviarEmail" id="enviarEmailN" value="0" class="checkradio" />
+			<label for="enviarEmailN">N√£o</label>
 		</td>
 		<td class="center" width="30">
-			<input id="btnAddEmail" type="button" title="Adicionar E-mail" class="btn_add" 
+			<input id="btnAddEmail" type="button" title="Adicionar E-mail" class="btn_add"
 				value=" " onclick="adicionar_email_agente();" />
 		</td>
 	</tr>
@@ -67,8 +67,8 @@
 		<td class="titulo_tabela">TIPO</td>
 		<td class="titulo_tabela" >E-MAIL</td>
 		<td class="titulo_tabela" >DIVULGAR?</td>
-		<td class="titulo_tabela" >PARA CORRESPOND NCIA?</td>
-		<td width="60">A«√O</td>
+		<td class="titulo_tabela" >PARA CORRESPOND√äNCIA?</td>
+		<td width="60">A√á√ÉO</td>
 	</tr>
 
 	<?php if (isset($this->Emails)): ?>
@@ -85,11 +85,11 @@
 				<input type="hidden" name="Emails[]" id="Emails[]" value="<?php echo $this->Emails[$i]?>" />
 			</td>
 			<td class="center">
-				<?php echo $this->divulgarEmails[$i] == 1 ? 'Sim' : 'N„o'; ?>
+				<?php echo $this->divulgarEmails[$i] == 1 ? 'Sim' : 'N√£o'; ?>
 				<input type="hidden" name="divulgarEmails[]" id="divulgarEmails[]" value="<?php echo $this->divulgarEmails[$i]?>" />
 			</td>
 			<td class="center">
-				<?php echo $this->enviarEmails[$i] == 1 ? 'Sim' : 'N„o'; ?>
+				<?php echo $this->enviarEmails[$i] == 1 ? 'Sim' : 'N√£o'; ?>
 				<input type="hidden" name="enviarEmails[]" id="enviarEmails[]" value="<?php echo $this->enviarEmails[$i]?>" />
 			</td>
 			<td class="center">

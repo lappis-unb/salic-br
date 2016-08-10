@@ -6,17 +6,17 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.scripts.manteragentes
- * @copyright © 2010 - MinistÈrio da Cultura - Todos os direitos reservados.
+ * @copyright ¬© 2010 - Minist√©rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
 
 <?php require_once "inc/menu.inc.php"; ?>
 
-<!-- ========== INÕCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== IN√çCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="InÌcio">InÌcio</a></li>
+		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="In√≠cio">In√≠cio</a></li>
 		<li><a href="<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'agentes')); ?>?acao=cc">Manter Agentes</a></li>
 		<li><a href="<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'buscaragente')); ?>">Pesquisar Agentes</a></li>
 		<li class="last">Resultado da busca por Agentes</li>
@@ -26,15 +26,15 @@
 
 
 
-<!-- ========== INÕCIO TÕTULO ========== -->
+<!-- ========== IN√çCIO T√çTULO ========== -->
 <div id="titulo">
 	<div>Resultado da busca por Agentes <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÕTULO ========== -->
+<!-- ========== FIM T√çTULO ========== -->
 
 
 
-<!-- ========== INÕCIO CONTE⁄DO ========== -->
+<!-- ========== IN√çCIO CONTE√öDO ========== -->
 <div id="conteudo">
 
 
@@ -46,8 +46,8 @@
 		<tr>
 			<th>CPF/CNPJ</th>
 			<th>NOME</th>
-			<th>VIS√O</th>
-			<th>A«√O</th>
+			<th>VIS√ÉO</th>
+			<th>A√á√ÉO</th>
 		</tr>
 		<?php $cont = 0; ?>
 		<?php foreach ($this->buscar as $b) : ?>
@@ -56,36 +56,32 @@
 			<td><?php echo $b->Nome; ?></td>
 			<td>
 				<?php
-				$visao = VisaoDAO::buscarVisao($b->idAgente); // vis„o
+				$visao = VisaoDAO::buscarVisao($b->idAgente); // vis√£o
 				$i     = 0; // contador
 
 				foreach ($visao as $v) :
-					if ($i > 0) echo " / "; // separa por barra caso tenha mais de uma vis„o
+					if ($i > 0) echo " / "; // separa por barra caso tenha mais de uma vis√£o
 					echo $v->Descricao;
 					$i++;
 				endforeach;
 				?>
 			</td>
-			<td class="centro"><input type="button" class="btn_perfil" title=" Alterar Vis„o " value=" " onkeypress=" " onclick="redirecionar('<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'alterarvisao')); ?>?idAgente=<?php echo $b->idAgente; ?>');" /></td>
+			<td class="centro"><input type="button" class="btn_perfil" title=" Alterar Vis√£o " value=" " onkeypress=" " onclick="redirecionar('<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'alterarvisao')); ?>?idAgente=<?php echo $b->idAgente; ?>');" /></td>
 		</tr>
 		<?php $cont++; ?>
 		<?php endforeach; ?>
 	</table>
 
-	<!-- ========== PAGINA«√O ========== -->
+	<!-- ========== PAGINA√á√ÉO ========== -->
 	<?php if ($this->qtdAgentes > 10) { echo "<br /><p>" . $this->buscar . "</p><br />"; } ?>
 
 	<p class="centro"><input type="button" class="btn_voltar" onkeypress=" " onclick="redirecionar('<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'buscaragente')); ?>');" /></p>
 
-
-
 </div>
-<!-- ========== FIM CONTE⁄DO ========== -->
+<!-- ========== FIM CONTE√öDO ========== -->
 
-
-
-<!-- ========== INÕCIO RODAP… DO CONTE⁄DO ========== -->
+<!-- ========== IN√çCIO RODAP√â DO CONTE√öDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP… DO CONTE⁄DO ========== -->
+<!-- ========== FIM RODAP√â DO CONTE√öDO ========== -->
 
 <br clear="all" />

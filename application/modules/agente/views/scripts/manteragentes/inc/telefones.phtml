@@ -1,28 +1,28 @@
 <?php
 /**
- * Formul·rio para Cadastro de Conselheiro
+ * Formul√°rio para Cadastro de Conselheiro
  * @author Equipe RUP - Politec
  * @since 29/03/2010
  * @version 1.0
  * @package application
  * @subpackage application.views.scripts.conselheiro.inc
- * @copyright © 2010 - MinistÈrio da Cultura - Todos os direitos reservados.
+ * @copyright ¬© 2010 - Minist√©rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
 
 
 
-<!-- ========== FORMUL¡RIO FONE ========== -->
+<!-- ========== FORMUL√ÅRIO FONE ========== -->
 <table id="tabFone" width="800" align="center">
 
 	<tr class="titulo_tabela">
-		<th colspan="6">ADICIONE TELEFONES ATRAV…S DO FORMUL¡RIO ABAIXO!</th>
+		<th colspan="6">ADICIONE TELEFONES ATRAV√âS DO FORMUL√ÅRIO ABAIXO!</th>
 	</tr>
 
 	<tr>
 		<td>
-			<label for="tipoFone">Tipo *</label> 
+			<label for="tipoFone">Tipo *</label>
 			<br />
 			<select name="tipoFone" id="tipoFone">
 				<option value=""> - Selecione - </option>
@@ -34,11 +34,11 @@
 			</select>
 		</td>
 		<td>
-			<label for="ufFone">UF *</label> 
+			<label for="ufFone">UF *</label>
 			<br />
-			<select name="ufFone" id="ufFone" 
-				onchange="carregar_combo(this.value, 
-					'dddFone', 
+			<select name="ufFone" id="ufFone"
+				onchange="carregar_combo(this.value,
+					'dddFone',
 					'../ddd/combo');">
 				<option value=""> -- </option>
 
@@ -49,28 +49,28 @@
 			</select>
 		</td>
 		<td>
-			<label for="dddFone">DDD *</label> 
+			<label for="dddFone">DDD *</label>
 			<br />
 			<select name="dddFone" id="dddFone">
 				<option value=""> -- </option>
 			</select>
 		</td>
 		<td>
-			<label for="fone">Telefone *</label> 
+			<label for="fone">Telefone *</label>
 			<br />
-			<input type="text" name="fone" id="fone" maxlength="9" 
+			<input type="text" name="fone" id="fone" maxlength="9"
 				onkeyup="mascara(this, format_tel);" />
 		</td>
 		<td>
-			<label>Divulgar? *</label> 
-			<br /> 
-			<input type="radio" name="divulgarFone" id="divulgarFoneS" value="1" class="checkradio" /> 
-			<label for="divulgarFoneS">Sim</label> 
-			<input type="radio" name="divulgarFone" id="divulgarFoneN" value="0" class="checkradio" checked="checked" /> 
-			<label for="divulgarFoneN">N„o</label>
+			<label>Divulgar? *</label>
+			<br />
+			<input type="radio" name="divulgarFone" id="divulgarFoneS" value="1" class="checkradio" />
+			<label for="divulgarFoneS">Sim</label>
+			<input type="radio" name="divulgarFone" id="divulgarFoneN" value="0" class="checkradio" checked="checked" />
+			<label for="divulgarFoneN">N√£o</label>
 		</td>
 		<td class="center" width="30">
-			<input id="btnAddFone" type="button" title="Adicionar Telefone" class="btn_add" 
+			<input id="btnAddFone" type="button" title="Adicionar Telefone" class="btn_add"
 				value=" " onclick="adicionar_fone_agente();" />
 		</td>
 	</tr>
@@ -85,7 +85,7 @@
 		<th>DDD</th>
 		<th>TELEFONE</th>
 		<th>DIVULGAR?</th>
-		<th width="60">A«√O</th>
+		<th width="60">A√á√ÉO</th>
 	</tr>
 
 	<?php if (isset($this->Fones)): ?>
@@ -112,7 +112,7 @@
 				<input type="hidden" name="Fones[]" id="Fones[]" value="<?php echo $this->Fones[$i] ?>" />
 			</td>
 			<td class="center">
-				<?php echo $this->divulgarFones[$i] == 1 ? 'Sim' : 'N„o'; ?>
+				<?php echo $this->divulgarFones[$i] == 1 ? 'Sim' : 'N√£o'; ?>
 				<input type="hidden" name="divulgarFones[]" id="divulgarFones[]" value="<?php echo $this->divulgarFones[$i]?>" />
 			</td>
 			<td class="center">

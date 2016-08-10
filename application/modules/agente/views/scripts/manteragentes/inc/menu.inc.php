@@ -1,4 +1,4 @@
-<!-- ========== INÕCIO MENU ========== -->
+<!-- ========== IN√çCIO MENU ========== -->
 <style type="text/css">
 		.sanfonaDiv {
 			clear: both;
@@ -20,10 +20,10 @@
 	});
 	</script>
 
-	<!-- inÌcio: conte˙do principal #container -->
+	<!-- in√≠cio: conte√∫do principal #container -->
 	<div id="container">
 
-		<!-- inÌcio: navegaÁ„o local #qm0 -->
+		<!-- in√≠cio: navega√ß√£o local #qm0 -->
 		<script type="text/javascript">
 		function layout_fluido()
 		{
@@ -49,8 +49,8 @@
 			<div id="qm0" class="qmmc">
 				<a class ="no_seta" href="<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'buscaragente')); ?>" title="Ir para Localizar Agente">Pesquisar Agentes</a>
 				<a class ="no_seta" href="<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'agentes')); ?>?acao=cc" title="Ir para Incluir Agente" >Incluir Agente</a>
-                                <a class ="no_seta" href="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'index')); 	?>" title="Ir para Vincular Respons·vel">	Vincular Respons·vel </a>
-                                <a class ="no_seta" href="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'desvincularresponsavel')); 		?>" title="Ir para Desvincular Respons·vel" >		Desvincular Respons·vel</a>
+                                <a class ="no_seta" href="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'index')); 	?>" title="Ir para Vincular Respons√°vel">	Vincular Respons√°vel </a>
+                                <a class ="no_seta" href="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'desvincularresponsavel')); 		?>" title="Ir para Desvincular Respons√°vel" >		Desvincular Respons√°vel</a>
                         </div>
 			<div class="bottom"></div>
 			<div id="space_menu"></div>
@@ -66,7 +66,7 @@
 			});
 		});
 		</script>
-		<!-- final: navegaÁ„o local #qm0 -->
+		<!-- final: navega√ß√£o local #qm0 -->
 	</div>
 </div>
 <!-- ========== FIM MENU ========== -->

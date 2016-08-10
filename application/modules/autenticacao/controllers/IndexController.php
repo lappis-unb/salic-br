@@ -202,7 +202,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
 
     public function cadastrarusuarioAction() {
         if ( $_POST ) {
-
             $post     = Zend_Registry::get('post');
             $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf)); // recebe cpf
             $nome = $post->nome; // recebe o nome
@@ -215,9 +214,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
             }
 
             $SenhaFinal = Gerarsenha::gerasenha(15, true, true, true, false);
-//                $encriptaSenha = EncriptaSenhaDAO::encriptaSenha($cpf, $gerarSenha);
-//                $SenhaFinal = $encriptaSenha[0]->senha;
-//                $SenhaFinal = $gerarSenha;
             $dataFinal = data::dataAmericana($dataNasc);
 
             $dados = array(
@@ -248,7 +244,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
             }
 
             if ( empty ( $sgcAcessoBuscaCpfArray ) && empty ( $sgcAcessoBuscaEmailArray ) ) {
-                $sgcAcessoSave = $sgcAcesso->salvar($dados);
+                //$sgcAcessoSave = $sgcAcesso->salvar($dados);
 
                 /**
                  * ==============================================================

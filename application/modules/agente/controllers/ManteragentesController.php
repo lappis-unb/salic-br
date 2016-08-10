@@ -7,12 +7,12 @@
  * @package application
  * @subpackage application.controllers
  * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
+ * @copyright Â© 2010 - Politec - Todos os direitos reservados.
  */
 
-class ManterAgentesController extends MinC_Controller_Action_Abstract {
+class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract {
     /**
-     * @var integer (variável com o id do usuário logado)
+     * @var integer (variÃ¡vel com o id do usuÃ¡rio logado)
      * @access private
      */
     private $getIdUsuario = 0;
@@ -20,21 +20,21 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mÃ©todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaÃ§Ã£o
         $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo');
-        // define as permissões
+        // define as permissÃµes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 144;  // Proponente
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
         $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
         $PermissoesGrupo[] = 94;  // Parecerista
-        $PermissoesGrupo[] = 118; // Componente da Comissão
+        $PermissoesGrupo[] = 118; // Componente da ComissÃ£o
         $PermissoesGrupo[] = 120; // Coordenador Administrativo CNIC
         $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
         $PermissoesGrupo[] = 123; // Coordenador Geral de Acompanhamento
@@ -44,7 +44,7 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
                 isset($_GET['acao']) &&
                 $_GET['acao'] == 'cc' &&
                 isset($_GET['cpf']) &&
-                !empty($_GET['cpf'])) // pega do readequação
+                !empty($_GET['cpf'])) // pega do readequaÃ§Ã£o
         {
             parent::perfil(2); // scriptcase
         }
@@ -53,18 +53,18 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
                 !empty($auth->getIdentity()->Cpf) &&
                 !isset($_GET['acao']) &&
                 !isset($_GET['cpf']) &&
-                empty($_GET['cpf'])) // pega do readequação
+                empty($_GET['cpf'])) // pega do readequaÃ§Ã£o
         {
-            parent::perfil(4, $PermissoesGrupo); // migração e novo salic
+            parent::perfil(4, $PermissoesGrupo); // migraÃ§Ã£o e novo salic
 
         } else if(isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo)) {
-            parent::perfil(1, $PermissoesGrupo); // migração e novo salic
+            parent::perfil(1, $PermissoesGrupo); // migraÃ§Ã£o e novo salic
 
         } else {
-            parent::perfil(4, $PermissoesGrupo); // migração e novo salic
+            parent::perfil(4, $PermissoesGrupo); // migraÃ§Ã£o e novo salic
         }
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticaç?o
+        $auth = Zend_Auth::getInstance(); // pega a autenticaÃ§?o
         if (isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
             $this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
             $this->getIdUsuario = ($this->getIdUsuario) ? $this->getIdUsuario["idAgente"] : 0;
@@ -82,9 +82,9 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
         $this->view->combotipostelefones   = Tipotelefone::buscar();
         $this->view->combotiposemails      = Tipoemail::buscar();
 
-        //Monta o combo das visões disponiveis
+        //Monta o combo das visÃµes disponiveis
         $visoes = VisaoDAO::buscarVisao(null,null,true);
-        $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessÃ£o com o grupo ativo
         $GrupoAtivo = $GrupoAtivo->codGrupo;
 
         $a = 0;
@@ -125,70 +125,70 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 
         $this->view->combovisoes = $select;
         parent::init();
-    } // fecha método init()
+    } // fecha mÃ©todo init()
 
 
 
     /**
-     * Método index()
+     * MÃ©todo index()
      * @access public
      * @param void
      * @return void
      */
     public function indexAction() {
 
-    } // fecha método indexAction()
+    } // fecha mÃ©todo indexAction()
 
 
 
     /**
-     * Método para realizar a buscar de agentes por cpf/cnpj ou por nome
+     * MÃ©todo para realizar a buscar de agentes por cpf/cnpj ou por nome
      * @access public
      * @param void
      * @return void
      */
     public function buscaragenteAction() {
-        // caso o formulário seja enviado via post
+        // caso o formulÃ¡rio seja enviado via post
         if ($this->getRequest()->isPost()) {
-            // recebe os dados do formulário
+            // recebe os dados do formulÃ¡rio
             $post = Zend_Registry::get('post');
-            $cpf  = Mascara::delMaskCPF(Mascara::delMaskCNPJ($post->cpf)); // deleta a máscara
+            $cpf  = Mascara::delMaskCPF(Mascara::delMaskCNPJ($post->cpf)); // deleta a mÃ¡scara
             $nome = $post->nome;
 
             try {
-                // validação dos campos
+                // validaÃ§Ã£o dos campos
                 if (empty($cpf) && empty($nome)) {
-                    throw new Exception("Dados obrigatórios não informados:<br /><br />É necessário informar o CPF/CNPJ ou o Nome!");
+                    throw new Exception("Dados obrigatÃ³rios nÃ£o informados:<br /><br />Ã‰ necessÃ¡rio informar o CPF/CNPJ ou o Nome!");
                 }
                 else if (!empty($cpf) && strlen($cpf) != 11 && strlen($cpf) != 14) // valida cnpj/cpf
                 {
-                    throw new Exception("O CPF/CNPJ informado é inválido!");
+                    throw new Exception("O CPF/CNPJ informado Ã© invÃ¡lido!");
                 }
                 else if (!empty($cpf) && strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) // valida cpf
                 {
-                    throw new Exception("O CPF informado é inválido!");
+                    throw new Exception("O CPF informado Ã© invÃ¡lido!");
                 }
                 else if (!empty($cpf) && strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf)) // valida cnpj
                 {
-                    throw new Exception("O CNPJ informado é inválido!");
+                    throw new Exception("O CNPJ informado Ã© invÃ¡lido!");
                 }
                 else {
-                    // redireciona para a página com a busca dos dados com paginação
-                    $this->_redirect("manteragentes/listaragente?cpf=" . $cpf . "&nome=" . $nome);
+                    // redireciona para a pÃ¡gina com a busca dos dados com paginaÃ§Ã£o
+                    $this->_redirect("agente/manteragentes/listaragente?cpf=" . $cpf . "&nome=" . $nome);
                 } // fecha else
             } // fecha try
             catch (Exception $e) {
                 $this->view->message      = $e->getMessage();
                 $this->view->message_type = "ERROR";
-                $this->view->cpf          = !empty($cpf) ? Validacao::mascaraCPFCNPJ($cpf) : ''; // caso exista, adiciona a máscara
+                $this->view->cpf          = !empty($cpf) ? Validacao::mascaraCPFCNPJ($cpf) : ''; // caso exista, adiciona a mÃ¡scara
                 $this->view->nome         = $nome;
             }
         } // fecha if
-    } // fecha método buscaragenteAction()
+    } // fecha mÃ©todo buscaragenteAction()
 
 
     /**
-     * Método para listar os agentes com paginação
+     * MÃ©todo para listar os agentes com paginaÃ§Ã£o
      * @access public
      * @param void
      * @return void
@@ -203,29 +203,27 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
         $buscar = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf, $nome);
 
         if (!$buscar) {
-            // redireciona para a página de cadastro de agentes, e, exibe uma notificação relativa ao cadastro
-            parent::message("Agente não cadastrado!<br /><br />Por favor, cadastre o mesmo no formulário abaixo!", "manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
+            // redireciona para a pÃ¡gina de cadastro de agentes, e, exibe uma notificaÃ§Ã£o relativa ao cadastro
+            parent::message("Agente nÃ£o cadastrado!<br /><br />Por favor, cadastre o mesmo no formulÃ¡rio abaixo!", "agente/manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
         } else {
-            // ========== INÍCIO PAGINAÇÃO ==========
-            // criando a paginaçao
+            // ========== INÃCIO PAGINAÃ‡ÃƒO ==========
+            // criando a paginaÃ§ao
             Zend_Paginator::setDefaultScrollingStyle('Sliding');
             Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
             $paginator = Zend_Paginator::factory($buscar); // dados a serem paginados
 
-            // página atual e quantidade de ítens por página
+            // pÃ¡gina atual e quantidade de Ã­tens por pÃ¡gina
             $currentPage = $this->_getParam('page', 1);
-            $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(10); // 10 por página
-            // ========== FIM PAGINAÇÃO ==========
+            $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(10); // 10 por pÃ¡gina
+            // ========== FIM PAGINAÃ‡ÃƒO ==========
 
             $this->view->buscar     = $paginator;
             $this->view->qtdAgentes = count($buscar); // quantidade de agentes
         } // fecha else
-    } // fecha método listaragenteAction()
-
-
+    }
 
     /**
-     * Método com o formulário para cadastro de agentes
+     * MÃ©todo com o formulÃ¡rio para cadastro de agentes
      * @access public
      * @param void
      * @return void
@@ -234,25 +232,25 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
         if(isset($_POST['cep'])) {
             xd(1);
         }
-    } // fecha método agentesAction()
+    } // fecha mÃ©todo agentesAction()
 
 
     /**
-     * Método com o formulário para cadastro de dirigentes
+     * MÃ©todo com o formulÃ¡rio para cadastro de dirigentes
      * @access public
      * @param void
      * @return void
      */
     public function dirigentesAction() {
-        // configurações do layout padrão para o scriptcase
-        // retira o topo e o rodapé
+        // configuraÃ§Ãµes do layout padrÃ£o para o scriptcase
+        // retira o topo e o rodapÃ©
         Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
-    } // fecha método dirigentesAction()
+    } // fecha mÃ©todo dirigentesAction()
 
 
 
     /**
-     * Método com a página de alteração de visão
+     * MÃ©todo com a pÃ¡gina de alteraÃ§Ã£o de visÃ£o
      * @access public
      * @param void
      * @return void
@@ -262,8 +260,8 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
         $get      = Zend_Registry::get('get');
         $idAgente = $get->idAgente;
 
-        // busca todas as visões
-        $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        // busca todas as visÃµes
+        $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessÃ£o com o grupo ativo
         $GrupoAtivo = $GrupoAtivo->codGrupo;
 
         $visoes = VisaoDAO::buscarVisao(null, null, true);
@@ -293,7 +291,7 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
         }
         $this->view->visao = $select;
 
-        // busca todas as visões do agente
+        // busca todas as visÃµes do agente
         $visoes = VisaoDAO::buscarVisao($idAgente);
         $a = 0;
         foreach($visoes as $visaoGrupo) {
@@ -325,33 +323,33 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
         // busca o agente pelo id
         $this->view->agente = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idAgente);
 
-        // caso o formulário seja enviado via post
+        // caso o formulÃ¡rio seja enviado via post
         if ($this->getRequest()->isPost()) {
-            // recebe os dados do formulário
+            // recebe os dados do formulÃ¡rio
             $post        = Zend_Registry::get('post');
             $idAgente    = $post->idAgente;
             $visaoAgente = $post->visaoAgente;
 
             try {
-                // ========== ATUALIZA AS VISÕES DO AGENTE ==========
+                // ========== ATUALIZA AS VISÃ•ES DO AGENTE ==========
 
-                // exclui todas as visões do agente
+                // exclui todas as visÃµes do agente
                 $excluir = VisaoDAO::excluirVisao($idAgente);
 
-                // cadastra todas as visões do agente
+                // cadastra todas as visÃµes do agente
                 foreach ($visaoAgente as $visao) :
                     $dados = array(
                         'idAgente' => $idAgente,
                         'Visao'    => $visao,
-                        'Usuario'  => $this->getIdUsuario, // código do usuário logado
+                        'Usuario'  => $this->getIdUsuario, // cÃ³digo do usuÃ¡rio logado
                         'stAtivo'  => 'A');
                     $cadastrar = VisaoDAO::cadastrarVisao($dados);
                 endforeach;
 
                 if ($cadastrar) {
-                    parent::message("Alteração realizada com sucesso!", "manteragentes/alterarvisao?idAgente=" . $idAgente, "CONFIRM");
+                    parent::message("AlteraÃ§Ã£o realizada com sucesso!", "manteragentes/alterarvisao?idAgente=" . $idAgente, "CONFIRM");
                 } else {
-                    throw new Exception("Erro ao efetuar alteração das visões do agente!");
+                    throw new Exception("Erro ao efetuar alteraÃ§Ã£o das visÃµes do agente!");
                 }
             } // fecha try
             catch (Exception $e) {
@@ -359,12 +357,12 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
                 $this->vies->message_type = "ERROR";
             }
         } // fecha if
-    } // fecha método alterarvisaoAction()
+    } // fecha mÃ©todo alterarvisaoAction()
 
 
 
 	/**
-	 * Método para salvar os dados do agente no banco de dados e fazer a busca
+	 * MÃ©todo para salvar os dados do agente no banco de dados e fazer a busca
 	 * assim que o cpf/cnpj for informado
 	 * @access public
 	 * @param void
@@ -376,19 +374,19 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 		$this->_helper->layout->disableLayout(); // desabilita o layout
 		$this->_helper->viewRenderer->setNoRender(true);
 		$novos_valores = array(); // array com os dados do agente
-		$v = ''; // flag verificadora de dados válidos/inválidos
+		$v = ''; // flag verificadora de dados vÃ¡lidos/invÃ¡lidos
 
 		if ($_REQUEST['cpf']) // caso o cpf/cnpj tenha sido informado
 		{
-			$cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($_REQUEST['cpf'])); // deleta as máscaras
+			$cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($_REQUEST['cpf'])); // deleta as mÃ¡scaras
 
-			// cpf/cnpj inválidos
+			// cpf/cnpj invÃ¡lidos
 			if ((strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) || (strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf)))
 			{
 				$v = 'not';
 				$novos_valores[$i]['msgCPF'] = utf8_encode($v);
 			}
-			else // cpf/cnpj válidos
+			else // cpf/cnpj vÃ¡lidos
 			{
 				$v = 'ok';
 				$novos_valores[$i]['msgCPF'] = utf8_encode($v);
@@ -396,14 +394,14 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 				// busca os dados do agente
 				$dados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
 
-				// caso o agente não esteja cadastrado, realizará o cadastro de um novo
+				// caso o agente nÃ£o esteja cadastrado, realizarÃ¡ o cadastro de um novo
 				if (!$dados)
 				{
 					$arrayCNPJCPF = array('CNPJCPF' => $cpf);
 					$insere = Agente_Model_ManterAgentesDAO::cadastrarAgente($arrayCNPJCPF);
 					$novos_valores[$i]['Agente'] = utf8_encode('novo');
 				}
-				else // o agente já encontra-se cadastrado
+				else // o agente jÃ¡ encontra-se cadastrado
 				{
 					$novos_valores[$i]['Agente'] = utf8_encode('cadastrado');
 				}
@@ -411,14 +409,14 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 				// busca os dados do agente pelo cpf/cnpj
 				$novosdados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
 
-				// busca as informações do agente
+				// busca as informaÃ§Ãµes do agente
 				foreach ($novosdados as $dado) :
 					$novos_valores[$i]['idAgente']                = utf8_encode($dado->idAgente);
 					$novos_valores[$i]['Nome']                    = utf8_encode($dado->Nome);
 					$novos_valores[$i]['CEP']                     = !empty($dado->CEP) ? utf8_encode(Mascara::addMaskCEP($dado->CEP)) : ' ';
 					$novos_valores[$i]['UF']                      = utf8_encode($dado->UF);
-					$novos_valores[$i]['Cidade']                  = utf8_encode($dado->Cidade);
-					$novos_valores[$i]['dsCidade']                = utf8_encode($dado->dsCidade);
+					$novos_valores[$i]['Cidade']                  = utf8_encode(!empty( $dado->Cidade ) ? $dado->Cidade : null);
+					$novos_valores[$i]['dsCidade']                = utf8_encode(!empty($dado->dsCidade) ? $dado->dsCidade : null);
 					$novos_valores[$i]['TipoEndereco']            = utf8_encode($dado->TipoEndereco);
 					$novos_valores[$i]['TipoLogradouro']          = utf8_encode($dado->TipoLogradouro);
 					$novos_valores[$i]['Logradouro']              = utf8_encode($dado->Logradouro);
@@ -428,7 +426,7 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 					$novos_valores[$i]['DivulgarEndereco']        = utf8_encode($dado->DivulgarEndereco);
 					$novos_valores[$i]['EnderecoCorrespondencia'] = utf8_encode($dado->EnderecoCorrespondencia);
 
-					// áreas e segmentos
+					// Ã¡reas e segmentos
 					$novos_valores[$i]['cdArea']                  = utf8_encode($dado->cdArea);
 					$novos_valores[$i]['dsArea']                  = utf8_encode($dado->dsArea);
 					$novos_valores[$i]['cdSegmento']              = utf8_encode($dado->cdSegmento);
@@ -441,12 +439,12 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 		{
 			die('0');
 		}
-	} // fecha método salvaragenteAction()
+	} // fecha mÃ©todo salvaragenteAction()
 
 
 
 	/**
-	 * Método para salvar os dados do dirigente no banco de dados e fazer a busca
+	 * MÃ©todo para salvar os dados do dirigente no banco de dados e fazer a busca
 	 * assim que o cpf/cnpj for informado
 	 * @access public
 	 * @param void
@@ -458,20 +456,20 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 		$this->_helper->layout->disableLayout(); // desabilita o layout
 		$this->_helper->viewRenderer->setNoRender(true);
 		$novos_valores = array(); // array com os dados do agente
-		$v = ''; // flag verificadora de dados válidos/inválidos
+		$v = ''; // flag verificadora de dados vÃ¡lidos/invÃ¡lidos
 
 		if ($_REQUEST['cpf'] && $_REQUEST['idAgenteGeral']) // caso o cpf/cnpj tenha sido informado
 		{
-			$cpf           = Mascara::delMaskCPF(Mascara::delMaskCNPJ($_REQUEST['cpf'])); // deleta as máscaras
+			$cpf           = Mascara::delMaskCPF(Mascara::delMaskCNPJ($_REQUEST['cpf'])); // deleta as mÃ¡scaras
 			$idAgenteGeral = $_REQUEST['idAgenteGeral']; // idVinculoPrincipal
 
-			// cpf/cnpj inválidos
+			// cpf/cnpj invÃ¡lidos
 			if ((strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) || (strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf)))
 			{
 				$v = 'not';
 				$novos_valores[$i]['msgCPF'] = utf8_encode($v);
 			}
-			else // cpf/cnpj válidos
+			else // cpf/cnpj vÃ¡lidos
 			{
 				$v = 'ok';
 				$novos_valores[$i]['msgCPF'] = utf8_encode($v);
@@ -479,7 +477,7 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 				// busca os dados do dirigente
 				$dados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
 
-				// caso o dirigente não esteja cadastrado, realizará o cadastro de um novo
+				// caso o dirigente nÃ£o esteja cadastrado, realizarÃ¡ o cadastro de um novo
 				if (!$dados)
 				{
 					// busca os dados do vinculo do dirigente (idVinculoPrincipal)
@@ -493,7 +491,7 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 					$insere = Agente_Model_ManterAgentesDAO::cadastrarAgente($arrayCNPJCPF);
 					$novos_valores[$i]['Agente'] = utf8_encode('novo');
 				}
-				else // o agente já encontra-se cadastrado, realizará a alteração
+				else // o agente jÃ¡ encontra-se cadastrado, realizarÃ¡ a alteraÃ§Ã£o
 				{
 					$novos_valores[$i]['Agente'] = utf8_encode('cadastrado');
 				}
@@ -517,7 +515,7 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 					$novos_valores[$i]['DivulgarEndereco']        = utf8_encode($dado->DivulgarEndereco);
 					$novos_valores[$i]['EnderecoCorrespondencia'] = utf8_encode($dado->EnderecoCorrespondencia);
 
-					// áreas e segmentos
+					// Ã¡reas e segmentos
 					$novos_valores[$i]['cdArea']                  = utf8_encode($dado->cdArea);
 					$novos_valores[$i]['dsArea']                  = utf8_encode($dado->dsArea);
 					$novos_valores[$i]['cdSegmento']              = utf8_encode($dado->cdSegmento);
@@ -531,12 +529,12 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 		{
 			die('0');
 		}
-	} // fecha método salvardirigenteAction()
+	} // fecha mÃ©todo salvardirigenteAction()
 
 
 
 	/**
-	 * Método para buscar todos os e-mails do agente
+	 * MÃ©todo para buscar todos os e-mails do agente
 	 * @access public
 	 * @param void
 	 * @return void
@@ -567,12 +565,12 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 			echo json_encode($novos_emails);
 		} // fecha if
 
-	} // fecha método buscaremailsAction()
+	} // fecha mÃ©todo buscaremailsAction()
 
 
 
 	/**
-	 * Método para buscar todos os telefones do agente
+	 * MÃ©todo para buscar todos os telefones do agente
 	 * @access public
 	 * @param void
 	 * @return void
@@ -604,7 +602,7 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 			echo json_encode($novos_fones);
 		} // fecha if
 
-	} // fecha método buscarfonesAction()
+	} // fecha mÃ©todo buscarfonesAction()
 
 
         public function buscarenderecosAction()
@@ -615,7 +613,7 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 		// caso o id do agente esteja definido
 		if ($_REQUEST['idAgente'])
 		{
-			$Enderecos = Agente_Model_ManterAgentesDAO::buscarEnderecos($_REQUEST['idAgente']); // busca todos os endereços do agente
+			$Enderecos = Agente_Model_ManterAgentesDAO::buscarEnderecos($_REQUEST['idAgente']); // busca todos os endereÃ§os do agente
 			$novos_enderecos = array();
 
 			$E = 0;
@@ -641,14 +639,14 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 			echo json_encode($enderecos);
 		} // fecha if
 
-	} // fecha método buscarenderecosAction()
+	} // fecha mÃ©todo buscarenderecosAction()
 
 
 
 
 
 	/**
-	 * Método para buscar todos os dirigentes do agente
+	 * MÃ©todo para buscar todos os dirigentes do agente
 	 * @access public
 	 * @param void
 	 * @return void
@@ -675,12 +673,12 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 			$Dirigentes = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $idAgenteGeral);
 			$this->view->Dirigentes = $Dirigentes;
 		}
-	} // fecha método buscardirigentesAction()
+	} // fecha mÃ©todo buscardirigentesAction()
 
 
 
 	/**
-	 * Método para buscar as áreas e segmentos culturais do agente
+	 * MÃ©todo para buscar as Ã¡reas e segmentos culturais do agente
 	 * @access public
 	 * @param void
 	 * @return void
@@ -690,36 +688,36 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 		$this->_helper->layout->disableLayout(); // desabilita o layout
 		$this->_helper->viewRenderer->setNoRender(true);
 
-		// caso a área cultural esteja definida
+		// caso a Ã¡rea cultural esteja definida
 		if ($_REQUEST['area'])
 		{
 			$novos_dados = array();
 			$i = 0;
 
-			// busca os agentes vinculados a área/segmento cultutal (, $_REQUEST['segmento'])
+			// busca os agentes vinculados a Ã¡rea/segmento cultutal (, $_REQUEST['segmento'])
 			$dados = TitulacaoConselheiroDAO::buscaAreaSegmento($_REQUEST['area']);
 
-			// pega a quantidade de titulares na área
+			// pega a quantidade de titulares na Ã¡rea
 			$Q_titulares = TitulacaoConselheiroDAO::buscaTitularArea($_REQUEST['area']);
 			$novos_dados[$i]['Q_titulares'] = utf8_encode($Q_titulares[0]->QTD);
 
-			// pega a quantidade de suplentes na área
+			// pega a quantidade de suplentes na Ã¡rea
 			$Q_suplentes = TitulacaoConselheiroDAO::buscaSuplentesArea($_REQUEST['area']);
 			$novos_dados[$i]['Q_suplentes'] = utf8_encode($Q_suplentes[0]->QTD);
 
-			// caso não existam mais vagas para titular e suplentes
+			// caso nÃ£o existam mais vagas para titular e suplentes
 			if ($Q_titulares[0]->QTD >= 1 && $Q_suplentes[0]->QTD >= 2)
 			{
-				$novos_dados[$i]['msgAS'] = utf8_encode('A Área Cultural selecionada já conta com 1 Titular e 2 Suplentes!');
+				$novos_dados[$i]['msgAS'] = utf8_encode('A Ãrea Cultural selecionada jÃ¡ conta com 1 Titular e 2 Suplentes!');
 			}
 			else  if ($Q_titulares[0]->QTD == 0  && $Q_suplentes[0]->QTD == 0){
 				$novos_dados[0]['Nome']    = 'Sem cadastro';
 				$novos_dados[0]['Titular'] = '';
-				$novos_dados[0]['msgAS'] = utf8_encode('Você pode cadastrar <strong> 1 </strong> Titular e <strong>  2 </strong> Suplente(s)!');
+				$novos_dados[0]['msgAS'] = utf8_encode('VocÃª pode cadastrar <strong> 1 </strong> Titular e <strong>  2 </strong> Suplente(s)!');
                         }else{
 				$titularesDisponives = 1 - (int) $Q_titulares[0]->QTD;
 				$suplentesDisponives = 2 - (int) $Q_suplentes[0]->QTD;
-				$novos_dados[$i]['msgAS'] = utf8_encode('Você pode cadastrar <strong>' . $titularesDisponives . '</strong> Titular e <strong>' . $suplentesDisponives . '</strong> Suplente(s)!');
+				$novos_dados[$i]['msgAS'] = utf8_encode('VocÃª pode cadastrar <strong>' . $titularesDisponives . '</strong> Titular e <strong>' . $suplentesDisponives . '</strong> Suplente(s)!');
 			}
 
 			// pega os nomes de titulares e suplentes cadastrados
@@ -731,12 +729,12 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 
 			echo json_encode($novos_dados);
 		} // fecha if
-	} // fecha método buscaareasegmentoAction()
+	} // fecha mÃ©todo buscaareasegmentoAction()
 
 
 
 	/**
-	 * Método para buscar as visões do agente
+	 * MÃ©todo para buscar as visÃµes do agente
 	 * @access public
 	 * @param void
 	 * @return void
@@ -752,7 +750,7 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 			$novos_dados = array();
 			$i = 0;
 
-			// busca as visões vinculadas ao agente
+			// busca as visÃµes vinculadas ao agente
 			$dados = VisaoDAO::buscarVisao($_REQUEST['idAgente']);
 
 			foreach ($dados as $dado) :
@@ -765,12 +763,12 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 
 			echo json_encode($novos_dados);
 		} // fecha if
-	} // fecha método buscarvisaoAction()
+	} // fecha mÃ©todo buscarvisaoAction()
 
 
 
 	/**
-	 * Método para gravação de todos os dados do agente
+	 * MÃ©todo para gravaÃ§Ã£o de todos os dados do agente
 	 * @access public
 	 * @param void
 	 * @return void
@@ -783,14 +781,14 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 
 			$post     = Zend_Registry::get('post');
 			$idAgente = $post->idAgente;
-			$cpf      = Mascara::delMaskCPF(Mascara::delMaskCNPJ($post->cpf)); // retira as máscaras
-			$TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa física e 19 = pessoa jurídica
-			$Usuario  = $this->getIdUsuario; // id do usuário logado
+			$cpf      = Mascara::delMaskCPF(Mascara::delMaskCNPJ($post->cpf)); // retira as mÃ¡scaras
+			$TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa fÃ­sica e 19 = pessoa jurÃ­dica
+			$Usuario  = $this->getIdUsuario; // id do usuÃ¡rio logado
 
 
 
 
-// ================================================ INÍCIO SALVAR NOME ======================================================
+// ================================================ INÃCIO SALVAR NOME ======================================================
 
 			$nome = $post->nome;
 
@@ -815,15 +813,15 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 // ================================================ FIM SALVAR NOME ======================================================
 
 
-// ================================================ INICIO SALVAR VISÂO ======================================================
+// ================================================ INICIO SALVAR VISÃ‚O ======================================================
 			$Visao = $post->visao;
 
 			$grupologado = $post->grupologado;
 
 
 			/*
-			 * Validação - Se for componente da comissão ele não salva a visão
-			 * Regra o componente da comissão não pode alterar sua visão.
+			 * ValidaÃ§Ã£o - Se for componente da comissÃ£o ele nÃ£o salva a visÃ£o
+			 * Regra o componente da comissÃ£o nÃ£o pode alterar sua visÃ£o.
 			 */
 
 			if($grupologado != 118):
@@ -845,22 +843,22 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 			}
 			catch(Exception $e)
 			{
-				parent::message("Erro ao salvar a visão: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
+				parent::message("Erro ao salvar a visÃ£o: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
 			}
 
 
-// ================================================ FIM SALVAR VISÂO ======================================================
+// ================================================ FIM SALVAR VISÃ‚O ======================================================
 
 
 
-// ===================== INÍCIO SALVAR TITULAÇÃO (ÁREA/SEGMENTO DO COMPONENTE DA COMISSÃO) ================================
+// ===================== INÃCIO SALVAR TITULAÃ‡ÃƒO (ÃREA/SEGMENTO DO COMPONENTE DA COMISSÃƒO) ================================
 
 
 			$titular          = $post->titular;
 			$areaCultural     = $post->areaCultural;
 			$segmentoCultural = $post->segmentoCultural;
 
-			// só salva área e segmento para a visão de Componente da Comissão e se os campos titular e areaCultural forem informados
+			// sÃ³ salva Ã¡rea e segmento para a visÃ£o de Componente da ComissÃ£o e se os campos titular e areaCultural forem informados
 			if ((int) $Visao == 210 && ((int) $titular == 0 || (int) $titular == 1) && !empty($areaCultural))
 			{
 				$GravarComponente = array( // insert
@@ -879,7 +877,7 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 
 				try
 				{
-					// busca a titulação do agente (titular/suplente de área cultural)
+					// busca a titulaÃ§Ã£o do agente (titular/suplente de Ã¡rea cultural)
 					$busca = TitulacaoConselheiroDAO::buscarComponente($idAgente, $Visao);
 
 					if (!$busca)
@@ -893,16 +891,16 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 				}
 				catch(Exception $e)
 				{
-					parent::message("Erro ao salvar a Área e Segmento: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
+					parent::message("Erro ao salvar a Ãrea e Segmento: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
 				}
 			}
 
-// ============================= FIM SALVAR TITULAÇÃO (ÁREA/SEGMENTO DO COMPONENTE DA COMISSÃO) ===========================
+// ============================= FIM SALVAR TITULAÃ‡ÃƒO (ÃREA/SEGMENTO DO COMPONENTE DA COMISSÃƒO) ===========================
 
-			endif; // Fecha o if da regra do componente da comissão
+			endif; // Fecha o if da regra do componente da comissÃ£o
 
 
-// =========================================== INICIO SALVAR ENDEREÇOS ====================================================
+// =========================================== INICIO SALVAR ENDEREÃ‡OS ====================================================
 
             $cepEnderecos               = $post->ceps;
 			$tipoEnderecos              = $post->tipoEnderecos;
@@ -959,10 +957,10 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 			}
 			catch (Exception $e)
 			{
-				parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
+				parent::message("Erro ao salvar o endereÃ§o: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
 			}
 
-// ============================================= FIM SALVAR ENDEREÇOS ====================================================
+// ============================================= FIM SALVAR ENDEREÃ‡OS ====================================================
 
 
 // =========================================== INICIO SALVAR TELEFONES ====================================================
@@ -1048,27 +1046,27 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 
 
 	/**
-	 * Método para gravação de todos os dados do dirigente
+	 * MÃ©todo para gravaÃ§Ã£o de todos os dados do dirigente
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function gravardirigentecompletoAction()
 	{
-		// caso o formulário seja enviado via post
+		// caso o formulÃ¡rio seja enviado via post
 		if ($this->getRequest()->isPost())
 		{
 			// recebe os dados via post
 			$post          = Zend_Registry::get('post');
 			$idAgente      = $post->idAgente; // id do dirigente
-			$idAgenteGeral = $post->idAgenteGeral; // usuário associado ao dirigente
-			$cpf           = Mascara::delMaskCPF(Mascara::delMaskCNPJ($post->cpf)); // retira as máscaras
-			$TipoNome      = 18; // pessoa física
-			$Usuario       = $this->getIdUsuario; // id do usuário logado
+			$idAgenteGeral = $post->idAgenteGeral; // usuÃ¡rio associado ao dirigente
+			$cpf           = Mascara::delMaskCPF(Mascara::delMaskCNPJ($post->cpf)); // retira as mÃ¡scaras
+			$TipoNome      = 18; // pessoa fÃ­sica
+			$Usuario       = $this->getIdUsuario; // id do usuÃ¡rio logado
 
 
 
-			// ========== INÍCIO SALVAR NOME ==========
+			// ========== INÃCIO SALVAR NOME ==========
 			$nome = $post->nome;
 
 			try
@@ -1076,11 +1074,11 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 				// busca o nome do agente
 				$busca = NomesDAO::buscarNome($idAgente);
 
-				if (!$busca) // faz a inserção do nome
+				if (!$busca) // faz a inserÃ§Ã£o do nome
 				{
 					$i = NomesDAO::gravarNome($idAgente, $TipoNome, $nome, 0, $Usuario);
 				}
-				else // faz a alteração do nome
+				else // faz a alteraÃ§Ã£o do nome
 				{
 					$i = NomesDAO::atualizaNome($idAgente, $TipoNome, $nome, 0, $Usuario);
 				}
@@ -1093,7 +1091,7 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 
 
 
-			// ========== INÍCIO SALVAR ENDEREÇO ==========
+			// ========== INÃCIO SALVAR ENDEREÃ‡O ==========
 			$TipoEndereco   = $post->tipoEndereco;
 			$TipoLogradouro = $post->tipoLogradouro;
 			$Logradouro     = $post->logradouro;
@@ -1137,27 +1135,27 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 
 			try
 			{
-				// busca o endereço do agente
+				// busca o endereÃ§o do agente
 				$busca = Agente_Model_EnderecoNacionalDAO::buscarEnderecoNacional($idAgente);
 
-				if (!$busca) // faz a inserção do endereço
+				if (!$busca) // faz a inserÃ§Ã£o do endereÃ§o
 				{
 					$i = Agente_Model_EnderecoNacionalDAO::gravarEnderecoNacional($GravarEnderecoNacional);
 				}
-				else // faz a alteração do endereço
+				else // faz a alteraÃ§Ã£o do endereÃ§o
 				{
 					$i = Agente_Model_EnderecoNacionalDAO::atualizaEnderecoNacional($idAgente, $AtualizarEnderecoNacional);
 				}
 			} // fecha try
 			catch(Exception $e)
 			{
-				$this->view->message = "Erro ao salvar o endereço: " . $e->getMessage();
+				$this->view->message = "Erro ao salvar o endereÃ§o: " . $e->getMessage();
 			}
-			// ========== FIM SALVAR ENDEREÇO ==========
+			// ========== FIM SALVAR ENDEREÃ‡O ==========
 
 
 
-			// ========== INÍCIO SALVAR VISÃO ==========
+			// ========== INÃCIO SALVAR VISÃƒO ==========
 			$Visao = $post->visao;
 
 			$GravarVisao = array( // insert
@@ -1168,23 +1166,23 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 
 			try
 			{
-				// busca as visões do agente
+				// busca as visÃµes do agente
 				$busca = VisaoDAO::buscarVisao($idAgente, $Visao);
 
-				if (!$busca) // faz a inserção da visão
+				if (!$busca) // faz a inserÃ§Ã£o da visÃ£o
 				{
 					$i = VisaoDAO::cadastrarVisao($GravarVisao);
 				}
 			} // fecha try
 			catch(Exception $e)
 			{
-				$this->view->message = "Erro ao salvar a visão: " . $e->getMessage();
+				$this->view->message = "Erro ao salvar a visÃ£o: " . $e->getMessage();
 			}
-			// ========== FIM SALVAR VISÃO ==========
+			// ========== FIM SALVAR VISÃƒO ==========
 
 
 
-			// ========== INÍCIO TELEFONES ==========
+			// ========== INÃCIO TELEFONES ==========
 			// array com os telefones
 			$tipoFones     = $post->tipoFones;
 			$ufFones       = $post->ufFones;
@@ -1220,7 +1218,7 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 
 
 
-			// ========== INÍCIO E-MAILS ==========
+			// ========== INÃCIO E-MAILS ==========
 			// array com os e-mails
 			$tipoEmails     = $post->tipoEmails;
 			$Emails         = $post->Emails;
@@ -1254,7 +1252,7 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 
 
 
-			// ========== INÍCIO DIRIGENTES ==========
+			// ========== INÃCIO DIRIGENTES ==========
 			// busca os dados do associado ao dirigente (idVinculoPrincipal)
 			//$buscarAgente = Agente_Model_ManterAgentesDAO::buscarAgentes(null, null, $idAgenteGeral);
 
@@ -1262,7 +1260,7 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 			//$dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados($buscarAgente[0]->CNPJCPF, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
 			$dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
 
-			// caso o agente não esteja vinculado, realizará a vinculação
+			// caso o agente nÃ£o esteja vinculado, realizarÃ¡ a vinculaÃ§Ã£o
 			if (!$dadosDirigente)
 			{
 				// associa o dirigente ao cnpj/cpf
@@ -1280,6 +1278,6 @@ class ManterAgentesController extends MinC_Controller_Action_Abstract {
 		} // fecha if ($this->getRequest()->isPost())
 
 		parent::message("Cadastro realizado com sucesso!", "manteragentes/dirigentes?acao=cc&idAgenteGeral=".$idAgenteGeral, "CONFIRM");
-	} // fecha método gravaragentecompletoAction()
+	} // fecha mÃ©todo gravaragentecompletoAction()
 
 } // fecha class

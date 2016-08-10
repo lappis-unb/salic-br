@@ -1,4 +1,4 @@
-<?php  
+<?php
 /**
  * Busca Agentes
  * @author Equipe RUP - Politec
@@ -6,17 +6,17 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.scripts.manteragentes
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright Â© 2010 - MinistÃ©rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
 
 <?php require_once "inc/menu.inc.php"; ?>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INÃCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Início">Início</a></li>
+		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="InÃ­cio">InÃ­cio</a></li>
 		<li><a href="<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'agentes')); ?>?acao=cc">Manter Agentes</a></li>
 		<li class="last">Pesquisar Agentes</li>
 	</ul>
@@ -25,15 +25,15 @@
 
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INÃCIO TÃTULO ========== -->
 <div id="titulo">
 	<div>Pesquisar Agentes <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM TÃTULO ========== -->
 
 
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INÃCIO CONTEÃšDO ========== -->
 <div id="conteudo">
 
 
@@ -45,7 +45,7 @@
 		document.getElementById('cpf').value     = "";
 		document.getElementById('cpf').maxLength = "14";
 		document.getElementById('cpf').onkeyup   = function() { mascara(document.formBuscar.cpf, format_cpf); };
-		document.getElementById('cpf').focus(); 
+		document.getElementById('cpf').focus();
 	}
 	function filtroCNPJ()
 	{
@@ -56,8 +56,8 @@
 	}
 	//-->
 	</script>
-	<!-- ========== FORMULÁRIO PARA BUSCAR PRONAC ========== -->
-	<form class="form" name="formBuscar" id="formBuscar" method="post" 
+	<!-- ========== FORMULÃRIO PARA BUSCAR PRONAC ========== -->
+	<form class="form" name="formBuscar" id="formBuscar" method="post"
 		action="<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'buscaragente')); ?>">
 
 		<table class="tabela_busca" style="width:50%;">
@@ -69,10 +69,10 @@
 				<td>
 					<div class="left"></div>
 					<label for="cpf"> </label>
-					<input class="input w150" type="text" name="cpf" id="cpf" 
-						onclick="limpar_campo(this, ' ');" onkeypress="limpar_campo(this, ' ');" 
-						onblur="restaurar_campo(this, ' ');" onmouseout="restaurar_campo(this, ' ');" 
-						value=" " 
+					<input class="input w150" type="text" name="cpf" id="cpf"
+						onclick="limpar_campo(this, ' ');" onkeypress="limpar_campo(this, ' ');"
+						onblur="restaurar_campo(this, ' ');" onmouseout="restaurar_campo(this, ' ');"
+						value=" "
 						maxlength="14" onkeyup="mascara(this, format_cpf);" onmouseup=" " value="<?php echo (isset($this->cpf) ? $this->cpf : ''); ?>"  />
 					<div class="right"></div>
 				</td>
@@ -81,10 +81,10 @@
 				<th class="esquerda titulo_campo"><label for="nome">Nome:</label></th>
 				<td>
 					<div class="left"></div>
-					<input class="input w300" type="text" name="nome" id="nome" 
-						onclick="limpar_campo(this, ' ');" onkeypress="limpar_campo(this, ' ');" 
-						onblur="restaurar_campo(this, ' ');" onmouseout="restaurar_campo(this, ' ');" 
-						value=" " 
+					<input class="input w300" type="text" name="nome" id="nome"
+						onclick="limpar_campo(this, ' ');" onkeypress="limpar_campo(this, ' ');"
+						onblur="restaurar_campo(this, ' ');" onmouseout="restaurar_campo(this, ' ');"
+						value=" "
 						maxlength="70" value="<?php echo (isset($this->nome) ? $this->nome : ''); ?>" />
 					<div class="right"></div>
 				</td>
@@ -92,18 +92,18 @@
 		</table>
 
 		<p class="centro">
-			<input class="btn" type="submit" value=" Buscar " /> &nbsp; 
-			<input class="btn" type="button" value=" Incluir Agente "  onclick="redirecionar('<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'agentes')); ?>?acao=cc');" 
+			<input class="btn" type="submit" value=" Buscar " /> &nbsp;
+			<input class="btn" type="button" value=" Incluir Agente "  onclick="redirecionar('<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'agentes')); ?>?acao=cc');"
 				onkeypress="redirecionar('<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'agentes')); ?>?acao=cc');" />
 		</p>
 	</form>
-	<!-- ========== FIM FORMULÁRIO DE BUSCA PRONAC ========== -->
+	<!-- ========== FIM FORMULÃRIO DE BUSCA PRONAC ========== -->
 
 
 
 	<script type="text/javascript">
 	<!--
-	// valida o envio do formulário
+	// valida o envio do formulÃ¡rio
     $('#formBuscar').submit(function()
 	{
 		cpf = document.getElementById('cpf').value;
@@ -146,7 +146,7 @@
 
                 else if (Tipo == 0 && cpf.length != 14 && (nome == "" || nome == " "))
 		{
-			msg = 'CPF inválido!';
+			msg = 'CPF invÃ¡lido!';
 			$("#dialog").dialog("destroy");
 			$("#dialog-alert").dialog
 			({
@@ -167,7 +167,7 @@
 		}
 		else if (Tipo == 1 && cpf.length != 18 && (nome == "" || nome == " "))
 		{
-			msg = 'CNPJ inválido!';
+			msg = 'CNPJ invÃ¡lido!';
 			$("#dialog").dialog("destroy");
 			$("#dialog-alert").dialog
 			({
@@ -196,12 +196,12 @@
         <div id="dialog-alert" class="sumir">Informe um documento v&aacute;lido!</div>
         <div id="dialog-alert2" class="sumir">Dados Obrigat&oacute;rios n&atilde;o informados!</div>
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEÃšDO ========== -->
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INÃCIO RODAPÃ‰ DO CONTEÃšDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPÃ‰ DO CONTEÃšDO ========== -->
 
 <br clear="all" />

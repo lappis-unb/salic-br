@@ -21,24 +21,17 @@ class EmailDAO extends Zend_Db_Table
      */
     public static function enviarEmail($email, $assunto, $texto, $perfil = 'PerfilGrupoPRONAC')
     {
-        //$sql = "EXEC msdb.dbo.sp_send_dbmail
-                    //@profile_name          = 'PerfilGrupoPRONAC'
-                    //,@recipients           = '" . htmlspecialchars($email) . "'
-                    //,@body                 = '" . $texto . "'
-                    //,@body_format          = 'HTML'
-                    //,@subject              = '" . $assunto . "'
-                    //,@exclude_query_output = 1;";
+        $config = new Zend_Config_Ini(APPLICATION_PATH .'/configs/config.ini');
+        $config = $config->default->mail->transport->toArray();
 
-        //$db = Zend_Registry::get('db');
-        //$db->setFetchMode(Zend_DB::FETCH_OBJ);
-        //return $db->query($sql);
-
+        $transport = new Zend_Mail_Transport_Smtp($config['host'], $config);
         $mail = new Zend_Mail();
-        $mail->setBodyText($texto);
-        $mail->setFrom('somebody@example.com', 'Some Sender');
-        $mail->addTo($email, 'Some Recipient');
+
+        $mail->setBodyHtml($texto);
+        $mail->setFrom('srv_salic@cultura.gov.br', 'Salic BR');
+        $mail->addTo($email);
         $mail->setSubject($assunto);
-        return $mail->send();
+        return $mail->send($transport);
     }
 
         /**

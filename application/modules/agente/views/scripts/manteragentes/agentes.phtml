@@ -1,32 +1,27 @@
-<?php  
-
+<?php
+  //menu lateral
 if($this->grupoAtivo != 118)
 {
     require_once "inc/menu.inc.php";
-} // menu lateral 
-
+}
 ?>
 
-
-
-<!-- ========== INÕCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== IN√çCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Ir para InÌcio">InÌcio</a></li>
+		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Ir para In√≠cio">In√≠cio</a></li>
 		<li class="last">Manter Agentes</li>
 	</ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
-
-
-<!-- ========== INÕCIO TÕTULO ========== -->
+<!-- ========== IN√çCIO T√çTULO ========== -->
 <div id="titulo">
-	<div>Manter Agentes 
+	<div>Manter Agentes
 		<span class="voltar">
 
-		<?php if (isset($_GET['acao']) && $_GET['acao'] == 'cc' && isset($_GET['cpf']) && !empty($_GET['cpf']) && isset($_GET['idpronac'])) { // pega do readequaÁ„o ?>
-		<a href="<?php echo $this->url(array('controller'=>'solicitaralteracao', 'action'=>'acaoprojeto')); ?>?idpronac=<?php echo $_GET['idpronac']; ?>" title="Voltar">Voltar para a SolicitaÁ„o de ReadequaÁ„o</a>
+		<?php if (isset($_GET['acao']) && $_GET['acao'] == 'cc' && isset($_GET['cpf']) && !empty($_GET['cpf']) && isset($_GET['idpronac'])) { // pega do readequa√ß√£o ?>
+		<a href="<?php echo $this->url(array('controller'=>'solicitaralteracao', 'action'=>'acaoprojeto')); ?>?idpronac=<?php echo $_GET['idpronac']; ?>" title="Voltar">Voltar para a Solicita√ß√£o de Readequa√ß√£o</a>
 		<?php } else {?>
 		<a href="#" onclick="voltar();">Voltar</a>
 		<?php } ?>
@@ -34,11 +29,9 @@ if($this->grupoAtivo != 118)
 		</span>
 	</div>
 </div>
-<!-- ========== FIM TÕTULO ========== -->
+<!-- ========== FIM T√çTULO ========== -->
 
-
-
-<!-- ========== INÕCIO CONTE⁄DO ========== -->
+<!-- ========== IN√çCIO CONTE√öDO ========== -->
 <div id="conteudo">
 <div id="confirma"></div>
 
@@ -52,22 +45,18 @@ if($this->grupoAtivo != 118)
 
 	</script>
 
-
-
 	<div id="erroGeral" class="msgERROR sumir">
 		<div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msgERROR" onclick="$('.msgERROR').hide();" onkeypress="$('.msgERROR').hide();"/></div>
-		<div>Dados obrigatÛrios n„o informados!</div>
+		<div>Dados obrigat√≥rios n√£o informados!</div>
 	</div>
 
-
-
-    <form class="formAgentes form" name="formCadAgentes" id="formCadAgentes" method="post" 
+    <form class="formAgentes form" name="formCadAgentes" id="formCadAgentes" method="post"
 		action="<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'gravaragentecompleto')); ?>">
 
 		<input type="hidden" value="<?php echo $this->grupoativo; ?>" id="grupologado" name="grupologado" />
 
 		<div><?php require_once "inc/menuabas.phtml"; // menu abas ?></div>
-		<div><?php require_once "inc/form.phtml"; // formul·rio ?></div>
+		<div><?php require_once "inc/form.phtml"; // formul√°rio ?></div>
 
 		<table class="tabela">
 			<tr>
@@ -84,12 +73,12 @@ if($this->grupoAtivo != 118)
 
 
 </div>
-<!-- ========== FIM CONTE⁄DO ========== -->
+<!-- ========== FIM CONTE√öDO ========== -->
 
 
 
-<!-- ========== INÕCIO RODAP… DO CONTE⁄DO ========== -->
+<!-- ========== IN√çCIO RODAP√â DO CONTE√öDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP… DO CONTE⁄DO ========== -->
+<!-- ========== FIM RODAP√â DO CONTE√öDO ========== -->
 
 <br clear="all" />
