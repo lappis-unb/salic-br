@@ -4058,7 +4058,59 @@ class ReadequacoesController extends GenericControllerNew {
 
     }
 
-
+     /*
+      * consultarReadequacaoAction Pagina acessada por ajax que retorna dados de readequao
+      * @since  13/06/2016
+      * @author Fernao Lopes Ginez de Lara fernao.lara@cultura.gov.br
+      * @access public
+      * @return Mixed Retorna json object com readequao
+      */
+    public function consultarReadequacaoAction() {
+        $this->_helper->viewRenderer->setNoRender();
+        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+        
+        $idPronac = $this->_request->getParam("idPronac"); // pega o id do pronac via get
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        
+        $idPronac = $this->_request->getParam("idPronac");
+        $idReadequacao = $this->_request->getParam("idReadequacao");
+        $idTipoReadequacao = $this->_request->getParam("idTipoReadequacao");
+        
+        $where = array();
+        $where['a.idPronac = ?'] = $idPronac;
+        
+        if ($idReadequacao) {
+            $where['a.idReadequacao = ?'] = $idReadequacao;
+        }
+        if ($idTipoReadequacao) {
+             $where['a.idTipoReadequacao = ?'] = $idTipoReadequacao;
+        }
+        
+        try {
+            $tbReadequacao = new tbReadequacao();
+            $readequacoes = $tbReadequacao->buscarDadosReadequacoes($where);
+            
+            // prepara sada json
+            $output = array();            
+            foreach ($readequacoes as $readequacao) {               
+                $output[] = array(
+                    'idReadequacao' => $readequacao->idReadequacao,
+                    'idPronac' => $readequacao->idPronac,
+                    'dtSolicitacao' => $readequacao->dtSolicitacao,
+                    'dsSolicitacao' => $readequacao->dsSolicitacao,
+                    'dsJustificativa' => $readequacao->dsJustificativa
+                );
+            }
+            
+            echo json_encode(array('readequacoes' => $output));
+            
+        } catch (Zend_Exception $e) {
+            echo json_encode(array('msg' => 'Registro no localizado'));
+        }
+    }
+    
     /*
      * Encaminhar para análise técnica
      * Criada em 13/06/2016
