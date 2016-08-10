@@ -88,8 +88,6 @@ if ($AMBIENTE == 'DES') { error_reporting(E_ALL | E_STRICT); }
 Zend_Registry::set('ambiente', $AMBIENTE); // registra
 
 
-
-
 /* manipulação de sessão */
 Zend_Session::start();
 Zend_Registry::set('session', new Zend_Session_Namespace()); // registra
@@ -120,10 +118,6 @@ Zend_Layout::startMvc(array(
         'layoutPath' => $DIR_LAYOUT,
         'contentKey' => 'content'));
 
-<<<<<<< HEAD
-=======
-
-
 /* configura a visão */
 $view = new Zend_View();
 $view->setEncoding('ISO-8859-1'); // codificação das pçginas
@@ -139,9 +133,6 @@ Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacaoMi
 $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
 Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
 
-
-
->>>>>>> [UPDATE:432] Imprimir Conta BancÃ¡ria
 /* variçveis para pegar dados vindos via get e post */
 $filter = new Zend_Filter();
 $filter->addFilter(new Zend_Filter_StringTrim()); // retira espaãos antes e depois
@@ -160,5 +151,19 @@ Zend_Registry::set('Zend_Currency', new Zend_Currency('pt_BR'));
 
 /* configura o controlador */
 $controller = Zend_Controller_Front::getInstance();
+$restRoute = new Zend_Rest_Route(
+    $controller,
+    array(),
+    array(
+        'default' => array(
+            'proponente-autenticacao-rest',
+            'proponente-rest',
+            'projeto-rest',
+            'dispositivo-movel-rest',
+            'projeto-extrato-rest',
+            'projeto-extrato-ano-rest',
+            'projeto-extrato-mes-rest'
+)));
+$controller->getRouter()->addRoute('rest', $restRoute);
 $controller->setControllerDirectory($DIR_CONTROLLER);
 $controller->dispatch();
