@@ -6,86 +6,117 @@
 
 class AnalisarPropostaDAO extends Zend_Db_Table{
 
-    public static function buscarGeral($idPreProjeto){
-        $sql = "SELECT
-                    p.idPreProjeto,
-                    p.idAgente,
-                    p.NomeProjeto,
-                    p.AreaAbrangencia,
-                    p.Mecanismo,---usar regra do Scrip Case.
-                    p.AgenciaBancaria,---label scrip case
-                    convert(TEXT, p.ResumoDoProjeto) as ResumoDoProjeto,
-                    p.Objetivos,
-                    p.Justificativa,
-                    convert(varchar(30),p.DtInicioDeExecucao, 103 )+' '+convert(varchar(30),p.DtInicioDeExecucao, 108) as DtInicioDeExecucao,
-                    convert(varchar(30),p.DtFinalDeExecucao, 103 )+' '+convert(varchar(30),p.DtFinalDeExecucao, 108 )  as DtFinalDeExecucao,
-                    p.NrAtoTombamento,
-                    convert(varchar(30),p.DtAtoTombamento, 103 ) as DtAtoTombamento,
-                    p.EsferaTombamento,
-                    p.Acessibilidade,
-                    p.DemocratizacaoDeAcesso,
-                    p.EtapaDeTrabalho,
-                    p.FichaTecnica,
-                    p.Sinopse,
-                    p.ImpactoAmbiental,
-                    p.EspecificacaoTecnica,
-                    p.EstrategiaDeExecucao,
-                    p.stDataFixa,
-                    p.stPlanoAnual,
-                    a.CNPJCPF,
-                    agentes.dbo.fnNome(p.idAgente) as NomeAgente,
-                    SAC.dbo.fnNomeTecnicoMinc(tbap.idTecnico) as tecnico,
-                    en.TipoEndereco,
-                    en.TipoLogradouro,
-                    en.Logradouro,
-                    en.Bairro,
-                    en.Numero,
-                    en.Complemento,
-                    en.Cidade,
-                    en.UF,
-                    en.CEP,
-                    en.Divulgar,
-                    ve.Descricao as endereco,
-                    ver.Descricao as logradouro,
-                    vemail.Descricao as email,
-                    vci.Descricao  as agente,
-                    vci.Divulgar as divulgarEmail,
-                    vdireito.Descricao as direito,
-                    vesfera.Descricao as esfera,
-                    vpoder.Descricao as poder,
-                    vadm.Descricao as Admins,
-                    vcd.CNPJCPF as CNPJCPFdigirente,
-                    vcd.Nome as nomeAgente,
-                    c.Cpf,
-                    c.Nome as nomeUsuario,
-                    uf.Sigla as SiglaUf,
-                    mun.Descricao as NomeCidade,
-                    p.idEdital,
-                    p.DtArquivamento,
-                    p.stEstado
-                FROM sac.dbo.PreProjeto p
-                    left JOIN agentes.dbo.Agentes a			on p.idAgente = a.idAgente
-                    left join agentes.dbo.endereconacional en		on p.idAgente = en.idAgente
-                    left join AGENTES.dbo.Verificacao ve		on en.TipoEndereco = ve.idVerificacao
-                    left join AGENTES.dbo.Verificacao ver		on en.TipoLogradouro = ver.idVerificacao
-                    left join sac.dbo.vCadastrarInternet vci		on p.idAgente = vci.idAgente
-                    left join AGENTES.dbo.Verificacao vemail		on vci.TipoInternet = vemail.idVerificacao
-                    left join sac.dbo.vwNatureza vna			on p.idAgente = vna.idAgente
-                    left join AGENTES.dbo.Verificacao vdireito		on vna.Direito = vdireito.idVerificacao
-                    left join AGENTES.dbo.Verificacao vesfera		on vna.Esfera = vesfera.idVerificacao
-                    left join AGENTES.dbo.Verificacao vpoder		on vna.Poder = vpoder.idVerificacao
-                    left join AGENTES.dbo.Verificacao vadm		on vna.Administracao = vadm.idVerificacao
-                    left join sac.dbo.vCadastrarDirigente vcd		on p.idAgente = vcd.idVinculoPrincipal
-                    left JOIN ControleDeAcesso.dbo.SGCAcesso c		on p.IdUsuario = c.idUsuario
-                    left JOIN SAC.dbo.tbHistoricoEmail tbhe		on p.idPreProjeto = tbhe.idProjeto
-                    left JOIN SAC.dbo.tbAvaliacaoProposta tbap		on tbhe.idAvaliacaoProposta = tbap.idAvaliacaoProposta
-                    left join AGENTES.dbo.Uf uf                         on uf.idUf = en.UF
-                    left join AGENTES.dbo.Municipios mun                on mun.idMunicipioIBGE = en.Cidade
-                WHERE idPreProjeto = {$idPreProjeto}";
+    public static function buscarGeral($idPreProjeto)
+    {
+        $table = Zend_Db_Table::getDefaultAdapter();
+
+        $select = $table->select()
+            ->from(array('p' => 'PreProjeto'),
+                array('idPreProjeto',
+                      'idAgente',
+                      'NomeProjeto',
+                      'AreaAbrangencia',
+                      'Mecanismo',
+                      'AgenciaBancaria',
+                      new Zend_Db_Expr('convert(TEXT, p.ResumoDoProjeto) AS ResumoDoProjeto'),
+                      'Objetivos',
+                      'Justificativa',
+                      new Zend_Db_Expr('convert(varchar(30),p.DtInicioDeExecucao, 103 )+\' \'+convert(varchar(30),p.DtInicioDeExecucao, 108) AS DtInicioDeExecucao'),
+                      new Zend_Db_Expr('convert(varchar(30),p.DtFinalDeExecucao, 103 )+\' \'+convert(varchar(30),p.DtFinalDeExecucao, 108 )  AS DtFinalDeExecucao'),
+                      'NrAtoTombamento',
+                      new Zend_Db_Expr('convert(varchar(30),p.DtAtoTombamento, 103 ) AS DtAtoTombamento'),
+                      'EsferaTombamento',
+                      'Acessibilidade',
+                      'DemocratizacaoDeAcesso',
+                      'EtapaDeTrabalho',
+                      'FichaTecnica',
+                      'Sinopse',
+                      'ImpactoAmbiental',
+                      'EspecificacaoTecnica',
+                      'EstrategiaDeExecucao',
+                      'stDataFixa',
+                      'stPlanoAnual',
+                      'idEdital',
+                      'DtArquivamento',
+                      'stEstado'),
+                      'SAC.dbo')
+            ->joinLeft(array('a' => 'Agentes'),
+                'p.idAgente = a.idAgente',
+                array('a.CNPJCPF', new Zend_Db_Expr('agentes.dbo.fnNome(p.idAgente) as NomeAgente'), new Zend_Db_Expr('SAC.dbo.fnNomeTecnicoMinc(tbap.idTecnico) AS tecnico')),
+                'AGENTES.dbo')
+            ->joinLeft(array('en' => 'endereconacional'),
+                'p.idAgente = en.idAgente',
+                array('TipoEndereco', 'TipoLogradouro', 'Logradouro', 'Bairro', 'Numero', 'Complemento', 'Cidade', 'UF', 'CEP', 'Divulgar'
+                ),
+                'AGENTES.dbo')
+            ->joinLeft(array('ve' => 'Verificacao'),
+                'en.TipoEndereco = ve.idVerificacao',
+                array(new Zend_Db_Expr('ve.Descricao AS endereco')),
+                'AGENTES.dbo')
+            ->joinLeft(array('ver' => 'Verificacao'),
+                'en.TipoLogradouro = ver.idVerificacao',
+                array(new Zend_Db_Expr('ver.Descricao AS logradouro')),
+                'AGENTES.dbo')
+            ->joinLeft(array('vci' => 'vCadastrarInternet'),
+                'p.idAgente = vci.idAgente',
+                array(new Zend_Db_Expr('vci.Descricao  AS agente'), new Zend_Db_Expr('vci.Divulgar AS divulgarEmail')),
+                'SAC.dbo')
+            ->joinLeft(array('vemail' => 'Verificacao'),
+                'vci.TipoInternet = vemail.idVerificacao',
+                array(new Zend_Db_Expr('vemail.Descricao AS email')),
+                'SAC.dbo')
+            ->joinLeft(array('vna' => 'vwNatureza'),
+                'p.idAgente = vna.idAgente',
+                array(''),
+                'SAC.dbo')
+            ->joinLeft(array('vdireito' => 'Verificacao'),
+                'vna.Direito = vdireito.idVerificacao',
+                array(new Zend_Db_Expr('vdireito.Descricao AS direito')),
+                'AGENTES.dbo')
+            ->joinLeft(array('vesfera' => 'Verificacao'),
+                'vna.Esfera = vesfera.idVerificacao',
+                array(new Zend_Db_Expr('vesfera.Descricao AS esfera')),
+                'AGENTES.dbo')
+            ->joinLeft(array('vpoder' => 'Verificacao'),
+                'vna.Poder = vpoder.idVerificacao',
+                array(new Zend_Db_Expr('vpoder.Descricao as poder')),
+                'AGENTES.dbo')
+            ->joinLeft(array('vadm' => 'Verificacao'),
+                'vna.Administracao = vadm.idVerificacao',
+                array(new Zend_Db_Expr('vadm.Descricao AS Admins')),
+                'AGENTES.dbo')
+            ->joinLeft(array('vcd' => 'vCadastrarDirigente'),
+                'p.idAgente = vcd.idVinculoPrincipal',
+                array(new Zend_Db_Expr('vcd.CNPJCPF as CNPJCPFdigirente'), new Zend_Db_Expr('vcd.Nome AS nomeAgente')),
+                'SAC.dbo')
+            ->joinLeft(array('c' => 'SGCAcesso'),
+                'p.IdUsuario = c.idUsuario',
+                array('Cpf', new Zend_Db_Expr('c.Nome as nomeUsuario')),
+                'ControleDeAcesso.dbo')
+            ->joinLeft(array('tbhe' => 'tbHistoricoEmail'),
+                'p.idPreProjeto = tbhe.idProjeto',
+                array(''),
+                'SAC.dbo')
+            ->joinLeft(array('tbap' => 'tbAvaliacaoProposta'),
+                'tbhe.idAvaliacaoProposta = tbap.idAvaliacaoProposta',
+                array(''),
+                'SAC.dbo')
+            ->joinLeft(array('uf' => 'Uf'),
+                'uf.idUf = en.UF',
+                array('uf.Sigla AS SiglaUf'),
+                'AGENTES.dbo')
+            ->joinLeft(array('mun' => 'Municipios'),
+                'mun.idMunicipioIBGE = en.Cidade',
+                array('mun.Descricao as NomeCidade'),
+                'AGENTES.dbo')
+            ->where('idPreProjeto = ?', $idPreProjeto);
+
+//        xd($select->assemble());
+
         $db  = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $db->query('SET TEXTSIZE 2147483647');
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
     }
 
     public static function buscarTelefone($idAgente){
