@@ -191,7 +191,7 @@ class Autenticacao_Model_Sgcacesso extends GenericModel {
 
     public function salvar($dados) {
         //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
-        $tmpTblSgcAcesso = new Sgcacesso();
+        $tmpTblSgcAcesso = new Autenticacao_Model_Sgcacesso();
 
         //DECIDINDO SE SERA FEITA UM INSERT OU UPDATE
         if (isset($dados['IdUsuario'])) {

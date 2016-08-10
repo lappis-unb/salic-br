@@ -198,8 +198,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
         Zend_Session::destroy();
         unset($_SESSION);
         $this->redirect('index');
-    } // fecha logoutAction
-
+    }
 
     public function cadastrarusuarioAction() {
         if ( $_POST ) {
@@ -296,8 +295,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
                 $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
                 parent::message("Cadastro efetuado com sucesso. Verifique a senha no seu email", "/autenticacao", "CONFIRM");
             }
-        } // fecha if
-    } // fecha método cadastrarusuarioAction()
+        }
+    }
 
     public function solicitarsenhaAction() {
 
