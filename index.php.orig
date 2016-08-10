@@ -1,45 +1,49 @@
 <?php
 /**
- * Arquivo principal da aplicaÁ„o (bootstrap)
- * Define todos os caminhos onde os arquivos est„o armazenados
- * Carrega as classes do Zend utilizadas durante toda a aplicaÁ„o
+ * Arquivo principal da aplica√ß√£o (bootstrap)
+ * Define todos os caminhos onde os arquivos est√£o armazenados
+ * Carrega as classes do Zend utilizadas durante toda a aplica√ß√£o
  * @author Equipe RUP - Politec
  * @since 29/03/2010
  * @version 1.0
- * @copyright Á 2010 - MinistÁrio da Cultura - Todos os direitos reservados.
+ * @copyright √ß 2010 - Minist√ßrio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 define('APPLICATION_PATH', realpath(__DIR__ . DIRECTORY_SEPARATOR . 'application'));
 /*
-   Favor n„o modificar a conexao.
+   Favor n√£o modificar a conexao.
    Equipe de desenvolvimento eh para usar o banco de desenvolvimento.
  */
 
 
-/* diretÁrios */
+/* diret√ßrios */
 //$DIR_BANCO      = "bancos_wotan";                   // Conexar 1
 //$DIR_BANCO      = "bancos_fedra";                   // Conexao 2
 //$DIR_BANCO      = "bancos_yord";                    //
 //$DIR_BANCO      = "bancos_minc10";                  // Conexao 3
 //$DIR_BANCO        = "bancos_ayphos";                // Conexao 5
-$DIR_BANCO        = "bancos_xti";                // Conexao 6
+//$DIR_BANCO        = "bancos_xti";                // Conexao 6
+$DIR_BANCO      = "bancos_treinamento";               
 
 //$DIR_BANCOP     = "conexao_01";                     // wotan
 //$DIR_BANCOP     = "conexao_02";                     // fedra
 //$DIR_BANCOP     = "conexao_03";                     // minc10
 //$DIR_BANCOP     = "conexao_04";                     //
 //$DIR_BANCOP     = "conexao_05";                     // ayphos
-$DIR_BANCOP     = "conexao_xti";                     // ayphos
+//$DIR_BANCOP     = "conexao_xti";                     // ayphos
+$DIR_BANCOP     = "conexao_02";                 
 $DIR_LIB        = "./library/";                       // bibliotecas
-$DIR_CONFIG     = "./application/configs/$DIR_BANCO.ini"; // configuraÁÁes
-$DIR_CONFIGP    = "./application/configs/config.ini"; // configuraÁıes
+$DIR_CONFIG     = "./application/configs/$DIR_BANCO.ini"; // configura√ß√ßes
+$DIR_CONFIGP    = "./application/configs/config.ini"; // configura√ß√µes
 $DIR_LAYOUT     = "./application/layout/";            // layouts
 $DIR_MODELS     = "./application/model";              // models
-$DIR_SERVICE     = "./application/model/Servico";     // services
+$DIR_SERVICE    = "./application/model/Servico";     // services
 $DIR_TO         = "./application/model/TO/";          // tos
 $DIR_DAO        = "./application/model/DAO/";         // daos
-$DIR_VIEW       = "./application/views/";             // visÁes
+$DIR_DOMAIN     = "./application/model/domain/";         // domain
+$DIR_TABLE      = "./application/model/Table/";         // table
+$DIR_VIEW       = "./application/views/";             // vis√ßes
 $DIR_CONTROLLER = "./application/controller/";        // controles
 
 
@@ -49,14 +53,14 @@ $AMBIENTE = 'DES';
 
 
 
-/* formato, idioma e localizaÁ„o */
+/* formato, idioma e localiza√ß√£o */
 setlocale(LC_ALL, 'pt_BR');
 setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
 date_default_timezone_set('America/Sao_Paulo');
 
 
 
-/* configuraÁ„o do caminho dos includes */
+/* configura√ß√£o do caminho dos includes */
 set_include_path('.' . PATH_SEPARATOR . $DIR_LIB
                                          . PATH_SEPARATOR . $DIR_CONFIG
                                          . PATH_SEPARATOR . $DIR_LAYOUT
@@ -64,22 +68,23 @@ set_include_path('.' . PATH_SEPARATOR . $DIR_LIB
                                          . PATH_SEPARATOR . $DIR_SERVICE
                                          . PATH_SEPARATOR . $DIR_TO
                                          . PATH_SEPARATOR . $DIR_DAO
+                                         . PATH_SEPARATOR . $DIR_DOMAIN
+                                         . PATH_SEPARATOR . $DIR_TABLE
                                          . PATH_SEPARATOR . $DIR_VIEW
                                          . PATH_SEPARATOR . $DIR_CONTROLLER
                                          . PATH_SEPARATOR . get_include_path());
 
 
 
-/* componente obrigatÁrio para carregar arquivos, classes e recursos */
+/* componente obrigat√ßrio para carregar arquivos, classes e recursos */
 require_once "Zend/Loader/Autoloader.php";
 Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
 
 
 
-/* classes pessoais do ministÁrio da cultura */
+/* classes pessoais do minist√ßrio da cultura */
 require_once "MinC/Loader.php";
-
-//Registrando variÁveis
+//Registrando vari√ßveis
 Zend_Registry::set('DIR_CONFIG', $DIR_CONFIG); // registra
 
 
@@ -88,68 +93,49 @@ if ($AMBIENTE == 'DES') { error_reporting(E_ALL | E_STRICT); }
 Zend_Registry::set('ambiente', $AMBIENTE); // registra
 
 
-/* manipulaÁ„o de sess„o */
+
+
+/* manipula√ß√£o de sess√£o */
 Zend_Session::start();
 Zend_Registry::set('session', new Zend_Session_Namespace()); // registra
 
 
-/* configuraÁıes do banco de dados */
-$config = new Zend_Config_Ini($DIR_CONFIGP, $DIR_BANCOP, array('allowModifications' => true,));
+/* configura√ß√µes do banco de dados */
+$config = new Zend_Config_Ini($DIR_CONFIGP, $DIR_BANCOP);
 $registry = Zend_Registry::getInstance();
 $registry->set('config', $config); // registra
-
-# set default paginator renderer
-Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacaoMinc.phtml');
-# adaptacao do usuario de banco para xti
-if (getenv('AMBIENTE')) {
-	$configuration = new Zend_Config_Ini('application' . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR . 'configuration.ini', 'Xti');
-	$config->merge($configuration->resource);
-}
-
 $db = Zend_Db::factory($config->db);
 Zend_Db_Table::setDefaultAdapter($db);
 Zend_Registry::set('db', $db); // registra
 $profiler = $db->getProfiler();
 $profiler->setEnabled(false);
 
-/* configuraÁÁes do layout padr„o do sistema */
+/* configura√ß√ßes do layout padr√£o do sistema */
 Zend_Layout::startMvc(array(
         'layout'     => 'layout',
         'layoutPath' => $DIR_LAYOUT,
         'contentKey' => 'content'));
 
-/* configura a vis„o */
-$view = new Zend_View();
-$view->setEncoding('ISO-8859-1'); // codificaÁ„o das pÁginas
-$view->setEscape('htmlentities');
-$view->setBasePath($DIR_VIEW); // diretÁrio das visÁes
-$view->addHelperPath($DIR_VIEW . 'helpers', 'View_Helper');
-$view->setScriptPath('./application/layout');
-Zend_Registry::set('view', $view); // registra
-
 # paginacao
 Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacaoMinc.phtml');
 
-$viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer($view);
-Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
-
-/* variÁveis para pegar dados vindos via get e post */
+/* vari√ßveis para pegar dados vindos via get e post */
 $filter = new Zend_Filter();
-$filter->addFilter(new Zend_Filter_StringTrim()); // retira espa„os antes e depois
-$filter->addFilter(new Zend_Filter_StripTags()); // retira cÁdigo html e etc
+$filter->addFilter(new Zend_Filter_StringTrim()); // retira espa√£os antes e depois
+$filter->addFilter(new Zend_Filter_StripTags()); // retira c√ßdigo html e etc
 $options = array('escapeFilter' => $filter);
 
 /* registra */
 Zend_Registry::set('post', new Zend_Filter_Input(NULL, NULL, $_POST, $options));
 Zend_Registry::set('get',  new Zend_Filter_Input(NULL, NULL, $_GET,  $options));
 
-/* registra a conex„o para mudar em ambiente scriptcase */
+/* registra a conex√£o para mudar em ambiente scriptcase */
 Zend_Registry::set('conexao_banco', $DIR_BANCOP);
 
-/* Registra currency que ser· usado autom·ticamente pelo zend */
+/* Registra currency que ser√° usado autom√°ticamente pelo zend */
 Zend_Registry::set('Zend_Currency', new Zend_Currency('pt_BR'));
 
-/* configura o controlador */
+/* configura o controlador REST */
 $controller = Zend_Controller_Front::getInstance();
 $restRoute = new Zend_Rest_Route(
     $controller,

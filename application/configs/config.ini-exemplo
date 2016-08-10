@@ -8,9 +8,12 @@
 ;; @link http://www.cultura.gov.br
 
 [default]
+bootstrap.path = APPLICATION_PATH "/Bootstrap.php"
+bootstrap.class = "Bootstrap"
 ; Library
 includePaths.library = APPLICATION_PATH "/../library"
 autoloaderNamespaces[] = "Minc"
+autoloaderNamespaces[] = "Zend"
 
 ; Options for Zend_View
 resources.view.encoding = "ISO-8859-1"
@@ -22,11 +25,19 @@ resources.view.service.encryptHash = "e@75e9R!3450otZ"
 resources.view.service.gcmApiKey = "AIzaSyArBUanKhFlbi9esM35rFIQy1DHmrBOe2o"
 resources.view.service.gcmUrl = "https://gcm-http.googleapis.com/gcm/send"
 
+
+; front controller
+resources.frontController.moduleDirectory = APPLICATION_PATH"/modules" 
+resources.frontController.defaultModule   = "default"
+;resources.frontController.controllerDirectory = APPLICATION_PATH "/controllers"
+;resources.frontController.controllerDirectory[foo] = APPLICATION_PATH "/foo/controller"
+resources.modules[]   = 
+
 [conexao_01:default]
 db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
+db.params.host = mssql_treinamento
+db.params.username = usuarios_internet
+db.params.password = _Salic
 db.params.dbname = TABELAS
 resources.db.params.charset = "utf8 "
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -34,9 +45,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_02:default]
 db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
+db.params.host = mssql_treinamento
+db.params.username = usuarios_internet
+db.params.password = _Salic
 db.params.dbname = TABELAS
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -44,19 +55,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_03:default]
 db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
-db.params.dbname = TABELAS
-resources.db.params.charset = "utf8"
-resources.db.params.driver_options.1002 = "SET NAMES utf8"
-resources.db.isDefaultTableAdapter = true
-
-[conexao_04:default]
-db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
+db.params.host = mssql_treinamento
+db.params.username = usuarios_internet
+db.params.password = _Salic
 db.params.dbname = TABELAS
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -65,9 +66,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_05:default]
 db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
+db.params.host = mssql_treinamento
+db.params.username = usuarios_internet
+db.params.password = _Salic
 db.params.dbname = TABELAS
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -75,9 +76,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_sad:default]
 db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
+db.params.host = mssql_treinamento
+db.params.username = usuarios_internet
+db.params.password = _Salic
 db.params.dbname = SAD
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -86,9 +87,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_scriptcase_01:default]
 db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
+db.params.host = mssql_treinamento
+db.params.username = usuarios_internet
+db.params.password = _Salic
 db.params.dbname = ControleDeAcesso
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -96,9 +97,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_scriptcase_02:default]
 db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
+db.params.host = mssql_treinamento
+db.params.username = usuarios_internet
+db.params.password = _Salic
 db.params.dbname = ControleDeAcesso
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -106,30 +107,19 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_scriptcase_03:default]
 db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
+db.params.host = mssql_treinamento
+db.params.username = usuarios_internet
+db.params.password = _Salic
 db.params.dbname = ControleDeAcesso
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
 resources.db.isDefaultTableAdapter = true
-
-[conexao_scriptcase_04:default]
-db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
-db.params.dbname = ControleDeAcesso
-resources.db.params.charset = "utf8"
-resources.db.params.driver_options.1002 = "SET NAMES utf8"
-resources.db.isDefaultTableAdapter = true
-
 
 [conexao_scriptcase_05:default]
 db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
+db.params.host = mssql_treinamento
+db.params.username = usuarios_internet
+db.params.password = _Salic
 db.params.dbname = ControleDeAcesso
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -137,9 +127,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_sac:default]
 db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
+db.params.host = mssql_treinamento
+db.params.username = usuarios_internet
+db.params.password = _Salic
 db.params.dbname = SAC
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -147,9 +137,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_sac_homolog:default]
 db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
+db.params.host = mssql_treinamento
+db.params.username = usuarios_internet
+db.params.password = _Salic
 db.params.dbname = SAC
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -157,9 +147,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_agentes_homolog:default]
 db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
+db.params.host = mssql_treinamento
+db.params.username = usuarios_internet
+db.params.password = _Salic
 db.params.dbname = AGENTES
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -167,9 +157,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_xti:default]
 db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
+db.params.host = mssql_treinamento
+db.params.username = usuarios_internet
+db.params.password = _Salic
 db.params.dbname = TABELAS
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -178,9 +168,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_xti_controle_acesso:default]
 db.adapter = PDO_MSSQL
-db.params.host = mssql_desenv 
-db.params.username = Usuarios_Internet 
-db.params.password = MudePorAmbiente
+db.params.host = mssql_treinamento
+db.params.username = usuarios_internet
+db.params.password = _Salic
 db.params.dbname = CONTROLEDEACESSO
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
