@@ -22,7 +22,7 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
             $dataEmissao,
             $arquivo,
             $comprovanteData,
-            $valor,
+            $comprovanteValor,
             $justificativa
             )
     {
@@ -36,7 +36,7 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
         $this->dataEmissao = $dataEmissao;
         $this->arquivo = $arquivo;
         $this->comprovanteData = $comprovanteData;
-        $this->comprovanteValor = $valor;
+        $this->comprovanteValor = $comprovanteValor;
         $this->comprovanteJustificativa = $justificativa;
     }
 
@@ -74,9 +74,11 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
         $projeto = $projetoModel->find($itemModel->find($this->item)->current()->IdPRONAC)->current();
         $dtInicioExecucao = new DateTime($projeto->DtInicioExecucao);
         $dtFimExecucao = new DateTime($projeto->DtFimExecucao);
+        
         if (!$this->dataEmissao || ($this->dataEmissao < $dtInicioExecucao) || ($this->dataEmissao > $dtFimExecucao)) {
             throw new Exception('A data do documento deve estar dentro do período de execução do projeto.');
         }
+        
         if (!$this->comprovanteValor) {
             throw new Exception('Valor do item inválido.');
         }
@@ -92,7 +94,7 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
         $this->validarCadastrar();
         try {
             Zend_Db_Table::getDefaultAdapter()->beginTransaction();
-            $this->getFornecedor()->setId(
+            $this->getFornecedor()->setIdFornecedorExterior(
                     $this->getFornecedor()->insert(
                             array(
                                 'dsNome' => $this->getFornecedor()->getNome(),
@@ -104,7 +106,7 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
                 array(
                     'tpDocumento' => $this->getTipoDocumento(),
                     'nrComprovante' => $this->getNif(),
-                    'idFornecedorExterior' => $this->getFornecedor()->getId(),
+                    'idFornecedorExterior' => $this->getFornecedor()->getIdFornecedorExterior(),
                     'nrSerie' => $this->getSerie(),
                     'dtEmissao' => $this->getDataEmissao()->format('Y-m-d h:i:s'),
                     'idArquivo' => $this->getArquivo(),
@@ -130,4 +132,36 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
         }
     }
 
+    public function atualizar($status = 4, $atualizarArquivo = false)
+    {
+    	$this->validarCadastrar(true);
+        // somente mexer no arquivo se houver um arquivo
+        if ($atualizarArquivo) {
+            $arquivoModel = new ArquivoModel();
+            $arquivoModel->deletar($this->arquivo);
+            $arquivoModel->cadastrar('arquivoInternacional');
+            $arquivoId = $arquivoModel->getId();
+        } else {
+            $arquivoId = $this->arquivo;
+        }
+        
+        $this->update(
+        	array(
+                'idFornecedorExterior' => $this->fornecedor,
+        		'tpDocumento' => $this->tipo,
+        		'nrComprovante' => $this->nif,
+        		'nrSerie' => $this->serie,
+        		'dtEmissao' => $this->dataEmissao->format('Y-m-d h:i:s'),
+        		'idArquivo' => $arquivoId,
+        		'vlComprovacao' => $this->comprovanteValor,
+        		'dtPagamento' => $this->comprovanteData->format('Y-m-d h:i:s'),
+        		'dsJustificativa' => $this->comprovanteJustificativa,
+        		'tpFormaDePagamento' => $this->comprovanteTipo,
+        		'nrDocumentoDePagamento' => $this->comprovanteNumero,
+        	),
+        	array('idComprovantePagamento = ?' => $this->comprovantePagamento)
+        );
+        $this->comprovarPlanilhaAtualizarStatus($status, $this->comprovantePagamento);
+    }
+    
 }
