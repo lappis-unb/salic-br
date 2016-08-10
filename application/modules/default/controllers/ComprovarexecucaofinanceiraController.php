@@ -863,17 +863,6 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                     // nao atualiza arquivo se não houver novo upload
                     $comprovantePagamentoModel->atualizar(4);                               
                 } 
-                
-                $this->_helper->flashMessenger('Comprovante alterado com sucesso.');
-
-                /*
- // TODO : arquivos
-                if($_FILES['arquivoInternacional']['name'] != '') {
-                    $comprovantePagamentoModel->atualizar(4, true, true);
-                } else {
-                    // nao atualiza arquivo se não houver novo upload
-                    $comprovantePagamentoModel->atualizar(4, false, true);                               
-                    }*/
             }
             
             # View Parameters
