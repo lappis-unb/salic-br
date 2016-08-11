@@ -1,3 +1,6 @@
+Release 1.8.10
+  * Fix: [Consultar dados projeto] Liberação correta dos links do menu lateral de acordo com permissões do projeto
+
 Release 1.8.9
   * Fix: [readequação] correção ao finalizar readequação de plano de divulgação
 
