@@ -140,7 +140,7 @@
         });
  
         $('.comboFiltro').change(function(){
-            window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')); ?>?tipoFiltro=" + $(this).val();
+	    $('#formPesquisa').submit();
         });	       
     });
 </script>
