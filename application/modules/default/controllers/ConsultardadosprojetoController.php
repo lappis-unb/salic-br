@@ -354,12 +354,6 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
                     $respProponente     = 'R';
                     $inabilitado 	= 'N';
                     
-                    // Indentificando o Proponente
-                    if($cpfLogado == $cpfProponente)
-                    {
-                    	$respProponente = 'P';
-                    }
-                    
                     // Verificando se o Proponente est� inabilitado
 	                $inabilitadoDAO = new Inabilitado();
                         $where['CgcCpf 		= ?'] = $cpfProponente;
