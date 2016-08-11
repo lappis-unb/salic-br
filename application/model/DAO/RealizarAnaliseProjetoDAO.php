@@ -1199,34 +1199,34 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
     $table = Zend_Db_Table::getDefaultAdapter();
 
     $sql = $table->select()
-        ->from(['x' =>'PlanoDistribuicaoProduto'],
-            [new Zend_Db_Expr('idPlanoDistribuicao'),'idProjeto','idProduto','stPrincipal','QtdeProduzida','QtdeProponente','QtdeVendaNormal','QtdePatrocinador','QtdeOutros', 'QtdeVendaPromocional','PrecoUnitarioNormal','PrecoUnitarioPromocional',
+        ->from(array('x' =>'PlanoDistribuicaoProduto'),
+            array(new Zend_Db_Expr('idPlanoDistribuicao'),'idProjeto','idProduto','stPrincipal','QtdeProduzida','QtdeProponente','QtdeVendaNormal','QtdePatrocinador','QtdeOutros', 'QtdeVendaPromocional','PrecoUnitarioNormal','PrecoUnitarioPromocional',
                 new Zend_Db_Expr('
                  QtdeVendaNormal*PrecoUnitarioNormal as ReceitaNormal,
                  QtdeVendaPromocional*PrecoUnitarioPromocional as ReceitaPro,
                  (QtdeVendaNormal*PrecoUnitarioNormal)
                  +(QtdeVendaPromocional*PrecoUnitarioPromocional) as ReceitaPrevista
-                ')],
+                ')),
             'SAC.dbo')
-        ->joinInner(['y' => 'Projetos'],
+        ->joinInner(array('y' => 'Projetos'),
              'x.idProjeto = y.idProjeto',
-             ['Localizacao'],
+             array('Localizacao'),
              'SAC.dbo')
-        ->joinInner(['p' => 'Produto'],
+        ->joinInner(array('p' => 'Produto'),
             'x.idProduto = p.Codigo',
-            [new Zend_Db_Expr('p.Descricao AS Produto')],
+            array(new Zend_Db_Expr('p.Descricao AS Produto')),
             'SAC.dbo')
-        ->joinInner(['a' => 'Area'],
+        ->joinInner(array('a' => 'Area'),
             'x.Area = a.Codigo',
-            [new Zend_Db_Expr('a.Descricao AS Area'),new Zend_Db_Expr('b.Descricao AS Segmento')],
+            array(new Zend_Db_Expr('a.Descricao AS Area'),new Zend_Db_Expr('b.Descricao AS Segmento')),
             'SAC.dbo')
-        ->joinInner(['b' => 'Segmento'],
+        ->joinInner(array('b' => 'Segmento'),
             'x.Segmento = b.Codigo',
-            [],
+            array(''),
             'SAC.dbo')
-        ->joinInner(['v' => 'Verificacao'],
+        ->joinInner(array('v' => 'Verificacao'),
             'x.idPosicaoDaLogo = v.idVerificacao',
-            [new Zend_Db_Expr('v.Descricao AS PosicaoDaLogo')],
+            array(new Zend_Db_Expr('v.Descricao AS PosicaoDaLogo')),
             'SAC.dbo')
         ->where('y.IdPRONAC = ?',$pronac)
         ->where('x.stPlanoDistribuicaoProduto = 1');
