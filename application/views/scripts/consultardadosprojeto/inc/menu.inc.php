@@ -231,7 +231,9 @@
 
                 <!-- ======================= SOLICITAR PRAZO CAPTAÇÃO  =======================   -->
                 <?php if($this->blnProponente) { ?>
-                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'solicitarprorrogacao', 'action' => 'index', 'idpronac' => Seguranca::encrypt($this->idPronac))); ?>">Solicitar Prorroga&ccedil;&atilde;o</a>
+		<?php if($this->fnLiberarLinks['SolicitarProrrogacao']): ?>
+                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'solicitarprorrogacao', 'action' => 'index', 'idpronac' => Seguranca::encrypt($this->idPronac))); ?>">Solicitar Prorroga&ccedil;&atilde;o</a>
+		<?php endif; ?>
                 <?php } ?>
                 <!-- ==================== FIM - SOLICITAR PRAZO CAPTAÇÃO  =======================   -->
 
@@ -293,7 +295,9 @@
 
                 <!--  ======================= MARCAS =======================  -->
                 <?php if($this->blnProponente) { ?>
-                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'form-enviar-arquivo-marca')); ?><?php echo $codPronac;?>">Marcas</a>
+	        <?php if($this->fnLiberarLinks['Marcas']): ?>
+                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'upload', 'action' => 'form-enviar-arquivo-marca')); ?><?php echo $codPronac;?>">Marcas</a>
+		<?php endif; ?>
                 <?php } ?>
                 <!--  ==================== FIM - MARCAS ====================  -->
 
