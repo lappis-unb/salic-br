@@ -833,7 +833,7 @@
                     <select class="select_simples comboReadequacoes" style="width: 200px;" name="tipoReadequacao" id="tipoReadequacao">
                         <option value="0"> - Selecione - </option>
                         <?php foreach ($this->TiposReadequacao as $tipos){ ?>
-                        <?php if($tipos->idTipoReadequacao != 1 && $tipos->idTipoReadequacao != 2){ //Retirando o Tipo de Readequação de Remanejamento 20% e planilha orçamentária / remanejamento interno ?>
+                        <?php if($tipos->idTipoReadequacao != 1){ //Retirando o Tipo de Readequação de Remanejamento 20% ?>
                         <option value="<?php echo $tipos->idTipoReadequacao; ?>"><?php echo $tipos->dsReadequacao; ?></option>
                         <?php } ?>
                         <?php } ?>
