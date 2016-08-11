@@ -1369,7 +1369,7 @@ class ReadequacoesController extends GenericControllerNew {
         if(count($planosDistribuicao)==0){
             $planosDistribuicao = $tbPlanoDistribuicao->buscarPlanosDistribuicaoReadequacao($idPronac, 'PlanoDistribuicaoProduto');
         }
-
+        
         $Produtos = new Produto();
         $produtos = $Produtos->buscar(array('stEstado=?'=>0), array('Descricao'));
 
@@ -1386,7 +1386,7 @@ class ReadequacoesController extends GenericControllerNew {
             'readequacoes/carregar-planos-de-distribuicao.phtml',
             array(
                 'idPronac' => $idPronac,
-                'planosDeDistribuicao' => $planosDistribuicao,
+                'planosDistribuicao' => $planosDistribuicao,
                 'produtos' => $produtos,
                 'posicoesLogomarca' => $posicoesLogomarca,
                 'areas' => $areas,
