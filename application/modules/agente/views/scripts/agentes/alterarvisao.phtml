@@ -15,7 +15,7 @@
             visao.remove(i); // remove o option do select de origem
             i--;
         }
-    } // fecha funÁ„o addTodos()
+    } // fecha fun√ß√£o addTodos()
 
 
     function delTodos() // deleta todos os options da direita
@@ -34,7 +34,7 @@
                 i--;
             }
         }
-    } // fecha funÁ„o delTodos()
+    } // fecha fun√ß√£o delTodos()
 
 
     function addSelecionado() // adiciona o option selecionado da esquerda para direita
@@ -53,7 +53,7 @@
                 i--;
             }
         }
-    } // fecha funÁ„o addSelecionado()
+    } // fecha fun√ß√£o addSelecionado()
 
 
     function delSelecionado() // deleta o option selecionado da direita
@@ -72,10 +72,10 @@
                 i--;
             }
         }
-    } // fecha funÁ„o delSelecionado()
+    } // fecha fun√ß√£o delSelecionado()
 
 
-    function selecionarOptions() // funÁ„o para selecionar todos os options antes do envio do formul·rio
+    function selecionarOptions() // fun√ß√£o para selecionar todos os options antes do envio do formul√°rio
     {
         visaoAgente = document.getElementById("visaoAgente"); // select de destino
         for (i = 0; i < visaoAgente.length; i++) // varre todo o option de origem
@@ -83,31 +83,31 @@
             visaoAgente.options[i].selected = true; // adiciona o novo option no select de destino
         }
         document.getElementById('form').submit();
-    } // fecha funÁ„o selecionarOptions()
+    } // fecha fun√ß√£o selecionarOptions()
 
 </script>
 
-<!-- ========== INÕCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== IN√çCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Ir para InÌcio">InÌcio</a></li>
-        <li class="last">Adicionar Vis„o</li>
+        <li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Ir para In√≠cio">In√≠cio</a></li>
+        <li class="last">Adicionar Vis√£o</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
-<!-- ========== INÕCIO TÕTULO ========== -->
+<!-- ========== IN√çCIO T√çTULO ========== -->
 <div id="titulo">
-    <div>Adicionar Vis„o <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+    <div>Adicionar Vis√£o <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÕTULO ========== -->
+<!-- ========== FIM T√çTULO ========== -->
 
-<!-- ========== INÕCIO CONTE⁄DO ========== -->
+<!-- ========== IN√çCIO CONTE√öDO ========== -->
 <div id="conteudo">
 
     <?php require_once "inc/cabecalho.php";?>
     <?php
-        // array com o id das visıes do agente
+        // array com o id das vis√µes do agente
         if($this->visaoAgente) {
             foreach ($this->visaoAgente as $visao) {
                 $arrayIdVisao[] = $visao['idVerificacao'];
@@ -118,9 +118,9 @@
     <form class="form" name="form" id="form" method="post"	action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'alterarvisao')); ?>">
         <table class="tabela">
             <tr>
-                <th>Visıes disponÌveis</th>
-                <th>AÁ„o</th>
-                <th>Visıes do Agente</th>
+                <th>Vis√µes dispon√≠veis</th>
+                <th>A√ß√£o</th>
+                <th>Vis√µes do Agente</th>
             </tr>
             <tr>
                 <td class="centro" valign="top">
@@ -128,23 +128,23 @@
                     <label for="visao"> </label>
                     <select class="select w300" name="visao[]" id="visao" multiple="multiple" size="7">
                         <?php foreach ($this->visao as $visao) : ?>
-                            <?php if(!in_array($visao['idVerificacao'], $arrayIdVisao)) : // sÛ mostra as visıes que o agente N√O possui ?>
-                            <option value="<?php echo $visao['idVerificacao']; ?>"><?php echo $visao['Descricao']; ?></option>
+                            <?php if(!in_array($visao['idVerificacao'], $arrayIdVisao)) : // s√≥ mostra as vis√µes que o agente N√ÉO possui ?>
+                            <option value="<?php echo $visao['idVerificacao']; ?>"><?php echo utf8_encode($visao['Descricao']); ?></option>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </select>
                 </td>
                 <td class="centro" valign="middle">
-                    <p><input class="btn" type="button" value=" >>  " onkeypress=" " onclick="addTodos();" 		 title="Adicionar todas as visıes para o Agente" /></p>
-                    <p><input class="btn" type="button" value="  >  " onkeypress=" " onclick="addSelecionado();" title="Adicionar a vis„o selecionada para o Agente" /></p>
-                    <p><input class="btn" type="button" value="  <  " onkeypress=" " onclick="delSelecionado();" title="Remover a vis„o selecionada do Agente" /></p>
-                    <p><input class="btn" type="button" value=" <<  " onkeypress=" " onclick="delTodos();" 		 title="Remover todas as visıes do Agente" /></p>
+                    <p><input class="btn" type="button" value=" >>  " onkeypress=" " onclick="addTodos();" 		 title="Adicionar todas as vis√µes para o Agente" /></p>
+                    <p><input class="btn" type="button" value="  >  " onkeypress=" " onclick="addSelecionado();" title="Adicionar a vis√£o selecionada para o Agente" /></p>
+                    <p><input class="btn" type="button" value="  <  " onkeypress=" " onclick="delSelecionado();" title="Remover a vis√£o selecionada do Agente" /></p>
+                    <p><input class="btn" type="button" value=" <<  " onkeypress=" " onclick="delTodos();" 		 title="Remover todas as vis√µes do Agente" /></p>
                 </td>
                 <td class="centro" valign="top">
                     <label for="visaoAgente"> </label>
                     <select class="select w300" name="visaoAgente[]" id="visaoAgente" multiple="multiple" size="7">
                         <?php foreach ($this->visaoAgente as $visao) : ?>
-                            <option value="<?php echo $visao['idVerificacao']; ?>"><?php echo $visao['Descricao']; ?></option>
+                            <option value="<?php echo $visao['idVerificacao']; ?>"><?php echo utf8_encode($visao['Descricao']); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </td>
@@ -162,10 +162,10 @@
     </form>
 
 </div>
-<!-- ========== FIM CONTE⁄DO ========== -->
+<!-- ========== FIM CONTE√öDO ========== -->
 
-<!-- ========== INÕCIO RODAP… DO CONTE⁄DO ========== -->
+<!-- ========== IN√çCIO RODAP√â DO CONTE√öDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP… DO CONTE⁄DO ========== -->
+<!-- ========== FIM RODAP√â DO CONTE√öDO ========== -->
 
 <br clear="all" />

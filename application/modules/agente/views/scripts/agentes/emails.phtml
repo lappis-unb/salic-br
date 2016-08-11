@@ -14,11 +14,11 @@
 
 </script>
 
-<!-- ========== INÕCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== IN√çCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="#" title="Ir para InÌcio">InÌcio</a></li>
-        <li><a href="#" title="TramitaÁ„o de Documentos">Manter Agentes</a></li>
+        <li class="first"><a href="#" title="Ir para In√≠cio">In√≠cio</a></li>
+        <li><a href="#" title="Tramita√ß√£o de Documentos">Manter Agentes</a></li>
         <li class="last">Principal</li>
     </ul>
 </div>
@@ -26,15 +26,15 @@
 
 
 
-<!-- ========== INÕCIO TÕTULO ========== -->
+<!-- ========== IN√çCIO T√çTULO ========== -->
 <div id="titulo">
     <div>E-Mails <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÕTULO ========== -->
+<!-- ========== FIM T√çTULO ========== -->
 
 
 
-<!-- ========== INÕCIO CONTE⁄DO ========== -->
+<!-- ========== IN√çCIO CONTE√öDO ========== -->
 <div id="conteudo">
 
     <?php require_once "inc/cabecalho.php";?>
@@ -52,7 +52,7 @@
 
             <table id="tabEmail" class="tabela">
                 <tr>
-                    <th colspan="5">ADICIONE E-MAILS ATRAV…S DO FORMUL¡RIO ABAIXO</th>
+                    <th colspan="5">ADICIONE E-MAILS ATRAV√âS DO FORMUL√ÅRIO ABAIXO</th>
                 </tr>
                 <tr>
                     <td>
@@ -83,15 +83,15 @@
                         <input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
                         <label for="divulgarEmailS">Sim</label>
                         <input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked"   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-                        <label for="divulgarEmailN">N„o</label>
+                        <label for="divulgarEmailN">N√£o</label>
                     </td>
                     <td>
-                        <label>Para correpondÍncia? *</label>
+                        <label>Para correpond√™ncia? *</label>
                         <br />
                         <input type="radio" name="enviarEmail" id="enviarEmailS" value="1" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
                         <label for="enviarEmailS">Sim</label>
                         <input type="radio" name="enviarEmail" id="enviarEmailN" value="0" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-                        <label for="enviarEmailN">N„o</label>
+                        <label for="enviarEmailN">N√£o</label>
                     </td>
                 </tr>
 
@@ -120,15 +120,15 @@
                 <td><label>Tipo</label></td>
                 <td><label>E-mail</label></td>
                 <td><label>Divulgar?</label></td>
-                <td><label>Para correpondÍncia?</label></td>
+                <td><label>Para correpond√™ncia?</label></td>
                 <td></td>
             </tr>
             <?php foreach($this->emails as $e):?>
             <tr>
                 <td><?php echo $e->tipo ;?></td>
                 <td><?php echo $e->Descricao ;?></td>
-                <td><?php echo $e->Divulgar == "1" ? "SIM" : "N√O" ;?></td>
-                <td><?php echo $e->Status == "1" ? "SIM" : "N√O" ;?></td>
+                <td><?php echo $e->Divulgar == "1" ? "SIM" : "N√ÉO" ;?></td>
+                <td><?php echo $e->Status == "1" ? "SIM" : "N√ÉO" ;?></td>
                 <td width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('','<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluiemail', 'idInternet' => $e->idInternet, 'qtdEmail' => $this->qtdEmail));?>');" /></td>
             </tr>
             <?php endforeach; ?>
@@ -142,12 +142,12 @@
 
 
 </div>
-<!-- ========== FIM CONTE⁄DO ========== -->
+<!-- ========== FIM CONTE√öDO ========== -->
 
 
 
-<!-- ========== INÕCIO RODAP… DO CONTE⁄DO ========== -->
+<!-- ========== IN√çCIO RODAP√â DO CONTE√öDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP… DO CONTE⁄DO ========== -->
+<!-- ========== FIM RODAP√â DO CONTE√öDO ========== -->
 
 <br clear="all" />

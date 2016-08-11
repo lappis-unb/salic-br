@@ -154,7 +154,7 @@
             <div id="atalhos">
                 <ul>
                     <?php if (!empty($this->usuario->usu_identificacao) && !empty($this->usuario->usu_nome)){ ?>
-                    <li class="black">Usu&aacute;rio conectado: <strong>[<?php echo Validacao::mascaraCPFCNPJ($this->usuario->usu_identificacao); ?>] - <?php echo $this->usuario->usu_nome; ?></strong></li>
+                    <li class="black">Usu&aacute;rio conectado: <strong>[<?php echo Validacao::mascaraCPFCNPJ($this->usuario->usu_identificacao); ?>] - <?php echo utf8_encode($this->usuario->usu_nome); ?></strong></li>
                     <?php } ?>
                     <li class="sair"><a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), '', true); ?>" id="sairSistema" title="Sair do Sistema" onclick="logout(); return false;">Sair</a></li>
                 </ul>
@@ -296,7 +296,6 @@
                     </li>
                     <?php } ?>
                     <!-- ========== FIM MENU ANALISE ========== -->
-
 
 				<!-- ========== INICIO MENU ACOMPANHAMENTO ========== -->
                 <?php if(in_array($this->grupoAtivo, array(94,121,122,123,124,125,126,129,134,135,137,138,139))){ ?>
