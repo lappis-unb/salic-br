@@ -18,11 +18,14 @@ class vwMemoriaDeCalculo extends GenericModel {
 
     public function busca($idPronac) {
 
-        $select =  new Zend_Db_Expr("
-                SELECT idPronac,PRONAC,ValorProposta,OutrasFontes,ValorSolicitado,
-                       Elaboracao,ValorParecer,ValorSugerido
-                FROM SAC.dbo.vwMemoriaDeCalculo
-                WHERE idPronac = $idPronac ");
+        $table = Zend_Db_Table::getDefaultAdapter();
+
+        $select = $table->select()
+            ->from('vwMemoriaDeCalculo',
+                array('idPronac', 'PRONAC', 'ValorProposta', 'OutrasFontes', 'ValorSolicitado', 'Elaboracao', 'ValorParecer', 'ValorSugerido'),
+                'SAC.dbo')
+            ->where('idPronac = ?', $idPronac);
+
         try {
             $db = Zend_Registry::get('db');
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
