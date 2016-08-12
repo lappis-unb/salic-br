@@ -186,30 +186,20 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
 
     public static function buscarPlanilhaOrcamentaria($idPreProjeto)
     {
+        $table = Zend_Db_Table::getDefaultAdapter();
+        $select = $table->select()
+            ->from('tbPlanilhaProposta',
+                array('idPLanilhaProposta', 'idProjeto', 'idProduto', 'idEtapa', 'idPlanilhaItem',
+                      'Descricao', 'Unidade', 'Quantidade', 'Ocorrencia', 'ValorUnitario', 'QtdeDias',
+                      'FonteRecurso','UfDespesa', 'MunicipioDespesa', 'idUsuario'),
+                'SAC.dbo')
+            ->where('idProjeto = ? ', $idPreProjeto)
+            ->order(array('idEtapa', 'Descricao'));
+
         $db  = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-                $sql = "SELECT
-                        idPlanilhaProposta,
-                        idProjeto,
-                        idProduto,
-                        idEtapa,
-                        idPlanilhaItem,
-                        Descricao,
-                        Unidade,
-                        Quantidade,
-                        Ocorrencia,
-                        ValorUnitario,
-                        QtdeDias,
-                         FonteRecurso,
-                        UfDespesa,
-                        MunicipioDespesa,
-                        idUsuario
-                    FROM
-                        sac.dbo.tbPlanilhaProposta
-                    WHERE idProjeto = $idPreProjeto
-                    ORDER BY idEtapa,Descricao
-                ";        
-        $resultado = $db->fetchAll($sql);
+
+        $resultado = $db->fetchAll($select);
         return $resultado;
     }
 
