@@ -26,11 +26,8 @@ class GenericModel extends Zend_Db_Table_Abstract {
     public function getBanco($strName = '')
     {
         $db = Zend_Db_Table::getDefaultAdapter();
-//        if ($strName != '') {
-//            $strName = $this->_banco;
-//        }
 
-        if ($db->getConfig()['host'] != '10.1.20.44') {
+        if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
             $strName = 'dbo';
         } else {
             $strName = $db->getConfig()['dbname'];
