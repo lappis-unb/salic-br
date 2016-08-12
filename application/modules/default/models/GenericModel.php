@@ -14,8 +14,101 @@ class GenericModel extends Zend_Db_Table_Abstract {
 
     private $_config;
 
+    /**
+     * @param string $strName
+     * @return string
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since 11/08/2016
+     *
+     * @todo melhorar e amadurecer codigo
+     */
+    public function getBanco($strName = '')
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+//        if ($strName != '') {
+//            $strName = $this->_banco;
+//        }
+
+        if ($db->getConfig()['host'] != '10.1.20.44') {
+            $strName = 'dbo';
+        } else {
+            $strName = $db->getConfig()['dbname'];
+        }
+        return  $strName;
+    }
+
+    /**
+     * @param $strName
+     * @param null $strSchema
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since 11/08/2016
+     *
+     * @todo melhorar e amadurecer codigo
+     */
+    public function getSchema($strSchema)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        if ($db->getConfig()['host'] != '10.1.20.44') {
+//            $strSchema = ucfirst($strSchema) . '.dbo';
+            if ($strSchema) {
+                $strSchema = $strSchema . '.dbo';
+            } else {
+                $strSchema = $this->_schema . '.dbo';
+            }
+        }
+
+        return $strSchema;
+    }
+
+    /**
+     * @param string $strName
+     * @param string $strSchema
+     * @return string
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since 11/08/2016
+     *
+     * @todo melhorar e amadurecer codigo
+     */
+    public function getName($strName = '', $strSchema = '')
+    {
+//        $db = Zend_Db_Table::getDefaultAdapter();
+
+//        if ($strSchema === '') $strSchema = $this->_schema;
+//        if ($strName === '') $strName = $this->_name;
+
+//        if ($db->getConfig()['host'] != '10.1.20.44') {
+//            $strName = ucfirst($strSchema) . '.dbo.' . $strName;
+//            $strName = ucfirst($strName);
+//        } else {
+//            $strName = strtolower($strSchema) . '.' . $strName;
+//            $strName = strtolower($strName);
+//        }
+
+        $strName = strtolower($strName);
+
+        return $strName;
+    }
+
+    public function init()
+    {
+        # Tratando o nome da tabela conforme o tipo de banco.
+        $this->_name = self::getName($this->_name);
+        $this->_banco = self::getBanco($this->_banco);
+        $this->_schema = self::getSchema($this->_schema);
+    }
+
+    /**
+     * GenericModel constructor.
+     *
+     * @todo verificar um tipo de SET TEXTSIZE 2147483647 para usar com o Postgres tambem.
+     */
     public function __construct() {
-        //FECHANDO A CONEXAO EXISTENTE JA QUE UMA NOVA SERA ABERTA
+
+        # FECHANDO A CONEXAO EXISTENTE JA QUE UMA NOVA SERA ABERTA
         $db = Zend_Db_Table::getDefaultAdapter();
         if(!empty($db)){
             $db->closeConnection();
@@ -32,8 +125,8 @@ class GenericModel extends Zend_Db_Table_Abstract {
             Zend_Db_Table::setDefaultAdapter(Zend_Db::factory($this->_config->db));
             parent::__construct();
 
-            //Setar o campo texto maior que 4096 caracteres aceitaveis por padr?o no PHP
-            $this->_db->query('SET TEXTSIZE 2147483647');
+            # Setar o campo texto maior que 4096 caracteres aceitaveis por padrao no PHP
+//            $this->_db->query('SET TEXTSIZE 2147483647');
         }
     }
 
@@ -50,9 +143,13 @@ class GenericModel extends Zend_Db_Table_Abstract {
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
      */
-    public function buscar($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
+    public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1) {
         $slct = $this->select();
-
+//echo '<pre>';
+//var_dump($this->getBanco());
+//var_dump($this->getName());
+//var_dump('$slct');
+//exit;
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
