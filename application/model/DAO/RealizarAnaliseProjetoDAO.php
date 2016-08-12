@@ -1123,16 +1123,39 @@ public static function divulgacaoProjetos($pronac){
 
 public static function divulgacaoProjetosGeral($pronac){
 
-	$sql = "
-		    SELECT d.idPlanoDivulgacao, v.idVerificacao as idVeiculo, v.Descricao as Veiculo, d.idPeca, v2.Descricao as Peca, logo.dsPosicao, doc.idArquivo, arq.nmArquivo
-                    FROM sac.dbo.PlanoDeDivulgacao d
-                    INNER JOIN sac.dbo.Projetos p on (d.idProjeto = p.idProjeto)
-                    INNER JOIN sac.dbo.Verificacao v on (d.idVeiculo = v.idVerificacao)
-                    INNER JOIN sac.dbo.Verificacao v2 on (d.idPeca = v2.idVerificacao)
-                    LEFT JOIN SAC.dbo.tbLogomarca as logo on logo.idPlanoDivulgacao = d.idPlanoDivulgacao
-                    LEFT JOIN BDCORPORATIVO.scCorp.tbDocumento as doc on doc.idDocumento = logo.idDocumento
-                    LEFT JOIN BDCORPORATIVO.scCorp.tbArquivo as arq on arq.idArquivo = doc.idArquivo
-                    WHERE p.IdPRONAC = '$pronac' AND d.stPlanoDivulgacao = 1";
+    $table = Zend_Db_Table::getDefaultAdapter();
+
+    $select = $table->select()
+        ->from(array('d' => 'PlanoDeDivulgacao'),
+            array('idPlanoDivulgacao', 'idPeca'),
+            'SAC.dbo')
+        ->joinInner(array('p' => 'Projetos'),
+            'd.idProjeto = p.idProjeto',
+            array(''),
+            'SAC.dbo')
+        ->joinInner(array('v' => 'Verificacao'),
+            'd.idVeiculo = v.idVerificacao',
+            array(new Zend_Db_Expr('v.idVerificacao AS idVeiculo'), new Zend_Db_Expr('v.Descricao AS Veiculo')),
+            'SAC.dbo')
+        ->joinInner(array('v2' => 'Verificacao'),
+            'd.idPeca = v2.idVerificacao',
+            array(new Zend_Db_Expr('v2.Descricao AS Peca')),
+            'SAC.dbo')
+        ->joinLeft(array('logo' => 'tbLogomarca'),
+            'logo.idPlanoDivulgacao = d.idPlanoDivulgacao',
+            array('dsPosicao'),
+            'SAC.dbo')
+        ->joinLeft(array('doc' => 'tbDocumento'),
+            'doc.idDocumento = logo.idDocumento',
+            array('idArquivo'),
+            'BDCORPORATIVO.scCorp')
+        ->joinLeft(array('arq' => 'tbArquivo'),
+            'arq.idArquivo = doc.idArquivo',
+            array('nmArquivo'),
+            'BDCORPORATIVO.scCorp')
+        ->where('p.IdPRONAC = ?', $pronac)
+        ->where('d.stPlanoDivulgacao = 1');
+
 
 	try
 			{
@@ -1143,7 +1166,7 @@ public static function divulgacaoProjetosGeral($pronac){
 			{
 				$this->view->message = "Erro ao buscar os Tipos de Documentos: " . $e->getMessage();
 			}
-			return $db->fetchAll($sql);
+			return $db->fetchAll($select);
 }
 
 public static function divulgacaoProjetosGeral2($pronac){
