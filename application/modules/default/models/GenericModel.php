@@ -48,7 +48,7 @@ class GenericModel extends Zend_Db_Table_Abstract {
     {
         $db = Zend_Db_Table::getDefaultAdapter();
 
-        if ($db->getConfig()['host'] != '10.1.20.44') {
+        if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
 //            $strSchema = ucfirst($strSchema) . '.dbo';
             if ($strSchema) {
                 $strSchema = $strSchema . '.dbo';
