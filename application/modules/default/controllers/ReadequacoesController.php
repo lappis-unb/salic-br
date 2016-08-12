@@ -3441,7 +3441,9 @@ class ReadequacoesController extends GenericControllerNew {
         // TODO: quando finalizar, mantem filtro de pronac caso estiver marca
         $auth = Zend_Auth::getInstance();
         $idCoordenador = $auth->getIdentity()->usu_codigo;
-
+        $pronacSelecionado = $this->_request->getParam("pronac");
+        $urlComplemento = ($pronacSelecionado) ? "&pronac=$pronacSelecionado" : "";
+        
         $get = Zend_Registry::get('get');
         $idReadequacao = (int) $get->id;
 
@@ -3925,9 +3927,9 @@ class ReadequacoesController extends GenericControllerNew {
         $return2 = $tbDistribuirReadequacao->update($dados, $where);
 
         if(!$return && !$return2){
-            parent::message("Não foi possível encaminhar a readequação para o Checklist de Publicação", "readequacoes/painel?tipoFiltro=analisados", "ERROR");
+            parent::message("Não foi possível encaminhar a readequação para o Checklist de Publicação", "readequacoes/painel?tipoFiltro=analisados" . $urlComplemento, "ERROR");
         }
-        parent::message("Readequação finalizada com sucesso!", "readequacoes/painel?tipoFiltro=analisados", "CONFIRM");
+        parent::message("Readequação finalizada com sucesso!", "readequacoes/painel?tipoFiltro=analisados" . $urlComplemento, "CONFIRM");
     }
 
 

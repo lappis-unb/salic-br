@@ -13,8 +13,10 @@
             window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'visualizar-readequacao')); ?>?id="+id;
         });
 
-        $('.finalizarAnaliseReadequacao').click(function(){
-            var id = $(this).attr('idReadequacao');
+        $('.finalizarAnaliseReadequacao').click(function(){          
+            var id = $(this).attr('idReadequacao'),
+                pronacSelecionado = $('#pronacSelecionado').val();
+            
             $("#alerta").dialog("destroy");
             $("#alerta").html('Deseja realmente finalizar a análise da readequação?');
             $("#alerta").dialog({
@@ -27,7 +29,8 @@
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
-                        window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'encaminhar-readequacao-checklist')); ?>?id="+id;
+                        var urlComplemento = (pronacSelecionado != '') ? '&pronac=' + pronacSelecionado : '';
+                        window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'encaminhar-readequacao-checklist')); ?>?id="+id + urlComplemento;
                     }
                 }
             });
@@ -36,6 +39,7 @@
 
         $('.devolverReadequacao').click(function(){
             var id = $(this).attr('idReadequacao');
+            
             $("#alerta").dialog("destroy");
             $("#alerta").html('Deseja realmente devolver a readequação para uma nova análise?');
             $("#alerta").dialog({
@@ -181,7 +185,7 @@ $situacoes = array(
             <tr class="divFiltroPesquisa">
                 <td class="destacar bold" width="60">PRONAC</td>
                 <td width="120">
-                    <input type="text" class="input_simples" name="pronac" maxlength="7" style="width: 70px;" value="<?php echo $this->pronac;?>">
+                    <input type="text" class="input_simples" name="pronac" maxlength="7" style="width: 70px;" value="<?php echo $this->pronac;?>" id="pronacSelecionado">
                     <input type="hidden" name="qtde" value="<?php echo $this->intTamPag;?>">
                 </td>
                 <td class="destacar bold" width="60">Situa&ccedil;&atilde;o</td>
