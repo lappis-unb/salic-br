@@ -10,7 +10,7 @@ private $intTamPag = 10;
 
     public function init()
     {
-        // verifica as permissões
+        // verifica as permissÃµes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor Salic
         parent::perfil(1, $PermissoesGrupo);
@@ -27,7 +27,7 @@ private $intTamPag = 10;
             $senha = Gerarsenha::gerasenha(15, true, true, true, true);
             $senhaFormatada = str_replace(">", "", str_replace("<", "", str_replace("'","", $senha)));
             $cpf = Mascara::delMaskCPF(filter_input(INPUT_POST, 'cpf'));
-            $sgcAcesso = new Sgcacesso();
+            $sgcAcesso = new Autenticacao_Model_Sgcacesso();
             $sgcAcessoBuscar = $sgcAcesso->buscar(array('Cpf = ?' => $cpf))->current();
 
             if($sgcAcessoBuscar) {
@@ -41,28 +41,26 @@ private $intTamPag = 10;
                 $sgcAcessoSave = $sgcAcesso->salvar($dados);
 
                 $email 		 = $scgAcessoDados['Email'];
-                $assunto 	 = "Alteração da senha de acesso";
+                $assunto 	 = "AlteraÃ§Ã£o da senha de acesso";
                 $perfil 	 = "SALICWEB";
                 $mens  		 = "Ol&aacute; " . $nome . ",<br><br>";
                 $mens 		.= "Senha....: " . $senhaFormatada . "<br><br>";
-                $mens 		.= "Esta &eacute; a sua senha tempor&aacute;ria de acesso ao Sistema de Apresentaç?o de Projetos via Web do ";
+                $mens 		.= "Esta &eacute; a sua senha tempor&aacute;ria de acesso ao Sistema de ApresentaÃ§?o de Projetos via Web do ";
                 $mens 		.= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
                 $mens 		.= "trocada no seu primeiro acesso ao sistema.<br><br>";
                 $mens 		.= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n?o responda.<br><br>";
                 $mens 		.= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
 
                 $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
-                parent::message("A senha gerada é <b>".$senhaFormatada."</b> encaminhe ao proponente.", "/principal", "ALERT");
+                parent::message("A senha gerada Ã© <b>".$senhaFormatada."</b> encaminhe ao proponente.", "/principal", "ALERT");
             }
-
-
         }
 
         if (filter_input(INPUT_POST, 'cpf')) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $cpf = filter_input(INPUT_POST, 'cpf');
 
-            $scgAcesso = new Sgcacesso();
+            $scgAcesso = new Autenticacao_Model_Sgcacesso();
             $sgcAcessoBuscar = $scgAcesso->buscar(array('Cpf = ?' => $cpf))->current();
 
             $json = array('error' => false);
@@ -82,7 +80,6 @@ private $intTamPag = 10;
 
     public function regerarsenhaAction()
     {
-
         if ( isset ($_POST['alterar'] )  )
         {
 
@@ -106,31 +103,28 @@ private $intTamPag = 10;
                 $usuariosSave = $usuarios->salvar($dados);
 
                 $email 		 = $_POST['email'];
-                $assunto 	 = "Alteração da senha de acesso";
+                $assunto 	 = "AlteraÃ§Ã£o da senha de acesso";
                 $perfil 	 = "SALICWEB";
                 $mens 		.= "Ol&aacute; " . $nome . ",<br><br>";
                 $mens 		.= "Senha....: " . $senha . "<br><br>";
-                $mens 		.= "Esta &eacute; a sua senha tempor&aacute;ria de acesso ao Sistema de Apresentaç?o de Projetos via Web do ";
+                $mens 		.= "Esta &eacute; a sua senha tempor&aacute;ria de acesso ao Sistema de ApresentaÃ§?o de Projetos via Web do ";
                 $mens 		.= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
                 $mens 		.= "trocada no seu primeiro acesso ao sistema.<br><br>";
                 $mens 		.= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n&atilde;o responda.<br><br>";
                 $mens 		.= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
 
-                parent::message("A senha gerada é <b>".$senha."</b> encaminhe ao usuario.", "/principal", "ALERT");
+                parent::message("A senha gerada Ã© <b>".$senha."</b> encaminhe ao usuario.", "/principal", "ALERT");
                 $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
 
             }
-
-
         }
-
 
         if ( isset ($_POST['cpf'] ) )
         {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $cpf = $_POST['cpf'];
 
-            $usuario = new Usuario();
+            $usuario = new Autenticacao_Model_Usuario();
             $usuariosBuscar = $usuario->pesquisarUsuarioOrgao(array ('usu_identificacao = ?' => $cpf))->current();
 
             if ( empty ( $usuariosBuscar ) )
@@ -166,7 +160,6 @@ private $intTamPag = 10;
                   die;
             }
 
-
             $json = array('error' => false);
             if($usuariosBuscar && $agentesBuscar && $internetBuscar)
             {
@@ -178,19 +171,17 @@ private $intTamPag = 10;
             echo $json;
             die;
         }
-
-
     }
 
     public function cadastrarusuarioexternoAction(){
 
-        $auth = Zend_Auth::getInstance();// instancia da autenticação
+        $auth = Zend_Auth::getInstance();// instancia da autenticaÃ§Ã£o
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idorgao = $auth->getIdentity()->usu_orgao;
         $usu_identificacao = $auth->getIdentity()->usu_identificacao;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessÃ£o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessÃ£o
+        $codOrgao = $GrupoAtivo->codOrgao; //  Ã“rgÃ£o ativo na sessÃ£o
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
 
@@ -218,11 +209,11 @@ private $intTamPag = 10;
             $pessoasIdentificacoes = new Pessoaidentificacoes();
             $pessoasIdentificacoesBuscar = $pessoasIdentificacoes->pesquisarPessoasDados(array('pdd_dado = ?' => $cpf))->current();
 
-            $usuarios = new Usuario();
+            $usuarios = new Autenticacao_Model_Usuario();
             $usuariosBuscar = $usuarios->buscar(array('usu_identificacao = ?' => $cpf))->current();
 
             if(!empty($usuariosBuscar)){
-                parent::message("CPF já cadastrado!", "/manterusuario/cadastrarusuarioexterno", "ALERT");
+                parent::message("CPF jÃ¡ cadastrado!", "/manterusuario/cadastrarusuarioexterno", "ALERT");
             }
 
             $pessoa = new Pessoas();
@@ -304,7 +295,7 @@ private $intTamPag = 10;
             if (isset($get->pag)) $pag = $get->pag;
             if (isset($get->tamPag)) $this->intTamPag = $get->tamPag;
             $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
-            $pesquisaOrgaoUsuario = new Usuario();
+            $pesquisaOrgaoUsuario = new Autenticacao_Model_Usuario();
             $total = $pesquisaOrgaoUsuario->pesquisarTotalUsuarioOrgao();
             $tamanho = (($inicio+$this->intTamPag)<=$total) ? $this->intTamPag : $total- ($inicio+$this->intTamPag) ;
             $fim = $inicio + $this->intTamPag;
@@ -338,7 +329,7 @@ private $intTamPag = 10;
             $this->view->perfisNomes = $arrPerfisNomes;
             $this->view->parametrosBusca = $_REQUEST;
 
-         	//Envia para tela que irá gerar todos os registro em PDF
+         	//Envia para tela que irÃ¡ gerar todos os registro em PDF
             if(isset($_POST['imprimirResumo']) && !empty($_POST['imprimirResumo'])  && $_POST['imprimirResumo'] == 'html')
             {
 	            $resultadoOrgaoUsuario2 = $usuariosOrgaosGrupos->buscarUsuariosOrgaosGruposSigla(array(),array( 'gru_nome ASC', 'usu_nome asc'));
@@ -549,7 +540,7 @@ private $intTamPag = 10;
                 $this->view->perfisNomes = "";
             }
 
-        	//Envia para tela que irá gerar todos os registro em PDF
+        	//Envia para tela que irÃ¡ gerar todos os registro em PDF
             if(isset($_POST['imprimirResumo']) && !empty($_POST['imprimirResumo'])  && $_POST['imprimirResumo'] == 'html')
             {
 	            if ( isset ( $_SESSION['dados'] ) || isset ( $dados ) )
@@ -597,7 +588,7 @@ private $intTamPag = 10;
             if (isset($get->pag)) $pag = $get->pag;
             if (isset($get->tamPag)) $this->intTamPag = $get->tamPag;
             $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
-            $pesquisaOrgaoUsuario = new Usuario();
+            $pesquisaOrgaoUsuario = new Autenticacao_Model_Usuario();
             $total = $pesquisaOrgaoUsuario->pesquisarTotalUsuarioOrgao();
             $tamanho = (($inicio+$this->intTamPag)<=$total) ? $this->intTamPag : $total- ($inicio+$this->intTamPag) ;
             $fim = $inicio + $this->intTamPag;
@@ -632,7 +623,7 @@ private $intTamPag = 10;
             $this->view->perfisNomes = $arrPerfisNomes;
             $this->view->parametrosBusca = $_REQUEST;
 
-        	//Envia para tela que irá gerar todos os registro em PDF
+        	//Envia para tela que irÃ¡ gerar todos os registro em PDF
             if(isset($_POST['imprimirResumo']) && !empty($_POST['imprimirResumo'])  && $_POST['imprimirResumo'] == 'html')
             {
             	$resultadoOrgaoUsuario2 = $usuariosOrgaosGrupos->buscarUsuariosOrgaosGruposSigla(array(),array( 'gru_nome ASC', 'usu_nome asc'));
@@ -699,15 +690,15 @@ private $intTamPag = 10;
 
     public function perfissalicwebAction()
     {
-            $auth = Zend_Auth::getInstance();// instancia da autenticaçao
+            $auth = Zend_Auth::getInstance();// instancia da autenticaÃ§ao
 
             $idusuario         = $auth->getIdentity()->usu_codigo;
             $idorgao           = $auth->getIdentity()->usu_orgao;
             $usu_identificacao = $auth->getIdentity()->usu_identificacao;
 
-            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-            $codGrupo   = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-            $codOrgao   = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessÃ£o com o grupo ativo
+            $codGrupo   = $GrupoAtivo->codGrupo; //  Grupo ativo na sessÃ£o
+            $codOrgao   = $GrupoAtivo->codOrgao; //  Ã“rgÃ£o ativo na sessÃ£o
 
             $this->view->codOrgao = $codOrgao;
             $this->view->idUsuarioLogado = $idusuario;
@@ -788,7 +779,7 @@ private $intTamPag = 10;
                 {
                 	if(count($buscardados) > 0)
 		            {
-		                parent::message("Perfil já cadastrado!", "/manterusuario/permissoessalic", "CONFIRM");
+		                parent::message("Perfil jÃ¡ cadastrado!", "/manterusuario/permissoessalic", "CONFIRM");
 		            }
 
                     $dados = array(
@@ -835,7 +826,7 @@ private $intTamPag = 10;
             $this->view->perfil_nome = $perfilUsuario->gru_nome;
         }
 
-        	//============Trazer a Unidade para cadastrar o Perfil/Usuário externo, faz um tratamento para não trazer órgão em branco=================
+        	//============Trazer a Unidade para cadastrar o Perfil/UsuÃ¡rio externo, faz um tratamento para nÃ£o trazer Ã³rgÃ£o em branco=================
             $orgaos = new Orgaos();
             $this->view->orgaos  = $orgaos->buscar(array('Sigla != ?'=>''), array('Sigla'));
     }

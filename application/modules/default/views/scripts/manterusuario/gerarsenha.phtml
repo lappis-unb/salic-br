@@ -8,17 +8,17 @@ label.error{color:red;}
 		// Define as regras
 		rules:{
                         cpf:{
-				// campoNome ser� obrigat�rio (required) e ter� tamanho m�nimo (minLength)
-				required: true, 
+				// campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
+				required: true,
                                 minlength: 14,
                                 verificaCPF: true
 			},
 			nome:{
-				// campoNome ser� obrigat�rio (required) e ter� tamanho m�nimo (minLength)
+				// campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
 				required: true, minlength: 5
 			},
 			email:{
-				// campoEmail ser� obrigat�rio (required) e precisar� ser um e-mail v�lido (email)
+				// campoEmail será obrigatório (required) e precisará ser um e-mail válido (email)
 				required: true, email: true, minlength: 2
 			}
 
@@ -27,17 +27,17 @@ label.error{color:red;}
 		messages:{
                         cpf:{
 				required: " Informe o CPF",
-				minlength: " O CPF deve conter no m�nimo 11 caracteres",
+				minlength: " O CPF deve conter no mínimo 11 caracteres",
                                 verificaCPF: " Informe CPF v&aacute;lido"
 			},
 			nome:{
 				required: " Informe o Nome",
-				minlength: " O nome deve conter no m�nimo 5 caracteres"
+				minlength: " O nome deve conter no mínimo 5 caracteres"
 			},
 			email:{
 				required: " Informe o E-mail",
-				email: " Digite um e-mail v�lido",
-                                minlength: " O nome deve conter no m�nimo 2 caracteres"
+				email: " Digite um e-mail válido",
+                                minlength: " O nome deve conter no mínimo 2 caracteres"
 			}
 		}
 	});
@@ -49,7 +49,7 @@ label.error{color:red;}
             $.ajax({ //funcao jquery para enviar os formularios via ajax
                 type: "POST",
                 dataType: 'json',
-                url:  "<?php echo $this->url(array('controller' => 'manterusuario', 'action' => 'gerarsenha')); ?>",
+                url:  "<?php echo $this->url(array('module'=>'default', 'controller' => 'manterusuario', 'action' => 'gerarsenha')); ?>",
                 data: {
                     cpf : cpfLimpo
                 },
@@ -90,14 +90,14 @@ function replaceAll(string, token, newtoken) {
 }
 
     function carregaCampo(cpf){
-        
+
    }
 
 
 </script>
 
 
-<!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div style="display:none" id="confirm">Por favor, informe seu email!</div>
 <div style="display:none" id="dialog-alert2"></div>
 <div style="display:none" id="confirmInforma">Por favor, digite seu email corretamente!</div>
@@ -105,27 +105,27 @@ function replaceAll(string, token, newtoken) {
 
 <ul>
 <li class="first"><a href="<?php echo $this->url(array('controller' => 'cadastrarusuario', 'action' => 'index')); ?>">In&iacute;cio</a></li>
-<li class="last">Cadastrar Usu�rio</li>
+<li class="last">Cadastrar Usuário</li>
 </ul>
 
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 
-<!-- ========== IN�CIO T�TULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 
 <div id="titulo">
 <div>Regerar Senha Proponente<span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 
 </div>
-<!-- ========== FIM T�TULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 
 
 
-<!-- ========== IN�CIO CONTE�DO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 
 	<div id="conteudo">
-<fieldset><legend>Informa��es</legend>
+<fieldset><legend>Informações</legend>
 
             <form method="POST" action="<?php echo $this->url(array('controller' => 'manterusuario', 'action' => 'gerarsenha')); ?>" name="gerarSenha" id="gerarSenha">
                 <center>
@@ -165,14 +165,14 @@ function replaceAll(string, token, newtoken) {
         </div>
 
 
-<!-- ========== FIM CONTE�DO ========== -->
+<!-- ========== FIM CONTEï¿½DO ========== -->
 
 
 
-<!-- ========== IN�CIO RODAP� DO CONTE�DO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 	<div id="rodapeConteudo"><span></span></div>
 
-<!-- ========== FIM RODAP� DO CONTE�DO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 			<br clear="all" />
 
 

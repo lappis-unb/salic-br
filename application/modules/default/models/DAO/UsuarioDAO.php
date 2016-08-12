@@ -31,9 +31,9 @@ class UsuarioDAO extends Zend_Db_Table
 				FROM TABELAS.dbo.Usuarios
 
 				WHERE usu_identificacao = '" . $username . "'
-					AND usu_senha = (SELECT TABELAS.dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') 
-									 FROM TABELAS.dbo.Usuarios 
-									 WHERE usu_identificacao = '" . $username . "') 
+					AND usu_senha = (SELECT TABELAS.dbo.fnEncriptaSenha('" . $username . "', '" . $password . "')
+									 FROM TABELAS.dbo.Usuarios
+									 WHERE usu_identificacao = '" . $username . "')
 					AND usu_status = 1";
 
 		$db = Zend_Registry::get('db');
@@ -90,7 +90,7 @@ class UsuarioDAO extends Zend_Db_Table
 	 */
 	public function alterarSenha($username, $password)
 	{
-		$sql = "UPDATE Tabelas.dbo.Usuarios 
+		$sql = "UPDATE Tabelas.dbo.Usuarios
 					SET usu_senha = TABELAS.dbo.fnEncriptaSenha('" . $username . "', '" . $password . "')
 				WHERE usu_identificacao = '" . $username . "'";
 
@@ -145,7 +145,7 @@ class UsuarioDAO extends Zend_Db_Table
 		$db = Zend_Registry::get('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
-	} // fecha método buscarUnidades()
+	}
 
 
 
@@ -159,7 +159,7 @@ class UsuarioDAO extends Zend_Db_Table
 	public static function getIdUsuario($usu_codigo)
 	{
 		$sql = "SELECT usu_codigo
-					,idAgente 
+					,idAgente
 				FROM Tabelas.dbo.Usuarios u
 					INNER JOIN Agentes.dbo.Agentes a ON (u.usu_identificacao = a.CNPJCPF)
 				WHERE usu_codigo = $usu_codigo";
@@ -187,8 +187,8 @@ class UsuarioDAO extends Zend_Db_Table
 	 */
 	public static function buscarUsuarioScriptcase($cod)
 	{
-		$sql = "SELECT * 
-				FROM ControleDeAcesso.dbo.SGCacesso 
+		$sql = "SELECT *
+				FROM ControleDeAcesso.dbo.SGCacesso
 				WHERE IdUsuario = $cod";
 
 		$db = Zend_Registry::get('db');
@@ -198,19 +198,19 @@ class UsuarioDAO extends Zend_Db_Table
 
 	public static function buscarUsuario($cod)
 	{
-		$sql = "SELECT * 
-				FROM TABELAS.dbo.Usuarios 
+		$sql = "SELECT *
+				FROM TABELAS.dbo.Usuarios
 				WHERE usu_codigo = $cod";
 
 		$db = Zend_Registry::get('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	}
-	
+
 	public static function buscarUsuarioCpf($cpf)
 	{
-		$sql = "SELECT * 
-				FROM TABELAS.dbo.Usuarios 
+		$sql = "SELECT *
+				FROM TABELAS.dbo.Usuarios
 				WHERE usu_identificacao = $cpf";
 
 		$db = Zend_Registry::get('db');
@@ -229,38 +229,40 @@ class UsuarioDAO extends Zend_Db_Table
 	{
 		// busca pelo usuário no banco de dados
 		$buscar = UsuarioDAO::buscarUsuarioScriptcase($cod);
-		$conexao = Zend_Registry::get('conexao_banco');
+		//$conexao = Zend_Registry::get('conexao_banco');
 
-		if ($conexao == "conexao_01")
-		{
-			$conexao_scriptcase = "conexao_scriptcase_01";
-		}
-		else if ($conexao == "conexao_02")
-		{
-			$conexao_scriptcase = "conexao_scriptcase_02";
-		}
-		else if ($conexao == "conexao_03")
-		{
-			$conexao_scriptcase = "conexao_scriptcase_03";
-		}
-		else if ($conexao == "conexao_04")
-		{
-			$conexao_scriptcase = "conexao_scriptcase_04";
-		}
-		else if ($conexao == "conexao_05")
-		{
-			$conexao_scriptcase = "conexao_scriptcase_05";
-		}
-                else if($conexao == "conexao_xti")
-                {
-                        $conexao_scriptcase = "conexao_xti_controle_acesso";
-                }
+		//if ($conexao == "conexao_01")
+		//{
+			//$conexao_scriptcase = "conexao_scriptcase_01";
+		//}
+		//else if ($conexao == "conexao_02")
+		//{
+			//$conexao_scriptcase = "conexao_scriptcase_02";
+		//}
+		//else if ($conexao == "conexao_03")
+		//{
+			//$conexao_scriptcase = "conexao_scriptcase_03";
+		//}
+		//else if ($conexao == "conexao_04")
+		//{
+			//$conexao_scriptcase = "conexao_scriptcase_04";
+		//}
+		//else if ($conexao == "conexao_05")
+		//{
+			//$conexao_scriptcase = "conexao_scriptcase_05";
+		//}
+                //else if($conexao == "conexao_xti")
+                //{
+                        //$conexao_scriptcase = "conexao_xti_controle_acesso";
+                //}
 
-		// configurações do banco de dados (seta uma nova conexão no arquivo config.ini)
-		$config = new Zend_Config_Ini('./application/configs/config.ini', $conexao_scriptcase);
-                //xd($config);
-		$db     = Zend_Db::factory($config->db);
-		Zend_Db_Table::setDefaultAdapter($db);
+		//// configurações do banco de dados (seta uma nova conexão no arquivo config.ini)
+		//$config = new Zend_Config_Ini('./application/configs/config.ini', $conexao_scriptcase);
+                ////xd($config);
+		//$db     = Zend_Db::factory($config->db);
+        $db = Zend_Db_Table::getDefaultAdapter();
+;
+		//Zend_Db_Table::setDefaultAdapter($db);
 
 		if ($buscar) // realiza a autenticação
 		{

@@ -36,7 +36,7 @@ class ListarprojetosController extends MinC_Controller_Action_Abstract {
         $this->cpfLogado = $cpf;
 
         // Busca na SGCAcesso
-        $sgcAcesso = new Sgcacesso();
+        $sgcAcesso = new Autenticacao_Model_Sgcacesso();
         $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
 
         // Busca na Usuarios
