@@ -7,12 +7,13 @@ Class ProponenteDAO extends Zend_Db_Table
 
     public function execPaProponente($idPronac)
     {
-        $sql = sprintf("exec SAC.dbo.paAgente %d",$idPronac);
+        $idPronac = preg_replace("/[^0-9]/","", $idPronac); //REMOVE injections
+        $sql = "exec SAC.dbo.paAgente $idPronac";
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-       // x($sql);
         $resultado = $db->fetchAll($sql);
-       // xd($resultado);
+
+       
         return $resultado;
     }
 
@@ -263,6 +264,8 @@ Class ProponenteDAO extends Zend_Db_Table
 					AND A.idAgente = N.idAgente
 					AND I.CgcCpf = A.CNPJCPF
 					AND P.IdPRONAC = $idPronac";
+
+
 
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
