@@ -1,5 +1,4 @@
 <?php if($this->menuLateral != 'false'){ ?>
-
     <div id="confirma"></div>
     <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
     <div id="menu">
@@ -58,7 +57,6 @@
                         <?php } ?>
                     <?php } ?>
 
-
                     <?php if(($this->grupoativo == "137") or ($this->grupoativo == "93")){ ?>
                         <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'painelcredenciamento'),'',true);?>" title="Ir para Incluir Agente" >Pesquisar Parecerista</a>
 
@@ -70,8 +68,8 @@
                     <div class="sumir">
                         <!-- Se for Proponente ou Gestor Salic -->
                         <?php if(($this->grupoativo == "144") or ($this->grupoativo == "97")){ ?>
-                        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'index'),'',true);?>" title="Ir para Vincular Respons·vel">Vincular Respons·vel </a>
-                        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'desvincularresponsavel'),'',true);?>" title="Ir para Desvincular Respons·vel" >Desvincular Respons·vel</a>
+                        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'index'),'',true);?>" title="Ir para Vincular Respons√°vel">Vincular Respons√°vel </a>
+                        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'desvincularresponsavel'),'',true);?>" title="Ir para Desvincular Respons√°vel" >Desvincular Respons√°vel</a>
                         <?php } ?>
                     </div>
 
@@ -79,7 +77,7 @@
                         <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes', 'id' => $this->id),'',true);?>" title="Ir para Dados do Agente">Dados Principais</a>
 
                         <?php if(($this->grupoativo != "93")){ ?>
-                        <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'enderecos', 'id' => $this->id),'',true);?>" title="Ir para EndereÁos">EndereÁos</a>
+                        <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'enderecos', 'id' => $this->id),'',true);?>" title="Ir para Endere√ßos">Endere√ßos</a>
                         <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'telefones', 'id' => $this->id),'',true);?>" title="Ir para Telefones">Telefones</a>
                         <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'emails', 'id' => $this->id),'',true);?>" title="Ir para Emails">Emails</a>
                         <?php } ?>
@@ -88,9 +86,9 @@
                         <?php if(($this->grupoativo == "94") || ($this->grupoativo == "137") || ($this->grupoativo == "97") || ($this->grupoativo == "93")){ ?>
                             <?php if($this->parecerista == "sim"){ ?>
                                 <?php if(($this->grupoativo != "93")){ ?>
-                                <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'escolaridade', 'id' => $this->id),'',true);?>" title="Ir para FormaÁ„o">Escolaridade/Cursos</a>
-                                <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'formacao', 'id' => $this->id),'',true);?>" title="Ir para FormaÁ„o">InformaÁıes Profissionais</a>
-                                <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'ferias', 'id' => $this->id),'',true);?>" title="Ir para FÈrias">FÈrias</a>
+                                <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'escolaridade', 'id' => $this->id),'',true);?>" title="Ir para Forma√ß√£o">Escolaridade/Cursos</a>
+                                <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'formacao', 'id' => $this->id),'',true);?>" title="Ir para Forma√ß√£o">Informa√ß√µes Profissionais</a>
+                                <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'ferias', 'id' => $this->id),'',true);?>" title="Ir para F√©rias">F√©rias</a>
                                 <?php } ?>
 
                                 <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'atestados', 'id' => $this->id),'',true);?>" title="Ir para Atestados">Atestados</a>
@@ -100,7 +98,7 @@
                         <!-- Se for Parecerista, Coordenador de PRONAC ou Gestor Salic -->
                         <?php if( ($this->grupoativo == "93") || ($this->grupoativo == "97")){ ?>
                             <?php if($this->parecerista == "sim"){ ?>
-                            <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'ferias', 'id' => $this->id),'',true);?>" title="Ir para FÈrias">Gerenciar FÈrias</a>
+                            <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'ferias', 'id' => $this->id),'',true);?>" title="Ir para F√©rias">Gerenciar F√©rias</a>
                             <?php } ?>
                         <?php } ?>
 
@@ -115,7 +113,7 @@
                         <?php } ?>
 
                         <?php if(($this->grupoativo != "94") && ($this->grupoativo != "118")&& ($this->grupoativo != "93")){ ?>
-                        <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'alterarvisao', 'id' => $this->id),'',true);?>" title="Ir para Visıes">Visıes</a>
+                        <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'alterarvisao', 'id' => $this->id),'',true);?>" title="Ir para Vis√µes">Vis√µes</a>
                         <?php } ?>
 
 
@@ -124,7 +122,7 @@
                             <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'natureza', 'id' => $this->id),'',true);?>" title="Ir para Natureza">Natureza</a>
                         <?php } else { ?>
                             <!-- Se for CPF -->
-                            <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'info-adicionais', 'id' => $this->id),'',true);?>" title="Ir para InformaÁıes Adicionais">InformaÁıes Adicionais</a>
+                            <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'info-adicionais', 'id' => $this->id),'',true);?>" title="Ir para Informa√ß√µes Adicionais">Informa√ß√µes Adicionais</a>
                         <?php } ?>
 
                         <?php if(($this->grupoativo == "120") || ($this->grupoativo == "97")){ ?>

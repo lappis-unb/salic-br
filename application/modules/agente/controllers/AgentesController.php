@@ -120,7 +120,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                     $select[$a]['Descricao'] = $visaoGrupo->Descricao;
                 }
 
-
                 $a++;
             }
         }
@@ -129,8 +128,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         //verifica se a funcionadade devera abrir em modal
         if ($this->_request->getParam("modal") == "s") {
-            $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-            header("Content-Type: text/html; charset=ISO-8859-1");
+            $this->_helper->layout->disableLayout();
             $this->modal = "s";
             $this->view->modal = "s";
         } else {

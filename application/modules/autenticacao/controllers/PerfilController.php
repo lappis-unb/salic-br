@@ -32,7 +32,9 @@ class Autenticacao_PerfilController extends MinC_Controller_Action_Abstract
         if($GrupoAtivo->codGrupo == "1111" && $GrupoAtivo->codOrgao == "2222"){
             $auth   = Zend_Auth::getInstance();
             $tblSGCacesso = new Autenticacao_Model_Sgcacesso();
-            $rsSGCacesso = $tblSGCacesso->buscar(array("Cpf = ? "=>$auth->getIdentity()->usu_identificacao))->current()->toArray();
+            $cpf = $auth->getIdentity()->usu_identificacao;
+            //$cpf = '00154249017';
+            $rsSGCacesso = $tblSGCacesso->buscar(array("Cpf = ? " => $cpf))->current()->toArray();
             $objAuth = $auth->getStorage()->write((object)$rsSGCacesso);
 
             $_SESSION["GrupoAtivo"]["codGrupo"] = $GrupoAtivo->codGrupo;

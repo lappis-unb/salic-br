@@ -5,13 +5,13 @@
 	        var html = $("#info").html();
 	        $("#html").val(html);
 	        $(".noPDF").show();
-	
+
 	        document.permissoes.submit();
-	
+
 	    });*/
 		$("#btn_imprimir").click(function(){
 			$("#frmPaginacao").attr('target', '_blank');
-            $("#frmPaginacao").submit(); 
+            $("#frmPaginacao").submit();
         });
 	});
 
@@ -42,7 +42,7 @@
 
 </script>
 <div id="confirm" title="Confirma&ccedil;&atilde;o"	style="display: none">Tem certeza que deseja excluir o registro?</div>
-<!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div style="display: none" id="confirm">Por favor, informe seu email!</div>
 <div style="display: none" id="dialog-alert2"></div>
 <div style="display: none" id="confirmInforma">Por favor, digite seu email corretamente!</div>
@@ -51,28 +51,28 @@
 <ul>
 	<li class="first"><a
 		href="<?php echo $this->url(array('controller' => 'manterusuario', 'action' => 'cadastrarusuarioexterno')); ?>">In&iacute;cio</a></li>
-	<li class="last">Cadastrar Usu�rio</li>
+	<li class="last">Cadastrar Usuário</li>
 </ul>
 
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 
-<!-- ========== IN�CIO T�TULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 
 <div id="titulo">
 <div>Permiss&otilde;es do SalicWeb<span></span> <span class="voltar"><a
 	href="javascript:voltar();">Voltar</a></span></div>
 
 </div>
-<!-- ========== FIM T�TULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 
 
 
-<!-- ========== IN�CIO CONTE�DO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 
 <div id="conteudo" align="center">
-<fieldset><legend>Informa��es</legend>
+<fieldset><legend>Informações</legend>
 
 <form method="POST" action="<?php echo $this->url(array('controller' => 'manterusuario', 'action' => 'gerar-pdf')); ?>"	target="_blank" name="permissoes" id="permissoes">
 	<div id="info">
@@ -88,10 +88,10 @@
 		<table class="tabela">
 			<thead>
 				<tr>
-					<th colspan="7">Perfis/Usu�rios do Sistema</th>
+					<th colspan="7">Perfis/Usuários do Sistema</th>
 				</tr>
 			</thead>
-		
+
 			<?php foreach ($this->perfis as $gru_codigo=>$perfil) {?>
 			<tr>
 				<td colspan="7">Perfil: <?php echo $this->perfisNomes[$gru_codigo]?></td>
@@ -114,9 +114,9 @@
 				<td><?php echo $resultadoOrgaoUsuario['usu_orgaolotacao']?></td>
 				<td><?php echo $resultadoOrgaoUsuario['usu_telefone']?></td>
 				<td><?php echo $resultadoOrgaoUsuario['org_siglaautorizado'] ?></td>
-		
+
 				<?php if ( $resultadoOrgaoUsuario['uog_status'] == 1 ) {?>
-		
+
 				<td><font color="green">Habilitado</font></td>
 				<?php } else {?>
 				<td><font color="red">Desabilitado</font></td>
@@ -182,8 +182,8 @@
 </table>
 			<?php } ?></fieldset>
 </div>
-<!-- ========== FIM CONTE�DO ========== -->
-<!-- ========== IN�CIO RODAP� DO CONTE�DO ========== -->
+<!-- ========== FIM CONTEï¿½DO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP� DO CONTE�DO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 <br clear="all" />

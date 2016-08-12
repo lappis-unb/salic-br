@@ -34,9 +34,9 @@ class EmailDAO extends Zend_Db_Table
         return $mail->send($transport);
     }
 
-        /**
+     /**
 	 * Método para buscar e-mails
-         * Módulo Fiscalizar Projetos - Comunicar Proponente da Fiscalização
+     * Módulo Fiscalizar Projetos - Comunicar Proponente da Fiscalização
 	 * @access public
 	 * @static
 	 * @param string $email

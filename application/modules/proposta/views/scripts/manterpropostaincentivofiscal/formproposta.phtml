@@ -422,7 +422,7 @@ $(document).ready(function()
                     <td colspan="5">Nome da Proposta Cultural *
                         <input type="text" class="input_simples" name="nomeProjeto" id="nomeProjeto" maxlength="500" title="Nome da Proposta Cultural"  style="width:50em;" value="<?php
                                     if (isset($this->proposta->idPreProjeto))
-                                        echo str_replace("'", "", str_replace("\"", "", $this->proposta->NomeProjeto));
+                                        echo str_replace("'", "", str_replace("\"", "", ($this->proposta->NomeProjeto)));
 ?>"/>
                     </td>
                 </tr>

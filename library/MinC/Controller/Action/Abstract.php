@@ -357,13 +357,13 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                     $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "principal/index", "ALERT");
                 }
 
-                // manda os dados para a vis?o
+                // manda os dados para a visão
                 $this->view->usuario     = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
                 $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
                 $this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
                 $this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
             } // fecha else
-        } // fecha else if
+        }
         // ========== FIM AUTENTICA??O ZEND ==========
 
         if(!empty($grupos)){

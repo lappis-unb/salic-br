@@ -1,0 +1,5 @@
+[Xti]
+resource.db.adapter = Pdo_Mssql
+resource.db.params.adapterNamespace = 
+resource.db.params.username = 
+resource.db.params.password = 

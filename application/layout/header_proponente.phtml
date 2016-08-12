@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
     <head>
-
         <?php if(in_array($_SERVER["HTTP_HOST"], array('novosalic.cultura.gov.br', 'www.novosalic.cultura.gov.br', 'http://novosalic.cultura.gov.br', 'http://www.novosalic.cultura.gov.br'))){ ?>
         <!-- Piwik -->
         <script type="text/javascript">
@@ -19,7 +18,6 @@
         </script>
         <!-- End Piwik Code -->
         <?php } ?>
-
         <title>Salic - Sistema de Apoio às Leis de Incentivo à Cultura</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="title" content="Sistema Salic" />
@@ -170,9 +168,7 @@
             if ( isset ($auth->getIdentity()->Cpf) ) :
         ?>
 
-        <!-- ================================= -->
         <!-- ========== INÍCIO MENU ========== -->
-        <!-- ================================= -->
         <div id="navglobal">
             <ul>
                 <li class="noOverHere"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), '', true); ?>" class="home" title="Início"><span>Início</span></a></li>
@@ -189,7 +185,7 @@
                                     <?php if($this->idAgenteKeyLog != 0){ ?>
                                     <li><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'consultarresponsaveis'), '', true, '', true); ?>" title="Ir para Aceitar vinculo">Gerenciar responsáveis</a></li>
                                     <?php } ?>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'procuracao', 'action' => 'index'),'',true); ?>">Procura&ccedil;&atilde;o</a></li>
+                                    <!-- li><a href="<?php echo $this->url(array('controller' => 'procuracao', 'action' => 'index'),'',true); ?>">Procura&ccedil;&atilde;o</a></li-->
 
                                 </ul>
                             </div>
@@ -223,7 +219,7 @@
 
 
                 <!-- ========== INÍCIO MENU PROJETO ========== -->
-                <li>
+                <!--li>
                     <div id="div">
                         <div id="divleft"></div>
                         <div id="divmenuprincipalcenter">
@@ -236,12 +232,8 @@
                         </div>
                         <div id="divrigth"></div>
                     </div>
-                </li>
+                </li-->
                 <!-- ========== FIM MENU PROJETO ========== -->
-
-
-
-
 
                 <!-- ========== INÍCIO MENU PROTOCOLO ========== -->
                 <li>
@@ -261,9 +253,6 @@
                 </li>
                 <!-- ========== FIM MENU PROTOCOLO ========== -->
 
-
-
-
                 <!-- ========== INICIO MENU MANUAIS ========== -->
                 <li>
                     <div id="div">
@@ -279,7 +268,7 @@
                                     <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Proposta.pdf', '_blank');" title="Ir para Proposta">Manual - Como Apresentar sua Proposta Cultural</a></li>
                                     <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Prorrogacao_da_Captacao.pdf', '_blank');" title="Ir para Prorroga&ccedil;&atilde;o da Capta&ccedil;&atilde;o">Prorroga&ccedil;&atilde;o da Capta&ccedil;&atilde;o</a></li>
                                     <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Readequacao_20.pdf', '_blank');" title="Ir para Readequa&ccedil;&atilde;o 20%">Readequa&ccedil;&atilde;o 20%</a></li>
-									<li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/MANUAL_DE_READEQUACAO.pdf', '_blank');" title="Ir para Solicita&ccedil;&otilde;es Gerais">Readequa&ccedil;&atilde;o Solicita&ccedil;&otilde;es Gerais</a></li>
+                                    <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/MANUAL_DE_READEQUACAO.pdf', '_blank');" title="Ir para Solicita&ccedil;&otilde;es Gerais">Readequa&ccedil;&atilde;o Solicita&ccedil;&otilde;es Gerais</a></li>
                                     <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Recurso.pdf', '_blank');" title="Ir para Recurso">Recurso</a></li>
                                     <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Relatorio_de_Comprovacao_do_Objeto.pdf', '_blank');" title="Ir para Relat&oacute;rio de Comprova&ccedil;&atilde;o do Objeto">Relat&oacute;rio de Comprova&ccedil;&atilde;o do Objeto</a></li>
                                     <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Relatorio_Trimestral.pdf', '_blank');" title="Ir para Relat&oacute;rio Trimestral">Relat&oacute;rio Trimestral</a></li>
@@ -291,18 +280,10 @@
                     </div>
                 </li>
                 <!-- ========== FIM MENU MANUAIS ========== -->
-
-
-
             </ul>
         </div>
-        <!-- ================================= -->
         <!-- =========== FIM MENU ============ -->
-        <!-- ================================= -->
-
         <?php endif; ?>
-
-
 
         <!-- ========== INÍCIO MENSAGENS (ERROS, CONFIRMAÇÕES E ADVERTÊNCIAS) ========== -->
         <?php if (isset($this->message)) : ?>
@@ -313,8 +294,6 @@
         <?php endif; ?>
         <div id="novas_mensagens"></div>
         <!-- ========== FIM MENSAGENS (ERROS, CONFIRMAÇÕES E ADVERTÊNCIAS) ========== -->
-
-
 
         <!-- ========== INÍCIO MENSAGENS DO PROJETO PARA O USUÁRIO ========== -->
         <div class="msgALERT sumir">
