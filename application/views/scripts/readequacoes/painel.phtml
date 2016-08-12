@@ -149,7 +149,8 @@
 $situacoes = array(
     'aguardando_distribuicao' => 'Aguardando distribuição',
     'em_analise' => 'Em análise',
-    'analisados' => 'Analisados'
+    'analisados' => 'Analisados',
+    'aguardando_publicacao' => 'Aguardando publicação',
 );
 ?>
 
@@ -253,8 +254,10 @@ $situacoes = array(
 
     <!-- Tabela com os dados-->
     <?php if($this->qtdRegistros > 0): ?>
-        <table class="tabela tablesorter">
-            <?php if($this->filtro == 'analisados'): ?>
+    <table class="tabela tablesorter">
+            <?php if($this->filtro == 'aguardando_publicacao'): ?>
+	    <?php echo $this->partial('readequacoes/partial/aguardandoPublicacao.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'conselheiros' => $this->conselheiros, 'paginacao' => $this->paginacao, 'pronac' => $this->pronac)); ?>      
+            <?php elseif($this->filtro == 'analisados'): ?>
 	    <?php echo $this->partial('readequacoes/partial/analisados.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'conselheiros' => $this->conselheiros, 'paginacao' => $this->paginacao, 'pronac' => $this->pronac)); ?>
             <?php elseif($this->filtro == 'em_analise'): ?>
                 <?php echo $this->partial('readequacoes/partial/emAnalise.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao, 'pronac' => $this->pronac)); ?>
