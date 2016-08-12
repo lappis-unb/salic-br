@@ -41,16 +41,6 @@ mail.transport.auth     = ""
 mail.transport.username = ""
 mail.transport.password = ""
 
-;[conexao_01:default]
-;db.adapter = PDO_MSSQL
-;db.params.host = mssql_treinamento
-;db.params.username = usuarios_internet
-;db.params.password = _Salic
-;db.params.dbname = TABELAS
-;resources.db.params.charset = "utf8 "
-;resources.db.params.driver_options.1002 = "SET NAMES utf8"
-;resources.db.isDefaultTableAdapter = true
-
 [conexao_02:default]
 db.adapter = PDO_MSSQL
 db.params.host = ""
