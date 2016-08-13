@@ -55,6 +55,11 @@ class GenericModel extends Zend_Db_Table_Abstract {
             } else {
                 $strSchema = $this->_schema . '.dbo';
             }
+        } else {
+//            echo '<pre>';
+//            var_dump($db);
+//            var_dump($strSchema);
+//            exit;
         }
 
         return $strSchema;
