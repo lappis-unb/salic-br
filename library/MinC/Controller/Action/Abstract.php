@@ -50,10 +50,10 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     private  $idUsuario 			= 0;
 
     /**
-     * Reescreve o m?todo init() para aceitar
+     * Reescreve o metodo init() para aceitar
      * as mensagens e redirecionamentos.
      * Teremos que cham?-lo dentro do
-     * m?todo init() da classe filha assim: parent::init();
+     * metodo init() da classe filha assim: parent::init();
      * @access public
      * @param void
      * @return void
@@ -61,36 +61,34 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     public function init()
     {
         //SE CAIU A SECAO REDIRECIONA
-        $auth = Zend_Auth::getInstance(); // pega a autentica??o
-
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $this->_msg  = $this->_helper->getHelper('FlashMessenger');
         $this->_url  = $this->_helper->getHelper('Redirector');
         $this->_type = $this->_helper->getHelper('FlashMessengerType');
 
-
         $this->_urlPadrao = Zend_Controller_Front::getInstance()->getBaseUrl();
         if (isset($auth->getIdentity()->usu_codigo))
         {
-            $Usuario      = new Autenticacao_Model_Usuario(); // objeto usu?rio
+            $Usuario      = new Autenticacao_Model_Usuario();
             $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-            $idAgente = $Agente['idAgente'];
-            // manda os dados para a vis?o
+            $idAgente = $Agente['idagente'];
+            // manda os dados para a visao
             $this->view->idAgente    = $idAgente;
         }
 
         @$cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
 
-        if ($cpf):
+        if ($cpf) {
 
-            // Busca na SGCAcesso
+            # Busca na SGCAcesso
             $sgcAcesso 	 = new Autenticacao_Model_Sgcacesso();
             $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
 
-            // Busca na Usuarios
+            # Busca na Usuarios
             $usuarioDAO   = new Autenticacao_Model_Usuario();
             $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
-            // Busca na Agentes
+            # Busca na Agentes
             $agentesDAO  = new Agente_Model_Agentes();
             $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
@@ -101,8 +99,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             $this->view->idAgenteKeyLog 		= $this->idAgente;
             $this->view->idResponsavelKeyLog 	= $this->idResponsavel;
             $this->view->idUsuarioKeyLog 		= $this->idUsuario;
-
-        endif;
+        }
     }
 
     /**
@@ -122,8 +119,8 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     }
 
     /**
-     * Reescreve o m?todo postDispatch() que ? respons?vel
-     * por executar uma a??o ap?s a execu??o de um m?todo
+     * Reescreve o m?todo postDispatch() que e responsavel
+     * por executar uma acao apos a execucao de um metodo
      * @access public
      * @param void
      * @return void
@@ -138,7 +135,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         {
             $this->view->message_type = implode("<br />", $this->_type->getMessages());
         }
-        parent::postDispatch(); // chama o m?todo pai
+        parent::postDispatch(); // chama o metodo pai
     }
 
     /**
