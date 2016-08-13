@@ -23,7 +23,105 @@ class Autenticacao_Model_Usuario extends GenericModel
     protected $_schema = 'tabelas';
 
     /**
+     * funcao do banco de dados do sql server no formato PHP.
+     *
+     * @name encriptaSenha
+     * @param $username
+     * @param $password
+     * @return string
+     *
+     * @author Ruy Junior Ferreira Silva ruyjfs@gmail.com
+     * @since 12/08/2016
+     *
+     * Exemplo do formado do SQL Server:
+     *
+     *        BEGIN
+     *    DECLARE
+     *    @w	varchar(30),
+     *        @s      varchar(15),
+     *        @t1	int,
+     *	@t2	int,
+     *        @k      int,
+     *        @i      int,
+     *        @j      int,
+     *        @f      int,
+     *        @v      int
+     *
+     *    SET @w = RTRIM(LTRIM(@p_senha))
+     *    SET @t1 = LEN(RTRIM(LTRIM(@p_identificacao)))
+     *    SET @t2 = LEN(@w)
+     *    IF @t2 < 1
+     *    BEGIN
+     *        SET @p_senha = '??????'
+     *        SET @w = '??????'
+     *        SET @t2 = 6
+     *    END
+     *    WHILE LEN(@w) < 15
+     *    BEGIN
+     *        SET @w = @w + @w
+     *    END
+     *    SET @w = SUBSTRING(@w, 1, 15)
+     *    SET @k = ASCII(SUBSTRING(@w, 1, 1)) + 2
+     *    SET @s = ''
+     *    SET @i = 0
+     *    WHILE @i < 15
+     *    BEGIN
+     *        SET @i = @i + 1
+     *        SET @v = (@t1 + @t2) * @k / @i
+     *        SET @f = ASCII(SUBSTRING(@w, 1, 1))
+     *        SET @w = SUBSTRING(@w, 2, 15)
+     *        SET @j = ((@f * @k) + @t1 + (@t2 * @f)) / @i
+     *        SET @v = @v + @j
+     *        IF @v < 33
+     *        BEGIN
+     *            SET @v = @v + (@t1 * @i)
+     *        END
+     *        SET @j = @v % 94
+     *        SET @s = @s + CHAR(33 + @j)
+     *    END
+     *    RETURN @s
+     */
+    private function encriptaSenha($username, $password)
+    {
+        $w = trim($password);
+        $t1 = strlen(trim($username));
+        $t2 = strlen($w);
+
+        if ($t2 < 1) {
+            $password = '??????';
+            $w = '??????';
+            $t2 = 6;
+        }
+
+        while (strlen($w) < 15) {
+            $w = $w . $w;
+        }
+
+        $w = substr($w, 1, 15);
+        $k = ord((substr($w, 1, 1))) + 2;
+        $s = '';
+        $i = 0;
+
+        while ($i < 15) {
+            $i = $i + 1;
+            $v = ($t1 + $t2) * $k / $i;
+            $f = ord(substr($w, 1, 1));
+            $w = substr($w, 2, 15);
+            $j = (($f * $k) + $t1 + ($t2 * $f)) / $i;
+            $v = $v + $j;
+            if ($v < 33) {
+                $v = $v + ($t1 * $i);
+            }
+            $j = $v % 94;
+            $s = $s . (33 + $j);
+        }
+
+        return $s;
+    }
+
+    /**
      * Metodo para buscar os dados do usuario de acordo com login e senha
+     *
      * @access public
      * @static
      * @param @username (cpf ou cnpj do usuario)
@@ -34,21 +132,29 @@ class Autenticacao_Model_Usuario extends GenericModel
     {
 
         // busca o usuario de acordo com o login e a senha
-        $senha = $this->select();
-        $senha->from($this,
-            array("dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha")
-        );
-        $senha->where('usu_identificacao = ?', $username);
-        $criptSenha = $this->fetchRow($senha);
+//        $select = $this->select();
+//        $select->from($this->_name,
+////            array("dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha")
+//            array('"' . self::encriptaSenha($username, $password) . '" as senha'),
+//            $this->_schema
+//        );
 
-        $auxSenha = "";
-        if (!empty($criptSenha['senha'])) {
-            $auxSenha = $criptSenha['senha'];
-        }
+//        $select->where('usu_identificacao = ?', $username);
+//        $criptSenha = $this->fetchRow($select);
+//        echo '<pre>';
+//        var_dump($criptSenha);
+//        var_dump($select->assemble());
+//        exit;
+//
+//        $auxSenha = "";
+//        if (!empty($criptSenha['senha'])) {
+//            $auxSenha = $criptSenha['senha'];
+            $auxSenha = self::encriptaSenha($username, $password);
+//        }
 
-        $sql = $this->select();
-        $sql->setIntegrityCheck(false);
-        $sql->from($this,
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from($this,
             array
             (
                 'usu_codigo',
@@ -58,21 +164,23 @@ class Autenticacao_Model_Usuario extends GenericModel
                 'usu_orgao'
             )
         );
-        $sql->joinInner(
-            array("uog" => "UsuariosXOrgaosXGrupos"),
-            "uog.uog_usuario = usu_codigo AND uog_status = 1",
-            array(), "TABELAS.dbo"
-        );
-        $sql->where('usu_identificacao = ?', $username);
-        $sql->where('usu_status  = ?', 1);
-        if (md5($password) != MinC_Controller_Action_Abstract::validarSenhaInicial()) {
-            $sql->where("usu_senha  = ?", $auxSenha);
-        }
-        $buscar = $this->fetchRow($sql);
 
-        if ($buscar) // realiza a autentica??o
+        $select->joinInner(
+            array("uog" => "usuariosxorgaosxgrupos"),
+            "uog.uog_usuario = usu_codigo AND uog_status = 1",
+            array(),
+            parent::getSchema('tabelas')
+        );
+        $select->where('usu_identificacao = ?', $username);
+        $select->where('usu_status  = ?', 1);
+        if (md5($password) != MinC_Controller_Action_Abstract::validarSenhaInicial()) {
+            $select->where("usu_senha  = ?", $auxSenha);
+        }
+        $buscar = $this->fetchRow($select);
+
+        if ($buscar) // realiza a autenticacao
         {
-            // configura??es do banco
+            // configuracoes do banco
             $dbAdapter = Zend_Db_Table::getDefaultAdapter();
             // pegamos o zend_auth
 
@@ -81,7 +189,7 @@ class Autenticacao_Model_Usuario extends GenericModel
             ->setIdentityColumn('usu_identificacao')
                 ->setCredentialColumn('usu_senha');
 
-            // seta as credenciais informada pelo usu?rio
+            // seta as credenciais informada pelo usuario
             $authAdapter
                 ->setIdentity($buscar['usu_identificacao'])
                 ->setCredential($buscar['usu_senha']);
@@ -92,12 +200,12 @@ class Autenticacao_Model_Usuario extends GenericModel
 
             // verifica se o acesso foi permitido
             if ($acesso->isValid()) {
-                // pega os dados do usu?rio com exce??o da senha
+                // pega os dados do usuario com excecao da senha
                 $authData = $authAdapter->getResultRowObject(null, 'usu_senha');
 
                 $orgao_maximo_superior = $this->recuperarOrgaoMaxSuperior($buscar['usu_orgao']);
 
-                // armazena os dados do usu?rio
+                // armazena os dados do usuario
                 $objAuth = $auth->getStorage()->write($authData);
                 //Grava o orgao superior na sessao do usuario
                 $_SESSION['Zend_Auth']['storage']->usu_org_max_superior = $orgao_maximo_superior;
