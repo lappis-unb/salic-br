@@ -46,7 +46,7 @@
                         $arrPrazo = $this->prazoRespostaDiligencia($d->idPronac, $tpDiligencia);
                         $icone = $arrPrazo['iconeDiligencia']['icone'];
                         $title = $arrPrazo['iconeDiligencia']['title']; ?>
-                        <a target="_blank" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $d->IdPRONAC . '&situacao=E59&tpDiligencia='.$tpDiligencia; ?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
+                        <a target="_blank" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' =>'listardiligenciaanalista')).'?idPronac=' . $d->idPronac . '&situacao=E59&tpDiligencia='.$tpDiligencia; ?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a><br>
                 </td>
 
 		<?php if ($this->idPerfil == 121): ?>
