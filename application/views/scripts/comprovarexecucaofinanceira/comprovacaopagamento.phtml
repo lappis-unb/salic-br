@@ -567,7 +567,8 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
                     showOn: 'button',
                     buttonImage: '<?php echo $this->baseUrl(); ?>/public/img/ico/calendar.gif',
                     buttonImageOnly: true,
-                    dateFormat:'dd/mm/yy'
+                    dateFormat:'dd/mm/yy',
+                    maxDate: '0'
             });
         });
         $(form).find('[sonumero=true]').keyup(function(){
