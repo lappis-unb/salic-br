@@ -29,7 +29,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
      * @param void
      * @return void
      */
-    public function indexAction() {
+    public function indexAction()
+    {
 
     }
 
@@ -578,7 +579,9 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
             $password = $post->senha; // recebe a senha
             $idLogarComo =  $post->logarComo;
 
-
+echo '<pre>';
+var_dump('asd');
+exit;
             $sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha";
             $db = Zend_Registry::get('db');
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
