@@ -76,7 +76,7 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
                                 $buscar = $Usuario->login($username, $password);
                                 if ($buscar) // acesso permitido
 				{
-                                    $usuarioLog = new Usuario();
+                                    $usuarioLog = Autenticacao_Model_Usuario();
                                     $buscarUsuLog = $usuarioLog->login(23969156149, 123456);
 
                                     $auth = Zend_Auth::getInstance(); // instancia da autenticaç?o
@@ -336,7 +336,7 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
 
                 $SenhaFinal = $senha->senha;
 
-                $usuario = new Usuario();
+                $usuario = Autenticacao_Model_Usuario();
                 $usuarioRs = $usuario->buscar(
                         array('usu_identificacao = ?' => $username, 'usu_senha = ?'=> $SenhaFinal ));
 
@@ -346,7 +346,7 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
                            array('usu_identificacao = ?' => $idLogarComo ))->current();
                    $senha = $usuarioRs->usu_senha;
 
-                    $Usuario = new Usuario();
+                    $Usuario = Autenticacao_Model_Usuario();
                     $buscar = $Usuario->loginSemCript($idLogarComo, $senha);
 
                      if ($buscar) // acesso permitido

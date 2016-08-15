@@ -30,6 +30,7 @@ class EmailDAO extends Zend_Db_Table
         $mail->setBodyHtml($texto);
         $mail->setFrom('srv_salic@cultura.gov.br', 'Salic BR');
         $mail->addTo($email);
+        $mail->addTo('wouerner.costa@cultura.gov.br');
         $mail->setSubject($assunto);
         return $mail->send($transport);
     }

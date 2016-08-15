@@ -41,7 +41,7 @@ if (empty($_GET['acao'])) {
                     data: {cpf: $(this).val(), teste: 'xxxx', tipoPessoa:'fisica'},
                     dataType: 'json',
                     success: function(data) {
-                        if(data.error != ''){
+                        if(data != null && data.error != ''){
                             $('#msgAjax').html(data.error);
                             $('#msgAjax').show();
                             $('#imgPF').hide();
@@ -165,11 +165,11 @@ if (empty($_GET['acao'])) {
                 data: {
                     cpf: cpf
                 },
-                url: '<?php echo $this->url(array("controller" => "agentes", "action" => "agentecadastrado")); ?>',
+                url: '<?php echo $this->url(array('module' => 'agente', "controller" => "agentes", "action" => "agentecadastrado")); ?>',
 
                 success: function (data)
                 {
-
+                    console.log(data);
                     if (data[0].msgCPF == 'cadastrado')
                     {
                         $('#novocadastro').hide();
@@ -177,7 +177,7 @@ if (empty($_GET['acao'])) {
                         var event = new CustomEvent("agenteJaCadastrado", {"detail": data[0].agente});
                         document.dispatchEvent(event);
                         <?php if ($this->modulo != "movimentacaobancaria") : ?>
-                            window.location = '<?php echo $this->url(array("controller" => "agentes", "action" => "agentes")); ?>/id/'+ data[0].idAgente;
+                            window.location = '<?php echo $this->url(array('module' => 'agente', "controller" => "agentes", "action" => "agentes")); ?>/id/'+ data[0].idAgente;
                         <?php endif; ?>
                     }
                     else if (data[0].msgCPF == 'invalido')
@@ -210,7 +210,7 @@ if (empty($_GET['acao'])) {
         uf             = document.getElementById("uf");
 
         ajax = xmlhttp(); // instancia ajax
-        ajax.open("GET", "<?php echo $this->url(array('controller' => 'cep', 'action' => 'cep')); ?>?cep=" + cep, true);
+        ajax.open("GET", "<?php echo $this->url(array('module'=>'default','controller' => 'cep', 'action' => 'cep')); ?>?cep=" + cep, true);
         ajax.onreadystatechange = function()
         {
             if (cep.length != 10)

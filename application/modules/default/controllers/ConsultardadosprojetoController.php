@@ -8,7 +8,6 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright  2010 - Ministerio da Cultura - Todos os direitos reservados.
  */
 class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
@@ -68,21 +67,19 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         $auth = Zend_Auth::getInstance(); // pega a autentica��o
         $this->view->usuarioInterno = false;
 
-        #xd('11111111111');
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
 
             $this->view->usuarioInterno = true;
 
             //Recupera todos os grupos do Usuario
-            $Usuario = new Usuario(); // objeto usu�rio
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo){
                 $PermissoesGrupo[] = $grupo->gru_codigo;
             }
         }
 
-        #xd('2222222222222222222222');
         if (isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
             parent::perfil(1, $PermissoesGrupo);
             $this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);

@@ -15,11 +15,11 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
     public function init() {
 
-    	// verifica as permissıes
+    	// verifica as permiss√µes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor Salic
 
-        $auth = Zend_Auth::getInstance(); // instancia da autenticaÁ„o
+        $auth = Zend_Auth::getInstance(); // instancia da autentica√ß√£o
 
         if (isset($auth->getIdentity()->usu_codigo))
         {
@@ -70,6 +70,14 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     public function indexAction() {
     }
 
+
+    /**
+     * mostraragentesAction
+     *
+     * @access public
+     * @return void
+     * @todo Remover Html do metodo.
+     */
     public function mostraragentesAction()
     {
     	$this->_helper->layout->disableLayout();
@@ -121,6 +129,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             $this->montaTela('vincularresponsavel/mostraragentes.phtml', array('vinculo' => $buscarvinculo));
         }
     }
+    /* }}} */
 
     public function vinculoAction()
     {
@@ -130,13 +139,13 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $pp 			= new Proposta_Model_PreProjeto();
         $vprp 			= new tbVinculoPropostaResponsavelProjeto();
         $emailDAO 		= new EmailDAO();
-        $internetDAO 	= new Internet();
+        $internetDAO 	= new Agente_Model_Internet();
 
         /*Temos que ver aonde vamos buscar o email do cara?*/
         $buscarEmail = $internetDAO->buscarEmailAgente(null, $_POST['idAgente'], 1, null, true);
 
-        $emailProponente = $buscarEmail[0]->Email;
-        $assunto = 'SolicitaÁ„o de vinculo ao respons·vel';
+        $emailProponente = !empty($buscarEmail->current()) ? $buscarEmail[0]->Email : null;
+        $assunto = 'Solicita√ß√£o de vinculo ao respons√°vel';
         $texto = 'Favor verificar o vinculo solicitado no Sistema SALIC WEB';
 
         if (isset($_POST['solicitarvinculo']))
@@ -299,11 +308,11 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $msg = '';
 
         if($siVinculo == 1) {
-            $msg = 'O respons·vel foi rejeitado.';
+            $msg = 'O respons√°vel foi rejeitado.';
         } else if($siVinculo == 2) {
-            $msg = 'Respons·vel vinculado com sucesso!';
+            $msg = 'Respons√°vel vinculado com sucesso!';
         } else if($siVinculo == 3) {
-            $msg = 'O respons·vel foi desvinculado.';
+            $msg = 'O respons√°vel foi desvinculado.';
         }
 
         try {
@@ -315,7 +324,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             }
             parent::message($msg, "manterpropostaincentivofiscal/consultarresponsaveis", "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Falha na recuperaÁ„o dos dados!", "manterpropostaincentivofiscal/consultarresponsaveis", "ERROR");
+            parent::message("Falha na recupera√ß√£o dos dados!", "manterpropostaincentivofiscal/consultarresponsaveis", "ERROR");
         }
     }
 
@@ -365,7 +374,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     }
 
     /**
-	 * MÈtodo trocarproponente()
+	 * M√©todo trocarproponente()
 	 * UC 89 - Fluxo FA1 - Trocar Proponente
 	 * @access public
 	 * @param void
@@ -424,7 +433,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
 
         /**
-         * MÈtodo trocarproponente()
+         * M√©todo trocarproponente()
          * UC 89 - Fluxo FA1 - Trocar Proponente
          * @access public
          * @param void
@@ -444,10 +453,10 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
             $idResponsavelRetirar = $parte[1];
 
-            $msg = "Respons·vel vinculado com sucesso!";
+            $msg = "Respons√°vel vinculado com sucesso!";
             if($opcaovinculacao == 1) {
                 $idResponsavel = $this->idResponsavel;
-                $msg = "O respons·vel foi desvinculado.";
+                $msg = "O respons√°vel foi desvinculado.";
             }
 
             try {
@@ -470,7 +479,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         }
 
     /**
-	 * MÈtodo vincularprojetos()
+	 * M√©todo vincularprojetos()
 	 * UC 89 - Fluxo FA8 - Desvincular Projetos
 	 * @access public
 	 * @param void
@@ -494,9 +503,9 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     		$where['idPreProjeto = ?'] = $idPreProjeto;
     		$alteraVP = $tbVinculoPropostaDAO->alterar($dados, $where, false);
 
-    		// CadÍ a procuraÁ„o?
+    		// Cad√™ a procura√ß√£o?
 
-    		/* N„o vai cadastrar pois ele È dono da sua proposta
+    		/* N√£o vai cadastrar pois ele √© dono da sua proposta
     		$novosDados = array('idVinculo' 		=> $idVinculo,
     							'idPreProjeto' 		=> $idPreProjeto,
     							'siVinculoProposta' => 2
@@ -506,7 +515,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 			*/
     		$alteraPP = $PreProjetoDAO->alteraresponsavel($idPreProjeto, $idResponsavel);
 
-    		parent::message("O respons·vel foi desvinculado.", "manterpropostaincentivofiscal/vincularprojetos", "CONFIRM");
+    		parent::message("O respons√°vel foi desvinculado.", "manterpropostaincentivofiscal/vincularprojetos", "CONFIRM");
 
     	}
     	catch (Exception $e)

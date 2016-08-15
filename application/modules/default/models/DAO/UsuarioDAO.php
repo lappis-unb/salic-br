@@ -229,40 +229,39 @@ class UsuarioDAO extends Zend_Db_Table
 	{
 		// busca pelo usuário no banco de dados
 		$buscar = UsuarioDAO::buscarUsuarioScriptcase($cod);
-		//$conexao = Zend_Registry::get('conexao_banco');
+        $conexao = Zend_Registry::get('conexao_banco');
 
-		//if ($conexao == "conexao_01")
-		//{
-			//$conexao_scriptcase = "conexao_scriptcase_01";
-		//}
-		//else if ($conexao == "conexao_02")
-		//{
-			//$conexao_scriptcase = "conexao_scriptcase_02";
-		//}
-		//else if ($conexao == "conexao_03")
-		//{
-			//$conexao_scriptcase = "conexao_scriptcase_03";
-		//}
-		//else if ($conexao == "conexao_04")
-		//{
-			//$conexao_scriptcase = "conexao_scriptcase_04";
-		//}
-		//else if ($conexao == "conexao_05")
-		//{
-			//$conexao_scriptcase = "conexao_scriptcase_05";
-		//}
-                //else if($conexao == "conexao_xti")
-                //{
-                        //$conexao_scriptcase = "conexao_xti_controle_acesso";
-                //}
+        if ($conexao == "conexao_01")
+        {
+            $conexao_scriptcase = "conexao_scriptcase_01";
+        }
+        else if ($conexao == "conexao_02")
+        {
+            $conexao_scriptcase = "conexao_scriptcase_02";
+        }
+        else if ($conexao == "conexao_03")
+        {
+            $conexao_scriptcase = "conexao_scriptcase_03";
+        }
+        else if ($conexao == "conexao_04")
+        {
+            $conexao_scriptcase = "conexao_scriptcase_04";
+        }
+        else if ($conexao == "conexao_05")
+        {
+            $conexao_scriptcase = "conexao_scriptcase_05";
+        }
+                else if($conexao == "conexao_xti")
+                {
+                        $conexao_scriptcase = "conexao_xti_controle_acesso";
+                }
 
-		//// configurações do banco de dados (seta uma nova conexão no arquivo config.ini)
-		//$config = new Zend_Config_Ini('./application/configs/config.ini', $conexao_scriptcase);
-                ////xd($config);
-		//$db     = Zend_Db::factory($config->db);
-        $db = Zend_Db_Table::getDefaultAdapter();
+        // configurações do banco de dados (seta uma nova conexão no arquivo config.ini)
+        $config = new Zend_Config_Ini('./application/configs/config.ini', $conexao_scriptcase);
+                //xd($config);
+        $db     = Zend_Db::factory($config->db);
 ;
-		//Zend_Db_Table::setDefaultAdapter($db);
+        Zend_Db_Table::setDefaultAdapter($db);
 
 		if ($buscar) // realiza a autenticação
 		{
