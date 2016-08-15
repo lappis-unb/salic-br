@@ -63,4 +63,20 @@ class Dispositivomovel extends GenericModel{
         return $this->fetchAll($consulta);
     }
     
+    /**
+     * Lista dispositivos que receberão a notificação.
+     * 
+     * @param integer $idPronac
+     * @return array
+     */
+    public function listarDispositivoNotificacao($idPronac) {
+        $listaDispositivos = array();
+        $listaResultadoDispositivo = $this->listarPorIdPronac($idPronac);
+        foreach ($listaResultadoDispositivo as $dispositivo) {
+            $listaDispositivos[] = $dispositivo->idRegistration;
+        }
+        
+        return $listaDispositivos;
+    }
+    
 }

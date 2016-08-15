@@ -26,6 +26,25 @@ class IndexController extends GenericControllerNew
     }
 
     /**
+     * Envia notificação para o usuário através do aplicativo mobile.
+     * 
+     * @param stdClass $projeto
+     */
+    protected function enviarNotificacao(stdClass $projeto) {
+        $modelDispositivo = new Dispositivomovel();
+        $listaDispositivos = $modelDispositivo->listarDispositivoNotificacao($projeto->idPronac);
+        $notification = new Minc_Notification_Mensage();
+        $response = $notification
+            ->setListResgistrationIds($listaDispositivos)
+            ->setTitle('Projeto '. $projeto->pronac)
+            ->setText('Recebeu nova diligência!')
+            ->setListParameters(array('projeto' => $projeto->idPronac))
+            ->send()
+        ;
+xd($response);
+    }
+    
+    /**
      * Método para o envio de notificações
      * 
      * @access public
@@ -33,15 +52,13 @@ class IndexController extends GenericControllerNew
      * @return void
      */
     public function notificationAction() {
-        $notification = new Minc_Notification_Mensage();
-        $response = $notification
-            ->setListResgistrationIds(array('eyqeXyxiPlY:APA91bGQZWyfya5Ly6XD3IgTMEgXWNStqVAT-n4KW7tWxZuU6up-w6-vws3jPq5sRiNU_40NdhDPPdQj1seXpgaZAO9rHTqwcEmoAD0JdYidMbI1HL1ZJGaqKiGdlbbQRGdO5XuCOp05'))
-            ->setTitle('O projeto 097788 recebeu Diligência!')
-            ->setText('Olá proponente, seu projeto 097788 recebeu Diligência.')
-            ->setListParameters(array('projeto' => 119079))
-            ->send()
-        ;
-xd($response);
+        # Envia notificação para o usuário através do aplicativo mobile.
+        $modelProjeto = new Projetos();
+        $projeto = $modelProjeto->buscarPorPronac(119079);
+        $this->enviarNotificacao((object)array(
+            'pronac' => $projeto->Pronac,
+            'idPronac' => $projeto->IdPRONAC
+        ));
     }
 
     public function loginUsuarioAction()

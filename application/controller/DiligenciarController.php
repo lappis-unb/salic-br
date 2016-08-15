@@ -682,31 +682,14 @@ class DiligenciarController extends GenericControllerNew {
         $this->view->mensagem = 'Dilig&ecirc;ncia enviada com sucesso!';
     }
     
-
-    /**
-     * Lista dispositivos que receberão a notificação.
-     * 
-     * @param integer $idPronac
-     * @return array
-     */
-    protected function listarDispositivoNotificacao($idPronac) {
-        $listaDispositivos = array();
-        $modelDispositivoMovel = new Dispositivomovel();
-        $listaResultadoDispositivo = $modelDispositivoMovel->listarPorIdPronac($idPronac);
-        foreach ($listaResultadoDispositivo as $dispositivo) {
-            $listaDispositivos[] = $dispositivo->idRegistration;
-        }
-        
-        return $listaDispositivos;
-    }
-    
     /**
      * Envia notificação para o usuário através do aplicativo mobile.
      * 
      * @param stdClass $projeto
      */
     protected function enviarNotificacao(stdClass $projeto) {
-        $listaDispositivos = $this->listarDispositivoNotificacao($projeto->idPronac);
+        $modelDispositivo = new Dispositivomovel();
+        $listaDispositivos = $modelDispositivo->listarDispositivoNotificacao($projeto->idPronac);
         $notification = new Minc_Notification_Mensage();
         $response = $notification
             ->setListResgistrationIds($listaDispositivos)
