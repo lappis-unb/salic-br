@@ -867,7 +867,7 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             
             # View Parameters
             $this->view->comprovantePagamento = $comprovantePagamentoModel->toStdclass();
-
+            
             $this->_helper->flashMessenger('Comprovante enviado com sucesso.');
             $this->_helper->flashMessengerType('CONFIRM');
             $this->_redirect(
@@ -880,8 +880,8 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                             'action' => $paginaRedirecionar,
                             'idusuario' => $this->view->idusuario,
                             'idpronac' => $request->getParam('idpronac'),
-                            'idComprovantePagamento' => $this->view->comprovantePagamento->comprovantePagamento,
-                        )
+                            'idPlanilhaAprovacao' => $request->getParam('idPlanilhaAprovacao'),
+                        ), null, true
                     )
                 )
             );
