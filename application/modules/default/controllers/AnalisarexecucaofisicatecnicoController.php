@@ -31,7 +31,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $PermissoesGrupo[] = 121; // Técnico de Acompanhamento
         parent::perfil(1, $PermissoesGrupo);
 
-        $Usuario = new Usuario(); // objeto usuário
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
         $auth = Zend_Auth::getInstance(); // pega a autenticação
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo

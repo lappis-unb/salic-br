@@ -423,7 +423,7 @@ class Autenticacao_Model_Usuario extends GenericModel
         public function salvarDados($dados)
         {
             //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
-            $tmpTblUsuario = new Usuario();
+            $tmpTblUsuario = new Autenticacao_Model_Usuario();
 
 
             $tmpTblUsuario = $tmpTblUsuario->createRow();
@@ -472,7 +472,7 @@ class Autenticacao_Model_Usuario extends GenericModel
         public function salvar($dados)
         {
             //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
-            $tmpTblUsuario = new Usuario();
+            $tmpTblUsuario = new Autenticacao_Model_Usuario();
 
             if(isset($dados['usu_codigo'])){
             $tmpTblUsuario = $tmpTblUsuario->buscar(array("usu_codigo = ?" => $dados['usu_codigo']))->current();

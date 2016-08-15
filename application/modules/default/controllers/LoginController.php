@@ -108,7 +108,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
                     //                                    $auth = Zend_Auth::getInstance(); // instancia da autenticação
                     //xd($auth->getIdentity());
                     //                                    // registra o primeiro grupo do usuï¿½rio (pega unidade autorizada, orgï¿½o e grupo do usuï¿½rio)
-                    //                                    $Usuario = new Usuario();
+                    //                                    $Usuario = new Autenticacao_Model_Usuario();
                     //                                    $Grupo   = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuï¿½rio
                     //
                     //                                    $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
@@ -300,7 +300,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
 
         /* ========== INÍCIO ID DO USUÁRIO LOGADO ========== */
         $auth    = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new Usuario();
+        $Usuario = new Autenticacao_Model_Usuario();
 
 
         // verifica se o usuário logado é agente
@@ -364,7 +364,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
             }
 
             // busca a senha do banco TABELAS
-            $Usuarios     = new Usuario();
+            $Usuarios     = new Autenticacao_Model_Usuario();
             $buscarCPF    = $Usuarios->buscar(array('usu_identificacao = ?' => trim($cpf)));
             $cpfTabelas   = count($buscarCPF) > 0 ? true : false;
             $senhaTabelas = $Usuarios->verificarSenha(trim($cpf) , $senhaAtual);
@@ -431,7 +431,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
 
         /* ========== INÍCIO ID DO USUÁRIO LOGADO ========== */
         $auth    = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new Usuario();
+        $Usuario = new Autenticacao_Model_Usuario();
 
         // verifica se o usuário logado é agente
         $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->usu_identificacao);
@@ -543,7 +543,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
 
             $SenhaFinal = $senha->senha;
 
-            $usuario = new Usuario();
+            $usuario = new Autenticacao_Model_Usuario();
             $usuarioRs = $usuario->buscar(
                     array('usu_identificacao = ?' => $username, 'usu_senha = ?'=> $SenhaFinal ));
 
@@ -552,7 +552,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
                         array('usu_identificacao = ?' => $idLogarComo ))->current();
                 $senha = $usuarioRs->usu_senha;
 
-                $Usuario = new Usuario();
+                $Usuario = new Autenticacao_Model_Usuario();
                 $buscar = $Usuario->loginSemCript($idLogarComo, $senha);
 
                 if ($buscar) // acesso permitido
@@ -579,7 +579,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
 
         /* ========== INÍCIO ID DO USUÁRIO LOGADO ========== */
         $auth    = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new Usuario();
+        $Usuario = new Autenticacao_Model_Usuario();
 
         // verifica se o usuário logado é agente
         $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->Cpf);

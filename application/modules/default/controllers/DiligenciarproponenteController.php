@@ -57,7 +57,7 @@ class DiligenciarProponenteController extends MinC_Controller_Action_Abstract
 	public function indexAction()
 	{
         $auth              = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new Usuario(); // objeto usuário
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $idagente = $idagente['idAgente'];
 

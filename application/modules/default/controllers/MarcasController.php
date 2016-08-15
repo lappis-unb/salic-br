@@ -49,7 +49,7 @@ class MarcasController extends MinC_Controller_Action_Abstract {
     public function indexAction() 
     {
         $tbArquivoImagem = new tbArquivoImagem();
-        $tblUsuario = new Usuario();
+        $tblUsuario = new Autenticacao_Model_Usuario();
         $rsUsuario = $tblUsuario->buscarOrgaoSuperior($this->codOrgao);
         $idOrgaoSuperior = $rsUsuario->idSecretaria;
 

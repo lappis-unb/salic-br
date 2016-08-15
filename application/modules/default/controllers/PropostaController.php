@@ -82,7 +82,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
                     }
                     else
                     {
-                        $tblUsuario = new Usuario();
+                        $tblUsuario = new Autenticacao_Model_Usuario();
                         $rsUsuario = $tblUsuario->find($rsMovimentacao->Usuario)->current();
 
                         $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "Proposta com o Analista";

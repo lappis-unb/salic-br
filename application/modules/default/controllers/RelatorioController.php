@@ -74,7 +74,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
 
     public function relatorioprojetopareceristaAction() {
 
-		$tblUsuario = new Usuario();
+		$tblUsuario = new Autenticacao_Model_Usuario();
 		$rsUsuario = $tblUsuario->buscarOrgao($_SESSION['Zend_Auth']['storage']->usu_orgao);
 		$this->view->idOrgao = $rsUsuario->org_codigo;
 		$this->view->idOrgaoSuperior = $rsUsuario->org_superior;
@@ -1213,7 +1213,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
 
     public function visualTecnicoAction(){
         $auth         = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario      = new Usuario(); // objeto usuário
+        $Usuario      = new Autenticacao_Model_Usuario(); // objeto usuário
         $UsuarioAtivo = new Zend_Session_Namespace('UsuarioAtivo'); // cria a sessão com o usuário ativo
         $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $codPerfil  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
