@@ -22,7 +22,7 @@ CREATE TABLE tabelas.Tipos_Pessoa
   tpe_descricao VARCHAR(100) NOT NULL,
   tpe_pf_pj SMALLINT NOT NULL,
   tpe_direito SMALLINT NOT NULL,
-  tpe_fim SMALLINT NOT NULL,
+  tpfnEncriptaSenhae_fim SMALLINT NOT NULL,
   tpe_status SMALLINT NOT NULL
 );
 CREATE UNIQUE INDEX sis_IDX_sigla ON tabelas.Sistemas (sis_sigla);
