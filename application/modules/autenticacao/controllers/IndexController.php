@@ -41,7 +41,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     public function loginAction(){
-        $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
+        $this->_helper->layout->disableLayout();
         $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
         $password = $this->getParam('Senha', null);
 
@@ -245,7 +245,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
             }
 
             if ( empty ( $sgcAcessoBuscaCpfArray ) && empty ( $sgcAcessoBuscaEmailArray ) ) {
-                //$sgcAcessoSave = $sgcAcesso->salvar($dados);
+                $sgcAcessoSave = $sgcAcesso->salvar($dados);
 
                 /**
                  * ==============================================================

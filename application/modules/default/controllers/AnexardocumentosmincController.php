@@ -53,7 +53,7 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 139;
         parent::perfil(1, $PermissoesGrupo);
 
-        $Usuario = new Usuario(); // objeto usuário
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
         $auth = Zend_Auth::getInstance(); // pega a autenticação
 
         //SE CAIU A SECAO REDIRECIONA

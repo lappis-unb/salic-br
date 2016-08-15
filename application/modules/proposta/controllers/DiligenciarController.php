@@ -34,7 +34,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if (isset($auth->getIdentity()->usu_codigo) ) {
             //Recupera todos os grupos do Usuario
-            $Usuario    = new Usuario(); // objeto usuï¿½rio
+            $Usuario    = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
             $grupos     = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo) {
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -98,7 +98,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $post               = Zend_Registry::get('post');
 
         $auth = Zend_Auth::getInstance(); // instancia da autenticação
-        $Usuario = new Usuario();
+        $Usuario = new Autenticacao_Model_Usuario();
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $usu_identificacao = trim($idagente['usu_identificacao']);
         $idagente = $idagente['idAgente'];
@@ -748,7 +748,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
             else
                 $idProduto = new Zend_Db_Expr('null');
 
-            $Usuario = new Usuario();
+            $Usuario = new Autenticacao_Model_Usuario();
             $idagente = $auth->getIdentity()->usu_codigo;
 
             $stEnviado = 'N';

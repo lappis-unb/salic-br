@@ -63,7 +63,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
         }
 
 
-        $Usuario = new Usuario(); // objeto usuário
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
         $auth = Zend_Auth::getInstance(); // pega a autenticação
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
@@ -141,7 +141,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
     }
 
     public function salvarAction() {
-        $Usuario = new Usuario(); // objeto usuário
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
         $auth = Zend_Auth::getInstance(); // pega a autenticação
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo

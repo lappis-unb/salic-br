@@ -1264,7 +1264,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
             //Conectando com projetos
             $tblProjetos = new Projetos();
             $tbAvaliacao = new AvaliacaoProposta();
-            $tblUsuario = new Usuario();
+            $tblUsuario = new Autenticacao_Model_Usuario();
 
             $movimentacoes = array();
             foreach ($rsPropostas as $proposta){

@@ -24,7 +24,7 @@
                         async: true,
                         dataType: 'json',
                         type: "post",
-                        url: "<?php echo $this->url(array('module'=>'default', 'controller' => 'vincularresponsavel', 'action' => 'vinculo')); ?>",
+                        url: "<?php echo $this->url(array('module'=>'proposta', 'controller' => 'vincularresponsavel', 'action' => 'vinculo')); ?>",
                         data:{
                             idAgente: idAgente,
                             solicitarvinculo : '1'
@@ -98,7 +98,7 @@
                 $("#error").addClass('sumir');
                 dados = 'cnpjcpf=' + encodeURIComponent(cnpjcpf);
                 dados+= '&nome=' + encodeURIComponent(nome);
-                enviar_pag("<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'mostraragentes')) ?>", dados, 'mostraproponente');
+                enviar_pag("<?php echo $this->url(array('module' => 'proposta', 'controller' => 'vincularresponsavel', 'action' => 'mostraragentes')) ?>", dados, 'mostraproponente');
             }
             return false;
         });
@@ -145,7 +145,7 @@
 
     function novoproponente(){
         var cpf = $("#novoproponente").val();
-        window.location = 'agentes/incluiragente?menuLateral=false&acao=prop&cpf='+cpf;
+        window.location = '/agente/agentes/incluiragente?menuLateral=false&acao=prop&cpf='+cpf;
     }
 </script>
 <!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
@@ -198,8 +198,5 @@
         <div id="mostraproponente"></div>
     </fieldset>
 </div>
-<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
-
 <br clear="all" />

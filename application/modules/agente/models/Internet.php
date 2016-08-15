@@ -11,7 +11,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class Internet extends GenericModel
+class Agente_Model_Internet extends GenericModel
 {
     protected $_banco  = "AGENTES";
     protected $_schema = "dbo";
@@ -56,17 +56,19 @@ class Internet extends GenericModel
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-            array("e" => $this->_name)
-            ,array("e.idInternet AS idEmail"
+            array("e" => $this->_name),
+            array("e.idInternet AS idEmail"
                 ,"e.TipoInternet AS TipoEmail"
                 ,"e.Descricao    AS Email"
                 ,"e.Status"
-                ,"e.Divulgar")
+                ,"e.Divulgar"),
+            'Agentes.dbo'
         );
-        $select->joinInner(
+
+        $select->join(
             array("a" => "Agentes")
             ,"a.idAgente = e.idAgente"
-            ,array()
+            ,array(), 'Agentes.dbo'
         );
 
         // busca pelo cnpj ou cpf

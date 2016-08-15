@@ -41,7 +41,7 @@ class CepController extends Zend_Controller_Action
 			break;
 
 			// demais cidades
-			case '1': 
+			case '1':
 				$_end         = $resultado['logradouro'];
 				$_complemento = $resultado['tipo_logradouro'];
 				$_bairro      = $resultado['bairro'];
@@ -102,4 +102,4 @@ class CepController extends Zend_Controller_Action
 		$this->view->cep = $buscarCEP;
 	} // fecha cepAction()
 
-} // fecha class
+}

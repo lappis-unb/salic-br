@@ -20,7 +20,7 @@ class MantermensagensController extends MinC_Controller_Action_Abstract {
         
         $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
         $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new Usuario(); // objeto usuário
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         if ($auth->hasIdentity()) { // caso o usuário esteja autenticado
             // verifica as permissões
@@ -82,7 +82,7 @@ class MantermensagensController extends MinC_Controller_Action_Abstract {
 
     public function incluirmensagemAction() {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
-        $usuario = new Usuario();
+        $usuario = new Autenticacao_Model_Usuario();
         $auth = Zend_Auth::getInstance(); // pega a autenticação
         $Agente = $usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $usu_codigo = $auth->getIdentity()->usu_codigo;
@@ -389,7 +389,7 @@ class MantermensagensController extends MinC_Controller_Action_Abstract {
         
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $grupologado = $GrupoAtivo->codGrupo;
-        $usuario = new Usuario();
+        $usuario = new Autenticacao_Model_Usuario();
         $auth = Zend_Auth::getInstance(); // pega a autenticação
         $Agente = $usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $usu_codigo = $auth->getIdentity()->usu_codigo;

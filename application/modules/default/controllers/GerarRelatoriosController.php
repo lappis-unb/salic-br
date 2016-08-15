@@ -7,8 +7,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.controllers
- * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
+ * @link http://cultura.gov.br
  */
 
 class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
@@ -22,7 +21,7 @@ class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
     public function init() {
         $auth = Zend_Auth::getInstance(); // pega a autenticação
 
-       
+
         // define as permissões
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 90; // Protocolo - Documento

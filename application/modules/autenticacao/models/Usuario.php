@@ -551,11 +551,10 @@ exit;
         $insert = $this->insert($dados);
     }
 
-    public function salvarDados($dados)
-    {
-        //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
-        $tmpTblUsuario = new Usuario();
-
+        public function salvarDados($dados)
+        {
+            //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
+            $tmpTblUsuario = new Autenticacao_Model_Usuario();
 
         $tmpTblUsuario = $tmpTblUsuario->createRow();
 
@@ -650,10 +649,10 @@ exit;
         }
     }
 
-    public function salvar($dados)
-    {
-        //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
-        $tmpTblUsuario = new Usuario();
+        public function salvar($dados)
+        {
+            //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
+            $tmpTblUsuario = new Autenticacao_Model_Usuario();
 
         if (isset($dados['usu_codigo'])) {
             $tmpTblUsuario = $tmpTblUsuario->buscar(array("usu_codigo = ?" => $dados['usu_codigo']))->current();

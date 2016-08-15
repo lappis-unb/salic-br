@@ -87,7 +87,7 @@ private $intTamPag = 10;
             $nome = $_POST['nome'];
             $senha = Gerarsenha::gerasenha(15, true, true, true, true);
             $senhaFinal = EncriptaSenhaDAO::encriptaSenha($cpf, $senha);
-            $usuarios = new Usuario();
+            $usuarios = new Autenticacao_Model_Usuario();
             $usuariosBuscar = $usuarios->buscar(array ('usu_identificacao = ?' => $cpf))->current();
 
             if($usuariosBuscar)
@@ -476,7 +476,7 @@ private $intTamPag = 10;
             if (isset($get->pag)) $pag = $get->pag;
             if (isset($get->tamPag)) $this->intTamPag = $get->tamPag;
             $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
-            $pesquisaOrgaoUsuario = new Usuario();
+            $pesquisaOrgaoUsuario = new Autenticacao_Model_Usuario();
 
             if ( !empty ( $dados ) )
             {
@@ -704,13 +704,13 @@ private $intTamPag = 10;
             $this->view->idUsuarioLogado = $idusuario;
 
             $usuario = new Usuariosorgaosgrupos();
-            $listaUsuario = new Usuario();
+            $listaUsuario = new Autenticacao_Model_Usuario();
             $resultadoUsuario = $listaUsuario->buscarUsuario();
             $resultadoUnidade = $usuario->buscarUsuariosOrgaosGruposUnidades(array('sis_codigo = ?' => 21),array('org_sigla ASC'));
             $resultadoGrupo   = $usuario->buscarUsuariosOrgaosGruposSistemas(array('sis_codigo = ?' => 21), array('gru_nome'));
            // $resultadoUnidade = $usuario->buscarUsuariosOrgaosGruposUnidades()->toArray(array('sis_codigo = ?' => 21));
 
-            $verificaCoordenadorGeral = new Usuario();
+            $verificaCoordenadorGeral = new Autenticacao_Model_Usuario();
             $buscaCoordenadorGeral = $verificaCoordenadorGeral->ECoordenadorGeral($idusuario);
 
             $buscaCoordenador = $verificaCoordenadorGeral->ECoordenador($idusuario);

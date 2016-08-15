@@ -164,7 +164,7 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                         $this->view->buscarcomprovantes = $resultComprovantes;
                         $this->view->buscarpronac = $buscarpronac;
                         $auth = Zend_Auth::getInstance(); // pega a autenticação
-                        $Usuario = new Usuario(); // objeto usuário
+                        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
                         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
                         $idagente = $idagente['idAgente'];
                         $reuniao = new Reuniao();

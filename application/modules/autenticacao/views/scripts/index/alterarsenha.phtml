@@ -6,15 +6,15 @@
 		// Define as regras
 		rules:{
                         senhaAtual:{
-				// campoNome ser� obrigat�rio (required) e ter� tamanho m�nimo (minLength)
+				// campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
 				required: true, minlength: 2
 			},
 			senhaNova:{
-				// campoNome ser� obrigat�rio (required) e ter� tamanho m�nimo (minLength)
+				// campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
 				required: true, minlength: 2
 			},
 			repeteSenha:{
-				// campoEmail ser� obrigat�rio (required) e precisar� ser um e-mail v�lido (email)
+				// campoEmail será obrigatório (required) e precisará ser um e-mail válido (email)
 				required: true, minlength: 2
 			}
 
@@ -23,16 +23,16 @@
 		messages:{
                         senhaAtual:{
 				required: "Digite a senha atual",
-				minLength: "O seu nome deve conter, no m�nimo, 11 caracteres"
+				minLength: "O seu nome deve conter, no mínimo, 11 caracteres"
 			},
 			senhaNova:{
 				required: "Digite senha nova",
-				minLength: "O seu nome deve conter, no m�nimo, 2 caracteres"
+				minLength: "O seu nome deve conter, no mínimo, 2 caracteres"
 			},
 			repeteSenha:{
 				required: "Repetir senha nova",
-                                minLength: "O seu nome deve conter, no m�nimo, 2 caracteres"
-				
+                                minLength: "O seu nome deve conter, no mínimo, 2 caracteres"
+
 			}
 		}
 	});
@@ -55,7 +55,7 @@ function validaSenha(){
 
 
 </script>
-<!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="confirm"></div>
 <div id="breadcrumb">
 <?php
@@ -64,31 +64,31 @@ $auth = Zend_Auth::getInstance();
 if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
 <ul>
 <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => 'index')); ?>">In&iacute;cio</a></li>
-<li class="last">Cadastrar Usu�rio</li>
+<li class="last">Cadastrar Usuário</li>
 </ul>
 <?php } ?>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 
-<!-- ========== IN�CIO T�TULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 
 <div id="titulo">
 <div>Alterar Senha<span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 
 </div>
-<!-- ========== FIM T�TULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 
 
 
-<!-- ========== IN�CIO CONTE�DO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 
 	<div id="conteudo">
 
 
-            <fieldset><legend>Informa��es</legend>
+            <fieldset><legend>Informações</legend>
 
-                <form method="POST" onsubmit="return validaSenha()" action="<?php echo $this->url(array('controller' => 'login', 'action' => 'alterarsenha')); ?>" name="alterarSenha" id="alterarSenha">
+                <form method="POST" onsubmit="return validaSenha()" action="<?php echo $this->url(array('module'=>'autenticacao', 'controller' => 'index', 'action' => 'alterarsenha')); ?>" name="alterarSenha" id="alterarSenha">
 
                 <table border="1" class="tabela">
                     <thead>
@@ -130,12 +130,12 @@ if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
         </div>
 
 
-<!-- ========== FIM CONTE�DO ========== -->
+<!-- ========== FIM CONTEï¿½DO ========== -->
 
 
 
-<!-- ========== IN�CIO RODAP� DO CONTE�DO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 	<div id="rodapeConteudo"><span></span></div>
 
-<!-- ========== FIM RODAP� DO CONTE�DO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 			<br clear="all" />
