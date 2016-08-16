@@ -6,21 +6,23 @@
  *
  * @author augusto
  * @author wouerner <wouerner@gmail.com>
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  */
 class Autenticacao_Model_Sgcacesso extends GenericModel {
 
     protected $_banco = 'controledeacesso';
-    protected $_name = 'dbo.SGCacesso';
+    protected $_schema = 'controledeacesso';
+    protected $_name = 'sgcacesso';
 
     /**
-     * M�todo para buscar os dados do usu�rio de acordo com id (login scriptcase)
+     * Método para buscar os dados do usuï¿½rio de acordo com id (login scriptcase)
      * @access public
      * @dinamic
-     * @param @cod (c�digo do usu�rio)
+     * @param @cod (codigo do usuario)
      * @return bool
      */
     public static function loginScriptcase($cod) {
-        // busca pelo usu�rio no banco de dados
+        // busca pelo usuario no banco de dados
         $buscar = $this->buscar(array('IdUsuario = ?' => $cod));
 
         $conexao = Zend_Registry::get('conexao_banco');
@@ -37,33 +39,33 @@ class Autenticacao_Model_Sgcacesso extends GenericModel {
             $conexao_scriptcase = "conexao_scriptcase";
         }
 
-        // configura��es do banco de dados (seta uma nova conex�o no arquivo config.ini)
+        // configurações do banco de dados (seta uma nova conexï¿½o no arquivo config.ini)
         $config = new Zend_Config_Ini('./application/configs/config.ini', $conexao_scriptcase);
         $db = Zend_Db::factory($config->db);
         Zend_Db_Table::setDefaultAdapter($db);
 
-        if ($buscar) { // realiza a autentica��o
-            // configura��es do banco
+        if ($buscar) { // realiza a autenticação
+            // configurações do banco
             $authAdapter = new Zend_Auth_Adapter_DbTable($db);
             $authAdapter->setTableName('dbo.SGCacesso') // ControleDeAcesso.dbo.SGCacesso
                     ->setIdentityColumn('Cpf')
                     ->setCredentialColumn('Senha');
 
-            // seta as credenciais informada pelo usu�rio
+            // seta as credenciais informada pelo usuï¿½rio
             $authAdapter
                     ->setIdentity($buscar[0]->Cpf)
                     ->setCredential($buscar[0]->Senha);
 
-            // tenta autenticar o usu�rio
+            // tenta autenticar o usuï¿½rio
             $auth = Zend_Auth::getInstance();
             $acesso = $auth->authenticate($authAdapter);
 
             // verifica se o acesso foi permitido
             if ($acesso->isValid()) {
-                // pega os dados do usu�rio com exce��o da senha
+                // pega os dados do usuï¿½rio com exceï¿½ï¿½o da senha
                 $authData = $authAdapter->getResultRowObject(null, 'Senha');
 
-                // armazena os dados do usu�rio
+                // armazena os dados do usuï¿½rio
                 $objAuth = $auth->getStorage()->write($authData);
 
                 return true;
@@ -71,8 +73,15 @@ class Autenticacao_Model_Sgcacesso extends GenericModel {
         }
     }
 
-// fecha m�todo loginScriptcase()
+// fecha método loginScriptcase()
 
+    /**
+     * @param $username
+     * @param $password
+     * @return bool
+     *
+     * @todo melhorar codigo para funcionar em ambos os bancos.
+     */
     public function login($username, $password) {
 
         // busca o usu?rio de acordo com o login e a senha
@@ -140,29 +149,31 @@ class Autenticacao_Model_Sgcacesso extends GenericModel {
         $sql = $this->select();
         $sql->setIntegrityCheck(false);
         $sql->from($this, array(
-                'Cpf',
-                'Senha',
+                'cpf',
+                'senha',
             )
         );
-        $sql->where('Cpf = ?', $username);
+        $sql->where('cpf = ?', $username);
         if ($password != MinC_Controller_Action_Abstract::validarSenhaInicial()) {
-        $sql->where("Senha  = ?", $password);
-        }$buscar = $this->fetchRow($sql);
+            $sql->where("senha  = ?", $password);
+        }
 
-        if ($buscar) { // realiza a autentica??o
+        $buscar = $this->fetchRow($sql);
+
+        if ($buscar) { // realiza a autenticacao
             // configura??es do banco
             $dbAdapter = Zend_Db_Table::getDefaultAdapter();
             // pegamos o zend_auth
 
             $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
             $authAdapter->setTableName($this->_name) // CONTROLEDEACESSO.dbo.sgcacesso
-                    ->setIdentityColumn('Cpf')
-                    ->setCredentialColumn('Senha');
+                    ->setIdentityColumn('cpf')
+                    ->setCredentialColumn('senha');
 
             // seta as credenciais informada pelo usu?rio
             $authAdapter
-                    ->setIdentity($buscar['Cpf'])
-                    ->setCredential($buscar['Senha']);
+                    ->setIdentity($buscar['cpf'])
+                    ->setCredential($buscar['senha']);
 
             // tenta autenticar o usu?rio
             $auth = Zend_Auth::getInstance();
@@ -171,7 +182,7 @@ class Autenticacao_Model_Sgcacesso extends GenericModel {
             // verifica se o acesso foi permitido
             if ($acesso->isValid()) {
                 // pega os dados do usu?rio com exce??o da senha
-                $authData = $authAdapter->getResultRowObject(null, 'Senha');
+                $authData = $authAdapter->getResultRowObject(null, 'senha');
 
                 // armazena os dados do usu?rio
                 $objAuth = $auth->getStorage()->write($authData);
