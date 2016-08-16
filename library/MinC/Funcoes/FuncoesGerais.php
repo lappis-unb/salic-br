@@ -6,8 +6,8 @@
  */
 
 
-/* FUNÇÃO ÚTIL PARA DEBUG */
-
+/* FUNï¿½ï¿½O ï¿½TIL PARA DEBUG */
+/*
 function xd($obj) {
     $debug = debug_backtrace();
     $calledLine = $debug[0]['line'];
@@ -20,9 +20,9 @@ function xd($obj) {
     echo "</div>";
     die();
 }
-
-/* FUNÇÃO ÚTIL PARA DEBUG SEM  DIE */
-
+*/
+/* FUNï¿½ï¿½O ï¿½TIL PARA DEBUG SEM  DIE */
+/*
 function x($obj) {
     echo "<div style='background-color:#9370DB; border:1px #666666 solid; text-align:left;'>"; #DFDFDF
     echo "<pre>";
@@ -30,7 +30,7 @@ function x($obj) {
     echo "</pre>";
     echo "</div>";
 }
-
+*/
 function preparaValor($valor, $tipo=1) {
     if ($tipo == 1) {
         $valor = str_replace(".", "", $valor);
@@ -81,12 +81,12 @@ function pontoMilhar($valor) {
  */
 function preparaNomeArquivo($strNomeArquivo) {
     //$strNomeArquivo = html_entity_decode(utf8_decode($strNomeArquivo));
-    //retira acentos e substitui espaço em branco por underscores
-    $arr1 = array("á", "à", "â", "ã", "ä", "é", "è", "ê", "ë", "í", "ì", "î", "ï", "ó", "ò", "ô", "õ", "ö", "ú", "ù", "û", "ü", "ç", "Á", "À", "Â", "Ã", "Ä", "É", "È", "Ê", "Ë", "Í", "Ì", "Î", "Ï", "Ó", "Ò", "Ô", "Õ", "Ö", "Ú", "Ù", "Û", "Ü", "Ç", " ", "-", "'", "/", "\\");
+    //retira acentos e substitui espaï¿½o em branco por underscores
+    $arr1 = array("ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", "ï¿½", " ", "-", "'", "/", "\\");
     $arr2 = array("a", "a", "a", "a", "a", "e", "e", "e", "e", "i", "i", "i", "i", "o", "o", "o", "o", "o", "u", "u", "u", "u", "c", "A", "A", "A", "A", "A", "E", "E", "E", "E", "I", "I", "I", "I", "O", "O", "O", "O", "O", "U", "U", "U", "U", "C", "", "", "", "", "");
     $strNomeArquivoAlterado = str_replace($arr1, $arr2, $strNomeArquivo);
 
-    //transformas as letras em minúsulas
+    //transformas as letras em minï¿½sulas
     $strNomeArquivoAlterado = strtolower($strNomeArquivoAlterado);
 
     return $strNomeArquivoAlterado;
@@ -98,7 +98,7 @@ function preparaNomeArquivo($strNomeArquivo) {
  * @return string
  */
 function retiraMascara($strNomeArquivo) {
-    //retira acentos e substitui espaço em branco por underscores
+    //retira acentos e substitui espaï¿½o em branco por underscores
     $arr1 = array("(", ")", "-", ".", "_", "/");
     $arr2 = array("", "", "", "", "", "");
     $strNomeArquivoAlterado = str_replace($arr1, $arr2, $strNomeArquivo);
@@ -162,7 +162,7 @@ function montaGuiaLinks($controller, $links = array()) {
             $guia .= "</ul></div>";
             print $guia;
         } else {
-            print "<span style='color: red;'>Erro na apresentaç?o da guia! - controller invalido</span>";
+            print "<span style='color: red;'>Erro na apresentaï¿½?o da guia! - controller invalido</span>";
         }
     } catch (Zend_Exception $e) {
         parent::message("Erro ao montar guia de links", "projetosgerenciar/projetosgerenciar", "ERROR");
@@ -205,7 +205,7 @@ function montaBotaoVoltar($controller, $links) {
 
 
 
-/* Funcção que verifica se o Proponente está Inabilitado*/
+/* Funcï¿½ï¿½o que verifica se o Proponente estï¿½ Inabilitado*/
 function proponenteInabilitado($cpf)
 {
 	$inabilitadoDAO = new Inabilitado();
@@ -225,12 +225,12 @@ function proponenteInabilitado($cpf)
  * @param $cpf
  * @return bool
  */
-function validaCPF($cpf) { // Verifiva se o número digitado contém todos os digitos
+function validaCPF($cpf) { // Verifiva se o nï¿½mero digitado contï¿½m todos os digitos
     $cpf = str_pad(preg_replace('[^0-9]', '', $cpf), 11, '0', STR_PAD_LEFT);
 
     if (strlen($cpf) != 11 || $cpf == '00000000000' || $cpf == '11111111111' || $cpf == '22222222222' || $cpf == '33333333333' || $cpf == '44444444444' || $cpf == '55555555555' || $cpf == '66666666666' || $cpf == '77777777777' || $cpf == '88888888888' || $cpf == '99999999999') {
         return false;
-    } else {   // Calcula os numeros para verificar se o CPF é verdadeiro
+    } else {   // Calcula os numeros para verificar se o CPF ï¿½ verdadeiro
         for ($t = 9; $t < 11; $t++) {
             for ($d = 0, $c = 0; $c < $t; $c++) {
                 $d += $cpf{$c} * (($t + 1) - $c);
@@ -257,7 +257,7 @@ function isValidDate($date, $format = 'Y-m-d') {
 }
 
 function isCnpjValid($cnpj) {
-    // Etapa 1: Cria um array com apenas os digitos numéricos,
+    // Etapa 1: Cria um array com apenas os digitos numï¿½ricos,
     // Isso permite receber o cnpj em diferentes formatos como:
     // "00.000.000/0000-00", "00000000000000", "00 000 000 0000 00" etc...
     $num = array();
@@ -269,18 +269,18 @@ function isCnpjValid($cnpj) {
         }
     }
 
-    //Etapa 2: Conta os dígitos, um Cnpj válido possui 14 dígitos numéricos.
+    //Etapa 2: Conta os dï¿½gitos, um Cnpj vï¿½lido possui 14 dï¿½gitos numï¿½ricos.
     if (count($num) != 14) {
         return false;
     }
 
-    //Etapa 3: O número 00000000000 embora não seja um cnpj real resultaria um cnpj válido
-    // após o calculo dos dígitos verificares e por isso precisa ser filtradas nesta etapa.
+    //Etapa 3: O nï¿½mero 00000000000 embora nï¿½o seja um cnpj real resultaria um cnpj vï¿½lido
+    // apï¿½s o calculo dos dï¿½gitos verificares e por isso precisa ser filtradas nesta etapa.
     if ($num[0] == 0 && $num[1] == 0 && $num[2] == 0 && $num[3] == 0 && $num[4] == 0 && $num[5] == 0 && $num[6] == 0 && $num[7] == 0 && $num[8] == 0 && $num[9] == 0 && $num[10] == 0 && $num[11] == 0) {
         return false;
     }
 
-    //Etapa 4: Calcula e compara o primeiro dígito verificador.
+    //Etapa 4: Calcula e compara o primeiro dï¿½gito verificador.
     else {
         $j = 5;
         for ($i = 0; $i < 4; $i++) {
@@ -305,7 +305,7 @@ function isCnpjValid($cnpj) {
         }
     }
 
-    //Etapa 5: Calcula e compara o segundo dígito verificador.
+    //Etapa 5: Calcula e compara o segundo dï¿½gito verificador.
     if (!isset($isCnpjValid)) {
         $j = 6;
         for ($i = 0; $i < 5; $i++) {
