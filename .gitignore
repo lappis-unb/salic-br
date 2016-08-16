@@ -12,3 +12,5 @@ tags
 vendor
 tests/log/*
 composer.lock
+library
+.idea
