@@ -137,7 +137,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
                     if(md5($password) != $this->validarSenhaInicial()){
                         $encriptaSenha = EncriptaSenhaDAO::encriptaSenha($username, $password);
                         //x($encriptaSenha);
-                        $SenhaFinal = $encriptaSenha[0]->senha;
+                        $SenhaFinal = $encriptaSenha;
                         //x($SenhaFinal);
                         $buscar = $Usuario->loginSemCript($username, $SenhaFinal);
                     } else {
@@ -579,9 +579,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
             $password = $post->senha; // recebe a senha
             $idLogarComo =  $post->logarComo;
 
-echo '<pre>';
-var_dump('asd');
-exit;
             $sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha";
             $db = Zend_Registry::get('db');
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
