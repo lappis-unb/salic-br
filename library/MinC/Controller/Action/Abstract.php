@@ -75,7 +75,6 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             // manda os dados para a visao
             $this->view->idAgente    = $idAgente;
         }
-
         @$cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
 
         if ($cpf) {
@@ -324,7 +323,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 // tenta fazer a autentica??o do usu?rio logado no scriptcase para o zend
                 $autenticar = UsuarioDAO::loginScriptcase($codUsuario);
 
-                if ($autenticar && $auth->hasIdentity()) // caso o usu?rio seja passado pelo scriptcase e esteja autenticado
+                if ($autenticar || $auth->hasIdentity()) // caso o usu?rio seja passado pelo scriptcase e esteja autenticado
                 {
                     // manda os dados para a vis?o
                     $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
@@ -646,7 +645,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
         }
 
-    } // fecha m?todo verificarPermissaoAcesso()
+    } // fecha metodo verificarPermissaoAcesso()
 
     public static function validarSenhaInicial(){
         return 'ae56f49edf70ec03b98f53ea6d2bc622';
