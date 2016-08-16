@@ -1,28 +1,28 @@
 <?php
 /**
- * Classe Usuário DAO
+ * Classe Usuï¿½rio DAO
  * @author Equipe RUP - Politec
  * @since 12/07/2010
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class UsuarioDAO extends Zend_Db_Table
 {
-	/**
-	 * Método para buscar os dados do usuário de acordo com login e senha
+    /**
+	 * Mï¿½todo para buscar os dados do usuï¿½rio de acordo com login e senha
 	 * @access public
 	 * @static
-	 * @param @username (cpf ou cnpj do usuário)
-	 * @param @password (senha do usuário criptografada)
+	 * @param @username (cpf ou cnpj do usuï¿½rio)
+	 * @param @password (senha do usuï¿½rio criptografada)
 	 * @return bool
 	 */
 	public static function login($username, $password)
 	{
-		// busca o usuário de acordo com o login e a senha
+		// busca o usuï¿½rio de acordo com o login e a senha
 		$sql = "SELECT usu_codigo
 					,usu_nome
 					,usu_identificacao
@@ -40,35 +40,35 @@ class UsuarioDAO extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$buscar = $db->fetchAll($sql);
 
-		if ($buscar) // realiza a autenticação
+		if ($buscar) // realiza a autenticaï¿½ï¿½o
 		{
-			// configurações do banco
+			// configuraï¿½ï¿½es do banco
 			$authAdapter = new Zend_Auth_Adapter_DbTable(Zend_Registry::get('db'));
 			$authAdapter->setTableName('dbo.Usuarios') // TABELAS.dbo.Usuarios
 				->setIdentityColumn('usu_identificacao')
 				->setCredentialColumn('usu_senha');
 
-			// seta as credenciais informada pelo usuário
+			// seta as credenciais informada pelo usuï¿½rio
 			$authAdapter
 				->setIdentity($buscar[0]->usu_identificacao)
 				->setCredential($buscar[0]->usu_senha);
 
-			// tenta autenticar o usuário
+			// tenta autenticar o usuï¿½rio
 			$auth   = Zend_Auth::getInstance();
 			$acesso = $auth->authenticate($authAdapter);
 
 			// verifica se o acesso foi permitido
 			if ($acesso->isValid())
 			{
-				// pega os dados do usuário com exceção da senha
+				// pega os dados do usuï¿½rio com exceï¿½ï¿½o da senha
 				$authData = $authAdapter->getResultRowObject(null, 'usu_senha');
 
-				// armazena os dados do usuário
+				// armazena os dados do usuï¿½rio
 				$objAuth = $auth->getStorage()->write($authData);
 
 				return true;
 			} // fecha if
-			else // caso não tenha sido validado
+			else // caso nï¿½o tenha sido validado
 			{
 				return false;
 			}
@@ -77,15 +77,15 @@ class UsuarioDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método login()
+	} // fecha mï¿½todo login()
 
 
 
 	/**
-	 * Método para alterar a senha do usuário do sistema
+	 * Mï¿½todo para alterar a senha do usuï¿½rio do sistema
 	 * @access public
-	 * @param @username (cpf ou cnpj do usuário)
-	 * @param @password (nova senha do usuário)
+	 * @param @username (cpf ou cnpj do usuï¿½rio)
+	 * @param @password (nova senha do usuï¿½rio)
 	 * @return object
 	 */
 	public function alterarSenha($username, $password)
@@ -97,17 +97,17 @@ class UsuarioDAO extends Zend_Db_Table
 		$db = Zend_Registry::get('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
-	} // fecha método alterarSenha()
+	} // fecha mï¿½todo alterarSenha()
 
 
 
 	/**
-	 * Método para buscar as unidades autorizadas do usuário do sistema
+	 * Mï¿½todo para buscar as unidades autorizadas do usuï¿½rio do sistema
 	 * @access public
-	 * @param @usu_codigo (código do usuário)
-	 * @param @sis_codigo (código sistema)
-	 * @param @gru_codigo (código do grupo)
-	 * @param @uog_orgao  (código do órgão)
+	 * @param @usu_codigo (cï¿½digo do usuï¿½rio)
+	 * @param @sis_codigo (cï¿½digo sistema)
+	 * @param @gru_codigo (cï¿½digo do grupo)
+	 * @param @uog_orgao  (cï¿½digo do ï¿½rgï¿½o)
 	 * @return object
 	 */
 	public function buscarUnidades($usu_codigo, $sis_codigo = null, $gru_codigo = null, $uog_orgao = null)
@@ -150,7 +150,7 @@ class UsuarioDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para pegar o id do usuário logado
+	 * Mï¿½todo para pegar o id do usuï¿½rio logado
 	 * @access public
 	 * @static
 	 * @param integer
@@ -174,27 +174,35 @@ class UsuarioDAO extends Zend_Db_Table
 		{
 			$this->view->message = $e->getMessage();
 		}
-	} // fecha método getIdUsuario()
+	} // fecha mï¿½todo getIdUsuario()
 
 
 
 	/**
-	 * Método para buscar todos os dados do usuário de acordo com o seu código vindo do SCRIPTCASE
+	 * Metodo para buscar todos os dados do usuario de acordo com o seu codigo vindo do SCRIPTCASE
 	 * @access public
 	 * @static
-	 * @param @cod (código do usuário)
+	 * @param @cod (codigo do usuario)
 	 * @return object
+     *
+     * @todo melhorar codigo pois esta fazendo a mesma verificacao de tipo de banco que na abstract da model.
 	 */
 	public static function buscarUsuarioScriptcase($cod)
 	{
-		$sql = "SELECT *
-				FROM ControleDeAcesso.dbo.SGCacesso
-				WHERE IdUsuario = $cod";
+        $db = Zend_Registry::get('db');
 
-		$db = Zend_Registry::get('db');
+        $schema = 'controledeacesso';
+        if ($db instanceof Zend_Db_Adapter_Pdo_Mssql){
+            $schema = $schema . '.dbo';
+        }
+
+		$sql = "SELECT *
+				FROM {$schema}.sgcacesso
+				WHERE idusuario = $cod";
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
+
 		return $db->fetchAll($sql);
-	} // fecha método buscarUsuarioScriptcase()
+	} // fecha mï¿½todo buscarUsuarioScriptcase()
 
 	public static function buscarUsuario($cod)
 	{
@@ -219,15 +227,15 @@ class UsuarioDAO extends Zend_Db_Table
 	}
 
 	/**
-	 * Método para buscar os dados do usuário de acordo com id (login scriptcase)
+	 * Mï¿½todo para buscar os dados do usuï¿½rio de acordo com id (login scriptcase)
 	 * @access public
 	 * @static
-	 * @param @cod (código do usuário)
+	 * @param @cod (cï¿½digo do usuï¿½rio)
 	 * @return bool
 	 */
 	public static function loginScriptcase($cod)
 	{
-		// busca pelo usuário no banco de dados
+		// busca pelo usuï¿½rio no banco de dados
 		$buscar = UsuarioDAO::buscarUsuarioScriptcase($cod);
         $conexao = Zend_Registry::get('conexao_banco');
 
@@ -256,42 +264,42 @@ class UsuarioDAO extends Zend_Db_Table
                         $conexao_scriptcase = "conexao_xti_controle_acesso";
                 }
 
-        // configurações do banco de dados (seta uma nova conexão no arquivo config.ini)
+        // configuraï¿½ï¿½es do banco de dados (seta uma nova conexï¿½o no arquivo config.ini)
         $config = new Zend_Config_Ini('./application/configs/config.ini', $conexao_scriptcase);
                 //xd($config);
         $db     = Zend_Db::factory($config->db);
 ;
         Zend_Db_Table::setDefaultAdapter($db);
 
-		if ($buscar) // realiza a autenticação
+		if ($buscar) // realiza a autenticaï¿½ï¿½o
 		{
-			// configurações do banco
+			// configuraï¿½ï¿½es do banco
 			$authAdapter = new Zend_Auth_Adapter_DbTable($db);
 			$authAdapter->setTableName('dbo.SGCacesso') // ControleDeAcesso.dbo.SGCacesso
 				->setIdentityColumn('Cpf')
 				->setCredentialColumn('Senha');
 
-			// seta as credenciais informada pelo usuário
+			// seta as credenciais informada pelo usuï¿½rio
 			$authAdapter
 				->setIdentity($buscar[0]->Cpf)
 				->setCredential($buscar[0]->Senha);
 
-			// tenta autenticar o usuário
+			// tenta autenticar o usuï¿½rio
 			$auth   = Zend_Auth::getInstance();
 			$acesso = $auth->authenticate($authAdapter);
 
 			// verifica se o acesso foi permitido
 			if ($acesso->isValid())
 			{
-				// pega os dados do usuário com exceção da senha
+				// pega os dados do usuï¿½rio com exceï¿½ï¿½o da senha
 				$authData = $authAdapter->getResultRowObject(null, 'Senha');
 
-				// armazena os dados do usuário
+				// armazena os dados do usuï¿½rio
 				$objAuth = $auth->getStorage()->write($authData);
 
 				return true;
 			}
-			else // caso não tenha sido validado
+			else // caso nï¿½o tenha sido validado
 			{
 				return false;
 			}
@@ -300,6 +308,6 @@ class UsuarioDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método loginScriptcase()
+	} // fecha mï¿½todo loginScriptcase()
 
 } // fecha class
