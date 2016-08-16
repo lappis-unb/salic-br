@@ -1,10 +1,10 @@
 <?php
 class TbVinculo extends GenericModel{
 
-    protected $_banco = 'Agentes';
-    protected $_schema = 'Agentes';
-    protected $_name = 'tbVinculo';
-
+    protected $_banco = 'agentes';
+    protected $_schema = 'agentes';
+    protected $_name = 'tbvinculo';
+    protected $_primary = 'idVinculo';
 
 
 	public function buscarVinculoProponenteResponsavel($where=array())
@@ -45,10 +45,17 @@ class TbVinculo extends GenericModel{
        // xd($slct->assemble());
         return $this->fetchAll($slct);
     }
+<<<<<<< HEAD
 
 
 	/* Método que lista os vinculos do Proponente ao Responsavel
      *
+=======
+
+
+	/* Mï¿½todo que lista os vinculos do Proponente ao Responsavel
+     *
+>>>>>>> b002a5f83ce4b7f9bab5dc2c443ab2d2601be66a
      * */
     public function buscarProponenteResponsavel($idUsuarioLogado, $mecanismo = false)
     {
@@ -145,10 +152,17 @@ class TbVinculo extends GenericModel{
 
         return $this->fetchAll($slctUnion);
     }
+<<<<<<< HEAD
 
 
 	/* Método que lista os responsáveis
      *
+=======
+
+
+	/* Mï¿½todo que lista os responsï¿½veis
+     *
+>>>>>>> b002a5f83ce4b7f9bab5dc2c443ab2d2601be66a
      * */
     public function buscarResponsaveis($where=array() , $idAgenteProponente)
     {
@@ -186,7 +200,7 @@ class TbVinculo extends GenericModel{
 
 
 	/**
-	 * Método para buscar os Proponentes vinculados a um determinado Responsável, bem como, os Projetos desses Proponentes
+	 * Mï¿½todo para buscar os Proponentes vinculados a um determinado Responsï¿½vel, bem como, os Projetos desses Proponentes
 	 * @access public
 	 * @param integer $idResponsavel
 	 * @param integer $idPronac
@@ -220,12 +234,12 @@ class TbVinculo extends GenericModel{
 		$select->order('p.NomeProjeto ASC');
 
 		return $this->fetchAll($select);
-	} // fecha método buscarProponentesProjetosResponsavel()
+	} // fecha mï¿½todo buscarProponentesProjetosResponsavel()
 
 
 
         /**
-	 * Método para buscar os Proponentes vinculados a um determinado Responsável
+	 * Mï¿½todo para buscar os Proponentes vinculados a um determinado Responsï¿½vel
 	 * @access public
 	 * @param integer $idResponsavel
 	 * @param integer $idPronac
@@ -273,7 +287,7 @@ class TbVinculo extends GenericModel{
 
             return $this->fetchAll($slctUnion);
 
-	} // fecha método buscarProponentes()
+	} // fecha mï¿½todo buscarProponentes()
 
 
 }
