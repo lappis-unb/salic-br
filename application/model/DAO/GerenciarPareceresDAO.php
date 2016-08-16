@@ -103,41 +103,49 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 	
 	public static function projetosConsolidadosParte2($idPronac)
 	{
-		$sql = "SELECT idPRONAC,p.Descricao as Produto,
-				      CASE
-				         WHEN Artigo18 = 1
-				              THEN 'Artigo 18'
-				              ELSE 'Artigo 26'
-				         END as Enquadramento,
-				       CASE
-				          WHEN IncisoArtigo27_I = 0
-				               THEN 'Não'
-				               ELSE 'Sim'
-				          END as IncisoArtigo27_I,
-				       CASE
-				          WHEN IncisoArtigo27_II = 0
-				               THEN 'Não'
-				               ELSE 'Sim'
-				          END as IncisoArtigo27_II,
-				       CASE
-				          WHEN IncisoArtigo27_III = 0
-				               THEN 'Não'
-				               ELSE 'Sim'
-				          END as IncisoArtigo27_III,
-				       CASE
-				          WHEN IncisoArtigo27_IV = 0
-				               THEN 'Não'
-				               ELSE 'Sim'
-				          END as IncisoArtigo27_IV        
-				FROM SAC.dbo.tbAnaliseDeConteudo a
-				INNER JOIN SAC.dbo.Produto p on (a.idProduto = p.Codigo)
-				WHERE idPronac=".$idPronac;
-				
-		
-				
+
+		$table = Zend_Db_Table::getDefaultAdapter();
+
+		$select = $table->select()
+			->from(array('a' => 'tbAnaliseDeConteudo'),
+				array('idPRONAC', new Zend_Db_Expr('
+					CASE
+							 WHEN Artigo18 = 1
+								  THEN \'Artigo 18\'
+								  ELSE \'Artigo 26\'
+							 END as Enquadramento,
+						   CASE
+							  WHEN IncisoArtigo27_I = 0
+								   THEN \'Não\'
+								   ELSE \'Sim\'
+							  END as IncisoArtigo27_I,
+						   CASE
+							  WHEN IncisoArtigo27_II = 0
+								   THEN \'Não\'
+								   ELSE \'Sim\'
+							  END as IncisoArtigo27_II,
+						   CASE
+							  WHEN IncisoArtigo27_III = 0
+								   THEN \'Não\'
+								   ELSE \'Sim\'
+							  END as IncisoArtigo27_III,
+						   CASE
+							  WHEN IncisoArtigo27_IV = 0
+								   THEN \'Não\'
+								   ELSE \'Sim\'
+							  END as IncisoArtigo27_IV
+				')),
+				'SAC.dbo')
+			->joinInner(array('p' => 'Produto'),
+				'a.idProduto = p.Codigo',
+				array(new Zend_Db_Expr('p.Descricao as Produto')),
+			    'SAC.dbo')
+		 	->where('idPronac = ?',$idPronac);
+
+
 		$db = Zend_Registry::get('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		return $db->fetchAll($sql);
+		return $db->fetchAll($select);
 			
 	}
 	
@@ -272,29 +280,87 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 
 	public static function pareceresTecnicos($idpronac)
 	{
-		$sql = "SELECT     p.IdPRONAC, p.AnoProjeto + p.Sequencial AS NrProjeto, p.NomeProjeto ,i.Nome AS Proponente, pr.Descricao AS Produto, a.idProduto, 
-                      CASE WHEN Lei8313 = 1 THEN 'Sim' ELSE 'Não' END AS Lei8313, CASE WHEN Artigo3 = 1 THEN 'Sim' ELSE 'Não' END AS Artigo3, 
-                      CASE WHEN IncisoArtigo3 = 1 THEN 'I' WHEN IncisoArtigo3 = 2 THEN 'II' WHEN IncisoArtigo3 = 3 THEN 'III' WHEN IncisoArtigo3 = 4 THEN 'IV' WHEN IncisoArtigo3
-                       = 5 THEN 'V' END AS IncisoArtigo3, a.AlineaArtigo3, CASE WHEN Artigo18 = 1 THEN 'Sim' ELSE 'Não' END AS Artigo18, a.AlineaArtigo18, 
-                      CASE WHEN Artigo26 = 1 THEN 'Sim' ELSE 'Não' END AS Artigo26, CASE WHEN Lei5761 = 1 THEN 'Sim' ELSE 'Não' END AS Lei5761, 
-                      CASE WHEN Artigo27 = 1 THEN 'Sim' ELSE 'Não' END AS Artigo27, CASE WHEN IncisoArtigo27_I = 1 THEN 'Sim' ELSE 'Não' END AS IncisoArtigo27_I, 
-                      CASE WHEN IncisoArtigo27_II = 1 THEN 'Sim' ELSE 'Não' END AS IncisoArtigo27_II, 
-                      CASE WHEN IncisoArtigo27_III = 1 THEN 'Sim' ELSE 'Não' END AS IncisoArtigo27_III, 
-                      CASE WHEN IncisoArtigo27_IV = 1 THEN 'Sim' ELSE 'Não' END AS IncisoArtigo27_IV, 
-                      CASE WHEN TipoParecer = 1 THEN 'Aprovação' WHEN TipoParecer = 2 THEN 'Complementação' WHEN TipoParecer = 4 THEN 'Redução' END AS TipoParecer,
-                       CASE WHEN ParecerFavoravel = 1 THEN 'Sim' ELSE 'Não' END AS ParecerFavoravel, a.ParecerDeConteudo, SAC.dbo.fnNomeParecerista(a.idUsuario) 
-                      AS Parecerista,
-                      pd.stPrincipal
-                      FROM       SAC.dbo.Projetos AS p 
-                                 INNER JOIN SAC.dbo.Interessado AS i ON p.CgcCpf = i.CgcCpf
-                                 INNER JOIN SAC.dbo.tbAnaliseDeConteudo AS a ON p.IdPRONAC = a.idPronac
-                                 INNER JOIN SAC.dbo.Produto AS pr ON a.idProduto = pr.Codigo
-                                 INNER JOIN SAC.dbo.PlanoDistribuicaoProduto pd ON p.idProjeto = pd.idProjeto and pd.idProduto = pr.Codigo AND pd.stPlanoDistribuicaoProduto = 1 
-                      WHERE     (a.idUsuario IS NOT NULL) AND p.IdPRONAC=".$idpronac." ORDER BY pd.stPrincipal DESC";
-				
+		$table = Zend_Db_Table::getDefaultAdapter();
+
+		$select = $table->select()
+			->from(array('p' => 'Projetos'),
+                    array('IdPRONAC' , new Zend_Db_Expr('p.AnoProjeto + p.Sequencial AS NrProjeto') , 'NomeProjeto',
+                        new Zend_Db_Expr(
+                            ' CASE 
+                                    WHEN Lei8313 = 1 THEN \'Sim\' 
+                                    ELSE \'Não\' 
+                              END AS Lei8313, 
+                              CASE 
+                                    WHEN Artigo3 = 1 THEN \'Sim\' 
+                                    ELSE \'Não\' 
+                              END AS Artigo3,
+                              CASE 
+                                    WHEN IncisoArtigo3 = 1 THEN \'I\' 
+                                    WHEN IncisoArtigo3 = 2 THEN \'II\' 
+                                    WHEN IncisoArtigo3 = 3 THEN \'III\' 
+                                    WHEN IncisoArtigo3 = 4 THEN \'IV\' 
+                                    WHEN IncisoArtigo3 = 5 THEN \'V\' 
+                              END AS IncisoArtigo3, a.AlineaArtigo3, CASE WHEN Artigo18 = 1 THEN \'Sim\' ELSE \'Não\' END AS Artigo18, a.AlineaArtigo18,
+                              CASE 
+                                    WHEN Artigo26 = 1 THEN \'Sim\' 
+                                    ELSE \'Não\' 
+                              END AS Artigo26, 
+                              CASE 
+                                    WHEN Lei5761 = 1 THEN \'Sim\' 
+                                    ELSE \'Não\' 
+                              END AS Lei5761,
+                              CASE 
+                                    WHEN Artigo27 = 1 THEN \'Sim\' 
+                                    ELSE \'Não\' 
+                              END AS Artigo27, 
+                              CASE 
+                                    WHEN IncisoArtigo27_I = 1 THEN \'Sim\' 
+                                    ELSE \'Não\' 
+                              END AS IncisoArtigo27_I,
+                              CASE 
+                                    WHEN IncisoArtigo27_II = 1 THEN \'Sim\' 
+                                    ELSE \'Não\' 
+                              END AS IncisoArtigo27_II,
+                              CASE 
+                                    WHEN IncisoArtigo27_III = 1 THEN \'Sim\' 
+                                    ELSE \'Não\' END AS IncisoArtigo27_III,
+                              CASE 
+                                    WHEN IncisoArtigo27_IV = 1 THEN \'Sim\' 
+                                    ELSE \'Não\' 
+                              END AS IncisoArtigo27_IV,
+                              CASE WHEN TipoParecer = 1 THEN \'Aprovação\' 
+                                    WHEN TipoParecer = 2 THEN \'Complementação\' 
+                                    WHEN TipoParecer = 4 THEN \'Redução\' 
+                              END AS TipoParecer,
+                               CASE 
+                                    WHEN ParecerFavoravel = 1 THEN \'Sim\' 
+                                    ELSE \'Não\' 
+                               END AS ParecerFavoravel,
+                               SAC.dbo.fnNomeParecerista(a.idUsuario) AS Parecerista
+                            ')),
+                    'SAC.dbo')
+            ->joinInner(array('i' => 'Interessado'),
+                'p.CgcCpf = i.CgcCpf',
+                array(new Zend_Db_Expr('i.Nome AS Proponente')),
+                'SAC.dbo')
+            ->joinInner(array('a' => 'tbAnaliseDeConteudo'),
+                'p.IdPRONAC = a.idPronac',
+                array('a.ParecerDeConteudo','a.idProduto'),
+                'SAC.dbo')
+            ->joinInner(array('pr' => 'Produto'),
+                'a.idProduto = pr.Codigo',
+                array(new Zend_Db_Expr('pr.Descricao AS Produto')),
+                'SAC.dbo')
+            ->joinInner(array('pd' => 'PlanoDistribuicaoProduto'),
+            'p.idProjeto = pd.idProjeto and pd.idProduto = pr.Codigo AND pd.stPlanoDistribuicaoProduto = 1',
+            array('pd.stPrincipal'),
+            'SAC.dbo')
+            ->where('a.idUsuario IS NOT NULL AND p.IdPRONAC = ?', $idpronac)
+            ->order('pd.stPrincipal DESC');
+
 		$db = Zend_Registry::get('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		return $db->fetchAll($sql);
+		return $db->fetchAll($select);
 			
 	}
 

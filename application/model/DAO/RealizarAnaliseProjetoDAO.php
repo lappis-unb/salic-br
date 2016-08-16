@@ -29,14 +29,29 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
      */
     public static function verificaEnquadramento($idpronac=null, $tpAnalise=null )
     {
-        $sql = "select taa.stArtigo18, taa.stArtigo26 from sac.dbo.tbAnaliseAprovacao taa
-                  inner join sac.dbo.projetos pr on pr.idpronac = taa.idpronac
-                  Inner join sac.dbo.PlanoDistribuicaoProduto pdp on pdp.idproduto=taa.idproduto and pdp.idprojeto = pr.idprojeto
-                  where taa.idpronac = $idpronac and pdp.stPrincipal = 1 and taa.tpanalise = '$tpAnalise' AND pdp.stPlanoDistribuicaoProduto = 1
-                  ";
+
+        $table = Zend_Db_Table::getDefaultAdapter();
+
+        $select = $table->select()
+            ->from(array('taa' =>'tbAnaliseAprovacao'),
+                array('stArtigo18','stArtigo26'),
+                'SAC.dbo')
+            ->joinInner(array('pr' => 'projetos'),
+                'pr.idpronac = taa.idpronac',
+                array(''),
+                'SAC.dbo')
+            ->joinInner(array('pdp' => 'PlanoDistribuicaoProduto'),
+                'pdp.idproduto=taa.idproduto and pdp.idprojeto = pr.idprojeto',
+                array(''),
+                'SAC.dbo')
+            ->where('taa.idpronac = ?', $idpronac)
+            ->where('pdp.stPrincipal = 1')
+            ->where('taa.tpanalise = ?', $tpAnalise)
+            ->where('pdp.stPlanoDistribuicaoProduto = 1');
+
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
 
     }
      /**
@@ -1108,16 +1123,39 @@ public static function divulgacaoProjetos($pronac){
 
 public static function divulgacaoProjetosGeral($pronac){
 
-	$sql = "
-		    SELECT d.idPlanoDivulgacao, v.idVerificacao as idVeiculo, v.Descricao as Veiculo, d.idPeca, v2.Descricao as Peca, logo.dsPosicao, doc.idArquivo, arq.nmArquivo
-                    FROM sac.dbo.PlanoDeDivulgacao d
-                    INNER JOIN sac.dbo.Projetos p on (d.idProjeto = p.idProjeto)
-                    INNER JOIN sac.dbo.Verificacao v on (d.idVeiculo = v.idVerificacao)
-                    INNER JOIN sac.dbo.Verificacao v2 on (d.idPeca = v2.idVerificacao)
-                    LEFT JOIN SAC.dbo.tbLogomarca as logo on logo.idPlanoDivulgacao = d.idPlanoDivulgacao
-                    LEFT JOIN BDCORPORATIVO.scCorp.tbDocumento as doc on doc.idDocumento = logo.idDocumento
-                    LEFT JOIN BDCORPORATIVO.scCorp.tbArquivo as arq on arq.idArquivo = doc.idArquivo
-                    WHERE p.IdPRONAC = '$pronac' AND d.stPlanoDivulgacao = 1";
+    $table = Zend_Db_Table::getDefaultAdapter();
+
+    $select = $table->select()
+        ->from(array('d' => 'PlanoDeDivulgacao'),
+            array('idPlanoDivulgacao', 'idPeca'),
+            'SAC.dbo')
+        ->joinInner(array('p' => 'Projetos'),
+            'd.idProjeto = p.idProjeto',
+            array(''),
+            'SAC.dbo')
+        ->joinInner(array('v' => 'Verificacao'),
+            'd.idVeiculo = v.idVerificacao',
+            array(new Zend_Db_Expr('v.idVerificacao AS idVeiculo'), new Zend_Db_Expr('v.Descricao AS Veiculo')),
+            'SAC.dbo')
+        ->joinInner(array('v2' => 'Verificacao'),
+            'd.idPeca = v2.idVerificacao',
+            array(new Zend_Db_Expr('v2.Descricao AS Peca')),
+            'SAC.dbo')
+        ->joinLeft(array('logo' => 'tbLogomarca'),
+            'logo.idPlanoDivulgacao = d.idPlanoDivulgacao',
+            array('dsPosicao'),
+            'SAC.dbo')
+        ->joinLeft(array('doc' => 'tbDocumento'),
+            'doc.idDocumento = logo.idDocumento',
+            array('idArquivo'),
+            'BDCORPORATIVO.scCorp')
+        ->joinLeft(array('arq' => 'tbArquivo'),
+            'arq.idArquivo = doc.idArquivo',
+            array('nmArquivo'),
+            'BDCORPORATIVO.scCorp')
+        ->where('p.IdPRONAC = ?', $pronac)
+        ->where('d.stPlanoDivulgacao = 1');
+
 
 	try
 			{
@@ -1128,7 +1166,7 @@ public static function divulgacaoProjetosGeral($pronac){
 			{
 				$this->view->message = "Erro ao buscar os Tipos de Documentos: " . $e->getMessage();
 			}
-			return $db->fetchAll($sql);
+			return $db->fetchAll($select);
 }
 
 public static function divulgacaoProjetosGeral2($pronac){
@@ -1184,34 +1222,34 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
     $table = Zend_Db_Table::getDefaultAdapter();
 
     $sql = $table->select()
-        ->from(['x' =>'PlanoDistribuicaoProduto'],
-            [new Zend_Db_Expr('idPlanoDistribuicao'),'idProjeto','idProduto','stPrincipal','QtdeProduzida','QtdeProponente','QtdeVendaNormal','QtdePatrocinador','QtdeOutros', 'QtdeVendaPromocional','PrecoUnitarioNormal','PrecoUnitarioPromocional',
+        ->from(array('x' =>'PlanoDistribuicaoProduto'),
+            array(new Zend_Db_Expr('idPlanoDistribuicao'),'idProjeto','idProduto','stPrincipal','QtdeProduzida','QtdeProponente','QtdeVendaNormal','QtdePatrocinador','QtdeOutros', 'QtdeVendaPromocional','PrecoUnitarioNormal','PrecoUnitarioPromocional',
                 new Zend_Db_Expr('
                  QtdeVendaNormal*PrecoUnitarioNormal as ReceitaNormal,
                  QtdeVendaPromocional*PrecoUnitarioPromocional as ReceitaPro,
                  (QtdeVendaNormal*PrecoUnitarioNormal)
                  +(QtdeVendaPromocional*PrecoUnitarioPromocional) as ReceitaPrevista
-                ')],
+                ')),
             'SAC.dbo')
-        ->joinInner(['y' => 'Projetos'],
+        ->joinInner(array('y' => 'Projetos'),
              'x.idProjeto = y.idProjeto',
-             ['Localizacao'],
+             array('Localizacao'),
              'SAC.dbo')
-        ->joinInner(['p' => 'Produto'],
+        ->joinInner(array('p' => 'Produto'),
             'x.idProduto = p.Codigo',
-            [new Zend_Db_Expr('p.Descricao AS Produto')],
+            array(new Zend_Db_Expr('p.Descricao AS Produto')),
             'SAC.dbo')
-        ->joinInner(['a' => 'Area'],
+        ->joinInner(array('a' => 'Area'),
             'x.Area = a.Codigo',
-            [new Zend_Db_Expr('a.Descricao AS Area'),new Zend_Db_Expr('b.Descricao AS Segmento')],
+            array(new Zend_Db_Expr('a.Descricao AS Area'),new Zend_Db_Expr('b.Descricao AS Segmento')),
             'SAC.dbo')
-        ->joinInner(['b' => 'Segmento'],
+        ->joinInner(array('b' => 'Segmento'),
             'x.Segmento = b.Codigo',
-            [],
+            array(''),
             'SAC.dbo')
-        ->joinInner(['v' => 'Verificacao'],
+        ->joinInner(array('v' => 'Verificacao'),
             'x.idPosicaoDaLogo = v.idVerificacao',
-            [new Zend_Db_Expr('v.Descricao AS PosicaoDaLogo')],
+            array(new Zend_Db_Expr('v.Descricao AS PosicaoDaLogo')),
             'SAC.dbo')
         ->where('y.IdPRONAC = ?',$pronac)
         ->where('x.stPlanoDistribuicaoProduto = 1');

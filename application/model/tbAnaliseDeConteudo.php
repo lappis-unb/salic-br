@@ -39,38 +39,45 @@ class tbAnaliseDeConteudo extends GenericModel {
 
 
 
-    public function buscarOutrasInformacoes($idPronac) {
+    public function buscarOutrasInformacoes($idPronac)
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
 
-        $select =  new Zend_Db_Expr("
-                SELECT idPRONAC,p.Descricao AS Produto,
-                  CASE
-                     WHEN Artigo18 = 1
-                          THEN 'Artigo 18'
-                          ELSE 'Artigo 26'
-                     END as Enquadramento,
-                   CASE
-                      WHEN IncisoArtigo27_I = 0
-                           THEN 'Não'
-                           ELSE 'Sim'
-                      END as IncisoArtigo27_I,
-                  CASE
-                      WHEN IncisoArtigo27_II = 0
-                           THEN 'Não'
-                           ELSE 'Sim'
-                      END as IncisoArtigo27_II,
-                   CASE
-                      WHEN IncisoArtigo27_III = 0
-                           THEN 'Não'
-                           ELSE 'Sim'
-                      END as IncisoArtigo27_III,
-                   CASE
-                      WHEN IncisoArtigo27_IV = 0
-                           THEN 'Não'
-                           ELSE 'Sim'
-                      END as IncisoArtigo27_IV
-            FROM tbAnaliseDeConteudo a
-            INNER JOIN Produto p ON (a.idProduto = p.Codigo)
-            WHERE idPronac = $idPronac ORDER BY 2");
+        $select->from(array('a' => 'tbAnaliseDeConteudo'),
+            array('idPRONAC',
+                new Zend_Db_Expr('p.Descricao AS Produto'),
+                new Zend_Db_Expr('CASE
+                                     WHEN Artigo18 = 1
+                                          THEN \'Artigo 18\'
+                                          ELSE \'Artigo 26\'
+                                 END as Enquadramento,
+                                 CASE
+                                     WHEN IncisoArtigo27_I = 0 THEN \'Não\'
+                                     ELSE \'Sim\'
+                                 END as IncisoArtigo27_I,
+                                 CASE
+                                     WHEN IncisoArtigo27_II = 0 THEN \'Não\'
+                                     ELSE \'Sim\'
+                                 END as IncisoArtigo27_II,
+                                 CASE
+                                     WHEN IncisoArtigo27_III = 0 THEN \'Não\'
+                                     ELSE \'Sim\'
+                                 END as IncisoArtigo27_III,
+                                 CASE
+                                     WHEN IncisoArtigo27_IV = 0 THEN \'Não\'
+                                     ELSE \'Sim\'
+                                 END as IncisoArtigo27_IV')
+            ),
+            'SAC.dbo')
+            ->joinInner(array('p' => 'Produto'),
+                'a.idProduto = p.Codigo',
+                array(''),
+                'SAC.dbo'
+                )
+            ->where('idPronac = ?', $idPronac)
+            ->order(2);
+
         try {
             $db = Zend_Registry::get('db');
             $db->setFetchMode(Zend_DB::FETCH_OBJ);

@@ -16,12 +16,15 @@ class tbConsolidacaoVotacao extends GenericModel
     protected $_schema = "scSAC";
     protected $_name   = "tbConsolidacaoVotacao";
 
-    public function consolidacaoPlenaria($idPronac) {
+    public function consolidacaoPlenaria($idPronac)
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from("$this->_name",
+            array('idNrReuniao', 'IdPRONAC', 'dsConsolidacao'),
+            "$this->_banco.$this->_schema")
+        ->where('idPRONAC = ?', $idPronac);
 
-        $select =  new Zend_Db_Expr("
-                SELECT idNrReuniao,IdPRONAC,dsConsolidacao
-                FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao
-                WHERE IdPRONAC = $idPronac ");
         try {
             $db = Zend_Registry::get('db');
             $db->setFetchMode(Zend_DB::FETCH_OBJ);

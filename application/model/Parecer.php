@@ -316,38 +316,39 @@ class Parecer extends GenericModel {
             return $this->fetchAll($select);
         }
 
-        public function identificacaoParecerConsolidado($idPronac) {
+        public function identificacaoParecerConsolidado($idPronac)
+        {
+            $select = $this->select();
+            $select->setIntegrityCheck(false);
+            $select->from(array('p' => 'Parecer'),
+                    array(new Zend_Db_Expr('p.idPronac AS Codigo'),
+                          new Zend_Db_Expr('p.AnoProjeto+p.Sequencial AS Pronac'),
+                          new Zend_Db_Expr('CASE
+                                                WHEN TipoParecer = \'1\' THEN \'Aprovação\'
+                                                WHEN TipoParecer = \'2\' THEN \'Complementação\'
+                                                WHEN TipoParecer = \'3\' THEN \'Prorrogação\'
+                                                WHEN TipoParecer = \'4\' THEN \'Redução\'
+                                            END AS TipoParecer,
+                                            CASE
+                                                WHEN ParecerFavoravel = \'1\' THEN \'Não\'
+                                                WHEN ParecerFavoravel = \'2\' THEN \'Sim\'
+                                                ELSE \'Sim com restrições\'
+                                            END AS ParecerFavoravel,
+                                            CASE
+                                                WHEN Enquadramento = \'1\' THEN \'Artigo 26\'
+                                                WHEN Enquadramento = \'2\' THEN \'Artigo 18\'
+                                            END AS Enquadramento')), 'SAC.dbo')
+            ->joinLeft(array('e' => 'Enquadramento'),
+                'p.idPronac = e.idPronac',
+                array(''),
+                'SAC.dbo')
+            ->joinLeft(array('pr' => 'Projetos'),
+                'p.idPronac = pr.idPronac',
+                array(''),
+                'SAC.dbo')
+            ->where('p.idTipoAgente = 1 AND p.idPronac = ?', $idPronac);
 
-            $select =  new Zend_Db_Expr("
-                SELECT p.idPronac AS Codigo, p.AnoProjeto+p.Sequencial AS Pronac, pr.NomeProjeto,
-                   CASE
-                     WHEN TipoParecer = '1'
-                          THEN 'Aprovação'
-                     WHEN TipoParecer = '2'
-                          THEN 'Complementação'
-                     WHEN TipoParecer = '3'
-                          THEN 'Prorrogação'
-                     WHEN TipoParecer = '4'
-                          THEN 'Redução'
-                   END AS TipoParecer,
-                   CASE
-                     WHEN ParecerFavoravel = '1'
-                          THEN 'Não'
-                     WHEN ParecerFavoravel = '2'
-                          THEN 'Sim'
-                          ELSE 'Sim com restrições'
-                   END AS ParecerFavoravel,
-                   CASE
-                     WHEN Enquadramento = '1'
-                          THEN 'Artigo 26'
-                     WHEN Enquadramento = '2'
-                          THEN 'Artigo 18'
-                   END AS Enquadramento,
-                   DtParecer,ResumoParecer,SugeridoReal
-            FROM Parecer p
-            LEFT JOIN Enquadramento e ON (p.idPronac = e.idPronac)
-            LEFT JOIN Projetos pr on (p.idPronac = pr.idPronac)
-            WHERE p.idTipoAgente = 1 AND p.idPronac = $idPronac ");
+
             try {
                 $db = Zend_Registry::get('db');
                 $db->setFetchMode(Zend_DB::FETCH_OBJ);

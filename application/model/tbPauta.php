@@ -840,18 +840,31 @@ class tbPauta extends GenericModel {
         return $this->fetchAll($slct);
     }
 
-    public function parecerDoComponenteComissao($idPronac) {
+    public function parecerDoComponenteComissao($idPronac)
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(array('p' => 'tbPauta'),
+            array('idPronac', new Zend_Db_Expr('x.AnoProjeto+x.Sequencial as PRONAC'),'stEnvioPlenario', new Zend_Db_Expr('round((Select sum(qtItem * nrOcorrencia * vlUnitario) From sac.dbo.tbPlanilhaAprovacao y where y.idPronac = x.idPronac and y.stAtivo = \'S\'),2) AS valor')),
+            'BDCORPORATIVO.scSAC')
+            ->joinInner(array('pa' => 'Parecer'),
+                'p.IdPRONAC = pa.IdPRONAC',
+                array('stAtivo','idTipoAgente','ParecerFavoravel','ResumoParecer'),
+                'SAC.dbo')
+            ->joinInner(array('x' => 'Projetos'),
+                'x.IdPRONAC = pa.IdPRONAC',
+                array('NomeProjeto', new Zend_Db_Expr('x.AnoProjeto+x.Sequencial as PRONAC')),
+                'SAC.dbo')
+            ->joinInner(array('r' => 'tbReuniao'),
+                'p.idNrReuniao = r.idNrReuniao',
+                array('NrReuniao', 'DtFinal', ),
+                'SAC.dbo')
+            ->joinInner(array('n' => 'Usuarios'),
+                'n.usu_codigo = pa.Logon',
+                array('n.usu_nome'),
+                'TABELAS.dbo')
+            ->where('pa.idTipoAgente = 6 AND p.idPronac = ?',$idPronac);
 
-        $select =  new Zend_Db_Expr("
-                SELECT p.idPronac,x.AnoProjeto+x.Sequencial as PRONAC,x.NomeProjeto ,pa.stAtivo,pa.idTipoAgente,n.usu_nome ,pa.ParecerFavoravel,pa.ResumoParecer,p.stEnvioPlenario,
-                       r.NrReuniao,r.DtFinal,
-                       round((Select sum(qtItem * nrOcorrencia * vlUnitario) From tbPlanilhaAprovacao y where y.idPronac = x.idPronac and y.stAtivo = 'S'),2) AS valor
-                FROM BDCORPORATIVO.scSAC.tbPauta p
-                INNER JOIN Parecer pa ON (p.IdPRONAC = pa.IdPRONAC)
-                INNER JOIN Projetos x ON (x.IdPRONAC = pa.IdPRONAC)
-                INNER JOIN tbReuniao r ON (p.idNrReuniao = r.idNrReuniao)
-                INNER JOIN Tabelas..Usuarios n ON (n.usu_codigo = pa.Logon)
-                WHERE pa.idTipoAgente = 6 AND p.idPronac = $idPronac ");
         try {
             $db = Zend_Registry::get('db');
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
