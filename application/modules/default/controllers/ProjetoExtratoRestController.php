@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
  */
-class ProjetoExtratoRestController extends AbstractRestController {
+class ProjetoExtratoRestController extends Minc_Controller_AbstractRest {
 
     public function postAction(){}
     

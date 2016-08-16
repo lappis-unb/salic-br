@@ -156,4 +156,28 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         /* registra a conexÃ£o para mudar em ambiente scriptcase */
         Zend_Registry::set('conexao_banco', $DIR_BANCOP);
     }
+    
+    /**
+     * _initRoutes Texto de descrição do método.
+     *
+     * @access public
+     * @return void
+     */
+    public function _initRoutes()
+    {
+        $controllerFront = Zend_Controller_Front::getInstance();
+        $restRoute = new Zend_Rest_Route(
+            $controllerFront,
+            array(),
+            array(
+                'default' => array(
+                    'proponente-autenticacao-rest',
+                    'proponente-rest',
+                    'projeto-rest',
+                    'projeto-extrato-rest',
+                    'projeto-extrato-ano-rest',
+                    'projeto-extrato-mes-rest'
+        )));
+        $controllerFront->getRouter()->addRoute('rest', $restRoute);
+    }
 }
