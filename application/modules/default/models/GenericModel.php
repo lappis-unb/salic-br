@@ -147,11 +147,7 @@ class GenericModel extends Zend_Db_Table_Abstract {
      */
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1) {
         $slct = $this->select();
-//echo '<pre>';
-//var_dump($this->getBanco());
-//var_dump($this->getName());
-//var_dump('$slct');
-//exit;
+
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
