@@ -124,9 +124,9 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
             }
             else {
 
-                // realiza a busca do usuï¿½rio no banco, fazendo a autenticaç?o do mesmo
+                // realiza a busca do usuario no banco, fazendo a autenticaçao do mesmo
                 $Usuario = new Autenticacao_Model_Sgcacesso();
-                $verificaStatus = $Usuario->buscar(array ( 'Cpf = ?' => $username));
+                $verificaStatus = $Usuario->buscar(array ( 'cpf = ?' => $username));
                 $verificaSituacao = 0;
                 if(count($verificaStatus)>0){
                     $IdUsuario =  $verificaStatus[0]->IdUsuario;
@@ -146,8 +146,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
                     if ( !$buscar ) {
                         parent::message("Login ou Senha inv&aacute;lidos!", "/autenticacao", "ALERT");
                     }
-                }
-                else {
+                } else {
                     $SenhaFinal = addslashes($password);
                     $buscar = $Usuario->loginSemCript($username, $SenhaFinal);
                 }
