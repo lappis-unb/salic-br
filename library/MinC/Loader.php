@@ -20,7 +20,6 @@ require_once "Arquivo/XML.php";
 require_once "Data/Data.php";
 require_once "Data/FuncoesData.php";
 require_once "Data/DateTimeCalc.php";
-require_once "Controller/AbstractRest.php";
 
 require_once "PDF/PDF.php";
 
