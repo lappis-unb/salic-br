@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="2800356674">
+    <data-source source="LOCAL" name="Salic - SQL Server - @10.0.0.212" uuid="f9fd5ab3-38f6-46f1-8582-681fd2df18a1">
+      <driver-ref>sqlserver.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://10.0.0.212:1433;databaseName=TABELAS</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="PostgreSQL Ruy - postgres@10.1.20.44" uuid="c2be7890-4cab-420b-97dc-b64a2e302b83">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://10.1.20.44:5432/postgres</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="PostgreSQL local - postgres@0.0.0.0" uuid="32fca014-f65c-4709-9c18-f4845bd7fda0">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://0.0.0.0:5432/postgres</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="SQL Server - TABELAS@10.0.0.191" uuid="80a5518f-0ed9-47ee-ad97-df213be6c8c0">
+      <driver-ref>sqlserver.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://10.0.0.191:1435;databaseName=TABELAS</jdbc-url>
+    </data-source>
+  </component>
+</project>
