@@ -5,23 +5,23 @@
             // Define as regras
             rules:{
                 cpf:{
-                    // campoNome ser· obrigatÛrio (required) e ter· tamanho mÌnimo (minLength)
+                    // campoNome ser√° obrigat√≥rio (required) e ter√° tamanho m√≠nimo (minLength)
                     required: true, minlength: 14
                 },
                 nome:{
-                    // campoNome ser· obrigatÛrio (required) e ter· tamanho mÌnimo (minLength)
+                    // campoNome ser√° obrigat√≥rio (required) e ter√° tamanho m√≠nimo (minLength)
                     required: true, minlength: 2
                 },
                 email:{
-                    // campoEmail ser· obrigatÛrio (required) e precisar· ser um e-mail v·lido (email)
+                    // campoEmail ser√° obrigat√≥rio (required) e precisar√° ser um e-mail v√°lido (email)
                     required: true, email: true, minlength: 2
                 },
                 emailConf:{
-                    // campoEmail ser· obrigatÛrio (required) e precisar· ser um e-mail v·lido (email)
+                    // campoEmail ser√° obrigat√≥rio (required) e precisar√° ser um e-mail v√°lido (email)
                     required: true, email: true, minlength: 2
                 },
                 dataNasc:{
-                    // campoMensagem ser· obrigatÛrio (required) e ter· tamanho mÌnimo (minLength)
+                    // campoMensagem ser√° obrigat√≥rio (required) e ter√° tamanho m√≠nimo (minLength)
                     required: true, minlength: 2
                 }
 
@@ -30,25 +30,25 @@
             messages:{
                 cpf:{
                     required: "Digite o seu cpf",
-                    minlength: "O seu nome deve conter, no mÌnimo, 11 caracteres"
+                    minlength: "O seu nome deve conter, no m√≠nimo, 11 caracteres"
                 },
                 nome:{
                     required: "Digite o seu nome",
-                    minlength: "O seu nome deve conter, no mÌnimo, 2 caracteres"
+                    minlength: "O seu nome deve conter, no m√≠nimo, 2 caracteres"
                 },
                 email:{
                     required: "Digite o seu e-mail",
-                    email: "Digite um e-mail v·lido",
-                    minlength: "O seu nome deve conter, no mÌnimo, 2 caracteres"
+                    email: "Digite um e-mail v√°lido",
+                    minlength: "O seu nome deve conter, no m√≠nimo, 2 caracteres"
                 },
                 emailConf:{
                     required: "Digite o seu e-mail",
-                    email: "Digite um e-mail v·lido",
-                    minlength: "O seu nome deve conter, no mÌnimo, 2 caracteres"
+                    email: "Digite um e-mail v√°lido",
+                    minlength: "O seu nome deve conter, no m√≠nimo, 2 caracteres"
                 },
                 dataNasc:{
                     required: "Digite a data do seu Nascimento",
-                    minlength: "A sua mensagem deve conter, no mÌnimo, 2 caracteres"
+                    minlength: "A sua mensagem deve conter, no m√≠nimo, 2 caracteres"
                 }
             }
         });
@@ -77,7 +77,7 @@
 
 </script>
 
-<!-- ========== INÔøΩCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== IN√çCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <?php
     $auth = Zend_Auth::getInstance();
@@ -94,24 +94,24 @@
 <div style="display:none" id="dialog-alert2"></div>
 <div style="display:none" id="confirmInforma">Por favor, digite seu email corretamente!</div>
 
-<!-- ========== INÔøΩCIO TÔøΩTULO ========== -->
+<!-- ========== IN√çCIO T√çTULO ========== -->
 
 <div id="titulo">
     <div>Alterar Dados<span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÔøΩTULO ========== -->
+<!-- ========== FIM T√çTULO ========== -->
 
 
 
-<!-- ========== INÔøΩCIO CONTEÔøΩDO ========== -->
+<!-- ========== IN√çCIO CONTE√öDO ========== -->
 
 <div id="conteudo">
-    <fieldset><legend>InformaÁıes</legend>
-        <form method="POST" action="<?php echo $this->url(array('controller' => 'login', 'action' => 'alterardados')); ?>" name="cadastraUsuario" id="cadastraUsuario">
+    <fieldset><legend>Informa√ß√µes</legend>
+        <form method="POST" action="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'alterardados')); ?>" name="cadastraUsuario" id="cadastraUsuario">
             <table border="1" class="tabela">
                 <thead>
                     <tr>
-                        <th colspan="2">Dados do Usu·rio</th>
+                        <th colspan="2">Dados do Usu√°rio</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -148,10 +148,10 @@
         </form>
     </fieldset>
 </div>
-<!-- ========== FIM CONTEÔøΩDO ========== -->
+<!-- ========== FIM CONTE√öDO ========== -->
 
-<!-- ========== INÔøΩCIO RODAPÔøΩ DO CONTEÔøΩDO ========== -->
+<!-- ========== IN√çCIO RODAP√â DO CONTE√öDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
 
-<!-- ========== FIM RODAPÔøΩ DO CONTEÔøΩDO ========== -->
+<!-- ========== FIM RODAP√â DO CONTE√öDO ========== -->
 <br clear="all" />
