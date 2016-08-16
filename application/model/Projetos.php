@@ -68,7 +68,6 @@ class Projetos extends GenericModel
             $consulta->limit($objParam->next, (int)$objParam->offset);
         }
 
-//xd($consulta->__toString());
         return $this->fetchAll($consulta);
     }
     

@@ -213,8 +213,7 @@ class Mascara
         
         return $cpfCnpj;
 	}
-
-
+    
 	/**
 	 * adiciona no cpf
 	 *
