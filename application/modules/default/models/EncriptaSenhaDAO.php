@@ -71,51 +71,51 @@ class EncriptaSenhaDAO extends Zend_Db_Table
      *    END
      *    RETURN @s
      */
-    public static function encriptaSenha($username, $password)
-    {
-        $w = trim($password);
-        $t1 = strlen(trim($username));
-        $t2 = strlen($w);
+//    public static function encriptaSenha($username, $password)
+//    {
+//        $w = trim($password);
+//        $t1 = strlen(trim($username));
+//        $t2 = strlen($w);
+//
+//        if ($t2 < 1) {
+//            $password = '??????';
+//            $w = '??????';
+//            $t2 = 6;
+//        }
+//
+//        while (strlen($w) < 15) {
+//            $w = $w . $w;
+//        }
+//
+//        $w = substr($w, 1, 15);
+//        $k = ord((substr($w, 1, 1))) + 2;
+//        $s = '';
+//        $i = 0;
+//
+//        while ($i < 15) {
+//            $i = $i + 1;
+//            $v = ($t1 + $t2) * $k / $i;
+//            $f = ord(substr($w, 1, 1));
+//            $w = substr($w, 2, 15);
+//            $j = (($f * $k) + $t1 + ($t2 * $f)) / $i;
+//            $v = $v + $j;
+//            if ($v < 33) {
+//                $v = $v + ($t1 * $i);
+//            }
+//            $j = $v % 94;
+//            $s = $s . (33 + $j);
+//        }
+//
+//        return $s;
+//    }
 
-        if ($t2 < 1) {
-            $password = '??????';
-            $w = '??????';
-            $t2 = 6;
-        }
-
-        while (strlen($w) < 15) {
-            $w = $w . $w;
-        }
-
-        $w = substr($w, 1, 15);
-        $k = ord((substr($w, 1, 1))) + 2;
-        $s = '';
-        $i = 0;
-
-        while ($i < 15) {
-            $i = $i + 1;
-            $v = ($t1 + $t2) * $k / $i;
-            $f = ord(substr($w, 1, 1));
-            $w = substr($w, 2, 15);
-            $j = (($f * $k) + $t1 + ($t2 * $f)) / $i;
-            $v = $v + $j;
-            if ($v < 33) {
-                $v = $v + ($t1 * $i);
-            }
-            $j = $v % 94;
-            $s = $s . (33 + $j);
-        }
-
-        return $s;
-    }
-
-//    public static function encriptaSenha($cpf, $senha)
-//	{
-//		$sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $cpf . "', '$senha' ) as senha";
-//                $db = Zend_Registry::get('db');
-//                $db->setFetchMode(Zend_DB::FETCH_OBJ);
-//                return $db->fetchAll($sql);
-//	} // fecha m�todo enviarEmail()
+    public static function encriptaSenha($cpf, $senha)
+	{
+		$sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $cpf . "', '$senha' ) as senha";
+                $db = Zend_Registry::get('db');
+                $db->setFetchMode(Zend_DB::FETCH_OBJ);
+                return $db->fetchRow($sql)->senha;
+	} // fecha m�todo enviarEmail()
 
 }
 ?>
