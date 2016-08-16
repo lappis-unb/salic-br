@@ -7,9 +7,18 @@
  */
 class tbComunicados extends GenericModel {
    
-    protected  $_banco  = 'SAC';
-    protected  $_schema = 'dbo';
+//    protected  $_banco  = 'SAC';
+//    protected  $_schema = 'dbo';
+//    protected  $_name   = 'tbComunicados';
+
+    protected  $_banco  = 'sac';
+    protected  $_schema = 'sac';
     protected  $_name   = 'tbComunicados';
+
+    public function init()
+    {
+        parent::init();
+    }
 
     /**
      * Retorna registros do banco de dados
