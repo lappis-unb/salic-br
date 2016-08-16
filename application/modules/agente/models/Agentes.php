@@ -15,6 +15,39 @@ class Agente_Model_Agentes extends GenericModel {
      * @var bool
      * @access protected
      */
+//    protected $_banco = 'Agentes';
+//
+//    /**
+//     * _name
+//     *
+//     * @var bool
+//     * @access protected
+//     */
+//    protected $_name = 'Agentes';
+//
+//    /**
+//     * _schema
+//     *
+//     * @var string
+//     * @access protected
+//     */
+//    protected $_schema = 'dbo';
+//
+//    /**
+//     * _primary
+//     *
+//     * @var bool
+//     * @access protected
+//     */
+//    protected $_primary = 'idAgente';
+
+
+    /**
+     * _banco
+     *
+     * @var bool
+     * @access protected
+     */
     protected $_banco = 'Agentes';
 
     /**
@@ -31,7 +64,7 @@ class Agente_Model_Agentes extends GenericModel {
      * @var string
      * @access protected
      */
-    protected $_schema = 'dbo';
+    protected $_schema = 'agentes';
 
     /**
      * _primary
@@ -40,6 +73,24 @@ class Agente_Model_Agentes extends GenericModel {
      * @access protected
      */
     protected $_primary = 'idAgente';
+
+//    public function init()
+//    {
+//        echo '<pre>';
+//        var_dump('asd');
+//        exit;
+//        parent::init();
+//    }
+
+//    public function __construct()
+//    {
+//        echo '<pre>';
+//        var_dump($this->_name);
+//        var_dump($this->_schema);
+//        var_dump($this->_banco);
+//        var_dump('asd');
+//        exit;
+//    }
 
     /**
      * BuscarComponente
@@ -72,14 +123,10 @@ class Agente_Model_Agentes extends GenericModel {
      * @access public
      * @return void
      */
-    public function BuscaAgente($cnpjcpf=null) {
+    public function BuscaAgente($cnpjcpf = null) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from(
-                array('A' => $this->_name)
-        );
-
-        $select->where('A.CNPJCPF = ?', $cnpjcpf);
+        $select->where('cnpjcpf = ?', trim($cnpjcpf));
         return $this->fetchAll($select);
     }
 
@@ -107,7 +154,7 @@ class Agente_Model_Agentes extends GenericModel {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(array('a' => $this->_name));
-        $slct->joinInner(array('m' => 'Nomes'), 'a.idAgente=m.idAgente');
+        $slct->joinInner(array('m' => 'nomes'), 'a.idagente=m.idagente');
 
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
