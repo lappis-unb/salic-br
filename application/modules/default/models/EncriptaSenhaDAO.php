@@ -89,6 +89,7 @@ class EncriptaSenhaDAO extends Zend_Db_Table
 
         $w = substr($w, 1, 15);
         $k = ord((substr($w, 1, 1))) + 2;
+//        $k = chr(ord((substr($w, 1, 1)))) . 2;
         $s = '';
         $i = 0;
 
@@ -96,6 +97,7 @@ class EncriptaSenhaDAO extends Zend_Db_Table
             $i = $i + 1;
             $v = ($t1 + $t2) * $k / $i;
             $f = ord(substr($w, 1, 1));
+//            $f = chr(ord(substr($w, 1, 1)));
             $w = substr($w, 2, 15);
             $j = (($f * $k) + $t1 + ($t2 * $f)) / $i;
             $v = $v + $j;
@@ -111,10 +113,20 @@ class EncriptaSenhaDAO extends Zend_Db_Table
 
     public static function encriptaSenha($cpf, $senha)
 	{
-		$sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $cpf . "', '$senha' ) as senha";
-                $db = Zend_Registry::get('db');
-                $db->setFetchMode(Zend_DB::FETCH_OBJ);
-                return $db->fetchRow($sql)->senha;
+        $db = Zend_Registry::get('db');
+
+        if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            $sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $cpf . "', '$senha' ) as senha";
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+            return $db->fetchRow($sql)->senha;
+        } else {
+            echo '<pre>';
+            var_dump('Senha do PostgreSQL à definir metodo: EncriptaSenhaDAO::encriptaSenha.');
+            var_dump(md5($senha));
+            exit;
+            return md5($senha);
+        }
+
 	} // fecha m�todo enviarEmail()
 
 }
