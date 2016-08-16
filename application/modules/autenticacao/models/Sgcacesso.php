@@ -175,21 +175,21 @@ class Autenticacao_Model_Sgcacesso extends GenericModel {
                     ->setIdentity($buscar['cpf'])
                     ->setCredential($buscar['senha']);
 
-            // tenta autenticar o usu?rio
+            // tenta autenticar o usuario
             $auth = Zend_Auth::getInstance();
             $acesso = $auth->authenticate($authAdapter);
 
             // verifica se o acesso foi permitido
             if ($acesso->isValid()) {
-                // pega os dados do usu?rio com exce??o da senha
+                // pega os dados do usuario com excecao da senha
                 $authData = $authAdapter->getResultRowObject(null, 'senha');
 
-                // armazena os dados do usu?rio
+                // armazena os dados do usuario
                 $objAuth = $auth->getStorage()->write($authData);
 
                 return true;
             } // fecha if
-            else { // caso n?o tenha sido validado
+            else { // caso nao tenha sido validado
                 return false;
             }
         } // fecha if
