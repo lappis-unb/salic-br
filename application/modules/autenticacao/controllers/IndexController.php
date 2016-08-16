@@ -158,7 +158,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
 
                         parent::message("Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha.", "/autenticacao/index/alterarsenha?idUsuario=".$IdUsuario, "ALERT");
                     }
-
                     $agentes = new Agente_Model_Agentes();
                     $verificaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $username))->current();
 
