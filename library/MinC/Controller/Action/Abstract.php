@@ -165,7 +165,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 {
                     $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
                     $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-                    $idAgente = $Agente['idAgente'];
+                    $idAgente = $Agente['idagente'];
                     $Cpflogado = $Agente['usu_identificacao'];
                 }
                 else
