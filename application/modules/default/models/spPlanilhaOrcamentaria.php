@@ -6,20 +6,33 @@
  */
 class spPlanilhaOrcamentaria extends GenericModel {
         
-    protected $_banco = 'SAC';
+    protected $_banco = 'sac';
+    protected $_schema = 'sac';
     protected $_name  = 'spPlanilhaOrcamentaria';
 
+    /**
+     * exec
+     *
+     * @name exec
+     * @param $idPronac
+     * @param $tipoPlanilha
+     * @return mixed
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  17/08/2016
+     */
     public function exec($idPronac, $tipoPlanilha){
         
-        // tipoPlanilha = 0 : Planilha Orçamentária da Proposta
-        // tipoPlanilha = 1 : Planilha Orçamentária do Proponente
-        // tipoPlanilha = 2 : Planilha Orçamentária do Parecerista
-        // tipoPlanilha = 3 : Planilha Orçamentária Aprovada Ativa
-        // tipoPlanilha = 4 : Cortes Orçamentários Aprovados
+        // tipoPlanilha = 0 : Planilha Orcamentaria da Proposta
+        // tipoPlanilha = 1 : Planilha Orcamentaria do Proponente
+        // tipoPlanilha = 2 : Planilha Orcamentaria do Parecerista
+        // tipoPlanilha = 3 : Planilha Orcamentaria Aprovada Ativa
+        // tipoPlanilha = 4 : Cortes Orcamentarios Aprovados
         // tipoPlanilha = 5 : Remanejamento menor que 20%
-        // tipoPlanilha = 6 : Readequação
+        // tipoPlanilha = 6 : Readequacao
         
-        $sql = "exec ".$this->_banco.".dbo.".$this->_name." $idPronac, $tipoPlanilha";
+        $sql = "exec ".$this->_schema.".".$this->_name." $idPronac, $tipoPlanilha";
+
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         return $db->fetchAll($sql);

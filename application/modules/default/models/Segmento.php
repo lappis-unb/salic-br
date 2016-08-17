@@ -1,13 +1,21 @@
 <?php
+
 /**
  * Description of Segmento
  *
+ * @name Segmento
+ * @package default
+ * @subpackage models
+ *
  * @author 01610881125
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+ * @since  17/08/2016
  */
-class Segmento extends GenericModel {
-    protected $_banco   = 'SAC';
-    protected $_name    = 'Segmento';
-    protected $_schema  = 'dbo';
+class Segmento extends GenericModel
+{
+    protected $_banco = 'sac';
+    protected $_schema = 'sac';
+    protected $_name = 'Segmento';
 
     public function buscaCompleta($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false){
         $slct = $this->select();
@@ -42,44 +50,49 @@ class Segmento extends GenericModel {
     }
 
 
+    /**
+     * Busca os segmentos para as combos
+     *
+     * @name combo
+     * @access public
+     * @param array $where (filtros)
+     * @param array $order (ordenacao)
+     * @return object
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  17/08/2016
+     */
+    public function combo($where = array(), $order = array())
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
 
-	/**
-	 * Busca os segmentos para as combos
-	 * @access public
-	 * @param array $where (filtros)
-	 * @param array $order (ordenação)
-	 * @return object
-	 */
-	public function combo($where = array(), $order = array())
-	{
-		$select = $this->select();
-		$select->setIntegrityCheck(false);
-		$select->from(array('s' => $this->_schema . '.vSegmento')
-			,array('s.Codigo AS id'
-                            ,'s.Segmento AS descricao'
-			)
-		);
-		$select->joinInner(
-			array('a' => 'Area')
-                            ,'s.Area = a.Codigo'
-			,array()
-		);
+        $select->from(array('s' => 'vsegmento')
+            , array('s.codigo AS id'
+            , 's.segmento AS descricao'
+            )
+        );
+        $select->joinInner(
+            array('a' => 'area')
+            , 's.area = a.codigo'
+            , array()
+        );
 
-		// adiciona quantos filtros foram enviados
-		foreach ($where as $coluna => $valor) :
-			$select->where($coluna, $valor);
-		endforeach;
+        // adiciona quantos filtros foram enviados
+        foreach ($where as $coluna => $valor) :
+            $select->where($coluna, $valor);
+        endforeach;
 
-		// adicionando linha order ao select
-		$select->order($order);
+        // adicionando linha order ao select
+        $select->order($order);
 
-		return $this->fetchAll($select);
-	} // fecha método combo()
-        
-        public function buscaSegmentos()
-        {
-            $select = $this->select();
-            $select->setIntegrityCheck(false);
-            return $this->fetchAll($select);
-        }
+        return $this->fetchAll($select);
+    } // fecha metodo combo()
+
+    public function buscaSegmentos()
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        return $this->fetchAll($select);
+    }
 }

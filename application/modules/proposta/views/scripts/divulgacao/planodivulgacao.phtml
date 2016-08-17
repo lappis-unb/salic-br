@@ -31,7 +31,7 @@ $IncluirDivulgacao                 = $this->url(array('controller' => 'divulgaca
                 },
                 'Confirmar':function()
                 {
-                    window.location.href="<?php echo $this->url(array('controller'=>'divulgacao', 'action'=>'excluirdivulgacao')); ?>?cod="+cod+"&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?>";
+                    window.location.href="<?php echo $this->url(array('module' => 'proposta', 'controller'=>'divulgacao', 'action'=>'excluirdivulgacao')); ?>?cod="+cod+"&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?>";
                 }
             }
         });

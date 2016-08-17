@@ -21,7 +21,7 @@ if(isset($_GET['cod'])){
                 blnInformouQtdeMinimadeRegistros: {verificaQtdeLocaisInformados: true}
             },
             messages: {
-                blnInformouQtdeMinimadeRegistros: {verificaQtdeLocaisInformados:"Informe ao menos um Local de Realização"}
+                blnInformouQtdeMinimadeRegistros: {verificaQtdeLocaisInformados:"Informe ao menos um Local de Realizaï¿½ï¿½o"}
             },
             submitHandler: function(form) {
                 form.submit();
@@ -171,7 +171,7 @@ if(isset($_GET['cod'])){
 						ident = ident;
 	                }
 	                else{
-	                	window.location.href="<?php echo $this->url(array('controller'=>'localderealizacao', 'action'=>'excluir')); ?>?cod=<?php if(isset($_GET['cod'])){ echo $_GET['cod']; } ?>&idPreProjeto=<?php echo $_GET['idPreProjeto'] ?>";
+	                	window.location.href="<?php echo $this->url(array('module' => 'proposta', 'controller'=>'localderealizacao', 'action'=>'excluir')); ?>?cod=<?php if(isset($_GET['cod'])){ echo $_GET['cod']; } ?>&idPreProjeto=<?php echo $_GET['idPreProjeto'] ?>";
 	                }
                 }
             }

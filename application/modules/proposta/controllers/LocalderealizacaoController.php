@@ -23,13 +23,13 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
      */
     public function init() {
 
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $PermissoesGrupo = array();
 
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo){
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -51,11 +51,11 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
             $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
         }else {
             if($_REQUEST['idPreProjeto'] != '0'){
-                parent::message("Necessário informar o número da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
+                parent::message("Necessï¿½rio informar o nï¿½mero da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
             }
         }
 
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $this->idUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
 
         //*******************************************
@@ -85,7 +85,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
             $this->view->enviado = $enviado;
         }
         //*****************
-        //FIM DA VALIDAÇ?O
+        //FIM DA VALIDAï¿½?O
         //*****************
 
         /* =============================================================================== */
@@ -96,20 +96,24 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
     /**
      * Metodo que monta grid de locais de realizacao
-     * @param void
-     * @return objeto
+     *
+     * @name indexAction
+     * @return void
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  17/08/2016
      */
     public function indexAction() {
         //RECUPERA OS LOCAIS DE REALIZACAO CADASTRADOS
         $arrBusca = array();
-        $arrBusca['idProjeto']=$this->idPreProjeto;
-        $arrBusca['stAbrangencia']=1;
+        $arrBusca['idprojeto']=$this->idPreProjeto;
+        $arrBusca['stabrangencia'] = 1;
         $tblAbrangencia = new Abrangencia();
         $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
 
         $arrDados = array("localizacoes"=>$rsAbrangencia,
-                "acaoAlterar"=>$this->_urlPadrao."/localderealizacao/form-local-de-realizacao",
-                "acaoExcluir"=>$this->_urlPadrao."/localderealizacao/excluir" );
+                "acaoAlterar"=>$this->_urlPadrao."/proposta/localderealizacao/form-local-de-realizacao",
+                "acaoExcluir"=>$this->_urlPadrao."/proposta/localderealizacao/excluir" );
 
         //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY DADOS
         $this->montaTela("localderealizacao/index.phtml", $arrDados);
@@ -117,9 +121,9 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
     }
 
     /**
-     * Metodo que monta o formulario de cadastro e altera&ccedil;&atilde;o de locais de realizacao
+     * Metodo que monta o formulario de cadastro e alteracao de locais de realizacao
      * @param void
-     * @return objeto
+     * @return void
      */
     public function formLocalDeRealizacaoAction() {
         //recupera parametros
@@ -192,7 +196,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
                     $locais[$i]["idMunicipioIBGE"] = "0";
                 }
             }else {
-                parent::message("Registro já cadastrado, transação cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
+                parent::message("Registro jï¿½ cadastrado, transaï¿½ï¿½o cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
             }
             $locaisinvalidos[$i] = $local_c;
 
@@ -225,7 +229,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
                 $resultado = $tblAbrangencia->verificarIgual($p, $u, $m, $this->idPreProjeto);
 
                 if(count($resultado)>0){
-                    parent::message("Registro já cadastrado, transação cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
+                    parent::message("Registro jï¿½ cadastrado, transaï¿½ï¿½o cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
                     return;
                 }
 
@@ -248,7 +252,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
                 }
             }
             if($idAbrangencia) {
-                parent::message("Alteração realizada com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
+                parent::message("Alteraï¿½ï¿½o realizada com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
             }
             else {
                 parent::message("Cadastro realizado com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
@@ -280,7 +284,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         //EXCLUI REGISTRO DA TABELA ABRANGENCIA
         if($tblAbrangencia->excluir($idAbrangencia)) {
 
-            parent::message("Exclusão realizada com sucesso!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
+            parent::message("Exclusï¿½o realizada com sucesso!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
 
         }else {
             parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ERROR");
@@ -386,7 +390,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
 
         if(count($rsAbrangencia)>0 && empty($idAbrangencia)){
-            parent::message("Local de Realização já cadastrado!", "/proposta/localderealizacao/index?idPreProjeto=". $this->idPreProjeto . $edital, "ALERT");
+            parent::message("Local de Realizaï¿½ï¿½o jï¿½ cadastrado!", "/proposta/localderealizacao/index?idPreProjeto=". $this->idPreProjeto . $edital, "ALERT");
         }
 
         if(isset($_REQUEST['edital'])) {

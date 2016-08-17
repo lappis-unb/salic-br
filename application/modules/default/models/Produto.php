@@ -1,8 +1,8 @@
 <?php 
 class Produto extends GenericModel
 {
-    protected $_banco = "SAC";
-    protected $_schema = "dbo";
+    protected $_banco = "sac";
+    protected $_schema = "sac";
     protected $_name = "Produto";
 
     public function find()
@@ -17,7 +17,7 @@ class Produto extends GenericModel
                                 'Codigo' => 0,
                                 'Descricao' => 'Livro',
                                 'Area' => 0,
-                                'Sintese' => 'Administração do Projeto',
+                                'Sintese' => 'Administra&ccedil;&atilde;o do Projeto',
                                 'Idorgao' => 0,
                                 'stEstado' => 0,
                             )

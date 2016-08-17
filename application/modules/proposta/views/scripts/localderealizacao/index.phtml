@@ -116,7 +116,7 @@ montaGuiaLinks($controller, $links);
                 <td class="centro"><?php echo utf8_encode($localizacao->uf); ?></td>
                 <td class="centro"><?php echo utf8_encode($localizacao->cidade); ?></td>
                 <td class="centro" nowrap>
-                <input type="button" id="btn_editar" name="sair" style="width: 88px" class="btn_editar" onclick="window.location.href='<?php echo $this->url(array('module'=>'default', 'controller'=>'localderealizacao', 'action'=>'form-local-de-realizacao')); ?>?cod=<?php echo $localizacao->idAbrangencia;?>&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>&edit=1'">
+                <input type="button" id="btn_editar" name="sair" style="width: 88px" class="btn_editar" onclick="window.location.href='<?php echo $this->url(array('module'=>'proposta', 'controller'=>'localderealizacao', 'action'=>'form-local-de-realizacao')); ?>?cod=<?php echo $localizacao->idAbrangencia;?>&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>&edit=1'">
                 <input type="button" id="btn_excluir" name="sair" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $localizacao->idAbrangencia;?>);"></td>
             </tr>
                 <?php } ?>

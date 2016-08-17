@@ -1,8 +1,8 @@
 <?php
 class PlanoDistribuicao extends GenericModel
 {
-    protected $_banco = "SAC";
-    //protected $_schema = "SAC";
+    protected $_banco = "sac";
+    protected $_schema = "sac";
     protected $_name = "PlanoDistribuicaoProduto";
     //protected $_primary = "idPlanoDistribuicao";
     /**

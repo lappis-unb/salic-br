@@ -12,20 +12,20 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         private $_idPreProjeto = null;
 
 	/**
-	 * Reescreve o método init()
+	 * Reescreve o mï¿½todo init()
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function init()
 	{
-            $auth = Zend_Auth::getInstance(); // instancia da autenticação
+            $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
             $PermissoesGrupo = array();
 
             //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
             if(isset($auth->getIdentity()->usu_codigo)){
                 //Recupera todos os grupos do Usuario
-                $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
+                $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
                 $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
                 foreach ($grupos as $grupo){
                     $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -47,7 +47,7 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
                 $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
             }else{
                 if($_REQUEST['idPreProjeto'] != '0'){
-                    parent::message("Necessário informar o número da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
+                    parent::message("Necessï¿½rio informar o nï¿½mero da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
                 }
             }
 
@@ -233,19 +233,19 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         }
 
         if(isset($post->produto)){
-            //VERIFICA SE PRODUTO JA ESTA CADASTRADO - NÃO PODE GRAVAR O MESMO PRODUTO MAIS DE UMA VEZ.
+            //VERIFICA SE PRODUTO JA ESTA CADASTRADO - Nï¿½O PODE GRAVAR O MESMO PRODUTO MAIS DE UMA VEZ.
             $arrBuscaProduto['a.idProjeto = ?'] = $this->_idPreProjeto;
             $arrBuscaProduto['a.idProduto = ?'] = $post->produto;
             $objProduto = $tblPlanoDistribuicao->buscar($arrBuscaProduto);
             if($objProduto[0]['idPlanoDistribuicao']){
-                parent::message("Produto já cadastrado no plano de distribuição desta proposta!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+                parent::message("Produto jï¿½ cadastrado no plano de distribuiï¿½ï¿½o desta proposta!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
             }
         }
         $retorno = $tblPlanoDistribuicao->salvar($dados);
         if($retorno > 0){
-            parent::message("Operação realizada com sucesso!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "CONFIRM");
+            parent::message("Operaï¿½ï¿½o realizada com sucesso!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "CONFIRM");
         } else {
-            parent::message("Não foi possível realizar a operação!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+            parent::message("Nï¿½o foi possï¿½vel realizar a operaï¿½ï¿½o!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
         }
     }
 
@@ -261,9 +261,9 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $retorno = $tblPlanoDistribuicao->apagar($get->idPlanoDistribuicao);
 
         if($retorno > 0){
-            parent::message("Operação realizada com sucesso!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "CONFIRM");
+            parent::message("Operaï¿½ï¿½o realizada com sucesso!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "CONFIRM");
         }else{
-            parent::message("Não foi possível realizar a operação!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+            parent::message("Nï¿½o foi possï¿½vel realizar a operaï¿½ï¿½o!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
         }
     }
 
