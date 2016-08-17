@@ -53,7 +53,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
         // Busca na SGCAcesso
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
-        $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
+        $buscaAcesso = $sgcAcesso->buscar(array('cpf = ?' => $cpf));
 
         // Busca na Usuarios
         $usuarioDAO = new Autenticacao_Model_Usuario();
@@ -97,14 +97,14 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
             //VERIFICA SE A PROPOSTA FOI ENVIADA AO MINC ALGUMA VEZ
             $arrbusca = array();
-            $arrbusca['idProjeto = ?'] = $this->idPreProjeto;
-            $arrbusca['Movimentacao = ?'] = '96';
+            $arrbusca['idprojeto = ?'] = $this->idPreProjeto;
+            $arrbusca['movimentacao = ?'] = '96';
             $rsHistMov = $Movimentacao->buscar($arrbusca);
             $this->view->blnJaEnviadaAoMinc = $rsHistMov->count();
 
             //VERIFICA SE A PROPOSTA TEM DILIGENCIAS
             $PreProjeto = new Proposta_Model_PreProjeto();
-            $rsDiligencias = $PreProjeto->listarDiligenciasPreProjeto(array('pre.idPreProjeto = ?' => $this->idPreProjeto));
+            $rsDiligencias = $PreProjeto->listarDiligenciasPreProjeto(array('pre.idpreprojeto = ?' => $this->idPreProjeto));
             $this->view->blnPossuiDiligencias = $rsDiligencias->count();
         }
     }
@@ -397,7 +397,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @param void
      * @return objeto
      */
-    public function editarAction() {
+    public function editarAction()
+    {
 
         /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
@@ -421,8 +422,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
 
             $ag = new Agente_Model_Agentes();
-            $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto,
-                'vprp.siVinculoProposta = ?' => 2));
+            $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto, 'vprp.siVinculoProposta = ?' => 2));
 
             $verificarvinculoCount = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto))->count();
 
@@ -1172,12 +1172,12 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $x = 0;
         $identificadores = array();
         foreach ($rsPreProjeto as $prop) {
-            if(!in_array($prop->idAgente.$prop->idPreProjeto, $identificadores)) {
-                $arrPropostas[$x]['CNPJCPF'] = $prop->CNPJCPF;
-                $arrPropostas[$x]['idAgente'] = $prop->idAgente;
-                $arrPropostas[$x]['NomeProponente'] = utf8_encode($prop->NomeProponente);
-                $arrPropostas[$x]['idPreProjeto'] = $prop->idPreProjeto;
-                $arrPropostas[$x]['NomeProjeto'] = utf8_encode($prop->NomeProjeto);
+            if(!in_array($prop->idagente.$prop->idpreprojeto, $identificadores)) {
+                $arrPropostas[$x]['cnpjcpf'] = $prop->cnpjcpf;
+                $arrPropostas[$x]['idagente'] = $prop->idagente;
+                $arrPropostas[$x]['nomeproponente'] = utf8_encode($prop->nomeproponente);
+                $arrPropostas[$x]['idpreprojeto'] = $prop->idpreprojeto;
+                $arrPropostas[$x]['nomeprojeto'] = utf8_encode($prop->nomeprojeto);
                 $x++;
             }
             $identificadores[$i] = $prop->idAgente.$prop->idPreProjeto;
