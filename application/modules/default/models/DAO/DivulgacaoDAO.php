@@ -11,8 +11,8 @@
  */
 class DivulgacaoDAO extends GenericModel{
 
-    protected $_banco = 'SAC';
-    protected $_schema = 'dbo';
+    protected $_banco = 'sac';
+    protected $_schema = 'sac';
     protected $_name  = 'PlanoDeDivulgacao';
 
     public static function buscarDigulgacao($idPreProjeto){
@@ -22,7 +22,7 @@ class DivulgacaoDAO extends GenericModel{
                 pd.idPeca,
                 pd.idVeiculo,
                 pd.Usuario,
-                ve.descricao as Peça,
+                ve.descricao as Peï¿½a,
                 ve1.descricao as Veiculo
 
                 FROM
@@ -172,12 +172,12 @@ class DivulgacaoDAO extends GenericModel{
         $slct->from(array('pd' => $this->_name));
         
         $slct->joinInner(array('v1' => 'Verificacao'),
-                               'v1.idVerificacao = pd.idPeca',
-                         array('v1.Descricao as Peca'));
+                               'v1.idverificacao = pd.idpeca',
+                         array('v1.descricao as peca'));
         $slct->joinInner(
-                array('v2' => 'Verificacao'),
-                'v2.idVerificacao = pd.idVeiculo',
-                array('v2.descricao as Veiculo')
+                array('v2' => 'verificacao'),
+                'v2.idverificacao = pd.idveiculo',
+                array('v2.descricao as veiculo')
         );
         
         //adiciona quantos filtros foram enviados

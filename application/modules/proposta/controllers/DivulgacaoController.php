@@ -1,6 +1,6 @@
 <?php
 /**
- * Controller Divulgação
+ * Controller Divulgaï¿½ï¿½o
  * @author Equipe RUP - Politec
  * @author wouerner <wouerner@gmail.com>
  * @since 15/12/2010
@@ -15,20 +15,20 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract {
     private $idPreProjeto =  null;
     private $idUsuario =  null;
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
 
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $PermissoesGrupo = array();
 
 	//Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo){
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -50,7 +50,7 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract {
         $this->idUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
     }
 
-    // fecha método init()
+    // fecha mï¿½todo init()
     /**
      * Redireciona para o fluxo inicial do sistema
      * @access public
@@ -186,8 +186,12 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract {
     /**
      * excluirdivulgacaoAction
      *
+     * @name excluirdivulgacaoAction
      * @access public
      * @return void
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  15/08/2016
      */
     public function excluirdivulgacaoAction() {
 
@@ -203,14 +207,18 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract {
         $dao = new DivulgacaoDAO();
         $dao->excluirdivulgacao($idPlanoDivulgacao);
 
-        parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
+        parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
     }
 
     /**
      * updatedivulgacaoAction
      *
+     * @name updatedivulgacaoAction
      * @access public
      * @return void
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  15/08/2016
      */
     public function updatedivulgacaoAction() {
 
@@ -226,15 +234,15 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract {
         $idPlanoDivulgacao = $post->idDivulgacao;
 
         $dao = new DivulgacaoDAO();
-        $dados = array('idPlanoDivulgacao <>?' => $idPlanoDivulgacao, 'idProjeto =?' => $idPreProjeto, 'idPeca =?' => $peca, 'idVeiculo =?' => $veiculo);
+        $dados = array('idplanodivulgacao <>?' => $idPlanoDivulgacao, 'idprojeto =?' => $idPreProjeto, 'idpeca =?' => $peca, 'idveiculo =?' => $veiculo);
 
         $verifica = $dao->localiza($dados);
         if(count($verifica) > 0){
-            parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o Cancelada!", "/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "ERROR");
+            parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o Cancelada!", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "ERROR");
         }else{
         $dao->UpdateDivulgacao($idPlanoDivulgacao, $peca, $veiculo);
 
-        parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
+        parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
 
         }
     }
@@ -242,8 +250,12 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract {
     /**
      * incluirdivulgacaoAction
      *
+     * @name incluirdivulgacaoAction
      * @access public
      * @return void
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  15/08/2016
      */
     public function incluirdivulgacaoAction(){
 
@@ -257,19 +269,19 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract {
         $idPeca         = $post->peca;
         $idveiculo      = $post->veiculo;
         $usuario        = $this->idUsuario;
-        $dados = array('idProjeto =?' => $idPreProjeto, 'idPeca =?' => $idPeca, 'idVeiculo =?' => $idveiculo);
+        $dados = array('idprojeto =?' => $idPreProjeto, 'idpeca =?' => $idPeca, 'idveiculo =?' => $idveiculo);
 
 
         $dao = new DivulgacaoDAO();
         $verifica = $dao->localiza($dados);
 
         if(count($verifica) > 0){
-            parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o Cancelada!", "/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "ERROR");
+            parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o Cancelada!", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "ERROR");
         } else {
-            $dados = array('idProjeto' => $idPreProjeto, 'idPeca' => $idPeca, 'idVeiculo' => $idveiculo, 'Usuario' => $usuario);
+            $dados = array('idprojeto' => $idPreProjeto, 'idpeca' => $idPeca, 'idveiculo' => $idveiculo, 'usuario' => $usuario);
             $dao->inserirDivulgacao($dados);
 
-            parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
+            parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
         }
     }
 }
