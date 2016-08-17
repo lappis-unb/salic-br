@@ -1,9 +1,9 @@
 <?php
 class Movimentacao extends GenericModel
 {
-    protected $_banco = "SAC";
-    protected $_schema = 'dbo';
-    protected $_name = "tbMovimentacao";
+    protected $_banco = "sac";
+    protected $_schema = 'sac';
+    protected $_name = "tbmovimentacao";
     
     /**
      * Grava registro. Se seja passado um ID ele altera um registro existente
