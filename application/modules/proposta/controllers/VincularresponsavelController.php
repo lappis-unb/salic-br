@@ -129,8 +129,14 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             $this->montaTela('vincularresponsavel/mostraragentes.phtml', array('vinculo' => $buscarvinculo));
         }
     }
-    /* }}} */
 
+    /**
+     * vinculoAction
+     *
+     * @access public
+     * @return void
+     * @author <wouerner@gmail.com>
+     */
     public function vinculoAction()
     {
         $this->_helper->layout->disableLayout();
@@ -158,7 +164,6 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 			                'dtVinculo' 			=> new Zend_Db_Expr('GETDATE()'),
 			                'siVinculo' 			=> 0
             );
-
             try
             {
 
@@ -174,7 +179,6 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 		        {
 		        	$v->inserir($dados);
 		        }
-
 
                 $enviarEmail = $emailDAO->enviarEmail($emailProponente, $assunto, $texto);
 
@@ -243,6 +247,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
         exit();
     }
+    /* }}} */
 
     public function vincularresponsavelAction() {
         $ag = new Agente_Model_Agentes;

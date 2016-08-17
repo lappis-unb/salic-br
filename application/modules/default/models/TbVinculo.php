@@ -1,53 +1,53 @@
-<?php 
+<?php
 class TbVinculo extends GenericModel{
-    
-    protected $_banco = 'Agentes';
-    protected $_name = 'tbVinculo';
-    protected $_schema = 'Agentes';
+
+    protected $_banco = 'agentes';
+    protected $_schema = 'agentes';
+    protected $_name = 'tbvinculo';
     protected $_primary = 'idVinculo';
 
-	public function buscarVinculoProponenteResponsavel($where=array()) 
+
+	public function buscarVinculoProponenteResponsavel($where=array())
     {
     	$slct = $this->select();
         $slct->distinct();
         $slct->setIntegrityCheck(false);
-        
+
         $slct->from(
-                array('VI' => $this->_name), 
+                array('VI' => $this->_name),
                 array('*')
         );
-        
+
         $slct->joinInner(
-                array('AG' => 'Agentes'), "AG.idAgente = VI.idAgenteProponente", 
+                array('AG' => 'Agentes'), "AG.idAgente = VI.idAgenteProponente",
                 array('AG.CNPJCPF')
         );
-        
+
         $slct->joinInner(
-                array('NM' => 'Nomes'), "NM.idAgente = AG.idAgente", 
+                array('NM' => 'Nomes'), "NM.idAgente = AG.idAgente",
                 array('NM.Descricao AS NomeProponente')
         );
-        
+
         $slct->joinLeft(
-                array('SGA' => 'SGCacesso'), "SGA.IdUsuario = VI.idUsuarioResponsavel", 
+                array('SGA' => 'SGCacesso'), "SGA.IdUsuario = VI.idUsuarioResponsavel",
                 array('SGA.IdUsuario AS idUsuarioResponsavel', 'SGA.Nome AS NomeResponsavel', 'SGA.Cpf AS CpfResponsavel'), 'CONTROLEDEACESSO.dbo'
         );
 
         $slct->joinLeft(
-                array('VP' => 'tbVinculoProposta'), "VP.idVinculo = VI.idVinculo", 
+                array('VP' => 'tbVinculoProposta'), "VP.idVinculo = VI.idVinculo",
                 array('VP.idVinculoProposta', 'VP.siVinculoProposta')
         );
-       
-        foreach ($where as $coluna => $valor) 
+
+        foreach ($where as $coluna => $valor)
         {
             $slct->where($coluna, $valor);
         }
        // xd($slct->assemble());
         return $this->fetchAll($slct);
     }
-	
-	
-	/* Mï¿½todo que lista os vinculos do Proponente ao Responsavel
-     * 
+
+	/* Método que lista os vinculos do Proponente ao Responsavel
+     *
      * */
     public function buscarProponenteResponsavel($idUsuarioLogado, $mecanismo = false)
     {
@@ -102,7 +102,7 @@ class TbVinculo extends GenericModel{
                     )
                     ->where('c.siEstado = ?', 2)
                     ->where('e.IdUsuario = ?', $idUsuarioLogado);
-        
+
         if(!empty($mecanismo)){
             $slct2->where('a.Mecanismo = ?', $mecanismo);
         }
@@ -140,41 +140,39 @@ class TbVinculo extends GenericModel{
                             ->union(array('('.$slct1.')', '('.$slct2.')', '('.$slct3.')'))
                             ->order('Ordem ASC')
                             ->order('NomeProponente ASC');
-//        xd($slctUnion->assemble());
 
         return $this->fetchAll($slctUnion);
     }
-	
-	
-	/* Mï¿½todo que lista os responsï¿½veis
-     * 
+
+	/* Método que lista os responsáveis
+     *
      * */
-    public function buscarResponsaveis($where=array() , $idAgenteProponente) 
+    public function buscarResponsaveis($where=array() , $idAgenteProponente)
     {
     	$slct = $this->select();
         $slct->distinct();
         $slct->setIntegrityCheck(false);
-        
+
         $slct->from(
-                array('SGA' => 'SGCacesso'), 
+                array('SGA' => 'SGCacesso'),
                 array('SGA.Nome AS NomeResponsavel', 'SGA.Cpf AS CpfResponsavel', 'SGA.IdUsuario AS idResponsavel'), 'CONTROLEDEACESSO.dbo'
         );
 
         $slct->joinLeft(
-                array('VI' => $this->_name),'VI.idUsuarioResponsavel = SGA.IdUsuario AND idAgenteProponente = '.$idAgenteProponente, 
+                array('VI' => $this->_name),'VI.idUsuarioResponsavel = SGA.IdUsuario AND idAgenteProponente = '.$idAgenteProponente,
                 array('*')
         );
-        
+
         $slct->joinLeft(
                 array('ag' => 'Agentes'), "SGA.Cpf = ag.CNPJCPF",
                 array('ag.CNPJCPF', 'ag.idAgente')
         );
         $slct->joinLeft(
-                array('v' => 'Visao'), "v.idAgente = ag.idAgente AND v.Visao = 146", 
+                array('v' => 'Visao'), "v.idAgente = ag.idAgente AND v.Visao = 146",
                 array('v.visao as UsuarioVinculo'), 'AGENTES.dbo'
         );
-        
-        foreach ($where as $coluna => $valor) 
+
+        foreach ($where as $coluna => $valor)
         {
             $slct->where($coluna, $valor);
         }
