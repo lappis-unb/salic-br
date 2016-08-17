@@ -263,7 +263,6 @@ class Agente_Model_Agentes extends GenericModel {
      * @param mixed $tamanho
      * @param mixed $inicio
      * @access public
-     * @return void
      */
     public function buscarAgenteVinculoProponente($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {

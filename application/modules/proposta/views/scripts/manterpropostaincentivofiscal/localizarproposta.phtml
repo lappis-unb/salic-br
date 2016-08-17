@@ -11,12 +11,12 @@
 //                     }else{
                  $url = $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'editar'));
 //                     }
-             $url .= "?idPreProjeto=".$prop['idPreProjeto'];
+             $url .= "?idPreProjeto=".$prop['idpreprojeto'];
         ?>
         <tr>
-            <td class="centro"><a href="#" onclick="window.location='<?php echo $url; ?>'"><?php echo $prop['idPreProjeto']; ?></a></td>
-            <td class="esquerda"><?php echo $prop['NomeProjeto']; ?></td>
-            <td class="esquerda"><?php echo $prop['NomeProponente']; ?></td>
+            <td class="centro"><a href="#" onclick="window.location='<?php echo $url; ?>'"><?php echo $prop['idpreprojeto']; ?></a></td>
+            <td class="esquerda"><?php echo $prop['nomeprojeto']; ?></td>
+            <td class="esquerda"><?php echo $prop['nomeproponente']; ?></td>
         </tr>
         <?php } ?>
 </table>
