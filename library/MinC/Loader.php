@@ -6,7 +6,7 @@
  * @version 1.0
  * @package library
  * @subpackage library.MinC
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
  

@@ -48,6 +48,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         /* configura para exibir as mensagens de erro */
         if ($AMBIENTE == 'DES') {
+            ini_set('display_errors', true);
             error_reporting(E_ALL | E_STRICT);
             #if(getenv("APPLICATION_ENV") == 'development') {
             require_once 'vendor/autoload.php';

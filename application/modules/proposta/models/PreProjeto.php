@@ -226,17 +226,15 @@ class Proposta_Model_PreProjeto extends GenericModel
      */
     public function salvar($dados)
     {
-
         //DECIDINDO SE INCLUI OU ALTERA UM REGISTRO
-        if(isset($dados['idPreProjeto']) && !empty ($dados['idPreProjeto'])){
+        if(isset($dados['idpreprojeto']) && !empty ($dados['idpreprojeto'])){
             //UPDATE
-            $rsPreProjeto = $this->find($dados['idPreProjeto'])->current();
+            $rsPreProjeto = $this->find($dados['idpreprojeto'])->current();
         }else{
             //INSERT
-            $dados['idPreProjeto'] = null;
+            $dados['idpreprojeto'] = null;
             return $this->insert($dados);
         }
-
         //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
        $rsPreProjeto->idAgente              = $dados["idAgente"];
        $rsPreProjeto->NomeProjeto           = $dados["NomeProjeto"];

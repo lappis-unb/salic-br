@@ -228,6 +228,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      */
     public function salvarAction()
     {
+
         $post = Zend_Registry::get("post");
         $idPreProjeto = $post->idPreProjeto;
         $acao = $post->acao;
@@ -238,6 +239,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         }
         $dtInicio = null;
         $dtInicioTemp = explode("/", $post->dtInicioDeExecucao);
+
         $dtInicio = $dtInicioTemp[2] . "/" . $dtInicioTemp[1] . "/" . $dtInicioTemp[0] . date(" H:i:s");
 
         $dtFim = null;
@@ -279,42 +281,41 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $especificacaoTecnica = $_POST['especificacaoTecnica'];
         $informacoes = $_POST['informacoes'];
 
-        $dados = array("idAgente" => $idAgente,
-            "NomeProjeto" => $nomeProjeto,
-            "Mecanismo" => 1, //seguindo sistema legado
-            "AgenciaBancaria" => $agenciaBancaria,
-            "AreaAbrangencia" => $propostaAudioVisual,
-            "DtInicioDeExecucao" => $dtInicioDeExecucao,
-            "DtFinalDeExecucao" => $dtFinalDeExecucao,
-            "NrAtoTombamento" => $nrAtoTombamento,
-            "DtAtoTombamento" => $dtAtoTombamento,
-            "EsferaTombamento" => $esferaTombamento,
-            "ResumoDoProjeto" => $resumoDoProjeto,
-            "Objetivos" => $objetivos,
-            "Justificativa" => $justificativa,
-            "Acessibilidade" => $acessibilidade,
-            "DemocratizacaoDeAcesso" => $democratizacaoDeAcesso,
-            "EtapaDeTrabalho" => $etapaDeTrabalho,
-            "FichaTecnica" => $fichaTecnica,
-            "Sinopse" => $sinopse,
-            "ImpactoAmbiental" => $impactoAmbiental,
-            "EspecificacaoTecnica" => $especificacaoTecnica, //No legado o que esta sendo gravado aqui e OUTRAS INFORMACOES
-            "EstrategiadeExecucao" => $informacoes, //No legado o que esta sendo gravado aqui e ESPECIFICAO TECNICA
-            "dtAceite" => date("Y/m/d H:i:s"),
-            "stEstado" => 1,
-            "stDataFixa" => $stDataFixa,
-            "stPlanoAnual" => $stPlanoAnual,
-            "idUsuario" => $this->idResponsavel,
-            "stTipoDemanda" => "NA", //seguindo sistema legado
+        $dados = array("idagente" => $idAgente,
+            "nomeprojeto" => $nomeProjeto,
+            "mecanismo" => 1, //seguindo sistema legado
+            "agenciabancaria" => $agenciaBancaria,
+            "areaabrangencia" => $propostaAudioVisual,
+            "dtiniciodeexecucao" => $dtInicioDeExecucao,
+            "dtfinaldeexecucao" => $dtFinalDeExecucao,
+            "nratotombamento" => $nrAtoTombamento,
+            "dtatotombamento" => $dtAtoTombamento,
+            "esferatombamento" => $esferaTombamento,
+            "resumodoprojeto" => $resumoDoProjeto,
+            "objetivos" => $objetivos,
+            "justificativa" => $justificativa,
+            "acessibilidade" => $acessibilidade,
+            "democratizacaodeacesso" => $democratizacaoDeAcesso,
+            "etapadetrabalho" => $etapaDeTrabalho,
+            "fichatecnica" => $fichaTecnica,
+            "sinopse" => $sinopse,
+            "impactoambiental" => $impactoAmbiental,
+            "especificacaotecnica" => $especificacaoTecnica, //No legado o que esta sendo gravado aqui e OUTRAS INFORMACOES
+            "estrategiadeexecucao" => $informacoes, //No legado o que esta sendo gravado aqui e ESPECIFICAO TECNICA
+            "dtaceite" => date("Y/m/d H:i:s"),
+            "stestado" => 1,
+            "stdatafixa" => $stDataFixa,
+            "stplanoanual" => $stPlanoAnual,
+            "idusuario" => $this->idResponsavel,
+            "sttipodemanda" => "NA", //seguindo sistema legado
         );
-        $dados['idPreProjeto'] = $idPreProjeto;
+        $dados['idpreprojeto'] = $idPreProjeto;
 
         if (!empty($idPreProjeto)) {
             $mesagem = "Altera&ccedil;&atilde;o realizada com sucesso!";
         } else {
             $mesagem = "Cadastro realizado com sucesso!";
         }
-
         //instancia classe modelo
         $tblPreProjeto = new Proposta_Model_PreProjeto();
 
@@ -347,7 +348,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 $vinculo2 = $tbVinculoDAO->buscar($whereVinculo);
                 if (count($vinculo2) > 0) {
                     $novosDadosV = array('idVinculo' => $idVinculo = $vinculo2[0]->idVinculo,
-                        'idPreProjeto' => $idPreProjeto,
+                        'idpreprojeto' => $idPreProjeto,
                         'siVinculoProposta' => 2
                     );
 
@@ -477,7 +478,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-
         $get = Zend_Registry::get("get");
         $idPreProjeto = $get->idPreProjeto;
 

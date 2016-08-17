@@ -609,7 +609,6 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         $auth = Zend_Auth::getInstance(); // pega a autentica??o
 
         if (!isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
-
             //Verifica Permiss?o de Projeto
             if($projeto){
                 $msgERRO = 'Voc? n?o tem permiss?o para acessar esse Projeto!';
