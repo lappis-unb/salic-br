@@ -6,27 +6,26 @@
  * @author tisomar
  * @author wouerner <wouerner@gmail.com>
  */
-class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abstract {
+class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abstract
+{
 
-    private $emailResponsavel  	= null;
-    private $idResponsavel  	= 0;
-    private $idAgente 	    	= 0;
-    private $idUsuario  		= 0;
+    private $emailResponsavel = null;
+    private $idResponsavel = 0;
+    private $idAgente = 0;
+    private $idUsuario = 0;
 
-    public function init() {
+    public function init()
+    {
 
-    	// verifica as permissões
+        // verifica as permissões
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor Salic
 
         $auth = Zend_Auth::getInstance(); // instancia da autenticação
 
-        if (isset($auth->getIdentity()->usu_codigo))
-        {
+        if (isset($auth->getIdentity()->usu_codigo)) {
             parent::perfil(1, $PermissoesGrupo);
-        }
-        else
-        {
+        } else {
             parent::perfil(4, $PermissoesGrupo);
         }
 
@@ -49,25 +48,24 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
 
-        if( count($buscaAcesso) > 0)
-        {
-        	$this->idResponsavel 	= $buscaAcesso[0]->IdUsuario;
-        	$this->emailResponsavel = $buscaAcesso[0]->Email;
+        if (count($buscaAcesso) > 0) {
+            $this->idResponsavel = $buscaAcesso[0]->IdUsuario;
+            $this->emailResponsavel = $buscaAcesso[0]->Email;
         }
-        if( count($buscaAgente) > 0 ){ $this->idAgente 	   = $buscaAgente[0]->idAgente; }
-        if( count($buscaUsuario) > 0 ){ $this->idUsuario   = $buscaUsuario[0]->usu_codigo; }
-
-        //xd($this->idResponsavel);
-        /*********************************************************************************************************/
-
-        //xd($this->idResponsavel);
+        if (count($buscaAgente) > 0) {
+            $this->idAgente = $buscaAgente[0]->idAgente;
+        }
+        if (count($buscaUsuario) > 0) {
+            $this->idUsuario = $buscaUsuario[0]->usu_codigo;
+        }
 
         $this->view->idAgenteLogado = $this->idAgente;
         parent::init();
         // chama o init() do pai GenericControllerNew
     }
 
-    public function indexAction() {
+    public function indexAction()
+    {
     }
 
 
@@ -80,21 +78,21 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
      */
     public function mostraragentesAction()
     {
-    	$this->_helper->layout->disableLayout();
+        $this->_helper->layout->disableLayout();
         $ag = new Agente_Model_Agentes;
 
-        if (isset($_POST['cnpjcpf'])){
+        if (isset($_POST['cnpjcpf'])) {
             $cnpjcpf = $_POST['cnpjcpf'];
             $nome = $_POST['nome'];
             $cnpjcpfSemMask = Mascara::delMaskCPFCNPJ($cnpjcpf);
 
-            if ($cnpjcpf != ''){
+            if ($cnpjcpf != '') {
                 $wh['CNPJCPF = ?'] = Mascara::delMaskCPFCNPJ($cnpjcpf);
                 $where['ag.CNPJCPF = ?'] = Mascara::delMaskCPFCNPJ($cnpjcpf);
                 $buscaAgente = $ag->buscar($wh);
 
-                if($buscaAgente->count() == 0) {
-                    echo "  <input type='hidden' id='novoproponente' value='".$cnpjcpfSemMask."' />
+                if ($buscaAgente->count() == 0) {
+                    echo "  <input type='hidden' id='novoproponente' value='" . $cnpjcpfSemMask . "' />
                             <table class='tabela' style='margin:1% auto; width:40%;'>
                                 <tr>
                                     <td class='red centro'>Proponente n&atilde;o cadastrado! Deseja cadastrar agora?</td>
@@ -105,13 +103,13 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
                 }
             }
 
-            if ($nome != ''){
+            if ($nome != '') {
                 $where["nm.Descricao like (?)"] = "%" . $nome . "%";
             }
 
             $buscarvinculo = $ag->buscarNovoProponente($where, $this->idResponsavel);
-            if ($buscarvinculo->count() > 0){
-                $this->montaTela('vincularresponsavel/mostraragentes.phtml', array('vinculo' => $buscarvinculo,'idResponsavel' => $this->idResponsavel));
+            if ($buscarvinculo->count() > 0) {
+                $this->montaTela('vincularresponsavel/mostraragentes.phtml', array('vinculo' => $buscarvinculo, 'idResponsavel' => $this->idResponsavel));
             } else {
                 echo "<div id='msgAgenteVinculado'>Nenhum registro encontrado!</div>
                     <script>
@@ -125,7 +123,6 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             $where["vp.idUsuarioResponsavel = ?"] = $this->idUsuario;
             //$where["v.siVinculo = ?"] = 2;
             $buscarvinculo = $ag->buscarAgenteVinculoProponente($where);
-//            xd($buscarvinculo);
             $this->montaTela('vincularresponsavel/mostraragentes.phtml', array('vinculo' => $buscarvinculo));
         }
     }
@@ -141,11 +138,11 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     {
         $this->_helper->layout->disableLayout();
 
-        $v 				= new TbVinculo();
-        $pp 			= new Proposta_Model_PreProjeto();
-        $vprp 			= new tbVinculoPropostaResponsavelProjeto();
-        $emailDAO 		= new EmailDAO();
-        $internetDAO 	= new Agente_Model_Internet();
+        $v = new TbVinculo();
+        $pp = new Proposta_Model_PreProjeto();
+        $vprp = new tbVinculoPropostaResponsavelProjeto();
+        $emailDAO = new EmailDAO();
+        $internetDAO = new Agente_Model_Internet();
 
         /*Temos que ver aonde vamos buscar o email do cara?*/
         $buscarEmail = $internetDAO->buscarEmailAgente(null, $_POST['idAgente'], 1, null, true);
@@ -154,102 +151,85 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $assunto = 'Solicitação de vinculo ao responsável';
         $texto = 'Favor verificar o vinculo solicitado no Sistema SALIC WEB';
 
-        if (isset($_POST['solicitarvinculo']))
-        {
-            $idAgenteProponente 	= $_POST['idAgente'];
-            $idUsuarioResponsavel 	= $this->idResponsavel;
+        if (isset($_POST['solicitarvinculo'])) {
+            $idAgenteProponente = $_POST['idAgente'];
+            $idUsuarioResponsavel = $this->idResponsavel;
 
-            $dados = array( 'idUsuarioResponsavel' 	=> $idUsuarioResponsavel,
-                			'idAgenteProponente' 	=> $idAgenteProponente,
-			                'dtVinculo' 			=> new Zend_Db_Expr('GETDATE()'),
-			                'siVinculo' 			=> 0
+            $dados = array('idUsuarioResponsavel' => $idUsuarioResponsavel,
+                'idAgenteProponente' => $idAgenteProponente,
+                'dtVinculo' => new Zend_Db_Expr('GETDATE()'),
+                'siVinculo' => 0
             );
-            try
-            {
+            try {
 
-	            $where['idAgenteProponente   = ?'] = $idAgenteProponente;
-		        $where['idUsuarioResponsavel = ?'] = $idUsuarioResponsavel;
-		        $vinculocadastrado = $v->buscar($where);
+                $where['idAgenteProponente   = ?'] = $idAgenteProponente;
+                $where['idUsuarioResponsavel = ?'] = $idUsuarioResponsavel;
+                $vinculocadastrado = $v->buscar($where);
 
-		        if(count($vinculocadastrado) > 0)
-				{
-					$v->alterar($dados, $where);
-		        }
-		        else
-		        {
-		        	$v->inserir($dados);
-		        }
+                if (count($vinculocadastrado) > 0) {
+                    $v->alterar($dados, $where);
+                } else {
+                    $v->inserir($dados);
+                }
 
                 $enviarEmail = $emailDAO->enviarEmail($emailProponente, $assunto, $texto);
 
                 echo json_encode(array('error' => false));
-            }
-            catch (Zend_Exception $e)
-            {
+            } catch (Zend_Exception $e) {
                 echo json_encode(array('error' => true));
             }
         }
 
-        if (isset($_POST['solicitarvinculoproposta']))
-        {
-            $idpreprojeto 			= $_POST['idpreprojeto'];
-            $buscarpreprojeto 		= $pp->buscar(array('idPreProjeto = ?' => $idpreprojeto))->current();
-            $idAgenteProponente 	= $buscarpreprojeto->idAgente;
-            $idUsuarioResponsavel 	= $this->idUsuario;
+        if (isset($_POST['solicitarvinculoproposta'])) {
+            $idpreprojeto = $_POST['idpreprojeto'];
+            $buscarpreprojeto = $pp->buscar(array('idPreProjeto = ?' => $idpreprojeto))->current();
+            $idAgenteProponente = $buscarpreprojeto->idAgente;
+            $idUsuarioResponsavel = $this->idUsuario;
 
             $buscarvinculo = $v->buscar(array('idAgenteProponente = ? ' => $idAgenteProponente, 'idUsuarioResponsavel = ?' => $idUsuarioResponsavel))->current();
             $idVinculo = $buscarvinculo->idVinculo;
 
             $dados = array('idVinculo' => $idVinculo, 'idPreProjeto' => $idpreprojeto, 'siVinculoProposta' => 0);
 
-            try
-            {
+            try {
                 $vprp->inserir($dados);
                 echo json_encode(array('error' => false));
-            }
-            catch (Zend_Exception $e)
-            {
+            } catch (Zend_Exception $e) {
                 echo json_encode(array('error' => true));
             }
         }
 
-        if (isset($_POST['aceitevinculo']))
-        {
+        if (isset($_POST['aceitevinculo'])) {
             $dados = array('siVinculoProposta' => $_POST['stVinculoProposta']);
             $where = "idVinculoProposta = {$_POST['idVinculoProposta']}";
 
-            try
-            {
+            try {
                 $vprp->alterar($dados, $where);
                 echo json_encode(array('error' => false));
-            }
-            catch (Zend_Exception $e)
-            {
+            } catch (Zend_Exception $e) {
                 echo json_encode(array('error' => true));
             }
         }
 
-        if (isset($_POST['desvincular']))
-        {
+        if (isset($_POST['desvincular'])) {
             $dados = array('siVinculoProposta' => 1);
             $where = "idVinculoProposta = {$_POST['idVinculoProposta']}";
 
-            try
-            {
+            try {
                 $vprp->alterar($dados, $where);
                 echo json_encode(array('error' => false));
-            }
-            catch (Zend_Exception $e)
-            {
+            } catch (Zend_Exception $e) {
                 echo json_encode(array('error' => true));
             }
         }
 
         exit();
     }
+
     /* }}} */
 
-    public function vincularresponsavelAction() {
+    public function vincularresponsavelAction()
+    {
         $ag = new Agente_Model_Agentes;
         $buscarvinculo = $ag->buscarAgenteVinculoResponsavel(array('vr.idAgenteProponente = ?' => $this->idUsuario, 'siVinculoProposta = ?' => 0));
         $buscarvinculado = $ag->buscarAgenteVinculoResponsavel(array('vr.idAgenteProponente = ?' => $this->idUsuario, 'siVinculoProposta = ?' => 2));
@@ -257,7 +237,8 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $this->view->vinculado = $buscarvinculado;
     }
 
-    public function vincularproponenteAction() {
+    public function vincularproponenteAction()
+    {
         $ag = new Agente_Model_Agentes;
         $buscarvinculo = $ag->buscarAgenteVinculoProponente(array('vp.idAgenteProponente = ?' => $this->idUsuario, 'siVinculoProposta = ?' => 0));
         $buscarvinculado = $ag->buscarAgenteVinculoProponente(array('vp.idAgenteProponente = ?' => $this->idUsuario, 'siVinculoProposta = ?' => 2));
@@ -265,11 +246,13 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $this->view->vinculado = $buscarvinculado;
     }
 
-    public function consultarresponsavelAction() {
+    public function consultarresponsavelAction()
+    {
 
     }
 
-    public function mostraresponsavelAction() {
+    public function mostraresponsavelAction()
+    {
         $this->_helper->layout->disableLayout();
         $ag = new Agente_Model_Agentes();
         if ($_POST) {
@@ -290,17 +273,15 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             $where['vprp.idPreProjeto is not null'] = '';
         }
         $buscarVinculo = $ag->buscarAgenteVinculoResponsavel($where);
-//        xd($buscarVinculo);
         $this->view->vinculo = $buscarVinculo;
     }
-
 
 
     /********************************************************************************************************/
 
     public function vinculoproponenteAction()
     {
-    	$tbVinculo = new TbVinculo();
+        $tbVinculo = new TbVinculo();
         $tbVinculoProposta = new tbVinculoPropostaResponsavelProjeto();
         $PreProjetoDAO = new Proposta_Model_PreProjeto();
 
@@ -308,230 +289,202 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $siVinculo = $this->_request->getParam("siVinculo");
         $idUsuarioR = $this->_request->getParam("idUsuario");
 
-        $dados = array('siVinculo' => $siVinculo,'dtVinculo' => new Zend_Db_Expr("GETDATE()") );
+        $dados = array('siVinculo' => $siVinculo, 'dtVinculo' => new Zend_Db_Expr("GETDATE()"));
         $where['idVinculo = ?'] = $idVinculo;
         $msg = '';
 
-        if($siVinculo == 1) {
+        if ($siVinculo == 1) {
             $msg = 'O responsável foi rejeitado.';
-        } else if($siVinculo == 2) {
+        } else if ($siVinculo == 2) {
             $msg = 'Responsável vinculado com sucesso!';
-        } else if($siVinculo == 3) {
+        } else if ($siVinculo == 3) {
             $msg = 'O responsável foi desvinculado.';
         }
 
         try {
             $alterar = $tbVinculo->alterar($dados, $where);
 
-            if($siVinculo == 3) {
+            if ($siVinculo == 3) {
                 $alterarVinculoProposta = $PreProjetoDAO->retirarProjetosVinculos($siVinculo, $idVinculo);
                 $retirarPropostas = $PreProjetoDAO->retirarProjetos($this->idResponsavel, $idUsuarioR, $this->idAgente);
             }
-            parent::message($msg, "manterpropostaincentivofiscal/consultarresponsaveis", "CONFIRM");
+            parent::message($msg, "proposta/manterpropostaincentivofiscal/consultarresponsaveis", "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Falha na recuperação dos dados!", "manterpropostaincentivofiscal/consultarresponsaveis", "ERROR");
+            parent::message("Falha na recuperação dos dados!", "proposta/manterpropostaincentivofiscal/consultarresponsaveis", "ERROR");
         }
     }
 
     public function vinculoresponsavelAction()
     {
-    	$tbVinculo	= new TbVinculo();
-    	$agentes 	= new Agente_Model_Agentes();
+        $tbVinculo = new TbVinculo();
+        $agentes = new Agente_Model_Agentes();
 
-    	$idResponsavel 		= $this->_request->getParam("idResponsavel");
-    	$idProponente 		= $this->idAgente;
-
-
-    	$where['idUsuarioResponsavel = ?'] = $idResponsavel;
-    	$where['idAgenteProponente   = ?'] = $idProponente;
-		$vinculo = $tbVinculo->buscar($where);
+        $idResponsavel = $this->_request->getParam("idResponsavel");
+        $idProponente = $this->idAgente;
 
 
-    	$dados = array('idAgenteProponente'		=> $idProponente,
-    				   'dtVinculo' 				=> new Zend_Db_Expr("GETDATE()"),
-    				   'siVinculo' 				=> 2,
-    				   'idUsuarioResponsavel' 	=> $idResponsavel
-    	);
-
-    	try {
-
-    		if(count($vinculo) > 0)
-    		{
-    			$dadosUP['siVinculo'] = 2;
-    			$whereUP['idVinculo = ?'] = $vinculo[0]->idVinculo;
-
-    			$update = $tbVinculo->alterar($dadosUP, $whereUP);
-    		}
-    		else
-    		{
-	    		$insere = $tbVinculo->inserir($dados);
-    		}
+        $where['idUsuarioResponsavel = ?'] = $idResponsavel;
+        $where['idAgenteProponente   = ?'] = $idProponente;
+        $vinculo = $tbVinculo->buscar($where);
 
 
-    		parent::message("vinculado com sucesso!", "manterpropostaincentivofiscal/novoresponsavel", "CONFIRM");
+        $dados = array('idAgenteProponente' => $idProponente,
+            'dtVinculo' => new Zend_Db_Expr("GETDATE()"),
+            'siVinculo' => 2,
+            'idUsuarioResponsavel' => $idResponsavel
+        );
 
-    	} catch (Exception $e)
-    	{
-    		parent::message("Erro ao vincular! ".$e->getMessage(), "manterpropostaincentivofiscal/novoresponsavel", "ERROR");
-    	}
+        try {
 
+            if (count($vinculo) > 0) {
+                $dadosUP['siVinculo'] = 2;
+                $whereUP['idVinculo = ?'] = $vinculo[0]->idVinculo;
 
-    }
-
-    /**
-	 * Método trocarproponente()
-	 * UC 89 - Fluxo FA1 - Trocar Proponente
-	 * @access public
-	 * @param void
-	 * @return void
-	 */
-    public function trocarproponenteAction()
-    {
-    	$tbVinculoPropostaDAO 	= new tbVinculoPropostaResponsavelProjeto();
-    	$PreProjetoDAO 			= new Proposta_Model_PreProjeto();
-
-    	$dadosPropronente 		= $this->_request->getParam("propronente");
-
-    	$parte = explode(":", $dadosPropronente);
-		$idNovoVinculo 		= $parte[0];
-		$idNovoPropronente 	= $parte[1];
-
-    	$idVinculoProposta		= $this->_request->getParam("idVinculoProposta"); // Vinculo a alterar
-    	$idPreProjeto 			= $this->_request->getParam("idPreProjeto"); // idPreProjeto
-
-    	$mecanismo 			    = $this->_request->getParam("mecanismo");
-
-    	try {
-
-    		$dados['siVinculoProposta'] = 3;
-    		$where['idVinculoProposta = ?'] = $idVinculoProposta;
-    		$alteraVP = $tbVinculoPropostaDAO->alterar($dados, $where, false);
-
-    		$novosDados = array('idVinculo' 		=> $idNovoVinculo,
-    							'idPreProjeto' 		=> $idPreProjeto,
-    							'siVinculoProposta' => 2);
-
-    		$insere = $tbVinculoPropostaDAO->inserir($novosDados, false);
-
-    		$alteraPP = $PreProjetoDAO->alteraproponente($idPreProjeto, $idNovoPropronente);
-
-    		if($mecanismo == 2)
-    		{
-	    		parent::message("Proponente trocado com sucesso!", "manterpropostaedital/dadospropostaedital?idPreProjeto=".$idPreProjeto, "CONFIRM");
-    		}
-			else
-			{
-	    		parent::message("Proponente trocado com sucesso!", "manterpropostaincentivofiscal/editar?idPreProjeto=".$idPreProjeto, "CONFIRM");
-			}
-
-
-    	}
-    	catch (Exception $e)
-    	{
-    		parent::message("Erro. ".$e->getMessage(), "manterpropostaincentivofiscal/editar?idPreProjeto=".$idPreProjeto, "ERROR");
-    	}
-
-
-
-
-    }
-
-
-        /**
-         * Método trocarproponente()
-         * UC 89 - Fluxo FA1 - Trocar Proponente
-         * @access public
-         * @param void
-         * @return void
-         */
-        public function vincularpropostasAction() {
-            $tbVinculoPropostaDAO = new tbVinculoPropostaResponsavelProjeto();
-            $PreProjetoDAO = new Proposta_Model_PreProjeto();
-
-            $opcaovinculacao = $this->_request->getParam("opcaovinculacao");
-            $idPreProjeto = $this->_request->getParam("propostas");
-
-            $dadosResponsavel = $this->_request->getParam("responsavel");
-            $parte = explode(":", $dadosResponsavel);
-            $idVinculo = $parte[0];
-            $idResponsavel = $parte[1];
-
-            $idResponsavelRetirar = $parte[1];
-
-            $msg = "Responsável vinculado com sucesso!";
-            if($opcaovinculacao == 1) {
-                $idResponsavel = $this->idResponsavel;
-                $msg = "O responsável foi desvinculado.";
+                $update = $tbVinculo->alterar($dadosUP, $whereUP);
+            } else {
+                $insere = $tbVinculo->inserir($dados);
             }
 
-            try {
-                $dados['siVinculoProposta'] = 3;
-                $where['idPreProjeto = ?'] = $idPreProjeto;
-                $alteraVP = $tbVinculoPropostaDAO->alterar($dados, $where, false);
+            parent::message("vinculado com sucesso!", "proposta/manterpropostaincentivofiscal/novoresponsavel", "CONFIRM");
 
-                $novosDados = array(
-                        'idVinculo' => $idVinculo,
-                        'idPreProjeto' => $idPreProjeto,
-                        'siVinculoProposta' => 2
-                );
-                $insere = $tbVinculoPropostaDAO->inserir($novosDados, false);
-                $alteraPP = $PreProjetoDAO->alteraresponsavel($idPreProjeto, $idResponsavel);
-                parent::message($msg, "manterpropostaincentivofiscal/vincularpropostas", "CONFIRM");
-
-            } catch (Exception $e) {
-                parent::message("Erro. ".$e->getMessage(), "manterpropostaincentivofiscal/vincularpropostas", "ERROR");
-            }
+        } catch (Exception $e) {
+            parent::message("Erro ao vincular! " . $e->getMessage(), "proposta/manterpropostaincentivofiscal/novoresponsavel", "ERROR");
         }
 
-    /**
-	 * Método vincularprojetos()
-	 * UC 89 - Fluxo FA8 - Desvincular Projetos
-	 * @access public
-	 * @param void
-	 * @return void
-	 */
-    public function vincularprojetosAction()
-    {
-    	$tbVinculoPropostaDAO 	= new tbVinculoPropostaResponsavelProjeto();
-    	$PreProjetoDAO 			= new Proposta_Model_PreProjeto();
-
-    	$idPreProjeto			= $this->_request->getParam("propostas");
-		$idResponsavel 			= $this->idResponsavel;
-
-		//x($idPreProjeto);
-		//xd($idResponsavel);
-
-
-    	try {
-
-    		$dados['siVinculoProposta'] = 3;
-    		$where['idPreProjeto = ?'] = $idPreProjeto;
-    		$alteraVP = $tbVinculoPropostaDAO->alterar($dados, $where, false);
-
-    		// Cadê a procuração?
-
-    		/* Não vai cadastrar pois ele é dono da sua proposta
-    		$novosDados = array('idVinculo' 		=> $idVinculo,
-    							'idPreProjeto' 		=> $idPreProjeto,
-    							'siVinculoProposta' => 2
-    		);
-
-    		$insere = $tbVinculoPropostaDAO->inserir($novosDados, false);
-			*/
-    		$alteraPP = $PreProjetoDAO->alteraresponsavel($idPreProjeto, $idResponsavel);
-
-    		parent::message("O responsável foi desvinculado.", "manterpropostaincentivofiscal/vincularprojetos", "CONFIRM");
-
-    	}
-    	catch (Exception $e)
-    	{
-    		parent::message("Erro. ".$e->getMessage(), "manterpropostaincentivofiscal/vincularprojetos", "ERROR");
-    	}
-
-
-
 
     }
 
+    /**
+     * Método trocarproponente()
+     * UC 89 - Fluxo FA1 - Trocar Proponente
+     * @access public
+     * @param void
+     * @return void
+     */
+    public function trocarproponenteAction()
+    {
+        $tbVinculoPropostaDAO = new tbVinculoPropostaResponsavelProjeto();
+        $PreProjetoDAO = new Proposta_Model_PreProjeto();
 
+        $dadosPropronente = $this->_request->getParam("propronente");
+
+        $parte = explode(":", $dadosPropronente);
+        $idNovoVinculo = $parte[0];
+        $idNovoPropronente = $parte[1];
+
+        $idVinculoProposta = $this->_request->getParam("idVinculoProposta"); // Vinculo a alterar
+        $idPreProjeto = $this->_request->getParam("idPreProjeto"); // idPreProjeto
+
+        $mecanismo = $this->_request->getParam("mecanismo");
+
+        try {
+
+            $dados['siVinculoProposta'] = 3;
+            $where['idVinculoProposta = ?'] = $idVinculoProposta;
+            $alteraVP = $tbVinculoPropostaDAO->alterar($dados, $where, false);
+
+            $novosDados = array('idVinculo' => $idNovoVinculo,
+                'idPreProjeto' => $idPreProjeto,
+                'siVinculoProposta' => 2);
+
+            $insere = $tbVinculoPropostaDAO->inserir($novosDados, false);
+
+            $alteraPP = $PreProjetoDAO->alteraproponente($idPreProjeto, $idNovoPropronente);
+
+            if ($mecanismo == 2) {
+                parent::message("Proponente trocado com sucesso!", "manterpropostaedital/dadospropostaedital?idPreProjeto=" . $idPreProjeto, "CONFIRM");
+            } else {
+                parent::message("Proponente trocado com sucesso!", "manterpropostaincentivofiscal/editar?idPreProjeto=" . $idPreProjeto, "CONFIRM");
+            }
+        } catch (Exception $e) {
+            parent::message("Erro. " . $e->getMessage(), "manterpropostaincentivofiscal/editar?idPreProjeto=" . $idPreProjeto, "ERROR");
+        }
+    }
+
+    /**
+     * Método trocarproponente()
+     * UC 89 - Fluxo FA1 - Trocar Proponente
+     * @access public
+     * @param void
+     * @return void
+     */
+    public function vincularpropostasAction()
+    {
+        $tbVinculoPropostaDAO = new tbVinculoPropostaResponsavelProjeto();
+        $PreProjetoDAO = new Proposta_Model_PreProjeto();
+
+        $opcaovinculacao = $this->_request->getParam("opcaovinculacao");
+        $idPreProjeto = $this->_request->getParam("propostas");
+
+        $dadosResponsavel = $this->_request->getParam("responsavel");
+        $parte = explode(":", $dadosResponsavel);
+        $idVinculo = $parte[0];
+        $idResponsavel = $parte[1];
+
+        $idResponsavelRetirar = $parte[1];
+
+        $msg = "Responsável vinculado com sucesso!";
+        if ($opcaovinculacao == 1) {
+            $idResponsavel = $this->idResponsavel;
+            $msg = "O responsável foi desvinculado.";
+        }
+
+        try {
+            $dados['siVinculoProposta'] = 3;
+            $where['idPreProjeto = ?'] = $idPreProjeto;
+            $alteraVP = $tbVinculoPropostaDAO->alterar($dados, $where, false);
+
+            $novosDados = array(
+                'idVinculo' => $idVinculo,
+                'idPreProjeto' => $idPreProjeto,
+                'siVinculoProposta' => 2
+            );
+            $insere = $tbVinculoPropostaDAO->inserir($novosDados, false);
+            $alteraPP = $PreProjetoDAO->alteraresponsavel($idPreProjeto, $idResponsavel);
+            parent::message($msg, "manterpropostaincentivofiscal/vincularpropostas", "CONFIRM");
+
+        } catch (Exception $e) {
+            parent::message("Erro. " . $e->getMessage(), "manterpropostaincentivofiscal/vincularpropostas", "ERROR");
+        }
+    }
+
+    /**
+     * Método vincularprojetos()
+     * UC 89 - Fluxo FA8 - Desvincular Projetos
+     * @access public
+     * @param void
+     * @return void
+     */
+    public function vincularprojetosAction()
+    {
+        $tbVinculoPropostaDAO = new tbVinculoPropostaResponsavelProjeto();
+        $PreProjetoDAO = new Proposta_Model_PreProjeto();
+
+        $idPreProjeto = $this->_request->getParam("propostas");
+        $idResponsavel = $this->idResponsavel;
+
+        try {
+
+            $dados['siVinculoProposta'] = 3;
+            $where['idPreProjeto = ?'] = $idPreProjeto;
+            $alteraVP = $tbVinculoPropostaDAO->alterar($dados, $where, false);
+
+            // Cadê a procuração?
+
+            /* Não vai cadastrar pois ele é dono da sua proposta
+            $novosDados = array('idVinculo' 		=> $idVinculo,
+                                'idPreProjeto' 		=> $idPreProjeto,
+                                'siVinculoProposta' => 2
+            );
+
+            $insere = $tbVinculoPropostaDAO->inserir($novosDados, false);
+            */
+            $alteraPP = $PreProjetoDAO->alteraresponsavel($idPreProjeto, $idResponsavel);
+
+            parent::message("O responsável foi desvinculado.", "manterpropostaincentivofiscal/vincularprojetos", "CONFIRM");
+
+        } catch (Exception $e) {
+            parent::message("Erro. " . $e->getMessage(), "manterpropostaincentivofiscal/vincularprojetos", "ERROR");
+        }
+    }
 }

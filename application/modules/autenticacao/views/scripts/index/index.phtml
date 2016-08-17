@@ -67,7 +67,7 @@
 
     <fieldset>
         <legend>Login</legend>
-        <form name="inicial" id="inicial"  onsubmit="return validaSenha();" method="POST" action="<?php echo $this->url(array('controller' => 'index', 'action' => 'login', 'module' => 'autenticacao')); ?>">
+        <form name="inicial" id="inicial"  onsubmit="return validaSenha();" method="POST" action="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'login'), null, true); ?>">
             <table class="tabela" border="1" style="margin-bottom: 50px; margin-top: 20px;">
                 <thead>
                     <tr>

@@ -40,7 +40,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
      * @param void
      * @return void
      */
-    public function loginAction(){
+    public function loginAction() {
+
         $this->_helper->layout->disableLayout();
         $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
         $password = $this->getParam('Senha', null);
@@ -80,6 +81,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
                     return $this->_helper->redirector->goToRoute(array('controller' => 'principal'), null, true);
                 } // fecha if
                 else {
+
                     //se nenhum registro foi encontrado na tabela Usuario, ele passa a tentar se logar como proponente.
                     //neste ponto o _forward encaminha o processamento para o metodo login do controller login, que recebe
                     //o post igualmente e tenta encontrar usuario cadastrado em SGCAcesso

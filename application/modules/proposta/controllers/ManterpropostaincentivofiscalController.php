@@ -1125,22 +1125,22 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $cpfCnpj = '';
 
         $rsVinculo = $proposta->listarPropostasCombo($this->idResponsavel);
+
         $agente = array();
+
+//        x($rsVinculo);
 
         $i = 0;
         foreach ($rsVinculo as $rs) {
-
-            if (!in_array($rs->idAgente, $agente)) {
-                if (strlen(trim($rs->CNPJCPF)) > 11) {
-                    $cpfCnpj = Mascara::addMaskCNPJ($rs->CNPJCPF);
-                } else {
-                    $cpfCnpj = Mascara::addMaskCPF($rs->CNPJCPF);
-                }
-
-                $dadosCombo[$i]['idAgenteProponente'] = $rs->idAgente;
-                $dadosCombo[$i]['CPF'] = $cpfCnpj;
-                $dadosCombo[$i]['Nome'] = $rs->NomeProponente;
+            $cpfCnpj = Mascara::addMaskCPF($rs->cnpjcpf);
+            if (strlen(trim($rs->cnpjcpf)) > 11) {
+                $cpfCnpj = Mascara::addMaskCNPJ($rs->cnpjcpf);
             }
+
+            $dadosCombo[$i]['idAgenteProponente'] = $rs->idagente;
+            $dadosCombo[$i]['CPF'] = $cpfCnpj;
+            $dadosCombo[$i]['Nome'] = $rs->nomeproponente;
+
             $i++;
         }
 

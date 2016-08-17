@@ -21,7 +21,7 @@
                     $(this).dialog('close');
                 },
                 'Sim': function() {
-                    window.location = "<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'vinculoproponente')); ?>?idVinculo="+idVinculo+"&siVinculo="+siVinculo+"&idUsuario="+idUsuario;
+                    window.location = "<?php echo $this->url(array('module' => 'proposta', 'controller' => 'vincularresponsavel', 'action' => 'vinculoproponente')); ?>?idVinculo="+idVinculo+"&siVinculo="+siVinculo+"&idUsuario="+idUsuario;
                 }
             }
         });
@@ -35,7 +35,7 @@
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">Início</a></li>
-        <li><a href="<?php echo $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
+        <li><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
         <li class="last">Gerenciar responsáveis</li>
     </ul>
 </div>

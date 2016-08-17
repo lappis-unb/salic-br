@@ -51,6 +51,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     public function init() {
+
         $this->view->comboestados = Estado::buscar();
         $this->view->combotiposenderecos = Tipoendereco::buscar();
         $this->view->combotiposlogradouros = Tipologradouro::buscar();
@@ -393,7 +394,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                         $erro = 1;
                     }
                     if ($erro == 0 && count($arrResultado) > 0) {
-                        #xd( $arrResultado );
                         $retorno['dados']['idPessoa'] = $arrResultado['idPessoaFisica'];
                         $retorno['dados']['nome'] = utf8_encode($arrResultado['nmPessoaFisica']);
                         $retorno['dados']['cep'] = isset($arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep']) && $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] ? $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] : '';
@@ -414,7 +414,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                         $erro = 1;
                     }
                     if ($erro == 0 && count($arrResultado) > 0) {
-                        #xd( $arrResultado );
                         $retorno['dados']['idPessoa'] = $arrResultado['idPessoaJuridica'];
                         $retorno['dados']['nome'] = utf8_encode($arrResultado['nmRazaoSocial']);
                         $retorno['dados']['cep'] = isset($arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep']) && $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] ? $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] : '';
@@ -1787,7 +1786,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $cpf = preg_replace('/\.|-|\//','',$_REQUEST['cpf']);
 
         $novos_valores = array();
-
         $dados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
 
         if ((strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) || (strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf))) {
@@ -1808,6 +1806,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 #Instancia a Classe de Serviço do WebService da Receita Federal
                 $wsServico = new ServicosReceitaFederal();
                 if(11 == strlen( $cpf )) {
+
                         $arrResultado = $wsServico->consultarPessoaFisicaReceitaFederal($cpf);
                         if (count($arrResultado) > 0) {
                             $novos_valores[0]['msgCPF'] = utf8_encode('novo');
@@ -1824,7 +1823,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                             $novos_valores[0]['Cep'] = isset($arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep']) && $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] ? $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] : '';;
                         }
                 }
-
             }
         }
 

@@ -6,11 +6,12 @@
  * @uses   Zend_Db_Table
  * @author wouerner <wouerner@gmail.com>
  */
-class Proposta_Model_PreProjeto extends Zend_Db_Table
+class Proposta_Model_PreProjeto extends GenericModel
 {
-    protected $_schema= "SAC.dbo";
-    protected $_name = "PreProjeto";
-    protected $_primary = "idPreProjeto";
+    protected $_schema= "sac";
+    protected $_name = "preprojeto";
+    protected $_primary = "idpreprojeto";
+    protected $_banco = "sac";
 
     public $_totalRegistros = null;
 
@@ -2146,10 +2147,9 @@ class Proposta_Model_PreProjeto extends Zend_Db_Table
     {
         $db = $this->getAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
         $sql = $db->select()
-            ->from(['b' => 'BancoAgencia'], 'Agencia', $this->_schema)
-            ->where('b.Agencia = ?', $codigo)
+            ->from(['b' => 'bancoagencia'], 'agencia', $this->_schema)
+            ->where('b.agencia = ?', $codigo)
             ->query();
 
         return $sql->fetchAll();

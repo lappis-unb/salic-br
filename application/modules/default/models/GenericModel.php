@@ -119,11 +119,11 @@ class GenericModel extends Zend_Db_Table_Abstract {
 
         if (!($this->_config instanceof  Zend_Config_Ini)) {
             $this->_config = new Zend_Config_Ini(
-            	Zend_Registry::get('DIR_CONFIG'),
-            	'conexao_' . strtolower($this->_banco),
-            	array('allowModifications' => true,)
+                Zend_Registry::get('DIR_CONFIG'),
+                'conexao_' . strtolower($this->_banco),
+                array('allowModifications' => true,)
             );
-        	Zend_Registry::getInstance()->set('config', $this->_config);
+            Zend_Registry::getInstance()->set('config', $this->_config);
             Zend_Db_Table::setDefaultAdapter(Zend_Db::factory($this->_config->db));
             parent::__construct();
 

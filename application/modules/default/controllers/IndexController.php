@@ -20,7 +20,7 @@ class IndexController extends MinC_Controller_Action_Abstract
      */
     public function indexAction()
     {
-        $this->forward("index", "index", "autenticacao");
+        $this->redirect("/autenticacao/index/index");
     }
 
     public function indisponivelAction()
@@ -34,12 +34,12 @@ class IndexController extends MinC_Controller_Action_Abstract
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $get = Zend_Registry::get('get');
         
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessco com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
         
         $this->view->idPronac = $get->idPronac;
         $spPlanilhaOrcamentaria = new spPlanilhaOrcamentaria();
-        $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($get->idPronac, $get->tipoPlanilha);
+        $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($get->idPronac, $get->tipoPlanilha); 
         $planilha = $this->montarPlanilhaOrcamentaria($planilhaOrcamentaria, $get->tipoPlanilha);
         // tipoPlanilha = 0 : Planilha Orcamentaria da Proposta
         // tipoPlanilha = 1 : Planilha Orcamentaria do Proponente

@@ -2,12 +2,12 @@
 
 /**
  * Classe do componente de SEI que gerencia a
- * comunicacao via webservice entre o NovoSalic e o serviço do Corporativo
+ * comunicacao via webservice entre o NovoSalic e o serviï¿½o do Corporativo
  * que consome o Webservice da Receita Federal
- * Este Serviço é do tipo REST
+ * Este Serviï¿½o ï¿½ do tipo REST
  *
- * @copyright Ministério da Cultura
- * @author Hepta/Minc - Alysson Vicuña de Oliveira
+ * @copyright Ministï¿½rio da Cultura
+ * @author Hepta/Minc - Alysson Vicuï¿½a de Oliveira
  * @since 18/04/2016
  * @version 1.0
  */
@@ -15,10 +15,12 @@ class ServicosReceitaFederal {
 
     # Constante usada na classe para conexao com o WS
     const username 		        = "3bf410091bddf5e2092be862aa25fe34";
-    #const password 		    = "QJHJWRRM"; #Produção
-    const password 		        = "123456"; #Homologação
-    #const urlServico 	        = "http://sistemasweb.cultura.gov.br/minc-pessoa/servicos/"; #Produção
-    const urlServico 	        = "http://homolog.cultura.gov.br/minc-pessoa/servicos/"; #Homologação
+    #const password 		    = "QJHJWRRM"; #Produï¿½ï¿½o
+    const password 		        = "123456"; #Homologaï¿½ï¿½o
+    #const hostServico           = "sistemasweb.cultura.gov.br";
+    #const urlServico 	        = "/minc-pessoa/servicos/"; #Produï¿½ï¿½o
+    const hostServico           = "homolog.cultura.gov.br";
+    const urlServico 	        = "/minc-pessoa/servicos/"; #Homologaï¿½ï¿½o
 
     const urlPessoaFisica 	    = "pessoa_fisica/consultar/";
     const urlPessoaJuridica 	= "pessoa_juridica/consultar/";
@@ -29,11 +31,11 @@ class ServicosReceitaFederal {
 
 
     /**
-     * @author Alysson Vicuña de Oliveira
+     * @author Alysson Vicuï¿½a de Oliveira
      *
      * @param $cnpj - CNPJ a ser consultado
      * @param bool $returnJSON - Define se o retorno sera um JSON ou Array de Objetos
-     * @param bool $forcarBuscaReceita - Define se deve ir na Base da receita federal, mesmo já existindo o CPF na base do MINC
+     * @param bool $forcarBuscaReceita - Define se deve ir na Base da receita federal, mesmo jï¿½ existindo o CPF na base do MINC
      * @return ArrayObject|mixed - Resultado da consulta em Json ou ArrayObject
      */
     public function consultarPessoaJuridicaReceitaFederal($cnpj, $forcarBuscaReceita = false, $returnJSON = false)
@@ -42,10 +44,10 @@ class ServicosReceitaFederal {
         $cnpj = str_replace($chars,"",$cnpj);
 
         if (15 == strlen($cnpj) && !isCnpjValid($cnpj)) {
-            throw new InvalidArgumentException("CPF/CNPJ inválido");
+            throw new InvalidArgumentException("CPF/CNPJ invï¿½lido");
         }
 
-        $url = self::urlServico . self::urlPessoaJuridica . $cnpj;
+        $url = "http://". self::hostServico . self::urlServico . self::urlPessoaJuridica . $cnpj;
         if ($forcarBuscaReceita) {
             $url .= self::urlForcar;
         }
@@ -74,20 +76,20 @@ class ServicosReceitaFederal {
     }
 
     /**
-     * @author Alysson Vicuña de Oliveira
+     * @author Alysson Vicuï¿½a de Oliveira
      *
      * @param $cpf - CPF a ser consultado
      * @param bool $returnJSON - Define se o retorno sera um JSON ou Array de Objetos
-     * @param bool $forcarBuscaReceita - Define se deve ir na Base da receita federal, mesmo já existindo o CPF na base do MINC
+     * @param bool $forcarBuscaReceita - Define se deve ir na Base da receita federal, mesmo jï¿½ existindo o CPF na base do MINC
      * @return ArrayObject|mixed - Resultado da consulta em Json ou ArrayObject
      */
     public function consultarPessoaFisicaReceitaFederal($cpf, $forcarBuscaReceita = false, $returnJSON = false)
     {
         if (11 == strlen($cpf) && !validaCPF($cpf)) {
-            throw new InvalidArgumentException("CPF/CNPJ inválido");
+            throw new InvalidArgumentException("CPF/CNPJ invÃ¡lido");
         }
 
-        $url = self::urlServico . self::urlPessoaFisica . $cpf;
+        $url = "http://". self::hostServico . self::urlServico . self::urlPessoaFisica . $cpf;
         if ($forcarBuscaReceita) {
             $url .= self::urlForcar;
         }
@@ -109,7 +111,7 @@ class ServicosReceitaFederal {
         } else{
             $retornoResultado = $result; #Retorno no Formato ArrayObject
         }
-        #xd($retornoResultado);
+#xd($retornoResultado);
 
         return $retornoResultado;
     }
