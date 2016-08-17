@@ -154,7 +154,6 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         $Usuario      = new Autenticacao_Model_Usuario(); // objeto usu?rio
         $UsuarioAtivo = new Zend_Session_Namespace('UsuarioAtivo'); // cria a sess?o com o usu?rio ativo
         $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess?o com o grupo ativo
-
         // somente autentica??o zend
         if ($tipo == 0 || empty($tipo))
         {
@@ -165,7 +164,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 {
                     $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
                     $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-                    $idAgente = $Agente['idAgente'];
+                    $idAgente = $Agente['idagente'];
                     $Cpflogado = $Agente['usu_identificacao'];
                 }
                 else
@@ -200,7 +199,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
                 // manda os dados para a vis?o
                 $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-                $idAgente = $Agente['idAgente'];
+                $idAgente = $Agente['idagente'];
                 $this->view->usuario     = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
                 $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
                 $this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o

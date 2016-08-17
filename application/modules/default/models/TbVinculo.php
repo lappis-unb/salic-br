@@ -45,17 +45,9 @@ class TbVinculo extends GenericModel{
        // xd($slct->assemble());
         return $this->fetchAll($slct);
     }
-<<<<<<< HEAD
-
 
 	/* Método que lista os vinculos do Proponente ao Responsavel
      *
-=======
-
-
-	/* Mï¿½todo que lista os vinculos do Proponente ao Responsavel
-     *
->>>>>>> b002a5f83ce4b7f9bab5dc2c443ab2d2601be66a
      * */
     public function buscarProponenteResponsavel($idUsuarioLogado, $mecanismo = false)
     {
@@ -148,21 +140,12 @@ class TbVinculo extends GenericModel{
                             ->union(array('('.$slct1.')', '('.$slct2.')', '('.$slct3.')'))
                             ->order('Ordem ASC')
                             ->order('NomeProponente ASC');
-//        xd($slctUnion->assemble());
 
         return $this->fetchAll($slctUnion);
     }
-<<<<<<< HEAD
-
 
 	/* Método que lista os responsáveis
      *
-=======
-
-
-	/* Mï¿½todo que lista os responsï¿½veis
-     *
->>>>>>> b002a5f83ce4b7f9bab5dc2c443ab2d2601be66a
      * */
     public function buscarResponsaveis($where=array() , $idAgenteProponente)
     {
