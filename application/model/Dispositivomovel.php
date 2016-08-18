@@ -54,9 +54,11 @@ class Dispositivomovel extends GenericModel{
             ->join(array('usuario' => 'SGCacesso'), 'projetos.IdUsuario = usuario.IdUsuario', array(
                 'cpf' => 'Cpf'), 'ControleDeAcesso.dbo')
             ->join(array('dispositivo' => 'tbDispositivoMovel'), 'usuario.Cpf = dispositivo.nrCPF', array(
+                'idDispositivoMovel',
                 'idRegistration'), 'SAC.dbo')
             ->group(array(
                 'cpf',
+                'idDispositivoMovel',
                 'idRegistration'))
         ;
         
@@ -66,14 +68,28 @@ class Dispositivomovel extends GenericModel{
     /**
      * Lista dispositivos que receberão a notificação.
      * 
-     * @param integer $idPronac
+     * @param array $listaResultadoDispositivo
      * @return array
      */
-    public function listarDispositivoNotificacao($idPronac) {
+    public function listarIdRegistration($listaResultadoDispositivo) {
         $listaDispositivos = array();
-        $listaResultadoDispositivo = $this->listarPorIdPronac($idPronac);
         foreach ($listaResultadoDispositivo as $dispositivo) {
             $listaDispositivos[] = $dispositivo->idRegistration;
+        }
+        
+        return $listaDispositivos;
+    }
+    
+    /**
+     * Lista de id dos dispositivos que receberão a notificação.
+     * 
+     * @param array $listaResultadoDispositivo
+     * @return array
+     */
+    public function listarIdDispositivoMovel($listaResultadoDispositivo) {
+        $listaDispositivos = array();
+        foreach ($listaResultadoDispositivo as $dispositivo) {
+            $listaDispositivos[] = $dispositivo->idDispositivoMovel;
         }
         
         return $listaDispositivos;

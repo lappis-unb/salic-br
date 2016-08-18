@@ -146,6 +146,7 @@ $restRoute = new Zend_Rest_Route(
             'proponente-rest',
             'projeto-rest',
             'dispositivo-movel-rest',
+            'mensagem-rest',
             'projeto-extrato-rest',
             'projeto-extrato-ano-rest',
             'projeto-extrato-mes-rest'

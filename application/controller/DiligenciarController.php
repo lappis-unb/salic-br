@@ -675,6 +675,7 @@ class DiligenciarController extends GenericControllerNew {
         $modelProjeto = new Projetos();
         $projeto = $modelProjeto->buscarPorPronac((int)$post->idPronac);
         $this->enviarNotificacao((object)array(
+            'cpf' => $projeto->CNPJCPF,
             'pronac' => $projeto->Pronac,
             'idPronac' => $projeto->IdPRONAC
         ));
@@ -689,16 +690,19 @@ class DiligenciarController extends GenericControllerNew {
      */
     protected function enviarNotificacao(stdClass $projeto) {
         $modelDispositivo = new Dispositivomovel();
-        $listaDispositivos = $modelDispositivo->listarDispositivoNotificacao($projeto->idPronac);
-        $notification = new Minc_Notification_Mensage();
-        $response = $notification
-            ->setListResgistrationIds($listaDispositivos)
+        $listaDispositivos = $modelDispositivo->listarPorIdPronac($projeto->idPronac);
+        $notification = new Minc_Notification_Message();
+        $notification
+            ->setCpf($projeto->cpf)
+            ->setCodePronac($projeto->idPronac)
+            ->setListDeviceId($modelDispositivo->listarIdDispositivoMovel($listaDispositivos))
+            ->setListResgistrationIds($modelDispositivo->listarIdRegistration($listaDispositivos))
             ->setTitle('Projeto '. $projeto->pronac)
             ->setText('Recebeu nova diligência!')
             ->setListParameters(array('projeto' => $projeto->idPronac))
             ->send()
         ;
-//xd($response);
+//xd($notification->getResponse());
     }
 
     public function salvardiligenciaAction() {

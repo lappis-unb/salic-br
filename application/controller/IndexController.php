@@ -32,16 +32,19 @@ class IndexController extends GenericControllerNew
      */
     protected function enviarNotificacao(stdClass $projeto) {
         $modelDispositivo = new Dispositivomovel();
-        $listaDispositivos = $modelDispositivo->listarDispositivoNotificacao($projeto->idPronac);
-        $notification = new Minc_Notification_Mensage();
-        $response = $notification
-            ->setListResgistrationIds($listaDispositivos)
+        $listaDispositivos = $modelDispositivo->listarPorIdPronac($projeto->idPronac);
+        $notification = new Minc_Notification_Message();
+        $notification
+            ->setCpf($projeto->cpf)
+            ->setCodePronac($projeto->idPronac)
+            ->setListDeviceId($modelDispositivo->listarIdDispositivoMovel($listaDispositivos))
+            ->setListResgistrationIds($modelDispositivo->listarIdRegistration($listaDispositivos))
             ->setTitle('Projeto '. $projeto->pronac)
-            ->setText('Recebeu nova diligência!')
+            ->setText('Recebeu nova atualização!')
             ->setListParameters(array('projeto' => $projeto->idPronac))
             ->send()
         ;
-xd($response);
+xd($notification->getResponse());
     }
     
     /**
@@ -56,6 +59,7 @@ xd($response);
         $modelProjeto = new Projetos();
         $projeto = $modelProjeto->buscarPorPronac(119079);
         $this->enviarNotificacao((object)array(
+            'cpf' => $projeto->CNPJCPF,
             'pronac' => $projeto->Pronac,
             'idPronac' => $projeto->IdPRONAC
         ));

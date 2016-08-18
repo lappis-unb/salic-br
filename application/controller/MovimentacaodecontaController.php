@@ -1476,6 +1476,7 @@ class MovimentacaodecontaController extends GenericControllerNew
                 
                 # Envia notificação para o usuário através do aplicativo mobile.
                 $this->enviarNotificacaoCapitacao((object)array(
+                    'cpf' => $dadosProjetos[0]->CgcCpf,
                     'pronac' => $AnoProjeto. $Sequencial,
                     'idPronac' => $dadosProjetos[0]->IdPRONAC,
                     'vlCaptado' => number_format($vlCaptado, 2, ',', '.')
@@ -1495,15 +1496,19 @@ class MovimentacaodecontaController extends GenericControllerNew
      */
     protected function enviarNotificacaoCapitacao(stdClass $projeto) {
         $modelDispositivo = new Dispositivomovel();
-        $listaDispositivos = $modelDispositivo->listarDispositivoNotificacao($projeto->idPronac);
-        $notification = new Minc_Notification_Mensage();
-        $response = $notification
-            ->setListResgistrationIds($listaDispositivos)
+        $listaDispositivos = $modelDispositivo->listarPorIdPronac($projeto->idPronac);
+        $notification = new Minc_Notification_Message();
+        $notification
+            ->setCpf($projeto->cpf)
+            ->setCodePronac($projeto->idPronac)
+            ->setListDeviceId($modelDispositivo->listarIdDispositivoMovel($listaDispositivos))
+            ->setListResgistrationIds($modelDispositivo->listarIdRegistration($listaDispositivos))
             ->setTitle('Projeto '. $projeto->pronac)
             ->setText('Recebeu R$'. $projeto->vlCaptado. ' de captação!')
             ->setListParameters(array('projeto' => $projeto->idPronac))
             ->send()
         ;
+//xd($notification->getResponse());
     }
 
     public function transferenciaColetivaContaCaptacaoAction(){

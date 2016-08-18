@@ -11,10 +11,31 @@ include_once APPLICATION_PATH.'/../library/Zend/Rest/Client.php';
  * @link http://www.cultura.gov.br
  * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
  */
-class Minc_Notification_Mensage{
+class Minc_Notification_Message {
     
     /**
-     * Lista de Ids dos dispositivos dos usuários que receberão a notificação.
+     * CPF do usuário que receberá a mensagem.
+     * 
+     * @var string
+     */
+    protected $cpf;
+
+    /**
+     * Código do projeto ou idPronac.
+     * 
+     * @var integer
+     */
+    protected $codePronac;
+
+    /**
+     * Lista de Id dos dispositivos dos usuários que receberão a notificação.
+     * 
+     * @var array
+     */
+    protected $listDeviceId;
+
+    /**
+     * Lista de Ids registrations dos dispositivos dos usuários que receberão a notificação.
      * 
      * @var array 
      */
@@ -63,11 +84,37 @@ class Minc_Notification_Mensage{
     protected $listParametersService;
 
     /**
+     * Informações do serviço GCM sobre a execução do envio da notificação.
+     * 
+     * @var stdClass
+     */
+    protected $response;
+    
+    /**
      * Classe realizar requisição e usufruir serviços.
      * 
      * @var Zend_Rest_Client 
      */
     protected $client;
+    
+    /**
+     * Classe que abstrai a tabela de mensagens(SAC.dbo.tbMensagem)
+     * 
+     * @var Mensagem
+     */
+    protected $modelMensagem;
+
+    public function getCpf() {
+        return $this->cpf;
+    }
+
+    public function getCodePronac() {
+        return $this->codePronac;
+    }
+
+    public function getListDeviceId() {
+        return $this->listDeviceId;
+    }
 
     public function getListResgistrationIds() {
         return $this->listResgistrationIds;
@@ -97,8 +144,31 @@ class Minc_Notification_Mensage{
         return $this->listParametersService;
     }
 
+    public function getResponse() {
+        return $this->response;
+    }
+
     public function getClient() {
         return $this->client;
+    }
+
+    public function getModelMensagem() {
+        return $this->modelMensagem;
+    }
+
+    public function setCpf($cpf) {
+        $this->cpf = $cpf;
+        return $this;
+    }
+
+    public function setCodePronac($codePronac) {
+        $this->codePronac = $codePronac;
+        return $this;
+    }
+
+    public function setListDeviceId($listDeviceId) {
+        $this->listDeviceId = $listDeviceId;
+        return $this;
     }
 
     public function setListResgistrationIds($listResgistrationIds) {
@@ -136,8 +206,18 @@ class Minc_Notification_Mensage{
         return $this;
     }
 
+    public function setResponse(stdClass $response) {
+        $this->response = $response;
+        return $this;
+    }
+
     public function setClient(Zend_Rest_Client $client) {
         $this->client = $client;
+        return $this;
+    }
+
+    public function setModelMensagem(Mensagem $modelMensagem) {
+        $this->modelMensagem = $modelMensagem;
         return $this;
     }
 
@@ -153,6 +233,7 @@ class Minc_Notification_Mensage{
         $config = new Zend_Config_Ini("./application/configs/config.ini");
         $this->gcmUrl = $config->get('default')->resources->view->service->gcmUrl;
         $this->gcmApiKey = $config->get('default')->resources->view->service->gcmApiKey;
+        $this->modelMensagem = new Mensagem();
 
         $this->listResgistrationIds = $listResgistrationIds;
         $this->title = $title;
@@ -164,7 +245,7 @@ class Minc_Notification_Mensage{
     /**
      * Carrega configurações padrões de envio de notificações.
      * 
-     * @return \Minc_Notification_Mensage
+     * @return \Minc_Notification_Message
      */
     protected function loadConfig(){
         $this->client = new Zend_Rest_Client($this->gcmUrl);
@@ -176,7 +257,7 @@ class Minc_Notification_Mensage{
     /**
      * Carrega configurações dos parametros utilizados para configurar o serviço de envio de notificações.
      * 
-     * @return \Minc_Notification_Mensage
+     * @return \Minc_Notification_Message
      */
     protected function loadListParametersService() {
         $this->listParametersService =  array(
@@ -198,7 +279,7 @@ class Minc_Notification_Mensage{
     /**
      * Envia notificação para para dispositivos registrados.
      * 
-     * @return array Metadados de envio das notificações.
+     * @return \Minc_Notification_Message
      */
     public function send() {
         $this->loadListParametersService();
@@ -210,9 +291,31 @@ class Minc_Notification_Mensage{
                         'Content-Type: application/json'))
                 ->setRawData(json_encode($this->listParametersService))
                 ->setUri($this->gcmUrl);
-        $response = json_decode($this->client->getHttpClient()->request('POST')->getBody());
+        $this->response = json_decode($this->client->getHttpClient()->request('POST')->getBody());
+        $this->save();
 
-        return $response;
+        return $this;
+    }
+    
+    /**
+     * Salva as mensagens enviadas no banco de dados.
+     * 
+     * @return \Minc_Notification_Message
+     */
+    private function save() {
+        $messageRow = $this->modelMensagem->createRow();
+        $messageRow->nrCPF = $this->cpf;
+        $messageRow->idPronac = $this->codePronac;
+        $messageRow->titulo = $this->title;
+        $messageRow->descricao = $this->text;
+        if($this->response && $this->response->success){
+            $messageRow->idSuccess = $this->response->success;
+            $messageRow->idMulticast = $this->response->multicast_id;
+        }
+        $messageRow->save();
+        $this->modelMensagem->saveListDevice($messageRow, $this->listDeviceId);
+        
+        return $this;
     }
     
 }
