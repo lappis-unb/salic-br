@@ -4,9 +4,9 @@
  */
 
 class DocumentosProjeto  extends GenericModel {
-     protected $_banco   = "SAC";
-     protected $_schema  = "dbo";
-     protected $_name = 'DocumentosProjeto';
+     protected $_banco   = "sac";
+     protected $_schema  = "sac";
+     protected $_name = 'documentosprojeto';
 
 
     public function documentosAnexados($idPronac){

@@ -528,7 +528,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                 if($post->tipoDocumento == 1){
 
                     if($tblTbDocumentoAgentes->buscar($where)->count() > 0){
-                        parent::message("Tipo de documento já cadastrado!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto, "ALERT");
+                        parent::message("Tipo de documento já cadastrado!", "/proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto, "ALERT");
                     }
 
                     $dadosArquivo = array(
@@ -543,7 +543,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                 } else {
 
                     if($tblTbDocumentoPreProjeto->buscar($where)->count() > 0){
-                        parent::message("Tipo de documento já cadastrado!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto, "ALERT");
+                        parent::message("Tipo de documento já cadastrado!", "/proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto, "ALERT");
                     }
 
                     $dadosArquivo = array(
@@ -555,26 +555,27 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                         'taarquivo' => $arquivoTamanho,
                         'dsdocumento' => $post->observacao
                     );
-//                    $idUltimoArquivo = $tblTbDocumentoPreProjeto->inserir($dadosArquivo);
+                    $idUltimoArquivo = $tblTbDocumentoPreProjeto->inserir($dadosArquivo);
                 }
+
                 //REMOVER AS PENDENCIAS DE DOCUMENTO
                 $tblDocumentosPendentesProjeto = new DocumentosProjeto();
                 $tblDocumentosPendentesProponente = new DocumentosProponente();
-//                $tblDocumentosPendentesProjeto->delete("idprojeto = {$post->idPreProjeto} AND codigodocumento = {$post->documento}");
-//                $tblDocumentosPendentesProponente->delete("idprojeto = {$post->idPreProjeto} AND codigodocumento = {$post->documento}");
+                $tblDocumentosPendentesProjeto->delete("idprojeto = {$post->idPreProjeto} AND codigodocumento = {$post->documento}");
+                $tblDocumentosPendentesProponente->delete("idprojeto = {$post->idPreProjeto} AND codigodocumento = {$post->documento}");
             } catch (Zend_Exception $e) {
-                parent::message("Falha ao anexar arquivo!<br>{$e->getMessage()}", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
+                parent::message("Falha ao anexar arquivo!<br>{$e->getMessage()}", "/proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
             } catch (Exception $e){
-                parent::message("Tipo de documento já cadastrado!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
+                parent::message("Tipo de documento já cadastrado!", "/proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
             }
 
-//            if ($idUltimoArquivo) {
-//                parent::message("Arquivo anexado com sucesso!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "CONFIRM");
-//            } else {
-//                parent::message("Falha ao anexar arquivo!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
-//            }
+            if ($idUltimoArquivo) {
+                parent::message("Arquivo anexado com sucesso!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "CONFIRM");
+            } else {
+                parent::message("Falha ao anexar arquivo!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
+            }
         }else{
-            parent::message("Falha ao anexar arquivo! O tamanho máximo permitido é de 10MB.", "proposta/manterpropostaincentivofiscal/listarproposta?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
+            parent::message("Falha ao anexar arquivo! O tamanho máximo permitido é de 10MB.", "/proposta/manterpropostaincentivofiscal/listarproposta?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
         }
     }
 
