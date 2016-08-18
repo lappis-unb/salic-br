@@ -5,6 +5,7 @@
  *
  * @author augusto
  * @author woeurner <wouerner@gmail.com>
+ *
  */
 
 class Agente_Model_Agentes extends GenericModel {

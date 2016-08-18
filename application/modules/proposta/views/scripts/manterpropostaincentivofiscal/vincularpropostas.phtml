@@ -101,8 +101,8 @@
 <!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">In&iacute;cio</a></li>
-        <li><a href="<?php echo $this->url(array('controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">In&iacute;cio</a></li>
+        <li><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
         <li class="last">Vincular Propostas </li>
     </ul>
 </div>
@@ -117,7 +117,7 @@
 <div id="conteudo">
     <div id="confirmartroca"></div>
     <div id="confirma"></div>
-    <form id="formvincularproposta" action="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'vincularpropostas')); ?>" method="post">
+    <form id="formvincularproposta" action="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'vincularresponsavel', 'action' => 'vincularpropostas')); ?>" method="post">
 
         <?php if((count($this->propostas) > 0) || (count($this->propostasD) > 0)):?>
         <table class="tabela">
