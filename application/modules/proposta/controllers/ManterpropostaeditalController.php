@@ -297,7 +297,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
                     $array['mensagem'] = 'Quantidade de caracteres maior que o permitido. Limite: 1000 caracteres.';
                     $array['tpmensagem'] = 'msgERROR';
-                    $this->_redirect('/manterpropostaedital/dadospropostaedital?idPreProjeto=' . $_REQUEST['idPreProjeto'] . '&idAgente=' . $_REQUEST['idAgente'] . '&idEdital=' . $_REQUEST['idEdital'] . '&mensagem=' . $array['mensagem'] . '&tpmensagem=' . $array['tpmensagem']);
+                    $this->_redirect('/proposta/manterpropostaedital/dadospropostaedital?idPreProjeto=' . $_REQUEST['idPreProjeto'] . '&idAgente=' . $_REQUEST['idAgente'] . '&idEdital=' . $_REQUEST['idEdital'] . '&mensagem=' . $array['mensagem'] . '&tpmensagem=' . $array['tpmensagem']);
                 }
 
                 $array = array();
@@ -322,7 +322,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                     $array['mensagem'] 		= 'Alteração realizada com sucesso!';
                     $array['tpmensagem'] 	= 'msgCONFIRM';
                     $array['mensagem'] 		= htmlspecialchars($array['mensagem']);
-                    parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/manterpropostaedital/dadospropostaedital?idPreProjeto=" . $array['idPreProjeto'], "CONFIRM");
+                    parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/proposta/manterpropostaedital/dadospropostaedital?idPreProjeto=" . $array['idPreProjeto'], "CONFIRM");
                 } else {
                     $dados = ManterpropostaeditalDAO::inserirProposta($array);
                     $array['idPreProjeto'] = $dados;
@@ -372,13 +372,13 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                     $array['tpmensagem'] = 'msgCONFIRM';
                 }
             } catch (Zend_Exception $ex) {
-                parent::message("Não foi possível realizar a operação!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+                parent::message("Não foi possível realizar a operação!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
             }
         } else {
             $array['mensagem'] 	 = 'Dados incorretos.';
             $array['tpmensagem'] = 'Erro!';
         }
-        $this->_redirect('/manterpropostaedital/dadospropostaedital?idPreProjeto=' . $array['idPreProjeto'] . '&mensagem=' . $array['mensagem'] . '&tpmensagem=' . $array['tpmensagem']);
+        $this->_redirect('/proposta/manterpropostaedital/dadospropostaedital?idPreProjeto=' . $array['idPreProjeto'] . '&mensagem=' . $array['mensagem'] . '&tpmensagem=' . $array['tpmensagem']);
     }
 
     /**
@@ -415,7 +415,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             $tblPreProjeto = new Proposta_Model_Preprojeto();
             $dados = $tblPreProjeto->buscarPropostaEditalCompleto($where);
         } else {
-            parent::message("Projeto não informado!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            parent::message("Projeto não informado!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
         }
         if ($dados) {
             $this->view->idPreProjeto = $dados[0]->idPreProjeto;
@@ -426,7 +426,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             $this->view->idEdital = $dados[0]->idEdital;
             $this->view->dados = $dados[0];
         } else {
-            parent::message("Pré Projeto não encontrado!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            parent::message("Pré Projeto não encontrado!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
         }
         $this->view->idUsuario = $this->idUsuario;
     }
@@ -612,11 +612,11 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                 $DocumentoProposta = new tbDocumentoProposta();
                 $DocumentoProposta->inserir($dados);
             } else {
-                parent::message("Falha ao anexar", "manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
+                parent::message("Falha ao anexar", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
             }
-            parent::message("Documento anexado com sucesso!", "manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "CONFIRM");
+            parent::message("Documento anexado com sucesso!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "CONFIRM");
         } else {
-            parent::message("Documento n&atilde;o informado", "manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
+            parent::message("Documento n&atilde;o informado", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
         }
     }
 
@@ -643,7 +643,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             }
             if ($arquivoTamanho > 10485760) // tamanho do arquivo: 10MB
             {
-                parent::message("O arquivo não pode ser maior do que 10MB!", "manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
+                parent::message("O arquivo não pode ser maior do que 10MB!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
             }
             // cadastra dados do arquivo
             $dadosArquivo = array(
@@ -792,15 +792,16 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $idPreProjeto = $get->idPreProjeto;
 
         //BUSCANDO REGISTRO A SER ALTERADO
-        $tblPreProjeto = new Proposta_Model_Preprojeto();
+        $tblPreProjeto = new Proposta_Model_PreProjeto();
+
         $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
         $rsPreProjeto->stEstado = 0;
 
         if ($rsPreProjeto->save()) {
-            parent::message("Exclus&atilde;o realizada com sucesso!", "/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
+            parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
         } else {
-            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
         }
     }
 
@@ -1009,12 +1010,12 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                 $arrResultado['erro'] = 0;
             }
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
-            $this->montaTela("manterpropostaedital/enviarproposta.phtml", array("acao" => $this->_urlPadrao . "/manterpropostaedital/salvar",
+            $this->montaTela("proposta/manterpropostaedital/enviarproposta.phtml", array("acao" => $this->_urlPadrao . "/proposta/manterpropostaedital/salvar",
                 "erro" => $arrResultado['erro'],
                 "resultado" => $arrResultado));
         } else {
 
-            parent::message("Necessário informar o número da proposta.", "/manterpropostaedital/index", "ERROR");
+            parent::message("Necessário informar o número da proposta.", "/proposta/manterpropostaedital/index", "ERROR");
         }
     }
 
@@ -1345,18 +1346,18 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                     //PERSISTE DADOS DA AVALIACAO PROPOSTA
                     $tblAvaliacao->inserirAvaliacao($dados);
 
-                    parent::message("A Proposta foi enviado com sucesso ao Minist&eacute;rio da Cultura!", "/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "CONFIRM");
+                    parent::message("A Proposta foi enviado com sucesso ao Minist&eacute;rio da Cultura!", "/proposta/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "CONFIRM");
                     die();
                 } catch (Exception $e) {
-                    parent::message("O Projeto n&atilde;o foi enviado ao Minist&eacute;rio da Cultura!", "/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
+                    parent::message("O Projeto n&atilde;o foi enviado ao Minist&eacute;rio da Cultura!", "/proposta/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
                     die();
                 }
             } else { //fecha IF se encontrou tecnicos para enviar a proposta
-                parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura. T&eacute;cnico n&atilde;o localizado", "/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
+                parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura. T&eacute;cnico n&atilde;o localizado", "/proposta/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
                 die();
             }
         } else {
-            parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
+            parent::message("A Proposta n&atilde;o foi enviado ao Minist&eacute;rio da Cultura.", "/proposta/manterpropostaedital/enviar-proposta-ao-minc?idPreProjeto=" . $idPreProjeto . $edital, "ERROR");
         }
     }
 
@@ -1397,7 +1398,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                 $tbDocumentosAgentes->apagar(array('idDocumentosAgentes = ?' => $_GET['idArquivo']));
             }
 
-            parent::message('Exclusão efetuada com sucesso!', 'manterpropostaedital/enviararquivoedital?idPreProjeto=' . $_GET['idPreProjeto'], 'CONFIRM');
+            parent::message('Exclusão efetuada com sucesso!', 'proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=' . $_GET['idPreProjeto'], 'CONFIRM');
         endif;
     }
 }
