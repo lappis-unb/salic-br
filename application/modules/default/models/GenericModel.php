@@ -53,7 +53,11 @@ class GenericModel extends Zend_Db_Table_Abstract {
             if ($strSchema) {
                 $strSchema = $strSchema . '.dbo';
             } else {
-                $strSchema = $this->_schema . '.dbo';
+                if ($this->_schema) {
+                    $strSchema = $this->_schema . '.dbo';
+                } else {
+                    $strSchema = $this->_banco . '.dbo';
+                }
             }
         } else {
 //            echo '<pre>';

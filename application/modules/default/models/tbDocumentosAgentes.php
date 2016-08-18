@@ -5,7 +5,8 @@
  */
 class tbDocumentosAgentes extends GenericModel {
 
-    protected $_banco = 'SAC';
+    protected $_banco = 'sac';
+    protected $_schema = 'sac';
     protected $_name  = 'tbDocumentosAgentes';
 
 
@@ -41,7 +42,7 @@ class tbDocumentosAgentes extends GenericModel {
         return $this->fetchAll($slct);
     }
     
-    //Essa consulta nao possui o dado binário do arquivo. Somente os demais dados do arquivo!
+    //Essa consulta nao possui o dado binï¿½rio do arquivo. Somente os demais dados do arquivo!
     public function buscarDadosDocumentos($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -153,14 +154,14 @@ class tbDocumentosAgentes extends GenericModel {
         $slct3->where("d.idPronac = ".$idPronac);
 
 
-        //seleciona todos os arquivos anexados pelo minc ao projeto no Justificativa de Manuntenç?o
+        //seleciona todos os arquivos anexados pelo minc ao projeto no Justificativa de Manuntenï¿½?o
         $slct4 = $this->select();
         $slct4->setIntegrityCheck(false);
         $slct4->from(
                 array('d' => 'tbHistoricoAlteracaoDocumento'),
                 array(
                     "d.idDocumentosExigidos as CodigoDocumento"
-                    //"'Anexados no Manuntenç?o'",
+                    //"'Anexados no Manuntenï¿½?o'",
                     ),
                 array()
         );
@@ -226,7 +227,7 @@ class tbDocumentosAgentes extends GenericModel {
                 array('d' => 'tbDocumentoProjeto'),
                 array(
                     "d.idTipoDocumento AS CodigoDocumento"
-                    //"'Anexados no Manuntenç?o'",
+                    //"'Anexados no Manuntenï¿½?o'",
                     ),
                 'BDCORPORATIVO.scCorp'
         );

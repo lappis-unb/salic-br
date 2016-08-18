@@ -32,7 +32,7 @@
             $("#cidades").html("<option value=''>- Carregando - </option>");
             var idEstado = $(this).val()
             $.ajax({
-                url:'<?php echo $this->url(array('controller' => 'localderealizacao', 'action' => 'cidades')); ?>?idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?>',
+                url:'<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'cidades')); ?>?idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?>',
                 async : true,
                 type: 'post',
                 data:{
@@ -78,7 +78,7 @@
 <!-- ==========  BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'localderealizacao', 'action' => 'index')); ?>?idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?>" title="Projetos">Local de Realiza&ccedil;&atilde;o</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'index')); ?>?idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?>" title="Projetos">Local de Realiza&ccedil;&atilde;o</a></li>
         <li class="last">Inserir Local de Realiza&ccedil;&atilde;o</li>
     </ul>
 </div>
@@ -97,7 +97,7 @@
 
 <div id="conteudo">
     <div id="localderealizacao">
-        <form method="post" id="formulario" name="formulario" action="<?php echo $this->url(array('controller' => 'localderealizacao', 'action' => 'salvar-local-realizacao')); ?>?idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?>">
+        <form method="post" id="formulario" name="formulario" action="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'salvar-local-realizacao')); ?>?idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?>">
             <table class="tabela">
                 <tr class="titulo_tabela">
                     <th width="25%">Pa&iacute;s</th>
@@ -140,8 +140,8 @@
 </div><!-- ========== FIM CONTEUDO ========== -->
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 
 <br clear="all" />

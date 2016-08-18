@@ -6,23 +6,22 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2012 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
 class Municipios extends GenericModel
 {
-	protected $_banco  = 'AGENTES';
+	protected $_banco  = 'agentes';
 	protected $_name   = 'Municipios';
-	protected $_schema = 'dbo';
-
+	protected $_schema = 'agentes';
 
 
 	/**
-	 * Busca os municípios para as combos
+	 * Busca os municï¿½pios para as combos
 	 * @access public
 	 * @param array $where (filtros)
-	 * @param array $order (ordenação)
+	 * @param array $order (ordenaï¿½ï¿½o)
 	 * @return object
 	 */
 	public function combo($where = array(), $order = array())
@@ -42,9 +41,8 @@ class Municipios extends GenericModel
 
 		// adicionando linha order ao select
 		$select->order($order);
-
 		return $this->fetchAll($select);
-	} // fecha método combo()
+	} // fecha mï¿½todo combo()
         
         
 	public function buscaCompleta($where = array(), $order = array(), $dbg = null){

@@ -5,8 +5,8 @@
  * @author Danilo Lisboa
  */
 class DocumentosProponente  extends GenericModel {
-     protected $_banco   = "SAC";
-     protected $_schema  = "dbo";
+     protected $_banco   = "sac";
+     protected $_schema  = "sac";
      protected $_name = 'DocumentosProponente';
 }
 ?>
