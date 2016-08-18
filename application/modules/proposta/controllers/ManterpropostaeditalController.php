@@ -53,6 +53,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
 
         // Busca na Usuarios
+        //Excluir ProposteExcluir Proposto
         $usuarioDAO   = new Autenticacao_Model_Usuario();
         $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
@@ -193,7 +194,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             $where['fd.idClassificaDocumento not in (?)'] = array(23, 24, 25);
             $where['p.idPreProjeto = ?'] = $_REQUEST['idPreProjeto'];
 
-            $tblPreProjeto = new Proposta_Model_Preprojeto();
+            $tblPreProjeto = new Proposta_Model_PreProjeto();
             $dados = $tblPreProjeto->buscarPropostaEditalCompleto($where);
 
             $get = Zend_Registry::get("get");
@@ -372,7 +373,8 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                     $array['tpmensagem'] = 'msgCONFIRM';
                 }
             } catch (Zend_Exception $ex) {
-                parent::message("Não foi possível realizar a operação!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+                parent::message("Não foi possível realizar a operação!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+
             }
         } else {
             $array['mensagem'] 	 = 'Dados incorretos.';
@@ -412,10 +414,10 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             $where['fd.idClassificaDocumento not in (?)'] = array(23, 24, 25);
             $where['p.idPreProjeto = ?'] = $_REQUEST['idPreProjeto'];
 
-            $tblPreProjeto = new Proposta_Model_Preprojeto();
+            $tblPreProjeto = new Proposta_Model_PreProjeto();
             $dados = $tblPreProjeto->buscarPropostaEditalCompleto($where);
         } else {
-            parent::message("Projeto não informado!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            parent::message("Projeto não informado!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
         }
         if ($dados) {
             $this->view->idPreProjeto = $dados[0]->idPreProjeto;
@@ -426,7 +428,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             $this->view->idEdital = $dados[0]->idEdital;
             $this->view->dados = $dados[0];
         } else {
-            parent::message("Pré Projeto não encontrado!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            parent::message("Pré Projeto não encontrado!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
         }
         $this->view->idUsuario = $this->idUsuario;
     }
@@ -514,7 +516,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                 //Verifica se tipo de documento ja esta cadastrado
                 $where = array();
                 if($post->tipoDocumento == 1){
-                    $tbPreProjeto = new Proposta_Model_Preprojeto();
+                    $tbPreProjeto = new Proposta_Model_PreProjeto();
                     $dadosProjeto = $tbPreProjeto->buscarAgentePreProjeto(array('idPreProjeto = ?'=>$post->idPreProjeto))->current();
 
                     $where['idAgente = ?'] = $dadosProjeto->idAgente;
@@ -792,15 +794,15 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $idPreProjeto = $get->idPreProjeto;
 
         //BUSCANDO REGISTRO A SER ALTERADO
-        $tblPreProjeto = new Proposta_Model_Preprojeto();
+        $tblPreProjeto = new Proposta_Model_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
         $rsPreProjeto->stEstado = 0;
 
         if ($rsPreProjeto->save()) {
-            parent::message("Exclus&atilde;o realizada com sucesso!", "/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
+            parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
         } else {
-            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
         }
     }
 
@@ -1030,7 +1032,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         //BUSCA DADOS DO PROJETO
         $arrBusca = array();
         $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
-        $tblPreProjeto = new Proposta_Model_Preprojeto();
+        $tblPreProjeto = new Proposta_Model_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
         /* ======== VERIFICA TODAS AS INFORMACOES NECESSARIAS AO ENVIO DA PROPOSTA ======= */
@@ -1220,7 +1222,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         }
 
         if (!empty($idPreProjeto) && $valida == "s") {
-            $tblPreProjeto = new Proposta_Model_Preprojeto();
+            $tblPreProjeto = new Proposta_Model_PreProjeto();
             $tblAvaliacao = new AnalisarPropostaDAO();
 
             //recupera dados do projeto

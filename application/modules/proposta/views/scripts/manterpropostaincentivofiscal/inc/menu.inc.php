@@ -62,7 +62,7 @@
                 },
                 'OK':function()
                 {
-                    window.location = "<?php echo $this->baseUrl(); ?>/manterpropostaedital/exluirproposta"+idPreProjeto;
+                    window.location = "<?php echo $this->baseUrl(); ?>/proposta/manterpropostaedital/exluirproposta"+idPreProjeto;
                     $(this).dialog('close'); // fecha a modal
                 }
             }
