@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -8,13 +8,14 @@
  * Description of tbTitulacaoConselheiro
  *
  * @author 01610881125
+ * @author wouerner <wouerner@gmail.com>
  */
 class tbTitulacaoConselheiro extends GenericModel
 {
     /* dados da tabela */
-    protected $_banco   = "AGENTES";
-    protected $_schema  = "dbo";
-    protected $_name    = "tbTitulacaoConselheiro";
+    protected $_banco   = "agentes";
+    protected $_schema  = "agentes";
+    protected $_name    = "tbtitulacaoconselheiro";
 
     public function buscarTitulacao($retornaSQL = false){
         $select = $this->select();
@@ -37,7 +38,7 @@ class tbTitulacaoConselheiro extends GenericModel
         else
             return $this->fetchAll($select);
     }
-    
+
     /*
      * Buscar os conselheiros trazendo os dados da tabela Agentes.
      */
@@ -45,8 +46,9 @@ class tbTitulacaoConselheiro extends GenericModel
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-            array('a'=>$this->_schema.'.'.$this->_name),
-            array('a.idAgente AS id')
+            array('a'=> $this->_name),
+            array('a.idAgente AS id'),
+            $this->_schema
         );
 
         $select->joinInner(
@@ -55,7 +57,7 @@ class tbTitulacaoConselheiro extends GenericModel
         );
         $select->where('a.stConselheiro = ?', "A");
         $select->order('b.Descricao');
-        
+
         return $this->fetchAll($select);
     }
 
@@ -81,7 +83,7 @@ class tbTitulacaoConselheiro extends GenericModel
         );
         $select->where('a.stConselheiro = ?', "A");
         $select->order('c.usu_nome');
-        
+
         return $this->fetchAll($select);
     }
 
@@ -90,4 +92,3 @@ class tbTitulacaoConselheiro extends GenericModel
         return $this->update($dados, $where);
     } // fecha método alterarDados()
 }
-?>

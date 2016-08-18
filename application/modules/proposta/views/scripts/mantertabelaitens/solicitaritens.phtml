@@ -84,7 +84,7 @@
                 required: "Dados obrigat&oacute;rios n&atilde;o informados"
             }
         });
-            
+
         jQuery.validator.addMethod("validarJustificativa", function(value, element) {
             var texto = $('#justificativa').val();
             if (texto.length > 0) {
@@ -97,7 +97,7 @@
         });
     })
 </script>
-<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== 
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ==========
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'prototipos', 'action' => 'index')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -107,7 +107,7 @@
 </div>-->
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
-<?php require_once "scripts/manterpropostaincentivofiscal/inc/menu.inc.php"; // menu de manter proposta por incentivo fiscal ?>
+<?php $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php");?>
 
 <!-- ========== INICIO TITULO ========== -->
 
@@ -117,7 +117,7 @@
 <!-- ========== FIM TITULO ========== -->
 
 <div id="conteudo">
-    <form name="form" id="form" action="<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'solicitaritens')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto'];?>" method="post">
+    <form name="form" id="form" action="<?php echo $this->url(array('module'=>'proposta', 'controller' => 'mantertabelaitens', 'action' => 'solicitaritens')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto'];?>" method="post">
         <table class="tabela">
             <tr class="titulo_tabela">
                 <th colspan="4">Novo Produto / Etapa / Item </th>
@@ -129,7 +129,7 @@
                 </td>
             </tr>
         </table>
-        
+
         <table class="tabela">
             <tr class="destacar bold">
                 <td width="33%">Produto <span class="red">*</span></td>
@@ -141,7 +141,7 @@
                     <select class="select_simples" name="produto" id="produto">
                         <option value="">- Selecione - </option>
                         <?php foreach($this->produto as $tbproduto) { ?>
-                        <option value="<?php echo $tbproduto->codproduto; ?>"> <?php echo $tbproduto->Produto; ?></option>
+                        <option value="<?php echo $tbproduto->codproduto; ?>"> <?php echo utf8_encode($tbproduto->Produto); ?></option>
                         <?php } ?>
                     </select>
                 </td>
@@ -149,7 +149,7 @@
                     <select class="select_simples" name="etapa" id="etapa">
                         <option value="">- Selecione - </option>
                         <?php foreach($this->etapa as $tbetapa) { ?>
-                        <option value="<?php echo $tbetapa->codetapa; ?>"> <?php echo $tbetapa->Etapa; ?></option>
+                        <option value="<?php echo $tbetapa->codetapa; ?>"> <?php echo utf8_encode($tbetapa->Etapa); ?></option>
                         <?php } ?>
                     </select>
                 </td>
@@ -157,7 +157,7 @@
                     <select class="input_simples" name="idPlanilhaItens" id="idPlanilhaItens" style="width: 100%;">
                         <option value="">- Selecione - </option>
                         <?php foreach($this->item as $tbitem) { ?>
-                        <option value="<?php echo $tbitem->coditens; ?>"> <?php echo $tbitem->Item; ?></option>
+                        <option value="<?php echo $tbitem->coditens; ?>"> <?php echo utf8_encode($tbitem->Item); ?></option>
                         <?php } ?>
                     </select>
                 </td>
@@ -174,7 +174,7 @@
                 </td>
             </tr>
         </table>
-        
+
         <table class="tabela">
             <tr class="centro">
                 <td colspan="4">

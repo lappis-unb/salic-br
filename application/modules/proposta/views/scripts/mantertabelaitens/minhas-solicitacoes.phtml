@@ -30,7 +30,7 @@
 
 <div id="breadcrumb">
     <ul>
-        <li class="first">Início</li>
+        <li class="first">InÃ­cio</li>
         <li>Itens de custo or&ccedil;ament&aacute;rio</li>
         <li class="last">Minhas Solicita&ccedil;&otilde;es</li>
     </ul>
@@ -65,7 +65,7 @@
     </form>
 
     <?php if(count($this->dados)>0){ ?>
-    <!-- ============ PAGINAÇÃO ============ -->
+    <!-- ============ PAGINAÃ‡ÃƒO ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
@@ -90,12 +90,12 @@
                     <input class="btn_ultimo" id="btn_ultimo" type="button"
                            onclick="location.href='<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'minhas-solicitacoes')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&tipoFiltro='.$this->filtro.'&idPreProjeto='.$this->idPreProjeto; ?>'">
                     <?php } ?>
-                    Pág.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
+                    PÃ¡g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples">
                         <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                         <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                         <?php endfor; ?>
                     </select>
-                    &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                    &nbsp;Registros por pÃ¡gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                     <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                     <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
@@ -113,7 +113,7 @@
             echo " de ". $this->paginacao['total']. " Projetos listados";
         ?>
     </center>
-    <!-- ========== FIM PAGINAÇÃO ========== -->
+    <!-- ========== FIM PAGINAÃ‡ÃƒO ========== -->
     <?php } ?>
 
 
@@ -132,12 +132,12 @@
         <tbody>
             <?php foreach($this->dados as $d){ ?>
             <tr>
-                <td><?php echo $d->Produto; ?></td>
-                <td><?php echo $d->Etapa; ?></td>
-                <td><?php echo $d->ItemSolicitado; ?></td>
-                <td><?php echo $d->Justificativa; ?></td>
-                <td><?php echo $d->Estado; ?></td>
-                <td><?php echo $d->Resposta; ?></td>
+                <td><?php echo utf8_encode($d->Produto); ?></td>
+                <td><?php echo utf8_encode($d->Etapa); ?></td>
+                <td><?php echo utf8_encode($d->ItemSolicitado); ?></td>
+                <td><?php echo utf8_encode($d->Justificativa); ?></td>
+                <td><?php echo utf8_encode($d->Estado); ?></td>
+                <td><?php echo utf8_encode($d->Resposta); ?></td>
             </tr>
             <?php } ?>
         </tbody>
@@ -145,7 +145,7 @@
 
     <?php if(count($this->dados)>0){ ?>
 
-        <!-- ============ PAGINAÇÃO ============ -->
+        <!-- ============ PAGINAÃ‡ÃƒO ============ -->
         <?php if($this->qtdRegistros > 10) { //echo $this->dados; ?>
         <center>
             <?php
@@ -178,12 +178,12 @@
                         <input class="btn_ultimo" id="btn_ultimo" type="button"
                                onclick="location.href='<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'minhas-solicitacoes')).'?pag='.($this->paginacao['totalPag'])."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao'].'&tipoFiltro='.$this->filtro.'&idPreProjeto='.$this->idPreProjeto; ?>'">
                         <?php } ?>
-                        Pág.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
+                        PÃ¡g.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples">
                             <?php for($i=1; $i<=$this->paginacao['totalPag']; $i++):?>
                             <option value="<?php echo $i;?>" <?php if($this->paginacao['pag'] == $i) echo "selected";?>><?php echo $i;?>&nbsp;</option>
                             <?php endfor; ?>
                         </select>
-                        &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                        &nbsp;Registros por pÃ¡gina:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
                         <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                         <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                         <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
@@ -194,7 +194,7 @@
                 </tr>
             </tbody>
         </table>
-        <!-- ========== FIM PAGINAÇÃO ========== -->
+        <!-- ========== FIM PAGINAÃ‡ÃƒO ========== -->
 
     <?php } } ?>
 

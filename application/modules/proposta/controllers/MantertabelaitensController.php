@@ -8,7 +8,7 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright ? 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ? 2010 - MinistÃ©rio da Cultura - Todos os direitos reservados.
  */
 set_time_limit(0);
 
@@ -19,22 +19,22 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
     private $idPreProjeto = 0;
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mÃ©todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
 
-        // autenticaç?o e permiss?es zend (AMBIENTE MINC)
+        // autenticaÃ§?o e permiss?es zend (AMBIENTE MINC)
         $PermissoesGrupo = array();
-        $PermissoesGrupo[] = 127; // Coordenador - Geral de Análise (Ministro)
+        $PermissoesGrupo[] = 127; // Coordenador - Geral de AnÃ¡lise (Ministro)
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaÃ§Ã£o
         isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
 
         parent::init(); // chama o init() do pai GenericControllerNew
-        $auth = Zend_Auth::getInstance(); // instancia da autenticaç?o
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaÃ§?o
 
         if(isset($auth->getIdentity()->usu_codigo)){
             $this->idUsuario = $auth->getIdentity()->usu_codigo;
@@ -170,7 +170,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
                     //xd($dadosassociar);
                     $associaritem = MantertabelaitensDAO::associaritem($dadosassociar);
                     if ($associaritem) {
-                        parent::message("A solicitação foi encaminhada ao Minc. Aguarde a resposta!", "mantertabelaitens/solicitacoes?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
+                        parent::message("A solicitaÃ§Ã£o foi encaminhada ao Minc. Aguarde a resposta!", "/proposta/mantertabelaitens/solicitacoes?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
                     }
                 }else if ($solicitacao == 'novoitem');
                 {
@@ -191,7 +191,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
                         $NovoItem = MantertabelaitensDAO::buscarItem($this->idUsuario);
                         $dadosassociar['idPlanilhaItens'] = $NovoItem['idPlanilhaItens'];
 
-                        parent::message("Cadastro realizado com sucesso!", "mantertabelaitens/solicitacoes?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
+                        parent::message("Cadastro realizado com sucesso!", "proposta/mantertabelaitens/solicitacoes?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
                         return;
                     }
                     else {
@@ -200,7 +200,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
                 }
             }catch (Exception $e) {
 
-                parent::message($e->getMessage(), "mantertabelaitens/solicitaritens?idPreProjeto=".$this->idPreProjeto, "ERROR");
+                parent::message($e->getMessage(), "proposta/mantertabelaitens/solicitaritens?idPreProjeto=".$this->idPreProjeto, "ERROR");
                 return;
             }
         }
@@ -254,7 +254,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaÃ§Ã£o
         $where = array();
         $where['sol.idAgente = ?'] = $auth->getIdentity()->IdUsuario;
         $where['sol.stEstado = ?'] = 1; // Atendido
@@ -364,7 +364,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaÃ§Ã£o
         $where = array();
         $where['sol.idAgente = ?'] = $auth->getIdentity()->IdUsuario;
         $where['sol.stEstado = ?'] = 1; // Atendido
@@ -546,23 +546,24 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
 		$this->view->idProduto = $idProduto;
 	}
 
-	/**
-	 * buscaitensAction
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function buscaitensAction()
-	{
-		$this->_helper->layout->disableLayout();
+    /**
+     * buscaitensAction
+     *
+     * @access public
+     * @return void
+     * @author wouerner <wouerner@gmail.com>
+     */
+    public function buscaitensAction()
+    {
+        $this->_helper->layout->disableLayout();
 
-		$idProduto 	= $_POST['idProduto'];
-		$idEtapa 	= $_POST['idEtapa'];
+        $idProduto 	= $_POST['idProduto'];
+        $idEtapa 	= $_POST['idEtapa'];
 
-		$this->view->itens = MantertabelaitensDAO::exibirItem($idProduto, $idEtapa);
-		$this->view->idProduto = $idProduto;
-		$this->view->idEtapa = $idEtapa;
-	}
+        $this->view->itens = MantertabelaitensDAO::exibirItem($idProduto, $idEtapa);
+        $this->view->idProduto = $idProduto;
+        $this->view->idEtapa = $idEtapa;
+    }
 
     /**
      * consultartabelaitensAction
@@ -637,7 +638,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
                 <table width="100%" style="font-family:Arial">
                     <tr>
                         <th style="font-size:20px;" colspan="3">
-                            Relatório Produto/Etapa/Item
+                            RelatÃ³rio Produto/Etapa/Item
                         </th>
                     </tr>
                 ';

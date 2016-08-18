@@ -1,5 +1,5 @@
 
-<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== 
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ==========
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'prototipos', 'action' => 'index')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -8,8 +8,8 @@
     </ul>
 </div>-->
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-<?php require_once "scripts/manterpropostaincentivofiscal/inc/menu.inc.php"; // menu ?>
-<script type="text/javascript">
+<?php $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php");  ?>
+)<script type="text/javascript">
 
     function buscaEtabas(idProduto){
         var id = idProduto,
@@ -115,7 +115,6 @@
     <table class="tabela centro">
         <tr>
             <td>
-                <!--<input type="button" name="voltar" class="btn_voltar" value="" onclick="window.location='<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'consultartabelaitens')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto'];?>'">-->
                 <input  type="button" name="imprimir" class="btn_imprimir" onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'>
             </td>
         </tr>

@@ -1,5 +1,5 @@
 
-<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== 
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ==========
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'prototipos', 'action' => 'index')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -9,7 +9,7 @@
 </div>-->
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 <?php
-require_once "scripts/manterpropostaincentivofiscal/inc/menu.inc.php"; // menu de manter proposta por incentivo fiscal
+$this->partial("manterpropostaincentivofiscal/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
 ?>
 <!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
@@ -62,6 +62,6 @@ require_once "scripts/manterpropostaincentivofiscal/inc/menu.inc.php"; // menu d
             </td>
         </tr>
     </table>
-    
+
 </div>
 <br clear="all" />
