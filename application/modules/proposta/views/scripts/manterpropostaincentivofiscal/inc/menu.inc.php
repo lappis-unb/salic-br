@@ -62,7 +62,7 @@
                 },
                 'OK':function()
                 {
-                    window.location = "<?php echo $this->baseUrl(); ?>/manterpropostaedital/exluirproposta"+idPreProjeto;
+                    window.location = "<?php echo $this->baseUrl(); ?>/proposta/manterpropostaedital/exluirproposta"+idPreProjeto;
                     $(this).dialog('close'); // fecha a modal
                 }
             }
@@ -127,33 +127,33 @@
             <div id="qm0" class="qmmc sanfona">
                 <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar')).$codProjeto; ?>" title="Ir para Proposta Atual">Proposta Atual </a>
                 <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'index')).$codProjeto; ?>" title="Ir para Local de realização / deslocamento">Local de realização / Deslocamento</a>
-                <!--a class="no_seta" href="<?php echo $this->url(array('controller' => 'deslocamento', 'action' => 'index')).$codProjeto; ?>" title="Ir para Deslocamento">Deslocamento</a-->
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'divulgacao', 'action' => 'index')).$codProjeto; ?>" title="Ir para Plano de divulgação">Plano de divulgação</a>
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'plano-distribuicao', 'action' => 'index')).$codProjeto; ?>" title="Ir para Plano de distribuição">Plano de distribuição</a>
-                <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'index')).$codProjeto; ?>" title="Ir para Orçamento">Orçamento</a>-->
+                <!--a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'deslocamento', 'action' => 'index')).$codProjeto; ?>" title="Ir para Deslocamento">Deslocamento</a-->
+                <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'divulgacao', 'action' => 'index')).$codProjeto; ?>" title="Ir para Plano de divulgação">Plano de divulgação</a>
+                <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index')).$codProjeto; ?>" title="Ir para Plano de distribuição">Plano de distribuição</a>
+                <!--<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'index')).$codProjeto; ?>" title="Ir para Orçamento">Orçamento</a>-->
                 <a href="#" title="Orcamento" class="planilha">Planilha Or&ccedil;ament&aacute;ria</a>
                 <div id="qm0" class="sanfona sanfonaDiv" style="display: none;">
-                    <a href="<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'produtoscadastrados')).$codProjeto; ?>" title="Custos por Produtos">Custos por Produtos</a>
-                    <a href='<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'custosadministrativos')).$codProjeto; ?>'>Custos Administrativos</a>
-                    <a href='<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'planilhaorcamentariageral')).$codProjeto; ?>'>Planilha Or&ccedil;ament&aacute;ria Geral</a>
+                    <a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados')).$codProjeto; ?>" title="Custos por Produtos">Custos por Produtos</a>
+                    <a href='<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'custosadministrativos')).$codProjeto; ?>'>Custos Administrativos</a>
+                    <a href='<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'planilhaorcamentariageral')).$codProjeto; ?>'>Planilha Or&ccedil;ament&aacute;ria Geral</a>
                 </div>
                 <?php //if(isset($this->blnJaEnviadaAoMinc) && $this->blnJaEnviadaAoMinc >= 1): ?>
                     <!--<a class="no_seta" href="#" onclick="return false;" style="color:#9d9d9d;">Anexar Documentos</a>-->
                 <?php //else: ?>
-                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'enviararquivoedital')); ?><?php echo $codProjeto; ?>">Anexar Documentos</a>
+                    <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaedital', 'action' => 'enviararquivoedital')); ?><?php echo $codProjeto; ?>">Anexar Documentos</a>
                 <?php //endif; ?>
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'documentospendentesedital')); ?><?php echo $codProjeto; ?>">Documentos Pendentes</a>
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'index')).$codProjeto; ?>">Solicitar inclus&atilde;o de itens de custo</a>
+                <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaedital', 'action' => 'documentospendentesedital')); ?><?php echo $codProjeto; ?>">Documentos Pendentes</a>
+                <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'mantertabelaitens', 'action' => 'index')).$codProjeto; ?>">Solicitar inclus&atilde;o de itens de custo</a>
 
                 <a href="#" title="Orcamento" class="planilha">Itens de custo or&ccedil;ament&aacute;rio</a>
                 <div id="qm0" class="sanfona sanfonaDiv" style="display: none;">
-                    <a href="<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'index')).$codProjeto; ?>" title="Solicitar">Solicitar</a>
-                    <a href='<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'minhas-solicitacoes')).$codProjeto; ?>'>Minhas solicita&ccedil;&otilde;es</a>
+                    <a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'mantertabelaitens', 'action' => 'index')).$codProjeto; ?>" title="Solicitar">Solicitar</a>
+                    <a href='<?php echo $this->url(array('module' => 'proposta', 'controller' => 'mantertabelaitens', 'action' => 'minhas-solicitacoes')).$codProjeto; ?>'>Minhas solicita&ccedil;&otilde;es</a>
                 </div>
 
-                <a class="no_seta" href="<?php echo $this->url(array('controller' => 'Gerarimprimirpdf', 'action' => 'index')); ?><?php echo $codProjeto; ?>">Imprimir/Gerar PDF</a>
+                <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'Gerarimprimirpdf', 'action' => 'index')); ?><?php echo $codProjeto; ?>">Imprimir/Gerar PDF</a>
                 <?php //if(isset($this->blnPossuiDiligencias) && $this->blnPossuiDiligencias > 0): ?>
-                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaproponente')).$codProjeto; ?>" title="Visualizar dilig&ecirc;ncias">Msg enviadas pelo MinC</a>
+                    <a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'diligenciar', 'action' => 'listardiligenciaproponente')).$codProjeto; ?>" title="Visualizar dilig&ecirc;ncias">Msg enviadas pelo MinC</a>
                 <?php //endif; ?>
                 <?php if(isset($this->movimentacaoAtual) && $this->movimentacaoAtual == '95'): ?>
                     <a class="no_seta" href="#" onclick="javascript:JSExcluirProposta('<?php echo $codProjeto; ?>');">Excluir Proposta</a>
@@ -179,7 +179,7 @@
 
 <div id="trocarproponente" style="display:none">
 
-<form id="formtrocaproponente" action="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'trocarproponente')); ?>" method="post">
+<form id="formtrocaproponente" action="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'vincularresponsavel', 'action' => 'trocarproponente')); ?>" method="post">
 <input type="hidden" value="<?php echo $this->dadosVinculo[0]->idVinculoProposta; ?>" name="idVinculoProposta" />
 <input type="hidden" value="<?php echo $this->idPreProjeto; ?>" name="idPreProjeto" />
 <input type="hidden" value="1" name="mecanismo" />

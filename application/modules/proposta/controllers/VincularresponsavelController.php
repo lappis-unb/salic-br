@@ -109,7 +109,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
             $buscarvinculo = $ag->buscarNovoProponente($where, $this->idResponsavel);
             if ($buscarvinculo->count() > 0) {
-                $this->montaTela('vincularresponsavel/mostraragentes.phtml', array('vinculo' => $buscarvinculo, 'idResponsavel' => $this->idResponsavel));
+                $this->montaTela('proposta/vincularresponsavel/mostraragentes.phtml', array('vinculo' => $buscarvinculo, 'idResponsavel' => $this->idResponsavel));
             } else {
                 echo "<div id='msgAgenteVinculado'>Nenhum registro encontrado!</div>
                     <script>
@@ -123,7 +123,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             $where["vp.idUsuarioResponsavel = ?"] = $this->idUsuario;
             //$where["v.siVinculo = ?"] = 2;
             $buscarvinculo = $ag->buscarAgenteVinculoProponente($where);
-            $this->montaTela('vincularresponsavel/mostraragentes.phtml', array('vinculo' => $buscarvinculo));
+            $this->montaTela('proposta/vincularresponsavel/mostraragentes.phtml', array('vinculo' => $buscarvinculo));
         }
     }
 
@@ -392,12 +392,12 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             $alteraPP = $PreProjetoDAO->alteraproponente($idPreProjeto, $idNovoPropronente);
 
             if ($mecanismo == 2) {
-                parent::message("Proponente trocado com sucesso!", "manterpropostaedital/dadospropostaedital?idPreProjeto=" . $idPreProjeto, "CONFIRM");
+                parent::message("Proponente trocado com sucesso!", "proposta/manterpropostaedital/dadospropostaedital?idPreProjeto=" . $idPreProjeto, "CONFIRM");
             } else {
-                parent::message("Proponente trocado com sucesso!", "manterpropostaincentivofiscal/editar?idPreProjeto=" . $idPreProjeto, "CONFIRM");
+                parent::message("Proponente trocado com sucesso!", "proposta/manterpropostaincentivofiscal/editar?idPreProjeto=" . $idPreProjeto, "CONFIRM");
             }
         } catch (Exception $e) {
-            parent::message("Erro. " . $e->getMessage(), "manterpropostaincentivofiscal/editar?idPreProjeto=" . $idPreProjeto, "ERROR");
+            parent::message("Erro. " . $e->getMessage(), "proposta/manterpropostaincentivofiscal/editar?idPreProjeto=" . $idPreProjeto, "ERROR");
         }
     }
 
@@ -428,10 +428,10 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             $idResponsavel = $this->idResponsavel;
             $msg = "O responsável foi desvinculado.";
         }
-
         try {
             $dados['siVinculoProposta'] = 3;
             $where['idPreProjeto = ?'] = $idPreProjeto;
+
             $alteraVP = $tbVinculoPropostaDAO->alterar($dados, $where, false);
 
             $novosDados = array(
@@ -441,10 +441,10 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             );
             $insere = $tbVinculoPropostaDAO->inserir($novosDados, false);
             $alteraPP = $PreProjetoDAO->alteraresponsavel($idPreProjeto, $idResponsavel);
-            parent::message($msg, "manterpropostaincentivofiscal/vincularpropostas", "CONFIRM");
+            parent::message($msg, "proposta/manterpropostaincentivofiscal/vincularpropostas", "CONFIRM");
 
         } catch (Exception $e) {
-            parent::message("Erro. " . $e->getMessage(), "manterpropostaincentivofiscal/vincularpropostas", "ERROR");
+            parent::message("Erro. " . $e->getMessage(), "proposta/manterpropostaincentivofiscal/vincularpropostas", "ERROR");
         }
     }
 
@@ -481,10 +481,10 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             */
             $alteraPP = $PreProjetoDAO->alteraresponsavel($idPreProjeto, $idResponsavel);
 
-            parent::message("O responsável foi desvinculado.", "manterpropostaincentivofiscal/vincularprojetos", "CONFIRM");
+            parent::message("O responsável foi desvinculado.", "proposta/manterpropostaincentivofiscal/vincularprojetos", "CONFIRM");
 
         } catch (Exception $e) {
-            parent::message("Erro. " . $e->getMessage(), "manterpropostaincentivofiscal/vincularprojetos", "ERROR");
+            parent::message("Erro. " . $e->getMessage(), "proposta/manterpropostaincentivofiscal/vincularprojetos", "ERROR");
         }
     }
 }
