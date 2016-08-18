@@ -351,7 +351,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                         'idpreprojeto' => $idPreProjeto,
                         'siVinculoProposta' => 2
                     );
-
                     $insere = $tbVinculoPropostaDAO->inserir($novosDadosV, false);
                 }
                 /* **************************************************************************************** */
