@@ -577,33 +577,32 @@ Class ManterorcamentoDAO extends Zend_Db_Table {
         return $db->fetchAll($sql);
     }
 
-    public static function buscarProdutos($idPreProjeto) {
+    public static function buscarProdutos($idPreProjeto)
+    {
+        $table = Zend_Db_Table::getDefaultAdapter();
 
-        $sql = "SELECT p.Codigo as CodigoProduto,
-                    p.Descricao as DescricaoProduto,
-                    pre.idPreProjeto as PreProjeto,
-                    pre.idPreProjeto as idProposta
-                    FROM SAC.dbo.PreProjeto pre
-                    INNER JOIN SAC.dbo.PlanoDistribuicaoProduto pd ON (pre.idPreProjeto = pd.idProjeto AND pd.stPlanoDistribuicaoProduto = 1)
-                    INNER JOIN SAC.dbo.Produto p ON (pd.idProduto = p.Codigo)
-                   where idPreProjeto = {$idPreProjeto} group by p.Codigo, p.Descricao, idPreProjeto ";
-
-        /*$sql = "SELECT p.Codigo as CodigoProduto,
-                    p.Descricao as DescricaoProduto,
-                    pre.idPreProjeto as PreProjeto,
-                    pre.idPreProjeto as idProposta
-                    FROM SAC.dbo.PreProjeto pre
-                    INNER JOIN SAC.dbo.PlanoDistribuicaoProduto pd ON (pre.idPreProjeto = pd.idProjeto AND pd.stPlanoDistribuicaoProduto = 1)
-                    INNER JOIN SAC.dbo.Produto p ON (pd.idProduto = p.Codigo)
-                       where idPreProjeto = {$idPreProjeto} group by p.Codigo, p.Descricao, idPreProjeto";*/
-
-        //xd($sql);
-        $sql.= " ORDER BY p.Descricao ";
+        $select = $table->select()
+            ->from(array('pre' => 'PreProjeto'),
+                array(new Zend_Db_Expr('idPreProjeto AS PreProjeto'), new Zend_Db_Expr(' pre.idPreProjeto AS idProposta')),
+                'SAC.dbo')
+            ->joinInner(array('pd' => 'PlanoDistribuicaoProduto'),
+                'pre.idPreProjeto = pd.idProjeto AND pd.stPlanoDistribuicaoProduto = 1',
+                array(''),
+                'SAC.dbo')
+            ->joinInner(array('p' => 'Produto'),
+                'pd.idProduto = p.Codigo',
+                array(new Zend_Db_Expr('Descricao AS DescricaoProduto')),
+                'SAC.dbo')
+            ->where('idPreProjeto = ?', $idPreProjeto)
+            ->group('p.Codigo')
+            ->group('p.Descricao')
+            ->group('idPreProjeto')
+            ->group('p.Descricao');
 
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
     }
     
     public static function buscarProdutosPlanilha($idPreProjeto) {
