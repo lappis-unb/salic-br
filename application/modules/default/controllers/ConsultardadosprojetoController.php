@@ -148,7 +148,8 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
                 'PrestacaoContas' => $linksGeral[10],
                 'Readequacao_20' => $linksGeral[11],
                 'Marcas' => $linksGeral[12],
-                'SolicitarProrrogacao' => $linksGeral[13]
+                'SolicitarProrrogacao' => $linksGeral[13],
+                'ReadequacaoPlanilha' => $linksGeral[14]
             );
             $this->view->fnLiberarLinks = $arrayLinks;
             
