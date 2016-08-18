@@ -684,7 +684,11 @@
     $dsJustificativa = '';
 }
 ?>
-	    
+	    if (<?php echo $idReadequacao; ?> === 0) {
+		idReadequacao = $('#idReadequacao').val();
+	    } else {
+		idReadequacao = <?php echo $idReadequacao; ?>
+	    }
 	// verifica se há planilha ativa; se falso, cria uma nova planilha
 	$.ajax({
 	    url: "<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'verificar-planilha-ativa'), '', true) ?>",
@@ -692,7 +696,7 @@
 	    data: {
 		idPronac: <?php echo $this->idPronac; ?>,
 		criarNovaPlanilha: 1,
-		idReadequacao: <?php echo $idReadequacao; ?>,
+		idReadequacao: idReadequacao,
 		idTipoReadequacao: 6,
 	    },
 	    

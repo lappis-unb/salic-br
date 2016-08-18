@@ -315,7 +315,7 @@ class ReadequacoesController extends GenericControllerNew {
 
         $whereIdPlanilha = "idPlanilhaAprovacaoPai = $idPlanilhaAprovacao";
         $itemTipoPlanilha = $tbPlanilhaAprovacao->buscar(array('idPlanilhaAprovacao=?'=>$idPlanilhaAprovacao))->current();
-
+        
         if($itemTipoPlanilha->tpAcao == 'I'){
             $exclusaoLogica = $tbPlanilhaAprovacao->delete(array('idPlanilhaAprovacao = ?'=>$idPlanilhaAprovacao));
         } else {
@@ -4016,7 +4016,7 @@ class ReadequacoesController extends GenericControllerNew {
         $idPronac = $post->idPronac;
         $idReadequacao = $post->idReadequacao;
         $criarNovaPlanilha = $post->criarNovaPlanilha;
-
+        
         // Se não possui idReadequacao, cria entrada na tabela tbReadequacao
         if ($idReadequacao == 0) {
 
@@ -4082,7 +4082,12 @@ class ReadequacoesController extends GenericControllerNew {
                     $planilhaSR['stAtivo'] = 'N';
                     $tbPlanilhaAprovacao->inserir($planilhaSR);
                 }
-                echo json_encode(array('msg' => 'Planilhas SR criadas'));
+                echo json_encode(
+                    array(
+                        'msg' => 'Planilhas SR criadas',
+                        'idReadequacao' => $idReadequacao
+                    )
+                );
             } catch (Zend_Exception $e) {
                 echo json_encode(array('msg' => 'Houve um erro na criação das planilhas SR'));
             }
