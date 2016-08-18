@@ -53,6 +53,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
 
         // Busca na Usuarios
+        //Excluir ProposteExcluir Proposto
         $usuarioDAO   = new Autenticacao_Model_Usuario();
         $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
@@ -193,7 +194,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             $where['fd.idClassificaDocumento not in (?)'] = array(23, 24, 25);
             $where['p.idPreProjeto = ?'] = $_REQUEST['idPreProjeto'];
 
-            $tblPreProjeto = new Proposta_Model_Preprojeto();
+            $tblPreProjeto = new Proposta_Model_PreProjeto();
             $dados = $tblPreProjeto->buscarPropostaEditalCompleto($where);
 
             $get = Zend_Registry::get("get");
@@ -297,7 +298,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
                     $array['mensagem'] = 'Quantidade de caracteres maior que o permitido. Limite: 1000 caracteres.';
                     $array['tpmensagem'] = 'msgERROR';
-                    $this->_redirect('/proposta/manterpropostaedital/dadospropostaedital?idPreProjeto=' . $_REQUEST['idPreProjeto'] . '&idAgente=' . $_REQUEST['idAgente'] . '&idEdital=' . $_REQUEST['idEdital'] . '&mensagem=' . $array['mensagem'] . '&tpmensagem=' . $array['tpmensagem']);
+                    $this->_redirect('/manterpropostaedital/dadospropostaedital?idPreProjeto=' . $_REQUEST['idPreProjeto'] . '&idAgente=' . $_REQUEST['idAgente'] . '&idEdital=' . $_REQUEST['idEdital'] . '&mensagem=' . $array['mensagem'] . '&tpmensagem=' . $array['tpmensagem']);
                 }
 
                 $array = array();
@@ -322,7 +323,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                     $array['mensagem'] 		= 'Alteração realizada com sucesso!';
                     $array['tpmensagem'] 	= 'msgCONFIRM';
                     $array['mensagem'] 		= htmlspecialchars($array['mensagem']);
-                    parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/proposta/manterpropostaedital/dadospropostaedital?idPreProjeto=" . $array['idPreProjeto'], "CONFIRM");
+                    parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/manterpropostaedital/dadospropostaedital?idPreProjeto=" . $array['idPreProjeto'], "CONFIRM");
                 } else {
                     $dados = ManterpropostaeditalDAO::inserirProposta($array);
                     $array['idPreProjeto'] = $dados;
@@ -373,6 +374,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                 }
             } catch (Zend_Exception $ex) {
                 parent::message("Não foi possível realizar a operação!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+
             }
         } else {
             $array['mensagem'] 	 = 'Dados incorretos.';
@@ -412,7 +414,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             $where['fd.idClassificaDocumento not in (?)'] = array(23, 24, 25);
             $where['p.idPreProjeto = ?'] = $_REQUEST['idPreProjeto'];
 
-            $tblPreProjeto = new Proposta_Model_Preprojeto();
+            $tblPreProjeto = new Proposta_Model_PreProjeto();
             $dados = $tblPreProjeto->buscarPropostaEditalCompleto($where);
         } else {
             parent::message("Projeto não informado!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
@@ -793,7 +795,6 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
         //BUSCANDO REGISTRO A SER ALTERADO
         $tblPreProjeto = new Proposta_Model_PreProjeto();
-
         $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
         $rsPreProjeto->stEstado = 0;
@@ -1031,7 +1032,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         //BUSCA DADOS DO PROJETO
         $arrBusca = array();
         $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
-        $tblPreProjeto = new Proposta_Model_Preprojeto();
+        $tblPreProjeto = new Proposta_Model_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
         /* ======== VERIFICA TODAS AS INFORMACOES NECESSARIAS AO ENVIO DA PROPOSTA ======= */
@@ -1221,7 +1222,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         }
 
         if (!empty($idPreProjeto) && $valida == "s") {
-            $tblPreProjeto = new Proposta_Model_Preprojeto();
+            $tblPreProjeto = new Proposta_Model_PreProjeto();
             $tblAvaliacao = new AnalisarPropostaDAO();
 
             //recupera dados do projeto
