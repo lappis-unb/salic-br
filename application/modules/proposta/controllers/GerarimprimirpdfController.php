@@ -409,6 +409,6 @@ if($mecanismo == 'Incentivo Fiscal'){
         //xd("para");
         $pdf = new PDF($texto, 'pdf');
         $pdf->gerarRelatorio();
-
+        exit;
     }
 }
