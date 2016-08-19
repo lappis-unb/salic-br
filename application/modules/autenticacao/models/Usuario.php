@@ -120,7 +120,7 @@ class Autenticacao_Model_Usuario extends GenericModel
     }
 
     /**
-     * M?todo para buscar os dados do usu?rio de acordo com login e senha
+     * Método para buscar os dados do usu?rio de acordo com login e senha
      * @access public
      * @static
      * @param @username (cpf ou cnpj do usu?rio)
@@ -134,6 +134,7 @@ class Autenticacao_Model_Usuario extends GenericModel
         $senha->from($this,
             array("dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha")
         );
+
         $senha->where('usu_identificacao = ?', $username);
         $criptSenha = $this->fetchRow($senha);
 

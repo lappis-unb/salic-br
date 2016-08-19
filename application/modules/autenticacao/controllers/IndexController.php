@@ -23,12 +23,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
         parent::init();
     }
 
-    /**
-     * M�todo com o formul�rio de login
-     * @access public
-     * @param void
-     * @return void
-     */
     public function indexAction()
     {
 
@@ -53,21 +47,18 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
             {
                 throw new Exception("Login ou Senha inválidos!");
             }
-            else if (strlen($username) == 11 && !Validacao::validarCPF($username)) // verifica se o CPF é válido
+            else if (strlen($username) == 11 && !Validacao::validarCPF($username))
             {
                 throw new Exception("O CPF informado é invalido!");
             }
-            else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)) // verifica se o CNPJ � v�lido
+            else if (strlen($username) == 14 && !Validacao::validarCNPJ($username))
             {
                 throw new Exception("O CPF informado é invalido!");
-            }
-            else {
-                // realiza a busca do usuário no banco, fazendo a autenticação do mesmo
+            } else {
                 $Usuario = new Autenticacao_Model_Usuario();
                 $buscar = $Usuario->login($username, $password);
-                if ($buscar) // acesso permitido
-                {
-                    $auth = Zend_Auth::getInstance(); // instancia da autenticação
+                if ($buscar) {
+                    $auth = Zend_Auth::getInstance();
 
                     // registra o primeiro grupo do usuário (pega unidade autorizada, orgão e grupo do usuário)
                     $Grupo   = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usu�rio
@@ -77,19 +68,17 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
                     $GrupoAtivo->codOrgao = $Grupo[0]->uog_orgao; // armazena o órgão na sessão
                     $this->orgaoAtivo = $GrupoAtivo->codOrgao;
 
-                    // redireciona para o Controller protegido
                     return $this->_helper->redirector->goToRoute(array('controller' => 'principal'), null, true);
-                } // fecha if
-                else {
-
+                } else {
                     //se nenhum registro foi encontrado na tabela Usuario, ele passa a tentar se logar como proponente.
                     //neste ponto o _forward encaminha o processamento para o metodo login do controller login, que recebe
                     //o post igualmente e tenta encontrar usuario cadastrado em SGCAcesso
                     $this->forward("login-proponente", "index", "autenticacao");
                     //throw new Exception("Usuário inexistente!");
                 }
-            } // fecha else
-        } // fecha try
+            }
+
+        }
         catch (Exception $e) {
             parent::message($e->getMessage(), "index", "ERROR");
         }
@@ -135,16 +124,13 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
                     $verificaSituacao = $verificaStatus[0]->Situacao;
                 }
                 if ($verificaSituacao != 1) {
-
                     if(md5($password) != $this->validarSenhaInicial()){
-                        $encriptaSenha = EncriptaSenhaDAO::encriptaSenha($username, $password);
-                        //x($encriptaSenha);
-                        $SenhaFinal = $encriptaSenha;
-                        //x($SenhaFinal);
+                        $SenhaFinal = EncriptaSenhaDAO::encriptaSenha($username, $password);
                         $buscar = $Usuario->loginSemCript($username, $SenhaFinal);
                     } else {
                         $buscar = $Usuario->loginSemCript($username, md5($password));
                     }
+
                     if ( !$buscar ) {
                         parent::message("Login ou Senha inv&aacute;lidos!", "/autenticacao", "ALERT");
                     }
@@ -204,30 +190,25 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
     public function cadastrarusuarioAction() {
         if ( $_POST ) {
             $post     = Zend_Registry::get('post');
-            $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf)); // recebe cpf
-            $nome = $post->nome; // recebe o nome
-            $dataNasc = $post->dataNasc; // recebe dataNasc
-            $email = $post->email; // recebe email
-            $emailConf = $post->emailConf; // recebe confirmacao senha
+            $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf));
 
-            if ( trim($email) != trim($emailConf) ) {
+            if ( trim($post->email) != trim($post->emailConf) ) {
                 parent::message("Digite o email certo!", "/autenticacao/index/cadastrarusuario", "ALERT");
             }
 
             $SenhaFinal = Gerarsenha::gerasenha(15, true, true, true, false);
-            $dataFinal = data::dataAmericana($dataNasc);
+            $dataFinal = data::dataAmericana($post->dataNasc);
 
             $dados = array(
                     "Cpf" => $cpf,
-                    "Nome" => $nome,
+                    "Nome" => $post->nome,
                     "DtNascimento" => $dataFinal,
-                    "Email" => $email,
+                    "Email" => $post->email,
                     "Senha" => $SenhaFinal,
                     "DtCadastro" => date("Y-m-d"),
                     "Situacao" => 1,
                     "DtSituacao" => date("Y-m-d")
             );
-
 
             $sgcAcesso = new Autenticacao_Model_Sgcacesso();
             $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf));
@@ -237,7 +218,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
                 parent::message("CPF j&aacute; cadastrado", "/autenticacao/index/cadastrarusuario", "ALERT");
             }
 
-            $sgcAcessoBuscaEmail = $sgcAcesso->buscar(array("Email = ?" => $email));
+            $sgcAcessoBuscaEmail = $sgcAcesso->buscar(array("Email = ?" => $post->email));
             $sgcAcessoBuscaEmailArray = $sgcAcessoBuscaEmail->toArray();
 
             if ( !empty ( $sgcAcessoBuscaEmailArray )) {
@@ -281,7 +262,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
                 /* ========== ENVIA O E-MAIL PARA O USUARIO ========== */
                 $assunto = "Cadastro SALICWEB";
                 $perfil = 'SALICWEB';
-                $mens  = "Ol&aacute; $nome ,<br><br>";
+                $mens  = "Ol&aacute; $post->nome ,<br><br>";
                 $mens .= "Senha: $SenhaFinal <br><br>";
                 $mens .= "Esta &eacute; a sua senha de acesso ao Sistema de Apresenta&ccedil;&atilde;o de Projetos via Web do ";
                 $mens .= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
@@ -289,7 +270,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
                 $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n&atilde;o responda.<br><br>";
                 $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
 
-                $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
+                $enviaEmail = EmailDAO::enviarEmail($post->email, $assunto, $mens, $perfil);
                 parent::message("Cadastro efetuado com sucesso. Verifique a senha no seu email", "/autenticacao", "CONFIRM");
             }
         }
@@ -345,7 +326,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
         /* ========== INÍCIO ID DO USUÁRIO LOGADO ========== */
         $auth    = Zend_Auth::getInstance(); // pega a autentica��o
         $Usuario = new Autenticacao_Model_Usuario();
-
 
         // verifica se o usuário logado é agente
         $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->Cpf);
@@ -418,13 +398,10 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
                 $comparaSenha = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaAtual);
                 $SenhaFinal = $comparaSenha[0]->senha;
 
-
                 if ( trim($senhaAtualBanco) !=  trim($SenhaFinal) && ($cpfTabelas && !$senhaTabelas) ) {
                     parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario","ALERT");
                 }
-            }
-
-            else {
+            } else {
                 if ( trim($senhaAtualBanco) !=  trim($senhaAtual) && ($cpfTabelas && !$senhaTabelas) ) {
                     parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario","ALERT");
                 }

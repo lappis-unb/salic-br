@@ -27,15 +27,15 @@ class EncriptaSenhaDAO extends Zend_Db_Table
      *
      *        BEGIN
      *    DECLARE
-     *    @w	varchar(30),
-     *        @s      varchar(15),
-     *        @t1	int,
-     *	@t2	int,
-     *        @k      int,
-     *        @i      int,
-     *        @j      int,
-     *        @f      int,
-     *        @v      int
+     * @w    varchar(30),
+     * @s      varchar(15),
+     * @t1    int,
+     * @t2    int,
+     * @k      int,
+     * @i      int,
+     * @j      int,
+     * @f      int,
+     * @v      int
      *
      *    SET @w = RTRIM(LTRIM(@p_senha))
      *    SET @t1 = LEN(RTRIM(LTRIM(@p_identificacao)))
@@ -112,7 +112,7 @@ class EncriptaSenhaDAO extends Zend_Db_Table
     }
 
     public static function encriptaSenha($cpf, $senha)
-	{
+    {
         $db = Zend_Registry::get('db');
 
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
@@ -120,14 +120,9 @@ class EncriptaSenhaDAO extends Zend_Db_Table
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchRow($sql)->senha;
         } else {
-            echo '<pre>';
-            var_dump('Senha do PostgreSQL à definir metodo: EncriptaSenhaDAO::encriptaSenha.');
-            var_dump(md5($senha));
-            exit;
             return md5($senha);
         }
 
-	} // fecha m�todo enviarEmail()
+    }
 
 }
-?>
