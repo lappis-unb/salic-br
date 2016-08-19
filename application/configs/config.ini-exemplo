@@ -1,5 +1,5 @@
-;; Configurações do banco
-;; @author wouerner <wouerner@gmail.com>
+;; Configuraï¿½ï¿½es do banco
+;; @author Equipe Fundep ABC
 ;; @since 29/03/2010
 ;; @version 1.0
 ;; @package application
@@ -22,8 +22,8 @@ resources.layout.layoutPath                = APPLICATION_PATH "/layout"
 resources.layout.layout                    = "layout"
 
 ; Options for Mobile
-resources.view.service.salicMobileHash = ""
-resources.view.service.encryptHash = ""
+resources.view.service.salicMobileHash = "b66113b1d84a1008b8ffea5fe9f51fc2"
+resources.view.service.encryptHash = "e@75e9R!3450otZ"
 
 ; front controller
 resources.frontController.moduleDirectory = APPLICATION_PATH"/modules"
@@ -31,24 +31,69 @@ resources.frontController.defaultModule   = "default"
 resources.modules[]   =
 
 ; minc resources
-resources.paginator     = ; configura paginação
+resources.paginator     = ; configura paginaï¿½ï¿½o
 
-;mail.default.name       = ""
-mail.default.email      = ""
-mail.transport.type     = ""
-mail.transport.host     = ""
-mail.transport.auth     = ""
-mail.transport.username = ""
-mail.transport.password = ""
+;mail.default.name       = "Salic BR"
+mail.default.email      = "srv_salic@cultura.gov.br"
+mail.transport.type     = "smtp"
+mail.transport.host     = "192.168.10.25"
+mail.transport.auth     = "login"
+mail.transport.username = "srv_salic"
+mail.transport.password = "emailSalic"
 
-[conexao_02:default]
-db.adapter = PDO_MSSQL
-db.params.host = ""
-db.params.username = 
-db.params.password = 
-db.params.port = 
-db.params.dbname = 
+; [ SQL SERVER ]
+;db.adapter = PDO_MSSQL
+;db.params.host = 10.0.0.191
+;db.params.username = usuarios_internet
+;db.params.password = _Salic
+;db.params.port = 1435
+
+; [ POSTGRES ]
+db.adapter = PDO_PGSQL
+db.params.host = 192.168.15.12
+db.params.username = postgres
+db.params.password = 123456
+db.params.port = 5432
+
 resources.db.params.charset = utf8
-;resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES UTF-8"
 resources.db.isDefaultTableAdapter = true
+
+[conexao_02:default]
+db.params.dbname = TABELAS
+
+[conexao_03:default]
+db.params.dbname = TABELAS
+
+[conexao_05:default]
+db.params.dbname = TABELAS
+
+[conexao_sad:default]
+db.params.dbname = SAD
+
+[conexao_scriptcase_01:default]
+db.params.dbname = ControleDeAcesso
+
+[conexao_scriptcase_02:default]
+db.params.dbname = ControleDeAcesso
+
+[conexao_scriptcase_03:default]
+db.params.dbname = ControleDeAcesso
+
+[conexao_scriptcase_05:default]
+db.params.dbname = ControleDeAcesso
+
+[conexao_sac:default]
+db.params.dbname = SAC
+
+[conexao_sac_homolog:default]
+db.params.dbname = SAC
+
+[conexao_agentes_homolog:default]
+db.params.dbname = AGENTES
+
+[conexao_xti:default]
+db.params.dbname = TABELAS
+
+[conexao_xti_controle_acesso:default]
+db.params.dbname = CONTROLEDEACESSO
