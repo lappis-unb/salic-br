@@ -61,7 +61,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
                     $auth = Zend_Auth::getInstance();
 
                     // registra o primeiro grupo do usuário (pega unidade autorizada, orgão e grupo do usuário)
-                    $Grupo   = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usu�rio
+                    $Grupo   = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuario
 
                     $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
                     $GrupoAtivo->codGrupo = $Grupo[0]->gru_codigo; // armazena o grupo na sessão
