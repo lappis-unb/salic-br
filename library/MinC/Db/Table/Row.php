@@ -29,4 +29,23 @@ class MinC_Db_Table_Row extends Zend_Db_Table_Row
         }
         return $array;
     }
+
+    /**
+     * Set row field value
+     *
+     * @param  string $columnName The column key.
+     * @param  mixed  $value      The value for the property.
+     * @return void
+     * @throws Zend_Db_Table_Row_Exception
+     */
+    public function __set($columnName, $value)
+    {
+        $columnName = $this->_transformColumn($columnName);
+        if (!array_key_exists(strtolower($columnName), array_change_key_case($this->_data))) {
+            require_once 'Zend/Db/Table/Row/Exception.php';
+            throw new Zend_Db_Table_Row_Exception("Specified column \"$columnName\" is not in the row");
+        }
+        $this->_data[$columnName] = $value;
+        $this->_modifiedFields[$columnName] = true;
+    }
 }
