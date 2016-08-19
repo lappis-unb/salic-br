@@ -13,7 +13,7 @@
 class Autenticacao_Model_Usuario extends GenericModel
 {
 
-        protected $_banco = "TABELAS";
+        protected $_banco = "tabelas";
 //        protected $_name  = 'dbo.Usuarios';
 //
 //    protected $_schema = 'dbo';
@@ -130,18 +130,20 @@ class Autenticacao_Model_Usuario extends GenericModel
     public function login($username, $password)
     {
         // busca o usu?rio de acordo com o login e a senha
-        $senha = $this->select();
-        $senha->from($this,
-            array("dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha")
-        );
+//        $senha = $this->select();
+//        $senha->from($this,
+//            array("dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha")
+//        );
+//
+//        $senha->where('usu_identificacao = ?', $username);
+//        $criptSenha = $this->fetchRow($senha);
+//
+//        $auxSenha = "";
+//        if(!empty($criptSenha['senha'])){
+//            $auxSenha = $criptSenha['senha'];
+//        }
 
-        $senha->where('usu_identificacao = ?', $username);
-        $criptSenha = $this->fetchRow($senha);
-
-        $auxSenha = "";
-        if(!empty($criptSenha['senha'])){
-            $auxSenha = $criptSenha['senha'];
-        }
+        $auxSenha = EncriptaSenhaDAO::encriptaSenha($username, $password);
 
         $sql = $this->select();
         $sql->setIntegrityCheck(false);
@@ -156,19 +158,21 @@ class Autenticacao_Model_Usuario extends GenericModel
             )
         );
         $sql->joinInner(
-            array("uog"=>"UsuariosXOrgaosXGrupos"),
+            array("uog"=>"usuariosxorgaosxgrupos"),
             "uog.uog_usuario = usu_codigo AND uog_status = 1",
-            array(), "TABELAS.dbo"
+            array(), $this->_schema
         );
         $sql->where('usu_identificacao = ?', $username);
         $sql->where('usu_status  = ?', 1);
         if(md5($password) != MinC_Controller_Action_Abstract::validarSenhaInicial()){
             $sql->where("usu_senha  = ?",$auxSenha);
-        }$buscar = $this->fetchRow($sql);
+        }
 
-        if ($buscar) // realiza a autentica??o
+        $buscar = $this->fetchRow($sql);
+
+        if ($buscar) // realiza a autenticacao
         {
-            // configura??es do banco
+            // configuracoes do banco
             $dbAdapter = Zend_Db_Table::getDefaultAdapter();
             // pegamos o zend_auth
 
@@ -177,24 +181,24 @@ class Autenticacao_Model_Usuario extends GenericModel
             ->setIdentityColumn('usu_identificacao')
                 ->setCredentialColumn('usu_senha');
 
-            // seta as credenciais informada pelo usu?rio
+            // seta as credenciais informada pelo usuario
             $authAdapter
                 ->setIdentity($buscar['usu_identificacao'])
                 ->setCredential($buscar['usu_senha']);
 
-            // tenta autenticar o usu?rio
+            // tenta autenticar o usuario
             $auth   = Zend_Auth::getInstance();
             $acesso = $auth->authenticate($authAdapter);
 
             // verifica se o acesso foi permitido
             if ($acesso->isValid())
             {
-                // pega os dados do usu?rio com exce??o da senha
+                // pega os dados do usuario com excecao da senha
                 $authData = $authAdapter->getResultRowObject(null, 'usu_senha');
 
                 $orgao_maximo_superior = $this->recuperarOrgaoMaxSuperior($buscar['usu_orgao']);
 
-                // armazena os dados do usu?rio
+                // armazena os dados do usuario
                 $objAuth = $auth->getStorage()->write($authData);
                 //Grava o orgao superior na sessao do usuario
                 $_SESSION['Zend_Auth']['storage']->usu_org_max_superior = $orgao_maximo_superior;
@@ -210,7 +214,7 @@ class Autenticacao_Model_Usuario extends GenericModel
         {
             return false;
         }
-    } // fecha m?todo login()
+    } // fecha metodo login()
 
 
     /**

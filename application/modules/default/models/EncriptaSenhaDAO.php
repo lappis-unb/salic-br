@@ -118,7 +118,8 @@ class EncriptaSenhaDAO extends Zend_Db_Table
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
             $sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $cpf . "', '$senha' ) as senha";
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
-            return $db->fetchRow($sql)->senha;
+            $result = $db->fetchRow($sql);
+            return ($result)? $db->fetchRow($sql)->senha : '';
         } else {
             return md5($senha);
         }
