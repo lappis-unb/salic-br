@@ -10,6 +10,7 @@ class PrincipalproponenteController extends MinC_Controller_Action_Abstract {
     private $idAgente = null;
 
     public function init() {
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $GrupoAtivo->codGrupo = 1111;
 

@@ -1127,8 +1127,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
         $agente = array();
 
-//        x($rsVinculo);
-
         $i = 0;
         foreach ($rsVinculo as $rs) {
             $cpfCnpj = Mascara::addMaskCPF($rs->cnpjcpf);

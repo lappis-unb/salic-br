@@ -1163,14 +1163,24 @@ class Proposta_Model_PreProjeto extends GenericModel
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
+        $subSql = $db->select()
+            ->from(['pr' => 'projetos'], ['idprojeto'], 'sac.dbo')
+            ->where('a.idpreprojeto = pr.idprojeto')
+            ;
+
         $sql = $db->select()
             ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'],'sac.dbo')
             ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'],'agentes.dbo')
             ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
             ->where('a.idagente = ? ', $idAgente)
             ->where('a.stestado = 1')
-            ->where(new Zend_Db_Expr('not exists(select 1 from sac.dbo.projetos pr where a.idpreprojeto = pr.idprojeto)'))
+            ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'")
+            ;
+
+        $subSql = $db->select()
+            ->from(['f' => 'projetos'], ['idprojeto'], 'sac.dbo')
+            ->where('a.idpreprojeto = f.idprojeto')
             ;
 
         $sql2 = $db->select()
@@ -1182,8 +1192,13 @@ class Proposta_Model_PreProjeto extends GenericModel
             ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
             ->where('e.idusuario = ?',$idResponsavel)
             ->where('a.stestado = 1')
-            ->where(new zend_db_expr('not exists(select 1 from sac.dbo.projetos f where a.idpreprojeto = f.idprojeto)'))
+            ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'")
+            ;
+
+        $subSql = $db->select()
+            ->from(['z' => 'projetos'], ['idprojeto'], 'sac.dbo')
+            ->where('a.idpreprojeto = z.idprojeto')
             ;
 
         $sql3 = $db->select()
@@ -1194,7 +1209,7 @@ class Proposta_Model_PreProjeto extends GenericModel
             ->join(['e' => 'tbvinculoproposta'], 'a.idpreprojeto = e.idpreprojeto', [], 'agentes.dbo')
             ->join(['f' => 'tbvinculo'], 'e.idvinculo = f.idvinculo', [], 'agentes.dbo')
             ->where('a.stestado = 1')
-            ->where(new zend_db_expr('not exists(select 1 from sac.dbo.projetos z where a.idpreprojeto = z.idprojeto)'))
+            ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'")
             ->where('e.sivinculoproposta = 2')
             ->where('f.idusuarioresponsavel = ?', $idResponsavel)
