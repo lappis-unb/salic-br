@@ -1,11 +1,11 @@
-;; Configura��es do banco
+;; Configurações do banco
+;;
 ;; @author Equipe RUP - Politec
 ;; @author Equipe Fundep ABC
 ;; @since 29/03/2010
 ;; @version 1.0
 ;; @package application
 ;; @subpackage application.configs
-;; @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
 ;; @link http://www.cultura.gov.br
 
 [default]
@@ -28,19 +28,19 @@ resources.db.params.driver_options.1002 = "SET NAMES UTF-8"
 resources.db.isDefaultTableAdapter = true
 
 [conexao_tabelas:default]
-db.params.dbname = TABELAS
+db.params.dbname = tabelas
 
 [conexao_sac:default]
-db.params.dbname = SAC
+db.params.dbname = sac
 
 [conexao_bdcorporativo:default]
-db.params.dbname = BDCORPORATIVO
+db.params.dbname = bdcorporativo
 
 [conexao_agentes:default]
-db.params.dbname = AGENTES
+db.params.dbname = agentes
 
 [conexao_bddne:default]
-db.params.dbname = BDDNE
+db.params.dbname = bddne
 
 [conexao_controledeacesso:default]
-db.params.dbname = CONTROLEDEACESSO
+db.params.dbname = controledeacesso
