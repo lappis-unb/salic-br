@@ -3962,7 +3962,8 @@ class ReadequacoesController extends GenericControllerNew {
         
         $links = new fnLiberarLinks();
         $linksXpermissao = $links->liberarLinks(2, $cpf, $idUsuarioLogado, $idPronac);
-        $permiteReadequacaoPlanilha = str_replace(' ', '', explode('-', $linksXpermissao->links))[14];
+        $linksPermissao = str_replace(' ', '', explode('-', $linksXpermissao->links));
+        $permiteReadequacaoPlanilha = $linksPermissao[14];
         
         if (!$permiteReadequacaoPlanilha) {
             parent::message("Voc&ecirc;  n&atilde;o pode realizar uma nova readequa&ccedil;&atilde;o.", "principalproponente", "ERROR");
