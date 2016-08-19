@@ -60,40 +60,40 @@ resources.db.params.driver_options.1002 = "SET NAMES UTF-8"
 resources.db.isDefaultTableAdapter = true
 
 [conexao_02:default]
-db.params.dbname = TABELAS
+db.params.dbname = tabelas
 
 [conexao_03:default]
-db.params.dbname = TABELAS
+db.params.dbname = tabelas
 
 [conexao_05:default]
-db.params.dbname = TABELAS
+db.params.dbname = tabelas
 
 [conexao_sad:default]
-db.params.dbname = SAD
+db.params.dbname = sad
 
 [conexao_scriptcase_01:default]
-db.params.dbname = ControleDeAcesso
+db.params.dbname = controledeacesso
 
 [conexao_scriptcase_02:default]
-db.params.dbname = ControleDeAcesso
+db.params.dbname = controledeacesso
 
 [conexao_scriptcase_03:default]
-db.params.dbname = ControleDeAcesso
+db.params.dbname = controledeacesso
 
 [conexao_scriptcase_05:default]
-db.params.dbname = ControleDeAcesso
+db.params.dbname = controledeacesso
 
 [conexao_sac:default]
-db.params.dbname = SAC
+db.params.dbname = sac
 
 [conexao_sac_homolog:default]
-db.params.dbname = SAC
+db.params.dbname = sac
 
 [conexao_agentes_homolog:default]
-db.params.dbname = AGENTES
+db.params.dbname = agentes
 
 [conexao_xti:default]
-db.params.dbname = TABELAS
+db.params.dbname = tabelas
 
 [conexao_xti_controle_acesso:default]
-db.params.dbname = CONTROLEDEACESSO
+db.params.dbname = controledeacesso
