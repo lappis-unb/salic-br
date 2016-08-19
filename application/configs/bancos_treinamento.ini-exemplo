@@ -1,69 +1,46 @@
-;; Configurações do banco
+;; Configuraï¿½ï¿½es do banco
 ;; @author Equipe RUP - Politec
+;; @author Equipe Fundep ABC
 ;; @since 29/03/2010
 ;; @version 1.0
 ;; @package application
 ;; @subpackage application.configs
-;; @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+;; @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
 ;; @link http://www.cultura.gov.br
 
+[default]
+; [ SQL SERVER ]
+;db.adapter = PDO_MSSQL
+;db.params.host = 10.0.0.191
+;db.params.username = usuarios_internet
+;db.params.password = _Salic
+;db.params.port = 1435
 
-[conexao_tabelas]
-db.adapter = PDO_MSSQL
-db.params.host = MudePorAmbiente
-db.params.username = MudePorAmbiente 
-db.params.password = MudePorAmbiente 
+; [ POSTGRES ]
+db.adapter = PDO_PGSQL
+db.params.host = 192.168.15.12
+db.params.username = postgres
+db.params.password = 123456
+db.params.port = 5432
+
+resources.db.params.charset = utf8
+resources.db.params.driver_options.1002 = "SET NAMES UTF-8"
+resources.db.isDefaultTableAdapter = true
+
+[conexao_tabelas:default]
 db.params.dbname = TABELAS
-resources.db.params.charset = "utf8"
-resources.db.params.driver_options.1002 = "SET NAMES utf8"
-resources.db.isDefaultTableAdapter = true
 
-[conexao_sac]
-db.adapter = PDO_MSSQL
-db.params.host = MudePorAmbiente
-db.params.username = MudePorAmbiente 
-db.params.password = MudePorAmbiente 
+[conexao_sac:default]
 db.params.dbname = SAC
-resources.db.params.charset = "utf8"
-resources.db.params.driver_options.1002 = "SET NAMES utf8"
-resources.db.isDefaultTableAdapter = true
 
-[conexao_bdcorporativo]
-db.adapter = PDO_MSSQL
-db.params.host = MudePorAmbiente
-db.params.username = MudePorAmbiente 
-db.params.password = MudePorAmbiente 
+[conexao_bdcorporativo:default]
 db.params.dbname = BDCORPORATIVO
-resources.db.params.charset = "utf8"
-resources.db.params.driver_options.1002 = "SET NAMES utf8"
-resources.db.isDefaultTableAdapter = true
 
-[conexao_agentes]
-db.adapter = PDO_MSSQL
-db.params.host = MudePorAmbiente
-db.params.username = MudePorAmbiente 
-db.params.password = MudePorAmbiente 
+[conexao_agentes:default]
 db.params.dbname = AGENTES
-resources.db.params.charset = "utf8"
-resources.db.params.driver_options.1002 = "SET NAMES utf8"
-resources.db.isDefaultTableAdapter = true
 
-[conexao_bddne]
-db.adapter = PDO_MSSQL
-db.params.host = MudePorAmbiente
-db.params.username = MudePorAmbiente 
-db.params.password = MudePorAmbiente 
+[conexao_bddne:default]
 db.params.dbname = BDDNE
-resources.db.params.charset = "utf8"
-resources.db.params.driver_options.1002 = "SET NAMES utf8"
-resources.db.isDefaultTableAdapter = true
 
-[conexao_controledeacesso]
-db.adapter = PDO_MSSQL
-db.params.host = MudePorAmbiente
-db.params.username = MudePorAmbiente 
-db.params.password = MudePorAmbiente 
+[conexao_controledeacesso:default]
 db.params.dbname = CONTROLEDEACESSO
-resources.db.params.charset = "utf8"
-resources.db.params.driver_options.1002 = "SET NAMES utf8"
-resources.db.isDefaultTableAdapter = true
