@@ -6,6 +6,7 @@
 -- COMMIT;
 
 CREATE SCHEMA IF NOT EXISTS tabelas AUTHORIZATION postgres;
+
 CREATE TABLE tabelas.Sistemas
 (
   sis_codigo SMALLINT PRIMARY KEY NOT NULL,

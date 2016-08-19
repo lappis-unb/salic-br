@@ -5,6 +5,8 @@
 -- BEGIN;
 -- COMMIT;
 
+CREATE SCHEMA IF NOT EXISTS controledeacesso AUTHORIZATION postgres;
+
 CREATE TABLE controledeacesso.dtproperties
 (
   id INT NOT NULL,

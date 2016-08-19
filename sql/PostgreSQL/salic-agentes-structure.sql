@@ -25,9 +25,9 @@ CREATE TABLE agentes.UF
   Descricao VARCHAR(100) NOT NULL,
   Regiao VARCHAR(20) NOT NULL
 );
-CREATE INDEX IX_UF ON UF (Sigla);
-CREATE INDEX IX_UF_1 ON UF (Descricao);
-CREATE INDEX IX_UF_2 ON UF (Regiao);
+CREATE INDEX IX_UF ON agentes.UF (Sigla);
+CREATE INDEX IX_UF_1 ON agentes.UF (Descricao);
+CREATE INDEX IX_UF_2 ON agentes.UF (Regiao);
 CREATE TABLE agentes.Tipo
 (
   idTipo INT PRIMARY KEY NOT NULL ,
@@ -72,8 +72,8 @@ CREATE TABLE agentes.Agentes
   Status SMALLINT DEFAULT 0 NOT NULL,
   Usuario INT DEFAULT 0 NOT NULL
 );
-CREATE INDEX _dta_index_Agentes_9_1977058079__K2_K1 ON Agentes (CNPJCPF, idAgente);
-CREATE INDEX _dta_index_Agentes_9_1977058079__K2_K1_3_4_5_6_7_8_9 ON Agentes (CNPJCPF, idAgente, CNPJCPFSuperior, TipoPessoa, DtCadastro, DtAtualizacao, DtValidade, Status, Usuario);
+CREATE INDEX _dta_index_Agentes_9_1977058079__K2_K1 ON agentes.Agentes (CNPJCPF, idAgente);
+CREATE INDEX _dta_index_Agentes_9_1977058079__K2_K1_3_4_5_6_7_8_9 ON agentes.Agentes (CNPJCPF, idAgente, CNPJCPFSuperior, TipoPessoa, DtCadastro, DtAtualizacao, DtValidade, Status, Usuario);
 CREATE TABLE agentes.Verificacao
 (
   idVerificacao INT PRIMARY KEY NOT NULL ,
@@ -82,8 +82,8 @@ CREATE TABLE agentes.Verificacao
   Sistema INT DEFAULT 0 NOT NULL,
   CONSTRAINT FK_Verificacao_Tipo FOREIGN KEY (IdTipo) REFERENCES agentes.Tipo (idTipo)
 );
-CREATE INDEX IX_Verificacao ON Verificacao (IdTipo);
-CREATE INDEX IX_Verificacao_1 ON Verificacao (Descricao);
+CREATE INDEX IX_Verificacao ON agentes.Verificacao (IdTipo);
+CREATE INDEX IX_Verificacao_1 ON agentes.Verificacao (Descricao);
 CREATE TABLE agentes.Telefones
 (
   idTelefone INT PRIMARY KEY NOT NULL ,
@@ -112,7 +112,7 @@ CREATE TABLE agentes.sysdiagrams
   version INT,
   definition VARBIT
 );
-CREATE UNIQUE INDEX UK_principal_name ON sysdiagrams (principal_id, name);
+CREATE UNIQUE INDEX UK_principal_name ON agentes.sysdiagrams (principal_id, name);
 CREATE TABLE agentes.bancos
 (
   Codigo CHAR(3) PRIMARY KEY NOT NULL,
@@ -140,8 +140,8 @@ CREATE TABLE agentes.ContaCorrente
   Usuario INT NOT NULL,
   CONSTRAINT FK_ContaCorrente_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
 );
-CREATE INDEX IX_ContaCorrente ON ContaCorrente (idAgente);
-CREATE INDEX IX_ContaCorrente_2 ON ContaCorrente (Banco, Agencia, ContaCorrente);
+CREATE INDEX IX_ContaCorrente ON agentes.ContaCorrente (idAgente);
+CREATE INDEX IX_ContaCorrente_2 ON agentes.ContaCorrente (Banco, Agencia, ContaCorrente);
 CREATE TABLE agentes.DDD
 (
   idDDD INT PRIMARY KEY NOT NULL ,
@@ -149,7 +149,7 @@ CREATE TABLE agentes.DDD
   Codigo VARCHAR(3) NOT NULL,
   CONSTRAINT FK_DDD_UF FOREIGN KEY (idUF) REFERENCES agentes.UF (idUF)
 );
-CREATE INDEX IX_DDD ON DDD (idUF);
+CREATE INDEX IX_DDD ON agentes.DDD (idUF);
 CREATE TABLE agentes.Documentos
 (
   idDocumentos INT PRIMARY KEY NOT NULL ,
@@ -210,10 +210,10 @@ CREATE TABLE agentes.EnderecoNacional
   CONSTRAINT FK_EnderecoNacional_Verificacao1 FOREIGN KEY (TipoEndereco) REFERENCES agentes.Verificacao (idVerificacao),
   CONSTRAINT FK_EnderecoNacional_Verificacao2 FOREIGN KEY (TipoLogradouro) REFERENCES agentes.Verificacao (idVerificacao)
 );
-CREATE INDEX IX_EnderecoNacional ON EnderecoNacional (idEndereco);
-CREATE INDEX IX_EnderecoNacional_1 ON EnderecoNacional (Cidade);
-CREATE INDEX IX_EnderecoNacional_2 ON EnderecoNacional (UF);
-CREATE INDEX IX_EnderecoNacional_idAgente ON EnderecoNacional (idAgente);
+CREATE INDEX IX_EnderecoNacional ON agentes.EnderecoNacional (idEndereco);
+CREATE INDEX IX_EnderecoNacional_1 ON agentes.EnderecoNacional (Cidade);
+CREATE INDEX IX_EnderecoNacional_2 ON agentes.EnderecoNacional (UF);
+CREATE INDEX IX_EnderecoNacional_idAgente ON agentes.EnderecoNacional (idAgente);
 CREATE TABLE agentes.HistoricoAgente
 (
   idAgente INT PRIMARY KEY NOT NULL,
@@ -254,8 +254,8 @@ CREATE TABLE agentes.Municipios
   CONSTRAINT FK_Municipios_MesoRegiao FOREIGN KEY (IdMeso) REFERENCES agentes.MesoRegiao (idMeso),
   CONSTRAINT FK_Municipios_MicroRegiao FOREIGN KEY (idMicro) REFERENCES agentes.MicroRegiao (idMicro)
 );
-CREATE INDEX IX_Municipios_idUFIBGE ON Municipios (idUFIBGE);
-CREATE INDEX IX_Municipios_Cidade ON Municipios (Descricao);
+CREATE INDEX IX_Municipios_idUFIBGE ON agentes.Municipios (idUFIBGE);
+CREATE INDEX IX_Municipios_Cidade ON agentes.Municipios (Descricao);
 CREATE TABLE agentes.Natureza
 (
   idNatureza INT PRIMARY KEY NOT NULL ,
@@ -267,7 +267,7 @@ CREATE TABLE agentes.Natureza
   Usuario INT DEFAULT 0 NOT NULL,
   CONSTRAINT FK_Natureza_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
 );
-CREATE INDEX IX_Natureza ON Natureza (idAgente);
+CREATE INDEX IX_Natureza ON agentes.Natureza (idAgente);
 CREATE TABLE agentes.Nomes
 (
   idNome INT PRIMARY KEY NOT NULL ,
@@ -279,8 +279,8 @@ CREATE TABLE agentes.Nomes
   CONSTRAINT FK_Nomes_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
   CONSTRAINT FK_Nomes_Verificacao FOREIGN KEY (TipoNome) REFERENCES agentes.Verificacao (idVerificacao)
 );
-CREATE INDEX _dta_index_Nomes_9_5575058__K5_K2_K4 ON Nomes (Status, idAgente, Descricao);
-CREATE INDEX _dta_index_Nomes_9_5575058__K2_K4 ON Nomes (idAgente, Descricao);
+CREATE INDEX _dta_index_Nomes_9_5575058__K5_K2_K4 ON agentes.Nomes (Status, idAgente, Descricao);
+CREATE INDEX _dta_index_Nomes_9_5575058__K2_K4 ON agentes.Nomes (idAgente, Descricao);
 CREATE TABLE agentes.Ocupacao
 (
   idOcupacao INT PRIMARY KEY NOT NULL ,
@@ -304,7 +304,7 @@ CREATE TABLE agentes.Perfil
   CONSTRAINT FK_Perfil_Verificacao FOREIGN KEY (Perfil) REFERENCES agentes.Verificacao (idVerificacao),
   CONSTRAINT FK_Perfil_Verificacao1 FOREIGN KEY (Caracteristica) REFERENCES agentes.Verificacao (idVerificacao)
 );
-CREATE INDEX IX_Perfil ON Perfil (idAgente);
+CREATE INDEX IX_Perfil ON agentes.Perfil (idAgente);
 CREATE TABLE agentes.PopulacaoMunicipio
 (
   IdMunicipio VARCHAR(6) PRIMARY KEY NOT NULL,
@@ -505,7 +505,7 @@ CREATE TABLE agentes.tbVinculoProposta
   siVinculoProposta CHAR NOT NULL,
   CONSTRAINT FK_tbVinculoProposta_tbVinculo FOREIGN KEY (idVinculo) REFERENCES agentes.tbVinculo (idVinculo)
 );
-CREATE INDEX IX_tbVinculoProposta ON tbVinculoProposta (idVinculoProposta);
+CREATE INDEX IX_tbVinculoProposta ON agentes.tbVinculoProposta (idVinculoProposta);
 CREATE TABLE agentes.TCU
 (
   UF VARCHAR(255),
@@ -534,8 +534,8 @@ CREATE TABLE agentes.Visao
   CONSTRAINT FK_Visao_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
   CONSTRAINT FK_Visao_Verificacao FOREIGN KEY (Visao) REFERENCES agentes.Verificacao (idVerificacao)
 );
-CREATE INDEX IX_Visao ON Visao (idAgente);
-CREATE INDEX IX_Visao_1 ON Visao (Visao);
+CREATE INDEX IX_Visao ON agentes.Visao (idAgente);
+CREATE INDEX IX_Visao_1 ON agentes.Visao (Visao);
 CREATE TABLE agentes.vAgentes
 (
   idAgente INT NOT NULL,
@@ -818,7 +818,7 @@ CREATE TABLE agentes.CheckListDocumentos
   CONSTRAINT FK_CheckListDocumentos_Verificacao FOREIGN KEY (idDocumento) REFERENCES agentes.Verificacao (idVerificacao),
   CONSTRAINT FK_CheckListDocumentos_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
 );
-CREATE INDEX IX_Agente ON CheckListDocumentos (idAgente);
+CREATE INDEX IX_Agente ON agentes.CheckListDocumentos (idAgente);
 
 -- CREATE PROCEDURE dt_addtosourcecontrol(@vchSourceSafeINI VARCHAR, @vchProjectName VARCHAR, @vchComment VARCHAR, @vchLoginName VARCHAR, @vchPassword VARCHAR);
 -- CREATE PROCEDURE dt_addtosourcecontrol_u(@vchSourceSafeINI TEXT, @vchProjectName TEXT, @vchComment TEXT, @vchLoginName TEXT, @vchPassword TEXT);
