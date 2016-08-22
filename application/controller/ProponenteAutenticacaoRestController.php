@@ -24,6 +24,7 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
         $post = Zend_Json::decode($body);
         $username = $post['usuario'];
         $password = $post['senha'];
+        $registrationId = $post['registrationId'];
 
         if(empty($username) || empty($password)){
             $result->msg = 'Usu&aacute;rio ou Senha inv&aacute;lidos!';
@@ -67,15 +68,18 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
 
                 $verificaSituacao = $verificaStatus[0]->Situacao;
                 if($verificaSituacao == 1) {
-                    $result->msg = 'Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha.';
+                    $result->msg = 'Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha depois.';
                 }
 
-                $agentes = new Agentes();
-                $verificaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $username))->current();
+                $modelDispositivoMovel = new Dispositivomovel();
+                $result->dispositivo = $modelDispositivoMovel->salvar($registrationId, $username);
 
-                if(empty($verificaAgentes)){
-                    $result->msg = 'Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente!';
-                }
+//                $agentes = new Agentes();
+//                $verificaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $username))->current();
+//
+//                if(empty($verificaAgentes)){
+//                    $result->msg = 'Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente!';
+//                }
 
             } else {
                 $result->msg = 'Usu&aacute;rio ou Senha inv&aacute;lidos!';

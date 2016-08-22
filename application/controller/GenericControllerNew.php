@@ -43,12 +43,13 @@ class GenericControllerNew extends Zend_Controller_Action
 	 * @var $_urlPadrao
 	 */
 	protected $_urlPadrao;
+    
 
-
-	private  $idResponsavel  		= 0;
+    private  $idResponsavel  		= 0;
     private  $idAgente 				= 0;
 	private  $idUsuario 			= 0;
 	
+    
 	/**
 	 * Reescreve o método init() para aceitar 
 	 * as mensagens e redirecionamentos. 
@@ -116,8 +117,6 @@ class GenericControllerNew extends Zend_Controller_Action
 
                 
 	} // fecha init()
-
-
 
 	/**
 	 * Método para chamar as mensagens e fazer o redirecionamento

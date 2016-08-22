@@ -10,9 +10,9 @@
 
 [conexao_tabelas]
 db.adapter = PDO_MSSQL
-db.params.host = MudePorAmbiente
-db.params.username = MudePorAmbiente 
-db.params.password = MudePorAmbiente 
+db.params.host = mssql_treinamento
+db.params.username = Usuarios_Internet
+db.params.password = _Salic
 db.params.dbname = TABELAS
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -20,9 +20,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_sac]
 db.adapter = PDO_MSSQL
-db.params.host = MudePorAmbiente
-db.params.username = MudePorAmbiente 
-db.params.password = MudePorAmbiente 
+db.params.host = mssql_treinamento
+db.params.username = Usuarios_Internet
+db.params.password = _Salic
 db.params.dbname = SAC
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -30,9 +30,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_bdcorporativo]
 db.adapter = PDO_MSSQL
-db.params.host = MudePorAmbiente
-db.params.username = MudePorAmbiente 
-db.params.password = MudePorAmbiente 
+db.params.host = mssql_treinamento
+db.params.username = Usuarios_Internet
+db.params.password = _Salic
 db.params.dbname = BDCORPORATIVO
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -40,9 +40,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_agentes]
 db.adapter = PDO_MSSQL
-db.params.host = MudePorAmbiente
-db.params.username = MudePorAmbiente 
-db.params.password = MudePorAmbiente 
+db.params.host = mssql_treinamento
+db.params.username = Usuarios_Internet
+db.params.password = _Salic
 db.params.dbname = AGENTES
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -50,9 +50,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_bddne]
 db.adapter = PDO_MSSQL
-db.params.host = MudePorAmbiente
-db.params.username = MudePorAmbiente 
-db.params.password = MudePorAmbiente 
+db.params.host = mssql_treinamento
+db.params.username = Usuarios_Internet
+db.params.password = _Salic
 db.params.dbname = BDDNE
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"
@@ -60,9 +60,9 @@ resources.db.isDefaultTableAdapter = true
 
 [conexao_controledeacesso]
 db.adapter = PDO_MSSQL
-db.params.host = MudePorAmbiente
-db.params.username = MudePorAmbiente 
-db.params.password = MudePorAmbiente 
+db.params.host = mssql_treinamento
+db.params.username = Usuarios_Internet
+db.params.password = _Salic
 db.params.dbname = CONTROLEDEACESSO
 resources.db.params.charset = "utf8"
 resources.db.params.driver_options.1002 = "SET NAMES utf8"

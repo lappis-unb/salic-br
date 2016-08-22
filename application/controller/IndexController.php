@@ -25,6 +25,46 @@ class IndexController extends GenericControllerNew
         $this->_forward("index", "login");
     }
 
+    /**
+     * Envia notificação para o usuário através do aplicativo mobile.
+     * 
+     * @param stdClass $projeto
+     */
+    protected function enviarNotificacao(stdClass $projeto) {
+        $modelDispositivo = new Dispositivomovel();
+        $listaDispositivos = $modelDispositivo->listarPorIdPronac($projeto->idPronac);
+        $notification = new Minc_Notification_Message();
+        $notification
+            ->setCpf($projeto->cpf)
+            ->setCodePronac($projeto->idPronac)
+            ->setListDeviceId($modelDispositivo->listarIdDispositivoMovel($listaDispositivos))
+            ->setListResgistrationIds($modelDispositivo->listarIdRegistration($listaDispositivos))
+            ->setTitle('Projeto '. 183901)
+            ->setText('Recebeu uma Diligência!')
+            ->setListParameters(array('projeto' => $projeto->idPronac))
+            ->send()
+        ;
+xd($notification->getResponse());
+    }
+    
+    /**
+     * Método para o envio de notificações
+     * 
+     * @access public
+     * @param void
+     * @return void
+     */
+    public function notificationAction() {
+        # Envia notificação para o usuário através do aplicativo mobile.
+        $modelProjeto = new Projetos();
+        $projeto = $modelProjeto->buscarPorPronac(119079);
+        $this->enviarNotificacao((object)array(
+            'cpf' => $projeto->CNPJCPF,
+            'pronac' => $projeto->Pronac,
+            'idPronac' => $projeto->IdPRONAC
+        ));
+    }
+
     public function loginUsuarioAction()
     {
         $this->_helper->layout->disableLayout();
