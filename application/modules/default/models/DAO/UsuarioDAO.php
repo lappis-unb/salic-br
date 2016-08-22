@@ -165,7 +165,7 @@ class UsuarioDAO extends GenericModel
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             return $db->fetchRow($sql);
         } catch (Zend_Exception_Db $objException) {
-            throw new Exception($e->getMessage(), 0, $objException);
+            throw new Exception($objException->getMessage(), 0, $objException);
         }
     } // fecha m�todo getIdUsuario()
 

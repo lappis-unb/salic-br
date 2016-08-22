@@ -200,14 +200,14 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $dataFinal = data::dataAmericana($post->dataNasc);
 
             $dados = array(
-                "Cpf" => $cpf,
-                "Nome" => $post->nome,
-                "DtNascimento" => $dataFinal,
-                "Email" => $post->email,
-                "Senha" => $senhaCriptografada,
-                "DtCadastro" => date("Y-m-d"),
-                "Situacao" => 1,
-                "DtSituacao" => date("Y-m-d")
+                "cpf" => $cpf,
+                "nome" => $post->nome,
+                "dtnascimento" => $dataFinal,
+                "email" => $post->email,
+                "senha" => $senhaCriptografada,
+                "dtcadastro" => date("Y-m-d"),
+                "situacao" => 1,
+                "dtsituacao" => date("Y-m-d")
             );
 
             $sgcAcesso = new Autenticacao_Model_Sgcacesso();
@@ -228,7 +228,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
             if (empty ($sgcAcessoBuscaCpfArray) && empty ($sgcAcessoBuscaEmailArray)) {
                 $sgcAcessoSave = $sgcAcesso->salvar($dados);
-
 
                 /**
                  * ==============================================================

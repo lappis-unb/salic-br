@@ -18,6 +18,9 @@ CREATE TABLE controledeacesso.dtproperties
   version INT DEFAULT 0 NOT NULL,
   CONSTRAINT pk_dtproperties PRIMARY KEY (id, property)
 );
+
+create SEQUENCE controledeacesso.sgcacesso_idusuario_seq;
+
 CREATE TABLE controledeacesso.SGCacesso
 (
   IdUsuario INT NOT NULL,
@@ -25,7 +28,7 @@ CREATE TABLE controledeacesso.SGCacesso
   Nome VARCHAR(100) NOT NULL,
   DtNascimento TIMESTAMP NOT NULL,
   Email VARCHAR(60) NOT NULL,
-  Senha CHAR(15) NOT NULL,
+  Senha VARCHAR(255) NOT NULL,
   DtCadastro TIMESTAMP NOT NULL,
   Situacao INT NOT NULL,
   DtSituacao TIMESTAMP NOT NULL
