@@ -84,7 +84,7 @@ $buscarVeiculo   = $this->url(array('module'=>'proposta', 'controller' => 'divul
                             if(is_array($this->itensplano) and count($this->itensplano)>0)
                             foreach ($this->itensplano as $itensConteudo){
                                 ?>
-                                <option value="<?php echo $itensConteudo->idVerificacao?>"  ><?php echo $itensConteudo->Descricao?></option>
+                                <option value="<?php echo $itensConteudo->idVerificacao?>"  ><?php echo utf8_encode($itensConteudo->Descricao)?></option>
                                 <?php
                             }
                             ?>

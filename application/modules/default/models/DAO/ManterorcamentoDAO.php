@@ -1,5 +1,13 @@
 <?php
-Class ManterorcamentoDAO extends Zend_Db_Table {
+Class ManterorcamentoDAO extends GenericModel {
+
+    public function __construct() {
+        parent::__construct();
+    }
+
+    public function init(){
+        parent::init();
+    }
 
     public static function buscarPlanilhaOrcamentariaP($idPreProjeto) {
         $sql = "SELECT
@@ -93,96 +101,93 @@ Class ManterorcamentoDAO extends Zend_Db_Table {
         catch (Zend_Exception_Db $e) {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
-        //xd($sql);
         return $db->fetchAll($sql);
     }
 
-    public static function buscarDadosEditarProdutos($idPreProjeto = null, $idEtapa = null, $idProduto = null, $idItem = null, $idPlanilhaProposta=null, $idUf = null, $municipio = null, 
-            														$unidade = null, $qtd = null, $ocorrencia = null, $valor = null, $qtdDias = null, $fonte = null) {
-        $sql = "
-                SELECT
-                    pp.idPlanilhaProposta as idPlanilhaProposta,
-                    P.Codigo AS CodigoProduto,
-                    pre.idPreProjeto as idProposta,
-                    pp.idEtapa as idEtapa,
-                    pe.Descricao as DescricaoEtapa,
-                    pp.idPlanilhaItem AS idItem,
-                    ti.Descricao as DescricaoItem,
-                    pp.UfDespesa AS IdUf,
-                    uf.Descricao AS DescricaoUf,
-                    pp.MunicipioDespesa as Municipio,
-                    mun.Descricao as DescricaoMunicipio,
-                    pp.FonteRecurso as Recurso,
-                    rec.Descricao as DescricaoRecurso,
-                    pp.Unidade as Unidade,
-                    uni.Descricao as DescricaoUnidade,
-                    pp.Quantidade as Quantidade,
-                    pp.Ocorrencia as Ocorrencia,
-                    pp.ValorUnitario as ValorUnitario,
-                    CAST(pp.dsJustificativa AS TEXT) as Justificativa,
-                    pp.QtdeDias as QtdDias
-                    FROM SAC.dbo.PreProjeto AS pre
-                    INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON pre.idPreProjeto = pp.idProjeto
-                    INNER JOIN SAC.dbo.Produto AS P ON pp.idProduto = P.Codigo
-                    INNER JOIN SAC.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
-                    INNER JOIN SAC.dbo.Uf AS uf ON uf.CodUfIbge = pp.UfDespesa
-                    INNER JOIN AGENTES.dbo.Municipios mun ON mun.idMunicipioIBGE = pp.MunicipioDespesa
-                    INNER JOIN SAC.dbo.tbPlanilhaEtapa pe ON pp.idEtapa = pe.idPlanilhaEtapa
-                    INNER JOIN SAC.dbo.Verificacao rec ON rec.idVerificacao = pp.FonteRecurso
-                    INNER JOIN SAC.dbo.tbPlanilhaUnidade uni ON uni.idUnidade = pp.Unidade
-                    WHERE pp.idEtapa = $idEtapa ";
+    /**
+     *
+     */
+    public static function buscarDadosEditarProdutos($idPreProjeto = null, $idEtapa = null, $idProduto = null, $idItem = null, $idPlanilhaProposta=null, $idUf = null, $municipio = null,
+                                                                    $unidade = null, $qtd = null, $ocorrencia = null, $valor = null, $qtdDias = null, $fonte = null) {
 
-        //echo "<pre>"; die($sql);
-    	if($idPreProjeto){
-            $sql .= " AND pre.idPreProjeto = ".$idPreProjeto;
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $pp = [
+                'pp.idPlanilhaProposta as idPlanilhaProposta',
+                'pp.idEtapa as idEtapa',
+                'pp.UfDespesa AS IdUf',
+                'pp.MunicipioDespesa as Municipio',
+                'pp.idPlanilhaItem AS idItem',
+                'pp.FonteRecurso as Recurso',
+                'pp.Quantidade as Quantidade',
+                'pp.Ocorrencia as Ocorrencia',
+                'pp.ValorUnitario as ValorUnitario',
+                'CAST(pp.dsJustificativa AS TEXT) as Justificativa',
+                'pp.QtdeDias as QtdDias',
+                'pp.Unidade as Unidade',
+        ];
+
+        $sacSchema = parent::getSchema('sac');
+        $sql = $db->select()->from(['pre' => 'PreProjeto' ],'pre.idPreProjeto as idProposta' , $sacSchema)
+            ->join(['pp' => 'tbPlanilhaProposta'], 'pre.idPreProjeto = pp.idProjeto', $pp, $sacSchema)
+            ->join(['p' => 'Produto'] , 'pp.idProduto = p.codigo', 'P.Codigo AS CodigoProduto', $sacSchema)
+            ->join(['ti' => 'tbPlanilhaItens'], 'ti.idPlanilhaItens = pp.idPlanilhaItem', 'ti.Descricao as DescricaoItem', $sacSchema)
+            ->join(['uf' => 'Uf' ], 'uf.CodUfIbge = pp.UfDespesa', 'uf.Descricao AS DescricaoUf', $sacSchema)
+            ->join(['mun' => 'Municipios'], 'mun.idMunicipioIBGE = pp.MunicipioDespesa','mun.Descricao as DescricaoMunicipio', parent::getSchema('agentes'))
+            ->join(['pe' => 'tbPlanilhaEtapa'], 'pp.idEtapa = pe.idPlanilhaEtapa', 'pe.Descricao as DescricaoEtapa', $sacSchema)
+            ->join(['rec' => 'Verificacao'], 'rec.idVerificacao = pp.FonteRecurso', 'rec.Descricao as DescricaoRecurso', $sacSchema)
+            ->join(['uni' => 'tbPlanilhaUnidade'], 'uni.idUnidade = pp.Unidade', 'uni.Descricao as DescricaoUnidade', $sacSchema)
+            ->where('pp.idEtapa = ?', $idEtapa)
+            ;
+
+        if($idPreProjeto){
+            $sql->where('pre.idPreProjeto = ?', $idPreProjeto);
         }
-    	if($idProduto){
-            $sql .= " AND p.Codigo = ".$idProduto;
+        if($idProduto){
+            $sql->where('p.Codigo = ?', $idProduto);
         }
-    	if($idItem){
-            $sql .= " AND pp.idPlanilhaItem = ".$idItem;
+        if($idItem){
+            $sql->where('pp.idPlanilhaItem = ?', $idItem);
         }
         if($idPlanilhaProposta){
-            $sql .= " AND pp.idPlanilhaProposta = ".$idPlanilhaProposta;
+            $sql->where('pre.idPreProjeto  = ?', $idPreProjeto);
         }
-        
-    	if($idUf){
-            $sql .= " AND pp.UfDespesa = ".$idUf;
+
+        if($idUf){
+            $sql->where('pp.UfDespesa = ?', $idUf);
         }
-        
-       	if($municipio){
-            $sql .= " AND pp.MunicipioDespesa = ".$municipio;
+
+           if($municipio){
+            $sql->where('pp.MunicipioDespesa = ?', $municipio);
         }
-        
+
         if($unidade){
-            $sql .= " AND pp.Unidade = ".$unidade;
+            $sql->where('pp.Unidade = ?', $unidade);
         }
-        
+
         if($qtd){
-            $sql .= " AND pp.Quantidade = ".$qtd;
+            $sql->where('pp.Quantidade = ?', $qtd);
         }
-        
+
         if($ocorrencia){
-            $sql .= " AND pp.Ocorrencia = ".$ocorrencia;
+            $sql->where('pp.Ocorrencia = ?', $ocorrencia);
         }
-        
+
         if($valor){
-            $sql .= " AND pp.ValorUnitario = ".$valor;
+            $sql->where('pp.ValorUnitario = ?', $valor);
         }
-        
+
         if($qtdDias){
-            $sql .= " AND pp.QtdeDias = ".$qtdDias;
+            $sql->where('pp.QtdeDias = ?', $qtdDias);
         }
-        
+
         if($fonte){
-            $sql .= " AND pp.FonteRecurso = ".$fonte;
+            $sql->where('pp.FonteRecurso = ?', $fonte);
         }
-        
-        $db = Zend_Registry::get('db');
+
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
-
     }
 
     public static function buscarDadosCadastrarProdutos($idPreProjeto, $idProduto) {
@@ -281,7 +286,7 @@ Class ManterorcamentoDAO extends Zend_Db_Table {
         //die($sql);
         return $db->fetchAll($sql);
     }
-    
+
     public static function buscarEtapasProdutosPlanilha($idPreProjeto) {
 
         $sql = "SELECT
@@ -297,7 +302,7 @@ Class ManterorcamentoDAO extends Zend_Db_Table {
                 WHERE idPreProjeto = {$idPreProjeto}";
 
         $sql.= " ORDER BY te.Descricao ";
-		
+
         try {
             $db  = Zend_Registry::get('db');
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -369,7 +374,7 @@ Class ManterorcamentoDAO extends Zend_Db_Table {
         catch (Zend_Exception_Db $e) {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
-        
+
         //xd($sql);
         return $db->fetchAll($sql);
     }
@@ -425,7 +430,7 @@ Class ManterorcamentoDAO extends Zend_Db_Table {
         //die($sql);
         return $db->fetchAll($sql);
     }
-    
+
     public static function buscarItensPlanilhaOrcamentaria($idPreProjeto) {
 
         $sql = "  SELECT
@@ -514,7 +519,7 @@ Class ManterorcamentoDAO extends Zend_Db_Table {
 					right(i.Descricao,40) as Descricao
 				from SAC.dbo.tbPlanilhaProposta pp
 					inner join SAC.dbo.tbPlanilhaItens as i on pp.idPlanilhaItem = i.idPlanilhaItens
-					inner join SAC.dbo.tbPlanilhaEtapa as e on pp.idEtapa = e.idPlanilhaEtapa 
+					inner join SAC.dbo.tbPlanilhaEtapa as e on pp.idEtapa = e.idPlanilhaEtapa
 				where idEtapa = $idEtapa order by i.Descricao "; */
 
        $sql = "select distinct a.idPlanilhaItens,b.Descricao
@@ -549,7 +554,7 @@ Class ManterorcamentoDAO extends Zend_Db_Table {
 
         return $db->fetchAll($sql);
     }
-    
+
     public static function buscarFontePlanilha($idPreProjeto) {
         $sql = "SELECT
                     DISTINCT
@@ -561,7 +566,7 @@ Class ManterorcamentoDAO extends Zend_Db_Table {
                     left JOIN SAC.dbo.Produto p ON (pd.idProduto = p.Codigo)
                 left JOIN SAC.dbo.Verificacao veri ON veri.idVerificacao = pp.FonteRecurso
                 WHERE idPreProjeto = $idPreProjeto and pd.idProduto != 0 and pp.idProduto != 0 and p.Codigo != 0";
-        
+
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -605,10 +610,10 @@ Class ManterorcamentoDAO extends Zend_Db_Table {
 
         return $db->fetchAll($sql);
     }
-    
+
     public static function buscarProdutosPlanilha($idPreProjeto) {
 
-        $sql = "SELECT 
+        $sql = "SELECT
                     p.Codigo as CodigoProduto,
                     p.Descricao as DescricaoProduto,
                     pre.idPreProjeto as PreProjeto,
@@ -668,41 +673,41 @@ Class ManterorcamentoDAO extends Zend_Db_Table {
     	if($idItem){
         	$sql .= " AND tpi.idPlanilhaItens = $idItem";
         }
-        
+
         if($idUf){
         	$sql .= " AND tpp.UfDespesa = $idUf";
         }
-        
+
     	if($idMunicipio){
         	$sql .= " AND tpp.MunicipioDespesa = $idMunicipio";
         }
-        
+
     	if($fonte){
         	$sql .= " AND veri.idVerificacao = $fonte";
         }
-        
+
     	if($unidade){
         	$sql .= " AND un.idUnidade = $unidade";
         }
-        
+
     	if($quantidade){
         	$sql .= " AND tpp.Quantidade = $quantidade";
         }
-        
+
     	if($ocorrencia){
         	$sql .= " AND tpp.Ocorrencia = $ocorrencia";
         }
-        
+
     	if($vlunitario){
         	$sql .= " AND tpp.ValorUnitario = $vlunitario";
         }
-        
+
     	if($qtdDias){
         	$sql .= " AND tpp.QtdeDias = $qtdDias";
         }
 
         $sql.= " ORDER BY tpe.Descricao ";
-		
+
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -854,4 +859,3 @@ Class ManterorcamentoDAO extends Zend_Db_Table {
 
 }
 
-?>

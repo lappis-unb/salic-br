@@ -304,7 +304,7 @@
                                 <select class="select_simples valida" style="width: 90%" id="fonterecurso" name="fonterecurso">
                                     <option value="<?php echo "" ?>"> - Selecione - </option>
                                     <?php foreach($this->Recurso as $recurso) {?>
-                                    <option value="<?php echo $recurso->idVerificacao ?>"><?php echo $recurso->VerificacaoDescricao ?></option>
+                                    <option value="<?php echo $recurso->idVerificacao ?>"><?php echo utf8_encode($recurso->VerificacaoDescricao) ?></option>
                                     <?php } ?>
                                 </select>
                             </td>

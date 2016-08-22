@@ -22,22 +22,22 @@
             $("#total").val('R$ '+soma);*/
             //$('#vlunitario').maskMoney({symbol:"R$ ", decimal:",", thousands:""});
             var vlunitario = $("#vlunitario").val().replace('R$ ','');
-            
-        	// retira os pontos e as vírgulas, deixando somente números
+
+        	// retira os pontos e as vÃ­rgulas, deixando somente nÃºmeros
             vlunitario = vlunitario.replace(/\D/g, "");
             vlunitario = vlunitario.replace(/(\d{0})(\d)/, "$1$2");
 
         	// adiciona o ponto na casa decimal
             vlunitario = vlunitario.replace(/(\d)(\d{2})$/, "$1.$2");
 
-        	// converte para float e adiciona precisão decimal
+        	// converte para float e adiciona precisÃ£o decimal
         	qtd        = parseFloat($("#quantidade").val()).toFixed(2);
         	ocorrencia = parseFloat($("#ocorrencia").val()).toFixed(2);
         	valor      = parseFloat(vlunitario).toFixed(2);
-            
+
             soma = parseFloat(qtd * ocorrencia * valor).toFixed(2); // armazena o resultado
             //soma = soma.toFixed(2).replace('.',',');
-            
+
             if(soma >= 0){
                 $("#total").val(soma);
             }else{
@@ -96,7 +96,7 @@
             if(validar == false){
                  $("#error").html('Dados obrigat&oacute;rios n&atilde;o informados!');
                  $("#error").dialog('open');
-             
+
             } else{
                 if($("#quantidade").val() == 0){
                     $("#error").html('Quantidade n&atilde;o pode ser igual a zero');
@@ -111,30 +111,30 @@
                     $("#ocorrencia").val('');
                     return false;
                 }
-                 
+
              	var vlunitario = $("#vlunitario").val();
              	vlunitario = vlunitario.replace(/\D/g, "");
              	vlunitario = vlunitario.replace(/(\d{0})(\d)/, "$1$2");
-             	
+
                 if(vlunitario == 0){
                     $("#error").html('Valor unit&aacute;rio n&atilde;o pode ser igual a zero');
                     $("#error").dialog('open');
                     $("#vlunitario").val('');
                     return false;
                 }
-                 
+
                 if($("#qtdDias").val() == 0){
                     $("#error").html('Quantidade de dias n&atilde;o pode ser igual a zero');
                     $("#error").dialog('open');
                     $("#qtdDias").val('');
                     return false;
-                
+
                 } else {
 
                     var jstv = $('#editor1').val();
                     if(jstv.length > 500){
                         $("#justificativaErro").dialog("destroy");
-                        $("#justificativaErro").html('O campo Justificativa não pode ultrapassar 500 caracteres!');
+                        $("#justificativaErro").html('O campo Justificativa nÃ£o pode ultrapassar 500 caracteres!');
                         $("#justificativaErro").dialog ({
                             width:320,
                             height:180,
@@ -253,7 +253,7 @@
         return result;
     }
 
-    //Formata número tipo moeda usando o evento onKeyDown
+    //Formata nÃºmero tipo moeda usando o evento onKeyDown
     function Formata(campo,tammax,teclapres,decimal) {
         var tecla = teclapres.keyCode;
         vr = Limpar(campo.value,"0123456789");
@@ -424,7 +424,7 @@
                             <td>
                                 <label for="municipio">QTD<span class="red">*</span>:</label><br />
                                 <input type="text" class="input_simples valida soma numero" size="3" id="quantidade" maxlength="9" name="qtd">
-                                
+
                             </td>
 
                             <td>

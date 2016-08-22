@@ -57,15 +57,12 @@ $IncluirDivulgacao                 = $this->url(array('controller' => 'divulgaca
 
 <!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
-
     <form id="formDivulgacao" method="post">
         <input type="hidden" name="idpeca" id="idpeca" value=""/>
         <input type="hidden" name="idveiculo" id="idveiculo" value=""/>
         <input type="hidden" name="iddivulgacao" id="iddivulgacao" value=""/>
     </form>
     <table class="tabela">
-
-
         <tr class="titulo_tabela">
             <th width="40%">Pe&ccedil;a</th>
             <th width="40%">Ve&iacute;culo</th>
@@ -73,14 +70,13 @@ $IncluirDivulgacao                 = $this->url(array('controller' => 'divulgaca
         </tr>
                 <?php
                     foreach ($this->itensDivulgacao as $divulgacao){
-                        //Zend_Debug::dump($divulgacao);
                         ?>
                             <tr class="fundo">
                                 <!--<td class="centro"><img border="0" title="Editar" class="editar" veiculo="<?php echo $divulgacao->idVeiculo ?>" peca="<?php echo $divulgacao->idPeca ?>" divulgacao="<?php echo $divulgacao->idPlanoDivulgacao ?>" src="<?php echo $this->baseUrl(); ?>/public/img/ico/edit.png"></td>
                                 <td class="centro"><img border="0" title="Excluir" class="excluir" veiculo="<?php echo $divulgacao->idVeiculo ?>" peca="<?php echo $divulgacao->idPeca ?>" divulgacao="<?php echo $divulgacao->idPlanoDivulgacao ?>" src="<?php echo $this->baseUrl(); ?>/public/img/btn_excluir.gif"></td>-->
 
-                                <td class="centro"><?php echo $divulgacao->peca ?></td>
-                                <td class="centro"><?php echo $divulgacao->veiculo ?></td>
+                                <td class="centro"><?php echo utf8_encode($divulgacao->peca) ?></td>
+                                <td class="centro"><?php echo utf8_encode($divulgacao->veiculo) ?></td>
                                 <td class="centro" nowrap>
                                     <input type="button" id="btn_editar" name="btn_editar" style="width: 88px" class="btn_editar" onclick="window.location.href='<?php echo $this->url(array('controller'=>'divulgacao', 'action'=>'editardivulgacao')); ?>?cod=<?php echo $divulgacao->idPlanoDivulgacao;?>&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?>'">
                                     <input type="button" id="btn_excluir" name="btn_excluir" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $divulgacao->idPlanoDivulgacao; ?>);">
