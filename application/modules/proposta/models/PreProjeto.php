@@ -1157,6 +1157,7 @@ class Proposta_Model_PreProjeto extends GenericModel
      * @static
      * @access public
      * @return void
+     * @author wouerner <wouerner@gmail.com>
      */
     public static function listarPropostasResultado($idAgente, $idResponsavel, $idAgenteCombo)
     {

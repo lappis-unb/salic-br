@@ -44,7 +44,7 @@ class GenericModel extends Zend_Db_Table_Abstract {
      *
      * @todo melhorar e amadurecer codigo
      */
-    public function getSchema($strSchema)
+    public static function getSchema($strSchema)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
 

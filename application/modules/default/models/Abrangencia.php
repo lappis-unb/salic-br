@@ -1,12 +1,22 @@
-<?php 
-class Abrangencia extends Zend_Db_Table_Abstract 
+<?php
+/**
+ * Abrangencia
+ *
+ * @uses GenericModel
+ * @author  wouerner <wouerner@gmail.com>
+ * @since 22/08/2016
+ */
+class Abrangencia extends GenericModel
 {
-    protected $_name = "Abrangencia";
-    //protected $_primary = "idAbrangencia";
+    protected $_name = 'abrangencia';
+    protected $_schema = 'sac';
+    protected $_banco = "sac";
 
     public function __construct() {
-        $db = new Conexao(Zend_Registry::get('DIR_CONFIG'), "conexao_sac");
         parent::__construct();
+    }
+    public function init(){
+        parent::init();
     }
 
     /**
@@ -19,50 +29,34 @@ class Abrangencia extends Zend_Db_Table_Abstract
      */
     public function buscar($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
+        $sql = $this->select()
+            ->setIntegrityCheck(false)
+            ->from(['a' => 'abrangencia'], ['*'])
+            ->join(['p' => 'pais'], 'a.idPais = p.idPais and a.stAbrangencia = 1', 'p.Descricao AS pais', 'AGENTES.dbo')
+            ->joinLeft(['u' => 'uf'], '(a.idUF = u.idUF)', 'u.descricao AS uf', 'AGENTES.dbo')
+            ->joinLeft(['m' => 'municipios'], '(a.idMunicipioIBGE = m.idMunicipioIBGE)', 'm.descricao AS cidade', 'AGENTES.dbo')
+            ;
 
-        $sql = "SELECT
-                    a.*,
-                    p.Descricao pais,
-                    u.descricao uf,
-                    m.descricao cidade
-                FROM
-                    SAC.dbo.Abrangencia a
-                INNER JOIN AGENTES.dbo.Pais p on (a.idPais=p.idPais and a.stAbrangencia = 1)
-                LEFT JOIN AGENTES.dbo.Uf u on (a.idUF=u.idUF)
-                LEFT JOIN AGENTES.dbo.Municipios m on (a.idMunicipioIBGE=m.idMunicipioIBGE)
-                ";
-
-        $ct=1;
         foreach ($where as $coluna=>$valor)
         {
-            if($ct==1)
-                $sql .= "WHERE ".$coluna." = '".$valor."'";
-            else
-                $sql .= " AND ".$coluna." = '".$valor."'";
-            $ct++;
+            $sql->where($coluna. '= ?', $valor);
         }
-        
-        $db  = Zend_Registry::get('db');
-	$db->setFetchMode(Zend_DB::FETCH_OBJ);
-	return $db->fetchAll($sql);
 
+        $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
+        return $this->_db->fetchAll($sql);
     }
 
-    
-    
     public function verificarIgual($idPais, $idUF, $idMunicipio, $idPreProjeto)
     {
-
         $sql = "SELECT * FROM SAC.dbo.Abrangencia WHERE idProjeto = ".$idPreProjeto."
 				 AND idPais = ".$idPais."
-				 AND idUF = ".$idUF." 
+				 AND idUF = ".$idUF."
 				 AND idMunicipioIBGE = ".$idMunicipio."
 				 AND stAbrangencia = 1";
-        
+
         $db  = Zend_Registry::get('db');
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
-
     }
 
     /**
@@ -72,10 +66,9 @@ class Abrangencia extends Zend_Db_Table_Abstract
      */
     public function salvar($dados)
     {
-        
         //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
         $tblAbrangencia = new Abrangencia();
-        
+
         //DECIDINDO SE INCLUI OU ALTERA UM REGISTRO
         $dados['stAbrangencia'] = 1;
         if(isset($dados['idAbrangencia']) && !empty ($dados['idAbrangencia'])){
@@ -87,7 +80,7 @@ class Abrangencia extends Zend_Db_Table_Abstract
             return $tblAbrangencia->insert($dados);
             //$rsAbrangencia = $tblAbrangencia->createRow();
         }
-        
+
         //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
         if(!empty($dados['idProjeto']))       { $rsAbrangencia->idProjeto = $dados['idProjeto']; }
         if(!empty($dados['idPais']))          { $rsAbrangencia->idPais = $dados['idPais']; }
@@ -110,13 +103,34 @@ class Abrangencia extends Zend_Db_Table_Abstract
      * Apaga registro do banco
      * @param number $idAbrangencia - ID do registro que deve ser apagado
      * @return true or false
+     * @todo colocar padrão ORM
      */
     public function excluir($idAbrangencia)
     {
         $sql ="DELETE FROM SAC.dbo.Abrangencia WHERE idAbrangencia = ".$idAbrangencia;
-        
+
         $db  = Zend_Registry::get('db');
-	$db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        if($db->query($sql)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * Apaga locais de ralizacao a partir do ID do PreProjeto
+     * @param number $idProjeto - ID do PerProjeto ao qual as lcoalizações estão vinculadas
+     * @return true or false
+     * @todo colocar padrão ORM
+     */
+    public function excluirPeloProjeto($idProjeto)
+    {
+        $sql ="DELETE FROM SAC.dbo.Abrangencia WHERE idProjeto = ".$idProjeto . " AND stAbrangencia = 1";
+
+        $db  = Zend_Registry::get('db');
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        //xd($sql);
         if($db->query($sql)){
             return true;
         }else{
@@ -126,26 +140,13 @@ class Abrangencia extends Zend_Db_Table_Abstract
     }
 
     /**
-     * Apaga locais de ralizacao a partir do ID do PreProjeto 
-     * @param number $idProjeto - ID do PerProjeto ao qual as lcoalizações estão vinculadas
-     * @return true or false
+     * abrangenciaProjeto
+     *
+     * @param bool $retornaSelect
+     * @access public
+     * @return void
+     * @todo retirar Zend_Db_Expr
      */
-    public function excluirPeloProjeto($idProjeto)
-    {
-        $sql ="DELETE FROM SAC.dbo.Abrangencia WHERE idProjeto = ".$idProjeto . " AND stAbrangencia = 1";
-        
-        $db  = Zend_Registry::get('db');
-	$db->setFetchMode(Zend_DB::FETCH_OBJ);
-	//xd($sql);
-	if($db->query($sql)){
-            return true;
-        }else{
-            return false;
-        }
-
-    }
-
-
     public function abrangenciaProjeto($retornaSelect = false){
 
         $selectAbrangencia = $this->select();
@@ -163,14 +164,21 @@ class Abrangencia extends Zend_Db_Table_Abstract
         $selectAbrangencia->group('idUF');
         $selectAbrangencia->group('idMunicipioIBGE');
 
-
         if($retornaSelect)
             return $selectAbrangencia;
         else
             return $this->fetchAll($selectAbrangencia);
-
     }
 
+    /**
+     * abrangenciaProjetoPesquisa
+     *
+     * @param bool $retornaSelect
+     * @param bool $where
+     * @access public
+     * @return void
+     * @todo retirar Zend_Db_Expr
+     */
     public function abrangenciaProjetoPesquisa($retornaSelect = false,$where = array()){
 
         $selectAbrangencia = $this->select();
@@ -182,7 +190,6 @@ class Abrangencia extends Zend_Db_Table_Abstract
                                 'idProjeto'
                              )
                      );
-
 
         $selectAbrangencia->joinInner(
                             array('mun'=>'Municipios'),
@@ -204,12 +211,9 @@ class Abrangencia extends Zend_Db_Table_Abstract
 
         $selectAbrangencia->group('idProjeto');
 
-
         if($retornaSelect)
             return $selectAbrangencia;
         else
             return $this->fetchAll($selectAbrangencia);
-
     }
 }
-?>

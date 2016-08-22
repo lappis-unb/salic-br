@@ -390,7 +390,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
 
         if(count($rsAbrangencia)>0 && empty($idAbrangencia)){
-            parent::message("Local de Realiza��o j� cadastrado!", "/proposta/localderealizacao/index?idPreProjeto=". $this->idPreProjeto . $edital, "ALERT");
+            parent::message("Local de Realização já cadastrado!", "/proposta/localderealizacao/index?idPreProjeto=". $this->idPreProjeto . $edital, "ALERT");
         }
 
         if(isset($_REQUEST['edital'])) {

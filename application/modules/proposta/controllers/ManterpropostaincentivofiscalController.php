@@ -1177,7 +1177,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 $arrPropostas[$x]['nomeprojeto'] = utf8_encode($prop->nomeprojeto);
                 $x++;
             }
-            $identificadores[$i] = $prop->idAgente.$prop->idPreProjeto;
+            $identificadores[$i] = $prop->idagente.$prop->idpreprojeto;
             $i++;
         }
 
