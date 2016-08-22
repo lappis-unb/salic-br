@@ -32,16 +32,19 @@ class tbComunicados extends GenericModel {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
-                array("c"=>$this->_name),
-                array("idComunicado", 
-					  "Comunicado",
-					  "idSistema", 
-					  "stOpcao", 
-					  "stEstado", 
-					  "dtInicioVigencia", 
-					  "dtTerminoVigencia",
-					  "CONVERT(CHAR(10),dtInicioVigencia,103) AS dtInicioVigenciaPT", 
-					  "CONVERT(CHAR(10),dtTerminoVigencia, 103) AS dtTerminoVigenciaPT")
+                array("c" => $this->_name),
+                array("idcomunicado",
+					  "comunicado",
+					  "idsistema",
+					  "stopcao",
+					  "stestado",
+					  "dtiniciovigencia",
+					  "dtterminovigencia",
+					  "dtiniciovigencia AS dtiniciovigenciapt",
+					  "dtterminovigencia AS dtterminovigenciapt"),
+                $this->_schema
+//					  "CONVERT(CHAR(10),dtInicioVigencia,103) AS dtInicioVigenciaPT",
+//					  "CONVERT(CHAR(10),dtTerminoVigencia, 103) AS dtTerminoVigenciaPT")
 		);
                 
         //adiciona quantos filtros foram enviados
@@ -53,8 +56,9 @@ class tbComunicados extends GenericModel {
             $slct2 = $this->select();
             $slct2->setIntegrityCheck(false);
             $slct2->from(
-                            array("c"=>$this->_name),
-                            array('total'=>"count(*)")
+                            array("c" => $this->_name),
+                            array('total'=>"count(*)"),
+                            $this->_schema
                          );
             //adiciona quantos filtros foram enviados
             foreach ($where as $coluna => $valor) {
@@ -78,7 +82,7 @@ class tbComunicados extends GenericModel {
         }
         
         //xd($slct->assemble());
-        
+
         return $this->fetchAll($slct);
     }
 

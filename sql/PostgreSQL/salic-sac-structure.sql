@@ -3100,7 +3100,7 @@ CREATE TABLE sac.tbComunicados
   idComunicado INT PRIMARY KEY NOT NULL,
   Comunicado VARCHAR NOT NULL,
   idSistema INT NOT NULL,
-  stOpcao CHAR DEFAULT 0,
+  stOpcao INTEGER DEFAULT 0,
   stEstado INTEGER DEFAULT 1 NOT NULL,
   dtInicioVigencia timestamp,
   dtTerminoVigencia timestamp,
