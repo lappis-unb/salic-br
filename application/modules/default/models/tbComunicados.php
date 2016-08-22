@@ -27,6 +27,8 @@ class tbComunicados extends GenericModel {
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
+     *
+     * @todo trocar as conversoes de datas conforme o banco
      */
     public function listarComunicados($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false) {
         $slct = $this->select();
