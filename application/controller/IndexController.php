@@ -39,8 +39,8 @@ class IndexController extends GenericControllerNew
             ->setCodePronac($projeto->idPronac)
             ->setListDeviceId($modelDispositivo->listarIdDispositivoMovel($listaDispositivos))
             ->setListResgistrationIds($modelDispositivo->listarIdRegistration($listaDispositivos))
-            ->setTitle('Projeto '. $projeto->pronac)
-            ->setText('Recebeu nova atualização!')
+            ->setTitle('Projeto '. 183901)
+            ->setText('Recebeu uma Diligência!')
             ->setListParameters(array('projeto' => $projeto->idPronac))
             ->send()
         ;

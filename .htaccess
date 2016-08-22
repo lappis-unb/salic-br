@@ -5,7 +5,7 @@ php_flag register_globals off
 
 ## Always set these headers.
 Header always set Access-Control-Allow-Origin "*"
-Header always set Access-Control-Allow-Methods "GET, OPTIONS"
+Header always set Access-Control-Allow-Methods "GET, OPTIONS, PUT, POST, DELETE"
 Header always set Access-Control-Max-Age "1000"
 Header always set Access-Control-Allow-Headers "x-requested-with, Content-Type, origin, authorization, accept, client-security-token, ApplicationKey"
 

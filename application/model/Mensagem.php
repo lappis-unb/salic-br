@@ -29,26 +29,86 @@ class Mensagem extends GenericModel{
     }
     
     /**
-     * Lista todos os dispositivos por idPronac.
+     * Monta todos os filtros padrões das consultas e também montará os filtros dinâmicos.
      * 
-     * @param integer $idPronac
-     * @return array
+     * @param Zend_Db_Table_Select $consulta
+     * @param stdClass $objParam
+     * @return Zend_Db_Table_Select
      */
-//    public function listarPorIdPronac($idPronac){
-//        $consulta = $this->select();
-//        $consulta->setIntegrityCheck(false);
-//        $consulta
-//            ->from(array('projetos' => 'vwAgentesSeusProjetos'), array(), 'SAC.dbo')
-//            ->join(array('usuario' => 'SGCacesso'), 'projetos.IdUsuario = usuario.IdUsuario', array(
-//                'cpf' => 'Cpf'), 'ControleDeAcesso.dbo')
-//            ->join(array('dispositivo' => 'tbDispositivoMovel'), 'usuario.Cpf = dispositivo.nrCPF', array(
-//                'idRegistration'), 'SAC.dbo')
-//            ->group(array(
-//                'cpf',
-//                'idRegistration'))
-//        ;
-//        
-//        return $this->fetchAll($consulta);
-//    }
+    public function montarFiltrosListarDeDispositivo($consulta, stdClass $objParam){
+        # Filtros padrões obrigatórios.
+        $consulta->where('m.dtExclusao IS NULL');
+        $consulta->where('md.dtExclusao IS NULL');
+        $consulta->where('d.idRegistration = ?', $objParam->idRegistration? $objParam->idRegistration: '');
+        
+        # Filtro(s) Dinamico(s).
+        if($objParam->new) {
+            $consulta->where('m.dtAcesso IS NULL');
+        }
+        
+        return $consulta;
+    }
+    
+    public function buscarTotalListarDeDispositivo(stdClass $objParam){
+        $total = 0;
+        $consulta = $this->select();
+        $consulta->setIntegrityCheck(false);
+        $consulta
+            ->from(array('m' => 'tbMensagem'), array('total' => new Zend_Db_Expr('COUNT(DISTINCT m.idMensagem)')), 'SAC.dbo')
+            ->join(array('md' => 'tbMensagemDispositivoMovel'), 'm.idMensagem = md.idMensagem', array(), 'SAC.dbo')
+            ->join(array('d' => 'tbDispositivoMovel'), 'md.idDispositivoMovel = d.idDispositivoMovel', array(), 'SAC.dbo');
+        # Filtros
+        $this->montarFiltrosListarDeDispositivo($consulta, $objParam);
+
+        $rs = $this->fetchRow($consulta);
+        if($rs){
+            $total = (int)$rs->total;
+        }
+        
+        return $total;
+    }
+    
+    /**
+     * Lista mensagens por codigo de registro do dispositivo.
+     * 
+     * @param stdClass $objParam
+     * @return Zend_Db_Table_Rowset_Abstract
+     */
+    public function listarDeDispositivo(stdClass $objParam){
+        $consulta = $this->select();
+        $consulta->setIntegrityCheck(false);
+        $consulta
+            ->from(array('m' => 'tbMensagem'), array(
+                'idMensagem',
+                'nrCPF',
+                'idPronac',
+                'titulo',
+                'descricao',
+                'dtEnvio',
+                'dtAcesso'), 'SAC.dbo')
+            ->join(array('md' => 'tbMensagemDispositivoMovel'), 'm.idMensagem = md.idMensagem', array(), 'SAC.dbo')
+            ->join(array('d' => 'tbDispositivoMovel'), 'md.idDispositivoMovel = d.idDispositivoMovel', array(), 'SAC.dbo')
+            ->group(array(
+                'm.idMensagem',
+                'm.nrCPF',
+                'm.idPronac',
+                'm.titulo',
+                'm.descricao',
+                'm.dtEnvio',
+                'm.dtAcesso'))
+            ->order(array(
+                'm.dtAcesso ASC',
+                'm.dtEnvio DESC'));
+        # Filtros
+        $this->montarFiltrosListarDeDispositivo($consulta, $objParam);
+
+        # Paginação
+        if($objParam->next) {
+            $consulta->limit($objParam->next, (int)$objParam->offset);
+        }
+
+//xd($consulta->__toString());
+        return $this->fetchAll($consulta);
+    }
     
 }
