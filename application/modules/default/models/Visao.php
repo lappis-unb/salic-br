@@ -15,8 +15,8 @@ class Visao extends GenericModel
     /* dados da tabela */
 
     protected $_banco = 'Agentes';
-    protected $_name = 'Visao';
-    protected $_schema = 'Agentes';
-    protected $_primary = 'idVisao';
+    protected $_name = 'visao';
+    protected $_schema = 'agentes';
+    protected $_primary = 'idvisao';
 
 }

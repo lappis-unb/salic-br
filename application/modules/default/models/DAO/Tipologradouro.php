@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Modelo Tipologradouro
  * @author Equipe RUP - Politec
@@ -6,40 +7,56 @@
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - MinistÈrio da Cultura - Todos os direitos reservados.
+ * @copyright ÔøΩ 2010 - MinistÔøΩrio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-
 class Tipologradouro extends Zend_Db_Table
 {
-	protected $_name = 'AGENTES.dbo.Verificacao'; // nome da tabela
+    protected $_banco = "agentes";
+    protected $_name = 'verificacao';
+    protected $_schema = 'agentes';
 
+    /**
+     * @var Zend_Db_Table
+     */
+    private static $instancia;
 
+    /**
+     * Respons√°vel por implementar o Singleton, retornando apenas uma instancia da classe
+     * utilizando uma chamada est√°tica.
+     * @return Zend_Db_Table
+     * @author Vin√≠cius Feitosa da Silva <viniciusfesil@mail.com>
+     */
+    public static function obterInstancia()
+    {
+        if (!self::$instancia) {
+            self::$instancia = new Tipologradouro();
+        }
+        return self::$instancia;
+    }
 
-	/**
-	 * MÈtodo para buscar todos os tipos de logradouros
-	 * @access public
-	 * @param void
-	 * @return object $db->fetchAll($sql)
-	 */
-	public static function buscar()
-	{
-		$sql = "SELECT idVerificacao AS id, descricao ";
-		$sql.= "FROM AGENTES.dbo.Verificacao ";
-		$sql.= "WHERE idTipo = 13 ";
-		$sql.= "ORDER BY descricao;";
+    /**
+     * M√©todo para buscar todos os tipos de logradouros
+     * @access public
+     * @param void
+     * @author Vin√≠cius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return array
+     */
+    public static function buscar()
+    {
+        $objSingleton = self::obterInstancia();
+        $sql = "SELECT idverificacao AS id, descricao ";
+        $sql .= 'FROM  ' . GenericModel::getStaticTableName($objSingleton->_schema, $objSingleton->_name);
+        $sql .= " WHERE idTipo = 13 ";
+        $sql .= "ORDER BY descricao;";
 
-		try
-		{
-			$db  = Zend_Registry::get('db');
-			$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		}
-		catch (Zend_Exception_Db $e)
-		{
-			$this->view->message = "Erro ao buscar Tipos de Logradouro: " . $e->getMessage();
-		}
+        try {
+            $db = Zend_Registry::get('db');
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        } catch (Zend_Exception_Db $objException) {
+            throw new Exception("Erro ao buscar Tipos de Logradouro: " . $objException->getMessage(), 0, $objException);
+        }
 
-		return $db->fetchAll($sql);
-	} // fecha buscar()
-
-} // fecha class
+        return $db->fetchAll($sql);
+    }
+}

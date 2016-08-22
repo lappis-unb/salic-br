@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Modelo Estado
  * @author Equipe RUP - Politec
@@ -6,67 +7,80 @@
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - MinistÈrio da Cultura - Todos os direitos reservados.
+ * @copyright ÔøΩ 2010 - MinistÔøΩrio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-
 class Estado extends Zend_Db_Table
 {
-	protected $_name = 'AGENTES.dbo.UF'; // nome da tabela
+    protected $_banco = "agentes";
+    protected $_name = 'uf';
+    protected $_schema = 'agentes';
+
+    /**
+     * @var Zend_Db_Table
+     */
+    private static $instancia;
+
+    /**
+     * Respons√°vel por implementar o Singleton, retornando apenas uma instancia da classe
+     * utilizando uma chamada est√°tica.
+     * @return Zend_Db_Table
+     * @author Vin√≠cius Feitosa da Silva <viniciusfesil@mail.com>
+     */
+    public static function obterInstancia() {
+        if(!self::$instancia) {
+            self::$instancia = new Estado();
+        }
+        return self::$instancia;
+    }
+
+    /**
+     * M√©todo para buscar os estados
+     * @access public
+     * @param void
+     * @return array
+     * @author Vin√≠cius Feitosa da Silva <viniciusfesil@mail.com>
+     */
+    public static function buscar()
+    {
+        $objEstado = self::obterInstancia();
+        $sql = 'SELECT idUF AS id, Sigla AS descricao ';
+        $sql .= 'FROM ' . GenericModel::getStaticTableName($objEstado->_schema, $objEstado->_name);
+        $sql .= ' ORDER BY Sigla';
 
 
+        try {
+            $db = Zend_Registry::get('db');
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+            return $db->fetchAll($sql);
+        } catch (Zend_Exception_Db $objException) {
+            throw new Exception("Erro ao buscar Estados: " . $objException->getMessage(), 0, $objException);
+        }
+    }
 
-	/**
-	 * MÈtodo para buscar os estados
-	 * @access public
-	 * @param void
-	 * @return object $db->fetchAll($sql)
-	 */
-	public static function buscar()
-	{
-		$sql = "SELECT idUF AS id, Sigla AS descricao ";
-		$sql.= "FROM AGENTES.dbo.UF ";
-		$sql.= "ORDER BY Sigla";
-
-		try
-		{
-			$db  = Zend_Registry::get('db');
-			$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		}
-		catch (Zend_Exception_Db $e)
-		{
-			$this->view->message = "Erro ao buscar Estados: " . $e->getMessage();
-		}
-
-		return $db->fetchAll($sql);
-	} // fecha buscar()
-
-
-
-	/**
-	 * MÈtodo para buscar os estados de acordo com a regi„o
-	 * @access public
-	 * @param void
-	 * @return object $db->fetchAll($sql)
-	 */
-	public static function buscarRegiao($regiao)
-	{
-		$sql = "SELECT idUF AS id, Descricao AS descricao 
-			FROM AGENTES.dbo.UF 
-			WHERE Regiao = '$regiao'
+    /**
+     * M√©todo para buscar os estados de acordo com a regi√£o
+     * @access public
+     * @param void
+     * @return array
+     * @author Vin√≠cius Feitosa da Silva <viniciusfesil@mail.com>
+     */
+    public static function buscarRegiao($regiao)
+    {
+        $objEstado = self::obterInstancia();
+        $sql = 'SELECT idUF AS id, Descricao AS descricao 
+			FROM ' . GenericModel::getStaticTableName($objEstado->_schema, $objEstado->_name) . " 
+			WHERE Regiao = '{$regiao}'
 			ORDER BY Sigla";
 
-		try
-		{
-			$db  = Zend_Registry::get('db');
-			$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		}
-		catch (Zend_Exception_Db $e)
-		{
-			$this->view->message = "Erro ao buscar Estados: " . $e->getMessage();
-		}
+        try {
+            $db = Zend_Registry::get('db');
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-		return $db->fetchAll($sql);
-	} // fecha buscar()
+            return $db->fetchAll($sql);
+        } catch (Zend_Exception_Db $objException) {
+            throw new Exception("Erro ao buscar Estados: " . $objException->getMessage(), 0, $objException);
+        }
 
-} // fecha class
+    }
+}
