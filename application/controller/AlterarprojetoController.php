@@ -1714,8 +1714,9 @@ class AlterarprojetoController extends GenericControllerNew {
         if (strlen($pronac) > 12) {
             $pronac = Seguranca::dencrypt($pronac);
         }
-
-        if (!empty($this->_request->getParam("Situacao"))) {
+        $situacao = $this->_request->getParam("Situacao");
+        
+        if (!empty($situacao)) {
             $providenciaTomada = $post->justificativa;
         } else {
             $providenciaTomada = '';
