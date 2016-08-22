@@ -99,10 +99,6 @@ class GenericModel extends Zend_Db_Table_Abstract
         return $strName;
     }
 
-    /**
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
-     * @return null
-     */
     public function init()
     {
         # Tratando o nome da tabela conforme o tipo de banco.
