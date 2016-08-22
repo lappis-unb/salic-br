@@ -33,6 +33,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract {
      * @access public
      * @param void
      * @return void
+     *
+     * @todo Melhorar a view do PostgreSQL onde usa 3 funcoes (tabelas.vwUsuariosOrgaosGrupos)
      */
     public function loginAction() {
 
