@@ -1,3 +1,9 @@
+Release 1.9.0
+  * Novo: [API-Mobile] Funcionalidade de exibir mensagens novas ao iniciar o aplicativo
+  * Novo: [API-Mobile] Desenvolvimento da funcionalidade que salva as informações no Banco de Dados de mensagens enviadas
+  * Novo: [API-Mobile] Refatoração da funcionalidade de envio de notificações.
+  * Fix: [Alterar projeto] plano de distribuição não gravava valor correto para quantidade total
+
 Release 1.8.10
   * Fix: [Consultar dados projeto] Liberação correta dos links do menu lateral de acordo com permissões do projeto
 
