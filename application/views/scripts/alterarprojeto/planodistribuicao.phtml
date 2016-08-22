@@ -392,7 +392,7 @@ include_once 'scripts/alterarprojeto/inc/menu.inc.php';
                 <input class="input_simples obrigatorio" type="text" name="qtdepromocional" id="qtdepromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>" value="<?php echo $planoDistribuicao->QtdeVendaPromocional; ?>" maxlength="8" size="10">
             </td>
             <td align="center">
-                <input disabled="disabled"  name="nexemplares" id="nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>" class="input_simples" type="text" maxlength="10" value="<?php echo $planoDistribuicao->QtdeProduzida; ?>">
+                <input readonly="readonly"  name="nexemplares" id="nexemplares-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>" class="input_simples" style="color: grey" type="text" maxlength="10" value="<?php echo $planoDistribuicao->QtdeProduzida; ?>">
             </td>
         </tr>
     </table>
@@ -419,13 +419,13 @@ include_once 'scripts/alterarprojeto/inc/menu.inc.php';
     <input class="input_simples obrigatorio" type="text" name="precopromocional" id="precopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>" value="<?php echo @number_format(($planoDistribuicao->PrecoUnitarioPromocional), 2, ",", "."); ?>" maxlength="9" size="10">
             </td>
             <td align="center">
-                <input   name="previstonormal"  disabled="disabled"  id="previstonormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>" class="input_simples" type="text" maxlength="10" value="<?php echo number_format($planoDistribuicao->QtdeVendaNormal * $planoDistribuicao->PrecoUnitarioNormal, 2, ',', '.'); ?>" size="10">
+                <input   name="previstonormal"  readonly="readonly"  id="previstonormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>" class="input_simples" style="color: grey" type="text" maxlength="10" value="<?php echo number_format($planoDistribuicao->QtdeVendaNormal * $planoDistribuicao->PrecoUnitarioNormal, 2, ',', '.'); ?>" size="10">
             </td>
             <td align="center">
-                <input class="input_simples"  disabled="disabled"  name="previstopromocional" id="previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>" type="text" maxlength="10" value="<?php echo $planoDistribuicao->QtdeVendaPromocional * str_replace(",", ".", $planoDistribuicao->PrecoUnitarioPromocional); ?>" size="10">
+                <input class="input_simples"  readonly="readonly"  name="previstopromocional" id="previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>" style="color: grey" type="text" maxlength="10" value="<?php echo $planoDistribuicao->QtdeVendaPromocional * str_replace(",", ".", $planoDistribuicao->PrecoUnitarioPromocional); ?>" size="10">
             </td>
             <td align="center">
-                <input disabled="disabled"  name="totalprevisto" id="totalprevisto-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>" class="input_simples" type="text" maxlength="10" value="<?php echo number_format($planoDistribuicao->QtdeVendaNormal * $planoDistribuicao->PrecoUnitarioNormal + $planoDistribuicao->QtdeVendaPromocional * $planoDistribuicao->PrecoUnitarioPromocional, 2, ',', '.'); ?>">
+                <input readonly="readonly"  name="totalprevisto" id="totalprevisto-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>" class="input_simples" style="color: grey" type="text" maxlength="10" value="<?php echo number_format($planoDistribuicao->QtdeVendaNormal * $planoDistribuicao->PrecoUnitarioNormal + $planoDistribuicao->QtdeVendaPromocional * $planoDistribuicao->PrecoUnitarioPromocional, 2, ',', '.'); ?>">
             </td>
         </tr>
     </table>
