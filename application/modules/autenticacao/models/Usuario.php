@@ -538,7 +538,7 @@ class Autenticacao_Model_Usuario extends GenericModel
         $sql = $this->select();
         $sql->setIntegrityCheck(false);
         $sql->from(
-            'vwUsuariosOrgaosGrupos',
+            'vwusuariosorgaosgrupos',
             array
             (
                 'usu_orgao'
@@ -551,7 +551,7 @@ class Autenticacao_Model_Usuario extends GenericModel
             , 'org_superior'
             , 'uog_status'
             , 'id_unico'
-            )
+            ), $this->_schema
         );
         $sql->where('usu_codigo = ?', $usu_codigo);
         $sql->where('uog_status = ?', 1);
