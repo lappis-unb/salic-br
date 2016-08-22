@@ -120,55 +120,42 @@ class Autenticacao_Model_Usuario extends GenericModel
     }
 
     /**
-     * Método para buscar os dados do usu?rio de acordo com login e senha
+     * Metodo para buscar os dados do usuario de acordo com login e senha
+     *
+     * @name login
+     * @param $username - cpf ou cnpj do usuario
+     * @param $password - senha do usuario criptografada
      * @access public
-     * @static
-     * @param @username (cpf ou cnpj do usu?rio)
-     * @param @password (senha do usu?rio criptografada)
      * @return bool
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  10/08/2016
      */
     public function login($username, $password)
     {
-        // busca o usu?rio de acordo com o login e a senha
-//        $senha = $this->select();
-//        $senha->from($this,
-//            array("dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha")
-//        );
-//
-//        $senha->where('usu_identificacao = ?', $username);
-//        $criptSenha = $this->fetchRow($senha);
-//
-//        $auxSenha = "";
-//        if(!empty($criptSenha['senha'])){
-//            $auxSenha = $criptSenha['senha'];
-//        }
-
+        // busca o usuario de acordo com o login e a senha
         $auxSenha = EncriptaSenhaDAO::encriptaSenha($username, $password);
 
-        $sql = $this->select();
-        $sql->setIntegrityCheck(false);
-        $sql->from($this,
-            array
-            (
+        $select = $this->select()
+            ->setIntegrityCheck(false)
+            ->from($this->_name, array (
                 'usu_codigo',
                 'usu_nome',
                 'usu_identificacao',
                 'usu_senha',
-                'usu_orgao'
-            )
-        );
-        $sql->joinInner(
-            array("uog"=>"usuariosxorgaosxgrupos"),
-            "uog.uog_usuario = usu_codigo AND uog_status = 1",
-            array(), $this->_schema
-        );
-        $sql->where('usu_identificacao = ?', $username);
-        $sql->where('usu_status  = ?', 1);
+                'usu_orgao'),
+                $this->_schema)
+            ->joinInner(array(
+                'uog' => 'usuariosxorgaosxgrupos'),
+                'uog.uog_usuario = usu_codigo AND uog_status = 1',
+                array(), $this->_schema)
+            ->where('usu_identificacao = ?', $username)
+            ->where('usu_status  = ?', 1);
         if(md5($password) != MinC_Controller_Action_Abstract::validarSenhaInicial()){
-            $sql->where("usu_senha  = ?",$auxSenha);
+            $select->where("usu_senha  = ?",$auxSenha);
         }
 
-        $buscar = $this->fetchRow($sql);
+        $buscar = $this->fetchRow($select);
 
         if ($buscar) // realiza a autenticacao
         {
@@ -177,7 +164,7 @@ class Autenticacao_Model_Usuario extends GenericModel
             // pegamos o zend_auth
 
             $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
-            $authAdapter->setTableName($this->_name) // TABELAS.dbo.Usuarios
+            $authAdapter->setTableName( $this->_schema . '.' . $this->_name) // TABELAS.dbo.Usuarios
             ->setIdentityColumn('usu_identificacao')
                 ->setCredentialColumn('usu_senha');
 
@@ -200,6 +187,7 @@ class Autenticacao_Model_Usuario extends GenericModel
 
                 // armazena os dados do usuario
                 $objAuth = $auth->getStorage()->write($authData);
+
                 //Grava o orgao superior na sessao do usuario
                 $_SESSION['Zend_Auth']['storage']->usu_org_max_superior = $orgao_maximo_superior;
 
@@ -434,9 +422,6 @@ class Autenticacao_Model_Usuario extends GenericModel
 //        agentes.usuarios
 //        Agentes.dbo.usuarios
         parent::name('ausuarios', 'agentes');
-echo '<pre>';
-var_dump('asd');
-exit;
         $this->_db->beginTransaction();
         try {
             $db = Zend_Registry:: get('db');
@@ -938,9 +923,9 @@ exit;
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
-            array("Orgaos"),
+            array("orgaos"),
             array("org_superior"),
-            "TABELAS.dbo"
+            $this->getSchema('tabelas')
         );
 
         $slct->where("org_codigo = ? ", $idOrgao);
