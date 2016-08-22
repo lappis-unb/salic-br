@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controle Gen?rico (Utilizado por todos os controles)
  * Trata as mensagens do sistema
@@ -10,7 +11,6 @@
  * @copyright ? 2010 - Minist?rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-
 class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 {
     /**
@@ -20,13 +20,11 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     protected $_msg;
 
 
-
     /**
      * Vari?vel com a p?gina de redirecionamento
      * @var $_url
      */
     protected $_url;
-
 
 
     /**
@@ -37,7 +35,6 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     protected $_type;
 
 
-
     /**
      * Vari?vel com a URL padrao do sistema
      * @var $_urlPadrao
@@ -45,9 +42,9 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     protected $_urlPadrao;
 
 
-    private  $idResponsavel  		= 0;
-    private  $idAgente 				= 0;
-    private  $idUsuario 			= 0;
+    private $idResponsavel = 0;
+    private $idAgente = 0;
+    private $idUsuario = 0;
 
     /**
      * Reescreve o metodo init() para aceitar
@@ -62,42 +59,47 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     {
         //SE CAIU A SECAO REDIRECIONA
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
-        $this->_msg  = $this->_helper->getHelper('FlashMessenger');
-        $this->_url  = $this->_helper->getHelper('Redirector');
+        $this->_msg = $this->_helper->getHelper('FlashMessenger');
+        $this->_url = $this->_helper->getHelper('Redirector');
         $this->_type = $this->_helper->getHelper('FlashMessengerType');
 
         $this->_urlPadrao = Zend_Controller_Front::getInstance()->getBaseUrl();
-        if (isset($auth->getIdentity()->usu_codigo))
-        {
-            $Usuario      = new Autenticacao_Model_Usuario();
+        if (isset($auth->getIdentity()->usu_codigo)) {
+            $Usuario = new Autenticacao_Model_Usuario();
             $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
             $idAgente = $Agente['idagente'];
             // manda os dados para a visao
-            $this->view->idAgente    = $idAgente;
+            $this->view->idAgente = $idAgente;
         }
         @$cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
 
         if ($cpf) {
 
             # Busca na SGCAcesso
-            $sgcAcesso 	 = new Autenticacao_Model_Sgcacesso();
+            $sgcAcesso = new Autenticacao_Model_Sgcacesso();
             $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
 
             # Busca na Usuarios
-            $usuarioDAO   = new Autenticacao_Model_Usuario();
+            $usuarioDAO = new Autenticacao_Model_Usuario();
             $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
             # Busca na Agentes
-            $agentesDAO  = new Agente_Model_Agentes();
+            $agentesDAO = new Agente_Model_Agentes();
             $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
-            if( count($buscaAcesso) > 0){ $this->idResponsavel = $buscaAcesso[0]->IdUsuario; }
-            if( count($buscaAgente) > 0 ){ $this->idAgente 	   = $buscaAgente[0]->idAgente; }
-            if( count($buscaUsuario) > 0 ){ $this->idUsuario   = $buscaUsuario[0]->usu_codigo; }
+            if (count($buscaAcesso) > 0) {
+                $this->idResponsavel = $buscaAcesso[0]->IdUsuario;
+            }
+            if (count($buscaAgente) > 0) {
+                $this->idAgente = $buscaAgente[0]->idAgente;
+            }
+            if (count($buscaUsuario) > 0) {
+                $this->idUsuario = $buscaUsuario[0]->usu_codigo;
+            }
 
-            $this->view->idAgenteKeyLog 		= $this->idAgente;
-            $this->view->idResponsavelKeyLog 	= $this->idResponsavel;
-            $this->view->idUsuarioKeyLog 		= $this->idUsuario;
+            $this->view->idAgenteKeyLog = $this->idAgente;
+            $this->view->idResponsavelKeyLog = $this->idResponsavel;
+            $this->view->idUsuarioKeyLog = $this->idUsuario;
         }
     }
 
@@ -126,12 +128,10 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
      */
     public function postDispatch()
     {
-        if ($this->_msg->hasMessages())
-        {
+        if ($this->_msg->hasMessages()) {
             $this->view->message = implode("<br />", $this->_msg->getMessages());
         }
-        if ($this->_type->hasMessages())
-        {
+        if ($this->_type->hasMessages()) {
             $this->view->message_type = implode("<br />", $this->_type->getMessages());
         }
         parent::postDispatch(); // chama o metodo pai
@@ -141,52 +141,46 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
      * M?todo respons?vel pela autentica??o e perfis
      * @access protected
      * @param integer $tipo
-     * 		0 => somente autentica??o zend
-     * 		1 => autentica??o e permiss?es zend (AMBIENTE MINC)
-     * 		2 => autentica??o scriptcase (AMBIENTE PROPONENTE)
-     * 		3 => autentica??o scriptcase e autentica??o/permiss?o zend (AMBIENTE PROPONENTE E MINC)
+     *        0 => somente autentica??o zend
+     *        1 => autentica??o e permiss?es zend (AMBIENTE MINC)
+     *        2 => autentica??o scriptcase (AMBIENTE PROPONENTE)
+     *        3 => autentica??o scriptcase e autentica??o/permiss?o zend (AMBIENTE PROPONENTE E MINC)
      * @param array $permissoes (array com as permiss?es para acesso)
      * @return void
      */
     protected function perfil($tipo = 0, $permissoes = null)
     {
-        $auth         = Zend_Auth::getInstance(); // pega a autentica??o
-        $Usuario      = new Autenticacao_Model_Usuario(); // objeto usu?rio
+        $auth = Zend_Auth::getInstance(); // pega a autentica??o
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usu?rio
         $UsuarioAtivo = new Zend_Session_Namespace('UsuarioAtivo'); // cria a sess?o com o usu?rio ativo
-        $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess?o com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess?o com o grupo ativo
+
         // somente autentica??o zend
-        if ($tipo == 0 || empty($tipo))
-        {
+        if ($tipo == 0 || empty($tipo)) {
             if ($auth->hasIdentity()) // caso o usu?rio esteja autenticado
             {
                 // pega as unidades autorizadas, org?os e grupos do usu?rio (pega todos os grupos)
-                if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo))
-                {
+                if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo)) {
                     $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
                     $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
                     $idAgente = $Agente['idagente'];
                     $Cpflogado = $Agente['usu_identificacao'];
-                }
-                else
-                {
+                } else {
                     return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), null, true);
                 }
 
                 // manda os dados para a vis?o
-                $this->view->idAgente    = $idAgente;
-                $this->view->usuario     = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                $this->view->idAgente = $idAgente;
+                $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
                 $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
-                $this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
-                $this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
-            }
-            else // caso o usu?rio n?o esteja autenticado
+                $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
+                $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
+            } else // caso o usu?rio n?o esteja autenticado
             {
                 return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), null, true);
             }
-        }
-        // autentica??o e permiss?es zend (AMBIENTE MINC)
-        else if ($tipo === 1)
-        {
+        } // autentica??o e permiss?es zend (AMBIENTE MINC)
+        else if ($tipo === 1) {
             if ($auth->hasIdentity()) // caso o usu?rio esteja autenticado
             {
                 if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo est? no array de permiss?es
@@ -200,10 +194,10 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 // manda os dados para a vis?o
                 $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
                 $idAgente = $Agente['idagente'];
-                $this->view->usuario     = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
                 $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
-                $this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
-                $this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
+                $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
+                $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
             } // fecha if
             else // caso o usu?rio n?o esteja autenticado
             {
@@ -213,20 +207,17 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
 
         // autentica??o scriptcase (AMBIENTE PROPONENTE)
-        else if ($tipo == 2)
-        {
+        else if ($tipo == 2) {
             // configura??es do layout padr?o para o scriptcase
             Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
 
             // pega o id do usu?rio logado pelo scriptcase (sess?o)
             //$codUsuario = isset($_SESSION['gusuario']['id']) ? $_SESSION['gusuario']['id'] : $UsuarioAtivo->codUsuario;
-            $codUsuario = isset($_GET['idusuario']) ? (int) $_GET['idusuario'] : $UsuarioAtivo->codUsuario;
+            $codUsuario = isset($_GET['idusuario']) ? (int)$_GET['idusuario'] : $UsuarioAtivo->codUsuario;
             //$codUsuario = 366;
-            if (isset($codUsuario) && !empty($codUsuario))
-            {
+            if (isset($codUsuario) && !empty($codUsuario)) {
                 $UsuarioAtivo->codUsuario = $codUsuario;
-            }
-            else // caso o usu?rio n?o esteja autenticado
+            } else // caso o usu?rio n?o esteja autenticado
             {
                 $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "index", "ALERT");
             }
@@ -247,16 +238,14 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
 
         // autentica??o scriptcase e autentica??o/permiss?o zend (AMBIENTE PROPONENTE E MINC)
-        else if ($tipo == 3)
-        {
+        else if ($tipo == 3) {
 
             // ========== IN?CIO AUTENTICA??O SCRIPTCASE ==========
             // pega o id do usu?rio logado pelo scriptcase
             //$codUsuario = isset($_SESSION['gusuario']['id']) ? $_SESSION['gusuario']['id'] : $UsuarioAtivo->codUsuario;
-            $codUsuario = isset($_GET['idusuario']) ? (int) $_GET['idusuario'] : $UsuarioAtivo->codUsuario;
+            $codUsuario = isset($_GET['idusuario']) ? (int)$_GET['idusuario'] : $UsuarioAtivo->codUsuario;
             //$codUsuario = 366;
-            if (isset($codUsuario) && !empty($codUsuario))
-            {
+            if (isset($codUsuario) && !empty($codUsuario)) {
                 // configura??es do layout padr?o para o scriptcase
                 Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
 
@@ -281,44 +270,39 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             // ========== IN?CIO AUTENTICA??O ZEND ==========
             else // caso o usu?rio n?o esteja autenticado pelo scriptcase
             {
+
                 if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo est? no array de permiss?es
                 {
                     $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "principal/index", "ALERT");
                 }
 
                 // pega as unidades autorizadas, org?os e grupos do usu?rio (pega todos os grupos)
-                if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo))
-                {
+                if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo)) {
                     $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
-                }
-                else
-                {
+                } else {
                     $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "principal/index", "ALERT");
                 }
 
                 // manda os dados para a vis?o
-                $this->view->usuario     = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
                 $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
-                $this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
-                $this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
+                $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
+                $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
             } // fecha else
         } // fecha else if
 
         // autentica??o migracao e autentica??o/permiss?o zend (AMBIENTE DE MIGRA??O E MINC)
-        else if ($tipo == 4)
-        {
+        else if ($tipo == 4) {
 
             // ========== IN?CIO AUTENTICA??O MIGRA??O ==========
             // pega o id do usu?rio logado pelo scriptcase
             //$codUsuario = isset($_SESSION['gusuario']['id']) ? $_SESSION['gusuario']['id'] : $UsuarioAtivo->codUsuario;
-            $codUsuario = isset($auth->getIdentity()->IdUsuario) ? (int) $auth->getIdentity()->IdUsuario : $UsuarioAtivo->codUsuario;
-            if (isset($codUsuario) && !empty($codUsuario))
-            {
+            $codUsuario = isset($auth->getIdentity()->idusuario) ? (int)$auth->getIdentity()->idusuario : $UsuarioAtivo->codusuario;
+            if (isset($codUsuario) && !empty($codUsuario)) {
                 // configura??es do layout padr?o para o proponente
                 Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
                 $UsuarioAtivo->codUsuario = $codUsuario;
-
                 // tenta fazer a autentica??o do usu?rio logado no scriptcase para o zend
                 $autenticar = UsuarioDAO::loginScriptcase($codUsuario);
 
@@ -326,10 +310,10 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 {
                     // manda os dados para a vis?o
                     $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
-                } // fecha if
-                else // caso o usu?rio n?o esteja autenticado
+                }
+                else
                 {
-                    $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "index", "ALERT");
+                    $this->message("Você não tem permissão para acessar essa área do sistema!", "index", "ALERT");
                 }
             }
             // ========== FIM AUTENTICA??O MIGRA??O ==========
@@ -337,35 +321,32 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             // ========== IN?CIO AUTENTICA??O ZEND ==========
             else // caso o usu?rio n?o esteja autenticado pelo scriptcase
             {
-                if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo est? no array de permiss?es
+                if (!in_array($GrupoAtivo->codgrupo, $permissoes)) // verifica se o grupo ativo est? no array de permiss?es
                 {
-                    $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "principal/index", "ALERT");
+                    $this->message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
                 }
 
                 // pega as unidades autorizadas, org?os e grupos do usu?rio (pega todos os grupos)
-                if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo))
-                {
+                if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo)) {
                     $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
-                }
-                else
-                {
-                    $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "principal/index", "ALERT");
+                } else {
+                    $this->message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
                 }
 
                 // manda os dados para a visão
-                $this->view->usuario     = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
                 $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
-                $this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
-                $this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
+                $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
+                $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
             } // fecha else
         }
         // ========== FIM AUTENTICA??O ZEND ==========
 
-        if(!empty($grupos)){
+        if (!empty($grupos)) {
             $tblSGCacesso = new Autenticacao_Model_Sgcacesso();
-            $rsSGCacesso = $tblSGCacesso->buscar(array("Cpf = ? "=>$auth->getIdentity()->usu_identificacao));
-            if($rsSGCacesso->count() > 0){
-                $this->view->arrayGrupoProponente = array("gru_codigo"=>1111, "uog_orgao"=>2222, "gru_nome"=>"Proponente");
+            $rsSGCacesso = $tblSGCacesso->buscar(array("Cpf = ? " => $auth->getIdentity()->usu_identificacao));
+            if ($rsSGCacesso->count() > 0) {
+                $this->view->arrayGrupoProponente = array("gru_codigo" => 1111, "uog_orgao" => 2222, "gru_nome" => "Proponente");
             }
         }
 
@@ -378,11 +359,10 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
      * @param boolean $exibeHeader - true ou false para exibir header, menu e rodape
      * @return void
      */
-    public function montaTela($view, $dados=array())
+    public function montaTela($view, $dados = array())
     {
         // percorrendo array de dados e inserindo no template
-        foreach ($dados as $dado=>$valor)
-        {
+        foreach ($dados as $dado => $valor) {
             $this->view->assign($dado, $valor);
         }
 
@@ -394,7 +374,8 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
      * Recebe codigo em HTML e gera um PDF
      * @return void
      */
-    public function gerarPdfAction() {
+    public function gerarPdfAction()
+    {
         @ini_set("memory_limit", "5000M");
         @ini_set('max_execution_time', 3000);
         @set_time_limit(9500);
@@ -449,7 +430,6 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                             </style>';
 
 
-
         @$output .= $_POST['html'];
 
         $patterns = array();
@@ -479,15 +459,16 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         $replaces[] = '';
 
         //METODO QUE GERA PDF UTILIZANDO A BIBLIOTECA MPDF
-        @$output = preg_replace($patterns,$replaces,utf8_encode($output));
-        @$pdf=new mPDF('pt','A4',12,'',8,8,5,14,9,9,'P');
+        @$output = preg_replace($patterns, $replaces, utf8_encode($output));
+        @$pdf = new mPDF('pt', 'A4', 12, '', 8, 8, 5, 14, 9, 9, 'P');
         @$pdf->allow_charset_conversion = true;
-        @$pdf->charset_in='UTF-8';
+        @$pdf->charset_in = 'UTF-8';
         @$pdf->WriteHTML($output);
         @$pdf->Output();
     }
 
-    public function gerarXlsAction(){
+    public function gerarXlsAction()
+    {
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
 
@@ -497,81 +478,83 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         echo $html;
     }
 
-    public function html2PdfAction(){
+    public function html2PdfAction()
+    {
         $orientacao = false;
 
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
-        if($this->_getParam('orientacao') == 'L'){
+        if ($this->_getParam('orientacao') == 'L') {
             $orientacao = true;
         }
 
-        $pdf = new PDFCreator($_POST['html'],$orientacao);
+        $pdf = new PDFCreator($_POST['html'], $orientacao);
 
         $pdf->gerarPdf();
     }
 
-    public static function montaBuscaData(Zend_Filter_Input $post, $tpBuscaData, $cmpData, $cmpBD, $cmpDataFinal = null, Array $arrayJoin = null ){
+    public static function montaBuscaData(Zend_Filter_Input $post, $tpBuscaData, $cmpData, $cmpBD, $cmpDataFinal = null, Array $arrayJoin = null)
+    {
         $arrBusca = array();
         $aux1 = $post->__get($cmpData);
         $aux2 = $post->__get($tpBuscaData);
-        if(!empty ($aux1) || $aux2 != ''){
-            if($post->__get($tpBuscaData) == "igual"){
-                $arrBusca["{$cmpBD} >= ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
-                $arrBusca["{$cmpBD} <= ?"] = ConverteData($post->__get($cmpData), 13)." 23:59:59";
+        if (!empty ($aux1) || $aux2 != '') {
+            if ($post->__get($tpBuscaData) == "igual") {
+                $arrBusca["{$cmpBD} >= ?"] = ConverteData($post->__get($cmpData), 13) . " 00:00:00";
+                $arrBusca["{$cmpBD} <= ?"] = ConverteData($post->__get($cmpData), 13) . " 23:59:59";
 
-            }elseif($post->__get($tpBuscaData) == "maior"){
-                $arrBusca["{$cmpBD} >= ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
+            } elseif ($post->__get($tpBuscaData) == "maior") {
+                $arrBusca["{$cmpBD} >= ?"] = ConverteData($post->__get($cmpData), 13) . " 00:00:00";
 
-            }elseif($post->__get($tpBuscaData) == "menor"){
-                $arrBusca["{$cmpBD} <= ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
+            } elseif ($post->__get($tpBuscaData) == "menor") {
+                $arrBusca["{$cmpBD} <= ?"] = ConverteData($post->__get($cmpData), 13) . " 00:00:00";
 
-            }elseif($post->__get($tpBuscaData) == "entre"){
+            } elseif ($post->__get($tpBuscaData) == "entre") {
 
-                $arrBusca["{$cmpBD} >= ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
-                $arrBusca["{$cmpBD} <= ?"] = ConverteData($post->__get($cmpDataFinal), 13)." 23:59:59";
+                $arrBusca["{$cmpBD} >= ?"] = ConverteData($post->__get($cmpData), 13) . " 00:00:00";
+                $arrBusca["{$cmpBD} <= ?"] = ConverteData($post->__get($cmpDataFinal), 13) . " 23:59:59";
 
-            }elseif($post->__get($tpBuscaData) == "OT"){
-                $arrBusca["{$cmpBD} = ?"] = date("Y-m-d",strtotime("-1 day"))." 00:00:00";
+            } elseif ($post->__get($tpBuscaData) == "OT") {
+                $arrBusca["{$cmpBD} = ?"] = date("Y-m-d", strtotime("-1 day")) . " 00:00:00";
 
-            }elseif($post->__get($tpBuscaData) == "U7"){
-                $arrBusca["{$cmpBD} > ?"] = date("Y-m-d",strtotime("-7 day"))." 00:00:00";
-                $arrBusca["{$cmpBD} < ?"] = date("Y-m-d")." 23:59:59";
+            } elseif ($post->__get($tpBuscaData) == "U7") {
+                $arrBusca["{$cmpBD} > ?"] = date("Y-m-d", strtotime("-7 day")) . " 00:00:00";
+                $arrBusca["{$cmpBD} < ?"] = date("Y-m-d") . " 23:59:59";
 
-            }elseif($post->__get($tpBuscaData) == "SP"){
+            } elseif ($post->__get($tpBuscaData) == "SP") {
                 /*$arrBusca["{$cmpBD} > ?"] = date("Y-m-").(date("d")-7)." 00:00:00";
                 $arrBusca["{$cmpBD} < ?"] = date("Y-m-d")." 23:59:59";*/
 
                 $dia_semana = date('w');
-                $primeiro_dia = date('Y-m-d', strtotime("-".$dia_semana."day"));
-                $domingo = date('Y-m-d',  strtotime($primeiro_dia."-1 week"));
-                $sabado =  date('Y-m-d',  strtotime($domingo."6 day"));
+                $primeiro_dia = date('Y-m-d', strtotime("-" . $dia_semana . "day"));
+                $domingo = date('Y-m-d', strtotime($primeiro_dia . "-1 week"));
+                $sabado = date('Y-m-d', strtotime($domingo . "6 day"));
 
-                $arrBusca["{$cmpBD} >= ?"] = $domingo." 00:00:00";
-                $arrBusca["{$cmpBD} <= ?"] = $sabado." 23:59:59";
+                $arrBusca["{$cmpBD} >= ?"] = $domingo . " 00:00:00";
+                $arrBusca["{$cmpBD} <= ?"] = $sabado . " 23:59:59";
 
 
-            }elseif($post->__get($tpBuscaData) == "MM"){
-                $arrBusca["{$cmpBD} > ?"] = date("Y-m-01")." 00:00:00";
-                $arrBusca["{$cmpBD} < ?"] = date("Y-m-d")." 23:59:59";
+            } elseif ($post->__get($tpBuscaData) == "MM") {
+                $arrBusca["{$cmpBD} > ?"] = date("Y-m-01") . " 00:00:00";
+                $arrBusca["{$cmpBD} < ?"] = date("Y-m-d") . " 23:59:59";
 
-            }elseif($post->__get($tpBuscaData) == "UM"){
-                $arrBusca["{$cmpBD} >= ?"] = date("Y-m",strtotime("-1 month"))."-01 00:00:00";
-                $arrBusca["{$cmpBD} <= ?"] = date("Y-m-d", mktime(0, 0, 0, date("m",  strtotime("-1 month"))+1, 0, date("Y")));
+            } elseif ($post->__get($tpBuscaData) == "UM") {
+                $arrBusca["{$cmpBD} >= ?"] = date("Y-m", strtotime("-1 month")) . "-01 00:00:00";
+                $arrBusca["{$cmpBD} <= ?"] = date("Y-m-d", mktime(0, 0, 0, date("m", strtotime("-1 month")) + 1, 0, date("Y")));
 
-            }elseif($post->__get($tpBuscaData) == ""){
+            } elseif ($post->__get($tpBuscaData) == "") {
 
-            }else{
-                $arrBusca["{$cmpBD} > ?"] = ConverteData($post->__get($cmpData), 13)." 00:00:00";
+            } else {
+                $arrBusca["{$cmpBD} > ?"] = ConverteData($post->__get($cmpData), 13) . " 00:00:00";
 
-                if($post->__get($cmpDataFinal) != ""){
-                    $arrBusca["{$cmpBD} < ?"] = ConverteData($post->__get($cmpDataFinal), 13)." 23:59:59";
+                if ($post->__get($cmpDataFinal) != "") {
+                    $arrBusca["{$cmpBD} < ?"] = ConverteData($post->__get($cmpDataFinal), 13) . " 23:59:59";
                 }
             }
         }
 
-        if(!empty($arrayJoin)){
+        if (!empty($arrayJoin)) {
             $arrBusca = array_merge($arrayJoin, $arrBusca);
         }
 
@@ -579,7 +562,8 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     }
 
 
-    public function prepararXlsPdfAction(){
+    public function prepararXlsPdfAction()
+    {
         Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
         ini_set('max_execution_time', 900);
         $this->_response->clearHeaders();
@@ -588,8 +572,8 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         $this->view->dados = $dados;
         $this->view->tipo = $dados['tipo'];
 
-        if($dados['view']){
-            $this->montaTela($dados['view'],$dados);
+        if ($dados['view']) {
+            $this->montaTela($dados['view'], $dados);
         }
 
     }
@@ -610,11 +594,11 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
         if (!isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
             //Verifica Permiss?o de Projeto
-            if($projeto){
+            if ($projeto) {
                 $msgERRO = 'Voc? n?o tem permiss?o para acessar esse Projeto!';
                 $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
-                $idPronac  = $this->_request->getParam('idpronac')  ? $this->_request->getParam('idpronac')  : $this->_request->getParam('idPronac');
-                if (strlen($idPronac) > 7){
+                $idPronac = $this->_request->getParam('idpronac') ? $this->_request->getParam('idpronac') : $this->_request->getParam('idPronac');
+                if (strlen($idPronac) > 7) {
                     $idPronac = Seguranca::dencrypt($idPronac);
                 }
                 $fnVerificarPermissao = new Autenticacao_Model_FnVerificarPermissao();
@@ -623,7 +607,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             }
 
             //Verifica Permiss?o de Proposta
-            if($proposta){
+            if ($proposta) {
                 $msgERRO = 'Voc? n?o tem permiss?o para acessar essa Proposta!';
                 $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
                 $idPreProjeto = $this->_request->getParam('idPreProjeto');
@@ -633,11 +617,11 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $permissao = $consulta->Permissao;
             }
 
-            if($administrativo){
+            if ($administrativo) {
             }
 
             //Se o usuario nao tiver permissao pra acessar o Projeto / Proposta / Administrativo, exibe a msg de alerta.
-            if(!$permissao){
+            if (!$permissao) {
                 $this->message($msgERRO, 'principalproponente', 'ALERT');
             }
 
@@ -645,7 +629,8 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
     } // fecha metodo verificarPermissaoAcesso()
 
-    public static function validarSenhaInicial(){
+    public static function validarSenhaInicial()
+    {
         return 'ae56f49edf70ec03b98f53ea6d2bc622';
     }
 
@@ -660,7 +645,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         $planilha = array();
         $count = 0;
         $seq = 1;
-        if($tipoPlanilha == 0){
+        if ($tipoPlanilha == 0) {
             foreach ($planilhaOrcamentaria as $resuplanilha) {
                 $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['Seq'] = $seq;
@@ -676,7 +661,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $count++;
                 $seq++;
             }
-        } else if($tipoPlanilha == 1){
+        } else if ($tipoPlanilha == 1) {
             foreach ($planilhaOrcamentaria as $resuplanilha) {
                 $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['Seq'] = $seq;
@@ -692,7 +677,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $count++;
                 $seq++;
             }
-        } else if($tipoPlanilha == 2){
+        } else if ($tipoPlanilha == 2) {
             foreach ($planilhaOrcamentaria as $resuplanilha) {
                 $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['Seq'] = $seq;
@@ -710,7 +695,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $count++;
                 $seq++;
             }
-        } else if($tipoPlanilha == 3){
+        } else if ($tipoPlanilha == 3) {
             foreach ($planilhaOrcamentaria as $resuplanilha) {
                 $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['Seq'] = $seq;
@@ -732,7 +717,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $count++;
                 $seq++;
             }
-        } else if($tipoPlanilha == 4){
+        } else if ($tipoPlanilha == 4) {
             foreach ($planilhaOrcamentaria as $resuplanilha) {
                 $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['Seq'] = $seq;
@@ -753,7 +738,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $count++;
                 $seq++;
             }
-        } else if($tipoPlanilha == 5){
+        } else if ($tipoPlanilha == 5) {
             foreach ($planilhaOrcamentaria as $resuplanilha) {
                 $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['Seq'] = $seq;
@@ -775,7 +760,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $count++;
                 $seq++;
             }
-        } else if($tipoPlanilha == 6){
+        } else if ($tipoPlanilha == 6) {
             foreach ($planilhaOrcamentaria as $resuplanilha) {
                 $produto = $resuplanilha->Produto == null ? 'Adminitra&ccedil;&atilde;o do Projeto' : $resuplanilha->Produto;
                 $planilha[$resuplanilha->FonteRecurso][$produto][$resuplanilha->idEtapa . ' - ' . $resuplanilha->Etapa][$resuplanilha->UF . ' - ' . $resuplanilha->Municipio][$count]['Seq'] = $seq;

@@ -13,9 +13,9 @@
 class Autenticacao_Model_Usuario extends GenericModel
 {
 
-        protected $_banco = "tabelas";
-//        protected $_name  = 'dbo.Usuarios';
-//
+    protected $_banco = "tabelas";
+//    protected $_name  = 'dbo.Usuarios';
+
 //    protected $_schema = 'dbo';
 
 //    protected $_banco = "TABELAS";
@@ -37,15 +37,15 @@ class Autenticacao_Model_Usuario extends GenericModel
      *
      *        BEGIN
      *    DECLARE
-     *    @w	varchar(30),
-     *        @s      varchar(15),
-     *        @t1	int,
-     *	@t2	int,
-     *        @k      int,
-     *        @i      int,
-     *        @j      int,
-     *        @f      int,
-     *        @v      int
+     * @w    varchar(30),
+     * @s      varchar(15),
+     * @t1    int,
+     * @t2    int,
+     * @k      int,
+     * @i      int,
+     * @j      int,
+     * @f      int,
+     * @v      int
      *
      *    SET @w = RTRIM(LTRIM(@p_senha))
      *    SET @t1 = LEN(RTRIM(LTRIM(@p_identificacao)))
@@ -129,6 +129,7 @@ class Autenticacao_Model_Usuario extends GenericModel
      * @return bool
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
      * @since  10/08/2016
      */
     public function login($username, $password)
@@ -164,7 +165,7 @@ class Autenticacao_Model_Usuario extends GenericModel
             // pegamos o zend_auth
 
             $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
-            $authAdapter->setTableName( $this->_schema . '.' . $this->_name) // TABELAS.dbo.Usuarios
+            $authAdapter->setTableName($this->getTableName())// TABELAS.dbo.Usuarios
             ->setIdentityColumn('usu_identificacao')
                 ->setCredentialColumn('usu_senha');
 
@@ -174,12 +175,11 @@ class Autenticacao_Model_Usuario extends GenericModel
                 ->setCredential($buscar['usu_senha']);
 
             // tenta autenticar o usuario
-            $auth   = Zend_Auth::getInstance();
+            $auth = Zend_Auth::getInstance();
             $acesso = $auth->authenticate($authAdapter);
 
             // verifica se o acesso foi permitido
-            if ($acesso->isValid())
-            {
+            if ($acesso->isValid()) {
                 // pega os dados do usuario com excecao da senha
                 $authData = $authAdapter->getResultRowObject(null, 'usu_senha');
 
@@ -192,15 +192,7 @@ class Autenticacao_Model_Usuario extends GenericModel
                 $_SESSION['Zend_Auth']['storage']->usu_org_max_superior = $orgao_maximo_superior;
 
                 return true;
-            } // fecha if
-            else // caso nao tenha sido validado
-            {
-                return false;
             }
-        } // fecha if
-        else
-        {
-            return false;
         }
     } // fecha metodo login()
 
@@ -538,7 +530,7 @@ class Autenticacao_Model_Usuario extends GenericModel
         $sql = $this->select();
         $sql->setIntegrityCheck(false);
         $sql->from(
-            'vwUsuariosOrgaosGrupos',
+            'vwusuariosorgaosgrupos',
             array
             (
                 'usu_orgao'
@@ -551,7 +543,8 @@ class Autenticacao_Model_Usuario extends GenericModel
             , 'org_superior'
             , 'uog_status'
             , 'id_unico'
-            )
+            ),
+            $this->_schema
         );
         $sql->where('usu_codigo = ?', $usu_codigo);
         $sql->where('uog_status = ?', 1);
@@ -602,8 +595,8 @@ class Autenticacao_Model_Usuario extends GenericModel
         $select->joinInner(
             array(
                 'a' => 'agentes'),
-                'u.usu_identificacao = a.CNPJCPF',
-                array('a.idagente'),
+            'u.usu_identificacao = a.cnpjcpf',
+            array('a.idagente'),
             parent::getSchema('agentes')
         );
 
@@ -613,17 +606,10 @@ class Autenticacao_Model_Usuario extends GenericModel
         if (!empty($usu_identificacao)) {
             $select->where("usu_identificacao = ? ", $usu_identificacao);
         }
-//                xd($select->assemble());
-//echo '<pre>';
-//var_dump('$this->fetchRow($select)');
-//var_dump($this->fetchRow($select)->toArray());
-//exit;
-//        var_dump(str_replace('"', '', $select->assemble()));
-//        var_dump($this->fetchAll($select));
-//        exit;
+//xd($select->assemble());
         try {
             $result = $this->fetchRow($select);
-            return ($result)? $result->toArray() : $result;
+            return ($result) ? $result->toArray() : $result;
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
         }
@@ -636,10 +622,10 @@ class Autenticacao_Model_Usuario extends GenericModel
         $insert = $this->insert($dados);
     }
 
-        public function salvarDados($dados)
-        {
-            //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
-            $tmpTblUsuario = new Autenticacao_Model_Usuario();
+    public function salvarDados($dados)
+    {
+        //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
+        $tmpTblUsuario = new Autenticacao_Model_Usuario();
 
         $tmpTblUsuario = $tmpTblUsuario->createRow();
 
@@ -734,10 +720,10 @@ class Autenticacao_Model_Usuario extends GenericModel
         }
     }
 
-        public function salvar($dados)
-        {
-            //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
-            $tmpTblUsuario = new Autenticacao_Model_Usuario();
+    public function salvar($dados)
+    {
+        //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
+        $tmpTblUsuario = new Autenticacao_Model_Usuario();
 
         if (isset($dados['usu_codigo'])) {
             $tmpTblUsuario = $tmpTblUsuario->buscar(array("usu_codigo = ?" => $dados['usu_codigo']))->current();
@@ -1032,18 +1018,20 @@ class Autenticacao_Model_Usuario extends GenericModel
     public function verificarSenha($username, $password)
     {
         // busca o usu?rio de acordo com o login e a senha
-        $senha = $this->select();
-        $senha->from($this,
-            array("dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha")
-        );
-        $senha->where('usu_identificacao = ?', $username);
-        $criptSenha = $this->fetchRow($senha);
+        $objUsuario = $this->select();
+        $senha = EncriptaSenhaDAO::encriptaSenha($username, $password);
+
+        $objUsuario->from($this->_name,
+            new Zend_Db_Expr("'{$senha}' as senha")
+            , $this->_schema);
+
+        $objUsuario->where('usu_identificacao = ?', $username);
+        $criptSenha = $this->fetchRow($objUsuario);
 
         $auxSenha = "";
         if (!empty($criptSenha['senha'])) {
             $auxSenha = $criptSenha['senha'];
         }
-
 
         $sql = $this->select();
         $sql->setIntegrityCheck(false);
@@ -1057,22 +1045,20 @@ class Autenticacao_Model_Usuario extends GenericModel
                 'usu_orgao'
             )
         );
+
         $sql->joinInner(
-            array("uog" => "UsuariosXOrgaosXGrupos"),
+            array("uog" => "usuariosxorgaosxgrupos"),
             "uog.uog_usuario = usu_codigo AND uog_status = 1",
-            array(), "TABELAS.dbo"
+            array(),
+            $this->getSchema("tabelas")
         );
         $sql->where('usu_identificacao = ?', $username);
         $sql->where('usu_status  = ?', 1);
         $sql->where("usu_senha  = ?", $auxSenha);
         $buscar = $this->fetchRow($sql);
 
-        if ($buscar) // realiza a autentica??o
-        {
+        if ($buscar) {
             return true;
-        } // fecha if
-        else {
-            return false;
         }
-    } // fecha m?todo verificarSenha()
-} // fecha class
+    }
+}

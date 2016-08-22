@@ -10,29 +10,34 @@
  * @author augusto
  */
 require_once 'Zend/Db/Table/Abstract.php';
-class GenericModel extends Zend_Db_Table_Abstract {
+
+class GenericModel extends Zend_Db_Table_Abstract
+{
 
     private $_config;
     protected $_rowClass = "MinC_Db_Table_Row";
+
     /**
      * @param string $strName
      * @return string
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @author V
      * @since 11/08/2016
-     *
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
      * @todo melhorar e amadurecer codigo
      */
+
     public function getBanco($strName = '')
     {
         $db = Zend_Db_Table::getDefaultAdapter();
+        $strName = 'dbo';
 
-        if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
-            $strName = 'dbo';
-        } else {
+        if (!($db instanceof Zend_Db_Adapter_Pdo_Mssql)) {
             $strName = $db->getConfig()['dbname'];
         }
-        return  $strName;
+
+        return $strName;
     }
 
     /**
@@ -44,7 +49,7 @@ class GenericModel extends Zend_Db_Table_Abstract {
      *
      * @todo melhorar e amadurecer codigo
      */
-    public static function getSchema($strSchema)
+    public function getSchema($strSchema)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
 
@@ -59,11 +64,6 @@ class GenericModel extends Zend_Db_Table_Abstract {
                     $strSchema = $this->_banco . '.dbo';
                 }
             }
-        } else {
-//            echo '<pre>';
-//            var_dump($db);
-//            var_dump($strSchema);
-//            exit;
         }
 
         return $strSchema;
@@ -108,27 +108,61 @@ class GenericModel extends Zend_Db_Table_Abstract {
     }
 
     /**
+     * @return string
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     */
+    public function getTableName($schema = null, $tableName = null)
+    {
+        if ($schema === null) $schema = $this->_schema;
+        if ($tableName === null) $tableName = $this->_name;
+
+        return $this->getSchema($schema) . '.' . $this->getName($tableName);
+    }
+
+    /**
+     * @return string
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @todo Implementar Inversão de controle + Singleton cascateado por Classes.
+     */
+    public static function getStaticTableName($schema = null, $tableName = null)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            if ($schema) {
+                $schema = $schema . '.dbo';
+            }
+        }
+
+        $tableName = strtolower($tableName);
+
+        return $schema . '.' . $tableName;
+    }
+
+    /**
      * GenericModel constructor.
      *
      * @todo verificar um tipo de SET TEXTSIZE 2147483647 para usar com o Postgres tambem.
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         # FECHANDO A CONEXAO EXISTENTE JA QUE UMA NOVA SERA ABERTA
-        $db = Zend_Db_Table::getDefaultAdapter();
-        if(!empty($db)){
-            $db->closeConnection();
-            unset ($db);
+        $dbAdapter = Zend_Db_Table::getDefaultAdapter();
+        if (!empty($dbAdapter)) {
+            $dbAdapter->closeConnection();
+            unset ($dbAdapter);
         }
 
-        if (!($this->_config instanceof  Zend_Config_Ini)) {
+        if (!($this->_config instanceof Zend_Config_Ini)) {
             $this->_config = new Zend_Config_Ini(
                 Zend_Registry::get('DIR_CONFIG'),
                 'conexao_' . strtolower($this->_banco),
                 array('allowModifications' => true,)
             );
+
             Zend_Registry::getInstance()->set('config', $this->_config);
             Zend_Db_Table::setDefaultAdapter(Zend_Db::factory($this->_config->db));
+
             parent::__construct();
 
             # Setar o campo texto maior que 4096 caracteres aceitaveis por padrao no PHP
@@ -136,7 +170,8 @@ class GenericModel extends Zend_Db_Table_Abstract {
         }
     }
 
-    public function  __destruct() {
+    public function __destruct()
+    {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->closeConnection();
     }
@@ -149,7 +184,8 @@ class GenericModel extends Zend_Db_Table_Abstract {
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
      */
-    public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1) {
+    public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
+    {
         $slct = $this->select();
 
         //adiciona quantos filtros foram enviados
@@ -167,10 +203,12 @@ class GenericModel extends Zend_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
+//xd($slct->__toString());
         return $this->fetchAll($slct);
     }
 
-    public function alterar($dados, $where, $dbg=false) {
+    public function alterar($dados, $where, $dbg = false)
+    {
         if ($dbg) {
             x($this->dbg($dados, $where));
         }
@@ -178,12 +216,14 @@ class GenericModel extends Zend_Db_Table_Abstract {
         return $update;
     }
 
-    public function apagar($where) {
+    public function apagar($where)
+    {
         $delete = $this->delete($where);
         return $delete;
     }
 
-    public function inserir($dados, $dbg = null) {
+    public function inserir($dados, $dbg = null)
+    {
         if ($dbg) {
             xd($this->dbg($dados));
         }
@@ -191,11 +231,12 @@ class GenericModel extends Zend_Db_Table_Abstract {
         return $insert;
     }
 
-    public function dbg($dados, $where=null) {
+    public function dbg($dados, $where = null)
+    {
         if (!$where) {
             $sql = "INSERT INTO " . $this->_name . " (";
             $keys = array_keys($dados);
-            $sql.= implode(',', $keys);
+            $sql .= implode(',', $keys);
             $sql .= ")\n values ('";
             $values = array_values($dados);
             $sql .= implode("','", $values);
@@ -215,8 +256,7 @@ class GenericModel extends Zend_Db_Table_Abstract {
         if (null === $this->_cols) {
             $this->_setupMetadata();
             $this->_cols = array_keys($this->_metadata);
-            foreach($this->_cols as $indice => $coluna)
-            {
+            foreach ($this->_cols as $indice => $coluna) {
                 $this->_cols[$indice] = strtolower($coluna);
             }
         }
@@ -234,12 +274,13 @@ class GenericModel extends Zend_Db_Table_Abstract {
      */
     protected function _setupPrimaryKey()
     {
+
         if (!$this->_primary) {
             $this->_setupMetadata();
             $this->_primary = array();
             foreach ($this->_metadata as $col) {
                 if ($col['PRIMARY']) {
-                    $this->_primary[ $col['PRIMARY_POSITION'] ] = $col['COLUMN_NAME'];
+                    $this->_primary[$col['PRIMARY_POSITION']] = $col['COLUMN_NAME'];
                     if ($col['IDENTITY']) {
                         $this->_identity = $col['PRIMARY_POSITION'];
                     }
@@ -257,20 +298,21 @@ class GenericModel extends Zend_Db_Table_Abstract {
             array_unshift($this->_primary, null);
             unset($this->_primary[0]);
         }
+
         $this->_primary[1] = strtolower($this->_primary[1]);
 
         $cols = $this->_getCols();
-        if (! array_intersect((array) $this->_primary, $cols) == (array) $this->_primary) {
+        if (!array_intersect((array)$this->_primary, $cols) == (array)$this->_primary) {
             require_once 'Zend/Db/Table/Exception.php';
             throw new Zend_Db_Table_Exception("Primary key column(s) ("
-                . implode(',', (array) $this->_primary)
+                . implode(',', (array)$this->_primary)
                 . ") are not columns in this table ("
                 . implode(',', $cols)
                 . ")");
         }
 
-        $primary    = (array) $this->_primary;
-        $pkIdentity = $primary[(int) $this->_identity];
+        $primary = (array)$this->_primary;
+        $pkIdentity = $primary[(int)$this->_identity];
 
         /**
          * Special case for PostgreSQL: a SERIAL key implicitly uses a sequence
@@ -284,6 +326,7 @@ class GenericModel extends Zend_Db_Table_Abstract {
         }
     }
 
+    public function insert(array $data)
+    {
+    }
 }
-
-?>

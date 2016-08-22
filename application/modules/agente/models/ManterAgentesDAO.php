@@ -12,7 +12,7 @@
 class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
 {
     /**
-     * MÈtodo para buscar agentes
+     * MÔøΩtodo para buscar agentes
      * @access public
      * @static
      * @param string $cnpjcpf
@@ -86,7 +86,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
     }
 
     /**
-     * MÈtodo para buscar agentes vinculados
+     * MÔøΩtodo para buscar agentes vinculados
      *
      * @access public
      * @static
@@ -146,7 +146,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
     }
 
     /**
-     * MÈtodo para buscar os endereÁos do agente
+     * MÔøΩtodo para buscar os endereÔøΩos do agente
      *
      * @access public
      * @static
@@ -201,7 +201,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
     }
 
     /**
-     * MÈtodo para buscar os e-mails do agente
+     * MÔøΩtodo para buscar os e-mails do agente
      *
      * @access public
      * @static
@@ -237,7 +237,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
     }
 
     /**
-     * MÈtodo para buscar os telefones do agente
+     * MÔøΩtodo para buscar os telefones do agente
      *
      * @access public
      * @static
@@ -288,13 +288,13 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
     }
 
     /**
-     * MÈtodo para buscar as ·reas culturais
+     * M√©todo para buscar as √Åreas culturais
      *
      * @param void
-     *
      * @access public
      * @static
      * @return object
+     * @author Vin√≠cius Feitosa da Silva <viniciusfesil@mail.com>
      */
     public static function buscarAreasCulturais()
     {
@@ -302,15 +302,15 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(['Area'], ['Codigo AS id' ,'Descricao AS descricao'], 'SAC.dbo')
-            ->order(['Descricao'])
+            ->from([GenericModel::getStaticTableName('sac', 'area')], ['codigo AS id' ,'descricao AS descricao'])
+            ->order(['descricao'])
             ;
 
         return $db->fetchAll($sql);
     }
 
     /**
-     * MÈtodo para cadastrar dados do agente
+     * MÔøΩtodo para cadastrar dados do agente
      * @access public
      * @static
      * @param array $dados
@@ -321,7 +321,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $insert = $db->insert('AGENTES.dbo.Agentes', $dados); // cadastra
+        $insert = $db->insert(GenericModel::getStaticTableName('agentes', 'agentes'), $dados); // cadastra
 
         if ($insert)
         {
@@ -334,7 +334,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
     }
 
     /**
-     * MÈtodo para cadastrar dados do agente
+     * MÔøΩtodo para cadastrar dados do agente
      * @access public
      * @static
      * @param array $dados
@@ -367,20 +367,20 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
     }
 
     /**
-     * MÈtodo para alterar dados do agente
+     * MÔøΩtodo para alterar dados do agente
      * @access public
      * @static
      * @param integer $idAgente
      * @param array $dados
      * @return boolean
-     * @todo Existe uma trigger no db que impede o acesso direto a atualizaÁ„o. Pendente de verificaÁ„o
+     * @todo Existe uma trigger no db que impede o acesso direto a atualizaÔøΩÔøΩo. Pendente de verificaÔøΩÔøΩo
      */
     public static function alterarAgente($idAgente, $dados)
     {
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $where = "idAgente = " . $idAgente; // condiÁ„o para alteraÁ„o
+        $where = "idAgente = " . $idAgente; // condiÔøΩÔøΩo para alteraÔøΩÔøΩo
 
         $update = $db->update('AGENTES.dbo.Agentes', $dados, $where); // altera
 
@@ -395,7 +395,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
     }
 
     /**
-     * MÈtodo para cadastrar o vÌnculo entre os agentes
+     * MÔøΩtodo para cadastrar o vÔøΩnculo entre os agentes
      * @access public
      * @static
      * @param array $dados
