@@ -216,7 +216,7 @@ class Autenticacao_Model_Sgcacesso extends GenericModel
 
             return $tmpTblSgcAcesso->save();
         } catch (Exception $objException) {
-            xd($objException);
+            throw new Exception($objException->getMessage(), 0, $objException);
         }
     }
 

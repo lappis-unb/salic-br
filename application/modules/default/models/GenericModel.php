@@ -328,5 +328,7 @@ class GenericModel extends Zend_Db_Table_Abstract
 
     public function insert(array $data)
     {
+        $arrayIndicesMinusculos = array_change_key_case($data);
+        return parent::insert($arrayIndicesMinusculos);
     }
 }
