@@ -29,6 +29,14 @@ class MensagemRestController extends Minc_Controller_AbstractRest{
         $idRegistration = $this->_request->getParam('idRegistration');
         $new = $this->_request->getParam('new');
         
+        # Grava último acesso.
+        if($idRegistration){
+            $modelDispositivo = new Dispositivomovel();
+            $dispositivoRow = $modelDispositivo->fetchRow("idRegistration = '{$idRegistration}'");
+            $dispositivoRow->dtAcesso = new Zend_Db_Expr('GETDATE()');
+            $dispositivoRow->save();
+        }
+        
         $listaMensagens = array();
         $modelMensagem = new Mensagem();
         $objParam = (object) array(
