@@ -22,9 +22,7 @@ class GenericModel extends Zend_Db_Table_Abstract
      * @return string
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @author V
      * @since 11/08/2016
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
      * @todo melhorar e amadurecer codigo
      */
 
@@ -46,17 +44,17 @@ class GenericModel extends Zend_Db_Table_Abstract
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since 11/08/2016
-     *
-     * @todo melhorar e amadurecer codigo
      */
-    public function getSchema($strSchema)
+    public function getSchema($strSchema = null)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
 
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
-//            $strSchema = ucfirst($strSchema) . '.dbo';
             if ($strSchema) {
-                $strSchema = $strSchema . '.dbo';
+                $arrayPedacos = explode('.', $strSchema);
+                if (count($arrayPedacos) < 1) {
+                    $strSchema = $strSchema . '.dbo';
+                }
             } else {
                 if ($this->_schema) {
                     $strSchema = $this->_schema . '.dbo';
@@ -128,8 +126,9 @@ class GenericModel extends Zend_Db_Table_Abstract
     {
         $db = Zend_Db_Table::getDefaultAdapter();
 
-        if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
-            if ($schema) {
+        if ($db instanceof Zend_Db_Adapter_Pdo_Mssql && $schema) {
+            $arrayPedacos = explode('.', $schema);
+            if (count($arrayPedacos) < 1) {
                 $schema = $schema . '.dbo';
             }
         }
@@ -330,5 +329,21 @@ class GenericModel extends Zend_Db_Table_Abstract
     {
         $arrayIndicesMinusculos = array_change_key_case($data);
         return parent::insert($arrayIndicesMinusculos);
+    }
+
+    /**
+     * @param Zend_Db_Table_Abstract::SELECT_WITHOUT_FROM_PART $withFromPart
+     * @return MinC_Db_Table_Select
+     * @author Wouerner <wouerner@gmail.com>
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     */
+    public function select($withFromPart = self::SELECT_WITHOUT_FROM_PART)
+    {
+        require_once 'Zend/Db/Table/Select.php';
+        $select = new MinC_Db_Table_Select($this);
+        if ($withFromPart == self::SELECT_WITH_FROM_PART) {
+            $select->from($this->info(self::NAME), Zend_Db_Table_Select::SQL_WILDCARD, $this->info(self::SCHEMA));
+        }
+        return $select;
     }
 }

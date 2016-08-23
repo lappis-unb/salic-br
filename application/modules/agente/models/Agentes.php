@@ -49,7 +49,7 @@ class Agente_Model_Agentes extends GenericModel {
      * @var bool
      * @access protected
      */
-    protected $_banco = 'Agentes';
+    protected $_banco = 'agentes';
 
     /**
      * _name
@@ -57,7 +57,7 @@ class Agente_Model_Agentes extends GenericModel {
      * @var bool
      * @access protected
      */
-    protected $_name = 'Agentes';
+    protected $_name = 'agentes';
 
     /**
      * _schema
