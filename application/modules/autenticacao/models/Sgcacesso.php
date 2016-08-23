@@ -75,8 +75,8 @@ class Autenticacao_Model_Sgcacesso extends GenericModel
             // configurações do banco
             $authAdapter = new Zend_Auth_Adapter_DbTable($db);
             $authAdapter->setTableName(self::obterInstancia()->getTableName())
-            ->setIdentityColumn('Cpf')
-                ->setCredentialColumn('Senha');
+                ->setIdentityColumn('cpf')
+                ->setCredentialColumn('senha');
 
             // seta as credenciais informada pelo usuï¿½rio
             $authAdapter
@@ -90,7 +90,7 @@ class Autenticacao_Model_Sgcacesso extends GenericModel
             // verifica se o acesso foi permitido
             if ($acesso->isValid()) {
                 // pega os dados do usuï¿½rio com exceï¿½ï¿½o da senha
-                $authData = $authAdapter->getResultRowObject(null, 'Senha');
+                $authData = $authAdapter->getResultRowObject(null, 'senha');
 
                 // armazena os dados do usuï¿½rio
                 $objAuth = $auth->getStorage()->write($authData);
@@ -211,24 +211,28 @@ class Autenticacao_Model_Sgcacesso extends GenericModel
      */
     public function salvar(array $dados)
     {
-        $tmpTblSgcAcesso = new Autenticacao_Model_Sgcacesso();
+        try {
+            $tmpTblSgcAcesso = new Autenticacao_Model_Sgcacesso();
 
-        if (isset($dados['idusuario'])) {
-            $tmpTblSgcAcesso = $tmpTblSgcAcesso->buscar(array("idusuario = ?" => $dados['idusuario']))->current();
-        } else {
-            $tmpTblSgcAcesso = $tmpTblSgcAcesso->createRow();
+            if (isset($dados['idusuario'])) {
+                $tmpTblSgcAcesso = $tmpTblSgcAcesso->buscar(array("idusuario = ?" => $dados['idusuario']))->current();
+            } else {
+                $tmpTblSgcAcesso = $tmpTblSgcAcesso->createRow();
+            }
+            //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
+            if (isset($dados['cpf'])) $tmpTblSgcAcesso->cpf = $dados['cpf'];
+            if (isset($dados['nome'])) $tmpTblSgcAcesso->nome = $dados['nome'];
+            if (isset($dados['dtnascimento'])) $tmpTblSgcAcesso->dtnascimento = $dados['dtnascimento'];
+            if (isset($dados['email'])) $tmpTblSgcAcesso->email = $dados['email'];
+            if (isset($dados['senha'])) $tmpTblSgcAcesso->senha = $dados['senha'];
+            if (isset($dados['dtcadastro'])) $tmpTblSgcAcesso->dtcadastro = $dados['dtcadastro'];
+            if (isset($dados['situacao'])) $tmpTblSgcAcesso->situacao = $dados['situacao'];
+            if (isset($dados['dtsituacao'])) $tmpTblSgcAcesso->dtsituacao = $dados['dtsituacao'];
+
+            return $tmpTblSgcAcesso->save();
+        } catch (Exception $objException) {
+            xd($objException);
         }
-        //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
-        if (isset($dados['cpf'])) $tmpTblSgcAcesso->cpf = $dados['cpf'];
-        if (isset($dados['nome'])) $tmpTblSgcAcesso->nome = $dados['nome'];
-        if (isset($dados['dtnascimento'])) $tmpTblSgcAcesso->dtnascimento = $dados['dtnascimento'];
-        if (isset($dados['email'])) $tmpTblSgcAcesso->email = $dados['email'];
-        if (isset($dados['senha'])) $tmpTblSgcAcesso->senha = $dados['senha'];
-        if (isset($dados['dtcadastro'])) $tmpTblSgcAcesso->dtcadastro = $dados['dtcadastro'];
-        if (isset($dados['situacao'])) $tmpTblSgcAcesso->situacao = $dados['situacao'];
-        if (isset($dados['dtsituacao'])) $tmpTblSgcAcesso->dtsituacao = $dados['dtsituacao'];
-
-        return $tmpTblSgcAcesso->save();
     }
 
     /**

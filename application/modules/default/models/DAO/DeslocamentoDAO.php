@@ -41,7 +41,9 @@ class DeslocamentoDAO extends GenericModel {
     public static function buscarDeslocamentos($idProjeto, $idDeslocamento = null)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $agenteSchema = parent::getSchema('agentes');
+
         $de = [
             'de.idDeslocamento',
             'de.idProjeto',
@@ -71,7 +73,6 @@ class DeslocamentoDAO extends GenericModel {
                 $sql->where('de.idDeslocamento = ?', $idDeslocamento);
             }
 
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
         return $resultado;

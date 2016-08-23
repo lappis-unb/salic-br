@@ -382,6 +382,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $where = "idPlanilhaProposta = ".$_POST['proposta'];
 
             $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos(null, $idEtapa, $idProduto, $idItem, null, $idUf, $municipio);
+
         }
 
         if  ( isset ( $_GET ) ) {
