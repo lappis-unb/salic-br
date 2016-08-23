@@ -114,7 +114,7 @@ class GenericModel extends Zend_Db_Table_Abstract
         if ($schema === null) $schema = $this->_schema;
         if ($tableName === null) $tableName = $this->_name;
 
-        return $this->getSchema($schema) . '.' . $this->getName($tableName);
+        return $schema . '.' . $this->getName($tableName);
     }
 
     /**

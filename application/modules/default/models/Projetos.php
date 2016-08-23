@@ -13,9 +13,9 @@
 class Projetos extends GenericModel
 {
 
-    protected $_name = 'Projetos';
-    protected $_schema = 'dbo';
-    protected $_banco = 'SAC';
+    protected $_name = 'projetos';
+    protected $_schema = 'sac';
+    protected $_banco = 'sac';
     public $_total = 0;
     public $_totalRegistros;
     private $codOrgao = null;
@@ -63,7 +63,7 @@ class Projetos extends GenericModel
         # Filtros
         $this->montarFiltrosListaProjetosDeUsuario($consulta, $objParam);
 
-        # Paginação
+        # Paginaï¿½ï¿½o
         if($objParam->next) {
             $consulta->limit($objParam->next, (int)$objParam->offset);
         }
@@ -175,7 +175,7 @@ class Projetos extends GenericModel
         # Filtros
         $this->montarFiltrosExtrato($select, $objParam);
         
-        # Paginação
+        # Paginaï¿½ï¿½o
         if($objParam->next) {
             $select->limit($objParam->next, (int)$objParam->offset);
         }
@@ -512,13 +512,13 @@ class Projetos extends GenericModel
             'NomeTecnico' => new Zend_Db_Expr('(SELECT top 1 usu_nome FROM TABELAS.dbo.Usuarios tecnico WHERE tecnico.usu_codigo = vp.idUsuario)'),
             'vp.stAnaliseProjeto',
             'status' => New Zend_Db_Expr("CASE WHEN vp.stAnaliseProjeto IS NULL
-                                                                        THEN 'Aguardando Análise'
+                                                                        THEN 'Aguardando Anï¿½lise'
                                                                    WHEN vp.stAnaliseProjeto = '1'
-                                                                        THEN 'Aguardando Análise'
+                                                                        THEN 'Aguardando Anï¿½lise'
                                                                    WHEN vp.stAnaliseProjeto = '2'
-                                                                        THEN 'Em Análise'
+                                                                        THEN 'Em Anï¿½lise'
                                                                    WHEN vp.stAnaliseProjeto = '3'
-                                                                        THEN 'Análise Finalizada'
+                                                                        THEN 'Anï¿½lise Finalizada'
                                                                    WHEN vp.stAnaliseProjeto = '4'
                                                                         THEN 'Encaminhado para portaria'
                                                               END "),
@@ -604,10 +604,10 @@ class Projetos extends GenericModel
                 array("vp" => "tbVerificaProjeto"), "vp.IdPRONAC = pr.IdPRONAC", array('vp.idUsuario',
             'NomeTecnico' => new Zend_Db_Expr('(SELECT top 1 usu_nome FROM TABELAS.dbo.Usuarios tecnico WHERE tecnico.usu_codigo = vp.idUsuario)'),
             'vp.stAnaliseProjeto',
-            'status' => New Zend_Db_Expr("CASE WHEN vp.stAnaliseProjeto IS NULL THEN 'Aguardando Análise'
-                                                                 WHEN vp.stAnaliseProjeto = '1' THEN 'Aguardando Análise'
-                                                                 WHEN vp.stAnaliseProjeto = '2' THEN 'Em Análise'
-                                                                 WHEN vp.stAnaliseProjeto = '3' THEN 'Análise Finalizada'
+            'status' => New Zend_Db_Expr("CASE WHEN vp.stAnaliseProjeto IS NULL THEN 'Aguardando Anï¿½lise'
+                                                                 WHEN vp.stAnaliseProjeto = '1' THEN 'Aguardando Anï¿½lise'
+                                                                 WHEN vp.stAnaliseProjeto = '2' THEN 'Em Anï¿½lise'
+                                                                 WHEN vp.stAnaliseProjeto = '3' THEN 'Anï¿½lise Finalizada'
                                                                  WHEN vp.stAnaliseProjeto = '4' THEN 'Encaminhado para portaria'
                                                                  END "),
             "DATEDIFF(day, vp.DtRecebido, GETDATE()) AS tempoAnalise",
@@ -1748,21 +1748,21 @@ class Projetos extends GenericModel
 
         $slct->joinInner(
                 array('a' => 'tbAnaliseDeConteudo'), "p.IdPRONAC = a.idPronac", array("a.idProduto",
-            "Lei8313" => new Zend_Db_Expr("CASE WHEN Lei8313 = 1 THEN 'Sim' ELSE 'Não' END"),
-            "Artigo3" => new Zend_Db_Expr("CASE WHEN Artigo3 = 1 THEN 'Sim' ELSE 'Não' END"),
+            "Lei8313" => new Zend_Db_Expr("CASE WHEN Lei8313 = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "Artigo3" => new Zend_Db_Expr("CASE WHEN Artigo3 = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
             "IncisoArtigo3" => new Zend_Db_Expr("CASE WHEN IncisoArtigo3 = 1 THEN 'I' WHEN IncisoArtigo3 = 2 THEN 'II' WHEN IncisoArtigo3 = 3 THEN 'III' WHEN IncisoArtigo3 = 4 THEN 'IV' WHEN IncisoArtigo3 = 5 THEN 'V' END"),
             "a.AlineaArtigo3",
-            "Artigo18" => new Zend_Db_Expr("CASE WHEN Artigo18 = 1 THEN 'Sim' ELSE 'Não' END"),
+            "Artigo18" => new Zend_Db_Expr("CASE WHEN Artigo18 = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
             "a.AlineaArtigo18",
-            "Artigo26" => new Zend_Db_Expr("CASE WHEN Artigo26 = 1 THEN 'Sim' ELSE 'Não' END"),
-            "Lei5761" => new Zend_Db_Expr("CASE WHEN Lei5761 = 1 THEN 'Sim' ELSE 'Não' END"),
-            "Artigo27" => new Zend_Db_Expr("CASE WHEN Artigo27 = 1 THEN 'Sim' ELSE 'Não' END"),
-            "IncisoArtigo27_I" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_I = 1 THEN 'Sim' ELSE 'Não' END"),
-            "IncisoArtigo27_II" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_II = 1 THEN 'Sim' ELSE 'Não' END"),
-            "IncisoArtigo27_III" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_III = 1 THEN 'Sim' ELSE 'Não' END"),
-            "IncisoArtigo27_IV" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_IV = 1 THEN 'Sim' ELSE 'Não' END"),
-            "TipoParecer" => new Zend_Db_Expr("CASE WHEN TipoParecer = 1 THEN 'Aprovação' WHEN TipoParecer = 2 THEN 'Complementação' WHEN TipoParecer = 4 THEN 'Redução' END"),
-            "ParecerFavoravel" => new Zend_Db_Expr("CASE WHEN ParecerFavoravel = 1 THEN 'Sim' ELSE 'Não' END"),
+            "Artigo26" => new Zend_Db_Expr("CASE WHEN Artigo26 = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "Lei5761" => new Zend_Db_Expr("CASE WHEN Lei5761 = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "Artigo27" => new Zend_Db_Expr("CASE WHEN Artigo27 = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "IncisoArtigo27_I" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_I = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "IncisoArtigo27_II" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_II = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "IncisoArtigo27_III" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_III = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "IncisoArtigo27_IV" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_IV = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "TipoParecer" => new Zend_Db_Expr("CASE WHEN TipoParecer = 1 THEN 'Aprovaï¿½ï¿½o' WHEN TipoParecer = 2 THEN 'Complementaï¿½ï¿½o' WHEN TipoParecer = 4 THEN 'Reduï¿½ï¿½o' END"),
+            "ParecerFavoravel" => new Zend_Db_Expr("CASE WHEN ParecerFavoravel = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
             "a.ParecerDeConteudo",
             "dbo.fnNomeParecerista(a.idUsuario) AS Parecerista",
                 )
@@ -1818,21 +1818,21 @@ class Projetos extends GenericModel
 
         $slct->joinInner(
                 array('a' => 'tbAnaliseDeConteudo'), "p.IdPRONAC = a.idPronac", array("a.idProduto",
-            "Lei8313" => new Zend_Db_Expr("CASE WHEN Lei8313 = 1 THEN 'Sim' ELSE 'Não' END"),
-            "Artigo3" => new Zend_Db_Expr("CASE WHEN Artigo3 = 1 THEN 'Sim' ELSE 'Não' END"),
+            "Lei8313" => new Zend_Db_Expr("CASE WHEN Lei8313 = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "Artigo3" => new Zend_Db_Expr("CASE WHEN Artigo3 = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
             "IncisoArtigo3" => new Zend_Db_Expr("CASE WHEN IncisoArtigo3 = 1 THEN 'I' WHEN IncisoArtigo3 = 2 THEN 'II' WHEN IncisoArtigo3 = 3 THEN 'III' WHEN IncisoArtigo3 = 4 THEN 'IV' WHEN IncisoArtigo3 = 5 THEN 'V' END"),
             "a.AlineaArtigo3",
-            "Artigo18" => new Zend_Db_Expr("CASE WHEN Artigo18 = 1 THEN 'Sim' ELSE 'Não' END"),
+            "Artigo18" => new Zend_Db_Expr("CASE WHEN Artigo18 = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
             "a.AlineaArtigo18",
-            "Artigo26" => new Zend_Db_Expr("CASE WHEN Artigo26 = 1 THEN 'Sim' ELSE 'Não' END"),
-            "Lei5761" => new Zend_Db_Expr("CASE WHEN Lei5761 = 1 THEN 'Sim' ELSE 'Não' END"),
-            "Artigo27" => new Zend_Db_Expr("CASE WHEN Artigo27 = 1 THEN 'Sim' ELSE 'Não' END"),
-            "IncisoArtigo27_I" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_I = 1 THEN 'Sim' ELSE 'Não' END"),
-            "IncisoArtigo27_II" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_II = 1 THEN 'Sim' ELSE 'Não' END"),
-            "IncisoArtigo27_III" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_III = 1 THEN 'Sim' ELSE 'Não' END"),
-            "IncisoArtigo27_IV" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_IV = 1 THEN 'Sim' ELSE 'Não' END"),
-            "TipoParecer" => new Zend_Db_Expr("CASE WHEN TipoParecer = 1 THEN 'Aprovação' WHEN TipoParecer = 2 THEN 'Complementação' WHEN TipoParecer = 4 THEN 'Redução' END"),
-            "ParecerFavoravel" => new Zend_Db_Expr("CASE WHEN ParecerFavoravel = 1 THEN 'Sim' ELSE 'Não' END"),
+            "Artigo26" => new Zend_Db_Expr("CASE WHEN Artigo26 = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "Lei5761" => new Zend_Db_Expr("CASE WHEN Lei5761 = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "Artigo27" => new Zend_Db_Expr("CASE WHEN Artigo27 = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "IncisoArtigo27_I" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_I = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "IncisoArtigo27_II" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_II = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "IncisoArtigo27_III" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_III = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "IncisoArtigo27_IV" => new Zend_Db_Expr("CASE WHEN IncisoArtigo27_IV = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
+            "TipoParecer" => new Zend_Db_Expr("CASE WHEN TipoParecer = 1 THEN 'Aprovaï¿½ï¿½o' WHEN TipoParecer = 2 THEN 'Complementaï¿½ï¿½o' WHEN TipoParecer = 4 THEN 'Reduï¿½ï¿½o' END"),
+            "ParecerFavoravel" => new Zend_Db_Expr("CASE WHEN ParecerFavoravel = 1 THEN 'Sim' ELSE 'Nï¿½o' END"),
             "a.ParecerDeConteudo",
             "dbo.fnNomeParecerista(a.idUsuario) AS Parecerista",
                 )
@@ -2769,11 +2769,12 @@ class Projetos extends GenericModel
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from($this->_name, "IdPRONAC");
+//        $select->from($this->_name, "idpronac");
 
 // busca pelo pronac
         if (!empty($pronac)) {
-            $select->where("(AnoProjeto+Sequencial) = ?", $pronac);
+            $select->where("(anoprojeto || sequencial) = ?", $pronac);
+//            $select->where("(anoprojeto+sequencial) = ?", $pronac);
         }
 
         return $this->fetchRow($select);
@@ -3813,7 +3814,7 @@ class Projetos extends GenericModel
                         sac.dbo.fnCustoProjeto (pr.AnoProjeto,pr.Sequencial) as ValorCaptado,
                         CASE
                             WHEN inab.Habilitado = 'S' THEN 'Sim'
-                            WHEN inab.Habilitado = 'N' THEN 'Não'
+                            WHEN inab.Habilitado = 'N' THEN 'Nï¿½o'
                             WHEN inab.Habilitado = '' THEN 'Sim'
                             WHEN inab.Habilitado is null THEN 'Sim'
                         END AS Habilitado, pr.Situacao, si.Descricao AS dsSituacao
@@ -5578,9 +5579,9 @@ class Projetos extends GenericModel
                 array('Pronac' => New Zend_Db_Expr('a.AnoProjeto + a.Sequencial'),'a.NomeProjeto','a.IdPRONAC',
                         new Zend_Db_Expr("CASE
                           WHEN b.siEstado = 0
-                               THEN 'Aguardando vínculo'
+                               THEN 'Aguardando vï¿½nculo'
                           WHEN  b.siEstado = 1
-                               THEN 'Vínculo rejeitado'
+                               THEN 'Vï¿½nculo rejeitado'
                           WHEN  b.siEstado = 2
                                THEN 'Vinculado'
                           WHEN  b.siEstado = 3
@@ -6046,7 +6047,7 @@ class Projetos extends GenericModel
                             then 'Artigo 26'
                             when Enquadramento = '2'
                             then 'Artigo 18'
-                            else 'Não enquadrado'
+                            else 'Nï¿½o enquadrado'
                             end as Enquadramento, p.Situacao as codSituacao,
                             (SELECT sum(b1.vlComprovacao)
                                 FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
@@ -6272,8 +6273,8 @@ class Projetos extends GenericModel
                         a.Descricao AS dsArea,
                         se.Descricao AS dsSegmento,
                         CASE
-                            WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorável'
-                            WHEN pr.ParecerFavoravel = '2' THEN 'Favorável'
+                            WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorï¿½vel'
+                            WHEN pr.ParecerFavoravel = '2' THEN 'Favorï¿½vel'
                         END AS descAvaliacao,
                         p.SolicitadoReal as vlSolicitado,
                         (SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS vlSugerido,
@@ -6341,8 +6342,8 @@ class Projetos extends GenericModel
                         a.Descricao AS dsArea,
                         se.Descricao AS dsSegmento,
                         CASE
-                            WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorável'
-                            WHEN pr.ParecerFavoravel = '2' THEN 'Favorável'
+                            WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorï¿½vel'
+                            WHEN pr.ParecerFavoravel = '2' THEN 'Favorï¿½vel'
                         END AS descAvaliacao,
                         p.SolicitadoReal as vlSolicitado,
                         (SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS vlSugerido,
@@ -6433,8 +6434,8 @@ class Projetos extends GenericModel
                         a.Descricao AS dsArea,
                         se.Descricao AS dsSegmento,
                         CASE
-                            WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorável'
-                            WHEN pr.ParecerFavoravel = '2' THEN 'Favorável'
+                            WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorï¿½vel'
+                            WHEN pr.ParecerFavoravel = '2' THEN 'Favorï¿½vel'
                         END AS descAvaliacao,
                         SolicitadoReal AS vlSolicitado,
                         CASE
@@ -6605,7 +6606,7 @@ class Projetos extends GenericModel
                         THEN 'Artigo 26'
                         WHEN Enquadramento = '2'
                         THEN 'Artigo 18'
-                        ELSE 'Não enquadrado'
+                        ELSE 'Nï¿½o enquadrado'
                     END AS Enquadramento,
                     pr.Objetivos,
                     pr.Justificativa,
@@ -6660,8 +6661,8 @@ class Projetos extends GenericModel
         $projetoRow = $this->fetchRow($this->select()->where('IdPRONAC = ?', $idPronac));
         if ($situacaoOrigem && $situacaoOrigem != $projetoRow->Situacao) {
             throw new BadFunctionCallException(
-            "A situação do projeto ({$projetoRow->Situacao}) não é a mesma "
-            . "da situação de origem ({$situacaoOrigem})"
+            "A situaï¿½ï¿½o do projeto ({$projetoRow->Situacao}) nï¿½o ï¿½ a mesma "
+            . "da situaï¿½ï¿½o de origem ({$situacaoOrigem})"
             );
         }
         $projetoRow->Situacao = $situacaoDestino;
@@ -6708,11 +6709,11 @@ class Projetos extends GenericModel
                     p.DtInicioExecucao) AS QtdeDiasVencido,
                     CASE
                         WHEN dbo.fnchecarDiligencia(p.idPronac) = 0
-                        THEN 'Sem Diligência'
+                        THEN 'Sem Diligï¿½ncia'
                         WHEN dbo.fnchecarDiligencia(p.idPronac) = 1
                         THEN 'Diligenciado'
                         WHEN dbo.fnchecarDiligencia(p.idPronac) = 2
-                        THEN 'Diligência Respondida'
+                        THEN 'Diligï¿½ncia Respondida'
                     END AS Diligencia,
                     o.Sigla as Vinculada
                 ")
@@ -6767,7 +6768,7 @@ class Projetos extends GenericModel
     /*
      * Alterada em 28/01/2015
      * @author: Jefferson Alessandro
-     * Essa consulta retorna os dados do painel de prestação de contas - Perfil: Coordenador de Prestação de Contas
+     * Essa consulta retorna os dados do painel de prestaï¿½ï¿½o de contas - Perfil: Coordenador de Prestaï¿½ï¿½o de Contas
      */
     public function buscarPainelPrestacaoDeContas($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $filtro='') {
 
@@ -6885,7 +6886,7 @@ class Projetos extends GenericModel
     /*
      * Criada em 12/02/2015
      * @author: Jefferson Alessandro
-     * Essa consulta retorna os dados do painel de prestação de contas - Perfil: Técnico de Prestação de Contas
+     * Essa consulta retorna os dados do painel de prestaï¿½ï¿½o de contas - Perfil: Tï¿½cnico de Prestaï¿½ï¿½o de Contas
      */
     public function buscarPainelTecPrestacaoDeContas($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $filtro='') {
 
@@ -6981,15 +6982,15 @@ class Projetos extends GenericModel
 
     /*
      * Criada em 07/04/2016
-     * @author: Fernão Lopes
-     * Essa consulta retorna os dados do painel de prestação de contas - Perfil: Chefe de divisão
+     * @author: Fernï¿½o Lopes
+     * Essa consulta retorna os dados do painel de prestaï¿½ï¿½o de contas - Perfil: Chefe de divisï¿½o
      */
     public function buscarPainelChefeDivisaoPrestacaoDeContas($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false, $filtro='') {
 
         $select = $this->select();
         $select->setIntegrityCheck(false);
 	
-	// em aguardando análise, nao puxa técnico nem relatório
+	// em aguardando anï¿½lise, nao puxa tï¿½cnico nem relatï¿½rio
 	if ($filtro == '') {
             $select->from(
                 array('p' => $this->_name),
@@ -7043,7 +7044,7 @@ class Projetos extends GenericModel
             array(''), 'BDCORPORATIVO.scSAC'
         );
 
-	// se não for 'aguardando análise'
+	// se nï¿½o for 'aguardando anï¿½lise'
 	if ($filtro != '') {
 	    $select->joinLeft(
 	                  array('u' => 'Usuarios'), 'e.idAgenteDestino = u.usu_codigo',
@@ -7090,7 +7091,7 @@ class Projetos extends GenericModel
     /*
      * Criada em 26/02/2015
      * @author: Jefferson Alessandro
-     * Essa consulta retorna os dados do painel de prestação de contas - Perfil: Coord. Geral de Prestação de Contas
+     * Essa consulta retorna os dados do painel de prestaï¿½ï¿½o de contas - Perfil: Coord. Geral de Prestaï¿½ï¿½o de Contas
      */
     public function buscarPainelCoordGeralPrestDeContas($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
 

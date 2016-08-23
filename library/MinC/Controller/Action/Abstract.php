@@ -150,8 +150,8 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
      */
     protected function perfil($tipo = 0, $permissoes = null)
     {
-        $auth = Zend_Auth::getInstance(); // pega a autentica??o
-        $Usuario = new Autenticacao_Model_Usuario(); // objeto usu?rio
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuario
         $UsuarioAtivo = new Zend_Session_Namespace('UsuarioAtivo'); // cria a sess?o com o usu?rio ativo
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess?o com o grupo ativo
 
@@ -185,7 +185,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             {
                 if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo est? no array de permiss?es
                 {
-                    $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "principal/index", "ALERT");
+                    $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
                 }
 
                 // pega as unidades autorizadas, org?os e grupos do usu?rio (pega todos os grupos)
@@ -219,7 +219,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $UsuarioAtivo->codUsuario = $codUsuario;
             } else // caso o usu?rio n?o esteja autenticado
             {
-                $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "index", "ALERT");
+                $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "index", "ALERT");
             }
 
             // tenta fazer a autentica??o do usu?rio logado no scriptcase para o zend
@@ -232,7 +232,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             } // fecha if
             else // caso o usu?rio n?o esteja autenticado
             {
-                $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "index", "ALERT");
+                $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "index", "ALERT");
             }
         } // fecha else if
 
@@ -261,7 +261,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 } // fecha if
                 else // caso o usu?rio n?o esteja autenticado
                 {
-                    $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "index", "ALERT");
+                    $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "index", "ALERT");
                 }
             } // fecha if
             // ========== FIM AUTENTICA??O SCRIPTCASE ==========
@@ -273,14 +273,14 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
                 if (!in_array($GrupoAtivo->codGrupo, $permissoes)) // verifica se o grupo ativo est? no array de permiss?es
                 {
-                    $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "principal/index", "ALERT");
+                    $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
                 }
 
                 // pega as unidades autorizadas, org?os e grupos do usu?rio (pega todos os grupos)
                 if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo)) {
                     $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
                 } else {
-                    $this->message("Voc? n?o tem permiss?o para acessar essa ?rea do sistema!", "principal/index", "ALERT");
+                    $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
                 }
 
                 // manda os dados para a vis?o
@@ -294,22 +294,25 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         // autentica??o migracao e autentica??o/permiss?o zend (AMBIENTE DE MIGRA??O E MINC)
         else if ($tipo == 4) {
 
-            // ========== IN?CIO AUTENTICA??O MIGRA??O ==========
+            // ========== INICIO AUTENTICACAO MIGRACAO ==========
             // pega o id do usu?rio logado pelo scriptcase
             //$codUsuario = isset($_SESSION['gusuario']['id']) ? $_SESSION['gusuario']['id'] : $UsuarioAtivo->codUsuario;
-            $codUsuario = isset($auth->getIdentity()->idusuario) ? (int)$auth->getIdentity()->idusuario : $UsuarioAtivo->codusuario;
+
+            # Convertendo os objetos da sessao em array, transformando as chaves em minusculas.
+            $arrAuth = array_change_key_case((array) $auth->getIdentity());
+
+            $codUsuario = isset($arrAuth['idusuario']) ? (int) $arrAuth['idusuario'] : $UsuarioAtivo->codusuario;
             if (isset($codUsuario) && !empty($codUsuario)) {
                 // configura??es do layout padr?o para o proponente
                 Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
-
                 $UsuarioAtivo->codUsuario = $codUsuario;
-                // tenta fazer a autentica??o do usu?rio logado no scriptcase para o zend
+                // tenta fazer a autenticacao do usuario logado no scriptcase para o zend
                 $autenticar = UsuarioDAO::loginScriptcase($codUsuario);
 
-                if ($autenticar || $auth->hasIdentity()) // caso o usu?rio seja passado pelo scriptcase e esteja autenticado
+                if ($autenticar || $auth->hasIdentity()) // caso o usuario seja passado pelo scriptcase e esteja autenticado
                 {
-                    // manda os dados para a vis?o
-                    $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                    // manda os dados para a visao
+                    $this->view->usuario = $auth->getIdentity(); // manda os dados do usuario para a vis?o
                 }
                 else
                 {

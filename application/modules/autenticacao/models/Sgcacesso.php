@@ -148,8 +148,10 @@ class Autenticacao_Model_Sgcacesso extends GenericModel
         }
     }
 
-    public function loginSemCript($username, $password)
-    {
+    public function loginSemCript($username, $password) {
+        // busca o usu?rio de acordo com o login e a senha
+
+
         $sql = $this->select();
         $sql->setIntegrityCheck(false);
         $sql->from($this, array(
@@ -158,34 +160,47 @@ class Autenticacao_Model_Sgcacesso extends GenericModel
             )
         );
         $sql->where('cpf = ?', $username);
-        $password = EncriptaSenhaDAO::encriptaSenha($username, $password);
-
         if ($password != MinC_Controller_Action_Abstract::validarSenhaInicial()) {
             $sql->where("senha  = ?", $password);
         }
-        //xd($sql->assemble());//e19d5cd5af0378da05f63f891c7467af
+
         $buscar = $this->fetchRow($sql);
+
         if ($buscar) { // realiza a autenticacao
+            // configura??es do banco
             $dbAdapter = Zend_Db_Table::getDefaultAdapter();
+            // pegamos o zend_auth
 
             $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
-            $authAdapter->setTableName($this->getTableName())
+            $authAdapter->setTableName($this->_name) // CONTROLEDEACESSO.dbo.sgcacesso
             ->setIdentityColumn('cpf')
                 ->setCredentialColumn('senha');
 
+            // seta as credenciais informada pelo usu?rio
             $authAdapter
                 ->setIdentity($buscar['cpf'])
-                ->setCredential(trim($buscar['senha']));
-            $auth = Zend_Auth::getInstance();
+                ->setCredential($buscar['senha']);
 
+            // tenta autenticar o usu?rio
+            $auth = Zend_Auth::getInstance();
             $acesso = $auth->authenticate($authAdapter);
+
             // verifica se o acesso foi permitido
             if ($acesso->isValid()) {
+                // pega os dados do usu?rio com exce??o da senha
                 $authData = $authAdapter->getResultRowObject(null, 'senha');
-                $auth->getStorage()->write($authData);
+
+                // armazena os dados do usu?rio
+                $objAuth = $auth->getStorage()->write($authData);
 
                 return true;
+            } // fecha if
+            else { // caso n?o tenha sido validado
+                return false;
             }
+        } // fecha if
+        else {
+            return false;
         }
     }
 

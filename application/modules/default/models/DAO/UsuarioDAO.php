@@ -215,8 +215,9 @@ class UsuarioDAO extends GenericModel
      */
     public static function loginScriptcase($cod)
     {
-        // busca pelo usu�rio no banco de dados
-        $buscar = UsuarioDAO::buscarUsuarioScriptcase($cod);
+        // busca pelo usuario no banco de dados
+        # Pegando apenas o primeiro resultado da consulta, transformando em array e transformando as chaves em minusculas.
+        $buscar = array_change_key_case(UsuarioDAO::buscarUsuarioScriptcase($cod)->current()->toArray());
 
         $conexao = Zend_Registry::get('conexao_banco');
 
@@ -234,8 +235,9 @@ class UsuarioDAO extends GenericModel
             $conexao_scriptcase = "conexao_xti_controle_acesso";
         }
 
-        // configura��es do banco de dados (seta uma nova conex�o no arquivo config.ini)
+        // configuracaes do banco de dados (seta uma nova conexao no arquivo config.ini)
         $config = new Zend_Config_Ini('./application/configs/config.ini', $conexao_scriptcase);
+
         //xd($config);
         $db = Zend_Db::factory($config->db);;
         Zend_Db_Table::setDefaultAdapter($db);
@@ -243,20 +245,20 @@ class UsuarioDAO extends GenericModel
         if ($buscar) {
             $authAdapter = new Zend_Auth_Adapter_DbTable($db);
             $objSgcAcesso = new Autenticacao_Model_Sgcacesso();
-
-            $authAdapter->setTableName($objSgcAcesso->getTableName())
+            $authAdapter->setTableName('sgcacesso')
                 ->setIdentityColumn('cpf')
                 ->setCredentialColumn('senha');
 
-            // seta as credenciais informada pelo usu�rio
+            // seta as credenciais informada pelo usuario
             $authAdapter
-                ->setIdentity($buscar[0]->cpf)
-                ->setCredential($buscar[0]->senha);
+                ->setIdentity($buscar['cpf'])
+                ->setCredential($buscar['senha']);
 
-            // tenta autenticar o usu�rio
+            // tenta autenticar o usuario
             $auth = Zend_Auth::getInstance();
 
             $acesso = $auth->authenticate($authAdapter);
+
             // verifica se o acesso foi permitido
             if ($acesso->isValid()) {
 

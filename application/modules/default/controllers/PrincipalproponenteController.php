@@ -11,15 +11,15 @@ class PrincipalproponenteController extends MinC_Controller_Action_Abstract {
 
     public function init() {
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $GrupoAtivo->codGrupo = 1111;
 
         Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
         parent::perfil(4); // autenticao zend
         parent::init(); // chama o init() do pai GenericControllerNew
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $this->idUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
-        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
         $Agente = new Agente_Model_Agentes();
         $this->idAgente = $auth->getIdentity()->IdUsuario;
     }
@@ -51,7 +51,7 @@ class PrincipalproponenteController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-	 * Método listarComunicados()
+	 * Mï¿½todo listarComunicados()
 	 * @access public
 	 * @param void
 	 * @return List
@@ -74,18 +74,18 @@ class PrincipalproponenteController extends MinC_Controller_Action_Abstract {
 
 		if(!empty($periodo1) && !empty($periodo1))
 		{
-			$where['dtInicioVigencia >= ?']  = $periodo1;
-			$where['dtTerminoVigencia <= ?'] = $periodo2;
+			$where['dtiniciovigencia >= ?']  = $periodo1;
+			$where['dtterminovigencia <= ?'] = $periodo2;
 		}
 
 		if($stEstado != '')
 		{
-			$where['stEstado = ?'] = $stEstado;
+			$where['stestado = ?'] = $stEstado;
 		}
 
 		if($stOpcao != '')
 		{
-			$where['stOpcao = ?'] = $stOpcao;
+			$where['stopcao = ?'] = $stOpcao;
 		}
 
 

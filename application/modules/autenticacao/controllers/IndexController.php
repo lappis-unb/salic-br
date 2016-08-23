@@ -74,7 +74,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                     //neste ponto o _forward encaminha o processamento para o metodo login do controller login, que recebe
                     //o post igualmente e tenta encontrar usuario cadastrado em SGCAcesso
                     $this->forward("login-proponente", "index", "autenticacao");
-                    //throw new Exception("Usuário inexistente!");
+//                    throw new Exception("Usuário inexistente!");
                 }
             }
 
@@ -111,18 +111,18 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             } else {
                 // realiza a busca do usuario no banco, fazendo a autenticação do mesmo
                 $Usuario = new Autenticacao_Model_Sgcacesso();
-                $verificaStatus = $Usuario->buscar(array('cpf = ?' => $username));
-                $verificaSituacao = 0;
-                if (count($verificaStatus) > 0) {
-                    $IdUsuario = $verificaStatus[0]->idusuario;
-                    $verificaSituacao = $verificaStatus[0]->situacao;
-                }
+                $verificaStatus = $Usuario->buscar(array('cpf = ?' => $username))->toArray();
+                if ($verificaStatus) {
+                    $verificaStatus = array_change_key_case(reset($verificaStatus));
 
-                if ($verificaSituacao != 1) {
+                    $IdUsuario =  $verificaStatus['idusuario'];
+                    $verificaSituacao = $verificaStatus['situacao'];
+                    $IdUsuario = $verificaStatus['idusuario'];
+                    $verificaSituacao = $verificaStatus['situacao'];
+
                     if (md5($password) != $this->validarSenhaInicial()) {
-                        //$SenhaFinal = EncriptaSenhaDAO::encriptaSenha($username, $password);
-                        //$buscar = $Usuario->loginSemCript($username, $SenhaFinal);
-                        $buscar = $Usuario->loginSemCript($username, $password);
+                        $SenhaFinal = EncriptaSenhaDAO::encriptaSenha($username, $password);
+                        $buscar = $Usuario->loginSemCript($username, $SenhaFinal);
                     } else {
                         $buscar = $Usuario->loginSemCript($username, md5($password));
                     }
@@ -135,24 +135,22 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 }
                 if ($buscar) // acesso permitido
                 {
-                    $verificaSituacao = $verificaStatus[0]->situacao;
+                    $verificaSituacao = $verificaStatus['situacao'];
                     if ($verificaSituacao == 1) {
 
                         parent::message("Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha.", "/autenticacao/index/alterarsenha?idUsuario=" . $IdUsuario, "ALERT");
                     }
                     $agentes = new Agente_Model_Agentes();
                     $verificaAgentes = $agentes->buscar(array('cnpjcpf = ?' => $username))->current();
-
                     if (!empty ($verificaAgentes)) {
 
                         //                                        $this->_redirect("/agente/agentes/incluiragenteexterno");
                         //                                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->IdUsuario}", "ALERT");
-                        return $this->_helper->redirector->goToRoute(array('module' => 'agente', 'controller' => 'principalproponente'), null, true);
+                        return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
                     } else {
 
-                        //return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
+                        return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
                         parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/agente/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->idusuario}", "ALERT");
-
                     }
 
                 }

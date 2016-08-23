@@ -578,9 +578,6 @@ class Autenticacao_Model_Usuario extends GenericModel
     public function getIdUsuario($usu_codigo = null, $usu_identificacao = null)
     {
         $select = $this->select();
-//        echo '<pre>';
-//        var_dump($select);
-//        var_dump($this->fetchRow($select));
         $select->setIntegrityCheck(false);
         $select->from(
             array('u' => $this->_name),
