@@ -67,7 +67,7 @@ include_once 'scripts/alterarprojeto/inc/menu.inc.php';
                 $('#segmentoCultural-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>').find('option').remove();
                 $('#segmentoCultural-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>').append(dados);
                 $('#segmentoCultural-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?> option').each(function(){
-                    if($(this).val() == '<?php echo $planoDistribuicao->idSegmento; ?>'){
+                    if($(this).val() == '<?php echo (isset($planoDistribuicao->idSegmento)) ? $planoDistribuicao->idSegmento : 0; ?>'){
                         $(this).attr('selected',true);
                     }
                 });
