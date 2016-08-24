@@ -174,6 +174,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                     'proponente-autenticacao-rest',
                     'proponente-rest',
                     'projeto-rest',
+                    'dispositivo-movel-rest',
+                    'mensagem-rest',                    
                     'projeto-extrato-rest',
                     'projeto-extrato-ano-rest',
                     'projeto-extrato-mes-rest'

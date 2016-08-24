@@ -670,7 +670,39 @@ class DiligenciarController extends GenericControllerNew {
             $dados['stEnviado'] = 'S';
         }
         $diligenciaDAO->inserir($dados);
+        
+        # Envia notificação para o usuário através do aplicativo mobile.
+        $modelProjeto = new Projetos();
+        $projeto = $modelProjeto->buscarPorPronac((int)$post->idPronac);
+        $this->enviarNotificacao((object)array(
+            'cpf' => $projeto->CNPJCPF,
+            'pronac' => $projeto->Pronac,
+            'idPronac' => $projeto->IdPRONAC
+        ));
+        
         $this->view->mensagem = 'Dilig&ecirc;ncia enviada com sucesso!';
+    }
+    
+    /**
+     * Envia notificação para o usuário através do aplicativo mobile.
+     * 
+     * @param stdClass $projeto
+     */
+    protected function enviarNotificacao(stdClass $projeto) {
+        $modelDispositivo = new Dispositivomovel();
+        $listaDispositivos = $modelDispositivo->listarPorIdPronac($projeto->idPronac);
+        $notification = new Minc_Notification_Message();
+        $notification
+            ->setCpf($projeto->cpf)
+            ->setCodePronac($projeto->idPronac)
+            ->setListDeviceId($modelDispositivo->listarIdDispositivoMovel($listaDispositivos))
+            ->setListResgistrationIds($modelDispositivo->listarIdRegistration($listaDispositivos))
+            ->setTitle('Projeto '. $projeto->pronac)
+            ->setText('Recebeu nova diligência!')
+            ->setListParameters(array('projeto' => $projeto->idPronac))
+            ->send()
+        ;
+//xd($notification->getResponse());
     }
 
     public function salvardiligenciaAction() {
