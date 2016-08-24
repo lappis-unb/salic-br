@@ -121,8 +121,9 @@
             </div>
             <div id="atalhos">
                 <ul>
-                    <?php if (!empty($this->usuario->Cpf) && !empty($this->usuario->Nome)) : ?>
-                    <li class="black">Usu&aacute;rio conectado: <strong>[<?php echo Validacao::mascaraCPFCNPJ($this->usuario->Cpf); ?>] - <?php echo utf8_encode($this->usuario->Nome); ?></strong></li>
+                    <?php $user = array_change_key_case((array) $this->usuario); ?>
+                    <?php if (!empty($user['cpf']) && !empty($user['nome'])) : ?>
+                    <li class="black">Usu&aacute;rio conectado: <strong>[<?php echo Validacao::mascaraCPFCNPJ($user['cpf']); ?>] - <?php echo utf8_encode($user['nome']); ?></strong></li>
                     <?php endif; ?>
                     <li class="sair"><a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), '', true); ?>" id="sairSistema" title="Sair do Sistema" onclick="logout(); return false;">Sair</a></li>
                 </ul>
@@ -162,12 +163,10 @@
         </script>
 
 
-
         <?php
-            $auth = Zend_Auth::getInstance();
-            if ( isset ($auth->getIdentity()->Cpf) ) :
+            $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
+            if ( isset ($auth['cpf']) ) :
         ?>
-
         <!-- ========== INÍCIO MENU ========== -->
         <div id="navglobal">
             <ul>

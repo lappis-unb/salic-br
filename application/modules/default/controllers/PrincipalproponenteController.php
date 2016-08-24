@@ -29,26 +29,17 @@ class PrincipalproponenteController extends MinC_Controller_Action_Abstract {
     public function indexAction() {
         $a = new Agente_Model_Agentes();
         Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
-        $this->view->saudacao = Data::saudacao() . "! " . Data::mostraData() . ".";
-
         $verificarvinculo = $a->buscarAgenteVinculoResponsavel(array('vr.idAgenteProponente = ?'=>$this->idAgente, 'vprp.siVinculoProposta = ?'=>0))->count();
-        if($verificarvinculo > 0){
-            $this->view->vinculos = true;
-        }
-        else{
-            $this->view->vinculos = false;
-        }
 
-        // Comunicados
         $tbComunicados = new tbComunicados();
-
 		$where['stEstado = ?'] = 1;
 		$where['stOpcao = ?'] = 1;
 		$ordem = array();
-
 		$rs = $tbComunicados->listarComunicados($where, $ordem);
 
+        $this->view->vinculos = ($verificarvinculo > 0)? true : false;
 		$this->view->comunicados = $rs;
+        $this->view->saudacao = Data::saudacao() . "! " . Data::mostraData() . ".";
     }
 
     /**
