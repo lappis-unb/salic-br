@@ -2773,7 +2773,7 @@ class Projetos extends GenericModel
 
 // busca pelo pronac
         if (!empty($pronac)) {
-            $select->where("(anoprojeto || sequencial) = ?", $pronac);
+            $select->where("(anoprojeto " . parent::getConcatExpression() ." sequencial) = ?", $pronac);
 //            $select->where("(anoprojeto+sequencial) = ?", $pronac);
         }
 
