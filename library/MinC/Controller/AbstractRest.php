@@ -32,6 +32,13 @@ abstract class Minc_Controller_AbstractRest extends Zend_Rest_Controller{
      * @var string
      */
     protected $authorization;
+    
+    /**
+     * Código único do dispositivo conectado fornecido pelo serviço GCM.
+     * 
+     * @var string
+     */
+    protected $registrationId;
 
     /**
      * Dados do usuário que está consumindo o serviço.
@@ -41,16 +48,16 @@ abstract class Minc_Controller_AbstractRest extends Zend_Rest_Controller{
     protected $usuario;
     
     /**
-     * Métodos públicos
+     * Métodos que pode ser acessados sem autenticação.
      * 
-     * Métodos que pode ser acessados sem autenticação
+     * @var array
      */
-    
     protected $arrPublicMethod = array();
     
     public function init(){
         $this->publicKey = Zend_Registry::get('config')->resources->view->service->salicMobileHash;
         $this->encryptHash = Zend_Registry::get('config')->resources->view->service->encryptHash;
+        $this->registrationId = $this->getRequest()->getHeader('registrationId');
         
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
@@ -63,6 +70,23 @@ abstract class Minc_Controller_AbstractRest extends Zend_Rest_Controller{
         }
         if($this->authorization){
             $this->carregarUsuario();
+        }
+        $this->salvarUltimoAcesso();
+    }
+    
+    /**
+     * Salva data e hora do último acesso do dispositivo.
+     * 
+     * @return VOID
+     */
+    protected function salvarUltimoAcesso() {
+        if($this->registrationId){
+            $modelDispositivo = new Dispositivomovel();
+            $dispositivoRow = $modelDispositivo->fetchRow("idRegistration = '{$this->registrationId}'");
+            if($dispositivoRow){
+                $dispositivoRow->dtAcesso = new Zend_Db_Expr('GETDATE()');
+                $dispositivoRow->save();
+            }
         }
     }
     
@@ -114,10 +138,13 @@ abstract class Minc_Controller_AbstractRest extends Zend_Rest_Controller{
     }
     
     public function setPublicMethod($publicMethod) {
-        if (is_array($publicMethod))
+        if (is_array($publicMethod)){
             $this->arrPublicMethod = array_merge ($this->arrPublicMethod, $publicMethod);
-        else if (is_string($publicMethod))
+        }
+        else if (is_string($publicMethod)){
             $this->arrPublicMethod[] = $publicMethod;
+        }
         $this;
     }
+    
 }
