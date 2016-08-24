@@ -48,7 +48,7 @@ abstract class Minc_Controller_AbstractRest extends Zend_Rest_Controller{
     protected $usuario;
     
     /**
-     * Métodos que pode ser acessados sem autenticação.
+     * Métodos que podem ser acessados sem autenticação.
      * 
      * @var array
      */
