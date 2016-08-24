@@ -1,3 +1,6 @@
+Release 1.9.1
+  * Fix: [Prestação de contas] Adicionando perfil SAV/CEP
+
 Release 1.9.0
   * Novo: [API-Mobile] Funcionalidade de exibir mensagens novas ao iniciar o aplicativo
   * Novo: [API-Mobile] Desenvolvimento da funcionalidade que salva as informações no Banco de Dados de mensagens enviadas
