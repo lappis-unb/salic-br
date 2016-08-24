@@ -39,12 +39,12 @@ class IndexController extends GenericControllerNew
             ->setCodePronac($projeto->idPronac)
             ->setListDeviceId($modelDispositivo->listarIdDispositivoMovel($listaDispositivos))
             ->setListResgistrationIds($modelDispositivo->listarIdRegistration($listaDispositivos))
-            ->setTitle('Projeto '. 183901)
-            ->setText('Recebeu uma Diligência!')
+            ->setTitle('Projeto '. $projeto->pronac)
+            ->setText('Recebeu nova mensagem!')
             ->setListParameters(array('projeto' => $projeto->idPronac))
             ->send()
         ;
-xd($notification->getResponse());
+        echo var_dump($notification->getResponse()); die;
     }
     
     /**
@@ -55,9 +55,11 @@ xd($notification->getResponse());
      * @return void
      */
     public function notificationAction() {
+        $idPronac = $this->_request->getParam('idPronac');
+        
         # Envia notificação para o usuário através do aplicativo mobile.
         $modelProjeto = new Projetos();
-        $projeto = $modelProjeto->buscarPorPronac(119079);
+        $projeto = $modelProjeto->buscarPorPronac($idPronac?$idPronac:119079);
         $this->enviarNotificacao((object)array(
             'cpf' => $projeto->CNPJCPF,
             'pronac' => $projeto->Pronac,

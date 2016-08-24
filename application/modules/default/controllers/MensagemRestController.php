@@ -26,7 +26,7 @@ class MensagemRestController extends Minc_Controller_AbstractRest{
         $next = $this->_request->getParam('next');
         $offset = $this->_request->getParam('offset');
         $total = $this->_request->getParam('total');
-        $idRegistration = $this->_request->getParam('idRegistration');
+        $idRegistration = $this->registrationId;
         $new = $this->_request->getParam('new');
         
         $listaMensagens = array();
@@ -63,7 +63,6 @@ class MensagemRestController extends Minc_Controller_AbstractRest{
             $mensagem->dtAcesso = new Zend_Db_Expr('GETDATE()');
             $mensagem->save();
             $result = (object)$mensagem->toArray();
-            
         }
         
         # Resposta do serviço.
