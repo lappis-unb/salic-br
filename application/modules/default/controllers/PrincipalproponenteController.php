@@ -8,20 +8,22 @@
 class PrincipalproponenteController extends MinC_Controller_Action_Abstract {
 
     private $idAgente = null;
+    private $idUsuario;
 
     public function init() {
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
         $GrupoAtivo->codGrupo = 1111;
+        $auth = Zend_Auth::getInstance();
+        $auth = array_change_key_case((array) $auth->getIdentity());
 
         Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
         parent::perfil(4); // autenticao zend
         parent::init(); // chama o init() do pai GenericControllerNew
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
-        $this->idUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
-        $Usuario = new Autenticacao_Model_Usuario(); // objeto usu�rio
+        $this->idUsuario = isset($auth['usu_codigo']) ? $auth['usu_codigo'] : $auth['idusuario'];
+        $Usuario = new Autenticacao_Model_Usuario();
         $Agente = new Agente_Model_Agentes();
-        $this->idAgente = $auth->getIdentity()->IdUsuario;
+        $this->idAgente = $auth['idusuario'];
     }
 
     public function indexAction() {
@@ -30,7 +32,6 @@ class PrincipalproponenteController extends MinC_Controller_Action_Abstract {
         $this->view->saudacao = Data::saudacao() . "! " . Data::mostraData() . ".";
 
         $verificarvinculo = $a->buscarAgenteVinculoResponsavel(array('vr.idAgenteProponente = ?'=>$this->idAgente, 'vprp.siVinculoProposta = ?'=>0))->count();
-
         if($verificarvinculo > 0){
             $this->view->vinculos = true;
         }

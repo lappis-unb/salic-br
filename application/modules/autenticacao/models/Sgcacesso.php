@@ -172,7 +172,7 @@ class Autenticacao_Model_Sgcacesso extends GenericModel
             // pegamos o zend_auth
 
             $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
-            $authAdapter->setTableName($this->_name) // CONTROLEDEACESSO.dbo.sgcacesso
+            $authAdapter->setTableName($this->getTableName(null, null, false)) // CONTROLEDEACESSO.dbo.sgcacesso
             ->setIdentityColumn('cpf')
                 ->setCredentialColumn('senha');
 
@@ -183,6 +183,7 @@ class Autenticacao_Model_Sgcacesso extends GenericModel
 
             // tenta autenticar o usu?rio
             $auth = Zend_Auth::getInstance();
+
             $acesso = $auth->authenticate($authAdapter);
 
             // verifica se o acesso foi permitido
@@ -191,16 +192,10 @@ class Autenticacao_Model_Sgcacesso extends GenericModel
                 $authData = $authAdapter->getResultRowObject(null, 'senha');
 
                 // armazena os dados do usu?rio
-                $objAuth = $auth->getStorage()->write($authData);
+                $auth->getStorage()->write($authData);
 
                 return true;
-            } // fecha if
-            else { // caso n?o tenha sido validado
-                return false;
             }
-        } // fecha if
-        else {
-            return false;
         }
     }
 

@@ -234,26 +234,28 @@ class Agente_Model_Agentes extends GenericModel {
      * @return void
      */
     public function buscarAgenteVinculoResponsavel($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
-        $slct = $this->select();
-        $slct->distinct();
-        $slct->setIntegrityCheck(false);
-        $slct->from(
-                array('ag' => $this->_name), array('ag.CNPJCPF')
+
+        $objAgentes = $this->select();
+        $objAgentes->distinct();
+        $objAgentes->setIntegrityCheck(false);
+        $objAgentes->from(
+                array('ag' => $this->_name), array('ag.CNPJCPF'), $this->_schema
         );
-        $slct->joinInner(
-                array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente", array('nm.Descricao as NomeAgente')
+        $objAgentes->joinInner(
+                array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente", array('nm.Descricao as NomeAgente'), $this->_schema
         );
-        $slct->joinLeft(
-                array('vr' => 'tbVinculo'), "vr.idUsuarioResponsavel  = ag.idAgente", array("vr.idVinculo as idVinculoResponsavel")
+        $objAgentes->joinLeft(
+                array('vr' => 'tbVinculo'), "vr.idUsuarioResponsavel  = ag.idAgente", array("vr.idVinculo as idVinculoResponsavel"), $this->_schema
         );
-        $slct->joinInner(
-                array('vprp' => 'tbVinculoProposta'), "vprp.idVinculo = vr.idVinculo", array("vprp.siVinculoProposta", "vprp.idPreProjeto", 'vprp.idVinculoProposta')
+        $objAgentes->joinInner(
+                array('vprp' => 'tbVinculoProposta'), "vprp.idVinculo = vr.idVinculo", array("vprp.siVinculoProposta", "vprp.idPreProjeto", 'vprp.idVinculoProposta'), $this->_schema
         );
-        $slct->joinLeft(array('pr'=>'Projetos'), 'vprp.idPreProjeto = pr.idProjeto', array('(pr.AnoProjeto+pr.Sequencial) as pronac'), 'SAC.dbo');
+        $objAgentes->joinLeft(array('pr'=>'Projetos'), 'vprp.idPreProjeto = pr.idProjeto', array('(pr.AnoProjeto ' . parent::getConcatExpression() . ' pr.Sequencial) as pronac'), $this->getSchema('sac'));
+
         foreach ($where as $coluna => $valor) {
-            $slct->where($coluna, $valor);
+            $objAgentes->where($coluna, $valor);
         }
-        return $this->fetchAll($slct);
+        return $this->fetchAll($objAgentes);
     }
 
     /**

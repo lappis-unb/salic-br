@@ -17,6 +17,44 @@ class GenericModel extends Zend_Db_Table_Abstract
     private $_config;
     protected $_rowClass = "MinC_Db_Table_Row";
 
+    public function init()
+    {
+        # Tratando o nome da tabela conforme o tipo de banco.
+        $this->_name = self::getName($this->_name);
+        $this->_banco = self::getBanco($this->_banco);
+        $this->_schema = self::getSchema($this->_schema);
+    }
+    /**
+     * GenericModel constructor.
+     *
+     * @todo verificar um tipo de SET TEXTSIZE 2147483647 para usar com o Postgres tambem.
+     */
+    public function __construct()
+    {
+        # FECHANDO A CONEXAO EXISTENTE JA QUE UMA NOVA SERA ABERTA
+        $dbAdapter = Zend_Db_Table::getDefaultAdapter();
+        if (!empty($dbAdapter)) {
+            $dbAdapter->closeConnection();
+            unset ($dbAdapter);
+        }
+
+        if (!($this->_config instanceof Zend_Config_Ini)) {
+            $this->_config = new Zend_Config_Ini(
+                Zend_Registry::get('DIR_CONFIG'),
+                'conexao_' . strtolower($this->_banco),
+                array('allowModifications' => true,)
+            );
+
+            Zend_Registry::getInstance()->set('config', $this->_config);
+            Zend_Db_Table::setDefaultAdapter(Zend_Db::factory($this->_config->db));
+
+            parent::__construct();
+
+            # Setar o campo texto maior que 4096 caracteres aceitaveis por padrao no PHP
+//            $this->_db->query('SET TEXTSIZE 2147483647');
+        }
+    }
+
     /**
      * @param string $strName
      * @return string
@@ -45,22 +83,18 @@ class GenericModel extends Zend_Db_Table_Abstract
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since 11/08/2016
      */
-    public function getSchema($strSchema = null)
+    public function getSchema($strSchema = null, $isReturnDb = true)
     {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        if (!$strSchema) {
+            $strSchema = $this->_schema;
+        }
 
+        $db = Zend_Db_Table::getDefaultAdapter();
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
-            if ($strSchema) {
-                $arrayPedacos = explode('.', $strSchema);
-                if (count($arrayPedacos) < 1) {
-                    $strSchema = $strSchema . '.dbo';
-                }
+            if ($isReturnDb && strpos($strSchema, '.') === false) {
+                $strSchema = $strSchema . ".dbo";
             } else {
-                if ($this->_schema) {
-                    $strSchema = $this->_schema . '.dbo';
-                } else {
-                    $strSchema = $this->_banco . '.dbo';
-                }
+                $strSchema = "dbo";
             }
         }
 
@@ -97,21 +131,15 @@ class GenericModel extends Zend_Db_Table_Abstract
         return $strName;
     }
 
-    public function init()
-    {
-        # Tratando o nome da tabela conforme o tipo de banco.
-        $this->_name = self::getName($this->_name);
-        $this->_banco = self::getBanco($this->_banco);
-        $this->_schema = self::getSchema($this->_schema);
-    }
+
 
     /**
      * @return string
      * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
      */
-    public function getTableName($schema = null, $tableName = null)
+    public function getTableName($schema = null, $tableName = null, $isReturnDb = true)
     {
-        if ($schema === null) $schema = $this->_schema;
+        if ($schema === null) $schema = $this->getSchema($schema, $isReturnDb);
         if ($tableName === null) $tableName = $this->_name;
 
         return $schema . '.' . $this->getName($tableName);
@@ -138,36 +166,7 @@ class GenericModel extends Zend_Db_Table_Abstract
         return $schema . '.' . $tableName;
     }
 
-    /**
-     * GenericModel constructor.
-     *
-     * @todo verificar um tipo de SET TEXTSIZE 2147483647 para usar com o Postgres tambem.
-     */
-    public function __construct()
-    {
-        # FECHANDO A CONEXAO EXISTENTE JA QUE UMA NOVA SERA ABERTA
-        $dbAdapter = Zend_Db_Table::getDefaultAdapter();
-        if (!empty($dbAdapter)) {
-            $dbAdapter->closeConnection();
-            unset ($dbAdapter);
-        }
 
-        if (!($this->_config instanceof Zend_Config_Ini)) {
-            $this->_config = new Zend_Config_Ini(
-                Zend_Registry::get('DIR_CONFIG'),
-                'conexao_' . strtolower($this->_banco),
-                array('allowModifications' => true,)
-            );
-
-            Zend_Registry::getInstance()->set('config', $this->_config);
-            Zend_Db_Table::setDefaultAdapter(Zend_Db::factory($this->_config->db));
-
-            parent::__construct();
-
-            # Setar o campo texto maior que 4096 caracteres aceitaveis por padrao no PHP
-//            $this->_db->query('SET TEXTSIZE 2147483647');
-        }
-    }
 
     public function __destruct()
     {
@@ -345,5 +344,23 @@ class GenericModel extends Zend_Db_Table_Abstract
             $select->from($this->info(self::NAME), Zend_Db_Table_Select::SQL_WILDCARD, $this->info(self::SCHEMA));
         }
         return $select;
+    }
+
+
+    /**
+     * @param Zend_Db_Table_Abstract::SELECT_WITHOUT_FROM_PART $withFromPart
+     * @return MinC_Db_Table_Select
+     * @author Wouerner <wouerner@gmail.com>
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return string
+     */
+    public static function getConcatExpression()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            return ' + ';
+        }
+        return " || ";
     }
 }

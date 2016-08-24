@@ -493,7 +493,7 @@ CREATE TABLE agentes.tbVinculo
   idVinculo INT PRIMARY KEY NOT NULL ,
   idAgenteProponente INT NOT NULL,
   dtVinculo TIMESTAMP NOT NULL,
-  siVinculo CHAR DEFAULT 0 NOT NULL,
+  siVinculo SMALLINT DEFAULT 0 NOT NULL,
   idUsuarioResponsavel INT NOT NULL,
   CONSTRAINT tbVinculo_Agentes_02 FOREIGN KEY (idAgenteProponente) REFERENCES agentes.Agentes (idAgente)
 );

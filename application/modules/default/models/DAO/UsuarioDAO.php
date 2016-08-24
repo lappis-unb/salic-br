@@ -245,7 +245,7 @@ class UsuarioDAO extends GenericModel
         if ($buscar) {
             $authAdapter = new Zend_Auth_Adapter_DbTable($db);
             $objSgcAcesso = new Autenticacao_Model_Sgcacesso();
-            $authAdapter->setTableName('sgcacesso')
+            $authAdapter->setTableName($objSgcAcesso->getTableName())
                 ->setIdentityColumn('cpf')
                 ->setCredentialColumn('senha');
 

@@ -12,6 +12,8 @@
  */
 class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 {
+    public $orgaoAtivo;
+
     /**
      * Reescreve o método init()
      * @access public
@@ -38,15 +40,13 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
      */
     public function loginAction()
     {
-
         $this->_helper->layout->disableLayout();
         $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
         $password = $this->getParam('Senha', null);
 
         try {
 
-            // valida os dados
-            if (empty($username) || empty($password)) // verifica se os campos foram preenchidos
+            if (empty($username) || empty($password))
             {
                 throw new Exception("Login ou Senha inválidos!");
             } else if (strlen($username) == 11 && !Validacao::validarCPF($username)) {
@@ -55,17 +55,18 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 throw new Exception("O CPF informado é invalido!");
             } else {
                 $Usuario = new Autenticacao_Model_Usuario();
-                $buscar = $Usuario->login($username, $password);
-
+                $buscar = $Usuario->login($username, $password);echo '<pre>';
                 if ($buscar) {
-                    $auth = Zend_Auth::getInstance();
-
+                    $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
+                    $objUnidades = $Usuario->buscarUnidades($auth['usu_codigo'], 21)->current();
+                    if($objUnidades) {
+                       $objUnidades = $objUnidades->toArray();
+                    }
                     // registra o primeiro grupo do usuário (pega unidade autorizada, orgão e grupo do usuário)
-                    $Grupo = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuario
-
-                    $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-                    $GrupoAtivo->codGrupo = $Grupo[0]->gru_codigo; // armazena o grupo na sessão
-                    $GrupoAtivo->codOrgao = $Grupo[0]->uog_orgao; // armazena o órgão na sessão
+                    $Grupo = array_change_key_case($objUnidades);
+                    $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
+                    $GrupoAtivo->codGrupo = $Grupo['gru_codigo'];
+                    $GrupoAtivo->codOrgao = $Grupo['uog_orgao'];
                     $this->orgaoAtivo = $GrupoAtivo->codOrgao;
 
                     return $this->_helper->redirector->goToRoute(array('controller' => 'principal'), null, true);
@@ -78,8 +79,9 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 }
             }
 
-        } catch (Exception $e) {
-            parent::message($e->getMessage(), "index", "ERROR");
+        } catch (Exception $objException) {
+            xd($objException);
+            parent::message($objException->getMessage(), "index", "ERROR");
         }
     }
 
@@ -115,8 +117,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 if ($verificaStatus) {
                     $verificaStatus = array_change_key_case(reset($verificaStatus));
 
-                    $IdUsuario =  $verificaStatus['idusuario'];
-                    $verificaSituacao = $verificaStatus['situacao'];
                     $IdUsuario = $verificaStatus['idusuario'];
                     $verificaSituacao = $verificaStatus['situacao'];
 

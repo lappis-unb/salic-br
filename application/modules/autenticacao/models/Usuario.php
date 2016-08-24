@@ -163,9 +163,10 @@ class Autenticacao_Model_Usuario extends GenericModel
             // configuracoes do banco
             $dbAdapter = Zend_Db_Table::getDefaultAdapter();
             // pegamos o zend_auth
-
             $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
-            $authAdapter->setTableName($this->getTableName())// TABELAS.dbo.Usuarios
+
+            //xd($this->getName('usuarios'));
+            $authAdapter->setTableName($this->getTableName(null, null, false))// TABELAS.dbo.Usuarios
             ->setIdentityColumn('usu_identificacao')
                 ->setCredentialColumn('usu_senha');
 
@@ -903,20 +904,19 @@ class Autenticacao_Model_Usuario extends GenericModel
      */
     public function recuperarOrgaoMaxSuperior($idOrgao)
     {
-        $slct = $this->select();
-        $slct->setIntegrityCheck(false);
-        $slct->from(
+        $objOrgaos = $this->select();
+        $objOrgaos->setIntegrityCheck(false);
+        $objOrgaos->from(
             array("orgaos"),
             array("org_superior"),
             $this->getSchema('tabelas')
         );
 
-        $slct->where("org_codigo = ? ", $idOrgao);
+        $objOrgaos->where("org_codigo = ? ", $idOrgao);
 
-        $rows = $this->fetchRow($slct);
-        $orgMaxSuperior = $rows->org_superior;
-        if ($orgMaxSuperior > 1) {
-            return $this->recuperarOrgaoMaxSuperior($orgMaxSuperior);
+        $row = $this->fetchRow($objOrgaos);
+        if (isset($row->org_superior) && $row->org_superior > 1) {
+            return $this->recuperarOrgaoMaxSuperior($row->org_superior);
         } else {
             return $idOrgao;
         }
