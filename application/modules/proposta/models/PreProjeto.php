@@ -552,15 +552,13 @@ class Proposta_Model_PreProjeto extends GenericModel
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('pre'=>$this->_name),
-                        array(
-                                'nomeProjeto'=>'pre.NomeProjeto',
-
-                                'pronac'=>'pre.idPreProjeto'
-                             )
+                        ['pre' => $this->_name],
+                        ['nomeProjeto' => 'pre.NomeProjeto', 'pronac'=>'pre.idPreProjeto' ],
+                        $this->_schema
                      );
 
-        $select->joinInner(
+        $select
+            ->joinInner(
                 array('aval' => 'tbAvaliacaoProposta'),
                 'aval.idProjeto = pre.idPreProjeto',
                 array(
@@ -572,8 +570,9 @@ class Proposta_Model_PreProjeto extends GenericModel
                         'Resposta'=>'aval.dsResposta',
                         'aval.idCodigoDocumentosExigidos',
                         'aval.stEnviado'
-                    )
-        );
+                    ),
+                $this->_schema
+            );
 
         $select->joinLeft(
                 array('arq' => 'tbArquivo'),
@@ -591,22 +590,23 @@ class Proposta_Model_PreProjeto extends GenericModel
                 array(
                         'a.idAgente'
                     ),
-                'AGENTES.dbo'
+                $this->getSchema('AGENTES')
         );
+
         $select->joinLeft(
                 array('n' => 'NOMES'),
                 'a.idAgente = n.idAgente',
                 array(
                         'n.Descricao'
                     ),
-                'AGENTES.dbo'
+                $this->getSchema('AGENTES')
         );
 
         foreach ($consulta as $coluna=>$valor)
         {
             $select->where($coluna, $valor);
         }
-
+//echo $select;die;
         if($retornaSelect)
         {
 

@@ -4,7 +4,7 @@ class Movimentacao extends GenericModel
     protected $_banco = "sac";
     protected $_schema = 'sac';
     protected $_name = "tbmovimentacao";
-    
+
     /**
      * Grava registro. Se seja passado um ID ele altera um registro existente
      * @param array $dados - array com dados referentes as colunas da tabela no formato "nome_coluna_1"=>"valor_1","nome_coluna_2"=>"valor_2"
@@ -22,13 +22,13 @@ class Movimentacao extends GenericModel
             return $this->insert($dados);
             //$rsMovimentacao = $this->createRow();
         }
-        
+
         //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
-        $rsMovimentacao->idProjeto = $dados['idProjeto']; 
+        $rsMovimentacao->idProjeto = $dados['idProjeto'];
         $rsMovimentacao->Movimentacao = $dados['Movimentacao'];
         $rsMovimentacao->DtMovimentacao = $dados['DtMovimentacao'];
         $rsMovimentacao->stEstado = $dados['stEstado'];
-        $rsMovimentacao->Usuario = $dados['Usuario']; 
+        $rsMovimentacao->Usuario = $dados['Usuario'];
 
         //SALVANDO O OBJETO
         $id = $rsMovimentacao->save();
@@ -43,10 +43,12 @@ class Movimentacao extends GenericModel
     public function buscarStatusAtualProposta($idPreProjeto) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
-        $slct->from($this->_name);
+        $slct->from($this->_name,['*'], $this->_schema);
+        //echo $slct; die;
         $slct->where('idProjeto = ? ', $idPreProjeto);
         $slct->where('stEstado = ? ', 0);
         $slct->order(array("DtMovimentacao DESC"));
+
         return $this->fetchRow($slct);
     }
 
@@ -58,14 +60,14 @@ class Movimentacao extends GenericModel
         $slct->from(
                 array('mov' => $this->_schema . '.' . $this->_name), array()
         );
-        
+
         $slct->joinInner(
                 array('pre'=>'PreProjeto'),
                 'pre.idPreProjeto = mov.idProjeto',
                 array(),
                 'SAC.dbo'
                 );
-        
+
         $slct->joinLeft(
                 array('proj'=>'Projetos'),
                 'proj.idProjeto = mov.idProjeto',
@@ -90,7 +92,7 @@ class Movimentacao extends GenericModel
                 array('Nome'=>'nm.Descricao'),
                 'AGENTES.dbo'
                 );
-        
+
         $slct->joinInner(
                 array('uog'=>'UsuariosXOrgaosXGrupos'),
                 'uog.uog_usuario = usu.usu_codigo',
@@ -103,14 +105,14 @@ class Movimentacao extends GenericModel
                 array('Perfil'=>'gru.gru_nome', 'cdPerfil'=>'gru.gru_codigo'),
                 'TABELAS.dbo'
                 );
-        
+
         $slct->joinInner(
                 array('org'=>'Orgaos'),
                 'org.Codigo = uog.uog_orgao and org.Codigo = usu.usu_orgao',
                 array('Orgao'=>'org.Sigla'),
                 'SAC.dbo'
         );
-        
+
 
         $slct->where('gru.gru_codigo in (92,131) ');
         $slct->where('proj.IdPRONAC = ? ', $idPronac);
@@ -119,4 +121,3 @@ class Movimentacao extends GenericModel
         return $this->fetchAll($slct);
     }
 }
-?>

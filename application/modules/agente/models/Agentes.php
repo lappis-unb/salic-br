@@ -154,8 +154,8 @@ class Agente_Model_Agentes extends GenericModel {
     public function buscarAgenteNome($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
-        $slct->from(array('a' => $this->_name));
-        $slct->joinInner(array('m' => 'nomes'), 'a.idagente=m.idagente');
+        $slct->from(array('a' => $this->_name), '*', $this->_schema);
+        $slct->joinInner(array('m' => 'nomes'), 'a.idagente=m.idagente', ['*'], $this->_schema);
 
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
@@ -269,40 +269,49 @@ class Agente_Model_Agentes extends GenericModel {
      */
     public function buscarAgenteVinculoProponente($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
+
         $slct = $this->select();
         $slct->distinct();
         $slct->setIntegrityCheck(false);
         $slct->from(
                 array('ag' => $this->_name),
-                array('ag.CNPJCPF', 'ag.idAgente')
-        );
+                array('ag.CNPJCPF', 'ag.idAgente'),
+                $this->_schema
+            );
         $slct->joinInner(
                 array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente",
-                array('nm.Descricao as NomeAgente')
+                array('nm.Descricao as NomeAgente'),
+                $this->_schema
+
         );
         $slct->joinLeft(
                 array('vp' => 'tbVinculo'), "vp.idAgenteProponente  = ag.idAgente",
-                array("vp.idVinculo as idVinculoProponente", "siVinculo", "idUsuarioResponsavel")
+                array("vp.idVinculo as idVinculoProponente", "siVinculo", "idUsuarioResponsavel"),
+                $this->_schema
         );
         $slct->joinLeft(
                 array('vprp' => 'tbVinculoProposta'), "vprp.idVinculo = vp.idVinculo",
-                array("vprp.siVinculoProposta", "vprp.idPreProjeto", "vprp.idVinculo")
+                array("vprp.siVinculoProposta", "vprp.idPreProjeto", "vprp.idVinculo"),
+                $this->_schema
         );
 
         $slct->joinLeft(
                 array('pr' => 'Projetos'), "pr.idProjeto = vprp.idPreProjeto",
-                array('pr.IdPRONAC'), 'SAC.dbo'
+                array('pr.IdPRONAC'),
+                'SAC.dbo'
         );
 
         $slct->joinLeft(
                 array('usu' => 'Usuarios'), "usu.usu_identificacao = ag.CNPJCPF",
-                array('usu.usu_identificacao as UsuarioVinculo'), 'TABELAS.dbo'
+                array('usu.usu_identificacao as UsuarioVinculo'),
+                'TABELAS.dbo'
         );
 
         foreach ($where as $coluna => $valor)
         {
             $slct->where($coluna, $valor);
         }
+        //echo $slct;die;
         return $this->fetchAll($slct);
     }
 

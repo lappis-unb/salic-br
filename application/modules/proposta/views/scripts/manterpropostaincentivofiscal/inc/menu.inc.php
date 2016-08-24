@@ -1,4 +1,4 @@
-<!-- ========== INÍCIO MENU ========== -->
+ <!-- ========== INÍCIO MENU ========== -->
 <script language="javascript" type="text/javascript"
         src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
 <script type="text/javascript">
@@ -101,7 +101,6 @@
     <div id="container">
         <!-- início: navegação local #qm0 -->
         <?php
-
         $get = Zend_Registry::get("get");
         //define id do PreProjeto que sera passado as outras implementacoes
         $codProjeto = "?idPreProjeto=";
@@ -222,7 +221,7 @@
 
                             <?php if ($lp->idAgenteProponente != $idAgente): ?>
                                 <option
-                                    value="<?php echo $lp->idVinculo; ?>:<?php echo $lp->idAgenteProponente; ?>"><?php echo $lp->NomeProponente; ?></option>
+                                    value="<?php echo $lp->idVinculo; ?>:<?php echo $lp->idAgenteProponente; ?>"><?php echo $lp->nomeproponente; ?></option>
                             <?php endif; ?>
 
                             <?php $idAgente = $lp->idAgenteProponente; ?>

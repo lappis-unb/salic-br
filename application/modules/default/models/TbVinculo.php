@@ -15,34 +15,39 @@ class TbVinculo extends GenericModel{
 
         $slct->from(
                 array('VI' => $this->_name),
-                array('*')
+                array('*'),
+                $this->_schema
         );
 
         $slct->joinInner(
                 array('AG' => 'Agentes'), "AG.idAgente = VI.idAgenteProponente",
-                array('AG.CNPJCPF')
+                array('AG.CNPJCPF'),
+                $this->_schema
         );
 
         $slct->joinInner(
                 array('NM' => 'Nomes'), "NM.idAgente = AG.idAgente",
-                array('NM.Descricao AS NomeProponente')
+                array('NM.Descricao AS NomeProponente'),
+                $this->_schema
         );
 
-        $slct->joinLeft(
+        $slct
+            ->joinLeft(
                 array('SGA' => 'SGCacesso'), "SGA.IdUsuario = VI.idUsuarioResponsavel",
-                array('SGA.IdUsuario AS idUsuarioResponsavel', 'SGA.Nome AS NomeResponsavel', 'SGA.Cpf AS CpfResponsavel'), 'CONTROLEDEACESSO.dbo'
-        );
+                array('SGA.IdUsuario AS idUsuarioResponsavel', 'SGA.Nome AS NomeResponsavel', 'SGA.Cpf AS CpfResponsavel'),
+                'CONTROLEDEACESSO.dbo'
+            );
 
         $slct->joinLeft(
                 array('VP' => 'tbVinculoProposta'), "VP.idVinculo = VI.idVinculo",
-                array('VP.idVinculoProposta', 'VP.siVinculoProposta')
+                array('VP.idVinculoProposta', 'VP.siVinculoProposta'),
+                $this->_schema
         );
 
         foreach ($where as $coluna => $valor)
         {
             $slct->where($coluna, $valor);
         }
-       // xd($slct->assemble());
         return $this->fetchAll($slct);
     }
 

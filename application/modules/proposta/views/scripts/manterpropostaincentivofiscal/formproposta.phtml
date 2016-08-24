@@ -347,7 +347,7 @@ $(document).ready(function()
 
 <?php
     if (isset($this->proposta->idPreProjeto)) {
-        require_once "inc/menu.inc.php"; // menu
+        echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); // menu
     }
 ?>
 
@@ -508,7 +508,7 @@ $(document).ready(function()
                 <tr>
                     <td class="centro">Data de In&iacute;cio *</td>
                     <td>
-                        <input type="text" name="dtInicioDeExecucao" id="dtInicioDeExecucao" maxlength="10" class="input_simples btn_calendario" value="<?php if (isset($this->proposta->idPreProjeto)) echo $this->proposta->DtInicioDeExecucaoForm; ?>"/>
+                        <input type="text" name="dtInicioDeExecucao" id="dtInicioDeExecucao" maxlength="10" class="input_simples btn_calendario" value="<?php if (isset($this->proposta->idPreProjeto)) echo $this->proposta->dtiniciodeexecucaoform; ?>"/>
                         <!--<input type="text" class="input_simples" name="dtInicioDeExecucao" id="dtInicioDeExecucao" autocomplete="off" onkeyup="mascara(this,
                             format_data);" maxlength="10" value="<?php
                                     //if (isset($this->proposta->idPreProjeto))
@@ -522,7 +522,7 @@ $(document).ready(function()
                 <tr>
                     <td class="centro">Data Final *</td>
                     <td>
-                        <input type="text" name="dtFinalDeExecucao" id="dtFinalDeExecucao" maxlength="10" class="input_simples btn_calendario" value="<?php if (isset($this->proposta->idPreProjeto)) echo $this->proposta->DtFinalDeExecucaoForm; ?>"/>
+                        <input type="text" name="dtFinalDeExecucao" id="dtFinalDeExecucao" maxlength="10" class="input_simples btn_calendario" value="<?php if (isset($this->proposta->idPreProjeto)) echo $this->proposta->dtfinaldeexecucaoform; ?>"/>
                        <!-- <input type="text" class="input_simples" name="dtFinalDeExecucao" id="dtFinalDeExecucao"  autocomplete="off" onkeyup="mascara(this, format_data);"
                        maxlength="10" value="<?php
                         //if (isset($this->proposta->idPreProjeto))
@@ -531,7 +531,7 @@ $(document).ready(function()
                     </td>
                     <td></td>
                     <td>Data do Ato </td>
-                    <td><input type="text" name="dtAtoTombamento" id="dtAtoTombamento" maxlength="10" class="input_simples btn_calendario" readonly="readonly" value="<?php if (isset($this->proposta->idPreProjeto)) echo $this->proposta->DtAtoTombamentoForm; ?>"/>
+                    <td><input type="text" name="dtAtoTombamento" id="dtAtoTombamento" maxlength="10" class="input_simples btn_calendario" readonly="readonly" value="<?php if (isset($this->proposta->idPreProjeto)) echo $this->proposta->dtatotombamentoform; ?>"/>
                     <!--<td><input type="text" class="input_simples" name="dtAtoTombamento" id="dtAtoTombamento" maxlength="10" onkeyup="mascara(this, format_data);" value="<?php
                         //if (isset($this->proposta->idPreProjeto))
                         //echo $this->proposta->DtAtoTombamentoForm;

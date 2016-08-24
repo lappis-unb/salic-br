@@ -399,7 +399,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      */
     public function editarAction()
     {
-
         /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
@@ -433,7 +432,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             }
 
             // I Love you @
-            if (@$verificarvinculo[0]->siVinculo != 2) {
+            if (@$verificarvinculo[0]->sivinculo != 2) {
                 $this->view->siVinculoProponente = true;
             } else {
                 $this->view->siVinculoProponente = false;
@@ -452,14 +451,17 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
 
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
-            $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar",
-                "proposta" => $rsPreProjeto,
-                "solicitacaovinculo" => $verificarvinculo,
-                "idResponsavel" => $idAgente,
-                "dadosVinculo" => $rsVinculoP,
-                "listaProponentes" => $rsVinculoN,
-                "idPreProjeto" => $idPreProjeto,
-                "proponente" => $rsProponente));
+            $this->montaTela(
+                "manterpropostaincentivofiscal/formproposta.phtml",
+                array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar",
+                    "proposta" => $rsPreProjeto,
+                    "solicitacaovinculo" => $verificarvinculo,
+                    "idResponsavel" => $idAgente,
+                    "dadosVinculo" => $rsVinculoP,
+                    "listaProponentes" => $rsVinculoN,
+                    "idPreProjeto" => $idPreProjeto,
+                    "proponente" => $rsProponente)
+                );
         } else {
             //chama o metodo index
             $this->_forward("index", "manterpropostaincentivofiscal", 'proposta');
