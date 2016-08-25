@@ -77,7 +77,6 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $total = $tblPlanoDistribuicao->pegaTotal(array("a.idProjeto = ?"=>$this->_idPreProjeto, "a.stPlanoDistribuicaoProduto = ?"=>1));
         $tamanho = (($inicio+$this->intTamPag)<=$total) ? $this->intTamPag : $total - ($inicio) ;
 
-
         $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscar(array("a.idProjeto = ?"=>$this->_idPreProjeto, "a.stPlanoDistribuicaoProduto = ?"=>1), array("idPlanoDistribuicao DESC"), $tamanho, $inicio);
 
         if ($fim>$total) $fim = $total;

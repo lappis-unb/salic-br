@@ -45,7 +45,7 @@ class PlanoDistribuicao extends GenericModel
         //SALVANDO O OBJETO CRIADO
 
         $id = $tmpRsPlanoDistribuicao->save();
-        
+
         if($id){
             return $id;
         }else{
@@ -68,21 +68,22 @@ class PlanoDistribuicao extends GenericModel
 
             $slct->setIntegrityCheck(false);
 
-            $slct->from(array("a"=>"PlanoDistribuicaoProduto"));
+            $slct->from(array("a"=> $this->_name), '*', $this->_schema);
             $slct->joinInner(array("b"=>"Produto"),
                             "a.idProduto = b.Codigo",
-                            array("Produto"=>"b.Descricao"));
+                            array("Produto"=>"b.Descricao"),
+                            $this->_schema);
             $slct->joinInner(array("c"=>"verificacao"),
                             "a.idPosicaoDaLogo = c.idVerificacao",
-                            array("PosicaoLogomarca"=>"c.Descricao"));
+                            array("PosicaoLogomarca"=>"c.Descricao"),  $this->_schema);
             $slct->joinInner(array("ar"=>"Area"),
                             "a.Area = ar.Codigo",
-                            array("DescricaoArea"=>"ar.Descricao"));
+                            array("DescricaoArea"=>"ar.Descricao"),  $this->_schema);
             $slct->joinInner(array("s"=>"Segmento"),
                             "a.Segmento = s.Codigo",
-                            array("DescricaoSegmento"=>"s.Descricao"));
-			
-			$slct->where('a.stPlanoDistribuicaoProduto = ?', '1');
+                            array("DescricaoSegmento"=>"s.Descricao"),  $this->_schema);
+
+            $slct->where('a.stPlanoDistribuicaoProduto = ?', '1');
 
             // adicionando clausulas where
             foreach ($where as $coluna=>$valor)
@@ -92,7 +93,7 @@ class PlanoDistribuicao extends GenericModel
 
             // adicionando linha order ao select
             $slct->order($order);
-//            xd($slct->__toString());
+                //xd($slct->__toString());
             // paginacao
             if ($tamanho > -1)
             {
@@ -103,7 +104,7 @@ class PlanoDistribuicao extends GenericModel
                     }
                     $slct->limit($tamanho, $tmpInicio);
             }
-            
+
             //SETANDO A QUANTIDADE DE REGISTROS
             $this->_totalRegistros = $this->pegaTotal($where);
             //$this->_totalRegistros = 100;
@@ -173,13 +174,13 @@ class PlanoDistribuicao extends GenericModel
 
             $slct->setIntegrityCheck(false);
 
-            $slct->from(array("a"=>"PlanoDistribuicaoProduto"));
+            $slct->from(array("a"=> $this->_name), '*', $this->_schema);
             $slct->joinInner(array("b"=>"Produto"),
                             "a.idProduto = b.Codigo",
-                            array("Produto"=>"b.Descricao"));
+                            array("Produto"=>"b.Descricao"),  $this->_schema);
             $slct->joinInner(array("c"=>"verificacao"),
                             "a.idPosicaoDaLogo = c.idVerificacao",
-                            array("PosicaoLogomarca"=>"c.Descricao"));
+                            array("PosicaoLogomarca"=>"c.Descricao"),  $this->_schema);
 
 			$slct->where('a.stPlanoDistribuicaoProduto = ?', '1');
 
@@ -202,10 +203,10 @@ class PlanoDistribuicao extends GenericModel
                     }
                     $slct->limit($tamanho, $tmpInicio);
             }
-try{
-            $rows = $this->fetchAll($slct);
-            return $rows->count();
-}catch(Exception $e){
+            try{
+                        $rows = $this->fetchAll($slct);
+                        return $rows->count();
+            }catch(Exception $e){
                 xd($slct->assemble());
             }
     }

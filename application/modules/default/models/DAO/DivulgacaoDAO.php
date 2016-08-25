@@ -1,13 +1,11 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of DivulgacaoDAO
+ * DivulgacaoDAO
  *
- *
+ * @uses GenericModel
+ * @package Webdav
+ * @version //autogen//
+ * @author  wouerner <wouerner@gmail.com>
  */
 class DivulgacaoDAO extends GenericModel{
 
@@ -48,15 +46,15 @@ class DivulgacaoDAO extends GenericModel{
             $db = Zend_Registry::get('db');
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $resultado = $db->fetchRow($sql);
-            
-            
+
+
         }
         catch (Exception $e)
         {
             die("ERRO" . $e->getMessage());
         }
 
-        
+
     }
      public static function inserirDivulgacao($divulgacao)
     {
@@ -70,7 +68,7 @@ class DivulgacaoDAO extends GenericModel{
         } catch (Exception $e){
             die("ERRO" . $e->getMessage());
         }
-        
+
     }
     public static function  excluirdivulgacao($idPlanoDivulgacao){
 
@@ -79,7 +77,7 @@ class DivulgacaoDAO extends GenericModel{
         $sql = "delete sac.dbo.PlanoDeDivulgacao where idPlanoDivulgacao = $idPlanoDivulgacao";
         $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $resultado = $db->fetchAll($sql);   
+        $resultado = $db->fetchAll($sql);
         }catch (Exception $e){
 
            die("ERRO" . $e->getMessage());
@@ -122,7 +120,7 @@ class DivulgacaoDAO extends GenericModel{
         $db  = Zend_Registry::get('db');
 	$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	$resultado = $db->fetchAll($sql);
-	
+
         return $resultado;
     }
 
@@ -149,37 +147,25 @@ class DivulgacaoDAO extends GenericModel{
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function buscar($where=array(), $order=array(), $tamanho=-1, $inicio=-1){
-
+    public function buscar($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
+    {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
-        $slct->from(array('pd' => $this->_name));
-        
-        $slct->joinInner(array('v1' => 'Verificacao'),
-                               'v1.idverificacao = pd.idpeca',
-                         array('v1.descricao as peca'));
+        $slct->from(array('pd' => $this->_name), '*', $this->_schema);
+
+        $slct->joinInner(
+            array('v1' => 'Verificacao'),
+                   'v1.idverificacao = pd.idpeca',
+                   array('v1.descricao as peca'),
+            $this->_schema
+                           );
         $slct->joinInner(
                 array('v2' => 'verificacao'),
                 'v2.idverificacao = pd.idveiculo',
-                array('v2.descricao as veiculo')
+                array('v2.descricao as veiculo'),
+            $this->_schema
         );
-        
+
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
@@ -196,8 +182,6 @@ class DivulgacaoDAO extends GenericModel{
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->query());
         return $this->fetchAll($slct);
     }
 }
-?>
