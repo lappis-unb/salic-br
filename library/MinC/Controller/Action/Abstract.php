@@ -300,7 +300,6 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
             # Convertendo os objetos da sessao em array, transformando as chaves em minusculas.
             $arrAuth = array_change_key_case((array) $auth->getIdentity());
-
             $codUsuario = isset($arrAuth['idusuario']) ? (int) $arrAuth['idusuario'] : $UsuarioAtivo->codusuario;
             if (isset($codUsuario) && !empty($codUsuario)) {
                 // configura??es do layout padr?o para o proponente
@@ -309,7 +308,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 // tenta fazer a autenticacao do usuario logado no scriptcase para o zend
                 $autenticar = UsuarioDAO::loginScriptcase($codUsuario);
 
-                if ($autenticar || $auth->hasIdentity()) // caso o usuario seja passado pelo scriptcase e esteja autenticado
+                if ($autenticar && $auth->hasIdentity()) // caso o usuario seja passado pelo scriptcase e esteja autenticado
                 {
                     // manda os dados para a visao
                     $this->view->usuario = $auth->getIdentity(); // manda os dados do usuario para a vis?o

@@ -8,6 +8,7 @@
  * @author wouerner <wouerner@gmail.com>
  */
 class DeslocamentoDAO extends GenericModel {
+    protected  $_banco = 'sac';
     protected  $_schema = 'sac';
     protected $_name = 'tbdeslocamento';
 
@@ -22,10 +23,20 @@ class DeslocamentoDAO extends GenericModel {
         $sql = "SELECT * FROM AGENTES.dbo.Pais";
 
         $db  = Zend_Registry::get('db');
-		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		$resultado = $db->fetchAll($sql);
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $resultado = $db->fetchAll($sql);
 
-		return $resultado;
+        return $resultado;
+    }
+
+    public function pais() {
+        $sql = "SELECT * FROM AGENTES.dbo.Pais";
+
+        $db  = Zend_Registry::get('db');
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $resultado = $db->fetchAll($sql);
+
+        return $resultado;
     }
 
     /**
@@ -42,7 +53,7 @@ class DeslocamentoDAO extends GenericModel {
     {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $agenteSchema = parent::getSchema('agentes');
+        $agenteSchema = parent::getStaticTableName('agentes');
 
         $de = [
             'de.idDeslocamento',
@@ -58,7 +69,57 @@ class DeslocamentoDAO extends GenericModel {
         ];
 
         $sql = $db->select()
-            ->from(['de' => 'tbDeslocamento'], $de)
+            ->from(['de' => 'tbDeslocamento'], $de, parent::getStaticTableName('tbdeslocamento'))
+            ->joinLeft(['paO'=>'Pais'], 'de.idPaisOrigem = paO.idPais','paO.Descricao AS PO', $agenteSchema)
+            ->joinLeft(['ufO'=>'UF'] , 'de.idUFOrigem = ufO.idUF','ufO.Descricao AS UFO', $agenteSchema)
+            ->joinLeft(['muO' => 'Municipios'] , 'de.idMunicipioOrigem = muO.idMunicipioIBGE','muO.Descricao AS MUO', $agenteSchema)
+            ->joinLeft(['paD' => 'Pais'], 'de.idPaisDestino = paD.idPais', 'paD.Descricao AS PD', $agenteSchema)
+            ->joinLeft(['ufD' => 'UF'], 'de.idUFDestino = ufD.idUF','ufD.Descricao AS UFD', $agenteSchema)
+            ->joinLeft(['muD' => 'Municipios '], 'de.idMunicipioDestino = muD.idMunicipioIBGE', 'muD.Descricao AS MUD', $agenteSchema)
+            ->where("idProjeto = ?", $idProjeto)
+            ;
+
+            if($idDeslocamento != null)
+            {
+                $sql->where('de.idDeslocamento = ?', $idDeslocamento);
+            }
+
+        $resultado = $db->fetchAll($sql);
+
+        return $resultado;
+    }
+
+    /**
+     * buscarDeslocamentos
+     *
+     * @param mixed $idProjeto
+     * @param bool $idDeslocamento
+     * @static
+     * @access public
+     * @return void
+     * @author wouerner <wouerner@gmail.com>
+     */
+    public function buscarDeslocamento($idProjeto, $idDeslocamento = null)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $agenteSchema = $this->getSchema('agentes');
+
+        $de = [
+            'de.idDeslocamento',
+            'de.idProjeto',
+            'de.idPaisOrigem',
+            'de.idUFOrigem',
+            'de.idMunicipioOrigem',
+            'de.idPaisDestino',
+            'de.idUFDestino',
+            'de.Qtde',
+            'de.idUsuario',
+            'de.idMunicipioDestino'
+        ];
+
+        $sql = $db->select()
+            ->from(['de' => $this->_name], $de, $this->_schema)
             ->joinLeft(['paO'=>'Pais'], 'de.idPaisOrigem = paO.idPais','paO.Descricao AS PO', $agenteSchema)
             ->joinLeft(['ufO'=>'UF'] , 'de.idUFOrigem = ufO.idUF','ufO.Descricao AS UFO', $agenteSchema)
             ->joinLeft(['muO' => 'Municipios'] , 'de.idMunicipioOrigem = muO.idMunicipioIBGE','muO.Descricao AS MUO', $agenteSchema)

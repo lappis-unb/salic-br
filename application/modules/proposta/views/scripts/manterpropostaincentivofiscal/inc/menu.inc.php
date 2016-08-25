@@ -200,10 +200,10 @@
           action="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'vincularresponsavel', 'action' => 'trocarproponente')); ?>"
           method="post">
         <?php
-        $idVinculoProposta = "";
-        if($this->dadosVinculo[0]) {
-            $idVinculoProposta = $this->dadosVinculo[0]->idVinculoProposta;
-        }
+            $idVinculoProposta = "";
+            if(!empty($this->dadosVinculo[0])) {
+                $idVinculoProposta = $this->dadosVinculo[0]->idVinculoProposta;
+            }
         ?>
         <input type="hidden" value="<?php echo $idVinculoProposta; ?>" name="idVinculoProposta"/>
         <input type="hidden" value="<?php echo $this->idPreProjeto; ?>" name="idPreProjeto"/>

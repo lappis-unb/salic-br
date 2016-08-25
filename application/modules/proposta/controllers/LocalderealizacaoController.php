@@ -51,11 +51,11 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
             $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
         }else {
             if($_REQUEST['idPreProjeto'] != '0'){
-                parent::message("Necess�rio informar o n�mero da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
+                parent::message("Necessário informar o número da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
             }
         }
 
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
+        $auth = Zend_Auth::getInstance();
         $this->idUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
 
         //*******************************************
@@ -101,6 +101,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
      * @return void
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @author wouerner <wouerner@gmail.com>
      * @since  17/08/2016
      */
     public function indexAction() {

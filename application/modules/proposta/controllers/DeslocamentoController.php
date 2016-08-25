@@ -44,11 +44,15 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
             $this->getIdUsuario = 0;
         }
 
-        $this->view->comboestados = Estado::buscar();
-        $this->view->paises = DeslocamentoDAO::buscarPais();
+        $uf = new Uf();
+        $uf = $uf->buscar();
+        $this->view->comboestados = $uf;
+        //$this->view->comboestados = Estado::buscar();
+        $paises = new DeslocamentoDAO();
+        $this->view->paises = $paises->pais();
+        //$this->view->paises = DeslocamentoDAO::buscarPais();
 
         parent::init();
-
         //recupera ID do pre projeto (proposta)
         if(!empty ($_REQUEST['idPreProjeto'])) {
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
@@ -68,6 +72,7 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
      *
      * @access public
      * @return void
+     * @todo Refatorar metodo para user metodos padrões do Zend
      */
     public function indexAction()
     {
@@ -83,9 +88,10 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
 
             $idPreProjeto = $this->idPreProjeto;
 
-            $dados = DeslocamentoDAO::buscarDeslocamentos($idPreProjeto, $id);
+            $deslocamentos = new DeslocamentoDAO();
+            $dados = $deslocamentos->buscarDeslocamento($idPreProjeto, $id);
 
-            if($id) {
+            if($id && !empty($dados)) {
                 foreach($dados as $d) {
                     $idPaisO 		= $d->idPaisOrigem;
                     $idUFO		= $d->idUFOrigem;
@@ -96,7 +102,9 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
                     $Qtde  		= $d->Qtde;
                 }
 
-                $this->view->combocidadesO = Cidade::buscar($idUFO);
+                $cidade = new Municipios();
+                $this->view->combocidadesO = $cidade->buscar($idUFO);
+                //$this->view->combocidadesO = Cidade::buscar($idUFO);
                 $this->view->combocidadesD = Cidade::buscar($idUFD);
 
                 $this->view->idPaisO 	= $idPaisO;
@@ -110,7 +118,7 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
             }
 
             $this->view->idPreProjeto	= $idPreProjeto;
-            $this->view->deslocamentos = DeslocamentoDAO::buscarDeslocamentos($idPreProjeto, null);
+            $this->view->deslocamentos = $deslocamentos->buscarDeslocamento($idPreProjeto, null);
         }
     }
 

@@ -1,9 +1,4 @@
-<?php 
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+<?php
 
 /**
  * Description of Uf
@@ -12,9 +7,9 @@
  */
 class Uf extends GenericModel {
 
-    protected $_banco = 'AGENTES';
-    protected $_name = 'UF';
-    protected $_schema = 'dbo';
+    protected $_banco = 'agentes';
+    protected $_name = 'uf';
+    protected $_schema = 'agentes';
 
     public function buscarRegiao() {
         $select = $this->select();
@@ -44,6 +39,26 @@ class Uf extends GenericModel {
         return $this->fetchAll($select);
     }
 
-}
+    /**
+     * Método para buscar os estados
+     * @access public
+     * @param void
+     * @return array
+     * @author wouerner <wouerner@gmail.com>
+     */
+    public function buscar()
+    {
+        $sql = 'SELECT idUF AS id, Sigla AS descricao ';
+        //$sql .= 'FROM ' . GenericModel::getStaticTableName($objEstado->_schema, $objEstado->_name);
+        $sql .= 'FROM agentes.dbo.uf ';
+        $sql .= ' ORDER BY Sigla';
 
-?>
+        try {
+            $db = Zend_Registry::get('db');
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+            return $db->fetchAll($sql);
+        } catch (Zend_Exception_Db $objException) {
+            throw new Exception("Erro ao buscar Estados: " . $objException->getMessage(), 0, $objException);
+        }
+    }
+}

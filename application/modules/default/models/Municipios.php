@@ -43,10 +43,10 @@ class Municipios extends GenericModel
 		$select->order($order);
 		return $this->fetchAll($select);
 	} // fecha m�todo combo()
-        
-        
+
+
 	public function buscaCompleta($where = array(), $order = array(), $dbg = null){
-            
+
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(array('mu' => $this->_name),
@@ -70,11 +70,41 @@ class Municipios extends GenericModel
             endforeach;
 
             $select->order($order);
-            
+
             if($dbg){
                 xd($select->assemble());
             }
 
             return $this->fetchAll($select);
 	}
+
+    /**
+     * Método para buscar as cidades de um determinado estado
+     * @access public
+     * @param integer $idUF
+     * @return object $db->fetchAll($sql)
+     */
+    public function buscar($idUF)
+    {
+        $sql = $this->select()
+            ->from($this->_name, 'idMunicipioIBGE AS id, Descricao AS descricao', $this->_schema)
+            ->where('idUFIBGE = ?', $idUF)
+            ->order('Descricao');
+
+        //$sql = "SELECT idMunicipioIBGE AS id, Descricao AS descricao ";
+        //$sql.= "FROM AGENTES.dbo.Municipios ";
+        //$sql.= "WHERE idUFIBGE = " . $idUF . " ";
+        //$sql.= "ORDER BY Descricao;";
+
+        try
+        {
+            $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
+        }
+        catch (Zend_Exception_Db $e)
+        {
+            $this->view->message = "Erro ao buscar Cidades: " . $e->getMessage();
+        }
+    echo $sql;die;
+        return $this->_db->fetchAll($sql);
+    }
 }

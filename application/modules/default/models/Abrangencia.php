@@ -31,8 +31,8 @@ class Abrangencia extends GenericModel
     {
         $sql = $this->select()
             ->setIntegrityCheck(false)
-            ->from(['a' => 'abrangencia'], ['*'])
-            ->join(['p' => 'pais'], 'a.idPais = p.idPais and a.stAbrangencia = 1', 'p.Descricao AS pais', 'AGENTES.dbo')
+            ->from(['a' => 'abrangencia'], ['*'], $this->_schema)
+            ->join(['p' => 'pais'], 'a.idPais = p.idPais and a.stAbrangencia = 1', 'p.Descricao AS pais', 'AGENTES.dbo', $this->_schema)
             ->joinLeft(['u' => 'uf'], '(a.idUF = u.idUF)', 'u.descricao AS uf', 'AGENTES.dbo')
             ->joinLeft(['m' => 'municipios'], '(a.idMunicipioIBGE = m.idMunicipioIBGE)', 'm.descricao AS cidade', 'AGENTES.dbo')
             ;
