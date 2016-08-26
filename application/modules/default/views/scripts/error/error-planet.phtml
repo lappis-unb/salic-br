@@ -1,0 +1,31 @@
+<?php if ($this->errorType == 'pagina' || $this->errorType == 'permissao' || $this->errorType == 'login') : ?>
+    <div class="msg-error <?= $this->errorType ?>">
+        <h3><?php echo $this->message ?></h3>
+    </div>
+<?php else: ?>
+    <div class="msg-error exception">
+    <span>
+        <h3>CGTI, nós temos um problema!</h3>
+        <p>Erros processados pela requisição:</p>
+    </span>
+    </div>
+    <?php if (isset($this->message)) echo "!!<p>{$this->message}</p>" ?>
+    <?php if (isset($this->exception)): ?>
+        <div class="msg-exception">
+            <fieldset>
+                <legend>Exceção</legend>
+                <b>Descrição:</b> <?php echo $this->exception->getMessage() ?>
+            </fieldset>
+
+            <fieldset>
+                <legend>Rastreamento do erro</legend>
+                <pre><?php echo $this->exception->getTraceAsString() ?></pre>
+            </fieldset>
+
+            <fieldset>
+                <legend>Parâmetros requisitados</legend>
+                <pre><?php echo var_export($this->request->getParams(), true) ?></pre>
+            </fieldset>
+        </div>
+    <?php endif;
+endif ?>

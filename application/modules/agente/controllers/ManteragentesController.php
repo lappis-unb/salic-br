@@ -21,16 +21,24 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
 
     /**
      * Reescreve o método init()
+     *
+     * @name init
      * @access public
      * @param void
      * @return void
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  25/08/2016
      */
     public function init()
     {
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        # Pega a autenticacao
+        $auth = Zend_Auth::getInstance()->getIdentity();
+        $arrAuth = array_change_key_case((array) $auth);
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
 
-        // define as permissões
+        # define as permissoes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 144;  // Proponente
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
@@ -41,36 +49,23 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
         $PermissoesGrupo[] = 123; // Coordenador Geral de Acompanhamento
 
-        if (isset($auth->getIdentity()->Cpf) &&
-            !empty($auth->getIdentity()->Cpf) &&
-            isset($_GET['acao']) &&
-            $_GET['acao'] == 'cc' &&
-            isset($_GET['cpf']) &&
-            !empty($_GET['cpf'])
-        ) // pega do readequação
-        {
+        # pega do readequacao
+        if (isset($arrAuth['cpf']) && !empty($arrAuth['cpf']) && isset($_GET['acao']) && $_GET['acao'] == 'cc' && isset($_GET['cpf']) && !empty($_GET['cpf'])) {
             parent::perfil(2); // scriptcase
         }
 
-        if (isset($auth->getIdentity()->Cpf) &&
-            !empty($auth->getIdentity()->Cpf) &&
-            !isset($_GET['acao']) &&
-            !isset($_GET['cpf']) &&
-            empty($_GET['cpf'])
-        ) // pega do readequação
-        {
+        # pega do readequacao
+        if (isset($arrAuth['cpf']) && !empty($arrAuth['cpf']) && !isset($_GET['acao']) && !isset($_GET['cpf']) && empty($_GET['cpf'])) {
             parent::perfil(4, $PermissoesGrupo); // migração e novo salic
-
-        } else if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo)) {
+        } else if (isset($arrAuth['usu_codigo']) && !empty($arrAuth['usu_codigo'])) {
             parent::perfil(1, $PermissoesGrupo); // migração e novo salic
-
         } else {
             parent::perfil(4, $PermissoesGrupo); // migração e novo salic
         }
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticaç?o
-        if (isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
-            $this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
+        # autenticacao novo salic
+        if (isset($arrAuth['usu_codigo'])) {
+            $this->getIdUsuario = UsuarioDAO::getIdUsuario($arrAuth['usu_codigo']);
             $this->getIdUsuario = ($this->getIdUsuario) ? $this->getIdUsuario["idAgente"] : 0;
         } else { // autenticacao scriptcase
             $this->getIdUsuario = (isset($_GET["idusuario"])) ? $_GET["idusuario"] : 0;
@@ -79,15 +74,14 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $Cpflogado = $this->getIdUsuario;
         $this->view->cpfLogado = $Cpflogado;
         $this->view->grupoativo = $GrupoAtivo->codGrupo;
-        ini_set('display_errors', true);
-        error_reporting(E_ALL ^E_NOTICE ^E_WARNING);
+//        ini_set('display_errors', true);
+//        error_reporting(E_ALL ^E_NOTICE ^E_WARNING);
         $this->view->comboestados = Estado::buscar();
         $this->view->combotiposenderecos = Tipoendereco::buscar();
         $this->view->combotiposlogradouros = Tipologradouro::buscar();
         $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
         $this->view->combotipostelefones = Tipotelefone::buscar();
         $this->view->combotiposemails = Tipoemail::buscar();
-
 
         //Monta o combo das visões disponiveis
         $visoes = VisaoDAO::buscarVisao(null, null, true);
@@ -96,7 +90,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
 
         $a = 0;
         $select = null;
-        if (isset ($auth->getIdentity()->cpf)) {
+        if (isset ($arrAuth['cpf'])) {
             $select[$a]['idverificacao'] = 144; //PROPONENTE
             $select[$a]['descricao'] = 'Proponente';
         } else {

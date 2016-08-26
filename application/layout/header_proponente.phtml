@@ -123,7 +123,7 @@
                 <ul>
                     <?php $user = array_change_key_case((array) $this->usuario); ?>
                     <?php if (!empty($user['cpf']) && !empty($user['nome'])) : ?>
-                    <li class="black">Usu&aacute;rio conectado: <strong>[<?php echo Validacao::mascaraCPFCNPJ($user['cpf']); ?>] - <?php echo utf8_encode($user['nome']); ?></strong></li>
+                    <li class="black">Usu&aacute;rio conectado: <strong>[<?php echo Validacao::mascaraCPFCNPJ($user['cpf']); ?>] - <?php echo $user['nome']; ?></strong></li>
                     <?php endif; ?>
                     <li class="sair"><a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), '', true); ?>" id="sairSistema" title="Sair do Sistema" onclick="logout(); return false;">Sair</a></li>
                 </ul>

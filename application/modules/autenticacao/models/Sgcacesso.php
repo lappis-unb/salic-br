@@ -148,23 +148,54 @@ class Autenticacao_Model_Sgcacesso extends GenericModel
         }
     }
 
+
+    /**
+     * Retorna registros do banco de dados
+     * @param array $where - array com dados where no formato "nome_coluna_1"=>"valor_1","nome_coluna_2"=>"valor_2"
+     * @param array $order - array com orders no formado "coluna_1 desc","coluna_2"...
+     * @param int $tamanho - numero de registros que deve retornar
+     * @param int $inicio - offset
+     * @return Zend_Db_Table_Rowset_Abstract
+     */
+    public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
+    {
+        $select = $this->select();
+
+        //adiciona quantos filtros foram enviados
+        foreach ($where as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
+        $select->order($order);
+
+        // paginacao
+        if ($tamanho > -1) {
+            $tmpInicio = 0;
+            if ($inicio > -1) {
+                $tmpInicio = $inicio;
+            }
+            $select->limit($tamanho, $tmpInicio);
+        }
+
+        return $this->fetchAll($select);
+    }
+
     public function loginSemCript($username, $password) {
         // busca o usu?rio de acordo com o login e a senha
 
 
-        $sql = $this->select();
-        $sql->setIntegrityCheck(false);
-        $sql->from($this, array(
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from($this, array(
                 'cpf',
                 'senha',
             )
         );
-        $sql->where('cpf = ?', $username);
+        $select->where('cpf = ?', $username);
         if ($password != MinC_Controller_Action_Abstract::validarSenhaInicial()) {
-            $sql->where("senha  = ?", $password);
+            $select->where("senha  = ?", $password);
         }
 
-        $buscar = $this->fetchRow($sql);
+        $buscar = $this->fetchRow($select);
 
         if ($buscar) { // realiza a autenticacao
             // configura??es do banco

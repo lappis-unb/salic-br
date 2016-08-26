@@ -11,19 +11,23 @@
  */
 ?>
 
-<?php if ($this->ambiente == 'DES') : ?>
+<?php if ($this->ambiente == 'development') : ?>
 <div style="overflow:auto; width:90%; margin:auto; border:0.1em solid #ccc; background:#ffc;">
-	<h1>EXCE��O:</h1>
-	<pre><?php echo $this->exception->getMessage();?></pre>
-	<br />
+	<div class="msg-exception">
+		<fieldset>
+			<legend>Exceção</legend>
+			<b>Descrição:</b> <?php echo $this->exception->getMessage() ?>
+		</fieldset>
 
-	<h1>TRACE:</h1>
-	<pre><?php
-		$this->exception->getTraceAsString();
-		?></pre>
-	<br />
+		<fieldset>
+			<legend>Rastreamento do erro</legend>
+			<pre><?php echo $this->exception->getTraceAsString() ?></pre>
+		</fieldset>
 
-	<h1>PAR�METROS DA REQUISI��O:</h1>
-	<pre><?php echo print_r($this->request->getParams(), true);?></pre>
+		<fieldset>
+			<legend>Parâmetros requisitados</legend>
+			<pre><?php echo var_export($this->request->getParams(), true) ?></pre>
+		</fieldset>
+	</div>
 </div>
 <?php endif; ?>

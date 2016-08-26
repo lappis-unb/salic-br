@@ -29,7 +29,7 @@ class Tipotelefone extends Zend_Db_Table
         $sql .= "ORDER BY Descricao;";
 
         try {
-            $db = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $objException) {
             throw new Exception("Erro ao buscar Tipos de Telefones:  " . $objException->getMessage(), 0, $objException);

@@ -61,7 +61,7 @@ class VisaoDAO extends Zend_Db_Table
             }
         }
         $sql .= " order by 2";
-        $db = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $dados = $db->fetchAll($sql);

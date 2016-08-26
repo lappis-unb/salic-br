@@ -55,7 +55,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 throw new Exception("O CPF informado é invalido!");
             } else {
                 $Usuario = new Autenticacao_Model_Usuario();
-                $buscar = $Usuario->login($username, $password);echo '<pre>';
+                $buscar = $Usuario->login($username, $password);
                 if ($buscar) {
                     $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
                     $objUnidades = $Usuario->buscarUnidades($auth['usu_codigo'], 21)->current();
@@ -80,7 +80,9 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             }
 
         } catch (Exception $objException) {
-            xd($objException);
+            echo '<pre>';
+            var_dump($objException->getMessage());
+            exit;
             parent::message($objException->getMessage(), "index", "ERROR");
         }
     }
@@ -101,11 +103,11 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         $password = str_replace("##aspa##", "'", $password);
 
         try {
-            if (empty($username) || empty($password)) // verifica se os campos foram preenchidos
-            {
+            if (empty($username) || empty($password)) {
+                # verifica se os campos foram preenchidos
                 parent::message("Senha ou login inv&aacute;lidos", "/login/index", "ALERT");
-            } else if (strlen($username) == 11 && !Validacao::validarCPF($username)) // verifica se o CPF é válido
-            {
+            } else if (strlen($username) == 11 && !Validacao::validarCPF($username)) {
+                # verifica se o CPF e valido
                 parent::message("CPF inv&aacute;lido", "/login/index");
             } else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)) // verifica se o CNPJ é válido
             {
@@ -133,24 +135,22 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                     $SenhaFinal = addslashes($password);
                     $buscar = $Usuario->loginSemCript($username, $SenhaFinal);
                 }
+
                 if ($buscar) // acesso permitido
                 {
                     $verificaSituacao = $verificaStatus['situacao'];
                     if ($verificaSituacao == 1) {
-
                         parent::message("Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha.", "/autenticacao/index/alterarsenha?idUsuario=" . $IdUsuario, "ALERT");
                     }
                     $agentes = new Agente_Model_Agentes();
                     $verificaAgentes = $agentes->buscar(array('cnpjcpf = ?' => $username))->current();
                     if (!empty ($verificaAgentes)) {
-
                         //                                        $this->_redirect("/agente/agentes/incluiragenteexterno");
                         //                                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->IdUsuario}", "ALERT");
                         return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
                     } else {
-
-                        return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
-                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/agente/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->idusuario}", "ALERT");
+//                        return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
+                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/agente/manteragentes/agentes?acao=cc&idusuario={$verificaStatus['idusuario']}", "ALERT");
                     }
 
                 }
@@ -160,6 +160,9 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             }
         }
         catch (Exception $e) {
+            echo '<pre>';
+            var_dump($e->getMessage());
+            exit;
             parent::message($e->getMessage(), "index", "ERROR");
         }
     }

@@ -1,99 +1,151 @@
-;; Configura��es do banco
-;; @author Equipe Fundep ABC
-;; @since 29/03/2010
-;; @version 1.0
+;; Configuracoes do banco
+;; @version 2.0
 ;; @package application
-;; @subpackage application.configs
+;; @subpackage configs
 ;; @link http://www.cultura.gov.br
+;; @author Equipe Fundep ABC
+;; @since 25/08/2016
+[production]
+;#######################################################################################################################
+;############################################# Produção ################################################################
+;#######################################################################################################################
 
-[default]
-; bootstrap
-autoloaderNamespaces[]               = "MinC"
-bootstrap.path                       = APPLICATION_PATH "/Bootstrap.php"
-bootstrap.class                      = "Bootstrap"
+url.base                                                     = "http://www.salic.gov.br"
+
+;======================================= PHP Configurations ============================================================
+phpSettings.display_startup_errors                                     = 0
+phpSettings.display_errors                                             = 0
+phpSettings.initl.default_locale                                       = "pt_BR"
+
+;======================================== Library Include Paths ========================================================
+includePaths.library                                                   = APPLICATION_PATH "/../library"
+autoloaderNamespaces[]                                                 = "MinC"
+
+;======================================= Bootstrap, classe e path ======================================================
+bootstrap.path                                                         = APPLICATION_PATH "/Bootstrap.php"
+bootstrap.class                                                        = "Bootstrap"
+
+;================================================= Plugins =============================================================
+;resources.frontController.plugins.NOME = ""
 pluginPaths.MinC_Application_Resource = "MinC/Application/Resource"
 
-; Options for Zend_View
-resources.view.encoding = "UTF-8"
-resources.view.escape = "htmlentities"
-resources.view.basePath = APPLICATION_PATH "/module/default/views"
-resources.view.helperPath.MinC_View_Helper_ = APPLICATION_PATH "/../library/MinC/View/Helper"
-resources.layout.layoutPath                = APPLICATION_PATH "/layout"
-resources.layout.layout                    = "layout"
+;======================================= Resource frontController ======================================================
+resources.frontController.moduleDirectory                              = APPLICATION_PATH "/modules"
+resources.frontController.defaultModule                                = "default"
+resources.frontController.params.displayExceptions                     = 0
+resources.frontController.defaultControllerName                        = "index"
+resources.modules[]   = ;
 
-; Options for Mobile
+;=========================================== Resource view =============================================================
+resources.view.title                                                   = ""
+resources.view.encoding                                                = "UTF-8"
+;resources.view.helperPathPrefix                                       = "Zend_View_Helper_"
+;resources.view.helperPath                                              = APPLICATION_PATH "/views/helpers"
+resources.view.escape                                                  = "htmlentities"
+resources.view.basePath                                                = APPLICATION_PATH "/module/default/views"
+resources.layout.layoutPath                                            = APPLICATION_PATH "/layout"
+resources.layout.layout                                                = "layout"
+resources.view.helperPath.MinC_View_Helper_                            = APPLICATION_PATH "/../library/MinC/View/Helper"
+resources.paginator     = ; configura paginação
+
+;=========================================== Resource view Mobile ======================================================
 resources.view.service.salicMobileHash = "b66113b1d84a1008b8ffea5fe9f51fc2"
 resources.view.service.encryptHash = "e@75e9R!3450otZ"
 
-; front controller
-resources.frontController.moduleDirectory = APPLICATION_PATH"/modules"
-resources.frontController.defaultModule   = "default"
-resources.modules[]   =
 
-; minc resources
-resources.paginator     = ; configura pagina��o
+;====================================== SMTP E-mail Configurations =====================================================
+;################## Conta padrão para envio de e-mails caso nenhuma seja informada #####################################
+email.server.default.host                                              = smtp.gmail.com
+email.server.default.ssl                                               = tls
+email.server.default.port                                              = 587
+email.account.default.name                                             = "Salic"
+email.account.default.username                                         = ""
+email.account.default.password                                         = ""
 
-;mail.default.name       = "Salic BR"
-mail.default.email      = "srv_salic@cultura.gov.br"
-mail.transport.type     = "smtp"
-mail.transport.host     = "192.168.10.25"
-mail.transport.auth     = "login"
-mail.transport.username = "srv_salic"
-mail.transport.password = "emailSalic"
+;====================================== Database Configurations ========================================================
+resources.db.adapter                                                   = "PDO_MSSQL"
+resources.db.params.host                                               = "10.0.0.212"
+resources.db.params.port                                               = "1433"
+resources.db.params.dbname                                             = "TABELAS"
+resources.db.params.username                                           = "usuarios_internet"
+resources.db.params.password                                           = "_Salic"
+resources.db.params.profiler.enabled                                   = false
+resources.db.isDefaultTableAdapter                                     = true
 
-; [ SQL SERVER ]
-;db.adapter = PDO_MSSQL
-;db.params.host = 10.0.0.191
-;db.params.username = usuarios_internet
-;db.params.password = _Salic
-;db.params.port = 1435
+resources.db.params.charset                                            = "utf8 "
+;;Retirado pois está dando warning ao setar o novo adapter.
+;resources.db.params.driver_options.1002                                = "SET NAMES utf8"
 
-; [ POSTGRES ]
-db.adapter = PDO_PGSQL
-db.params.host = 192.168.15.12
-db.params.username = postgres
-db.params.password = 123456
-db.params.port = 5432
+;====================================== Validation Translate ===========================================================
+resources.translate.data                                               = APPLICATION_PATH "/lang/pt_BR/Zend_Validate.php"
+resources.translate.adapter                                            = "array"
+resources.translate.locale                                             = "pt_BR"
 
-resources.db.params.charset = utf8
-resources.db.params.driver_options.1002 = "SET NAMES UTF-8"
-resources.db.isDefaultTableAdapter = true
+;====================================== Translate Calendar =============================================================
+calendar.path                                                          = APPLICATION_PATH "/configs/calendarlang.ini"
+calendar.languages[]                                                   = "pt_BR"
 
-[conexao_02:default]
-db.params.dbname = tabelas
+[staging : production]
+;#######################################################################################################################
+;############################################ Treinamento ##############################################################
+;#######################################################################################################################
+url.base                                                               = ""
+resources.db.adapter                                                   = "PDO_MSSQL"
+resources.db.params.host                                               = "10.0.0.212"
+resources.db.params.dbname                                             = "TABELAS"
+resources.db.params.username                                           = "usuarios_internet"
+resources.db.params.password                                           = "_Salic"
+resources.db.params.port                                               = "1433"
 
-[conexao_03:default]
-db.params.dbname = tabelas
+[testing : production]
+;#######################################################################################################################
+;########################################### Homologacao ###############################################################
+;#######################################################################################################################
 
-[conexao_05:default]
-db.params.dbname = tabelas
+;======================================= PHP Configurations ==============================================
+phpSettings.display_startup_errors                                     = 1
+phpSettings.display_errors                                             = 1
+phpSettings.initl.default_locale                                       = "pt_BR"
 
-[conexao_sad:default]
-db.params.dbname = sad
+;====================================== Database Configurations ==========================================
+resources.db.params.host                                               = "10.0.0.5"
+resources.db.params.dbname                                             = "medicando_teste"
+resources.db.params.username                                           = "med_aplic"
+resources.db.params.password                                           = "medit01@dbpg"
+resources.db.params.profiler.enabled                                   = true
 
-[conexao_scriptcase_01:default]
-db.params.dbname = controledeacesso
+resources.db.mongo.params.host                                         = "db.server.qg.medicando.com.br"
 
-[conexao_scriptcase_02:default]
-db.params.dbname = controledeacesso
+url.base                                                               = "http://teste.qg.medicando.com.br"
 
-[conexao_scriptcase_03:default]
-db.params.dbname = controledeacesso
+[development : testing]
+;#######################################################################################################################
+;########################################## Desenvolvimento ############################################################
+;#######################################################################################################################
 
-[conexao_scriptcase_05:default]
-db.params.dbname = controledeacesso
+;======================================= PHP Configurations ==============================================
+resources.frontController.params.displayExceptions                     = 1
+url.base                                                               = "http://local.salic"
+cache.enable                                                           = false
 
-[conexao_sac:default]
-db.params.dbname = sac
+;====================================== Database Configurations ==========================================
+resources.db.params.profiler.class                                     = Zend_Db_Profiler_Firebug
+resources.db.params.profiler.enabled                                   = true
+resources.db.isDefaultTableAdapter                                     = true
 
-[conexao_sac_homolog:default]
-db.params.dbname = sac
+;========================================= UFABC - SQL SERVER ============================================
+resources.db.adapter                                                   = "PDO_MSSQL"
+resources.db.params.host                                               = "10.0.0.191"
+resources.db.params.dbname                                             = "TABELAS"
+resources.db.params.username                                           = "usuarios_internet"
+resources.db.params.password                                           = "_Salic"
+resources.db.params.port                                               = "1435"
 
-[conexao_agentes_homolog:default]
-db.params.dbname = agentes
-
-[conexao_xti:default]
-db.params.dbname = tabelas
-
-[conexao_xti_controle_acesso:default]
-db.params.dbname = controledeacesso
+;=========================================== UFABC - POSTGRES =============================================
+;
+;resources.db.adapter                                                   = "PDO_PGSQL"
+;resources.db.params.host                                               = "192.168.15.12"
+;resources.db.params.dbname                                             = "postgres"
+;resources.db.params.username                                           = "postgres"
+;resources.db.params.password                                           = "123456"
+;resources.db.params.port                                               = "5432"

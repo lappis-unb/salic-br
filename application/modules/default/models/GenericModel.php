@@ -28,26 +28,47 @@ class GenericModel extends Zend_Db_Table_Abstract
     {
         # FECHANDO A CONEXAO EXISTENTE JA QUE UMA NOVA SERA ABERTA
         $dbAdapter = Zend_Db_Table::getDefaultAdapter();
-        if (!empty($dbAdapter)) {
-            $dbAdapter->closeConnection();
-            unset ($dbAdapter);
+        if ($dbAdapter instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            if (!empty($dbAdapter)) {
+                $dbAdapter->closeConnection();
+                unset ($dbAdapter);
+            }
+
+            if (!($this->_config instanceof Zend_Config_Ini)) {
+//            $this->_config = new Zend_Config_Ini(
+//                Zend_Registry::get('DIR_CONFIG'),
+//                'conexao_' . strtolower($this->_banco),
+//                array('allowModifications' => true,)
+//            );
+                $db = Zend_Db_Table::getDefaultAdapter();
+                $arrConfig = $db->getConfig();
+
+                $strDb = str_replace('.dbo', '', $this->_schema);
+                $arrConfig['dbname'] = strtoupper($strDb);
+                $this->_config = new Zend_Config(
+                    array(
+                        'db' => array(
+                            'adapter' => 'PDO_MSSQL',
+                            'params'  => array(
+                                'username' => $arrConfig['username'],
+                                'password' => $arrConfig['password'],
+                                'dbname'   => $arrConfig['dbname'],
+                                'host'     => $arrConfig['host'],
+                                'port'     => $arrConfig['port'],
+                            )
+                        )
+                    )
+                );
+
+                Zend_Registry::getInstance()->set('config', $this->_config);
+                Zend_Db_Table::setDefaultAdapter(Zend_Db::factory($this->_config->db));
+
+                # Setar o campo texto maior que 4096 caracteres aceitaveis por padrao no PHP
+//                $this->_db->query('SET TEXTSIZE 2147483647');
+            }
         }
 
-        if (!($this->_config instanceof Zend_Config_Ini)) {
-            $this->_config = new Zend_Config_Ini(
-                Zend_Registry::get('DIR_CONFIG'),
-                'conexao_' . strtolower($this->_banco),
-                array('allowModifications' => true,)
-            );
-
-            Zend_Registry::getInstance()->set('config', $this->_config);
-            Zend_Db_Table::setDefaultAdapter(Zend_Db::factory($this->_config->db));
-
-            parent::__construct();
-
-            # Setar o campo texto maior que 4096 caracteres aceitaveis por padrao no PHP
-//            $this->_db->query('SET TEXTSIZE 2147483647');
-        }
+        parent::__construct();
     }
 
     /**
@@ -80,17 +101,17 @@ class GenericModel extends Zend_Db_Table_Abstract
      */
     public function getSchema($strSchema = null, $isReturnDb = true)
     {
-        if (!$strSchema) {
-            $strSchema = $this->_schema;
-        }
-
         $db = Zend_Db_Table::getDefaultAdapter();
+
+
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
             if ($isReturnDb && strpos($strSchema, '.') === false) {
                 $strSchema = $strSchema . ".dbo";
-            } else {
+            } elseif (strpos($strSchema, '.') === false) {
                 $strSchema = "dbo";
             }
+        } else if (!$strSchema) {
+            $strSchema = $this->_schema;
         }
 
         return $strSchema;
@@ -179,25 +200,45 @@ class GenericModel extends Zend_Db_Table_Abstract
      */
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {
-        $slct = $this->select();
+        $select = $this->select();
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
-            $slct->where($coluna, $valor);
+            $select->where($coluna, $valor);
         }
+
+
+//        $select->where('cpf = ?', '00000000000');
         //adicionando linha order ao select
-        $slct->order($order);
+//        $select->order($order);
 
         // paginacao
-        if ($tamanho > -1) {
-            $tmpInicio = 0;
-            if ($inicio > -1) {
-                $tmpInicio = $inicio;
-            }
-            $slct->limit($tamanho, $tmpInicio);
-        }
+//        if ($tamanho > -1) {
+//            $tmpInicio = 0;
+//            if ($inicio > -1) {
+//                $tmpInicio = $inicio;
+//            }
+//            $select->limit($tamanho, $tmpInicio);
+//        }
+//        echo '<pre>';
+//        var_dump(Zend_Db_Table::getDefaultAdapter());
+//        var_dump($select->assemble());
+//        var_dump($this->fetchAll($select));
+//        var_dump($this->fetchAll($select)->toArray());
+//        var_dump($this->fetchRow($select)->toArray());
+//        exit;
 //xd($slct->__toString());
-        return $this->fetchAll($slct);
+
+        try {
+            $this->fetchAll($select);
+        } catch (Exception $e) {
+            echo '<pre>';
+            var_dump($select->assemble());
+            var_dump($e->getMessage());
+            exit;
+        }
+
+        return $this->fetchAll($select);
     }
 
     public function alterar($dados, $where, $dbg = false)

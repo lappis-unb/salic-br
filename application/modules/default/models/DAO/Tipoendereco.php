@@ -52,7 +52,7 @@ class Tipoendereco extends Zend_Db_Table
         $sql .= "ORDER BY descricao;";
 
         try {
-            $db = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
         } catch (Zend_Exception_Db $objException) {

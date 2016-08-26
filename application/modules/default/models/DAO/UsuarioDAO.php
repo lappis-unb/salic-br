@@ -151,9 +151,15 @@ class UsuarioDAO extends GenericModel
      * @static
      * @param integer
      * @return object
+     *
+     * @todo retirar o debug depois de verificar a necessidade dele.
      */
     public static function getIdUsuario($usu_codigo)
     {
+        echo '<pre>';
+        var_dump('Debug para verificacao da necessidade deste metodo, chamado de: getIdUsuario' );
+        var_dump($usu_codigo);
+        exit;
         $sql = "SELECT usu_codigo
 					,idAgente
 				FROM Tabelas.dbo.Usuarios u
@@ -206,44 +212,51 @@ class UsuarioDAO extends GenericModel
     }
 
     /**
-     * M�todo para buscar os dados do usu�rio de acordo com id (login scriptcase)
+     * Metodo para buscar os dados do usuario de acordo com id (login scriptcase)
      * @access public
      * @static
-     * @param @cod (c�digo do usu�rio)
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @param @cod (codigo do usuario)
      * @return bool
+     *
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Ruy Junior Ferreira Silva <ruyjfs@mail.com>
+     * @since 25/0/2016
+     *
+     * @todo Remover o codigo comentado depois que testado em todos os ambientes;
      */
     public static function loginScriptcase($cod)
     {
         // busca pelo usuario no banco de dados
         # Pegando apenas o primeiro resultado da consulta, transformando em array e transformando as chaves em minusculas.
-        $buscar = array_change_key_case(UsuarioDAO::buscarUsuarioScriptcase($cod)->current()->toArray());
+        $arrUser = array_change_key_case(UsuarioDAO::buscarUsuarioScriptcase($cod)->current()->toArray());
 
         $conexao = Zend_Registry::get('conexao_banco');
 
-        if ($conexao == "conexao_01") {
-            $conexao_scriptcase = "conexao_scriptcase_01";
-        } else if ($conexao == "conexao_02") {
-            $conexao_scriptcase = "conexao_scriptcase_02";
-        } else if ($conexao == "conexao_03") {
-            $conexao_scriptcase = "conexao_scriptcase_03";
-        } else if ($conexao == "conexao_04") {
-            $conexao_scriptcase = "conexao_scriptcase_04";
-        } else if ($conexao == "conexao_05") {
-            $conexao_scriptcase = "conexao_scriptcase_05";
-        } else if ($conexao == "conexao_xti") {
-            $conexao_scriptcase = "conexao_xti_controle_acesso";
-        }
-
+//
+//        if ($conexao == "conexao_01") {
+//            $conexao_scriptcase = "conexao_scriptcase_01";
+//        } else if ($conexao == "conexao_02") {
+//            $conexao_scriptcase = "conexao_scriptcase_02";
+//        } else if ($conexao == "conexao_03") {
+//            $conexao_scriptcase = "conexao_scriptcase_03";
+//        } else if ($conexao == "conexao_04") {
+//            $conexao_scriptcase = "conexao_scriptcase_04";
+//        } else if ($conexao == "conexao_05") {
+//            $conexao_scriptcase = "conexao_scriptcase_05";
+//        } else if ($conexao == "conexao_xti") {
+//            $conexao_scriptcase = "conexao_xti_controle_acesso";
+//        }
+//        ControleDeAcesso
         // configuracaes do banco de dados (seta uma nova conexao no arquivo config.ini)
-        $config = new Zend_Config_Ini('./application/configs/config.ini', $conexao_scriptcase);
+//        $config = new Zend_Config_Ini('./application/configs/config.ini', $conexao_scriptcase);
 
         //xd($config);
-        $db = Zend_Db::factory($config->db);;
-        Zend_Db_Table::setDefaultAdapter($db);
+//        $db = Zend_Db::factory($config->db);;
+//        Zend_Db_Table::setDefaultAdapter($db);,
 
-        if ($buscar) {
-            $authAdapter = new Zend_Auth_Adapter_DbTable($db);
+        if ($arrUser) {
+//            $authAdapter = new Zend_Auth_Adapter_DbTable($db);
+            $authAdapter = new Zend_Auth_Adapter_DbTable();
             $objSgcAcesso = new Autenticacao_Model_Sgcacesso();
             $authAdapter->setTableName($objSgcAcesso->getTableName())
                 ->setIdentityColumn('cpf')
@@ -251,8 +264,8 @@ class UsuarioDAO extends GenericModel
 
             // seta as credenciais informada pelo usuario
             $authAdapter
-                ->setIdentity($buscar['cpf'])
-                ->setCredential($buscar['senha']);
+                ->setIdentity($arrUser['cpf'])
+                ->setCredential($arrUser['senha']);
 
             // tenta autenticar o usuario
             $auth = Zend_Auth::getInstance();
