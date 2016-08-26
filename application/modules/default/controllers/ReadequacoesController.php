@@ -147,9 +147,10 @@ class ReadequacoesController extends GenericControllerNew {
             $tbTipoReadequacao = new tbTipoReadequacao();
             $this->view->TiposReadequacao = $tbTipoReadequacao->buscarTiposReadequacoesPermitidos($idPronac);
 
+            // na listagem de 'outras solicitações' não listar planilha orçamentária (idTipoReadequacao 2)
             $tbReadequacao = new tbReadequacao();
-            $this->view->readequacoesCadastradas = $tbReadequacao->readequacoesCadastradasProponente(array('a.idPronac = ?'=>$idPronac, 'a.siEncaminhamento = ?'=>12), array(1));
-
+            $this->view->readequacoesCadastradas = $tbReadequacao->readequacoesCadastradasProponente(array('a.idPronac = ?'=>$idPronac, 'a.siEncaminhamento = ?'=>12, 'a.idTipoReadequacao != ?' => 2), array(1));
+            
         } else {
             parent::message("N&uacute;mero Pronac inv&aacute;lido!", "principalproponente", "ERROR");
         }
@@ -1824,7 +1825,11 @@ class ReadequacoesController extends GenericControllerNew {
             $exclusao = $tbReadequacao->delete(array('idPronac =?'=>$idPronac, 'idReadequacao =?'=>$get->idReadequacao));
 
             if ($exclusao) {
-                parent::message('Tipo de readequação excluída com sucesso!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                if ($dados->idTipoReadequacao == 2) {
+                    parent::message('Tipo de readequação excluída com sucesso!', "readequacoes/planilha-orcamentaria?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                } else {
+                    parent::message('Tipo de readequação excluída com sucesso!', "readequacoes/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                }
             } else {
                 throw new Exception("Erro ao excluir o tipo de readequação!");
             }

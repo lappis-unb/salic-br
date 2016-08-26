@@ -6,7 +6,7 @@
     $('.btnSalvar').removeClass('sumir');			
     atualizarDadosPlanilha();
     <?php endif; ?>
-        $('#btn_cancelar').click(function(){
+        $('#btn_voltar').click(function(){
             window.location = "<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'), null, true); ?>?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>";
         });
         
@@ -707,6 +707,9 @@
 
 		data = JSON.parse(data);
 		$('#idReadequacao').val(data.idReadequacao);
+		$('#btn_excluir').removeClass('sumir');
+		$('#btn_finalizar').removeClass('sumir');
+		$('#btn_exclusao').attr('readequacao', data.idReadequacao);
 	    }
         });
     }
@@ -825,17 +828,19 @@
                 </td>
             </tr>
         </table>
-    
+
         <table class="tabela">
             <tr>
                 <td class="centro">
-                    <input type="button" class="btn_finalizar" id="btn_finalizar" title="Finalizar" />
-                    <input type="button" class="btn_cancelar" id="btn_cancelar" title="Cancelar" />
+                  <input type="button" class="btn_finalizar sumir" id="btn_finalizar" title="Finalizar" />
+                  <input type="button" class="btn_exclusao sumir" id="btn_excluir" readequacao="<?php echo $this->readequacao[0]->idReadequacao; ?>" />
+                  <input type="button" class="btn_cancelar" id="btn_voltar" title="Voltar" />
                 </td>
             </tr>
         </table>
     </form>
-    <!-- ========== FIM FORMULÁRIO ========== -->
+                                                                                                                
+    <!-- ========== Fim FORMULÁRIO ========== -->
 
     <?php //MODAL DE AVALIAÇÃO DO ITEM ?>
     <div id="modalItem" class="sumir">
