@@ -64,7 +64,7 @@ class tbPedidoAlteracaoProjetoDAO extends Zend_Db_Table
             (select max(dtSolicitacao) from BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto where idPedidoAlteracao = pap.idPedidoAlteracao)";
 
         }
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
 
@@ -72,7 +72,7 @@ class tbPedidoAlteracaoProjetoDAO extends Zend_Db_Table
 
     public static function insertDadosProjeto($dados)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $alterar = $db->insert("BDCORPORATIVO.scSAC.tbAvaliacaoPedidoAlteracao", $dados);

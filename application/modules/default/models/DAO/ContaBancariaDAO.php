@@ -23,7 +23,7 @@ class ContaBancariaDao extends Zend_Db_Table{
                     SAC.dbo.ContaBancaria cb
                 where
                         (cb.AnoProjeto+cb.Sequencial) = {$idPronac}";
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $resultado = $db->fetchRow($sql);
 

@@ -19,7 +19,7 @@ class tbalteracaolocalrealizacaoDAO extends Zend_Db_Table
         join AGENTES.dbo.Pais pais on pais.idPais = alr.idPais
         where alr.idpedidoalteracao= ".$idpedidoalteracao." order by pais, uf, mun asc";
         
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }

@@ -7,14 +7,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 class AnexardocumentosDAO extends Zend_Db_Table
 {
 
     /**
-     * Método para buscar pronac para os documentos
+     * Mï¿½todo para buscar pronac para os documentos
      * @access public
      * @static
      * @param integer $idPronac
@@ -36,7 +36,7 @@ class AnexardocumentosDAO extends Zend_Db_Table
     }
 
     /**
-     * Método para buscar documentos de um PRONAC
+     * Mï¿½todo para buscar documentos de um PRONAC
      * @access public
      * @static
      * @param integer $idPronac
@@ -58,10 +58,10 @@ class AnexardocumentosDAO extends Zend_Db_Table
         }
     }
 
-// fecha método buscar()
+// fecha mï¿½todo buscar()
 
     /**
-     * Método para buscar documentos de um PRONAC
+     * Mï¿½todo para buscar documentos de um PRONAC
      * @access public
      * @static
      * @param integer $idPronac
@@ -164,7 +164,7 @@ class AnexardocumentosDAO extends Zend_Db_Table
               inner join BDCORPORATIVO.scCorp.tbDocumentoProjeto tap on tap.idDocumento = a4.idDocumento
         ) tb where idpronac = $idpronac and nome <> '' order by tb.tipoDocumento, tb.idDocumento";
         
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 //        die('<pre>'.$sql);
         $resultado = $db->fetchAll($sql);
@@ -174,7 +174,7 @@ class AnexardocumentosDAO extends Zend_Db_Table
     
     public static function uploadDocumento($id, $tipo)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         // busca o arquivo
@@ -217,11 +217,11 @@ class AnexardocumentosDAO extends Zend_Db_Table
         return $resultado;
     }
 
-// fecha método abrir()
-// fecha método buscar()
+// fecha mï¿½todo abrir()
+// fecha mï¿½todo buscar()
 
     /**
-     * Método para cadastrar documentos do PRONAC
+     * Mï¿½todo para cadastrar documentos do PRONAC
      * @access public
      * @param void
      * @return object
@@ -232,7 +232,7 @@ class AnexardocumentosDAO extends Zend_Db_Table
           $sql.= "VALUES ($dados['idPRONAC'], $dados['idTipoDocumento'], $dados['nmComprovante'], $dados['dsComprovante'], $dados['idArquivo'], $dados['idSolicitante'], $dados['dtEnvioComprovante'], $dados['stComprovante'], $dados['stComprovante'], $dados['idComprovanteAnterior'])"; */
     }
 
-// fecha método cadastrar()
+// fecha mï¿½todo cadastrar()
 }
 
 // fecha class

@@ -16,7 +16,7 @@ class ArquivoPagamentoParecerista extends GenericModel {
         $sql = "INSERT INTO ".$this->_banco.".".$this->_schema.".".$this->_name." (idGerarPagamentoParecerista,idArquivo,siArquivo)
                 values ($idGerarPagamentoParecerista, $idArquivo,'$siArquivo')";
         
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->query($sql);
         

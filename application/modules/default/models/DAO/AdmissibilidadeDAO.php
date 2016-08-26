@@ -31,7 +31,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                 ORDER BY usu_nome";
 
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar projeto: " . $e->getMessage();
@@ -64,7 +64,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                     and gru_codigo      <> 97";
 
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar projeto: " . $e->getMessage();
@@ -84,7 +84,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                    and uog_orgao   = {$params->usu_orgao}";
        //xd($sql);
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar projeto: " . $e->getMessage();
@@ -133,7 +133,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                 ORDER BY Fase, Tecnico, DtMovimentacao, idProjeto, NomeProjeto";
 
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar dados: " . $e->getMessage();
@@ -161,7 +161,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
         }
 
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar dados: " . $e->getMessage();
@@ -186,7 +186,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                     ORDER BY usu_nome";
 
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar dados: " . $e->getMessage();
@@ -200,7 +200,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                  WHERE idProjeto = {$params->idProjeto}
                    AND stEstado  = 0";
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao executar comando sql: " . $e->getMessage();
@@ -227,7 +227,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                 WHERE idSecretaria = {$params->cod_orgao}
                 ORDER BY Tecnico, DtAdmissibilidade";
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar dados: " . $e->getMessage();
@@ -296,7 +296,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
         ";
 
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar dados: " . $e->getMessage();
@@ -345,7 +345,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                 WHERE {$meuWhere} 1=1
                 ORDER BY usu_nome";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
 

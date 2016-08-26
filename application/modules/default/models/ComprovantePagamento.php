@@ -221,16 +221,16 @@ class ComprovantePagamento extends GenericModel
     private function validarCadastrar()
     {
         if (!$this->fornecedor) {
-            throw new Exception('Fornecedor inválido.');
+            throw new Exception('Fornecedor invï¿½lido.');
         }
         if (!$this->item) {
-            throw new Exception('Item inválido.');
+            throw new Exception('Item invï¿½lido.');
         }
         if (!$this->tipo) {
-            throw new Exception('Comprovante inválido.');
+            throw new Exception('Comprovante invï¿½lido.');
         }
         if (!$this->numero) {
-            throw new Exception('Número inválido.');
+            throw new Exception('Nï¿½mero invï¿½lido.');
         }
 
         # validar periodo
@@ -240,17 +240,17 @@ class ComprovantePagamento extends GenericModel
         $dtInicioExecucao = new DateTime($projeto->DtInicioExecucao);
         $dtFimExecucao = new DateTime($projeto->DtFimExecucao);
         if (!$this->dataEmissao || ($this->dataEmissao < $dtInicioExecucao) || ($this->dataEmissao > $dtFimExecucao)) {
-            throw new Exception('A data do documento deve estar dentro do período de execução do projeto.');
+            throw new Exception('A data do documento deve estar dentro do perï¿½odo de execuï¿½ï¿½o do projeto.');
         }
 
         if (!$this->comprovanteTipo) {
-            throw new Exception('Forma de pagamento inválida.');
+            throw new Exception('Forma de pagamento invï¿½lida.');
         }
         if (!$this->comprovanteNumero) {
-            throw new Exception('Número do comprovante inválido.');
+            throw new Exception('Nï¿½mero do comprovante invï¿½lido.');
         }
         if (!$this->comprovanteValor) {
-            throw new Exception('Valor do item inválido.');
+            throw new Exception('Valor do item invï¿½lido.');
         }
     }
 
@@ -362,7 +362,7 @@ class ComprovantePagamento extends GenericModel
                     convert(char(10), comp.dtEmissao, 103) as dtEmissao,
                     (
                         CASE pa.idProduto
-                            WHEN 0 THEN ('Administração do projeto')
+                            WHEN 0 THEN ('Administraï¿½ï¿½o do projeto')
                             ELSE prod.Descricao
                         END
                     ) as produtonome,
@@ -371,7 +371,7 @@ class ComprovantePagamento extends GenericModel
                     (
                         CASE tpFormaDePagamento 
                             WHEN 1 THEN ('Cheque')
-                            WHEN 2 THEN ('Transferência Bancária')
+                            WHEN 2 THEN ('Transferï¿½ncia Bancï¿½ria')
                             WHEN 3 THEN ('Saque/Dinheiro')
                         END
                     ) as tipoFormaPagamentoNome,
@@ -408,8 +408,8 @@ class ComprovantePagamento extends GenericModel
     }
 
     /**
-     * Author: Alysson Vicuña de Oliveira
-     * Descrição: Alteração realizada por pedido da Área Finalistica em 16/02/2016 as 11:33
+     * Author: Alysson Vicuï¿½a de Oliveira
+     * Descriï¿½ï¿½o: Alteraï¿½ï¿½o realizada por pedido da ï¿½rea Finalistica em 16/02/2016 as 11:33
      * @param $item
      * @return array
      */
@@ -422,7 +422,7 @@ class ComprovantePagamento extends GenericModel
                     convert(char(10), comp.dtEmissao, 103) as dtEmissao,
                     (
                         CASE pa.idProduto
-                            WHEN 0 THEN ('Administração do projeto')
+                            WHEN 0 THEN ('Administraï¿½ï¿½o do projeto')
                             ELSE prod.Descricao
                         END
                     ) as produtonome,
@@ -431,7 +431,7 @@ class ComprovantePagamento extends GenericModel
                     (
                         CASE tpFormaDePagamento 
                             WHEN 1 THEN ('Cheque')
-                            WHEN 2 THEN ('Transferência Bancária')
+                            WHEN 2 THEN ('Transferï¿½ncia Bancï¿½ria')
                             WHEN 3 THEN ('Saque/Dinheiro')
                         END
                     ) as tipoFormaPagamentoNome,
@@ -472,7 +472,7 @@ class ComprovantePagamento extends GenericModel
                     convert(char(10), comp.dtEmissao, 103) as dtEmissao,
                     (
                         CASE pa.idProduto
-                            WHEN 0 THEN ('Administração do projeto')
+                            WHEN 0 THEN ('Administraï¿½ï¿½o do projeto')
                             ELSE prod.Descricao
                         END
                     ) as produtonome,
@@ -481,7 +481,7 @@ class ComprovantePagamento extends GenericModel
                     (
                         CASE tpFormaDePagamento
                             WHEN 1 THEN ('Cheque')
-                            WHEN 2 THEN ('Transferência Bancária')
+                            WHEN 2 THEN ('Transferï¿½ncia Bancï¿½ria')
                             WHEN 3 THEN ('Saque/Dinheiro')
                         END
                     ) as tipoFormaPagamentoNome,
@@ -534,11 +534,11 @@ class ComprovantePagamento extends GenericModel
 
     /**
      * Author: Fernao Lopes Ginez de Lara
-     * Descrição: Função criada a pedido da Área Finalistica em 13/04/2016
+     * Descriï¿½ï¿½o: Funï¿½ï¿½o criada a pedido da ï¿½rea Finalistica em 13/04/2016
      * @param $idPronac
      */
     public function atualizarComprovanteRecusado($idPronac) {
-      $db = Zend_Registry::get('db');
+      $db= Zend_Db_Table::getDefaultAdapter();
       $db->setFetchMode(Zend_DB::FETCH_ASSOC);
 
       try {
@@ -555,7 +555,7 @@ class ComprovantePagamento extends GenericModel
 	
 	$update2 = "UPDATE sac.dbo.tbDiligencia
                     SET DtResposta = GETDATE(),
-                    RESPOSTA  = 'O PROPONENTE JÁ REALIZOU O AJUSTE DOS COMPROVANTES QUE HAVIAM SIDO RECUSADOS PELO MINISTÉRIO DA CULTURA.'
+                    RESPOSTA  = 'O PROPONENTE Jï¿½ REALIZOU O AJUSTE DOS COMPROVANTES QUE HAVIAM SIDO RECUSADOS PELO MINISTï¿½RIO DA CULTURA.'
                     WHERE idTipoDiligencia = 174 and idPronac = $idPronac AND stEstado = 0";
 
 	$db->fetchRow($update2);
@@ -574,7 +574,7 @@ class ComprovantePagamento extends GenericModel
         $select = "SELECT top 50 a.*,
                     (
                         CASE c.idProduto
-                            WHEN 0 THEN ('Administração do projeto')
+                            WHEN 0 THEN ('Administraï¿½ï¿½o do projeto')
                             ELSE f.Descricao
                         END
                     ) as produto, b.*, d.Descricao as etapa, e.Descricao as item

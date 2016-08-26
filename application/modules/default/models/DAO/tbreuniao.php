@@ -74,7 +74,7 @@ class tbreuniao extends GenericModel{
 		{
 			return false;
 		}
-	} // fecha método atualizarreuniao()
+	} // fecha mï¿½todo atualizarreuniao()
 
 
             public function pegaTotal($where=array(), $order=array())
@@ -123,7 +123,7 @@ class tbreuniao extends GenericModel{
 	{
 
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$cadastrar = $db->insert("SAC.dbo.tbReuniao", $dados);
@@ -136,6 +136,6 @@ class tbreuniao extends GenericModel{
 		{
 			return false;
 		}
-	} // fecha método salvareuniao()
+	} // fecha mï¿½todo salvareuniao()
 }
 ?>

@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -19,7 +19,7 @@ class tbRecurso extends GenericModel
 
 
 	/**
-	 * Método para buscar o(s) recursos(s)
+	 * Mï¿½todo para buscar o(s) recursos(s)
 	 * @access public
 	 * @param $idPronac integer
 	 * @param $idPlanilhaAprovacao integer
@@ -90,7 +90,7 @@ class tbRecurso extends GenericModel
 			,"AGENTES.dbo"
 		);
 
-		// avaliação do ministro
+		// avaliaï¿½ï¿½o do ministro
 		$select->joinLeft(
 			array("papm" => "tbPlanilhaAprovacao")
 			,"rx.idPlanilhaAprovacao = papm.idPlanilhaAprovacaoPai AND papm.tpPlanilha = 'MI'"
@@ -114,25 +114,25 @@ class tbRecurso extends GenericModel
 		$select->order("pi.Descricao");
 
 		return $this->fetchAll($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
 
 
 
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @param array $dados
-	 * @return integer (retorna o último id cadastrado)
+	 * @return integer (retorna o ï¿½ltimo id cadastrado)
 	 */
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarDados()
+	} // fecha mï¿½todo cadastrarDados()
 
 
 
 	/**
-	 * Método para alterar
+	 * Mï¿½todo para alterar
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -142,16 +142,16 @@ class tbRecurso extends GenericModel
 	{
 		$where = "idRecurso = " . $where;
 		return $this->update($dados, $where);
-	} // fecha método alterarDados()
+	} // fecha mï¿½todo alterarDados()
 
 
 
 	/**
-	 * Método para excluir
+	 * Mï¿½todo para excluir
 	 * @access public
 	 * @param integer $idPronac (excluir todos os recursos de um projeto)
 	 * @param integer $idRecurso (excluir um determinado recurso)
-	 * @return integer (quantidade de registros excluídos)
+	 * @return integer (quantidade de registros excluï¿½dos)
 	 */
 	public function excluirDados($idPronac = null, $idRecurso = null)
 	{
@@ -168,12 +168,12 @@ class tbRecurso extends GenericModel
 		}
 
 		return $this->delete($where);
-	} // fecha método excluirDados()
+	} // fecha mï¿½todo excluirDados()
 
 
 
 	/**
-	 * Método para buscar os projetos com solicitação de recurso
+	 * Mï¿½todo para buscar os projetos com solicitaï¿½ï¿½o de recurso
 	 * @access public
 	 * @param $idPronac integer
 	 * @param $tpSolicitacao string
@@ -291,11 +291,11 @@ class tbRecurso extends GenericModel
 		$select->order("Pr.NomeProjeto");
 
 		return $this->fetchAll($select);
-	} // fecha método buscarSolicitacaoRecurso()
+	} // fecha mï¿½todo buscarSolicitacaoRecurso()
     
     
 	/**
-	 * Método para buscar os projetos com solicitação de recurso
+	 * Mï¿½todo para buscar os projetos com solicitaï¿½ï¿½o de recurso
 	 * @access public
 	 * @param $idPronac integer
 	 * @param $tpSolicitacao string
@@ -311,8 +311,8 @@ class tbRecurso extends GenericModel
                 new Zend_Db_Expr("
                     CASE
                         WHEN tp.tpSolicitacao = 'EN' THEN 'Enquadramento' 
-                        WHEN tp.tpSolicitacao = 'EO' THEN 'Enquadramento e Orçamento' 
-                        WHEN tp.tpSolicitacao = 'OR' THEN 'Orçamento' 
+                        WHEN tp.tpSolicitacao = 'EO' THEN 'Enquadramento e Orï¿½amento' 
+                        WHEN tp.tpSolicitacao = 'OR' THEN 'Orï¿½amento' 
                         WHEN tp.tpSolicitacao = 'PI' THEN 'Projeto indeferido'
                     END AS tpSolicitacao,
                     tp.stAnalise,
@@ -363,12 +363,12 @@ class tbRecurso extends GenericModel
         
         //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha método buscarSolicitacaoRecurso()
+	} // fecha mï¿½todo buscarSolicitacaoRecurso()
 
 
 
 	/**
-	 * Método que busca a planilha de de orçamento de custos
+	 * Mï¿½todo que busca a planilha de de orï¿½amento de custos
 	 * @access public
 	 * @param $idPronac integer
 	 * @param $tpPlanilha string
@@ -382,7 +382,7 @@ class tbRecurso extends GenericModel
 					,PD.Descricao
 					,CASE
 						WHEN PAP.idProduto = 0
-							THEN 'Administração do Projeto'
+							THEN 'Administraï¿½ï¿½o do Projeto'
 							ELSE PD.Descricao
 						END AS Produto
 					,PAP.qtItem AS quantidade_con
@@ -451,11 +451,11 @@ class tbRecurso extends GenericModel
 		}
 
 		$sql.= "ORDER BY PAP.nrFonteRecurso, PD.Descricao, PAP.idEtapa, E.Descricao, UF.Sigla, CID.Descricao, I.Descricao";
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
-	} // fecha método buscarPlanilhaDeCustos()
+	} // fecha mï¿½todo buscarPlanilhaDeCustos()
 
 
     public function buscarRecursoProjeto($idPronac) {
@@ -463,11 +463,11 @@ class tbRecurso extends GenericModel
                         idAgenteSolicitante, dtAvaliacao, dsAvaliacao, stAtendimento,
                         tpSolicitacao, idAgenteAvaliador
                 FROM SAC.dbo.tbRecurso WHERE IdPRONAC = $idPronac";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método buscarPlanilhaDeCustos()
+    } // fecha mï¿½todo buscarPlanilhaDeCustos()
     
     public function painelRecursos($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
         $select = $this->select();
@@ -478,12 +478,12 @@ class tbRecurso extends GenericModel
                 new Zend_Db_Expr("b.idPronac, a.idRecurso, b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto, a.dtSolicitacaoRecurso"),
                 new Zend_Db_Expr("CASE
                                     WHEN tpSolicitacao = 'EN' THEN 'Enquadramento' 
-                                    WHEN tpSolicitacao = 'OR' THEN 'Orçamento' 
+                                    WHEN tpSolicitacao = 'OR' THEN 'Orï¿½amento' 
                                     WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
-                                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Orçamento'
+                                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Orï¿½amento'
                                  END AS tpSolicitacao,
                                  CASE
-                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsideração'
+                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsideraï¿½ï¿½o'
                                     WHEN tpRecurso = 2 THEN 'Recurso'
                                  END AS tpRecurso, a.siRecurso
                 "),
@@ -535,15 +535,15 @@ class tbRecurso extends GenericModel
                 CAST(a.dsAvaliacao AS TEXT) AS dsAvaliacao,
                 a.tpRecurso,
                 CASE
-                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsideração'
+                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsideraï¿½ï¿½o'
                     WHEN tpRecurso = 2 THEN 'Recurso'
                 END AS tpRecursoDesc,
                 a.tpSolicitacao,
                 CASE
                     WHEN tpSolicitacao = 'EN' THEN 'Enquadramento' 
-                    WHEN tpSolicitacao = 'OR' THEN 'Orçamento' 
+                    WHEN tpSolicitacao = 'OR' THEN 'Orï¿½amento' 
                     WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
-                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Orçamento'
+                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Orï¿½amento'
                 END AS tpSolicitacaoDesc,
                 a.idAgenteAvaliador,
                 a.stAtendimento,
@@ -592,12 +592,12 @@ class tbRecurso extends GenericModel
                 new Zend_Db_Expr("b.idPronac, a.idRecurso, b.AnoProjeto+b.Sequencial AS PRONAC, b.NomeProjeto, a.dtSolicitacaoRecurso, a.tpSolicitacao"),
                 new Zend_Db_Expr("CASE
                                     WHEN tpSolicitacao = 'EN' THEN 'Enquadramento' 
-                                    WHEN tpSolicitacao = 'OR' THEN 'Orçamento' 
+                                    WHEN tpSolicitacao = 'OR' THEN 'Orï¿½amento' 
                                     WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
-                                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Orçamento'
+                                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Orï¿½amento'
                                  END AS descTpSolicitacao,
                                  CASE
-                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsideração'
+                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsideraï¿½ï¿½o'
                                     WHEN tpRecurso = 2 THEN 'Recurso'
                                  END AS tpRecurso
                 "),
@@ -654,11 +654,11 @@ class tbRecurso extends GenericModel
                 INNER JOIN SAC.dbo.Projetos c on (a.IdPRONAC = c.idPronac)
                 WHERE siRecurso = 8
                       AND NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao b WHERE a.IdPRONAC = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao )";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método buscarPlanilhaDeCustos()
+    } // fecha mï¿½todo buscarPlanilhaDeCustos()
     
     public function atualizarStatusRecursosNaoSubmetidos($idNrReuniao) {
         $sql = "UPDATE SAC.dbo.tbRecurso
@@ -669,10 +669,10 @@ class tbRecurso extends GenericModel
                     (a.siRecurso = 9 and a.idNrReuniao = $idNrReuniao ) or
                     (a.siRecurso = 8 and a.stEstado = 0
                     AND EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao b WHERE a.IdPRONAC = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao ))";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método buscarPlanilhaDeCustos()
+    } // fecha mï¿½todo buscarPlanilhaDeCustos()
     
 } // fecha class

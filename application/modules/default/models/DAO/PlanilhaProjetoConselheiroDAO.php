@@ -6,7 +6,7 @@
  * @package application
  * @subpackage application.model.DAO
  * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Politec - Todos os direitos reservados.
  */
 
 class PlanilhaProjetoConselheiroDAO extends Zend_Db_Table
@@ -19,7 +19,7 @@ class PlanilhaProjetoConselheiroDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para alterar os dados da planilha do conselheiro
+	 * Mï¿½todo para alterar os dados da planilha do conselheiro
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -29,7 +29,7 @@ class PlanilhaProjetoConselheiroDAO extends Zend_Db_Table
 	 */
 	public static function alterar($dados, $idPlanilha, $idPronac)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where   = "idPlanilhaProjeto = $idPlanilha AND IdPRONAC = $idPronac";
@@ -43,6 +43,6 @@ class PlanilhaProjetoConselheiroDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método alterar()
+	} // fecha mï¿½todo alterar()
 
 } // fecha class

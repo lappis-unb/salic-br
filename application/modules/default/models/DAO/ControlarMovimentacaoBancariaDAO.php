@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -20,7 +20,7 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para buscar o extrato de movimentacao bancaria
+	 * Mï¿½todo para buscar o extrato de movimentacao bancaria
 	 * @access public
 	 * @static
 	 * @param string $pronac
@@ -40,7 +40,7 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 			$sql.= " AnoProjeto+Sequencial = '" . $pronac . "' ";
 		}
 
-		// busca pelo período
+		// busca pelo perï¿½odo
 		if (!empty($periodo))
 		{
 			// filtra conforme uma data inicial e uma data final
@@ -65,7 +65,7 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 			}
 		}
 
-		// busca pelo tipo de operação: crédito ou débito
+		// busca pelo tipo de operaï¿½ï¿½o: crï¿½dito ou dï¿½bito
 		if (!empty($operacao))
 		{
 			$sql.= " stMovimento = '" . $operacao . "' ";
@@ -79,19 +79,19 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 		}
 		catch (Zend_Exception_Db $e)
 		{
-			$this->view->message = "Erro ao buscar extrato de movimentação bancária: " . $e->getMessage();
+			$this->view->message = "Erro ao buscar extrato de movimentaï¿½ï¿½o bancï¿½ria: " . $e->getMessage();
 		} */
 		// dados do header
 		$dados_header[0]['header']              = ""; // HEADER DO ARQUIVO - CONSTANTE 1
-		$dados_header[0]['nr_banco']            = ""; // NÚMERO DO BANCO
+		$dados_header[0]['nr_banco']            = ""; // Nï¿½MERO DO BANCO
 		$dados_header[0]['arquivo']             = ""; // NOME DO ARQUIVO
-		$dados_header[0]['dt_arquivo']          = ""; // DATA DA GERAÇÃO DO ARQUIVO - FORMATO (DDMMAAAA)
+		$dados_header[0]['dt_arquivo']          = ""; // DATA DA GERAï¿½ï¿½O DO ARQUIVO - FORMATO (DDMMAAAA)
 		$dados_header[0]['dt_inicio_movimento'] = ""; // DATA DO INICIO DA MOVIMENTACAO BANCARIA - FORMATO (DDMMAAAA)
 		$dados_header[0]['dt_fim_movimento']    = ""; // DATA FINAL DA MOVIMENTACAO BANCARIA - FORMATO (DDMMAAAA)
 
 
 
-		// dados da movimentação
+		// dados da movimentaï¿½ï¿½o
 		$dados[0]['dt_movimentacao'] = "24/12/2010";
 		$dados[0]['deposito_origem'] = "";
 		$dados[0]['historico']       = "Saldo Anterior";
@@ -102,11 +102,11 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 		$dados[0]['saldo']           = "59.487,23";
 		$dados[0]['idPronac']        = 57016;
 		$dados[0]['pronac']          = "066044";
-		$dados[0]['NomeProjeto']     = "Elaboração de Projetos Executivos para a Restauração dos Monumentos da Floresta da Tijuca";
+		$dados[0]['NomeProjeto']     = "Elaboraï¿½ï¿½o de Projetos Executivos para a Restauraï¿½ï¿½o dos Monumentos da Floresta da Tijuca";
 
 		$dados[1]['dt_movimentacao'] = "03/01/2011";
 		$dados[1]['deposito_origem'] = "";
-		$dados[1]['historico']       = "Depósito COMPE<br />033 0815 890474192 MARIA DA SILVA";
+		$dados[1]['historico']       = "Depï¿½sito COMPE<br />033 0815 890474192 MARIA DA SILVA";
 		$dados[1]['documento']       = "7.178";
 		$dados[1]['op_valor']        = "C";
 		$dados[1]['valor']           = "1.000,00";
@@ -114,11 +114,11 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 		$dados[1]['saldo']           = "";
 		$dados[1]['idPronac']        = 57016;
 		$dados[1]['pronac']          = "066044";
-		$dados[1]['NomeProjeto']     = "Elaboração de Projetos Executivos para a Restauração dos Monumentos da Floresta da Tijuca";
+		$dados[1]['NomeProjeto']     = "Elaboraï¿½ï¿½o de Projetos Executivos para a Restauraï¿½ï¿½o dos Monumentos da Floresta da Tijuca";
 
 		$dados[2]['dt_movimentacao'] = "03/01/2011";
 		$dados[2]['deposito_origem'] = "";
-		$dados[2]['historico']       = "Cobrança de I.O.F.";
+		$dados[2]['historico']       = "Cobranï¿½a de I.O.F.";
 		$dados[2]['documento']       = "391.100.701";
 		$dados[2]['op_valor']        = "D";
 		$dados[2]['valor']           = "0,13";
@@ -126,11 +126,11 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 		$dados[2]['saldo']           = "60.487,10";
 		$dados[2]['idPronac']        = 57016;
 		$dados[2]['pronac']          = "066044";
-		$dados[2]['NomeProjeto']     = "Elaboração de Projetos Executivos para a Restauração dos Monumentos da Floresta da Tijuca";
+		$dados[2]['NomeProjeto']     = "Elaboraï¿½ï¿½o de Projetos Executivos para a Restauraï¿½ï¿½o dos Monumentos da Floresta da Tijuca";
 
 		$dados[3]['dt_movimentacao'] = "09/01/2011";
 		$dados[3]['deposito_origem'] = "1236-X";
-		$dados[3]['historico']       = "Compra com Cartão<br />04/01 12:25 MADE IN BRAZIL";
+		$dados[3]['historico']       = "Compra com Cartï¿½o<br />04/01 12:25 MADE IN BRAZIL";
 		$dados[3]['documento']       = "144.736";
 		$dados[3]['op_valor']        = "D";
 		$dados[3]['valor']           = "300,00";
@@ -138,7 +138,7 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 		$dados[3]['saldo']           = "60.187,10";
 		$dados[3]['idPronac']        = 57016;
 		$dados[3]['pronac']          = "066044";
-		$dados[3]['NomeProjeto']     = "Elaboração de Projetos Executivos para a Restauração dos Monumentos da Floresta da Tijuca";
+		$dados[3]['NomeProjeto']     = "Elaboraï¿½ï¿½o de Projetos Executivos para a Restauraï¿½ï¿½o dos Monumentos da Floresta da Tijuca";
 
 		$dados[4]['dt_movimentacao'] = "17/01/2011";
 		$dados[4]['deposito_origem'] = "1236-X";
@@ -150,11 +150,11 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 		$dados[4]['saldo']           = "58.187,10";
 		$dados[4]['idPronac']        = 57016;
 		$dados[4]['pronac']          = "066044";
-		$dados[4]['NomeProjeto']     = "Elaboração de Projetos Executivos para a Restauração dos Monumentos da Floresta da Tijuca";
+		$dados[4]['NomeProjeto']     = "Elaboraï¿½ï¿½o de Projetos Executivos para a Restauraï¿½ï¿½o dos Monumentos da Floresta da Tijuca";
 
 		$dados[5]['dt_movimentacao'] = "09/01/2011";
 		$dados[5]['deposito_origem'] = "1236-X";
-		$dados[5]['historico']       = "Compra com Cartão<br />04/01 12:25 MADE IN BRAZIL";
+		$dados[5]['historico']       = "Compra com Cartï¿½o<br />04/01 12:25 MADE IN BRAZIL";
 		$dados[5]['documento']       = "144.736";
 		$dados[5]['op_valor']        = "D";
 		$dados[5]['valor']           = "300,00";
@@ -162,7 +162,7 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 		$dados[5]['saldo']           = "60.187,10";
 		$dados[5]['idPronac']        = 119358;
 		$dados[5]['pronac']          = "098064";
-		$dados[5]['NomeProjeto']     = "Circuito Sinfônico 2010";
+		$dados[5]['NomeProjeto']     = "Circuito Sinfï¿½nico 2010";
 
 		$dados[6]['dt_movimentacao'] = "17/01/2011";
 		$dados[6]['deposito_origem'] = "1236-X";
@@ -174,15 +174,15 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 		$dados[6]['saldo']           = "58.187,10";
 		$dados[6]['idPronac']        = 119358;
 		$dados[6]['pronac']          = "098064";
-		$dados[6]['NomeProjeto']     = "Circuito Sinfônico 2010";
+		$dados[6]['NomeProjeto']     = "Circuito Sinfï¿½nico 2010";
 
 		return $dados;
-	} // fecha método buscar()
+	} // fecha mï¿½todo buscar()
 
 
 
 	/**
-	 * Método para cadastrar informações dos arquivos vindos do banco do brasil
+	 * Mï¿½todo para cadastrar informaï¿½ï¿½es dos arquivos vindos do banco do brasil
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -190,7 +190,7 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 	 */
 	public static function cadastrar($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$cadastrar = $db->insert("", $dados);
@@ -203,12 +203,12 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método cadastrar()
+	} // fecha mï¿½todo cadastrar()
 
 
 
 	/**
-	 * Método para alterar informações dos arquivos vindos do banco do brasil
+	 * Mï¿½todo para alterar informaï¿½ï¿½es dos arquivos vindos do banco do brasil
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -217,7 +217,7 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 	 */
 	public static function alterar($dados, $id)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where   = "id = $id";
@@ -231,12 +231,12 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método alterar()
+	} // fecha mï¿½todo alterar()
 
 
 
 	/**
-	 * Método para excluir informações dos arquivos vindos do banco do brasil
+	 * Mï¿½todo para excluir informaï¿½ï¿½es dos arquivos vindos do banco do brasil
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -245,7 +245,7 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 	 */
 	public static function excluir($dados, $id)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where   = "id = $id";
@@ -259,12 +259,12 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método excluir()
+	} // fecha mï¿½todo excluir()
 
 
 
 	/**
-	 * Método para buscar o id da última informação do arquivo vindo do banco do brasil
+	 * Mï¿½todo para buscar o id da ï¿½ltima informaï¿½ï¿½o do arquivo vindo do banco do brasil
 	 * @access public
 	 * @static
 	 * @param void
@@ -274,9 +274,9 @@ class ControlarMovimentacaoBancariaDAO extends Zend_Db_Table
 	{
 		$sql = "SELECT MAX(id) AS id FROM ";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
-	} // fecha método buscarId()
+	} // fecha mï¿½todo buscarId()
 
 } // fecha class ControlarMovimentacaoBancariaDAO

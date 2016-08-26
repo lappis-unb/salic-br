@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright ? 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ? 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 class tbDistribuirParecer extends GenericModel
@@ -59,7 +59,7 @@ class tbDistribuirParecer extends GenericModel
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarDados()
+	} // fecha mï¿½todo cadastrarDados()
 
 	public function buscarHistoricoDeAnalise($idPronac, $codOrgao) {
        $sql = "SELECT distinct d.idPronac, tabelas.dbo.fnEstruturaOrgao(d.idOrgao,0) AS Unidade, 
@@ -77,7 +77,7 @@ class tbDistribuirParecer extends GenericModel
                 //xd($sql);
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		}
 		catch (Zend_Exception_Db $e)
@@ -86,7 +86,7 @@ class tbDistribuirParecer extends GenericModel
 		}
 		//xd($sql);
 		return $db->fetchAll($sql);
-    }// fecha método buscarHistoricoDeAnalise()
+    }// fecha mï¿½todo buscarHistoricoDeAnalise()
     
     public function buscarHistorico($where = array()) {
         $select = $this->select();
@@ -95,7 +95,7 @@ class tbDistribuirParecer extends GenericModel
                 array('d' => $this->_name), array(
             "d.idPronac",
             "d.idProduto",
-            "TipoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contéudo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
+            "TipoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contï¿½udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
             "d.idOrgao",
             "tabelas.dbo.fnEstruturaOrgao(d.idOrgao,0) as Unidade",
             "DtEnvio",
@@ -131,7 +131,7 @@ class tbDistribuirParecer extends GenericModel
         $select->order('idDistribuirParecer DESC');
 // 		xd($select->assemble());
         return $this->fetchAll($select);
-    }// fecha método buscarHistorico()
+    }// fecha mï¿½todo buscarHistorico()
 
     public function buscarHistoricoCoordenador($where = array()) {
         $select = $this->select();
@@ -140,7 +140,7 @@ class tbDistribuirParecer extends GenericModel
                 array('d' => $this->_name), array(
             "d.idPronac",
             "d.idProduto",
-            "TipoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contéudo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
+            "TipoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contï¿½udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
             "d.idOrgao",
             "tabelas.dbo.fnEstruturaOrgao(d.idOrgao,0) as Unidade",
             "DtEnvio",
@@ -176,11 +176,11 @@ class tbDistribuirParecer extends GenericModel
         $select->order('idDistribuirParecer DESC');
 		//xd($select->assemble());
         return $this->fetchAll($select);
-    }// fecha método buscarHistorico()
+    }// fecha mï¿½todo buscarHistorico()
 
     
     /**
-	 * Método que lista os projetos na tela inicial do UC 103 ( Gerenciar Parecerer )
+	 * Mï¿½todo que lista os projetos na tela inicial do UC 103 ( Gerenciar Parecerer )
 	 * @param Int
 	 * @return List
 	 */
@@ -204,7 +204,7 @@ class tbDistribuirParecer extends GenericModel
                 "CONVERT(CHAR(10),t.DtDistribuicao,103) AS DtDistribuicaoPT",
                 "CONVERT(CHAR(10),t.DtEnvio,103) AS DtEnvioPT",
 //                "agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista",
-                "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contéudo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
+                "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contï¿½udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
                 "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs"
             ));
 
@@ -241,7 +241,7 @@ class tbDistribuirParecer extends GenericModel
             $select->order(array('(p.AnoProjeto + p.Sequencial)', 't.stPrincipal desc', 't.DtDevolucao', 't.DtEnvio', 'r.Descricao'));
 //            xd($select->assemble());
             return $this->fetchAll($select);
-	} // fecha método listarProjetos()
+	} // fecha mï¿½todo listarProjetos()
 
 
         public function verificarProdutosSecundarios($idPronac, $codOrgao) {
@@ -290,7 +290,7 @@ class tbDistribuirParecer extends GenericModel
 		$select->order(array('(p.AnoProjeto + p.Sequencial)', 't.stPrincipal desc','t.DtDevolucao', 't.DtEnvio', 'r.Descricao'));
                 //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha método listarProjetos()
+	} // fecha mï¿½todo listarProjetos()
 
 
 
@@ -313,7 +313,7 @@ class tbDistribuirParecer extends GenericModel
 		                 "CONVERT(CHAR(10),t.DtEnvio,103) AS DtEnvioPT",
                                  "nrDias"=>new Zend_Db_Expr("DATEDIFF(day, t.DtEnvio,t.DtDistribuicao)"),
                                  "agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista",
-		                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contéudo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
+		                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contï¿½udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
 		                 "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
                                     
 		                ));
@@ -352,7 +352,7 @@ class tbDistribuirParecer extends GenericModel
 		$select->order(array('t.DtEnvio', 'r.Descricao', '(p.AnoProjeto + p.Sequencial)'));
                 //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha método listarProjetos()
+	} // fecha mï¿½todo listarProjetos()
 
         public function pagamentoParecerista($org_codigo, $perfil)
         {
@@ -373,7 +373,7 @@ class tbDistribuirParecer extends GenericModel
 		                 "CONVERT(CHAR(10),t.DtEnvio,103) AS DtEnvioPT",
                                  "nrDias"=>new Zend_Db_Expr("DATEDIFF(day, t.DtEnvio,t.DtDistribuicao)"),
                                  "agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista",
-		                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contéudo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
+		                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contï¿½udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
 		                 "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
 
 		                ));
@@ -443,7 +443,7 @@ class tbDistribuirParecer extends GenericModel
                         $select->order(array('t.DtEnvio', 'r.Descricao', '(p.AnoProjeto + p.Sequencial)'));
                        // xd($select->assemble());
                         return $this->fetchAll($select);
-	} // fecha método listarProjetos()
+	} // fecha mï¿½todo listarProjetos()
 
 
          public function BuscarParaMemorando($dadosWhere)
@@ -465,7 +465,7 @@ class tbDistribuirParecer extends GenericModel
 		                 "CONVERT(CHAR(10),t.DtEnvio,103) AS DtEnvioPT",
                                  "nrDias"=>new Zend_Db_Expr("DATEDIFF(day, t.DtEnvio,t.DtDistribuicao)"),
                                  "agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista",
-		                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contéudo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
+		                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contï¿½udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
 		                 "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
 
 		                ));
@@ -510,7 +510,7 @@ class tbDistribuirParecer extends GenericModel
                 //xd($select->assemble());
                 return $this->fetchAll($select);
                 
-	} // fecha método()
+	} // fecha mï¿½todo()
 
         public function dadosParaDistribuir($dadosWhere) {
 
@@ -534,7 +534,7 @@ class tbDistribuirParecer extends GenericModel
                     "CONVERT(CHAR(10), DtEnvio, 103) AS DtEnvioPT",
                     "CONVERT(CHAR(10), t.DtDevolucao, 103) AS DtDevolucaoPT",
                     "CONVERT(CHAR(10), t.DtDistribuicao, 103) AS DtDistribuicaoPT",
-                    "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contéudo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
+                    "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contï¿½udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
                     "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs",
                     "(Select SUM(x.Ocorrencia*x.Quantidade*x.ValorUnitario) FROM SAC.dbo.tbPlanilhaProjeto x WHERE p.IdPRONAC = x.idPRONAC and x.FonteRecurso = 109 and x.idProduto = t.idProduto) as Valor",
 		    "(SELECT x1.Segmento FROM sac.dbo.PlanoDistribuicaoProduto x1
@@ -573,7 +573,7 @@ class tbDistribuirParecer extends GenericModel
 	    
             return $this->fetchAll($select);
 
-        } // fecha método dadosParaDistribuir()
+        } // fecha mï¿½todo dadosParaDistribuir()
 
         public function dadosParaDistribuirSecundarios($dadosWhere)
         {
@@ -593,7 +593,7 @@ class tbDistribuirParecer extends GenericModel
 		                 "CONVERT(CHAR(10), DtEnvio, 103) AS DtEnvioPT",
 		                 "CONVERT(CHAR(10), t.DtDevolucao, 103) AS DtDevolucaoPT",
 		                 "CONVERT(CHAR(10), t.DtDistribuicao, 103) AS DtDistribuicaoPT",
-                                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contéudo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
+                                 "DescricaoAnalise" => new Zend_Db_Expr("CASE WHEN TipoAnalise = 0 THEN 'Contï¿½udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' ELSE 'Custo Administrativo' END"),
 		                 "SAC.dbo.fnChecarDistribuicaoProjeto(p.IdPRONAC, t.idProduto, t.TipoAnalise) AS Obs"
         ));
 
@@ -634,7 +634,7 @@ class tbDistribuirParecer extends GenericModel
                // xd($select->assemble());
 		return $this->fetchAll($select);
 
-    } // fecha método dadosParaDistribuir()
+    } // fecha mï¿½todo dadosParaDistribuir()
 
 
 
@@ -670,7 +670,7 @@ class tbDistribuirParecer extends GenericModel
 
 
 
-    } // fecha método distribuirParecer()
+    } // fecha mï¿½todo distribuirParecer()
 
     public function encaminharParecer($dados) {
 
@@ -701,7 +701,7 @@ class tbDistribuirParecer extends GenericModel
 
 
 
-    } // fecha método encaminharParecer()
+    } // fecha mï¿½todo encaminharParecer()
 
 public function concluirParecer($dados) {
 
@@ -730,7 +730,7 @@ public function concluirParecer($dados) {
 
 
 
-    } // fecha método concluirParecer()
+    } // fecha mï¿½todo concluirParecer()
 
 	public function atualizarParecer($data, $idDistribuirParecer) 
 	{
@@ -751,7 +751,7 @@ public function concluirParecer($dados) {
 public function excluirDados($where) {
         $where = "idDistribuirParecer = " . $where;
         return $this->delete($where);
-    } // fecha método excluirDados()
+    } // fecha mï¿½todo excluirDados()
 
 public function aguardandoparecerresumo($where) {
         $select = $this->select();
@@ -1706,7 +1706,7 @@ public function analisePorParecerista($where){
 
 
     /**
-     * Método que lista os projetos na tela inicial do UC 103 ( Gerenciar Parecerer )
+     * Mï¿½todo que lista os projetos na tela inicial do UC 103 ( Gerenciar Parecerer )
      * @param Int
      * @return List
      */
@@ -1863,7 +1863,7 @@ public function analisePorParecerista($where){
 	// se for totalizador
 	if ($qtdeTotal) {
 
-	    $db = Zend_Registry::get('db');
+	    $db= Zend_Db_Table::getDefaultAdapter();
 	    $db->setFetchMode(Zend_DB::FETCH_OBJ);
 	    $whereSql = '';
 	    if (!empty($where)) {
@@ -1898,7 +1898,7 @@ public function analisePorParecerista($where){
 	  //xd($slct->assemble());
 	  return $this->fetchAll($slct);
 	}
-    } // fecha método listarProjetos()
+    } // fecha mï¿½todo listarProjetos()
     
     public function buscarHistoricoEncaminhamento($where=array())
     {
@@ -1957,7 +1957,7 @@ public function analisePorParecerista($where){
     public function checarValidacaoProdutosSecundarios($idPronac) {
       $sql = "SELECT SAC.dbo.fnchecarValidacaoProdutoSecundario($idPronac)";
 
-      $db = Zend_Registry::get('db');
+      $db= Zend_Db_Table::getDefaultAdapter();
       $db->setFetchMode(Zend_DB::FETCH_OBJ);
       return $db->fetchOne($sql);
     }

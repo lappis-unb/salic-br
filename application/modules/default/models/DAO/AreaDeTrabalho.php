@@ -8,13 +8,13 @@ Class AreadeTrabalho extends Zend_Db_Table{
        		$sql = "
        		select Pr.idPRONAC, Pr.NomeProjeto,
        		CASE WHEN Pa.ParecerFavoravel in ('2','3') THEN 'Sim'
-            ELSE 'Não' End AS ParecerFavoravel,
+            ELSE 'Nï¿½o' End AS ParecerFavoravel,
        		CONVERT(CHAR(10),DPC.dtDistribuicao,103) AS DataRecebimento
  			from SAC.dbo.Projetos Pr, SAC.dbo.Parecer Pa, BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao DPC
 			where Pa.idPRONAC = Pr.idPRONAC
 			AND DPC.idPRONAC = Pr.idPRONAC";
 			//AND DPC.idAgente = idParametro";
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			$resultado = $db->fetchAll($sql);
 
@@ -25,7 +25,7 @@ Class AreadeTrabalho extends Zend_Db_Table{
        		$sql1 = "
        		select Pr.idPRONAC, Pr.NomeProjeto,
        		CASE WHEN Pa.ParecerFavoravel in ('2','3') THEN 'Sim'
-            ELSE 'Não' End AS ParecerFavoravel,
+            ELSE 'Nï¿½o' End AS ParecerFavoravel,
        		CONVERT(CHAR(10),d.dtSolicitacao,103) AS DataSolicitacao
  			from SAC.dbo.Projetos Pr, SAC.dbo.Parecer Pa, SAC.dbo.tbDiligencia D
 			where Pa.idPRONAC = Pr.idPRONAC
@@ -34,7 +34,7 @@ Class AreadeTrabalho extends Zend_Db_Table{
 			";
 			//AND d.idSolicitante = idParametro";
 
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			$resultado1 = $db->fetchAll($sql1);
 
@@ -45,7 +45,7 @@ Class AreadeTrabalho extends Zend_Db_Table{
        		$sql2 = "
        		select Pr.idPRONAC, Pr.NomeProjeto,
        		CASE WHEN Pa.ParecerFavoravel in ('2','3') THEN 'Sim'
-            ELSE 'Não' End AS ParecerFavoravel,
+            ELSE 'Nï¿½o' End AS ParecerFavoravel,
        		CONVERT(CHAR(10),d.dtResposta,103) AS DataResposta
  			from SAC.dbo.Projetos Pr, SAC.dbo.Parecer Pa, SAC.dbo.tbDiligencia D
 			where Pa.idPRONAC = Pr.idPRONAC
@@ -53,7 +53,7 @@ Class AreadeTrabalho extends Zend_Db_Table{
 			AND D.dtResposta IS NOT NULL";
 			//AND d.idSolicitante = idParametro";
 
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			$resultado2 = $db->fetchAll($sql2);
 

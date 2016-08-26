@@ -78,11 +78,11 @@ class Inabilitado extends GenericModel {
                          	AND Sequencial 	= '".$dados['Sequencial']."'";
 		
         
-        //Retirado, não pode ter mais de um registro de um único projeto
+        //Retirado, nï¿½o pode ter mais de um registro de um ï¿½nico projeto
         //AND CgcCpf 		= '".$dados['CgcCpf']."'
         
         //xd($sql);
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
         $db->query($sql);
     }

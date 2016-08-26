@@ -22,7 +22,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
      */
     public static function buscarAgentes($cnpjcpf = null, $nome = null, $idAgente = null)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $a = [
             'A.idAgente'
             ,'A.CNPJCPF'
@@ -99,7 +99,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
      */
     public static function buscarVinculados($cnpjcpfSuperior = null, $nome = null, $idAgente = null, $idVinculado = null, $idVinculoPrincipal = null)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
 
         $a = [
             'a.idAgente'
@@ -318,7 +318,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
      */
     public static function cadastrarAgente($dados)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $insert = $db->insert(GenericModel::getStaticTableName('agentes', 'agentes'), $dados); // cadastra
@@ -377,7 +377,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
      */
     public static function alterarAgente($idAgente, $dados)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idAgente = " . $idAgente; // condi��o para altera��o
@@ -403,7 +403,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
      */
     public static function cadastrarVinculados($dados)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $insert = $db->insert('AGENTES.dbo.Vinculacao', $dados); // cadastra

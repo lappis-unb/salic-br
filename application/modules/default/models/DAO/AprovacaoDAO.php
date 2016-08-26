@@ -7,7 +7,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 class AprovacaoDAO extends Zend_Db_Table
@@ -156,7 +156,7 @@ class AprovacaoDAO extends Zend_Db_Table
     {
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $where = "idpronac = $idpronac and dtAprovacao in (select max(dtAprovacao) from sac.dbo.aprovacao where idpronac = $idpronac)";
             $alterar = $db->update("SAC.dbo.Aprovacao", $dados, $where);

@@ -7,7 +7,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 class PublicacaoDouDAO extends Zend_Db_Table {
@@ -18,12 +18,12 @@ class PublicacaoDouDAO extends Zend_Db_Table {
                         WHERE a.DtPortariaAprovacao in
                         (SELECT MAX(DtPortariaAprovacao) FROM SAC.dbo.Aprovacao
                         WHERE YEAR(DtPortariaAprovacao) = '" . date('Y') . "')";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
         return $db->fetchRow($sql);
     }
 
-// fecha método buscarPortaria()
+// fecha mï¿½todo buscarPortaria()
 
     public static function buscarPortariaPublicacao($PortariaAprovacao, $orgaoSuperior = null, $tipoPublicacao = null) {
         if($orgaoSuperior->Superior == 251){
@@ -39,12 +39,12 @@ class PublicacaoDouDAO extends Zend_Db_Table {
                  AND $filtroOrgao
                  AND A.TipoAprovacao = $tipoPublicacao
                 ";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
-// fecha método buscarPortaria()
+// fecha mï¿½todo buscarPortaria()
 
     public static function BuscarProjetosDOU() {
         $sql = "SELECT 
@@ -82,7 +82,7 @@ class PublicacaoDouDAO extends Zend_Db_Table {
                         from SAC.dbo.Projetos Pr
                         INNER JOIN SAC.dbo.Aprovacao Ap on Pr.IdPRONAC = Ap.IdPRONAC";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -96,7 +96,7 @@ class PublicacaoDouDAO extends Zend_Db_Table {
 
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -133,12 +133,12 @@ class PublicacaoDouDAO extends Zend_Db_Table {
 		and (Pr.Situacao = 'D27' OR Pr.Situacao = 'D28')
 		AND (Enq.Enquadramento = '1' OR Enq.Enquadramento = '2')
 		AND (Ap.PortariaAprovacao is null or Ap.PortariaAprovacao = '')";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
-// fecha método ProjetoparaPublicacaoDOU18()
+// fecha mï¿½todo ProjetoparaPublicacaoDOU18()
 
     public static function ProjetoPortaria($portaria, $situacao) {
         $sql = " SELECT   Pr.AnoProjeto+Pr.Sequencial as pronac, Pr.IdPRONAC,  Pr.Processo, 
@@ -180,7 +180,7 @@ class PublicacaoDouDAO extends Zend_Db_Table {
         ";
 		//xd($sql);
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -231,7 +231,7 @@ class PublicacaoDouDAO extends Zend_Db_Table {
                ORDER BY 12,19,7  
         ";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -284,18 +284,18 @@ class PublicacaoDouDAO extends Zend_Db_Table {
                ORDER BY 25, 2
         ";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
-// fecha método ProjetoparaPublicacaoDOU26()
+// fecha mï¿½todo ProjetoparaPublicacaoDOU26()
 
     public static function retornaSeqPortaria($idAprovacao) {
 
         $sql = "select PortariaAprovacao from SAC.dbo.Aprovacao where idAprovacao = $idAprovacao";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sequencialPortaria = $db->fetchAll($sql);
@@ -322,12 +322,12 @@ class PublicacaoDouDAO extends Zend_Db_Table {
             $sql.= " AND pf.pxf_funcao = $funcao";
         }
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
-// fecha método ProjetoparaPublicacaoDOU26()
+// fecha mï¿½todo ProjetoparaPublicacaoDOU26()
 
     public static function buscaProjetoparaPublicacaoDOU() {
         $sql = "SELECT    Ap.idAprovacao, Pr.AnoProjeto+Pr.Sequencial as pronac, Pr.IdPRONAC, 
@@ -359,12 +359,12 @@ class PublicacaoDouDAO extends Zend_Db_Table {
 							 ";
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
-// fecha método ProjetoparaPublicacaoDOU26()
+// fecha mï¿½todo ProjetoparaPublicacaoDOU26()
 
     public static function ProjetoparaPublicacaoDOU() {
         $sql = "SELECT    Ap.idAprovacao, Pr.AnoProjeto+Pr.Sequencial as pronac, Pr.IdPRONAC, 
@@ -396,12 +396,12 @@ class PublicacaoDouDAO extends Zend_Db_Table {
 						WHERE (St.Codigo = 'D27' OR St.Codigo = 'D28')";
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
-// fecha método ProjetoparaPublicacaoDOU18()
+// fecha mï¿½todo ProjetoparaPublicacaoDOU18()
 
     public static function ProjetoPublicadoDOU2001() {
         $sql = "SELECT   Pr.AnoProjeto+Pr.Sequencial as pronac, Pr.IdPRONAC,  
@@ -423,12 +423,12 @@ class PublicacaoDouDAO extends Zend_Db_Table {
 						WHERE Ap.PortariaAprovacao = '2003/10' and Pr.situacao = 'D09'";
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
-// fecha método ProjetoPublicadoDOU2001()
+// fecha mï¿½todo ProjetoPublicadoDOU2001()
 
     public static function ProjetoPublicadoDOU2002() {
         $sql = "SELECT   Pr.AnoProjeto+Pr.Sequencial as pronac, Pr.IdPRONAC,  
@@ -450,15 +450,15 @@ class PublicacaoDouDAO extends Zend_Db_Table {
 						WHERE Ap.PortariaAprovacao = '2007/10' and Pr.situacao = 'D09'";
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
-// fecha método ProjetoPublicadoDOU2002()
+// fecha mï¿½todo ProjetoPublicadoDOU2002()
 
     /**
-     * Método para busca os Projetos Publicados
+     * Mï¿½todo para busca os Projetos Publicados
      * @access public
      * @static
      * @param $portaria string
@@ -500,12 +500,12 @@ class PublicacaoDouDAO extends Zend_Db_Table {
 						AND Ap.PortariaAprovacao LIKE '2%%%/%%'";
         }
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
-// fecha método buscarProjetosPublicados()
+// fecha mï¿½todo buscarProjetosPublicados()
 
     public static function ProjetoPublicadoDOU($PortariaAprovacao) {
         $sql = "SELECT   Pr.AnoProjeto+Pr.Sequencial as pronac, Pr.IdPRONAC,  
@@ -527,12 +527,12 @@ class PublicacaoDouDAO extends Zend_Db_Table {
 						WHERE Ap.PortariaAprovacao = '$PortariaAprovacao' and Pr.situacao = 'D09'";
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
-// fecha método ProjetoPublicadoDOU2002()
+// fecha mï¿½todo ProjetoPublicadoDOU2002()
 
     public static function cadastrarportaria($dados, $id) {
         $db = Zend_Registry :: get('db');
@@ -548,18 +548,18 @@ class PublicacaoDouDAO extends Zend_Db_Table {
         }
     }
 
-// fecha método alterar()
+// fecha mï¿½todo alterar()
 
     public static function gerarportaria($dados, $idAprovacao) {
 
-//		$db = Zend_Registry::get('db');
+//		$db= Zend_Db_Table::getDefaultAdapter();
 //		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = "UPDATE SAC.dbo.Aprovacao SET PortariaAprovacao = '$PortariaAprovacao', DtPortariaAprovacao = '$DtPortariaAprovacao' where idAprovacao = $idAprovacao";
 
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
         return $db->fetchRow($sql);
     }
@@ -577,7 +577,7 @@ class PublicacaoDouDAO extends Zend_Db_Table {
       {
       return false;
       }
-      } // fecha método alterar()
+      } // fecha mï¿½todo alterar()
 
 
      */
@@ -587,11 +587,11 @@ class PublicacaoDouDAO extends Zend_Db_Table {
             
             $ProvidenciaTomada = 'Projeto aprovado e publicado no Di&aacute;rio Oficial da Uni&atilde;o.';
             if($TipoAprovacao == 2){
-                $ProvidenciaTomada = 'Complementação aprovada e publicada no Di&aacute;rio Oficial da Uni&atilde;o.';
+                $ProvidenciaTomada = 'Complementaï¿½ï¿½o aprovada e publicada no Di&aacute;rio Oficial da Uni&atilde;o.';
             } else if($TipoAprovacao == 3){
-                $ProvidenciaTomada = 'Prorrogação aprovada e publicada no Di&aacute;rio Oficial da Uni&atilde;o.';
+                $ProvidenciaTomada = 'Prorrogaï¿½ï¿½o aprovada e publicada no Di&aacute;rio Oficial da Uni&atilde;o.';
             } else if($TipoAprovacao == 4){
-                $ProvidenciaTomada = 'Redução aprovada e publicada no Di&aacute;rio Oficial da Uni&atilde;o.';
+                $ProvidenciaTomada = 'Reduï¿½ï¿½o aprovada e publicada no Di&aacute;rio Oficial da Uni&atilde;o.';
             }
 	    
             if($orgaoSuperior == 251){
@@ -621,7 +621,7 @@ class PublicacaoDouDAO extends Zend_Db_Table {
                 }
             }
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $alterar = $db->fetchRow($sql);
         } catch (exception $e) {
@@ -637,7 +637,7 @@ class PublicacaoDouDAO extends Zend_Db_Table {
 
             $sql = "UPDATE SAC.dbo.Projetos SET Situacao = '$situacao', ProvidenciaTomada = '$ProvidenciaTomada', DtInicioExecucao = '$DtInicioExecucao' WHERE IdPRONAC = '" . $IdPRONAC . "'";
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $alterar = $db->fetchRow($sql);
         } catch (exception $e) {
@@ -645,7 +645,7 @@ class PublicacaoDouDAO extends Zend_Db_Table {
         }
     }
 
-// fecha método alterar()
+// fecha mï¿½todo alterar()
 
     public static function retirarpublicacao($dados, $IdPRONAC) {
 
@@ -655,7 +655,7 @@ class PublicacaoDouDAO extends Zend_Db_Table {
 
         $sql = "UPDATE SAC.dbo.Projetos SET Situacao = '$situacao', ProvidenciaTomada = '$ProvidenciaTomada', dtSituacao = '$dtSituacao' WHERE IdPRONAC = '" . $IdPRONAC . "'";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
         $alterar = $db->fetchRow($sql);
 
@@ -666,14 +666,14 @@ class PublicacaoDouDAO extends Zend_Db_Table {
         }
     }
 
-// fecha método alterar()
+// fecha mï¿½todo alterar()
 
     public static function apagarpublicacao($idAprovacao) {
 
         $sql = "UPDATE SAC.dbo.Aprovacao SET PortariaAprovacao = null, DtPortariaAprovacao = null, DtPublicacaoAprovacao = null, DtInicioCaptacao = null, DtFimCaptacao = null
 				WHERE idAprovacao = '" . $idAprovacao . "'";
         
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
         return $db->fetchRow($sql);
     }
@@ -683,7 +683,7 @@ class PublicacaoDouDAO extends Zend_Db_Table {
 
         $sql = "UPDATE SAC.dbo.Projetos SET Situacao = 'E10' WHERE IdPRONAC = $idPronac";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         if ($db->setFetchMode(Zend_DB::FETCH_ASSOC)) {
             $valida = TRUE;
         }
@@ -692,20 +692,20 @@ class PublicacaoDouDAO extends Zend_Db_Table {
     }
 
     public static function alterardatapublicacao($dados, $portaria) {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = " PortariaAprovacao = '$portaria'";
         $alterar = $db->update("SAC.dbo.aprovacao", $dados, $where);
     }
 
-// fecha método alterar()
+// fecha mï¿½todo alterar()
 
     public static function buscaCargosPublicacao() {
 
         $sql = "SELECT Descricao FROM Agentes.dbo.Verificacao WHERE idTipo=24 and sistema=21 ORDER BY Descricao";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -714,7 +714,7 @@ class PublicacaoDouDAO extends Zend_Db_Table {
 
         $sql = "SELECT Descricao FROM Agentes.dbo.Verificacao WHERE idTipo=26 and sistema=21 ORDER BY Descricao";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }

@@ -25,7 +25,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
    		/*$sql .= "where AnoProjeto+Sequencial = '$pronac' and 
    		(Situacao = 'E12' or Situacao = 'C16' or Situacao = 'D11' or Situacao = 'A14' or Situacao = 'D25' or Situacao = 'E23')";*/
     	
-    $db = Zend_Registry::get('db');
+    $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 	//xd($sql);
     return $db->fetchAll($sql);
@@ -76,7 +76,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 				    sac.dbo.Situacao AS si ON p.Situacao = si.Codigo
 				WHERE p.AnoProjeto + p.Sequencial = '$pronac'";
     //xd($sql);
-	$db = Zend_Registry::get('db');
+	$db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
     return $db->fetchAll($sql);
@@ -104,7 +104,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 				     INNER JOIN sac.dbo.Mecanismo m            on (p.Mecanismo = m.Codigo)
 				WHERE p.Anoprojeto+p.Sequencial='$pronac'";
     //xd($sql);
-	$db = Zend_Registry::get('db');
+	$db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
     return $db->fetchAll($sql);
@@ -120,10 +120,10 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 					pr.Descricao AS Produto, 
 					a.idProduto, 
 					CASE 
-						WHEN Lei8313 = 1 THEN 'Sim' ELSE 'Não' 
+						WHEN Lei8313 = 1 THEN 'Sim' ELSE 'Nï¿½o' 
 					END AS Lei8313, 
 					CASE 
-						WHEN Artigo3 = 1 THEN 'Sim' ELSE 'Não' 
+						WHEN Artigo3 = 1 THEN 'Sim' ELSE 'Nï¿½o' 
 					END AS Artigo3, 
 					CASE 
 						WHEN IncisoArtigo3 = 1 THEN 'I' 
@@ -134,17 +134,17 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 					END AS IncisoArtigo3, 
 					a.AlineaArtigo3, 
 					CASE 
-						WHEN Artigo18 = 1 THEN 'Sim' ELSE 'Não' 
+						WHEN Artigo18 = 1 THEN 'Sim' ELSE 'Nï¿½o' 
 					END AS Artigo18, 
 					a.AlineaArtigo18, 
 					CASE 
-						WHEN Artigo26 = 1 THEN 'Sim' ELSE 'Não' 
+						WHEN Artigo26 = 1 THEN 'Sim' ELSE 'Nï¿½o' 
 					END AS Artigo26, 
 					CASE 
-						WHEN Lei5761 = 1 THEN 'Sim' ELSE 'Não' 
+						WHEN Lei5761 = 1 THEN 'Sim' ELSE 'Nï¿½o' 
 					END AS Lei5761, 
 					CASE 
-						WHEN Artigo27 = 1 THEN 'Sim' ELSE 'Não' 
+						WHEN Artigo27 = 1 THEN 'Sim' ELSE 'Nï¿½o' 
 					END AS Artigo27, 
 					CASE 
 						WHEN IncisoArtigo27_I = 1 THEN 'X' ELSE '' 
@@ -159,12 +159,12 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 						WHEN IncisoArtigo27_IV = 1 THEN 'X' ELSE '' 
 					END AS IncisoArtigo27_IV, 
 					CASE 
-						WHEN TipoParecer = 1 THEN 'Aprovação' 
-						WHEN TipoParecer = 2 THEN 'Complementação' 
-						WHEN TipoParecer = 4 THEN 'Redução' 
+						WHEN TipoParecer = 1 THEN 'Aprovaï¿½ï¿½o' 
+						WHEN TipoParecer = 2 THEN 'Complementaï¿½ï¿½o' 
+						WHEN TipoParecer = 4 THEN 'Reduï¿½ï¿½o' 
 					END AS TipoParecer,
 					CASE 
-						WHEN ParecerFavoravel = 1 THEN 'Sim' ELSE 'Não' 
+						WHEN ParecerFavoravel = 1 THEN 'Sim' ELSE 'Nï¿½o' 
 					END AS ParecerFavoravel, 
 					a.ParecerDeConteudo, 
 					sac.dbo.fnNomeParecerista(a.idUsuario) AS Parecerista
@@ -177,7 +177,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
     	
    	//xd($sql);
     	
-    $db = Zend_Registry::get('db');
+    $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
     return $db->fetchAll($sql);
@@ -209,7 +209,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
     	
     	//xd($sql);
     	
-    $db = Zend_Registry::get('db');
+    $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
     return $db->fetchAll($sql);
@@ -241,7 +241,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 				WHERE p.AnoProjeto+p.Sequencial ='$pronac'";    
 
    	//xd($sql);
-    $db = Zend_Registry::get('db');
+    $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
     return $db->fetchAll($sql);
@@ -257,7 +257,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 					WHERE p.AnoProjeto+p.Sequencial='$pronac'";    
 
    	//xd($sql);
-    $db = Zend_Registry::get('db');
+    $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
     return $db->fetchAll($sql);
@@ -266,7 +266,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
     public static function LocalRealizacao ($pronac)
     {
     	$sql = "SELECT CASE a.idPais 
-			            WHEN 0 THEN 'Não é possível informar o local de realização do projeto'
+			            WHEN 0 THEN 'Nï¿½o ï¿½ possï¿½vel informar o local de realizaï¿½ï¿½o do projeto'
 			            ELSE p.Descricao 
 			            END as Pais,u.Descricao as UF,m.Descricao as Cidade,x.DtInicioDeExecucao,x.DtFinalDeExecucao
 			FROM  sac.dbo.Abrangencia a
@@ -278,7 +278,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 			WHERE y.AnoProjeto+y.Sequencial = '$pronac' AND a.stAbrangencia = 1";    
 
    	//xd($sql);
-    $db = Zend_Registry::get('db');
+    $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
     return $db->fetchAll($sql);
@@ -311,7 +311,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 				WHERE y.AnoProjeto+y.Sequencial='$pronac' AND x.stPlanoDistribuicaoProduto = 1";    
 
    	//xd($sql);
-    $db = Zend_Registry::get('db');
+    $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
     return $db->fetchAll($sql);
@@ -330,7 +330,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 				WHERE AnoProjeto+Sequencial = '$pronac'";    
 
    	//xd($sql);
-    $db = Zend_Registry::get('db');
+    $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
     return $db->fetchAll($sql);
@@ -342,7 +342,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 					x.idTipo,
 					b.idProduto, 
 					CASE 
-						WHEN idProduto = 0 THEN 'Administração do Projeto' 
+						WHEN idProduto = 0 THEN 'Administraï¿½ï¿½o do Projeto' 
 						ELSE c.Descricao END AS Produto
 				FROM sac.dbo.Projetos AS a 
 				     INNER JOIN sac.dbo.tbPlanilhaProposta AS b ON a.idProjeto = b.idProjeto 
@@ -351,7 +351,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 				WHERE a.AnoProjeto+a.Sequencial = '$pronac' ORDER BY b.idProduto";    
 
    	//xd($sql);
-    $db = Zend_Registry::get('db');
+    $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
     return $db->fetchAll($sql);
@@ -369,7 +369,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 				WHERE a.AnoProjeto+a.Sequencial = '$pronac' ORDER BY idProduto";    
 
    	//xd($sql);
-    $db = Zend_Registry::get('db');
+    $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
     return $db->fetchAll($sql);
@@ -390,7 +390,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 				WHERE a.AnoProjeto+a.Sequencial = '$pronac' ORDER BY idProduto";    
 
    	//xd($sql);
-    $db = Zend_Registry::get('db');
+    $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
     return $db->fetchAll($sql);
@@ -411,7 +411,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 				WHERE a.AnoProjeto+a.Sequencial = '$pronac' ORDER BY idProduto";    
 
    	//xd($sql);
-    $db = Zend_Registry::get('db');
+    $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
     return $db->fetchAll($sql);
@@ -438,7 +438,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 				WHERE a.AnoProjeto+a.Sequencial = '$pronac' ORDER BY idProduto";    
 
    	//xd($sql);
-    $db = Zend_Registry::get('db');
+    $db= Zend_Db_Table::getDefaultAdapter();
     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
     return $db->fetchAll($sql);
@@ -446,7 +446,7 @@ class GerenciarparecertecnicoDAO extends GenericModel{
 
 
        public function inserirparecer($dados){
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
             return $db->insert("SAC.dbo.Parecer",$dados);

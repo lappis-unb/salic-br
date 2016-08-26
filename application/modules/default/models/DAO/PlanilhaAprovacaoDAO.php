@@ -6,7 +6,7 @@
  * @package application
  * @subpackage application.model.DAO
  * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Politec - Todos os direitos reservados.
  */
 
 class PlanilhaAprovacaoDAO extends Zend_Db_Table
@@ -19,7 +19,7 @@ class PlanilhaAprovacaoDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -27,7 +27,7 @@ class PlanilhaAprovacaoDAO extends Zend_Db_Table
 	 */
 	public static function cadastrar($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbPlanilhaAprovacao", $dados);
@@ -40,12 +40,12 @@ class PlanilhaAprovacaoDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método cadastrar()
+	} // fecha mï¿½todo cadastrar()
 
 
 
 	/**
-	 * Método para alterar os dados da planilha do conselheiro/ministro
+	 * Mï¿½todo para alterar os dados da planilha do conselheiro/ministro
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -56,7 +56,7 @@ class PlanilhaAprovacaoDAO extends Zend_Db_Table
 	 */
 	public static function alterar($dados, $idPronac, $idProduto = null, $idPlanilhaAprovacao = null, $tpPlanilha = null)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where = "IdPRONAC = $idPronac ";
@@ -87,12 +87,12 @@ class PlanilhaAprovacaoDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método alterar()
+	} // fecha mï¿½todo alterar()
 
 
 
 	/**
-	 * Método para buscar
+	 * Mï¿½todo para buscar
 	 * @access public
 	 * @static
 	 * @param integer $idPlanilhaAprovacao
@@ -133,9 +133,9 @@ class PlanilhaAprovacaoDAO extends Zend_Db_Table
                     $sql.= " AND tpAcao = '$tpAcao'";
                 }
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
-	} // fecha método verificar()
+	} // fecha mï¿½todo verificar()
 
 } // fecha class

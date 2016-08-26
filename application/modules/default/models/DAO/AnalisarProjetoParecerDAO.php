@@ -5,7 +5,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
 
        	/* EXCLUIR ESSA CLASSE
        	 * ATUALIZADA PARA ZEND_DB_TABLE
-       	 * ALTERAÇÃO TARCISIO
+       	 * ALTERAï¿½ï¿½O TARCISIO
        	 * UC 101
        	 * IMPLEMENTADA POR YAN
        	 * 
@@ -21,7 +21,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
        		$sql = "SELECT     SAC.dbo.fnchecarDiligencia(p.IdPRONAC) AS Diligencia, d.idDistribuirParecer, p.IdPRONAC, p.AnoProjeto + p.Sequencial AS PRONAC, p.NomeProjeto, 
 					                      d.idProduto, pr.Descricao AS Produto, d.idAgenteParecerista, d.idOrgao, u.usu_codigo, CONVERT(CHAR(10),d.DtDistribuicao,103) AS DtDistribuicao2, DATEDIFF(day, d.DtDistribuicao, GETDATE())
 					                      AS NrDias, d.Observacao, 
-					                      CASE WHEN TipoAnalise = 0 THEN 'Contéudo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo' END
+					                      CASE WHEN TipoAnalise = 0 THEN 'Contï¿½udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo' END
 					                       AS DescricaoAnalise, d.TipoAnalise, AGENTES.dbo.fnNome(d.idAgenteParecerista) AS Parecerista
 					FROM         SAC.dbo.Projetos AS p INNER JOIN
 					                      SAC.dbo.tbDistribuirParecer AS d ON p.IdPRONAC = d.idPRONAC INNER JOIN
@@ -36,7 +36,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
 					      TipoAnalise <> 2
 					ORDER BY d.DtDistribuicao";
    
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			$resultado = $db->fetchAll($sql);
 
@@ -47,7 +47,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
        	{
             $sql = "select idPronac,idProduto, Descricao as Produto,
                            case TipoAnalise
-                              when 0 then 'Contéudo'
+                              when 0 then 'Contï¿½udo'
                               when 1 then 'Custo do Produto'
                               else 'Custo Administrativo'
                               end as TipoAnalise
@@ -60,7 +60,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
                             TipoAnalise = ".$g_tipoanalise."
                     order by idDistribuirParecer DESC";
 
-                    $db  = Zend_Registry::get('db');
+                    $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB::FETCH_OBJ);
                     $resultado = $db->fetchAll($sql);
 
@@ -72,7 +72,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
         {
             $sql = "select * from SAC.dbo.tbAnaliseDeConteudo where idPronac = ".$idPronac." and idProduto = ".$idProduto;
         
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB::FETCH_OBJ);
                     $resultado = $db->fetchAll($sql);
 
@@ -82,7 +82,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
         public static function nrsequencialpronac($idPronac){
             $sql = "select anoprojeto+sequencial as pronac from SAC.dbo.projetos where idpronac=".$idPronac;
 
-             $db  = Zend_Registry::get('db');
+             $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB::FETCH_OBJ);
                     $resultado = $db->fetchAll($sql);
 
@@ -99,7 +99,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
                         WHERE     (d.stEstado = 0) AND (d.DtDistribuicao IS NOT NULL) AND (d.DtDevolucao IS NULL) AND (p.Situacao = 'B11' OR
                                               p.Situacao = 'B14') and p.idpronac=".$idpronac." and d.idproduto=".$idproduto;
 
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB::FETCH_OBJ);
                     $resultado = $db->fetchAll($sql);
 
@@ -107,7 +107,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
         }
 
         public static function  updateTipoAnalise(array $data, $where) {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             try{
                 $db->update('SAC.dbo.tbAnaliseDeConteudo',$data,$where);
                 return true;
@@ -117,7 +117,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
         }
 
         public static function inserirDiligencia($data){
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             try{
                 $db->insert('SAC.dbo.tbDiligencia',$data);
                 return true;
@@ -175,7 +175,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
             $sql.=   implode( " AND ", $sql1 );
             //print_r($sql);die;
 
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB::FETCH_OBJ);
                     $resultado = $db->fetchAll($sql);
 
@@ -192,7 +192,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
                   FROM SAC.dbo.Produto
                   WHERE Codigo = ".$idProduto;
 
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB::FETCH_OBJ);
                     $resultado = $db->fetchAll($sql);
 
@@ -202,7 +202,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
         public static function buscaTipo(){
              $sql="select idVerificacao, Descricao from SAC.dbo.Verificacao WHERE idtipo=8 and stEstado=1";
              
-             $db  = Zend_Registry::get('db');
+             $db = Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB::FETCH_OBJ);
                     $resultado = $db->fetchAll($sql);
 
@@ -218,7 +218,7 @@ Class AnalisarProjetoParecerDAO extends Zend_Db_Table{
 			b.idPlanilhaProjeto,
 			PAP.dsJustificativa dsJustificativaConselheiro,
 			(PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario) AS VlSugeridoConselheiro,
-			CASE WHEN b.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END AS Produto, CONVERT(varchar(8),
+			CASE WHEN b.idProduto = 0 THEN 'Administraï¿½ï¿½o do Projeto' ELSE c.Descricao END AS Produto, CONVERT(varchar(8),
 			d.idPlanilhaEtapa) + ' - ' + d.Descricao AS Etapa,
 			d.idPlanilhaEtapa,
 			i.Descricao AS Item,
@@ -258,7 +258,7 @@ FROM         SAC.dbo.Projetos AS a
                                                 }
                                                $sql.= "ORDER BY x.Descricao, Produto, Etapa, UF, Item";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 
@@ -268,7 +268,7 @@ FROM         SAC.dbo.Projetos AS a
 	{
             $sql = "SELECT idUnidade, Descricao FROM SAC.dbo.tbPlanilhaUnidade ORDER BY Descricao";
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
         }
@@ -278,7 +278,7 @@ FROM         SAC.dbo.Projetos AS a
        		$sql = "SELECT     SAC.dbo.fnchecarDiligencia(p.IdPRONAC) AS Diligencia, d.idDistribuirParecer, p.IdPRONAC, p.AnoProjeto + p.Sequencial AS PRONAC, p.NomeProjeto,
 					                      d.idProduto, pr.Descricao AS Produto, d.idAgenteParecerista, d.idOrgao, u.usu_codigo, CONVERT(CHAR(10),d.DtDistribuicao,103) AS DtDistribuicao2, DATEDIFF(day, d.DtDistribuicao, GETDATE())
 					                      AS NrDias, d.Observacao,
-					                      CASE WHEN TipoAnalise = 0 THEN 'Contéudo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo' END
+					                      CASE WHEN TipoAnalise = 0 THEN 'Contï¿½udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo' END
 					                       AS DescricaoAnalise, d.TipoAnalise, AGENTES.dbo.fnNome(d.idAgenteParecerista) AS Parecerista
 					FROM         SAC.dbo.Projetos AS p INNER JOIN
 					                      SAC.dbo.tbDistribuirParecer AS d ON p.IdPRONAC = d.idPRONAC INNER JOIN
@@ -294,7 +294,7 @@ FROM         SAC.dbo.Projetos AS a
 					      TipoAnalise <> 2
 					ORDER BY d.DtDistribuicao";
 
-                        $db  = Zend_Registry::get('db');
+                        $db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			$resultado = $db->fetchAll($sql);
 
@@ -302,7 +302,7 @@ FROM         SAC.dbo.Projetos AS a
        	}
 
         public static function atualizarParecer(array $data, $where) {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             try{
                 $db->update('SAC.dbo.tbDistribuirParecer',$data,$where);
                 return true;
@@ -312,7 +312,7 @@ FROM         SAC.dbo.Projetos AS a
         }
 
         public static function updateItem(array $data, $where) {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             try{
                 $db->update('SAC.dbo.tbPlanilhaProjeto',$data,$where);
                 return true;

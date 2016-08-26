@@ -27,7 +27,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     where
                     projetos.IdPRONAC = $idPronac";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
@@ -44,7 +44,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     where ab.idProjeto = $idProjeto
                     ORDER BY pais.Descricao, uf.Sigla, mp.Descricao";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
@@ -57,7 +57,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     where ab.idPedidoAlteracao = $idPedidoAlteracao
                     and ab.tpAcao!='E'and pais.Descricao!= 'Brasil'";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
@@ -75,7 +75,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     and ab.tpAcao!='E'
                     ORDER BY pais.Descricao, uf.Sigla, mp.Descricao";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
@@ -83,7 +83,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     public function updateLocais($idPais, $idUF, $idMunicipioIBGE, $tpAcao, $idPedidoAlteracao, $idAbrangencia) {
         $sql0 = "  update SAC.dbo.tbAbrangencia set idPais = $idPais, idUF= $idUF,idMunicipioIBGE = $idMunicipioIBGE,tpAcao = '$tpAcao',dtRegistro = GETDATE()
                     where idPedidoAlteracao = $idPedidoAlteracao and idAbrangencia= $idAbrangencia";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
@@ -91,7 +91,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     public function excluirLocais($idAbrangencia, $dsJustificativaExclusao) {
         $sql0 = "  update SAC.dbo.tbAbrangencia set tpAcao = 'E', dtRegistro = GETDATE(), dsExclusao='".$dsJustificativaExclusao."'
                     where idAbrangencia= $idAbrangencia";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
@@ -100,7 +100,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
         $sql0 = " insert into SAC.dbo.tbAbrangencia (idPais,idUF,idMunicipioIBGE,tpAbrangencia,tpAcao,idPedidoAlteracao,dtRegistro)
                     values ($idPais,$idUF,$idMunicipioIBGE,'SA','$tpAcao',$idPedidoAlteracao,GETDATE())";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
@@ -108,14 +108,14 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     public function buscarLocaisCadastrados($idPais, $idUF, $idMunicipioIBGE, $idPedidoAlteracao) {
         $sql0 = " select * from SAC.dbo.tbAbrangencia where idPais = $idPais and idUF = $idUF and  idMunicipioIBGE = $idMunicipioIBGE and idPedidoAlteracao = $idPedidoAlteracao";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
     public function buscarLocaisCadastradosFinal($idPedidoAlteracao) {
         $sql0 = " select * from BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao where tpAlteracaoProjeto  = 4 and idPedidoAlteracao = $idPedidoAlteracao";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
@@ -123,14 +123,14 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     public function buscaridPedidoAlteracao($idPedidoAlteracao) {
         $sql0 = "  select * from BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
                     where idPedidoAlteracao =  $idPedidoAlteracao";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
 
     public function buscarTipoAlteracaoInserido($idPedidoAlteracao) {
         $sql0 = " select * from   BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao WHERE tpAlteracaoProjeto = 7 AND idPedidoAlteracao = $idPedidoAlteracao";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
@@ -141,14 +141,14 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 						INNER JOIN SAC.dbo.Segmento AS segmento ON plano.cdSegmento = segmento.Codigo
 						LEFT JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao AS x ON plano.idPedidoAlteracao = x.idPedidoAlteracao
 					WHERE plano.idPedidoAlteracao = $idPedidoAlteracao and plano.idProduto = $idProduto ";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
 
     public function buscarID($idPronac) {
         $sql0 = " select p.idProjeto from SAC.dbo.Projetos as p where p.IdPRONAC = $idPronac";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
@@ -161,7 +161,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     on plano.Segmento = segmento.Codigo
                     where idProjeto = $idProjeto 
                     ORDER BY plano.stPrincipal DESC, produto.Descricao";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
@@ -174,7 +174,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 					LEFT JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao AS x ON pla.idPedidoAlteracao = x.idPedidoAlteracao
 				WHERE plano.idProjeto = $idProjeto and plano.idProduto = $idProduto";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
@@ -184,7 +184,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     inner join SAC.dbo.Produto as produto
                     on plano.idProduto = produto.Codigo
                     where idProjeto = $idProjeto and idProduto = $idProduto";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
@@ -195,14 +195,14 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     on plano.idProduto = produto.Codigo
                     where idProjeto = $idProjeto ";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
 
     public function buscarSolicitacao($idPronac) {
         $sql1 = "select MAX(idPedidoAlteracao)as idPedidoAlteracao   from BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto where IdPRONAC = $idPronac";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql1);
     }
@@ -217,7 +217,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                 where idPedidoAlteracao = $idPedidoAlteracao and plano.tpAcao!='E' 
                 order by plano.stPrincipal DESC, produto.Descricao";
 //        die($sql1);
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql1);
     }
@@ -232,7 +232,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                 inner join SAC.dbo.Projetos as projetos
                 on projetos.IdPRONAC = pedido.IdPRONAC
                 where plano.idProjeto = $idProjeto and pedido.idPedidoAlteracao = $idPedidoAlteracao and plano.idProduto = $idProduto";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -267,7 +267,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     on ProjetoProduto.CodigoProduto = produto.Codigo
                     where projetos.IdPRONAC = $idPronac";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql1);
@@ -279,7 +279,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                 produto.Descricao 
                 from SAC.dbo.Produto as produto 
                 ORDER BY produto.Descricao";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql1);
@@ -287,7 +287,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public function buscarprodutoAcao($idProduto, $idPedidoAlteracao) {
         $sql1 = "select * from SAC.dbo.tbPlanoDistribuicao where idPedidoAlteracao = $idPedidoAlteracao and idProduto = $idProduto";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql1);
@@ -322,7 +322,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 					LEFT JOIN SAC.dbo.Segmento AS s ON s.Codigo = p.Segmento 
 					LEFT JOIN SAC.dbo.tbPlanoDistribuicao AS pla ON p.idPlanoDistribuicao = pla.idPlanoDistribuicao
 				 WHERE p.idProjeto = $idProjeto AND p.idProduto = $idProduto";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql1);
@@ -334,7 +334,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                 on Verificacao.idTipo = Tipo.idTipo
                 where Tipo.idTipo = 3 
                 ORDER BY Verificacao.Descricao";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql1);
@@ -357,7 +357,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                 on ProjetoProduto.CodigoProduto = produto.Codigo
                 where projetos.IdPRONAC = $idPronac
                 and produto.Codigo = $idProduto";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql1);
@@ -365,7 +365,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public function buscarProdutosPlano($idProjeto) {
         $sql0 = "select idProduto from SAC.dbo.PlanoDistribuicaoProduto  where idProjeto = $idProjeto";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
@@ -375,14 +375,14 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                 inner join SAC.dbo.tbPlanoDistribuicao as plano2
                 on plano.idProduto = plano2.idProduto
                 where idPedidoAlteracao = $idPedidoAlteracao and idProjeto = $idProjeto and plano.idProduto = $idProduto";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql0);
     }
 
     public function solicitarAlteracao($idPronac) {
         $sql0 = "";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql0);
@@ -406,7 +406,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
         $sql = "INSERT INTO
                 BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao(idPedidoAlteracao, tpAlteracaoProjeto, dsJustificativa)
                 VALUES     ($idPedidoAlteracao,7,'$justificativa')";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -416,7 +416,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
         $sql = "UPDATE BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao
                 SET     idPedidoAlteracao = $idPedidoAlteracao, tpAlteracaoProjeto = 7 , dsJustificativa = '$justificativa' WHERE idPedidoAlteracao = $idPedidoAlteracao";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -425,7 +425,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     public static function verificaPedidoTipoAlteracao($idPedidoAlteracao) {
         $sql = "select TOP 1 idPedidoAlteracao
                 from BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao WHERE idPedidoAlteracao = $idPedidoAlteracao order by idPedidoAlteracao desc";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -433,21 +433,21 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
     public static function verificarBotao($idPedidoAlteracao) {
         $sql = "select * from BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto where idPedidoAlteracao=$idPedidoAlteracao and stPedidoAlteracao = 'A'";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
     public static function verificarMenu($idPronac) {
         $sql = "select stPedidoAlteracao from BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto where idPronac = $idPronac";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
     public static function verificarProposta($idPedidoAlteracao) {
         $sql = "select * from SAC.dbo.tbProposta where idPedidoAlteracao = $idPedidoAlteracao";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -457,7 +457,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
         $sql = "insert into SAC.dbo.tbProposta (tpProposta,dtProposta,dsEspecificacaoTecnica,idPedidoAlteracao)
                 values ('SA',GETDATE(),'$dsEspecificacaotecnica',$idPedidoAlteracao);";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -469,7 +469,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                 set dtSolicitacao = GETDATE(),stPedidoAlteracao= '$status'
                 where idPedidoAlteracao = $idPedidoAlteracao";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -479,7 +479,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
         $sql = "insert into BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao(idPedidoAlteracao,tpAlteracaoProjeto,dsJustificativa)
                 values ($idPedidoAlteracao,$status,'$dsJustificativa')";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -488,7 +488,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     public static function alterarJustificativa($idPedidoAlteracao, $dsJustificativa) {
 
         $sql = "UPDATE BDCORPORATIVO.scSAC.tbPedidoAlteracaoXTipoAlteracao SET dsJustificativa = '".$dsJustificativa."' WHERE idPedidoAlteracao = '".$idPedidoAlteracao."';";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -500,7 +500,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                 ,cdArea = $areaCultural,cdSegmento = $segmentoCultural,tpAcao = 'A', dsjustificativa = '".$dsJustificativa."' 
                 where idPedidoAlteracao = $idPedidoAlteracao and idProduto = $idProdutoNovo";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -510,7 +510,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
         $sql = "update SAC.dbo.tbPlanoDistribuicao set idPedidoAlteracao = $idPedidoAlteracao,idPosicaoLogo = $idPosicaoLogo, qtProduzida=$qtProduzida, qtPatrocinador=$qtPatrocinador, qtOutros=$qtOutros, qtVendaNormal=$qtVendaNormal, qtVendaPromocional = $qtVendaPromocional  , vlUnitarioNormal=$vlUnitarioNormal, vlUnitarioPromocional=$vlUnitarioPromocional,tpAcao = 'A'
                 where idPedidoAlteracao = $idPedidoAlteracao and idProduto = $idProdutoNovo";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -520,7 +520,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
         $sql = "update BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto set stPedidoAlteracao = '$stPedido'
                 where idPedidoAlteracao = $idPedidoAlteracao";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -529,7 +529,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     public function excluirProduto($idPedidoAlteracao, $idProduto, $dsJustificativa = null) {
         $sql = "update SAC.dbo.tbPlanoDistribuicao  set tpAcao = 'E',dtPlanoDistribuicao = GETDATE(), dsjustificativa = '".$dsJustificativa."' 
                 where idPedidoAlteracao = $idPedidoAlteracao and idProduto = $idProduto ";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -542,7 +542,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 					,CONVERT(CHAR(10), dtFimNovoPrazo, 103) AS dtFimNovoPrazo
 				FROM BDCORPORATIVO.scSAC.tbProrrogacaoPrazo 
 				WHERE idPedidoAlteracao = $idPedidoAlteracao AND tpProrrogacao = '$tpProrrogacao'";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -556,7 +556,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
 
         
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -573,7 +573,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
             AND TipoAprovacao in (1,3)
             ORDER BY idAprovacao DESC";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -584,7 +584,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     public function insertPrazo($idPedidoAlteracao, $dtInicioNovoPrazo, $dtFimNovoPrazo, $tpProrrogacao) {
         $sql = "insert into BDCORPORATIVO.scSAC.tbProrrogacaoPrazo (idPedidoAlteracao,dtInicioNovoPrazo,dtFimNovoPrazo,tpProrrogacao)
                 values ($idPedidoAlteracao,'$dtInicioNovoPrazo','$dtFimNovoPrazo','$tpProrrogacao')";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -593,7 +593,7 @@ class ReadequacaoProjetos extends Zend_Db_Table {
     public function updatePrazo($idPedidoAlteracao, $dtInicioNovoPrazo, $dtFimNovoPrazo, $tpProrrogacao) {
         $sql = "update BDCORPORATIVO.scSAC.tbProrrogacaoPrazo set dtInicioNovoPrazo = '$dtInicioNovoPrazo',dtFimNovoPrazo ='$dtFimNovoPrazo'
                 where idPedidoAlteracao = $idPedidoAlteracao and tpProrrogacao = '$tpProrrogacao'";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -637,11 +637,11 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         AND g.tpAlteracaoProjeto = $tpAlteracao ";
 
 			if ($unidade_autorizada == 166) :
-				$sql.= " AND b.Area = 2 ";  // quando for SAV/CGAV/CAP pega somente os projetos da área de Audiovisual
+				$sql.= " AND b.Area = 2 ";  // quando for SAV/CGAV/CAP pega somente os projetos da ï¿½rea de Audiovisual
 			elseif ($unidade_autorizada == 272) :
-				$sql.= " AND b.Area <> 2 "; // quando for SEFIC/GEAR/SACAV pega somente os projetos das áreas que não sejam de Audiovisual
+				$sql.= " AND b.Area <> 2 "; // quando for SEFIC/GEAR/SACAV pega somente os projetos das ï¿½reas que nï¿½o sejam de Audiovisual
 			else :
-				$sql.= " AND b.Area = 0 ";  // quando for diferente de SAV/CGAV/CAP e SAV/CGAV/CAP pega somente os projetos da área de Audiovisual
+				$sql.= " AND b.Area = 0 ";  // quando for diferente de SAV/CGAV/CAP e SAV/CGAV/CAP pega somente os projetos da ï¿½rea de Audiovisual
 			endif;
 
 			$sql.= " ORDER BY a.dtSolicitacao";
@@ -686,11 +686,11 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         AND tmp.tpAlteracaoProjeto = g.tpAlteracaoProjeto ";
 
 			if ($unidade_autorizada == 166) :
-				$sql.= " AND b.Area = 2 ";  // quando for SAV/CGAV/CAP pega somente os projetos da área de Audiovisual
+				$sql.= " AND b.Area = 2 ";  // quando for SAV/CGAV/CAP pega somente os projetos da ï¿½rea de Audiovisual
 			elseif ($unidade_autorizada == 272) :
-				$sql.= " AND b.Area <> 2 "; // quando for SEFIC/GEAR/SACAV pega somente os projetos das áreas que não sejam de Audiovisual
+				$sql.= " AND b.Area <> 2 "; // quando for SEFIC/GEAR/SACAV pega somente os projetos das ï¿½reas que nï¿½o sejam de Audiovisual
 			else :
-				$sql.= " AND b.Area = 0 ";  // quando for diferente de SAV/CGAV/CAP e SAV/CGAV/CAP pega somente os projetos da área de Audiovisual
+				$sql.= " AND b.Area = 0 ";  // quando for diferente de SAV/CGAV/CAP e SAV/CGAV/CAP pega somente os projetos da ï¿½rea de Audiovisual
 			endif;
 
 			$sql.= " ORDER BY a.dtSolicitacao ";
@@ -751,11 +751,11 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     AND i.stAvaliacaoItemPedidoAlteracao in ('AP','IN')";
 
 			if ($unidade_autorizada == 166) :
-				$sql.= " AND b.Area = 2 ";  // quando for SAV/CGAV/CAP pega somente os projetos da área de Audiovisual
+				$sql.= " AND b.Area = 2 ";  // quando for SAV/CGAV/CAP pega somente os projetos da ï¿½rea de Audiovisual
 			elseif ($unidade_autorizada == 272) :
-				$sql.= " AND b.Area <> 2 "; // quando for SEFIC/GEAR/SACAV pega somente os projetos das áreas que não sejam de Audiovisual
+				$sql.= " AND b.Area <> 2 "; // quando for SEFIC/GEAR/SACAV pega somente os projetos das ï¿½reas que nï¿½o sejam de Audiovisual
 			else :
-				$sql.= " AND b.Area = 0 ";  // quando for diferente de SAV/CGAV/CAP e SAV/CGAV/CAP pega somente os projetos da área de Audiovisual
+				$sql.= " AND b.Area = 0 ";  // quando for diferente de SAV/CGAV/CAP e SAV/CGAV/CAP pega somente os projetos da ï¿½rea de Audiovisual
 			endif;
 
         } else if ($sqlDesejado == "sqlCoordAcompDevProdutos") {
@@ -807,11 +807,11 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     AND i.stAvaliacaoItemPedidoAlteracao in ('AP','IN')";
 
 			if ($unidade_autorizada == 166) :
-				$sql.= " AND b.Area = 2 ";  // quando for SAV/CGAV/CAP pega somente os projetos da área de Audiovisual
+				$sql.= " AND b.Area = 2 ";  // quando for SAV/CGAV/CAP pega somente os projetos da ï¿½rea de Audiovisual
 			elseif ($unidade_autorizada == 272) :
-				$sql.= " AND b.Area <> 2 "; // quando for SEFIC/GEAR/SACAV pega somente os projetos das áreas que não sejam de Audiovisual
+				$sql.= " AND b.Area <> 2 "; // quando for SEFIC/GEAR/SACAV pega somente os projetos das ï¿½reas que nï¿½o sejam de Audiovisual
 			else :
-				$sql.= " AND b.Area = 0 ";  // quando for diferente de SAV/CGAV/CAP e SAV/CGAV/CAP pega somente os projetos da área de Audiovisual
+				$sql.= " AND b.Area = 0 ";  // quando for diferente de SAV/CGAV/CAP e SAV/CGAV/CAP pega somente os projetos da ï¿½rea de Audiovisual
 			endif;
 
         } else if ($sqlDesejado == "sqlCoordAcompDevItens") {
@@ -862,11 +862,11 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                     AND i.stAvaliacaoItemPedidoAlteracao in ('AP','IN')";
 
 			if ($unidade_autorizada == 166) :
-				$sql.= " AND b.Area = 2 ";  // quando for SAV/CGAV/CAP pega somente os projetos da área de Audiovisual
+				$sql.= " AND b.Area = 2 ";  // quando for SAV/CGAV/CAP pega somente os projetos da ï¿½rea de Audiovisual
 			elseif ($unidade_autorizada == 272) :
-				$sql.= " AND b.Area <> 2 "; // quando for SEFIC/GEAR/SACAV pega somente os projetos das áreas que não sejam de Audiovisual
+				$sql.= " AND b.Area <> 2 "; // quando for SEFIC/GEAR/SACAV pega somente os projetos das ï¿½reas que nï¿½o sejam de Audiovisual
 			else :
-				$sql.= " AND b.Area = 0 ";  // quando for diferente de SAV/CGAV/CAP e SAV/CGAV/CAP pega somente os projetos da área de Audiovisual
+				$sql.= " AND b.Area = 0 ";  // quando for diferente de SAV/CGAV/CAP e SAV/CGAV/CAP pega somente os projetos da ï¿½rea de Audiovisual
 			endif;
 
 
@@ -974,11 +974,11 @@ class ReadequacaoProjetos extends Zend_Db_Table {
                         AND tmp.tpAlteracaoProjeto = g.tpAlteracaoProjeto ";
 
 			if ($unidade_autorizada == 166) :
-				$sql.= " AND b.Area = 2 ";  // quando for SAV/CGAV/CAP pega somente os projetos da área de Audiovisual
+				$sql.= " AND b.Area = 2 ";  // quando for SAV/CGAV/CAP pega somente os projetos da ï¿½rea de Audiovisual
 			elseif ($unidade_autorizada == 272) :
-				$sql.= " AND b.Area <> 2 "; // quando for SEFIC/GEAR/SACAV pega somente os projetos das áreas que não sejam de Audiovisual
+				$sql.= " AND b.Area <> 2 "; // quando for SEFIC/GEAR/SACAV pega somente os projetos das ï¿½reas que nï¿½o sejam de Audiovisual
 			else :
-				$sql.= " AND b.Area = 0 ";  // quando for diferente de SAV/CGAV/CAP e SAV/CGAV/CAP pega somente os projetos da área de Audiovisual
+				$sql.= " AND b.Area = 0 ";  // quando for diferente de SAV/CGAV/CAP e SAV/CGAV/CAP pega somente os projetos da ï¿½rea de Audiovisual
 			endif;
 
 			$sql.= " ORDER BY a.dtSolicitacao ";

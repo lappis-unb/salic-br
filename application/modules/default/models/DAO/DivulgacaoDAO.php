@@ -31,7 +31,7 @@ class DivulgacaoDAO extends GenericModel{
                 ";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 	$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	$resultado = $db->fetchAll($sql);
         //Zend_Debug::dump($resultado);
@@ -43,7 +43,7 @@ class DivulgacaoDAO extends GenericModel{
          try
         {
             $sql = "update  sac.dbo.PlanoDeDivulgacao set idPeca = $idPeca, idVeiculo = $idVeiculo where idPlanoDivulgacao = $idPlanoDivulgacao";
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $resultado = $db->fetchRow($sql);
 
@@ -60,7 +60,7 @@ class DivulgacaoDAO extends GenericModel{
     {
           try
         {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $cadastrar = $db->insert("SAC.dbo.PlanoDeDivulgacao", $divulgacao);
@@ -75,7 +75,7 @@ class DivulgacaoDAO extends GenericModel{
         try{
 
         $sql = "delete sac.dbo.PlanoDeDivulgacao where idPlanoDivulgacao = $idPlanoDivulgacao";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         }catch (Exception $e){
@@ -89,7 +89,7 @@ class DivulgacaoDAO extends GenericModel{
         $sql = "select idVerificacao, Descricao from SAC.dbo.Verificacao where idTipo = 1 order by Descricao";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 	$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	$resultado = $db->fetchAll($sql);
         ///Zend_Debug::dump($resultado);
@@ -117,7 +117,7 @@ class DivulgacaoDAO extends GenericModel{
         WHERE idVerificacaoPeca = ".$pecaID ;
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 	$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	$resultado = $db->fetchAll($sql);
 

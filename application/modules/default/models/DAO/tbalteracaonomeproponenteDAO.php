@@ -14,7 +14,7 @@ class tbalteracaonomeproponenteDAO extends Zend_Db_Table
 		  join BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tap on tap.idPedidoAlteracao = tanp.idPedidoAlteracao
                   where tanp.idpedidoalteracao =".$idpedidoalteracao;
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -30,14 +30,14 @@ class tbalteracaonomeproponenteDAO extends Zend_Db_Table
                 join SAC.dbo.Situacao sit on sit.Codigo = pr.Situacao
                 where pr.cgccpf = '".$cpf."'";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
     
     public static function alterarNomeProponente($dados, $idpronac)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idpronac = ".$idpronac;

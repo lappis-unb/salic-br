@@ -6,14 +6,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Cep
 {
 	/**
-	 * Método para buscar os dados do CEP (efetua a busca no web service)
+	 * Mï¿½todo para buscar os dados do CEP (efetua a busca no web service)
 	 * @access public
 	 * @static
 	 * @param integer $cep
@@ -21,8 +21,8 @@ class Cep
 	 */
 	public static function buscar($cep)
 	{
-		ini_set("allow_url_fopen", "On"); // função habilitada
-		ini_set("allow_url_include", "On"); // função habilitada
+		ini_set("allow_url_fopen", "On"); // funï¿½ï¿½o habilitada
+		ini_set("allow_url_include", "On"); // funï¿½ï¿½o habilitada
 
 		$resultado = @file_get_contents('http://republicavirtual.com.br/web_cep.php?cep='.urlencode($cep).'&formato=query_string');
 
@@ -31,8 +31,8 @@ class Cep
 			$resultado = "&resultado=0&resultado_txt=erro+ao+buscar+cep";
 		}
 
-		ini_set("allow_url_fopen", "Off"); // função desabilitada
-		ini_set("allow_url_include", "Off"); // função desabilitada
+		ini_set("allow_url_fopen", "Off"); // funï¿½ï¿½o desabilitada
+		ini_set("allow_url_include", "Off"); // funï¿½ï¿½o desabilitada
 
 		parse_str($resultado, $retorno);
 
@@ -42,7 +42,7 @@ class Cep
 
 
 	/**
-	 * Método para buscar o cep no banco de dados
+	 * Mï¿½todo para buscar o cep no banco de dados
 	 * @access public
 	 * @static
 	 * @param integer $cep
@@ -67,7 +67,7 @@ class Cep
 
 					-- busca de acordo com a cidade e a sigla do estado
 					(SELECT TOP 1 cid.idMunicipioIBGE
-						FROM AGENTES.dbo.UF uf, AGENTES.dbo.Municipios cid -- busca o código cidade
+						FROM AGENTES.dbo.UF uf, AGENTES.dbo.Municipios cid -- busca o cï¿½digo cidade
 						WHERE uf.idUF = cid.idUFIBGE
 							AND cid.Descricao = loc.nmLocalidade
 							AND uf.Sigla = loc.cdUf) AS idCidadeMunicipios,
@@ -81,7 +81,7 @@ class Cep
 
 					-- busca de acordo com a sigla do estado
 					(SELECT TOP 1 cid.idMunicipioIBGE
-						FROM AGENTES.dbo.UF uf, AGENTES.dbo.Municipios cid -- busca o código da cidade pelo uf
+						FROM AGENTES.dbo.UF uf, AGENTES.dbo.Municipios cid -- busca o cï¿½digo da cidade pelo uf
 						WHERE uf.idUF = cid.idUFIBGE AND uf.Sigla = loc.cdUf) AS idCidadeUF,
 
 					-- busca de acordo com a sigla do estado
@@ -113,10 +113,10 @@ class Cep
                     FROM BDDNE.scDNE.VW_ENDERECO
                     WHERE CEP = '$cep'";
 
-			$db = Zend_Registry::get('db');
+			$db= Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_ASSOC);
 
 			return $db->fetchRow($sql);
-	} // fecha método buscarCepDB()
+	} // fecha mï¿½todo buscarCepDB()
 
 } // fecha class

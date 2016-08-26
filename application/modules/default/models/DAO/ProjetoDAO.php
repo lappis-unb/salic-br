@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -20,7 +20,7 @@ class ProjetoDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para buscar os projetos (PRONAC)
+	 * Mï¿½todo para buscar os projetos (PRONAC)
 	 * Permite buscar pelo Ano/Sequencial do projeto
 	 * @access public
 	 * @static
@@ -72,7 +72,7 @@ class ProjetoDAO extends Zend_Db_Table
 		}
 
 		$sql.= "ORDER BY AnoProjeto+Sequencial";
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	} // fecha buscar()
@@ -88,13 +88,13 @@ class ProjetoDAO extends Zend_Db_Table
 				inner join SAC.dbo.Mecanismo m on m.Codigo = p.Mecanismo
 				where p.AnoProjeto+p.Sequencial = '$pronac'";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
 		return $db->fetchRow($sql);
 	} // fecha buscarIdPronac()
 
 	/**
-	 * Método para retornar o idPronac
+	 * Mï¿½todo para retornar o idPronac
 	 * @access public
 	 * @static
 	 * @param string $pronac
@@ -104,7 +104,7 @@ class ProjetoDAO extends Zend_Db_Table
 	{
 		$sql = "SELECT TOP 1 IdPRONAC FROM SAC.dbo.Projetos WHERE AnoProjeto+Sequencial = '$pronac'";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
 		return $db->fetchRow($sql);
 	} // fecha buscarIdPronac()
@@ -112,7 +112,7 @@ class ProjetoDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para retornar o pronac
+	 * Mï¿½todo para retornar o pronac
 	 * @access public
 	 * @static
 	 * @param integer $idPronac
@@ -122,7 +122,7 @@ class ProjetoDAO extends Zend_Db_Table
 	{
 		$sql = "SELECT TOP 1 AnoProjeto+Sequencial AS pronac, idProjeto FROM SAC.dbo.Projetos WHERE IdPRONAC = $idPronac";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
 		return $db->fetchRow($sql);
 	} // fecha buscarPronac()
@@ -130,7 +130,7 @@ class ProjetoDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para alterar a situação de um projeto
+	 * Mï¿½todo para alterar a situaï¿½ï¿½o de um projeto
 	 * @access public
 	 * @static
 	 * @param integer $idPronac
@@ -141,7 +141,7 @@ class ProjetoDAO extends Zend_Db_Table
 	{
 		$sql = "UPDATE SAC.dbo.Projetos SET Situacao = '$situacao' WHERE IdPRONAC = $idPronac";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
 		return $db->fetchRow($sql);
 	} // fecha alterarSituacao()
@@ -149,7 +149,7 @@ class ProjetoDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para buscar o histórico de situações do projeto
+	 * Mï¿½todo para buscar o histï¿½rico de situaï¿½ï¿½es do projeto
 	 * @access public
 	 * @static
 	 * @param string $pronac
@@ -159,7 +159,7 @@ class ProjetoDAO extends Zend_Db_Table
 	{
 		$sql = "SELECT * FROM SAC.dbo.HistoricoSituacao WHERE AnoProjeto+Sequencial='$pronac' ORDER BY DtSituacao DESC;";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	} // fecha buscarSituacoesProjeto()
@@ -167,7 +167,7 @@ class ProjetoDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para buscar o periodo de execução do projeto
+	 * Mï¿½todo para buscar o periodo de execuï¿½ï¿½o do projeto
 	 * @access public
 	 * @static
 	 * @param integer $idPronac
@@ -193,7 +193,7 @@ class ProjetoDAO extends Zend_Db_Table
 			$sql.= "WHERE AnoProjeto+Sequencial = '" . $pronac . "'";
 		}
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_ASSOC);
 		return $db->fetchRow($sql);
 	} // fecha buscarPeriodoExecucao()

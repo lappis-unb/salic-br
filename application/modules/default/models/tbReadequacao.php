@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -18,7 +18,7 @@ class tbReadequacao extends GenericModel
 
 
 	/**
-	 * Método para alterar
+	 * Mï¿½todo para alterar
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -28,7 +28,7 @@ class tbReadequacao extends GenericModel
 	{
 		$where = "idRecurso = " . $where;
 		return $this->update($dados, $where);
-	} // fecha método alterarDados()
+	} // fecha mï¿½todo alterarDados()
 
 
     /*
@@ -327,7 +327,7 @@ class tbReadequacao extends GenericModel
     /*
      * Criada em 16/03/2014
      * @author: Jefferson Alessandro
-     * Função usada para detalhar a readequação para análise do componente da comissão.
+     * Funï¿½ï¿½o usada para detalhar a readequaï¿½ï¿½o para anï¿½lise do componente da comissï¿½o.
      */
     public function buscarDadosReadequacoesCnic($where=array(), $order=array()) {
         $select = $this->select();
@@ -461,7 +461,7 @@ class tbReadequacao extends GenericModel
     /*
      * Criada em 14/03/2014
      * @author: Jefferson Alessandro
-     * Função acessada pelo componente da comissão.
+     * Funï¿½ï¿½o acessada pelo componente da comissï¿½o.
      */
     public function painelReadequacoesComponente($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
         $select = $this->select();
@@ -662,11 +662,11 @@ class tbReadequacao extends GenericModel
                 INNER JOIN SAC.dbo.Projetos c on (a.idPronac = c.IdPRONAC)
                 WHERE siEncaminhamento = 8
                       AND NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao b WHERE a.IdPRONAC = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao )";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método buscarPlanilhaDeCustos()
+    } // fecha mï¿½todo buscarPlanilhaDeCustos()
 
     public function atualizarStatusReadequacoesNaoSubmetidos($idNrReuniao) {
         $sql = "UPDATE SAC.dbo.tbReadequacao
@@ -677,10 +677,10 @@ class tbReadequacao extends GenericModel
                     (a.siEncaminhamento = 9 and a.idNrReuniao = $idNrReuniao ) or
                     (a.siEncaminhamento = 8 and a.stEstado = 0
                     AND EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbConsolidacaoVotacao b WHERE a.idPronac = b.IdPRONAC AND a.idNrReuniao = $idNrReuniao ))";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método buscarPlanilhaDeCustos()
+    } // fecha mï¿½todo buscarPlanilhaDeCustos()
 
 } // fecha class

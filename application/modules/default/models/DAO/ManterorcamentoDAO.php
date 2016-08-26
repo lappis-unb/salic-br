@@ -31,7 +31,7 @@ Class ManterorcamentoDAO extends GenericModel {
         $sql.= " ORDER BY p.Codigo ";
 
         try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -63,7 +63,7 @@ Class ManterorcamentoDAO extends GenericModel {
         $sql.= " ORDER BY te.Descricao ";
 
         try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -95,7 +95,7 @@ Class ManterorcamentoDAO extends GenericModel {
         $sql.= " ORDER BY pp.idEtapa ";
 
         try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -199,7 +199,7 @@ Class ManterorcamentoDAO extends GenericModel {
                 WHERE (pd.idProduto = $idProduto and pd.idProjeto = $idPreProjeto) AND pd.stPlanoDistribuicaoProduto = 1";
 
         //x($sql);
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -214,7 +214,7 @@ Class ManterorcamentoDAO extends GenericModel {
             WHERE tpp.idProjeto = $idPreProjeto";
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -250,7 +250,7 @@ Class ManterorcamentoDAO extends GenericModel {
                         LEFT JOIN SAC.dbo.tbPlanilhaUnidade uni ON uni.idUnidade = pp.Unidade
                 WHERE (pre.idPreProjeto = {$array['idPreProjeto']} and  pp.idEtapa = {$array['etapa']} and pp.idPlanilhaItem = {$array['item']} )
                        and pp.idPlanilhaProposta = {$array['idPlanilhaProposta']}";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         //xd($sql);
         return $db->fetchAll($sql);
@@ -277,7 +277,7 @@ Class ManterorcamentoDAO extends GenericModel {
         $sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
 
         try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -304,7 +304,7 @@ Class ManterorcamentoDAO extends GenericModel {
         $sql.= " ORDER BY te.Descricao ";
 
         try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -328,7 +328,7 @@ Class ManterorcamentoDAO extends GenericModel {
         $sql.= " ORDER BY pp.idEtapa ";
 
         try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -349,7 +349,7 @@ Class ManterorcamentoDAO extends GenericModel {
         $sql.= " ORDER BY Descricao ";
 
         try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -368,7 +368,7 @@ Class ManterorcamentoDAO extends GenericModel {
         $sql.= " ORDER BY Descricao ";
 
         try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -421,7 +421,7 @@ Class ManterorcamentoDAO extends GenericModel {
 
 
         try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -471,7 +471,7 @@ Class ManterorcamentoDAO extends GenericModel {
 
 
         try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -503,7 +503,7 @@ Class ManterorcamentoDAO extends GenericModel {
         $sql.= " ORDER BY ti.Descricao ";
 
         try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -538,7 +538,7 @@ Class ManterorcamentoDAO extends GenericModel {
 
         //$sql .= " order by 2 asc";
 		//xd($sql);
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -549,7 +549,7 @@ Class ManterorcamentoDAO extends GenericModel {
                 inner join SAC.dbo.Tipo as Tipo
                 on Verificacao.idTipo = Tipo.idTipo
                 where Tipo.idTipo = 5";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -567,7 +567,7 @@ Class ManterorcamentoDAO extends GenericModel {
                 left JOIN SAC.dbo.Verificacao veri ON veri.idVerificacao = pp.FonteRecurso
                 WHERE idPreProjeto = $idPreProjeto and pd.idProduto != 0 and pp.idProduto != 0 and p.Codigo != 0";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -576,7 +576,7 @@ Class ManterorcamentoDAO extends GenericModel {
     public static function buscarUnidade() {
         $sql = "select idUnidade, Sigla, Descricao
         FROM SAC.dbo.tbPlanilhaUnidade order by 3";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -605,7 +605,7 @@ Class ManterorcamentoDAO extends GenericModel {
         //xd($sql);
         $sql.= " ORDER BY p.Descricao ";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -628,7 +628,7 @@ Class ManterorcamentoDAO extends GenericModel {
         //xd($sql);
         $sql.= " ORDER BY p.Descricao ";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -708,7 +708,7 @@ Class ManterorcamentoDAO extends GenericModel {
 
         $sql.= " ORDER BY tpe.Descricao ";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -753,7 +753,7 @@ Class ManterorcamentoDAO extends GenericModel {
 		//xd($sql);
         //echo "<pre>" .  $sql;
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -765,7 +765,7 @@ Class ManterorcamentoDAO extends GenericModel {
 		//xd($sql);
         //echo "<pre>" .  $sql;
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -794,7 +794,7 @@ Class ManterorcamentoDAO extends GenericModel {
                     'dsJustificativa'=> substr($justificativa,0,450),
                     'idUsuario'=>$idUsuario
             );
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             //xd($dados);
             $db->insert('SAC.dbo.tbPlanilhaProposta', $dados);
             return $db->lastInsertId();
@@ -817,7 +817,7 @@ Class ManterorcamentoDAO extends GenericModel {
                 SET ($idProposta, $idProduto, $idEtapa, $idItem, $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $fonte, $idUf, $idMunicipio, $dsJustificativa, 462)
                         WHERE (pp.idProjeto = $idProposta and pp.idProduto = $idProduto and pp.idUsuario = 462) ";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->update('SAC.dbo.tbPlanilhaProposta',$dados, $where);
 
 
@@ -825,7 +825,7 @@ Class ManterorcamentoDAO extends GenericModel {
 
     public static function editarPlanilhaProdutos($dados, $where) {
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $db->update('SAC.dbo.tbPlanilhaProposta', $dados, $where);
         }
@@ -835,7 +835,7 @@ Class ManterorcamentoDAO extends GenericModel {
     }
 
     public static function buscarUltimosDadosCadastrados() {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
 
         $sql = "
@@ -853,7 +853,7 @@ Class ManterorcamentoDAO extends GenericModel {
 
     public static function excluirItensProdutos($idPlanilhaProposta) {
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         return $db->delete('SAC.dbo.tbPlanilhaProposta','idPlanilhaProposta =' .$idPlanilhaProposta);
     }
 

@@ -36,8 +36,8 @@ Class Proponente extends GenericModel {
         $sql = "SELECT a.idAgente, a.CNPJCPF,n.Descricao AS Proponente,  
 						   CASE   
 						     WHEN LEN(a.CNPJCPF) = 11  
-						       THEN 'Física'  
-						     ELSE 'Jurídica'  
+						       THEN 'Fï¿½sica'  
+						     ELSE 'Jurï¿½dica'  
 						   END AS TipoPessoa,  
 						   v1.Descricao + ' - ' + v2.Descricao + ' - ' + e.Logradouro + ' - ' + e.Numero + ' - ' + e.Bairro + ' - ' +  
 						   e.Complemento Logradouro,
@@ -46,7 +46,7 @@ Class Proponente extends GenericModel {
 						   e.Cep,   
 						   CASE   
 						      WHEN Direito = 1  
-						           THEN 'Direito Público'  
+						           THEN 'Direito Pï¿½blico'  
 						      WHEN Direito = 2 or Direito = 35   
 						           THEN 'Direito Privado'  
 						      end as Direito,  
@@ -73,12 +73,12 @@ Class Proponente extends GenericModel {
 						   SAC.dbo.fnNomeResponsavel(a.Usuario) as Responsavel,  
 						   CASE  
 						      WHEN e.Divulgar = 0  
-						        THEN 'Não'  
+						        THEN 'Nï¿½o'  
 						        ELSE 'Sim'  
 						      END AS DivulgarEndereco,   
 						   CASE  
 						      WHEN e.Status = 0  
-						        THEN 'Não'  
+						        THEN 'Nï¿½o'  
 						        ELSE 'Sim'  
 						      END AS Correspondencia,  
 						   a.idAgente,e.idEndereco  
@@ -96,7 +96,7 @@ Class Proponente extends GenericModel {
 
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -117,7 +117,7 @@ LEFT JOIN AGENTES.dbo.Agentes Ag on Ag.IdAgente = It.IdAgente
 LEFT JOIN SAC.dbo.Projetos Pr ON Ag.CNPJCPF = Pr.CgcCpf
 where Pr.IdPRONAC = " . $pronac . "";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado1 = $db->fetchAll($sql1);
 
@@ -143,7 +143,7 @@ CASE
 WHEN Tl.Divulgar = 1  
 THEN 'Sim'  
 WHEN Tl.Divulgar = 0 
-THEN 'Não'  
+THEN 'Nï¿½o'  
 end as Divulgar
 FROM AGENTES.dbo.Telefones Tl
 LEFT JOIN AGENTES.dbo.Uf as Uf on Uf.idUF = Tl.UF
@@ -152,7 +152,7 @@ LEFT JOIN SAC.dbo.Projetos Pr On Ag.CNPJCPF = Pr.CgcCpf
 where Pr.IdPRONAC = " . $pronac . "";
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado2 = $db->fetchAll($sql2);
 
@@ -184,7 +184,7 @@ where Pr.IdPRONAC = " . $pronac . "";
                                                 LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
                                                 WHERE Pr.idPRONAC = " . $pronac . " and Ta.stEstado = '1'";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado1 = $db->fetchAll($sql3);
 
@@ -216,7 +216,7 @@ where Pr.IdPRONAC = " . $pronac . "";
                                                 LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
                                                 WHERE Pr.idPRONAC = " . $pronac . " and St.StatusProjeto = '0'";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado1 = $db->fetchAll($sql4);
 
@@ -248,7 +248,7 @@ where Pr.IdPRONAC = " . $pronac . "";
 							LEFT JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
 					  		WHERE Pr.idPRONAC = " . $pronac . " and St.StatusProjeto = '1'";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado1 = $db->fetchAll($sql5);
 

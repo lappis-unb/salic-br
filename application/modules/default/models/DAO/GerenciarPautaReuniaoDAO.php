@@ -23,7 +23,7 @@ class GerenciarPautaReuniaoDAO
 
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             return $db->fetchRow($sql);
         }
@@ -49,7 +49,7 @@ class GerenciarPautaReuniaoDAO
 
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)
@@ -90,7 +90,7 @@ class GerenciarPautaReuniaoDAO
                        ON Area.Codigo = Projetos.Area";
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)
@@ -118,7 +118,7 @@ class GerenciarPautaReuniaoDAO
                 and tp.stAnalise in ('AS','IS')";
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)
@@ -137,7 +137,7 @@ class GerenciarPautaReuniaoDAO
                 and idpronac = $idpronac";
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
         }

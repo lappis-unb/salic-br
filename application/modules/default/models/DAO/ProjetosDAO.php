@@ -7,7 +7,7 @@
  * @package application
  * @subpackage application.controllers
  * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Politec - Todos os direitos reservados.
  */
 
 class ProjetosDAO extends Zend_Db_Table
@@ -16,7 +16,7 @@ class ProjetosDAO extends Zend_Db_Table
     protected $_name = 'dbo.Agentes';
 
     /*     * ************************************************************************************************************************
-     * Função que retorna o sql desejado
+     * Funï¿½ï¿½o que retorna o sql desejado
      * *********************************************************************************************************************** */
 
     public static function retornaSQL($sqlDesejado)
@@ -39,7 +39,7 @@ class ProjetosDAO extends Zend_Db_Table
     }
 
     /*     * ************************************************************************************************************************
-     * Função que copia as tabelas SAC.dbo.tbPlanilhaProjeto e tbAnaliseDeConteudo
+     * Funï¿½ï¿½o que copia as tabelas SAC.dbo.tbPlanilhaProjeto e tbAnaliseDeConteudo
      * e cola nas tabelas tbPlanilhaProjetoConselheiro e tbAnaliseConteudoConselheiro
      * *********************************************************************************************************************** */
 
@@ -158,9 +158,9 @@ class ProjetosDAO extends Zend_Db_Table
     }
 
     /*     * ************************************************************************************************************************
-     * Função que faz o balanceamento  
-     * Pega o Componente que tem menos projeto da área do projeto
-     * ou manda para o componente que é da área e seguimento do projeto
+     * Funï¿½ï¿½o que faz o balanceamento  
+     * Pega o Componente que tem menos projeto da ï¿½rea do projeto
+     * ou manda para o componente que ï¿½ da ï¿½rea e seguimento do projeto
      * *********************************************************************************************************************** */
 
     public static function balancear($idPronac)
@@ -177,7 +177,7 @@ class ProjetosDAO extends Zend_Db_Table
         left JOIN SAC.dbo.Segmento sg on sg.Codigo = pr.Segmento
         WHERE Pr.idPRONAC = $idPronac";
 
-        // Busca a área e seguimento do projeto
+        // Busca a ï¿½rea e seguimento do projeto
         $PAS = $db->fetchAll($sqlProjetoAreaSegmento);
         foreach ($PAS as $dados)
         {
@@ -196,11 +196,11 @@ class ProjetosDAO extends Zend_Db_Table
         
         $AAS = $db->fetchAll($sqlComponenteAreaSegmento);
 
-        // Se não tiver componente com a Area e Segmento do projeto ele faz...
+        // Se nï¿½o tiver componente com a Area e Segmento do projeto ele faz...
         if (count($ASS)==0)
         {
 
-            //aqui já está buscando o id do agente que tem a menor quantidade de projetos
+            //aqui jï¿½ estï¿½ buscando o id do agente que tem a menor quantidade de projetos
             $sqlMenor = "SELECT TOP 1 TC.idAgente as agente,
 					       PXC.Qtd
 					FROM AGENTES.dbo.tbTitulacaoConselheiro TC
@@ -260,14 +260,14 @@ class ProjetosDAO extends Zend_Db_Table
             echo $sqlComponenteAreaSegmento;
             die;
         }
-        // atualiza a situação do projeto
+        // atualiza a situaï¿½ï¿½o do projeto
 //        $atualizarProjeto = "UPDATE SAC.dbo.Projetos SET Situacao = 'C10' WHERE IdPRONAC = $idPronac";
 //        $db->fetchAll($atualizarProjeto);
     }
 
     /*     * ************************************************************************************************************************
-     * Altera a situação do projeto para C10 para não aparecer na tela
-     * Situação de enviado para o componente
+     * Altera a situaï¿½ï¿½o do projeto para C10 para nï¿½o aparecer na tela
+     * Situaï¿½ï¿½o de enviado para o componente
      * *********************************************************************************************************************** */
 
     public static function alteraProjeto($idPronac)
@@ -284,7 +284,7 @@ class ProjetosDAO extends Zend_Db_Table
     {
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $where = "idpronac = $idpronac";
             $alterar = $db->update("SAC.dbo.Projetos", $dados, $where);

@@ -13,11 +13,11 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 				          CASE WHEN ValorParecer > 0 THEN (Elaboracao / ValorParecer) * 100 ELSE 0 END AS PERC, 
 				          CASE WHEN ValorParecer > 0 THEN CASE WHEN ((Elaboracao / ValorParecer) * 100) > 10 THEN 'Acima de 10%' ELSE '' END END AS Acima,
 				          case 
-							 when TipoParecer = '1' then 'Aprovação' when TipoParecer = '2' then 'Complementação' when TipoParecer = '3' then 'Prorrogação'
-							 when TipoParecer = '4' then 'Redução'
+							 when TipoParecer = '1' then 'Aprovaï¿½ï¿½o' when TipoParecer = '2' then 'Complementaï¿½ï¿½o' when TipoParecer = '3' then 'Prorrogaï¿½ï¿½o'
+							 when TipoParecer = '4' then 'Reduï¿½ï¿½o'
 						   end as TipoParecer,
 						   case 
-							 when ParecerFavoravel = '1' then 'Não' when ParecerFavoravel = '2' then 'Sim' else 'Sim com restrições' 
+							 when ParecerFavoravel = '1' then 'Nï¿½o' when ParecerFavoravel = '2' then 'Sim' else 'Sim com restriï¿½ï¿½es' 
 						   end as ParecerFavoravel,       
 						   case 
 							 when Enquadramento = '1' then 'Artigo 26' when Enquadramento = '2' then 'Artigo 18'
@@ -32,7 +32,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 				            LEFT JOIN SAC.dbo.Enquadramento e ON (p.idPronac = e.idPronac)
 				WHERE     (p.Situacao IN ('C09', 'C20', 'C25')) AND (p.AnoProjeto > '08') AND (p.Mecanismo = '1') ";
 		
-				//AND idSecretaria = 251 (Obs: não pode ser mais fixo
+				//AND idSecretaria = 251 (Obs: nï¿½o pode ser mais fixo
 				
 				if($idPronac)
 				{
@@ -62,7 +62,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 				}
 				//**********************************************************************
 				
-				//Data de consolidação
+				//Data de consolidaï¿½ï¿½o
 				if(($dtI) && ($dtF == null))
 				{
 					$sql .= " AND cast(convert(char(8),pa.DtParecer,112)as smalldatetime) = '".$dtI."'";
@@ -73,10 +73,10 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 				}	
 				//**********************************************************************
 				
-				/* Situação ************************************************************
+				/* Situaï¿½ï¿½o ************************************************************
 				* C09 - Projeto fora da pauta - Proponente Inabilitado
-				* C20 - Análise Técnica Concluida
-				* C25 - Parecer Técnico desfavorável
+				* C20 - Anï¿½lise Tï¿½cnica Concluida
+				* C25 - Parecer Tï¿½cnico desfavorï¿½vel
 				*/
 				if(($situacao) && ($sutuacaotc == 1))
 				{
@@ -94,7 +94,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 		//die('<pre>'.$sql);
 		
 				
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 			
@@ -111,22 +111,22 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 				         END as Enquadramento,
 				       CASE
 				          WHEN IncisoArtigo27_I = 0
-				               THEN 'Não'
+				               THEN 'Nï¿½o'
 				               ELSE 'Sim'
 				          END as IncisoArtigo27_I,
 				       CASE
 				          WHEN IncisoArtigo27_II = 0
-				               THEN 'Não'
+				               THEN 'Nï¿½o'
 				               ELSE 'Sim'
 				          END as IncisoArtigo27_II,
 				       CASE
 				          WHEN IncisoArtigo27_III = 0
-				               THEN 'Não'
+				               THEN 'Nï¿½o'
 				               ELSE 'Sim'
 				          END as IncisoArtigo27_III,
 				       CASE
 				          WHEN IncisoArtigo27_IV = 0
-				               THEN 'Não'
+				               THEN 'Nï¿½o'
 				               ELSE 'Sim'
 				          END as IncisoArtigo27_IV        
 				FROM SAC.dbo.tbAnaliseDeConteudo a
@@ -135,7 +135,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 				
 		
 				
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 			
@@ -147,8 +147,8 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 		
 		$sql = "SELECT  t.stPrincipal, t.stEstado,  t.idDistribuirParecer, t.idOrgao, p.IdPRONAC, p.AnoProjeto + p.Sequencial AS PRONAC, p.NomeProjeto, t.idProduto, r.Descricao AS Produto, 
 						   x.idSecretaria, a.Descricao as AreaD, s.Descricao as SegmentoD,
-						   CASE WHEN TipoAnalise = 0 THEN 'Contéudo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo do Projeto'
-						   END AS DescricaoAnalise, t.TipoAnalise, CASE WHEN FecharAnalise = 1 THEN 'Concluído' ELSE 'Aguardando análise' END AS Estado, 
+						   CASE WHEN TipoAnalise = 0 THEN 'Contï¿½udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo do Projeto'
+						   END AS DescricaoAnalise, t.TipoAnalise, CASE WHEN FecharAnalise = 1 THEN 'Concluï¿½do' ELSE 'Aguardando anï¿½lise' END AS Estado, 
 						   TABELAS.dbo.fnEstruturaOrgao(t.idOrgao, 0) AS Orgao
 				FROM       SAC.dbo.tbDistribuirParecer AS t 
 				INNER JOIN SAC.dbo.Projetos AS p ON t.idPRONAC = p.IdPRONAC 
@@ -159,7 +159,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 				WHERE (t.stEstado = 0) AND p.IdPRONAC = ".$idpronac;
 				
 				
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
 		return $db->fetchAll($sql);
@@ -177,7 +177,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
                                                         $unidade     = null)
 	{
 		$sql = "select idPronac,idProduto, Descricao as Produto,
-				      	 case TipoAnalise when 0 then 'Contéudo' when 1 then 'Custo do Produto'
+				      	 case TipoAnalise when 0 then 'Contï¿½udo' when 1 then 'Custo do Produto'
 				         else 'Custo Administrativo' end as TipoAnalise
 				        ,d.idOrgao,tabelas.dbo.fnEstruturaOrgao(d.idOrgao,0) as Unidade, 
                                         CONVERT(CHAR(11),DtEnvio,103) + CONVERT(CHAR(8),DtEnvio,108) AS DtEnvio ,
@@ -260,7 +260,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 				//die('<pre>'.$sql);
 				
 				
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 			
@@ -273,16 +273,16 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 	public static function pareceresTecnicos($idpronac)
 	{
 		$sql = "SELECT     p.IdPRONAC, p.AnoProjeto + p.Sequencial AS NrProjeto, p.NomeProjeto ,i.Nome AS Proponente, pr.Descricao AS Produto, a.idProduto, 
-                      CASE WHEN Lei8313 = 1 THEN 'Sim' ELSE 'Não' END AS Lei8313, CASE WHEN Artigo3 = 1 THEN 'Sim' ELSE 'Não' END AS Artigo3, 
+                      CASE WHEN Lei8313 = 1 THEN 'Sim' ELSE 'Nï¿½o' END AS Lei8313, CASE WHEN Artigo3 = 1 THEN 'Sim' ELSE 'Nï¿½o' END AS Artigo3, 
                       CASE WHEN IncisoArtigo3 = 1 THEN 'I' WHEN IncisoArtigo3 = 2 THEN 'II' WHEN IncisoArtigo3 = 3 THEN 'III' WHEN IncisoArtigo3 = 4 THEN 'IV' WHEN IncisoArtigo3
-                       = 5 THEN 'V' END AS IncisoArtigo3, a.AlineaArtigo3, CASE WHEN Artigo18 = 1 THEN 'Sim' ELSE 'Não' END AS Artigo18, a.AlineaArtigo18, 
-                      CASE WHEN Artigo26 = 1 THEN 'Sim' ELSE 'Não' END AS Artigo26, CASE WHEN Lei5761 = 1 THEN 'Sim' ELSE 'Não' END AS Lei5761, 
-                      CASE WHEN Artigo27 = 1 THEN 'Sim' ELSE 'Não' END AS Artigo27, CASE WHEN IncisoArtigo27_I = 1 THEN 'Sim' ELSE 'Não' END AS IncisoArtigo27_I, 
-                      CASE WHEN IncisoArtigo27_II = 1 THEN 'Sim' ELSE 'Não' END AS IncisoArtigo27_II, 
-                      CASE WHEN IncisoArtigo27_III = 1 THEN 'Sim' ELSE 'Não' END AS IncisoArtigo27_III, 
-                      CASE WHEN IncisoArtigo27_IV = 1 THEN 'Sim' ELSE 'Não' END AS IncisoArtigo27_IV, 
-                      CASE WHEN TipoParecer = 1 THEN 'Aprovação' WHEN TipoParecer = 2 THEN 'Complementação' WHEN TipoParecer = 4 THEN 'Redução' END AS TipoParecer,
-                       CASE WHEN ParecerFavoravel = 1 THEN 'Sim' ELSE 'Não' END AS ParecerFavoravel, a.ParecerDeConteudo, SAC.dbo.fnNomeParecerista(a.idUsuario) 
+                       = 5 THEN 'V' END AS IncisoArtigo3, a.AlineaArtigo3, CASE WHEN Artigo18 = 1 THEN 'Sim' ELSE 'Nï¿½o' END AS Artigo18, a.AlineaArtigo18, 
+                      CASE WHEN Artigo26 = 1 THEN 'Sim' ELSE 'Nï¿½o' END AS Artigo26, CASE WHEN Lei5761 = 1 THEN 'Sim' ELSE 'Nï¿½o' END AS Lei5761, 
+                      CASE WHEN Artigo27 = 1 THEN 'Sim' ELSE 'Nï¿½o' END AS Artigo27, CASE WHEN IncisoArtigo27_I = 1 THEN 'Sim' ELSE 'Nï¿½o' END AS IncisoArtigo27_I, 
+                      CASE WHEN IncisoArtigo27_II = 1 THEN 'Sim' ELSE 'Nï¿½o' END AS IncisoArtigo27_II, 
+                      CASE WHEN IncisoArtigo27_III = 1 THEN 'Sim' ELSE 'Nï¿½o' END AS IncisoArtigo27_III, 
+                      CASE WHEN IncisoArtigo27_IV = 1 THEN 'Sim' ELSE 'Nï¿½o' END AS IncisoArtigo27_IV, 
+                      CASE WHEN TipoParecer = 1 THEN 'Aprovaï¿½ï¿½o' WHEN TipoParecer = 2 THEN 'Complementaï¿½ï¿½o' WHEN TipoParecer = 4 THEN 'Reduï¿½ï¿½o' END AS TipoParecer,
+                       CASE WHEN ParecerFavoravel = 1 THEN 'Sim' ELSE 'Nï¿½o' END AS ParecerFavoravel, a.ParecerDeConteudo, SAC.dbo.fnNomeParecerista(a.idUsuario) 
                       AS Parecerista,
                       pd.stPrincipal
                       FROM       SAC.dbo.Projetos AS p 
@@ -292,7 +292,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
                                  INNER JOIN SAC.dbo.PlanoDistribuicaoProduto pd ON p.idProjeto = pd.idProjeto and pd.idProduto = pr.Codigo AND pd.stPlanoDistribuicaoProduto = 1 
                       WHERE     (a.idUsuario IS NOT NULL) AND p.IdPRONAC=".$idpronac." ORDER BY pd.stPrincipal DESC";
 				
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 			
@@ -306,7 +306,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 					INNER JOIN SAC.dbo.Situacao s ON s.Codigo = p.Situacao
 						WHERE idPronac = ".$idpronac." AND s.AreaAtuacao='R' and s.StatusProjeto='1'";
 				
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 			
@@ -316,7 +316,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 	{
 		$sql = "SELECT  TOP 1 * FROM SAC.dbo.Aprovacao WHERE TipoAprovacao = '1' and (AnoProjeto+Sequencial) = '".$pronac."'";
 				
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 			
@@ -327,8 +327,8 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 	{
 		$sql = "SELECT     t.idDistribuirParecer, t.idOrgao, p.IdPRONAC, p.AnoProjeto + p.Sequencial AS PRONAC, p.NomeProjeto, t.stPrincipal ,t.idProduto, r.Descricao AS Produto, 
 						   x.idSecretaria, a.Descricao as AreaD, s.Descricao as SegmentoD,
-						   CASE WHEN TipoAnalise = 0 THEN 'Contéudo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo do Projeto'
-						   END AS DescricaoAnalise, t.TipoAnalise, CASE WHEN FecharAnalise = 1 THEN 'Concluído' ELSE 'Aguardando análise' END AS Estado, 
+						   CASE WHEN TipoAnalise = 0 THEN 'Contï¿½udo' WHEN TipoAnalise = 1 THEN 'Custo do Produto' WHEN TipoAnalise = 2 THEN 'Custo Administrativo do Projeto'
+						   END AS DescricaoAnalise, t.TipoAnalise, CASE WHEN FecharAnalise = 1 THEN 'Concluï¿½do' ELSE 'Aguardando anï¿½lise' END AS Estado, 
 						   TABELAS.dbo.fnEstruturaOrgao(t.idOrgao, 0) AS Orgao
 				FROM       SAC.dbo.tbDistribuirParecer AS t 
 				INNER JOIN SAC.dbo.Projetos AS p ON t.idPRONAC = p.IdPRONAC 
@@ -339,7 +339,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 				
 				WHERE p.IdPRONAC = ".$idPronac." AND t.stPrincipal = 1 AND t.stEstado = 0";
 				
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 			
@@ -357,7 +357,7 @@ class GerenciarPareceresDAO extends Zend_Db_Table
 			b.idPlanilhaProjeto,
 			PAP.dsJustificativa dsJustificativaConselheiro,
 			(PAP.qtItem * PAP.nrOcorrencia * PAP.vlUnitario) AS VlSugeridoConselheiro,
-			CASE WHEN b.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END AS Produto, CONVERT(varchar(8),
+			CASE WHEN b.idProduto = 0 THEN 'Administraï¿½ï¿½o do Projeto' ELSE c.Descricao END AS Produto, CONVERT(varchar(8),
 			d.idPlanilhaEtapa) + ' - ' + d.Descricao AS Etapa,
 			d.idPlanilhaEtapa,
 			i.Descricao AS Item,
@@ -393,7 +393,7 @@ FROM         SAC.dbo.Projetos AS a
 					  WHERE a.IdPRONAC = ".$idpronac."
 						ORDER BY x.Descricao, Produto, Etapa, UF, Item";
 
-            	$db = Zend_Registry::get('db');
+            	$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 			
@@ -416,7 +416,7 @@ FROM         SAC.dbo.Projetos AS a
 				INNER JOIN SAC.dbo.Verificacao v ON d.idTipoDiligencia = v.idVerificacao
 				WHERE idPronac = ".$idpronac;
 				
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 			
@@ -453,14 +453,14 @@ FROM         SAC.dbo.Projetos AS a
 
 				WHERE sis_codigo = 21 AND uog_orgao = $usu_codigo ";
 	
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 			
 	}
 	
 
-	/** ALTERAÇÕES *************************************************************************************/
+	/** ALTERAï¿½ï¿½ES *************************************************************************************/
 	
 	public static function devolverParecer($idpronac, $idproduto, $observacao, $tipoanalise, $idusuario, $idorgao)
 	{
@@ -470,7 +470,7 @@ FROM         SAC.dbo.Projetos AS a
 					AND   tipoanalise = ".$tipoanalise." 
 					AND   stestado    = 0";
 					
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->query($sql);			
 	}
@@ -480,7 +480,7 @@ FROM         SAC.dbo.Projetos AS a
 	{
 		$sql = "UPDATE SAC.dbo.tbAnaliseDeConteudo SET idParecer = NULL WHERE idPronac = ".$idpronac." and idParecer is not null";
 					
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->query($sql);			
 	}
@@ -490,34 +490,34 @@ FROM         SAC.dbo.Projetos AS a
 	{
 		$sql = "UPDATE SAC.dbo.tbPlanilhaProjeto SET idParecer = NULL WHERE idPronac = ".$idpronac." and idParecer is not null";
 					
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->query($sql);			
 	}
 	
-	//-- Alterar a situação do projeto	
+	//-- Alterar a situaï¿½ï¿½o do projeto	
 	public static function updateProjetos($idpronac)
 	{
 		$sql = "UPDATE SAC.dbo.Projetos SET Situacao = 'B11', 
-						ProvidenciaTomada = 'Projeto encaminhado para novo parecer técnico na unidade de análise do MinC.', 
+						ProvidenciaTomada = 'Projeto encaminhado para novo parecer tï¿½cnico na unidade de anï¿½lise do MinC.', 
 						DtSituacao = getdate() 
       			WHERE idPronac = ".$idpronac;
 					
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->query($sql);			
 	}
 	
 			
 	
-	/** EXCLUSÕES **************************************************************************************/
+	/** EXCLUSï¿½ES **************************************************************************************/
 
-		// Excluir o parecer técnico do projeto
+		// Excluir o parecer tï¿½cnico do projeto
 		public static function delPerecer($idpronac)
 		{
 			$sql = "DELETE FROM SAC.dbo.Parecer WHERE TipoParecer = '1' and idPronac = ".$idpronac;
 
-			$db = Zend_Registry::get('db');
+			$db= Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			return $db->query($sql);			
 		} 
@@ -527,7 +527,7 @@ FROM         SAC.dbo.Projetos AS a
 		{
 			$sql = "DELETE FROM SAC.dbo.Enquadramento WHERE idPronac = ".$idpronac;
 
-			$db = Zend_Registry::get('db');
+			$db= Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			return $db->query($sql);			
 		} 
@@ -544,7 +544,7 @@ FROM         SAC.dbo.Projetos AS a
 	{
 		$sql = "EXEC SAC.dbo.paConsolidarParecer";
 		
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->query($sql);
 	}	

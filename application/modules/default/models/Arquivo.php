@@ -30,7 +30,7 @@ class Arquivo extends GenericModel {
                "(nmArquivo,sgExtensao,dtEnvio,stAtivo,biArquivo,idTipoDocumento,dsDocumento,idPronac,stAtivoDocumentoProjeto) " .
                "VALUES ('$name', '$fileType', GETDATE(),'I',$data,1,'$dsDocumento', $IdPRONAC,'E')";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -53,7 +53,7 @@ class Arquivo extends GenericModel {
 
 //        xd($sql);
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -65,7 +65,7 @@ class Arquivo extends GenericModel {
                 WHERE idTipoDocumento in (22,23,24)
                 AND idPronac = $idPronac";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -76,7 +76,7 @@ class Arquivo extends GenericModel {
                 INNER JOIN SAC.dbo.tbDiligenciaxArquivo AS b on (a.idArquivo = b.idArquivo)
                 WHERE b.idDiligencia = $idDiligencia";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }

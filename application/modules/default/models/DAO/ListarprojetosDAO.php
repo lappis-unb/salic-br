@@ -54,7 +54,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
 
         $sql .= " ORDER BY m.Descricao, a.NomeProjeto ASC";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -135,7 +135,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
 
        $sql .= " ORDER BY m.Descricao, a.NomeProjeto ASC";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -169,7 +169,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
 
         $sql .= " ORDER BY m.Descricao, a.NomeProjeto ASC";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -220,7 +220,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
 
             $sql .=" ) ORDER BY 1,6 ";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -242,7 +242,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
 
         $sql .= " ORDER BY a.NomeProjeto ASC";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -261,7 +261,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
         $sql .= " order by n.Descricao DESC";
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -277,7 +277,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
 				AND VI.siVinculo IN (0,2)
 				ORDER BY NM.Descricao ";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -294,7 +294,7 @@ class ListarprojetosDAO extends Zend_Db_Table {
         }
         $sql .= " order by n.Descricao DESC";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 

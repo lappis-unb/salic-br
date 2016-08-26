@@ -6,14 +6,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Tipodocumento
 {
 	/**
-	 * Método para buscar os tipos de documentos
+	 * Mï¿½todo para buscar os tipos de documentos
 	 * @access public
 	 * @param void
 	 * @return object
@@ -26,7 +26,7 @@ class Tipodocumento
 
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		}
 		catch (Zend_Exception_Db $e)
@@ -35,7 +35,7 @@ class Tipodocumento
 		}
 
 		return $db->fetchAll($sql);
-	} // fecha método buscar()
+	} // fecha mï¿½todo buscar()
 
 } // fecha class
 ?>

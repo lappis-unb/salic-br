@@ -5,7 +5,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -15,18 +15,18 @@ class tbAnaliseDeConteudo extends GenericModel {
     protected $_name   = "tbAnaliseDeConteudo";
 
     /**
-     * Método para cadastrar
+     * Mï¿½todo para cadastrar
      * @access public
      * @param array $dados
-     * @return integer (retorna o último id cadastrado)
+     * @return integer (retorna o ï¿½ltimo id cadastrado)
      */
     public function cadastrarDados($dados) {
         return $this->insert($dados);
-    } // fecha método cadastrarDados()
+    } // fecha mï¿½todo cadastrarDados()
 
 
     /**
-     * Método para alterar
+     * Mï¿½todo para alterar
      * @access public
      * @param array $dados
      * @param integer $where
@@ -35,7 +35,7 @@ class tbAnaliseDeConteudo extends GenericModel {
     public function alterarDados($dados, $where) {
         $where = "idAnaliseDeConteudo = " . $where;
         return $this->update($dados, $where);
-    } // fecha método alterarDados()
+    } // fecha mï¿½todo alterarDados()
 
 
 
@@ -50,29 +50,29 @@ class tbAnaliseDeConteudo extends GenericModel {
                      END as Enquadramento,
                    CASE
                       WHEN IncisoArtigo27_I = 0
-                           THEN 'Não'
+                           THEN 'Nï¿½o'
                            ELSE 'Sim'
                       END as IncisoArtigo27_I,
                   CASE
                       WHEN IncisoArtigo27_II = 0
-                           THEN 'Não'
+                           THEN 'Nï¿½o'
                            ELSE 'Sim'
                       END as IncisoArtigo27_II,
                    CASE
                       WHEN IncisoArtigo27_III = 0
-                           THEN 'Não'
+                           THEN 'Nï¿½o'
                            ELSE 'Sim'
                       END as IncisoArtigo27_III,
                    CASE
                       WHEN IncisoArtigo27_IV = 0
-                           THEN 'Não'
+                           THEN 'Nï¿½o'
                            ELSE 'Sim'
                       END as IncisoArtigo27_IV
             FROM tbAnaliseDeConteudo a
             INNER JOIN Produto p ON (a.idProduto = p.Codigo)
             WHERE idPronac = $idPronac ORDER BY 2");
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
@@ -97,22 +97,22 @@ class tbAnaliseDeConteudo extends GenericModel {
                             END as Enquadramento,
                         CASE
                             WHEN IncisoArtigo27_I = 0
-                                THEN 'Não'
+                                THEN 'Nï¿½o'
                                 ELSE 'Sim'
                             END as IncisoArtigo27_I,
                         CASE
                             WHEN IncisoArtigo27_II = 0
-                                THEN 'Não'
+                                THEN 'Nï¿½o'
                                 ELSE 'Sim'
                             END as IncisoArtigo27_II,
                         CASE
                             WHEN IncisoArtigo27_III = 0
-                                THEN 'Não'
+                                THEN 'Nï¿½o'
                                 ELSE 'Sim'
                             END as IncisoArtigo27_III,
                         CASE
                             WHEN IncisoArtigo27_IV = 0
-                                THEN 'Não'
+                                THEN 'Nï¿½o'
                                 ELSE 'Sim'
                             END as IncisoArtigo27_IV
                     ")

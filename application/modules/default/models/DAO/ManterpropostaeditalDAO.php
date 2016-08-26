@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -22,7 +22,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 	
 //	public static function cadastrar($dados)
 //	{
-//		$db = Zend_Registry::get('db');
+//		$db= Zend_Db_Table::getDefaultAdapter();
 //		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 //
 //		$cadastrar = $db->insert("SAC.dbo.tbRecurso", $dados);
@@ -36,14 +36,14 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 //		{
 //			return false;
 //		}
-//	} // fecha método cadastrar()
+//	} // fecha mï¿½todo cadastrar()
 
 
 
 	
 //	public static function alterar($dados, $idPronac)
 //	{
-//		$db = Zend_Registry::get('db');
+//		$db= Zend_Db_Table::getDefaultAdapter();
 //		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 //
 //		$where   = "IdPRONAC = $idPronac";
@@ -57,7 +57,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
 //		{
 //			return false;
 //		}
-//	} // fecha método alterar()
+//	} // fecha mï¿½todo alterar()
 
 
 
@@ -85,10 +85,10 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                 and not exists (select * from SAC.dbo.projetos pr where p.idPreProjeto = pr.idProjeto )
                 AND fd.idClassificaDocumento not in (23,24,25)";
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
-	} // fecha método buscaredital()
+	} // fecha mï¿½todo buscaredital()
 	
 	
 		public static function buscarpreprojeto()
@@ -97,10 +97,10 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                 INNER JOIN AGENTES.dbo.Nomes nm on nm.idAgente = pp.idAgente
                 where pp.idPreProjeto = '23546'";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
-	} // fecha método buscarpreprojeto()
+	} // fecha mï¿½todo buscarpreprojeto()
 
 
 		public static function buscaendereco($cpf)
@@ -114,7 +114,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                 where Ag.CNPJCPF= '" . $cpf . "'";
 		
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	}
@@ -152,7 +152,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                        or nmDocumento like '%{$array['nmEdital']}%'";
         }
         $sql .= " ORDER BY c.dsClassificaDocumento,v.Descricao,Tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1),e.NrEdital";
-        $db   = Zend_Registry::get('db');
+        $db  = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -176,7 +176,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                         u.dtIniFase <= GETDATE() AND u.dtFimFase >= GETDATE()
                ORDER BY c.dsClassificaDocumento,v.Descricao,Tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1),e.NrEdital";
 
-        $db   = Zend_Registry::get('db');
+        $db  = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -202,7 +202,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
             $sql .= " and e.idEdital = {$array['idEdital']}";
         }
         $sql .= " ORDER BY c.dsClassificaDocumento,v.Descricao,Tabelas.dbo.fnEstruturaOrgao(e.idOrgao,1),e.NrEdital";
-        $db   = Zend_Registry::get('db');
+        $db  = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -219,7 +219,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                         f.stModalidadeDocumento is not null and
                         u.dtIniFase <= GETDATE() AND u.dtFimFase >= GETDATE()
                group by f.nmFormDocumento";
-        $db   = Zend_Registry::get('db');
+        $db  = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -243,7 +243,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                      and idPreProjeto = {$array['idPreProjeto']}
                 GROUP BY NomeProjeto, Mecanismo, p.idAgente, p.idEdital, idPreProjeto, stTipoDemanda, p.ResumoDoProjeto,nm.Descricao";
 
-        $db   = Zend_Registry::get('db');
+        $db  = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -252,13 +252,13 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
         $sql = "select Descricao
                   from AGENTES.dbo.Nomes
                  where idAgente = {$array['idAgente']} --39318";
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
     public static function inserirProposta($array = array()) {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
     	$db->insert('SAC.dbo.PreProjeto', $array);
     	return $db->lastInsertId();
     }
@@ -272,7 +272,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                    and p.idEdital        = {$array['idEdital']}
                    and p.ResumoDoProjeto = '{$array['resumoProjeto']}'";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -283,7 +283,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                  where idPreProjeto    = {$array['idPreProjeto']}
                    and idAgente        = {$array['idAgente']}
                    and idEdital        = {$array['idEdital']}";
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -305,7 +305,7 @@ class ManterpropostaeditalDAO extends Zend_Db_Table
                 fd.idClassificaDocumento not in (23,24,25)
                 GROUP BY NomeProjeto, Mecanismo, idagente, p.idEdital, idPreProjeto, stTipoDemanda";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
 

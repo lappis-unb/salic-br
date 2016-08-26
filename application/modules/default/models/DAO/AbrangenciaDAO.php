@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -18,7 +18,7 @@ class AbrangenciaDAO extends Zend_Db_Table
 	protected $_primary = 'idAbrangencia';
 
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -26,7 +26,7 @@ class AbrangenciaDAO extends Zend_Db_Table
 	 */
 	public static function cadastrar($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$cadastrar = $db->insert("SAC.dbo.Abrangencia", $dados);
@@ -39,12 +39,12 @@ class AbrangenciaDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método cadastrar()
+	} // fecha mï¿½todo cadastrar()
 
 
 
         	/**
-	 * Método para excluir
+	 * Mï¿½todo para excluir
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -52,12 +52,12 @@ class AbrangenciaDAO extends Zend_Db_Table
 	 */
 	public static function excluir($where)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where   = array("idAbrangencia = ? " => $where, "stAbrangencia = ?" => 1);
         
-        // limpa a associação antes de excluir
+        // limpa a associaï¿½ï¿½o antes de excluir
         $alterar = $db->update("SAC.dbo.tbAbrangencia", array("idAbrangenciaAntiga" => NULL), array("idAbrangenciaAntiga = ? " => $where));
 
 		$excluir = $db->delete("SAC.dbo.Abrangencia", $where);
@@ -70,12 +70,12 @@ class AbrangenciaDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método excluir()
+	} // fecha mï¿½todo excluir()
 
 
 
         	/**
-	 * Método para alterar
+	 * Mï¿½todo para alterar
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -83,7 +83,7 @@ class AbrangenciaDAO extends Zend_Db_Table
 	 */
 	public static function alterar($dados, $where)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
                 $where   = "idAbrangencia = $where";
@@ -97,7 +97,7 @@ class AbrangenciaDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método alterar()
+	} // fecha mï¿½todo alterar()
 
 
         public static function buscarAbrangenciasAtuais($idProjeto, $idPais, $idUF, $idMunicipioIBGE){
@@ -109,7 +109,7 @@ class AbrangenciaDAO extends Zend_Db_Table
                         and idMunicipioIBGE = $idMunicipioIBGE 
                         and stAbrangencia = 1
                     ";
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $resultado = $db->fetchAll($sql);
 
@@ -210,7 +210,7 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
             ";
         } // fecha else
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 	$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	$resultado = $db->fetchAll($sql);
 
@@ -299,7 +299,7 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
                 ) as tabelas ORDER BY pais, uf, mun, idAvaliacaoItemPedidoAlteracao DESC  ";
         } // fecha else
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 	$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	$resultado = $db->fetchAll($sql);
 
@@ -326,7 +326,7 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
                 where
                     pro.IdPRONAC  = $idpedidoalteracao and tap.tpAlteracaoProjeto = 4 and abran.stAbrangencia = 1
                 ";
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 	$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	$resultado = $db->fetchAll($sql);
 
@@ -356,7 +356,7 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
                         "
         ;
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 	$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	$resultado = $db->fetchAll($sql);
 
@@ -392,7 +392,7 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
 		endif;
 	
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 	$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	$resultado = $db->fetchAll($sql);
 
@@ -400,7 +400,7 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
     }
 
 	/**
-	 * Método para avaliar o local de realização
+	 * Mï¿½todo para avaliar o local de realizaï¿½ï¿½o
 	 * @access public
 	 * @static
 	 * @param $dados array
@@ -408,7 +408,7 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
 	 */
 	public static function avaliarLocalRealizacao($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao", $dados);
@@ -421,16 +421,16 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
 		{
 			return false;
 		}
-	} // fecha método avaliarLocalRealizacao()
+	} // fecha mï¿½todo avaliarLocalRealizacao()
 	
 	
 	
 	/**
-	 * Método para verificar se o loca de realização já existe
+	 * Mï¿½todo para verificar se o loca de realizaï¿½ï¿½o jï¿½ existe
 	 */
 	public static function verificarLocalRealizacao($idProjeto, $idMunicipio)
 	{
-		$sql = "SELECT idMunicipíoIBGE FROM Abrangencia WHERE idProjeto=$idProjeto AND stAbrangencia = 1 AND idMunicipioIBGE=$idMunicipio";
+		$sql = "SELECT idMunicipï¿½oIBGE FROM Abrangencia WHERE idProjeto=$idProjeto AND stAbrangencia = 1 AND idMunicipioIBGE=$idMunicipio";
 		return $sql;
 	}
 

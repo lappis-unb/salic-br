@@ -32,7 +32,7 @@ Class DadosprojetoDAO extends Zend_Db_Table{
 			CONVERT(CHAR(10),Pr.DtSituacao,103) as DtSituacao, 
 			Pr.ProvidenciaTomada, 
 			Pr.Localizacao,
-			CASE En.Enquadramento when 1 then 'Artigo 26' when 2 then 'Artigo 18' else 'Não enquadrado' end as Enquadramento,
+			CASE En.Enquadramento when 1 then 'Artigo 26' when 2 then 'Artigo 18' else 'Nï¿½o enquadrado' end as Enquadramento,
 			Pr.SolicitadoReal,
 			--SAC.dbo.fnOutrasFontes(Pr.idPronac) AS OutrasFontes,
 			CASE WHEN SAC.dbo.fnOutrasFontes(Pr.idPronac) is null
@@ -61,7 +61,7 @@ Class DadosprojetoDAO extends Zend_Db_Table{
 			JOIN SAC.dbo.Interessado I ON Pr.CgcCpf = I.CgcCpf
 			WHERE Pr.idPRONAC = ". $pronac ."" ;
 
-                        $db  = Zend_Registry::get('db');
+                        $db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			$resultado = $db->fetchAll($sql);
 

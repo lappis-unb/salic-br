@@ -55,7 +55,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
                     hd.idUnidade = '".$idDestino."'
                 ORDER BY hd.idHistorico "; 
 	
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
 		$resultado = $db->fetchAll("SET TEXTSIZE 104857600");
@@ -124,7 +124,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
         $sql .= implode(" AND ", $filtros);
         //xd($sql);
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
 		$resultado = $db->fetchAll("SET TEXTSIZE 10485760");
@@ -172,7 +172,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 			}
 // xd($sql);
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
 		$resultado = $db->fetchAll("SET TEXTSIZE 10485760");
@@ -268,7 +268,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 						INNER JOIN SAC.dbo.Projetos pro			ON doc.idPronac = pro.IdPRONAC
 						INNER JOIN SAC.dbo.tbTipoDocumento td	ON doc.idTipoDocumento = td.idTipoDocumento 	
 				WHERE	hd.Acao = 3 AND hd.idLote=".$idLote." /*AND hd.idUsuarioEmissor = ".$idUsuario."*/ AND hd.stEstado = 1";
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_Db::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	}
@@ -308,7 +308,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		}
 		
 		//xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
 		$resultado = $db->fetchAll("SET TEXTSIZE 10485760");
@@ -341,7 +341,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 						INNER JOIN SAC.dbo.tbTipoDocumento td	ON doc.idTipoDocumento = td.idTipoDocumento
 						WHERE hd.Acao in ($acao) AND hd.stEstado = 1 AND hd.idDocumento <> 0 AND hd.idDocumento = ".$idDocumento;
 		//xd($sql);					
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
 		return $db->fetchAll($sql);
@@ -357,7 +357,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 					INNER JOIN SAC.dbo.Projetos pro ON hd.idPronac = pro.IdPRONAC
 						WHERE Acao = 2 AND hd.stEstado = 1 AND hd.idDocumento <> 0 AND doc.idUnidadeCadastro=".$codOrgao;
 							
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	
 		return $db->fetchAll($sql);
@@ -379,7 +379,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 					INNER JOIN SAC.dbo.Projetos pro ON hd.idPronac = pro.IdPRONAC
 						WHERE Acao = 4 AND hd.stEstado = 1 AND hd.idDocumento <> 0 AND doc.idUnidadeCadastro=".$codOrgao;
 //		xd($sql);					
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	
 		return $db->fetchAll($sql);
@@ -406,7 +406,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		}
 		
 		// xd($sql);				
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	
 		return $db->fetchAll($sql);
@@ -436,7 +436,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		}
 		catch (Zend_Exception_Db $e)
@@ -460,7 +460,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		}
 		catch (Zend_Exception_Db $e)
@@ -475,7 +475,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 	{
 		$sql = "SELECT * FROM SAC.dbo.Orgaos WHERE Status = 0 ORDER BY Sigla";
 							
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	
 		return $db->fetchAll($sql);
@@ -506,7 +506,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		}						
 
 //		xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	
 		return $db->fetchAll($sql);
@@ -525,7 +525,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
                 //and hd.idUsuarioEmissor = $idusuario
 		
 //		xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
 		return $db->fetchAll($sql);
@@ -547,7 +547,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		}
 		
 //		xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	}
@@ -567,7 +567,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		}
 		
 //		xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	}
@@ -643,12 +643,12 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 
 		$sql .= " order by h.idOrigem";
 //		xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 		
 		//x($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	}
@@ -729,12 +729,12 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		
 		$sql .= " order by h.idOrigem";
 //		xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 		
 		//x($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	}
@@ -743,7 +743,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 	{
 		$sql = "SELECT * FROM SAC.dbo.tbDocumento WHERE idDocumento = ".$id;
 							
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
 		$resultado = $db->fetchAll("SET TEXTSIZE 10485760");
@@ -756,7 +756,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 	{
 		$sql = "SELECT * FROM SAC.dbo.tbTipoDocumento";
 							
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
 		$resultado = $db->fetchAll($sql);
@@ -777,7 +777,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 				where anoprojeto+sequencial = '$pronac'";
 		//xd($sql);
 						
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
 		 return $db->fetchAll($sql);
@@ -825,7 +825,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		
 		
 //		//xd($sql);					
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 			
@@ -923,7 +923,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		$sql .= " order by h.idOrigem";
 		
 //		xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 			
@@ -940,7 +940,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 		 
 	
 		//xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 			
@@ -950,7 +950,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 
 	public static function cadDocumento($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$db->query($dados);
 		return $db->lastInsertId();
@@ -958,7 +958,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 	
 	public static function cadHistorico($base, $dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$db->insert($base,$dados);
 		return $db->lastInsertId();
@@ -968,7 +968,7 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 	{
 		$sql = "INSERT INTO SAC.dbo.tbLote (dtLote)values(GETDATE())";
 							
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$db->query($sql);
 		
@@ -978,32 +978,32 @@ class TramitarDocumentosDAO extends Zend_Db_Table
 	
 	public static function GravarHistorico($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->insert('SAC.dbo.tbHistoricoDocumento',$dados);
 					
 	}
 
-	/** ATUALIZAÇÕES ***********************************************************************************/
+	/** ATUALIZAï¿½ï¿½ES ***********************************************************************************/
 
 	public static function MudaEstado($idDocumento)
 	{
 		$sql = "UPDATE SAC.dbo.tbHistoricoDocumento SET stEstado = 0 WHERE stEstado = 1 and idDocumento = ".$idDocumento;	
 		
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 	
 		return $db->fetchAll($sql);
 			
 	}
 	
-	/** EXCLUSÃO ***************************************************************************************/
+	/** EXCLUSï¿½O ***************************************************************************************/
 
 	public static function ExcluirDoc($idDocumento, $tabela)
 	{
 		$sql  = "DELETE FROM " .$tabela. " WHERE  idDocumento = ".$idDocumento;	
 		
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->query($sql);
 			

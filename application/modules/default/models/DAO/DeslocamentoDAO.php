@@ -22,7 +22,7 @@ class DeslocamentoDAO extends GenericModel {
     public static function buscarPais() {
         $sql = "SELECT * FROM AGENTES.dbo.Pais";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -32,7 +32,7 @@ class DeslocamentoDAO extends GenericModel {
     public function pais() {
         $sql = "SELECT * FROM AGENTES.dbo.Pais";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -187,7 +187,7 @@ class DeslocamentoDAO extends GenericModel {
                             $meuOrder";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 
@@ -198,7 +198,7 @@ class DeslocamentoDAO extends GenericModel {
     public static function salvaDeslocamento($dados)
     {
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$db->insert('SAC.dbo.tbDeslocamento', $dados);
 
@@ -217,7 +217,7 @@ class DeslocamentoDAO extends GenericModel {
     			"WHERE idDeslocamento = ".$idDeslocamento;
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$db->query($sql);
 
@@ -227,7 +227,7 @@ class DeslocamentoDAO extends GenericModel {
 
         $sql ="DELETE FROM SAC.dbo.tbDeslocamento WHERE idDeslocamento = ".$idDeslocamento;
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$db->query($sql);
 

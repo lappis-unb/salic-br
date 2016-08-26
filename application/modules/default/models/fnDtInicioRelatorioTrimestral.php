@@ -8,7 +8,7 @@ class fnDtInicioRelatorioTrimestral extends GenericModel {
     public function dtInicioRelatorioTrimestral($idPronac) {
         $select = new Zend_Db_Expr("SELECT SAC.dbo.fnDtInicioRelatorioTrimestral($idPronac) as dtLiberacao");
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();

@@ -54,7 +54,7 @@ class Uf extends GenericModel {
         $sql .= ' ORDER BY Sigla';
 
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
         } catch (Zend_Exception_Db $objException) {

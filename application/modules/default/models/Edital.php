@@ -171,7 +171,7 @@ class Edital extends GenericModel{
 	
 //		xd($sql);
 				
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
 		$resultado = $db->fetchAll("SET TEXTSIZE 104857600");
@@ -186,7 +186,7 @@ class Edital extends GenericModel{
 	
 //		xd($sql);
 				
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
 		$resultado = $db->fetchAll("SET TEXTSIZE 104857600");
@@ -227,7 +227,7 @@ class Edital extends GenericModel{
 	
 //		xd($sql);
 				
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		
 		$resultado = $db->fetchAll("SET TEXTSIZE 104857600");

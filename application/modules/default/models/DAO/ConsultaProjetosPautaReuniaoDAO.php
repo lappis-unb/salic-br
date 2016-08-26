@@ -33,7 +33,7 @@ class ConsultaProjetosPautaReuniaoDAO extends Zend_Db_Table
         }
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
         }
@@ -91,7 +91,7 @@ class ConsultaProjetosPautaReuniaoDAO extends Zend_Db_Table
 //        die('<pre>'.$sql);
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
         }
@@ -128,7 +128,7 @@ class ConsultaProjetosPautaReuniaoDAO extends Zend_Db_Table
 
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)

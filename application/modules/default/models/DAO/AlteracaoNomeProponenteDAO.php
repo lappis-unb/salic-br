@@ -23,7 +23,7 @@ class AlteracaoNomeProponenteDAO  extends Zend_Db_Table{
                     CgcCpf = '{$cgccpf}'
                     ";
 
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $resultado = $db->fetchAll($sql);
 
@@ -45,7 +45,7 @@ class AlteracaoNomeProponenteDAO  extends Zend_Db_Table{
                 where
                     pap.IdPRONAC = {$idpedidoalteracao} and pt.tpAlteracaoProjeto = 1
                 ";
-         $db  = Zend_Registry::get('db');
+         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 

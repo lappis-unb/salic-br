@@ -86,7 +86,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                     left join AGENTES.dbo.Uf uf                         on uf.idUf = en.UF
                     left join AGENTES.dbo.Municipios mun                on mun.idMunicipioIBGE = en.Cidade
                 WHERE idPreProjeto = {$idPreProjeto}";
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $db->query('SET TEXTSIZE 2147483647');
         return $db->fetchAll($sql);
@@ -110,7 +110,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 ";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -151,7 +151,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 ";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -159,7 +159,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
 
     public static function buscarPlanilhaOrcamentaria($idPreProjeto)
     {
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
                 $sql = "SELECT
                         idPlanilhaProposta,
@@ -197,7 +197,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 ";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -205,7 +205,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
     public static function buscarLocalDeRealizacao($idPreProjeto){
         $sql = "SELECT
                 CASE a.idPais
-                WHEN 0 THEN 'Não é possível informar o local de realização do projeto'
+                WHEN 0 THEN 'Nï¿½o ï¿½ possï¿½vel informar o local de realizaï¿½ï¿½o do projeto'
                 ELSE p.Descricao
                 END as Pais,
                 u.Descricao as UF,
@@ -222,7 +222,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 ORDER BY p.Descricao,u.Descricao,m.Descricao
                 ";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -250,7 +250,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 ";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -272,7 +272,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 ";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -290,7 +290,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 ";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -309,7 +309,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                     WHERE
                             tbd.idAgente= $idAgente
                 ";
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -323,7 +323,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 INNER JOIN tabelas.dbo.Usuarios u on (p.idTecnico = u.usu_codigo)
                 WHERE ConformidadeOK < 9
                 UNION ALL
-                SELECT idProjeto,0,'Proponente' as Tecnico, convert(varchar(30),DtMovimentacao, 120 ) as DtMovimentacao,'Proposta Cultural ENVIADA ao Ministério da Cultura para Conformidade Visual' as Avaliacao, '' as dtResposta, '' as dsResposta
+                SELECT idProjeto,0,'Proponente' as Tecnico, convert(varchar(30),DtMovimentacao, 120 ) as DtMovimentacao,'Proposta Cultural ENVIADA ao Ministï¿½rio da Cultura para Conformidade Visual' as Avaliacao, '' as dtResposta, '' as dsResposta
                 FROM SAC.dbo.tbMovimentacao
                 WHERE Movimentacao=96
             ) as slctPrincipal
@@ -331,7 +331,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
             ORDER BY convert(varchar(30),DtAvaliacao, 120 ) ASC
         ";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -340,12 +340,12 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
          try
         {
 
-            //insert da avaliação
+            //insert da avaliaï¿½ï¿½o
             $sql = "INSERT INTO sac.dbo.tbAvaliacaoProposta
                    (idProjeto,idTecnico, DtEnvio, DtAvaliacao, Avaliacao, ConformidadeOK, stEstado, stEnviado)
                     values (".$dado['idPreProjeto'].",".$dado['idTecnico'].",".$dado['dtEnvio'].",".$dado['dtAvaliacao'].",'".$dado['avaliacao']."',".$dado['conformidade'].",".$dado['estado'].",'N');";
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
 
             $db->fetchRow($sql);
@@ -363,7 +363,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
         $sql = "SELECT * FROM sac.dbo.tbAvaliacaoProposta WHERE idProjeto = $idPreProjeto order by idAvaliacaoProposta DESC";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -372,12 +372,12 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
         try
         {
 
-            //update do estado das outras avaliações
+            //update do estado das outras avaliaï¿½ï¿½es
             $sql = "UPDATE sac.dbo.tbAvaliacaoProposta
                     SET stEstado = 1
                     WHERE idProjeto = $IdProjeto AND stEstado <> 1";
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
 
             $db->fetchRow($sql);
@@ -394,12 +394,12 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
         try
         {
 
-            //update do estado das outras avaliações
+            //update do estado das outras avaliaï¿½ï¿½es
             $sql = "UPDATE sac.dbo.tbMovimentacao
                     SET stEstado = 1
                     WHERE idProjeto = $IdProjeto AND stEstado <> 1";
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
 
@@ -418,7 +418,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 (idProjeto,Movimentacao,DtMovimentacao,stEstado,Usuario)
                 VALUES (".$dado['idPreProjeto'].",".$dado['movimentacao'].",getdate(),0,".$dado['idTecnico'].");";
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
 
@@ -445,7 +445,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                          where idProposta = $idPreProjeto
                 ";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -459,7 +459,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 (idProposta,Tipo,Data,Despacho,stEstado,idUsuario)
                 VALUES (".$dado['idPreProjeto'].",129,getdate(),'".$dado['despacho']."',0,".$dado['idTecnico'].");";
             ;
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
 
@@ -476,7 +476,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
         $sql = "SELECT * FROM sac.dbo.tbDespacho WHERE idProposta = $idPreProjeto";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -489,7 +489,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                      SET stEstado = 1
                      WHERE idProposta = $IdProjeto AND stEstado <> 1;";
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
 
@@ -506,7 +506,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
         //$sql = "SELECT TOP 1 * FROM sac.dbo.tbMovimentacao WHERE idProjeto = $idPreProjeto AND stEstado = 0 and Movimentacao = 128 ORDER BY idMovimentacao DESC";
         $sql = "SELECT TOP 1 * FROM sac.dbo.tbMovimentacao WHERE idProjeto = $idPreProjeto AND stEstado = 0 ORDER BY idMovimentacao DESC";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -539,7 +539,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 ";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -549,7 +549,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
        $sql = "select codigo,descricao from SAC.dbo.vwDocumentosExigidosApresentacaoProposta where opcao=$idOpcao order by descricao ";
        //$sql = "select codigo,descricao from SAC.dbo.DocumentosExigidos where opcao=$idOpcao order by descricao";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -561,7 +561,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 (idProjeto,CodigoDocumento)
                 VALUES (".$dado['idPreProjeto'].",".$dado['CodigoDocumento'].");";
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
         }catch (Exception $e){
@@ -579,7 +579,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 VALUES (".$dado['idPreProjeto'].",".$dado['CodigoDocumento'].");
                 ";
             ;
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
 
@@ -601,7 +601,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
         SET CodigoDocumento = ".$dado['CodigoDocumento']."
         WHERE idProjeto=".$dado['idPreProjeto']." and CodigoDocumento=".$dado['iddocantigo']."";
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
 
@@ -624,7 +624,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
         WHERE idProjeto=".$dado['idPreProjeto']." and CodigoDocumento=".$dado['iddocantigo']."";
 
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
 
@@ -644,7 +644,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
 
             $sql = "DELETE FROM sac.dbo.DocumentosProponente WHERE Contador = $idcontador";
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
 
@@ -665,7 +665,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
 
             $sql = "DELETE FROM sac.dbo.DocumentosProponente WHERE IdProjeto = $idProjeto";
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
 
@@ -686,7 +686,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
             $sql = "DELETE FROM sac.dbo.DocumentosProjeto WHERE Contador = $idcontador";
 
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
 
@@ -708,7 +708,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
             $sql = "DELETE FROM sac.dbo.DocumentosProjeto WHERE idProjeto = $idProjeto";
 
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
 
@@ -726,7 +726,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 ";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -737,7 +737,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 ";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -748,7 +748,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 ";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -765,7 +765,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 ";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -777,7 +777,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
             $sql = "DELETE FROM sac.dbo.PreProjeto WHERE idPreProjeto = $idPreProjeto";
 
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $db->fetchRow($sql);
         }
@@ -796,7 +796,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
                 WHERE uog_orgao={$idOrgao} AND idTecnico={$idTecnico} and sis_codigo=21 and gru_codigo=92 and
                 stEstado = 0 and year(DtAvaliacao)=year(Getdate()) and month(DtAvaliacao)=month(Getdate())";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);

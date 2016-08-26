@@ -8,7 +8,7 @@ class fnTotalCaptadoProjeto extends GenericModel {
     public function buscaCaptacao($AnoProjeto, $Sequencial) {
         $select = new Zend_Db_Expr("SELECT SAC.dbo.fnTotalCaptadoProjeto('$AnoProjeto','$Sequencial') AS vlCaptacao");
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();

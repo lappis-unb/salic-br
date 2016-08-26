@@ -78,7 +78,7 @@ class VisaoDAO extends Zend_Db_Table
      */
     public static function cadastrarVisao($dados)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $insert = $db->insert('AGENTES.dbo.Visao', $dados); // cadastra
@@ -96,7 +96,7 @@ class VisaoDAO extends Zend_Db_Table
      */
     public static function alterarVisao($idAgente, $dados)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idAgente = " . $idAgente; // condi��o para altera��o
@@ -120,7 +120,7 @@ class VisaoDAO extends Zend_Db_Table
      */
     public static function excluirVisao($idAgente)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idAgente = " . $idAgente; // condi��o para exclus�o

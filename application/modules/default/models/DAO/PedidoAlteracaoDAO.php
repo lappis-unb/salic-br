@@ -18,7 +18,7 @@ Class PedidoAlteracaoDAO extends Zend_Db_Table{
                             tpap.IdPRONAC = $idpedidoalteracao and tpa.tpAlteracaoProjeto = 5 
                         ORDER BY tpap.idPedidoAlteracao DESC";
    
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_ASSOC);
 			$resultado = $db->fetchRow($sql);
 
@@ -40,7 +40,7 @@ Class PedidoAlteracaoDAO extends Zend_Db_Table{
                     where
                         tpap.IdPRONAC = $idPronac and tpa.tpAlteracaoProjeto = 2";
 
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $resultado = $db->fetchRow($sql);
 
@@ -59,7 +59,7 @@ Class PedidoAlteracaoDAO extends Zend_Db_Table{
                         JOIN SAC.dbo.tbAbrangencia abran on abran.idPedidoAlteracao = tpap.idPedidoAlteracao
                     where
                         tpap.IdPRONAC = $idPronac and tpap.idPedidoAlteracao = $idPedidoAlteracao and tpa.tpAlteracaoProjeto = 4";
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $resultado = $db->fetchRow($sql);
 
@@ -81,7 +81,7 @@ Class PedidoAlteracaoDAO extends Zend_Db_Table{
                     where
                         tpap.IdPRONAC = $idPronac and tpa.tpAlteracaoProjeto = 1";
 
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $resultado = $db->fetchRow($sql);
 
@@ -103,7 +103,7 @@ Class PedidoAlteracaoDAO extends Zend_Db_Table{
                     tpa.IdPRONAC = {$idPronac} and tpxa.tpAlteracaoProjeto = 3 ORDER BY tpa.idPedidoAlteracao DESC
                 ";
 
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $resultado = $db->fetchRow($sql);
 
@@ -121,7 +121,7 @@ Class PedidoAlteracaoDAO extends Zend_Db_Table{
                     tpa.IdPRONAC = {$idPronac} and tpxa.tpAlteracaoProjeto = 6 ORDER BY tpa.idPedidoAlteracao DESC
                 ";
 
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $resultado = $db->fetchRow($sql);
 
@@ -141,7 +141,7 @@ Class PedidoAlteracaoDAO extends Zend_Db_Table{
                     tpa.IdPRONAC = {$idPronac} and tpa.idPedidoAlteracao = $idPedidoAlteracao and tpxa.tpAlteracaoProjeto = 3
                 ";
 
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $resultado = $db->fetchAll($sql);
 
@@ -177,7 +177,7 @@ Class PedidoAlteracaoDAO extends Zend_Db_Table{
                         pap.IdPRONAC = {$idPronac} and pp.tpProrrogacao = 'E' and tap.tpAlteracaoProjeto = 9 
                     ORDER BY pap.idPedidoAlteracao DESC";
 
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $resultado = $db->fetchRow($sql);
 
@@ -205,7 +205,7 @@ Class PedidoAlteracaoDAO extends Zend_Db_Table{
                         pap.IdPRONAC = $idPronac and pp.tpProrrogacao = 'C' and tap.tpAlteracaoProjeto = 8 and aprov.TipoAprovacao in (1,3)
                     order by pap.idPedidoAlteracao desc";
 
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             $resultado = $db->fetchRow($sql);
 

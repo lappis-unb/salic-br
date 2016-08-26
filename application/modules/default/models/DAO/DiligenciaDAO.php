@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -20,7 +20,7 @@ class DiligenciaDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para cadastrar informações da diligencia
+	 * Mï¿½todo para cadastrar informaï¿½ï¿½es da diligencia
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -28,7 +28,7 @@ class DiligenciaDAO extends Zend_Db_Table
 	 */
 	public static function cadastrar($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$cadastrar = $db->insert("SAC.dbo.tbDiligencia", $dados);
@@ -41,6 +41,6 @@ class DiligenciaDAO extends Zend_Db_Table
 		{
 			return false;
 		} 
-	} // fecha método cadastrar()
+	} // fecha mï¿½todo cadastrar()
 
 } // fecha class DiligenciaDAO

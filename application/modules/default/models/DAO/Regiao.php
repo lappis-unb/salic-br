@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -17,7 +17,7 @@ class Regiao extends Zend_Db_Table
 
 
  /**
-  * Método para buscar as regiões
+  * Mï¿½todo para buscar as regiï¿½es
   * @access public
   * @param void
   * @return object $db->fetchAll($sql)
@@ -28,12 +28,12 @@ class Regiao extends Zend_Db_Table
 
   try
   {
-   $db  = Zend_Registry::get('db');
+   $db = Zend_Db_Table::getDefaultAdapter();
    $db->setFetchMode(Zend_DB::FETCH_OBJ);
   }
   catch (Zend_Exception_Db $e)
   {
-   $this->view->message = "Erro ao buscar Regiões: " . $e->getMessage();
+   $this->view->message = "Erro ao buscar Regiï¿½es: " . $e->getMessage();
   }
 
   return $db->fetchAll($sql);

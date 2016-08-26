@@ -14,7 +14,7 @@ class Cidade extends Zend_Db_Table
     protected $_schema = 'agentes';
 
     /**
-     * Método para buscar as cidades de um determinado estado
+     * Mï¿½todo para buscar as cidades de um determinado estado
      * @access public
      * @param integer $idUF
      * @return object $db->fetchAll($sql)
@@ -28,7 +28,7 @@ class Cidade extends Zend_Db_Table
 
         try
         {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)

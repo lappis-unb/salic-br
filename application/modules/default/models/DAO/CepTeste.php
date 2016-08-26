@@ -27,7 +27,7 @@ class CepTeste{
 						on bro.nrBairro = lor.nrInicioBairro 
 						or bro.nrBairro = lor.nrFimBairro ";
 
-			$db = Zend_Registry::get('db');
+			$db= Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 			return $db->fetchAll($sql);

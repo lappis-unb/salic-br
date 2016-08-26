@@ -66,7 +66,7 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
         //die('<pre>'.$sql);
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -120,7 +120,7 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
         //die('<pre>'.$sql);
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -186,7 +186,7 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
         //die('<pre>'.$sql);
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         
         return $db->fetchAll($sql);
@@ -242,7 +242,7 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
         //die('<pre>'.$sql);
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -256,7 +256,7 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
         //die('<pre>'.$sql);
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -273,7 +273,7 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
         //die('<pre>'.$sql);
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -302,13 +302,13 @@ class GerarRelatoriosDAO extends Zend_Db_Table {
         //die('<pre>'.$sql);
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
-    /** ALTERAÇÕES ************************************************************************************ */
-    /** EXCLUSÕES ************************************************************************************* */
+    /** ALTERAï¿½ï¿½ES ************************************************************************************ */
+    /** EXCLUSï¿½ES ************************************************************************************* */
     /** CADASTROS ************************************************************************************* */
     /** EXEC ****************************************************************************************** */
 }

@@ -19,11 +19,11 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
 		$sql = "SELECT idPRONAC FROM Sac.dbo.Projetos WHERE AnoProjeto+Sequencial = '{$idPronac}'";
 
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		return $db->fetchAll($sql);
-	} // fecha método buscaAgentes()
+	} // fecha mï¿½todo buscaAgentes()
 
 
     	public static function buscaAgentes($cnpjcpf = null, $nome = null, $idAgente = null)
@@ -33,11 +33,11 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
 		$sql = "SELECT TipoPessoa FROM Agentes.dbo.Agentes WHERE CNPJCPF = '$cnpjcpf'";
 
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		return $db->fetchAll($sql);
-	} // fecha método buscaAgentes()
+	} // fecha mï¿½todo buscaAgentes()
 
 
         public static function buscaInteressados($cnpjcpf = null, $nome = null, $idAgente = null)
@@ -47,11 +47,11 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
 		$sql = "SELECT CgcCpf FROM SAC.dbo.Interessado WHERE CgcCpf = '$cnpjcpf'";
 
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		return $db->fetchAll($sql);
-	} // fecha método buscaAgentes()
+	} // fecha mï¿½todo buscaAgentes()
 
         public static function buscaCertidoesQF($cnpjcpf = null, $nome = null, $idAgente = null) {
 
@@ -65,7 +65,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
 						ORDER BY idCertidoesnegativas DESC";
 
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
             return $db->fetchAll($sql);
@@ -83,7 +83,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
 						ORDER BY idCertidoesnegativas DESC";
 
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
             return $db->fetchAll($sql);
@@ -101,7 +101,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
 						ORDER BY idCertidoesnegativas DESC";
 
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
             return $db->fetchAll($sql);
@@ -118,7 +118,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
 						ORDER BY idCertidoesnegativas DESC ";
 
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
             return $db->fetchAll($sql);
@@ -136,7 +136,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
 						ORDER BY idCertidoesnegativas DESC";
 
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
             return $db->fetchAll($sql);
@@ -155,7 +155,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
             $sql = "select  CgcCpf,CodigoCertidao  from SAC.dbo.CertidoesNegativas where CgcCpf = '$cpfCnpj' and CodigoCertidao = $codigoCertidao";
 
 
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
             return $db->fetchAll($sql);
@@ -212,7 +212,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
                 }
 
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		return $db->fetchAll($sql);
@@ -270,7 +270,7 @@ class ManterRegularidadeProponenteDAO extends Zend_Db_Table {
 
 
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		return $db->fetchAll($sql);

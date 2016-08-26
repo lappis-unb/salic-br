@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -20,7 +20,7 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para cadastrar os comprovantes
+	 * Mï¿½todo para cadastrar os comprovantes
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -28,7 +28,7 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 	 */
 	public static function cadastrar($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbComprovanteExecucao", $dados);
@@ -41,12 +41,12 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 		{
 			return false;
 		} 
-	} // fecha método cadastrar()
+	} // fecha mï¿½todo cadastrar()
 
 
 
 	/**
-	 * Método para alterar os comprovantes
+	 * Mï¿½todo para alterar os comprovantes
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -55,7 +55,7 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 	 */
 	public static function alterar($dados, $id)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where   = "idComprovante = $id";
@@ -69,12 +69,12 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método alterar()
+	} // fecha mï¿½todo alterar()
 
 
 
 	/**
-	 * Método para buscar o id do último comprovante cadastrado
+	 * Mï¿½todo para buscar o id do ï¿½ltimo comprovante cadastrado
 	 * @access public
 	 * @static
 	 * @param void
@@ -84,16 +84,16 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 	{
 		$sql = "SELECT MAX(idComprovante) AS id FROM BDCORPORATIVO.scSAC.tbComprovanteExecucao";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
-	} // fecha método buscarIdComprovante()
+	} // fecha mï¿½todo buscarIdComprovante()
 
 
 
 
 	/**
-	 * Método para buscar todas as informações dos comprovantes ativos
+	 * Mï¿½todo para buscar todas as informaï¿½ï¿½es dos comprovantes ativos
 	 * @access public
 	 * @static
 	 * @param integer $idPRONAC
@@ -103,7 +103,7 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 	 */
 	public static function buscar($idPRONAC = null, $idComprovante = null, $idProponente = null)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$sql = "SELECT doc.idComprovante
@@ -163,12 +163,12 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 		$sql.= "ORDER BY doc.dtEnvioComprovante DESC"; // ordem decrescente pela data
 
 		return $db->fetchAll($sql);
-	} // fecha método buscar()
+	} // fecha mï¿½todo buscar()
 
 
 
 	/**
-	 * Método para buscar todas as informações dos útimos históricos de comprovantes ativos
+	 * Mï¿½todo para buscar todas as informaï¿½ï¿½es dos ï¿½timos histï¿½ricos de comprovantes ativos
 	 * @access public
 	 * @static
 	 * @param integer $idPRONAC
@@ -178,7 +178,7 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 	 */
 	public static function buscarDocumentos($idPRONAC = null, $idComprovante = null, $idProponente = null)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$sql = "SELECT doc.idComprovante
@@ -240,12 +240,12 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 		$sql.= "ORDER BY doc.dtEnvioComprovante DESC"; // ordem decrescente pela data
 
 		return $db->fetchAll($sql);
-	} // fecha método buscarDocumentos()
+	} // fecha mï¿½todo buscarDocumentos()
 
 
 
 	/**
-	 * Método para buscar o histórico de cada comprovante
+	 * Mï¿½todo para buscar o histï¿½rico de cada comprovante
 	 * @access public
 	 * @static
 	 * @param integer $idComprovante
@@ -255,7 +255,7 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 	 */
 	public static function buscarHistorico($idComprovante, $idComprovanteAnterior, $idProponente = null)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$sql = "SELECT doc.idComprovante
@@ -306,12 +306,12 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 		$sql.= "ORDER BY doc.dtEnvioComprovante DESC"; // ordem decrescente pela data
 
 		return $db->fetchAll($sql);
-	} // fecha método buscarHistorico()
+	} // fecha mï¿½todo buscarHistorico()
 
 
 
 	/**
-	 * Busca os projetos com os status 'Aguardando Avaliação', 'Em Avaliação', 'Em Aprovação' e 'Avaliado'
+	 * Busca os projetos com os status 'Aguardando Avaliaï¿½ï¿½o', 'Em Avaliaï¿½ï¿½o', 'Em Aprovaï¿½ï¿½o' e 'Avaliado'
 	 * @access public
 	 * @param string $pronac
 	 * @param string $status
@@ -322,7 +322,7 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 	public static function buscarProjetos($pronac = null, $status = null, 
 	$dt_inicio = null, $dt_fim = null)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		// busca os dados
@@ -353,28 +353,28 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 		if (!empty($status))
 		{
 			// se o projeto tiver pelo menos um comprovante 
-			// com o status 'Aguardando Avaliação'
+			// com o status 'Aguardando Avaliaï¿½ï¿½o'
 			if ($status == "AG")
 			{
 				$sql.= "AND doc.stParecerComprovante = 'AG' ";
 			}
 
 			// se o projeto tiver pelo menos um comprovante 
-			// com o status 'Em Aprovação'
+			// com o status 'Em Aprovaï¿½ï¿½o'
 			if ($status == "EA")
 			{
 				$sql.= "AND doc.stParecerComprovante = 'EA' ";
 			}
 
 			// se o projeto tiver pelo menos um comprovante 
-			// com o status 'Em Avaliação'
+			// com o status 'Em Avaliaï¿½ï¿½o'
 			if ($status == "AV")
 			{
 				$sql.= "AND doc.stParecerComprovante = 'AV' ";
 			}
 
-			// se o projeto não tiver comprovantes  
-			// com os status 'Aguardando Avaliação', 'Em Aprovação' em 'Em Avaliação'
+			// se o projeto nï¿½o tiver comprovantes  
+			// com os status 'Aguardando Avaliaï¿½ï¿½o', 'Em Aprovaï¿½ï¿½o' em 'Em Avaliaï¿½ï¿½o'
 			if ($status == "AA")
 			{
 				$sql.= "AND doc.stParecerComprovante <> 'AG' ";
@@ -408,7 +408,7 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 
 
 	/**
-	 * Busca o último comprovante aprovado de acordo com seu histórico
+	 * Busca o ï¿½ltimo comprovante aprovado de acordo com seu histï¿½rico
 	 * @access public
 	 * @param integer $idPRONAC
 	 * @param integer $idComprovante
@@ -417,7 +417,7 @@ class ComprovanteExecucaoFisicaDAO extends Zend_Db_Table
 	 */
 	public static function buscarUltimoComprovanteAprovado($idPRONAC, $idComprovante, $idComprovanteAnterior)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		// busca os dados

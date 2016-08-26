@@ -18,7 +18,7 @@ class DiligenciarDao extends Zend_Db_Table
                 where Opcao in (1,2) $where
                 " ;
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -45,7 +45,7 @@ class DiligenciarDao extends Zend_Db_Table
                 left  join BDCORPORATIVO.scCorp.tbArquivo arq on arq.idArquivo = dil.idArquivo
                 $where " ;
         
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -62,7 +62,7 @@ class DiligenciarDao extends Zend_Db_Table
                 left  join BDCORPORATIVO.scCorp.tbArquivo arq on arq.idArquivo = dil.idArquivo
                 $where " ;
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -76,7 +76,7 @@ class DiligenciarDao extends Zend_Db_Table
                 from SAC.dbo.Projetos pro
                 $where " ;
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -89,7 +89,7 @@ class DiligenciarDao extends Zend_Db_Table
         $sql = "select pre.NomeProjeto as nomeProjeto,idPreProjeto from SAC.dbo.PreProjeto pre
                 $where " ;
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -103,7 +103,7 @@ class DiligenciarDao extends Zend_Db_Table
 
         $sql = "select idVerificacao,Descricao from SAC.dbo.Verificacao where idTipo = 8 and stEstado = 1 $where " ;
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -124,7 +124,7 @@ class DiligenciarDao extends Zend_Db_Table
         }
         $sql = "Insert Into SAC.dbo.tbDiligencia({$atributos})values({$valores})";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $dados =  $db->query($sql);
 
@@ -144,7 +144,7 @@ class DiligenciarDao extends Zend_Db_Table
         }
         $sql = "update SAC.dbo.tbDiligencia set $valores $where";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $dados =  $db->query($sql);
 
@@ -160,7 +160,7 @@ class DiligenciarDao extends Zend_Db_Table
         $sql = "select pre.idAgente from SAC.dbo.Projetos pro
                 inner join SAC.dbo.PreProjeto pre on pro.idProjeto = pre.idPreProjeto $where " ;
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -172,7 +172,7 @@ class DiligenciarDao extends Zend_Db_Table
 
         $sql = "select pre.idAgente from SAC.dbo.PreProjeto pre $where " ;
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 

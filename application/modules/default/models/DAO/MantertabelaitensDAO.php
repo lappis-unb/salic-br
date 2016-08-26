@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -36,11 +36,11 @@ class MantertabelaitensDAO extends Zend_Db_Table {
         }
         $sql .=" ORDER BY pr.Codigo ASC";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
-    } // fecha método buscaprodutoetapaitem()
+    } // fecha mï¿½todo buscaprodutoetapaitem()
 
     
     public static function exibirEtapa($idProduto) {
@@ -54,7 +54,7 @@ class MantertabelaitensDAO extends Zend_Db_Table {
 						 ORDER BY  e.Descricao  ASC ";
         
     	//die('<pre>'.$sql);
-    	 $db = Zend_Registry::get('db');
+    	 $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     } 
@@ -68,7 +68,7 @@ class MantertabelaitensDAO extends Zend_Db_Table {
 					Where  p.idProduto = ".$idProduto." and e.idPlanilhaEtapa = ".$idEtapa." 
 					ORDER BY  i.Descricao  ASC";
         
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     } 
@@ -94,11 +94,11 @@ class MantertabelaitensDAO extends Zend_Db_Table {
             $sql .=" AND i.Descricao ".$nomeItem;
         }
         //XD($sql);
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchRow($sql);
-    } // fecha método buscaprodutoetapaitem()
+    } // fecha mï¿½todo buscaprodutoetapaitem()
 
 
     public static function buscaproduto($where=null) {
@@ -108,22 +108,22 @@ class MantertabelaitensDAO extends Zend_Db_Table {
             $sql .=" AND i.Descricao ".$nomeItem;
         }
         //xd($sql);
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
-    } // fecha método buscaprodutoetapaitem()
+    } // fecha mï¿½todo buscaprodutoetapaitem()
 
 
 
     public static function buscaetapa() {
         $sql = "SELECT idPlanilhaEtapa as codetapa, Descricao as Etapa
 				FROM SAC.dbo.TbPlanilhaEtapa";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
-    } // fecha método buscaprodutoetapaitem()
+    } // fecha mï¿½todo buscaprodutoetapaitem()
 
 
 
@@ -131,11 +131,11 @@ class MantertabelaitensDAO extends Zend_Db_Table {
     public static function buscaitem() {
         $sql = "Select idPlanilhaItens as coditens, Descricao as Item, idUsuario from SAC.dbo.tbPlanilhaItens
 		 order by Descricao";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
-    } // fecha método buscaprodutoetapaitem()
+    } // fecha mï¿½todo buscaprodutoetapaitem()
 
 
 
@@ -159,11 +159,11 @@ class MantertabelaitensDAO extends Zend_Db_Table {
 			      LEFT JOIN SAC.dbo.TbPlanilhaItens it ON sol.idPlanilhaItens = it.idPlanilhaItens
 			 WHERE sol.idAgente = '".$idAgente."'
 			 ORDER BY sol.idSolicitarItem";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
-    } // fecha método buscaprodutoetapaitem()
+    } // fecha mï¿½todo buscaprodutoetapaitem()
 
 
 
@@ -190,23 +190,23 @@ class MantertabelaitensDAO extends Zend_Db_Table {
 
        /* $resultado = $db->query($sql);
         return $resultado;*/
-    } // fecha método cadastraritem()
+    } // fecha mï¿½todo cadastraritem()
 
 
 
     public static function buscarItem($idAgente) {
         $sql = "SELECT TOP 1 idPlanilhaItens FROM SAC.dbo.tbPlanilhaItens where idUsuario = ".$idAgente." order by idPlanilhaItens desc";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
         return $db->fetchRow($sql);
-    } // fecha método buscarItem()
+    } // fecha mï¿½todo buscarItem()
 
 
 
     public static function associaritem($dadosassociar) {
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $cadastrar = $db->insert("SAC.dbo.tbSolicitarItem", $dadosassociar);
 		
@@ -257,7 +257,7 @@ class MantertabelaitensDAO extends Zend_Db_Table {
         }
         $sql .= " ORDER BY sol.idSolicitarItem";
         
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);

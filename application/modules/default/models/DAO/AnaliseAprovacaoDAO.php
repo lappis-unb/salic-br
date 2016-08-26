@@ -1,12 +1,12 @@
 <?php
-/* DAO Análise Aprovacao
+/* DAO Anï¿½lise Aprovacao
  * @author Equipe RUP - Politec
  * @since 02/06/2010
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
  * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Politec - Todos os direitos reservados.
  */
 
 class AnaliseAprovacaoDAO extends Zend_Db_Table
@@ -19,7 +19,7 @@ class AnaliseAprovacaoDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para alterar os dados da análise de conteúdo na planilha do conselheiro/ministro
+	 * Mï¿½todo para alterar os dados da anï¿½lise de conteï¿½do na planilha do conselheiro/ministro
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -30,7 +30,7 @@ class AnaliseAprovacaoDAO extends Zend_Db_Table
 	 */
 	public static function alterar($dados, $idPronac, $idProduto = null, $idAnaliseAprovacao = null, $tpAnalise = null)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where = "IdPRONAC = $idPronac ";
@@ -62,6 +62,6 @@ class AnaliseAprovacaoDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método alterar()
+	} // fecha mï¿½todo alterar()
 
 } // fecha class

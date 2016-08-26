@@ -113,7 +113,7 @@ class EncriptaSenhaDAO extends Zend_Db_Table
 
     public static function encriptaSenha($cpf, $senha)
     {
-//        $db = Zend_Registry::get('db');
+//        $db= Zend_Db_Table::getDefaultAdapter();
         $db = Zend_Db_Table::getDefaultAdapter();
 
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {

@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -20,7 +20,7 @@ class AvaliacaoSubItemPlanoDistribuicaoDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -28,7 +28,7 @@ class AvaliacaoSubItemPlanoDistribuicaoDAO extends Zend_Db_Table
 	 */
 	public static function cadastrar($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPlanoDistribuicao", $dados);
@@ -41,12 +41,12 @@ class AvaliacaoSubItemPlanoDistribuicaoDAO extends Zend_Db_Table
 		{
 			return false;
 		} 
-	} // fecha método cadastrar()
+	} // fecha mï¿½todo cadastrar()
 
 
 
 	/**
-	 * Método para alterar
+	 * Mï¿½todo para alterar
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -56,7 +56,7 @@ class AvaliacaoSubItemPlanoDistribuicaoDAO extends Zend_Db_Table
 	 */
 	public static function alterar($dados, $id, $idPlano)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where   = "idAvaliacaoSubItemPedidoAlteracao = $id";
@@ -71,6 +71,6 @@ class AvaliacaoSubItemPlanoDistribuicaoDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método alterar()
+	} // fecha mï¿½todo alterar()
 
 } // fecha class AvaliacaoSubItemPlanoDistribuicaoDAO

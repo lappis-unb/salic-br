@@ -6,7 +6,7 @@
  * @package application
  * @subpackage application.model.DAO
  * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Politec - Todos os direitos reservados.
 */
 
 class RealizarAnaliseProjetoDAO extends Zend_db_table
@@ -14,14 +14,14 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
     public static function somarOrcamentoSolicitado($idpronac){
 
        $sele = "select sum(VlTotal) as somatudo from SAC.dbo.vwOrcamentoSolicitado where idpronac = $idpronac";
-       $db  = Zend_Registry::get('db');
+       $db = Zend_Db_Table::getDefaultAdapter();
        $db->setFetchMode(Zend_DB::FETCH_ASSOC);
        return $db->fetchRow($sele);
         
     }
 
     /**
-     * Método para Verificar Enquadramento
+     * Mï¿½todo para Verificar Enquadramento
      * @access public
      * @static
      * @param integer $idPronac
@@ -34,13 +34,13 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
                   Inner join sac.dbo.PlanoDistribuicaoProduto pdp on pdp.idproduto=taa.idproduto and pdp.idprojeto = pr.idprojeto
                   where taa.idpronac = $idpronac and pdp.stPrincipal = 1 and taa.tpanalise = '$tpAnalise' AND pdp.stPlanoDistribuicaoProduto = 1
                   ";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
 
     }
      /**
-     * Método para Verificar se o parecer é favoravel ou não
+     * Mï¿½todo para Verificar se o parecer ï¿½ favoravel ou nï¿½o
      * @access public
      * @static
      * @param integer $idPronac
@@ -50,17 +50,17 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
     {
             $sql = "select
                     case
-                    when sac.dbo.fnParecerFavoravel($idpronac) = 1 then 'Não'
+                    when sac.dbo.fnParecerFavoravel($idpronac) = 1 then 'Nï¿½o'
                     when sac.dbo.fnParecerFavoravel($idpronac) = 2 then 'Sim'
                     end as parecer";
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
 
     }
 
     /**
-     * Método para Verificar Se existe na tabela Planilha aprovacao item com codigo 206
+     * Mï¿½todo para Verificar Se existe na tabela Planilha aprovacao item com codigo 206
      * @access public
      * @static
      * @param integer $idPronac
@@ -77,14 +77,14 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
                     AND stAtivo = 'S'
                     AND tpPlanilha = 'CO'
                    ";
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
 
     }
 
     /**
-     * Método para Verificar Se existe na tabela Planilha aprovacao item com codigo 206
+     * Mï¿½todo para Verificar Se existe na tabela Planilha aprovacao item com codigo 206
      * @access public
      * @static
      * @param integer $idPronac
@@ -117,13 +117,13 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
                             AND stAtivo = 'S'
                             AND tpPlanilha = 'CO'
                    ";
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
 
     }
         /**
-             * Método que altera o o altera a planilha aprovacao
+             * Mï¿½todo que altera o o altera a planilha aprovacao
              * @access public
              * @param array $dados
              * @param integer $idPronac
@@ -140,7 +140,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
                             and stAtivo='S'
                             and tpplanilha='CO'";
                 try{
-                $db = Zend_Registry::get('db');
+                $db= Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB::FETCH_OBJ);
                 $alterar = $db->update("SAC.dbo.tbPlanilhaAprovacao", $dados, $where);
                 return true;
@@ -152,7 +152,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 
             
                 /**
-                 * Método que insere os dados na tabela tbplanilhaaprovacao
+                 * Mï¿½todo que insere os dados na tabela tbplanilhaaprovacao
                  * @access public
                  * @param array $dados
                  * @static
@@ -161,7 +161,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
                 public static function inserirplanilhaaprovacao($dados)
                 {
                     try{
-                    $db = Zend_Registry::get('db');
+                    $db= Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB::FETCH_OBJ);
                     $cadastrar = $db->insert("BSAC.dbo.tbPlanilhaAprovacao", $dados);
                     return true;
@@ -170,10 +170,10 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
                     return false;
                     }
 
-                } // fecha método cadastrarSubmeterCNIC()
+                } // fecha mï¿½todo cadastrarSubmeterCNIC()
 
      /**
-     * Método para trazer a Elaboração, Valor do Componente da Comissao
+     * Mï¿½todo para trazer a Elaboraï¿½ï¿½o, Valor do Componente da Comissao
      * @access public
      * @static
      * @param integer $idPronac, $tipoBusca = S: Sugerido pelo componente da comissao, E: Elaboracao e agenciamento
@@ -199,13 +199,13 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
                         AND p.stAtivo = 'S' AND p.tpPlanilha = 'CO'
                         ";
                 }
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
 
     }
      /**
-     * Método para trazer a Elaboração
+     * Mï¿½todo para trazer a Elaboraï¿½ï¿½o
      * @access public
      * @static
      * @param integer
@@ -217,7 +217,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
                          sac.dbo.fnQtElaboracaoAgenciamento($idpronac,'CO') as valor
 ";
 
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
 
@@ -225,8 +225,8 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 
     
     /**
-     * Método para recuperar os projetos em análise. (CONSELHEIRO)
-     * Só efetua a busca se as fontes de recursos estiverem de acordo com o Código 109 – Incentivo Fiscal Federal,
+     * Mï¿½todo para recuperar os projetos em anï¿½lise. (CONSELHEIRO)
+     * Sï¿½ efetua a busca se as fontes de recursos estiverem de acordo com o Cï¿½digo 109 ï¿½ Incentivo Fiscal Federal,
      * conforme Lei 8.313 de 1991.
      * @access public
      * @static
@@ -301,16 +301,16 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
         }
 
         $sql.= " ORDER BY Situacao ASC";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método analiseDeConta()
+    } // fecha mï¿½todo analiseDeConta()
 
 
 
     /**
-     * Método que busca as informações da análise do parecer consolidado
+     * Mï¿½todo que busca as informaï¿½ï¿½es da anï¿½lise do parecer consolidado
      * @access public
      * @static
      * @param integer $idPronac
@@ -328,15 +328,15 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 			,par.SugeridoReal
             ,par.ResumoParecer
             , case
-                  when par.ParecerFavoravel = 1 then 'Não'
+                  when par.ParecerFavoravel = 1 then 'Nï¿½o'
                   when par.ParecerFavoravel = 2 then 'Sim'
             end as parecerfavoravel,
             par.TipoParecer
             ,case
-			      when par.TipoParecer = 1 then 'Aprovação Inicial'
-			      when par.TipoParecer = 2 then 'Complementação'
-			      when par.TipoParecer = 3 then 'Prorrogação'
-			      when par.TipoParecer = 4 then 'Redução'
+			      when par.TipoParecer = 1 then 'Aprovaï¿½ï¿½o Inicial'
+			      when par.TipoParecer = 2 then 'Complementaï¿½ï¿½o'
+			      when par.TipoParecer = 3 then 'Prorrogaï¿½ï¿½o'
+			      when par.TipoParecer = 4 then 'Reduï¿½ï¿½o'
 			end as tipoparecer
             ,case
 			when par.idEnquadramento = 1 then 'Artigo 26'
@@ -347,7 +347,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
             WHERE PAR.idTipoAgente = 1 and PRO.IdPRONAC=" . $idPronac;
         // busca de acordo com o pronac
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
@@ -362,18 +362,18 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
                      ROUND(sac.dbo.fnOutrasFontes(idPronac),2) as OutrasFontes,
                      ROUND(sac.dbo.fnValorSolicitado(AnoProjeto,Sequencial),2) as ValorSolicitado,
                      --CASE
-                     --WHEN sac.dbo.fnParecerFavoravel(idPronac) = 1 -- Parecer Desfavorável
+                     --WHEN sac.dbo.fnParecerFavoravel(idPronac) = 1 -- Parecer Desfavorï¿½vel
                      --THEN  0
                      --ELSE
                      --sac.dbo.fnValorElaboracaoAgenciamento(idPronac)
                      --END as Elaboracao,
                      CASE
-                       WHEN sac.dbo.fnParecerFavoravel(idPronac) = 1 -- Parecer Desfavorável
+                       WHEN sac.dbo.fnParecerFavoravel(idPronac) = 1 -- Parecer Desfavorï¿½vel
                          THEN  0
                          ELSE  ROUND(sac.dbo.fnValorSugerido(idPronac),2)
                        END as ValorSugerido,
                      CASE
-                       WHEN sac.dbo.fnParecerFavoravel(idPronac) = 1 -- Parecer Desfavorável
+                       WHEN sac.dbo.fnParecerFavoravel(idPronac) = 1 -- Parecer Desfavorï¿½vel
                          THEN  0
                          ELSE  ROUND(sac.dbo.fnValorSugerido(idPronac) - sac.dbo.fnValorElaboracaoAgenciamento(idPronac),2)
                      END as ValorParecer
@@ -381,13 +381,13 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
                          WHERE sac.dbo.fnValorDaProposta(idProjeto) > 0 and IdPRONAC=$idpronac
 ";
 //            echo '<pre>'.$sql; die;
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
     }
 
     /**
-     * Método que busca as informações da análise do parecer consolidado já somados os valores
+     * Mï¿½todo que busca as informaï¿½ï¿½es da anï¿½lise do parecer consolidado jï¿½ somados os valores
      * @access public
      * @static
      * @param integer $idPronac
@@ -435,7 +435,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
         $sql .=" AND PAP.tpPlanilha = 'CO'
                  AND PRO.IdPRONAC= ".$idPronac;
         // busca de acordo com o pronac
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 //        echo "<pre>".$sql; die;
@@ -447,7 +447,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 
 
     /**
-     * Método que busca as informações da análise de conteúdo
+     * Mï¿½todo que busca as informaï¿½ï¿½es da anï¿½lise de conteï¿½do
      * @access public
      * @static
      * @param integer $idPronac
@@ -512,16 +512,16 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
             $sql.= " WHERE AP. tpAnalise = '$tpAnalise' and AC.idPronac = $idPronac";
         }
 //        xd($sql);
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método analiseDeConteudo()
+    } // fecha mï¿½todo analiseDeConteudo()
 
 
 
     /**
-     * Método que busca os produtos dos projetos da análise de custos
+     * Mï¿½todo que busca os produtos dos projetos da anï¿½lise de custos
      * @access public
      * @static
      * @param integer $idPronac
@@ -531,7 +531,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
     {
         $sql = "select dsAnalise from BDCORPORATIVO.scSAC.tbPauta where idpronac = $idpronac ";
 //die($sql);
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
         $resultado = $db->fetchRow($sql);
 //        die($sql);
@@ -539,7 +539,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
     }
     
     /**
-     * Método que busca os produtos dos projetos da análise de custos
+     * Mï¿½todo que busca os produtos dos projetos da anï¿½lise de custos
      * @access public
      * @static
      * @param integer $idPronac
@@ -551,7 +551,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 		$sql = "SELECT DISTINCT PD.Descricao, 
 					CASE
 						WHEN PAP.idProduto = 0
-							THEN 'Administração do Projeto'
+							THEN 'Administraï¿½ï¿½o do Projeto'
 							ELSE PD.Descricao
 						END AS Produto
 					,PAP.IdPRONAC
@@ -579,16 +579,16 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
             $sql.= " AND PAP.IdPRONAC = $idPronac";
         }
         $sql.= " ORDER BY PD.Descricao";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método analiseDeCustosBuscarProduto()
+    } // fecha mï¿½todo analiseDeCustosBuscarProduto()
 
 
 
     /**
-     * Método que busca as etapas dos projetos da análise de custos
+     * Mï¿½todo que busca as etapas dos projetos da anï¿½lise de custos
      * @access public
      * @static
      * @param integer $idPronac
@@ -628,16 +628,16 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 
         $sql.= " ORDER BY PP.idEtapa";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método analiseDeCustosBuscarEtapa()
+    } // fecha mï¿½todo analiseDeCustosBuscarEtapa()
 
 
 
     /**
-     * Método que busca os estados dos projetos da análise de custos
+     * Mï¿½todo que busca os estados dos projetos da anï¿½lise de custos
      * @access public
      * @static
      * @param integer $idPronac
@@ -684,15 +684,15 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 
         $sql.= " ORDER BY PAP.idUFDespesa";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método analiseDeCustosBuscarUF()
+    } // fecha mï¿½todo analiseDeCustosBuscarUF()
 
 
     /**
-     * Método que emite parecer (grava na tabela de aprovação)
+     * Mï¿½todo que emite parecer (grava na tabela de aprovaï¿½ï¿½o)
      * @access public
      * @static
      * @param array $dados
@@ -700,7 +700,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
      */
     public static function inserirAprovacao($valores)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $cadastrar = $db->insert("SAC.dbo.Aprovacao", $valores);
@@ -713,10 +713,10 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
         {
             return false;
         }
-    } // fecha método emitirParecer()
+    } // fecha mï¿½todo emitirParecer()
 
     /**
-     * Método que verifica a tabela aprovacao
+     * Mï¿½todo que verifica a tabela aprovacao
      * @access public
      * @static
      * @param $idpronac
@@ -725,13 +725,13 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
     public static function verificaraprovacao($idpronac)
     {
 		$sql = "SELECT 1 FROM SAC.dbo.aprovacao WHERE idpronac = $idpronac";
-		$db  = Zend_Registry::get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
     } // fecha verificaraprovacao
 
     /**
-     * Método que verifica a tabela aprovacao
+     * Mï¿½todo que verifica a tabela aprovacao
      * @access public
      * @static
      * @param $idpronac
@@ -739,7 +739,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
      */
     public static function alteraraprovacao($dados, $idpronac)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = " idpronac = ".$idpronac;
@@ -755,7 +755,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
     }
 
     /**
-     * Método que busca a reunião aberta
+     * Mï¿½todo que busca a reuniï¿½o aberta
      * @access public
      * @static
      * @return object
@@ -763,7 +763,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 	public static function buscarUltimaReuniao()
 	{
 		$sql = "SELECT * FROM SAC.dbo.tbReuniao WHERE stEstado = 0";
-		$db  = Zend_Registry::get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	} // fecha buscarUltimaReuniao()
@@ -771,7 +771,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 
 
     /**
-     * Método que insere o projeto na pauta
+     * Mï¿½todo que insere o projeto na pauta
      * @access public
      * @param array $dados
      * @static
@@ -780,7 +780,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
     public static function cadastrarSubmeterCNIC($dados)
     {
         try{
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbPauta", $dados);
         return true;
@@ -789,12 +789,12 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
         return false;
         }
 
-    } // fecha método cadastrarSubmeterCNIC()
+    } // fecha mï¿½todo cadastrarSubmeterCNIC()
 
 
 
     /**
-     * Método que altera o projeto na pauta
+     * Mï¿½todo que altera o projeto na pauta
      * @access public
      * @param array $dados
      * @param integer $idPronac
@@ -810,7 +810,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
             $where .= " and idnrreuniao=".$idnrreuniao;
         }
         try{
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $alterar = $db->update("BDCORPORATIVO.scSAC.tbPauta", $dados, $where);
         return true;
@@ -819,12 +819,12 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
             die($e->getMessage());
             return false;
         }
-    } // fecha método cadastrarSubmeterCNIC()
+    } // fecha mï¿½todo cadastrarSubmeterCNIC()
 
 
 
     /**
-     * Método que altera o projeto na pauta
+     * Mï¿½todo que altera o projeto na pauta
      * @access public
      * @param array $dados
      * @static
@@ -837,7 +837,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 					stEnvioPlenario = 'S'
 				WHERE IdPRONAC = $idPronac AND idNrReuniao = $idReuniao";
 
-		$db  = Zend_Registry::get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$alterar = $db->fetchAll($sql);
@@ -850,12 +850,12 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
 		{
 			return false;
 		}
-    } // fecha método submeterCnic()
+    } // fecha mï¿½todo submeterCnic()
 
 
 
     /**
-     * Método que busca os projetos em pauta
+     * Mï¿½todo que busca os projetos em pauta
      * @access public
      * @param integer $idPronac
      * @param integer $idReuniao
@@ -867,7 +867,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
         $sql = "SELECT idPRONAC, idNrReuniao, stEnvioPlenario FROM BDCORPORATIVO.scSAC.tbPauta WHERE idPRONAC = $idPronac AND idNrReuniao = $idReuniao";
         try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		}
 		catch (Zend_Exception_Db $e)
@@ -884,7 +884,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
          $sql = "select * from SAC.dbo.Situacao where Codigo in ('A13', 'A14', 'A16', 'A17', 'A20', 'A23', 'A24', 'D14','A41') and StatusProjeto <> 0";
 
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Erro ao buscar os Tipos de Documentos: " . $e->getMessage();
@@ -897,7 +897,7 @@ class RealizarAnaliseProjetoDAO extends Zend_db_table
     {
 	$where   = "IdPRONAC = $idPronac";
         try{
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $dados = array('situacao'=>$situacao);
         
@@ -935,7 +935,7 @@ public static  function outrasinformacoes($idpronac)
 	      
 	      try
 			{
-				$db  = Zend_Registry::get('db');
+				$db = Zend_Db_Table::getDefaultAdapter();
 				$db->setFetchMode(Zend_DB::FETCH_ASSOC);
 			}
 			catch (Zend_Exception_Db $e)
@@ -964,7 +964,7 @@ public static  function outrasinformacoes($idpronac)
 	
 		try
 			{
-				$db  = Zend_Registry::get('db');
+				$db = Zend_Db_Table::getDefaultAdapter();
 				$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			}
 			catch (Zend_Exception_Db $e)
@@ -1001,7 +1001,7 @@ public static function deslocamento($pronac){
 		
 		try
 			{
-				$db  = Zend_Registry::get('db');
+				$db = Zend_Db_Table::getDefaultAdapter();
 				$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			}
 			catch (Zend_Exception_Db $e)
@@ -1025,7 +1025,7 @@ public static function divulgacao($pronac){
 	
 	try
 			{
-				$db  = Zend_Registry::get('db');
+				$db = Zend_Db_Table::getDefaultAdapter();
 				$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			}
 			catch (Zend_Exception_Db $e)
@@ -1047,7 +1047,7 @@ public static function divulgacaoProjetos($pronac){
 	
 	try
 			{
-				$db  = Zend_Registry::get('db');
+				$db = Zend_Db_Table::getDefaultAdapter();
 				$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			}
 			catch (Zend_Exception_Db $e)
@@ -1072,7 +1072,7 @@ public static function divulgacaoProjetosGeral($pronac){
 
 	try
 			{
-				$db  = Zend_Registry::get('db');
+				$db = Zend_Db_Table::getDefaultAdapter();
 				$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			}
 			catch (Zend_Exception_Db $e)
@@ -1094,7 +1094,7 @@ public static function divulgacaoProjetosGeral2($pronac){
 
 	try
 			{
-				$db  = Zend_Registry::get('db');
+				$db = Zend_Db_Table::getDefaultAdapter();
 				$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			}
 			catch (Zend_Exception_Db $e)
@@ -1118,7 +1118,7 @@ public static function divulgacaoProjetosCadastrados($pronac){
 
 	try
 			{
-				$db  = Zend_Registry::get('db');
+				$db = Zend_Db_Table::getDefaultAdapter();
 				$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			}
 			catch (Zend_Exception_Db $e)
@@ -1168,7 +1168,7 @@ public static function planodedistribuicao ($pronac, $idproduto=null) {
 
 	try
 			{
-				$db  = Zend_Registry::get('db');
+				$db = Zend_Db_Table::getDefaultAdapter();
 				$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			}
 			catch (Zend_Exception_Db $e)
@@ -1195,7 +1195,7 @@ public static function planodedistribuicao ($pronac, $idproduto=null) {
 	   
 	      try
 			{
-				$db  = Zend_Registry::get('db');
+				$db = Zend_Db_Table::getDefaultAdapter();
 				$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			}
 			catch (Zend_Exception_Db $e)
@@ -1219,7 +1219,7 @@ public static function planodedistribuicao ($pronac, $idproduto=null) {
 	   
 	      try
 			{
-				$db  = Zend_Registry::get('db');
+				$db = Zend_Db_Table::getDefaultAdapter();
 				$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			}
 			catch (Zend_Exception_Db $e)
@@ -1253,7 +1253,7 @@ public static function planodedistribuicao ($pronac, $idproduto=null) {
 	   
 	      try
 			{
-				$db  = Zend_Registry::get('db');
+				$db = Zend_Db_Table::getDefaultAdapter();
 				$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			}
 			catch (Zend_Exception_Db $e)
@@ -1276,7 +1276,7 @@ public static function planodedistribuicao ($pronac, $idproduto=null) {
 
 
     /**
-     * Planilha de Orçamento
+     * Planilha de Orï¿½amento
      * @access public
      * @static
      * @param integer $idPronac
@@ -1336,16 +1336,16 @@ public static function planodedistribuicao ($pronac, $idproduto=null) {
 
         $sql.= " ORDER BY Item ASC";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método planilhaOrcamento()
+    } // fecha mï¿½todo planilhaOrcamento()
 
 
 
     /**
-     * Método que busca os produtos da planilha orçamento
+     * Mï¿½todo que busca os produtos da planilha orï¿½amento
      * @access public
      * @static
      * @param integer $idPronac
@@ -1363,16 +1363,16 @@ public static function planodedistribuicao ($pronac, $idproduto=null) {
 				WHERE idPronac = $idPronac
 				ORDER BY Produto";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método planilhaOrcamentoBuscarProduto()
+    } // fecha mï¿½todo planilhaOrcamentoBuscarProduto()
 
 
 
     /**
-     * Método que busca as etapas da planilhaOrcamento
+     * Mï¿½todo que busca as etapas da planilhaOrcamento
      * @access public
      * @static
      * @param integer $idPronac
@@ -1397,16 +1397,16 @@ public static function planodedistribuicao ($pronac, $idproduto=null) {
 
         $sql.= " ORDER BY Etapa";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método planilhaOrcamentoBuscarEtapa()
+    } // fecha mï¿½todo planilhaOrcamentoBuscarEtapa()
 
 
 
     /**
-     * Método que busca os estados da planilhaOrcamento
+     * Mï¿½todo que busca os estados da planilhaOrcamento
      * @access public
      * @static
      * @param integer $idPronac
@@ -1436,15 +1436,15 @@ public static function planodedistribuicao ($pronac, $idproduto=null) {
 
         $sql.= " ORDER BY UF";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método planilhaOrcamentoBuscarUF()
+    } // fecha mï¿½todo planilhaOrcamentoBuscarUF()
 
 
         /**
-     * Método que busca o valor total de custo administrativo
+     * Mï¿½todo que busca o valor total de custo administrativo
      * @access public
      * @static
      * @return object
@@ -1468,14 +1468,14 @@ public static function planodedistribuicao ($pronac, $idproduto=null) {
             
         }
 //die($sql);
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
         $resultado = $db->fetchRow($sql);
         return $resultado;
     }
 
     /**
-     * Método que busca a planilha de análise de custos
+     * Mï¿½todo que busca a planilha de anï¿½lise de custos
      * @access public
      * @static
      * @return object
@@ -1486,7 +1486,7 @@ public static function planodedistribuicao ($pronac, $idproduto=null) {
 					PD.Descricao
 					,CASE
 						WHEN PAP.idProduto = 0
-							THEN 'Administração do Projeto'
+							THEN 'Administraï¿½ï¿½o do Projeto'
 							ELSE PD.Descricao
 						END AS Produto
 					,PAP.qtItem AS quantidade_con
@@ -1555,10 +1555,10 @@ public static function planodedistribuicao ($pronac, $idproduto=null) {
 		}
 
 		//$sql.= "ORDER BY PAP.nrFonteRecurso, PD.Descricao, PAP.idEtapa, E.Descricao, UF.Sigla, CID.Descricao, I.Descricao";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método analiseDeCustos()
+    } // fecha mï¿½todo analiseDeCustos()
 
 }   

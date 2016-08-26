@@ -101,10 +101,10 @@ class Aprovacao extends GenericModel {
                           "CodTipoAprovacao"=>"a.TipoAprovacao",
                           "Concedido"=>new Zend_Db_Expr("(ConcedidoCusteioReal+ConcedidoCapitalReal) - ContrapartidaReal"),
                           "TipoAprovacao" => new Zend_Db_Expr("CASE WHEN a.TipoAprovacao = 1 THEN 'Inicial'
-                                                               WHEN a.TipoAprovacao = 2 THEN 'Complementação'
-                                                               WHEN a.TipoAprovacao = 3 THEN 'Prorrogação'
-                                                               WHEN a.TipoAprovacao = 4 THEN 'Redução'
-                                                               WHEN a.TipoAprovacao = 8 THEN 'Readequação' END"),
+                                                               WHEN a.TipoAprovacao = 2 THEN 'Complementaï¿½ï¿½o'
+                                                               WHEN a.TipoAprovacao = 3 THEN 'Prorrogaï¿½ï¿½o'
+                                                               WHEN a.TipoAprovacao = 4 THEN 'Reduï¿½ï¿½o'
+                                                               WHEN a.TipoAprovacao = 8 THEN 'Readequaï¿½ï¿½o' END"),
                         "a.idReadequacao"
                         ), "SAC.dbo"
                     );
@@ -344,7 +344,7 @@ class Aprovacao extends GenericModel {
             as tabela order by idAprovacao desc) as tabela order by idAprovacao");
             
             try {
-                $db = Zend_Registry::get('db');
+                $db= Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB::FETCH_OBJ);
             } catch (Zend_Exception_Db $e) {
                 $this->view->message = $e->getMessage();
@@ -359,7 +359,7 @@ class Aprovacao extends GenericModel {
             INNER JOIN SAC.dbo.Projetos AS pr ON pr.IdPRONAC = ap.idPRONAC WHERE pr.Mecanismo = $mecanismo  order by ap.idAprovacao");
             
             try {
-                $db = Zend_Registry::get('db');
+                $db= Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB::FETCH_OBJ);
             } catch (Zend_Exception_Db $e) {
                 $this->view->message = $e->getMessage();
@@ -373,7 +373,7 @@ class Aprovacao extends GenericModel {
             $select =  new Zend_Db_Expr("SELECT SAC.dbo.fnTotalAprovadoProjeto('$anoProjeto', '$sequencial') as total");
             
             try {
-                $db = Zend_Registry::get('db');
+                $db= Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB::FETCH_OBJ);
             } catch (Zend_Exception_Db $e) {
                 $this->view->message = $e->getMessage();
@@ -412,7 +412,7 @@ class Aprovacao extends GenericModel {
     {
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $where = "idpronac = $idpronac";
             $alterar = $db->update("SAC.dbo.Aprovacao", $dados, $where);
@@ -446,7 +446,7 @@ class Aprovacao extends GenericModel {
         ");
 
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();

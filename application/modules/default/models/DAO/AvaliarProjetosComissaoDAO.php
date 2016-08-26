@@ -6,7 +6,7 @@ class AvaliarProjetosComissaoDAO extends Zend_Db_Table{
 		$sql = "select distinct Regiao from SAC.dbo.Uf ";
 		
 		try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -24,7 +24,7 @@ class AvaliarProjetosComissaoDAO extends Zend_Db_Table{
 		}
 		
 		try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -47,7 +47,7 @@ class AvaliarProjetosComissaoDAO extends Zend_Db_Table{
                         order by edi.NrEdital DESC";
 
 		try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -62,7 +62,7 @@ class AvaliarProjetosComissaoDAO extends Zend_Db_Table{
 		$sql = "select count(nrNotaFinal) as qtd from BDCORPORATIVO.scSAC.tbAvaliacaoPreProjeto where idPreProjeto = $idPreProjeto";
 		
 		try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -76,7 +76,7 @@ class AvaliarProjetosComissaoDAO extends Zend_Db_Table{
 		$sql = "update BDCORPORATIVO.scSAC.tbAvaliacaoPreProjeto set nrNotaFinal = $nota, dtAvaliacao = GETDATE() where idPreProjeto = $idPreProjeto";
 		
 		try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -109,7 +109,7 @@ class AvaliarProjetosComissaoDAO extends Zend_Db_Table{
 		}
 
 		try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {
@@ -123,7 +123,7 @@ class AvaliarProjetosComissaoDAO extends Zend_Db_Table{
 		$sql = "select * from BDCORPORATIVO.scSAC.tbAprovacaoPreProjeto where idPreProjeto = $idPreProjeto";
 		
 		try {
-            $db  = Zend_Registry::get('db');
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e) {

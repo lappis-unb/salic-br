@@ -54,7 +54,7 @@ class Abrangencia extends GenericModel
 				 AND idMunicipioIBGE = ".$idMunicipio."
 				 AND stAbrangencia = 1";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
     }
@@ -103,13 +103,13 @@ class Abrangencia extends GenericModel
      * Apaga registro do banco
      * @param number $idAbrangencia - ID do registro que deve ser apagado
      * @return true or false
-     * @todo colocar padrão ORM
+     * @todo colocar padrï¿½o ORM
      */
     public function excluir($idAbrangencia)
     {
         $sql ="DELETE FROM SAC.dbo.Abrangencia WHERE idAbrangencia = ".$idAbrangencia;
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         if($db->query($sql)){
             return true;
@@ -120,15 +120,15 @@ class Abrangencia extends GenericModel
 
     /**
      * Apaga locais de ralizacao a partir do ID do PreProjeto
-     * @param number $idProjeto - ID do PerProjeto ao qual as lcoalizações estão vinculadas
+     * @param number $idProjeto - ID do PerProjeto ao qual as lcoalizaï¿½ï¿½es estï¿½o vinculadas
      * @return true or false
-     * @todo colocar padrão ORM
+     * @todo colocar padrï¿½o ORM
      */
     public function excluirPeloProjeto($idProjeto)
     {
         $sql ="DELETE FROM SAC.dbo.Abrangencia WHERE idProjeto = ".$idProjeto . " AND stAbrangencia = 1";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         //xd($sql);
         if($db->query($sql)){

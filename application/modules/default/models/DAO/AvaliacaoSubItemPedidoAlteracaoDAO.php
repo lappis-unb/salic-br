@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -20,7 +20,7 @@ class AvaliacaoSubItemPedidoAlteracaoDAO extends Zend_Db_Table
 
 
         /**
-	 * Método para buscar
+	 * Mï¿½todo para buscar
 	 * @access public
 	 * @static
 	 * @param void
@@ -34,15 +34,15 @@ class AvaliacaoSubItemPedidoAlteracaoDAO extends Zend_Db_Table
                     $sql.= " WHERE idAvaliacaoItemPedidoAlteracao = " . $idAvaliacaoItemPedidoAlteracao;
                 }
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
-	} // fecha método buscar()
+	} // fecha mï¿½todo buscar()
 
 
 
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -50,7 +50,7 @@ class AvaliacaoSubItemPedidoAlteracaoDAO extends Zend_Db_Table
 	 */
 	public static function cadastrar($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao", $dados);
@@ -63,12 +63,12 @@ class AvaliacaoSubItemPedidoAlteracaoDAO extends Zend_Db_Table
 		{
 			return false;
 		} 
-	} // fecha método cadastrar()
+	} // fecha mï¿½todo cadastrar()
 
 
 
 	/**
-	 * Método para alterar
+	 * Mï¿½todo para alterar
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -77,7 +77,7 @@ class AvaliacaoSubItemPedidoAlteracaoDAO extends Zend_Db_Table
 	 */
 	public static function alterar($dados, $id)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where   = "idAvaliacaoSubItemPedidoAlteracao = $id";
@@ -91,12 +91,12 @@ class AvaliacaoSubItemPedidoAlteracaoDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método alterar()
+	} // fecha mï¿½todo alterar()
 
 
 
         /**
-	 * Método para buscar ultimo registro
+	 * Mï¿½todo para buscar ultimo registro
 	 * @access public
 	 * @static
 	 * @param void
@@ -106,9 +106,9 @@ class AvaliacaoSubItemPedidoAlteracaoDAO extends Zend_Db_Table
 	{
 		$sql = "SELECT MAX(idAvaliacaoSubItemPedidoAlteracao) AS id FROM BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
-	} // fecha método buscarUltimo()
+	} // fecha mï¿½todo buscarUltimo()
 
 } // fecha class AvaliacaoSubItemPedidoAlteracaoDAO

@@ -89,10 +89,10 @@ class Parecer extends GenericModel {
     }
 
     /**
-     * @todo: N?o apague esse comentário, caso contrário aparecerá uma tela azul no seu computador! ;D
+     * @todo: N?o apague esse comentï¿½rio, caso contrï¿½rio aparecerï¿½ uma tela azul no seu computador! ;D
      *
 
-        -- Lista de Análises realizadas
+        -- Lista de Anï¿½lises realizadas
          > somente se selecionar um parecerista
         -- Se solicitar valor por produto linkar com planilha projeto
 
@@ -124,9 +124,9 @@ class Parecer extends GenericModel {
         $select->from(
                 array('dp' => 'tbDistribuirParecer'),
                 array(
-                    "case when dp.TipoAnalise = 0 then 'Análise de conteúdo' else '' end +
-                     case when dp.TipoAnalise = 1 then 'Análise de custo de produto' else '' end +
-                     case when dp.TipoAnalise = 2 then 'Análise de custo adminstrativo do projeto' else '' end as TipoAnalise",
+                    "case when dp.TipoAnalise = 0 then 'Anï¿½lise de conteï¿½do' else '' end +
+                     case when dp.TipoAnalise = 1 then 'Anï¿½lise de custo de produto' else '' end +
+                     case when dp.TipoAnalise = 2 then 'Anï¿½lise de custo adminstrativo do projeto' else '' end as TipoAnalise",
                     'dp.Observacao'
                 )
         );
@@ -247,7 +247,7 @@ class Parecer extends GenericModel {
             order by pa.idParecer) as tabela order by idParecer desc) as tabela order by idParecer");
 
             try {
-                $db = Zend_Registry::get('db');
+                $db= Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB::FETCH_OBJ);
             } catch (Zend_Exception_Db $e) {
                 $this->view->message = $e->getMessage();
@@ -263,7 +263,7 @@ class Parecer extends GenericModel {
             order by pa.idParecer");
             //xd($select);
             try {
-                $db = Zend_Registry::get('db');
+                $db= Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB::FETCH_OBJ);
             } catch (Zend_Exception_Db $e) {
                 $this->view->message = $e->getMessage();
@@ -322,20 +322,20 @@ class Parecer extends GenericModel {
                 SELECT p.idPronac AS Codigo, p.AnoProjeto+p.Sequencial AS Pronac, pr.NomeProjeto,
                    CASE
                      WHEN TipoParecer = '1'
-                          THEN 'Aprovação'
+                          THEN 'Aprovaï¿½ï¿½o'
                      WHEN TipoParecer = '2'
-                          THEN 'Complementação'
+                          THEN 'Complementaï¿½ï¿½o'
                      WHEN TipoParecer = '3'
-                          THEN 'Prorrogação'
+                          THEN 'Prorrogaï¿½ï¿½o'
                      WHEN TipoParecer = '4'
-                          THEN 'Redução'
+                          THEN 'Reduï¿½ï¿½o'
                    END AS TipoParecer,
                    CASE
                      WHEN ParecerFavoravel = '1'
-                          THEN 'Não'
+                          THEN 'Nï¿½o'
                      WHEN ParecerFavoravel = '2'
                           THEN 'Sim'
-                          ELSE 'Sim com restrições'
+                          ELSE 'Sim com restriï¿½ï¿½es'
                    END AS ParecerFavoravel,
                    CASE
                      WHEN Enquadramento = '1'
@@ -349,7 +349,7 @@ class Parecer extends GenericModel {
             LEFT JOIN Projetos pr on (p.idPronac = pr.idPronac)
             WHERE p.idTipoAgente = 1 AND p.idPronac = $idPronac ");
             try {
-                $db = Zend_Registry::get('db');
+                $db= Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB::FETCH_OBJ);
             } catch (Zend_Exception_Db $e) {
                 $this->view->message = $e->getMessage();
@@ -370,20 +370,20 @@ class Parecer extends GenericModel {
                          pr.NomeProjeto,
                          CASE
                             WHEN TipoParecer = '1'
-                                 THEN 'Aprovação'
+                                 THEN 'Aprovaï¿½ï¿½o'
                             WHEN TipoParecer = '2'
-                                 THEN 'Complementação'
+                                 THEN 'Complementaï¿½ï¿½o'
                             WHEN TipoParecer = '3'
-                                 THEN 'Prorrogação'
+                                 THEN 'Prorrogaï¿½ï¿½o'
                             WHEN TipoParecer = '4'
-                                 THEN 'Redução'
+                                 THEN 'Reduï¿½ï¿½o'
                           END AS TipoParecer,
                           CASE
                             WHEN ParecerFavoravel = '1'
-                                 THEN 'Não'
+                                 THEN 'Nï¿½o'
                             WHEN ParecerFavoravel = '2'
                                  THEN 'Sim'
-                                 ELSE 'Sim com restrições'
+                                 ELSE 'Sim com restriï¿½ï¿½es'
                           END AS ParecerFavoravel,
                           CASE
                             WHEN Enquadramento = '1'

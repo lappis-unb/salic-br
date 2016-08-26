@@ -7,47 +7,47 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 
 class LoginController extends MinC_Controller_Action_Abstract {
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
-        // configurações do layout
+        // configuraï¿½ï¿½es do layout
         Zend_Layout::startMvc(array('layout' => 'layout_login'));
 
         parent::init(); // chama o init() do pai GenericControllerNew
-    } // fecha método init()
+    } // fecha mï¿½todo init()
 
 
 
     /**
-     * Método com o formulário de login
+     * Mï¿½todo com o formulï¿½rio de login
      * @access public
      * @param void
      * @return void
      */
     public function indexAction() {
 
-    } // fecha método indexAction()
+    } // fecha mï¿½todo indexAction()
     public function index2Action() {
 
-    } // fecha método indexAction()
+    } // fecha mï¿½todo indexAction()
 
 
     /**
-     * Método que efetua o login
+     * Mï¿½todo que efetua o login
      * @access public
      * @param void
      * @return void
      */
     public function loginAction() {
-        // recebe os dados do formulário via post
+        // recebe os dados do formulï¿½rio via post
         $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
         $password = $this->getParam('Senha', null);
 
@@ -71,7 +71,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
             }
             else {
 
-                // realiza a busca do usuï¿½rio no banco, fazendo a autenticaç?o do mesmo
+                // realiza a busca do usuï¿½rio no banco, fazendo a autenticaï¿½?o do mesmo
                 $Usuario = new Autenticacao_Model_Sgcacesso();
                 $verificaStatus = $Usuario->buscar(array ( 'Cpf = ?' => $username));
 
@@ -105,15 +105,15 @@ class LoginController extends MinC_Controller_Action_Abstract {
                 if ($buscar) // acesso permitido
                 {
 
-                    //                                    $auth = Zend_Auth::getInstance(); // instancia da autenticação
+                    //                                    $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
                     //xd($auth->getIdentity());
                     //                                    // registra o primeiro grupo do usuï¿½rio (pega unidade autorizada, orgï¿½o e grupo do usuï¿½rio)
                     //                                    $Usuario = new Autenticacao_Model_Usuario();
                     //                                    $Grupo   = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuï¿½rio
                     //
-                    //                                    $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-                    //                                    $GrupoAtivo->codGrupo = $Grupo[0]->gru_codigo; // armazena o grupo na sessão
-                    //                                    $GrupoAtivo->codOrgao = $Grupo[0]->uog_orgao; // armazena o orgão na sessão
+                    //                                    $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+                    //                                    $GrupoAtivo->codGrupo = $Grupo[0]->gru_codigo; // armazena o grupo na sessï¿½o
+                    //                                    $GrupoAtivo->codOrgao = $Grupo[0]->uog_orgao; // armazena o orgï¿½o na sessï¿½o
 
                     $verificaSituacao =  $verificaStatus[0]->Situacao;
                     if ( $verificaSituacao == 1 ) {
@@ -217,7 +217,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
                 /* ========== VINCULA O RESPONSAVEL A SEU PROPRIO PERFIL DE PROPONENTE ========== */
                 if ( count($buscarVisao) > 0 ) :
                     $tbVinculo    = new TbVinculo();
-                    $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $sgcAcessoSave)); // pega o id do responsável cadastrado
+                    $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $sgcAcessoSave)); // pega o id do responsï¿½vel cadastrado
 
                     $dadosVinculo = array(
                             'idAgenteProponente'    => $idAgenteProp
@@ -248,7 +248,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
                 parent::message("Cadastro efetuado com sucesso. Verifique a senha no seu email", "/login/index", "CONFIRM");
             }
         } // fecha if
-    } // fecha método cadastrarusuarioAction()
+    } // fecha mï¿½todo cadastrarusuarioAction()
 
     public function solicitarsenhaAction() {
 
@@ -296,20 +296,20 @@ class LoginController extends MinC_Controller_Action_Abstract {
     }
 
     public function alterarsenhaAction() {
-        // autenticação proponente (Novo Salic)
+        // autenticaï¿½ï¿½o proponente (Novo Salic)
 
-        /* ========== INÍCIO ID DO USUÁRIO LOGADO ========== */
-        $auth    = Zend_Auth::getInstance(); // pega a autenticação
+        /* ========== INï¿½CIO ID DO USUï¿½RIO LOGADO ========== */
+        $auth    = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $Usuario = new Autenticacao_Model_Usuario();
 
 
-        // verifica se o usuário logado é agente
+        // verifica se o usuï¿½rio logado ï¿½ agente
         $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->Cpf);
         if ( $idUsuario ) {
-            // caso não tenha idAgente, atribui o idUsuario
+            // caso nï¿½o tenha idAgente, atribui o idUsuario
             $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth->getIdentity()->IdUsuario;
             $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
-            /* ========== FIM ID DO USUÁRIO LOGADO ========== */
+            /* ========== FIM ID DO USUï¿½RIO LOGADO ========== */
             parent::perfil(4);
         }
 
@@ -322,7 +322,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
         $this->view->email = "";
 
         if ( count(Zend_Auth::getInstance()->getIdentity()) > 0 ) {
-            $auth = Zend_Auth::getInstance();// instancia da autenticação
+            $auth = Zend_Auth::getInstance();// instancia da autenticaï¿½ï¿½o
 
             $idUsuario = $auth->getIdentity()->IdUsuario;
             $this->view->idUsuario = $auth->getIdentity()->IdUsuario;
@@ -427,20 +427,20 @@ class LoginController extends MinC_Controller_Action_Abstract {
 
     public function alterarsenhausuarioAction() {
         parent::perfil(0);
-        // autenticação proponente (Novo Salic)
+        // autenticaï¿½ï¿½o proponente (Novo Salic)
 
-        /* ========== INÍCIO ID DO USUÁRIO LOGADO ========== */
-        $auth    = Zend_Auth::getInstance(); // pega a autenticação
+        /* ========== INï¿½CIO ID DO USUï¿½RIO LOGADO ========== */
+        $auth    = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $Usuario = new Autenticacao_Model_Usuario();
 
-        // verifica se o usuário logado é agente
+        // verifica se o usuï¿½rio logado ï¿½ agente
         $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->usu_identificacao);
         if ( isset($auth->getIdentity()->usu_identificacao) ) {
             //xd($auth->getIdentity());
-            // caso não tenha idAgente, atribui o idUsuario
+            // caso nï¿½o tenha idAgente, atribui o idUsuario
             $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth->getIdentity()->usu_codigo;
             //$this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
-            /* ========== FIM ID DO USUÁRIO LOGADO ========== */
+            /* ========== FIM ID DO USUï¿½RIO LOGADO ========== */
 
         }
 
@@ -450,7 +450,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
         $this->view->nome = "";
 
         if ( count(Zend_Auth::getInstance()->getIdentity()) > 0 ) {
-            $auth = Zend_Auth::getInstance();// instancia da autenticação
+            $auth = Zend_Auth::getInstance();// instancia da autenticaï¿½ï¿½o
 
             $idUsuario = $auth->getIdentity()->usu_codigo;
             $cpf       = $auth->getIdentity()->usu_identificacao;
@@ -502,7 +502,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
             }
 
             if ( strlen(trim($senhaNova))<5) {
-                parent::message("Por favor, sua nova senha deverá conter no mínimo 5 dígitos!", "/login/alterarsenhausuario?idUsuario=$idUsuario","ALERT");
+                parent::message("Por favor, sua nova senha deverï¿½ conter no mï¿½nimo 5 dï¿½gitos!", "/login/alterarsenhausuario?idUsuario=$idUsuario","ALERT");
             }
 
             $alterar = $Usuario->alterarSenhaSalic($cpf, $senhaNova);
@@ -537,7 +537,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
 
 
             $sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha";
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $senha =  $db->fetchRow($sql);
 
@@ -557,9 +557,9 @@ class LoginController extends MinC_Controller_Action_Abstract {
 
                 if ($buscar) // acesso permitido
                 {
-                    $auth = Zend_Auth::getInstance(); // instancia da autenticaç?o
+                    $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½?o
 
-                    // registra o primeiro grupo do usu&aacute;rio (pega unidade autorizada, organiza e grupo do usuaàio)
+                    // registra o primeiro grupo do usu&aacute;rio (pega unidade autorizada, organiza e grupo do usuaï¿½io)
                     $Grupo   = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuï¿½rio
 
                     $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess?o com o grupo ativo
@@ -574,23 +574,23 @@ class LoginController extends MinC_Controller_Action_Abstract {
     }
 
     public function alterardadosAction() {
-        // autenticação proponente (Novo Salic)
+        // autenticaï¿½ï¿½o proponente (Novo Salic)
         parent::perfil(4);
 
-        /* ========== INÍCIO ID DO USUÁRIO LOGADO ========== */
-        $auth    = Zend_Auth::getInstance(); // pega a autenticação
+        /* ========== INï¿½CIO ID DO USUï¿½RIO LOGADO ========== */
+        $auth    = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $Usuario = new Autenticacao_Model_Usuario();
 
-        // verifica se o usuário logado é agente
+        // verifica se o usuï¿½rio logado ï¿½ agente
         $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->Cpf);
 
-        // caso não tenha idAgente, atribui o idUsuario
+        // caso nï¿½o tenha idAgente, atribui o idUsuario
         $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth->getIdentity()->IdUsuario;
         $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
-        /* ========== FIM ID DO USUÁRIO LOGADO ========== */
+        /* ========== FIM ID DO USUï¿½RIO LOGADO ========== */
 
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
-        $auth = Zend_Auth::getInstance();// instancia da autenticação
+        $auth = Zend_Auth::getInstance();// instancia da autenticaï¿½ï¿½o
         $cpf = Mascara::delMaskCPF($auth->getIdentity()->Cpf);
         $buscarDados =  $sgcAcesso->buscar(array ('Cpf = ?' => $cpf))->current();
 

@@ -19,7 +19,7 @@ class GerarImprimirpdfDAO
 
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             return $db->fetchRow($sql);
         }
@@ -47,7 +47,7 @@ class GerarImprimirpdfDAO
 
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)
@@ -92,7 +92,7 @@ class GerarImprimirpdfDAO
 
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)
@@ -107,7 +107,7 @@ class GerarImprimirpdfDAO
         public static function AbrangenciaGeografica($id_projeto)
     {
         $sql = "SELECT CASE a.idPais
-                WHEN 0 THEN 'Não é possível informar o local de realização do projeto'
+                WHEN 0 THEN 'Nï¿½o ï¿½ possï¿½vel informar o local de realizaï¿½ï¿½o do projeto'
                 ELSE p.Descricao
                 END as Pais,u.Descricao as UF,m.Descricao as Cidade,x.DtInicioDeExecucao,x.DtFinalDeExecucao
                 FROM  SAC.dbo.Abrangencia a
@@ -122,7 +122,7 @@ class GerarImprimirpdfDAO
 
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)
@@ -173,7 +173,7 @@ class GerarImprimirpdfDAO
 
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)

@@ -6,7 +6,7 @@
  * @package application
  * @subpackage application.model.DAO
  * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Politec - Todos os direitos reservados.
  */
 
 class PlanilhaUnidadeDAO extends Zend_Db_Table
@@ -25,9 +25,9 @@ class PlanilhaUnidadeDAO extends Zend_Db_Table
 	public static function buscar()
 	{
 		$sql = "SELECT * FROM SAC.dbo.tbPlanilhaUnidade ORDER BY Descricao";
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
-	} // fecha método buscar()
+	} // fecha mï¿½todo buscar()
 
 } // fecha class

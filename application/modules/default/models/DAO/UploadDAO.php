@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -17,14 +17,14 @@ class UploadDAO extends Zend_Db_Table {
     protected $_tbArquivoImagem = "tbArquivoImagem";
 
     /**
-     * Método para abrir o arquivo
+     * Mï¿½todo para abrir o arquivo
      * @access public
      * @static
      * @param integer $id
      * @return object || bool
      */
     public static function abrir($id) {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         // busca o arquivo
@@ -36,18 +36,18 @@ class UploadDAO extends Zend_Db_Table {
         $resultado = $db->fetchAll('SET TEXTSIZE 2147483647');
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método abrir()
+    } // fecha mï¿½todo abrir()
 
 
     /**
-     * Método para abrir o arquivo
+     * Mï¿½todo para abrir o arquivo
      * @access public
      * @static
      * @param integer $id
      * @return object || bool
      */
     public static function abrirdocumentosanexados($id, $busca) {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         if ($busca == "tbDocumentosAgentes") { //acrescentado-jass
@@ -75,6 +75,6 @@ class UploadDAO extends Zend_Db_Table {
         $resultado = $db->fetchAll("SET TEXTSIZE 104857600");
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método abrir()
+    } // fecha mï¿½todo abrir()
 
 } // fecha class

@@ -24,7 +24,7 @@ class ConsultaTitulacaoConselheiroDAO extends Zend_Db_Table
                 where ttc.cdarea = $area and ttc.stTitular = $sttilular ORDER BY ttc.cdArea, ttc.stTitular DESC";
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)
@@ -40,7 +40,7 @@ class ConsultaTitulacaoConselheiroDAO extends Zend_Db_Table
         $sql = "delete from bdcorporativo.scsac.tbvotante where idreuniao=$idnrreuniao";
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)
@@ -61,7 +61,7 @@ class ConsultaTitulacaoConselheiroDAO extends Zend_Db_Table
                 ";
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)
@@ -92,7 +92,7 @@ class ConsultaTitulacaoConselheiroDAO extends Zend_Db_Table
 
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)

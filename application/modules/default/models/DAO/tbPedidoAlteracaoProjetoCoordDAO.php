@@ -63,7 +63,7 @@ class tbPedidoAlteracaoProjetoCoordDAO extends Zend_Db_Table
             $sql.=" where apa.dtParecerTecnico is not null and apa.dsParecerTecnico is not null and idTecnico is not null and apa.dtparecertecnico in
             (select max(dtparecertecnico) from BDCORPORATIVO.scSAC.tbavaliacaopedidoalteracao where idPedidoAlteracao = pap.idPedidoAlteracao)";
         }
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
 
@@ -71,7 +71,7 @@ class tbPedidoAlteracaoProjetoCoordDAO extends Zend_Db_Table
 
     public static function UpdateAvaliacaoProjeto($dados, $id, $data)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where   = "idpedidoalteracao = ".$id." and dtparecertecnico='".$data."'";
@@ -89,7 +89,7 @@ class tbPedidoAlteracaoProjetoCoordDAO extends Zend_Db_Table
 
     public static function updateDadosProjeto($dados, $id)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idpedidoalteracao = ".$id;

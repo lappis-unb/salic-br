@@ -40,7 +40,7 @@ class UsuarioDAO extends GenericModel
 									 WHERE usu_identificacao = '" . $username . "')
 					AND usu_status = 1";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $buscar = $db->fetchAll($sql);
 
@@ -95,7 +95,7 @@ class UsuarioDAO extends GenericModel
 					SET usu_senha = TABELAS.dbo.fnEncriptaSenha('" . $username . "', '" . $password . "')
 				WHERE usu_identificacao = '" . $username . "'";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     } // fecha m�todo alterarSenha()
@@ -139,7 +139,7 @@ class UsuarioDAO extends GenericModel
         $sql .= "ORDER BY org_siglaautorizado";
         //die($sql);
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -167,7 +167,7 @@ class UsuarioDAO extends GenericModel
 				WHERE usu_codigo = $usu_codigo";
 
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
             return $db->fetchRow($sql);
         } catch (Zend_Exception_Db $objException) {
@@ -195,7 +195,7 @@ class UsuarioDAO extends GenericModel
 				FROM TABELAS.dbo.Usuarios
 				WHERE usu_codigo = $cod";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -206,7 +206,7 @@ class UsuarioDAO extends GenericModel
 				FROM TABELAS.dbo.Usuarios
 				WHERE usu_identificacao = $cpf";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }

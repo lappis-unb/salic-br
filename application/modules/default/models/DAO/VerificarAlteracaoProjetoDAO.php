@@ -31,7 +31,7 @@ Class VerificarAlteracaoProjetoDAO extends Zend_Db_Table
                 LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa on taipa.idPedidoAlteracao = tpta.idPedidoAlteracao
                 and taipa.tpAlteracaoProjeto =  tpta.tpAlteracaoProjeto
                ";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
@@ -75,7 +75,7 @@ Class VerificarAlteracaoProjetoDAO extends Zend_Db_Table
                     left join BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao taipa on taipa.idPedidoAlteracao = tpap.idPedidoAlteracao AND taipa.tpAlteracaoProjeto = 4
                 where
                    tpap.IdPRONAC=$idPronac AND tpap.idPedidoAlteracao = $idPedidoAlteracao";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
         $resultado = $db->fetchRow($sql);
 
@@ -95,7 +95,7 @@ Class VerificarAlteracaoProjetoDAO extends Zend_Db_Table
                     INNER JOIN BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto pap on pap.idPedidoAlteracao = papxa.idPedidoAlteracao
                 where
                     pap.IdPRONAC =$idPronac and papxa.tpAlteracaoProjeto = $tipo AND pap.idPedidoAlteracao = $idPedidoAlteracao ";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -115,7 +115,7 @@ Class VerificarAlteracaoProjetoDAO extends Zend_Db_Table
                     inner join AGENTES.dbo.Nomes nom on nom.idAgente = aipa.idAgenteAvaliador
                 where
                     pap.IdPRONAC = {$idPronac} and aipa.tpAlteracaoProjeto = $tipo and tap.tpAlteracaoProjeto = $tipo AND pap.idPedidoAlteracao = $idPedidoAlteracao";
-         $db  = Zend_Registry::get('db');
+         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 

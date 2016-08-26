@@ -11,7 +11,7 @@ class NomesDAO extends Zend_Db_Table
 		
 		$sql = "Select idNome, idAgente, TipoNome, Descricao, Status, Usuario From AGENTES.dbo.Nomes Where idAgente =".$idAgente;
 		
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$dados =  $db->fetchAll($sql);	
@@ -26,7 +26,7 @@ class NomesDAO extends Zend_Db_Table
 		
 		$sql = "Insert Into AGENTES.dbo.Nomes(idAgente, TipoNome, Descricao, Status, Usuario)values(".$idAgente.", ".$TipoNome.", '".$Descricao."', ".$Status.", ".$Usuario.")";
 		
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$dados =  $db->query($sql);	
 		
@@ -38,7 +38,7 @@ class NomesDAO extends Zend_Db_Table
 		
 		$sql = "Update AGENTES.dbo.Nomes set TipoNome = ".$TipoNome.", Descricao = '".$Descricao."', Status = ".$Status.", Usuario = ".$Usuario."	Where idAgente = ".$idAgente;
 		
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$dados =  $db->query($sql);	
@@ -49,7 +49,7 @@ class NomesDAO extends Zend_Db_Table
 	{
 		$sql = "Update AGENTES.dbo.Nomes set Descricao = '".$Descricao."' Where idAgente = ".$idAgente;
 		
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		return $db->query($sql);	

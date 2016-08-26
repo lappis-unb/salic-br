@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -17,7 +17,7 @@ class EstadoDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para buscar os estados
+	 * Mï¿½todo para buscar os estados
 	 * @access public
 	 * @param void
 	 * @return object $db->fetchAll($sql)
@@ -36,7 +36,7 @@ class EstadoDAO extends Zend_Db_Table
 
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		}
 		catch (Zend_Exception_Db $e)

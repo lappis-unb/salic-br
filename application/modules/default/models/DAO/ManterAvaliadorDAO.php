@@ -22,7 +22,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
                                 where usu_identificacao = '$cpf'";    
             
         //xd($sql);
-    	$db = Zend_Registry::get('db');
+    	$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -50,7 +50,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
                                 where usu_identificacao = '$cpf' and a.idAgente = $idAgente";
             
 //    	xd($sql);
-    	$db = Zend_Registry::get('db');
+    	$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -61,7 +61,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 		$sql = "select * from SAC.dbo.Edital where idEdital = $idEdital and NrEdital is not null";
 		
 		//xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -85,7 +85,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 //			    where  c.stFormDocumento = 'A' and b.idOrgao = $codOrgao
 //			    order by b.NrEdital,nmFormDocumento asc ";
 //		//xd($sql);
-//		$db = Zend_Registry::get('db');
+//		$db= Zend_Db_Table::getDefaultAdapter();
 //        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 //
 //        return $db->fetchAll($sql);
@@ -104,7 +104,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
 				  a.dtFimFase >= GETDATE() and (idFaseEdital = 4)
 				  order by dtFimFase";
 		//xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -117,7 +117,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     		$sql .= " and idEdital = $idEdital";
     	}
 		//xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -128,7 +128,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     {
     	$sql = "select * from BDCORPORATIVO.scSAC.tbAvaliadorEdital where idAvaliador = $idAgente and stAtivo = 'A'";
 		//xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -138,7 +138,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     {
     	$sql = "insert into AGENTES.dbo.Agentes (CNPJCPF, TipoPessoa, DtCadastro, Status, Usuario) values ('$cpf', 18, GETDATE(), 0, $idusuario)";
 		//xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -148,7 +148,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     {
     	$sql = "insert into AGENTES.dbo.Internet (idAgente, TipoInternet, Descricao, Status, Divulgar, Usuario) values ($idAgente, 28, '$email', 0, 1, $idusuario)";
 		//xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -158,7 +158,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     {
     	$sql = "update AGENTES.dbo.Internet set Descricao = '$email' where idAgente = $idAgente and TipoInternet = 28 and Usuario = $idusuario";
 		//xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -168,7 +168,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     {
     	$sql = "insert into AGENTES.dbo.Nomes (idAgente, TipoNome, Descricao, Status, Usuario) values ($idAgente, 18, '$nome', 0, $idusuario)";
 		//xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -178,7 +178,7 @@ class ManterAvaliadorDAO extends Zend_Db_Table {
     {
     	$sql = "update AGENTES.dbo.Nomes set Descricao = '$nome' where idAgente = $idAgente and TipoNome = 18 and Usuario = $idusuario";
 		//xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);

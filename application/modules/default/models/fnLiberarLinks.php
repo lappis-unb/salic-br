@@ -8,7 +8,7 @@ class fnLiberarLinks extends GenericModel {
     public function liberarLinks($tipo, $cpfProponente, $idUsuarioLogado, $idPronac) {
         $select = new Zend_Db_Expr("SELECT SAC.dbo.fnLiberarLinks($tipo,'$cpfProponente',$idUsuarioLogado,$idPronac) as links");
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();

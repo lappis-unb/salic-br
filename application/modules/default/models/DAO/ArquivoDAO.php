@@ -7,7 +7,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 class ArquivoDAO extends Zend_Db_Table
@@ -19,7 +19,7 @@ class ArquivoDAO extends Zend_Db_Table
     protected $_primary = "idArquivo";
 
     /**
-     * Método para cadastrar informações dos arquivos
+     * Mï¿½todo para cadastrar informaï¿½ï¿½es dos arquivos
      * @access public
      * @static
      * @param array $dados
@@ -27,7 +27,7 @@ class ArquivoDAO extends Zend_Db_Table
      */
     public static function cadastrar($dados)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $cadastrar = $db->insert("BDCORPORATIVO.scCorp.tbArquivo", $dados);
@@ -36,7 +36,7 @@ class ArquivoDAO extends Zend_Db_Table
     }
 
     /**
-     * Método para alterar informações dos arquivos
+     * Mï¿½todo para alterar informaï¿½ï¿½es dos arquivos
      * @access public
      * @static
      * @param array $dados
@@ -45,7 +45,7 @@ class ArquivoDAO extends Zend_Db_Table
      */
     public static function alterar($dados, $id)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idArquivo = $id";
@@ -64,7 +64,7 @@ class ArquivoDAO extends Zend_Db_Table
     }
 
     /**
-     * Método para verificar se o arquivo existe (pelo hash)
+     * Mï¿½todo para verificar se o arquivo existe (pelo hash)
      * @access public
      * @static
      * @param string $dsHash
@@ -74,13 +74,13 @@ class ArquivoDAO extends Zend_Db_Table
     {
         $sql = "SELECT * FROM BDCORPORATIVO.scCorp.tbArquivo WHERE dsHash = '$dsHash'";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
 
     /**
-     * Método para buscar o id do último arquivo cadastrado
+     * Mï¿½todo para buscar o id do ï¿½ltimo arquivo cadastrado
      * @access public
      * @static
      * @param void
@@ -90,7 +90,7 @@ class ArquivoDAO extends Zend_Db_Table
     {
         $sql = "SELECT MAX(idArquivo) AS id FROM BDCORPORATIVO.scCorp.tbArquivo";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -104,7 +104,7 @@ class ArquivoDAO extends Zend_Db_Table
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 class ArquivoImagemDAO extends Zend_Db_Table
@@ -116,7 +116,7 @@ class ArquivoImagemDAO extends Zend_Db_Table
     protected $_primary = "idArquivo";
 
     /**
-     * Método para cadastrar os binários dos arquivos
+     * Mï¿½todo para cadastrar os binï¿½rios dos arquivos
      * @access public
      * @static
      * @param array $dados
@@ -125,13 +125,13 @@ class ArquivoImagemDAO extends Zend_Db_Table
     public static function cadastrar($dados)
     {
         /* @var $db Zend_Db_Adapter_Sqlsrv */
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $dados['biArquivo'] = new Zend_Db_Expr("CONVERT(varbinary(MAX),{$dados['biArquivo']})");
         return $db->insert('BDCORPORATIVO.scCorp.tbArquivoImagem', $dados);
     }
 
     /**
-     * Método para alterar os binários dos arquivos
+     * Mï¿½todo para alterar os binï¿½rios dos arquivos
      * @access public
      * @static
      * @param array $dados
@@ -140,7 +140,7 @@ class ArquivoImagemDAO extends Zend_Db_Table
      */
     public static function alterar($dados, $id)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = "UPDATE BDCORPORATIVO.scCorp.tbArquivoImagem SET 

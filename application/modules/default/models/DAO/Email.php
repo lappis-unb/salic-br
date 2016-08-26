@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -20,7 +20,7 @@ class Email extends Zend_Db_Table
 
 
 	/**
-	 * Método para buscar todos os e-mails de um conselheiro
+	 * Mï¿½todo para buscar todos os e-mails de um conselheiro
 	 * @access public
 	 * @param integer $idAgente
 	 * @return object $db->fetchAll($sql)
@@ -33,7 +33,7 @@ class Email extends Zend_Db_Table
 
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		}
 		catch (Zend_Exception_Db $e)
@@ -47,14 +47,14 @@ class Email extends Zend_Db_Table
 
 
 	/**
-	 * Método para cadastrar todos os e-mails de um conselheiro
+	 * Mï¿½todo para cadastrar todos os e-mails de um conselheiro
 	 * @access public
 	 * @param array $dados
 	 * @return boolean
 	 */
 	public static function cadastrar($dados)
 	{
-		$db  = Zend_Registry::get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		try
@@ -73,7 +73,7 @@ class Email extends Zend_Db_Table
 
 
 	/**
-	 * Método para excluir e-mail de um conselheiro
+	 * Mï¿½todo para excluir e-mail de um conselheiro
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -93,12 +93,12 @@ class Email extends Zend_Db_Table
 		}
 
 		return $db->fetchAll($sql);
-	} // fecha método excluir()
+	} // fecha mï¿½todo excluir()
 
 
 
 	/**
-	 * Método para excluir todos os emails de um conselheiro
+	 * Mï¿½todo para excluir todos os emails de um conselheiro
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -117,6 +117,6 @@ class Email extends Zend_Db_Table
 		{
 			$this->view->message = "Erro ao excluir E-mail do Proponente: " . $e->getMessage();
 		}
-	} // fecha método excluirTodos()
+	} // fecha mï¿½todo excluirTodos()
 
 } // fecha class

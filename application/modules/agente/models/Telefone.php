@@ -38,7 +38,7 @@ class Agente_Model_Telefone extends Zend_Db_Table
     protected $_primary = 'idTelefone';
 
     /**
-     * Método para buscar todos os telefones de um conselheiro
+     * Mï¿½todo para buscar todos os telefones de um conselheiro
      *
      * @param integer $idAgente ID do agente
      *
@@ -54,7 +54,7 @@ class Agente_Model_Telefone extends Zend_Db_Table
             throw new InvalidArgumentException('Precisa ser inteiro');
         }
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
 
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -64,7 +64,7 @@ class Agente_Model_Telefone extends Zend_Db_Table
     }
 
     /**
-     * Método para cadastrar todos os telefones de um agente
+     * Mï¿½todo para cadastrar todos os telefones de um agente
      *
      * @param array $dados Array com dados de cadastro
      *
@@ -78,7 +78,7 @@ class Agente_Model_Telefone extends Zend_Db_Table
     {
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
 
             $inserir = $db->insert('Agentes.dbo.Telefones', $dados);
 
@@ -91,7 +91,7 @@ class Agente_Model_Telefone extends Zend_Db_Table
     }
 
     /**
-     * Método para excluir telefone
+     * Mï¿½todo para excluir telefone
      *
      * @param integer $id ID do telefone
      *
@@ -119,7 +119,7 @@ class Agente_Model_Telefone extends Zend_Db_Table
     }
 
     /**
-     * Método para excluir todos os telefones de um agente
+     * Mï¿½todo para excluir todos os telefones de um agente
      *
      * @param integer $idAgente ID do Agente
      *

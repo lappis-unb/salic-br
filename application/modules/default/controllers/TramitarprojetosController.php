@@ -13,37 +13,37 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         private $intTamPag = 10;
 
     public function init() {
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
-        /*$auth = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new UsuarioDAO(); // objeto usuário*/
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $this->view->title = "Salic - Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura"; // tï¿½tulo da pï¿½gina
+        /*$auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $Usuario = new UsuarioDAO(); // objeto usuï¿½rio*/
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
 
-        // verifica as permissões
+        // verifica as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97; //Gestor Salic
         $PermissoesGrupo[] = 99; //Acompanhamento
-        $PermissoesGrupo[] = 103; //Coordenador de Análise
+        $PermissoesGrupo[] = 103; //Coordenador de Anï¿½lise
         $PermissoesGrupo[] = 104; //Protocolo - (Envio / Recebimento) 
         $PermissoesGrupo[] = 91; //Protocolo - Recebimento
         $PermissoesGrupo[] = 109; //Arquivo
-        $PermissoesGrupo[] = 128; //Técnico de Portaria
-        $PermissoesGrupo[] = 121; //Técnico de Acompanhamento
+        $PermissoesGrupo[] = 128; //Tï¿½cnico de Portaria
+        $PermissoesGrupo[] = 121; //Tï¿½cnico de Acompanhamento
         $PermissoesGrupo[] = 105; //FCRB
         $PermissoesGrupo[] = 106; //Coordenador SAV
         $PermissoesGrupo[] = 113; //Coordenador de Arquivo
         $PermissoesGrupo[] = 99; //Acompanhamento
         $PermissoesGrupo[] = 102; //Administrtivo
-        $PermissoesGrupo[] = 115; //Atendimento Representações
-        $PermissoesGrupo[] = 101; //Intercâmbio
+        $PermissoesGrupo[] = 115; //Atendimento Representaï¿½ï¿½es
+        $PermissoesGrupo[] = 101; //Intercï¿½mbio
         $PermissoesGrupo[] = 114; //Coordenador de Editais
-        $PermissoesGrupo[] = 100; //Prestação de Contas
-        $PermissoesGrupo[] = 124; //Técnico de Prestação de Contas
+        $PermissoesGrupo[] = 100; //Prestaï¿½ï¿½o de Contas
+        $PermissoesGrupo[] = 124; //Tï¿½cnico de Prestaï¿½ï¿½o de Contas
         $PermissoesGrupo[] = 122; //Coordenador de Acompanhamento
 
 		parent::perfil(1, $PermissoesGrupo); // perfil novo salic
 
-		// pega o idAgente do usuário logado
-		$auth = Zend_Auth::getInstance(); // pega a autenticação
+		// pega o idAgente do usuï¿½rio logado
+		$auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 
 		$this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
 		//$this->getIdUsuario = ($this->getIdUsuario) ? $this->getIdUsuario["idAgente"] : 0;
@@ -52,48 +52,48 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 		$this->getIdOrgao   = $auth->getIdentity()->usu_orgao;
 		/* ========== FIM PERFIL ==========*/
 
-        /*if ($auth->hasIdentity()) { // caso o usuário estja autenticado
-            // verifica as permissões
+        /*if ($auth->hasIdentity()) { // caso o usuï¿½rio estja autenticado
+            // verifica as permissï¿½es
             $PermissoesGrupo = array();
             $PermissoesGrupo[] = 97; //Gestor Salic
             $PermissoesGrupo[] = 99; //Acompanhamento
-            $PermissoesGrupo[] = 103; //Coordenador de Análise
+            $PermissoesGrupo[] = 103; //Coordenador de Anï¿½lise
             $PermissoesGrupo[] = 104; //Protocolo - (Envio / Recebimento) 
             $PermissoesGrupo[] = 91; //Protocolo - Recebimento
             $PermissoesGrupo[] = 109; //Arquivo
-            $PermissoesGrupo[] = 128; //Técnico de Portaria
-            $PermissoesGrupo[] = 121; //Técnico de Acompanhamento
+            $PermissoesGrupo[] = 128; //Tï¿½cnico de Portaria
+            $PermissoesGrupo[] = 121; //Tï¿½cnico de Acompanhamento
             $PermissoesGrupo[] = 105; //FCRB
             $PermissoesGrupo[] = 106; //Coordenador SAV
             $PermissoesGrupo[] = 113; //Coordenador de Arquivo
             $PermissoesGrupo[] = 99; //Acompanhamento
             $PermissoesGrupo[] = 102; //Administrtivo
-            $PermissoesGrupo[] = 115; //Atendimento Representações
-            $PermissoesGrupo[] = 101; //Intercâmbio
+            $PermissoesGrupo[] = 115; //Atendimento Representaï¿½ï¿½es
+            $PermissoesGrupo[] = 101; //Intercï¿½mbio
             $PermissoesGrupo[] = 114; //Coordenador de Editais
-            $PermissoesGrupo[] = 100; //Prestação de Contas
-            $PermissoesGrupo[] = 124; //Técnico de Prestação de Contas
+            $PermissoesGrupo[] = 100; //Prestaï¿½ï¿½o de Contas
+            $PermissoesGrupo[] = 124; //Tï¿½cnico de Prestaï¿½ï¿½o de Contas
             $PermissoesGrupo[] = 122; //Coordenador de Acompanhamento
             
            parent::perfil(1, $PermissoesGrupo);
 	        
-            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo está no array de permissões
-                parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo estï¿½ no array de permissï¿½es
+                parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+            // pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
-            // manda os dados para a visão
-            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+            // manda os dados para a visï¿½o
+            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
 
 
 
         //} // fecha if
         else {
-            // caso o usuário não esteja autenticado
+            // caso o usuï¿½rio nï¿½o esteja autenticado
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }*/
 
@@ -102,14 +102,14 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
     public function indexAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
         $idorgao = $this->getIdOrgao;
         $this->_redirect("tramitarprojetos/despacharprojetos");
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         $this->view->codGrupo = $codGrupo;
 
         /*         * *************************************************************** */
@@ -166,7 +166,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                 }
             }
             if ($recusado) {
-                parent::message("Projetos com a situação RECUSADO não foram tramitados!", "/tramitarprojetos/despacharprojetos", "ALERT");
+                parent::message("Projetos com a situaï¿½ï¿½o RECUSADO nï¿½o foram tramitados!", "/tramitarprojetos/despacharprojetos", "ALERT");
             } else {
                 parent::message("O projeto foi enviado com sucesso!", "/tramitarprojetos/despacharprojetos", "CONFIRM");
             }
@@ -181,13 +181,13 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
     public function buscaprojetoAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
         $idorgao = $this->getIdOrgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -229,13 +229,13 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
     
 	public function buscaprojetodesarquivadoAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
         $idorgao = $this->getIdOrgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -278,13 +278,13 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
     public function buscaprojetodespacharAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
         $idorgao = $this->getIdOrgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -309,7 +309,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                 $blnJaExisteProjeto = true;
             }
         }
-        //VERIFICANDO SE O PRONAC PESQUISADO JÁ FOI ENVIADO A ALGUM ORGAO
+        //VERIFICANDO SE O PRONAC PESQUISADO Jï¿½ FOI ENVIADO A ALGUM ORGAO
         $despachados = $historicodocumento->projetosDespachados(array(1,2), null,null, $dadoProjeto->IdPRONAC);
         if(count($despachados) > 0){
             $blnJaExisteProjeto = true;
@@ -350,7 +350,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
     public function despacharprojetosAction() {
         /** Usuario Logado ************************************************/
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
         $idorgao = $this->getIdOrgao;
 
@@ -363,16 +363,16 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                 $mens .= '<br /><br />';
             }
             $email = 'jefferson.silva@cultura.gov.br';
-            $assunto = 'Tramitação Projetos - Pronac Repetido';
+            $assunto = 'Tramitaï¿½ï¿½o Projetos - Pronac Repetido';
 
             $perfil = 'PerfilGrupoPRONAC';
             EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
         }
         
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
-        $this->view->codorgaoverifica = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
+        $this->view->codorgaoverifica = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         /* **************************************************************** */
         $orgaos = new Orgaos();
@@ -447,10 +447,10 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
             }
 
             if ($recusado && !$cadastrado) {
-                parent::message("Projetos com a situação RECUSADO não foram tramitados!", "/tramitarprojetos/enviarprojetos", "ALERT");
+                parent::message("Projetos com a situaï¿½ï¿½o RECUSADO nï¿½o foram tramitados!", "/tramitarprojetos/enviarprojetos", "ALERT");
             }
             else if ( $recusado && $cadastrado ) {
-                parent::message("Projetos com a situação RECUSADO não foram tramitados!",  "/tramitarprojetos/imprimirguia?idLote=".$idLoteAtual, "ALERT");
+                parent::message("Projetos com a situaï¿½ï¿½o RECUSADO nï¿½o foram tramitados!",  "/tramitarprojetos/imprimirguia?idLote=".$idLoteAtual, "ALERT");
             }
             else if ( $verificaPendencia == 1 && $verificaEnviado == 0  ) {
                 parent::message("Projeto enviado com sucesso!", "/tramitarprojetos/imprimirguia?idLote=".$idLoteAtual, "CONFIRM");
@@ -480,13 +480,13 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
     public function receberprojetosAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
         $idorgao = $this->getIdOrgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->grupoAtivo = $codGrupo;
@@ -501,17 +501,17 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         $destino = $historicodocumento->pesquisarOrgaosPorDestinoRecebimento(2, 2,$idusuario, $codOrgao);
         $this->view->Destino = $destino;
 
-        // ========== INÍCIO PAGINAÇÃO ==========
+        // ========== INï¿½CIO PAGINAï¿½ï¿½O ==========
         Zend_Paginator::setDefaultScrollingStyle('Sliding');
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
         $paginator = Zend_Paginator::factory($destino); // dados a serem paginados
 
-        // página atual e quantidade de ítens por página
+        // pï¿½gina atual e quantidade de ï¿½tens por pï¿½gina
         $currentPage = $this->_getParam('page', 1);
         $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(5);
         $this->view->Destino = $paginator;
         $this->view->qtdDoc    = count($destino); // quantidade
-        // ========== FIM PAGINAÇÃO ==========
+        // ========== FIM PAGINAï¿½ï¿½O ==========
         
         /* =================== FIM PROJETOS RECEBIDOS ====================*/
         if (isset($_POST['idH'])) {
@@ -639,7 +639,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
             $cxInicio = $_POST['inicial'];
             $cxFinal = $_POST['final'];
 
-            $busca2 = TramitarprojetosDAO::buscaProjetoUnidade($idPronac); //Verifica se o projeto já tem registro na tabela tbArquivamento
+            $busca2 = TramitarprojetosDAO::buscaProjetoUnidade($idPronac); //Verifica se o projeto jï¿½ tem registro na tabela tbArquivamento
 
             if ($busca2) {
                 foreach ($busca2 as $b) {
@@ -648,7 +648,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                     //xd($stAcao);
                 }
                 if($stAcao == 0) {
-                    parent::message("O projeto já se encontra arquivado nesta unidade!", "tramitarprojetos/receberprojetos?projetoRecebido=true", "ALERT");
+                    parent::message("O projeto jï¿½ se encontra arquivado nesta unidade!", "tramitarprojetos/receberprojetos?projetoRecebido=true", "ALERT");
                 }else {
                     $despacho = $historicodocumento->projetosDespachados(array(2), $idDestino);
                     foreach ($despacho as $despachoResu) {
@@ -719,7 +719,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                     TramitarprojetosDAO::arquivarProjeto($idPronac, $stAcao, $cxInicio, $cxFinal, $idusuario, null, 1);
                     parent::message("Projeto arquivado com sucesso!", "tramitarprojetos/receberprojetos?projetoRecebido=true", "CONFIRM");
                 } else {
-                    parent::message("O projeto não se encontra na DGI/CGRL/COAL/DCA, transação cancelada.", "tramitarprojetos/receberprojetos?projetoRecebido=true", "ALERT");
+                    parent::message("O projeto nï¿½o se encontra na DGI/CGRL/COAL/DCA, transaï¿½ï¿½o cancelada.", "tramitarprojetos/receberprojetos?projetoRecebido=true", "ALERT");
                 }
             }//FIM ELSE $busca2
 
@@ -735,12 +735,12 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
     public function despacharprojAction() {
 
-    	$auth = Zend_Auth::getInstance(); // instancia da autenticação
+    	$auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
        
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
     	$destino = TramitarprojetosDAO::pesquisarDestinos(1);
         $this->view->Destino = $destino;
@@ -751,13 +751,13 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         $despacho = TramitarprojetosDAO::projetosDespachados(1, 4);
         $this->view->Despacho = $despacho;
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
 
         if (isset($_POST)) {
 
             if($_POST['projeto']){
                 try {
-                    //Código novo - Jefferson
+                    //Cï¿½digo novo - Jefferson
 
                     //VERIFICAR A EXISTENCIA DO PROJETO
                     $Projetos = new Projetos();
@@ -766,7 +766,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                         parent::message("Projeto inexistente.", "tramitarprojetos/despacharprojetos", "ALERT");
                     }
 
-                    //CHECAR SE HÁ DOCUMENTO SEM ANEXACAO PARA O PROJETO
+                    //CHECAR SE Hï¿½ DOCUMENTO SEM ANEXACAO PARA O PROJETO
                     $whereHistorio = array();
                     $whereHistorio['idPronac = ?'] = $dadosProjeto->IdPRONAC;
                     $whereHistorio['idDocumento != ?'] = 0;
@@ -775,7 +775,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                     $tbHistoricoDocumento = new tbHistoricoDocumento();
                     $dadosTbHistorico = $tbHistoricoDocumento->buscar($whereHistorio);
                     if(count($dadosTbHistorico) > 0){
-                        parent::message("O projeto não pode ser despachado, porque existe documento a ser juntado antes da sua tramitação para outra unidade.", "tramitarprojetos/despacharprojetos", "ALERT");
+                        parent::message("O projeto nï¿½o pode ser despachado, porque existe documento a ser juntado antes da sua tramitaï¿½ï¿½o para outra unidade.", "tramitarprojetos/despacharprojetos", "ALERT");
                     }
 
                     //CHECAR SE O PROJETO NAO ESTA DESPACHADO PARA OUTRA UNIDADE
@@ -786,7 +786,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                     $whereHistorio['stEstado = ?'] = 1;
                     $dadosTbHistorico = $tbHistoricoDocumento->buscar($whereHistorio);
                     if(count($dadosTbHistorico) > 0){
-                        parent::message("O projeto não pode ser despachado novamente, transação cancelada.", "tramitarprojetos/despacharprojetos", "ALERT");
+                        parent::message("O projeto nï¿½o pode ser despachado novamente, transaï¿½ï¿½o cancelada.", "tramitarprojetos/despacharprojetos", "ALERT");
                     }
 
                     //SE EXISTIR ALGUM REGISTRO ATIVO, ELE TRANSFORMA PARA HISTORICO
@@ -815,7 +815,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                         'stEstado' => 1
                     );
                     if($codOrgao == $_POST['idunidade']){
-                        parent::message("O projeto não pode ser despachado para sua própria unidade.", "tramitarprojetos/despacharprojetos", "ALERT");
+                        parent::message("O projeto nï¿½o pode ser despachado para sua prï¿½pria unidade.", "tramitarprojetos/despacharprojetos", "ALERT");
                     } else {
                         $tbHistoricoDocumento->inserir($dados);
                     }
@@ -843,7 +843,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
             if(count($buscaDados)>0){
                 $idPronac = $buscaDados[0]->IdPRONAC;
             } else {
-                parent::message("Projeto não encontrado!", "tramitarprojetos/despacharprojetos", "ALERT");
+                parent::message("Projeto nï¿½o encontrado!", "tramitarprojetos/despacharprojetos", "ALERT");
             }
 
             $tbHistoricoDocumento = new tbHistoricoDocumento();
@@ -854,23 +854,23 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
             $where = 'idPronac = '.$idPronac;
             $atualizaDados = $tbHistoricoDocumento->update($dados, $where);
             if($atualizaDados){
-                parent::message("Alteração realizada com sucesso!", "tramitarprojetos/despacharprojetos", "CONFIRM");
+                parent::message("Alteraï¿½ï¿½o realizada com sucesso!", "tramitarprojetos/despacharprojetos", "CONFIRM");
             } else {
-                parent::message("Não foi possível fazer a alteração!", "tramitarprojetos/despacharprojetos", "ERROR");
+                parent::message("Nï¿½o foi possï¿½vel fazer a alteraï¿½ï¿½o!", "tramitarprojetos/despacharprojetos", "ERROR");
             }
         }
-        parent::message("Não foi possível fazer nenhuma ação!", "tramitarprojetos/despacharprojetos", "ALERT");
+        parent::message("Nï¿½o foi possï¿½vel fazer nenhuma aï¿½ï¿½o!", "tramitarprojetos/despacharprojetos", "ALERT");
     }
 
     public function enviarprojetosAction() {
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
         $idorgao = $this->getIdOrgao;
         
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -1002,7 +1002,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                 }
             }
             if ($recusado) {
-                parent::message("Projetos com a situação RECUSADO não foram tramitados!", "/tramitarprojetos/enviarprojetos", "ALERT");
+                parent::message("Projetos com a situaï¿½ï¿½o RECUSADO nï¿½o foram tramitados!", "/tramitarprojetos/enviarprojetos", "ALERT");
             } else {
                 parent::message("Projeto enviado com sucesso!", "/tramitarprojetos/enviarprojetos", "CONFIRM");
             }
@@ -1026,12 +1026,12 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
     public function guiasAction() {
 
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -1056,13 +1056,13 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
     public function recusarprojetosAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
         $idorgao = $this->getIdOrgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -1103,11 +1103,11 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
     }
 
     public function localizarprojetosAction() {
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $this->view->orgaoLogado = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $this->view->orgaoLogado = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->view->usuarioLogado = $this->getIdUsuario;
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -1223,7 +1223,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
     public function solicitarcancelamentoenvioprojetosAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
         /*         * *************************************************************** */
 
@@ -1240,13 +1240,13 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
     
 	public function solicitacoesAction() {
 		 /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
         $idorgao = $this->getIdOrgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         $this->view->codOrgao = $codOrgao;
         $this->view->grupoAtivo = $codGrupo;
         $this->view->idUsuarioLogado = $idusuario;
@@ -1285,7 +1285,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 		            $where = "idPronac =  $idPronac and stEstado = 1 and Acao = 0";
 		            $alterar = $historicoDocumentos->alterarHistoricoDocumento($dados, $where);
 		
-		            parent::message("Solicitação Cancelada!", "tramitarprojetos/solicitacoes", "CONFIRM");
+		            parent::message("Solicitaï¿½ï¿½o Cancelada!", "tramitarprojetos/solicitacoes", "CONFIRM");
         		}
         	}
         	
@@ -1307,12 +1307,12 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
     
 	public function arquivarAction() {
 		
-		$auth = Zend_Auth::getInstance(); // instancia da autenticação
+		$auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
         
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         $orgaos = new Orgaos();
         $orgaossigla = $orgaos->buscar(array("Codigo =?" =>$codOrgao));
         $this->view->siglaOrgao = $orgaossigla[0]->Sigla;
@@ -1339,7 +1339,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 				$idPronac = $dados->IdPRONAC;
 			}
 			
-			$busca2 = TramitarprojetosDAO::buscaProjetoUnidade($idPronac); //Verifica se o projeto já tem registro na tabela tbArquivamento
+			$busca2 = TramitarprojetosDAO::buscaProjetoUnidade($idPronac); //Verifica se o projeto jï¿½ tem registro na tabela tbArquivamento
 			
 			if ($busca2){
 				//xd('Tem registro na tbArquivamento');
@@ -1351,7 +1351,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 				}
 				if($stAcao == 0)
 				{
-					parent::message("O projeto já se encontra arquivado nesta unidade!", "tramitarprojetos/arquivar", "ALERT");
+					parent::message("O projeto jï¿½ se encontra arquivado nesta unidade!", "tramitarprojetos/arquivar", "ALERT");
 				}else{
 					$despacho = $historicodocumento->projetosDespachados(array(), $idDestino, null, $idPronac);
 		            foreach ($despacho as $despachoResu) {
@@ -1389,7 +1389,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 			}else{
 	            $tramitacao = $historicodocumento->projetosDespachados(array(), null, null, $idPronac);
 				//xd($tramitacao);
-	            if(count($tramitacao)){    //Se tiver Historico de tramitação
+	            if(count($tramitacao)){    //Se tiver Historico de tramitaï¿½ï¿½o
 		            foreach ($tramitacao as $despachoResu) {
 		                $despachos = $despachoResu->despacho;
 		                $idPronac = $despachoResu->idPronac;
@@ -1433,11 +1433,11 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 			            TramitarprojetosDAO::arquivarProjeto($idPronac, $stAcao, $cxInicio, $cxFinal, $idusuario, null, 1);
 			            parent::message("Projeto arquivado com sucesso!", "tramitarprojetos/arquivar", "CONFIRM");
 					}else {	
-						parent::message("O projeto não se encontra na DGI/CGRL/COAL/DCA, transação cancelada.", "tramitarprojetos/arquivar", "ALERT");
+						parent::message("O projeto nï¿½o se encontra na DGI/CGRL/COAL/DCA, transaï¿½ï¿½o cancelada.", "tramitarprojetos/arquivar", "ALERT");
 					}
-	            }//FIM IF TRAMITAÇÃO
+	            }//FIM IF TRAMITAï¿½ï¿½O
 	            else{
-	            	//xd('Só tem registro na tabela Projetos.');
+	            	//xd('Sï¿½ tem registro na tabela Projetos.');
 	            	$despacho = $buscaprojeto->buscarTodosDadosProjeto($idPronac);
 	            	
 	            	$dadosInserir = array(
@@ -1471,7 +1471,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 			            TramitarprojetosDAO::arquivarProjeto($idPronac, $stAcao, $cxInicio, $cxFinal, $idusuario, null, 1);
 			            parent::message("Projeto arquivado com sucesso!", "tramitarprojetos/arquivar", "CONFIRM");
 					}else {	
-						parent::message("O projeto não se encontra na DGI/CGRL/COAL/DCA, transação cancelada.", "tramitarprojetos/arquivar", "ALERT");
+						parent::message("O projeto nï¿½o se encontra na DGI/CGRL/COAL/DCA, transaï¿½ï¿½o cancelada.", "tramitarprojetos/arquivar", "ALERT");
 					}
 	            }
 			}//FIM ELSE $busca2
@@ -1482,10 +1482,10 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
     public function desarquivarAction() {
 
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         $this->view->codOrgao = $codOrgao;
         $buscaprojeto = new Projetos();
 
@@ -1506,7 +1506,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
             }
             if($stAcao == 1) {
-                parent::message("O projeto NÃO se encontra Arquivado nesta Unidade.!", "tramitarprojetos/desarquivar", "ALERT");
+                parent::message("O projeto Nï¿½O se encontra Arquivado nesta Unidade.!", "tramitarprojetos/desarquivar", "ALERT");
             }else {
                 if(($busca) && ($stAcao == 0)) {
                     TramitarprojetosDAO::alterarStatusArquivamento($idPronac);
@@ -1521,7 +1521,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
                     $atualizarProjeto = $buscaprojeto->alterarProjetos($dados, $where);
                     parent::message("Projeto desarquivado com sucesso!", "tramitarprojetos/desarquivar", "CONFIRM");
                 }else {
-                    parent::message("O projeto não se encontra na DGI/CGRL/COAL/DCA, transação cancelada.", "tramitarprojetos/desarquivar", "ALERT");
+                    parent::message("O projeto nï¿½o se encontra na DGI/CGRL/COAL/DCA, transaï¿½ï¿½o cancelada.", "tramitarprojetos/desarquivar", "ALERT");
                 }
             }
 
@@ -1540,7 +1540,7 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
         $where = "idPronac = $idPronac and stEstado = 1";
         $alterar = $historicoDocumentos->alterarHistoricoDocumento($dados, $where);
         if($alterar) {
-            parent::message("Exclusão realizada com sucesso!", "tramitarprojetos/despacharprojetos", "CONFIRM");
+            parent::message("Exclusï¿½o realizada com sucesso!", "tramitarprojetos/despacharprojetos", "CONFIRM");
         }
 
     }
@@ -1551,13 +1551,13 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
     public function projetosarquivadosAction(){
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
         $idorgao = $this->getIdOrgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->grupoAtivo = $codGrupo;
@@ -1790,17 +1790,17 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
 
         $arquivados = TramitarprojetosDAO::projetosArquivados($idusuario, $pronac, $tipo_nome, $nome, $tipo_processo, $processo, $tipo_dtArquivo,
     							$dtArquivI, $dtArquivInull, $dtArquivF, $tipo_cxInicio, $cxInicio, $tipo_cxFinal, $cxFinal);
-        // ========== INÍCIO PAGINAÇÃO ==========
+        // ========== INï¿½CIO PAGINAï¿½ï¿½O ==========
         Zend_Paginator::setDefaultScrollingStyle('Sliding');
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
         $paginator = Zend_Paginator::factory($arquivados); // dados a serem paginados
 
-        // página atual e quantidade de ítens por página
+        // pï¿½gina atual e quantidade de ï¿½tens por pï¿½gina
         $currentPage = $this->_getParam('page', 1);
         $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(30);
         $this->view->Arquivados = $paginator;
         $this->view->qtdDocs    = count($arquivados); // quantidade
-        // ========== FIM PAGINAÇÃO ==========
+        // ========== FIM PAGINAï¿½ï¿½O ==========
 
         if(!$arquivados){
             parent::message("Nenhum Projeto Encontrado!", "tramitarprojetos/consultarprojetosarquivados", "CONFIRM");
@@ -1816,13 +1816,13 @@ class TramitarprojetosController extends MinC_Controller_Action_Abstract {
             $stEstado = 1;
             $inserir = TramitarprojetosDAO::inserirSolicitacaoArquivamento($idPronac, $justificativa, $idusuario, $cxInicio, $cxFinal, $acao, $stEstado);
             $alterar = TramitarprojetosDAO::alterarStatusArquivamento($idPronac);
-            parent::message("Solicitação enviada com sucesso!", "tramitarprojetos/projetosarquivados", "CONFIRM");
+            parent::message("Solicitaï¿½ï¿½o enviada com sucesso!", "tramitarprojetos/projetosarquivados", "CONFIRM");
     	}
     }
 
     public function imprimirguiaAction() {
         //** Usuario Logado ************************************************/
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
 
         /* *************************************************************** */

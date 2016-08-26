@@ -8,7 +8,7 @@ class Termo extends Zend_Db_Table{
                             SAC.dbo.tbReuniao as reuniao
                             where
                             reuniao.stEstado = 1 and reuniao.stPlenaria = 'E'";
-                    $db = Zend_Registry::get('db');
+                    $db= Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 			return $db->fetchAll($sql0);
@@ -34,7 +34,7 @@ $sql = "select  tr.idNrReuniao,
         and tr.stEstado = 1 
         and ap.dtaprovacao in(select max(dtaprovacao) from sac.dbo.aprovacao where idpronac=pr.IdPRONAC);";
 
-			$db = Zend_Registry::get('db');
+			$db= Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 			return $db->fetchAll($sql);
@@ -60,10 +60,10 @@ $sql = "        SELECT
 		    ap.AprovadoReal,
 		    ap.ResumoAprovacao,
               case
-		    when ap.TipoAprovacao = 1 then 'Aprovação Inicial'
-		    when ap.TipoAprovacao = 2 then 'Complementação'
-		    when ap.TipoAprovacao = 3 then 'Prorrogação de Prazo'
-		    when ap.TipoAprovacao = 4 then 'Redução'
+		    when ap.TipoAprovacao = 1 then 'Aprovaï¿½ï¿½o Inicial'
+		    when ap.TipoAprovacao = 2 then 'Complementaï¿½ï¿½o'
+		    when ap.TipoAprovacao = 3 then 'Prorrogaï¿½ï¿½o de Prazo'
+		    when ap.TipoAprovacao = 4 then 'Reduï¿½ï¿½o'
 		    end as tipoaprovacao
       		FROM SAC.dbo.Projetos pr
 		    INNER JOIN BDCORPORATIVO.scSAC.tbPauta tp ON pr.IdPRONAC = tp.IdPRONAC
@@ -79,7 +79,7 @@ $sql = "        SELECT
 		    ;
 			" ;
 
-			$db = Zend_Registry::get('db');
+			$db= Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			return $db->fetchAll($sql);
        	}

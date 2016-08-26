@@ -16,16 +16,16 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
     private $idPreProjeto = null;
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $this->view->title = "Salic - Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura"; // tï¿½tulo da pï¿½gina
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $PermissoesGrupo = array();
-        if (!$auth->hasIdentity()) // caso o usuário esteja autenticado
+        if (!$auth->hasIdentity()) // caso o usuï¿½rio esteja autenticado
         {
              return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
@@ -33,7 +33,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo){
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -52,7 +52,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
         }else {
             if($_REQUEST['idPreProjeto'] != '0'){
-                parent::message("Necessário informar o número da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
+                parent::message("Necessï¿½rio informar o nï¿½mero da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
             }
         }
 
@@ -72,11 +72,11 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      */
     public function indexAction() {
         // Usuario Logado
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -149,7 +149,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @return void
      */
     public function planilhaorcamentariageralAction(){
-        $this->view->tipoPlanilha = 0; // 0=Planilha Orçamentária da Proposta
+        $this->view->tipoPlanilha = 0; // 0=Planilha Orï¿½amentï¿½ria da Proposta
     }
 
     /**
@@ -599,7 +599,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
             try {
 
-                $db = Zend_Registry::get('db');
+                $db= Zend_Db_Table::getDefaultAdapter();
                 $dados = array(	'idProjeto'=>$idProposta,
                                 'idEtapa'=>$idEtapa,
                                 'idPlanilhaItem'=>$idItem,
@@ -703,7 +703,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $resposta = ManterorcamentoDAO::excluirItensProdutos($idPlanilhaProposta);
 
         if($resposta) {
-            parent::message("Exclusão realizada com sucesso!", "manterorcamento/".$retorno."?idPreProjeto=".$this->idPreProjeto ,"CONFIRM");
+            parent::message("Exclusï¿½o realizada com sucesso!", "manterorcamento/".$retorno."?idPreProjeto=".$this->idPreProjeto ,"CONFIRM");
         } else {
             parent::message("Erro ao excluir os dados", "manterorcamento/".$retorno."?idPreProjeto=".$this->idPreProjeto ,"ERROR");
         }

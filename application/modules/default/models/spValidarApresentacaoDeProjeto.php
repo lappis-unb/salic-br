@@ -8,7 +8,7 @@ class spValidarApresentacaoDeProjeto extends GenericModel {
     public function validarEnvioProposta($idPreProjeto) {
         $select = new Zend_Db_Expr(" exec SAC.dbo.spValidarApresentacaoDeProjeto $idPreProjeto ");
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
@@ -19,7 +19,7 @@ class spValidarApresentacaoDeProjeto extends GenericModel {
     public function paChecklistDeEnvioDeProposta($idPreProjeto) {
         $select = new Zend_Db_Expr(" exec SAC.dbo.paChecklistDeEnvioDeProposta $idPreProjeto ");
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();

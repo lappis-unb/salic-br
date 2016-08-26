@@ -13,7 +13,7 @@ Class AreadeTrabalhoDAO extends Zend_Db_Table{
 						,Pr.NomeProjeto
 						,CASE WHEN Pa.ParecerFavoravel in ('2','3')
 							THEN 'Sim'
-							ELSE 'Não'
+							ELSE 'Nï¿½o'
 						  End AS ParecerFavoravel
 						 ,CONVERT(CHAR(10),DPC.dtDistribuicao,103) AS DataRecebimento
 
@@ -29,7 +29,7 @@ Class AreadeTrabalhoDAO extends Zend_Db_Table{
                                                 AND not exists(select 1 from BDCORPORATIVO.scSAC.tbPauta where idpronac = Pr.idPRONAC )
                                                 AND Pa.stAtivo = 1
 			";
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			$resultado = $db->fetchAll($sql);
 
@@ -45,7 +45,7 @@ Class AreadeTrabalhoDAO extends Zend_Db_Table{
 						,Pr.NomeProjeto
 						,CASE WHEN Pa.ParecerFavoravel in ('2','3')
 							THEN 'Sim'
-							ELSE 'Não'
+							ELSE 'Nï¿½o'
 						  End AS ParecerFavoravel
 						 ,CONVERT(CHAR(10),D.DtResposta,103) AS DtResposta
 					FROM SAC.dbo.Projetos Pr
@@ -59,7 +59,7 @@ Class AreadeTrabalhoDAO extends Zend_Db_Table{
 			//AND d.idSolicitante = idParametro";
 //                die('<pre>'.$sql1);
 
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			$resultado1 = $db->fetchAll($sql1);
 
@@ -75,7 +75,7 @@ Class AreadeTrabalhoDAO extends Zend_Db_Table{
 						,Pr.NomeProjeto
 						,CASE WHEN Pa.ParecerFavoravel in ('2','3')
 							THEN 'Sim'
-							ELSE 'Não'
+							ELSE 'Nï¿½o'
 						End AS ParecerFavoravel
 						,CONVERT(CHAR(10),d.dtSolicitacao,103) AS dtSolicitacao
 
@@ -88,7 +88,7 @@ Class AreadeTrabalhoDAO extends Zend_Db_Table{
 			";
 			//AND d.idSolicitante = idParametro";
 //die('<pre>'.$sql2);
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			$resultado2 = $db->fetchAll($sql2);
 

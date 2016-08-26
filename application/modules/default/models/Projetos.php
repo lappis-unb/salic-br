@@ -5062,7 +5062,7 @@ class Projetos extends GenericModel
                 ) AS tabela ORDER BY IdPRONAC desc
             ) AS tabela ORDER BY IdPRONAC");
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
@@ -5083,7 +5083,7 @@ class Projetos extends GenericModel
             SELECT * FROM SAC.dbo.Projetos
             WHERE Situacao = '" . $where['situacao'] . "' $filtroOrgao ORDER BY IdPRONAC");
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
@@ -5096,7 +5096,7 @@ class Projetos extends GenericModel
 //
 //            $sql = "EXEC SAC.dbo.paGravarProjeto '{$dados['AnoProjeto']}','{$dados['Sequencial']}','{$dados['UfProjeto']}','{$dados['Area']}','{$dados['Segmento']}','{$dados['NomeProjeto']}','{$dados['Processo']}','{$dados['CgcCpf']}','{$dados['Orgao']}','{$dados['Modalidade']}','NULL','{$dados ['Situacao']}','{$dados ['ProvidenciaTomada']}','NULL','{$dados ['Mecanismo']}','0.00',{$dados['VlCusteio']},{$dados['VlCapital']},'{$dados['Usuario']}','{$dados ['DtProtocolo']}'";
 ////          xd($sql);
-//            $db = Zend_Registry::get('db');
+//            $db= Zend_Db_Table::getDefaultAdapter();
 //            $db->setFetchMode(Zend_DB::FETCH_OBJ);
 //            return $db->fetchAll($sql);
 //

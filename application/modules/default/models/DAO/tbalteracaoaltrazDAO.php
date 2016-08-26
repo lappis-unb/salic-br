@@ -17,14 +17,14 @@ class tbalteracaoaltrazDAO extends Zend_Db_Table
                        join SAC.dbo.PreProjeto prepr on prepr.idPreProjeto = pr.idProjeto
                        where trsp.idpedidoalteracao= ".$idpedidoalteracao;
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
     
     public static function alterarRazaoSocialProjeto($dados, $idagente)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idagente = ".$idagente;

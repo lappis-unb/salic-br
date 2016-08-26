@@ -14,7 +14,7 @@ class tbprorrogacaoprazoDao extends Zend_Db_Table
             from BDCORPORATIVO.scSAC.tbProrrogacaoPrazo ppraz
             join BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tap on tap.idPedidoAlteracao = ppraz.idPedidoAlteracao
             where ppraz.idpedidoalteracao = ".$idpedidoalteracao;
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
 
@@ -22,7 +22,7 @@ class tbprorrogacaoprazoDao extends Zend_Db_Table
 
     public static function alterarProrrogracaoPrazoCap($dados, $idpronac)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idpronac = ".$idpronac;
@@ -40,7 +40,7 @@ class tbprorrogacaoprazoDao extends Zend_Db_Table
     
     public static function alterarProrrogracaoPrazoExec($dados, $idpronac)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idpronac = ".$idpronac;

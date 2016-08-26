@@ -40,11 +40,11 @@ class ManterAgentes extends Zend_Db_Table
 
 		$sql.= " ORDER BY N.Descricao ASC";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		return $db->fetchAll($sql);		
-	} // fecha método buscaAgentes()
+	} // fecha mï¿½todo buscaAgentes()
 
 
 
@@ -82,11 +82,11 @@ class ManterAgentes extends Zend_Db_Table
 
 		$sql.= " ORDER BY n.Descricao";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		return $db->fetchAll($sql);		
-	} // fecha método buscaDirigentes()
+	} // fecha mï¿½todo buscaDirigentes()
 
 
 
@@ -109,7 +109,7 @@ class ManterAgentes extends Zend_Db_Table
 									"AND I.idAgente =".$idAgente;
 									
 	
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		return $db->fetchAll($Sql);
@@ -141,7 +141,7 @@ class ManterAgentes extends Zend_Db_Table
 					  			 	"AND F.idAgente =".$idAgente;
 									
 	
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		return $db->fetchAll($Sql);
@@ -159,12 +159,12 @@ class ManterAgentes extends Zend_Db_Table
 
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		}
 		catch (Zend_Exception_Db $e)
 		{
-			$this->view->message = "Erro ao buscar Área Cultural: " . $e->getMessage();
+			$this->view->message = "Erro ao buscar ï¿½rea Cultural: " . $e->getMessage();
 		}
 
 		return $db->fetchAll($sql);
@@ -180,7 +180,7 @@ class ManterAgentes extends Zend_Db_Table
 		
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			$i = $db->query($sqlInsert);
 		}
@@ -200,7 +200,7 @@ class ManterAgentes extends Zend_Db_Table
 		
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			$i = $db->query($sqlInsert);
 		}
@@ -220,7 +220,7 @@ class ManterAgentes extends Zend_Db_Table
 
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			$i = $db->query($sql);
 		}
@@ -239,7 +239,7 @@ class ManterAgentes extends Zend_Db_Table
 
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		}
 		catch (Zend_Exception_Db $e)
@@ -260,7 +260,7 @@ class ManterAgentes extends Zend_Db_Table
 
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			$i = $db->query($sql);
 		}

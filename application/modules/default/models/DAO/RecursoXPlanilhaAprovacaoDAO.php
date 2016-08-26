@@ -8,7 +8,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -22,7 +22,7 @@ class RecursoXPlanilhaAprovacaoDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para cadastrar informações dos recursos na planilha de aprovação
+	 * Mï¿½todo para cadastrar informaï¿½ï¿½es dos recursos na planilha de aprovaï¿½ï¿½o
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -30,7 +30,7 @@ class RecursoXPlanilhaAprovacaoDAO extends Zend_Db_Table
 	 */
 	public static function cadastrar($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$cadastrar = $db->insert("SAC.dbo.tbRecursoXPlanilhaAprovacao", $dados);
@@ -43,7 +43,7 @@ class RecursoXPlanilhaAprovacaoDAO extends Zend_Db_Table
 		{
 			return false;
 		} 
-	} // fecha método cadastrar()
+	} // fecha mï¿½todo cadastrar()
 
 
 
@@ -53,7 +53,7 @@ class RecursoXPlanilhaAprovacaoDAO extends Zend_Db_Table
 	
 	
 	/**
-	 * Método para alterar informações dos recursos na planilha de aprovação
+	 * Mï¿½todo para alterar informaï¿½ï¿½es dos recursos na planilha de aprovaï¿½ï¿½o
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -62,7 +62,7 @@ class RecursoXPlanilhaAprovacaoDAO extends Zend_Db_Table
 	 */
 	public static function alterar($dados, $id)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$where   = "idRecurso = $id";
@@ -76,6 +76,6 @@ class RecursoXPlanilhaAprovacaoDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método alterar()
+	} // fecha mï¿½todo alterar()
 
 } // fecha class RecursoXPlanilhaAprovacaoDAO

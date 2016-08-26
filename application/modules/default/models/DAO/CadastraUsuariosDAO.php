@@ -25,7 +25,7 @@ class CadastraUsuariosDAO extends Zend_Db_Table {
             0,'~Xqkg',2011-02-15,0,0,1,'','')";
 
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $rs = $db->query($sql);
             return $rs;

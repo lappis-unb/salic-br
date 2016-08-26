@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -20,7 +20,7 @@ class TipoDocumentoDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para buscar os tipos de documentos
+	 * Mï¿½todo para buscar os tipos de documentos
 	 * @access public
 	 * @static
 	 * @param void
@@ -30,9 +30,9 @@ class TipoDocumentoDAO extends Zend_Db_Table
 	{
 		$sql = "SELECT * FROM SAC.dbo.tbTipoDocumento ORDER BY dsTipoDocumento";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
-	} // fecha método buscar()
+	} // fecha mï¿½todo buscar()
 
 } // fecha class

@@ -41,7 +41,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
                     on pre.idAgente = agentes.idAgente
 
                 where projetos.IdPRONAC = $idPronac";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -102,7 +102,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
                 //xd($slct->__toString());
         return $this->fetchAll($slct);
 
-//        $db = Zend_Registry::get('db');
+//        $db= Zend_Db_Table::getDefaultAdapter();
 //        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 //
 //        return $db->fetchAll($sql);
@@ -143,7 +143,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
                         and tpa.dtPlanilha in (select max(dtPlanilha) from SAC.dbo.tbPlanilhaAprovacao where IdPRONAC=tpa.IdPRONAC
                         and idPlanilhaAprovacao=tpa.idPlanilhaAprovacao and idPlanilhaItem=tpa.idPlanilhaItem)";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -202,7 +202,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
             $sql .=" AND idProduto = $idProduto";
         }
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -261,7 +261,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
         }
 //        xd($sql);
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -304,7 +304,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
                     ";
         //die($sql);
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -348,7 +348,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
                     ";
         
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -361,7 +361,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
             $sql .=  $where;
         }
         
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -372,7 +372,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
         $sql = " SELECT stAvaliacaoSubItemPedidoAlteracao as stAvaliacao FROM BDCORPORATIVO.scSac.tbAvaliacaoSubItemPedidoAlteracao
                 WHERE idAvaliacaoItemPedidoAlteracao = $idPedidoAlteracao AND idAvaliacaoItemPedidoAlteracao = $idAvaliacaoSubItem";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -382,7 +382,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
 
         $sql = " SELECT idPedidoAlteracao FROM BDCORPORATIVO.scSac.tbPedidoAlteracaoProjeto WHERE idPRONAC = $idPRONAC ";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -402,7 +402,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
                             ";
 
         //die($sql);
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -414,7 +414,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
         if (!empty($tpAlteracaoProjeto)) :
         	$sql.= " AND tpAlteracaoProjeto = " . $tpAlteracaoProjeto;
         endif;
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -423,7 +423,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
     public static function buscaIdAvaliacaoSubItemPedidoAlteracao($idItemAvaliacaoItemPedidoAlteracao) {
 
         $sql = "select TOP 1 idAvaliacaoSubItemPedidoAlteracao from BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao WHERE idAvaliacaoItemPedidoAlteracao = $idItemAvaliacaoItemPedidoAlteracao ORDER BY idAvaliacaoSubItemPedidoAlteracao DESC ";
-         $db = Zend_Registry::get('db');
+         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -439,7 +439,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
                 AND b.idPlanilhaAprovacao = $idPlanilhaAprovacao
                 AND a.idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao
                 AND b.idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchRow($sql);
@@ -477,7 +477,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
         //die( "<pre>" . $sql) ;
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -494,7 +494,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
         WHERE     (idPlanilhaAprovacao = $idPlanilhaAprovacao) AND tpPlanilha = 'PA' AND stAtivo = 'N'";
 
 //die();
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -508,7 +508,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
         $sql = "UPDATE BDCORPORATIVO.SCsAC.tbAvaliacaoSubItemPedidoAlteracao
         set stAvaliacaoSubItemPedidoAlteracao = '$stAvaliacaoSubItemPedidoAlteracao' where idAvaliacaoItemPedidoAlteracao = $idItemAvaliacaoItemPedidoAlteracao";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -528,7 +528,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
         $sql = "INSERT INTO BDCORPORATIVO.scSac.tbAvaliacaoSubItemPedidoAlteracao
         (idAvaliacaoItemPedidoAlteracao, stAvaliacaoSubItemPedidoAlteracao, dsAvaliacaoSubItemPedidoAlteracao)
             VALUES ($idAvaliacaoSubItemPedidoAlteracao, '$stDeferimento', '$dsJustificativaAvaliador')";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -538,7 +538,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
 
         $sql = "INSERT INTO BDCORPORATIVO.scSac.tbAvaliacaoSubItemCusto
                 (idAvaliacaoItemPedidoAlteracao, idAvaliacaoSubItemPedidoAlteracao , idPlanilhaAprovacao)
-                VALUES ($idItemAvaliacaoItemPedidoAlteracao, $idAvaliacaoSubItemPedidoAlteracao,  $idPlanilhaAprovacao)";$db = Zend_Registry::get('db');
+                VALUES ($idItemAvaliacaoItemPedidoAlteracao, $idAvaliacaoSubItemPedidoAlteracao,  $idPlanilhaAprovacao)";$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -571,7 +571,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
         }
 
         //xd($sql);
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -586,7 +586,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
                         SET stAvaliacaoItemPedidoAlteracao = '$tipoAlteracao', dsAvaliacao = '$dsAvaliacao' WHERE idPedidoAlteracao = $idPedido";
 
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -594,7 +594,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
 
     public static function verificaPlanilhaAprovacao($idPronac) {
         $sql = "select * from SAC.dbo.tbPlanilhaAprovacao WHERE idPRONAC = $idPronac AND tpPlanilha = 'PA'";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -607,7 +607,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
 			$sql.= "AND tpAlteracaoProjeto = " . $tpAlteracaoProjeto;
 		endif;
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -623,7 +623,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
 			$sql.= "AND tpAlteracaoProjeto = " . $tpAlteracaoProjeto;
 		endif;
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchRow($sql);
@@ -632,7 +632,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
     public static function verificaStatusFinal($idPedidoAlteracao) {
         $sql = "SELECT stAvaliacaoItemPedidoAlteracao as stAvaliacao FROM BDCORPORATIVO.scSAC.tbAvaliacaoItemPedidoAlteracao WHERE idPedidoAlteracao = $idPedidoAlteracao";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -645,7 +645,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
                         AND a.idAvaliacaoSubItemPedidoAlteracao = b.idAvaliacaoSubItemPedidoAlteracao
                 WHERE b.idPlanilhaAprovacao = $idPlanilhaAprovacao AND a.idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao AND b.idAvaliacaoItemPedidoAlteracao = $idAvaliacaoItemPedidoAlteracao ";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -657,7 +657,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
     INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemCusto tsi ON tsi.idAvaliacaoItemPedidoAlteracao = tai.idAvaliacaoItemPedidoAlteracao
     INNER JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tsu ON tsu.idAvaliacaoSubItemPedidoAlteracao = tsi.idAvaliacaoSubItemPedidoAlteracao";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -669,7 +669,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
                                     WHERE idAvaliacaoItemPedidoAlteracao = $idacao
                                             AND idPerfilRemetente = 93
                                     ORDER BY dtEncaminhamento DESC";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
         return $db->fetchRow($sql);
     }
@@ -679,7 +679,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
                                     FROM BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
                                     WHERE idAvaliacaoItemPedidoAlteracao = $idacao
                                     ORDER BY dtEncaminhamento DESC";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
         return $db->fetchRow($sql);
     }
@@ -694,7 +694,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
 
     public function buscarOrgao($idacao){
         $sql = "select idorgao from BDCORPORATIVO.scSac.tbAcaoAvaliacaoItemPedidoAlteracao where idAvaliacaoItemPedidoAlteracao=$idacao";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
 
         return $db->fetchRow($sql);
@@ -707,7 +707,7 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
 
     public function buscarEtapa() {
         $sql = "select idPlanilhaEtapa, Descricao, tpCusto from SAC.dbo.tbPlanilhaEtapa";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -715,42 +715,42 @@ class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
 
     public function atualizarStatus($dados, $where) {
         
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $alterar = $db->update("bdcorporativo.scsac.tbavaliacaoitempedidoalteracao", $dados, $where);
         return $alterar;
     }
     
     public function atualizarPedido($dados, $where) {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $db->update("BDCORPORATIVO.scSac.tbPedidoAlteracaoProjeto", $dados, $where);
     }
 
     public function atualizarTipoAlteracao($dados, $where) {
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $alterar = $db->update("BDCORPORATIVO.scSac.tbPedidoAlteracaoXTipoAlteracao", $dados, $where);
     }
     
     public function atualizarAvaliacaopedido($dados, $where) {
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $alterar = $db->update("BDCORPORATIVO.scSac.tbAvaliacaoItemPedidoAlteracao", $dados, $where);
     }
     
     public function atualizarAvaliacaoAcao($dados, $where) {
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $alterar = $db->update("BDCORPORATIVO.scSac.tbAcaoAvaliacaoItemPedidoAlteracao", $dados, $where);
     }
     
     public function insertAvaliacaoAcao($dados) {
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $alterar = $db->insert("BDCORPORATIVO.scSac.tbAcaoAvaliacaoItemPedidoAlteracao", $dados);
     }

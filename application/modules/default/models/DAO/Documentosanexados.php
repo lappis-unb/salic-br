@@ -16,7 +16,7 @@ Class Documentosanexados extends Zend_Db_Table{
 					where Pr.IdPRONAC= " . $pronac . "";
        		
        		
-       		$db  = Zend_Registry::get('db');
+       		$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			$resultado = $db->fetchAll($sql);
 
@@ -26,16 +26,16 @@ Class Documentosanexados extends Zend_Db_Table{
        	public function inserirArquivo($name,$fileType)
 		{
 			$name     = $_FILES['arquivo']['name']; // nome
-			$arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporário
+			$arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporï¿½rio
 			$fileType     = $_FILES['arquivo']['type']; // tipo
 			$arquivoTamanho  = $_FILES['arquivo']['size']; // tamanho
 			if (!empty($name))
 			{
-				$arquivoExtensao = Upload::getExtensao($name); // extensão
+				$arquivoExtensao = Upload::getExtensao($name); // extensï¿½o
 			}
 			if (!empty($arquivoTemp))
 			{
-				$arquivoBinario  = Upload::setBinario($arquivoTemp); // binário
+				$arquivoBinario  = Upload::setBinario($arquivoTemp); // binï¿½rio
 				$arquivoHash     = Upload::setHash($arquivoTemp); // hash
 			}
 			
@@ -45,13 +45,13 @@ Class Documentosanexados extends Zend_Db_Table{
 				}
 				else if ($arquivoExtensao == 'exe' || $arquivoExtensao == 'bat' || 
 				$fileType == 'application/exe' || $fileType == 'application/x-exe' || 
-				$fileType == 'application/dos-exe') // extensão do arquivo
+				$fileType == 'application/dos-exe') // extensï¿½o do arquivo
 				{
-					throw new Exception("A extensão do arquivo é inválida!");
+					throw new Exception("A extensï¿½o do arquivo ï¿½ invï¿½lida!");
 				}
 				else if ($arquivoTamanho > 10485760) // tamanho do arquivo: 10MB
 				{
-					throw new Exception("O arquivo não pode ser maior do que 10MB!");
+					throw new Exception("O arquivo nï¿½o pode ser maior do que 10MB!");
 				}
 				// faz o cadastro no banco de dados
 				else

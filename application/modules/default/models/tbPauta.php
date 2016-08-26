@@ -613,11 +613,11 @@ class tbPauta extends GenericModel {
                 array('*',
                       'resultadoPlenaria' => new Zend_Db_Expr("CASE
                                                                 WHEN stAnalise = 'AS'
-                                                                    THEN 'Aprovado na plenária'
+                                                                    THEN 'Aprovado na plenï¿½ria'
                                                                 WHEN stAnalise = 'AC'
                                                                     THEN 'Aprovado pelo componente'
                                                                 WHEN stAnalise = 'IS'
-                                                                    THEN 'Indeferido na plenária'
+                                                                    THEN 'Indeferido na plenï¿½ria'
                                                                 WHEN stAnalise = 'IC'
                                                                     THEN 'Indeferido pelo componente'
                                                                 END "),
@@ -853,7 +853,7 @@ class tbPauta extends GenericModel {
                 INNER JOIN Tabelas..Usuarios n ON (n.usu_codigo = pa.Logon)
                 WHERE pa.idTipoAgente = 6 AND p.idPronac = $idPronac ");
         try {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
@@ -869,7 +869,7 @@ class tbPauta extends GenericModel {
         $slct1->from(
             array('a' => $this->_schema . '.' . $this->_name),
             array(
-                new Zend_Db_Expr("'Análise Inicial' AS TipoAprovacao,'' AS Tipo,b.IdPRONAC,b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto"),
+                new Zend_Db_Expr("'Anï¿½lise Inicial' AS TipoAprovacao,'' AS Tipo,b.IdPRONAC,b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto"),
                 new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC) as QtdeVotoAprovacao"),
                 new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC) as QtdeVotoAbstencao"),
                 new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC) as QtdeVotoIndeferimento"),
@@ -914,13 +914,13 @@ class tbPauta extends GenericModel {
         $slct2->where('a.stEstado = ?', 0);
         
         
-        //PROJETOS DE READEQUAÇÃO
+        //PROJETOS DE READEQUAï¿½ï¿½O
         $slct3 = $this->select();
         $slct3->setIntegrityCheck(false);
         $slct3->from(
             array('a' => 'tbReadequacao'),
             array(
-                new Zend_Db_Expr("'Readequação' AS TipoAprovacao,d.dsReadequacao AS Tipo,b.IdPRONAC,b.AnoProjeto+b.Sequencial AS PRONAC, b.NomeProjeto"),
+                new Zend_Db_Expr("'Readequaï¿½ï¿½o' AS TipoAprovacao,d.dsReadequacao AS Tipo,b.IdPRONAC,b.AnoProjeto+b.Sequencial AS PRONAC, b.NomeProjeto"),
                 new Zend_Db_Expr("(SELECT COUNT(d.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao d WHERE d.stVoto = 'A' and d.idPronac = a.IdPRONAC and d.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoAprovacao"),
                 new Zend_Db_Expr("(SELECT COUNT(e.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao e WHERE e.stVoto = 'B' and e.idPronac = a.IdPRONAC and e.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoAbstencao"),
                 new Zend_Db_Expr("(SELECT COUNT(f.stVoto) FROM BDCORPORATIVO.scSAC.tbVotacao f WHERE f.stVoto = 'I' and f.idPronac = a.IdPRONAC and f.tpTipoReadequacao = a.idTipoReadequacao) as QtdeVotoIndeferimento"),

@@ -17,7 +17,7 @@ class ComprovarexecucaofinanceiraDao extends Zend_Db_Table
         
         $sql = "Select {$atributosAux} From {$tabela} Where {$whereAux} {$orderAux}";
         
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $dados =  $db->fetchAll($sql);	
@@ -79,7 +79,7 @@ class ComprovarexecucaofinanceiraDao extends Zend_Db_Table
     public function retornaUltimoIdentity() {
         /*$sql = "select  @@IDENTITY";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $dados =  $db->fetchAll($sql);
@@ -102,11 +102,11 @@ class ComprovarexecucaofinanceiraDao extends Zend_Db_Table
 
                         
 
-                        // insere o binário do arquivo select insert
+                        // insere o binï¿½rio do arquivo select insert
                         $sql = "";
                         $db->query($sql);
 
-                        // insere informações do documento select insert
+                        // insere informaï¿½ï¿½es do documento select insert
                         $sql = "";
                         $db->query($sql);
                         return true;

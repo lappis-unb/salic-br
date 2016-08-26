@@ -17,7 +17,7 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
 
     public static function atualizaReuniao($idReuniao, $valor)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $where = "idNrReuniao = " . $idReuniao;
         $alterar = $db->update("SAC.dbo.tbReuniao", $valor, $where);
@@ -42,7 +42,7 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
                  tp.stAnalise='AC' and tp.stEnvioPlenario='N' and tp.dtEnvioPauta < r.dtFinal " ;
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)
@@ -82,7 +82,7 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
         }
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)
@@ -104,7 +104,7 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
                WHERE tp.stAnalise='AC' or tp.stAnalise='IC' and  tv.idNrReuniao = " . $idReuniao;
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)
@@ -116,7 +116,7 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
 
     public static function inciaVotacao($idPronac, $idAgente, $idReuniao)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $dados = array('IdPRONAC' => $idPronac, 'idAgente' => $idAgente, 'idNrReuniao' => $idReuniao);
 
@@ -146,7 +146,7 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
 
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             return $db->fetchAll($sql);
         }
@@ -158,7 +158,7 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
 
     public static function inserirVotantes($votantes)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $cadastrar = $db->insert("BDCORPORATIVO.scSAC.tbvotante", $votantes);
@@ -185,7 +185,7 @@ class AtualizaReuniaoDAO extends Zend_Db_Table
 //        die($sql);
         try
         {
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         }
         catch (Zend_Exception_Db $e)

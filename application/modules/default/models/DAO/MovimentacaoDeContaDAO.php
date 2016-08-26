@@ -17,10 +17,10 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
                                 @recipients = '".$email."',
                                 @body = '".$texto."',
                                 @body_format = 'HTML',
-                                @subject = 'Diligência na captação do Projeto',
+                                @subject = 'Diligï¿½ncia na captaï¿½ï¿½o do Projeto',
                                 @exclude_query_output = 1;";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->query($sql);
 		
@@ -33,7 +33,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
         		"FROM SAC.dbo.ContaBancaria " .
         		"WHERE Agencia = '".$agencia."' AND ContaBloqueada = '".$conta."' OR ContaLivre = '".$conta."'";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 
@@ -48,7 +48,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
 				AND A.idAgente = N.idAgente
 				AND A.idAgente = I.idAgente";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 
@@ -63,7 +63,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
         		AND A.CNPJCPF = '".$cpf_cnpj."'";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 
@@ -74,7 +74,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
     {
         $sql = "SELECT Enquadramento FROM SAC.dbo.Enquadramento WHERE AnoProjeto+Sequencial = ".$PRONAC;
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 
@@ -91,7 +91,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
 				"AND '".$data."' between DtInicioExecucao AND DtFimExecucao";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 
@@ -108,7 +108,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
         		"AND '".$data."' between DtInicioCaptacao AND DtFimCaptacao";
 
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 
@@ -121,7 +121,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
 	{
 		
 		
-		$db  = Zend_Registry::get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$db->insert('SAC.dbo.Captacao',$dados);
 						
@@ -132,7 +132,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
 	{
 		
 				
-		$db  = Zend_Registry::get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$db->insert('SAC.dbo.tbTmpCaptacao',$dados);
 		return $db->lastInsertId();
@@ -142,7 +142,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
 	{
 		
 		
-		$db  = Zend_Registry::get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$db->insert('SAC.dbo.tbTmpInconsistenciaCaptacao', $dados);
 		
@@ -153,7 +153,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
 		
 		$sql = "DELETE FROM SAC.dbo.tbTmpInconsistenciaCaptacao ";
 		
-		$db  = Zend_Registry::get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$db->query($sql);
 		
@@ -174,7 +174,7 @@ class MovimentacaoDeContaDAO extends Zend_Db_Table{
 					FROM SAC.dbo.tbTmpCaptacao
 					WHERE nrAnoProjeto is not null AND nrAnoProjeto != '' OR nrSequencial is not null AND nrSequencial != ''";
 		
-		$db  = Zend_Registry::get('db');
+		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->query($sql);
 		

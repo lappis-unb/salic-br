@@ -18,7 +18,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 		$db = Zend_Registry::get ( 'db' );
 		$db->setFetchMode ( Zend_DB::FETCH_OBJ );
 		return $db->fetchAll ($sql);
-	} // fecha método buscarProjetos()
+	} // fecha mï¿½todo buscarProjetos()
 
 
 
@@ -40,7 +40,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
 
         return $db->fetchAll ($sql);
-	} // fecha método compararInserirAbrangencia()
+	} // fecha mï¿½todo compararInserirAbrangencia()
 
 
 
@@ -58,7 +58,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-	} // fecha método buscartbPedidoAlteracaoXTipoAlteracao()
+	} // fecha mï¿½todo buscartbPedidoAlteracaoXTipoAlteracao()
 
         public function buscartbPedidoAlteracaoXTipoAlteracaoGeral($idPedidoAlteracao)
 	{
@@ -74,7 +74,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-	} // fecha método buscartbPedidoAlteracaoXTipoAlteracao()
+	} // fecha mï¿½todo buscartbPedidoAlteracaoXTipoAlteracao()
 
 
          public function buscartbPedidoAlteracaoXTipoAlteracaoGeralJustificativa($idPedidoAlteracao)
@@ -91,7 +91,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-	} // fecha método buscartbPedidoAlteracaoXTipoAlteracao()
+	} // fecha mï¿½todo buscartbPedidoAlteracaoXTipoAlteracao()
 
 
         public function buscarTrocaProponente($idPedidoAlteracao)
@@ -101,7 +101,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-	} // fecha método buscartbPedidoAlteracaoXTipoAlteracao()
+	} // fecha mï¿½todo buscartbPedidoAlteracaoXTipoAlteracao()
 
 
 
@@ -113,7 +113,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-	} // fecha método updatetbPedidoAlteracaoXTipoAlteracao()
+	} // fecha mï¿½todo updatetbPedidoAlteracaoXTipoAlteracao()
 
 
 
@@ -155,7 +155,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-    } // fecha método buscatbProposta()
+    } // fecha mï¿½todo buscatbProposta()
 
 
 
@@ -166,7 +166,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 		$db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-    } // fecha método inserttbProposta()
+    } // fecha mï¿½todo inserttbProposta()
 
 
 
@@ -178,7 +178,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-    } // fecha método updatetbProposta()
+    } // fecha mï¿½todo updatetbProposta()
 
 
 
@@ -191,7 +191,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-    } // fecha método buscarProposta2()
+    } // fecha mï¿½todo buscarProposta2()
 
 
 
@@ -202,7 +202,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-    } // fecha método buscarNomeProposta()
+    } // fecha mï¿½todo buscarNomeProposta()
 
 
 
@@ -213,7 +213,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-    } // fecha método buscarRazaoSocial()
+    } // fecha mï¿½todo buscarRazaoSocial()
 
 
 
@@ -225,7 +225,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-    } // fecha método insertRazaoSocial()
+    } // fecha mï¿½todo insertRazaoSocial()
 
 
 
@@ -237,7 +237,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-    } // fecha método updateRazaoSocial()
+    } // fecha mï¿½todo updateRazaoSocial()
 
 
 
@@ -249,7 +249,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-    } // fecha método buscaNomeProponente()
+    } // fecha mï¿½todo buscaNomeProponente()
 
 
 
@@ -261,7 +261,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-    } // fecha método updateNomeProponente()
+    } // fecha mï¿½todo updateNomeProponente()
 
 
 
@@ -273,7 +273,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-    } // fecha método insertNomeProponente()
+    } // fecha mï¿½todo insertNomeProponente()
 
 
 
@@ -285,7 +285,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-    } // fecha método insertArquivo()
+    } // fecha mï¿½todo insertArquivo()
 
 
 
@@ -299,7 +299,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-    } // fecha método insertArquivo()
+    } // fecha mï¿½todo insertArquivo()
 
     public function buscarArquivoTrocaNomeProponente($idPedidoAlteracao)
     {
@@ -311,12 +311,12 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
         $db = Zend_Registry::get ( 'db' );
         $db->setFetchMode ( Zend_DB::FETCH_OBJ );
         return $db->fetchAll ($sql);
-    } // fecha método insertArquivo()
+    } // fecha mï¿½todo insertArquivo()
 
 
 
 	/**
-	 * Método para excluir o arquivo fisicamente
+	 * Mï¿½todo para excluir o arquivo fisicamente
 	 * @access public
 	 * @static
 	 * @param integer $idPedidoAlteracao
@@ -326,25 +326,25 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 	public static function excluirArquivo($idPedidoAlteracao, $idArquivo)
 	{
 		$sql = "DELETE FROM BDCORPORATIVO.scSAC.tbPedidoAltProjetoXArquivo WHERE idPedidoAlteracao = $idPedidoAlteracao AND idArquivo = $idArquivo";
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$excluir = $db->fetchAll($sql);
 
 		$sql = "DELETE FROM BDCORPORATIVO.scCorp.tbArquivoImagem WHERE idArquivo = $idArquivo";
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$excluir = $db->fetchAll($sql);
 
 		$sql = "DELETE FROM BDCORPORATIVO.scCorp.tbArquivo WHERE idArquivo = $idArquivo";
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$excluir = $db->fetchAll($sql);
-	} // fecha método excluirArquivo()
+	} // fecha mï¿½todo excluirArquivo()
 
 
 
 	/**
-	 * Método para verificar se o usuario existe na tabela Interessados e na tabela Agentes
+	 * Mï¿½todo para verificar se o usuario existe na tabela Interessados e na tabela Agentes
 	 * @access public
 	 * @static
 	 * @param string $CNPJCPF
@@ -367,7 +367,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 
 			return false;
 		}
-	} // fecha método verificarInteressadosAgentes()
+	} // fecha mï¿½todo verificarInteressadosAgentes()
 
 
 
@@ -386,7 +386,7 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha função excluirArquivoDuplicado()
+	} // fecha funï¿½ï¿½o excluirArquivoDuplicado()
 
 
 
@@ -405,5 +405,5 @@ class SolicitarAlteracaoDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha função excluirArquivoDuplicado()
+	} // fecha funï¿½ï¿½o excluirArquivoDuplicado()
 } // fecha class

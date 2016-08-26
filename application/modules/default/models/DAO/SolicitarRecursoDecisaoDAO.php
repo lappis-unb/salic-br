@@ -1,19 +1,19 @@
 <?php
 /**
- * Solicitar Recurso da Decisão
+ * Solicitar Recurso da Decisï¿½o
  * @author Equipe RUP - Politec
  * @since 21/07/2010
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 {
 	/**
-	 * Método para buscar os Projetos Aprovados e Não Aprovados
+	 * Mï¿½todo para buscar os Projetos Aprovados e Nï¿½o Aprovados
 	 * @access public
 	 * @static
 	 * @param integer $idPronac
@@ -49,12 +49,12 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
-	} // fecha método buscarProjetos()
+	} // fecha mï¿½todo buscarProjetos()
 
 
 
 	/**
-	 * Método para buscar a planilha com o orçamento
+	 * Mï¿½todo para buscar a planilha com o orï¿½amento
 	 * @access public
 	 * @static
 	 * @param integer $idPronac
@@ -128,12 +128,12 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
         }
 
         $sql.= " ORDER BY I.Descricao ASC";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
         
-	} // fecha método buscarPlanilhaOrcamento()
+	} // fecha mï¿½todo buscarPlanilhaOrcamento()
 
 	
 	
@@ -172,7 +172,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
-	} // fecha método buscarproponentes()
+	} // fecha mï¿½todo buscarproponentes()
 
 
 
@@ -208,7 +208,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
-	} // fecha método buscaprojetosaprovados()
+	} // fecha mï¿½todo buscaprojetosaprovados()
 
 
 
@@ -244,7 +244,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
-	} // fecha método buscaprojetosnaoaprovados()
+	} // fecha mï¿½todo buscaprojetosnaoaprovados()
 
 
 
@@ -259,7 +259,7 @@ class SolicitarRecursoDecisaoDAO extends Zend_Db_Table
 		$resultado = $db->query($sql);
 		return $resultado;
 	
-    } // fecha método reintegrarecursoorc()
+    } // fecha mï¿½todo reintegrarecursoorc()
 
 
 	
@@ -357,8 +357,8 @@ FROM         tbPlanilhaProposta INNER JOIN
 	
 	
     /**
-     * Método para recuperar os projetos em análise. (CONSELHEIRO)
-     * Só efetua a busca se as fontes de recursos estiverem de acordo com o Código 109 – Incentivo Fiscal Federal,
+     * Mï¿½todo para recuperar os projetos em anï¿½lise. (CONSELHEIRO)
+     * Sï¿½ efetua a busca se as fontes de recursos estiverem de acordo com o Cï¿½digo 109 ï¿½ Incentivo Fiscal Federal,
      * conforme Lei 8.313 de 1991.
      * @access public
      * @static
@@ -434,11 +434,11 @@ FROM         tbPlanilhaProposta INNER JOIN
         }
 
         $sql.= " ORDER BY I.Descricao ASC";
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método analiseDeConta()
+    } // fecha mï¿½todo analiseDeConta()
 	
 	
 	
@@ -449,7 +449,7 @@ FROM         tbPlanilhaProposta INNER JOIN
 		$sql = "SELECT DISTINCT PD.Descricao, 
 					CASE
 						WHEN PAP.idProduto = 0
-							THEN 'Administração do Projeto'
+							THEN 'Administraï¿½ï¿½o do Projeto'
 							ELSE PD.Descricao
 						END AS Produto
 					,PAP.IdPRONAC
@@ -477,16 +477,16 @@ FROM         tbPlanilhaProposta INNER JOIN
 
         $sql.= " ORDER BY PD.Descricao";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método analiseDeCustosBuscarProduto()
+    } // fecha mï¿½todo analiseDeCustosBuscarProduto()
 
 
 
     /**
-     * Método que busca as etapas dos projetos da análise de custos
+     * Mï¿½todo que busca as etapas dos projetos da anï¿½lise de custos
      * @access public
      * @static
      * @param integer $idPronac
@@ -524,11 +524,11 @@ FROM         tbPlanilhaProposta INNER JOIN
 
         $sql.= " ORDER BY PP.idEtapa";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha método analiseDeCustosBuscarEtapa()
+    } // fecha mï¿½todo analiseDeCustosBuscarEtapa()
 
 
 	

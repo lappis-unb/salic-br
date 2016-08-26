@@ -6,7 +6,7 @@ class Conexao{
 
     public function __construct($pathIni, $iniSession) {
         try{
-            /* configurações do banco de dados */
+            /* configuraï¿½ï¿½es do banco de dados */
             $config = new Zend_Config_Ini($pathIni, $iniSession);
             Zend_Registry::set('config', $config);
 
@@ -23,7 +23,7 @@ class Conexao{
     }
 
     public function  backToOriginalConnection() {
-        $dbOrig = Zend_Registry::get('db');
+        $dbOrig= Zend_Db_Table::getDefaultAdapter();
     }
 }
 ?>

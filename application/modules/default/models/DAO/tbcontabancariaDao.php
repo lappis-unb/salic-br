@@ -14,7 +14,7 @@ class tbcontabancariaDao extends Zend_Db_Table
                 ContaLivre,
                 dtloteremessacl
                 from SAC.dbo.ContaBancaria where idPronac=".$idpronac;
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
        

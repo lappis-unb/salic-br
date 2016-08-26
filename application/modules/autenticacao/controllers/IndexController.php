@@ -193,7 +193,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             }
 
             $senha = Gerarsenha::gerasenha(15, true, true, true, false);
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $senhaCriptografada = $senha;
             if (!($db instanceof Zend_Db_Adapter_Pdo_Mssql)) {
                 $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $senha);
@@ -554,7 +554,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $idLogarComo = $post->logarComo;
 
             $sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha";
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $senha = $db->fetchRow($sql);
 

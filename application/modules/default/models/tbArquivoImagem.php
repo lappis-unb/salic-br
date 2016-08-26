@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -18,7 +18,7 @@ class tbArquivoImagem extends GenericModel
 
 
 	/**
-	 * Método para buscar um arquivo binário pelo seu id
+	 * Mï¿½todo para buscar um arquivo binï¿½rio pelo seu id
 	 * @access public
 	 * @param integer $idArquivo
 	 * @return array
@@ -32,25 +32,25 @@ class tbArquivoImagem extends GenericModel
 		$select->where("idArquivo = ?", $idArquivo);
 
 		return $this->fetchRow($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
 
 
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @param array $dados
-	 * @return integer (retorna o último id cadastrado)
+	 * @return integer (retorna o ï¿½ltimo id cadastrado)
 	 */
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarDados()
+	} // fecha mï¿½todo cadastrarDados()
 
 	
 	
 	public function salvarDados($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$db->query($dados);
 		return $db->lastInsertId();
@@ -59,7 +59,7 @@ class tbArquivoImagem extends GenericModel
 
 
 	/**
-	 * Método para alterar
+	 * Mï¿½todo para alterar
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -69,20 +69,20 @@ class tbArquivoImagem extends GenericModel
 	{
 		$where = "idArquivo = " . $where;
 		return $this->update($dados, $where);
-	} // fecha método alterarDados()
+	} // fecha mï¿½todo alterarDados()
 
 
 	/**
-	 * Método para excluir
+	 * Mï¿½todo para excluir
 	 * @access public
 	 * @param integer $where
-	 * @return integer (quantidade de registros excluídos)
+	 * @return integer (quantidade de registros excluï¿½dos)
 	 */
 	public function excluirDados($where)
 	{
 		$where = "idArquivo = " . $where;
 		return $this->delete($where);
-	} // fecha método excluirDados()
+	} // fecha mï¿½todo excluirDados()
 
 
         public function buscarArquivoMarca($where=array(), $order=array(), $tamanho=-1, $inicio=-1)

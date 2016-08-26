@@ -39,7 +39,7 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 		
 		$sql .= " order by p.IdPRONAC";
 //xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -63,7 +63,7 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 				and u.uog_orgao = $orgao";
 		
 //xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -78,7 +78,7 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 				DATEDIFF(day, t.DtEnvio,t.DtDistribuicao) AS nrDias, 
 				agentes.dbo.fnNome(t.idAgenteParecerista) AS nomeParecerista, 
 				CASE 
-				WHEN TipoAnalise = 0 THEN 'Contéudo' 
+				WHEN TipoAnalise = 0 THEN 'Contï¿½udo' 
 				WHEN TipoAnalise = 1 THEN 'Custo do Produto' 
 				ELSE 'Custo Administrativo' 
 				END AS DescricaoAnalise, 
@@ -118,7 +118,7 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 		
 		$sql .= " ORDER BY p.IdPRONAC";
 //xd($sql); 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -205,7 +205,7 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 		
 		$sql .= " order by dp.idPRONAC";
 //xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -242,7 +242,7 @@ class ConsultarPareceristasDAO  extends Zend_Db_Table{
 			$sql .= " AND CONVERT(char(10), au.dtInicioAusencia, 103) >= '$dataInicio' and CONVERT(char(10), au.dtFimAusencia, 103) <= '$dataFim'";
 		}
 //xd($sql);
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);

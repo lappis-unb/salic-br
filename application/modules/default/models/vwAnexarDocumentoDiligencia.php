@@ -5,7 +5,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -36,7 +36,7 @@ class vwAnexarDocumentoDiligencia extends GenericModel {
                "(nmArquivo,sgExtensao,dtEnvio,stAtivo,biArquivo,idTipoDocumento,dsDocumento,idPronac,stAtivoDocumentoProjeto,idDiligencia) " .
                "VALUES ('$name', '$fileType', GETDATE(), 'I', $data, $idTipoDocumento, '$dsDocumento', $IdPRONAC, 'E', $idDiligencia)";
 
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }

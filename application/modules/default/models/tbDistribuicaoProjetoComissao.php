@@ -21,7 +21,7 @@ class tbDistribuicaoProjetoComissao extends GenericModel
         $slct->joinInner(
                             array('pa'=>'Parecer'),
                             'pr.idPronac = pa.idPronac',
-                            array('Avaliacao'=>new Zend_Db_Expr("case when pa.ParecerFavoravel = '1' then 'Desfavorável' when pa.ParecerFavoravel = '2' then 'Favorável' end"), 'SugeridoReal'),
+                            array('Avaliacao'=>new Zend_Db_Expr("case when pa.ParecerFavoravel = '1' then 'Desfavorï¿½vel' when pa.ParecerFavoravel = '2' then 'Favorï¿½vel' end"), 'SugeridoReal'),
                             'SAC.dbo'
                           );
         $slct->joinInner(
@@ -180,7 +180,7 @@ class tbDistribuicaoProjetoComissao extends GenericModel
         $slctAnalisados->joinInner(
                             array('par'=>'Parecer'),
                             'pr.idPronac = par.idPronac AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = pr.IdPRONAC)',
-                            array('Avaliacao'=>new Zend_Db_Expr("CASE WHEN par.ParecerFavoravel = '1' THEN 'Desfavorável' WHEN par.ParecerFavoravel = '2' THEN 'Favorável' END"), 'SugeridoReal'),
+                            array('Avaliacao'=>new Zend_Db_Expr("CASE WHEN par.ParecerFavoravel = '1' THEN 'Desfavorï¿½vel' WHEN par.ParecerFavoravel = '2' THEN 'Favorï¿½vel' END"), 'SugeridoReal'),
                             'SAC.dbo'
                           );
         $slctAnalisados->joinInner(
@@ -254,7 +254,7 @@ class tbDistribuicaoProjetoComissao extends GenericModel
         $slctNaoAnalisados->setIntegrityCheck(false);
         $slctNaoAnalisados->from(
                         array('dpc'=>$this->_schema.'.'.$this->_name),
-                        array(new Zend_Db_Expr("'Não analisado' as Analise"),'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
+                        array(new Zend_Db_Expr("'Nï¿½o analisado' as Analise"),'DtDistribuicao'=>'CONVERT(CHAR(20),DtDistribuicao, 120)', 'idAgente', 'Dias'=>new Zend_Db_Expr('DATEDIFF(DAY,dpc.DtDistribuicao,GETDATE())'))
                      );
         $slctNaoAnalisados->joinInner(
                             array('pr'=>'Projetos'),
@@ -265,7 +265,7 @@ class tbDistribuicaoProjetoComissao extends GenericModel
         $slctNaoAnalisados->joinInner(
                             array('par'=>'Parecer'),
                             'pr.idPronac = par.idPronac AND par.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = pr.IdPRONAC)',
-                            array('Avaliacao'=>new Zend_Db_Expr("CASE WHEN par.ParecerFavoravel = '1' THEN 'Desfavorável' WHEN par.ParecerFavoravel = '2' THEN 'Favorável' END"), 'SugeridoReal'),
+                            array('Avaliacao'=>new Zend_Db_Expr("CASE WHEN par.ParecerFavoravel = '1' THEN 'Desfavorï¿½vel' WHEN par.ParecerFavoravel = '2' THEN 'Favorï¿½vel' END"), 'SugeridoReal'),
                             'SAC.dbo'
                           );
         $slctNaoAnalisados->joinInner(
@@ -391,7 +391,7 @@ class tbDistribuicaoProjetoComissao extends GenericModel
         $slctNaoAnalisados->from(
             array('t'=>$this->_name),
             array(new Zend_Db_Expr("
-                'Não analisado' AS Analise
+                'Nï¿½o analisado' AS Analise
                 ,t.idAgente
                 ,n.Descricao AS Componente
                 ,p.IdPronac AS idPronac
@@ -419,8 +419,8 @@ class tbDistribuicaoProjetoComissao extends GenericModel
                 ,null as NrReuniao
                 ,null AS stAnalise
                 ,CASE
-                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorável'
-                    WHEN pr.ParecerFavoravel = '2' THEN 'Favorável'
+                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorï¿½vel'
+                    WHEN pr.ParecerFavoravel = '2' THEN 'Favorï¿½vel'
                 END AS Avaliacao
                 ,p.SolicitadoReal
                 ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS SugeridoReal
@@ -523,8 +523,8 @@ class tbDistribuicaoProjetoComissao extends GenericModel
                 ,r.NrReuniao AS NrReuniao
                 ,stAnalise
                 ,CASE
-                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorável'
-                    WHEN pr.ParecerFavoravel = '2' THEN 'Favorável'
+                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorï¿½vel'
+                    WHEN pr.ParecerFavoravel = '2' THEN 'Favorï¿½vel'
                 END AS Avaliacao
                 ,p.SolicitadoReal
                 ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
@@ -605,7 +605,7 @@ class tbDistribuicaoProjetoComissao extends GenericModel
         $slctReadequados->from(
             array('p'=>'Projetos'),
             array(new Zend_Db_Expr("
-                'Readequação' AS Analise
+                'Readequaï¿½ï¿½o' AS Analise
                 ,''
                 ,'' AS Componente
                 ,p.IdPronac AS idPronac
@@ -630,8 +630,8 @@ class tbDistribuicaoProjetoComissao extends GenericModel
                 ,'' AS NrReuniao
                 ,''
                 ,CASE
-                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorável'
-                    WHEN pr.ParecerFavoravel = '2' THEN 'Favorável'
+                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorï¿½vel'
+                    WHEN pr.ParecerFavoravel = '2' THEN 'Favorï¿½vel'
                 END AS Avaliacao
                 ,p.SolicitadoReal
                 ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
@@ -734,7 +734,7 @@ class tbDistribuicaoProjetoComissao extends GenericModel
         if($dados['status'] == 0 || $dados['status'] == 1){
             $sql .= "(
                 SELECT 
-                    'Não analisado' AS Analise
+                    'Nï¿½o analisado' AS Analise
                     ,t.idAgente
                     ,n.Descricao AS Componente
                     ,p.IdPronac
@@ -761,8 +761,8 @@ class tbDistribuicaoProjetoComissao extends GenericModel
                     ,null as NrReuniao
                     ,null AS stAnalise
                     ,CASE
-                        WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorável'
-                        WHEN pr.ParecerFavoravel = '2' THEN 'Favorável'
+                        WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorï¿½vel'
+                        WHEN pr.ParecerFavoravel = '2' THEN 'Favorï¿½vel'
                     END AS Avaliacao
                     ,p.SolicitadoReal
                     ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS SugeridoReal
@@ -818,8 +818,8 @@ class tbDistribuicaoProjetoComissao extends GenericModel
                     ,r.NrReuniao AS NrReuniao
                     ,stAnalise
                     ,CASE
-                        WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorável'
-                        WHEN pr.ParecerFavoravel = '2' THEN 'Favorável'
+                        WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorï¿½vel'
+                        WHEN pr.ParecerFavoravel = '2' THEN 'Favorï¿½vel'
                     END AS Avaliacao
                     ,p.SolicitadoReal
                     ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
@@ -849,7 +849,7 @@ class tbDistribuicaoProjetoComissao extends GenericModel
 
         $sql .= "(
             SELECT 
-                'Readequação' AS Analise
+                'Readequaï¿½ï¿½o' AS Analise
                 ,''
                 ,'' AS Componente
                 ,p.IdPronac
@@ -872,8 +872,8 @@ class tbDistribuicaoProjetoComissao extends GenericModel
                 ,'' AS NrReuniao
                 ,''
                 ,CASE
-                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorável'
-                    WHEN pr.ParecerFavoravel = '2' THEN 'Favorável'
+                    WHEN pr.ParecerFavoravel = '1' THEN 'Desfavorï¿½vel'
+                    WHEN pr.ParecerFavoravel = '2' THEN 'Favorï¿½vel'
                 END AS Avaliacao
                 ,p.SolicitadoReal
                 ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
@@ -895,7 +895,7 @@ class tbDistribuicaoProjetoComissao extends GenericModel
         ORDER BY 6 ASC ";
             
 //        xd($sql);
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }

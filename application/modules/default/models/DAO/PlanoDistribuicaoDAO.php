@@ -1,12 +1,12 @@
 <?php
-/* DAO Plano Distribuição
+/* DAO Plano Distribuiï¿½ï¿½o
  * @author Equipe RUP - Politec
  * @since 02/06/2010
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
  * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Politec - Todos os direitos reservados.
 */
 
 class PlanoDistribuicaoDAO extends Zend_Db_Table {
@@ -18,7 +18,7 @@ class PlanoDistribuicaoDAO extends Zend_Db_Table {
 
 
     /**
-     * Método para buscar
+     * Mï¿½todo para buscar
      * @access public
      * @static
      * @param integer $idPlano
@@ -27,15 +27,15 @@ class PlanoDistribuicaoDAO extends Zend_Db_Table {
     public static function buscar($idPlano) {
         $sql = "SELECT * FROM SAC.dbo.tbPlanoDistribuicao WHERE idPlano = $idPlano ";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
-    } // fecha método buscar()
+    } // fecha mï¿½todo buscar()
 
 
 
     /**
-     * Método para buscar ultimo registro
+     * Mï¿½todo para buscar ultimo registro
      * @access public
      * @static
      * @param void
@@ -44,22 +44,22 @@ class PlanoDistribuicaoDAO extends Zend_Db_Table {
     public static function buscarUltimo() {
         $sql = "SELECT MAX(idPlano) AS id FROM SAC.dbo.tbPlanoDistribuicao ";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
-    } // fecha método buscarUltimo()
+    } // fecha mï¿½todo buscarUltimo()
 
 
 
     /**
-     * Método para cadastrar
+     * Mï¿½todo para cadastrar
      * @access public
      * @static
      * @param array $dados
      * @return bool
      */
     public static function cadastrar($dados) {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $cadastrar = $db->insert("SAC.dbo.tbPlanoDistribuicao", $dados);
@@ -70,12 +70,12 @@ class PlanoDistribuicaoDAO extends Zend_Db_Table {
         else {
             return false;
         }
-    } // fecha método cadastrar()
+    } // fecha mï¿½todo cadastrar()
 
 
 
     /**
-     * Método para alterar
+     * Mï¿½todo para alterar
      * @access public
      * @static
      * @param array $dados
@@ -83,7 +83,7 @@ class PlanoDistribuicaoDAO extends Zend_Db_Table {
      * @return bool
      */
     public static function alterar($dados, $idPlano) {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idPlano = $idPlano ";
@@ -96,7 +96,7 @@ class PlanoDistribuicaoDAO extends Zend_Db_Table {
         else {
             return false;
         }
-    } // fecha método alterar()
+    } // fecha mï¿½todo alterar()
 
 } // fecha class
 
@@ -113,7 +113,7 @@ class PlanoDistribuicaoProdutoDAO extends Zend_Db_Table {
 
 
     /**
-     * Método para buscar
+     * Mï¿½todo para buscar
      * @access public
      * @static
      * @param integer $idPlanoDistribuicao
@@ -122,22 +122,22 @@ class PlanoDistribuicaoProdutoDAO extends Zend_Db_Table {
     public static function buscar($idPlanoDistribuicao) {
         $sql = "SELECT * FROM SAC.dbo.PlanoDistribuicaoProduto WHERE idPlanoDistribuicao = $idPlanoDistribuicao  AND stPlanoDistribuicaoProduto = 1";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
-    } // fecha método buscar()
+    } // fecha mï¿½todo buscar()
 
 
 
     /**
-     * Método para cadastrar
+     * Mï¿½todo para cadastrar
      * @access public
      * @static
      * @param array $dados
      * @return bool
      */
     public static function cadastrar($dados) {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $cadastrar = $db->insert("SAC.dbo.PlanoDistribuicaoProduto", $dados);
@@ -148,12 +148,12 @@ class PlanoDistribuicaoProdutoDAO extends Zend_Db_Table {
         else {
             return false;
         }
-    } // fecha método cadastrar()
+    } // fecha mï¿½todo cadastrar()
 
 
 
     /**
-     * Método para alterar
+     * Mï¿½todo para alterar
      * @access public
      * @static
      * @param array $dados
@@ -161,7 +161,7 @@ class PlanoDistribuicaoProdutoDAO extends Zend_Db_Table {
      * @return bool
      */
     public static function alterar($dados, $idPlanoDistribuicao) {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idPlanoDistribuicao = $idPlanoDistribuicao ";
@@ -174,6 +174,6 @@ class PlanoDistribuicaoProdutoDAO extends Zend_Db_Table {
         else {
             return false;
         }
-    } // fecha método alterar()
+    } // fecha mï¿½todo alterar()
 
 } // fecha class

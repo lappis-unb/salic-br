@@ -24,7 +24,7 @@ class AlteracaoNomeProjetoDAO extends Zend_Db_Table{
                 where
                     pap.IdPRONAC = {$idpedidoalteracao} and pt.tpAlteracaoProjeto = 5
                 ";
-        $db  = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;

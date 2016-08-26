@@ -36,40 +36,40 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
 			// valida os dados
 			if (empty($username) || empty($password)) // verifica se os campos foram preenchidos
 			{
-				parent::message("Senha ou login inválidos", "/manterlogin/index");
+				parent::message("Senha ou login invï¿½lidos", "/manterlogin/index");
 			}
 			else if (strlen($username) == 11 && !Validacao::validarCPF($username)) // verifica se o CPF ï¿½ vï¿½lido
 			{
-				parent::message("CPF inválido", "/manterlogin/index");
+				parent::message("CPF invï¿½lido", "/manterlogin/index");
 			}
 			else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)) // verifica se o CNPJ ï¿½ vï¿½lido
 			{
-				parent::message("CNPJ inválido", "/manterlogin/index");
+				parent::message("CNPJ invï¿½lido", "/manterlogin/index");
 			}
 			else
 			{
                                 Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
-				// realiza a busca do usuï¿½rio no banco, fazendo a autenticaç?o do mesmo
+				// realiza a busca do usuï¿½rio no banco, fazendo a autenticaï¿½?o do mesmo
                                 $Usuario = new Autenticacao_Model_Sgcacesso();
                                 $verificaStatus = $Usuario->buscar(array ( 'Cpf = ?' => $username));
                                 $IdUsuario =  $verificaStatus[0]->IdUsuario;
 
                                 $sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha";
-                                $db = Zend_Registry::get('db');
+                                $db= Zend_Db_Table::getDefaultAdapter();
                                 $db->setFetchMode(Zend_DB::FETCH_OBJ);
                                 $senha =  $db->fetchAll($sql);
                                 $SenhaFinal = $senha[0]->senha;
 
                                 if ( $verificaStatus[0]->Senha !=  trim( $SenhaFinal ) )
                                 {
-                                    parent::message("Login ou Senha inválidos!", "/manterlogin/index");
+                                    parent::message("Login ou Senha invï¿½lidos!", "/manterlogin/index");
                                 }
 
                                 $verificaSituacao =  $verificaStatus[0]->Situacao;
 
                                 if ( $verificaSituacao == 1 )
                                 {
-                                    parent::message("Voc? logou com uma senha temporária. Por favor, troque a senha.", "/manterlogin/alterarsenha?idUsuario=".$IdUsuario);
+                                    parent::message("Voc? logou com uma senha temporï¿½ria. Por favor, troque a senha.", "/manterlogin/alterarsenha?idUsuario=".$IdUsuario);
                                 }
 
 
@@ -79,9 +79,9 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
                                     $usuarioLog = Autenticacao_Model_Usuario();
                                     $buscarUsuLog = $usuarioLog->login(23969156149, 123456);
 
-                                    $auth = Zend_Auth::getInstance(); // instancia da autenticaç?o
+                                    $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½?o
 
-                                    // registra o primeiro grupo do usuário (pega unidade autorizada, organiza e grupo do usuaàio)
+                                    // registra o primeiro grupo do usuï¿½rio (pega unidade autorizada, organiza e grupo do usuaï¿½io)
                                     $Grupo   = $usuarioLog->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuï¿½rio
 
                                     $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess?o com o grupo ativo
@@ -94,7 +94,7 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
 				} // fecha if
 				else
 				{
-					 parent::message("Senha ou usuário inválidos.", "/manterlogin/index");
+					 parent::message("Senha ou usuï¿½rio invï¿½lidos.", "/manterlogin/index");
 }
 
 			} // fecha else
@@ -132,7 +132,7 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
             $gerarSenha = Gerarsenha::gerasenha(15, true, true, true, true);
 
             $sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $cpf . "', '" . $gerarSenha . "') as senha";
-            $db = Zend_Registry::get('db');
+            $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
             $senha =  $db->fetchAll($sql);
             $SenhaFinal = $senha[0]->senha;
@@ -157,7 +157,7 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
 
                 if ( !empty ( $sgcAcessoBuscaCpfArray ))
                 {
-                    parent::message("CPF já cadastrado", "/manterlogin/cadastrarusuario");
+                    parent::message("CPF jï¿½ cadastrado", "/manterlogin/cadastrarusuario");
                 }
 
                 $sgcAcessoBuscaEmail = $sgcAcesso->buscar(array("Email = ?" => $email));
@@ -165,7 +165,7 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
 
                 if ( !empty ( $sgcAcessoBuscaEmailArray ))
                 {
-                    parent::message("E-mail já cadastrado", "/manterlogin/cadastrarusuario");
+                    parent::message("E-mail jï¿½ cadastrado", "/manterlogin/cadastrarusuario");
                 }
 
                 if ( empty ( $sgcAcessoBuscaCpfArray ) && empty ( $sgcAcessoBuscaEmailArray ) )
@@ -175,16 +175,16 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
                     $sgcAcessoSave = $sgcAcesso->salvar($dados);
 
                     $mens = "<font face='Verdana' size='2'>";
-                    $mens .= "Olá $nome,<br><br>";
+                    $mens .= "Olï¿½ $nome,<br><br>";
                     $mens .= "Senha....: <B>" . $SenhaFinal . "</B><br><br>";
-                    $mens .= "Esta é a sua senha de acesso ao Sistema de Apresentaç?o de Projetos via Web do ";
-                    $mens .= "Ministério da Cultura.<br><br>Lembramos que a mesma deverá ser ";
+                    $mens .= "Esta ï¿½ a sua senha de acesso ao Sistema de Apresentaï¿½?o de Projetos via Web do ";
+                    $mens .= "Ministï¿½rio da Cultura.<br><br>Lembramos que a mesma deverï¿½ ser ";
                     $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
-                    $mens .= "Esta é uma mensagem automática. Por favor n?o responda.<br><br>";
+                    $mens .= "Esta ï¿½ uma mensagem automï¿½tica. Por favor n?o responda.<br><br>";
                     $mens .= "Para acessar o Sistema, clique no link abaixo:<br>";
                     $mens .= "<a href='sistemas.cultura.gov.br/propostaweb/'>";
-                    $mens .= "Apresentaç?o de Projetos via Web</a><br><br>";
-                    $mens .= "Atenciosamente,<br><B>Ministério da Cultura</B></font>";
+                    $mens .= "Apresentaï¿½?o de Projetos via Web</a><br><br>";
+                    $mens .= "Atenciosamente,<br><B>Ministï¿½rio da Cultura</B></font>";
 
 
                     $enviaEmail = EnviaemailController::enviaEmail($mens, "tiago.rodrigues@cultura.gov.br", $email);
@@ -215,7 +215,7 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
                     $verificaUsuario = $sgcAcessoBuscaCpf->toArray();
                     if ( empty ( $verificaUsuario ) )
                     {
-                        parent::message("Usuário n?o cadastrado!", "/manterlogin/index");
+                        parent::message("Usuï¿½rio n?o cadastrado!", "/manterlogin/index");
                     }
 
                     $sgcAcessoBuscaCpfArray = $sgcAcessoBuscaCpf->toArray();
@@ -236,18 +236,18 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
                    $headers .= "From: cadastro@cultura.gov.br\r\n";
 
                    $mens = "<font face='Verdana' size='2'>";
-                   $mens .= "Olá " . $nome . ",<br><br>";
+                   $mens .= "Olï¿½ " . $nome . ",<br><br>";
                    $mens .= "Senha....: <B>" . $senha . "</B><br><br>";
-                   $mens .= "Esta é a sua nova senha de acesso ao Sistema de Apresentaç?o de Projetos via Web do ";
-                   $mens .= "Ministério da Cultura.<br><br>Lembramos que a mesma deverá ser ";
-                   $mens .= "trocada no seu próximo acesso ao sistema.<br><br>";
-                   $mens .= "Esta é uma mensagem automática. Por favor n?o responda.<br><br>";
+                   $mens .= "Esta ï¿½ a sua nova senha de acesso ao Sistema de Apresentaï¿½?o de Projetos via Web do ";
+                   $mens .= "Ministï¿½rio da Cultura.<br><br>Lembramos que a mesma deverï¿½ ser ";
+                   $mens .= "trocada no seu prï¿½ximo acesso ao sistema.<br><br>";
+                   $mens .= "Esta ï¿½ uma mensagem automï¿½tica. Por favor n?o responda.<br><br>";
                    $mens .= "Para acessar o Sistema, clique no link abaixo:<br>";
                    $mens .= "<a href='sistemas.cultura.gov.br/propostaweb/'>";
-                   $mens .= "Apresentaç?o de Projetos via Web</a><br><br>";
-                   $mens .= "Atenciosamente,<br><B>Ministério da Cultura</B></font>";
+                   $mens .= "Apresentaï¿½?o de Projetos via Web</a><br><br>";
+                   $mens .= "Atenciosamente,<br><B>Ministï¿½rio da Cultura</B></font>";
 
-                    $enviaEmail = EnviaemailController::enviaEmail($mens, "Solicitaç?o de senha",  "tiago.rodrigues@cultura.gov.br", $email);
+                    $enviaEmail = EnviaemailController::enviaEmail($mens, "Solicitaï¿½?o de senha",  "tiago.rodrigues@cultura.gov.br", $email);
                     parent::message("Senha gerada com sucesso. Verifique seu email!", "/manterlogin/index");
 
 
@@ -286,7 +286,7 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
 
 
                     $sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $cpf . "', '" . $senhaNova . "') as senha";
-                    $db = Zend_Registry::get('db');
+                    $db= Zend_Db_Table::getDefaultAdapter();
                     $db->setFetchMode(Zend_DB::FETCH_OBJ);
                     $senha =  $db->fetchAll($sql);
                     $SenhaFinal = $senha[0]->senha;
@@ -322,7 +322,7 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
             {
 
 
-                // recebe os dados do formulário via post
+                // recebe os dados do formulï¿½rio via post
 		$post     = Zend_Registry::get('post');
 		$username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf)); // recebe o login sem mï¿½scaras
 		$password = $post->senha; // recebe a senha
@@ -330,7 +330,7 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
 
 
                 $sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha";
-                $db = Zend_Registry::get('db');
+                $db= Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB::FETCH_OBJ);
                 $senha =  $db->fetchRow($sql);
 
@@ -351,9 +351,9 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
 
                      if ($buscar) // acesso permitido
                     {
-                            $auth = Zend_Auth::getInstance(); // instancia da autenticaç?o
+                            $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½?o
 
-                            // registra o primeiro grupo do usuário (pega unidade autorizada, organiza e grupo do usuaàio)
+                            // registra o primeiro grupo do usuï¿½rio (pega unidade autorizada, organiza e grupo do usuaï¿½io)
                             $Grupo   = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuï¿½rio
 
                             $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess?o com o grupo ativo

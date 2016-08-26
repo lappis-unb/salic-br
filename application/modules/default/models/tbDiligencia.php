@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -20,18 +20,18 @@ class tbDiligencia extends GenericModel
 
 
 	 /**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @param array $dados
-	 * @return integer (retorna o último id cadastrado)
+	 * @return integer (retorna o ï¿½ltimo id cadastrado)
 	 */
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarDados()
+	} // fecha mï¿½todo cadastrarDados()
 
 	/**
-	 * Método para buscarDados
+	 * Mï¿½todo para buscarDados
 	 * @access public
 	 * @param array $dados
 	 * @return array 
@@ -48,7 +48,7 @@ class tbDiligencia extends GenericModel
         $select->where("stEstado = 0");
         $select->where("DtResposta IS NULL");
         return $this->fetchAll($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
 
 	public function buscaDiligencia($idPronac=null, $idProduto=null, $idSolicitante=null, $idDiligencia=null)
 	{
@@ -121,7 +121,7 @@ class tbDiligencia extends GenericModel
             		                
         
         return $this->fetchAll($select);
-	} // fecha método buscaDiligencia()
+	} // fecha mï¿½todo buscaDiligencia()
 	
 	
 	
@@ -131,7 +131,7 @@ class tbDiligencia extends GenericModel
 	
 	
 	/**
-	 * Método para alterar
+	 * Mï¿½todo para alterar
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -141,34 +141,34 @@ class tbDiligencia extends GenericModel
 	{
 		$where = "idDistribuirParecer = " . $where;
 		return $this->update($dados, $where);
-	} // fecha método alterarDados()
+	} // fecha mï¿½todo alterarDados()
 
 
 
 	/**
-	 * Método para excluir
+	 * Mï¿½todo para excluir
 	 * @access public
 	 * @param integer $where
-	 * @return integer (quantidade de registros excluídos)
+	 * @return integer (quantidade de registros excluï¿½dos)
 	 */
 	public function excluirDados($where)
 	{
 		$where = "idDistribuirParecer = " . $where;
 		return $this->delete($where);
-	} // fecha método excluirDados()
+	} // fecha mï¿½todo excluirDados()
 
 
 
 	/**
-	 * Função para checar o status da diligência
+	 * Funï¿½ï¿½o para checar o status da diligï¿½ncia
 	 */
 	public function fnChecarDiligencia($idPronac)
 	{
 		$sql = 'SELECT SAC.dbo.fnchecarDiligencia('. $idPronac .') AS Diligencia';
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);	
-	} // fecha método fnChecarDiligencia()
+	} // fecha mï¿½todo fnChecarDiligencia()
 
 } // fecha class

@@ -32,7 +32,7 @@ class Tipoemail extends Zend_Db_Table
         $sql .= "ORDER BY Descricao;";
 
         try {
-//            $db = Zend_Registry::get('db');
+//            $db= Zend_Db_Table::getDefaultAdapter();
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $objException) {

@@ -25,7 +25,7 @@ class tbModalidade extends GenericModel {
                              )
                      );
         $select->order("m.Descricao");
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		//xd($select);
         return $this->fetchAll($select);

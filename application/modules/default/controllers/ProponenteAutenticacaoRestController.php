@@ -1,13 +1,13 @@
-<?php
+]<?php
 
 /**
- * Login e autenticação via REST
+ * Login e autenticaï¿½ï¿½o via REST
  *
  * @version 1.0
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2016 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 class ProponenteAutenticacaoRestController extends MinC_Controller_Rest_Abstract{
 
@@ -82,12 +82,12 @@ class ProponenteAutenticacaoRestController extends MinC_Controller_Rest_Abstract
             }
         }
 
-        # Resposta da autenticação.
+        # Resposta da autenticaï¿½ï¿½o.
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($result));
     }
 
     /**
-     * Gera a chave de acesso do usuário para utilizar os serviços que precisam de identificação de usuário.
+     * Gera a chave de acesso do usuï¿½rio para utilizar os serviï¿½os que precisam de identificaï¿½ï¿½o de usuï¿½rio.
      *
      * @return string
      */

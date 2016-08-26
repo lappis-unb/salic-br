@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -17,7 +17,7 @@ class PesquisaFiscalizacaoDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para buscar as cidades de um determinado estado
+	 * Mï¿½todo para buscar as cidades de um determinado estado
 	 * @access public
 	 * @param integer $idUF
 	 * @return object $db->fetchAll($sql)
@@ -29,10 +29,10 @@ class PesquisaFiscalizacaoDAO extends Zend_Db_Table
 
 	
 	
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
-	} // fecha método buscarRecursoReenquadramento()
+	} // fecha mï¿½todo buscarRecursoReenquadramento()
 	
 	
 	
@@ -47,7 +47,7 @@ SAC.dbo.Segmento as Segmento ON Projetos.Segmento = Segmento.Codigo  INNER JOIN
 SAC.dbo.Area  as Area ON Projetos.Area = Area.Codigo
 where Projetos.Area = 4 and Projetos.UfProjeto = 'RJ' and Projetos.Area = 4 and Projetos.Segmento = 47";
 		
-	$db = Zend_Registry::get('db');
+	$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	} 
@@ -65,7 +65,7 @@ SAC.dbo.Segmento as Segmento ON Projetos.Segmento = Segmento.Codigo  INNER JOIN
 SAC.dbo.Area  as Area ON Projetos.Area = Area.Codigo
 where Projetos.Area = 4 and Projetos.UfProjeto = 'RJ' and Projetos.Area = 4 and Projetos.Segmento = 47";
 		
-	$db = Zend_Registry::get('db');
+	$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	} 

@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -17,9 +17,9 @@ class Conselheiro extends Zend_Db_Table
 
 
 	/**
-	 * Método para buscar proponentes
+	 * Mï¿½todo para buscar proponentes
 	 * @access public
-	 * @param integer $id (código do proponente)
+	 * @param integer $id (cï¿½digo do proponente)
 	 * @param string $cpf (cpf do proponente)
 	 * @return object $db->fetchAll($sql)
 	 */
@@ -84,7 +84,7 @@ class Conselheiro extends Zend_Db_Table
 
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		}
 		catch (Zend_Exception_Db $e)
@@ -106,7 +106,7 @@ class Conselheiro extends Zend_Db_Table
 	
 
 	/**
-	 * Método para cadastrar proponentes
+	 * Mï¿½todo para cadastrar proponentes
 	 * @access public
 	 * @param datatype paramname
 	 * @return datatype description
@@ -119,7 +119,7 @@ class Conselheiro extends Zend_Db_Table
 
 
 	/**
-	 * Método para alterar proponentes
+	 * Mï¿½todo para alterar proponentes
 	 * @access public
 	 * @param datatype paramname
 	 * @return datatype description
@@ -142,7 +142,7 @@ class Conselheiro extends Zend_Db_Table
 
 
 	/**
-	 * Método para excluir proponentes
+	 * Mï¿½todo para excluir proponentes
 	 * @access public
 	 * @param datatype paramname
 	 * @return datatype description
@@ -174,7 +174,7 @@ class Conselheiro extends Zend_Db_Table
                     on agentes.idAgente = nomes.idAgente
                     where agentes.CNPJCPF = '{$cnpjcpf}'";
             try {
-                $db = Zend_Registry::get('db');
+                $db= Zend_Db_Table::getDefaultAdapter();
                 $db->setFetchMode(Zend_DB::FETCH_ASSOC);
                 return $db->fetchAll($sql);
             } catch (Zend_Exception_Db $e) {

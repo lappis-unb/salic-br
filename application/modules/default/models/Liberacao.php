@@ -196,7 +196,7 @@ class Liberacao extends GenericModel {
                     'Inabilitado' => New Zend_Db_Expr("CASE 
                                                             WHEN (SELECT TOP 1 Habilitado FROM Inabilitado i WHERE p.CgcCpf = i.CgcCpf) = 'N' 
                                                             THEN 'SIM'
-                                                            ELSE 'NÃO'
+                                                            ELSE 'Nï¿½O'
                                                             END "),
                     'Certidao' => New Zend_Db_Expr("CASE 
                                                             WHEN EXISTS(SELECT top 1 CONVERT(CHAR(8),DtValidade,112) FROM CertidoesNegativas c WHERE p.CgcCpf = c.CgcCpf AND CodigoCertidao <> 244 AND CodigoCertidao <> 70 AND CONVERT(CHAR(8),DtValidade,112) <  GETDATE()) 
@@ -261,7 +261,7 @@ class Liberacao extends GenericModel {
         $sql = "SELECT sac.dbo.fnPercentualCaptado(p.AnoProjeto, p.Sequencial) AS captacao
 				FROM Sac.dbo.Projetos AS p where p.AnoProjeto+p.Sequencial = '$pronac'";
 //    	xd($sql);
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $resultado = $db->fetchAll("SET TEXTSIZE 104857600");
@@ -273,7 +273,7 @@ class Liberacao extends GenericModel {
     public function buscarCertidoesVencidas($cpf) {
         $sql = "select CONVERT(CHAR(10), DtValidade,103) as DtValidade from SAC.dbo.CertidoesNegativas where CgcCpf = '$cpf'";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $resultado = $db->fetchAll("SET TEXTSIZE 104857600");
@@ -288,7 +288,7 @@ class Liberacao extends GenericModel {
 				values
 				('$dados[AnoProjeto]', '$dados[Sequencial]', 1, '$dados[DtLiberacao]', '$dados[DtDocumento]', '$dados[NumeroDocumento]', '$dados[VlOutrasFontes]', '$dados[Observacao]', '$dados[CgcCpf]', '$dados[Permissao]', $dados[Logon])";
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $db->query($sql);
 

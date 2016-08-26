@@ -13,7 +13,7 @@ class tbalteracaonomeprojetoDAO extends Zend_Db_Table
                        join BDCORPORATIVO.scSAC.tbPedidoAlteracaoProjeto tap on tap.idPedidoAlteracao = tba.idPedidoAlteracao
                        where tba.idpedidoalteracao= ".$idpedidoalteracao;
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
@@ -27,7 +27,7 @@ class tbalteracaonomeprojetoDAO extends Zend_Db_Table
                        join AGENTES.dbo.Nomes nom on nom.idAgente =  apa.idTecnico
                        where apa.idpedidoalteracao= ".$idpedidoalteracao;
 
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
 
@@ -35,7 +35,7 @@ class tbalteracaonomeprojetoDAO extends Zend_Db_Table
 
     public static function alterarNomeProjeto($dados,$idpronac)
     {
-        $db = Zend_Registry::get('db');
+        $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idpronac = ".$idpronac;

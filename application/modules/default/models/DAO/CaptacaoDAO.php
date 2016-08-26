@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.model.DAO
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -21,7 +21,7 @@ class CaptacaoDAO extends Zend_Db_Table
 
 
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -29,7 +29,7 @@ class CaptacaoDAO extends Zend_Db_Table
 	 */
 	public static function cadastrar($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$cadastrar = $db->insert("SAC.dbo.Captacao", $dados);
@@ -42,12 +42,12 @@ class CaptacaoDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método cadastrar()
+	} // fecha mï¿½todo cadastrar()
 
 
 
 	/**
-	 * Método para cadastrar os erros
+	 * Mï¿½todo para cadastrar os erros
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -55,17 +55,17 @@ class CaptacaoDAO extends Zend_Db_Table
 	 */
 	public static function cadastrarErro($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$db->insert("SAC.dbo.tbTmpCaptacao", $dados);
 		return $db->lastInsertId();
-	} // fecha método cadastrarErro()
+	} // fecha mï¿½todo cadastrarErro()
 
 
 
 	/**
-	 * Método para cadastrar as insconsistências
+	 * Mï¿½todo para cadastrar as insconsistï¿½ncias
 	 * @access public
 	 * @static
 	 * @param array $dados
@@ -73,7 +73,7 @@ class CaptacaoDAO extends Zend_Db_Table
 	 */
 	public static function cadastrarInconsistencia($dados)
 	{
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		$cadastrar = $db->insert("SAC.dbo.tbTmpInconsistenciaCaptacao", $dados);
@@ -86,12 +86,12 @@ class CaptacaoDAO extends Zend_Db_Table
 		{
 			return false;
 		}
-	} // fecha método cadastrarInconsistencia()
+	} // fecha mï¿½todo cadastrarInconsistencia()
 
 
 
 	/**
-	 * Método para excluir as inconsistências
+	 * Mï¿½todo para excluir as inconsistï¿½ncias
 	 * @access public
 	 * @static
 	 * @param void
@@ -101,15 +101,15 @@ class CaptacaoDAO extends Zend_Db_Table
 	{
 		$sql = "DELETE FROM SAC.dbo.tbTmpInconsistenciaCaptacao ";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$db->query($sql);
-	} // fecha método excluirInconsistencia()
+	} // fecha mï¿½todo excluirInconsistencia()
 
 
 
 	/**
-	 * Método para buscar os erros
+	 * Mï¿½todo para buscar os erros
 	 * @access public
 	 * @static
 	 * @param void
@@ -129,10 +129,10 @@ class CaptacaoDAO extends Zend_Db_Table
 				FROM SAC.dbo.tbTmpCaptacao 
 				WHERE nrAnoProjeto IS NOT NULL AND nrAnoProjeto != '' OR nrSequencial IS NOT NULL AND nrSequencial != ''";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->query($sql);
-	} // fecha método buscarErro()
+	} // fecha mï¿½todo buscarErro()
 
 	public static function buscarProjetos($pronac)
 	{
@@ -147,7 +147,7 @@ class CaptacaoDAO extends Zend_Db_Table
 				inner join SAC.dbo.Mecanismo m on m.Codigo = p.Mecanismo
 				where (p.Situacao = 'E10' or p.Situacao = 'E12' or p.Situacao = 'E13') and p.AnoProjeto+p.Sequencial = '{$pronac}' and a.AprovadoReal != 0"; 
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
 	}
@@ -157,14 +157,14 @@ class CaptacaoDAO extends Zend_Db_Table
 		$sql = "select SUM(CaptacaoReal) as captado from SAC.dbo.Captacao 
 				where AnoProjeto+Sequencial = '$pronac'";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
-	} // fecha método buscarErro()
+	} // fecha mï¿½todo buscarErro()
 	
 
 	/**
-	 * Método para gerar o relatório com as captações contendo erros
+	 * Mï¿½todo para gerar o relatï¿½rio com as captaï¿½ï¿½es contendo erros
 	 * @access public
 	 * @static
 	 * @param string $pronac
@@ -232,7 +232,7 @@ class CaptacaoDAO extends Zend_Db_Table
 			$sql.= "AND c.nrCpfCnpjIncentivador = '" . $incentivador . "' ";
 		}
 
-		if (!empty($dtCredito)) // busca pela data de crédito
+		if (!empty($dtCredito)) // busca pela data de crï¿½dito
 		{
 			$dtCreditoInicio = $dtCredito[0];
 			$dtCreditoFim    = $dtCredito[1];
@@ -256,9 +256,9 @@ class CaptacaoDAO extends Zend_Db_Table
 
 		$sql.= "ORDER BY c.dtChegadaRecibo, c.dtCredito, c.nrAnoProjeto+c.nrSequencial DESC";
 
-		$db = Zend_Registry::get('db');
+		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		return $db->fetchAll($sql);
-	} // fecha método gerarRelatorioErro()
+	} // fecha mï¿½todo gerarRelatorioErro()
 
 } // fecha class CaptacaoDAO

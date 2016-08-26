@@ -6,7 +6,7 @@
  * @version 1.0
  * @package application
  * @subpackage application.models
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -17,7 +17,7 @@ class Pronac extends Zend_Db_Table
 
 
 	/**
-	 * Método para buscar PRONAC
+	 * Mï¿½todo para buscar PRONAC
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -71,7 +71,7 @@ class Pronac extends Zend_Db_Table
 //                die('<pre>'.$sql);
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			return $db->fetchAll($sql);
 		}
@@ -84,7 +84,7 @@ class Pronac extends Zend_Db_Table
 
 
 	/**
-	 * Método para buscar o PRONAC com a análise de conteúdo
+	 * Mï¿½todo para buscar o PRONAC com a anï¿½lise de conteï¿½do
 	 * @access public
 	 * @param integer $id
 	 * @return object $db->fetchAll($sql)
@@ -112,7 +112,7 @@ class Pronac extends Zend_Db_Table
 
 		try
 		{
-			$db  = Zend_Registry::get('db');
+			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 			return $db->fetchAll($sql);
 		}
