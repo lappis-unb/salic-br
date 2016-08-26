@@ -7,9 +7,25 @@
  * @package Config
  * @version 0.1
  * @author  wouerner <wouerner@gmail.com>
+ * @author  Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  */
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
+
+    /**
+     *
+     * @name _initDoctype
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  ${DATE}
+     */
+//    protected function _initDoctype()
+//    {
+//        $this->bootstrap('view');
+//        $view = $this->getResource('view');
+//        $view->doctype('XHTML1_STRICT');
+//    }
+
     /**
      * _initPath
      *
@@ -18,7 +34,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     public function _initPath()
     {
-        $strBancoAmbiente      = "bancos_treinamento";
+//        $strBancoAmbiente      = "bancos_treinamento";
 
         /* configuração do caminho dos includes */
         set_include_path('.'
@@ -39,22 +55,21 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         require_once "MinC/Loader.php";
 
 
-
         //Registrando variçveis
-        Zend_Registry::set('DIR_CONFIG', APPLICATION_PATH . '/configs/' . $strBancoAmbiente . '.ini'); // registra
+//        Zend_Registry::set('DIR_CONFIG', APPLICATION_PATH . '/configs/' . $strBancoAmbiente . '.ini'); // registra
 
         /* ambientes: (DES: desenvolvimento - TES: teste - PRO: producao) */
-        $AMBIENTE = 'DES';
+//        $AMBIENTE = 'DES';
 
         /* configura para exibir as mensagens de erro */
-        if ($AMBIENTE == 'DES') {
-            ini_set('display_errors', true);
-            error_reporting(E_ALL | E_STRICT);
-            #if(getenv("APPLICATION_ENV") == 'development') {
-            require_once 'vendor/autoload.php';
-            #}
-        }
-        Zend_Registry::set('ambiente', $AMBIENTE);
+//        if ($AMBIENTE == 'DES') {
+//            ini_set('display_errors', true);
+//            error_reporting(E_ALL | E_STRICT);
+//            #if(getenv("APPLICATION_ENV") == 'development') {
+//            require_once 'vendor/autoload.php';
+//            #}
+//        }
+//        Zend_Registry::set('ambiente', $AMBIENTE);
     }
 
     /**
@@ -63,16 +78,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      * @access public
      * @return void
      */
-    public function _initLocal()
-    {
+//    public function _initLocal()
+//    {
         /* formato, idioma e localização */
-        setlocale(LC_ALL, 'pt_BR');
-        setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
-        date_default_timezone_set('America/Sao_Paulo');
+//        setlocale(LC_ALL, 'pt_BR');
+//        setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
+//        date_default_timezone_set('America/Sao_Paulo');
 
         // Registra currency que será usado automáticamente pelo zend
-        Zend_Registry::set('Zend_Currency', new Zend_Currency('pt_BR'));
-    }
+//        Zend_Registry::set('Zend_Currency', new Zend_Currency('pt_BR'));
+//    }
 
     /**
      * _initSession
@@ -114,24 +129,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      * @access public
      * @return void
      */
-    public function _initRegistry()
-    {
-        $strConexao     = "conexao_02";
-
-        /* configurações do banco de dados */
-        $config = new Zend_Config_Ini(APPLICATION_PATH. '/configs/config.ini', $strConexao);
-        $registry = Zend_Registry::getInstance();
-        $registry->set('config', $config); // registra
-
-        $db = Zend_Db::factory($config->db);
-        Zend_Db_Table::setDefaultAdapter($db);
-        Zend_Registry::set('db', $db); // registra
-        $profiler = $db->getProfiler();
-        $profiler->setEnabled(false);
-
-        /* registra a conexão para mudar em ambiente scriptcase */
-        Zend_Registry::set('conexao_banco', $strConexao);
-    }
+//    public function _initRegistry()
+//    {
+//        $strConexao     = "conexao_02";
+//
+//        /* configurações do banco de dados */
+//        $config = new Zend_Config_Ini(APPLICATION_PATH. '/configs/config.ini', $strConexao);
+//        $registry = Zend_Registry::getInstance();
+//        $registry->set('config', $config); // registra
+//
+//        $db = Zend_Db::factory($config->db);
+//        Zend_Db_Table::setDefaultAdapter($db);
+//        Zend_Registry::set('db', $db); // registra
+//        $profiler = $db->getProfiler();
+//        $profiler->setEnabled(false);
+//
+//        /* registra a conexão para mudar em ambiente scriptcase */
+//        Zend_Registry::set('conexao_banco', $strConexao);
+//    }
 
     public function _initRouteRest()
     {
