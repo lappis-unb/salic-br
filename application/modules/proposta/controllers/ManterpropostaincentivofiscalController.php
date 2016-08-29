@@ -412,7 +412,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
             $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
 
-            // Chama o SQL
             $tblPreProjeto = new Proposta_Model_PreProjeto();
             $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 

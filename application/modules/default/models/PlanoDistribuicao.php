@@ -3,7 +3,7 @@ class PlanoDistribuicao extends GenericModel
 {
     protected $_banco = "sac";
     protected $_schema = "sac";
-    protected $_name = "PlanoDistribuicaoProduto";
+    protected $_name = "planodistribuicaoproduto";
     //protected $_primary = "idPlanoDistribuicao";
     /**
      * Grava registro. Se seja passado um ID ele altera um registro existente
@@ -122,41 +122,39 @@ class PlanoDistribuicao extends GenericModel
      */
     public function buscarPlanoDistribuicao($where=array())
     {
-            // criando objeto do tipo select
-            $slct = $this->select();
-            $slct->setIntegrityCheck(false);
-            $slct->from(
-                    array('a' => 'PlanoDistribuicaoProduto'),
-                    array(
-                            'a.idPlanoDistribuicao',
-                            'a.idProjeto',
-                            'a.idProduto',
-                            'a.Area',
-                            'a.Segmento',
-                            'a.idPosicaoDaLogo',
-                            'a.QtdeProduzida',
-                            'a.QtdePatrocinador',
-                            'a.QtdeProponente',
-                            'a.QtdeOutros',
-                            'a.QtdeVendaNormal',
-                            'a.QtdeVendaPromocional',
-                            'a.PrecoUnitarioNormal',
-                            'a.PrecoUnitarioPromocional',
-                            'a.stPrincipal',
-                            'a.Usuario',
-                            'CAST(a.dsJustificativaPosicaoLogo AS TEXT) AS dsJustificativaPosicaoLogo',
-                            'a.Usuario'
-                        )
-            );
+        $slct = $this->select();
+        $slct->setIntegrityCheck(false);
+        $slct->from(
+                array('a' => $this->_name),
+                array(
+                    'a.idPlanoDistribuicao',
+                    'a.idProjeto',
+                    'a.idProduto',
+                    'a.Area',
+                    'a.Segmento',
+                    'a.idPosicaoDaLogo',
+                    'a.QtdeProduzida',
+                    'a.QtdePatrocinador',
+                    'a.QtdeProponente',
+                    'a.QtdeOutros',
+                    'a.QtdeVendaNormal',
+                    'a.QtdeVendaPromocional',
+                    'a.PrecoUnitarioNormal',
+                    'a.PrecoUnitarioPromocional',
+                    'a.stPrincipal',
+                    'a.Usuario',
+                    'CAST(a.dsJustificativaPosicaoLogo AS TEXT) AS dsJustificativaPosicaoLogo',
+                    'a.Usuario'
+                ),
+                $this->_schema
+        );
 
-            // adicionando clausulas where
-            foreach ($where as $coluna=>$valor)
-            {
-                $slct->where($coluna, $valor);
-            }
+        foreach ($where as $coluna=>$valor)
+        {
+            $slct->where($coluna, $valor);
+        }
 
-//            xd($slct->__toString());
-            return $this->fetchRow($slct);
+        return $this->fetchRow($slct);
     }
 
     /**

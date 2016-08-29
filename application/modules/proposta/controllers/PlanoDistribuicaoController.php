@@ -81,7 +81,6 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
 
         if ($fim>$total) $fim = $total;
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
-
         $arrDados = array(
                         "pag"=>$pag,
                         "total"=>$total,
@@ -131,7 +130,6 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
 
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
-        header("Content-Type: text/html; charset=ISO-8859-1");
 
         $bln_exitePP = "false"; //Nao existe Produto Principal cadastrado
 
@@ -153,8 +151,7 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         }
 
         $tblLogomarca = new Logomarca();
-        $rsLogomarcas = $tblLogomarca->buscar(array("idTipo=?"=>3));
-
+        $rsLogomarcas = $tblLogomarca->buscar(array("idLogomarca=?"=>3));
         $arrDados["combologomarcas"] = $rsLogomarcas;
         $arrDados["comboprodutos"] = $rsProdutos;
         $arrDados["comboareasculturais"] = ManterAgentes::buscarAreasCulturais();

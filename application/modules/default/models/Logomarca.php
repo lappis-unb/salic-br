@@ -1,14 +1,16 @@
 <?php
-class Logomarca extends Zend_Db_Table_Abstract
+/**
+ * Logomarca
+ *
+ * @uses GenericModel
+ * @author  wouerner <wouerner@gmail.com>
+ */
+class Logomarca extends GenericModel
 {
-    //protected $_db = "SAC";
-    //protected $_schema = "dbo";
-    protected $_name = "Verificacao";
-    //protected $_primary = "idPlanoDistribuicao";
+    protected $_schema = "sac";
+    protected $_name = "tblogomarca";
 
     public function __construct() {
-        $db = new Conexao(Zend_Registry::get('DIR_CONFIG'), "conexao_sac");
-
         parent::__construct();
     }
 
@@ -22,31 +24,28 @@ class Logomarca extends Zend_Db_Table_Abstract
      */
     public function buscar($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
     {
-            // criando objeto do tipo select
-            $slct = $this->select();
+        $slct = $this->select();
 
-            // adicionando clausulas where
-            foreach ($where as $coluna=>$valor)
+        foreach ($where as $coluna=>$valor)
+        {
+            $slct->where($coluna, $valor);
+        }
+
+        $slct->order($order);
+
+        // paginacao
+        if ($tamanho > -1)
+        {
+            $tmpInicio = 0;
+            if ($inicio > -1)
             {
-                    $slct->where($coluna, $valor);
+                $tmpInicio = $inicio;
             }
+            $slct->limit($tamanho, $tmpInicio);
+        }
 
-            // adicionando linha order ao select
-            $slct->order($order);
+        $this->fetchAll($slct);
 
-            // paginacao
-            if ($tamanho > -1)
-            {
-                    $tmpInicio = 0;
-                    if ($inicio > -1)
-                    {
-                            $tmpInicio = $inicio;
-                    }
-                    $slct->limit($tamanho, $tmpInicio);
-            }
-
-            // retornando os registros conforme objeto select
-            return $this->fetchAll($slct);
+        return $this->fetchAll($slct);
     }
 }
-?>
