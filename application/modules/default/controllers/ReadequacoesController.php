@@ -1962,7 +1962,11 @@ class ReadequacoesController extends GenericControllerNew {
         $this->view->filtro = $filtro;
         
         // lista apenas readequações do órgão atual
-        $where['idOrgao = ?'] = $this->idOrgao;
+        if ($this->idOrgao == 272) {
+            $where['idOrgao = ?'] = 262;
+        } else {
+            $where['idOrgao = ?'] = $this->idOrgao;
+        }
         
         if ($this->_request->getParam('pronac')) {           
             $where['a.PRONAC = ?'] = $this->_request->getParam('pronac');
