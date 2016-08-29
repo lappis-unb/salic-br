@@ -4217,7 +4217,7 @@ class ReadequacoesController extends GenericControllerNew {
         $dataEnvio = null;
         $destinatario = (null !== $this->_request->getParam('destinatario')) ? $this->_request->getParam('destinatario') : null;
         $idUnidade = $this->_request->getParam('vinculada');
-
+        
         try {
             if (in_array($idUnidade, array(171, 262))) {           
                 // MUDANÇA DE TECNICO
@@ -4232,6 +4232,15 @@ class ReadequacoesController extends GenericControllerNew {
                 
                 $u = $tbDistribuirReadequacao->update($dados, $where);
 
+                // atualizar tbReadequacao
+                $tbReadequacao = new tbReadequacao();
+                $dados = array(
+                    'siEncaminhamento' => 4
+                );
+                $where = array();
+                $where['idReadequacao = ?'] = $idReadequacao;
+                $tbReadequacao->update($dados, $where);
+                
                 if ($this->idPerfil == 121) {
                     parent::message('Dados salvos com sucesso!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "CONFIRM");
                 } else {
