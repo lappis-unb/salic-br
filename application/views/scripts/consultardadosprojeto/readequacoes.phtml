@@ -40,7 +40,7 @@ if (count($this->readequacoes) > 0):
         $r = (object) $r;
     ?>
 
-        <?php if(!in_array($r->siEncaminhamento, array(12))){ ?>
+<?php if(!in_array($r->siEncaminhamento, array(12))){ ?>
         <table class="tabela">
             <tr>
                 <td align="left">
@@ -117,15 +117,38 @@ if (count($this->readequacoes) > 0):
                 </td>
             </tr>
         </table>
-        <?php } ?>
-
-            
+	<?php } ?>
+		
         <?php $ct++;
     endforeach; ?>
 <?php else: ?>
+<?php if (count($this->readequacoesDevolvidas) == 0) : ?>
     <table class="tabela">
         <tr>
             <td align="center"><em>Dados n&atilde;o informados!</em></td>
         </tr>
     </table>
 <?php endif; ?>
+<?php endif; ?>
+
+<?php // pedido de readequação devolvido para o proponente ?>
+<?php if (count($this->readequacoesDevolvidas) > 0): ?>
+
+<div style="font-size: 18px; color: #35953f; padding: 20px;">Readequa&ccedil;&otilde;es devolvidas</div>
+<table class="tabela">
+  <thead>
+    <th>Tipo de readequação</th>
+    <th>Data</th>
+    <th>Avaliação</th>
+  </thead>
+  
+  <?php foreach ($this->readequacoesDevolvidas as $rd) : 
+  $rd = (object) $rd; ?>
+  <tr>
+    <td align="center"><?php echo $rd->dsReadequacao; ?></td>
+    <td align="center"><?php echo Data::tratarDataZend($rd->dtAvaliador, 'Brasileira'); ?></td>	    
+    <td align="center"><?php echo $rd->dsAvaliacao; ?></td>
+  </tr>
+  <?php endforeach; ?>
+  <?php endif; ?>
+

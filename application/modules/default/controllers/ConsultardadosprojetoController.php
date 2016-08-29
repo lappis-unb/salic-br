@@ -1032,11 +1032,14 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
             $tbReadequacao = new tbReadequacao();
             $dadosReadequacoes = $tbReadequacao->buscarDadosReadequacoes(array('a.idPronac = ?'=>$idPronac, 'a.siEncaminhamento <> ?'=>12))->toArray();
             
+            $dadosReadequacoesDevolvidas = $tbReadequacao->buscarDadosReadequacoes(array('a.idPronac = ?'=>$idPronac, 'a.siEncaminhamento = ?'=>12, 'a.stAtendimento = ?' => 'E', 'a.stEstado = ?' => 0))->toArray();
+            
             $tbReadequacaoXParecer = new tbReadequacaoXParecer();
             foreach ($dadosReadequacoes as &$dr) {
                 $dr['pareceres'] = $tbReadequacaoXParecer->buscarPareceresReadequacao(array('a.idReadequacao = ?'=>$dr['idReadequacao']))->toArray();
             }
             $this->view->readequacoes = $dadosReadequacoes;
+            $this->view->readequacoesDevolvidas = $dadosReadequacoesDevolvidas;
         }
     }
 
