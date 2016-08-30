@@ -6,7 +6,7 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
     private $tipoLicitacao = array(' - Selecione - ','Eletrônico','Eletrônico para registro de preço','Eletrônico por desconto','Eletrônico por lote','Presencial','Presencial para registro de preço','Presencial para maior desconto');
     private $tipoCompra    = array(' - Selecione - ','Material','Servi&ccedil;o','Marterial/Servi&ccedil;o');
     private $tipoAquisicao = array(' - Selecione - ','Material','Servi&ccedil;o','Material/Servi&ccedil;o');
-    private $tipoDocumento = array(' - Selecione - ','Boleto Banc&aacute;rio','Cupom Fiscal','Guia de Recolhimento','Nota Fiscal/Fatura','Recibo de Pagamento','RPA');
+    private $tipoDocumento = array(' - Selecione - ','Cupom Fiscal','Guia de Recolhimento','Nota Fiscal/Fatura','Recibo de Pagamento','RPA');
     private $_vrSituacao   = false;
 
     /*
