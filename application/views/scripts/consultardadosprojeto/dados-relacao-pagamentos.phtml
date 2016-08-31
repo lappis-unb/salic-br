@@ -47,7 +47,6 @@
         <td width="1" class="destacar bold">Item</td>
         <td width="1" class="destacar bold">CNPJ/CPF</td>
         <td width="1" class="destacar bold">Fornecedor</td>
-        <td width="1" class="destacar bold">Dt.<br />Comprova&ccedil;&atilde;o</td>
         <td width="1" class="destacar bold">Documento</td>
         <td width="1" class="destacar bold">N&ordm; Comprovante</td>
         <td width="1" class="destacar bold">Dt.<br />Pagamento</td>
@@ -70,7 +69,6 @@
         </td>
         <td><?php echo (!empty($relPagamentos->CNPJCPF)) ? Validacao::mascaraCPFCNPJ($relPagamentos->CNPJCPF) : ''; ?></td>
         <td><?php echo $relPagamentos->Fornecedor; ?></td>
-        <td align="center"><?php echo Data::tratarDataZend($relPagamentos->DtComprovacao, 'Brasileira'); ?></td>
         <td><?php echo $relPagamentos->tbDocumento; ?></td>
         <td><?php echo $relPagamentos->nrComprovante; ?></td>
         <td align="center"><?php echo Data::tratarDataZend($relPagamentos->DtPagamento, 'Brasileira'); ?></td>
