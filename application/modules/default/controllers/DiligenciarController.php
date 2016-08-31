@@ -681,7 +681,18 @@ class DiligenciarController extends GenericControllerNew {
             'idPronac' => $projeto->IdPRONAC
         ));
         
-        $this->view->mensagem = 'Dilig&ecirc;ncia enviada com sucesso!';
+        parent::message(
+            "Dilig&ecirc;ncia enviada com sucesso!",
+            $this->view->url(
+                array(
+                    'controller' => 'diligenciar',
+                    'action' => 'listardiligenciaanalista',
+                    'idPronac' => $this->getRequest()->getParam('idPronac'),
+                    'situacao' => $this->getRequest()->getParam('situacao'),
+                    'tpDiligencia' => $this->getRequest()->getParam('tpDiligencia')
+                )
+            ),
+            "CONFIRM");
     }
     
     /**
