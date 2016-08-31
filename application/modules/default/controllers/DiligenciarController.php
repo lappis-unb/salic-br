@@ -622,10 +622,9 @@ class DiligenciarController extends GenericControllerNew {
      */
     public function inserirdiligenciaAction()
     {
-        $post = Zend_Registry::get('post');
         $diligenciaDAO = new Diligencia();
         $auth = Zend_Auth::getInstance();
-
+        
         if (!$this->idPronac) {
             $this->_redirect(
                 $this->view->url(
@@ -640,31 +639,32 @@ class DiligenciarController extends GenericControllerNew {
                 )
             );
         }
-
+        
         // caso ja tenha diligencia para o pronac
         if (isset($this->idPronac) && !empty($this->idPronac)) {
-            $buscarDiligenciaResp = $diligenciaDAO->buscar(array('idPronac = ?' => $this->idPronac, 'DtResposta ?' => array(new Zend_Db_Expr('IS NULL')), 'stEnviado = ?'=>'S' ), array('idDiligencia DESC'),0,0,$post->idProduto);
+            $buscarDiligenciaResp = $diligenciaDAO->buscar(array('idPronac = ?' => $this->idPronac, 'DtResposta ?' => array(new Zend_Db_Expr('IS NULL')), 'stEnviado = ?'=>'S' ), array('idDiligencia DESC'),0,0, $this->getRequest()->getParam('idProduto'));
             if (count($buscarDiligenciaResp) > 0) {
-                $queryString = '?idPronac=' . $this->idPronac . '&situacao=' . $post->situacao . '&tpDiligencia=' . $post->tpDiligencia;
+                $queryString = '?idPronac=' . $this->idPronac . '&situacao=' . $this->getRequest()->getParam('situacao') . '&tpDiligencia=' . $this->getRequest()->getParam('tpDiligencia');
                 parent::message('Existe dilig&ecirc;ncia aguardando resposta!', 'diligenciar/cadastrardiligencia' . $queryString, 'ALERT');
             }
+           
         }
-
+                
         $idagente = $auth->getIdentity()->usu_codigo;
-        $idProduto = $post->idProduto ? $post->idProduto : new Zend_Db_Expr('null');
+        $idProduto = $this->getRequest()->getParam('idProduto') ? $this->getRequest()->getParam('idProduto') : new Zend_Db_Expr('null');
 
         $dados = array(
-            'idPronac'          => $post->idPronac,
+            'idPronac'          => $this->getRequest()->getParam('idPronac'),
             'DtSolicitacao'     => null,
-            'Solicitacao'       => filter_input(INPUT_POST, 'solicitacao'),
+            'Solicitacao'       => $this->getRequest()->getParam('solicitacao'),
             'idSolicitante'     => null,
-            'idTipoDiligencia'  => $post->tpDiligencia,
+            'idTipoDiligencia'  => $this->getRequest()->getParam('tpDiligencia'),
             'idProduto'         => $idProduto,
             'stEstado'          => 0,
             'stEnviado'         => 'N'
         );
 
-        if(filter_input(INPUT_POST, 'btnEnvio') == 1){
+        if($this->getRequest()->getParam('btnEnvio') == 1){
             $dados['DtSolicitacao'] = new Zend_Db_Expr('GETDATE()');
             $dados['idSolicitante'] = $idagente;
             $dados['stEnviado'] = 'S';
@@ -673,7 +673,8 @@ class DiligenciarController extends GenericControllerNew {
         
         # Envia notificação para o usuário através do aplicativo mobile.
         $modelProjeto = new Projetos();
-        $projeto = $modelProjeto->buscarPorPronac((int)$post->idPronac);
+        $projeto = $modelProjeto->buscarPorPronac((int)$this->getRequest()->getParam('idPronac'));
+        
         $this->enviarNotificacao((object)array(
             'cpf' => $projeto->CNPJCPF,
             'pronac' => $projeto->Pronac,
