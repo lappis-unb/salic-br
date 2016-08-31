@@ -218,33 +218,74 @@
         });
         
         $('.btn_finalizar').click(function(){
-            $("#msgAlerta").dialog("destroy");
-            $("#msgAlerta").html('Deseja realmente finalizar as solicitações de readequação cadastradas?<br /><br />Ao finalizar, todas as solicitações serão encaminhadas ao MinC.');
-            $("#msgAlerta").dialog({
-                resizable: false,
-                title: 'Alerta!',
-                width:360,
-                modal: true,
-                buttons : {
-                    'Não' : function(){
-                        $(this).dialog('close');
-                    },
-                    'Sim' : function(){
-                        $(this).dialog('close');
-                        $("#msgAlerta").dialog("destroy");
-                        $("#msgAlerta").html('<br /><div align="center"><img src="<?php echo $this->baseUrl().'/public/img/ajax.gif'; ?>"><br />Aguarde..</div>');
-                        $("#msgAlerta").dialog({
-                            resizable: false,
-                            width:320,
-                            modal: true,
-                            title: 'Carregando..'
-                        });
-                        $('.ui-dialog-titlebar-close').remove();
-                        window.setTimeout('finalizarformulario()', 1000);
-                    }
-                }
-            });
-            $('.ui-dialog-titlebar-close').remove();
+	    $('#mensagens').html('<span style="font-weigth: bold; color: grey">Verificando limites orçamentários...</span>');
+	    // verifica limites orçamentários
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'verificar-limites-orcamentarios'), '', true); ?>?idPronac=<?php echo $this->idPronac; ?>',
+                data: {
+                    idPronac: <?php echo $this->idPronac; ?>
+                },
+                success: function(resposta){
+		    resposta = JSON.parse(resposta);
+		    
+		    if (resposta.mensagens[0].Observacao == 'OK' &&
+			resposta.mensagens[1].Observacao == 'OK' &&
+			resposta.mensagens[2].Observacao == 'OK') {
+			
+			    $("#msgAlerta").dialog("destroy");
+			    $("#msgAlerta").html('Deseja realmente finalizar as solicitações de readequação cadastradas?<br /><br />Ao finalizar, todas as solicitações serão encaminhadas ao MinC.');
+			    $("#msgAlerta").dialog({
+				resizable: false,
+				title: 'Alerta!',
+				width:360,
+				modal: true,
+				buttons : {
+				    'Não' : function(){
+					$(this).dialog('close');
+				    },
+				    'Sim' : function(){
+					$(this).dialog('close');
+					$("#msgAlerta").dialog("destroy");
+					$("#msgAlerta").html('<br /><div align="center"><img src="<?php echo $this->baseUrl().'/public/img/ajax.gif'; ?>"><br />Aguarde..</div>');
+					$("#msgAlerta").dialog({
+					    resizable: false,
+					    width:320,
+					    modal: true,
+					    title: 'Carregando..'
+					});
+					$('.ui-dialog-titlebar-close').remove();
+					window.setTimeout('finalizarformulario()', 1000);
+				    }
+				}
+				
+			    });
+			    $('.ui-dialog-titlebar-close').remove();
+			    
+		    } else {
+			var saidaHtml = "<table><thead><th colspan='2'>Verificação de limites orçamentários</th><th>Valor excedente</th></thead>";
+			
+			for (var m = 0; m < resposta.mensagens.length; m++) {
+			    var item = resposta.mensagens[m];
+			    if (item.Observacao == 'OK') {
+				saidaHtml += "<tr><td><img src='<?php echo $this->baseUrl(); ?>/public/img/ok_16x16.png' alt='' /></td>";
+				saidaHtml += "<td><strong>" + item.Descricao + "</strong></td>";
+				saidaHtml += "<td></td>";
+
+			    } else {
+				saidaHtml += "<tr><td><img src='<?php echo $this->baseUrl(); ?>/public/img/delete_16x16.png' alt='' /></td>";
+				saidaHtml += "<td><strong>" + item.Descricao + "</strong></td>";
+				saidaHtml += "<td style='color: red' id='vlDiferenca'>R$ " + item.vlDiferenca + "</td>";
+			    }
+			    
+			    saidaHtml += "</tr>";
+			}
+			
+			saidaHtml += "</table>";
+			$('#mensagens').html(saidaHtml);
+		    }		    
+		}
+	    });
         });
         
         $(".icn_menos").click(function(){
@@ -829,6 +870,8 @@
             </tr>
         </table>
 
+	<div align="center" id="mensagens"></div>
+	
         <table class="tabela">
             <tr>
                 <td class="centro">

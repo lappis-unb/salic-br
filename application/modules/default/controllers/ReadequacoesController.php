@@ -36,7 +36,7 @@ class ReadequacoesController extends GenericControllerNew {
         // pega o idAgente do usuário logado
         $auth = Zend_Auth::getInstance(); // pega a autenticação
         $this->view->usuarioInterno = false;
-
+        
         if (isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
             $this->view->usuarioInterno = true;
             $this->idUsuario = $auth->getIdentity()->usu_codigo;
@@ -4291,4 +4291,35 @@ class ReadequacoesController extends GenericControllerNew {
             }                
         }
     }
+
+     /*
+      * verificarLimitesOrcamentarios Consulta ajax para verficiar limites orçamentários de readequação
+      * @since  31/08/2016
+      * @author Fernao Lopes Ginez de Lara fernao.lara@cultura.gov.br
+      * @access public
+      * @return Mixed Retorna json object com mensagem
+      */
+    public function verificarLimitesOrcamentariosAction() {
+        $this->_helper->viewRenderer->setNoRender();
+        $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+        
+        $idPronac = $this->_request->getParam("idPronac");
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        
+        $pa = new spChecarLimitesOrcamentarioReadequacao();
+        $resultadoCheckList = $pa->exec($idPronac, 3);
+        
+        $resultado = array();
+        $i = 0;
+        foreach($resultadoCheckList as $item) {
+            $resultado[$i]['idPronac'] = $item->idPronac;
+            $resultado[$i]['Descricao'] = utf8_encode($item->Descricao);
+            $resultado[$i]['vlDiferenca'] = $item->vlDiferenca;
+            $resultado[$i]['Observacao'] = $item->Observacao;
+            $i++;
+        }
+        echo json_encode(array('mensagens' => $resultado));
+    }    
 }
