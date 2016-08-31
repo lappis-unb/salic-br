@@ -1406,7 +1406,7 @@ class AlterarprojetoController extends GenericControllerNew {
         $dados = Null;
         $dados = array(//Monta dados para o historico
             'idPRONAC' => $dadosProjeto->IdPRONAC,
-            'idLogon' => $this->idusuario,
+            'idLogon' => $auth->getIdentity()->usu_codigo,
             'cdArea' => null,
             'cdSegmento' => null,
             'nmProjeto' => null,
