@@ -23,13 +23,15 @@ class tbDocumentosPreProjeto  extends GenericModel {
         $slct->setIntegrityCheck(false);
         $slct->from(
             array("a"=>$this->_name),
-            array("CodigoDocumento", new Zend_Db_Expr("2 as tpDoc"), 'idProjeto as Codigo', 'Data', 'imDocumento', 'NoArquivo', 'TaArquivo', 'idDocumentosPreprojetos')
+            array("CodigoDocumento", new Zend_Db_Expr('(2) as tpDoc'), 'idProjeto as Codigo',
+                'Data', 'imDocumento', 'NoArquivo', 'TaArquivo', 'idDocumentosPreprojetos'),
+            $this->_schema
         );
         $slct->joinInner(
             array("b"=>"DocumentosExigidos"), "a.CodigoDocumento = b.Codigo",
             array("Descricao"), "SAC.dbo"
         );
-        
+
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
@@ -46,7 +48,9 @@ class tbDocumentosPreProjeto  extends GenericModel {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
+//die('w');
         //xd($slct->__toString());
+        //echo $slct;die;
         return $this->fetchAll($slct);
     }
 
