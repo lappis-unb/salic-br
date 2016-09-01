@@ -74,7 +74,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             // instancia da autentica��o
             $auth = Zend_Auth::getInstance();
             $this->getIdUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
-            $tblAgente = new Agente_Model_Agentes();
+            $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsAgente = $tblAgente->buscar(array('CNPJCPF = ?'=>$auth->getIdentity()->usu_identificacao))->current();
             if(!empty($rsAgente)){
                 $this->getIdAgenteLogado = $rsAgente->idAgente;
@@ -973,7 +973,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $nomeProponente = null;
 
             $projetosDAO = new Projetos ();
-            $tblAgente = new Agente_Model_Agentes();
+            $tblAgente = new Agente_Model_DbTable_Agentes();
 
             $rsProjeto = $projetosDAO->buscar(array ('IdPRONAC = ? '=> "{$idpronac}"));
             $pronac = $rsProjeto[0]->AnoProjeto . $rsProjeto[0]->Sequencial;

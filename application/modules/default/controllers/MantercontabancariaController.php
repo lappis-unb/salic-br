@@ -9,15 +9,15 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 class MantercontabancariaController extends MinC_Controller_Action_Abstract {
 
     private $modal = "n";
 
     public function init() {
-        $PermissoesGrupo[] = 121; // Técnico de Acompanhamento
-        $PermissoesGrupo[] = 129; // Técnico de Acompanhamento
+        $PermissoesGrupo[] = 121; // Tï¿½cnico de Acompanhamento
+        $PermissoesGrupo[] = 129; // Tï¿½cnico de Acompanhamento
         $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
         $PermissoesGrupo[] = 123; // Coordenador Geral de Acompanhamento
         parent::perfil(1, $PermissoesGrupo);
@@ -36,7 +36,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
 
     }
 
-// fecha método init()
+// fecha mï¿½todo init()
 
 
     public function consultarAction() {
@@ -63,10 +63,10 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
         }
 
 
-        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $orgao = $GrupoAtivo->codOrgao;
         $pronac = $this->_request->getParam("pronac");
 
@@ -88,10 +88,10 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
 
         if(count($resp) < 1 && count($PronacExistente) > 0){
             if ($this->modal == "s") {
-                echo "<br/><br/><br/><br/><center><font color='red'>Você não tem acesso a esta unidade!</font></center>";
+                echo "<br/><br/><br/><br/><center><font color='red'>Vocï¿½ nï¿½o tem acesso a esta unidade!</font></center>";
                 exit();
             } else {
-                parent::message("Você não tem acesso a esta unidade!", "mantercontabancaria/consultar", "ALERT");
+                parent::message("Vocï¿½ nï¿½o tem acesso a esta unidade!", "mantercontabancaria/consultar", "ALERT");
             }
         }
 
@@ -101,10 +101,10 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
             $this->view->Historicos = $historicos;
         } else {
             if ($this->modal == "s") {
-                echo "<br/><br/><br/><br/><center><font color='red'>Conta bancária inexistente!</font></center>";
+                echo "<br/><br/><br/><br/><center><font color='red'>Conta bancï¿½ria inexistente!</font></center>";
                 exit();
             } else {
-                parent::message("Conta bancária inexistente!", "mantercontabancaria/consultar", "ALERT");
+                parent::message("Conta bancï¿½ria inexistente!", "mantercontabancaria/consultar", "ALERT");
             }
         }
 
@@ -122,7 +122,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
 
     public function imprimirContaBancariaCadastradaAction() {
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $orgao = $GrupoAtivo->codOrgao;
         $pronac = $this->_request->getParam("pronac");
 
@@ -141,10 +141,10 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
     }
 
     public function salvarAction() {
-        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $orgao = $GrupoAtivo->codOrgao;
         $pronac = $_POST['Pronac'];
         $he = new tbHistoricoExclusaoConta();
@@ -156,7 +156,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
 
         if(isset($_POST['excluir'])){
 
-            //INSERE OS DADOS NA TABELA DE HISTÓRICO - SAC.dbo.tbHistoricoExclusaoConta
+            //INSERE OS DADOS NA TABELA DE HISTï¿½RICO - SAC.dbo.tbHistoricoExclusaoConta
             $dadosInsert = array(
                 'idContaBancaria' => $resp->IdContaBancaria,
                 'Banco' => $resp->Banco,
@@ -171,7 +171,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
             );
             $id = $he->inserir($dadosInsert);
 
-            //ALETAR OS DADOS NA TABELA DE CONTA BANCÁRIA - SAC.dbo.ContaBancaria
+            //ALETAR OS DADOS NA TABELA DE CONTA BANCï¿½RIA - SAC.dbo.ContaBancaria
             $dadosUpdate = array(
                 'ContaBloqueada' => '000000000000',
                 'ContaLivre' => '000000000000'
@@ -191,7 +191,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
 
             if(count($AgenciaDados) > 0){
 
-                //INSERE OS DADOS NA TABELA DE HISTÓRICO - SAC.dbo.tbHistoricoExclusaoConta
+                //INSERE OS DADOS NA TABELA DE HISTï¿½RICO - SAC.dbo.tbHistoricoExclusaoConta
                 $dadosInsert = array(
                     'idContaBancaria' => $resp->IdContaBancaria,
                     'Banco' => $resp->Banco,
@@ -266,7 +266,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
             }
 
             $this->view->cgccpf = $cnpjcpf;
-            $agentes = new Agente_Model_Agentes();
+            $agentes = new Agente_Model_DbTable_Agentes();
             $interessados = New Interessado();
             $buscaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $cnpjcpf));
 
@@ -285,13 +285,13 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
             $consultaRegularidade = $paRegularidade->exec($cnpjcpf);
             $this->view->resultadoRegularidade = $consultaRegularidade;
 
-            $auth = Zend_Auth::getInstance(); // instancia da autenticação
+            $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
             if (strlen(trim($auth->getIdentity()->usu_identificacao)) == 11){
                 $cpfcnpjUsuario = Mascara::addMaskCPF(trim($auth->getIdentity()->usu_identificacao));
             } else {
                 $cpfcnpjUsuario = Mascara::addMaskCNPJ(trim($auth->getIdentity()->usu_identificacao));
             }
-            $this->view->dadosUsuarioConsulta = '( '. $cpfcnpjUsuario .' ) '.$auth->getIdentity()->usu_nome.' - '.date('d/m/Y').' às '.date('h:i:s');
+            $this->view->dadosUsuarioConsulta = '( '. $cpfcnpjUsuario .' ) '.$auth->getIdentity()->usu_nome.' - '.date('d/m/Y').' ï¿½s '.date('h:i:s');
 
         } else {
             parent::message("Por favor, informe o campo CPF/CNPJ!", 'mantercontabancaria/regularidade-proponente', "ERROR");
@@ -326,7 +326,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
             }
 
             $this->view->cgccpf = $cnpjcpf;
-            $agentes = new Agente_Model_Agentes();
+            $agentes = new Agente_Model_DbTable_Agentes();
             $interessados = New Interessado();
             $buscaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $cnpjcpf));
 
@@ -345,13 +345,13 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
             $consultaRegularidade = $paRegularidade->exec($cnpjcpf);
             $this->view->resultadoRegularidade = $consultaRegularidade;
 
-            $auth = Zend_Auth::getInstance(); // instancia da autenticação
+            $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
             if (strlen(trim($auth->getIdentity()->usu_identificacao)) == 11){
                 $cpfcnpjUsuario = Mascara::addMaskCPF(trim($auth->getIdentity()->usu_identificacao));
             } else {
                 $cpfcnpjUsuario = Mascara::addMaskCNPJ(trim($auth->getIdentity()->usu_identificacao));
             }
-            $this->view->dadosUsuarioConsulta = '( '. $cpfcnpjUsuario .' ) '.$auth->getIdentity()->usu_nome.' - '.date('d/m/Y').' às '.date('H:i:s');
+            $this->view->dadosUsuarioConsulta = '( '. $cpfcnpjUsuario .' ) '.$auth->getIdentity()->usu_nome.' - '.date('d/m/Y').' ï¿½s '.date('H:i:s');
             $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
 
         } else {

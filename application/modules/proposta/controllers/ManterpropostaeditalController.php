@@ -58,7 +58,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
         // Busca na Agentes
-        $agentesDAO  = new Agente_Model_Agentes();
+        $agentesDAO  = new Agente_Model_DbTable_Agentes();
         $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
 
@@ -236,7 +236,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             }
 
 
-        	$ag = new Agente_Model_Agentes();
+        	$ag = new Agente_Model_DbTable_Agentes();
             $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $dados[0]->idPreProjeto,
             															 'vprp.siVinculoProposta = ?' => 2));
             if(count($verificarvinculo) > 0){
@@ -1056,7 +1056,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         /*         * ******* DADOS DO PROPONENTE ******** */
         $tblProponente = new Proponente();
 
-        $tblAgente = new Agente_Model_Agentes();
+        $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsPreProjeto->idAgente))->current();
 
         $regularidade = Regularidade::buscarSalic($rsProponente->CNPJCPF);

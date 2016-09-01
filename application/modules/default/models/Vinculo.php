@@ -123,7 +123,7 @@ class Vinculo extends GenericModel {
         //VERIFICA SE PROPONETE JA ESTA CADASTRADO
         $arrBusca = array();
         $arrBusca['a.idAgente = ?'] = $post->idAgente;
-        $tblAgente = new Agente_Model_Agentes();
+        $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
 
         if (count($rsProponente) > 0) {
@@ -276,7 +276,7 @@ class Vinculo extends GenericModel {
         } catch (Zend_Exception $ex) {
             //$db->rollback();
             //xd($ex->getMessage());
-            parent::message("N?o foi possível realizar a operaç?o!", "/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
+            parent::message("N?o foi possï¿½vel realizar a operaï¿½?o!", "/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
         }
     }
 
@@ -296,7 +296,7 @@ class Vinculo extends GenericModel {
         $arrBuscaProponete = array();
         $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto->idAgente;
 
-        $tblAgente = new Agente_Model_Agentes();
+        $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
 
         //xd($rsPreProjeto);
@@ -374,7 +374,7 @@ class Vinculo extends GenericModel {
       }
       else
       {
-      parent::message("Nao foi possível inserir os dados!", "manterpropostaincentivofiscal", "ERRO");
+      parent::message("Nao foi possï¿½vel inserir os dados!", "manterpropostaincentivofiscal", "ERRO");
       }
 
       }
@@ -393,7 +393,7 @@ class Vinculo extends GenericModel {
         if (!empty($idPreProjeto)) {
             /* $result = $this->verificaPermissaoAcessoProposta($_REQUEST['idPreProjeto']);
               if($result<1){
-              parent::message("Voc? n?o tem permiss?o para acessar esta Proposta ou esta n?o é uma Proposta por Incentivo Fiscal.", "/principal", "ALERT");
+              parent::message("Voc? n?o tem permiss?o para acessar esta Proposta ou esta n?o ï¿½ uma Proposta por Incentivo Fiscal.", "/principal", "ALERT");
               die;
               } */
 
@@ -406,7 +406,7 @@ class Vinculo extends GenericModel {
 
             $arrBuscaProponete = array();
             $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto->idAgente;
-            $tblAgente = new Agente_Model_Agentes();
+            $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
 
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
@@ -438,7 +438,7 @@ class Vinculo extends GenericModel {
         if ($rsPreProjeto->save()) {
             parent::message("Exclus&atilde;o realizada com sucesso!", "/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
         } else {
-            parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
+            parent::message("N&atilde;o foi possï¿½vel realizar a opera&ccedil;&atilde;o!", "/manterpropostaincentivofiscal/listar-propostas", "ERROR");
         }
     }
 
@@ -459,7 +459,7 @@ class Vinculo extends GenericModel {
                 "resultado" => $arrResultado));
         } else {
 
-            parent::message("Necessário informar o número da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
+            parent::message("Necessï¿½rio informar o nï¿½mero da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
         }
     }
 
@@ -480,7 +480,7 @@ class Vinculo extends GenericModel {
         //valida mes de envio da proposta
         /* if(date("m") == "01" || date("m") == "12"){
           $arrResultado['prazoenvioproposta']['erro'] = true;
-          $arrResultado['prazoenvioproposta']['msg'] = "Conforme Art 5? da Instruç?o Normativa n? 1, de 5 de outubro de 2010, nenhuma proposta poderá ser enviada ao MinC nos meses de DEZEMBRO e JANEIRO!";
+          $arrResultado['prazoenvioproposta']['msg'] = "Conforme Art 5? da Instruï¿½?o Normativa n? 1, de 5 de outubro de 2010, nenhuma proposta poderï¿½ ser enviada ao MinC nos meses de DEZEMBRO e JANEIRO!";
           return $arrResultado;
           } */
 
@@ -504,7 +504,7 @@ class Vinculo extends GenericModel {
         $tblProponente = new Proponente();
         //$rsProponente = $tblProponente->buscar(array("a.idAgente = ?"=>$rsPreProjeto->idAgente))->current();
 
-        $tblAgente = new Agente_Model_Agentes();
+        $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsPreProjeto->idAgente))->current();
 
         $regularidade = Regularidade::buscarSalic($rsProponente->CNPJCPF);
@@ -964,11 +964,11 @@ class Vinculo extends GenericModel {
     public function listarPropostasAction() {
 
 
-        //BUSCA idAgente DO USUARIO LOGADO, que é o Responsavel ou o Proponente
+        //BUSCA idAgente DO USUARIO LOGADO, que ï¿½ o Responsavel ou o Proponente
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticaç?o
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½?o
         $usu_identificacao = isset($auth->getIdentity()->usu_identificacao) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
-        $agentes = new Agente_Model_Agentes();
+        $agentes = new Agente_Model_DbTable_Agentes();
 
         $idAgenteProponenteRs = $agentes->buscar(array("CNPJCPF = ?" => $usu_identificacao))->current();
         $idAgente = $idAgenteProponenteRs->idAgente;
@@ -998,7 +998,7 @@ class Vinculo extends GenericModel {
         $options = "";
         $optionsTemp = "";
         $idsProponente = 0;
-        $tblAgente = new Agente_Model_Agentes();
+        $tblAgente = new Agente_Model_DbTable_Agentes();
 
         //==== MONTA COMBO COM TODOS OS PROPONENTES //
         foreach ($rsVinculo as $cahve => $valor) {

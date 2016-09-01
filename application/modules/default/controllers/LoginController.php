@@ -123,7 +123,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
                     }
 
 
-                    $agentes = new Agente_Model_Agentes();
+                    $agentes = new Agente_Model_DbTable_Agentes();
                     $verificaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $username))->current();
 
                     if ( !empty ( $verificaAgentes ) ) {
@@ -208,7 +208,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
                  * ==============================================================
                  */
                 /* ========== VERIFICA SE O RESPONSAVEL JA TEM CADASTRO COMO PROPONENTE ========== */
-                $Agentes = new Agente_Model_Agentes();
+                $Agentes = new Agente_Model_DbTable_Agentes();
                 $Visao   = new Visao();
                 $buscarAgente = $Agentes->buscar(array('CNPJCPF = ?' => $cpf));
                 $idAgenteProp = count($buscarAgente) > 0 ? $buscarAgente[0]->idAgente : 0;

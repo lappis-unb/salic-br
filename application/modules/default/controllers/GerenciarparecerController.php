@@ -3,7 +3,7 @@
 class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
     /**
-     * @var integer (variável com o id do usuário logado)
+     * @var integer (variï¿½vel com o id do usuï¿½rio logado)
      * @access private
      */
     private $getIdUsuario = 0;
@@ -11,32 +11,32 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
 
     public function init() {
-        $this->view->title  = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario            = new UsuarioDAO(); // objeto usuário
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $this->view->title  = "Salic - Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura"; // tï¿½tulo da pï¿½gina
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $Usuario            = new UsuarioDAO(); // objeto usuï¿½rio
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
 
-        if ($auth->hasIdentity()) // caso o usuário esteja autenticado
+        if ($auth->hasIdentity()) // caso o usuï¿½rio esteja autenticado
         {
-            // verifica as permissões
+            // verifica as permissï¿½es
             $PermissoesGrupo    = array();
             $PermissoesGrupo[]  = 94;
             $PermissoesGrupo[]  = 93;
             $PermissoesGrupo[]  = 137;
 
-            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo está no array de permissões
+            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo estï¿½ no array de permissï¿½es
             {
-                parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+                parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+            // pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-            // manda os dados para a visão
-            $this->view->usuario        = $auth->getIdentity(); // manda os dados do usuário para a visão
-            $this->view->arrayGrupos    = $grupos; // manda todos os grupos do usuário para a visão
-            $this->view->grupoAtivo     = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-            $this->view->orgaoAtivo     = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+            // manda os dados para a visï¿½o
+            $this->view->usuario        = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+            $this->view->arrayGrupos    = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+            $this->view->grupoAtivo     = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+            $this->view->orgaoAtivo     = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
 
             if (isset($auth->getIdentity()->usu_codigo)) // autenticacao novo salic
             {
@@ -45,7 +45,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
             }
 
         } // fecha if
-        else // caso o usuário não esteja autenticado
+        else // caso o usuï¿½rio nï¿½o esteja autenticado
         {
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
@@ -53,7 +53,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
         parent::init(); // chama o init() do pai GenericControllerNew
     }
 
-    // fecha método init()
+    // fecha mï¿½todo init()
 
 
     public function indexAction() {
@@ -62,10 +62,10 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
     public function listaprojetosAction(){
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario          = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
         /******************************************************************/
@@ -134,7 +134,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
         $busca = $tbDistribuirParecer->painelAnaliseTecnica($where, $order, $tamanho, $inicio, false, $tipoFiltro);
 
-	// caso for produto principal, verifica se pode concluir (caso não haja produtos secundários abertos)
+	// caso for produto principal, verifica se pode concluir (caso nï¿½o haja produtos secundï¿½rios abertos)
 	if ($tipoFiltro == 'validados' || $tipoFiltro == 'em_validacao' || $tipoFiltro == 'devolvida') {
 	  $checarValidacaoSecundarios = array();
 	  foreach($busca as $chave => $item) {
@@ -169,11 +169,11 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
     public function produtosdistribuidosAction() {
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 //		$idusuario          = $auth->getIdentity()->usu_codigo;
         $idusuario          = $this->getIdUsuario;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         /******************************************************************/
         $tbDistribuirParecer    = new tbDistribuirParecer();
@@ -196,11 +196,11 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
     public function enviarpagamentoAction() {
         //** Usuario Logado ************************************************/
 
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 //		$idusuario          = $auth->getIdentity()->usu_codigo;
         $idusuario          = $this->getIdUsuario;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         $Grupo              = $GrupoAtivo->codGrupo;
 
         /******************************************************************/
@@ -224,12 +224,12 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
     public function historicoAction() {
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 //        $idUsuario = $auth->getIdentity()->usu_codigo;
         $idusuario          = $this->getIdUsuario;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $idOrgao 	= $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $idOrgao 	= $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $idPronac 			 = $this->_request->getParam("idPronac");
         $idProduto 			 = $this->_request->getParam("idProduto");
@@ -262,7 +262,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
             }
 
             $Pareceres['pareceres'][$cont]['Nome do Produto'] 			= "$val->dsProduto";
-            $Pareceres['pareceres'][$cont]['Unidade Responsável'] 		= "$val->Unidade";
+            $Pareceres['pareceres'][$cont]['Unidade Responsï¿½vel'] 		= "$val->Unidade";
             $Pareceres['pareceres'][$cont]['Data'] 						= date('d/m/Y', strtotime($val->DtDistribuicao));
             $Pareceres['pareceres'][$cont]['Observa&ccedil;&otilde;es'] = $val->Observacao;
             $Pareceres['pareceres'][$cont]['Nome do Remetente'] 		= $val->nmUsuario;
@@ -275,11 +275,11 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
     public function distribuirAction() {
         //** Usuario Logado ************************************************/
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 //		$idusuario 	= $auth->getIdentity()->usu_codigo;
         $idusuario = $this->getIdUsuario;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $idPronac = $this->_request->getParam("idpronac");
@@ -317,10 +317,10 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
     public function distribuiuAction() {
         //** Usuario Logado ************************************************/
-        $auth           = Zend_Auth::getInstance(); // pega a autenticação
+        $auth           = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario 		= $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao       = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao       = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $idPronac                   = $this->_request->getParam("idpronac");
@@ -332,11 +332,11 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
         $tipoFiltro                 = $this->_request->getParam("tipoFiltro");
 
         if(strlen($observacao) < 11 ) {
-            parent::message("Dados obrigatórios n&atilde;o informados.","gerenciarparecer/distribuir/idpronac/".$idPronac ,"ALERT");
+            parent::message("Dados obrigatï¿½rios n&atilde;o informados.","gerenciarparecer/distribuir/idpronac/".$idPronac ,"ALERT");
         }
 
         if((empty($idAgenteParecerista)) && ($tipoescolha == 1)) {
-            parent::message("Dados obrigatórios n&atilde;o informados.",
+            parent::message("Dados obrigatï¿½rios n&atilde;o informados.",
                     "gerenciarparecer/encaminhar/idproduto/".$idProduto."/tipoanalise/".$TipoAnalise."/idpronac/".$idPronac  . "/tipoFiltro/" . $tipoFiltro,
                     "ALERT");
         }
@@ -347,7 +347,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 	$buscaDadosProjeto = $tbDistribuirParecer->painelAnaliseTecnica($dadosWhere, null, null, null, null, $tipoFiltro);
 
 	$error = "";
-        $msg = "Distribuição Realizada com sucesso!";
+        $msg = "Distribuiï¿½ï¿½o Realizada com sucesso!";
 
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
@@ -358,7 +358,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
             foreach($buscaDadosProjeto as $dp) {
 
-	        // se forem validados ou em validação, zera fecharAnalise
+	        // se forem validados ou em validaï¿½ï¿½o, zera fecharAnalise
 	        if ($tipoFiltro == 'devolvida' || $tipoFiltro == 'validados' || $tipoFiltro == 'em_validacao') {
 		  $dp->FecharAnalise = 0;
 		} else {
@@ -368,7 +368,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
                 if($tipoescolha == 2) {
                     $msg = "Enviado os Produtos/Projeto para a entidade!";
 
-                    // ALTERAR UNIDADE DE ANÁLISE ( COORDENADOR DE PARECER )
+                    // ALTERAR UNIDADE DE ANï¿½LISE ( COORDENADOR DE PARECER )
 
                     $dadosE = array(
                             'idOrgao'       		=> $orgaoDestino,
@@ -396,10 +396,10 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 		    $orgaos = new Orgaos();
 		    $orgao = $orgaos->pesquisarNomeOrgao($codOrgao);
 
-		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para <strong>' . $orgao[0]->NomeOrgao . ' para análise e emissão de parecer técnico</strong>.');
+		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para <strong>' . $orgao[0]->NomeOrgao . ' para anï¿½lise e emissï¿½o de parecer tï¿½cnico</strong>.');
                 }
                 else {
-                    $msg = "Distribuição Realizada com sucesso!";
+                    $msg = "Distribuiï¿½ï¿½o Realizada com sucesso!";
 
                     // DISTRIBUIR OU REDISTRIBUIR ( COORDENADOR DE PARECER )
 
@@ -426,7 +426,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
                     $insere = $tbDistribuirParecer->inserir($dadosD);
 		    $projetos = new Projetos();
-		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para o perito para análise técnica e emissão de parecer.');
+		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para o perito para anï¿½lise tï¿½cnica e emissï¿½o de parecer.');
                 }
 
             }
@@ -444,11 +444,11 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
     public function encaminharAction() {
         //** Usuario Logado ************************************************/
-        $auth           = Zend_Auth::getInstance(); // pega a autenticação
+        $auth           = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 	//$idusuario 	= $auth->getIdentity()->usu_codigo;
         $idusuario      = $this->getIdUsuario;
-        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao       = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao       = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         /******************************************************************/
 
@@ -474,7 +474,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
         if( (count($buscaDadosProjetoS) == 0) && (count($buscaDadosProjeto) == 0) ) {
             parent::message("Todos os produtos foram distribuidos!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro ,"ALERT");
-            //parent::message("Aguardando as análises dos produtos secundários!", "gerenciarparecer/listaprojetos" ,"ALERT");
+            //parent::message("Aguardando as anï¿½lises dos produtos secundï¿½rios!", "gerenciarparecer/listaprojetos" ,"ALERT");
         }
 
         //Produto Secundario
@@ -486,7 +486,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
         if( count($buscaDadosProjetoSA) > 0 && count($buscaDadosProjetoS) == 0) {
             parent::message("Todos os produtos foram distribuidos SA!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro ,"ALERT");
-            //parent::message("Aguardando as análises dos produtos secundários!", "gerenciarparecer/listaprojetos" ,"ALERT");
+            //parent::message("Aguardando as anï¿½lises dos produtos secundï¿½rios!", "gerenciarparecer/listaprojetos" ,"ALERT");
         }
 
         if(count($buscaDadosProjetoS) != 0) {
@@ -521,10 +521,10 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
     public function encaminhouAction() {
         //** Usuario Logado ************************************************/
-        $auth           = Zend_Auth::getInstance(); // pega a autenticação
+        $auth           = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario 	= $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao       = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao       = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $idDistribuirParecer        = $this->_request->getParam("idDistribuirParecer");
@@ -538,7 +538,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
         $tipoFiltro                 = $this->_request->getParam("tipoFiltro");
 
         if(strlen($observacao) < 11) {
-            parent::message("O campo observação deve ter no mínimo 11 caracteres!",
+            parent::message("O campo observaï¿½ï¿½o deve ter no mï¿½nimo 11 caracteres!",
                     "gerenciarparecer/encaminhar/idproduto/".$idProduto."/idpronac/".$idPronac , "ALERT");
         }
 
@@ -565,7 +565,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
             foreach($buscaDadosProjeto as $dp) {
 	      // invalida e redistribui
 
-	      // se forem validados ou em validação, zera fecharAnalise
+	      // se forem validados ou em validaï¿½ï¿½o, zera fecharAnalise
 	        if ($tipoFiltro == 'devolvida' || $tipoFiltro == 'validados' || $tipoFiltro == 'em_validacao') {
 		$dp->FecharAnalise = 0;
 	      } else {
@@ -573,7 +573,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 	      }
 
                 if($tipoescolha == 2) {
-                    // ALTERAR UNIDADE DE ANÁLISE ( COORDENADOR DE PARECER )
+                    // ALTERAR UNIDADE DE ANï¿½LISE ( COORDENADOR DE PARECER )
 
                     $dadosE = array(
                             'idOrgao'       		=> $orgaoDestino,
@@ -601,7 +601,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 		    $orgaos = new Orgaos();
 		    $orgao = $orgaos->pesquisarNomeOrgao($codOrgao);
 
-		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para <strong>' . $orgao[0]->NomeOrgao . ' para análise e emissão de parecer técnico</strong>.');
+		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Encaminhado para <strong>' . $orgao[0]->NomeOrgao . ' para anï¿½lise e emissï¿½o de parecer tï¿½cnico</strong>.');
 
                     parent::message("Enviado os Produtos/Projeto para a entidade!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
                 }
@@ -630,9 +630,9 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
                     $insere = $tbDistribuirParecer->inserir($dadosD);
 
-		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Produto <strong>' . $dp->Produto . '</strong> encaminhado ao perito para análise técnica e emissão de parecer.');
+		    $projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Produto <strong>' . $dp->Produto . '</strong> encaminhado ao perito para anï¿½lise tï¿½cnica e emissï¿½o de parecer.');
 
-                    parent::message("Distribuição Realizada com sucesso!  ", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
+                    parent::message("Distribuiï¿½ï¿½o Realizada com sucesso!  ", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
                 }
             }
             $db->commit();
@@ -648,10 +648,10 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
     public function concluirAction() {
 
         //** Usuario Logado ************************************************/
-        $auth           = Zend_Auth::getInstance(); // pega a autenticação
+        $auth           = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario          = $this->getIdUsuario;
-        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao       = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao       = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $idDistribuirParecer    = $this->_request->getParam("idDistribuirParecer");
@@ -670,10 +670,10 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
     public function concluiuAction() {
         //** Usuario Logado ************************************************/
-        $auth           = Zend_Auth::getInstance(); // pega a autenticação
+        $auth           = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario 	= $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao       = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao       = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         /******************************************************************/
 
@@ -684,7 +684,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
 
         if(strlen($observacao) < 11) {
-            parent::message("O campo observação deve ter no mínimo 11 caracteres!",
+            parent::message("O campo observaï¿½ï¿½o deve ter no mï¿½nimo 11 caracteres!",
                     "gerenciarparecer/concluir/idDistribuirParecer/".$idDistribuirParecer."/idpronac/".$idPronac ,
                     "ALERT");
         }
@@ -707,7 +707,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
                 // FECHAR ANALISE ( COORDENADOR DE PARECER )
                 $orgaos = array('91','92','93','94','95','160','171','335');
 
-                // Caso não esteja dentro do array
+                // Caso nï¿½o esteja dentro do array
                 if (!in_array($dp->idOrgao, $orgaos)) {
                     $idOrgao 		= 91;
                     $fecharAnalise 	= 0;
@@ -745,7 +745,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
             endforeach;
 
-            /** Grava o Parecer nas Tabelas tbPlanilhaProjeto e Parecer e altera a situação do Projeto para  ***************/
+            /** Grava o Parecer nas Tabelas tbPlanilhaProjeto e Parecer e altera a situaï¿½ï¿½o do Projeto para  ***************/
             $projeto = new Projetos();
             $wherePro['IdPRONAC = ?'] = $idPronac;
             $buscaDadosdoProjeto = $projeto->buscar($wherePro);
@@ -756,22 +756,22 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
                 $inabilitadoDAO = new Inabilitado();
                 $buscaInabilitado = $inabilitadoDAO->BuscarInabilitado($buscaDadosdoProjeto[0]->CgcCpf, $buscaDadosdoProjeto[0]->AnoProjeto, $buscaDadosdoProjeto[0]->Sequencial);
 
-		// nao está inabilitado
+		// nao estï¿½ inabilitado
                 if(count($buscaInabilitado == 0)) {
   		    // dentro das unidades abaixo
                     if(in_array($dp->idOrgao, array(91,92,93,94,95,160,171,335))){
 		      if ($tipoFiltro == 'validados' || $tipoFiltro == 'devolvida') {
-			$projeto->alterarSituacao($idPronac, null, 'C20', 'Análise técnica concluída');
+			$projeto->alterarSituacao($idPronac, null, 'C20', 'Anï¿½lise tï¿½cnica concluï¿½da');
 		      } else if ($tipoFiltro == 'em_validacao') {
-			$projeto->alterarSituacao($idPronac, null, 'B11', 'Aguardando validação do parecer técnico');
+			$projeto->alterarSituacao($idPronac, null, 'B11', 'Aguardando validaï¿½ï¿½o do parecer tï¿½cnico');
 		      }
                     } else {
 		      // fora das unidades acima
-		      $projeto->alterarSituacao($idPronac, null, 'B11', 'Aguardando validação do parecer técnico');
+		      $projeto->alterarSituacao($idPronac, null, 'B11', 'Aguardando validaï¿½ï¿½o do parecer tï¿½cnico');
                     }
                 } else {
 		  // inabilitado
-		  $projeto->alterarSituacao($idPronac, null, 'C09', 'Projeto fora da pauta de reunião da CNIC porque o proponente está inabilitado no Ministério da Cultura.');
+		  $projeto->alterarSituacao($idPronac, null, 'C09', 'Projeto fora da pauta de reuniï¿½o da CNIC porque o proponente estï¿½ inabilitado no Ministï¿½rio da Cultura.');
                 }
 
                 /****************************************************************************************************************/
@@ -791,7 +791,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
                 /****************************************************************************************************************/
             }
             $db->commit();
-            parent::message("Concluído com sucesso!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
+            parent::message("Concluï¿½do com sucesso!", "gerenciarparecer/listaprojetos?tipoFiltro=" . $tipoFiltro, "CONFIRM");
 
         } catch(Zend_Exception $ex) {
             $db->rollBack();
@@ -860,7 +860,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
         if(count($ferias) > 0) {
             $situacao = '0';
-            $situacaoTexto = 'Férias';
+            $situacaoTexto = 'Fï¿½rias';
         }
 
         if(count($atestado) > 0) {
@@ -870,7 +870,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
         if((count($ferias) > 0) && (count($atestado) > 0)) {
             $situacao = '0';
-            $situacaoTexto = 'Férias e Atestado';
+            $situacaoTexto = 'Fï¿½rias e Atestado';
         }
 
         // CREDENCIAMENTO
@@ -889,15 +889,15 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
         if($credenciamento == 0) {
             $situacao = '0';
-            $situacaoTexto .= '<br /> Parecerista não credenciado na área e segmento do Produto!';
+            $situacaoTexto .= '<br /> Parecerista nï¿½o credenciado na ï¿½rea e segmento do Produto!';
         }
         //$situacaoTexto .= '<br /> Area: '.$projeto[0]->Area.' Segmento: '.$projeto[0]->Segmento.' idAgente: '.$idAgente;
 
 
-        // Análises em eberto
+        // Anï¿½lises em eberto
         $whereAnalise['distribuirParecer.idAgenteParecerista = ?'] = $idAgente;
         $analiseEmAberto = $projetosDAO->buscaProjetosProdutos($whereAnalise);
-        $situacaoTexto .= '<br /> Análise em aberto: '.count($analiseEmAberto);
+        $situacaoTexto .= '<br /> Anï¿½lise em aberto: '.count($analiseEmAberto);
 
         $pareceristas[] = array('situacao' => utf8_encode($situacao), 'situacaoTexto' => utf8_encode($situacaoTexto));
 
@@ -932,11 +932,11 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
     public function resconsolidacaopareceristaAction() {
         //** Usuario Logado ************************************************/
-        $auth           = Zend_Auth::getInstance(); // pega a autenticação
+        $auth           = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 //		$idusuario 	= $auth->getIdentity()->usu_codigo;
         $idusuario          = $this->getIdUsuario;
-        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao       = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao       = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $tela   = 'resconsolidacaoparecerista';
@@ -995,11 +995,11 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
     public function visaopareceristaAction() {
         //** Usuario Logado ************************************************/
-        $auth           = Zend_Auth::getInstance(); // pega a autenticação
+        $auth           = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 //		$idusuario 	= $auth->getIdentity()->usu_codigo;
         $idusuario          = $this->getIdUsuario;
-        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao       = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao       = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $tela   = 'visaoparecerista';
@@ -1275,7 +1275,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
                 }
 
                 if($zerado) {
-                    $agentesDAO = new Agente_Model_Agentes();
+                    $agentesDAO = new Agente_Model_DbTable_Agentes();
 
                     $tela    = 'resconsolidacaoparecerista2';
                     $where   = $this->filtroGeral($tela);
@@ -1440,7 +1440,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
         $this->view->cargoSecretario 		= $cargoSecretario;
 
         if(empty($idAgente)) {
-            parent::message("Dados obrigatórios n&atilde;o informados.",
+            parent::message("Dados obrigatï¿½rios n&atilde;o informados.",
                     "gerenciarparecer/enviarpagamento",
                     "ALERT");
         }
@@ -1471,7 +1471,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
         $tbDistribuirParecer = new tbDistribuirParecer();
         $dadosProduto = $tbDistribuirParecer->pagamentoParecerista(null, 137);
 
-        $agentes = new Agente_Model_Agentes();
+        $agentes = new Agente_Model_DbTable_Agentes();
 
         $whereAgente = array('a.idAgente = ?' => $idAgente[0] );
         $dadosAgente = $agentes->buscarAgenteNome($whereAgente);

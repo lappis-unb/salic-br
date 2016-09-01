@@ -23,7 +23,7 @@ class ComprovantePagamentoService
     const TIPO_PAGAMENTO_DINHEIRO = 3;
 
     /**
-     * Metodo que está disponivel para ser consumido como soap.
+     * Metodo que estï¿½ disponivel para ser consumido como soap.
      * Responsavel por cadastrar um comprovante de pagamento
      *
      * @param string $fornecedorCpfCnpj
@@ -63,10 +63,10 @@ class ComprovantePagamentoService
              *  @todo mover este trecho de buscar fornecedor para um model
              */
             $cnpjcpf = preg_replace('/\.|-|\//','', $fornecedorCpfCnpj);
-            $agentesDao = new Agente_Model_Agentes();
+            $agentesDao = new Agente_Model_DbTable_Agentes();
             $fornecedores = $agentesDao->buscarFornecedor(array(' A.CNPJCPF = ? ' => $cnpjcpf));
             if (!$fornecedores->count()) {
-                throw new Exception('Fornecedor não encontrado');
+                throw new Exception('Fornecedor nï¿½o encontrado');
             }
             $fornecedor = $fornecedores->current();
 
@@ -77,7 +77,7 @@ class ComprovantePagamentoService
             $filePath = tempnam("/tmp", "ComprovantePagamentoService_");
             file_put_contents($filePath, $arquivo);
             $_FILES['arquivo']['name'] = $arquivoNome; // nome
-            $_FILES['arquivo']['tmp_name'] = $filePath; // nome temporário
+            $_FILES['arquivo']['tmp_name'] = $filePath; // nome temporï¿½rio
             $_FILES['arquivo']['type'] = mime_content_type($filePath); // tipo
             $_FILES['arquivo']['size'] = filesize($filePath); // tamanho
 
@@ -106,7 +106,7 @@ class ComprovantePagamentoService
             if (false !== strpos($mensagem, 'DateTime::__construct()')) {
                 $matches = array();
                 preg_match('#string \((.+)\) at#', $mensagem, $matches);
-                $mensagem = "A data \"{$matches[1]}\" está fora do formato aceito: \"yyyy-mm-dd\".";
+                $mensagem = "A data \"{$matches[1]}\" estï¿½ fora do formato aceito: \"yyyy-mm-dd\".";
             }
             new Exception($mensagem, null, $exception);
         }

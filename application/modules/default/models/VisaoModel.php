@@ -33,7 +33,7 @@ class VisaoModel implements ModelInterface
      */
     public function atualizar()
     {
-        throw new Exception('Método não implementado');
+        throw new Exception('Mï¿½todo nï¿½o implementado');
     }
 
     /**
@@ -43,7 +43,7 @@ class VisaoModel implements ModelInterface
      */
     public function buscar($id = null)
     {
-        throw new Exception('Método não implementado');
+        throw new Exception('Mï¿½todo nï¿½o implementado');
     }
 
     /**
@@ -53,7 +53,7 @@ class VisaoModel implements ModelInterface
      */
     public function deletar($id)
     {
-        throw new Exception('Método não implementado');
+        throw new Exception('Mï¿½todo nï¿½o implementado');
     }
 
     /**
@@ -62,7 +62,7 @@ class VisaoModel implements ModelInterface
      */
     public function salvar()
     {
-        throw new Exception('Método não implementado');
+        throw new Exception('Mï¿½todo nï¿½o implementado');
     }
 
     /**
@@ -72,7 +72,7 @@ class VisaoModel implements ModelInterface
      */
     public function adicionaVisao($cpfCnpjAgente, $tipoVisao)
     {
-        $agentesTable = new Agente_Model_Agentes();
+        $agentesTable = new Agente_Model_DbTable_Agentes();
 
         $select = $this->table->select()
           ->setIntegrityCheck(false)

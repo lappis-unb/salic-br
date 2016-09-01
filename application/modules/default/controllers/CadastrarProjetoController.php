@@ -5,9 +5,9 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
     public function init() {
 //recupera ID do pre projeto (proposta)
         $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // tï¿½tulo da pï¿½gina
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $Usuario = new UsuarioDAO(); // objeto usuï¿½rio
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $PermissoesGrupo[] = 103; // Coordenador de Analise
         $PermissoesGrupo[] = 132; // Coordenador de Convenios
 
@@ -23,14 +23,14 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
                 parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuï¿½rio (pega todos os grupos)
+            // pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-            // manda os dados para a visão
-            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visão
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visão
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visão
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o orgão ativo do usuï¿½rio para a visão
+            // manda os dados para a visï¿½o
+            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o orgï¿½o ativo do usuï¿½rio para a visï¿½o
 
             $this->Orgao = $GrupoAtivo->codOrgao;
             $this->Usuario = $auth->getIdentity()->usu_codigo;
@@ -114,7 +114,7 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
 
 
         try {
-            if(count($sequencial->verificarSequencial()->toArray()) == 0 ){ //verifica se ja existe o sequencial para o ano corrente, se não existir insere.
+            if(count($sequencial->verificarSequencial()->toArray()) == 0 ){ //verifica se ja existe o sequencial para o ano corrente, se nï¿½o existir insere.
                 $dado_sequencial = array('Ano'=>date('Y'),'Sequencial'=>1);
                 $sequencial->inserirSequencial($dado_sequencial);
             }else{ //atualiza sequencial de projeto.
@@ -154,9 +154,9 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
         if(Validacao::validarNrProcesso($Processo)){
             $projeto = new Projetos();
             $where = array('Processo =  ?'=>$Processo);
-            $nrProcesso = $projeto->VerificaPronac($where)->toArray(); // verifica se processo ja está vinculado a um PRONAC.
+            $nrProcesso = $projeto->VerificaPronac($where)->toArray(); // verifica se processo ja estï¿½ vinculado a um PRONAC.
             if(count($nrProcesso)> 0){
-                $this->view->processo = 'Processo já vinculado a um PRONAC';
+                $this->view->processo = 'Processo jï¿½ vinculado a um PRONAC';
             } else {
                 // verifica se processo existe no SAD.
                 preg_match("#\.(.*?)\/#",$ProcessoMascara,$processoNumero);
@@ -183,7 +183,7 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
         $this->_helper->viewRenderer->setNoRender();
         $post = Zend_Registry::get('post');
 
-        $agentes = new Agente_Model_Agentes();
+        $agentes = new Agente_Model_DbTable_Agentes();
 
         preg_match_all('#\d+#', $post->CgcCpf, $cgcCpf);
         $CgcCpf = implode('',$cgcCpf[0]);

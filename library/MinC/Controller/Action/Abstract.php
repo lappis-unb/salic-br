@@ -84,7 +84,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
             # Busca na Agentes
-            $agentesDAO = new Agente_Model_Agentes();
+            $agentesDAO = new Agente_Model_DbTable_Agentes();
             $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
             if (count($buscaAcesso) > 0) {

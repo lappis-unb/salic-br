@@ -8,7 +8,7 @@ class InserirusuarioController extends MinC_Controller_Action_Abstract {
 
     public function indexAction() {
         $cpf = $this->_request->getParam("cpf");
-        $agente = new Agente_Model_Agentes();
+        $agente = new Agente_Model_DbTable_Agentes();
         $usuario = new Autenticacao_Model_Usuario();
 
         $buscarDadosAgente = $agente->buscar(array('CNPJCPF = ?' => $cpf))->current()->toArray();

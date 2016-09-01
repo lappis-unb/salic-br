@@ -23,7 +23,7 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
 
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
@@ -87,10 +87,10 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
         //$this->proponente
     }
 
-// fecha método init()
+// fecha mï¿½todo init()
 
     /**
-     * Reescreve o método preDispatch()
+     * Reescreve o mï¿½todo preDispatch()
      * Pega o cpf/cnpj via get uma ï¿½nica vez
      * @access public
      * @param void
@@ -115,7 +115,7 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
         endif;
     }
 
-// fecha método preDispatch()
+// fecha mï¿½todo preDispatch()
 
     /**
      * Formulï¿½rio de consulta por cnpj/cpf
@@ -127,7 +127,7 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
 
     }
 
-// fecha método indexAction()
+// fecha mï¿½todo indexAction()
 
     /**
      * Cadastra as regularidades do proponente
@@ -197,7 +197,7 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
             }
 
                 $this->view->cgccpf = $_REQUEST['cpfCnpj'];
-                $agentes = new Agente_Model_Agentes();
+                $agentes = new Agente_Model_DbTable_Agentes();
                 $interessados = New Interessado();
                 $certidoesNegativas = New CertidoesNegativas();
                 $buscaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $cnpjcpf));
@@ -704,7 +704,7 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
             } else {
 
                 $this->view->cgccpf = $_REQUEST['cpfCnpj'];
-                $agentes                        = new Agente_Model_Agentes();
+                $agentes                        = new Agente_Model_DbTable_Agentes();
                 $nomes                          = New Nomes();
                 $interessados                   = New Interessado();
                 $certidoesNegativas             = New CertidoesNegativas();
@@ -1066,5 +1066,5 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
         }
     }
 
-// fecha método manterregularidadeproponenteAction()
+// fecha mï¿½todo manterregularidadeproponenteAction()
 }

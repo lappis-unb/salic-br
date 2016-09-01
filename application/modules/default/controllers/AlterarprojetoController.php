@@ -101,7 +101,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                 parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ERROR");
             }
 
-            $agentes = new Agente_Model_Agentes();
+            $agentes = new Agente_Model_DbTable_Agentes();
             $buscaTipoPessoa = $agentes->buscar(array('CNPJCPF = ?' => $CgcCpf));
 
             if ($buscaTipoPessoa[0]->TipoPessoa == 1) {
@@ -110,7 +110,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                 $this->view->pj = "false";
             }
 
-            $agentes = new Agente_Model_Agentes();
+            $agentes = new Agente_Model_DbTable_Agentes();
             $buscaTipoPessoa = $agentes->buscar(array('CNPJCPF = ?' => $CgcCpf));
             $this->idAgente = $buscaTipoPessoa[0]->idAgente;
 
@@ -292,7 +292,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
 
         // Retorna o idAgente cadastrado
 
-        $Agentes = new Agente_Model_Agentes();
+        $Agentes = new Agente_Model_DbTable_Agentes();
         $salvaAgente = $Agentes->inserirAgentes($arrayAgente);
         $Agente = $Agentes->BuscaAgente($cpf);
         $idAgente = $Agente[0]->idAgente;
@@ -1293,7 +1293,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
 
         if (count($validapronac) > 0) {
             $listaparecer = $projeto->buscarTodosDadosProjeto($validapronac[0]->IdPRONAC);
-            $agente = new Agente_Model_Agentes();
+            $agente = new Agente_Model_DbTable_Agentes();
             $agente = $agente->buscarAgenteNome(array("CNPJCPF = ?" => $listaparecer[0]->CgcCpf));
             if (count($agente) > 0) {
                 $this->view->agente = $agente[0]['Descricao'];
@@ -1326,7 +1326,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         $cpf = str_replace("/", "", str_replace("-", "", str_replace(".", "", addslashes($get->cpf))));
 
         if (strlen($cpf) == 11 or strlen($cpf) == 14) {
-            $agente = new Agente_Model_Agentes();
+            $agente = new Agente_Model_DbTable_Agentes();
             $agente = $agente->buscarAgenteNome(array("CNPJCPF = ?" => $cpf));
 
             $inabilitados = new Inabilitado();
@@ -1530,7 +1530,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                     $interessadoTb->inserir($dadosProponente);
                 }
 
-                $Agentes = new Agente_Model_Agentes();
+                $Agentes = new Agente_Model_DbTable_Agentes();
                 $tbDocumentosAgentes = new tbDocumentosAgentes();
                 $ag = $Agentes->buscar(array('CNPJCPF = ?'=> Mascara::delMaskCPFCNPJ($post->CGCCPF)))->current();
                 $docs = $tbDocumentosAgentes->buscarDocumentos(array('a.idAgente = ?'=>$ag->idAgente));
@@ -1575,7 +1575,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
              * ==============================================================
              */
             $Projetos = new Projetos();
-            $Agentes = new Agente_Model_Agentes();
+            $Agentes = new Agente_Model_DbTable_Agentes();
             $Visao = new Visao();
             $tbVinculo = new TbVinculo();
             $tbVinculoProposta = new tbVinculoProposta();

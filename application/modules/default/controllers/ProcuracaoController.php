@@ -10,7 +10,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
     private $orgaoSuperior = 0;
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
@@ -21,10 +21,10 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         // verifica as permissoes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
-        $PermissoesGrupo[] = 103;  // Coordenador de Análise
+        $PermissoesGrupo[] = 103;  // Coordenador de Anï¿½lise
         $PermissoesGrupo[] = 122;  // Coordenador de Acompanhamento
 
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo');
 
         if (isset($auth->getIdentity()->usu_codigo)) {
@@ -51,7 +51,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
         // Busca na Agentes
-        $agentesDAO = new Agente_Model_Agentes();
+        $agentesDAO = new Agente_Model_DbTable_Agentes();
         $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
         if( count($buscaAcesso) > 0){ $this->idResponsavel = $buscaAcesso[0]->IdUsuario; $this->view->nomeproponente = $buscaAcesso[0]->Nome; }
@@ -77,7 +77,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         $this->view->buscarprocuracao = $buscarprocuracao;
     }
 
-    /* Médodo para cadastrar uma procuração
+    /* Mï¿½dodo para cadastrar uma procuraï¿½ï¿½o
      *
      *
      */
@@ -153,12 +153,12 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         $tbVinculoPropostaDAO 	= new tbVinculoPropostaResponsavelProjeto();
         $tbVinculoDAO 			= new TbVinculo();
         $Sgcacesso              = new Sgcacesso();
-        $Agentes                = new Agente_Model_Agentes();
+        $Agentes                = new Agente_Model_DbTable_Agentes();
         $Nomes                  = new Nomes();
         $Visao                  = new Visao();
         $Internet               = new Internet();
 
-        //================== VARIÁVEIS PASSADAS VIA POST =====================
+        //================== VARIï¿½VEIS PASSADAS VIA POST =====================
         $responsavel 	= $this->_request->getParam("responsavel");
         $proponente 	= $this->_request->getParam("proponente");
         $dsObservacao 	= $this->_request->getParam("dsObservacao");
@@ -186,7 +186,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         	$proponente = $this->idAgente;
         }
 
-        //========= BUSCA O IDVINCULO COM AS INFORMAÇÕES PASSADAS =============
+        //========= BUSCA O IDVINCULO COM AS INFORMAï¿½ï¿½ES PASSADAS =============
         $whereVinculo['idUsuarioResponsavel = ?'] = $responsavel;
         $whereVinculo['idAgenteProponente = ?']   = $proponente;
         $buscarVinculo = $tbVinculoDAO->buscar($whereVinculo);
@@ -229,7 +229,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
 	        $idDocumento = $idDocumento['idDocumento'];
 
 
-	        //======== MONTA UM ARRAY COM AS INFORMAÇÕES DO VINCULO PROPOSTA========
+	        //======== MONTA UM ARRAY COM AS INFORMAï¿½ï¿½ES DO VINCULO PROPOSTA========
 	        for ($i = 0; $i < sizeof($arrayProjetos); $i++)
 			{
 
@@ -238,7 +238,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
 												  'siVinculoProposta' => 0
 					);
 
-					// Salva as informações retornando o idVinculo Proposta
+					// Salva as informaï¿½ï¿½es retornando o idVinculo Proposta
 					$idVinculoProposta = $tbVinculoPropostaDAO->inserir($arrayVinculoProposta);
 
 			        // ==================== Insere na Tabela Procuracao ===============================
@@ -255,12 +255,12 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
 			}
 
 
-			// ======== CADASTRA A VISÃO DE PROCURADOR PARA O RESPONSÁVEL CASO A MESMA NÃO EXISTA ========
-			$buscarDadosResponsavel = $Sgcacesso->buscar(array('IdUSuario = ?' => $responsavel))->current(); // busca os dados do responsável
-			$buscarDadosAgente      = $Agentes->buscar(array('CNPJCPF = ?' => $buscarDadosResponsavel['Cpf']))->current(); // verifica se o responsável é um agente
+			// ======== CADASTRA A VISï¿½O DE PROCURADOR PARA O RESPONSï¿½VEL CASO A MESMA Nï¿½O EXISTA ========
+			$buscarDadosResponsavel = $Sgcacesso->buscar(array('IdUSuario = ?' => $responsavel))->current(); // busca os dados do responsï¿½vel
+			$buscarDadosAgente      = $Agentes->buscar(array('CNPJCPF = ?' => $buscarDadosResponsavel['Cpf']))->current(); // verifica se o responsï¿½vel ï¿½ um agente
 
 			if ($buscarDadosAgente) :
-				// verifica se tem visão de procurador
+				// verifica se tem visï¿½o de procurador
 				$buscarVisao = $Visao->buscar(array('idAgente = ?' => $buscarDadosAgente['idAgente'], 'Visao = ?' => 247))->current();
 				if (!$buscarVisao) :
 					$dadosVisao = array(
@@ -269,7 +269,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
 						,'Usuario' => empty($this->idUsuario) ? $this->idAgente : $this->idUsuario
 						,'stAtivo' => 'A'
 					);
-					$Visao->inserir($dadosVisao); // cadastra a visão de procurador
+					$Visao->inserir($dadosVisao); // cadastra a visï¿½o de procurador
 				endif;
 
 			else : // cadastra como agente
@@ -300,13 +300,13 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
 					,'Usuario' => empty($this->idUsuario) ? $this->idAgente : $this->idUsuario
 					,'stAtivo' => 'A'
 				);
-				$Visao->inserir($dadosVisao); // cadastra a visão de procurador
+				$Visao->inserir($dadosVisao); // cadastra a visï¿½o de procurador
 
 				$dadosInternet = array(
 					'idAgente'      => $idAgenteNovo
 					,'TipoInternet' => 28 // particular
 					,'Descricao'    => $buscarDadosResponsavel['Email']
-					,'Status'       => 1 // sim para correspondência
+					,'Status'       => 1 // sim para correspondï¿½ncia
 					,'Divulgar'     => 1 // sim para divulgar
 					,'Usuario'      => empty($this->idUsuario) ? $this->idAgente : $this->idUsuario
 				);
@@ -439,7 +439,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
                 //$buscarProjeto = $vinculoPropostaDAO->buscar($wherePROP);
                 $alteraPRO = $preProjetoDAO->alteraresponsavel($idVinculoProposta[$i], $responsavel) ;
             }
-            parent::message("Procuração ".$situacaoMSG." com sucesso!", "procuracao/analisar", "CONFIRM");
+            parent::message("Procuraï¿½ï¿½o ".$situacaoMSG." com sucesso!", "procuracao/analisar", "CONFIRM");
 
         } catch (Exception $e) {
             parent::message("Error".$e->getMessage(), "procuracao/avaliar/idDocumento/".$idDocumento, "ERROR");
@@ -490,7 +490,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         $dados = array();
         $dados['a.CNPJCPF = ?'] = $cpf;
 
-        $agentes = new Agente_Model_Agentes();
+        $agentes = new Agente_Model_DbTable_Agentes();
         $result = $agentes->buscarAgenteNome($dados);
 
         $a = 0;
@@ -654,8 +654,8 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $idProcuracao = $_POST['id'];
 
-        /*** siProcuracao = Situação da procuração, informando qual fase de homologação que esta se encontra, com as opções a seguir:
-        0-Pendente de Validação; 1-Aceita; 2-Rejeitada.
+        /*** siProcuracao = Situaï¿½ï¿½o da procuraï¿½ï¿½o, informando qual fase de homologaï¿½ï¿½o que esta se encontra, com as opï¿½ï¿½es a seguir:
+        0-Pendente de Validaï¿½ï¿½o; 1-Aceita; 2-Rejeitada.
         ***/
         $dadostbProcuracao = array(
             'siProcuracao' => $_POST['siProcuracao']
@@ -674,7 +674,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
             );
         } else {
             $dadostbProcuradorProjeto = array(
-                'siEstado' => 1 //Rejeitar Vínculo
+                'siEstado' => 1 //Rejeitar Vï¿½nculo
             );
         }
         $tbProcuradorProjeto = new tbProcuradorProjeto();

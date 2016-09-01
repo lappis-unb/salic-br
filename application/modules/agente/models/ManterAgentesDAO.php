@@ -346,7 +346,7 @@ class Agente_Model_ManterAgentesDAO extends GenericModel
     public static function cadastraAgente($dados)
     {
         //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
-        $Agentes = new Agente_Model_Agentes();
+        $Agentes = new Agente_Model_DbTable_Agentes();
 
         $rsAgente = $Agentes->createRow();
 

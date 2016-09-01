@@ -142,7 +142,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                     if ($verificaSituacao == 1) {
                         parent::message("Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha.", "/autenticacao/index/alterarsenha?idUsuario=" . $IdUsuario, "ALERT");
                     }
-                    $agentes = new Agente_Model_Agentes();
+                    $agentes = new Agente_Model_DbTable_Agentes();
                     $verificaAgentes = $agentes->buscar(array('cnpjcpf = ?' => $username))->current();
                     if (!empty ($verificaAgentes)) {
                         //                                        $this->_redirect("/agente/agentes/incluiragenteexterno");
@@ -236,7 +236,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                  * ==============================================================
                  */
                 /* ========== VERIFICA SE O RESPONSAVEL JA TEM CADASTRO COMO PROPONENTE ========== */
-                $Agentes = new Agente_Model_Agentes();
+                $Agentes = new Agente_Model_DbTable_Agentes();
                 $Visao = new Visao();
 
                 $buscarAgente = $Agentes->buscar(array('CNPJCPF = ?' => $cpf));

@@ -410,7 +410,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     $tbtelefone = $geral->buscarTelefone($idPronac);
                     $this->view->telefone = $tbtelefone;
 
-                    $tblAgente = new Agente_Model_Agentes();
+                    $tblAgente = new Agente_Model_DbTable_Agentes();
                     if(isset($dadosProjeto[0]->CNPJCPF) && !empty($dadosProjeto[0]->CNPJCPF)){
                         $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$dadosProjeto[0]->CNPJCPF))->current();
                         $this->view->CgcCpf = $dadosProjeto[0]->CNPJCPF;
@@ -512,7 +512,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     $tbtelefone = $geral->buscarTelefone($idPronac);
                     $this->view->telefone = $tbtelefone;
 
-                    $tblAgente = new Agente_Model_Agentes();
+                    $tblAgente = new Agente_Model_DbTable_Agentes();
                     $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$tbdados[0]->CgcCpf))->current();
 
                     $rsDirigentes = $tblAgente->buscarDirigentes(array('v.idVinculoPrincipal =?'=>$rsAgente->idAgente));
@@ -808,7 +808,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     $tbtelefone = $geral->buscarTelefone($idPronac);
                     $this->view->telefone = $tbtelefone;
 
-                    $tblAgente = new Agente_Model_Agentes();
+                    $tblAgente = new Agente_Model_DbTable_Agentes();
                     $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$dadosProjeto[0]->CNPJCPF))->current();
 
                     $rsIdAgente = (isset($rsAgente->idAgente) && !empty($rsAgente->idAgente)) ? $rsAgente->idAgente : 0;
@@ -2497,7 +2497,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         } else {
 
             $auth = Zend_Auth::getInstance(); // pega a autentica��o
-            $tblAgente = new Agente_Model_Agentes();
+            $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$auth->getIdentity()->Cpf))->current();
 
             $tbReadequacao = new tbReadequacao();
@@ -2709,7 +2709,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
 
         $auth = Zend_Auth::getInstance(); // pega a autentica��o
-        $tblAgente = new Agente_Model_Agentes();
+        $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsAgente = $tblAgente->buscar(array('CNPJCPF = ?'=>$auth->getIdentity()->Cpf));
         if($rsAgente->count() > 0){
              $idAgente = $rsAgente[0]->idAgente;
@@ -2911,7 +2911,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         $this->_helper->viewRenderer->setNoRender();
         $auth = Zend_Auth::getInstance(); // pega a autentica��o
 
-        $tblAgente = new Agente_Model_Agentes();
+        $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsAgente = $tblAgente->buscar(array('CNPJCPF = ?'=>$auth->getIdentity()->Cpf));
         if($rsAgente->count() > 0){
              $idAgente = $rsAgente[0]->idAgente;
@@ -4126,7 +4126,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     $tbtelefone = $geral->buscarTelefone($idPronac);
                     $this->view->telefone = $tbtelefone;
 
-                    $tblAgente = new Agente_Model_Agentes();
+                    $tblAgente = new Agente_Model_DbTable_Agentes();
                     $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$tbdados[0]->CgcCpf))->current();
 
                     $rsDirigentes = $tblAgente->buscarDirigentes(array('v.idVinculoPrincipal =?'=>$rsAgente->idAgente));
@@ -4208,7 +4208,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                    $idAgente = null;
                    if(in_array('documentosanexados',$arrConteudoImpressao))
                    {
-                       $tblAgente = new Agente_Model_Agentes();
+                       $tblAgente = new Agente_Model_DbTable_Agentes();
                        $rsAgente = $tblAgente->buscar(array('CNPJCPF = ?'=>$rsProjeto->CgcCpf));
                        if($rsAgente->count() > 0){
                             $idAgente = $rsAgente[0]->idAgente;
@@ -4316,7 +4316,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                         $consultaRegularidade = $paRegularidade->exec($rs->CgcCpf);
                         $this->view->regularidadeproponente = $consultaRegularidade;
 
-                        $agentes = new Agente_Model_Agentes();
+                        $agentes = new Agente_Model_DbTable_Agentes();
                         $buscaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $rs->CgcCpf));
                         $this->view->regularidadeCgccpf = $rs->CgcCpf;
 
@@ -5048,7 +5048,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     $tbtelefone = $geral->buscarTelefone($idPronac);
                     $this->view->telefone = $tbtelefone;
 
-                    $tblAgente = new Agente_Model_Agentes();
+                    $tblAgente = new Agente_Model_DbTable_Agentes();
                     $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$tbdados[0]->CgcCpf))->current();
 
                     $rsDirigentes = $tblAgente->buscarDirigentes(array('v.idVinculoPrincipal =?'=>$rsAgente->idAgente));
@@ -5111,7 +5111,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                         //DOCUMENTOS ANEXADOS
                         $idAgente = null;
 
-                        $tblAgente = new Agente_Model_Agentes();
+                        $tblAgente = new Agente_Model_DbTable_Agentes();
                         $rsAgente = $tblAgente->buscar(array('CNPJCPF = ?'=>$rsProjeto->CgcCpf));
                         if($rsAgente->count() > 0){
                             $idAgente = $rsAgente[0]->idAgente;

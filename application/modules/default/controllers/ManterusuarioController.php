@@ -136,7 +136,7 @@ private $intTamPag = 10;
 
             }
 
-            $agentes = new Agente_Model_Agentes();
+            $agentes = new Agente_Model_DbTable_Agentes();
             $agentesBuscar = $agentes->buscar(array ('CNPJCPF = ?' => $cpf))->current();
 
             if ( empty ( $agentesBuscar ) )
