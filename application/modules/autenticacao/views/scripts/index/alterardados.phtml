@@ -1,82 +1,3 @@
-<script type="text/javascript">
-
-    $(document).ready( function() {
-        $("#cadastraUsuario").validate({
-            // Define as regras
-            rules:{
-                cpf:{
-                    // campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
-                    required: true, minlength: 14
-                },
-                nome:{
-                    // campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
-                    required: true, minlength: 2
-                },
-                email:{
-                    // campoEmail será obrigatório (required) e precisará ser um e-mail válido (email)
-                    required: true, email: true, minlength: 2
-                },
-                emailConf:{
-                    // campoEmail será obrigatório (required) e precisará ser um e-mail válido (email)
-                    required: true, email: true, minlength: 2
-                },
-                dataNasc:{
-                    // campoMensagem será obrigatório (required) e terá tamanho mínimo (minLength)
-                    required: true, minlength: 2
-                }
-
-            },
-            // Define as mensagens de erro para cada regra
-            messages:{
-                cpf:{
-                    required: "Digite o seu cpf",
-                    minlength: "O seu nome deve conter, no mínimo, 11 caracteres"
-                },
-                nome:{
-                    required: "Digite o seu nome",
-                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
-                },
-                email:{
-                    required: "Digite o seu e-mail",
-                    email: "Digite um e-mail válido",
-                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
-                },
-                emailConf:{
-                    required: "Digite o seu e-mail",
-                    email: "Digite um e-mail válido",
-                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
-                },
-                dataNasc:{
-                    required: "Digite a data do seu Nascimento",
-                    minlength: "A sua mensagem deve conter, no mínimo, 2 caracteres"
-                }
-            }
-        });
-
-//        var cpfCnpj = '<?php //echo trim($this->cpf)?>';
-//        //mascaraCnpjCpf(cpfCnpj);
-//
-//        if(cpfCnpj.length <= 14){
-//            $("#cpf").mask("99.999.999/9999-99");
-//            //fun = format_cpf;
-//            //format_cpf(cpfCnpj);
-//        }else{
-//            //format_cnpj(cpfCnpj);
-//            $("#cpf").mask("999.999.999-99");
-//        }
-
-    });
-
-    function resetForm(){
-        //$('#cpf').val('');
-        $('#nome').val('');
-        $('#dataNasc').val('');
-        $('#email').val('');
-        $('#emailConf').val('');
-    }
-
-</script>
-
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <?php
@@ -155,3 +76,81 @@
 
 <!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
 <br clear="all" />
+<script type="text/javascript">
+
+    $(document).ready( function() {
+        $("#cadastraUsuario").validate({
+            // Define as regras
+            rules:{
+                cpf:{
+                    // campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
+                    required: true, minlength: 14
+                },
+                nome:{
+                    // campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
+                    required: true, minlength: 2
+                },
+                email:{
+                    // campoEmail será obrigatório (required) e precisará ser um e-mail válido (email)
+                    required: true, email: true, minlength: 2
+                },
+                emailConf:{
+                    // campoEmail será obrigatório (required) e precisará ser um e-mail válido (email)
+                    required: true, email: true, minlength: 2
+                },
+                dataNasc:{
+                    // campoMensagem será obrigatório (required) e terá tamanho mínimo (minLength)
+                    required: true, minlength: 2
+                }
+
+            },
+            // Define as mensagens de erro para cada regra
+            messages:{
+                cpf:{
+                    required: "Digite o seu cpf",
+                    minlength: "O seu nome deve conter, no mínimo, 11 caracteres"
+                },
+                nome:{
+                    required: "Digite o seu nome",
+                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
+                },
+                email:{
+                    required: "Digite o seu e-mail",
+                    email: "Digite um e-mail válido",
+                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
+                },
+                emailConf:{
+                    required: "Digite o seu e-mail",
+                    email: "Digite um e-mail válido",
+                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
+                },
+                dataNasc:{
+                    required: "Digite a data do seu Nascimento",
+                    minlength: "A sua mensagem deve conter, no mínimo, 2 caracteres"
+                }
+            }
+        });
+
+//        var cpfCnpj = '<?php //echo trim($this->cpf)?>';
+//        //mascaraCnpjCpf(cpfCnpj);
+//
+//        if(cpfCnpj.length <= 14){
+//            $("#cpf").mask("99.999.999/9999-99");
+//            //fun = format_cpf;
+//            //format_cpf(cpfCnpj);
+//        }else{
+//            //format_cnpj(cpfCnpj);
+//            $("#cpf").mask("999.999.999-99");
+//        }
+
+    });
+
+    function resetForm(){
+        //$('#cpf').val('');
+        $('#nome').val('');
+        $('#dataNasc').val('');
+        $('#email').val('');
+        $('#emailConf').val('');
+    }
+
+</script>
