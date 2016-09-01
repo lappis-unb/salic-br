@@ -8,15 +8,15 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
     private $intTamPag = 100;
 
     public function init() {
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
+        $this->view->title = "Salic - Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura"; // tï¿½tulo da pï¿½gina
 
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $PermissoesGrupo = array();
 
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if (isset($auth->getIdentity()->usu_codigo) ) {
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo) {
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -30,8 +30,8 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
           $PermissoesGrupo[] = 94;  // Parecerista
           $PermissoesGrupo[] = 121; // T?cnico
           $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
-          $PermissoesGrupo[] = 126; // Coordenador Geral de Prestação de Contas
-          $PermissoesGrupo[] = 134; // Coordenador de Fiscalizaç?o */
+          $PermissoesGrupo[] = 126; // Coordenador Geral de Prestaï¿½ï¿½o de Contas
+          $PermissoesGrupo[] = 134; // Coordenador de Fiscalizaï¿½?o */
 
         isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
 
@@ -119,7 +119,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
             $grafico->setTituloItens($titulos);
             $grafico->gerar();
         }else{
-            echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Gráfico.";
+            echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Grï¿½fico.";
         }
     }
     public function pareceremitidoAction(){
@@ -147,7 +147,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
         $this->view->Areas          =   $AreaDAO->buscar();
         $this->view->Segmento       =   $SegmentoDAO->buscar(array('stEstado = ?'=>1));
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
     }
 
@@ -413,17 +413,17 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
             $html .= '<th>Nome do Projeto</th>';
             $html .= '<th>Produto</th>';
             $html .= '<th>Dt.Primeiro Envio p/ Vinculada</th>';
-            $html .= '<th>Dt.Último Envio p/ Vinculada</th>';
-            $html .= '<th>Dt.Distribuição Parecerista</th>';
+            $html .= '<th>Dt.ï¿½ltimo Envio p/ Vinculada</th>';
+            $html .= '<th>Dt.Distribuiï¿½ï¿½o Parecerista</th>';
             $html .= '<th>Parecerista</th>';
             $html .= '<th>Qtde Dias Para Distribuir</th>';
             $html .= '<th>Qtde Dias Para Parecerista Analisar</th>';
             $html .= '<th>Qtde Dias Devolvidos Para Coordenador</th>';
-            $html .= '<th>Status da Diligência</th>';
+            $html .= '<th>Status da Diligï¿½ncia</th>';
             $html .= '<th>Unidade Vinculada</th>';
-            $html .= '<th>Dt.Início Execução</th>';
-            $html .= '<th>Dt.Fim Execução</th>';
-            $html .= '<th>Dias vencidos ou a vencer para execução do Projeto</th>';
+            $html .= '<th>Dt.Inï¿½cio Execuï¿½ï¿½o</th>';
+            $html .= '<th>Dt.Fim Execuï¿½ï¿½o</th>';
+            $html .= '<th>Dias vencidos ou a vencer para execuï¿½ï¿½o do Projeto</th>';
             $html .= '</tr>';
 
             foreach ($busca as $v) {
@@ -797,7 +797,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
                 }
 
                 if($zerado){
-                    $agentesDAO = new Agente_Model_Agentes();
+                    $agentesDAO = new Agente_Model_DbTable_Agentes();
 
                     $tela    = 'resconsolidacaoparecerista2';
                     $where   = $this->filtroGeral($tela);
@@ -1102,7 +1102,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
                                         <th width=\"100\">&Oacute;rg&atilde;o				</th>
                                         <th>Produto				</th>
                                         <th>PRODUTO PRINCIPAL</th>
-                                        <th width=\"100\">Dt. de fechamento da análise técnica</th>
+                                        <th width=\"100\">Dt. de fechamento da anï¿½lise tï¿½cnica</th>
                                         <th width=\"150\">&Aacute;rea				</th>
                                         <th width=\"150\">Segmento Cultural	</th>
                                     </tr>
@@ -1170,7 +1170,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
                                         <th width=\"100\">&Oacute;rg&atilde;o				</th>
                                         <th>Produto				</th>
                                         <th>PRODUTO PRINCIPAL</th>
-                                        <th width=\"100\">Dt. de fechamento da análise técnica</th>
+                                        <th width=\"100\">Dt. de fechamento da anï¿½lise tï¿½cnica</th>
                                         <th width=\"150\">&Aacute;rea				</th>
                                         <th width=\"150\">Segmento Cultural	</th>
                                     </tr>
@@ -1255,11 +1255,11 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
                         <th colspan=\"3\" style=\"font-size: 13px; font-family: sans-serif; text-align: left;\">Parecerista : {$conteudo['nmParecerista']}</th>
                     </tr>
                     <tr>
-                        <td>QTD de Análise: {$conteudo['qtAnalise']}</td>
-                        <td>Férias:{$conteudo['ferias']}</td>
+                        <td>QTD de Anï¿½lise: {$conteudo['qtAnalise']}</td>
+                        <td>Fï¿½rias:{$conteudo['ferias']}</td>
                     </tr>
                     <tr>
-                        <td> Áreas, Segmentos e Nível</td>
+                        <td> ï¿½reas, Segmentos e Nï¿½vel</td>
                         <td>
                             ";
                             foreach ($conteudo['area_segmento_nivel'] as $val) {
@@ -1280,7 +1280,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
                             <th width=\"100\">Dt Distribui&ccedil;&atilde;o</th>
                             <th width=\"50\">Nr Dias</th>
                             <th width=\"80\">Dilig&ecirc;ncia</th>
-                            <!--<th>Situaç?o</th>
+                            <!--<th>Situaï¿½?o</th>
                             <th>Provid?ncia Tomada</th>-->
                         </tr>
                         ";
@@ -1300,7 +1300,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
                                                 <td>{$distribuicao['dtDistribuicao']}</td>
                                                 <td>{$distribuicao['nrDias']}</td>
                                                 <td>{$produto['diligencia']}</td>
-                                                <!--<td>B11 - Encaminhado para análise técnica</td>
+                                                <!--<td>B11 - Encaminhado para anï¿½lise tï¿½cnica</td>
                                                 <td>Proposta transformada em projeto cultural</td>-->
                                             </tr>
                                             ";
@@ -1314,7 +1314,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
                                                 <td>{$distribuicao['dtDistribuicao']}</td>
                                                 <td>{$distribuicao['nrDias']}</td>
                                                 <td></td>
-                                                <!--<td>B11 - Encaminhado para análise técnica</td>
+                                                <!--<td>B11 - Encaminhado para anï¿½lise tï¿½cnica</td>
                                                 <td>Proposta transformada em projeto cultural</td>-->
                                             </tr>
                                             ";
@@ -1335,7 +1335,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
                                                 <td>{$distribuicao['dtDistribuicao']}</td>
                                                 <td>{$distribuicao['nrDias']}</td>
                                                 <td>{$produto['diligencia']}</td>
-                                                <!--<td>B11 - Encaminhado para análise técnica</td>
+                                                <!--<td>B11 - Encaminhado para anï¿½lise tï¿½cnica</td>
                                                 <td>Proposta transformada em projeto cultural</td>-->
                                             </tr>
                                             ";
@@ -1349,7 +1349,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
                                                 <td>{$distribuicao['dtDistribuicao']}</td>
                                                 <td>{$distribuicao['nrDias']}</td>
                                                 <td></td>
-                                                <!--<td>B11 - Encaminhado para análise técnica</td>
+                                                <!--<td>B11 - Encaminhado para anï¿½lise tï¿½cnica</td>
                                                 <td>Proposta transformada em projeto cultural</td>-->
                                             </tr>
                                             ";

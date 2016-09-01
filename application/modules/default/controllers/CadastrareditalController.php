@@ -7,7 +7,7 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 
 class CadastrareditalController extends MinC_Controller_Action_Abstract
@@ -28,7 +28,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         if (isset($auth->getIdentity()->usu_codigo))
         {
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo)
             {
@@ -52,7 +52,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
         parent::init();
         // chama o init() do pai GenericControllerNew
-    } // fecha método init()
+    } // fecha mï¿½todo init()
 
 	public function indexAction() {
         $this->_redirect("cadastraredital/consultaralterareditais");
@@ -60,7 +60,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
 
 	/**
-	 * Método para buscar/salvar os dados do edital
+	 * Mï¿½todo para buscar/salvar os dados do edital
 	 */
     public function dadosgeraisAction()
     {
@@ -110,7 +110,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
             die;
         }
 
-		// caso já exista um edital cadastrado
+		// caso jï¿½ exista um edital cadastrado
         if ( !empty ( $_GET['idEdital'] )  &&  !empty ($idusuario))
         {
             $idEdital = $_GET['idEdital'];
@@ -118,7 +118,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
             $dadosEdital = new Edital();
             $buscaEdital = $dadosEdital->buscaEditalFormDocumento($idusuario, $idEdital)->toArray();
-            //busca os PI´s da secretaria cadastrada no Edital
+            //busca os PIï¿½s da secretaria cadastrada no Edital
             $buscarPI = new SimcAtividade();
             $pi = $buscarPI->buscarPI(array('o.Codigo = ?'=>$buscaEdital[0]['idOrgao'], 'atianopi = ?'=> date('Y'), 'ati.atistatuspi = ?'=>"A"))->toArray();
             $classificacaoDocumento  = $buscaEdital[0]['idClassificaDocumento'];
@@ -311,7 +311,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
     //                xd($dados);
                     $idEdital = $insereDadosEdital->salvar($dados);
                 }
-                else // alteração
+                else // alteraï¿½ï¿½o
                 {
                     $dados = array('idEdital' => $idEdital,
                     'idOrgao' => $orgao,
@@ -381,7 +381,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                         'qtDiasRecurso' => $diasRec,
                         'qtDiasJulgamento' => $diasJulg);
 
-                    if ( !empty ( $_POST['idEdital'] ) ) // alteração
+                    if ( !empty ( $_POST['idEdital'] ) ) // alteraï¿½ï¿½o
                     {
                         $where = " idFaseEdital = " . $fases[2] . " AND idEdital = " . $idEdital;
 
@@ -415,7 +415,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 {
                     $dadosFormDocumento = array('nrVersaoDocumento' => 1,
                         'nmFormDocumento' => $nomeEdital,
-                        'dsFormDocumento' => 'Formulário de Edital',
+                        'dsFormDocumento' => 'Formulï¿½rio de Edital',
                         'stFormDocumento' => 'A',
                         'dtCadastramento' => new Zend_Db_Expr('GETDATE()'),
                         'idClassificaDocumento' => $classificaDocumento,
@@ -428,10 +428,10 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     parent::message("Cadastro realizado com sucesso!", "/cadastraredital/dadosgerais?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idUsuario={$idusuario}&idEdital={$idEdital}" , "CONFIRM");
 
                 }
-                else // alteração
+                else // alteraï¿½ï¿½o
                 {
                     $dadosFormDocumento = array('nmFormDocumento' => $nomeEdital,
-                        'dsFormDocumento' => 'Formulário de Edital',
+                        'dsFormDocumento' => 'Formulï¿½rio de Edital',
                         'stFormDocumento' => 'A',
                         'dtCadastramento' => new Zend_Db_Expr('GETDATE()'),
                         'idClassificaDocumento' => $classificaDocumento,
@@ -452,12 +452,12 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
             }
         } // fecha if ($_POST)
 
-	} // fecha método dadosgeraisAction()
+	} // fecha mï¿½todo dadosgeraisAction()
 
 
 
 	/**
-	 * Método para cadastro/busca de critérios de avaliação
+	 * Mï¿½todo para cadastro/busca de critï¿½rios de avaliaï¿½ï¿½o
 	 */
     public function criteriosavaliacaoAction()
     {
@@ -471,16 +471,16 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
 
-		// joga o nome do edital no título
+		// joga o nome do edital no tï¿½tulo
         if ( isset($_GET['idEdital']) )
         {
-	 		// joga o nome do edital no título
+	 		// joga o nome do edital no tï¿½tulo
 	        $tbFormDocumentoDAO =   new tbFormDocumento();
 	        $edital                 =   $tbFormDocumentoDAO->buscar(array('idEdital = ?'=>$_GET['idEdital']));
 	        $this->view->nmEdital   =   $edital[0]->nmFormDocumento;
         }
 
-		// busca todos os critérios cadastrados
+		// busca todos os critï¿½rios cadastrados
         if ( isset($_GET['nrFormDocumento']) && isset($_GET['nrVersaoDocumento']) )
         {
             $nrFormDocumento = $_GET['nrFormDocumento'];
@@ -499,8 +499,8 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 		// caso os dados sejam enviados via post
         if ($_POST)
         {
-            /* não está sendo utilizado
-            // recadastra a posição
+            /* nï¿½o estï¿½ sendo utilizado
+            // recadastra a posiï¿½ï¿½o
             if ( isset ( $_POST['operacao'] ) )
             {
                 $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -538,7 +538,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 					'idEdital'              =>  $idEdital,
 					'nrVersaoDocumento'     =>  $nrVersaoDocumento,
 					'nmFormDocumento'       =>  $_POST['dsPergunta'],
-					'dsFormDocumento'       =>  'Critério de Avaliação',
+					'dsFormDocumento'       =>  'Critï¿½rio de Avaliaï¿½ï¿½o',
 					'idClassificaDocumento' =>  25,
 					'dtCadastramento'       =>  new Zend_Db_Expr('GETDATE()'),
 					'stFormDocumento'       =>  'A'
@@ -546,7 +546,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 $nrFormDocumentoCriterio   = $result['nrFormDocumento'];
                 $nrVersaoDocumentoCriterio = $result['nrVersaoDocumento'];
 
-                $agentes = new Agente_Model_Agentes();
+                $agentes = new Agente_Model_DbTable_Agentes();
                 $buscarAgente = $agentes->buscar(array("CNPJCPF = ?" => $usu_identificacao))->current()->toArray();
                 $idAgente = $buscarAgente['idAgente'];
                 $dadosPergunta = array('stTipoRespPergunta' => "O",
@@ -602,7 +602,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 parent::message("Cadastro realizado com sucesso!", "/cadastraredital/criteriosavaliacao?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idUsuario={$idusuario}&idEdital={$idEdital}" , "CONFIRM");
             } // fim if cadastro
 
-            if ( !empty ( $_POST['nrPergunta'] ) &&  !empty ($_POST['acao']) ) // alteração
+            if ( !empty ( $_POST['nrPergunta'] ) &&  !empty ($_POST['acao']) ) // alteraï¿½ï¿½o
             {
                 $nrFormDocumento = $_POST['nrFormDocumento'];
                 $nrVersaoDocumento = $_POST['nrVersaoDocumento'];
@@ -624,7 +624,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
 				$tbFormDocumento = new tbFormDocumento();
                 $dadosFormDocumento = array('nmFormDocumento' => $dsPergunta,
-                    'dsFormDocumento' => 'Critério de Avaliação',
+                    'dsFormDocumento' => 'Critï¿½rio de Avaliaï¿½ï¿½o',
                     'stFormDocumento' => 'A',
                     'dtCadastramento' => new Zend_Db_Expr('GETDATE()'),
                     'idClassificaDocumento' => 25);
@@ -665,9 +665,9 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                  $idOpcaoRespostaVariavel = $buscaOpcaoRespostaVariavel->save();
 
                  parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/cadastraredital/criteriosavaliacao?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idUsuario={$idusuario}&idEdital=$idEdital" , "CONFIRM");
-            } // fim if alteração
+            } // fim if alteraï¿½ï¿½o
 
-            if ( isset ($_POST['acaoD']) ) // alteração e exclusão
+            if ( isset ($_POST['acaoD']) ) // alteraï¿½ï¿½o e exclusï¿½o
             {
                 $nrFormDocumento = $_POST['nrFormDocumento'];
                 $nrVersaoDocumento = $_POST['nrVersaoDocumento'];
@@ -679,11 +679,11 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 $dadosTbpergunta = new tbPergunta();
                 $buscarDadosTbPergunta = $dadosTbpergunta->buscarDados($dadosBuscaTbPergunta, 'pd.nrOrdemPergunta')->toArray();
 
-                if ( $_POST['acaoD'] == "0" ) // busca os dados para efetuar a alteração
+                if ( $_POST['acaoD'] == "0" ) // busca os dados para efetuar a alteraï¿½ï¿½o
                 {
                      $this->view->dadosCriterios = $buscarDadosTbPergunta;
                 }
-                else // efetua a exclusão
+                else // efetua a exclusï¿½o
                 {
                 	$nrFormDocumentoCriterio   = $buscarDadosTbPergunta[0]['nrFormDocumento'];
                 	$nrVersaoDocumentoCriterio = $buscarDadosTbPergunta[0]['nrVersaoDocumento'];
@@ -719,16 +719,16 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
                     parent::message("Exclus&atilde;o realizada com sucesso!", "/cadastraredital/criteriosavaliacao?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idUsuario={$idusuario}&idEdital={$idEdital}" , "CONFIRM");
                 }
-            } // fim if exclusão
+            } // fim if exclusï¿½o
 
         } // fim post
 
-    } // fecha método criteriosavaliacaoAction()
+    } // fecha mï¿½todo criteriosavaliacaoAction()
 
 
 
 	/**
-	 * Método para cadastro/busca de formas de pagamento
+	 * Mï¿½todo para cadastro/busca de formas de pagamento
 	 */
     public function formapagamentoAction()
     {
@@ -821,7 +821,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
             $idEdital = $_POST['idEdital'];
             $dtCadastramento = new Zend_Db_Expr('GETDATE()');
 
-            $agentes = new Agente_Model_Agentes();
+            $agentes = new Agente_Model_DbTable_Agentes();
 
             $buscarAgente = $agentes->buscar(array("CNPJCPF = ?" => $usu_identificacao))->current()->toArray();
 
@@ -868,7 +868,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
              }
         unset($_POST);
         //} // fim post
-    } // fecha método formapagamentoAction()
+    } // fecha mï¿½todo formapagamentoAction()
 
 
 
@@ -895,7 +895,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
 //        xd($listaPerguntas);
         $this->view->listaPerguntas = $listaPerguntas;
-    } // fecha método listaformapagamentoAction()
+    } // fecha mï¿½todo listaformapagamentoAction()
 
 
 
@@ -923,12 +923,12 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $listaFormaPagamentoDAO = new tbOpcaoResposta();
         $listaFormaPagamento = $listaFormaPagamentoDAO->buscarparcelas($nrFormDocumento, $nrVersaoDocumento, $nrPergunta);
         $this->view->listaFormaPagamento = $listaFormaPagamento;
-    } // fecha método listaparcelasAction()
+    } // fecha mï¿½todo listaparcelasAction()
 
 
 
 	/**
-	 * Método para cadastrar/buscar as opções de forma de pagamento
+	 * Mï¿½todo para cadastrar/buscar as opï¿½ï¿½es de forma de pagamento
 	 */
     public function formapagamentoopcoesAction()
     {
@@ -1213,7 +1213,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 break;
         }
 
-    } // fecha método formapagamentoopcoesAction()
+    } // fecha mï¿½todo formapagamentoopcoesAction()
 
 
 
@@ -1232,7 +1232,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $dadosEdital = new Edital();
         $buscaEdital = $dadosEdital->buscaEditalFormDocumento($idusuario)->toArray();
         $this->view->buscaEdital = $buscaEdital;
-    } // fecha método consultaralterareditaisAction()
+    } // fecha mï¿½todo consultaralterareditaisAction()
 
 
 
@@ -1257,7 +1257,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $this->view->idEdital           = $idEdital;
         $this->view->nrVersaoDocumento  = $nrVersaoDocumento;
         $this->view->idUsuario          = $idusuario;
-    } // fecha método propostacustomizavelAction()
+    } // fecha mï¿½todo propostacustomizavelAction()
 
 
 
@@ -1278,7 +1278,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
             $idUsuario = $auth->getIdentity()->IdUsuario;
             $this->view->idUsuario   =   $idUsuario;
         }
-    } // fecha método listaguiaAction()
+    } // fecha mï¿½todo listaguiaAction()
 
 
 
@@ -1290,7 +1290,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         														'idClassificaDocumento = ?'=>23));
 //        xd($edital);
         return $edital;
-    } // fecha método listaGuiaDigital($idEdital)
+    } // fecha mï¿½todo listaGuiaDigital($idEdital)
 
 
 
@@ -1839,7 +1839,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                                                 );
                                 $idOpcaoResposta = $tbOpcaoRespostaDAO->inserir($dados);
                                 if($idOpcaoResposta){
-                                	parent::message("Alteração realizado com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
+                                	parent::message("Alteraï¿½ï¿½o realizado com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
 //                                    echo json_encode(array('retorno'=>'ALTERAR','mensagem'=>''));
                                 }
                                 else{
@@ -1867,7 +1867,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                                         $validado = false;
                                 }
                                 if($validado){
-                                	parent::message("Alteração realizado com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
+                                	parent::message("Alteraï¿½ï¿½o realizado com sucesso!", "/cadastraredital/propostacustomizavel?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idusuario}", "CONFIRM");
 //                                    echo json_encode(array('retorno'=>'ALTERAR','mensagem'=>''));
                                 }
                                 else{
@@ -1887,7 +1887,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     echo json_encode(array('retorno'=>'ERRO','mensagem'=>utf8_encode('Erro alterar pergunta.')));
                 break;
         }
-    } // fecha método operacoescustomizavelAction()
+    } // fecha mï¿½todo operacoescustomizavelAction()
 
 
 
@@ -1915,19 +1915,19 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                     if($tdRespostaDAO->update($data, $where))
                         echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualizaç?o DT.')));
+                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualizaï¿½?o DT.')));
                    break;
                 case 'tipoNR':
                     if($tdRespostaDAO->update($data, $where))
                         echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualizaç?o NR.')));
+                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualizaï¿½?o NR.')));
                    break;
                 case 'tipoIT':
                     if($tdRespostaDAO->update($data, $where))
                         echo json_encode(array('result'=>true,'mensagem'=>utf8_encode('Cadastro realizado com sucesso.')));
                     else
-                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualizaç?o IT.')));
+                        echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro atualizaï¿½?o IT.')));
                    break;
                 case 'tipoTA':
                     if($tdRespostaDAO->update($data, $where))
@@ -1988,7 +1988,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
             else
                 echo json_encode(array('result'=>false,'mensagem'=>utf8_encode('Erro cadastro '.$info['operacao'].'.')));
         }
-    } // fecha método cadastraAtualizaRespostaQuestoes($info)
+    } // fecha mï¿½todo cadastraAtualizaRespostaQuestoes($info)
 
 
 
@@ -2004,7 +2004,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
         $tbOpcaoRespostaDAO =   new tbOpcaoResposta();
         $this->view->opcoes             =   $tbOpcaoRespostaDAO->buscar($where,array('nrOrdemOpcao'));
-    } // fecha método opcaoadicionadasAction()
+    } // fecha mï¿½todo opcaoadicionadasAction()
 
 
 
@@ -2020,7 +2020,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
         $this->view->nrFormDocumento    =   $nrFormDocumento;
         $this->view->nrVersaoDocumento  =   $nrVersaoDocumento;
-    } // fecha método questoesadicionadasAction()
+    } // fecha mï¿½todo questoesadicionadasAction()
 
 
 
@@ -2078,7 +2078,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
         $this->view->idPreProjeto       =   $this->idPreProjeto;
         $this->view->listaGuiasEdital   =   $edital;
-    } // fecha método visualizarguiaAction()
+    } // fecha mï¿½todo visualizarguiaAction()
 
 
 
@@ -2097,7 +2097,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $this->view->nmFormDocumento    =   $FormDocumento[0]->nmFormDocumento;
         $this->view->stSomenteLeitura   =   $this->stSomenteLeitura;
         $this->view->questionario       =   $this->montarQuestionario();
-    } // fecha método visualizarquestionarioAction()
+    } // fecha mï¿½todo visualizarquestionarioAction()
 
 
 
@@ -2147,7 +2147,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         }
 
         return $questionario;
-    } // fecha método montarQuestionario()
+    } // fecha mï¿½todo montarQuestionario()
 
 
 
@@ -2222,7 +2222,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
             $resp = $this->defaultQuestao($resp);
         }
         return $resp;
-    } // fecha método montarQuestoes()
+    } // fecha mï¿½todo montarQuestoes()
 
 
 
@@ -2242,7 +2242,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 $this->stSomenteLeitura = '';
             }
         }
-    } // fecha método desabilitaQuestoes()
+    } // fecha mï¿½todo desabilitaQuestoes()
 
 
 
@@ -2266,7 +2266,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 $tbFormDocumentoProjetoDAO->inserir($cad);
             }
         }
-    } // fecha método vincularProjetoDocumento()
+    } // fecha mï¿½todo vincularProjetoDocumento()
 
 
 
@@ -2327,7 +2327,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
             else
                 return array(false,"Erro ao tentar excluir a Resposta.");
         }
-    } // fecha método excluirQuestionario()
+    } // fecha mï¿½todo excluirQuestionario()
 
 
 
@@ -2350,7 +2350,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
                 <div></div>
             </form>
         ";
-    } // fecha método defaultQuestao($add)
+    } // fecha mï¿½todo defaultQuestao($add)
 
 
 
@@ -2395,7 +2395,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         </script>
         ";
         return $this->defaultQuestao($resp);
-    } // fecha método MontarTextArea()
+    } // fecha mï¿½todo MontarTextArea()
 
 
 
@@ -2408,7 +2408,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $label = $alternativa['dsOpcao'];
         $resp = "<input class=\"{$this->operacao}\" name=\"resposta_{$this->nrOpcao}\" type=\"checkbox\" {$disable} {$valor} value=\"{$label}\" />{$label}";
         return $this->defaultQuestao($resp);
-    } // fecha método MontarCheckGroup()
+    } // fecha mï¿½todo MontarCheckGroup()
 
 
 
@@ -2424,7 +2424,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
         //$resp = "<input class=\"{$this->operacao}\" name=\"resposta_{$this->nrOpcao}\" type=\"checkbox\" {$disable} {$valor} value=\"{$label}\" />{$label} <input value=\"{$valorAux}\" type=\"text\" size=\"50\" {$disable} class=\"{$this->operacao}\" name=\"resposta_{$this->nrPergunta}_{$this->nrOpcao}\" />";
         return $this->defaultQuestao($resp);
-    } // fecha método MontarCheckGroupJust()
+    } // fecha mï¿½todo MontarCheckGroupJust()
 
 
 
@@ -2437,7 +2437,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $label = $alternativa['dsOpcao'];
         $resp = "<option {$valor} value=\"{$this->nrOpcao}\">{$label}</option>";
         return $resp;
-    } // fecha método MontarComboBox()
+    } // fecha mï¿½todo MontarComboBox()
 
 
 
@@ -2450,7 +2450,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $label = $alternativa['dsOpcao'];
         $resp = "<input name=\"resposta_{$this->nrPergunta}\" type=\"radio\" class=\"{$this->operacao}\"  {$disable} {$valor} value=\"{$this->nrOpcao}\" />{$label}<br /><br />";
         return $resp;
-    } // fecha método MontarRadio()
+    } // fecha mï¿½todo MontarRadio()
 
 
 
@@ -2467,20 +2467,20 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $resp = "<input name=\"resposta_{$this->nrPergunta}\" type=\"radio\" class=\"{$this->operacao}\" {$disable} {$valor} value=\"{$this->nrOpcao}\" />{$label}<br />Justificativa:<br /> <textarea {$disable} class=\"{$this->operacao}\" style=\"width:100%;\"  name=\"resposta_{$this->nrPergunta}_{$this->nrOpcao}\" >{$valorAux}</textarea><br /><br />";
         //$resp = "<input name=\"resposta_{$this->nrPergunta}\" type=\"radio\" class=\"{$this->operacao}\" {$disable} {$valor} value=\"{$this->nrOpcao}\" />{$label} <input value=\"{$valorAux}\" type=\"text\" size=\"50\" {$disable} class=\"{$this->operacao}\" name=\"resposta_{$this->nrPergunta}_{$this->nrOpcao}\" /><br /><br />";
         return $resp;
-    } // fecha método MontarRadioJust()
+    } // fecha mï¿½todo MontarRadioJust()
 
 
 
  	public function acessaravaliadorAction()
     {
     	/** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idorgao = $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codGrupo = $codGrupo;
         $this->view->codOrgao = $codOrgao;
@@ -2496,7 +2496,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $this->view->nmEdital   =   $edital[0]->nmFormDocumento;
         /*         * *************************************************************** */
 
-    } // fecha método acessaravaliadorAction()
+    } // fecha mï¿½todo acessaravaliadorAction()
 
 
 
@@ -2527,7 +2527,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
      			$idAgente = $_POST['idAgente'];
         		$this->view->idAgente = $idAgente;
      		}else{
-     			$agentes = new Agente_Model_Agentes();
+     			$agentes = new Agente_Model_DbTable_Agentes();
 	    		$agente = $agentes->BuscaAgente($cpf)->toArray();
 	    		$idAgente = $agente[0]['idAgente'];
 	    		$this->view->idAgente = $idAgente;
@@ -2546,21 +2546,21 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $dadosEdital = ManterAvaliadorDAO::listarEditaisAvaliador(); //BUSCA DA MODAL EDITAIS
        	$this->view->dadosEditalAvaliador = $dadosEdital;
 
-        	// ========== INÍCIO PAGINAÇÃO ==========
+        	// ========== INï¿½CIO PAGINAï¿½ï¿½O ==========
 			Zend_Paginator::setDefaultScrollingStyle('Sliding');
 			Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
 			$paginator = Zend_Paginator::factory($dadosEdital); // dados a serem paginados
 
-			// página atual e quantidade de ítens por página
+			// pï¿½gina atual e quantidade de ï¿½tens por pï¿½gina
 			$currentPage = $this->_getParam('page', 1);
 			$paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(5);
 			$this->view->dadosEditalAvaliador = $paginator;
         	//xd($paginator);
         	$this->view->qtdDoc    = count($dadosEdital); // quantidade
 
-			// ========== FIM PAGINAÇÃO ==========
+			// ========== FIM PAGINAï¿½ï¿½O ==========
 		}else{
-			parent::message("CPF não cadastrado!", "/cadastraredital/acessaravaliador?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
+			parent::message("CPF nï¿½o cadastrado!", "/cadastraredital/acessaravaliador?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}", "ALERT");
 		}
    		 if (isset($_POST['idEdit'])) { x(3);//Desvincular
     		$idAgente = $_POST['idAgen'];
@@ -2590,7 +2590,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
     	if (isset($_POST['cpf2'])) { //Vincular
 
     		$cpf = $_POST['cpf2'];
-    		$agentes = new Agente_Model_Agentes();
+    		$agentes = new Agente_Model_DbTable_Agentes();
     		$agente = $agentes->BuscaAgente($cpf)->toArray();
     		$idAgente = $agente[0]['idAgente'];
     		$this->view->idAgente = $idAgente;
@@ -2602,7 +2602,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
 
         	if($vinculado){
         		if($vinculado[0]['stAtivo'] == 'A'){
-        			parent::message("Edital já vinculado!", "/cadastraredital/vinculareditais?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}&cpf={$cpf}", "ALERT");
+        			parent::message("Edital jï¿½ vinculado!", "/cadastraredital/vinculareditais?nrFormDocumento={$nrFormDocumento}&nrVersaoDocumento={$nrVersaoDocumento}&idEdital={$idEdital}&idUsuario={$idUsuario}&cpf={$cpf}", "ALERT");
         		}elseif($vinculado[0]['stAtivo'] == 'I'){
 	        		$dados = array('stAtivo' => 'A');
 		        	$where = "idAvaliador = $idAgente and idEdital = $idEdital";
@@ -2626,7 +2626,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         	}
         }
 
-    } // fecha método vinculareditaisAction()
+    } // fecha mï¿½todo vinculareditaisAction()
 
 	public static function saldoPiMenosValorEdital($nrFormDocumento,$idAti){
 

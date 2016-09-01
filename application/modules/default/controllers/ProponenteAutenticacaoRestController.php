@@ -70,7 +70,7 @@ class ProponenteAutenticacaoRestController extends MinC_Controller_Rest_Abstract
                     $result->msg = 'Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha.';
                 }
 
-                $agentes = new Agente_Model_Agentes();
+                $agentes = new Agente_Model_DbTable_Agentes();
                 $verificaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $username))->current();
 
                 if(empty($verificaAgentes)){

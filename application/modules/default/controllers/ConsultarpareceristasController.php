@@ -20,7 +20,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
         $auth = Zend_Auth::getInstance();
         self::$usu_identificacao = $auth->getIdentity()->usu_identificacao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         self::$codOrgao = $GrupoAtivo->codOrgao;
 
         parent::perfil(1, self::$perfil);
@@ -55,7 +55,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
     	$codGrupo = self::$codPerfil;
         $produtoDAO = new Produto();
         $OrgaosDAO = new Orgaos();
-        $AgentesDAO = new Agente_Model_Agentes();
+        $AgentesDAO = new Agente_Model_DbTable_Agentes();
         $AreaDAO = new Area();
         $SegmentoDAO = new Segmento();
 
@@ -99,7 +99,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
     	$idOrgao = self::$codOrgao;
         $OrgaosDAO = new Orgaos();
         $codGrupo = self::$codPerfil;
-        $AgentesDAO = new Agente_Model_Agentes();
+        $AgentesDAO = new Agente_Model_DbTable_Agentes();
         $AreaDAO = new Area();
         $SegmentoDAO = new Segmento();
         $this->view->Orgaos = $OrgaosDAO->buscar(array('Status = ?' => 0));
@@ -119,7 +119,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 
     public function relatoriomensaldepagamentoAction (){
     	$idOrgao = self::$codOrgao;
-    	$AgentesDAO = new Agente_Model_Agentes();
+    	$AgentesDAO = new Agente_Model_DbTable_Agentes();
 
     	if(self::$codPerfil == 137)
         {
@@ -134,7 +134,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 
    	public function consultarprodutospareceristasAction() {
 
-		$AgentesDAO = new Agente_Model_Agentes();
+		$AgentesDAO = new Agente_Model_DbTable_Agentes();
         $logado = $AgentesDAO->buscar(array('CNPJCPF = ?'=>self::$usu_identificacao))->toArray();
 		$idAgente = $logado[0]['idAgente'];
 
@@ -177,7 +177,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
                 $segmento = $SegmentoDAO->buscar(array('Codigo = ?' => $idSegmento));
 
                 if($idAgente == 0){
-                	parent::message("Dados obrigatórios não informados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
+                	parent::message("Dados obrigatï¿½rios nï¿½o informados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
                 }
 				$this->view->histFerias = 1;
                 $this->view->feriasAgend = 1;
@@ -188,7 +188,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
                 $atestados = null;
                 $produtos = null;
 
-                /*-------------- AUSÊNCIAS  --------------*/
+                /*-------------- AUSï¿½NCIAS  --------------*/
 	                /* 2 - Historico de Ferias*/
                 	if ($idTipoAusencia == 2){
 		                $histFerias = ConsultarPareceristasDAO::buscarAusencias($idTipoAusencia, 1, $idAgente, $dataInicio, $dataFim);
@@ -269,7 +269,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 //	               xd($this->view->projetos );
                 /*---------------------------------------*/
                 if((!$histFerias) && (!$feriasAgend) && (!$atestados) && (!$produtos)){
-                	parent::message("Dados não localizados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
+                	parent::message("Dados nï¿½o localizados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
                 }
                 $this->view->titulo = $titulo;
               	$this->view->parecerista = strtoupper($parecerista[0]['Nome']);
@@ -299,7 +299,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 	                $parecerista = $NomesDAO->buscarNomePorCPFCNPJ(null, $_REQUEST['filtro']['parecerista']);
 	                $this->view->parecerista = strtoupper($parecerista[0]['Nome']);
         			if($idAgente == 0){
-                		parent::message("Dados obrigatórios não informados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
+                		parent::message("Dados obrigatï¿½rios nï¿½o informados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
                 	}
 
 	                $produtos = null;
@@ -367,7 +367,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 		                $this->view->produtos = $produtos;
 	                /*---------------------------------------*/
         			if(!$produtos){
-	                	parent::message("Dados não localizados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
+	                	parent::message("Dados nï¿½o localizados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
     	            }
 
                 break;
@@ -383,7 +383,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 		            $data_inicio = $_POST['filtro']['periodo']['dataInicio'];
 		            $data_fim = $_POST['filtro']['periodo']['datafim'];
 		            $idPronac = '';
-		            $AgentesDAO = new Agente_Model_Agentes();
+		            $AgentesDAO = new Agente_Model_DbTable_Agentes();
 			        $logado = $AgentesDAO->buscar(array('CNPJCPF = ?'=>self::$usu_identificacao))->toArray();
 					$idAgente = $logado[0]['idAgente'];
 
@@ -430,7 +430,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 	                $this->view->produtos = $produtos;
                 /*---------------------------------------*/
             		if(!$produtos){
-	                	parent::message("Dados não localizados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
+	                	parent::message("Dados nï¿½o localizados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
     	            }
             	}else{
 
@@ -442,7 +442,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 					if(isset($_POST['filtro']['periodo']['datafim'])){ $data_fim = $_POST['filtro']['periodo']['datafim'];} else $data_fim = null;
 	            	$pronac = $_POST['pronac'];
 
-		            $AgentesDAO = new Agente_Model_Agentes();
+		            $AgentesDAO = new Agente_Model_DbTable_Agentes();
 			        $logado = $AgentesDAO->buscar(array('CNPJCPF = ?'=>self::$usu_identificacao))->toArray();
 					$idAgente = $logado[0]['idAgente'];
 
@@ -479,7 +479,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 	                $this->view->produtos = $produtos;
                 /*---------------------------------------*/
             		if(!$produtos){
-	                	parent::message("Dados não localizados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
+	                	parent::message("Dados nï¿½o localizados!", "/consultarpareceristas/consultardadospareceristas", "ALERT");
     	            }
             	}
                 break;
@@ -514,7 +514,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 	                $this->view->parecerista = strtoupper($parecerista[0]['Nome']);
 
         			if($idAgente == 0){
-                		parent::message("Dados obrigatórios não informados!", "/consultarpareceristas/relatoriomensaldepagamento", "ALERT");
+                		parent::message("Dados obrigatï¿½rios nï¿½o informados!", "/consultarpareceristas/relatoriomensaldepagamento", "ALERT");
                 	}
 	                 /*-------------- PRODUTOS  --------------*/
 		                $produtos = ConsultarPareceristasDAO::buscarProdutosPareceristas($idAgente, null, $dataInicio, $dataFim, $parecer);
@@ -552,7 +552,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 		                $this->view->produtos = $produtos;
 	                /*---------------------------------------*/
         			if(!$produtos){
-	                	parent::message("Dados não localizados!", "/consultarpareceristas/relatoriomensaldepagamento", "ALERT");
+	                	parent::message("Dados nï¿½o localizados!", "/consultarpareceristas/relatoriomensaldepagamento", "ALERT");
     	            }
             	}else{
 		            $this->view->perfilAtual = self::$perfilAtual;
@@ -596,7 +596,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 		                $this->view->projetos = $dados;
 		                $this->view->produtos = $produtos;
             	    if(!$produtos){
-	                	parent::message("Dados não localizados!", "/consultarpareceristas/consultarpagamentospareceristas", "ALERT");
+	                	parent::message("Dados nï¿½o localizados!", "/consultarpareceristas/consultarpagamentospareceristas", "ALERT");
     	            }
 		            /*---------------------------------------*/
             	}
@@ -613,7 +613,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 		            $data_inicio = $_POST['filtro']['periodo']['dataInicio'];
 		            $data_fim = $_POST['filtro']['periodo']['datafim'];
 		            $idPronac = '';
-		            $AgentesDAO = new Agente_Model_Agentes();
+		            $AgentesDAO = new Agente_Model_DbTable_Agentes();
 			        $logado = $AgentesDAO->buscar(array('CNPJCPF = ?'=>self::$usu_identificacao))->toArray();
 					$idAgente = $logado[0]['idAgente'];
 
@@ -659,7 +659,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 	                $this->view->produtos = $produtos;
                 /*---------------------------------------*/
             		if(count($produtos) <= 0){
-	                	parent::message("Dados não localizados!", "/consultarpareceristas/consultarprodutospareceristas", "ALERT");
+	                	parent::message("Dados nï¿½o localizados!", "/consultarpareceristas/consultarprodutospareceristas", "ALERT");
     	            }
             	}
         }
@@ -719,7 +719,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
         if ($_REQUEST['idOrgao'] != '') {
-            $agentes = new Agente_Model_Agentes();
+            $agentes = new Agente_Model_DbTable_Agentes();
             $dados = $agentes->consultaPareceristasDoOrgao($_REQUEST['idOrgao']);
             $html = '';
             if ($dados) {
@@ -729,7 +729,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
             }
             echo $html;
         } else {
-        	$agentes = new Agente_Model_Agentes();
+        	$agentes = new Agente_Model_DbTable_Agentes();
             $dados = $agentes->consultaPareceristasDoOrgao();
             $html = '';
             if ($dados) {
@@ -757,7 +757,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
 		}
 		else
 		{
-			echo '<span style="color:red">'. utf8_encode('O Pronac '. $pronac . ' é inexistente!') . '</span>';
+			echo '<span style="color:red">'. utf8_encode('O Pronac '. $pronac . ' ï¿½ inexistente!') . '</span>';
 		}
     }
 

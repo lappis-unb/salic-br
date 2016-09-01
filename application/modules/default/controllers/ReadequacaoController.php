@@ -1,48 +1,48 @@
 <?php
 /**
- * Controller Readequacao (Proponente, Responsável / Procurador)
- * Considerações importantes:
- *  1. O Projeto tem que estar na Fase de Execução (2)
+ * Controller Readequacao (Proponente, Responsï¿½vel / Procurador)
+ * Consideraï¿½ï¿½es importantes:
+ *  1. O Projeto tem que estar na Fase de Execuï¿½ï¿½o (2)
  *  2. O Projeto tem que estar Aprovado (SAC.dbo.Aprovacao):
  * 		2.1. Os dados da Portaria tem que estar preenchidos
- * 		2.2. O Tipo de Aprovação deve ser 1
- *  3. Os Projetos devem estar vinculados ao Proponente/Responsável/Procurador
+ * 		2.2. O Tipo de Aprovaï¿½ï¿½o deve ser 1
+ *  3. Os Projetos devem estar vinculados ao Proponente/Responsï¿½vel/Procurador
  * @author emanuel.sampaio <emanuelonline@gmail.com>
  * @since 30/03/2012
  * @version 1.0
  * @package application
  * @subpackage application.controller
  * @link http://salic.cultura.gov.br
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2012 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 
 class ReadequacaoController extends MinC_Controller_Action_Abstract
 {
 	/**
-	 * Variáveis globais utilizada em toda a controller
+	 * Variï¿½veis globais utilizada em toda a controller
 	 * @access private
 	 */
-	private $_idResponsavel     = 0; // id do responsável logado, hoje obrigatório para acessar todas as páginas
+	private $_idResponsavel     = 0; // id do responsï¿½vel logado, hoje obrigatï¿½rio para acessar todas as pï¿½ginas
 	private $_idProponente      = 0; // id do proponente logado, opcional
 	private $_idProcurador      = 0; // id do procurador logado, opcional
 	private $_idAgente          = 0; // id do agente logado, opcional
-	private $_idUsuario         = 0; // id do usuário interno do minc que está logado no sistema, opcional
-	private $_idAgenteProjeto   = 0; // id do proponente do projeto em questão
-	private $_cpfLogado         = 0; // cpf do usuário logado, obrigatório para todas as páginas
-	private $_idPronac          = 0; // id do pronac/projeto, obrigatório para todas as páginas
-	private $_idPreProjeto      = 0; // código pré-projeto do projeto
-	private $_idPedidoAlteracao = 0; // id do pedido de readequação do projeto, obrigatório caso exista solicitação de readequação
+	private $_idUsuario         = 0; // id do usuï¿½rio interno do minc que estï¿½ logado no sistema, opcional
+	private $_idAgenteProjeto   = 0; // id do proponente do projeto em questï¿½o
+	private $_cpfLogado         = 0; // cpf do usuï¿½rio logado, obrigatï¿½rio para todas as pï¿½ginas
+	private $_idPronac          = 0; // id do pronac/projeto, obrigatï¿½rio para todas as pï¿½ginas
+	private $_idPreProjeto      = 0; // cï¿½digo prï¿½-projeto do projeto
+	private $_idPedidoAlteracao = 0; // id do pedido de readequaï¿½ï¿½o do projeto, obrigatï¿½rio caso exista solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 	private $_vlTotalAprovado   = 0; // valor aprovado do projeto (SAC.dbo.Aprovacao)
-	private $_vlTotalSolicitado = 0; // valor que o projeto terá após a solicitação de readequação ser aprovada
-	private $_tipoReadequacao   = ''; // tipo de readequação: redução, complementação ou remanejamento
-	private $_stPedidoAlteracao = ''; // status do pedido de readequação atual (A - Ativo, I - Inativo, T - Temporário)
-	private $_urlMod            = ''; // monta a url padrão do módulo (index)
+	private $_vlTotalSolicitado = 0; // valor que o projeto terï¿½ apï¿½s a solicitaï¿½ï¿½o de readequaï¿½ï¿½o ser aprovada
+	private $_tipoReadequacao   = ''; // tipo de readequaï¿½ï¿½o: reduï¿½ï¿½o, complementaï¿½ï¿½o ou remanejamento
+	private $_stPedidoAlteracao = ''; // status do pedido de readequaï¿½ï¿½o atual (A - Ativo, I - Inativo, T - Temporï¿½rio)
+	private $_urlMod            = ''; // monta a url padrï¿½o do mï¿½dulo (index)
 	private $_urlAtual          = ''; // monta a url ativa (action aberta)
 
 
 
 	/**
-	 * Variáveis com os objetos de banco utilizados na controle
+	 * Variï¿½veis com os objetos de banco utilizados na controle
 	 * @access private
 	 * @var object (tabelas utilizadas)
 	 */
@@ -78,8 +78,8 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 
 	/**
-	 * Método para verificar se o usuário logado tem permissão para acessar o projeto
-	 * OBS: SERVE APENAS PARA RESPONSÁVEL E AGENTE (PROPONENTE E PROCURADOR)
+	 * Mï¿½todo para verificar se o usuï¿½rio logado tem permissï¿½o para acessar o projeto
+	 * OBS: SERVE APENAS PARA RESPONSï¿½VEL E AGENTE (PROPONENTE E PROCURADOR)
 	 * @access private
 	 * @param integer $idPronac
 	 * @param integer $idResponsavel
@@ -96,15 +96,15 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 		try
 		{
-			// o id do pronac é obrigatório
+			// o id do pronac ï¿½ obrigatï¿½rio
 			if (isset($idPronac) && !empty($idPronac)) :
 
 				/**
 				 * Verifica:
 				 * 	-> se o PRONAC existe
-				 *  -> se o Projeto está em Fase de Execução (2)
-				 *  -> se o Tipo de Aprovação é igual a 1
-				 *  -> se existem informações da Portaria
+				 *  -> se o Projeto estï¿½ em Fase de Execuï¿½ï¿½o (2)
+				 *  -> se o Tipo de Aprovaï¿½ï¿½o ï¿½ igual a 1
+				 *  -> se existem informaï¿½ï¿½es da Portaria
 				 */
 				$whereVerificacao = array();
 				$whereVerificacao['IdPRONAC = ?'] = $idPronac;
@@ -118,17 +118,17 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 				$whereVerificacao['TipoAprovacao = ?']             = 1;
 				$whereVerificacao['PortariaAprovacao IS NOT NULL'] = '';
 				if ( count($this->Aprovacao->buscar($whereVerificacao)) <= 0 ) :
-					throw new Exception('O Projeto não está na Fase de execução!');
+					throw new Exception('O Projeto nï¿½o estï¿½ na Fase de execuï¿½ï¿½o!');
 				endif;
 
 
-				// ========== validação caso o usuário logado seja somente responsável ==========
+				// ========== validaï¿½ï¿½o caso o usuï¿½rio logado seja somente responsï¿½vel ==========
 				if ($idResponsavel > 0 && $idAgente == 0) :
 
-					// verifica se o projeto está com algum proponente que esteja vinculado ao responsável
+					// verifica se o projeto estï¿½ com algum proponente que esteja vinculado ao responsï¿½vel
 					$buscarProjetosProponente = count( $this->tbVinculo->buscarProponentesProjetosResponsavel($idResponsavel, $idPronac) );
 
-					// verifica se o responsável tem procuração
+					// verifica se o responsï¿½vel tem procuraï¿½ï¿½o
 					$this->tbProcuracao = new Procuracao();
 					$buscarProcuracao = $this->tbProcuracao->buscarProcuracaoProjeto(array('v.idUsuarioResponsavel = ?' => $idResponsavel, 'v.siVinculo = ?' => 2, 'vprp.idPreProjeto = ?' => $verificarProjeto[0]->idProjeto));
 
@@ -137,10 +137,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 					endif;
 
 
-				// ========== validação caso o usuário logado seja somente proponente ==========
+				// ========== validaï¿½ï¿½o caso o usuï¿½rio logado seja somente proponente ==========
 				elseif ($idAgente > 0 && $idResponsavel == 0) :
 
-					// verifica se o projeto está vinculado ao proponente
+					// verifica se o projeto estï¿½ vinculado ao proponente
 					$buscarCpfAgente = $this->Agentes->buscar(array('idAgente = ?' => $idAgente));
 					$cpfAgente       = (count($buscarCpfAgente) > 0) ? $buscarCpfAgente[0]->CNPJCPF : 0;
 					$buscarProjeto   = count( $this->Projetos->buscar(array('CgcCpf = ?' => $cpfAgente, 'IdPRONAC = ?' => $idPronac)) );
@@ -150,18 +150,18 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 					endif;
 
 
-				// ========== validação caso o usuário logado seja responsável e proponente ao mesmo tempo ==========
+				// ========== validaï¿½ï¿½o caso o usuï¿½rio logado seja responsï¿½vel e proponente ao mesmo tempo ==========
 				elseif ($idAgente > 0 && $idResponsavel > 0) :
 
-					// verifica se o projeto está vinculado ao proponente
+					// verifica se o projeto estï¿½ vinculado ao proponente
 					$buscarCpfAgente = $this->Agentes->buscar(array('idAgente = ?' => $idAgente));
 					$cpfAgente       = (count($buscarCpfAgente) > 0) ? $buscarCpfAgente[0]->CNPJCPF : 0;
 					$buscarProjeto   = count( $this->Projetos->buscar(array('CgcCpf = ?' => $cpfAgente, 'IdPRONAC = ?' => $idPronac)) );
 
-					// verifica se o projeto está com algum proponente que esteja vinculado ao responsável
+					// verifica se o projeto estï¿½ com algum proponente que esteja vinculado ao responsï¿½vel
 					$buscarProjetosProponente = count( $this->tbVinculo->buscarProponentesProjetosResponsavel($idResponsavel, $idPronac) );
 
-					// verifica se o responsável tem procuração
+					// verifica se o responsï¿½vel tem procuraï¿½ï¿½o
 					$this->tbProcuracao = new Procuracao();
 					$buscarProcuracao = $this->tbProcuracao->buscarProcuracaoProjeto(array('v.idUsuarioResponsavel = ?' => $idResponsavel, 'v.siVinculo = ?' => 2, 'vprp.idPreProjeto = ?' => $verificarProjeto[0]->idProjeto));
 
@@ -183,19 +183,19 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			parent::message($e->getMessage(), 'principalproponente', 'ALERT');
 		}
 
-	} // fecha método verificarPermissaoProjetoProponente()
+	} // fecha mï¿½todo verificarPermissaoProjetoProponente()
 
 
 
 	/**
-	 * Método que retorna o tipo de readequação.
-	 * O tipo é definido com base no valor aprovado do projeto e no valor que está sendo solicitado pelo proponente na readequação:
-	 * - Caso o Valor Solicitado seja menor que o Valor Aprovado, o tipo será: redução;
-	 * - Caso o Valor Solicitado seja maior que o Valor Aprovado, o tipo será: complementação;
-	 * - Caso o Valor Solicitado seja igual ao Valor Aprovado, o tipo será: remanejamento.
+	 * Mï¿½todo que retorna o tipo de readequaï¿½ï¿½o.
+	 * O tipo ï¿½ definido com base no valor aprovado do projeto e no valor que estï¿½ sendo solicitado pelo proponente na readequaï¿½ï¿½o:
+	 * - Caso o Valor Solicitado seja menor que o Valor Aprovado, o tipo serï¿½: reduï¿½ï¿½o;
+	 * - Caso o Valor Solicitado seja maior que o Valor Aprovado, o tipo serï¿½: complementaï¿½ï¿½o;
+	 * - Caso o Valor Solicitado seja igual ao Valor Aprovado, o tipo serï¿½: remanejamento.
 	 * @access private
 	 * @param void
-	 * @return string (retorna a descrição do tipo de readequação)
+	 * @return string (retorna a descriï¿½ï¿½o do tipo de readequaï¿½ï¿½o)
 	 */
 	private function verificarTipoReadequacao()
 	{
@@ -244,12 +244,12 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			$this->_tipoReadequacao = $tpReadequacao[2];
 			return $tpReadequacao[2];
 		endif;
-	} // fecha método verificarTipoReadequacao()
+	} // fecha mï¿½todo verificarTipoReadequacao()
 
 
 
 	/**
-	 * Método para salvar o pedido de solicitação de readequação
+	 * Mï¿½todo para salvar o pedido de solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 	 * @access private
 	 * @param $stPedidoAlteracao (andamento do pedido)
 	 * @param $siVerificacao (status do pedido)
@@ -259,7 +259,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	{
 		$this->tbPedidoAlteracaoProjeto = new tbPedidoAlteracaoProjeto(); // objeto utilizado
 
-		// filtro para alteração
+		// filtro para alteraï¿½ï¿½o
 		$whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
 
 		// salva os dados do pedido
@@ -281,12 +281,12 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			);
 			$this->tbPedidoAlteracaoProjeto->alterar($dadosPedido, $whereItemPedido);
 		endif;
-	} // fecha método salvarPedido()
+	} // fecha mï¿½todo salvarPedido()
 
 
 
 	/**
-	 * Método para cadastrar os arquivos da solicitação de readequação
+	 * Mï¿½todo para cadastrar os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 	 * @access private
 	 * @param array $_FILES
 	 * @param integer $idPedidoAlteracao
@@ -305,15 +305,15 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		if (!empty($valor)) :
 
 			for ($i = 0; $i < count($_FILES["arquivo"]["name"]); $i++) :
-				// pega as informações do arquivo
+				// pega as informaï¿½ï¿½es do arquivo
 				$arquivoNome     = $_FILES['arquivo']['name'][$i]; // nome
-				$arquivoTemp     = $_FILES['arquivo']['tmp_name'][$i]; // nome temporário
+				$arquivoTemp     = $_FILES['arquivo']['tmp_name'][$i]; // nome temporï¿½rio
 				$arquivoTipo     = $_FILES['arquivo']['type'][$i]; // tipo
 				$arquivoTamanho  = $_FILES['arquivo']['size'][$i]; // tamanho
 
 				if (!empty($arquivoNome) && !empty($arquivoTemp)) :
-					$arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
-					$arquivoBinario  = Upload::setBinario($arquivoTemp); // binário
+					$arquivoExtensao = Upload::getExtensao($arquivoNome); // extensï¿½o
+					$arquivoBinario  = Upload::setBinario($arquivoTemp); // binï¿½rio
 					$arquivoHash     = Upload::setHash($arquivoTemp); // hash
 
 					// cadastra dados do arquivo
@@ -326,16 +326,16 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 						,'dtEnvio'           => new Zend_Db_Expr('GETDATE()')
 						,'dsHash'            => $arquivoHash
 						,'stAtivo'           => 'A');
-					$idUltimoArquivo = $this->tbArquivo->inserir($dadosArquivo); // pega o id do último arquivo cadastrado
+					$idUltimoArquivo = $this->tbArquivo->inserir($dadosArquivo); // pega o id do ï¿½ltimo arquivo cadastrado
 
-					// cadastra o binário do arquivo
+					// cadastra o binï¿½rio do arquivo
 					$dadosBinario = array(
 						'idArquivo'  => $idUltimoArquivo
 						,'biArquivo' => new Zend_Db_Expr("CONVERT(varbinary(MAX), {$arquivoBinario})")
 					);
 					$this->tbArquivoImagem->inserir($dadosBinario);
 
-					// cadastra o pedido de alteração
+					// cadastra o pedido de alteraï¿½ï¿½o
 					$dadosPedido = array(
 						'idArquivo'           => $idUltimoArquivo
 						,'idPedidoAlteracao'  => $idPedidoAlteracao
@@ -345,12 +345,12 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 				endif;
 			endfor;
 		endif;
-	} // fecha método cadastrarArquivos()
+	} // fecha mï¿½todo cadastrarArquivos()
 
 
 
 	/**
-	 * Reescreve o método init()
+	 * Reescreve o mï¿½todo init()
 	 * @access public
 	 * @param void
 	 * @return void
@@ -359,8 +359,8 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	{
 		ini_set('memory_limit', '-1');
 
-		// objetos pré-carregados inicialmente
-		$this->Agentes                  = new Agente_Model_Agentes();
+		// objetos prï¿½-carregados inicialmente
+		$this->Agentes                  = new Agente_Model_DbTable_Agentes();
 		$this->Visao                    = new Visao();
 		$this->Projetos                 = new Projetos();
 		$this->tbVinculo                = new TbVinculo();
@@ -368,11 +368,11 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$this->tbPlanilhaAprovacao      = new PlanilhaAprovacao();
 		$this->tbPedidoAlteracaoProjeto = new tbPedidoAlteracaoProjeto();
 
-		// monta a url principal do módulo e a atual
+		// monta a url principal do mï¿½dulo e a atual
 		$this->_urlMod    = $this->_request->getControllerName() . '/index/idpronac/' .$this->_request->getParam('idpronac');
 		$this->_urlAtual  = $this->_request->getControllerName() . '/' . $this->_request->getActionName() . '/idpronac/' . $this->_request->getParam('idpronac');
 
-                $auth = Zend_Auth::getInstance(); // pega a autenticação
+                $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
                 //SE CAIU A SECAO REDIRECIONA
                 if(!$auth->hasIdentity()){
                     $url = Zend_Controller_Front::getInstance()->getBaseUrl();
@@ -380,44 +380,44 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                 }
                 $this->verificarPermissaoAcesso(false, true, false);
 
-//		$auth = Zend_Auth::getInstance(); // pega a autenticação
+//		$auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 //
-//		// atribui o CPF do usuário logado
+//		// atribui o CPF do usuï¿½rio logado
 //		$this->_cpfLogado = isset($auth->getIdentity()->usu_identificacao) ? $auth->getIdentity()->usu_identificacao : 0;
 //		$this->_cpfLogado = isset($auth->getIdentity()->Cpf)               ? $auth->getIdentity()->Cpf               : $this->_cpfLogado;
 //
-//		// verifica se o usuário logado é Agente
+//		// verifica se o usuï¿½rio logado ï¿½ Agente
 //		$buscarAgente    = $this->Agentes->buscar(array('CNPJCPF = ?' => $this->_cpfLogado));
 //		$this->_idAgente = count($buscarAgente) > 0 ? $buscarAgente[0]->idAgente : 0;
 //
-//		// verifica se o Agente logado possui visão de Proponente e Procurador
+//		// verifica se o Agente logado possui visï¿½o de Proponente e Procurador
 //		$buscarVisaoProponente = count($this->Visao->buscar(array('idAgente = ?' => $this->_idAgente, 'Visao = ?' => '144')));
 //		$buscarVisaoProcurador = count($this->Visao->buscar(array('idAgente = ?' => $this->_idAgente, 'Visao = ?' => '247')));
 //		$this->_idProponente   = $buscarVisaoProponente > 0 ? $this->_idAgente : 0;
 //		$this->_idProcurador   = $buscarVisaoProcurador > 0 ? $this->_idAgente : 0;
 //
-//		// verifica se o usuário logado é Interno (base TABELAS) ou Externo (base CONTROLEDEACESSO)
+//		// verifica se o usuï¿½rio logado ï¿½ Interno (base TABELAS) ou Externo (base CONTROLEDEACESSO)
 //		$this->_idResponsavel = isset($auth->getIdentity()->IdUsuario)  ? $auth->getIdentity()->IdUsuario  : 0;
 //		$this->_idUsuario     = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : 0;
 //
-//		// o usuário tem que estar cadastrado no banco TABELAS ou CONTROLEDEACESSO para ter acesso ao sistema
+//		// o usuï¿½rio tem que estar cadastrado no banco TABELAS ou CONTROLEDEACESSO para ter acesso ao sistema
 //		if (empty($this->_idResponsavel) && empty($this->_idUsuario)) :
-//			parent::message('Você não tem permissão para acessar essa área do sistema!', 'index', 'ALERT');
+//			parent::message('Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!', 'index', 'ALERT');
 //		endif;
 
 		parent::perfil(4); // perfil
 
 		parent::init();
-	} // fecha método init()
+	} // fecha mï¿½todo init()
 
 
 
 	/**
-	 * Reescreve o método preDispatch()
-	 * 1. Pega o id do Pronac via get uma única vez
-	 * 2. Valida se o usuário possui permissão para acessar o projeto
-	 * 3. Mostra/Oculta o botão 'Enviar Solicitação'
-	 * 4. Pega o tipo de readequação: redução, complementação ou remanejamento
+	 * Reescreve o mï¿½todo preDispatch()
+	 * 1. Pega o id do Pronac via get uma ï¿½nica vez
+	 * 2. Valida se o usuï¿½rio possui permissï¿½o para acessar o projeto
+	 * 3. Mostra/Oculta o botï¿½o 'Enviar Solicitaï¿½ï¿½o'
+	 * 4. Pega o tipo de readequaï¿½ï¿½o: reduï¿½ï¿½o, complementaï¿½ï¿½o ou remanejamento
 	 * @access public
 	 * @param void
 	 * @return void
@@ -440,16 +440,16 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		// atribui o id do proponente do projeto
 		$this->_idAgenteProjeto = isset($dadosProjeto['idAgente']) ? $dadosProjeto['idAgente'] : 0;
 
-		// busca os id do último pedido de readequação não finalizado
+		// busca os id do ï¿½ltimo pedido de readequaï¿½ï¿½o nï¿½o finalizado
 		$wherePedido                    = array('IdPRONAC = ?' => $this->_idPronac, 'siVerificacao IN (?)' => array(0, 1));
 		$orderPedido                    = array('idPedidoAlteracao DESC');
 		$buscarPedidoAlteracao          = $this->tbPedidoAlteracaoProjeto->buscar($wherePedido, $orderPedido)->current();
 		$this->_idPedidoAlteracao       = count($buscarPedidoAlteracao) > 0 ? $buscarPedidoAlteracao['idPedidoAlteracao'] : 0;
 
-		// busca a situação do pedido de alteração do projeto
+		// busca a situaï¿½ï¿½o do pedido de alteraï¿½ï¿½o do projeto
 		$this->_stPedidoAlteracao = count($buscarPedidoAlteracao) > 0 ? $buscarPedidoAlteracao['stPedidoAlteracao'] : $this->_stPedidoAlteracao;
 
-		// manda os dados para a visão
+		// manda os dados para a visï¿½o
 		$this->view->projeto           = $dadosProjeto;
 		$this->view->idPronac          = $this->_idPronac;
 		$this->view->idPedidoAlteracao = $this->_idPedidoAlteracao;
@@ -458,7 +458,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$this->view->vlTotalAprovado   = $this->_vlTotalAprovado;
 		$this->view->vlTotalSolicitado = $this->_vlTotalSolicitado;
 		$this->view->pagina            = $this->_request->getActionName();
-	} // fecha método preDispatch()
+	} // fecha mï¿½todo preDispatch()
 
 
 
@@ -479,7 +479,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 
 	/**
-	 * Método responsável pela exclusão dos arquivos da solicitação de readequação
+	 * Mï¿½todo responsï¿½vel pela exclusï¿½o dos arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 	 * @access public
 	 * @param void
 	 * @return void
@@ -488,10 +488,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	{
 		$this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
 
-		// caso tenha dados de formulário via post
+		// caso tenha dados de formulï¿½rio via post
 		if ($this->getRequest()->isPost()) :
 
-			// recebe os dados do formulário
+			// recebe os dados do formulï¿½rio
 			$post = Zend_Registry::get('post');
 			$idPedidoAlteracao = (int) Seguranca::tratarVarAjaxUFT8($post->idPedidoAlteracao);
 			$idArquivo         = (int) Seguranca::tratarVarAjaxUFT8($post->idArquivo);
@@ -515,7 +515,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 					$this->tbArquivoImagem->delete($whereArquivo);
 					$this->tbArquivo->delete($whereArquivo);
 
-					$this->view->nmArquivo = $nmArquivo; // manda o nome do arquivo para visão
+					$this->view->nmArquivo = $nmArquivo; // manda o nome do arquivo para visï¿½o
 
 				else :
 					throw new Exception('Erro ao excluir arquivo!');
@@ -526,34 +526,34 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 				parent::message($e->getMessage(), $this->_urlMod , 'ERROR');
 			}
 		endif;
-	} // fecha método excluirArquivoAction()
+	} // fecha mï¿½todo excluirArquivoAction()
 
 
 
 	/**
-	 * Método responsável pelo envio da solicitação de readequação
+	 * Mï¿½todo responsï¿½vel pelo envio da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function enviarSolicitacaoAction() { //jass
-            // caso tenha dados de formulário via post
+            // caso tenha dados de formulï¿½rio via post
             if ($this->getRequest()->isPost()){
 
-                // recebe os dados do formulário
+                // recebe os dados do formulï¿½rio
                 $post = Zend_Registry::get('post');
                 $stPedidoAlteracao = $post->finalizarPedido;
 
-                if($stPedidoAlteracao == 'I'){ //finalizar a solicitação = sim
+                if($stPedidoAlteracao == 'I'){ //finalizar a solicitaï¿½ï¿½o = sim
                     $tbPedidoAlteracaoProjeto = new tbPedidoAlteracaoProjeto();
                     $dadosProdutos = $tbPedidoAlteracaoProjeto->verificarProdutoSemItem($this->_idPedidoAlteracao);
                     if(count($dadosProdutos)>0){
-                        parent::message('Não foi possível concluir a ação porque não há planilha orçamentária correspondente ao(s) novo(s) produto(s) cadastrado(s)!', $this->_urlMod , 'ALERT');
+                        parent::message('Nï¿½o foi possï¿½vel concluir a aï¿½ï¿½o porque nï¿½o hï¿½ planilha orï¿½amentï¿½ria correspondente ao(s) novo(s) produto(s) cadastrado(s)!', $this->_urlMod , 'ALERT');
                     }
                 }
 
                 try {
-                    // faz a alteração na situação do pedido
+                    // faz a alteraï¿½ï¿½o na situaï¿½ï¿½o do pedido
                     $dados = array(
                         'idSolicitante'      => $this->_idAgenteProjeto
                         ,'dtSolicitacao'     => new Zend_Db_Expr('GETDATE()')
@@ -561,7 +561,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                     );
                     $where = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
 
-                    // atualiza a situação do pedido de readequação
+                    // atualiza a situaï¿½ï¿½o do pedido de readequaï¿½ï¿½o
                     if ($this->tbPedidoAlteracaoProjeto->alterar($dados, $where)){
                         $this->_stPedidoAlteracao = $stPedidoAlteracao;
                         if($stPedidoAlteracao == 'I') {
@@ -577,12 +577,12 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                     parent::message($e->getMessage(), $this->_urlMod , 'ERROR');
                 }
             }
-        } // fecha método enviarSolicitacaoAction()
+        } // fecha mï¿½todo enviarSolicitacaoAction()
 
 
 
 	/**
-	 * Método para solicitar alteração de dados do Proponente do Projeto
+	 * Mï¿½todo para solicitar alteraï¿½ï¿½o de dados do Proponente do Projeto
 	 * @access public
 	 * @param void
 	 * @return void
@@ -590,7 +590,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	public function proponenteAction() {
 
             try {
-                // verifica se o usuário logado tem permissão para acessar o projeto
+                // verifica se o usuï¿½rio logado tem permissï¿½o para acessar o projeto
                 $this->verificarPermissaoAcesso(false, true, false);
 
                 // objetos utilizados
@@ -600,36 +600,36 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
                 // busca os dados aprovados
                 $buscarAP = $this->Projetos->buscarProjetoXProponente(array('p.IdPRONAC = ?' => $this->_idPronac))->current();
-                $this->view->dadosAP = $buscarAP; // manda as informações para a visão
+                $this->view->dadosAP = $buscarAP; // manda as informaï¿½ï¿½es para a visï¿½o
 
-                // busca os dados com solicitação de readequação
+                // busca os dados com solicitaï¿½ï¿½o de readequaï¿½ï¿½o
                 $buscarSR = $this->tbAlteracaoNomeProponente->buscarPedido(array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao))->current();
-                $this->view->dadosSR = $buscarSR; // manda as informações para a visão
+                $this->view->dadosSR = $buscarSR; // manda as informaï¿½ï¿½es para a visï¿½o
 
-                // busca o pedido (justificativa) da solicitação de readequação
+                // busca o pedido (justificativa) da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
                 $whereTipoReadequacao = array(
                         'p.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
                         ,'x.tpAlteracaoProjeto IN (?)' => array(1, 2) // proponente
                 );
                 $buscarPedido = $this->tbPedidoAlteracaoXTipoAlteracao->buscarPedido($whereTipoReadequacao)->current();
-                $this->view->pedido = $buscarPedido; // manda as informações para a visão
+                $this->view->pedido = $buscarPedido; // manda as informaï¿½ï¿½es para a visï¿½o
 
-                // busca os arquivos da solicitação de readequação
+                // busca os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
                 $whereArquivo = array(
                         'x.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
                         ,'x.tpAlteracaoProjeto IN (?)' => array(1, 2) // proponente
                 );
                 $buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
-                $this->view->arquivos = $buscarArquivo; // manda as informações para a visão
+                $this->view->arquivos = $buscarArquivo; // manda as informaï¿½ï¿½es para a visï¿½o
             } // fecha try
             catch (Exception $e) {
                 parent::message($e->getMessage(), $this->_urlAtual, 'ERROR');
             }
 
 
-            // ========== INÍCIO: FORMULÁRIO ENVIADO VIA POST ==========
+            // ========== INï¿½CIO: FORMULï¿½RIO ENVIADO VIA POST ==========
             if ($this->getRequest()->isPost()) {
-                // recebe os dados do formulário
+                // recebe os dados do formulï¿½rio
                 $post = Zend_Registry::get('post');
                 $cpfcnpj            = Mascara::delMaskCPFCNPJ($post->cpfcnpj);
                 $nome               = $post->nome;
@@ -639,18 +639,18 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                 $tpAlteracaoProjeto = $post->tpAlteracaoProjeto;
 
                 try {
-                    // validação dos dados
+                    // validaï¿½ï¿½o dos dados
                     if (empty($cpfcnpj) || empty($nome) || empty($justificativa)) :
                         throw new Exception('Dados obrigat&oacute;rios n&atilde;o informados!');
                     endif;
 
-                    // atualiza o status do pedido de readequação
+                    // atualiza o status do pedido de readequaï¿½ï¿½o
                     $this->_stPedidoAlteracao = $stPedidoAlteracao;
 
                     // salva os dados do pedido
                     $this->salvarPedido($stPedidoAlteracao, $siVerificacao);
 
-                    // filtro para alteração
+                    // filtro para alteraï¿½ï¿½o
                     $whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
 
                     // salva os dados do item do pedido
@@ -671,7 +671,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
                     // salva os dados da justificativa
                     if ($buscarAP['CNPJCPF'] != $cpfcnpj) : // justificativa de cpf do proponente
-                        $whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao, 'tpAlteracaoProjeto = ?' => 2); // filtro para alteração
+                        $whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao, 'tpAlteracaoProjeto = ?' => 2); // filtro para alteraï¿½ï¿½o
                         if ( count($this->tbPedidoAlteracaoXTipoAlteracao->buscar($whereItemPedido)) <= 0 ) : // CADASTRA
                             $dadosJustificativa = array(
                                     'idPedidoAlteracao'   => $this->_idPedidoAlteracao
@@ -685,7 +685,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                             $this->tbPedidoAlteracaoXTipoAlteracao->alterar($dadosJustificativa, $whereItemPedido);
                         endif;
                     else :
-                        $whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao, 'tpAlteracaoProjeto = ?' => 1); // filtro para alteração
+                        $whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao, 'tpAlteracaoProjeto = ?' => 1); // filtro para alteraï¿½ï¿½o
                         if ( count($this->tbPedidoAlteracaoXTipoAlteracao->buscar($whereItemPedido)) <= 0 ) : // CADASTRA
                             $dadosJustificativa = array(
                                     'idPedidoAlteracao'   => $this->_idPedidoAlteracao
@@ -710,21 +710,21 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                     $this->view->message_type  = 'ERROR';
                 }
             } // fecha if
-            // ========== FIM: FORMULÁRIO ENVIADO VIA POST ==========
+            // ========== FIM: FORMULï¿½RIO ENVIADO VIA POST ==========
 
-        } // fecha método proponenteAction()
+        } // fecha mï¿½todo proponenteAction()
 
 
 
 	/**
-	 * Método com a grid para solicitar cadastros e alterações de novos Produtos (Plano de Distribuição)
+	 * Mï¿½todo com a grid para solicitar cadastros e alteraï¿½ï¿½es de novos Produtos (Plano de Distribuiï¿½ï¿½o)
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function produtosAction() {
             try {
-                // verifica se o usuário logado tem permissão para acessar o projeto
+                // verifica se o usuï¿½rio logado tem permissï¿½o para acessar o projeto
                 $this->verificarPermissaoAcesso(false, true, false);
 
                 $this->tbPlanoDistribuicao = new tbPlanoDistribuicao();
@@ -732,21 +732,21 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                 // busca os dados aprovados
                 $orderProduto = array('p.stPrincipal DESC', 'd.Descricao');
                 $buscarAP = $this->tbPlanoDistribuicao->buscarProdutosAprovados(array('p.idProjeto = ?' => $this->_idPreProjeto, 'p.stPlanoDistribuicaoProduto = ?' => 1), $orderProduto);
-                $this->view->dadosAP = $buscarAP; // manda as informações para a visão
+                $this->view->dadosAP = $buscarAP; // manda as informaï¿½ï¿½es para a visï¿½o
 
-                // busca os dados com solicitação de readequação
+                // busca os dados com solicitaï¿½ï¿½o de readequaï¿½ï¿½o
                 $buscarSR = $this->tbPlanoDistribuicao->buscarProdutosSolicitados(array('p.idPedidoAlteracao = ?' => $this->_idPedidoAlteracao, 'p.tpAcao <> ?' => 'E', 'tpPlanoDistribuicao = ?' => 'SR'), $orderProduto);
-                $this->view->dadosSR = $buscarSR; // manda as informações para a visão
+                $this->view->dadosSR = $buscarSR; // manda as informaï¿½ï¿½es para a visï¿½o
             } // fecha try
             catch (Exception $e) {
                 parent::message($e->getMessage(), $this->_urlAtual, 'ERROR');
             }
-        } // fecha método produtosAction()
+        } // fecha mï¿½todo produtosAction()
 
 
 
 	/**
-	 * Método para inclusões de novos Produtos (Plano de Distribuição)
+	 * Mï¿½todo para inclusï¿½es de novos Produtos (Plano de Distribuiï¿½ï¿½o)
 	 * @access public
 	 * @param void
 	 * @return void
@@ -754,7 +754,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	public function cadastrarProdutosAction()
 	{
             try {
-                // verifica se o usuário logado tem permissão para acessar o projeto
+                // verifica se o usuï¿½rio logado tem permissï¿½o para acessar o projeto
                 $this->verificarPermissaoAcesso(false, true, false);
 
                 // objetos utilizados
@@ -771,7 +771,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                 $this->view->area        = $this->Area->buscar(array('Codigo <> ?' => 7), array('Descricao ASC'));
                 $this->view->posicaoLogo = $this->Verificacao->buscarTipos(array('t.idTipo = ?' => 3), array('v.Descricao ASC'));
 
-                // pega o código do produto (se for vazio, faz o cadastro, caso contrário, faz a alteração ou exclusão)
+                // pega o cï¿½digo do produto (se for vazio, faz o cadastro, caso contrï¿½rio, faz a alteraï¿½ï¿½o ou exclusï¿½o)
                 $idProduto = $this->_request->getParam('idproduto');
                 $this->view->idProduto = $idProduto;
 
@@ -780,12 +780,12 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                     $orderProdutoAP = array('p.stPrincipal DESC', 'd.Descricao');
                     $whereProdutoAP = array('p.idProjeto = ?' => $this->_idPreProjeto, 'p.stPlanoDistribuicaoProduto = ?' => 1, 'p.idProduto = ?' => $idProduto);
                     $buscarAP = $this->tbPlanoDistribuicao->buscarProdutosAprovados($whereProdutoAP, $orderProdutoAP);
-                    $this->view->dadosAP = $buscarAP; // manda as informações para a visão
+                    $this->view->dadosAP = $buscarAP; // manda as informaï¿½ï¿½es para a visï¿½o
 
-                    // busca os dados com solicitação de readequação
+                    // busca os dados com solicitaï¿½ï¿½o de readequaï¿½ï¿½o
                     $whereProdutoSR = array('p.idPedidoAlteracao = ?' => $this->_idPedidoAlteracao, 'p.tpAcao <> ?' => 'E', 'p.idProduto = ?' => $idProduto, 'tpPlanoDistribuicao = ?' => 'SR');
                     $buscarSR = $this->tbPlanoDistribuicao->buscarProdutosSolicitados($whereProdutoSR, $orderProdutoAP);
-                    $this->view->dadosSR = $buscarSR; // manda as informações para a visão
+                    $this->view->dadosSR = $buscarSR; // manda as informaï¿½ï¿½es para a visï¿½o
                 else :
                     $this->view->dadosAP = '';
                     $this->view->dadosSR = '';
@@ -858,11 +858,11 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                                     ,'tpAcao'                => 'N'
                                     ,'dtPlanoDistribuicao'   => new Zend_Db_Expr('GETDATE()')
                             );
-                            //INSERE UMA CÓPIA QUE NAO SERÁ ALTERADA - AP
+                            //INSERE UMA Cï¿½PIA QUE NAO SERï¿½ ALTERADA - AP
                             $dadosCopia['tpPlanoDistribuicao'] = 'AP';
                             $this->tbPlanoDistribuicao->inserir($dadosCopia);
 
-                            //INSERE UMA CÓPIA QUE SERÁ ALTERADA COM OS DADOS FORNECIDOS PELO PROPONENTE - SR
+                            //INSERE UMA Cï¿½PIA QUE SERï¿½ ALTERADA COM OS DADOS FORNECIDOS PELO PROPONENTE - SR
                             $dadosCopia['tpPlanoDistribuicao'] = 'SR';
                             $this->tbPlanoDistribuicao->inserir($dadosCopia);
                         }
@@ -940,7 +940,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                     }
 
                     // salva os dados da justificativa
-                    $whereItemPedido = array_merge($whereItemPedido, array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto)); // filtro para alteração
+                    $whereItemPedido = array_merge($whereItemPedido, array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto)); // filtro para alteraï¿½ï¿½o
                     if ( count($this->tbPedidoAlteracaoXTipoAlteracao->buscar($whereItemPedido)) <= 0 ) { // CADASTRA
                         $dadosJustificativa = array(
                                 'idPedidoAlteracao'   => $this->_idPedidoAlteracao
@@ -967,7 +967,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 
 	/**
-	 * Método para solicitar alteração na Ficha Técnica do Projeto
+	 * Mï¿½todo para solicitar alteraï¿½ï¿½o na Ficha Tï¿½cnica do Projeto
 	 * @access public
 	 * @param void
 	 * @return void
@@ -976,7 +976,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	{
 		try
 		{
-			// verifica se o usuário logado tem permissão para acessar o projeto
+			// verifica se o usuï¿½rio logado tem permissï¿½o para acessar o projeto
 			$this->verificarPermissaoAcesso(false, true, false);
 
 			// objetos utilizados
@@ -987,27 +987,27 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 			// busca os dados aprovados
 			$buscarAP = $this->PreProjeto->buscar(array('idPreProjeto = ?' => $this->_idPreProjeto))->current();
-			$this->view->dadosAP = $buscarAP; // manda as informações para a visão
+			$this->view->dadosAP = $buscarAP; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca os dados com solicitação de readequação
+			// busca os dados com solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$buscarSR = $this->tbProposta->buscarPedido(array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao))->current();
-			$this->view->dadosSR = $buscarSR; // manda as informações para a visão
+			$this->view->dadosSR = $buscarSR; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca o pedido (justificativa) da solicitação de readequação
+			// busca o pedido (justificativa) da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereTipoReadequacao = array(
 				'p.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(3) // ficha técnica
+				,'x.tpAlteracaoProjeto IN (?)' => array(3) // ficha tï¿½cnica
 			);
 			$buscarPedido = $this->tbPedidoAlteracaoXTipoAlteracao->buscarPedido($whereTipoReadequacao)->current();
-			$this->view->pedido = $buscarPedido; // manda as informações para a visão
+			$this->view->pedido = $buscarPedido; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca os arquivos da solicitação de readequação
+			// busca os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(3) // ficha técnica
+				,'x.tpAlteracaoProjeto IN (?)' => array(3) // ficha tï¿½cnica
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
-			$this->view->arquivos = $buscarArquivo; // manda as informações para a visão
+			$this->view->arquivos = $buscarArquivo; // manda as informaï¿½ï¿½es para a visï¿½o
 		} // fecha try
 		catch (Exception $e)
 		{
@@ -1015,10 +1015,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		}
 
 
-		// ========== INÍCIO: FORMULÁRIO ENVIADO VIA POST ==========
+		// ========== INï¿½CIO: FORMULï¿½RIO ENVIADO VIA POST ==========
 		if ($this->getRequest()->isPost())
 		{
-			// recebe os dados do formulário
+			// recebe os dados do formulï¿½rio
 			$post = Zend_Registry::get('post');
 			$fichaSolicitada    = $post->fichaSolicitada;
 			$justificativa      = $post->justificativa;
@@ -1028,18 +1028,18 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 			try
 			{
-				// validação dos dados
+				// validaï¿½ï¿½o dos dados
 				if (empty($fichaSolicitada) || empty($justificativa)) :
 					throw new Exception('Dados obrigat&oacute;rios n&atilde;o informados!');
 				endif;
 
-				// atualiza o status do pedido de readequação
+				// atualiza o status do pedido de readequaï¿½ï¿½o
 				$this->_stPedidoAlteracao = $stPedidoAlteracao;
 
 				// salva os dados do pedido
 				$this->salvarPedido($stPedidoAlteracao, $siVerificacao);
 
-				// filtro para alteração
+				// filtro para alteraï¿½ï¿½o
 				$whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
 
 				// salva os dados do item do pedido
@@ -1060,7 +1060,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 				endif;
 
 				// salva os dados da justificativa
-				$whereItemPedido = array_merge($whereItemPedido, array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto)); // filtro para alteração
+				$whereItemPedido = array_merge($whereItemPedido, array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto)); // filtro para alteraï¿½ï¿½o
 				if ( count($this->tbPedidoAlteracaoXTipoAlteracao->buscar($whereItemPedido)) <= 0 ) : // CADASTRA
 					$dadosJustificativa = array(
 						'idPedidoAlteracao'   => $this->_idPedidoAlteracao
@@ -1085,14 +1085,14 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 				$this->view->message_type  = 'ERROR';
 			}
 		} // fecha if
-		// ========== FIM: FORMULÁRIO ENVIADO VIA POST ==========
+		// ========== FIM: FORMULï¿½RIO ENVIADO VIA POST ==========
 
-	} // fecha método fichaTecnicaAction()
+	} // fecha mï¿½todo fichaTecnicaAction()
 
 
 
 	/**
-	 * Método para solicitar cadastros, alterações e inclusões de novos Locais de Realização
+	 * Mï¿½todo para solicitar cadastros, alteraï¿½ï¿½es e inclusï¿½es de novos Locais de Realizaï¿½ï¿½o
 	 * @access public
 	 * @param void
 	 * @return void
@@ -1101,7 +1101,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	{
 		try
 		{
-			// verifica se o usuário logado tem permissão para acessar o projeto
+			// verifica se o usuï¿½rio logado tem permissï¿½o para acessar o projeto
 			$this->verificarPermissaoAcesso(false, true, false);
 
 			// objetos utilizados
@@ -1119,27 +1119,27 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			// busca os dados aprovados
 			$orderAbrangencia = array('p.Descricao', 'u.Sigla', 'm.Descricao');
 			$buscarAP = $this->tbAbrangencia->buscarLocaisAprovados(array('a.idProjeto = ?' => $this->_idPreProjeto, 'a.stAbrangencia = ?' => 1), $orderAbrangencia);
-			$this->view->dadosAP = $buscarAP; // manda as informações para a visão
+			$this->view->dadosAP = $buscarAP; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca os dados com solicitação de readequação
+			// busca os dados com solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$buscarSR = $this->tbAbrangencia->buscarLocaisSolicitados(array('a.idPedidoAlteracao = ?' => $this->_idPedidoAlteracao, 'a.tpAcao <> ?' => 'E'), $orderAbrangencia);
-			$this->view->dadosSR = $buscarSR; // manda as informações para a visão
+			$this->view->dadosSR = $buscarSR; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca o pedido (justificativa) da solicitação de readequação
+			// busca o pedido (justificativa) da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereTipoReadequacao = array(
 				'p.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(4) // local de realização
+				,'x.tpAlteracaoProjeto IN (?)' => array(4) // local de realizaï¿½ï¿½o
 			);
 			$buscarPedido = $this->tbPedidoAlteracaoXTipoAlteracao->buscarPedido($whereTipoReadequacao)->current();
-			$this->view->pedido = $buscarPedido; // manda as informações para a visão
+			$this->view->pedido = $buscarPedido; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca os arquivos da solicitação de readequação
+			// busca os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(4) // local de realização
+				,'x.tpAlteracaoProjeto IN (?)' => array(4) // local de realizaï¿½ï¿½o
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
-			$this->view->arquivos = $buscarArquivo; // manda as informações para a visão
+			$this->view->arquivos = $buscarArquivo; // manda as informaï¿½ï¿½es para a visï¿½o
 		} // fecha try
 		catch (Exception $e)
 		{
@@ -1147,10 +1147,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		}
 
 
-		// ========== INÍCIO: FORMULÁRIO ENVIADO VIA POST ==========
+		// ========== INï¿½CIO: FORMULï¿½RIO ENVIADO VIA POST ==========
 		if ($this->getRequest()->isPost())
 		{
-			// recebe os dados do formulário
+			// recebe os dados do formulï¿½rio
 			$post = Zend_Registry::get('post');
 			$pais               = $post->pais;
 			$uf                 = !empty($post->uf)     ? $post->uf     : 0;
@@ -1164,21 +1164,21 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 			try
 			{
-				// validação dos dados
+				// validaï¿½ï¿½o dos dados
 				if (empty($pais) || (empty($justificativa) && empty($dsExclusao))) :
 					throw new Exception('Dados obrigat&oacute;rios n&atilde;o informados!');
 				endif;
 
-				// atualiza o status do pedido de readequação
+				// atualiza o status do pedido de readequaï¿½ï¿½o
 				$this->_stPedidoAlteracao = $stPedidoAlteracao;
 
 				// salva os dados do pedido
 				$this->salvarPedido($stPedidoAlteracao, $siVerificacao);
 
-				// filtro para alteração
+				// filtro para alteraï¿½ï¿½o
 				$whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
 
-				// faz a cópia da tabela original para a solicitada caso não exista na solicitada, e, exista algum registro na aprovada
+				// faz a cï¿½pia da tabela original para a solicitada caso nï¿½o exista na solicitada, e, exista algum registro na aprovada
 				if ( count($this->tbAbrangencia->buscar(array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao))) <= 0 && count($buscarAP) > 0 ) :
 					foreach ($buscarAP as $d) :
 						$dadosCopia = array(
@@ -1223,7 +1223,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 				endif;
 
 				// salva os dados da justificativa
-				$whereItemPedido = array_merge($whereItemPedido, array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto)); // filtro para alteração
+				$whereItemPedido = array_merge($whereItemPedido, array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto)); // filtro para alteraï¿½ï¿½o
 				if ( count($this->tbPedidoAlteracaoXTipoAlteracao->buscar($whereItemPedido)) <= 0 ) : // CADASTRA
 					$dadosJustificativa = array(
 						'idPedidoAlteracao'   => $this->_idPedidoAlteracao
@@ -1248,14 +1248,14 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 				$this->view->message_type  = 'ERROR';
 			}
 		} // fecha if
-		// ========== FIM: FORMULÁRIO ENVIADO VIA POST ==========
+		// ========== FIM: FORMULï¿½RIO ENVIADO VIA POST ==========
 
-	} // fecha método localRealizacaoAction()
+	} // fecha mï¿½todo localRealizacaoAction()
 
 
 
 	/**
-	 * Método para solicitar alterações no Nome do Projeto
+	 * Mï¿½todo para solicitar alteraï¿½ï¿½es no Nome do Projeto
 	 * @access public
 	 * @param void
 	 * @return void
@@ -1264,7 +1264,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	{
 		try
 		{
-			// verifica se o usuário logado tem permissão para acessar o projeto
+			// verifica se o usuï¿½rio logado tem permissï¿½o para acessar o projeto
 			$this->verificarPermissaoAcesso(false, true, false);
 
 			// objetos utilizados
@@ -1275,27 +1275,27 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 			// busca os dados aprovados
 			$buscarAP = $this->Projetos->buscar(array('IdPRONAC = ?' => $this->_idPronac))->current();
-			$this->view->dadosAP = $buscarAP; // manda as informações para a visão
+			$this->view->dadosAP = $buscarAP; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca os dados com solicitação de readequação
+			// busca os dados com solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$buscarSR = $this->tbProposta->buscarPedido(array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao))->current();
-			$this->view->dadosSR = $buscarSR; // manda as informações para a visão
+			$this->view->dadosSR = $buscarSR; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca o pedido (justificativa) da solicitação de readequação
+			// busca o pedido (justificativa) da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereTipoReadequacao = array(
 				'p.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
 				,'x.tpAlteracaoProjeto IN (?)' => array(5) // nome do projeto
 			);
 			$buscarPedido = $this->tbPedidoAlteracaoXTipoAlteracao->buscarPedido($whereTipoReadequacao)->current();
-			$this->view->pedido = $buscarPedido; // manda as informações para a visão
+			$this->view->pedido = $buscarPedido; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca os arquivos da solicitação de readequação
+			// busca os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
 				,'x.tpAlteracaoProjeto IN (?)' => array(5) // nome do projeto
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
-			$this->view->arquivos = $buscarArquivo; // manda as informações para a visão
+			$this->view->arquivos = $buscarArquivo; // manda as informaï¿½ï¿½es para a visï¿½o
 		} // fecha try
 		catch (Exception $e)
 		{
@@ -1303,10 +1303,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		}
 
 
-		// ========== INÍCIO: FORMULÁRIO ENVIADO VIA POST ==========
+		// ========== INï¿½CIO: FORMULï¿½RIO ENVIADO VIA POST ==========
 		if ($this->getRequest()->isPost())
 		{
-			// recebe os dados do formulário
+			// recebe os dados do formulï¿½rio
 			$post = Zend_Registry::get('post');
 			$nome               = $post->nome;
 			$justificativa      = $post->justificativa;
@@ -1316,18 +1316,18 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 			try
 			{
-				// validação dos dados
+				// validaï¿½ï¿½o dos dados
 				if (empty($nome) || empty($justificativa)) :
 					throw new Exception('Dados obrigat&oacute;rios n&atilde;o informados!');
 				endif;
 
-				// atualiza o status do pedido de readequação
+				// atualiza o status do pedido de readequaï¿½ï¿½o
 				$this->_stPedidoAlteracao = $stPedidoAlteracao;
 
 				// salva os dados do pedido
 				$this->salvarPedido($stPedidoAlteracao, $siVerificacao);
 
-				// filtro para alteração
+				// filtro para alteraï¿½ï¿½o
 				$whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
 
 				// salva os dados do item do pedido
@@ -1348,7 +1348,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 				endif;
 
 				// salva os dados da justificativa
-				$whereItemPedido = array_merge($whereItemPedido, array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto)); // filtro para alteração
+				$whereItemPedido = array_merge($whereItemPedido, array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto)); // filtro para alteraï¿½ï¿½o
 				if ( count($this->tbPedidoAlteracaoXTipoAlteracao->buscar($whereItemPedido)) <= 0 ) : // CADASTRA
 					$dadosJustificativa = array(
 						'idPedidoAlteracao'   => $this->_idPedidoAlteracao
@@ -1373,14 +1373,14 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 				$this->view->message_type  = 'ERROR';
 			}
 		} // fecha if
-		// ========== FIM: FORMULÁRIO ENVIADO VIA POST ==========
+		// ========== FIM: FORMULï¿½RIO ENVIADO VIA POST ==========
 
-	} // fecha método nomeProjetoAction()
+	} // fecha mï¿½todo nomeProjetoAction()
 
 
 
 	/**
-	 * Método para solicitar prorrogação de Prazo de Execução do Projeto
+	 * Mï¿½todo para solicitar prorrogaï¿½ï¿½o de Prazo de Execuï¿½ï¿½o do Projeto
 	 * @access public
 	 * @param void
 	 * @return void
@@ -1389,7 +1389,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	{
 		try
 		{
-			// verifica se o usuário logado tem permissão para acessar o projeto
+			// verifica se o usuï¿½rio logado tem permissï¿½o para acessar o projeto
 			$this->verificarPermissaoAcesso(false, true, false);
 
 			// objetos utilizados
@@ -1400,27 +1400,27 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 			// busca os dados aprovados
 			$buscarAP = $this->Projetos->buscarPeriodoExecucao($this->_idPronac);
-			$this->view->dadosAP = $buscarAP; // manda as informações para a visão
+			$this->view->dadosAP = $buscarAP; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca os dados com solicitação de readequação
+			// busca os dados com solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$buscarSR = $this->tbProrrogacaoPrazo->buscarDados($this->_idPronac, 'E', $this->_idPedidoAlteracao)->current();
-			$this->view->dadosSR = $buscarSR; // manda as informações para a visão
+			$this->view->dadosSR = $buscarSR; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca o pedido (justificativa) da solicitação de readequação
+			// busca o pedido (justificativa) da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereTipoReadequacao = array(
 				'p.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(9) // prazo de execução
+				,'x.tpAlteracaoProjeto IN (?)' => array(9) // prazo de execuï¿½ï¿½o
 			);
 			$buscarPedido = $this->tbPedidoAlteracaoXTipoAlteracao->buscarPedido($whereTipoReadequacao)->current();
-			$this->view->pedido = $buscarPedido; // manda as informações para a visão
+			$this->view->pedido = $buscarPedido; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca os arquivos da solicitação de readequação
+			// busca os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(9) // prazo de execução
+				,'x.tpAlteracaoProjeto IN (?)' => array(9) // prazo de execuï¿½ï¿½o
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
-			$this->view->arquivos = $buscarArquivo; // manda as informações para a visão
+			$this->view->arquivos = $buscarArquivo; // manda as informaï¿½ï¿½es para a visï¿½o
 		} // fecha try
 		catch (Exception $e)
 		{
@@ -1428,10 +1428,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		}
 
 
-		// ========== INÍCIO: FORMULÁRIO ENVIADO VIA POST ==========
+		// ========== INï¿½CIO: FORMULï¿½RIO ENVIADO VIA POST ==========
 		if ($this->getRequest()->isPost())
 		{
-			// recebe os dados do formulário
+			// recebe os dados do formulï¿½rio
 			$post = Zend_Registry::get('post');
 			$dtInicioExecucao   = Data::dataAmericana($post->dtInicioExecucaoSR);
 			$dtFimExecucao      = Data::dataAmericana($post->dtFimExecucaoSR);
@@ -1442,18 +1442,18 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 			try
 			{
-				// validação dos dados
+				// validaï¿½ï¿½o dos dados
 				if (empty($dtInicioExecucao) || empty($dtFimExecucao) || empty($justificativa)) :
 					throw new Exception('Dados obrigat&oacute;rios n&atilde;o informados!');
 				endif;
 
-				// atualiza o status do pedido de readequação
+				// atualiza o status do pedido de readequaï¿½ï¿½o
 				$this->_stPedidoAlteracao = $stPedidoAlteracao;
 
 				// salva os dados do pedido
 				$this->salvarPedido($stPedidoAlteracao, $siVerificacao);
 
-				// filtro para alteração
+				// filtro para alteraï¿½ï¿½o
 				$whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
 
 				// salva os dados do item do pedido
@@ -1475,7 +1475,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 				endif;
 
 				// salva os dados da justificativa
-				$whereItemPedido = array_merge($whereItemPedido, array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto)); // filtro para alteração
+				$whereItemPedido = array_merge($whereItemPedido, array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto)); // filtro para alteraï¿½ï¿½o
 				if ( count($this->tbPedidoAlteracaoXTipoAlteracao->buscar($whereItemPedido)) <= 0 ) : // CADASTRA
 					$dadosJustificativa = array(
 						'idPedidoAlteracao'   => $this->_idPedidoAlteracao
@@ -1500,14 +1500,14 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 				$this->view->message_type  = 'ERROR';
 			}
 		} // fecha if
-		// ========== FIM: FORMULÁRIO ENVIADO VIA POST ==========
+		// ========== FIM: FORMULï¿½RIO ENVIADO VIA POST ==========
 
-	} // fecha método prazoExecucaoAction()
+	} // fecha mï¿½todo prazoExecucaoAction()
 
 
 
 	/**
-	 * Método para solicitar prorrogação de Prazo de Captação do Projeto
+	 * Mï¿½todo para solicitar prorrogaï¿½ï¿½o de Prazo de Captaï¿½ï¿½o do Projeto
 	 * @access public
 	 * @param void
 	 * @return void
@@ -1516,7 +1516,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	{
 		try
 		{
-			// verifica se o usuário logado tem permissão para acessar o projeto
+			// verifica se o usuï¿½rio logado tem permissï¿½o para acessar o projeto
 			$this->verificarPermissaoAcesso(false, true, false);
 
 			// objetos utilizados
@@ -1525,33 +1525,33 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			$this->tbPedidoAlteracaoXTipoAlteracao = new tbPedidoAlteracaoXTipoAlteracao();
 			$this->tbPedidoAltProjetoXArquivo      = new tbPedidoAltProjetoXArquivo();
 
-			// busca os dados aprovados de execução e captação
+			// busca os dados aprovados de execuï¿½ï¿½o e captaï¿½ï¿½o
 			$buscarExecAP = $this->Projetos->buscarPeriodoExecucao($this->_idPronac);
-			$this->view->dadosExecAP = $buscarExecAP; // manda as informações para a visão
+			$this->view->dadosExecAP = $buscarExecAP; // manda as informaï¿½ï¿½es para a visï¿½o
 			$buscarAP = $this->Projetos->buscarPeriodoCaptacao($this->_idPronac, null, null, false, array('TipoAprovacao = ?' => 1, 'PortariaAprovacao IS NOT NULL' => ''));
-			$this->view->dadosAP = $buscarAP; // manda as informações para a visão
+			$this->view->dadosAP = $buscarAP; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca os dados com solicitação de readequação (execução e captação)
+			// busca os dados com solicitaï¿½ï¿½o de readequaï¿½ï¿½o (execuï¿½ï¿½o e captaï¿½ï¿½o)
 			$buscarExecSR = $this->tbProrrogacaoPrazo->buscarDados($this->_idPronac, 'E', $this->_idPedidoAlteracao)->current();
-			$this->view->dadosExecSR = $buscarExecSR; // manda as informações para a visão
+			$this->view->dadosExecSR = $buscarExecSR; // manda as informaï¿½ï¿½es para a visï¿½o
 			$buscarSR = $this->tbProrrogacaoPrazo->buscarDados($this->_idPronac, 'C', $this->_idPedidoAlteracao)->current();
-			$this->view->dadosSR = $buscarSR; // manda as informações para a visão
+			$this->view->dadosSR = $buscarSR; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca o pedido (justificativa) da solicitação de readequação
+			// busca o pedido (justificativa) da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereTipoReadequacao = array(
 				'p.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(8) // prazo de captação
+				,'x.tpAlteracaoProjeto IN (?)' => array(8) // prazo de captaï¿½ï¿½o
 			);
 			$buscarPedido = $this->tbPedidoAlteracaoXTipoAlteracao->buscarPedido($whereTipoReadequacao)->current();
-			$this->view->pedido = $buscarPedido; // manda as informações para a visão
+			$this->view->pedido = $buscarPedido; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca os arquivos da solicitação de readequação
+			// busca os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(8) // prazo de captação
+				,'x.tpAlteracaoProjeto IN (?)' => array(8) // prazo de captaï¿½ï¿½o
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
-			$this->view->arquivos = $buscarArquivo; // manda as informações para a visão
+			$this->view->arquivos = $buscarArquivo; // manda as informaï¿½ï¿½es para a visï¿½o
 		} // fecha try
 		catch (Exception $e)
 		{
@@ -1559,10 +1559,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		}
 
 
-		// ========== INÍCIO: FORMULÁRIO ENVIADO VIA POST ==========
+		// ========== INï¿½CIO: FORMULï¿½RIO ENVIADO VIA POST ==========
 		if ($this->getRequest()->isPost())
 		{
-			// recebe os dados do formulário
+			// recebe os dados do formulï¿½rio
 			$post = Zend_Registry::get('post');
 			$dtInicioCaptacao   = Data::dataAmericana($post->dtInicioCaptacaoSR);
 			$dtFimCaptacao      = Data::dataAmericana($post->dtFimCaptacaoSR);
@@ -1573,18 +1573,18 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 			try
 			{
-				// validação dos dados
+				// validaï¿½ï¿½o dos dados
 				if (empty($dtInicioCaptacao) || empty($dtFimCaptacao) || empty($justificativa)) :
 					throw new Exception('Dados obrigat&oacute;rios n&atilde;o informados!');
 				endif;
 
-				// atualiza o status do pedido de readequação
+				// atualiza o status do pedido de readequaï¿½ï¿½o
 				$this->_stPedidoAlteracao = $stPedidoAlteracao;
 
 				// salva os dados do pedido
 				$this->salvarPedido($stPedidoAlteracao, $siVerificacao);
 
-				// filtro para alteração
+				// filtro para alteraï¿½ï¿½o
 				$whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
 
 				// salva os dados do item do pedido
@@ -1606,7 +1606,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 				endif;
 
 				// salva os dados da justificativa
-				$whereItemPedido = array_merge($whereItemPedido, array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto)); // filtro para alteração
+				$whereItemPedido = array_merge($whereItemPedido, array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto)); // filtro para alteraï¿½ï¿½o
 				if ( count($this->tbPedidoAlteracaoXTipoAlteracao->buscar($whereItemPedido)) <= 0 ) : // CADASTRA
 					$dadosJustificativa = array(
 						'idPedidoAlteracao'   => $this->_idPedidoAlteracao
@@ -1631,14 +1631,14 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 				$this->view->message_type  = 'ERROR';
 			}
 		} // fecha if
-		// ========== FIM: FORMULÁRIO ENVIADO VIA POST ==========
+		// ========== FIM: FORMULï¿½RIO ENVIADO VIA POST ==========
 
-	} // fecha método prazoCaptacaoAction()
+	} // fecha mï¿½todo prazoCaptacaoAction()
 
 
 
 	/**
-	 * Método para solicitar alteração na Proposta Pedagógica do Projeto
+	 * Mï¿½todo para solicitar alteraï¿½ï¿½o na Proposta Pedagï¿½gica do Projeto
 	 * @access public
 	 * @param void
 	 * @return void
@@ -1647,7 +1647,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	{
 		try
 		{
-			// verifica se o usuário logado tem permissão para acessar o projeto
+			// verifica se o usuï¿½rio logado tem permissï¿½o para acessar o projeto
 			$this->verificarPermissaoAcesso(false, true, false);
 
 			// objetos utilizados
@@ -1658,37 +1658,37 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
 			// busca os dados aprovados
 			$buscarAP = $this->PreProjeto->buscar(array('idPreProjeto = ?' => $this->_idPreProjeto))->current();
-			$this->view->dadosAP = $buscarAP; // manda as informações para a visão
+			$this->view->dadosAP = $buscarAP; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca os dados com solicitação de readequação
+			// busca os dados com solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$buscarSR = $this->tbProposta->buscarPedido(array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao))->current();
-			$this->view->dadosSR = $buscarSR; // manda as informações para a visão
+			$this->view->dadosSR = $buscarSR; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca o pedido (justificativa) da solicitação de readequação
+			// busca o pedido (justificativa) da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereTipoReadequacao = array(
 				'p.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(6) // proposta pedagógica
+				,'x.tpAlteracaoProjeto IN (?)' => array(6) // proposta pedagï¿½gica
 			);
 			$buscarPedido = $this->tbPedidoAlteracaoXTipoAlteracao->buscarPedido($whereTipoReadequacao)->current();
-			$this->view->pedido = $buscarPedido; // manda as informações para a visão
+			$this->view->pedido = $buscarPedido; // manda as informaï¿½ï¿½es para a visï¿½o
 
-			// busca os arquivos da solicitação de readequação
+			// busca os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			/*$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $this->_idPedidoAlteracao
-				,'x.tpAlteracaoProjeto IN (?)' => array(6) // proposta pedagógica
+				,'x.tpAlteracaoProjeto IN (?)' => array(6) // proposta pedagï¿½gica
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
-			$this->view->arquivos = $buscarArquivo; // manda as informações para a visão*/
+			$this->view->arquivos = $buscarArquivo; // manda as informaï¿½ï¿½es para a visï¿½o*/
 		} // fecha try
 		catch (Exception $e)
 		{
                     parent::message($e->getMessage(), $this->_urlAtual, 'ERROR');
 		}
 
-		// ========== INÍCIO: FORMULÁRIO ENVIADO VIA POST ==========
+		// ========== INï¿½CIO: FORMULï¿½RIO ENVIADO VIA POST ==========
 		if ($this->getRequest()->isPost())
 		{
-                    // recebe os dados do formulário
+                    // recebe os dados do formulï¿½rio
                     $post = Zend_Registry::get('post');
                     $especificacaoSolicitada  = $post->especificacaoSolicitada;
                     $estrategiaExecSolicitada = $post->estrategiaExecSolicitada;
@@ -1699,18 +1699,18 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 
                     try
                     {
-                        // validação dos dados
+                        // validaï¿½ï¿½o dos dados
                         if (empty($especificacaoSolicitada) || empty($estrategiaExecSolicitada) || empty($justificativa)) :
                             throw new Exception('Dados obrigat&oacute;rios n&atilde;o informados!');
                         endif;
 
-                        // atualiza o status do pedido de readequação
+                        // atualiza o status do pedido de readequaï¿½ï¿½o
                         $this->_stPedidoAlteracao = $stPedidoAlteracao;
 
                         // salva os dados do pedido
                         $this->salvarPedido($stPedidoAlteracao, $siVerificacao);
 
-                        // filtro para alteração
+                        // filtro para alteraï¿½ï¿½o
                         $whereItemPedido = array('idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
 
                         // salva os dados do item do pedido
@@ -1733,7 +1733,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                         endif;
 
                         // salva os dados da justificativa
-                        $whereItemPedido = array_merge($whereItemPedido, array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto)); // filtro para alteração
+                        $whereItemPedido = array_merge($whereItemPedido, array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto)); // filtro para alteraï¿½ï¿½o
                         if ( count($this->tbPedidoAlteracaoXTipoAlteracao->buscar($whereItemPedido)) <= 0 ) : // CADASTRA
                             $dadosJustificativa = array(
                                 'idPedidoAlteracao'   => $this->_idPedidoAlteracao
@@ -1758,14 +1758,14 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                         $this->view->message_type  = 'ERROR';
                     }
 		} // fecha if
-		// ========== FIM: FORMULÁRIO ENVIADO VIA POST ==========
+		// ========== FIM: FORMULï¿½RIO ENVIADO VIA POST ==========
 
-	} // fecha método propostaPedagogicaAction()
+	} // fecha mï¿½todo propostaPedagogicaAction()
 
 
 
 	/**
-	 * Método com a Planilha de Custos por Produtos do Projeto
+	 * Mï¿½todo com a Planilha de Custos por Produtos do Projeto
 	 * @access public
 	 * @param void
 	 * @return void
@@ -1773,7 +1773,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	public function custoProdutosAction()
 	{
             try {
-                // verifica se o usuário logado tem permissão para acessar o projeto
+                // verifica se o usuï¿½rio logado tem permissï¿½o para acessar o projeto
                 $this->verificarPermissaoAcesso(false, true, false);
 
                 $this->tbPlanoDistribuicao = new tbPlanoDistribuicao();
@@ -1781,21 +1781,21 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                 // busca os dados aprovados
                 $orderProduto = array('p.stPrincipal DESC', 'd.Descricao');
                 $buscarAP = $this->tbPlanoDistribuicao->buscarProdutosAprovados(array('p.idProjeto = ?' => $this->_idPreProjeto, 'p.stPlanoDistribuicaoProduto = ?' => 1), $orderProduto);
-                $this->view->dadosAP = $buscarAP; // manda as informações para a visão
+                $this->view->dadosAP = $buscarAP; // manda as informaï¿½ï¿½es para a visï¿½o
 
-                // busca os dados com solicitação de readequação
+                // busca os dados com solicitaï¿½ï¿½o de readequaï¿½ï¿½o
                 $buscarSR = $this->tbPlanoDistribuicao->buscarProdutosSolicitados(array('p.idPedidoAlteracao = ?' => $this->_idPedidoAlteracao, 'p.tpAcao <> ?' => 'E', 'tpPlanoDistribuicao = ?' => 'SR'), $orderProduto);
-                $this->view->dadosSR = $buscarSR; // manda as informações para a visão
+                $this->view->dadosSR = $buscarSR; // manda as informaï¿½ï¿½es para a visï¿½o
             } // fecha try
             catch (Exception $e) {
                 parent::message($e->getMessage(), $this->_urlAtual, 'ERROR');
             }
 
-	} // fecha método custoProdutosAction()
+	} // fecha mï¿½todo custoProdutosAction()
 
 
 	/**
-	 * Método com a Planilha de Custos Administrativo do Projeto
+	 * Mï¿½todo com a Planilha de Custos Administrativo do Projeto
 	 * @access public
 	 * @param void
 	 * @return void
@@ -1803,19 +1803,19 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	public function custoAdministrativoAction()
 	{
 		$this->_redirect('readequacao/custo/idpronac/' . $this->_idPronac . '/idproduto/0');
-	} // fecha método custoAdministrativoAction()
+	} // fecha mï¿½todo custoAdministrativoAction()
 
 
 
 	/**
-	 * Método com a Planilha de Custos (Tanto pra Produtos como para Administrativos)
+	 * Mï¿½todo com a Planilha de Custos (Tanto pra Produtos como para Administrativos)
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function custoAction() {
             try {
-                // verifica se o usuário logado tem permissão para acessar o projeto
+                // verifica se o usuï¿½rio logado tem permissï¿½o para acessar o projeto
                 $this->verificarPermissaoAcesso(false, true, false);
 
                 // objetos utilizados
@@ -1828,14 +1828,14 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                 $this->Verificacao                     = new Verificacao();
                 $this->tbPedidoAlteracaoXTipoAlteracao = new tbPedidoAlteracaoXTipoAlteracao();
 
-                // pega o código do produto
+                // pega o cï¿½digo do produto
                 $idProduto = $this->_request->getParam('idproduto');
                 $idProduto = empty($idProduto) ? 0 : $idProduto;
 
                 // busca os dados aprovado do produto
                 $buscarProdutoAP = $this->tbPlanoDistribuicao->buscarProdutosAprovados(array('p.idProduto = ?' => $idProduto, 'p.idProjeto = ?' => $this->_idPreProjeto, 'p.stPlanoDistribuicaoProduto = ?' => 1));
 
-                // busca os dados com solicitação de readequação do produto
+                // busca os dados com solicitaï¿½ï¿½o de readequaï¿½ï¿½o do produto
                 $buscarProdutoSR = $this->tbPlanoDistribuicao->buscarProdutosSolicitados(array('p.idProduto = ?' => $idProduto, 'p.idPedidoAlteracao = ?' => $this->_idPedidoAlteracao, 'p.tpAcao <> ?' => 'E'));
 
                 /*if (count($buscarProdutoAP) <= 0 && count($buscarProdutoSR) <= 0) :
@@ -1914,7 +1914,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                     $cont++;
                 endforeach;
 
-                // manda as informações do produto, a planilha aprovada e a solicitada para a visão
+                // manda as informaï¿½ï¿½es do produto, a planilha aprovada e a solicitada para a visï¿½o
                 $this->view->idProduto = $idProduto;
                 $this->view->Produto   = $nomeProduto;
                 $this->view->planAP    = $planAP;
@@ -1925,9 +1925,9 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
             }
 
 
-            // ========== INÍCIO: FORMULÁRIO ENVIADO VIA POST ==========
+            // ========== INï¿½CIO: FORMULï¿½RIO ENVIADO VIA POST ==========
             if ($this->getRequest()->isPost()) {
-                // recebe os dados do formulário
+                // recebe os dados do formulï¿½rio
                 $post = Zend_Registry::get('post');
                 $dadosEtapa = explode(':', $post->etapa);
                 $dadosEtapa = $dadosEtapa[0];
@@ -1958,18 +1958,18 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                 $tpPlanilhaEnviada      = $post->tpPlanilhaEnviada;
 
                 try {
-                    // validação dos dados
+                    // validaï¿½ï¿½o dos dados
                     if (empty($etapa) || empty($item) || empty($unidade) || empty($vlUnitario) || empty($fonte) || empty($uf) || empty($cidade) || empty($justificativa)) :
                         throw new Exception('Dados obrigat&oacute;rios n&atilde;o informados!');
                     endif;
 
-                    // atualiza o status do pedido de readequação
+                    // atualiza o status do pedido de readequaï¿½ï¿½o
                     $this->_stPedidoAlteracao = $stPedidoAlteracao;
 
                     // salva os dados do pedido
                     $this->salvarPedido($stPedidoAlteracao, $siVerificacao);
 
-                    // faz a cópia da tabela original para a solicitada caso não exista na solicitada, e, exista algum registro na aprovada
+                    // faz a cï¿½pia da tabela original para a solicitada caso nï¿½o exista na solicitada, e, exista algum registro na aprovada
                     $wherePlanilhaAP  = array('PAP.tpPlanilha = ?' => 'CO', 'PAP.stAtivo = ?' => 'S', 'PAP.IdPRONAC = ?' => $this->_idPronac);
                     $wherePlanilhaSR  = array('PAP.tpPlanilha = ?' => 'SR', 'PAP.stAtivo = ?' => 'N', 'PAP.IdPRONAC = ?' => $this->_idPronac, 'PAP.idPedidoAlteracao = ?' => $this->_idPedidoAlteracao);
                     $buscarPlanilhaAP = $this->tbPlanilhaAprovacao->buscarCustosReadequacao($wherePlanilhaAP);
@@ -2091,7 +2091,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                     endif;
 
                     // salva os dados da justificativa
-                    $whereItemPedido = array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto, 'idPedidoAlteracao = ?' => $this->_idPedidoAlteracao); // filtro para alteração
+                    $whereItemPedido = array('tpAlteracaoProjeto = ?' => $tpAlteracaoProjeto, 'idPedidoAlteracao = ?' => $this->_idPedidoAlteracao); // filtro para alteraï¿½ï¿½o
                     if ( count($this->tbPedidoAlteracaoXTipoAlteracao->buscar($whereItemPedido)) <= 0 ) : // CADASTRA
                         $dadosJustificativa = array(
                                 'idPedidoAlteracao'   => $this->_idPedidoAlteracao
@@ -2112,14 +2112,14 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                     $this->view->message_type  = 'ERROR';
                 }
             } // fecha if
-            // ========== FIM: FORMULÁRIO ENVIADO VIA POST ==========
+            // ========== FIM: FORMULï¿½RIO ENVIADO VIA POST ==========
 
-        } // fecha método custoAction()
+        } // fecha mï¿½todo custoAction()
 
 
 
 	/**
-	 * Método para buscar o histórico com as solicitações de alteração do proponente
+	 * Mï¿½todo para buscar o histï¿½rico com as solicitaï¿½ï¿½es de alteraï¿½ï¿½o do proponente
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2132,7 +2132,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$this->tbAlteracaoNomeProponente  = new tbAlteracaoNomeProponente();
 		$this->tbPedidoAltProjetoXArquivo = new tbPedidoAltProjetoXArquivo();
 
-		// busca os dados do histórico
+		// busca os dados do histï¿½rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
 			,'p.siVerificacao IN (?)'                  => array(1, 2)
@@ -2147,7 +2147,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$cachePedido = array();
 		$cont        = 0;
 		for ($i = 0; $i < count($buscar); $i++) :
-			// busca os arquivos da solicitação de readequação
+			// busca os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$buscarArquivo = array();
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $buscar[$i]['idPedidoAlteracao']
@@ -2179,13 +2179,13 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			$dados['Arquivos'][$i]           = $buscarArquivo;
 		endfor;
 
-		$this->view->dados = $dados; // manda as informações para a visão
-	} // fecha método historicoProponenteAction()
+		$this->view->dados = $dados; // manda as informaï¿½ï¿½es para a visï¿½o
+	} // fecha mï¿½todo historicoProponenteAction()
 
 
 
 	/**
-	 * Método para buscar o histórico com as solicitações de alteração de produto
+	 * Mï¿½todo para buscar o histï¿½rico com as solicitaï¿½ï¿½es de alteraï¿½ï¿½o de produto
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2213,7 +2213,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                     $cacheItem = true;
                     $cont++;
                 }
-                // busca os produtos alterados pelo técnico
+                // busca os produtos alterados pelo tï¿½cnico
                 $whereTecnico = array(
                     'p.IdPRONAC = ?' => $this->_idPronac
                     ,'p.siVerificacao IN (?)' => array(1, 2)
@@ -2251,12 +2251,12 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
                 $dados['dadosTecnico'][$i]          = $buscarTecnico;
             endfor;
 
-            $this->view->dados = $dados; // manda as informações para a visão
-        } // fecha método historicoProdutosAction()
+            $this->view->dados = $dados; // manda as informaï¿½ï¿½es para a visï¿½o
+        } // fecha mï¿½todo historicoProdutosAction()
 
 
 	/**
-	 * Método para buscar o histórico com as solicitações de alteração da ficha técnica
+	 * Mï¿½todo para buscar o histï¿½rico com as solicitaï¿½ï¿½es de alteraï¿½ï¿½o da ficha tï¿½cnica
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2269,7 +2269,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$this->tbProposta                 = new tbProposta();
 		$this->tbPedidoAltProjetoXArquivo = new tbPedidoAltProjetoXArquivo();
 
-		// busca os dados do histórico
+		// busca os dados do histï¿½rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
 			,'p.siVerificacao IN (?)'                  => array(1, 2)
@@ -2283,10 +2283,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$dados = array();
 		$cont  = 0;
 		for ($i = 0; $i < count($buscar); $i++) :
-			// busca os arquivos da solicitação de readequação
+			// busca os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $buscar[$i]['idPedidoAlteracao']
-				,'x.tpAlteracaoProjeto IN (?)' => array(3) // ficha técnica
+				,'x.tpAlteracaoProjeto IN (?)' => array(3) // ficha tï¿½cnica
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
 			$cont++;
@@ -2306,13 +2306,13 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			$dados['Arquivos'][$i]           = $buscarArquivo;
 		endfor;
 
-		$this->view->dados = $dados; // manda as informações para a visão
-	} // fecha método historicoFichaTecnicaAction()
+		$this->view->dados = $dados; // manda as informaï¿½ï¿½es para a visï¿½o
+	} // fecha mï¿½todo historicoFichaTecnicaAction()
 
 
 
 	/**
-	 * Método para buscar o histórico com as solicitações de alteração de locais de realização
+	 * Mï¿½todo para buscar o histï¿½rico com as solicitaï¿½ï¿½es de alteraï¿½ï¿½o de locais de realizaï¿½ï¿½o
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2325,7 +2325,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$this->tbAbrangencia              = new tbAbrangencia();
 		$this->tbPedidoAltProjetoXArquivo = new tbPedidoAltProjetoXArquivo();
 
-		// busca os dados do histórico
+		// busca os dados do histï¿½rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
 			,'p.siVerificacao IN (?)'                  => array(1, 2)
@@ -2340,11 +2340,11 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$cachePedido = array();
 		$cont        = 0;
 		for ($i = 0; $i < count($buscar); $i++) :
-			// busca os arquivos da solicitação de readequação
+			// busca os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$buscarArquivo = array();
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $buscar[$i]['idPedidoAlteracao']
-				,'x.tpAlteracaoProjeto IN (?)' => array(4) // local de realização
+				,'x.tpAlteracaoProjeto IN (?)' => array(4) // local de realizaï¿½ï¿½o
 			);
 
 			$cacheItem = false;
@@ -2383,13 +2383,13 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			$dados['Arquivos'][$i]            = $buscarArquivo;
 		endfor;
 
-		$this->view->dados = $dados; // manda as informações para a visão
-	} // fecha método historicoLocalRealizacaoAction()
+		$this->view->dados = $dados; // manda as informaï¿½ï¿½es para a visï¿½o
+	} // fecha mï¿½todo historicoLocalRealizacaoAction()
 
 
 
 	/**
-	 * Método para buscar o histórico com as solicitações de alteração do nome do projeto
+	 * Mï¿½todo para buscar o histï¿½rico com as solicitaï¿½ï¿½es de alteraï¿½ï¿½o do nome do projeto
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2402,7 +2402,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$this->tbProposta                 = new tbProposta();
 		$this->tbPedidoAltProjetoXArquivo = new tbPedidoAltProjetoXArquivo();
 
-		// busca os dados do histórico
+		// busca os dados do histï¿½rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
 			,'p.siVerificacao IN (?)'                  => array(1, 2)
@@ -2416,7 +2416,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$dados = array();
 		$cont  = 0;
 		for ($i = 0; $i < count($buscar); $i++) :
-			// busca os arquivos da solicitação de readequação
+			// busca os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $buscar[$i]['idPedidoAlteracao']
 				,'x.tpAlteracaoProjeto IN (?)' => array(5) // nome do projeto
@@ -2439,13 +2439,13 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			$dados['Arquivos'][$i]           = $buscarArquivo;
 		endfor;
 
-		$this->view->dados = $dados; // manda as informações para a visão
-	} // fecha método historicoNomeProjetoAction()
+		$this->view->dados = $dados; // manda as informaï¿½ï¿½es para a visï¿½o
+	} // fecha mï¿½todo historicoNomeProjetoAction()
 
 
 
 	/**
-	 * Método para buscar o histórico com as solicitações de alteração do prazo de execução
+	 * Mï¿½todo para buscar o histï¿½rico com as solicitaï¿½ï¿½es de alteraï¿½ï¿½o do prazo de execuï¿½ï¿½o
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2458,14 +2458,14 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$this->tbProrrogacaoPrazo         = new tbProrrogacaoPrazo();
 		$this->tbPedidoAltProjetoXArquivo = new tbPedidoAltProjetoXArquivo();
 
-		// busca os dados do histórico
+		// busca os dados do histï¿½rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
 			,'p.siVerificacao IN (?)'                  => array(1, 2)
 			,'j.tpAlteracaoProjeto IN (?)'             => array(9)
 			,'a.tpAlteracaoProjeto IN (?)'             => array(9)
 			,'a.stAvaliacaoItemPedidoAlteracao IN (?)' => array('AP', 'IN')
-			,'h.tpProrrogacao = ?'                     => 'E'); // execução
+			,'h.tpProrrogacao = ?'                     => 'E'); // execuï¿½ï¿½o
 		$order = array('p.dtSolicitacao ASC');
 		$buscar = $this->tbProrrogacaoPrazo->historicoReadequacao($where, $order);
 
@@ -2473,10 +2473,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$dados = array();
 		$cont  = 0;
 		for ($i = 0; $i < count($buscar); $i++) :
-			// busca os arquivos da solicitação de readequação
+			// busca os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $buscar[$i]['idPedidoAlteracao']
-				,'x.tpAlteracaoProjeto IN (?)' => array(9) // prazo execução
+				,'x.tpAlteracaoProjeto IN (?)' => array(9) // prazo execuï¿½ï¿½o
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
 			$cont++;
@@ -2497,13 +2497,13 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			$dados['Arquivos'][$i]           = $buscarArquivo;
 		endfor;
 
-		$this->view->dados = $dados; // manda as informações para a visão
-	} // fecha método historicoPrazoExecucaoAction()
+		$this->view->dados = $dados; // manda as informaï¿½ï¿½es para a visï¿½o
+	} // fecha mï¿½todo historicoPrazoExecucaoAction()
 
 
 
 	/**
-	 * Método para buscar o histórico com as solicitações de alteração do prazo de captação
+	 * Mï¿½todo para buscar o histï¿½rico com as solicitaï¿½ï¿½es de alteraï¿½ï¿½o do prazo de captaï¿½ï¿½o
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2516,14 +2516,14 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$this->tbProrrogacaoPrazo         = new tbProrrogacaoPrazo();
 		$this->tbPedidoAltProjetoXArquivo = new tbPedidoAltProjetoXArquivo();
 
-		// busca os dados do histórico
+		// busca os dados do histï¿½rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
 			,'p.siVerificacao IN (?)'                  => array(1, 2)
 			,'j.tpAlteracaoProjeto IN (?)'             => array(8)
 			,'a.tpAlteracaoProjeto IN (?)'             => array(8)
 			,'a.stAvaliacaoItemPedidoAlteracao IN (?)' => array('AP', 'IN')
-			,'h.tpProrrogacao = ?'                     => 'C'); // captação
+			,'h.tpProrrogacao = ?'                     => 'C'); // captaï¿½ï¿½o
 		$order = array('p.dtSolicitacao ASC');
 		$buscar = $this->tbProrrogacaoPrazo->historicoReadequacao($where, $order);
 
@@ -2531,10 +2531,10 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$dados = array();
 		$cont  = 0;
 		for ($i = 0; $i < count($buscar); $i++) :
-			// busca os arquivos da solicitação de readequação
+			// busca os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 			$whereArquivo = array(
 				'x.idPedidoAlteracao = ?'      => $buscar[$i]['idPedidoAlteracao']
-				,'x.tpAlteracaoProjeto IN (?)' => array(8) // prazo captação
+				,'x.tpAlteracaoProjeto IN (?)' => array(8) // prazo captaï¿½ï¿½o
 			);
 			$buscarArquivo = $this->tbPedidoAltProjetoXArquivo->buscarArquivos($whereArquivo);
 			$cont++;
@@ -2555,13 +2555,13 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			$dados['Arquivos'][$i]           = $buscarArquivo;
 		endfor;
 
-		$this->view->dados = $dados; // manda as informações para a visão
-	} // fecha método historicoPrazoCaptacaoAction()
+		$this->view->dados = $dados; // manda as informaï¿½ï¿½es para a visï¿½o
+	} // fecha mï¿½todo historicoPrazoCaptacaoAction()
 
 
 
 	/**
-	 * Método para buscar o histórico com as solicitações de alteração da proposta pedagogica
+	 * Mï¿½todo para buscar o histï¿½rico com as solicitaï¿½ï¿½es de alteraï¿½ï¿½o da proposta pedagogica
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2574,7 +2574,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$this->tbProposta                 = new tbProposta();
 		$this->tbPedidoAltProjetoXArquivo = new tbPedidoAltProjetoXArquivo();
 
-		// busca os dados do histórico
+		// busca os dados do histï¿½rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
 			,'p.siVerificacao IN (?)'                  => array(1, 2)
@@ -2607,13 +2607,13 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			$dados['dsEstrategiaExecucao'][$i]   = utf8_encode($buscar[$i]['dsEstrategiaExecucao']);
 		endfor;
 
-		$this->view->dados = $dados; // manda as informações para a visão
-	} // fecha método historicoPropostaPedagogicaAction()
+		$this->view->dados = $dados; // manda as informaï¿½ï¿½es para a visï¿½o
+	} // fecha mï¿½todo historicoPropostaPedagogicaAction()
 
 
 
 	/**
-	 * Método para buscar o histórico com as solicitações de alteração de custos por produtos
+	 * Mï¿½todo para buscar o histï¿½rico com as solicitaï¿½ï¿½es de alteraï¿½ï¿½o de custos por produtos
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2625,7 +2625,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		// objetos
 		$this->tbPlanilhaAprovacao = new PlanilhaAprovacao();
 
-		// busca os dados do histórico
+		// busca os dados do histï¿½rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
 			,'p.siVerificacao IN (?)'                  => array(1, 2)
@@ -2667,13 +2667,13 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			$cont++;
 		endforeach;
 
-		$this->view->planSR = $plan; // manda as informações para a visão
-	} // fecha método historicoCustoProdutosAction()
+		$this->view->planSR = $plan; // manda as informaï¿½ï¿½es para a visï¿½o
+	} // fecha mï¿½todo historicoCustoProdutosAction()
 
 
 
 	/**
-	 * Método para buscar o histórico com as solicitações de alteração de custos administrativos
+	 * Mï¿½todo para buscar o histï¿½rico com as solicitaï¿½ï¿½es de alteraï¿½ï¿½o de custos administrativos
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2685,7 +2685,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		// objetos
 		$this->tbPlanilhaAprovacao = new PlanilhaAprovacao();
 
-		// busca os dados do histórico
+		// busca os dados do histï¿½rico
 		$where = array(
 			'p.IdPRONAC = ?'                           => $this->_idPronac
 			,'p.siVerificacao IN (?)'                  => array(1, 2)
@@ -2727,13 +2727,13 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			$cont++;
 		endforeach;
 
-		$this->view->planSR = $plan; // manda as informações para a visão
-	} // fecha método historicoCustoAdministrativoAction()
+		$this->view->planSR = $plan; // manda as informaï¿½ï¿½es para a visï¿½o
+	} // fecha mï¿½todo historicoCustoAdministrativoAction()
 
 
 
 	/**
-	 * Método para popular o formulário de cadastro de itens
+	 * Mï¿½todo para popular o formulï¿½rio de cadastro de itens
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2742,14 +2742,14 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	{
 		$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 
-		// recebe os dados do formulário
+		// recebe os dados do formulï¿½rio
 		$post = Zend_Registry::get('post');
 
 		if (isset($post->popularForm) && $post->popularForm == 'S') :
 
 			$idPlanilhaAprovacao = $post->idPlanilhaAprovacao;
 
-			// busca as informações do item da planilha
+			// busca as informaï¿½ï¿½es do item da planilha
 			$this->tbPlanilhaAprovacao = new PlanilhaAprovacao();
 			$where = array('PAP.idPlanilhaAprovacao = ?' => $idPlanilhaAprovacao);
 			$buscar = $this->tbPlanilhaAprovacao->buscarCustosReadequacao($where);
@@ -2774,12 +2774,12 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			echo $json;
 			die();
 		endif;
-	} // fecha método popFormCustoAction()
+	} // fecha mï¿½todo popFormCustoAction()
 
 
 
 	/**
-	 * Método para popular a combo de itens de custo de acordo com uma etapa
+	 * Mï¿½todo para popular a combo de itens de custo de acordo com uma etapa
 	 * @access public
 	 * @param void
 	 * @return void
@@ -2788,7 +2788,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 	{
 		$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 
-		// recebe os dados do formulário
+		// recebe os dados do formulï¿½rio
 		$post = Zend_Registry::get('post');
 
 		if (isset($post->popularEtapas) && $post->popularEtapas == 'S') :
@@ -2808,6 +2808,6 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			echo $json;
 			die();
 		endif;
-	} // fecha método popItensCustoAction()
+	} // fecha mï¿½todo popItensCustoAction()
 
 } // fecha class

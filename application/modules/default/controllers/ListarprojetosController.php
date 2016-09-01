@@ -10,7 +10,7 @@ class ListarprojetosController extends MinC_Controller_Action_Abstract {
     private $cpfLogado = 0;
 
     /*     * *
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
@@ -18,12 +18,12 @@ class ListarprojetosController extends MinC_Controller_Action_Abstract {
 
     public function init() {
         ini_set('memory_limit', '128M');
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        // define as permissões
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        // define as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor Salic
         $PermissoesGrupo[] = 93;  // Acompanhamento
-        $PermissoesGrupo[] = 134; // Coordenador de Fiscalizaç?o
+        $PermissoesGrupo[] = 134; // Coordenador de Fiscalizaï¿½?o
         //SE CAIU A SECAO REDIRECIONA
         if (!$auth->hasIdentity()) {
             $url = Zend_Controller_Front::getInstance()->getBaseUrl();
@@ -44,7 +44,7 @@ class ListarprojetosController extends MinC_Controller_Action_Abstract {
         $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
         // Busca na Agentes
-        $agentesDAO = new Agente_Model_Agentes();
+        $agentesDAO = new Agente_Model_DbTable_Agentes();
         $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
 
@@ -61,7 +61,7 @@ class ListarprojetosController extends MinC_Controller_Action_Abstract {
         $this->view->idAgenteLogado = $this->idAgente;
         /*         * ****************************************************************************************************** */
 
-        // pega o idAgente do usuário logado
+        // pega o idAgente do usuï¿½rio logado
         if (isset($auth->getIdentity()->usu_codigo)) {
             parent::perfil(1, $PermissoesGrupo);
 
@@ -116,7 +116,7 @@ class ListarprojetosController extends MinC_Controller_Action_Abstract {
             try {
                 $post = Zend_Registry::get('post');
 
-                $idProponente = !empty($post->idProponente) ? $post->idProponente : ''; // deleta a máscara
+                $idProponente = !empty($post->idProponente) ? $post->idProponente : ''; // deleta a mï¿½scara
                 $mecanismo = $_POST['mecanismo'];
                 $idResponsavel = $this->idResponsavel;
 

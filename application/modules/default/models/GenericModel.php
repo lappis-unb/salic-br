@@ -171,8 +171,7 @@ class GenericModel extends Zend_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
 
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql && $schema) {
-            $arrayPedacos = explode('.', $schema);
-            if (count($arrayPedacos) < 1) {
+            if (strpos('.', $schema) === false) {
                 $schema = $schema . '.dbo';
             }
         }

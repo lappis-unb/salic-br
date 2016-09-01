@@ -44,7 +44,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
         // Busca na Agentes
-        $agentesDAO = new Agente_Model_Agentes();
+        $agentesDAO = new Agente_Model_DbTable_Agentes();
         $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
 
@@ -79,7 +79,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     public function mostraragentesAction()
     {
         $this->_helper->layout->disableLayout();
-        $ag = new Agente_Model_Agentes;
+        $ag = new Agente_Model_DbTable_Agentes;
 
         if (isset($_POST['cnpjcpf'])) {
             $cnpjcpf = $_POST['cnpjcpf'];
@@ -230,7 +230,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
     public function vincularresponsavelAction()
     {
-        $ag = new Agente_Model_Agentes;
+        $ag = new Agente_Model_DbTable_Agentes;
         $buscarvinculo = $ag->buscarAgenteVinculoResponsavel(array('vr.idAgenteProponente = ?' => $this->idUsuario, 'siVinculoProposta = ?' => 0));
         $buscarvinculado = $ag->buscarAgenteVinculoResponsavel(array('vr.idAgenteProponente = ?' => $this->idUsuario, 'siVinculoProposta = ?' => 2));
         $this->view->vinculo = $buscarvinculo;
@@ -239,7 +239,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
     public function vincularproponenteAction()
     {
-        $ag = new Agente_Model_Agentes;
+        $ag = new Agente_Model_DbTable_Agentes;
         $buscarvinculo = $ag->buscarAgenteVinculoProponente(array('vp.idAgenteProponente = ?' => $this->idUsuario, 'siVinculoProposta = ?' => 0));
         $buscarvinculado = $ag->buscarAgenteVinculoProponente(array('vp.idAgenteProponente = ?' => $this->idUsuario, 'siVinculoProposta = ?' => 2));
         $this->view->vinculo = $buscarvinculo;
@@ -254,7 +254,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     public function mostraresponsavelAction()
     {
         $this->_helper->layout->disableLayout();
-        $ag = new Agente_Model_Agentes();
+        $ag = new Agente_Model_DbTable_Agentes();
         if ($_POST) {
             $cnpjcpf = $_POST['cnpjcpf'];
             $nome = $_POST['nome'];
@@ -317,7 +317,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     public function vinculoresponsavelAction()
     {
         $tbVinculo = new TbVinculo();
-        $agentes = new Agente_Model_Agentes();
+        $agentes = new Agente_Model_DbTable_Agentes();
 
         $idResponsavel = $this->_request->getParam("idResponsavel");
         $idProponente = $this->idAgente;

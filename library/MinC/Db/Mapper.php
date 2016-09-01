@@ -38,7 +38,7 @@ class MinC_Db_Mapper
         return $this->_dbTable;
     }
 
-    public function save(Agente_Model_Agentes $agentes)
+    public function save(Agente_Model_DbTable_Agentes $agentes)
     {
 //        $data = array(
 //            'email'   => $agentes->getEmail(),
@@ -76,7 +76,7 @@ class MinC_Db_Mapper
         $resultSet = $this->getDbTable()->fetchAll();
 //        $entries   = array();
 //        foreach ($resultSet as $row) {
-//            $entry = new Agente_Model_Agentes();
+//            $entry = new Agente_Model_DbTable_Agentes();
 //            $entry->setId($row->id)
 //                ->setEmail($row->email)
 //                ->setComment($row->comment)

@@ -7,7 +7,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
     private $intTamPag = 10;
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
@@ -16,14 +16,14 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
 
         $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
         $PermissoesGrupo[] = 94;  // Parecerista
-        $PermissoesGrupo[] = 121; // Técnico de Acompanhamento
-        $PermissoesGrupo[] = 129; // Técnico de Acompanhamento
+        $PermissoesGrupo[] = 121; // Tï¿½cnico de Acompanhamento
+        $PermissoesGrupo[] = 129; // Tï¿½cnico de Acompanhamento
         $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
         $PermissoesGrupo[] = 123; // Coordenador Geral de Acompanhamento
         $PermissoesGrupo[] = 128; // Tecnico de Portaria
         parent::perfil(1, $PermissoesGrupo);
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         //SE CAIU A SECAO REDIRECIONA
         if(!$auth->hasIdentity()){
             $url = Zend_Controller_Front::getInstance()->getBaseUrl();
@@ -33,12 +33,12 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
         $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
         $this->view->agente = $agente['idAgente'];
         $this->getIdUsuario = $agente['idAgente'];
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $this->getIdOrgao = $GrupoAtivo->codOrgao;
         $this->codGrupo = $GrupoAtivo->codGrupo;
         parent::init(); // chama o init() do pai GenericControllerNew
 
-    } // fecha método init()
+    } // fecha mï¿½todo init()
 
     public function indexAction(){
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -83,20 +83,20 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
         $where['e.tpAlteracaoProjeto = ?'] = 1; //Nome do Proponente
 
         if($this->getIdOrgao == 166){
-            $where['b.Area = ?'] = 2;  // quando for SAV/CGAV/CAP pega somente os projetos da área de Audiovisual
+            $where['b.Area = ?'] = 2;  // quando for SAV/CGAV/CAP pega somente os projetos da ï¿½rea de Audiovisual
         } elseif ($this->getIdOrgao == 272){
-            $where['b.Area <> ?'] = 2; // quando for SEFIC/GEAR/SACAV pega somente os projetos das áreas que não sejam de Audiovisual
+            $where['b.Area <> ?'] = 2; // quando for SEFIC/GEAR/SACAV pega somente os projetos das ï¿½reas que nï¿½o sejam de Audiovisual
         } else {
-            $where['b.Area = ?'] = 0;  // quando for diferente de SAV/CGAV/CAP e SAV/CGAV/CAP pega somente os projetos da área de Audiovisual
+            $where['b.Area = ?'] = 0;  // quando for diferente de SAV/CGAV/CAP e SAV/CGAV/CAP pega somente os projetos da ï¿½rea de Audiovisual
         }
 
-        $stCombo = 'A'; //Aguardando Análise
+        $stCombo = 'A'; //Aguardando Anï¿½lise
         if(isset($_GET['tipoFiltro']) && !empty($_GET['tipoFiltro'])){
             $comboView = explode(':', $_GET['tipoFiltro']);
             $this->view->filtro = $_GET['tipoFiltro'];
             $where['e.tpAlteracaoProjeto = ?'] = $comboView[0];
             if($comboView[1] == 'd'){
-                $stCombo = 'D'; //Devolvidos Após Análise
+                $stCombo = 'D'; //Devolvidos Apï¿½s Anï¿½lise
             }
         }
 
@@ -145,7 +145,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-        // Chama o SQL da lista de Entidades Vinculadas - Técnico
+        // Chama o SQL da lista de Entidades Vinculadas - Tï¿½cnico
         $sqllistasDeEntidadesVinculadas = ReadequacaoProjetos::retornaSQLlista("listasDeEntidadesVinculadas", $this->getIdOrgao);
         $listaEntidades = $db->fetchAll($sqllistasDeEntidadesVinculadas);
 
@@ -164,7 +164,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
 
     public function encaminharPainelCoordAcompAction() {
         //retorna o id do agente logado
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
         $idAgenteEncaminhar = $agente['idAgente'];
 
@@ -203,7 +203,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
             $sqlEncaminhar = ReadequacaoProjetos::retornaSQLencaminhar("sqlCoordAcompEncaminhar",$ID_PRONAC,$idPedidoAlteracao,$tpAlteracaoProjeto,$justificativa,$Orgao,$idAgenteReceber);
             $db->fetchAll($sqlEncaminhar);
 
-            //RETORNA EM VARIÁVEIS OS DADOS DO LOG ANTERIOR PARA INSERIR NA TABELA tbAcaoAvaliacaoItemPedidoAlteracao
+            //RETORNA EM VARIï¿½VEIS OS DADOS DO LOG ANTERIOR PARA INSERIR NA TABELA tbAcaoAvaliacaoItemPedidoAlteracao
             $sqlproposta = ReadequacaoProjetos::retornaSQLencaminhar("sqlRecuperarRegistro",$ID_PRONAC,$idPedidoAlteracao,$tpAlteracaoProjeto,$justificativa,$Orgao,$idAgenteReceber);
             $dados = $db->fetchAll($sqlproposta);
             $idAvaliacaoItemPedidoAlteracao = $dados[0]->idAvaliacaoItemPedidoAlteracao;
@@ -435,7 +435,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
                 }
             }
 
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
+            $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
             $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
             $idagente = $agente['idAgente'];
 
@@ -481,7 +481,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
                      * ==============================================================
                      */
                     $Projetos          = new Projetos();
-                    $Agentes           = new Agente_Model_Agentes();
+                    $Agentes           = new Agente_Model_DbTable_Agentes();
                     $Visao             = new Visao();
                     $tbVinculo         = new TbVinculo();
                     $tbVinculoProposta = new tbVinculoProposta();
@@ -512,7 +512,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
 
                         $tbVinculo->alterar($dadosVinculo, $whereVinculo);
                     else :
-                        parent::message("O usuário informado não é Proponente ou o Projeto não está vinculado a uma Proposta!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento", "ERROR");
+                        parent::message("O usuï¿½rio informado nï¿½o ï¿½ Proponente ou o Projeto nï¿½o estï¿½ vinculado a uma Proposta!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetocoordacompanhamento", "ERROR");
                     endif;
 
                     /**
@@ -523,7 +523,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
 
 
                 } else if ($tpAlt == 3) {
-                    //FICHA TÉCNICA
+                    //FICHA Tï¿½CNICA
                     $fichatecAtual = FichaTecnicaDAO::buscarFichaTecnicaFinal($idPronac, $idPedidoAlt);
                     $Atual = $fichatecAtual[0]->FichaTecnica;
                     $idPreProjeto = $fichatecAtual[0]->idPreProjeto;
@@ -535,7 +535,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
                     $result = $db->fetchAll($avaliacao);
 
                 } else if ($tpAlt == 4) {
-                    //LOCAL DE REALIZAÇÃO
+                    //LOCAL DE REALIZAï¿½ï¿½O
                     $local = ProjetoDAO::buscarPronac($idPronac);
                     $idProjeto = $local['idProjeto'];
 
@@ -558,7 +558,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
                             //print_r($local);
 
                         } else if (trim($x->tpAcao) == 'E') {
-                            // altera o status dos locais excluídos
+                            // altera o status dos locais excluï¿½dos
                             $Abrangencia = new Abrangencia();
                             $Abrangencia->update(array('stAbrangencia' => 0), array('idAbrangencia = ?' => $x->idAbrangenciaAntiga));
                             //$_local = AbrangenciaDAO::buscarAbrangenciasAtuais($idProjeto, $x->idPais, $x->idUF, $x->idMunicipioIBGE);
@@ -577,7 +577,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
 
                 } else if ($tpAlt == 6) {
 
-                    //PROPOSTA PEDAGÓGICA
+                    //PROPOSTA PEDAGï¿½GICA
                     $sqlproposta = ReadequacaoProjetos::retornaSQLproposta("sqlpropostafinalizar",$idPronac);
                     $dadosSolicitado = $db->fetchAll($sqlproposta);
 
@@ -641,7 +641,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
                             'Sequencial' => $DadosProj[0]->Sequencial,
                             'TipoAprovacao' => 3,
                             'DtAprovacao' => new Zend_Db_Expr('GETDATE()'),
-                            // 'ResumoAprovacao' => 'Solicitação de Readequação',
+                            // 'ResumoAprovacao' => 'Solicitaï¿½ï¿½o de Readequaï¿½ï¿½o',
                             'DtInicioCaptacao' => $datas['dtInicioNovoPrazo'],
                             'DtFimCaptacao' => $datas['dtFimNovoPrazo'],
                             'Logon' => $idagente
@@ -709,7 +709,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
                             $buscarTpAcaoSR = $planilha->buscar($_dados);
 
                             if (count($buscarTpAcaoSR) > 0 && !empty($buscarProjeto[0]->idProjeto)) {
-                                // EXCLUSÃO
+                                // EXCLUSï¿½O
                                 if ($buscarTpAcaoSR[0]->tpAcao == 'E') :
                                     // planilha antiga
                                     $idProjeto = $buscarProjeto[0]->idProjeto;
@@ -724,7 +724,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
                                         $planilhaProposta->delete(array('idPlanilhaProposta = ?' => $dadosExculsao->idPlanilhaProposta));
                                     endforeach;
 
-                                // ALTERAÇÃO
+                                // ALTERAï¿½ï¿½O
                                 elseif ($buscarTpAcaoSR[0]->tpAcao == 'A') :
                                     // planilha antiga
                                     $idProjeto = $buscarProjeto[0]->idProjeto;
@@ -755,7 +755,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
 
                                     $planilha->update(array('tpPlanilha' => 'CO' , 'stAtivo' => 'N'), array('idPlanilhaAprovacao = ? ' => $dadosP->idPlanilhaAprovacao));
                                     $planilha->update(array('tpPlanilha' => 'CO' , 'stAtivo' => 'N'), array('idPlanilhaAprovacao = ? ' => $buscarTpAcaoSR[0]->idPlanilhaAprovacao));
-                                // INCLUSÃO
+                                // INCLUSï¿½O
                                 elseif ($buscarTpAcaoSR[0]->tpAcao == 'I') :
                                     // planilha antiga
                                     $ReplicaDados = array(
@@ -791,7 +791,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
 
             $db->commit();
 
-            //CASO SEJA O ÚLTIMO ITEM DO PEDIDO DE ALTERAÇÃO, FINALIZA O STATUS DA MESMA
+            //CASO SEJA O ï¿½LTIMO ITEM DO PEDIDO DE ALTERAï¿½ï¿½O, FINALIZA O STATUS DA MESMA
             $tbPedidoAlteracaoXTipoAlteracao = new tbPedidoAlteracaoXTipoAlteracao();
             $verificarPedidosAtivos = $tbPedidoAlteracaoXTipoAlteracao->buscar(array('idPedidoAlteracao = ?' => $idPedidoAlt, 'stVerificacao <> ?' => 4));
             $arrBusca = array();
@@ -816,7 +816,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
         } catch(Zend_Exception $e) {
 
             $db->rollBack();
-            parent::message("Erro na devolução da solicitação", "manterreadequacao?tipoFiltro=$tipoFiltro" ,"ERROR");
+            parent::message("Erro na devoluï¿½ï¿½o da solicitaï¿½ï¿½o", "manterreadequacao?tipoFiltro=$tipoFiltro" ,"ERROR");
 
         }
 

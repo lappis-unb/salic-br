@@ -60,7 +60,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
 
         // Busca na Agentes
-        $agentesDAO = new Agente_Model_Agentes();
+        $agentesDAO = new Agente_Model_DbTable_Agentes();
         $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
 
@@ -183,7 +183,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         //VERIFICA SE PROPONETE JA ESTA CADASTRADO
         $arrBusca = array();
         $arrBusca['a.idAgente = ?'] = $post->idAgente;
-        $tblAgente = new Agente_Model_Agentes();
+        $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
 
         if (count($rsProponente) > 0) {
@@ -380,7 +380,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $arrBuscaProponete = array();
         $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto->idAgente;
 
-        $tblAgente = new Agente_Model_Agentes();
+        $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
 
         $arrDados = array("proposta" => $rsPreProjeto,
@@ -416,10 +416,10 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
             $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto->idAgente;
-            $tblAgente = new Agente_Model_Agentes();
+            $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
 
-            $ag = new Agente_Model_Agentes();
+            $ag = new Agente_Model_DbTable_Agentes();
             $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto, 'vprp.siVinculoProposta = ?' => 2));
 
             $verificarvinculoCount = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto))->count();
@@ -564,7 +564,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $tblProponente = new Proponente();
         //$rsProponente = $tblProponente->buscar(array("a.idAgente = ?"=>$rsPreProjeto->idAgente))->current();
 
-        $tblAgente = new Agente_Model_Agentes();
+        $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsPreProjeto->idAgente))->current();
 
         $regularidade = Regularidade::buscarSalic($rsProponente->CNPJCPF);
@@ -1201,7 +1201,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $idUsuario = $auth->getIdentity()->IdUsuario;
         $cpf = $auth->getIdentity()->Cpf;
 
-        $Agentes = new Agente_Model_Agentes();
+        $Agentes = new Agente_Model_DbTable_Agentes();
         $buscarpendentes = $Agentes->gerenciarResponsaveisListas('0', $idUsuario);
         $buscarvinculados = $Agentes->gerenciarResponsaveisListas('2', $idUsuario);
 
@@ -1221,7 +1221,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $tbVinculo = new TbVinculo();
         $propostas = new Proposta_Model_PreProjeto();
 
-        $agentes = new Agente_Model_Agentes();
+        $agentes = new Agente_Model_DbTable_Agentes();
         $dadosCombo = array();
         $rsVinculo = $agentes->listarVincularPropostaCombo($this->idResponsavel);
 

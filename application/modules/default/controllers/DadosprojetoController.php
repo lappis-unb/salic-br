@@ -3,7 +3,7 @@
 class DadosprojetoController extends MinC_Controller_Action_Abstract {
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
@@ -19,7 +19,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo){
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -43,7 +43,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                 parent::message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuario (pega todos os grupos)
+            // pega as unidades autorizadas, orgï¿½os e grupos do usuario (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
             // manda os dados para a visao
@@ -52,13 +52,13 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
             $this->view->grupoAtivo  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuario para a visao
             $this->view->orgaoAtivo  = $GrupoAtivo->codOrgao; // manda o orgao ativo do usuario para a visao
         } // fecha if
-        else // caso o usuario não esteja autenticado
+        else // caso o usuario nï¿½o esteja autenticado
         {
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }*/
 
         parent::init(); // chama o init() do pai GenericControllerNew
-    } // fecha método init()
+    } // fecha mï¿½todo init()
 
 
 
@@ -91,7 +91,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                 }
             }
             else{
-                parent::message("Não existe CNIC aberta no momento. Favor aguardar!", "principal/index", "ERROR");
+                parent::message("Nï¿½o existe CNIC aberta no momento. Favor aguardar!", "principal/index", "ERROR");
             }
 		$pronac = $this->_request->getParam("idpronac");
 		$tbdadosprojeto = DadosprojetoDAO::buscar($pronac);
@@ -202,7 +202,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
             $aprovacao = new Aprovacao();
             $PlanilhaProposta = new PlanilhaProposta();
             $interessado      = new Interessado();
-            $agente           = new Agente_Model_Agentes();
+            $agente           = new Agente_Model_DbTable_Agentes();
 
             $dadosprojeto = $projetos->buscarTodosDadosProjeto($idpronac)->current()->toArray();
             $buscarInteressado = $interessado->buscar(array('CgcCpf = ?'=> $dadosprojeto['CgcCpf']));

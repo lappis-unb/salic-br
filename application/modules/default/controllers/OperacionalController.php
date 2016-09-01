@@ -25,7 +25,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	 * @return void
 	 */
 	public function init() {
-		$auth = Zend_Auth::getInstance(); // instancia da autenticação
+		$auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
 		if(empty($auth->getIdentity()->usu_codigo)){
 			$script = "
                 <script>window.location.href = '".Zend_Controller_Front::getInstance()->getBaseUrl()."';</script>
@@ -33,12 +33,12 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 			die($script);
 		}
 
-		// verifica as permissões
+		// verifica as permissï¿½es
 		$PermissoesGrupo = array();
         $PermissoesGrupo[] = 90; // Protocolo - Documento
         $PermissoesGrupo[] = 91; // Protocolo - Recebimento
         $PermissoesGrupo[] = 92; // Tec. de Admissibilidade
-        $PermissoesGrupo[] = 93; // Coordenador - Geral de Análise (Ministro)
+        $PermissoesGrupo[] = 93; // Coordenador - Geral de Anï¿½lise (Ministro)
         $PermissoesGrupo[] = 94; // Parecerista
         $PermissoesGrupo[] = 96;  // Consulta Gerencial
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
@@ -52,21 +52,21 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 121; // Tec. de Acompanhamento
         $PermissoesGrupo[] = 122; // Coord. de Acompanhamento
         $PermissoesGrupo[] = 123; // Coord. Geral de Acompanhamento
-        $PermissoesGrupo[] = 124; // Tec. de Prestação de Contas
-        $PermissoesGrupo[] = 125; // Coord. de Prestação de Contas
-        $PermissoesGrupo[] = 126; // Coord. Geral de Prestação de Contas
-        $PermissoesGrupo[] = 127; // Coord. Geral de Análise
+        $PermissoesGrupo[] = 124; // Tec. de Prestaï¿½ï¿½o de Contas
+        $PermissoesGrupo[] = 125; // Coord. de Prestaï¿½ï¿½o de Contas
+        $PermissoesGrupo[] = 126; // Coord. Geral de Prestaï¿½ï¿½o de Contas
+        $PermissoesGrupo[] = 127; // Coord. Geral de Anï¿½lise
         $PermissoesGrupo[] = 128; // Tec. de Portaria
         $PermissoesGrupo[] = 131; // Coord. de Admissibilidade
-        $PermissoesGrupo[] = 132; // Chefe de Divisão
-        $PermissoesGrupo[] = 135; // Tec. De Fiscalização
-        $PermissoesGrupo[] = 138; // Coord. de Avaliação
-        $PermissoesGrupo[] = 139; // Tec. de Avaliação
+        $PermissoesGrupo[] = 132; // Chefe de Divisï¿½o
+        $PermissoesGrupo[] = 135; // Tec. De Fiscalizaï¿½ï¿½o
+        $PermissoesGrupo[] = 138; // Coord. de Avaliaï¿½ï¿½o
+        $PermissoesGrupo[] = 139; // Tec. de Avaliaï¿½ï¿½o
 
 		parent::perfil(1, $PermissoesGrupo);
 		parent::init();
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $this->idPerfil = $GrupoAtivo->codGrupo;
         $this->idOrgao = $GrupoAtivo->codOrgao;
 
@@ -119,7 +119,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                 }
 
                 $this->view->cgccpf = $cnpjcpf;
-                $agentes = new Agente_Model_Agentes();
+                $agentes = new Agente_Model_DbTable_Agentes();
                 $interessados = New Interessado();
                 $buscaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $cnpjcpf));
 
@@ -138,13 +138,13 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                 $consultaRegularidade = $paRegularidade->exec($cnpjcpf);
                 $this->view->resultadoRegularidade = $consultaRegularidade;
 
-                $auth = Zend_Auth::getInstance(); // instancia da autenticação
+                $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
                 if (strlen(trim($auth->getIdentity()->usu_identificacao)) == 11){
                     $cpfcnpjUsuario = Mascara::addMaskCPF(trim($auth->getIdentity()->usu_identificacao));
                 } else {
                     $cpfcnpjUsuario = Mascara::addMaskCNPJ(trim($auth->getIdentity()->usu_identificacao));
                 }
-                $this->view->dadosUsuarioConsulta = '( '. $cpfcnpjUsuario .' ) '.$auth->getIdentity()->usu_nome.' - '.date('d/m/Y').' às '.date('h:i:s');
+                $this->view->dadosUsuarioConsulta = '( '. $cpfcnpjUsuario .' ) '.$auth->getIdentity()->usu_nome.' - '.date('d/m/Y').' ï¿½s '.date('h:i:s');
 
             } else {
                 parent::message("Por favor, informe o campo CPF/CNPJ!", 'operacional/regularidade-proponente', "ERROR");
@@ -179,7 +179,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                 }
 
                 $this->view->cgccpf = $cnpjcpf;
-                $agentes = new Agente_Model_Agentes();
+                $agentes = new Agente_Model_DbTable_Agentes();
                 $interessados = New Interessado();
                 $buscaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $cnpjcpf));
 
@@ -198,13 +198,13 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                 $consultaRegularidade = $paRegularidade->exec($cnpjcpf);
                 $this->view->resultadoRegularidade = $consultaRegularidade;
 
-                $auth = Zend_Auth::getInstance(); // instancia da autenticação
+                $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
                 if (strlen(trim($auth->getIdentity()->usu_identificacao)) == 11){
                     $cpfcnpjUsuario = Mascara::addMaskCPF(trim($auth->getIdentity()->usu_identificacao));
                 } else {
                     $cpfcnpjUsuario = Mascara::addMaskCNPJ(trim($auth->getIdentity()->usu_identificacao));
                 }
-                $this->view->dadosUsuarioConsulta = '( '. $cpfcnpjUsuario .' ) '.$auth->getIdentity()->usu_nome.' - '.date('d/m/Y').' às '.date('h:i:s');
+                $this->view->dadosUsuarioConsulta = '( '. $cpfcnpjUsuario .' ) '.$auth->getIdentity()->usu_nome.' - '.date('d/m/Y').' ï¿½s '.date('h:i:s');
                 $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
 
             } else {
@@ -256,7 +256,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                                     $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
                                     $fim    = $inicio + $this->intTamPag;
 
-                                    //Varifica se foi solicitado a ordenação
+                                    //Varifica se foi solicitado a ordenaï¿½ï¿½o
                                     if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}
 
                                     $rs = $tbl->buscar(array("stEstado = ?"=>0),$ordem, null, null);
@@ -316,7 +316,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                                     $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
                                     $fim    = $inicio + $this->intTamPag;
 
-                                    //Varifica se foi solicitado a ordenação
+                                    //Varifica se foi solicitado a ordenaï¿½ï¿½o
                                     if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}
 
                                     $rs    = $tbl->buscar();
@@ -400,7 +400,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                                     $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
                                     $fim    = $inicio + $this->intTamPag;
 
-                                    //Varifica se foi solicitado a ordenação
+                                    //Varifica se foi solicitado a ordenaï¿½ï¿½o
                                     if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}
 
                                     $rs    = $tbl->buscar();
@@ -469,7 +469,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                                     $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
                                     $fim    = $inicio + $this->intTamPag;
 
-                                    //Varifica se foi solicitado a ordenação
+                                    //Varifica se foi solicitado a ordenaï¿½ï¿½o
                                     if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1');}
 
                                     $rs    = $tbl->buscar();
@@ -538,7 +538,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                                     $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
                                     $fim    = $inicio + $this->intTamPag;
 
-                                    //Varifica se foi solicitado a ordenação
+                                    //Varifica se foi solicitado a ordenaï¿½ï¿½o
                                     if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}
 
                                     $rs    = $tbl->buscar();
@@ -608,7 +608,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                                     $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
                                     $fim    = $inicio + $this->intTamPag;
 
-                                    //Varifica se foi solicitado a ordenação
+                                    //Varifica se foi solicitado a ordenaï¿½ï¿½o
                                     if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('2 ASC');}
 
                                     $rs    = $tbl->buscar();
@@ -666,7 +666,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                                     $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
                                     $fim    = $inicio + $this->intTamPag;
 
-                                    //Varifica se foi solicitado a ordenação
+                                    //Varifica se foi solicitado a ordenaï¿½ï¿½o
                                     if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}
 
                                     $rs    = $tbl->buscar(array("idTipo = ?"=>1, "stEstado = ?"=>1));
@@ -724,7 +724,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                                     $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
                                     $fim    = $inicio + $this->intTamPag;
 
-                                    //Varifica se foi solicitado a ordenação
+                                    //Varifica se foi solicitado a ordenaï¿½ï¿½o
                                     if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}
 
                                     $rs    = $tbl->buscar(array("idTipo = ?"=>2, "stEstado = ?"=>1));
@@ -899,7 +899,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
                     if ($fim>$total) $fim = $total;
 
-                    //Varifica se foi solicitado a ordenação
+                    //Varifica se foi solicitado a ordenaï¿½ï¿½o
                     if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('idProrrogacao DESC');}
 
                     $rs = $tblProrrogacao->buscar($arrBusca, $ordem, $tamanho, $inicio);
@@ -1084,7 +1084,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
                     $tamanho  = ($fim > $total) ? $total - $inicio : $this->intTamPag;
                     if ($fim>$total) $fim = $total;
 
-                    //Varifica se foi solicitado a ordenação
+                    //Varifica se foi solicitado a ordenaï¿½ï¿½o
                     if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('Descricao ASC');}
 
                     $rs = $tbl->buscar($arrBusca, $ordem, $tamanho, $inicio);
@@ -1219,7 +1219,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		if(!empty($post->situacao)){ if($post->formasituacao == "1"){ $arrBusca["hd.Acao = ?"] = $post->situacao; }else{ $arrBusca["hd.Acao <> ?"] = $post->situacao; } }
 		if(!empty($post->correio)){ $arrBusca["d.CodigoCorreio = ?"] = $post->correio; }
 
-		//Varifica se foi solicitado a ordenação
+		//Varifica se foi solicitado a ordenaï¿½ï¿½o
 		if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('7');}
 
 		//montando parametros de busca dos campos de data
@@ -1290,7 +1290,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		if(!empty($post->situacao)){ if($post->formasituacao == "1"){ $arrBusca["hd.Acao = ?"] = $post->situacao; }else{ $arrBusca["hd.Acao <> ?"] = $post->situacao; } }
 		if(!empty($post->correio)){ $arrBusca["d.CodigoCorreio = ?"] = $post->correio; }
 
-		//Varifica se foi solicitado a ordenação
+		//Varifica se foi solicitado a ordenaï¿½ï¿½o
 		if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('7');}
 
 		//montando parametros de busca dos campos de data
@@ -1476,7 +1476,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		$tbl = new Projetos();
 		$post = Zend_Registry::get('post');
 
-		// verifica se foi solicitado a ordenação
+		// verifica se foi solicitado a ordenaï¿½ï¿½o
 		if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}
 
 		if(isset($post->gerarPdfTotal) && !empty($post->gerarPdfTotal) && $post->gerarPdfTotal == 'PdfTotal'){
@@ -1582,7 +1582,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		if($post->edital != ""){ $arrBusca["e.idEdital = ?"] = $post->edital; }
 		if($post->uf != ""){ $arrBusca["uf.CodUfIbge = ?"] = $post->uf; }
 
-		//Varifica se foi solicitado a ordenação
+		//Varifica se foi solicitado a ordenaï¿½ï¿½o
 		if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array("18 ASC", "4 ASC");}
 
 		//montando parametros de busca dos campos de data
@@ -1668,7 +1668,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
 	public function exibirresultadoprojetoporsituacaoAction(){
-		// configuração o php.ini para 100MB
+		// configuraï¿½ï¿½o o php.ini para 100MB
 		@set_time_limit(0);
 		@ini_set('mssql.textsize',      10485760000);
 		@ini_set('mssql.textlimit',     10485760000);
@@ -1684,7 +1684,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 
 		$tbl = new Projetos();
 
-		// ========== INÍCIO PAGINAÇÃO ==========
+		// ========== INï¿½CIO PAGINAï¿½ï¿½O ==========
 		$get = Zend_Registry::get('get');
 		if(isset($pag)){
 			$pagina = $pag;
@@ -1696,14 +1696,14 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		$total = $tbl->buscar(array('Situacao = ?' => $filtro['situacao']));
 		//$buscaAprovados = $aprovacao->buscarAprovados($inicio,$fim);
 
-		// ========== FIM PAGINAÇÃO ==========
+		// ========== FIM PAGINAï¿½ï¿½O ==========
 
 		$this->view->dados       = $rs;
 		$this->view->qtdRegistro = ceil(count($total)/$qtPag); // quantidade de comprovantes
 	}
 
 	public function imprimirresultadoprojetoporsituacaoAction(){
-		// configuração o php.ini para 100MB
+		// configuraï¿½ï¿½o o php.ini para 100MB
 		@set_time_limit(0);
 		@ini_set('mssql.textsize',      10485760000);
 		@ini_set('mssql.textlimit',     10485760000);
@@ -1718,11 +1718,11 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 
 		$tbl = new Projetos();
 
-		// ========== INÍCIO PAGINAÇÃO ==========
+		// ========== INï¿½CIO PAGINAï¿½ï¿½O ==========
 		$get = Zend_Registry::get('get');
 		$rs = $tbl->imprimirResultadoProjetoSituacao($filtro);
 		$total = $tbl->buscar(array('Situacao = ?' => $filtro['situacao']));
-		// ========== FIM PAGINAÇÃO ==========
+		// ========== FIM PAGINAï¿½ï¿½O ==========
 
 		$this->view->dados = $rs;
                 $this->_helper->layout->disableLayout();// Desabilita o Zend Layout
@@ -1733,7 +1733,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	/*===========================================================================*/
 
 	public function projetosEmPautaReuniaoCnicAction(){
-		$tblAgentes = new Agente_Model_Agentes();
+		$tblAgentes = new Agente_Model_DbTable_Agentes();
 		$rsAgentes  = $tblAgentes->BuscarComponente();
 		$this->view->agentes = $rsAgentes;
 
@@ -1785,7 +1785,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 			if($post->statusAnalise == "SA"){
 				$statusAnalise = "Analisado";
 			}else{
-				$statusAnalise = "Não analisado";
+				$statusAnalise = "Nï¿½o analisado";
 			}
 		}
 
@@ -2075,7 +2075,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		$rsTbReuniao  = $tblTbReuniao->buscar(array("NrReuniao >= ?"=>184), array("NrReuniao DESC"));
 		$this->view->reunioes = $rsTbReuniao;
 
-		$tblAgentes = new Agente_Model_Agentes();
+		$tblAgentes = new Agente_Model_DbTable_Agentes();
 		$rsAgentes  = $tblAgentes->BuscarComponente();
 		$this->view->agentes = $rsAgentes;
 
@@ -2304,7 +2304,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 			$grafico->setTituloItens($titulos);
 			$grafico->gerar();
 		}else{
-			echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Gráfico.";
+			echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Grï¿½fico.";
 		}
 
 	}
@@ -2314,7 +2314,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		$rsTbReuniao  = $tblTbReuniao->buscar(array("NrReuniao >= ?"=>184), array("NrReuniao DESC"));
 		$this->view->reunioes = $rsTbReuniao;
 
-		$tblAgentes = new Agente_Model_Agentes();
+		$tblAgentes = new Agente_Model_DbTable_Agentes();
 		$rsAgentes  = $tblAgentes->BuscarComponente();
 		$this->view->agentes = $rsAgentes;
 
@@ -2531,14 +2531,14 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 			$grafico->setTituloItens($titulos);
 			$grafico->gerar();
 		}else{
-			echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Gráfico.";
+			echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Grï¿½fico.";
 		}
 
 	}
 
 	/*====== NOVOS RELAROTIO =====*/
 	public function projetosEmPautaReuniaoCnicSemQuebraAction(){
-		$tblAgentes = new Agente_Model_Agentes();
+		$tblAgentes = new Agente_Model_DbTable_Agentes();
 		$rsAgentes  = $tblAgentes->BuscarComponente();
 		$this->view->agentes = $rsAgentes;
 
@@ -2605,7 +2605,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
             if ($post->statusAnalise == "SA") {
                 $statusAnalise = 2; //Analisados
             } else {
-                $statusAnalise = 1; //Não Analisados
+                $statusAnalise = 1; //Nï¿½o Analisados
             }
         }
 
@@ -2678,10 +2678,10 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
             $this->resumoProjetosEmPautaReuniaoCnicSemQuebra($rs);
         }
 
-        //CHAMA METODO DE QUE IRA GERAR TELA DE IMPRESSÃO HTML OU XLS
+        //CHAMA METODO DE QUE IRA GERAR TELA DE IMPRESSï¿½O HTML OU XLS
         if (isset($post->imprimirResumo) && $post->imprimirResumo == 'html') {
             $rs2 = $tbl->buscaProjetosEmPauta($arrBusca, $ordem, null, null, null, $statusAnalise);
-            //Envia os parâmetros para outra função sem a necessidade de criar uma tela .phtml
+            //Envia os parï¿½metros para outra funï¿½ï¿½o sem a necessidade de criar uma tela .phtml
             $this->_forward('gerar-xls-html-projetos-em-pauta-reuniao-cnic-sem-quebra', null, null, array(
                 'valores' => $rs2,
                 'gerar' => 'html')
@@ -2694,7 +2694,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 //            $rs2 = $tbl->buscaProjetosEmPauta($arrBusca, $ordem, null, null, null, $statusAnalise);
             $rs2 = $tbl->buscaProjetosEmPautaTeste($arrBusca, $ordem, null, null, null, $statusAnalise);
 
-            //Envia os parâmetros para outra função sem a necessidade de criar uma tela .phtml
+            //Envia os parï¿½metros para outra funï¿½ï¿½o sem a necessidade de criar uma tela .phtml
             $this->_forward('gerar-xls-html-projetos-em-pauta-reuniao-cnic-sem-quebra', null, null, array(
                 'valores' => $rs2,
                 'gerar' => 'xls')
@@ -2777,7 +2777,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
             if ($post->statusAnalise == "SA") {
                 $arrBusca["status"] = 2; //Analisados
             } else {
-                $arrBusca["status"] = 1; //Não Analisados
+                $arrBusca["status"] = 1; //Nï¿½o Analisados
             }
         }
 
@@ -2787,7 +2787,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 //        xd($arrBusca);
         $rs2 = $tbl->buscaProjetosEmPautaXLS($arrBusca);
 
-        //Envia os parâmetros para outra função sem a necessidade de criar uma tela .phtml
+        //Envia os parï¿½metros para outra funï¿½ï¿½o sem a necessidade de criar uma tela .phtml
 //        $this->_forward('gerar-xls-html-projetos-em-pauta-reuniao-cnic-sem-quebra', null, null, array(
 //            'valores' => $rs2,
 //            'gerar' => 'xls')
@@ -2832,7 +2832,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
     }
 
 	/*
-	 * Recebe os dados de outra função pelo método _forward
+	 * Recebe os dados de outra funï¿½ï¿½o pelo mï¿½todo _forward
 	 */
 //	public function gerarXlsHtmlProjetosEmPautaReuniaoCnicSemQuebraAction(){
 //		Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
@@ -3016,7 +3016,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		//Valida se o pronac foi passado
 		if(!empty($post->pronac)){ $arrBusca["p.AnoProjeto + p.Sequencial = ?"] = $post->pronac; }
 
-		//Valida se a área foi passada
+		//Valida se a ï¿½rea foi passada
 		if(!empty($post->area)){
 			if($post->tipoPesqArea == 'EIG'){
 				if(!empty($post->area)){ $arrBusca["a.Codigo = ?"] = $post->area; }
@@ -3028,7 +3028,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		//Valida se o segmento foi passao
 		if(!empty($post->segmento)){ $arrBusca["p.Segmento = ?"] = $post->segmento; }
 
-		//Valida se a região e/ou estado foi passado
+		//Valida se a regiï¿½o e/ou estado foi passado
 		if(!empty($post->regiao) && empty($post->uf)){
 			$arrBusca["uf.Regiao = ?"] = $post->regiao;
 		}else if(!empty($post->regiao) && !empty($post->uf)){
@@ -3052,7 +3052,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtCaptacao", "dtCaptacao", "ca.DtRecibo", "dtCaptacao_Final", $arrBusca);
 		$arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDtExecucao", "dtExecucao", "p.DtInicioExecucao", "dtExecucao_Final", $arrBusca);
 
-		//Dados para paginação
+		//Dados para paginaï¿½ï¿½o
 		$pag = 1;
 		if (isset($post->pag)) $pag = $post->pag;
 		if (isset($post->tamPag)) $this->intTamPag = $post->tamPag;
@@ -3068,10 +3068,10 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 
 		if ($fim>$total) $fim = $total;
 
-		//Varifica se foi solicitado a ordenação
+		//Varifica se foi solicitado a ordenaï¿½ï¿½o
 		if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('6');}
 
-		//Valida se está na última página para passar os somatórios
+		//Valida se estï¿½ na ï¿½ltima pï¿½gina para passar os somatï¿½rios
 		//if($totalPag == $pag){
 			$rsSomatorioAutorizado = $tbl->buscarDemonstrativoDeCaptacaoSomatorioValorAutorizado($arrBusca, $arrBuscaValor);
 			$rsSomatorioCaptado    = $tbl->buscarDemonstrativoDeCaptacaoSomatorioValorCaptado($arrBusca, $arrBuscaValor);
@@ -3111,7 +3111,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		//}
 
 
-		//CHAMA METODO DE QUE IRA GERAR TELA DE IMPRESSÃO HTML OU XLS
+		//CHAMA METODO DE QUE IRA GERAR TELA DE IMPRESSï¿½O HTML OU XLS
 		if(isset($post->imprimirResumo) && $post->imprimirResumo == 'html')
 		{
 			Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
@@ -3120,7 +3120,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 			$rs    = $tbl->buscarDemonstrativoDeCaptacao($arrBusca, $ordem, null, null, null,$arrBuscaValor);
 			$i     = 0;
 			$lista = array();
-			//Envia a lista após buscar o valor total captado
+			//Envia a lista apï¿½s buscar o valor total captado
 			foreach ($rs as $d)
 			{
 				//$lista[$i]['DtRecibo'] 			= $d->DtRecibo;
@@ -3160,7 +3160,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 			//xd($vlCaptado);
 			$valorRenunciaFiscal = $vlRenunciaTotal - $vlCaptado;
 
-			//Envia os parâmetros para outra função sem a necessidade de criar uma tela .phtml
+			//Envia os parï¿½metros para outra funï¿½ï¿½o sem a necessidade de criar uma tela .phtml
 			$this->_forward('gerar-tela-xls-html',null,null,array('valores'=>$lista,
 																  'SmAu'=>$rsSomatorioAutorizado,
 																  'SmCp'=>$rsSomatorioCaptado,
@@ -3179,7 +3179,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 			$i 	   = 0;
 			$lista = array();
 
-			//Envia a lista após buscar o valor total captado
+			//Envia a lista apï¿½s buscar o valor total captado
 			foreach ($rs as $d)
 			{
 				//$lista[$i]['DtRecibo'] 			= $d->DtRecibo;
@@ -3216,7 +3216,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 			foreach ($rsSomatorioCaptado as $valorCaptado)   {$vlCaptado = $valorCaptado->somatorioVlCaptado;}
 
 			$valorRenunciaFiscal = $vlRenunciaTotal - $vlCaptado;
-			//Envia os parâmetros para outra função sem a necessidade de criar uma tela .phtml
+			//Envia os parï¿½metros para outra funï¿½ï¿½o sem a necessidade de criar uma tela .phtml
 			$this->_forward('gerar-tela-xls-html',null,null,array('valores'=>$lista,
 																  'SmAu'=>$rsSomatorioAutorizado,
 																  'SmCp'=>$rsSomatorioCaptado,
@@ -3231,7 +3231,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 
 		$i     = 0;
 		$lista = array();
-		//Envia a lista após buscar o valor total captado
+		//Envia a lista apï¿½s buscar o valor total captado
 		foreach ($rs as $d){
 			//$lista[$i]['DtRecibo'] 			= $d->DtRecibo;
 			$lista[$i]['CaptacaoReal'] 			= $d->CaptacaoReal;
@@ -3249,7 +3249,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		}
 		//xd($lista);
 
-		//Dados para view e para a paginação
+		//Dados para view e para a paginaï¿½ï¿½o
 		$this->view->registros       = $lista;
 		$this->view->pag             = $pag;
 		$this->view->total           = $total;
@@ -3278,7 +3278,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
         }
 
 	/*
-	 * Recebe os dados de outra função pelo método _forward
+	 * Recebe os dados de outra funï¿½ï¿½o pelo mï¿½todo _forward
 	 */
 	public function gerarTelaXlsHtmlAction(){
 		Zend_Layout::startMvc(array('layout' => 'layout_scriptcase'));
@@ -3328,7 +3328,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		$this->_helper->viewRenderer->setNoRender();
 
 		$grafico = new Grafico($_POST["cgTipoGrafico"]);
-		$grafico->setTituloGrafico("Demonstrativo de captação de recursos");
+		$grafico->setTituloGrafico("Demonstrativo de captaï¿½ï¿½o de recursos");
 		$grafico->setTituloEixoXY("PRONAC", "VLAUTORIZADO");
 		$grafico->configurar($_POST);
 
@@ -3350,23 +3350,23 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 			$grafico->setTamanho(800,800);
 			$grafico->gerar();
 		}else{
-			echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Gráfico.";
+			echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Grï¿½fico.";
 		}
 
 	}
 
     public function contaBancariaAction(){
-        //FUNÇÃO ACESSADA SOMENTE PELO TEC., COORD. E COORD. GERAL DE ACOMPANHAMENTO
+        //FUNï¿½ï¿½O ACESSADA SOMENTE PELO TEC., COORD. E COORD. GERAL DE ACOMPANHAMENTO
         if($this->idPerfil != 121 && $this->idPerfil != 122 && $this->idPerfil != 123){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal", "ALERT");
         }
 
 	}
 
     public function resultadoContaBancariaAction(){
-        //FUNÇÃO ACESSADA SOMENTE PELO TEC., COORD. E COORD. GERAL DE ACOMPANHAMENTO
+        //FUNï¿½ï¿½O ACESSADA SOMENTE PELO TEC., COORD. E COORD. GERAL DE ACOMPANHAMENTO
         if($this->idPerfil != 121 && $this->idPerfil != 122 && $this->idPerfil != 123){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal", "ALERT");
         }
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -3434,7 +3434,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 
         if (!empty($_GET['tpDtLtCap'])){
 
-            //SE O USUARIO NÃO INFORMAR A DATA CORRETAMENTE, O SISTEMA RETORNA A MSG.
+            //SE O USUARIO Nï¿½O INFORMAR A DATA CORRETAMENTE, O SISTEMA RETORNA A MSG.
             if(empty($_GET['dtInicioLtCap'])){
                 parent::message("Faltou informar a data para a realizarmos a pesquisa!", "operacional/conta-bancaria", "ALERT");
 
@@ -3504,9 +3504,9 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
     public function imprimirResultadoContaBancariaAction(){
-        //FUNÇÃO ACESSADA SOMENTE PELO TEC., COORD. E COORD. GERAL DE ACOMPANHAMENTO
+        //FUNï¿½ï¿½O ACESSADA SOMENTE PELO TEC., COORD. E COORD. GERAL DE ACOMPANHAMENTO
         if($this->idPerfil != 121 && $this->idPerfil != 122 && $this->idPerfil != 123){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal", "ALERT");
         }
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -3574,7 +3574,7 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 
         if (!empty($_POST['tpDtLtCap'])){
 
-            //SE O USUARIO NÃO INFORMAR A DATA CORRETAMENTE, O SISTEMA RETORNA A MSG.
+            //SE O USUARIO Nï¿½O INFORMAR A DATA CORRETAMENTE, O SISTEMA RETORNA A MSG.
             if(empty($_POST['dtInicioLtCap'])){
                 parent::message("Faltou informar a data para a realizarmos a pesquisa!", "operacional/conta-bancaria", "ALERT");
 

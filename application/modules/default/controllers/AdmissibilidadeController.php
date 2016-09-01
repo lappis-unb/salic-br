@@ -21,15 +21,15 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
     private $COD_CLASSIFICACAO_DOCUMENTO = 23;
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
 
-        // verifica as permissões
+        // verifica as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 90;  // Protocolo - Documento
         $PermissoesGrupo[] = 91;  // Protocolo - Recebimento
@@ -40,7 +40,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 96;  // Consulta Gerencial
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
         $PermissoesGrupo[] = 99;  // Acompanhamento
-        $PermissoesGrupo[] = 100; // Prestação de Contas
+        $PermissoesGrupo[] = 100; // Prestaï¿½ï¿½o de Contas
         $PermissoesGrupo[] = 103; // Coordenador de Analise
         $PermissoesGrupo[] = 104; // Protocolo - Envio / Recebimento
         $PermissoesGrupo[] = 110; // Tecnico de Analise
@@ -76,11 +76,11 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
         isset($auth->getIdentity()->usu_codigo) ? $this->idUsuario = $auth->getIdentity()->usu_codigo : $this->idUsuario = $auth->getIdentity()->IdUsuario;
         //$this->idUsuario = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         if(isset($auth->getIdentity()->usu_codigo)){
 
-            $this->codGrupo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-            $this->codOrgao = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+            $this->codGrupo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+            $this->codOrgao = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
 
             $this->codOrgaoSuperior = (!empty($auth->getIdentity()->usu_org_max_superior))?$auth->getIdentity()->usu_org_max_superior:$auth->getIdentity()->usu_orgao;
         }
@@ -100,7 +100,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
     public function validarAcessoAdmissibilidade(){
         if(empty($this->idPreProjeto)){
-            parent::message("Necessário informar o número da proposta.", "/admissibilidade/listar-propostas", "ALERT");
+            parent::message("Necessï¿½rio informar o nï¿½mero da proposta.", "/admissibilidade/listar-propostas", "ALERT");
         }
     }
     public function listarpropostasproponenteAction() {
@@ -132,7 +132,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $this->view->Pronac = $Pronac;
 
         if(isset($dados[0]->CNPJCPFdigirente) && $dados[0]->CNPJCPFdigirente != "") {
-            $tblAgente = new Agente_Model_Agentes();
+            $tblAgente = new Agente_Model_DbTable_Agentes();
             $tblNomes = new Nomes();
             foreach ($dados as $v) {
                 $rsAgente = $tblAgente->buscarAgenteNome(array('CNPJCPF=?'=>$v->CNPJCPFdigirente))->current();
@@ -278,7 +278,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
             $tipoDoc = "tbDocumento"; //SAC.dbo.tbDocumento
         }
 
-        // Configuração o php.ini para 10MB
+        // Configuraï¿½ï¿½o o php.ini para 10MB
         @ini_set("mssql.textsize",      10485760);
         @ini_set("mssql.textlimit",     10485760);
         @ini_set("upload_max_filesize", "10M");
@@ -321,7 +321,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
             $tipoDoc = "tbDocumento"; //SAC.dbo.tbDocumento
         }
 
-        // Configuração o php.ini para 10MB
+        // Configuraï¿½ï¿½o o php.ini para 10MB
         @ini_set("mssql.textsize",      10485760);
         @ini_set("mssql.textlimit",     10485760);
         @ini_set("upload_max_filesize", "10M");
@@ -392,9 +392,9 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 		$tbHistoricoEmailDAO = new tbHistoricoEmail();
 
 		foreach ($dadosProjeto as $d) :
-			//para Produç?o comentar linha abaixo e para teste descomente ela
+			//para Produï¿½?o comentar linha abaixo e para teste descomente ela
 			//$email  =   'jailton.landim@cultura.gov.br';
-			//para Produç?o descomentar linha abaixo e para teste comente ela
+			//para Produï¿½?o descomentar linha abaixo e para teste comente ela
 			$email   = trim(strtolower($d->Email));
                         if($pronac){
                             $mens    = '<b>Proposta: ' .$d->idProjeto. ' - ' .$d->NomeProjeto. '<br> Pronac: '.$pronac.'<br> </b>' . $Mensagem;
@@ -426,7 +426,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $rsProposta = $tblProposta->buscar(array("idPreProjeto = ?"=>$this->idPreProjeto))->current();
         $this->view->proposta = $rsProposta;
 
-        $tblAgente = new Agente_Model_Agentes();
+        $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsAgente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsProposta->idAgente))->current();
         $this->view->agente = $rsAgente;
 
@@ -586,7 +586,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $get = Zend_Registry::get('get');
 
         $this->validarAcessoAdmissibilidade();
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idOrgao = $auth->getIdentity()->usu_orgao;
 
         $tblProposta = new Proposta_Model_PreProjeto();
@@ -636,7 +636,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
             $idOrgao = $this->codOrgao;
         }
 
-        $tblAgente = new Agente_Model_Agentes();
+        $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsAgente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsProposta->idAgente))->current();
 
         $cnpjcpf = $rsAgente->CNPJCPF;
@@ -881,7 +881,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $idEmpresa = $Empresa->idAgente;
 
         if(isset($this->view->itensGeral[0]->CNPJCPFdigirente) && $this->view->itensGeral[0]->CNPJCPFdigirente != "") {
-            $tblAgente = new Agente_Model_Agentes();
+            $tblAgente = new Agente_Model_DbTable_Agentes();
             $tblNomes = new Nomes();
             foreach ($this->view->itensGeral as $v) {
                 $rsAgente = $tblAgente->buscarAgenteNome(array('CNPJCPF=?'=>$v->CNPJCPFdigirente))->current();
@@ -1047,7 +1047,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
             $params->usu_cod   = $_REQUEST['usu_cod'];
             $params->idProjeto = $_REQUEST['idProjeto'];
             AdmissibilidadeDAO::redistribuirAnalise($params);
-            //$this->view->mensagem = 'Alteração realizada com sucesso.';
+            //$this->view->mensagem = 'Alteraï¿½ï¿½o realizada com sucesso.';
             parent::message("An&aacute;lise redistribu&iacute;da com sucesso.", "/admissibilidade/redistribuiranalise", "CONFIRM");
         }
         if($_REQUEST['idProjeto'] && $_REQUEST['fase']) {
@@ -1257,7 +1257,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $tblAgente = new Nomes();
         $rsAgente = $tblAgente->buscar(array("idAgente = ? "=>$idAgente))->current();
 
-        //Descobrindo a movimentação corrente de cada proposta
+        //Descobrindo a movimentaï¿½ï¿½o corrente de cada proposta
         if(count($rsPropostas)>0){
             //Conectando com movimentacao
             $tblMovimentacao = new Movimentacao();
@@ -1268,7 +1268,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
             $movimentacoes = array();
             foreach ($rsPropostas as $proposta){
-                //Buscando movimentação desta proposta
+                //Buscando movimentaï¿½ï¿½o desta proposta
                 $rsMovimentacao = $tblMovimentacao->buscar(array("idprojeto = ?"=>$proposta->idPreProjeto, "stestado = ?"=>0))->current();
                 $movimentacoes[$proposta->idPreProjeto]["tecnico"] = "";
 
@@ -1286,7 +1286,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
                         $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#0000FF>Proposta com Proponente</font>";
                     }elseif ($rsMovimentacao->Movimentacao == 96)
                     {
-                        $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta em Análise' . "</font>";
+                        $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta em Anï¿½lise' . "</font>";
 
                         $rsAvaliacao = $tbAvaliacao->buscar(array("idProjeto = ?"=>$proposta->idPreProjeto, "ConformidadeOK =?"=> 9, "stEstado =?"=>0))->current();
 
@@ -1301,7 +1301,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
                         //$movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#0000FF>Proposta com Proponente</font>";
                         /*if (!count($tecnico)>0)
                         {
-                            $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta em Análise' . "</font>";
+                            $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta em Anï¿½lise' . "</font>";
                         }*/
                     }
                     elseif ($rsMovimentacao->Movimentacao == 97 and (!count($rsProjeto)>0))
@@ -1481,7 +1481,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
                 <tr>
                     <td>Nr. Proposta</td>
                     <td>Nome da Proposta</td>
-                    <td>Dt.Movimentação</td>
+                    <td>Dt.Movimentaï¿½ï¿½o</td>
                 </tr>
                 ";
         foreach($rsProposta as $proposta){
@@ -1511,7 +1511,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
                 <tr>
                     <td>Nr. Proposta</td>
                     <td>Nome da Proposta</td>
-                    <td>Dt.Movimentação</td>
+                    <td>Dt.Movimentaï¿½ï¿½o</td>
                 </tr>
                 ";
         foreach($rsProposta as $proposta){
@@ -1543,7 +1543,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
                 <table width="100%">
                     <tr>
                         <th style="font-size:36px;">
-                            Proposta em análise final
+                            Proposta em anï¿½lise final
                         </th>
                     </tr>
                 ';
@@ -1563,7 +1563,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
                                 <tr>
                                     <th width="15%" style="border-bottom:1px #000000 solid;">Nr. Proposta</th>
                                     <th width="65%" style="border-bottom:1px #000000 solid;">Nome da Proposta</th>
-                                    <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimentação</th>
+                                    <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimentaï¿½ï¿½o</th>
                                 </tr>
                 ';
                                 foreach($propostas as $proposta){
@@ -1612,7 +1612,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
                 <table width="100%">
                     <tr>
                         <th style="font-size:36px;">
-                            Avaliação: Reavaliação
+                            Avaliaï¿½ï¿½o: Reavaliaï¿½ï¿½o
                         </th>
                     </tr>
                 ';
@@ -1632,7 +1632,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
                                 <tr>
                                     <th width="15%" style="border-bottom:1px #000000 solid;">Nr. Proposta</th>
                                     <th width="65%" style="border-bottom:1px #000000 solid;">Nome da Proposta</th>
-                                    <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimentação</th>
+                                    <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimentaï¿½ï¿½o</th>
                                 </tr>
                 ';
                                 foreach($propostas as $proposta){
@@ -1663,7 +1663,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
                 <table width="100%">
                     <tr>
                         <th style="font-size:36px;">
-                            Avaliação: Inicial
+                            Avaliaï¿½ï¿½o: Inicial
                         </th>
                     </tr>
                 ';
@@ -1683,7 +1683,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
                                 <tr>
                                     <th width="15%" style="border-bottom:1px #000000 solid;">Nr. Proposta</th>
                                     <th width="65%" style="border-bottom:1px #000000 solid;">Nome da Proposta</th>
-                                    <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimentação</th>
+                                    <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimentaï¿½ï¿½o</th>
                                 </tr>
                 ';
                                 foreach($propostas as $proposta){
@@ -1786,7 +1786,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
             $grafico->setTituloItens($titulos);
             $grafico->gerar();
         }else{
-            echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Gráfico.";
+            echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Grï¿½fico.";
         }
     }
 
@@ -1883,7 +1883,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         }
 
         //recuperando a unidade do usuario logado
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idOrgao = $auth->getIdentity()->usu_orgao;
         $tblOrgao = new Orgaos();
         $rsOrgao = $tblOrgao->buscar(array("Codigo = ?"=>$idOrgao))->current();
@@ -2104,7 +2104,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
             $grafico->setTituloItens($titulos);
             $grafico->gerar();
         }else{
-            echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Gráfico.";
+            echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Grï¿½fico.";
         }
     }
 
@@ -2114,7 +2114,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
         $grafico = new Grafico($_POST["cgTipoGrafico"]);
         $grafico->setTituloGrafico("Registros");
-        $grafico->setTituloEixoXY("Técnicos", "Registros");
+        $grafico->setTituloEixoXY("Tï¿½cnicos", "Registros");
         $grafico->configurar($_POST);
 
         $aux = array();
@@ -2131,7 +2131,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
             $grafico->setTituloItens($titulos);
             $grafico->gerar();
         }else{
-            echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Gráfico.";
+            echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Grï¿½fico.";
         }
     }
 
@@ -2145,7 +2145,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
         $grafico = new Grafico($_POST["cgTipoGrafico"]);
         $grafico->setTituloGrafico("Registros");
-        $grafico->setTituloEixoXY("Avaliação", "Registros");
+        $grafico->setTituloEixoXY("Avaliaï¿½ï¿½o", "Registros");
         $grafico->configurar($_POST);
 
         $analista = array();
@@ -2222,11 +2222,11 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
         $arrTitulo = array();
         if(isset($_POST["reavaliacao"])){
-            $arrTitulo[]="Reavaliação";
+            $arrTitulo[]="Reavaliaï¿½ï¿½o";
         }elseif(isset($_POST["inicial"])){
             $arrTitulo[]="Inicial";
         }else{
-            $arrTitulo[]="Reavaliação";
+            $arrTitulo[]="Reavaliaï¿½ï¿½o";
             $arrTitulo[]="Inicial";
         }
 
@@ -2257,7 +2257,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
             $grafico->setTituloItens($titulos);
             $grafico->gerar();
         }else{
-            echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Gráfico.";
+            echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Grï¿½fico.";
         }
     }
 
@@ -2403,7 +2403,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
         if(isset($get->estado) && !empty($get->estado)){
             if($get->estado == 1){
-                $situacao = 'Em análise';
+                $situacao = 'Em anï¿½lise';
             } else {
                 $situacao = '<font color=red>Concluida</font>';
             }
@@ -2491,7 +2491,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
         if(isset($post->estado) && !empty($post->estado)){
             if($post->estado == 1){
-                $situacao = 'Em análise';
+                $situacao = 'Em anï¿½lise';
             } else {
                 $situacao = '<font color=red>Concluida</font>';
             }

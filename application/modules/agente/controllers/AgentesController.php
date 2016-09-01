@@ -1856,7 +1856,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             'Usuario' => $Usuario
         );
 
-        $Agentes = new Agente_Model_Agentes();
+        $Agentes = new Agente_Model_DbTable_Agentes();
 
         $salvaAgente = $Agentes->inserirAgentes($arrayAgente);
 
@@ -2221,7 +2221,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         // Retorna o idAgente cadastrado
 
-        $Agentes = new Agente_Model_Agentes();
+        $Agentes = new Agente_Model_DbTable_Agentes();
 
         $salvaAgente = $Agentes->inserirAgentes($arrayAgente);
 
@@ -2637,7 +2637,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      */
     public function painelcredenciamentoAction() {
         $this->autenticacao();
-        $agentes = new Agente_Model_Agentes();
+        $agentes = new Agente_Model_DbTable_Agentes();
 
         $nome = $this->_request->getParam('nome');
         $cpf = Mascara::delMaskCPF($this->_request->getParam('cpf'));

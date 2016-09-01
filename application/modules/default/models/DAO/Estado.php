@@ -44,10 +44,9 @@ class Estado extends Zend_Db_Table
     public static function buscar()
     {
         $objEstado = self::obterInstancia();
-        $sql = 'SELECT idUF AS id, Sigla AS descricao ';
+        $sql = 'select iduf as id, sigla as descricao ';
         $sql .= 'FROM ' . GenericModel::getStaticTableName($objEstado->_schema, $objEstado->_name);
         $sql .= ' ORDER BY Sigla';
-
 
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
