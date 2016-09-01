@@ -32,34 +32,76 @@
                 });
                 $('.ui-dialog-titlebar-close').remove();
             } else {
-                $("#alerta").dialog("destroy");
-                $("#alerta").html('Deseja realmente finalizar a análise da readequação?<br /><br />Ao finalizar a readequação será devolvida ao coordenador.');
-                $("#alerta").dialog({
-                    resizable: false,
-                    title: 'Alerta!',
-                    width:400,
-                    modal: true,
-                    buttons : {
-                        'Não' : function(){
-                            $(this).dialog('close');
-                        },
-                        'Sim' : function(){
-                            $('#form_parecer').append('<input type="hidden" name="finalizarAvaliacao" value="1">');
+
+	    // verifica limites oramentrios
+                $.ajax({
+                  type: 'POST',
+                        url: '<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'verificar-limites-orcamentarios'), '', true); ?>?idPronac=<?php echo $this->idPronac; ?>',
+                        data: {
+                      idPronac: <?php echo $this->idPronac; ?>
+                    },
+                        success: function(resposta){
+                        resposta = JSON.parse(resposta);
+                        
+                        if (resposta.mensagens[0].Observacao == 'OK' &&
+                        resposta.mensagens[1].Observacao == 'OK' &&
+                        resposta.mensagens[2].Observacao == 'OK') {
+
+                            // sem problemas de limites orcamentarios
+                
                             $("#alerta").dialog("destroy");
-                            $("#alerta").html('<br /><div align="center"><img src="<?php echo $this->baseUrl().'/public/img/ajax.gif'; ?>"><br />Aguarde..</div>');
+                            $("#alerta").html('Deseja realmente finalizar a análise da readequação?<br /><br />Ao finalizar a readequação será devolvida ao coordenador.');
                             $("#alerta").dialog({
-                                resizable: false,
-                                width:320,
-                                modal: true,
-                                title: 'Carregando..'
+                              resizable: false,
+                                    title: 'Alerta!',
+                                    width:400,
+                                    modal: true,
+                                    buttons : {
+                                  'Não' : function(){
+                                        $(this).dialog('close');
+                                    },
+                                        'Sim' : function(){
+                                        $('#form_parecer').append('<input type="hidden" name="finalizarAvaliacao" value="1">');
+                                        $("#alerta").dialog("destroy");
+                                        $("#alerta").html('<br /><div align="center"><img src="<?php echo $this->baseUrl().'/public/img/ajax.gif'; ?>"><br />Aguarde..</div>');
+                                        $("#alerta").dialog({
+                                          resizable: false,
+                                                width:320,
+                                                modal: true,
+                                                title: 'Carregando..'
+                                                });
+                                        $('.ui-dialog-titlebar-close').remove();
+                                        window.setTimeout('enviarformulario()', 1000);
+                                    }
+                                }
                             });
                             $('.ui-dialog-titlebar-close').remove();
-                            window.setTimeout('enviarformulario()', 1000);
+                        } else {
+                            // retorna mensagens de erro de limites orçamentários
+                            
+			    var saidaHtml = "<table><thead><th colspan='2'>Verificao de limites oramentrios</th></thead>";
+      
+                            for (var m = 0; m < resposta.mensagens.length; m++) {
+                                var item = resposta.mensagens[m];
+                                if (item.Observacao == 'OK') {
+                                    saidaHtml += "<tr><td><img src='<?php echo $this->baseUrl(); ?>/public/img/ok_16x16.png' alt='' /></td>";
+                                    saidaHtml += "<td><strong>" + item.Descricao + "</strong></td>";
+                                    
+                                } else {
+                                    saidaHtml += "<tr><td><img src='<?php echo $this->baseUrl(); ?>/public/img/delete_16x16.png' alt='' /></td>";
+                                    saidaHtml += "<td><strong>" + item.Descricao + "</strong></td>";
+				    saidaHtml += "<td><strong>" + item.Descricao + " " + item.vlDiferenca + "</strong></td>";
+                                }
+                                
+                                saidaHtml += "</tr>";
+                            }
+                            
+                            saidaHtml += "</table>";
+                            $('#mensagens').html(saidaHtml);
                         }
-                    }
-                });
-                $('.ui-dialog-titlebar-close').remove();
-            }
+                    } // success
+                }); // fim ajax
+            } // verificação de erros
         });
         
         $('#btn_salvar').click(function(){
@@ -547,6 +589,8 @@
         <input type="hidden" name="idPronac" value="<?php echo $this->dados->idPronac; ?>">
         <input type="hidden" name="idReadequacao" value="<?php echo $this->dados->idReadequacao; ?>">
     </form>
+
+    <div align="center" id="mensagens"></div>
     
     <table class="tabela">
         <tr>
