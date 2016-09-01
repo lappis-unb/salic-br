@@ -341,7 +341,8 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 // ========== ATUALIZA AS VISÕES DO AGENTE ==========
 
                 // exclui todas as visões do agente
-                $excluir = VisaoDAO::excluirVisao($idAgente);
+                $visaoTable = new Agente_Model_DbTable_Visao();
+                $excluir = $visaoTable->excluirVisao($idAgente);
 
                 // cadastra todas as visões do agente
                 foreach ($visaoAgente as $visao) :
@@ -350,7 +351,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                         'Visao' => $visao,
                         'Usuario' => $this->getIdUsuario, // código do usuário logado
                         'stAtivo' => 'A');
-                    $cadastrar = VisaoDAO::cadastrarVisao($dados);
+                    $cadastrar = $visaoTable->cadastrarVisao($dados);
                 endforeach;
 
                 if ($cadastrar) {

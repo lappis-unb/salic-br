@@ -2812,7 +2812,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             try {
 
                 // exclui todas as visões do agente
-                VisaoDAO::excluirVisao($idAgente);
+                $visaoTable = new Agente_Model_DbTable_Visao();
+                $visaoTable->excluirVisao($idAgente);
 
                 // cadastra todas as visões do agente
                 foreach ($visaoAgente as $visao) {
@@ -2821,7 +2822,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                         'Visao' => $visao,
                         'Usuario' => $this->getIdUsuario, // código do usuário logado
                         'stAtivo' => 'A');
-                    VisaoDAO::cadastrarVisao($dados);
+                    $visaoTable->cadastrarVisao($dados);
                 }
 
                 parent::message("Alteração realizada com sucesso!", "agente/agentes/alterarvisao/id/" . $idAgente, "CONFIRM");
