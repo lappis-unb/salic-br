@@ -50,12 +50,14 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      * @param void
      * @return void
      */
-    public function init() {
+    public function init()
+    {
+        $areaMapper = new Agente_Model_AreaMapper;
 
         $this->view->comboestados = Estado::buscar();
         $this->view->combotiposenderecos = Tipoendereco::buscar();
         $this->view->combotiposlogradouros = Tipologradouro::buscar();
-        $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+        $this->view->comboareasculturais = $areaMapper->fetchPairs();
         $this->view->combotipostelefones = Tipotelefone::buscar();
         $this->view->combotiposemails = Tipoemail::buscar();
 
