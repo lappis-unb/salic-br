@@ -88,8 +88,8 @@
                                     saidaHtml += "<td><strong>" + item.Descricao + "</strong></td>";
                                 } else {
                                     saidaHtml += "<tr><td><img src='<?php echo $this->baseUrl(); ?>/public/img/delete_16x16.png' alt='' /></td>";
+				    saidaHtml += "<td><strong>" + item.Descricao + " " + item.vlDiferenca + "</strong></td>";
                                 }
-				saidaHtml += "<td><strong>" + item.Descricao + " " + item.vlDiferenca + "</strong></td>";
                                 saidaHtml += "</tr>";
                             }
                             
