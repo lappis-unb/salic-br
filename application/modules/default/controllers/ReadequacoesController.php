@@ -2439,11 +2439,12 @@ class ReadequacoesController extends GenericControllerNew {
         $where["idDistribuirReadequacao = ? "] = $idDistRead;
         $tbDistribuirReadequacao = new tbDistribuirReadequacao();
         $return = $tbDistribuirReadequacao->update($dados, $where);
-
+        
         //Atualiza a tabela tbReadequacao
         $dados = array();
         $dados['siEncaminhamento'] = 4; // Enviado para análise técnica
-        $where = "idDistribuirReadequacao = $idDistRead";
+        $where = array();
+        $where['idReadequacao = ?'] = $idReadequacao;
         $tbReadequacao = new tbReadequacao();
         $return2 = $tbReadequacao->update($dados, $where);
 
