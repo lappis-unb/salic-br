@@ -590,39 +590,45 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         }
     }
 
+    /**
+     *
+     * @name alterardadosAction
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  01/09/2016
+     */
     public function alterardadosAction()
     {
         // autenticação proponente (Novo Salic)
         parent::perfil(4);
 
         /* ========== INÍCIO ID DO USUÁRIO LOGADO ========== */
-        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
         $Usuario = new Autenticacao_Model_Usuario();
 
         // verifica se o usuário logado é agente
-        $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->Cpf);
+        $idUsuario = $Usuario->getIdUsuario(null, $auth['cpf']);
 
         // caso não tenha idAgente, atribui o idUsuario
-        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth->getIdentity()->IdUsuario;
+        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth['idusuario'];
         $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
         /* ========== FIM ID DO USUÁRIO LOGADO ========== */
 
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
-        $auth = Zend_Auth::getInstance();// instancia da autentica��o
-        $cpf = Mascara::delMaskCPF($auth->getIdentity()->Cpf);
-        $buscarDados = $sgcAcesso->buscar(array('Cpf = ?' => $cpf))->current();
+        $cpf = Mascara::delMaskCPF($auth['cpf']);
+        $buscarDados = array_change_key_case($sgcAcesso->buscar(array('cpf = ?' => $cpf))->current()->toArray());
 
         if (count(Zend_Auth::getInstance()->getIdentity()) > 0) {
-            if (strlen($buscarDados['Cpf']) > 11) {
-                $this->view->cpf = Mascara::addMaskCNPJ($buscarDados['Cpf']);
+            if (strlen($buscarDados['cpf']) > 11) {
+                $this->view->cpf = Mascara::addMaskCNPJ($buscarDados['cpf']);
             } else {
-                $this->view->cpf = Mascara::addMaskCPF($buscarDados['Cpf']);
+                $this->view->cpf = Mascara::addMaskCPF($buscarDados['cpf']);
             }
 
-            $this->view->nome = $buscarDados['Nome'];
-            $dataFormatada = Data::tratarDataZend($buscarDados['DtNascimento'], 'Brasileira');
+            $this->view->nome = $buscarDados['nome'];
+            $dataFormatada = Data::tratarDataZend($buscarDados['dtnascimento'], 'Brasileira');
             $this->view->dtNascimento = $dataFormatada;
-            $this->view->email = $buscarDados['Email'];
+            $this->view->email = $buscarDados['email'];
         }
 
         $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
@@ -644,13 +650,13 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
             $dataFinal = data::dataAmericana($dataNasc);
             $dados = array(
-                "IdUsuario" => $auth->getIdentity()->IdUsuario,
-                "Cpf" => $cpf,
-                "Nome" => $nome,
-                "DtNascimento" => $dataFinal . ' 00:00:00',
-                "Email" => $email,
-                "DtCadastro" => date("Y-m-d"),
-                "DtSituacao" => date("Y-m-d")
+                "idusuario" => $auth['idusuario'],
+                "cpf" => $cpf,
+                "nome" => $nome,
+                "dtnascimento" => $dataFinal . ' 00:00:00',
+                "email" => $email,
+                "dtcadastro" => date("Y-m-d"),
+                "dtsituacao" => date("Y-m-d")
             );
 
             $sgcAcessoSave = $sgcAcesso->salvar($dados);
