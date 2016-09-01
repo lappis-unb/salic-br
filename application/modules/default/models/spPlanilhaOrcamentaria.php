@@ -34,7 +34,7 @@ class spPlanilhaOrcamentaria extends GenericModel {
         // tipoPlanilha = 5 : Remanejamento menor que 20%
         // tipoPlanilha = 6 : Readequacao
 
-        $tipoPlanilha = 3;
+        $tipoPlanilha = 5;
         switch($tipoPlanilha){
         case 0:
             return $this->planilhaOrcamentariaProposta($idPronac);
@@ -252,255 +252,320 @@ class spPlanilhaOrcamentaria extends GenericModel {
         return $db->fetchAll($sql);
     }
 
-    public function orcamentariaAprovadaAtiva($idPronac){
+    /**
+     * orcamentariaAprovadaAtiva
+     *
+     * @param mixed $idPronac
+     * @access public
+     * @return void
+     */
+    public function orcamentariaAprovadaAtiva($idPronac)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
 
-        //SELECT a.idPronac,a.AnoProjeto+a.Sequencial as PRONAC,a.NomeProjeto,k.idProduto,k.idPlanilhaAprovacao,k.tpPlanilha,
-             //CASE
-               //WHEN k.idProduto = 0
-                    //THEN 'Administração do Projeto'
-                    //ELSE c.Descricao
-               //END as Produto,
-             //b.idEtapa,d.Descricao as Etapa,k.idPlanilhaItem,i.Descricao as Item,k.idUfDespesa as idUF,k.idMunicipioDespesa as idMunicipio,
-             //ROUND((z.Quantidade * z.Ocorrencia * z.ValorUnitario),2) as vlSolicitado,convert(varchar(max),z.dsJustificativa) as JustProponente,
-             //ROUND((b.Quantidade * b.Ocorrencia * b.ValorUnitario),2) as vlSugerido,convert(varchar(max),b.Justificativa) as JustParecerista,
-             //e.Descricao as Unidade,k.QtItem as Quantidade,k.nrOcorrencia as Ocorrencia,k.vlUnitario,k.QtDias as QtdeDias,
-             //k.TpDespesa,k.TpPessoa,k.nrContrapartida,k.nrFonteRecurso as idFonte,x.Descricao as FonteRecurso,f.UF,f.Municipio,
-             //ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado,
-             //CASE
-               //WHEN k.tpPlanilha = 'CO'
-                  //THEN (SELECT sum(b1.vlComprovacao) AS vlPagamento
-                    //FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                    //INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                    //INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
-                    //WHERE c1.stAtivo = 'S' AND c1.idPlanilhaAprovacao = k.idPlanilhaAprovacao AND (c1.idPronac = k.idPronac)
-                    //GROUP BY a1.idPlanilhaAprovacao)
-                  //ELSE
-                     //(SELECT sum(b1.vlComprovacao) AS vlPagamento
-                    //FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                    //INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                    //INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacaoPai)
-                    //WHERE c1.stAtivo = 'S' AND c1.idPlanilhaAprovacaoPai = k.idPlanilhaAprovacaoPai AND (c1.idPronac = k.idPronac)
-                    //GROUP BY a1.idPlanilhaAprovacao)
-                 //END as vlComprovado,
-             //CONVERT(varchar(max),k.dsJustificativa) as JustComponente
-        //
-       //FROM Projetos a
-       //inner join tbplanilhaprojeto b on (a.idpronac = b.idpronac)
-       //inner join tbplanilhaproposta z on (b.idplanilhaproposta=z.idplanilhaproposta)
-       //inner join tbplanilhaaprovacao k on (b.idplanilhaproposta=k.idplanilhaproposta)
-       //left join produto c on (b.idproduto = c.codigo)
-       //inner join tbplanilhaetapa d on (k.idetapa = d.idplanilhaetapa)
-       //inner join tbplanilhaunidade e on (b.idunidade = e.idunidade)
-       //inner join tbplanilhaitens i on (b.idplanilhaitem=i.idplanilhaitens)
-       //inner join verificacao x on (b.fonterecurso = x.idverificacao)
-       //inner join agentes.dbo.vufmunicipio f on (b.ufdespesa = f.iduf and b.municipiodespesa = f.idmunicipio)
-       //
-       //where k.stativo = 's' and a.idpronac = @idpronac
-       //order by x.descricao,c.descricao desc,convert(varchar(8),d.idplanilhaetapa) + ' - ' + d.descricao,f.uf,f.municipio,i.descricao
+        $subA = [
+            'sum(b1.vlComprovacao) AS vlPagamento',
+        ];
 
-        $sql = $db->select()
-            ->from(['a' => 'projetos'], $a, $sac)
-            ->joinInner(['b' => 'tbplanilhaprojeto'], '(a.idpronac = b.idpronac)', $b, $sac)
-            ->joinInner(['z' => 'tbplanilhaproposta'], '(b.idplanilhaproposta=z.idplanilhaproposta)', $b, $sac)
-            ->joinInner(['k' => 'tbplanilhaaprovacao'], '(b.idplanilhaproposta=k.idplanilhaproposta)', $b, $sac)
-            ->joinLeft(['c' => 'produto'], '(b.idproduto = c.codigo)', $b, $sac)
-            ->joinInner(['d' => 'tbplanilhaetapa'], '(k.idetapa = d.idplanilhaetapa)', $b, $sac)
-            ->joinInner(['e' => 'tbplanilhaunidade'], '(b.idunidade = e.idunidade)', $b, $sac)
-            ->joinInner(['i' => 'tbplanilhaitens'], '(b.idplanilhaitem=i.idplanilhaitens)', $b, $sac)
-            ->joinInner(['x' => 'verificacao'], '(b.fonterecurso = x.idverificacao)', $b, $sac)
-            ->joinInner(['f' => 'vufmunicipio'], '(b.ufdespesa = f.iduf and b.municipiodespesa = f.idmunicipio)', $b, 'agentes.dbo')
-            ->where("k.stativo = 's'")
-            ->where('a.idpronac = ?', $idpronac)
-            ->order('x.descricao')
-            ->order("c.descricao desc")
-            ->order("convert(varchar(8),d.idplanilhaetapa) + ' - ' + d.descricao")
-            ->order('f.uf')
-            ->order('f.municipio')
-            ->order('i.descricao')
+        $subSQLA = $db->select()->from(['a1' => 'tbComprovantePagamentoxPlanilhaAprovacao'], $subA, 'BDCORPORATIVO.scSAC')
+            ->join(['b1' => 'tbComprovantePagamento'], '(a1.idComprovantePagamento = b1.idComprovantePagamento)', null, 'BDCORPORATIVO.scSAC')
+            ->join(['c1' => 'tbPlanilhaAprovacao'], '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)', null, $this->schema)
+            ->where("c1.stAtivo = 'S'")
+            ->where("c1.idPlanilhaAprovacao = k.idPlanilhaAprovacao")
+            ->where("(c1.idPronac = k.idPronac)")
+            ->group("a1.idPlanilhaAprovacao")
+        ;
+
+        $subB = [
+            'sum(b1.vlComprovacao) AS vlPagamento',
+        ];
+
+        $subSQLB = $db->select()->from(['a1' =>'tbComprovantePagamentoxPlanilhaAprovacao'], $subB, 'BDCORPORATIVO.scSAC')
+            ->join(['b1' => 'tbComprovantePagamento'], '(a1.idComprovantePagamento = b1.idComprovantePagamento)', null, 'BDCORPORATIVO.scSAC')
+            ->join(['c1' => 'tbPlanilhaAprovacao'], '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacaoPai)', null, $this->schema)
+            ->where("c1.stAtivo = 'S'")
+            ->where("c1.idPlanilhaAprovacaoPai = k.idPlanilhaAprovacaoPai")
+            ->where("(c1.idPronac = k.idPronac)")
+            ->group("a1.idPlanilhaAprovacao")
+        ;
+
+        $a = [
+            new Zend_Db_Expr("
+                CASE
+                    WHEN k.tpPlanilha = 'CO' THEN
+                    ($subSQLA)
+                   ELSE
+                    ($subSQLB)
+            END as vlComprovado"),
+        new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END as Produto"),
+        'CONVERT(varchar(max), k.dsJustificativa) as JustComponente',
+        'ROUND((b.Quantidade * b.Ocorrencia * b.ValorUnitario),2) as vlSugerido',
+        'ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado',
+        'ROUND((z.Quantidade * z.Ocorrencia * z.ValorUnitario),2) as vlSolicitado',
+        new Zend_Db_Expr('a.AnoProjeto+a.Sequencial as PRONAC'),
+        'a.NomeProjeto',
+        'a.idPronac',
+        'b.idEtapa',
+        'convert(varchar(max),b.Justificativa) as JustParecerista',
+        'convert(varchar(max),z.dsJustificativa) as JustProponente',
+        'd.Descricao as Etapa',
+        'e.Descricao as Unidade',
+        'f.Municipio',
+        'f.UF',
+        'i.Descricao as Item',
+        'k.QtDias as QtdeDias',
+        'k.QtItem as Quantidade',
+        'k.TpDespesa',
+        'k.TpPessoa',
+        'k.idMunicipioDespesa as idMunicipio',
+        'k.idPlanilhaAprovacao',
+        'k.idPlanilhaItem',
+        'k.idProduto',
+        'k.idUfDespesa as idUF',
+        'k.nrContrapartida',
+        'k.nrFonteRecurso as idFonte',
+        'k.nrOcorrencia as Ocorrencia',
+        'k.tpPlanilha',
+        'k.vlUnitario',
+        'x.Descricao as FonteRecurso',
+        ];
+
+        $sql = $db->select()->from(['a' => 'Projetos'], $a, $this->_schema)
+            ->join(['b' => 'tbPlanilhaProjeto'], '(a.idPronac = b.idPronac)', null, $this->schema)
+            ->join(['z' => 'tbPlanilhaProposta'], '(b.idPlanilhaProposta=z.idPlanilhaProposta)', null, $this->schema)
+            ->join(['k' => 'tbPlanilhaAprovacao'], '(b.idPlanilhaProposta=k.idPlanilhaProposta)', null, $this->schema)
+            ->joinLeft(['c' => 'Produto'], '(b.idProduto = c.Codigo)', null, $this->schema)
+            ->join(['d' => 'tbPlanilhaEtapa'], '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->schema)
+            ->join(['e' => 'tbPlanilhaUnidade'], '(b.idUnidade = e.idUnidade)', null, $this->schema)
+            ->join(['i' => 'tbPlanilhaItens'], '(b.idPlanilhaItem=i.idPlanilhaItens)', null, $this->schema)
+            ->join(['x' => 'Verificacao'], '(b.FonteRecurso = x.idVerificacao)', null, $this->schema)
+            ->join(['f' => 'vUfMunicipio'], '(b.UfDespesa = f.idUF and b.MunicipioDespesa = f.idMunicipio)', null, 'agentes.dbo')
+            ->where("k.stAtivo = 'S'")
+            ->where("a.idPronac = ?", $idPronac)
+            ->order("x.Descricao")
+            ->order("c.Descricao DESC")
+            ->order("CONVERT(VARCHAR(8),d.idPlanilhaEtapa) + ' - ' + d.Descricao")
+            ->order("f.UF")
+            ->order("f.Municipio")
+            ->order("i.Descricao")
             ;
+
+        return $db->fetchAll($sql);
     }
 
+    /**
+     * cortesOrcamentariosAprovados
+     *
+     * @param mixed $idPronac
+     * @access public
+     * @return void
+     */
     public function cortesOrcamentariosAprovados($idPronac)
     {
-     //SELECT a.idPronac,a.AnoProjeto+a.Sequencial as PRONAC,a.NomeProjeto,k.idProduto,k.idPlanilhaAprovacao,b.idPlanilhaProjeto,
-             //CASE
-               //WHEN k.idProduto = 0
-                    //THEN 'Administração do Projeto'
-                    //ELSE c.Descricao
-               //END as Produto,
-             //b.idEtapa,d.Descricao as Etapa,i.Descricao as Item,
-             //ROUND((z.Quantidade * z.Ocorrencia * z.ValorUnitario),2) as vlSolicitado,convert(varchar(max),z.dsJustificativa) as JustProponente,
-             //ROUND((b.Quantidade * b.Ocorrencia * b.ValorUnitario),2) as vlSugerido,convert(varchar(max),b.Justificativa) as JustParecerista,
-             //e.Descricao as Unidade,k.QtItem as Quantidade,k.nrOcorrencia as Ocorrencia,k.vlUnitario,k.QtDias as QtdeDias,
-             //k.TpDespesa,k.TpPessoa,k.nrContrapartida,k.nrFonteRecurso as idFonte,x.Descricao as FonteRecurso,f.UF,f.Municipio,
-             //ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado,
-       //convert(varchar(max),k.dsJustificativa) as JustComponente
-       //FROM Projetos a
-       //INNER JOIN tbPlanilhaProjeto b on (a.idPronac = b.idPronac)
-       //INNER JOIN tbPlanilhaProposta z on (b.idPlanilhaProposta=z.idPlanilhaProposta)
-       //INNER JOIN tbPlanilhaAprovacao k on (b.idPlanilhaProposta=k.idPlanilhaProposta)
-       //LEFT JOIN Produto c on (b.idProduto = c.Codigo)
-       //INNER JOIN tbPlanilhaEtapa d on (k.idEtapa = d.idPlanilhaEtapa)
-       //INNER JOIN tbPlanilhaUnidade e on (b.idUnidade = e.idUnidade)
-       //INNER JOIN tbPlanilhaItens i on (b.idPlanilhaItem=i.idPlanilhaItens)
-       //INNER JOIN Verificacao x on (b.FonteRecurso = x.idVerificacao)
-       //INNER JOIN agentes.dbo.vUfMunicipio f on (b.UfDespesa = f.idUF and b.MunicipioDespesa = f.idMunicipio)
-       //WHERE k.stAtivo = 'S'
-            //AND (ROUND((z.Quantidade * z.Ocorrencia * z.ValorUnitario),2) <> ROUND((b.Quantidade * b.Ocorrencia * b.ValorUnitario),2) OR
-                 //ROUND((z.Quantidade * z.Ocorrencia * z.ValorUnitario),2) <> ROUND((k.QtItem * k.nrOcorrencia * k.vlUnitario),2))
-            //AND a.idPronac = @idPronac
-       //ORDER BY x.Descricao,c.Descricao DESC,CONVERT(VARCHAR(8),d.idPlanilhaEtapa) + ' - ' + d.Descricao,f.UF,f.Municipio,i.Descricao
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $a = [
+            new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END as Produto"),
+            'ROUND((b.Quantidade * b.Ocorrencia * b.ValorUnitario),2) as vlSugerido',
+            'ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado',
+            'ROUND((z.Quantidade * z.Ocorrencia * z.ValorUnitario),2) as vlSolicitado',
+            new Zend_Db_Expr('a.AnoProjeto+a.Sequencial as PRONAC'),
+            'a.NomeProjeto',
+            'a.idPronac',
+            'b.idEtapa',
+            'b.idPlanilhaProjeto',
+            'convert(varchar(max),k.dsJustificativa) as JustComponente',
+            'convert(varchar(max),b.Justificativa) as JustParecerista',
+            'convert(varchar(max),z.dsJustificativa) as JustProponente',
+            'd.Descricao as Etapa',
+            'e.Descricao as Unidade',
+            'f.Municipio',
+            'f.UF',
+            'i.Descricao as Item',
+            'k.QtDias as QtdeDias',
+            'k.QtItem as Quantidade',
+            'k.TpDespesa',
+            'k.TpPessoa',
+            'k.idPlanilhaAprovacao',
+            'k.idProduto',
+            'k.nrContrapartida',
+            'k.nrFonteRecurso as idFonte',
+            'k.nrOcorrencia as Ocorrencia',
+            'k.vlUnitario',
+            'x.Descricao as FonteRecurso',
+        ];
+
+        $sql = $db->select()->from(['a' => 'Projetos'], $a, $this->_schema)
+            ->join(['b' => 'tbPlanilhaProjeto'], '(a.idPronac = b.idPronac)', null, $this->schema)
+            ->join(['z' => 'tbPlanilhaProposta'], '(b.idPlanilhaProposta=z.idPlanilhaProposta)', null, $this->schema)
+            ->join(['k' => 'tbPlanilhaAprovacao'], '(b.idPlanilhaProposta=k.idPlanilhaProposta)', null, $this->schema)
+            ->joinLeft(['c' => 'Produto'], '(b.idProduto = c.Codigo)', null, $this->schema)
+            ->join(['d' => 'tbPlanilhaEtapa'], '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->schema)
+            ->join(['e' => 'tbPlanilhaUnidade'], '(b.idUnidade = e.idUnidade)', null, $this->schema)
+            ->join(['i' => 'tbPlanilhaItens'], '(b.idPlanilhaItem=i.idPlanilhaItens)', null, $this->schema)
+            ->join(['x' => 'Verificacao'], '(b.FonteRecurso = x.idVerificacao)', null, $this->schema)
+            ->join(['f' => 'vUfMunicipio'], '(b.UfDespesa = f.idUF and b.MunicipioDespesa = f.idMunicipio)', null, 'agentes.dbo')
+            ->where("a.idPronac = ?", $idPronac)
+            ->where("k.stAtivo = 'S'")
+            ->where("
+                (ROUND((z.Quantidade * z.Ocorrencia * z.ValorUnitario),2) <> ROUND((b.Quantidade * b.Ocorrencia * b.ValorUnitario),2) OR
+                     ROUND((z.Quantidade * z.Ocorrencia * z.ValorUnitario),2) <> ROUND((k.QtItem * k.nrOcorrencia * k.vlUnitario),2))
+            ")
+            ->order("x.Descricao")
+            ->order('c.Descricao DESC')
+            ->order("CONVERT(VARCHAR(8), d.idPlanilhaEtapa) + ' - ' + d.Descricao")
+            ->order("f.UF")
+            ->order("f.Municipio")
+            ->order("i.Descricao")
+        ;
+        return $db->fetchAll($sql);
     }
 
-    public function remanejamentoMenor20($idPronac){
-      //IF NOT EXISTS( SELECT TOP 1 * FROM tbPlanilhaAprovacao WHERE idPronac = @idPronac AND stAtivo = 'S' AND tpPlanilha = 'RP')
-         //BEGIN
-           //SELECT a.idPronac,a.AnoProjeto+a.Sequencial as PRONAC,a.NomeProjeto,k.idProduto,k.idPlanilhaAprovacao,k.idPlanilhaAprovacaoPai,
-                 //CASE
-                   //WHEN k.idProduto = 0
-                        //THEN 'Administração do Projeto'
-                        //ELSE c.Descricao
-                   //END as Produto,
-                 //k.idEtapa,d.Descricao as Etapa,d.tpGrupo,i.Descricao as Item,k.nrFonteRecurso as idFonte,x.Descricao as FonteRecurso,
-                 //e.Descricao as Unidade,k.QtItem as Quantidade,k.nrOcorrencia as Ocorrencia,k.vlUnitario,
-                 //ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado,
-                 //(SELECT sum(b1.vlComprovacao) AS vlPagamento
-                         //FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                         //INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                         //INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
-                         //WHERE c1.idPlanilhaItem = k.idPlanilhaItem AND c1.idPronac = k.idPronac
-                         //GROUP BY c1.idPlanilhaItem) as vlComprovado,
-                 //k.QtDias as QtdeDias,f.UF,f.Municipio,k.dsJustificativa,k.idAgente
-               //FROM Projetos a
-               //INNER JOIN tbPlanilhaAprovacao k on (a.idPronac = k.idPronac)
-               //INNER JOIN tbPlanilhaProposta z on (k.idPlanilhaProposta=z.idPlanilhaProposta)
-               //LEFT JOIN Produto c on (k.idProduto = c.Codigo)
-               //INNER JOIN tbPlanilhaEtapa d on (k.idEtapa = d.idPlanilhaEtapa)
-               //INNER JOIN tbPlanilhaUnidade e on (k.idUnidade = e.idUnidade)
-               //INNER JOIN tbPlanilhaItens i on (k.idPlanilhaItem=i.idPlanilhaItens)
-               //INNER JOIN Verificacao x on (k.nrFonteRecurso = x.idVerificacao)
-               //INNER JOIN agentes.dbo.vUfMunicipio f on (k.idUfDespesa = f.idUF and k.idMunicipioDespesa = f.idMunicipio)
-               //WHERE k.stAtivo = 'N'
-                    //AND k.tpPlanilha = 'RP'
-                    //AND ((ROUND((k.qtItem * k.nrOcorrencia * k.vlUnitario),2) <> 0)
-                         //OR (k.dsJustificativa IS NOT NULL))
-                    //AND a.idPronac = @idPronac
-               //ORDER BY x.Descricao,c.Descricao DESC,CONVERT(VARCHAR(8),d.idPlanilhaEtapa) + ' - ' + d.Descricao,f.UF,f.Municipio,i.Descricao
-         //END
-        //ELSE
-         //BEGIN
-           //SELECT a.idPronac,a.AnoProjeto+a.Sequencial as PRONAC,a.NomeProjeto,k.idProduto,k.idPlanilhaAprovacao,k.idPlanilhaAprovacaoPai,
-				 //CASE
-				   //WHEN k.idProduto = 0
-						//THEN 'Administração do Projeto'
-						//ELSE c.Descricao
-				   //END as Produto,
-				 //k.idEtapa,d.Descricao as Etapa,d.tpGrupo,i.Descricao as Item,k.nrFonteRecurso as idFonte,x.Descricao as FonteRecurso,
-				 //e.Descricao as Unidade,k.QtItem as Quantidade,k.nrOcorrencia as Ocorrencia,k.vlUnitario,
-				 //ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado,
-				 //(SELECT sum(b1.vlComprovacao) AS vlPagamento
-                         //FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                         //INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                         //INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
-                         //WHERE c1.idPlanilhaItem = k.idPlanilhaItem AND c1.idPronac = k.idPronac
-                         //GROUP BY c1.idPlanilhaItem) as vlComprovado,
-				 //k.QtDias as QtdeDias,f.UF,f.Municipio,k.dsJustificativa,k.idAgente
-			   //FROM Projetos a
-			   //INNER JOIN tbPlanilhaAprovacao k on (a.idPronac = k.idPronac)
-			   //INNER JOIN tbPlanilhaProposta z on (k.idPlanilhaProposta=z.idPlanilhaProposta)
-			   //LEFT JOIN Produto c on (k.idProduto = c.Codigo)
-			   //INNER JOIN tbPlanilhaEtapa d on (k.idEtapa = d.idPlanilhaEtapa)
-			   //INNER JOIN tbPlanilhaUnidade e on (k.idUnidade = e.idUnidade)
-			   //INNER JOIN tbPlanilhaItens i on (k.idPlanilhaItem=i.idPlanilhaItens)
-			   //INNER JOIN Verificacao x on (k.nrFonteRecurso = x.idVerificacao)
-			   //INNER JOIN agentes.dbo.vUfMunicipio f on (k.idUfDespesa = f.idUF and k.idMunicipioDespesa = f.idMunicipio)
-			   //WHERE k.stAtivo = 'S'
-					//AND k.tpPlanilha = 'RP'
-					//AND ((ROUND((k.qtItem * k.nrOcorrencia * k.vlUnitario),2) <> 0)
-						 //OR (k.dsJustificativa IS NOT NULL))
-					//AND a.idPronac = @idPronac
-			   //ORDER BY x.Descricao,c.Descricao DESC,CONVERT(VARCHAR(8),d.idPlanilhaEtapa) + ' - ' + d.Descricao,f.UF,f.Municipio,i.Descricao
-	   //END
-   //END
+    /**
+     * remanejamentoMenor20
+     *
+     * @param mixed $idPronac
+     * @access public
+     * @return void
+     */
+    public function remanejamentoMenor20($idPronac)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $sql = $db->select()->from(['tbPlanilhaAprovacao'], '*', $this->_schema)
+            ->where('idPronac = ?', $idPronac)
+            ->where("stAtivo = 'S'")
+            ->where("tpPlanilha = 'RP'")
+            ->limit(1)
+            ;
+        $planilha = $db->fetchAll($sql);
+
+        if (empty($planilha)) {
+            $subA = [
+                "sum(b1.vlComprovacao) AS vlPagamento",
+            ];
+
+            $subSql = $db->select()->from(['a1' => 'tbComprovantePagamentoxPlanilhaAprovacao'], $subA, 'BDCORPORATIVO.scSAC')
+                ->join(['b1' => 'tbComprovantePagamento'], '(a1.idComprovantePagamento = b1.idComprovantePagamento)', null, 'BDCORPORATIVO.scSAC')
+                ->join(['c1' => 'tbPlanilhaAprovacao'], '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)', null, $this->schema)
+                ->where("c1.idPlanilhaItem = k.idPlanilhaItem")
+                ->where("c1.idPronac = k.idPronac")
+                ->group("c1.idPlanilhaItem")
+            ;
+
+            $a = [
+                "($subSql) AS vlComprovado",
+                new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END as Produto"),
+                "ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado",
+                "(a.AnoProjeto+a.Sequencial) as PRONAC",
+                "a.NomeProjeto",
+                "a.idPronac",
+                "d.Descricao as Etapa",
+                "d.tpGrupo",
+                "e.Descricao as Unidade",
+                "f.Municipio",
+                "f.UF",
+                "i.Descricao as Item",
+                "k.QtDias as QtdeDias",
+                "k.QtItem as Quantidade",
+                "k.dsJustificativa",
+                "k.idAgente",
+                "k.idEtapa",
+                "k.idPlanilhaAprovacao",
+                "k.idPlanilhaAprovacaoPai",
+                "k.idProduto",
+                "k.nrFonteRecurso as idFonte",
+                "k.nrOcorrencia as Ocorrencia",
+                "k.vlUnitario",
+                "x.Descricao as FonteRecurso",
+            ];
+
+            $sql = $db->select()->from(['a' => 'Projetos'], $a, $this->_schema)
+                ->join(['k' => 'tbPlanilhaAprovacao'], '(a.idPronac = k.idPronac)', null, $this->schema)
+                ->join(['z' => 'tbPlanilhaProposta'], '(k.idPlanilhaProposta=z.idPlanilhaProposta)', null, $this->schema)
+                ->join(['c' => 'Produto'], '(k.idProduto = c.Codigo)', null, $this->schema)
+                ->join(['d' => 'tbPlanilhaEtapa'], '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->schema)
+                ->join(['e' => 'tbPlanilhaUnidade'], '(k.idUnidade = e.idUnidade)', null, $this->schema)
+                ->join(['i' => 'tbPlanilhaItens'], '(k.idPlanilhaItem=i.idPlanilhaItens)', null, $this->schema)
+                ->join(['x' => 'Verificacao'], '(k.nrFonteRecurso = x.idVerificacao)', null, $this->schema)
+                ->join(['f' => 'vUfMunicipio'], '(k.idUfDespesa = f.idUF and k.idMunicipioDespesa = f.idMunicipio)', null, 'agentes.dbo')
+                ->where("k.stAtivo = 'N'")
+                ->where("k.tpPlanilha = 'RP'")
+                ->where("((ROUND((k.qtItem * k.nrOcorrencia * k.vlUnitario),2) <> 0) OR (k.dsJustificativa IS NOT NULL))")
+                ->where("a.idPronac = ?", $idPronac)
+                ->order("x.Descricao")
+                ->order('c.Descricao DESC')
+                ->order("CONVERT(VARCHAR(8),d.idPlanilhaEtapa) + ' - ' + d.Descricao")
+                ->order('f.UF')
+                ->order('f.Municipio')
+                ->order('i.Descricao')
+            ;
+        } else {
+
+            $subA = [
+                "sum(b1.vlComprovacao) AS vlPagamento",
+            ];
+
+            $subSql = $db->select()->from(['a1' => 'tbComprovantePagamentoxPlanilhaAprovacao'], $subA, 'BDCORPORATIVO.scSAC')
+                ->join(['b1' => 'tbComprovantePagamento'], '(a1.idComprovantePagamento = b1.idComprovantePagamento)', null, 'BDCORPORATIVO.scSAC')
+                ->join(['c1' => 'tbPlanilhaAprovacao'], '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)', null, $this->schema)
+                ->where("c1.idPlanilhaItem = k.idPlanilhaItem")
+                ->where("c1.idPronac = k.idPronac")
+                ->group("c1.idPlanilhaItem")
+            ;
+
+            $c = [
+                "($subSql) AS vlComprovado",
+                new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END as Produto"),
+                "ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado",
+                "(a.AnoProjeto+a.Sequencial) as PRONAC",
+                "a.NomeProjeto",
+                "a.idPronac",
+                "d.Descricao as Etapa",
+                "d.tpGrupo",
+                "e.Descricao as Unidade",
+                "f.Municipio",
+                "f.UF",
+                "i.Descricao as Item",
+                "k.QtDias as QtdeDias",
+                "k.QtItem as Quantidade",
+                "k.dsJustificativa",
+                "k.idAgente",
+                "k.idEtapa",
+                "k.idPlanilhaAprovacao",
+                "k.idPlanilhaAprovacaoPai",
+                "k.idProduto",
+                "k.nrFonteRecurso as idFonte",
+                "k.nrOcorrencia as Ocorrencia",
+                "k.vlUnitario",
+                "x.Descricao as FonteRecurso",
+            ];
+
+            $sql = $db->select()->from(['a' => 'Projetos'], $c, $this->_schema)
+                ->join(['k' => 'tbPlanilhaAprovacao'], '(a.idPronac = k.idPronac)', null, $this->schema)
+                ->join(['z' => 'tbPlanilhaProposta'], '(k.idPlanilhaProposta=z.idPlanilhaProposta)', null, $this->schema)
+                ->join(['c' => 'Produto'], '(k.idProduto = c.Codigo)', null, $this->schema)
+                ->join(['d' => 'tbPlanilhaEtapa'], '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->schema)
+                ->join(['e' => 'tbPlanilhaUnidade'], '(k.idUnidade = e.idUnidade)', null, $this->schema)
+                ->join(['i' => 'tbPlanilhaItens'], '(k.idPlanilhaItem=i.idPlanilhaItens)', null, $this->schema)
+                ->join(['x' => 'Verificacao'], '(k.nrFonteRecurso = x.idVerificacao)', null, $this->schema)
+                ->join(['f' => 'vUfMunicipio'], '(k.idUfDespesa = f.idUF and k.idMunicipioDespesa = f.idMunicipio)', null, 'agentes.dbo')
+                ->where("k.stAtivo = 'S'")
+                ->where("k.tpPlanilha = 'RP'")
+                ->where("((ROUND((k.qtItem * k.nrOcorrencia * k.vlUnitario),2) <> 0) OR (k.dsJustificativa IS NOT NULL))")
+                ->where("a.idPronac = ?", $idPronac)
+                ->order("x.Descricao")
+                ->order('c.Descricao DESC')
+                ->order("CONVERT(VARCHAR(8),d.idPlanilhaEtapa) + ' - ' + d.Descricao")
+                ->order('f.UF')
+                ->order('f.Municipio')
+                ->order('i.Descricao')
+            ;
+        }
+
+        return $db->fetchAll($sql);
     }
 
     public function readequacao($idPronac){
-    //BEGIN
-          //IF EXISTS(SELECT TOP 1 * FROM tbPlanilhaAprovacao a
-                                   //INNER JOIN tbReadequacao b on (a.idPronac = b.idPronac)
-                                   //WHERE a.idPronac = @idPronac
-                                         //AND a.stAtivo = 'N'
-                                         //AND a.tpPlanilha = 'SR'
-                                         //AND b.idTipoReadequacao = 2
-                                         //AND b.siEncaminhamento <> 15
-                                         //AND b.stEstado = 0)
-                                          //--AND b.siEncaminhamento IN (1,3,4,5,6,7,8,10,12,14))
-             //BEGIN
-               //SELECT a.idPronac,a.AnoProjeto+a.Sequencial as PRONAC,a.NomeProjeto,k.idProduto,k.idPlanilhaAprovacao,k.idPlanilhaAprovacaoPai,
-                     //CASE
-                       //WHEN k.idProduto = 0
-                            //THEN 'Administração do Projeto'
-                            //ELSE c.Descricao
-                       //END as Produto,
-                     //k.idEtapa,d.Descricao as Etapa,d.tpGrupo,i.Descricao as Item,k.nrFonteRecurso as idFonte,x.Descricao as FonteRecurso,
-                     //e.Descricao as Unidade,k.QtItem as Quantidade,k.nrOcorrencia as Ocorrencia,k.vlUnitario,
-                     //ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado,
-                     //(SELECT sum(b1.vlComprovacao) AS vlPagamento
-                             //FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                             //INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                             //INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
-                             //WHERE c1.idPlanilhaItem = k.idPlanilhaItem AND c1.idPronac = k.idPronac
-                             //GROUP BY c1.idPlanilhaItem) as vlComprovado,
-                     //k.QtDias as QtdeDias,f.UF,f.Municipio,k.dsJustificativa,k.idAgente,k.tpAcao
-                   //FROM Projetos a
-                   //INNER JOIN tbPlanilhaAprovacao k on (a.idPronac = k.idPronac)
-                   //LEFT JOIN Produto c on (k.idProduto = c.Codigo)
-                   //INNER JOIN tbPlanilhaEtapa d on (k.idEtapa = d.idPlanilhaEtapa)
-                   //INNER JOIN tbPlanilhaUnidade e on (k.idUnidade = e.idUnidade)
-                   //INNER JOIN tbPlanilhaItens i on (k.idPlanilhaItem=i.idPlanilhaItens)
-                   //INNER JOIN Verificacao x on (k.nrFonteRecurso = x.idVerificacao)
-                   //INNER JOIN agentes.dbo.vUfMunicipio f on (k.idUfDespesa = f.idUF and k.idMunicipioDespesa = f.idMunicipio)
-                   //WHERE k.stAtivo = 'N'
-                           //AND k.tpPlanilha = 'SR'
-                        //AND ((ROUND((k.qtItem * k.nrOcorrencia * k.vlUnitario),2) <> 0)
-                             //OR (k.dsJustificativa IS NOT NULL))
-                        //AND a.idPronac = @idPronac
-                   //ORDER BY x.Descricao,c.Descricao DESC,CONVERT(VARCHAR(8),d.idPlanilhaEtapa) + ' - ' + d.Descricao,f.UF,f.Municipio,i.Descricao
-             //END
-          //ELSE
-             //BEGIN
-               //SELECT a.idPronac,a.AnoProjeto+a.Sequencial as PRONAC,a.NomeProjeto,k.idProduto,k.idPlanilhaAprovacao,k.idPlanilhaAprovacaoPai,
-                     //CASE
-                       //WHEN k.idProduto = 0
-                            //THEN 'Administração do Projeto'
-                            //ELSE c.Descricao
-                       //END as Produto,
-                     //k.idEtapa,d.Descricao as Etapa,d.tpGrupo,i.Descricao as Item,k.nrFonteRecurso as idFonte,x.Descricao as FonteRecurso,
-                     //e.Descricao as Unidade,k.QtItem as Quantidade,k.nrOcorrencia as Ocorrencia,k.vlUnitario,
-                     //ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado,
-                     //(SELECT sum(b1.vlComprovacao) AS vlPagamento
-                             //FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                             //INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                             //INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
-                             //WHERE c1.idPlanilhaItem = k.idPlanilhaItem AND c1.idPronac = k.idPronac
-                             //GROUP BY c1.idPlanilhaItem) as vlComprovado,
-                     //k.QtDias as QtdeDias,f.UF,f.Municipio,k.dsJustificativa,k.idAgente,k.tpAcao
-                   //FROM Projetos a
-                   //INNER JOIN tbPlanilhaAprovacao k on (a.idPronac = k.idPronac)
-                   //LEFT JOIN Produto c on (k.idProduto = c.Codigo)
-                   //INNER JOIN tbPlanilhaEtapa d on (k.idEtapa = d.idPlanilhaEtapa)
-                   //INNER JOIN tbPlanilhaUnidade e on (k.idUnidade = e.idUnidade)
-                   //INNER JOIN tbPlanilhaItens i on (k.idPlanilhaItem=i.idPlanilhaItens)
-                   //INNER JOIN Verificacao x on (k.nrFonteRecurso = x.idVerificacao)
-                   //INNER JOIN agentes.dbo.vUfMunicipio f on (k.idUfDespesa = f.idUF and k.idMunicipioDespesa = f.idMunicipio)
-                   //WHERE k.stAtivo = 'S'
-                        //AND k.tpPlanilha = 'SR'
-                        //AND k.tpAcao <> 'E'
-                        //AND ((ROUND((k.qtItem * k.nrOcorrencia * k.vlUnitario),2) <> 0)
-                             //OR (k.dsJustificativa IS NOT NULL))
-                        //AND a.idPronac = @idPronac
-                   //ORDER BY x.Descricao,c.Descricao DESC,CONVERT(VARCHAR(8),d.idPlanilhaEtapa) + ' - ' + d.Descricao,f.UF,f.Municipio,i.Descricao
-           //END
-       //END
     }
 }
