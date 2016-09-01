@@ -616,7 +616,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
         $cpf = Mascara::delMaskCPF($auth['cpf']);
-        $buscarDados = $sgcAcesso->buscar(array('cpf = ?' => $cpf))->current();
+        $buscarDados = array_change_key_case($sgcAcesso->buscar(array('cpf = ?' => $cpf))->current()->toArray());
 
         if (count(Zend_Auth::getInstance()->getIdentity()) > 0) {
             if (strlen($buscarDados['cpf']) > 11) {
