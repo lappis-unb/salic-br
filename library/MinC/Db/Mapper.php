@@ -38,20 +38,29 @@ class MinC_Db_Mapper
         return $this->_dbTable;
     }
 
-    public function save(Agente_Model_DbTable_Agentes $agentes)
+    /**
+     *
+     * @name save
+     * @param $model
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  01/09/2016
+     *
+     * @todo deixar a pk podendo ser array, atualmente so pode sendo string utilizando o reset.
+     */
+    public function save($model)
     {
-//        $data = array(
-//            'email'   => $agentes->getEmail(),
-//            'comment' => $agentes->getComment(),
-//            'created' => date('Y-m-d H:i:s'),
-//        );
-//
-//        if (null === ($id = $agentes->getId())) {
-//            unset($data['id']);
-//            $this->getDbTable()->insert($data);
-//        } else {
-//            $this->getDbTable()->update($data, array('id = ?' => $id));
-//        }
+        $table = $this->getDbTable();
+        $pk = reset($table->getPrimary());
+        $method = 'get' . ucfirst($pk);
+        $pkValue = $model->$method();
+        $data = array_filter($model->toArray());
+        if (null === ($id = $pkValue)) {
+            unset($data[$pk]);
+            $this->getDbTable()->insert($data);
+        } else {
+            $this->getDbTable()->update($data, array('id = ?' => $id));
+        }
     }
 
     public function find()

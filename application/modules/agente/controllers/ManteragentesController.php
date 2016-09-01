@@ -94,43 +94,34 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $GrupoAtivo = $GrupoAtivo->codGrupo;
 
-        $a = 0;
-        $select = null;
+        $viesoesNew = array();
         if (isset ($arrAuth['cpf'])) {
-            $select[$a]['idverificacao'] = 144; //PROPONENTE
-            $select[$a]['descricao'] = 'Proponente';
+            $viesoesNew[144] = 'Proponente';
         } else {
             foreach ($visoes as $visaoGrupo) {
                 if ($GrupoAtivo == 93 and ($visaoGrupo->idverificacao == 209 or $visaoGrupo->idverificacao == 216)) {
-                    $select[$a]['idverificacao'] = $visaoGrupo->idverificacao;
-                    $select[$a]['descricao'] = $visaoGrupo->descricao;
+                    $viesoesNew[$visaoGrupo->idverificacao] = $visaoGrupo->descricao;
                 }
                 if ($GrupoAtivo == 94 and $visaoGrupo->idverificacao == 209) {
-                    $select[$a]['idverificacao'] = $visaoGrupo->idverificacao;
-                    $select[$a]['descricao'] = $visaoGrupo->descricao;
+                    $viesoesNew[$visaoGrupo->idverificacao] = $visaoGrupo->descricao;
                 }
                 if ($GrupoAtivo == 97) {
-                    $select[$a]['idverificacao'] = $visaoGrupo->idverificacao;
-                    $select[$a]['descricao'] = $visaoGrupo->descricao;
+                    $viesoesNew[$visaoGrupo->idverificacao] = $visaoGrupo->descricao;
                 }
                 if ($GrupoAtivo == 120 and $visaoGrupo->idverificacao == 210) {
-                    $select[$a]['idverificacao'] = $visaoGrupo->idverificacao;
-                    $select[$a]['descricao'] = $visaoGrupo->descricao;
+                    $viesoesNew[$visaoGrupo->idverificacao] = $visaoGrupo->descricao;
                 }
                 if ($GrupoAtivo == 118 and $visaoGrupo->idverificacao == 210) {
-                    $select[$a]['idverificacao'] = $visaoGrupo->idverificacao;
-                    $select[$a]['descricao'] = $visaoGrupo->descricao;
+                    $viesoesNew[$visaoGrupo->idverificacao] = $visaoGrupo->descricao;
                 }
                 if ($GrupoAtivo == 122 and ($visaoGrupo->idverificacao == 210 or $visaoGrupo->idverificacao == 216 or $GrupoAtivo == 123)) {
-                    $select[$a]['idverificacao'] = $visaoGrupo->idverificacao;
-                    $select[$a]['descricao'] = $visaoGrupo->descricao;
+                    $viesoesNew[$visaoGrupo->idverificacao] = $visaoGrupo->descricao;
                 }
-                $a++;
             }
         }
 //        echo Zend_Debug::dump($visoes); exit(0);
 
-        $this->view->combovisoes = $select;
+        $this->view->combovisoes = $viesoesNew;
         parent::init();
     } // fecha método init()
 
@@ -396,12 +387,11 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                 if ($result) {
                     $result[0]['Agente'] = utf8_encode('cadastrado'); # o agente já encontra-se cadastrado
                 } else {
-                    echo '<pre>';
-                    var_dump('Cadastrar');
-                    exit;
-                    $arrayCNPJCPF = array('cnpjcpf' => $cpf);
-//                    $agentesTable
-                    $insere = Agente_Model_ManterAgentesDAO::cadastrarAgente($arrayCNPJCPF);
+                    $data = array('cnpjcpf' => $cpf);
+                    $agentesMapple = new Agente_Model_AgentesMapper();
+                    $insere = $agentesMapple->save(new Agente_Model_Agentes($data));
+//                    $arrayCNPJCPF = array('cnpjcpf' => $cpf);
+//                    $insere = Agente_Model_ManterAgentesDAO::cadastrarAgente($arrayCNPJCPF);
                     $result[0]['Agente'] = 'novo';
                 }
             }

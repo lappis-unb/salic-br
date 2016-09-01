@@ -19,6 +19,12 @@ class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         $this->_banco = self::getBanco($this->_banco);
         $this->_schema = self::getSchema($this->_schema);
     }
+
+    public function getPrimary()
+    {
+        return (isset($this->_primary))? $this->_primary : '';
+    }
+
     /**
      * GenericModel constructor.
      *

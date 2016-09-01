@@ -55,6 +55,14 @@ class Agente_Model_Agentes extends MinC_Db_Model
      */
     public function getCnpjcpf()
     {
+        return $this->_cnpjcpf;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCnpjcpfMask()
+    {
         return Mascara::addMaskCpfCnpj($this->_cnpjcpf);
     }
 
@@ -173,9 +181,10 @@ class Agente_Model_Agentes extends MinC_Db_Model
     /**
      *
      * @name toArray
+     * @return array
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  ${DATE}
+     * @since  01/09/2016
      */
     public function toArray()
     {

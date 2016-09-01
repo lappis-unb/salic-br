@@ -32,6 +32,24 @@ class Agente_Model_AgentesMapper extends MinC_Db_Mapper
         return $entries;
     }
 
+    public function isUniqueCpfCnpj($value)
+    {
+        $where = $this->getDbTable()
+            ->getDefaultAdapter()
+            ->quoteInto('cnpjcpf = ?', $value);
+
+        return ($this->getDbTable()->fetchRow($where)) ? true : false;
+    }
+
+    public function save(Agente_Model_Agentes $model)
+    {
+        if (self::isUniqueCpfCnpj($model->getCnpjcpf())) {
+            throw new Exception('CNPJ ou CPF j&aacute; cadastrado.');
+        } else {
+            return parent::save($model);
+        }
+    }
+
 //    public function fetchAll()
 //    {
 //        $schemaAgentes = parent::getSchema('agentes');

@@ -67,68 +67,66 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $GrupoAtivo = $GrupoAtivo->codGrupo;
 
-        $a = 0;
-        $select = null;
+        $visoesNew = null;
         $auth = Zend_Auth::getInstance(); // pega a autenticação
-        if (isset($auth->getIdentity()->Cpf)) {
-            $select[$a]['idVerificacao'] = 144; //PROPONENTE
-            $select[$a]['Descricao'] = 'Proponente';
+        $authIdentity = array_change_key_case((array) $auth->getIdentity());
+        if (isset($authIdentity['cpf'])) {
+            $visoesNew[0]['idVerificacao'] = 144; //PROPONENTE
+            $visoesNew[0]['Descricao'] = 'Proponente';
         } else {
-            foreach ($visoes as $visaoGrupo) {
+            foreach ($visoes as $key => $visaoGrupo) {
                 if ($GrupoAtivo == 93 and ($visaoGrupo->idVerificacao == 209 or $visaoGrupo->idVerificacao == 216)) {
-                    $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                    $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+                    $visoesNew[$key]['idVerificacao'] = $visaoGrupo->idVerificacao;
+                    $visoesNew[$key]['Descricao'] = $visaoGrupo->Descricao;
                 }
                 if ($GrupoAtivo == 94 and $visaoGrupo->idVerificacao == 209) {
-                    $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                    $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+                    $visoesNew[$key]['idVerificacao'] = $visaoGrupo->idVerificacao;
+                    $visoesNew[$key]['Descricao'] = $visaoGrupo->Descricao;
                 }
                 if ($GrupoAtivo == 137 and $visaoGrupo->idVerificacao == 209) {
-                    $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                    $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+                    $visoesNew[$key]['idVerificacao'] = $visaoGrupo->idVerificacao;
+                    $visoesNew[$key]['Descricao'] = $visaoGrupo->Descricao;
                 }
                 if ($GrupoAtivo == 97) {
-                    $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                    $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+                    $visoesNew[$key]['idVerificacao'] = $visaoGrupo->idVerificacao;
+                    $visoesNew[$key]['Descricao'] = $visaoGrupo->Descricao;
                 }
                 if ($GrupoAtivo == 120 and $visaoGrupo->idVerificacao == 210) {
-                    $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                    $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+                    $visoesNew[$key]['idVerificacao'] = $visaoGrupo->idVerificacao;
+                    $visoesNew[$key]['Descricao'] = $visaoGrupo->Descricao;
                 }
                 if ($GrupoAtivo == 121 and $visaoGrupo->idVerificacao == 145) {
-                    $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                    $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+                    $visoesNew[$key]['idVerificacao'] = $visaoGrupo->idVerificacao;
+                    $visoesNew[$key]['Descricao'] = $visaoGrupo->Descricao;
                 }
                 if ($GrupoAtivo == 123 and $visaoGrupo->idVerificacao == 145) {
-                    $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                    $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+                    $visoesNew[$key]['idVerificacao'] = $visaoGrupo->idVerificacao;
+                    $visoesNew[$key]['Descricao'] = $visaoGrupo->Descricao;
                 }
 
 
                 if ($GrupoAtivo == 118 and $visaoGrupo->idVerificacao == 210) {
-                    $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                    $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+                    $visoesNew[$key]['idVerificacao'] = $visaoGrupo->idVerificacao;
+                    $visoesNew[$key]['Descricao'] = $visaoGrupo->Descricao;
                 }
                 if (($GrupoAtivo == 122 or $GrupoAtivo == 123) and $visaoGrupo->idVerificacao == 145) {
-                    $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                    $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+                    $visoesNew[$key]['idVerificacao'] = $visaoGrupo->idVerificacao;
+                    $visoesNew[$key]['Descricao'] = $visaoGrupo->Descricao;
                 }
 
                 if (($GrupoAtivo == 103 || $GrupoAtivo == 142) and $visaoGrupo->idVerificacao == 144) {
-                    $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                    $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+                    $visoesNew[$key]['idVerificacao'] = $visaoGrupo->idVerificacao;
+                    $visoesNew[$key]['Descricao'] = $visaoGrupo->Descricao;
                 }
 
                 if (($GrupoAtivo == 97 || $GrupoAtivo == 120) and $visaoGrupo->idVerificacao == 217) {
-                    $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;
-                    $select[$a]['Descricao'] = $visaoGrupo->Descricao;
+                    $visoesNew[$key]['idVerificacao'] = $visaoGrupo->idVerificacao;
+                    $visoesNew[$key]['Descricao'] = $visaoGrupo->Descricao;
                 }
-
-                $a++;
             }
         }
 
-        $this->view->combovisoes = $select;
+        $this->view->combovisoes = $visoesNew;
 
         //verifica se a funcionadade devera abrir em modal
         if ($this->_request->getParam("modal") == "s") {
