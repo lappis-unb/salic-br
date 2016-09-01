@@ -15,7 +15,9 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
      * @param void
      * @return void
      */
-    public function init() {
+    public function init()
+    {
+        $mapperVerificacao = new Agente_Model_VerificacaoMapper();
 
         $auth = Zend_Auth::getInstance(); // pega a autentica�?o
         $this->view->title = "Salic - Sistema de Apoio ?s Leis de Incentivo ? Cultura"; // t�tulo da p�gina
@@ -156,7 +158,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         }
 
         $this->view->comboestados = Estado::buscar();
-        $this->view->combotiposenderecos = Tipoendereco::buscar();
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs(['idtipo' => 2]);
         $this->view->combotiposlogradouros = Tipologradouro::buscar();
         $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
         $this->view->combotipostelefones = Tipotelefone::buscar();

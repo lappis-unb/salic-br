@@ -1,38 +1,24 @@
 <?php
 
 /**
- * Modelo Estado
- * @author Equipe RUP - Politec
- * @since 29/03/2010
- * @version 1.0
- * @package application
- * @subpackage application.models
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
+ * Class Agente_Model_DbTable_UF
+ *
+ * @name Agente_Model_DbTable_UF
+ * @package Modules/Agente
+ * @subpackage Models/DbTable
+ * @version $Id$
+ *
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+ * @since 01/09/2016
+ *
+ * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
+ * @link http://salic.cultura.gov.br
  */
-class Estado extends Zend_Db_Table
+class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
 {
     protected $_banco = "agentes";
     protected $_name = 'uf';
     protected $_schema = 'agentes';
-
-    /**
-     * @var Zend_Db_Table
-     */
-    private static $instancia;
-
-    /**
-     * Responsável por implementar o Singleton, retornando apenas uma instancia da classe
-     * utilizando uma chamada estática.
-     * @return Zend_Db_Table
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
-     */
-    public static function obterInstancia() {
-        if(!self::$instancia) {
-            self::$instancia = new Estado();
-        }
-        return self::$instancia;
-    }
 
     /**
      * Método para buscar os estados
@@ -41,7 +27,7 @@ class Estado extends Zend_Db_Table
      * @return array
      * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
      */
-    public static function buscar()
+    public function buscar()
     {
         $objEstado = self::obterInstancia();
         $sql = 'select iduf as id, sigla as descricao ';
@@ -64,7 +50,7 @@ class Estado extends Zend_Db_Table
      * @return array
      * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
      */
-    public static function buscarRegiao($regiao)
+    public function buscarRegiao($regiao)
     {
         $objEstado = self::obterInstancia();
         $sql = 'SELECT idUF AS id, Descricao AS descricao 

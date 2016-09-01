@@ -80,6 +80,42 @@ class MinC_Db_Mapper
         return $result;
     }
 
+    /**
+     * Retorna o resultado com chave e valor apenas.
+     *
+     * @name fetchPairs
+     * @param string $key
+     * @param string $value
+     * @param array $where
+     * @param string $order
+     * @return array
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  01/09/2016
+     */
+    public function fetchPairs($key, $value , array $where = [], $order = '')
+    {
+        if (empty($order)) $order = $value;
+
+        $table = $this->getDbTable();
+        $select = $table->select()
+            ->setIntegrityCheck(false)
+            ->order($order);
+
+        foreach ($where as $column => $columnValue) {
+            $select->where( $column. ' = ?', $columnValue);
+        }
+
+        $resultSet = $table->fetchAll($select);
+        $resultSet = ($resultSet)? $resultSet->toArray() : array();
+        $entries   = array();
+        foreach ($resultSet as $row) {
+            $row = array_change_key_case($row);
+            $entries[$row[$key]] = $row[$value];
+        }
+        return $entries;
+    }
+
     public function fetchAll()
     {
         $resultSet = $this->getDbTable()->fetchAll();

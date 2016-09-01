@@ -52,12 +52,14 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      */
     public function init()
     {
-        $areaMapper = new Agente_Model_AreaMapper;
+        $mapperArea = new Agente_Model_AreaMapper;
+        $mapperVerificacao = new Agente_Model_VerificacaoMapper();
+        $mapperUF = new Agente_Model_UFMapper();
 
-        $this->view->comboestados = Estado::buscar();
-        $this->view->combotiposenderecos = Tipoendereco::buscar();
+        $this->view->comboestados = $mapperUF->fetchPairs('iduf', 'sigla');
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', ['idtipo' => 2]);
         $this->view->combotiposlogradouros = Tipologradouro::buscar();
-        $this->view->comboareasculturais = $areaMapper->fetchPairs();
+        $this->view->comboareasculturais = $mapperArea->fetchPairs();
         $this->view->combotipostelefones = Tipotelefone::buscar();
         $this->view->combotiposemails = Tipoemail::buscar();
 

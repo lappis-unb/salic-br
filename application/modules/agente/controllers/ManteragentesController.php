@@ -35,6 +35,9 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
      */
     public function init()
     {
+        $mapperVerificacao = new Agente_Model_VerificacaoMapper();
+        $mapperUF = new Agente_Model_UFMapper();
+
         # Pega a autenticacao
         $auth = Zend_Auth::getInstance()->getIdentity();
         $arrAuth = array_change_key_case((array) $auth);
@@ -79,8 +82,9 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $this->view->grupoativo = $GrupoAtivo->codGrupo;
 //        ini_set('display_errors', true);
 //        error_reporting(E_ALL ^E_NOTICE ^E_WARNING);
-        $this->view->comboestados = Estado::buscar();
-        $this->view->combotiposenderecos = Tipoendereco::buscar();
+        $this->view->comboestados = $mapperUF->fetchPairs('iduf', 'sigla');
+
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', ['idtipo' => 2]);
         $this->view->combotiposlogradouros = Tipologradouro::buscar();
         $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
         $this->view->combotipostelefones = Tipotelefone::buscar();

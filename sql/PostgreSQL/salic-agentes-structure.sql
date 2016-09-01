@@ -25,6 +25,9 @@ CREATE TABLE agentes.UF
   Descricao VARCHAR(100) NOT NULL,
   Regiao VARCHAR(20) NOT NULL
 );
+CREATE SEQUENCE agentes.uf_iduf_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE agentes.uf ALTER COLUMN iduf SET DEFAULT nextval('agentes.uf_iduf_seq');
+ALTER SEQUENCE agentes.uf_iduf_seq OWNED BY agentes.uf.iduf;
 CREATE INDEX IX_UF ON agentes.UF (Sigla);
 CREATE INDEX IX_UF_1 ON agentes.UF (Descricao);
 CREATE INDEX IX_UF_2 ON agentes.UF (Regiao);
@@ -88,6 +91,9 @@ CREATE TABLE agentes.Verificacao
   Sistema INT DEFAULT 0 NOT NULL,
   CONSTRAINT FK_Verificacao_Tipo FOREIGN KEY (IdTipo) REFERENCES agentes.Tipo (idTipo)
 );
+CREATE SEQUENCE agentes.verificacao_idverificacao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE agentes.verificacao ALTER COLUMN idverificacao SET DEFAULT nextval('agentes.verificacao_idverificacao_seq');
+ALTER SEQUENCE agentes.verificacao_idverificacao_seq OWNED BY agentes.verificacao.idverificacao;
 CREATE INDEX IX_Verificacao ON agentes.Verificacao (IdTipo);
 CREATE INDEX IX_Verificacao_1 ON agentes.Verificacao (Descricao);
 CREATE TABLE agentes.Telefones

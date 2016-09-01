@@ -198,10 +198,10 @@ function filtroCNPJ()
 				<?php } ?>
 
 				<?php if ($this->comboestados):  ?>
-                    <?php foreach ($this->comboestados as $comboestado): ?>
-                        <option value="<?php echo $comboestado->id; ?>"
-                            <?php if ($this->uf == $comboestado->id) echo "selected=\"selected\""; ?> >
-                            <?php echo $comboestado->descricao; ?>
+                    <?php foreach ($this->comboestados as $key => $comboestado): ?>
+                        <option value="<?php echo $key; ?>"
+                            <?php if ($this->uf == $key) echo "selected=\"selected\""; ?> >
+                            <?php echo $comboestado; ?>
                         </option>
                     <?php endforeach; ?>
 				<?php endif; ?>
@@ -237,10 +237,10 @@ function filtroCNPJ()
 				<option value="0"> - Selecione - </option>
 				<?php } ?>
 
-				<?php foreach ($this->combotiposenderecos as $combotipoendereco): ?>
-				<option value="<?php echo $combotipoendereco->id; ?>"
-					<?php if ($this->tipoEndereco == $combotipoendereco->id) echo "selected=\"selected\""; ?>>
-					<?php echo $combotipoendereco->descricao; ?>
+				<?php foreach ($this->combotiposenderecos as $key => $value): ?>
+				<option value="<?php echo $key; ?>"
+					<?php if ($this->tipoEndereco == $key) echo "selected=\"selected\""; ?>>
+					<?php echo $value; ?>
 				</option>
 				<?php endforeach; ?>
 
@@ -342,8 +342,8 @@ function filtroCNPJ()
 			<select name="ufFone" id="ufFone" onchange="carregar_combo(this.value,'dddFone','../ddd/combo');">
 				<option value="0"> -- </option>
 
-				<?php foreach ($this->comboestados as $combouffone){ ?>
-				<option value="<?php echo $combouffone->id; ?>"><?php echo $combouffone->descricao; ?></option>
+				<?php foreach ($this->comboestados as $key => $value){ ?>
+				<option value="<?php echo $key; ?>"><?php echo $value; ?></option>
 				<?php } ?>
 
 			</select>
