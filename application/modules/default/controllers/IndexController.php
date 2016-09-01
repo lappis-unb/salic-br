@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  * @copyright © 2010 - Ministerio da Cultura - Todos os direitos reservados.
  */
- 
+
 class IndexController extends MinC_Controller_Action_Abstract
 {
     /**
@@ -28,18 +28,25 @@ class IndexController extends MinC_Controller_Action_Abstract
 
     }
 
+    /**
+     * montarPlanilhaOrcamentariaAction
+     *
+     * @access public
+     * @return void
+     * @author wouerner <wouerner@gmail.com>
+     * @todo Verificar melhor local para esse metodo
+     */
     public function montarPlanilhaOrcamentariaAction()
     {
-        
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $get = Zend_Registry::get('get');
-        
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
-        
+
         $this->view->idPronac = $get->idPronac;
         $spPlanilhaOrcamentaria = new spPlanilhaOrcamentaria();
-        $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($get->idPronac, $get->tipoPlanilha); 
+        $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($get->idPronac, $get->tipoPlanilha);
         $planilha = $this->montarPlanilhaOrcamentaria($planilhaOrcamentaria, $get->tipoPlanilha);
         // tipoPlanilha = 0 : Planilha Orcamentaria da Proposta
         // tipoPlanilha = 1 : Planilha Orcamentaria do Proponente
@@ -48,9 +55,9 @@ class IndexController extends MinC_Controller_Action_Abstract
         // tipoPlanilha = 4 : Cortes Orcamentarios Aprovados
         // tipoPlanilha = 5 : Remanejamento menor que 20%
         // tipoPlanilha = 6 : Readequacao
-        
+
         $link = isset($get->link) ? true : false;
-        
+
         $this->montaTela(
             'index/montar-planilha-orcamentaria.phtml', array(
             'tipoPlanilha' => $get->tipoPlanilha,
@@ -60,5 +67,4 @@ class IndexController extends MinC_Controller_Action_Abstract
             )
         );
     }
-
-} // fecha class
+}

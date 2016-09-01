@@ -1,30 +1,18 @@
 <?php
 
+/**
+ * MinC_Db_Expr
+ *
+ * @author  wouerner <wouerner@gmail.com>
+ */
 class MinC_Db_Expr
 {
-    protected $_expression;
-
-    public function __construct($function = null, $expression = null)
-    {
-        $this->$function($expression);
-    }
-
-    public function concat($a)
+    public static function concat()
     {
         $db = Zend_Db_Table::getDefaultAdapter();
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
-            $this->_expression = ' + ';
-            return;
+             return ' + ';
         }
-        $this->_expression = " || ";
+        return " || ";
     }
-
-    /**
-     * @return string The string of the SQL expression stored in this object.
-     */
-    public function __toString()
-    {
-        return $this->_expression;
-    }
-
 }
