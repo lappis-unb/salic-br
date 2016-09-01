@@ -163,12 +163,12 @@ class ErrorController extends Zend_Controller_Action
 	public function errorAction()
 	{
 
-//	    if (APPLICATION_ENV === 'development') {
-//            $request = clone $this->getRequest();
-//            // Don't set controller or module; use current values
-//            $request->setActionName('error-planet');
-//            return $this->_helper->actionStack($request);
-//        }
+	    if (APPLICATION_ENV === 'development') {
+            $request = clone $this->getRequest();
+            // Don't set controller or module; use current values
+            $request->setActionName('error-planet');
+            return $this->_helper->actionStack($request);
+        }
 
 		// limpa o conte�do gerado antes do erro
 		$this->getResponse()->clearBody();

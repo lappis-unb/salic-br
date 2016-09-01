@@ -1,17 +1,17 @@
 <!--
 /**
- * Funções Proponentes
+ * Funï¿½ï¿½es Proponentes
  * @author Equipe RUP - Politec
  * @since 29/03/2010
  * @version 1.0
  * @package public
  * @subpackage public.js
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright c 2010 - Ministerio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 /**
- * Função AJAX para buscar informações do endereço de acordo com o CEP informado
+ * Funcao AJAX para buscar informacoes do endereco de acordo com o CEP informado
  */
 function buscar_cep(cep)
 {
@@ -28,7 +28,7 @@ function buscar_cep(cep)
     {
         if (cep.length != 10)
         {
-            $('#erroCep').html("O CEP informado é inválido!");
+            $('#erroCep').html("O CEP informado &eacute; inv&aacute;lido!");
         }
         else
         {
@@ -55,14 +55,14 @@ function buscar_cep(cep)
             // divide a string para colocar cada uma em seu campo
             var s = ajax.responseText;
 
-            if (s == "") // caso os dados retornem vazios ou o cep não exista
+            if (s == "") // caso os dados retornem vazios ou o cep nï¿½o exista
             {
                 logradouro.value               = " ";
                 tipoLogradouro.options[0].text = " - Selecione - ";
                 bairro.value                   = " ";
                 cidade.options[0].text         = " - Selecione - ";
                 uf.options[0].text             = " -- ";
-                $('#erroCep').html("O CEP informado é inválido!");
+                $('#erroCep').html("O CEP informado ï¿½ invï¿½lido!");
             }
             else // caso o cep exista
             {
@@ -98,12 +98,12 @@ function buscar_cep(cep)
 
 
                 // tipoLogradouro
-                // seleciona o combo de acordo com a lista existente no formulário
+                // seleciona o combo de acordo com a lista existente no formulï¿½rio
                 for (i = 0; i < tipoLogradouro.options.length; i++)
                 {
                     if (txtTipoLogradouro == tipoLogradouro.options[i].text)
                     {
-                        // seleciona o ítem igual
+                        // seleciona o ï¿½tem igual
                         tipoLogradouro.options[i].selected = true;
                     }
                 }
@@ -125,12 +125,12 @@ function buscar_cep(cep)
 
 
                 // uf
-                // seleciona o combo de acordo com a lista existente no formulário
+                // seleciona o combo de acordo com a lista existente no formulï¿½rio
                 for (i = 0; i < uf.options.length; i++)
                 {
                     if (txtUF == uf.options[i].text)
                     {
-                        // seleciona o ítem igual
+                        // seleciona o ï¿½tem igual
                         uf.options[i].selected = true;
                     }
                 }
@@ -151,7 +151,7 @@ function buscar_cep(cep)
                 // preenche o combo com a cidade
                 else
                 {
-                    // deixa apenas um elemento no combo, os outros são excluídos
+                    // deixa apenas um elemento no combo, os outros sï¿½o excluï¿½dos
                     document.getElementById("cidade").options.length = 0;
 	
                     // cria um novo option
@@ -165,12 +165,12 @@ function buscar_cep(cep)
     } // fecha onreadystatechange
 
     ajax.send(null);
-} // fecha função buscar_cep()
+} // fecha funï¿½ï¿½o buscar_cep()
 
 
 
 /**
- * Função para habilitar os campos quando o formulário for submetido
+ * Funcao para habilitar os campos quando o formulario for submetido
  */
 function habilitar_campos()
 {
@@ -183,12 +183,12 @@ function habilitar_campos()
     document.getElementById("uf").disabled             = false;
 
     return true;
-} // fecha função habilitar_campos()
+} // fecha funï¿½ï¿½o habilitar_campos()
 
 
 
 /**
- * Função para buscar os dados do usuário quando o cpf/cnpj é informado 
+ * Funcao para buscar os dados do usuario quando o cpf/cnpj e informado
  */
 function buscardados(valor)
 {
@@ -242,13 +242,13 @@ function buscardados(valor)
     {
         $('#erroCpf').html('');
 
-        // retira as máscaras do cpf/cnpj
+        // retira as mascaras do cpf/cnpj
         value = value.replace(".","");
         value = value.replace(".","");
         value = value.replace("/","");
         cpf = value.replace("-","");
 
-        // faz a verificação do agente via post
+        // faz a verificacao do agente via post
         $.ajax({
             type: "POST",
             dataType: 'json',
@@ -323,13 +323,13 @@ function buscardados(valor)
                         buscarEnderecos();
                         buscarTelefones(); // busca os telefones do agente
                         buscarEmails(); // busca os e-mails do agente
-                        buscarVisao(); // busca as visões do agente
+                        buscarVisao(); // busca as visï¿½es do agente
                         buscarDirigentes(); // busca os dirigentes do agente
                     } // fecha for
                 } // fecha if
-                else if (data[0].msgCPF == 'not') // cpf/cnpj inválido
+                else if (data[0].msgCPF == 'not') // cpf/cnpj invï¿½lido
                 {
-                    $('#erroCpf').html('CPF/CNPJ inválido');
+                    $('#erroCpf').html('CPF/CNPJ invï¿½lido');
                 }
                 else // novo cpf/cnpj
                 {
@@ -343,17 +343,17 @@ function buscardados(valor)
             },
             error: function (data)
             {
-                alert("Falha na recuperação dos dados.\nNão foi possível carregar agente!");
+                alert("Falha na recuperacao dos dados.\nNao foi possivel carregar agente!");
             }
         }); // fecha $.ajax
 
     } // fecha else
-} // fecha função buscardados()
+} // fecha funï¿½ï¿½o buscardados()
 
 
 
 /**
- * função para buscar os dados do dirigente quando o cpf é informado 
+ * funcao para buscar os dados do dirigente quando o cpf e informado
  */
 function buscardadosdirigente()
 {
@@ -385,16 +385,16 @@ function buscardadosdirigente()
     {
         $('#erroCpf').html('');
 
-        // retira as máscaras do cpf/cnpj
+        // retira as mï¿½scaras do cpf/cnpj
         value = value.replace(".","");
         value = value.replace(".","");
         value = value.replace("/","");
         cpf = value.replace("-","");
 
-        // pega o código do agente
+        // pega o cï¿½digo do agente
         idAgenteGeral = document.getElementById('idAgenteGeral').value;
 
-        // faz a verificação do dirigente via post
+        // faz a verificaï¿½ï¿½o do dirigente via post
         $.ajax({
             type: "POST",
             dataType: 'json',
@@ -467,14 +467,14 @@ function buscardadosdirigente()
                             $("input[name='enderecoCorrespondencia'][value='0']").attr('checked','checked');
                         }
 
-                        buscarEnderecos();// busca os endereços
+                        buscarEnderecos();// busca os endereï¿½os
                         buscarTelefones(); // busca os telefones do dirigente
                         buscarEmails(); // busca os e-mails do dirigente
                     } // fecha for
                 } // fecha if
-                else if (data[0].msgCPF == 'not') // cpf/cnpj inválido
+                else if (data[0].msgCPF == 'not') // cpf/cnpj invï¿½lido
                 {
-                    $('#erroCpf').html('CPF inválido');
+                    $('#erroCpf').html('CPF invï¿½lido');
                 }
                 else // novo cpf/cnpj
                 {
@@ -488,17 +488,17 @@ function buscardadosdirigente()
             },
             error: function (data)
             {
-                alert("Falha na recuperação dos dados.\nNão foi possível carregar dirigente!");
+                alert("Falha na recuperaï¿½ï¿½o dos dados.\nNï¿½o foi possï¿½vel carregar dirigente!");
             }
         }); // fecha $.ajax
 
     } // fecha else
-} // fecha função buscardadosdirigente()
+} // fecha funï¿½ï¿½o buscardadosdirigente()
 
 
 
 /**
- * Função para buscar todos os e-mails do agente/dirigente
+ * Funï¿½ï¿½o para buscar todos os e-mails do agente/dirigente
  */
 function buscarEnderecos()
 {
@@ -537,10 +537,10 @@ function buscarEnderecos()
                 tabela += '<input type="hidden" name="logradouros[]" id="logradouros[]" value="' + data[e].Logradouro + '" />';
                 tabela +='</td>';
                 tabela +='<td>';
-                tabela+= 'Correspondências <input type="radio" style="margin:5px" name="correspondenciaEnderecos" id="correspondenciaEnderecos" value="end'+e+'"/>';
+                tabela+= 'Correspondï¿½ncias <input type="radio" style="margin:5px" name="correspondenciaEnderecos" id="correspondenciaEnderecos" value="end'+e+'"/>';
                 tabela +='</td>';
                 tabela +='<td>';
-                tabela += '<div class="botao_icone"><a class="cancelar_ico" href="#" title=" Excluir endereço " onclick=excluirFoneEmail("#tabela'+e+'"); /></div>';
+                tabela += '<div class="botao_icone"><a class="cancelar_ico" href="#" title=" Excluir endereï¿½o " onclick=excluirFoneEmail("#tabela'+e+'"); /></div>';
                 tabela += '<input type="hidden" name="numeros[]" id="numeros[]" value="' + data[e].Numero + '" />';
                 tabela += '<input type="hidden" name="complementos[]" id="complementos[]" value="' + data[e].Complemento + '" />';
                 tabela += '<input type="hidden" name="bairros[]" id="bairros[]" value="' + data[e].Bairro + '" />';
@@ -555,11 +555,11 @@ function buscarEnderecos()
         error: function(data)
         {
             if (data[0].msgCPF == 'ok'){
-                alert('Falha na recuperação dos dados.\nNão foi possível carregar os endereços!');
+                alert('Falha na recuperaï¿½ï¿½o dos dados.\nNï¿½o foi possï¿½vel carregar os endereï¿½os!');
             }
         }
     });
-} // fecha função buscarEnderecos()
+} // fecha funï¿½ï¿½o buscarEnderecos()
 
 function buscarEmails()
 {
@@ -610,15 +610,15 @@ function buscarEmails()
         },
         error: function(data)
         {
-            alert('Falha na recuperação dos dados.\nNão foi possível carregar os e-mails!');
+            alert('Falha na recuperaï¿½ï¿½o dos dados.\nNï¿½o foi possï¿½vel carregar os e-mails!');
         }
     });
-} // fecha função buscarEmails()
+} // fecha funï¿½ï¿½o buscarEmails()
 
 
 
 /**
- * Função para buscar todos os telefones do agente
+ * Funï¿½ï¿½o para buscar todos os telefones do agente
  */
 function buscarTelefones()
 {
@@ -672,15 +672,15 @@ function buscarTelefones()
         },
         error: function(data)
         {
-            alert('Falha na recuperação dos dados.\nNão foi possível carregar os telefones!');
+            alert('Falha na recuperaï¿½ï¿½o dos dados.\nNï¿½o foi possï¿½vel carregar os telefones!');
         }
     });
-} // fecha função buscarTelefones()
+} // fecha funï¿½ï¿½o buscarTelefones()
 
 
 
 /**
- * Função para buscar todos os dirigentes do agente
+ * Funï¿½ï¿½o para buscar todos os dirigentes do agente
  */
 function buscarDirigentes()
 {
@@ -690,12 +690,12 @@ function buscarDirigentes()
 
     // busca a tabela com os dados do dirigente
     enviar_pag('../manteragentes/buscardirigentes', dados, 'tabBuscarDirigente');
-} // fecha função buscarDirigentes()
+} // fecha funï¿½ï¿½o buscarDirigentes()
 
 
 
 /**
- * Função para buscar todas as áreas do agente
+ * Funï¿½ï¿½o para buscar todas as ï¿½reas do agente
  */
 function buscarareasegmento()
 {
@@ -703,7 +703,7 @@ function buscarareasegmento()
     $("#Q_titulares").html('');
     $("#msgAS").html('');
     $("#TitularSuplente").html('');
-    var TitularSuplente = '<p><strong>COMPONENTE(S) DA COMISSÃO CADASTRADO(S):</strong>';
+    var TitularSuplente = '<p><strong>COMPONENTE(S) DA COMISSï¿½O CADASTRADO(S):</strong>';
 
     $.ajax({
         type: "POST",
@@ -776,15 +776,15 @@ function buscarareasegmento()
         },
         error: function(data)
         {
-            alert('Falha na recuperação dos dados.\nNão foi possível carregar áreas e seguimentos culturais!');
+            alert('Falha na recuperaï¿½ï¿½o dos dados.\nNï¿½o foi possï¿½vel carregar ï¿½reas e seguimentos culturais!');
         }
     });
-} // fecha função buscarareasegmento()
+} // fecha funï¿½ï¿½o buscarareasegmento()
 
 
 
 /**
- * Função para buscar todas as visões do agente
+ * Funï¿½ï¿½o para buscar todas as visï¿½es do agente
  */
 function buscarVisao()
 {
@@ -805,7 +805,7 @@ function buscarVisao()
             // percorre todos os dados
             if (data.length > 0)
             {
-                // mostra as visões do agente e deixa uma visão selecionada
+                // mostra as visï¿½es do agente e deixa uma visï¿½o selecionada
                 visoesDoAgente = '<strong>VIS&Otilde;ES DO AGENTE:</strong> ';
                 for (i in data)
                 {
@@ -820,10 +820,10 @@ function buscarVisao()
                         visoesDoAgente+= ' / ';
                     }
 
-                    // percorre o select com as visões
+                    // percorre o select com as visï¿½es
                     for (j = 0; j < document.getElementById("visao").options.length; j++)
                     {
-                        // seleciona a opção caso o usuário tenha a respectiva visão
+                        // seleciona a opï¿½ï¿½o caso o usuï¿½rio tenha a respectiva visï¿½o
                         if (document.getElementById("visao").options[j].value == data[i].Visao)
                         {
                             document.getElementById("visao").options[j].selected = true // seleciona o option
@@ -841,5 +841,5 @@ function buscarVisao()
             }
         }
     });
-} // fecha função buscarVisao()
+} // fecha funï¿½ï¿½o buscarVisao()
 //-->

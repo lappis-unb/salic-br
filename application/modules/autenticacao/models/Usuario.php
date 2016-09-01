@@ -166,7 +166,7 @@ class Autenticacao_Model_Usuario extends GenericModel
             $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
 
             //xd($this->getName('usuarios'));
-            $authAdapter->setTableName($this->getTableName(null, null, false))// TABELAS.dbo.Usuarios
+            $authAdapter->setTableName($this->getTableName(null, null, false))// TABElLAS.dbo.Usuarios
             ->setIdentityColumn('usu_identificacao')
                 ->setCredentialColumn('usu_senha');
 

@@ -29,6 +29,9 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  25/08/2016
+     *
+     * @todo retirar esse tanto de consulta da init, deixando apenas nos metodos que utilizam.
+     * @todo retirar os id fixos no codigo.
      */
     public function init()
     {
@@ -83,8 +86,11 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $this->view->combotipostelefones = Tipotelefone::buscar();
         $this->view->combotiposemails = Tipoemail::buscar();
 
-        //Monta o combo das visões disponiveis
-        $visoes = VisaoDAO::buscarVisao(null, null, true);
+        //Monta o combo das visees disponiveis
+//        $visoes = VisaoDAO::buscarVisao(null, null, true);
+        $visaoTable = new Agente_Model_DbTable_Visao();
+        $visoes = $visaoTable->buscarVisao(null, null, true);
+
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $GrupoAtivo = $GrupoAtivo->codGrupo;
 
@@ -231,8 +237,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         if (isset($_POST['cep'])) {
             xd(1);
         }
-    } // fecha método agentesAction()
-
+    }
 
     /**
      * Método com o formulário para cadastro de dirigentes
@@ -361,79 +366,48 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
 
 
     /**
-     * Método para salvar os dados do agente no banco de dados e fazer a busca
-     * assim que o cpf/cnpj for informado
-     * @access public
-     * @param void
-     * @return void
+     * Metodo para salvar os dados do agente no banco de dados e fazer a busca assim que o cpf/cnpj for informado
+     *
+     * @name salvaragenteAction
+     *
+     * @author Ruy Junior Ferreira Silva
+     * @since 31/08/2016
      */
     public function salvaragenteAction()
     {
-        $i = 0; // inicializa o contador
-        $this->_helper->layout->disableLayout(); // desabilita o layout
+        $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-        $novos_valores = array(); // array com os dados do agente
-        $v = ''; // flag verificadora de dados válidos/inválidos
 
-        if ($_REQUEST['cpf']) // caso o cpf/cnpj tenha sido informado
-        {
-            $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($_REQUEST['cpf'])); // deleta as máscaras
+        $result = array();
+        # caso o cpf/cnpj tenha sido informado
+        if (isset($_REQUEST['cpf']) && !empty($_REQUEST['cpf'])) {
+            $cpf = $_REQUEST['cpf'];
+            $agentesTable = new Agente_Model_DbTable_Agentes();
 
-            // cpf/cnpj inválidos
             if ((strlen($cpf) == 11 && !Validacao::validarCPF($cpf)) || (strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf))) {
-                $v = 'not';
-                $novos_valores[$i]['msgCPF'] = utf8_encode($v);
-            } else // cpf/cnpj válidos
-            {
-                $v = 'ok';
-                $novos_valores[$i]['msgCPF'] = utf8_encode($v);
-
-                // busca os dados do agente
-                $dados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
-
-                // caso o agente não esteja cadastrado, realizará o cadastro de um novo
-                if (!$dados) {
-                    $arrayCNPJCPF = array('CNPJCPF' => $cpf);
+                # cpf/cnpj invalidos
+                $result[0]['msgCPF'] = 'not';
+            } else {
+                $result = $agentesTable->buscarAgentes($cpf);
+                # caso o agente não esteja cadastrado, realizara o cadastro de um novo
+                if ($result) {
+                    $result[0]['Agente'] = utf8_encode('cadastrado'); # o agente já encontra-se cadastrado
+                } else {
+                    echo '<pre>';
+                    var_dump('Cadastrar');
+                    exit;
+                    $arrayCNPJCPF = array('cnpjcpf' => $cpf);
+//                    $agentesTable
                     $insere = Agente_Model_ManterAgentesDAO::cadastrarAgente($arrayCNPJCPF);
-                    $novos_valores[$i]['Agente'] = utf8_encode('novo');
-                } else // o agente já encontra-se cadastrado
-                {
-                    $novos_valores[$i]['Agente'] = utf8_encode('cadastrado');
+                    $result[0]['Agente'] = 'novo';
                 }
+            }
 
-                // busca os dados do agente pelo cpf/cnpj
-                $novosdados = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf);
-
-                // busca as informações do agente
-                foreach ($novosdados as $dado) :
-                    $novos_valores[$i]['idAgente'] = utf8_encode($dado->idAgente);
-                    $novos_valores[$i]['Nome'] = utf8_encode($dado->Nome);
-                    $novos_valores[$i]['CEP'] = !empty($dado->CEP) ? utf8_encode(Mascara::addMaskCEP($dado->CEP)) : ' ';
-                    $novos_valores[$i]['UF'] = utf8_encode($dado->UF);
-                    $novos_valores[$i]['Cidade'] = utf8_encode(!empty($dado->Cidade) ? $dado->Cidade : null);
-                    $novos_valores[$i]['dsCidade'] = utf8_encode(!empty($dado->dsCidade) ? $dado->dsCidade : null);
-                    $novos_valores[$i]['TipoEndereco'] = utf8_encode($dado->TipoEndereco);
-                    $novos_valores[$i]['TipoLogradouro'] = utf8_encode($dado->TipoLogradouro);
-                    $novos_valores[$i]['Logradouro'] = utf8_encode($dado->Logradouro);
-                    $novos_valores[$i]['Numero'] = utf8_encode($dado->Numero);
-                    $novos_valores[$i]['Complemento'] = utf8_encode($dado->Complemento);
-                    $novos_valores[$i]['Bairro'] = utf8_encode($dado->Bairro);
-                    $novos_valores[$i]['DivulgarEndereco'] = utf8_encode($dado->DivulgarEndereco);
-                    $novos_valores[$i]['EnderecoCorrespondencia'] = utf8_encode($dado->EnderecoCorrespondencia);
-
-                    // áreas e segmentos
-                    $novos_valores[$i]['cdArea'] = utf8_encode($dado->cdArea);
-                    $novos_valores[$i]['dsArea'] = utf8_encode($dado->dsArea);
-                    $novos_valores[$i]['cdSegmento'] = utf8_encode($dado->cdSegmento);
-                    $novos_valores[$i]['dsSegmento'] = utf8_encode($dado->dsSegmento);
-                endforeach;
-            } // fecha else
-            echo json_encode($novos_valores);
-        } // fecha if
-        else {
+            echo json_encode($result);
+        } else {
             die('0');
         }
-    } // fecha método salvaragenteAction()
+    }
 
 
     /**
@@ -633,6 +607,9 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
      */
     public function buscardirigentesAction()
     {
+        echo '<pre>';
+        var_dump('aaaa');
+        exit;
         $gmtDate = gmdate("D, d M Y H:i:s");
         header("Expires: {$gmtDate} GMT");
         header("Last-Modified: {$gmtDate} GMT");

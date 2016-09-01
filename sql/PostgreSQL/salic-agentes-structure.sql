@@ -33,6 +33,9 @@ CREATE TABLE agentes.Tipo
   idTipo INT PRIMARY KEY NOT NULL ,
   Descricao VARCHAR(100) NOT NULL
 );
+CREATE SEQUENCE agentes.tipo_idtipo_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE agentes.tipo ALTER COLUMN idtipo SET DEFAULT nextval('agentes.tipo_idtipo_seq');
+ALTER SEQUENCE agentes.tipo_idtipo_seq OWNED BY agentes.tipo.idtipo;
 CREATE TABLE agentes.Pais
 (
   idPais INT PRIMARY KEY NOT NULL,
@@ -65,13 +68,16 @@ CREATE TABLE agentes.Agentes
   idAgente INT PRIMARY KEY NOT NULL ,
   CNPJCPF VARCHAR(14) DEFAULT '00000000000000' NOT NULL,
   CNPJCPFSuperior VARCHAR(14) DEFAULT '00000000000000',
-  TipoPessoa BIT,
+  TipoPessoa INTEGER DEFAULT 0,
   DtCadastro TIMESTAMP,
   DtAtualizacao TIMESTAMP,
   DtValidade TIMESTAMP,
   Status SMALLINT DEFAULT 0 NOT NULL,
   Usuario INT DEFAULT 0 NOT NULL
 );
+CREATE SEQUENCE agentes.agentes_idagente_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE agentes.agentes ALTER COLUMN idagente SET DEFAULT nextval('agentes.agentes_idagente_seq');
+ALTER SEQUENCE agentes.agentes_idagente_seq OWNED BY agentes.agentes.idagente;
 CREATE INDEX _dta_index_Agentes_9_1977058079__K2_K1 ON agentes.Agentes (CNPJCPF, idAgente);
 CREATE INDEX _dta_index_Agentes_9_1977058079__K2_K1_3_4_5_6_7_8_9 ON agentes.Agentes (CNPJCPF, idAgente, CNPJCPFSuperior, TipoPessoa, DtCadastro, DtAtualizacao, DtValidade, Status, Usuario);
 CREATE TABLE agentes.Verificacao

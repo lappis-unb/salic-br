@@ -1,13 +1,13 @@
 <?php
 /**
- * Classe para retirada de máscaras javascript 
- * e inserção em campos vindos do banco
+ * Classe para retirada de mï¿½scaras javascript 
+ * e inserï¿½ï¿½o em campos vindos do banco
  * @author Equipe RUP - Politec
  * @since 29/03/2010
  * @version 1.0
  * @package library
  * @subpackage library.MinC.Validacao
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
@@ -31,7 +31,7 @@ class Mascara
 		$fone = str_replace(".", "", $fone);
 
 		return $fone;
-	} // fecha método delMaskFone()
+	} // fecha mï¿½todo delMaskFone()
 
 
 
@@ -45,7 +45,7 @@ class Mascara
 	 */
 	public static function delMaskEmail($email)
 	{
-		// elimina os erros mais comuns de digitação de e-mails
+		// elimina os erros mais comuns de digitaï¿½ï¿½o de e-mails
 		$email = str_replace(" ", "", $email);
 		$email = str_replace("/", "", $email);
 		$email = str_replace("@.", "@", $email);
@@ -54,7 +54,7 @@ class Mascara
 		$email = str_replace(";", ".", $email);
 
 		return $email;
-	} // fecha método delMaskEmail()
+	} // fecha mï¿½todo delMaskEmail()
 
 
 
@@ -76,7 +76,7 @@ class Mascara
 		$cep = str_replace("/", "", $cep);
 
 		return $cep;
-	} // fecha método delMaskCEP()
+	} // fecha mï¿½todo delMaskCEP()
 
 
 
@@ -98,7 +98,7 @@ class Mascara
 		$cpf = str_replace("/", "", $cpf);
 
 		return $cpf;
-	} // fecha método delMaskCPF()
+	} // fecha mï¿½todo delMaskCPF()
 
 
 
@@ -120,7 +120,7 @@ class Mascara
 		$cnpj = str_replace("/", "", $cnpj);
 
 		return $cnpj;
-	} // fecha método delMaskCNPJ()
+	} // fecha mï¿½todo delMaskCNPJ()
 
 
 
@@ -138,7 +138,7 @@ class Mascara
 		$cpfcnpj = self::delMaskCNPJ($cpfcnpj);
 
 		return $cpfcnpj;
-	} // fecha método delMaskCPFCNPJ()
+	} // fecha mï¿½todo delMaskCPFCNPJ()
 
 
 
@@ -157,7 +157,7 @@ class Mascara
 		$valor = str_replace(",", ".", $valor);
 
 		return $valor;
-	} // fecha método delMaskMoeda()
+	} // fecha mï¿½todo delMaskMoeda()
 
 
 
@@ -175,7 +175,7 @@ class Mascara
 		$s2 = substr($fone, 4, 4);
 
 		return $s1 . "-" . $s2;
-	} // fecha método addMaskFone()
+	} // fecha mï¿½todo addMaskFone()
 
 
 
@@ -186,18 +186,25 @@ class Mascara
 	 * @static
 	 * @param string $cep
 	 * @return string
+     *
+     * @author Ruy Junior Ferreira Silva
+     * @since 01/05/2016
 	 */
 	public static function addMaskCEP($cep)
 	{
-		$s1 = substr($cep, 0, 2);
-		$s2 = substr($cep, 2, 3);
-		$s3 = substr($cep, 5, 3);
+	    if (empty($cep)) {
+	        return '';
+        } else {
+            $s1 = substr($cep, 0, 2);
+            $s2 = substr($cep, 2, 3);
+            $s3 = substr($cep, 5, 3);
 
-		return $s1 . "." . $s2 . "-" . $s3;
-	} // fecha método addMaskCEP()
+            return $s1 . "." . $s2 . "-" . $s3;
+        }
+	}
 
 	/**
-	 * Formata texto para CPF ou CNPJ conforme a quantidade de números.
+	 * Formata texto para CPF ou CNPJ conforme a quantidade de nï¿½meros.
 	 *
 	 * @access public
 	 * @static
@@ -231,7 +238,7 @@ class Mascara
 		$s4 = substr($cpf, 9, 2);
 
 		return $s1 . "." . $s2 . "." . $s3 . "-" . $s4;
-	} // fecha método addMaskCPF()
+	} // fecha mï¿½todo addMaskCPF()
 
 
         public static function addMaskProcesso($processo)
@@ -242,7 +249,7 @@ class Mascara
 		$s4 = substr($processo, 15, 2);
 
 		return $s1 . "." . $s2 . "/" . $s3 . "-" . $s4;
-	} // fecha método addMaskCPF()
+	} // fecha mï¿½todo addMaskCPF()
 
         
         public static function delMaskProcesso($processo)
@@ -255,7 +262,7 @@ class Mascara
 
             return $processo;
                 
-	} // fecha método delMaskProcesso()
+	} // fecha mï¿½todo delMaskProcesso()
 
 
 
@@ -276,7 +283,7 @@ class Mascara
 		$s5 = substr($cnpj, 12, 2);
 
 		return $s1 . "." . $s2 . "." . $s3 . "/" . $s4 . "-" . $s5;
-	} // fecha método addMaskCNPJ()
+	} // fecha mï¿½todo addMaskCNPJ()
 
 
 
@@ -295,6 +302,6 @@ class Mascara
 		$s3 = substr($data, 4, 4);
 
 		return $s1 . "/" . $s2 . "/" . $s3;
-	} // fecha método addMaskDataBrasileira()
+	} // fecha mï¿½todo addMaskDataBrasileira()
 
 } // fecha class

@@ -9,10 +9,10 @@
  * @subpackage application.model.DAO
  */
 
-class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
+class Agente_Model_ManterAgentesDAO extends GenericModel
 {
     /**
-     * M�todo para buscar agentes
+     * Metodo para buscar agentes
      * @access public
      * @static
      * @param string $cnpjcpf
@@ -23,65 +23,68 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
     public static function buscarAgentes($cnpjcpf = null, $nome = null, $idAgente = null)
     {
         $db= Zend_Db_Table::getDefaultAdapter();
+        $schemaAgentes = parent::getSchema('agentes');
+        $schemaSac = parent::getSchema('sac');
+
         $a = [
-            'A.idAgente'
-            ,'A.CNPJCPF'
-            ,'A.CNPJCPFSuperior'
-            ,'A.TipoPessoa'
+            'a.idagente'
+            ,'a.cnpjcpf'
+            ,'a.cnpjcpfsuperior'
+            ,'a.tipopessoa'
         ];
 
         $e = [
-            'E.TipoLogradouro'
-            ,'E.Cidade'
-            ,'E.Cep as CEP'
-            ,'E.UF'
-            ,'E.Status'
-            ,'E.TipoEndereco'
-            ,'E.idEndereco'
-            ,'E.Logradouro'
-            ,'E.Numero'
-            ,'E.Complemento'
-            ,'E.Bairro'
-            ,'E.Divulgar as DivulgarEndereco'
-            ,'E.Status as EnderecoCorrespondencia'
+            'e.tipologradouro'
+            ,'e.cidade'
+            ,'e.cep as cep'
+            ,'e.uf'
+            ,'e.status'
+            ,'e.tipoendereco'
+            ,'e.idendereco'
+            ,'e.logradouro'
+            ,'e.numero'
+            ,'e.complemento'
+            ,'e.bairro'
+            ,'e.divulgar as divulgarendereco'
+            ,'e.status as enderecocorrespondencia'
         ];
 
         $t = [
-            'T.stTitular'
-            ,'T.cdArea'
-            ,'T.cdSegmento'
+            't.sttitular'
+            ,'t.cdarea'
+            ,'t.cdsegmento'
         ];
 
-        $sql = $db->select()->distinct()->from(['A' => 'Agentes'], $a, 'AGENTES.dbo')
-            ->joinLeft(['N' => 'Nomes'], 'N.idAgente = A.idAgente', ['N.Descricao as Nome'], 'AGENTES.dbo')
-            ->joinLeft(['E' => 'EnderecoNacional'], 'E.idAgente = A.idAgente', $e, 'AGENTES.dbo')
-            ->joinLeft(['M' => 'Municipios'], 'M.idMunicipioIBGE = E.Cidade', '*', 'AGENTES.dbo')
-            ->joinLeft(['U' => 'UF'], 'U.idUF = E.UF', 'U.Sigla as dsUF', 'AGENTES.dbo')
-            ->joinLeft(['VE' => 'Verificacao'], 'VE.idVerificacao = E.TipoEndereco', 'VE.Descricao as dsTipoEndereco', 'AGENTES.dbo')
-            ->joinLeft(['VL' => 'Verificacao'], 'VL.idVerificacao = E.TipoLogradouro', 'VL.Descricao as dsTipoLogradouro', 'AGENTES.dbo')
-            ->joinLeft(['T' => 'tbTitulacaoConselheiro'], 'T.idAgente = A.idAgente', $t, 'AGENTES.dbo')
-            ->joinLeft(['V' => 'Visao'], 'V.idAgente = A.idAgente', '*', 'AGENTES.dbo')
-            ->joinLeft(['SA' => 'Area'], 'SA.Codigo = T.cdArea', 'SA.Descricao as dsArea', 'SAC.dbo')
-            ->joinLeft(['SS' => 'Segmento'], 'SS.Codigo = T.cdSegmento', 'SS.Descricao as dsSegmento', 'SAC.dbo')
-            ->where('A.TipoPessoa = 0 OR A.TipoPessoa = 1')
+        $sql = $db->select()->distinct()->from(['a' => 'agentes'], $a, $schemaAgentes)
+            ->joinLeft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nome'], $schemaAgentes)
+            ->joinLeft(['e' => 'endereconacional'], 'e.idagente = a.idagente', $e, $schemaAgentes)
+            ->joinLeft(['m' => 'municipios'], 'm.idmunicipioibge = e.cidade', '*', $schemaAgentes)
+            ->joinLeft(['u' => 'uf'], 'u.iduf = e.uf', 'u.sigla as dsuf', $schemaAgentes)
+            ->joinLeft(['ve' => 'verificacao'], 've.idverificacao = e.tipoendereco', 've.descricao as dstipoendereco', $schemaAgentes)
+            ->joinLeft(['vl' => 'verificacao'], 'vl.idverificacao = e.tipologradouro', 'vl.descricao as dstipologradouro', $schemaAgentes)
+            ->joinLeft(['t' => 'tbtitulacaoconselheiro'], 't.idagente = a.idagente', $t, $schemaAgentes)
+            ->joinLeft(['v' => 'visao'], 'v.idagente = a.idagente', '*', $schemaAgentes)
+            ->joinLeft(['sa' => 'area'], 'sa.codigo = t.cdarea', 'sa.descricao as dsarea', $schemaSac)
+            ->joinLeft(['ss' => 'segmento'], 'ss.codigo = t.cdsegmento', 'ss.descricao as dssegmento', $schemaSac)
+            ->where('a.tipopessoa = 0 or a.tipopessoa = 1')
             ;
 
-        if (!empty($cnpjcpf)) // busca pelo cpf/cnpj
-        {
-            $sql->where('A.CNPJCPF = ?', $cnpjcpf);
-        }
-        if (!empty($nome)) // filtra pelo nome
-        {
-            $sql->where('N.Descricao LIKE ?', '%'.$nome.'%');
-        }
-        if (!empty($idAgente)) // busca de acordo com o id do agente
-        {
-            $sql->where('A.idAgente = ?',$idAgente);
+        if (!empty($cnpjcpf)) {
+            # busca pelo cpf/cnpj
+            $sql->where('a.cnpjcpf = ?', $cnpjcpf);
+        } if (!empty($nome)) {
+            # filtra pelo nome
+            $sql->where('n.descricao LIKE ?', '%'.$nome.'%');
+        } if (!empty($idAgente)) {
+            # busca de acordo com o id do agente
+            $sql->where('a.idagente = ?',$idAgente);
         }
 
-        $sql->order(['E.Status Desc', 'N.Descricao Asc']);
-
+        $sql->order(['e.status Desc', 'n.descricao Asc']);
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
+//        echo '<pre>';
+//        print_r($sql->assemble());
+//        exit;
         return $db->fetchAll($sql);
     }
 
@@ -310,7 +313,7 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
     }
 
     /**
-     * M�todo para cadastrar dados do agente
+     * Metodo para cadastrar dados do agente
      * @access public
      * @static
      * @param array $dados
@@ -367,20 +370,23 @@ class Agente_Model_ManterAgentesDAO extends Zend_Db_Table
     }
 
     /**
-     * M�todo para alterar dados do agente
+     * Metodo para alterar dados do agente
      * @access public
      * @static
      * @param integer $idAgente
      * @param array $dados
      * @return boolean
-     * @todo Existe uma trigger no db que impede o acesso direto a atualiza��o. Pendente de verifica��o
+     *
+     * @todo Existe uma trigger no db que impede o acesso direto a atualizacao. Pendente de verificacao
      */
     public static function alterarAgente($idAgente, $dados)
     {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $where = "idAgente = " . $idAgente; // condi��o para altera��o
+
+
+        $where = "idAgente = " . $idAgente; // condicao para alteracao
 
         $update = $db->update('AGENTES.dbo.Agentes', $dados, $where); // altera
 
