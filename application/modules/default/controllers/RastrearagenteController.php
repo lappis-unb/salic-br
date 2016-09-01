@@ -7,17 +7,17 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 
 class RastrearagenteController extends MinC_Controller_Action_Abstract {
     /**
-     * @var integer (variável com o id do usuário logado)
+     * @var integer (variï¿½vel com o id do usuï¿½rio logado)
      * @access privacte
      */
 
     public function init() {
-        // verifica as permissões
+        // verifica as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 92;
         $PermissoesGrupo[] = 93;
@@ -44,10 +44,10 @@ class RastrearagenteController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 138;
         $PermissoesGrupo[] = 139;
 
-        // definição do perfil
+        // definiï¿½ï¿½o do perfil
         parent::perfil(1, $PermissoesGrupo);
         parent::init(); // chama o init() do pai GenericControllerNew
-    } // fecha método init()
+    } // fecha mï¿½todo init()
 
     public function indexAction() {
 
@@ -65,7 +65,8 @@ class RastrearagenteController extends MinC_Controller_Action_Abstract {
         if(count($agente)<1) {
             parent::message("Nenhum agente encontrado com o CPF/CNPJ {$get->CpfCnpj}", "/Rastrearagente", "ALERT");
         }
-        $visoes = VisaoDAO::buscarVisao($agente[0]->idAgente);
+        $visaoTable = new Agente_Model_DbTable_Visao();
+        $visoes = $visaoTable->buscarVisao($agente[0]->idAgente);
 
         $projeto = new Projetos();
         $projetos = null;

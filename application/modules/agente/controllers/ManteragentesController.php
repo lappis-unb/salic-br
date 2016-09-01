@@ -269,7 +269,8 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $GrupoAtivo = $GrupoAtivo->codGrupo;
 
-        $visoes = VisaoDAO::buscarVisao(null, null, true);
+        $visaoTable = new Agente_Model_DbTable_Visao();
+        $visoes = $visaoTable->buscarVisao(null, null, true);
         $a = 0;
         foreach ($visoes as $visaoGrupo) {
             if ($GrupoAtivo == 93 and $visaoGrupo->idVerificacao == 209) {
@@ -297,7 +298,8 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $this->view->visao = $select;
 
         // busca todas as visões do agente
-        $visoes = VisaoDAO::buscarVisao($idAgente);
+        $visaoTable = new Agente_Model_DbTable_Visao();
+        $visoes = $visaoTable->buscarVisao($idAgente);
         $a = 0;
         foreach ($visoes as $visaoGrupo) {
             if ($GrupoAtivo == 93 and ($visaoGrupo->Visao == 209 or $visaoGrupo->Visao == 144)) {
@@ -701,7 +703,8 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             $i = 0;
 
             // busca as visões vinculadas ao agente
-            $dados = VisaoDAO::buscarVisao($_REQUEST['idAgente']);
+            $visaoTable = new Agente_Model_DbTable_Visao();
+            $dados = $visaoTable->buscarVisao($_REQUEST['idAgente']);
 
             foreach ($dados as $dado) :
                 $novos_dados[$i]['Visao'] = utf8_encode($dado->Visao);
@@ -773,10 +776,11 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                     'stAtivo' => 'A');
 
                 try {
-                    $busca = VisaoDAO::buscarVisao($idAgente, $Visao);
+                    $visaoTable = new Agente_Model_DbTable_Visao();
+                    $busca = $visaoTable->buscarVisao($idAgente, $Visao);
 
                     if (!$busca) {
-                        $i = VisaoDAO::cadastrarVisao($GravarVisao);
+                        $i = $visaoTable->cadastrarVisao($GravarVisao);
                     }
                 } catch (Exception $e) {
                     parent::message("Erro ao salvar a visão: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
@@ -1070,11 +1074,12 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
 
             try {
                 // busca as visões do agente
-                $busca = VisaoDAO::buscarVisao($idAgente, $Visao);
+                $visaoTable = new Agente_Model_DbTable_Visao();
+                $busca = $visaoTable->buscarVisao($idAgente, $Visao);
 
                 if (!$busca) // faz a inserção da visão
                 {
-                    $i = VisaoDAO::cadastrarVisao($GravarVisao);
+                    $i = $visaoTable->cadastrarVisao($GravarVisao);
                 }
             } // fecha try
             catch (Exception $e) {

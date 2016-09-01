@@ -43,7 +43,8 @@
             <td><?php echo $b->Nome; ?></td>
             <td>
                 <?php
-                $visao = VisaoDAO::buscarVisao($b->idAgente); // visão
+                $visaoTable = new Agente_Model_DbTable_Visao();
+                $visao = $visaoTable->buscarVisao($b->idAgente); // visão
                 $i     = 0; // contador
 
                 foreach ($visao as $v) :

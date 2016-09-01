@@ -60,7 +60,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->view->combotiposemails = Tipoemail::buscar();
 
         //Monta o combo das visões disponiveis
-        $visoes = VisaoDAO::buscarVisao(null, null, true);
+        $visaoTable = new Agente_Model_DbTable_Visao();
+        $visoes = $visaoTable->buscarVisao(null, null, true);
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $GrupoAtivo = $GrupoAtivo->codGrupo;
 
@@ -260,7 +261,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
             $this->view->telefones = Agente_Model_ManterAgentesDAO::buscarFones($idAgente);
             $this->view->emails = Agente_Model_ManterAgentesDAO::buscarEmails($idAgente);
-            $visoes = VisaoDAO::buscarVisao($idAgente);
+            $visaoTable = new Agente_Model_DbTable_Visao();
+            $visoes = $visaoTable->buscarVisao($idAgente);
             $this->view->visoes = $visoes;
 
             foreach ($visoes as $v) {
@@ -627,7 +629,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
             $this->view->telefonesD = Agente_Model_ManterAgentesDAO::buscarFones($idDirigente);
             $this->view->emailsD = Agente_Model_ManterAgentesDAO::buscarEmails($idDirigente);
-            $this->view->visoesD = VisaoDAO::buscarVisao($idDirigente);
+            $visaoTable = new Agente_Model_DbTable_Visao();
+            $this->view->visoesD = $visaoTable->buscarVisao($idDirigente);
             $this->view->Instituicao = "sim";
             $this->view->id = $this->_request->getParam("id");
             $this->view->idDirigente = $this->_request->getParam("idDirigente");
@@ -1229,7 +1232,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->view->formacoes = $tbInfo->BuscarInfo($idAgente, null);
 
         $this->view->id = $this->_request->getParam("id");
-        $this->view->visoes = VisaoDAO::buscarVisao($idAgente);
+        $visaoTable = new Agente_Model_DbTable_Visao();
+        $this->view->visoes = $visaoTable->buscarVisao($idAgente);
     }
 
     /**
@@ -1897,10 +1901,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'stAtivo' => 'A');
 
             try {
-                $busca = VisaoDAO::buscarVisao($idAgente, $Visao);
+                $visaoTable = new Agente_Model_DbTable_Visao();
+                $busca = $visaoTable->buscarVisao($idAgente, $Visao);
 
                 if (!$busca) {
-                    $i = VisaoDAO::cadastrarVisao($GravarVisao);
+                    $i = $visaoTable->cadastrarVisao($GravarVisao);
                 }
             } catch (Exception $e) {
                 parent::message("Erro ao salvar a visão: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
@@ -2257,10 +2262,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'stAtivo' => 'A');
 
             try {
-                $busca = VisaoDAO::buscarVisao($idAgente, $Visao);
+                $visaoTable = new Agente_Model_DbTable_Visao();
+                $busca = $visaoTable->buscarVisao($idAgente, $Visao);
 
                 if (!$busca) {
-                    $i = VisaoDAO::cadastrarVisao($GravarVisao);
+                    $i = $visaoTable->cadastrarVisao($GravarVisao);
                 }
             } catch (Exception $e) {
                 parent::message("Erro ao salvar a visão: " . $e->getMessage(), "agente/agentes/incluirdirigente/id/" . $idAgenteGeral, "ERROR");
@@ -2457,9 +2463,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                     'Visao' => $Visao,
                     'Usuario' => $Usuario,
                     'stAtivo' => 'A');
-                $busca = VisaoDAO::buscarVisao($idDirigente, $Visao);
+                $visaoTable = new Agente_Model_DbTable_Visao();
+                $busca = $visaoTable->buscarVisao($idDirigente, $Visao);
                 if (!$busca){
-                    $i = VisaoDAO::cadastrarVisao($GravarVisao);
+                    $i = $visaoTable->cadastrarVisao($GravarVisao);
                 }
             }
 
@@ -2704,7 +2711,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $GrupoAtivo = $this->GrupoAtivoSalic;
 
         // busca todas as visões
-        $visoes = VisaoDAO::buscarVisao(null, null, true);
+        $visaoTable = new Agente_Model_DbTable_Visao();
+        $visoes = $visaoTable->buscarVisao(null, null, true);
         $a = 0;
         $select = null;
         foreach ($visoes as $visaoGrupo) {
@@ -2750,7 +2758,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->view->visao = $select;
 
         // busca todas as visões do agente
-        $visoesAgente = VisaoDAO::buscarVisao($idAgente);
+        $visaoTable = new Agente_Model_DbTable_Visao();
+        $visoesAgente = $visaoTable->buscarVisao($idAgente);
         $b = 0;
         $selectAgente = null;
         foreach ($visoesAgente as $visaoGrupo) {
