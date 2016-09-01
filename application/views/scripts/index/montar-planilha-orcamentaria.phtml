@@ -957,7 +957,11 @@ else if($this->tipoPlanilha == 6){ ?>
                                     <tr class="item" style="color: <?php echo $corLinha; ?> !important;">
                                         <td style="width: 5%;"><?php echo $planilha['Seq']; ?></td>
                                         <td style="width: 20%;">
-					  <?php if(($this->link && $planilha['tpAcao'] != 'E') && $nrfonte == '0'){ ?>
+					    <?php
+                                        if((($this->link && $planilha['tpAcao'] != 'E') && $nrfonte == '0')
+                                           ||
+                                           ($this->idPerfil == '1111') // se for proponente
+                                        ) { ?>
                                                 <a href="#" style="color: <?php echo $corLinha; ?> !important;" title="clique para alterar os dados do item" class="editarItem" idPlanilhaAprovacao="<?php echo $planilha['idPlanilhaAprovacao']; ?>"><?php echo $planilha['Item']; ?></a>
                                             <?php } else {
                                                 echo $planilha['Item']; ?>
