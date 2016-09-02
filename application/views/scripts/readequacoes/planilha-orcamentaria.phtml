@@ -227,15 +227,21 @@
                     idPronac: <?php echo $this->idPronac; ?>
                 },
                 success: function(resposta){
-		    resposta = JSON.parse(resposta);
-		    
-		    if (resposta.mensagens[0].Observacao == 'OK' &&
-			resposta.mensagens[1].Observacao == 'OK' &&
-			resposta.mensagens[2].Observacao == 'OK') {
+                    var resposta = JSON.parse(resposta),
+                        respostaErro = false;
+                    
+                    resposta.mensagens.forEach(function(mensagem) {
+                        if (mensagem.Observacao !== 'OK') {
+                            respostaErro = true;
+                        }
+                    });
+                    if (!respostaErro) {
+			$('#mensagens').html('');
+			// sem problemas de limites orcamentarios
 			
-			    $("#msgAlerta").dialog("destroy");
-			    $("#msgAlerta").html('Deseja realmente finalizar as solicitações de readequação cadastradas?<br /><br />Ao finalizar, todas as solicitações serão encaminhadas ao MinC.');
-			    $("#msgAlerta").dialog({
+			$("#msgAlerta").dialog("destroy");
+			$("#msgAlerta").html('Deseja realmente finalizar as solicitações de readequação cadastradas?<br /><br />Ao finalizar, todas as solicitações serão encaminhadas ao MinC.');
+			$("#msgAlerta").dialog({
 				resizable: false,
 				title: 'Alerta!',
 				width:360,
@@ -259,9 +265,9 @@
 				    }
 				}
 				
-			    });
-			    $('.ui-dialog-titlebar-close').remove();
-			    
+			});
+			$('.ui-dialog-titlebar-close').remove();
+			
 		    } else {
 			var saidaHtml = "<table class='tabela'><thead><th colspan='2'>Verificao de limites oramentrios</th></thead>";
 			
