@@ -37,6 +37,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
     {
         $mapperVerificacao = new Agente_Model_VerificacaoMapper();
         $mapperUF = new Agente_Model_UFMapper();
+        $mapperArea = new Agente_Model_AreaMapper();
 
         # Pega a autenticacao
         $auth = Zend_Auth::getInstance()->getIdentity();
@@ -83,12 +84,16 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
 //        ini_set('display_errors', true);
 //        error_reporting(E_ALL ^E_NOTICE ^E_WARNING);
         $this->view->comboestados = $mapperUF->fetchPairs('iduf', 'sigla');
-
+        
         $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', ['idtipo' => 2]);
-        $this->view->combotiposlogradouros = Tipologradouro::buscar();
-        $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
-        $this->view->combotipostelefones = Tipotelefone::buscar();
-        $this->view->combotiposemails = Tipoemail::buscar();
+        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 13));
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
+        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 3));
+        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
+//        $this->view->combotiposlogradouros = Tipologradouro::buscar();
+//        $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+//        $this->view->combotipostelefones = Tipotelefone::buscar();
+//        $this->view->combotiposemails = Tipoemail::buscar();
 
         //Monta o combo das visees disponiveis
 //        $visoes = VisaoDAO::buscarVisao(null, null, true);

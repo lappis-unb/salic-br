@@ -291,28 +291,6 @@ class Agente_Model_ManterAgentesDAO extends GenericModel
     }
 
     /**
-     * Método para buscar as Áreas culturais
-     *
-     * @param void
-     * @access public
-     * @static
-     * @return object
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
-     */
-    public static function buscarAreasCulturais()
-    {
-        $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
-        $sql = $db->select()
-            ->from([GenericModel::getStaticTableName('sac', 'area')], ['codigo AS id' ,'descricao AS descricao'])
-            ->order(['descricao'])
-            ;
-
-        return $db->fetchAll($sql);
-    }
-
-    /**
      * Metodo para cadastrar dados do agente
      * @access public
      * @static

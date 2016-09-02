@@ -103,7 +103,11 @@ class MinC_Db_Mapper
             ->order($order);
 
         foreach ($where as $column => $columnValue) {
-            $select->where( $column. ' = ?', $columnValue);
+            if (is_array($columnValue)) {
+                $select->where( $column. ' IN (?)', $columnValue);
+            } else {
+                $select->where( $column. ' = ?', $columnValue);
+            }
         }
 
         $resultSet = $table->fetchAll($select);
