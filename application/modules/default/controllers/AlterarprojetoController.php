@@ -18,6 +18,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
     public function init()
     {
         $mapperVerificacao = new Agente_Model_VerificacaoMapper();
+        $mapperUF = new Agente_Model_UFMapper();
+        $mapperArea = new Agente_Model_AreaMapper();
 
         $auth = Zend_Auth::getInstance(); // pega a autentica�?o
         $this->view->title = "Salic - Sistema de Apoio ?s Leis de Incentivo ? Cultura"; // t�tulo da p�gina
@@ -157,12 +159,13 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             }
         }
 
-        $this->view->comboestados = Estado::buscar();
-        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs(['idtipo' => 2]);
-        $this->view->combotiposlogradouros = Tipologradouro::buscar();
-        $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
-        $this->view->combotipostelefones = Tipotelefone::buscar();
-        $this->view->combotiposemails = Tipoemail::buscar();
+        $this->view->comboestados = $mapperUF->fetchPairs('iduf', 'sigla');
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', ['idtipo' => 2]);
+        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 13));
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
+        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 3));
+        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
+
         parent::init(); // chama o init() do pai GenericControllerNew
     }
 
