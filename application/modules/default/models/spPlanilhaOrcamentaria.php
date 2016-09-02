@@ -34,7 +34,7 @@ class spPlanilhaOrcamentaria extends GenericModel {
         // tipoPlanilha = 5 : Remanejamento menor que 20%
         // tipoPlanilha = 6 : Readequacao
 
-        $tipoPlanilha = 5;
+        $tipoPlanilha = 6;
         switch($tipoPlanilha){
         case 0:
             return $this->planilhaOrcamentariaProposta($idPronac);
@@ -566,6 +566,146 @@ class spPlanilhaOrcamentaria extends GenericModel {
         return $db->fetchAll($sql);
     }
 
-    public function readequacao($idPronac){
+    public function readequacao($idPronac)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $a = ["*",];
+
+        $sql = $db->select()->from(['a' => 'tbPlanilhaAprovacao'], $a, $this->_schema)
+            ->join(['b' => 'tbReadequacao'], '(a.idPronac = b.idPronac)', null, $this->schema)
+            ->where("a.idPronac = ?", $idPronac)
+            ->where("a.stAtivo = 'N'")
+            ->where("a.tpPlanilha = 'SR'")
+            ->where("b.idTipoReadequacao = 2")
+            ->where("b.siEncaminhamento <> 15")
+            ->where("b.stEstado = 0")
+            ->limit(1)
+        ;
+
+        $readequacao = $db->fetchAll($sql);
+
+        if (!empty($readequacao)) {
+            $subA = [
+                "sum(b1.vlComprovacao) AS vlPagamento",
+            ];
+
+            $subSQL = $db->select()->from(['a1' => 'tbComprovantePagamentoxPlanilhaAprovacao'], $subA, 'BDCORPORATIVO.scSAC')
+                ->join(['b1' => 'tbComprovantePagamento'], '(a1.idComprovantePagamento = b1.idComprovantePagamento)', null, 'BDCORPORATIVO.scSAC')
+                ->join(['c1' => 'tbPlanilhaAprovacao'], '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)', null, $this->schema)
+                ->where("c1.idPlanilhaItem = k.idPlanilhaItem")
+                ->where("c1.idPronac = k.idPronac")
+                ->group("c1.idPlanilhaItem")
+            ;
+
+            $a = [
+                "($subSQL) as vlComprovado",
+                new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END as Produto"),
+                "ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado",
+                "( a.AnoProjeto+a.Sequencial ) as PRONAC",
+                "a.NomeProjeto",
+                "a.idPronac",
+                "d.Descricao as Etapa",
+                "d.tpGrupo",
+                "e.Descricao as Unidade",
+                "f.Municipio",
+                "f.UF",
+                "i.Descricao as Item",
+                "k.QtDias as QtdeDias",
+                "k.QtItem as Quantidade",
+                "k.dsJustificativa",
+                "k.idAgente",
+                "k.idEtapa",
+                "k.idPlanilhaAprovacao",
+                "k.idPlanilhaAprovacaoPai",
+                "k.idProduto",
+                "k.nrFonteRecurso as idFonte",
+                "k.nrOcorrencia as Ocorrencia",
+                "k.tpAcao",
+                "k.vlUnitario",
+                "x.Descricao as FonteRecurso",
+            ];
+            $sql = $db->select()->from(['a' => 'Projetos'], $a, $this->_schema)
+                ->join(['k' => 'tbPlanilhaAprovacao'], '(a.idPronac = k.idPronac)', null, $this->schema)
+                ->join(['c' => 'Produto'], '(k.idProduto = c.Codigo)', null, $this->schema)
+                ->join(['d' => 'tbPlanilhaEtapa'], '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->schema)
+                ->join(['e' => 'tbPlanilhaUnidade'], '(k.idUnidade = e.idUnidade)', null, $this->schema)
+                ->join(['i' => 'tbPlanilhaItens'], '(k.idPlanilhaItem=i.idPlanilhaItens)', null, $this->schema)
+                ->join(['x' => 'Verificacao'], '(k.nrFonteRecurso = x.idVerificacao)', null, $this->schema)
+                ->join(['f' => 'vUfMunicipio'], '(k.idUfDespesa = f.idUF and k.idMunicipioDespesa = f.idMunicipio)', null, 'agentes.dbo')
+                ->where("k.stAtivo = 'N'")
+                ->where("k.tpPlanilha = 'SR'")
+                ->where("((ROUND((k.qtItem * k.nrOcorrencia * k.vlUnitario),2) <> 0) OR (k.dsJustificativa IS NOT NULL))")
+                ->where("a.idPronac = ?", $idPronac)
+                ->order("x.Descricao")
+                ->order("c.Descricao DESC")
+                ->order("f.UF")
+                ->order("f.Municipio")
+                ->order("i.Descricao")
+                ->order("CONVERT(VARCHAR(8),d.idPlanilhaEtapa) + ' - ' + d.Descricao")
+            ;
+        } else {
+            $subA = [
+                "sum(b1.vlComprovacao) AS vlPagamento",
+            ];
+
+            $subSQL = $db->select()->from(['a1' => 'tbComprovantePagamentoxPlanilhaAprovacao'], $subA, 'BDCORPORATIVO.scSAC')
+                ->join(['b1' => 'tbComprovantePagamento'], '(a1.idComprovantePagamento = b1.idComprovantePagamento)', null, 'BDCORPORATIVO.scSAC')
+                ->join(['c1' => 'tbPlanilhaAprovacao'], '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)', null, 'SAC.dbo')
+                ->where("c1.idPlanilhaItem = k.idPlanilhaItem")
+                ->where("c1.idPronac = k.idPronac")
+                ->group("c1.idPlanilhaItem")
+            ;
+
+            $a = [
+                "($subSQL) as vlComprovado",
+                new Zend_Db_Expr("CASE WHEN k.idProduto = 0 THEN 'Administração do Projeto' ELSE c.Descricao END as Produto"),
+                "ROUND((k.QtItem * k.nrOcorrencia * k.VlUnitario),2) as vlAprovado",
+                "(a.AnoProjeto+a.Sequencial) as PRONAC",
+                "a.NomeProjeto",
+                "a.idPronac",
+                "d.Descricao as Etapa",
+                "d.tpGrupo",
+                "e.Descricao as Unidade",
+                "f.Municipio",
+                "f.UF",
+                "i.Descricao as Item",
+                "k.QtDias as QtdeDias",
+                "k.QtItem as Quantidade",
+                "k.dsJustificativa",
+                "k.idAgente",
+                "k.idEtapa",
+                "k.idPlanilhaAprovacao",
+                "k.idPlanilhaAprovacaoPai",
+                "k.idProduto",
+                "k.nrFonteRecurso as idFonte",
+                "k.nrOcorrencia as Ocorrencia",
+                "k.tpAcao",
+                "k.vlUnitario",
+                "x.Descricao as FonteRecurso",
+            ];
+
+            $sql = $db->select()->from(['a' => 'Projetos'], $a, $this->_schema)
+                ->join(['k' => 'tbPlanilhaAprovacao'], '(a.idPronac = k.idPronac)', null, $this->schema)
+                ->join(['c' => 'Produto'], '(k.idProduto = c.Codigo)', null, $this->schema)
+                ->join(['d' => 'tbPlanilhaEtapa'], '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->schema)
+                ->join(['e' => 'tbPlanilhaUnidade'], '(k.idUnidade = e.idUnidade)', null, $this->schema)
+                ->join(['i' => 'tbPlanilhaItens'], '(k.idPlanilhaItem=i.idPlanilhaItens)', null, $this->schema)
+                ->join(['x' => 'Verificacao'], '(k.nrFonteRecurso = x.idVerificacao)', null, $this->schema)
+                ->join(['f' => 'vUfMunicipio'], '(k.idUfDespesa = f.idUF and k.idMunicipioDespesa = f.idMunicipio)', null, 'agentes.dbo')
+                ->where("k.stAtivo = 'S'")
+                ->where("k.tpPlanilha = 'SR'")
+                ->where("k.tpAcao <> 'E'")
+                ->where("((ROUND((k.qtItem * k.nrOcorrencia * k.vlUnitario),2) <> 0) OR (k.dsJustificativa IS NOT NULL))")
+                ->where("a.idPronac = ? ", $idPronac)
+                ->order("x.Descricao")
+                ->order("c.Descricao DESC")
+                ->order("f.UF")
+                ->order("f.Municipio")
+                ->order("i.Descricao")
+                ->order("CONVERT(VARCHAR(8),d.idPlanilhaEtapa) + ' - ' + d.Descricao")
+            ;
+        }
+        return $db->fetchAll($sql);
     }
 }
