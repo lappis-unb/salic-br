@@ -1962,10 +1962,10 @@ class ReadequacoesController extends GenericControllerNew {
         $this->view->filtro = $filtro;
         
         // lista apenas readequações do órgão atual
-        if ($this->idOrgao == 272) {
-            $where['idOrgao = ?'] = 262;
-        } else {
+        if ($filtro == 'aguardando_distribuicao') {
             $where['idOrgao = ?'] = $this->idOrgao;
+        } else {
+            $where['idOrgaoOrigem = ?'] = $this->idOrgao;
         }
         
         if ($this->_request->getParam('pronac')) {           
@@ -2439,11 +2439,12 @@ class ReadequacoesController extends GenericControllerNew {
         $where["idDistribuirReadequacao = ? "] = $idDistRead;
         $tbDistribuirReadequacao = new tbDistribuirReadequacao();
         $return = $tbDistribuirReadequacao->update($dados, $where);
-
+        
         //Atualiza a tabela tbReadequacao
         $dados = array();
         $dados['siEncaminhamento'] = 4; // Enviado para análise técnica
-        $where = "idDistribuirReadequacao = $idDistRead";
+        $where = array();
+        $where['idReadequacao = ?'] = $idReadequacao;
         $tbReadequacao = new tbReadequacao();
         $return2 = $tbReadequacao->update($dados, $where);
 
