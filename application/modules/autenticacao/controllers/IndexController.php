@@ -195,9 +195,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $senha = Gerarsenha::gerasenha(15, true, true, true, false);
             $db= Zend_Db_Table::getDefaultAdapter();
             $senhaCriptografada = $senha;
-            if (!($db instanceof Zend_Db_Adapter_Pdo_Mssql)) {
-                $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $senha);
-            }
+            $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $senha);
             $dataFinal = data::dataAmericana($post->dataNasc);
 
             $dados = array(
