@@ -41,11 +41,15 @@
                       idPronac: <?php echo $this->idPronac; ?>
                     },
                         success: function(resposta){
-                        resposta = JSON.parse(resposta);
-                        
-                        if (resposta.mensagens[0].Observacao == 'OK' &&
-                        resposta.mensagens[1].Observacao == 'OK' &&
-                        resposta.mensagens[2].Observacao == 'OK') {
+                        var resposta = JSON.parse(resposta),
+                            respostaErro = false;
+                            
+                        resposta.mensagens.forEach(function(mensagem) {
+                            if (mensagem.Observacao !== 'OK') {
+                                respostaErro = true;
+                            }
+                        });
+                        if (!respostaErro) {
 
                             // sem problemas de limites orcamentarios
                 
