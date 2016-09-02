@@ -161,6 +161,9 @@ CREATE TABLE agentes.DDD
   Codigo VARCHAR(3) NOT NULL,
   CONSTRAINT FK_DDD_UF FOREIGN KEY (idUF) REFERENCES agentes.UF (idUF)
 );
+CREATE SEQUENCE agentes.ddd_idddd_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE agentes.ddd ALTER COLUMN idddd SET DEFAULT nextval('agentes.ddd_idddd_seq');
+ALTER SEQUENCE agentes.ddd_idddd_seq OWNED BY agentes.ddd.idddd;
 CREATE INDEX IX_DDD ON agentes.DDD (idUF);
 CREATE TABLE agentes.Documentos
 (

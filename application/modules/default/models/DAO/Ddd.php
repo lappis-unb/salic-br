@@ -8,29 +8,28 @@
  * @subpackage application.models
  * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
+ *
+ * @todo alterar para o formato com as models, dbtable e mapper.
  */
-
-class Ddd extends Zend_Db_Table
+class Ddd extends MinC_Db_Table_Abstract
 {
 	protected $_name = 'AGENTES.dbo.DDD'; // nome da tabela
 
 
-
 	/**
-	 * M�todo para buscar os ddds de um determinado estado
+	 * Metodo para buscar os ddds de um determinado estado
 	 * @access public
 	 * @param integer $idUF
 	 * @return object $db->fetchAll($sql)
 	 */
-	public static function buscar($idUF)
+	public function buscar($idUF)
 	{
 		$sql = "SELECT AGENTES.dbo.DDD.idDDD AS id, AGENTES.dbo.DDD.Codigo AS descricao ";
 		$sql.= "FROM AGENTES.dbo.DDD ";
 		$sql.= "WHERE AGENTES.dbo.DDD.idUF = " . $idUF . " ";
 		$sql.= "ORDER BY AGENTES.dbo.DDD.Codigo;";
 
-		try
-		{
+		try {
 			$db = Zend_Db_Table::getDefaultAdapter();
 			$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		}

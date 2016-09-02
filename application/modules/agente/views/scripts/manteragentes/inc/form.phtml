@@ -191,7 +191,7 @@ function filtroCNPJ()
 		</td>
 		<td>
 			<label for="uf">UF *</label> <br />
-			<select name="uf" id="uf" onchange="carregar_combo(this.value,'cidade','../cidade/combo',' - Selecione primeiro o UF - ');"	>
+			<select name="uf" id="uf" onchange="carregar_combo(this.value,'cidade','/agente/municipios/combo',' - Selecione primeiro o UF - ');"	>
 
 				<?php if (!isset($this->uf) || empty($this->uf)) { ?>
 				<option value="0"> -- </option>
@@ -255,10 +255,10 @@ function filtroCNPJ()
 				<option value="0"> - Selecione - </option>
 				<?php } ?>
 
-				<?php foreach ($this->combotiposlogradouros as $combotipologradouro): ?>
-				<option value="<?php echo $combotipologradouro->id; ?>"
-					<?php if ($this->tipoLogradouro == $combotipologradouro->id) echo "selected=\"selected\""; ?>>
-					<?php echo $combotipologradouro->descricao; ?>
+				<?php foreach ($this->combotiposlogradouros as $key => $combotipologradouro): ?>
+				<option value="<?php echo $key; ?>"
+					<?php if ($this->tipoLogradouro == $key) echo "selected=\"selected\""; ?>>
+					<?php echo $combotipologradouro; ?>
 				</option>
 				<?php endforeach; ?>
 
@@ -330,8 +330,8 @@ function filtroCNPJ()
 			<select name="tipoFone" id="tipoFone">
 				<option value=""> - Selecione - </option>
 
-				<?php foreach ($this->combotipostelefones as $combotipotelefone){ ?>
-				<option value="<?php echo $combotipotelefone->id; ?>"><?php echo $combotipotelefone->descricao; ?></option>
+				<?php foreach ($this->combotipostelefones as $key => $combotipotelefone){ ?>
+				<option value="<?php echo $key; ?>"><?php echo $combotipotelefone; ?></option>
 				<?php } ?>
 
 			</select>
@@ -339,7 +339,7 @@ function filtroCNPJ()
 		<td>
 			<label for="ufFone">UF *</label>
 			<br />
-			<select name="ufFone" id="ufFone" onchange="carregar_combo(this.value,'dddFone','../ddd/combo');">
+			<select name="ufFone" id="ufFone" onchange="carregar_combo(this.value,'dddFone','/agente/ddd/combo');">
 				<option value="0"> -- </option>
 
 				<?php foreach ($this->comboestados as $key => $value){ ?>
@@ -395,8 +395,8 @@ function filtroCNPJ()
 			<select name="tipoEmail" id="tipoEmail">
 				<option value="0">- Selecione - </option>
 
-				<?php foreach ($this->combotiposemails as $combotipoemail){ ?>
-				<option value="<?php echo $combotipoemail->id; ?>"><?php echo $combotipoemail->descricao; ?></option>
+				<?php foreach ($this->combotiposemails as $key => $combotipoemail){ ?>
+				<option value="<?php echo $key; ?>"><?php echo $combotipoemail; ?></option>
 				<?php } ?>
 
 			</select>

@@ -7,14 +7,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.controllers
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Agente_DddController extends Zend_Controller_Action
 {
     /**
-     * Método para buscar os ddds de um estado
+     * Mï¿½todo para buscar os ddds de um estado
      * @param void
      * @return void
      */
@@ -26,14 +26,14 @@ class Agente_DddController extends Zend_Controller_Action
         $post = Zend_Registry::get('post');
         $id = (int) $post->id;
 
-        // integração MODELO e VISÃO
+        // integraï¿½ï¿½o MODELO e VISï¿½O
         $this->view->ddds = Ddd::buscar($id);
     }
 
 
 
     /**
-     * Método para buscar os ddds de um estado
+     * Mï¿½todo para buscar os ddds de um estado
      * Busca como XML para o AJAX
      * @access public
      * @param void
@@ -47,13 +47,13 @@ class Agente_DddController extends Zend_Controller_Action
         $post = Zend_Registry::get('post');
         $id = (int) $post->id;
 
-        // integração MODELO e VISÃO
-        $this->view->comboddds = Ddd::buscar($id);
+        $dddMapper = new Agente_Model_DDDMapper();
+        $this->view->comboddds = $dddMapper->fetchPairs('idddd', 'codigo', array('iduf' => $id));
     }
 
 
     /**
-     * Método para buscar os ddds de um estado
+     * Mï¿½todo para buscar os ddds de um estado
      * Busca como XML para o AJAX
      * @access public
      * @param void
@@ -67,7 +67,7 @@ class Agente_DddController extends Zend_Controller_Action
             $post = Zend_Registry::get('post');
             $id = (int) $post->id;
 
-            // integração MODELO e VISÃO
+            // integraï¿½ï¿½o MODELO e VISï¿½O
             $arrayDados = Ddd::buscar($id);
             $dados = array();
             $i = 0;
