@@ -6,7 +6,7 @@
  *
  * @author Equipe MINC
  */
-class TbEscolaridade extends GenericModel {
+class TbEscolaridade extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'Agentes';
     protected $_name = 'tbEscolaridade';

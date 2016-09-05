@@ -5,30 +5,30 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class tbManterPortaria extends GenericModel {
+class tbManterPortaria extends MinC_Db_Table_Abstract {
     
     protected $_banco = "SAC";
     protected $_schema = "dbo";
     protected $_name = "tbManterPortaria";
 
     /**
-     * Método para cadastrar
+     * Mï¿½todo para cadastrar
      * @access public
      * @param array $dados
-     * @return integer (retorna o último id cadastrado)
+     * @return integer (retorna o ï¿½ltimo id cadastrado)
      */
     public function cadastrarDados($dados) {
         return $this->insert($dados);
     }
 
-// fecha método cadastrarDados()
+// fecha mï¿½todo cadastrarDados()
 
     /**
-     * Método para alterar
+     * Mï¿½todo para alterar
      * @access public
      * @param array $dados
      * @param integer $where
@@ -74,6 +74,6 @@ class tbManterPortaria extends GenericModel {
         return $this->fetchAll($select);
     }
 
-// fecha método alterarDados()
+// fecha mï¿½todo alterarDados()
 
 } // fecha class

@@ -10,7 +10,7 @@
  *
  * @author Emerson Silva
  */ 
-class tbRelatorioTecnico extends GenericModel {
+class tbRelatorioTecnico extends MinC_Db_Table_Abstract {
 	
     protected $_name   = 'tbRelatorioTecnico';
     protected $_schema = 'dbo';

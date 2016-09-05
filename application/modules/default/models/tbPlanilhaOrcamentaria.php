@@ -1,6 +1,6 @@
 <?php
 
-class tbPlanilhaOrcamentaria extends GenericModel {
+class tbPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
 
     protected $_banco   = "SAC";
     protected $_schema  = "dbo";

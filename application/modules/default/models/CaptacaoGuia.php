@@ -5,7 +5,7 @@
  * @author augusto
  */
 
-class CaptacaoGuia extends GenericModel {
+class CaptacaoGuia extends MinC_Db_Table_Abstract {
     protected $_banco   = "SAC";
     protected $_schema  = "dbo";
     protected $_name    = "Captacaoguia";
@@ -15,7 +15,7 @@ class CaptacaoGuia extends GenericModel {
         $select->setIntegrityCheck(false);
         $select->from($this);
         return $this->fetchAll($select);
-    } // fecha método buscarCaptacaoGuia()
+    } // fecha mï¿½todo buscarCaptacaoGuia()
 
     public function BuscarTotalCaptacaoGuia($retornaSelect = false, $where = array()) {
         $select = $this->select();

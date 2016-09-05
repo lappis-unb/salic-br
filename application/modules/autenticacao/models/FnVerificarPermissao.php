@@ -1,6 +1,6 @@
 <?php
 
-class Autenticacao_Model_FnVerificarPermissao extends GenericModel {
+class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
     protected $_name = 'dbo.fnVerificarPermissao';

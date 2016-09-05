@@ -6,15 +6,15 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 
-class Verificacao extends GenericModel
+class Verificacao extends MinC_Db_Table_Abstract
 {
 	/**
-	 * Devolução ao Fundo Nacional de Cultura - FNC
+	 * Devoluï¿½ï¿½o ao Fundo Nacional de Cultura - FNC
 	 */
 	const DEVOLUCAO_JUDICIAL = 349;
 	const DEVOLUCAO_FUNDO_NACIONAL_CULTURA = 350;
@@ -28,15 +28,15 @@ class Verificacao extends GenericModel
 
 
 	 /**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @param array $dados
-	 * @return integer (retorna o último id cadastrado)
+	 * @return integer (retorna o ï¿½ltimo id cadastrado)
 	 */
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarDados()
+	} // fecha mï¿½todo cadastrarDados()
 
         function tipoDiligencia($consulta = array()){
 
@@ -66,7 +66,7 @@ class Verificacao extends GenericModel
 	 * Busca por tipo
 	 * @access public
 	 * @param array $where (filtros)
-	 * @param array $order (ordenação)
+	 * @param array $order (ordenaï¿½ï¿½o)
 	 * @return object
 	 */
 	public function buscarTipos($where = array(), $order = array())
@@ -94,7 +94,7 @@ class Verificacao extends GenericModel
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha método buscarTipos()
+	} // fecha mï¿½todo buscarTipos()
 
         function combosNatureza($idTipo){
 

@@ -13,7 +13,7 @@
  * @link http://salic.cultura.gov.br
  */
 
-class tbPlanoDistribuicao extends GenericModel
+class tbPlanoDistribuicao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco  = "SAC";
@@ -67,7 +67,7 @@ class tbPlanoDistribuicao extends GenericModel
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha método buscarProdutosAprovados()
+	} // fecha mï¿½todo buscarProdutosAprovados()
 
 
 
@@ -119,7 +119,7 @@ class tbPlanoDistribuicao extends GenericModel
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha método buscarProdutosSolicitados()
+	} // fecha mï¿½todo buscarProdutosSolicitados()
 
 
 
@@ -200,7 +200,7 @@ class tbPlanoDistribuicao extends GenericModel
 		$select->order($order);
                 //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha método historicoReadequacao()
+	} // fecha mï¿½todo historicoReadequacao()
 
 
         /**
@@ -239,13 +239,13 @@ class tbPlanoDistribuicao extends GenericModel
                 $select->where('c.stAvaliacaoSubItemPedidoAlteracao = ?', 'D');
 
                 return $this->fetchAll($select);
-	} // fecha método historicoReadequacao()
+	} // fecha mï¿½todo historicoReadequacao()
 
     
     /* 
      * Criada em 31/03/2014
      * @author: Jefferson Alessandro
-     * Função utilizada para buscar os planos de distribuição do projeto para readequação.
+     * Funï¿½ï¿½o utilizada para buscar os planos de distribuiï¿½ï¿½o do projeto para readequaï¿½ï¿½o.
      */
     public function buscarPlanosDistribuicaoReadequacao($idPronac, $tabela = 'PlanoDistribuicaoProduto') {
         $select = $this->select();
@@ -346,7 +346,7 @@ class tbPlanoDistribuicao extends GenericModel
         $select->where('b.idReadequacao = ?', $idReadequacao);
         
 		return $this->fetchAll($select);
-	} // fecha método historicoReadequacao()
+	} // fecha mï¿½todo historicoReadequacao()
     
     
     public function buscarDadosPlanosDistribuicaoAtual($where = array())
@@ -367,6 +367,6 @@ class tbPlanoDistribuicao extends GenericModel
 
         //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha método historicoReadequacao()
+	} // fecha mï¿½todo historicoReadequacao()
 
 } // fecha class

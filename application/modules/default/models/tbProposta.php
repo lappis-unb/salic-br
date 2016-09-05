@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2012 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
-class tbProposta extends GenericModel
+class tbProposta extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "SAC";
@@ -20,10 +20,10 @@ class tbProposta extends GenericModel
 
 
 	/**
-	 * Busca os pedidos de readequação
+	 * Busca os pedidos de readequaï¿½ï¿½o
 	 * @access public
 	 * @param array $where (filtros)
-	 * @param array $order (ordenação)
+	 * @param array $order (ordenaï¿½ï¿½o)
 	 * @return object
 	 */
 	public function buscarPedido($where = array(), $order = array())
@@ -79,15 +79,15 @@ class tbProposta extends GenericModel
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha método buscarPedido()
+	} // fecha mï¿½todo buscarPedido()
 
 
 
 	/**
-	 * Busca o histórico de readequação
+	 * Busca o histï¿½rico de readequaï¿½ï¿½o
 	 * @access public
 	 * @param array $where (filtros)
-	 * @param array $order (ordenação)
+	 * @param array $order (ordenaï¿½ï¿½o)
 	 * @return object
 	 */
 	public function historicoReadequacao($where = array(), $order = array())
@@ -174,7 +174,7 @@ class tbProposta extends GenericModel
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha método historicoReadequacao()
+	} // fecha mï¿½todo historicoReadequacao()
 
 
 
@@ -232,6 +232,6 @@ class tbProposta extends GenericModel
                 xd($select->assemble());
 
 		return $this->fetchAll($select);
-	} // fecha método historicoReadequacao()
+	} // fecha mï¿½todo historicoReadequacao()
 
 } // fecha class

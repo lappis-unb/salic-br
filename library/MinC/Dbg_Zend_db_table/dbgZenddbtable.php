@@ -9,7 +9,7 @@
  *
  * @author augusto
  */
-class dbtable extends GenericModel {
+class dbtable extends MinC_Db_Table_Abstract {
 
     public static function dbg($dados, type $type=null){
 

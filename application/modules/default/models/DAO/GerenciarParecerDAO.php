@@ -11,7 +11,7 @@
  */
 //include_once "../GenericModel.php";
 
-class GerenciarParecerDAO extends GenericModel
+class GerenciarParecerDAO extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "SAC";

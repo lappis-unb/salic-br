@@ -4,7 +4,7 @@
  *
  * @author Equipe Politec
  */
-class TbInformacaoProfissional extends GenericModel {
+class TbInformacaoProfissional extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'Agentes';
     protected $_name = 'tbInformacaoProfissional';

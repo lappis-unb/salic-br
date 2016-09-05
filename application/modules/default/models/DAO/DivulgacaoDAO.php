@@ -7,7 +7,7 @@
  * @version //autogen//
  * @author  wouerner <wouerner@gmail.com>
  */
-class DivulgacaoDAO extends GenericModel{
+class DivulgacaoDAO extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'sac';
     protected $_schema = 'sac';

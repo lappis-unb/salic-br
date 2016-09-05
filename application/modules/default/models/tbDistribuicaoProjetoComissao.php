@@ -1,5 +1,5 @@
 <?php
-class tbDistribuicaoProjetoComissao extends GenericModel
+class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
 {
     protected $_banco = "BDCORPORATIVO";
     protected $_schema = "scSAC";

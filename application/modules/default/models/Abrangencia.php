@@ -6,7 +6,7 @@
  * @author  wouerner <wouerner@gmail.com>
  * @since 22/08/2016
  */
-class Abrangencia extends GenericModel
+class Abrangencia extends MinC_Db_Table_Abstract
 {
     protected $_name = 'abrangencia';
     protected $_schema = 'sac';

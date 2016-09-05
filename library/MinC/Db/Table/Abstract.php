@@ -6,7 +6,7 @@
  */
 require_once 'Zend/Db/Table/Abstract.php';
 
-class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
+abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 {
 
     private $_config;
@@ -405,5 +405,43 @@ class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
             return ' + ';
         }
         return " || ";
+    }
+
+    /**
+     *
+     * @name findBy
+     * @param array $where
+     * @return array
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  05/09/2016
+     */
+    public function findBy(array $where) {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        foreach ($where as $columnName => $columnValue) {
+            $select->where($columnName . ' = ?', trim($columnValue));
+        }
+        $result = $this->fetchRow($select);
+        return ($result)? $result->toArray() : array();
+    }
+
+    /**
+     *
+     * @name findAll
+     * @param array $where
+     * @return array
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  05/09/2016
+     */
+    public function findAll(array $where = array()) {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        foreach ($where as $columnName => $columnValue) {
+            $select->where($columnName . ' = ?', trim($columnValue));
+        }
+        $result = $this->fetchAll($select);
+        return ($result)? $result->toArray() : array();
     }
 }

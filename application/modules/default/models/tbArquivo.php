@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class tbArquivo extends GenericModel
+class tbArquivo extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "BDCORPORATIVO";
 	protected $_schema = "scCorp";

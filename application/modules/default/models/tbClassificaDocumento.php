@@ -9,7 +9,7 @@
  *
  * @author tisomar
  */
-class tbClassificaDocumento extends GenericModel
+class tbClassificaDocumento extends MinC_Db_Table_Abstract
 {
 
     protected $_banco  = "BDCORPORATIVO";

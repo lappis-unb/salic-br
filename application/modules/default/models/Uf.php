@@ -5,7 +5,7 @@
  *
  * @author 01610881125
  */
-class Uf extends GenericModel {
+class Uf extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'agentes';
     protected $_name = 'uf';

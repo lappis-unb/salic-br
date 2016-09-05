@@ -4,7 +4,7 @@
  *
  * @author Equipe Politec
  */
-class TbCredenciamentoParecerista extends GenericModel {
+class TbCredenciamentoParecerista extends MinC_Db_Table_Abstract {
 
     protected $_banco 	= 'Agentes';
     protected $_name 	= 'tbCredenciamentoParecerista';

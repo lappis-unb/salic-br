@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class HistoricoInsert extends GenericModel
+class HistoricoInsert extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
 	protected $_schema = "dbo";
@@ -19,7 +19,7 @@ class HistoricoInsert extends GenericModel
 
 
 	/**
-	 * Método para verificar se a trigger HISTORICO_INSERT está habilitada
+	 * Mï¿½todo para verificar se a trigger HISTORICO_INSERT estï¿½ habilitada
 	 * @access public
 	 * @param void
 	 * @return integer (0 = Habilitado e 1 = desabilitado)
@@ -30,7 +30,7 @@ class HistoricoInsert extends GenericModel
 				FROM {$this->_banco}.{$this->_schema}.{$this->_name}
 				WHERE name = 'HISTORICO_INSERT'";
 
-		// seta para o banco SAC que é onde encontra-se a trigger
+		// seta para o banco SAC que ï¿½ onde encontra-se a trigger
 		$DIRBANCO = Zend_Registry::get('DIR_CONFIG');
 		$Conexao  = 'conexao_sac';
 		$config   = new Zend_Config_Ini($DIRBANCO, $Conexao);
@@ -42,11 +42,11 @@ class HistoricoInsert extends GenericModel
 		// executa a query
 		$resultado = $db->fetchAll($sql);
 
-		// encerra a conexão
+		// encerra a conexï¿½o
 		$db = Zend_Db_Table::getDefaultAdapter();
 		$db->closeConnection();
 
 		return $resultado[0]['Habilitado'];
-	} // fecha método statusHISTORICO_INSERT()
+	} // fecha mï¿½todo statusHISTORICO_INSERT()
 
 } // fecha class

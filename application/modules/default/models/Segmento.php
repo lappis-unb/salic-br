@@ -11,7 +11,7 @@
  * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  * @since  17/08/2016
  */
-class Segmento extends GenericModel
+class Segmento extends MinC_Db_Table_Abstract
 {
     protected $_banco = 'sac';
     protected $_schema = 'sac';

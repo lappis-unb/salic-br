@@ -9,7 +9,7 @@
  *
  * @author tisomar
  */
-class HistoricoInabilitado extends GenericModel {
+class HistoricoInabilitado extends MinC_Db_Table_Abstract {
 
     protected $_banco = "SAC";
     protected $_name = "HistoricoInabilitado";

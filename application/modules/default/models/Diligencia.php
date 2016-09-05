@@ -10,7 +10,7 @@
  *
  * @author augusto
  */
-class Diligencia extends GenericModel {
+class Diligencia extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
     protected $_name = 'tbDiligencia';
@@ -128,7 +128,7 @@ class Diligencia extends GenericModel {
                 'Pa.IdPRONAC = D.idPronac',
                 array("CASE WHEN Pa.ParecerFavoravel in ('2','3')
 				  THEN 'Sim'
-				  ELSE 'Não'
+				  ELSE 'Nï¿½o'
 				  End AS ParecerFavoravel"
                 ),
                 'SAC.dbo'
@@ -216,7 +216,7 @@ class Diligencia extends GenericModel {
                 'Pa.IdPRONAC = D.idPronac  AND Pa.DtParecer = (SELECT TOP 1 max(DtParecer) from SAC..Parecer where IdPRONAC = Pr.IdPRONAC)',
                 array("CASE WHEN Pa.ParecerFavoravel in ('2','3')
 				  THEN 'Sim'
-				  ELSE 'Não'
+				  ELSE 'Nï¿½o'
 				  End AS ParecerFavoravel"
                 ),
                 'SAC.dbo'

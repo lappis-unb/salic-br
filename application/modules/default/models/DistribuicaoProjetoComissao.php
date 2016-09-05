@@ -10,7 +10,7 @@
  *
  * @author augusto
  */
-class DistribuicaoProjetoComissao extends GenericModel {
+class DistribuicaoProjetoComissao extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'BDCORPORATIVO';
     protected $_schema = 'scSAC';
@@ -59,7 +59,7 @@ class DistribuicaoProjetoComissao extends GenericModel {
     }
 
 
-    //LISTAR PROJETOS QUE FORAM ENCAMINHADOS ATRAVÉS DO UC53
+    //LISTAR PROJETOS QUE FORAM ENCAMINHADOS ATRAVï¿½S DO UC53
     public function buscarProjetosDistribuidosReadequados($where=array(), $order=array()) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -77,7 +77,7 @@ class DistribuicaoProjetoComissao extends GenericModel {
                                  'Pa.idPRONAC = Pr.IdPRONAC',
                             array("CASE WHEN Pa.ParecerFavoravel in ('2','3')
                                     THEN 'Sim'
-                                    ELSE 'Não'
+                                    ELSE 'Nï¿½o'
                                     End AS ParecerFavoravel",
                                     "Pa.idTipoAgente"
                                 ),'SAC.dbo'

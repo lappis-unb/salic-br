@@ -9,7 +9,7 @@
  *
  * @author 01610881125
  */
-class Arquivo extends GenericModel {
+class Arquivo extends MinC_Db_Table_Abstract {
     protected $_name = 'tbArquivo';
     protected $_schema = 'scCorp';
     protected $_banco = 'BDCORPORATIVO';

@@ -9,7 +9,7 @@
  *
  * @author augusto
  */
-class Area extends GenericModel {
+class Area extends MinC_Db_Table_Abstract {
     protected  $_banco = 'SAC';
     protected  $_name = 'Area';
 

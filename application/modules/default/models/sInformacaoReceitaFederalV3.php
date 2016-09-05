@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class sInformacaoReceitaFederalV3 extends GenericModel
+class sInformacaoReceitaFederalV3 extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "SAC";
@@ -20,7 +20,7 @@ class sInformacaoReceitaFederalV3 extends GenericModel
 
 
 	/**
-	 * Método para executar a SP de geração de DBF para a Receita Federal
+	 * Mï¿½todo para executar a SP de geraï¿½ï¿½o de DBF para a Receita Federal
 	 * @access public
 	 * @param integer $ano
 	 * @return bool
@@ -37,6 +37,6 @@ class sInformacaoReceitaFederalV3 extends GenericModel
 		{
 			return $e->getMessage();
 		}
-	} // fecha método gerarDBF()
+	} // fecha mï¿½todo gerarDBF()
 
 } // fecha class

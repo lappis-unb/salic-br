@@ -9,7 +9,7 @@
  *
  * @author tisomar
  */
-class tbPergunta extends GenericModel {
+class tbPergunta extends MinC_Db_Table_Abstract {
     protected $_banco   = "BDCORPORATIVO";
     protected $_schema  = "scQuiz";
     protected $_name = 'tbPergunta';
@@ -90,7 +90,7 @@ class tbPergunta extends GenericModel {
             $select->order($order); 
         //xd($select->__toString());
         return $this->fetchAll($select);
-    } // fecha método buscarDados
+    } // fecha mï¿½todo buscarDados
 
     public function montarQuestionario($nrFormDocumento,$nrVersaoDocumento,$nrPergunta = ''){
 
@@ -163,7 +163,7 @@ class tbPergunta extends GenericModel {
 
             $select->order($order);
         return $this->fetchAll($select);
-    } // fecha método buscarDados
+    } // fecha mï¿½todo buscarDados
 
 
 

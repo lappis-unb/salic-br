@@ -4,7 +4,7 @@
  * Description of paIncluirRecusarItem
  * @author Jefferson Alessandro
  */
-class paIncluirRecusarItem extends GenericModel {
+class paIncluirRecusarItem extends MinC_Db_Table_Abstract {
         
     protected $_banco = 'SAC';
     protected $_name  = 'paIncluirRecusarItem';

@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class tbDiligencia extends GenericModel
+class tbDiligencia extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "SAC";

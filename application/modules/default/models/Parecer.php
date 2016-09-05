@@ -10,7 +10,7 @@
  *
  * @author augusto
  */
-class Parecer extends GenericModel {
+class Parecer extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
     protected $_schema = 'dbo';

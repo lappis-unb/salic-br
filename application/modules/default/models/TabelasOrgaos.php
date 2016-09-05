@@ -9,7 +9,7 @@
  *
  * @author augusto
  */
-class TabelasOrgaos extends GenericModel{
+class TabelasOrgaos extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'TABELAS';
     protected $_name  = 'Orgaos';

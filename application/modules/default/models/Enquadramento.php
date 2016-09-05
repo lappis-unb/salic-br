@@ -4,7 +4,7 @@
  *
  * @author augusto
  */
-class Enquadramento extends GenericModel
+class Enquadramento extends MinC_Db_Table_Abstract
 {
 	protected $_name   = "Enquadramento";
 	protected $_schema = "dbo";
@@ -36,7 +36,7 @@ class Enquadramento extends GenericModel
 
 
 	/**
-	 * Método para buscar o enquadramento do projeto
+	 * Mï¿½todo para buscar o enquadramento do projeto
 	 * @access public
 	 * @param integer $idPronac
 	 * @param string $pronac
@@ -62,25 +62,25 @@ class Enquadramento extends GenericModel
 		}
 
 		return $buscarTodos ? $this->fetchAll($select) : $this->fetchRow($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
 
 
 
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @param array $dados
-	 * @return integer (retorna o último id cadastrado)
+	 * @return integer (retorna o ï¿½ltimo id cadastrado)
 	 */
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarDados()
+	} // fecha mï¿½todo cadastrarDados()
 
 
 
 	/**
-	 * Método para alterar
+	 * Mï¿½todo para alterar
 	 * @access public
 	 * @param array $dados
 	 * @param integer $idEnquadramento
@@ -109,17 +109,17 @@ class Enquadramento extends GenericModel
 		}
 
 		return $this->update($dados, $where);
-	} // fecha método alterarDados()
+	} // fecha mï¿½todo alterarDados()
 
 
 
 	/**
-	 * Método para excluir
+	 * Mï¿½todo para excluir
 	 * @access public
 	 * @param integer $idEnquadramento
 	 * @param integer $idPronac
 	 * @param string $pronac
-	 * @return integer (quantidade de registros excluídos)
+	 * @return integer (quantidade de registros excluï¿½dos)
 	 */
 	public function excluirDados($idEnquadramento = null, $idPronac = null, $pronac = null)
 	{
@@ -142,6 +142,6 @@ class Enquadramento extends GenericModel
 		}
 
 		return $this->delete($where);
-	} // fecha método excluirDados()
+	} // fecha mï¿½todo excluirDados()
 
 } // fecha class

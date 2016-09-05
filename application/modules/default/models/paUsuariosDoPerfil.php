@@ -9,7 +9,7 @@
  *
  * @author 01129075125
  */
-class paUsuariosDoPerfil extends GenericModel {
+class paUsuariosDoPerfil extends MinC_Db_Table_Abstract {
         
     protected $_banco = 'SAC';
     protected $_name  = 'paUsuariosDoPerfil';
