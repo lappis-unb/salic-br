@@ -183,17 +183,18 @@ class Proposta_Model_PreProjeto extends GenericModel
                                   "a.DtAtoTombamentoForm"=>"CONVERT(CHAR(10),DtAtoTombamento,103)",
                                   "a.dtAceiteForm"=>"CONVERT(CHAR(10),dtAceite,103)",
                                   "a.DtArquivamentoForm"=>"CONVERT(CHAR(10),DtArquivamento,103)"
-                                ));
+                              ),
+                          $this->_schema);
 
         $slct->joinInner(array('ag' => 'Agentes'),
                          'a.idAgente = ag.idAgente',
                          array("ag.CNPJCPF as CNPJCPF"),
-                         'AGENTES.dbo');
+                         $this->getSchema('agentes'));
 
         $slct->joinInner(array('m' => 'Nomes'),
                          'a.idAgente = m.idAgente',
                          array("m.Descricao as NomeAgente"),
-                         'AGENTES.dbo');
+                         $this->getSchema('agentes'));
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna=>$valor)
@@ -202,7 +203,6 @@ class Proposta_Model_PreProjeto extends GenericModel
         }
         $slct->where(new Zend_Db_Expr("NOT EXISTS(select 1 from SAC.dbo.Projetos pr where a.idPreProjeto = pr.idProjeto)"));
 
-        //adicionando linha order ao select
         $slct->order($order);
 
         // paginacao
@@ -653,14 +653,16 @@ class Proposta_Model_PreProjeto extends GenericModel
      * @access public
      * @return void
      */
-    public function buscarAgentePreProjeto($consulta = array()){
+    public function buscarAgentePreProjeto($consulta = array())
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('pre'=>$this->_name),
-                        array(
-                                'pre.idAgente'
-                             )
+                    array('pre'=>$this->_name),
+                    array(
+                            'pre.idAgente'
+                        ),
+                        $this->_schema
                      );
 
         foreach ($consulta as $coluna=>$valor)
