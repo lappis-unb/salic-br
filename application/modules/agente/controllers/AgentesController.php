@@ -58,10 +58,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         $this->view->comboestados = $mapperUF->fetchPairs('iduf', 'sigla');
         $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', ['idtipo' => 2]);
-        $this->view->combotiposlogradouros = Tipologradouro::buscar();
-        $this->view->comboareasculturais = $mapperArea->fetchPairs();
-        $this->view->combotipostelefones = Tipotelefone::buscar();
-        $this->view->combotiposemails = Tipoemail::buscar();
+        $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 13));
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
+        $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 3));
+        $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
 
         //Monta o combo das visões disponiveis
         $visaoTable = new Agente_Model_DbTable_Visao();

@@ -23,7 +23,7 @@ function buscar_cep(cep)
     uf             = document.getElementById("uf");
 
     ajax = xmlhttp(); // instancia ajax
-    ajax.open("GET", "../cep/cep?cep=" + cep, true);
+    ajax.open("GET", "/cep/cep?cep=" + cep, true);
     ajax.onreadystatechange = function()
     {
         if (cep.length != 10)

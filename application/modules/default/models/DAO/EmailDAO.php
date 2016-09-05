@@ -21,8 +21,8 @@ class EmailDAO extends Zend_Db_Table
      */
     public static function enviarEmail($email, $assunto, $texto, $perfil = 'PerfilGrupoPRONAC')
     {
-        $config = new Zend_Config_Ini(APPLICATION_PATH .'/configs/config.ini');
-        $config = $config->default->mail->transport->toArray();
+        $config = new Zend_Config_Ini(APPLICATION_PATH .'/configs/config.ini', getenv('APPLICATION_ENV'));
+        $config = $config->mail->transport->toArray();
 
         $transport = new Zend_Mail_Transport_Smtp($config['host'], $config);
         $mail = new Zend_Mail();
@@ -30,7 +30,6 @@ class EmailDAO extends Zend_Db_Table
         $mail->setBodyHtml($texto);
         $mail->setFrom('srv_salic@cultura.gov.br', 'Salic BR');
         $mail->addTo($email);
-        //$mail->addTo('wouerner.costa@cultura.gov.br');
         $mail->setSubject($assunto);
         return $mail->send($transport);
     }
