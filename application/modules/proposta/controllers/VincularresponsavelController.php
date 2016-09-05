@@ -21,9 +21,10 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor Salic
 
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance();
+        $arrAuth = array_change_key_case((array) $auth->getIdentity());
 
-        if (isset($auth->getIdentity()->usu_codigo)) {
+        if (isset($arrAuth['usu_codigo'])) {
             parent::perfil(1, $PermissoesGrupo);
         } else {
             parent::perfil(4, $PermissoesGrupo);
@@ -31,32 +32,32 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
         /*********************************************************************************************************/
 
-        $cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
+        $cpf = isset($arrAuth['usu_codigo']) ? $arrAuth['usu_identificacao'] : $arrAuth['cpf'];
 
         /*********************************************************************************************************/
 
         // Busca na SGCAcesso
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
-        $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
+        $acesso = $sgcAcesso->findBy(array('cpf' => $cpf));
 
         // Busca na Usuarios
-        $usuarioDAO = new Autenticacao_Model_Usuario();
-        $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
+        $mdlUsuario = new Autenticacao_Model_Usuario();
+        $usuario = $mdlUsuario->findBy(array('usu_identificacao' => $cpf));
 
         // Busca na Agentes
-        $agentesDAO = new Agente_Model_DbTable_Agentes();
-        $buscaAgente = $agentesDAO->BuscaAgente($cpf);
+        $tblAgentes = new Agente_Model_DbTable_Agentes();
+        $agente = $tblAgentes->findBy(['cnpjcpf' => $cpf]);
 
 
-        if (count($buscaAcesso) > 0) {
-            $this->idResponsavel = $buscaAcesso[0]->IdUsuario;
-            $this->emailResponsavel = $buscaAcesso[0]->Email;
+        if ($acesso) {
+            $this->idResponsavel = $acesso[0]->IdUsuario;
+            $this->emailResponsavel = $acesso[0]->Email;
         }
-        if (count($buscaAgente) > 0) {
-            $this->idAgente = $buscaAgente[0]->idAgente;
+        if ($agente) {
+            $this->idAgente = $agente[0]->idAgente;
         }
-        if (count($buscaUsuario) > 0) {
-            $this->idUsuario = $buscaUsuario[0]->usu_codigo;
+        if ($usuario) {
+            $this->idUsuario = $usuario[0]->usu_codigo;
         }
 
         $this->view->idAgenteLogado = $this->idAgente;
