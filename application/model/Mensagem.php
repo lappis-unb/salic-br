@@ -37,9 +37,10 @@ class Mensagem extends GenericModel{
      */
     public function montarFiltrosListarDeDispositivo($consulta, stdClass $objParam){
         # Filtros padrões obrigatórios.
-        $consulta->where('m.dtExclusao IS NULL');
-        $consulta->where('md.dtExclusao IS NULL');
-        $consulta->where('d.idRegistration = ?', $objParam->idRegistration? $objParam->idRegistration: '');
+        $consulta
+            ->where('m.dtExclusao IS NULL')
+            ->where('md.dtExclusao IS NULL')
+            ->where('d.idRegistration = ?', $objParam->idRegistration? $objParam->idRegistration: '');
         
         # Filtro(s) Dinamico(s).
         if($objParam->new) {
@@ -97,18 +98,18 @@ class Mensagem extends GenericModel{
                 'm.dtEnvio',
                 'm.dtAcesso'))
             ->order(array(
-                'm.dtAcesso ASC',
-                'm.dtEnvio DESC'));
+                'dtAcesso ASC',
+                'dtEnvio DESC'));
+
         # Filtros
-        $this->montarFiltrosListarDeDispositivo($consulta, $objParam);
+        $consulta = $this->montarFiltrosListarDeDispositivo($consulta, $objParam);
 
         # Paginação
         if($objParam->next) {
             $consulta->limit($objParam->next, (int)$objParam->offset);
         }
 
-//xd($consulta->__toString());
         return $this->fetchAll($consulta);
     }
-    
+
 }
