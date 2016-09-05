@@ -626,16 +626,14 @@ class DiligenciarController extends GenericControllerNew {
         $auth = Zend_Auth::getInstance();
         
         if (!$this->idPronac) {
-            $this->_redirect(
-                $this->view->url(
-                    array(
-                        'controller' => 'diligenciar',
-                        'action' => 'cadastrardiligencia',
-                        'tipoAnalise' => 'inicial',
-                        'idPronac' => $this->getRequest()->getParam('idPronac'),
-                        'situacao' => $this->getRequest()->getParam('situacao'),
-                        'tpDiligencia' => $this->getRequest()->getParam('tpDiligencia'),
-                    )
+            $this->_helper->redirector->goToRoute(
+                array(
+                    'controller' => 'diligenciar',
+                    'action' => 'cadastrardiligencia',
+                    'tipoAnalise' => 'inicial',
+                    'idPronac' => $this->getRequest()->getParam('idPronac'),
+                    'situacao' => $this->getRequest()->getParam('situacao'),
+                    'tpDiligencia' => $this->getRequest()->getParam('tpDiligencia'),
                 )
             );
         }
@@ -683,7 +681,7 @@ class DiligenciarController extends GenericControllerNew {
         
         parent::message(
             "Dilig&ecirc;ncia enviada com sucesso!",
-            $this->view->url(
+            $this->_helper->redirector->goToRoute(
                 array(
                     'controller' => 'diligenciar',
                     'action' => 'listardiligenciaanalista',
