@@ -374,31 +374,37 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
      */
     public function buscarNovoProponente($where=array(), $idResponsavel)
     {
-        $slct = $this->select();
-        $slct->distinct();
-        $slct->setIntegrityCheck(false);
-        $slct->from(
+        $select = $this->select();
+        $select->distinct();
+        $select->setIntegrityCheck(false);
+        $select->from(
             array('ag' => $this->_name),
-            array('ag.CNPJCPF', 'ag.idAgente')
+            array('ag.cnpjcpf', 'ag.idagente'),
+            $this->_schema
         );
-        $slct->joinInner(
-            array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente",
-            array('nm.Descricao as NomeAgente')
+        $select->joinInner(
+            array('nm' => 'nomes'), "nm.idagente = ag.idagente",
+            array('nm.descricao as nomeagente'),
+            $this->_schema
         );
-        $slct->joinLeft(
-            array('vp' => 'tbVinculo'), "vp.idAgenteProponente  = ag.idAgente AND vp.idUsuarioResponsavel = $idResponsavel",
-            array("vp.idVinculo as idVinculoProponente", "siVinculo", "idUsuarioResponsavel")
+        $select->joinLeft(
+            array('vp' => 'tbvinculo'), "vp.idagenteproponente  = ag.idagente and vp.idusuarioresponsavel = $idResponsavel",
+            array("vp.idvinculo as idvinculoproponente", "sivinculo", "idusuarioresponsavel"),
+            $this->_schema
         );
-        $slct->joinLeft(
-            array('v' => 'Visao'), "v.idAgente = ag.idAgente AND v.Visao = 146",
-            array('v.visao as UsuarioVinculo'), 'AGENTES.dbo'
+        $select->joinLeft(
+            array('v' => 'visao'), "v.idagente = ag.idagente and v.visao = 146",
+            array('v.visao as usuariovinculo'),
+            $this->_schema
         );
 
-        foreach ($where as $coluna => $valor)
-        {
-            $slct->where($coluna, $valor);
+        foreach ($where as $coluna => $valor) {
+            if ($valor) {
+                $select->where($coluna, $valor);
+            }
         }
-        return $this->fetchAll($slct);
+
+        return $this->fetchAll($select);
     }
 
     /**

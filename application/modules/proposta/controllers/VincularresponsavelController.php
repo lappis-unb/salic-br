@@ -48,19 +48,18 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $tblAgentes = new Agente_Model_DbTable_Agentes();
         $agente = $tblAgentes->findBy(['cnpjcpf' => $cpf]);
 
-
         if ($acesso) {
-            $this->idResponsavel = $acesso[0]->IdUsuario;
-            $this->emailResponsavel = $acesso[0]->Email;
+            $this->idResponsavel = $acesso['idusuario'];
+            $this->emailResponsavel = $acesso['email'];
         }
         if ($agente) {
-            $this->idAgente = $agente[0]->idAgente;
+            $this->idAgente = $acesso['idagente'];
         }
         if ($usuario) {
-            $this->idUsuario = $usuario[0]->usu_codigo;
+            $this->idUsuario = $acesso['usu_codigo'];
         }
 
-        $this->view->idAgenteLogado = $this->idAgente;
+        $this->view->idAgenteLogado = $acesso['idagente'];
         parent::init();
         // chama o init() do pai GenericControllerNew
     }
