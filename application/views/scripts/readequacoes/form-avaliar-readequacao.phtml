@@ -83,7 +83,7 @@
                         } else {
                             // retorna mensagens de erro de limites orçamentários
                             
-			    var saidaHtml = "<table class='tabela'><thead><th colspan='2'>Verificao de limites orçamentários</th></thead>";
+			    var saidaHtml = "<table class='tabela'><thead><th colspan='2'>Verificação de limites orçamentários</th></thead>";
       
                             for (var m = 0; m < resposta.mensagens.length; m++) {
                                 var item = resposta.mensagens[m];
@@ -92,7 +92,7 @@
                                     saidaHtml += "<td><strong>" + item.Descricao + "</strong></td>";
                                 } else {
                                     saidaHtml += "<tr><td><img src='<?php echo $this->baseUrl(); ?>/public/img/delete_16x16.png' alt='' /></td>";
-				    saidaHtml += "<td><strong>" + item.Descricao + " " + item.vlDiferenca + "</strong></td>";
+                                    saidaHtml += "<td><strong>" + item.Descricao + " <span class='vlDiferenca'>" + moeda.formatar(item.vlDiferenca) + "</span></strong></td>";				                    
                                 }
                                 saidaHtml += "</tr>";
                             }
