@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -7,7 +7,7 @@ class tbDocumentosAgentes extends GenericModel {
 
     protected $_banco = 'sac';
     protected $_schema = 'sac';
-    protected $_name  = 'tbDocumentosAgentes';
+    protected $_name  = 'tbdocumentosagentes';
 
 
     public function buscarDocumentos($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
@@ -41,18 +41,20 @@ class tbDocumentosAgentes extends GenericModel {
         //xd($slct->__toString());
         return $this->fetchAll($slct);
     }
-    
+
     //Essa consulta nao possui o dado bin�rio do arquivo. Somente os demais dados do arquivo!
     public function buscarDadosDocumentos($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
             array("a"=>$this->_name),
-            array("CodigoDocumento", new Zend_Db_Expr("1 as tpDoc"), 'idAgente as Codigo', 'Data', 'NoArquivo', 'TaArquivo', 'idDocumentosAgentes')
+            array("CodigoDocumento", new Zend_Db_Expr("(1) as tpDoc"), 'idAgente as Codigo', 'Data', 'NoArquivo', 'TaArquivo', 'idDocumentosAgentes'),
+            $this->_schema
         );
         $slct->joinInner(
             array("b"=>"DocumentosExigidos"), "a.CodigoDocumento = b.Codigo",
-            array("Descricao"), "SAC.dbo"
+            array("Descricao"),
+            $this->_schema
         );
 
         //adiciona quantos filtros foram enviados
@@ -71,7 +73,7 @@ class tbDocumentosAgentes extends GenericModel {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->__toString());
+
         return $this->fetchAll($slct);
     }
 
@@ -101,7 +103,7 @@ class tbDocumentosAgentes extends GenericModel {
 
         $slct1->where("d.idagente = ".$idAgente);
 
-        
+
         //seleciona todos os arquivos referente ao projeto -- Para arquivos anexados da forma antiga
         $slct2 = $this->select();
         $slct2->setIntegrityCheck(false);
@@ -118,7 +120,7 @@ class tbDocumentosAgentes extends GenericModel {
                 array()
         );
 
-        
+
 
         $slct2->joinInner(
                 array('e' => 'DocumentosExigidos'),
@@ -191,7 +193,7 @@ class tbDocumentosAgentes extends GenericModel {
                 array(''),
                 'BDCORPORATIVO.scCorp'
         );
-        
+
 
 
 
@@ -282,7 +284,7 @@ class tbDocumentosAgentes extends GenericModel {
 
         $slct5->where("d.idPronac = ".$idPronac);
 
-           
+
         //Une todas os Selects
         $slct = $this->select();
 
@@ -310,7 +312,7 @@ class tbDocumentosAgentes extends GenericModel {
             }
             $slctMaster->limit($tamanho, $tmpInicio);
         }
-        
+
         //xd($slct->__toString());
         //xd(str_replace('"',"",$slct->assemble()));
         //xd($slctMaster->assemble());
@@ -344,4 +346,3 @@ class tbDocumentosAgentes extends GenericModel {
     }
 
 
-?>
