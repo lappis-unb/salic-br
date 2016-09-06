@@ -2,121 +2,76 @@
 /**
  * Modelo Cep
  * @author Equipe RUP - Politec
+ * @author wouerner <wouerner@gmail.com>
  * @since 29/03/2010
- * @version 1.0
- * @package application
  * @subpackage application.models
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-
-class Cep
+class Cep extends GenericModel
 {
-	/**
-	 * M�todo para buscar os dados do CEP (efetua a busca no web service)
-	 * @access public
-	 * @static
-	 * @param integer $cep
-	 * @return string $retorno
-	 */
-	public static function buscar($cep)
-	{
-		ini_set("allow_url_fopen", "On"); // fun��o habilitada
-		ini_set("allow_url_include", "On"); // fun��o habilitada
 
-		$resultado = @file_get_contents('http://republicavirtual.com.br/web_cep.php?cep='.urlencode($cep).'&formato=query_string');
+    protected $_schema = 'bddne';
+    protected $_name = 'vw_endereco';
 
-		if (!$resultado)
-		{
-			$resultado = "&resultado=0&resultado_txt=erro+ao+buscar+cep";
-		}
+    public function __construct() {
+        parent::__construct();
+    }
 
-		ini_set("allow_url_fopen", "Off"); // fun��o desabilitada
-		ini_set("allow_url_include", "Off"); // fun��o desabilitada
+    public function init(){
+        parent::init();
+    }
 
-		parse_str($resultado, $retorno);
+    /**
+     * Buscar o cep no banco de dados
+     * @access public
+     * @static
+     * @param integer $cep
+     * @return string $retorno
+     */
+    public static function buscarCepDB($cep)
+    {
+        $sql = "SELECT CEP,
+            logradouro,
+            tipo_logradouro,
+            bairro,
+            cidade,
+            uf,
+            idCidadeMunicipios,
+            dsCidadeMunicipios,
+            idCidadeUF,
+            DSCIDADEMUNICIPIOS AS dsCidadeUF
+            FROM BDDNE.scDNE.VW_ENDERECO
+            WHERE CEP = '$cep'";
 
-		return $retorno;
-	} // fecha buscar()
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_ASSOC);
 
+        return $db->fetchRow($sql);
+    }
 
+    public function buscarCEP($cep)
+    {
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_ASSOC);
 
-	/**
-	 * M�todo para buscar o cep no banco de dados
-	 * @access public
-	 * @static
-	 * @param integer $cep
-	 * @return string $retorno
-	 */
-	public static function buscarCepDB($cep)
-	{
-		/*$sql = "SELECT
-					LTRIM(RTRIM(lor.cdCep)) AS cep,
-					LTRIM(RTRIM(
-					 LTRIM(RTRIM(CAST(ISNULL(lor.nmLogradouro, '')   AS VARCHAR))) + ' ' +
-					 LTRIM(RTRIM(CAST(ISNULL(lor.nrLote, '')         AS VARCHAR))) + ' ' +
-					 LTRIM(RTRIM(CAST(ISNULL(lor.dsComplemento1, '') AS VARCHAR))) + ' ' +
-					 LTRIM(RTRIM(CAST(ISNULL(lor.cdComplemento1, '') AS VARCHAR))) + ' ' +
-					 LTRIM(RTRIM(CAST(ISNULL(lor.dsComplemento2, '') AS VARCHAR))) + ' ' +
-					 LTRIM(RTRIM(CAST(ISNULL(lor.cdComplemento2, '') AS VARCHAR)))
-					)) AS logradouro,
-					LTRIM(RTRIM(lor.nmTipoLogradouro)) AS tipo_logradouro,
-					LTRIM(RTRIM(bro.nmBairro)) AS bairro,
-					LTRIM(RTRIM(loc.nmLocalidade)) AS cidade,
-					LTRIM(RTRIM(loc.cdUf)) AS uf,
+        $cols = [
+            'cep',
+            'logradouro',
+            'tipo_logradouro',
+            'bairro',
+            'cidade',
+            'uf',
+            'idcidademunicipios',
+            'dscidademunicipios',
+            'idcidadeuf',
+            'dscidademunicipios as dscidadeuf'
+        ];
 
-					-- busca de acordo com a cidade e a sigla do estado
-					(SELECT TOP 1 cid.idMunicipioIBGE
-						FROM AGENTES.dbo.UF uf, AGENTES.dbo.Municipios cid -- busca o c�digo cidade
-						WHERE uf.idUF = cid.idUFIBGE
-							AND cid.Descricao = loc.nmLocalidade
-							AND uf.Sigla = loc.cdUf) AS idCidadeMunicipios,
+        $sql = $db->select()
+            ->from($this->_name, $cols, $this->_schema)
+            ->where('CEP = ?', $cep)
+            ;
 
-					-- busca de acordo com a cidade e a sigla do estado
-					(SELECT TOP 1 cid.Descricao
-						FROM AGENTES.dbo.UF uf, AGENTES.dbo.Municipios cid -- busca pela cidade
-						WHERE uf.idUF = cid.idUFIBGE
-							AND cid.Descricao = loc.nmLocalidade
-							AND uf.Sigla = loc.cdUf) AS dsCidadeMunicipios,
-
-					-- busca de acordo com a sigla do estado
-					(SELECT TOP 1 cid.idMunicipioIBGE
-						FROM AGENTES.dbo.UF uf, AGENTES.dbo.Municipios cid -- busca o c�digo da cidade pelo uf
-						WHERE uf.idUF = cid.idUFIBGE AND uf.Sigla = loc.cdUf) AS idCidadeUF,
-
-					-- busca de acordo com a sigla do estado
-					(SELECT TOP 1 cid.Descricao
-						FROM AGENTES.dbo.UF uf, AGENTES.dbo.Municipios cid -- busca pelo uf
-						WHERE uf.idUF = cid.idUFIBGE AND uf.Sigla = loc.cdUf) AS dsCidadeUF
-
-				FROM
-					--BDCORPORATIVO.scDNE.tbLocalidade loc
-					--INNER JOIN BDCORPORATIVO.scDNE.tbLogradouroUf lor
-					BDDNE.scDNE.tbLocalidade loc
-					LEFT JOIN BDDNE.scDNE.tbLogradouroUf lor
-						ON lor.nrLocalidade = loc.nrLocalidade
-					LEFT JOIN BDCORPORATIVO.scDNE.tbBairro bro
-						ON bro.nrBairro = lor.nrInicioBairro
-						OR bro.nrBairro = lor.nrFimBairro
-                                WHERE lor.cdCep = '$cep' OR loc.cdCep = '$cep' ";*/
-
-            $sql = "SELECT CEP,
-                           logradouro,
-                           tipo_logradouro,
-                           bairro,
-                           cidade,
-                           uf,
-                           idCidadeMunicipios,
-                           dsCidadeMunicipios,
-                           idCidadeUF,
-                           DSCIDADEMUNICIPIOS AS dsCidadeUF
-                    FROM BDDNE.scDNE.VW_ENDERECO
-                    WHERE CEP = '$cep'";
-
-			$db= Zend_Db_Table::getDefaultAdapter();
-			$db->setFetchMode(Zend_DB::FETCH_ASSOC);
-
-			return $db->fetchRow($sql);
-	} // fecha m�todo buscarCepDB()
-
-} // fecha class
+        return $db->fetchRow($sql);
+    }
+}

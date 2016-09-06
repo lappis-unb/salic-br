@@ -454,12 +454,11 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $rs = $tbl->buscarDocumentos(array("idProjeto = ?" => $get->idPreProjeto));
         $this->view->arquivosProposta = $rs;
 
-        die('w');
         $tbPreProjeto = new Proposta_Model_PreProjeto();
         $dadosProjeto = $tbPreProjeto->buscarAgentePreProjeto(array('idPreProjeto = ?'=>$get->idPreProjeto))->current();
 
         $tbA = new tbDocumentosAgentes();
-        $rsA = $tbA->buscarDadosDocumentos(array("idAgente = ?" => $dadosProjeto->idAgente));
+        $rsA = $tbA->buscarDadosDocumentos(array("idagente = ?" => $dadosProjeto->idagente));
         $this->view->arquivosProponente = $rsA;
 
     }

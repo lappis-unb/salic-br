@@ -281,6 +281,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
             $this->view->nmPagina = 'Atendido';
         }
 
+        //die('w');
         $tbSolicitarItem = New tbSolicitarItem();
         $total = $tbSolicitarItem->buscarItens($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
