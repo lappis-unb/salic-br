@@ -20,9 +20,9 @@ resources.view.encoding = "ISO-8859-1"
 resources.view.escape = "htmlentities"
 resources.view.basePath = APPLICATION_PATH "/views"
 resources.view.helperPath.MinC_View_Helper = APPLICATION_PATH "/../library/MinC/View/Helper"
-resources.view.service.salicMobileHash = "b66113b1d84a1008b8ffea5fe9f51fc2"
-resources.view.service.encryptHash = "e@75e9R!3450otZ"
-resources.view.service.gcmApiKey = "AIzaSyArBUanKhFlbi9esM35rFIQy1DHmrBOe2o"
+resources.view.service.salicMobileHash = ""
+resources.view.service.encryptHash = ""
+resources.view.service.gcmApiKey = ""
 resources.view.service.gcmUrl = "https://gcm-http.googleapis.com/gcm/send"
 
 
