@@ -25,7 +25,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
 	 */
 	public function init()
 	{
-        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        $mapperArea = new Agente_Model_AreaMapper();
+	    $auth = Zend_Auth::getInstance(); // pega a autentica��o
         $this->idUsuario = $auth->getIdentity()->usu_codigo; // usu�rio logado
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
@@ -641,7 +642,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-            $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+            $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
 
             $parecer = new Parecer();
@@ -738,7 +739,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-            $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+            $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
 
             $parecer = new Parecer();
@@ -1287,7 +1288,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-            $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+            $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
 
             $parecer = new Parecer();

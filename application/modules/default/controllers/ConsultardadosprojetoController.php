@@ -27,7 +27,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     public function init() {
-
+        $mapperArea = new Agente_Model_AreaMapper();
 
         // verifica as permissoes
         $PermissoesGrupo = array();
@@ -1598,7 +1598,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             if($dados->tpSolicitacao == 'EN' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR' || $dados->tpSolicitacao == 'PI'){
                                 $this->view->projetosENReconsideracao = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-                                $this->view->comboareasculturaisReconsideracao = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+                                $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
                                 $this->view->combosegmentosculturaisReconsideracao = Segmentocultural::buscarSegmento($this->view->projetosENReconsideracao->cdArea);
 
                                 $parecer = new Parecer();
@@ -1636,7 +1636,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             if($dados->tpSolicitacao == 'EN' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR' || $dados->tpSolicitacao == 'PI'){
                                 $this->view->projetosENRecurso = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-                                $this->view->comboareasculturaisRecurso = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+                                $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
                                 $this->view->combosegmentosculturaisRecurso = Segmentocultural::buscarSegmento($this->view->projetosENRecurso->cdArea);
 
                                 $parecer = new Parecer();
