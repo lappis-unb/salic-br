@@ -4,7 +4,7 @@
  *
  * @author Tarcisio Angelo
  */
-class GerarPagamentoParecerista extends GenericModel {
+class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
  
     protected $_name = 'tbGerarPagamentoParecerista';
     protected $_schema = 'dbo';

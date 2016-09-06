@@ -4,7 +4,7 @@
  * Description of spTipoDeReadequacaoOrcamentaria
  * Criado em 22/02/2016 - Fernão Lara
  */
-class spTipoDeReadequacaoOrcamentaria extends GenericModel {
+class spTipoDeReadequacaoOrcamentaria extends MinC_Db_Table_Abstract {
         
     protected $_banco = 'SAC';
     protected $_name  = 'spTipoDeReadequacaoOrcamentaria';

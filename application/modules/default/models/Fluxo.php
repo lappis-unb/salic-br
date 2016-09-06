@@ -4,7 +4,7 @@
  * Modulo: Editais
  * Criado por: Emanuel Melo 
  */
-class Fluxo extends GenericModel {
+class Fluxo extends MinC_Db_Table_Abstract {
     
     protected  $_banco = 'SAC';
     protected  $_name = 'tbFluxo';

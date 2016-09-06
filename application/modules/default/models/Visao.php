@@ -10,7 +10,7 @@
  * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-class Visao extends GenericModel
+class Visao extends MinC_Db_Table_Abstract
 {
     /* dados da tabela */
 

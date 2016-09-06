@@ -5,11 +5,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class tbCumprimentoObjeto extends GenericModel
+class tbCumprimentoObjeto extends MinC_Db_Table_Abstract
 {
 
     const SITUACAO_PROPONENTE = 1;
@@ -280,17 +280,17 @@ class tbCumprimentoObjeto extends GenericModel
     }
 
     /**
-     * Valida se todos os atributos obrigatórios para persistir o objeto estão
+     * Valida se todos os atributos obrigatï¿½rios para persistir o objeto estï¿½o
      * presentes no mesmo
      * @throws InvalidArgumentException
      */
     private function validarCadastrar()
     {
         if (!$this->idPronac) {
-            throw new InvalidArgumentException('Necessário fornecer o Pronac');
+            throw new InvalidArgumentException('Necessï¿½rio fornecer o Pronac');
         }
         if (!$this->idUsuario) {
-            throw new InvalidArgumentException('Necessário fornecer o usuário logado no sistema');
+            throw new InvalidArgumentException('Necessï¿½rio fornecer o usuï¿½rio logado no sistema');
         }
     }
 

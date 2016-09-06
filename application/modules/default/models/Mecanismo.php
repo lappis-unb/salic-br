@@ -9,7 +9,7 @@
  *
  * @author 01610881125
  */
-class Mecanismo extends GenericModel {
+class Mecanismo extends MinC_Db_Table_Abstract {
     protected $_banco   = 'SAC';
     protected $_name    = 'Mecanismo';
     protected $_schema  = 'dbo';

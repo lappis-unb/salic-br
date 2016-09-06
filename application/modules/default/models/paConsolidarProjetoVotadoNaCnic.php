@@ -8,7 +8,7 @@
 /**
  * Description of paConsolidarProjetoVotadoNaCnic
  */
-class paConsolidarProjetoVotadoNaCnic extends GenericModel {
+class paConsolidarProjetoVotadoNaCnic extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
     protected $_name = 'paConsolidarProjetoVotadoNaCnic';
@@ -16,7 +16,7 @@ class paConsolidarProjetoVotadoNaCnic extends GenericModel {
 //    	idpronac
 //	idNrReuniao
 //	NrReuniao
-//      tpresultadovotacao (verificar se é igual a 3)
+//      tpresultadovotacao (verificar se ï¿½ igual a 3)
 //	resultadovotacao (AS)
 //	parecerconsolidado
 //	bln_readequacao (1 = true ou 0 = false)

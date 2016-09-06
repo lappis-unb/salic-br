@@ -3,7 +3,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-class tbDocumentosAgentes extends GenericModel {
+class tbDocumentosAgentes extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'sac';
     protected $_schema = 'sac';

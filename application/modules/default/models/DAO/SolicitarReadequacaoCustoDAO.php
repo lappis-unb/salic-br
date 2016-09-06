@@ -10,7 +10,7 @@
  *
  * @author 01373930160
  */
-class SolicitarReadequacaoCustoDAO extends GenericModelScriptCase {
+class SolicitarReadequacaoCustoDAO extends MinC_Db_Table_AbstractScriptCase {
 
     public function verificarreadequacao($idPronac)
     {

@@ -10,7 +10,7 @@
  * @author 01610881125
  * @author wouerner <wouerner@gmail.com>
  */
-class tbTitulacaoConselheiro extends GenericModel
+class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
 {
     /* dados da tabela */
     protected $_banco   = "agentes";
@@ -90,5 +90,5 @@ class tbTitulacaoConselheiro extends GenericModel
     public function alterarDados($dados, $where) {
         $where = "idAgente = " . $where;
         return $this->update($dados, $where);
-    } // fecha método alterarDados()
+    } // fecha mï¿½todo alterarDados()
 }

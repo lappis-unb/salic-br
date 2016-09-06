@@ -10,7 +10,7 @@
  * @copyright - 2010 - Ministerio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-class Autenticacao_Model_Usuario extends GenericModel
+class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
 {
 
     protected $_banco = "tabelas";

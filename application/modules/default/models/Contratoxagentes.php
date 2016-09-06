@@ -9,7 +9,7 @@
  *
  * @author 01610881125
  */
-class Contratoxagentes extends GenericModel {
+class Contratoxagentes extends MinC_Db_Table_Abstract {
     protected $_banco   = 'bdcorporativo';
     protected $_name    = 'tbContratoxAgentes';
     protected $_schema  = 'scSAC';

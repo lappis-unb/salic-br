@@ -1,5 +1,5 @@
 <?php
-class Situacao extends GenericModel {
+class Situacao extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
     protected $_name = 'dbo.Situacao';
@@ -16,7 +16,7 @@ class Situacao extends GenericModel {
             	$select->orwhere('sit.Codigo = ?', $situacao);
             }
             return $this->fetchAll($select);
-	} // fecha método listasituacao()
+	} // fecha mï¿½todo listasituacao()
         
 }
 ?>

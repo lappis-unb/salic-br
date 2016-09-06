@@ -9,7 +9,7 @@
  *
  * @author augusto
  */
-class Cotacao extends GenericModel {
+class Cotacao extends MinC_Db_Table_Abstract {
 
     protected $_banco   = 'bdcorporativo';
     protected $_name    = 'tbCotacao';

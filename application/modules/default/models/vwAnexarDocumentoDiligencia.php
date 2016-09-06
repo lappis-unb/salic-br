@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class vwAnexarDocumentoDiligencia extends GenericModel {
+class vwAnexarDocumentoDiligencia extends MinC_Db_Table_Abstract {
 
     /* dados da tabela */
     protected $_banco  = 'SAC';

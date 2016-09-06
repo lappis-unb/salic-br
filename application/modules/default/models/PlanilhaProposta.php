@@ -1,6 +1,6 @@
 <?php
 
-class PlanilhaProposta extends GenericModel {
+class PlanilhaProposta extends MinC_Db_Table_Abstract {
 
     //protected $_name = 'SAC.dbo.tbPlanilhaProposta';
     protected $_banco = 'SAC';

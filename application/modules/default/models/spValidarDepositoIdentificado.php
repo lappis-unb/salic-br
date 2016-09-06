@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class spValidarDepositoIdentificado extends GenericModel {
+class spValidarDepositoIdentificado extends MinC_Db_Table_Abstract {
 
     /* dados da tabela */
     protected $_banco   = "SAC";
@@ -18,8 +18,8 @@ class spValidarDepositoIdentificado extends GenericModel {
     protected $_name    = "spValidarDepositoIdentificado";
 
     /**
-     * Método para executar a SP de movimentação bancária.
-     * A mesma verifica se as inconsistências foram corrigidas.
+     * Mï¿½todo para executar a SP de movimentaï¿½ï¿½o bancï¿½ria.
+     * A mesma verifica se as inconsistï¿½ncias foram corrigidas.
      * @access public
      * @param void
      * @return bool
@@ -33,6 +33,6 @@ class spValidarDepositoIdentificado extends GenericModel {
         catch (Zend_Exception $e) {
             return $e->getMessage();
         }
-    } // fecha método verificarInconsistencias()
+    } // fecha mï¿½todo verificarInconsistencias()
 
 } // fecha class

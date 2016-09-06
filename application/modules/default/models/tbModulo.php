@@ -4,7 +4,7 @@
  * Modulo: Editais
  * Criado por: Emanuel Melo 
  */
-class tbModulo extends GenericModel {
+class tbModulo extends MinC_Db_Table_Abstract {
     
     protected  $_banco = 'SAC';
     protected  $_name = 'tbModulo';
@@ -12,7 +12,7 @@ class tbModulo extends GenericModel {
     /*
      * Metodo: buscarComposicaoEdital
      * Entrada: void
-     * Saida: Array de Composições
+     * Saida: Array de Composiï¿½ï¿½es
     */
   //  public function buscarModulo(){
 //        $select = $this->select();

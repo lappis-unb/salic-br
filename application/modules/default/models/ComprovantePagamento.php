@@ -2,7 +2,7 @@
 /**
  * @author Caio Lucena <caioflucena@gmail.com>
  */
-class ComprovantePagamento extends GenericModel
+class ComprovantePagamento extends MinC_Db_Table_Abstract
 {
     protected $comprovantePagamento;
     protected $fornecedor;

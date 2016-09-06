@@ -9,7 +9,7 @@
  *
  * @author 01610881125
  */
-class Contrato  extends GenericModel {
+class Contrato  extends MinC_Db_Table_Abstract {
     protected $_banco   = 'bdcorporativo';
     protected $_name    = 'tbContrato';
     protected $_schema  = 'scSAC';

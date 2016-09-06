@@ -9,7 +9,7 @@
  *
  * @author 01129075125
  */
-class tbAcesso extends GenericModel{
+class tbAcesso extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'SAC';
     protected $_schema = 'dbo';
@@ -17,7 +17,7 @@ class tbAcesso extends GenericModel{
 
 
     /**
-     * Método para consultar se existe algum registro para o idRelatorio
+     * Mï¿½todo para consultar se existe algum registro para o idRelatorio
      * @access public
      * @param array $dados
      * @param integer $where

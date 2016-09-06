@@ -9,7 +9,7 @@
  *
  * @author 01610881125
  */
-class tbResposta  extends GenericModel {
+class tbResposta  extends MinC_Db_Table_Abstract {
      protected $_banco   = "BDCORPORATIVO";
      protected $_schema  = "scQuiz";
      protected $_name = 'tbResposta';

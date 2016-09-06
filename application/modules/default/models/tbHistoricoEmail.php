@@ -5,7 +5,7 @@
  */
 
 
-class tbHistoricoEmail extends GenericModel {
+class tbHistoricoEmail extends MinC_Db_Table_Abstract {
 
     protected $_banco = "SAC";
     protected $_name = "tbHistoricoEmail";

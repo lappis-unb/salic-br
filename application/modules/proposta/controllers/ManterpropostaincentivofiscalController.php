@@ -32,7 +32,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      */
     public function init() {
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance();
+        $arrAuth = array_change_key_case((array) $auth->getIdentity());
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
 
         // verifica as permissoes
@@ -49,39 +50,35 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             parent::perfil(4, $PermissoesGrupo);
         }
 
-        $cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
+        $cpf = isset($arrAuth['usu_codigo']) ? $arrAuth['usu_identificacao'] : $arrAuth['cpf'];
 
         // Busca na SGCAcesso
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
-        $buscaAcesso = $sgcAcesso->buscar(array('cpf = ?' => $cpf));
+        $acessos = $sgcAcesso->findBy(array('cpf' => $cpf));
 
         // Busca na Usuarios
-        $usuarioDAO = new Autenticacao_Model_Usuario();
-        $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
+        $mdlusuario = new Autenticacao_Model_Usuario();
+        $usuario = $mdlusuario->findBy(array('usu_identificacao' => $cpf));
 
         // Busca na Agentes
-        $agentesDAO = new Agente_Model_DbTable_Agentes();
-        $buscaAgente = $agentesDAO->BuscaAgente($cpf);
+        $tblAgentes = new Agente_Model_DbTable_Agentes();
+        $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
 
-
-        if (count($buscaAcesso) > 0) {
-            $this->idResponsavel = $buscaAcesso[0]->IdUsuario;
+        if ($agente) {
+            $this->idResponsavel = $agente['idusuario'];
+            $this->idAgente = $agente['idagente'];
         }
-        if (count($buscaAgente) > 0) {
-            $this->idAgente = $buscaAgente[0]->idAgente;
-        }
-        if (count($buscaUsuario) > 0) {
-            $this->idUsuario = $buscaUsuario[0]->usu_codigo;
-        }
-
-        if ($this->idAgente != 0) {
-            $this->usuarioProponente = "S";
+        if ($usuario) {
+            $this->idUsuario = $usuario['usu_codigo'];
+            if ($this->idAgente != 0) {
+                $this->usuarioProponente = "S";
+            }
         }
 
         $this->cpfLogado = $cpf;
         $this->idAgenteProponente = $this->idAgente;
-        $this->usuario = isset($auth->getIdentity()->usu_codigo) ? 'func' : 'prop';
-        $this->view->usuarioLogado = isset($auth->getIdentity()->usu_codigo) ? 'func' : 'prop';
+        $this->usuario = isset($arrAuth['usu_codigo']) ? 'func' : 'prop';
+        $this->view->usuarioLogado = isset($arrAuth['usu_codigo']) ? 'func' : 'prop';
         $this->view->usuarioProponente = $this->usuarioProponente;
 
         parent::init();
@@ -1105,6 +1102,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      *
      * @access public
      * @return void
+     *
+     * @todo retirar futuramenteq
      */
     public function listarPropostasAction() {
 
@@ -1124,7 +1123,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $dadosCombo = array();
         $cpfCnpj = '';
 
-        $rsVinculo = $proposta->listarPropostasCombo($this->idResponsavel);
+        $rsVinculo = ($this->idResponsavel) ? $proposta->listarPropostasCombo($this->idResponsavel): array();
 
         $agente = array();
 

@@ -1,5 +1,5 @@
 <?php
-class TbVinculo extends GenericModel{
+class TbVinculo extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'agentes';
     protected $_schema = 'agentes';
@@ -51,7 +51,7 @@ class TbVinculo extends GenericModel{
         return $this->fetchAll($slct);
     }
 
-	/* Método que lista os vinculos do Proponente ao Responsavel
+	/* Mï¿½todo que lista os vinculos do Proponente ao Responsavel
      *
      * */
     public function buscarProponenteResponsavel($idUsuarioLogado, $mecanismo = false)
@@ -149,7 +149,7 @@ class TbVinculo extends GenericModel{
         return $this->fetchAll($slctUnion);
     }
 
-	/* Método que lista os responsáveis
+	/* Mï¿½todo que lista os responsï¿½veis
      *
      * */
     public function buscarResponsaveis($where=array() , $idAgenteProponente)

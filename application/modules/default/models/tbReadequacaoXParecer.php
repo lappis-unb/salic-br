@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class tbReadequacaoXParecer extends GenericModel
+class tbReadequacaoXParecer extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
 	protected $_schema = "dbo";
@@ -29,9 +29,9 @@ class tbReadequacaoXParecer extends GenericModel
                 new Zend_Db_Expr("b.IdParecer, b.ParecerFavoravel, b.ResumoParecer, b.DtParecer, c.usu_nome AS Avaliador"),
                 new Zend_Db_Expr("
                     CASE WHEN b.idTipoAgente = 1
-                        THEN 'Técnico / Parecerista'
+                        THEN 'Tï¿½cnico / Parecerista'
                     WHEN b.idTipoAgente = 6
-                        THEN 'Componente da Comissão'                          
+                        THEN 'Componente da Comissï¿½o'                          
                     END AS tpAvaliador
                 ")
             )

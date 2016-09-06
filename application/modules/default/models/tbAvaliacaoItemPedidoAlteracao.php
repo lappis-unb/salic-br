@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2012 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
-class tbAvaliacaoItemPedidoAlteracao extends GenericModel
+class tbAvaliacaoItemPedidoAlteracao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "BDCORPORATIVO";

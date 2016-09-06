@@ -4,7 +4,7 @@
  *
  * @author Emerson Silva
  */
-class tbTipoInabilitado extends GenericModel {
+class tbTipoInabilitado extends MinC_Db_Table_Abstract {
 
     protected $_name   = 'tbTipoInabilitado';
     protected $_schema = 'dbo';

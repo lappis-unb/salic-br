@@ -7,7 +7,7 @@
  * @author 01129075125
  * @author wouerner <wouerner@gmail.com>
  */
-class DeslocamentoDAO extends GenericModel {
+class DeslocamentoDAO extends MinC_Db_Table_Abstract {
     protected  $_banco = 'sac';
     protected  $_schema = 'sac';
     protected $_name = 'tbdeslocamento';

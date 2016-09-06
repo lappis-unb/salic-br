@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class tbAnaliseDeConteudo extends GenericModel {
+class tbAnaliseDeConteudo extends MinC_Db_Table_Abstract {
     protected $_banco  = "SAC";
     protected $_schema = "dbo";
     protected $_name   = "tbAnaliseDeConteudo";

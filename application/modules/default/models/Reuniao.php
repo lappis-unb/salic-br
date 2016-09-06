@@ -9,7 +9,7 @@
  *
  * @author augusto
  */
-class Reuniao extends GenericModel{
+class Reuniao extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'SAC';
     protected $_name  = 'dbo.tbReuniao';

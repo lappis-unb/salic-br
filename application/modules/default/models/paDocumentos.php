@@ -7,7 +7,7 @@
 /**
  * Description of paDocumentos
  */
-class paDocumentos extends GenericModel {
+class paDocumentos extends MinC_Db_Table_Abstract {
         
     protected $_banco = 'SAC';
     protected $_name  = 'paDocumentos';

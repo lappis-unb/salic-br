@@ -8,7 +8,7 @@
  * Description of paCoordenadorDoPerfil
  *
  */
-class paCoordenadorDoPerfil extends GenericModel {
+class paCoordenadorDoPerfil extends MinC_Db_Table_Abstract {
         
     protected $_banco = 'SAC';
     protected $_name  = 'paCoordenadorDoPerfil';

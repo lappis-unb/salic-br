@@ -1,5 +1,5 @@
 <?php
-class Movimentacao extends GenericModel
+class Movimentacao extends MinC_Db_Table_Abstract
 {
     protected $_banco = "sac";
     protected $_schema = 'sac';

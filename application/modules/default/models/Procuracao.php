@@ -1,6 +1,6 @@
 <?php
 
-class Procuracao extends GenericModel {
+class Procuracao extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'Agentes';
     protected $_name = 'dbo.tbProcuracao';

@@ -4,7 +4,7 @@
  *
  * @author Danilo Lisboa
  */
-class tbDocumentosPreProjeto  extends GenericModel {
+class tbDocumentosPreProjeto  extends MinC_Db_Table_Abstract {
      protected $_banco   = "sac";
      protected $_schema  = "sac";
      protected $_name = 'tbDocumentosPreProjeto';

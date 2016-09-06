@@ -9,7 +9,7 @@
  *
  * @author augusto
  */
-class HistoricoConselheiro extends GenericModel {
+class HistoricoConselheiro extends MinC_Db_Table_Abstract {
     protected $_banco = 'BDCORPORATIVO';
     protected $_schema = 'scAGENTES';
     protected $_name   = 'tbHistoricoConselheiro';

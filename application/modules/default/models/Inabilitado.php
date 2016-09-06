@@ -9,7 +9,7 @@
  *
  * @author tisomar
  */
-class Inabilitado extends GenericModel {
+class Inabilitado extends MinC_Db_Table_Abstract {
 
     protected $_banco = "SAC";
     protected $_name = "Inabilitado";

@@ -1,5 +1,5 @@
 <?php 
-class LocalizacaoFisicaModel extends GenericModel
+class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
 {
 	/**
 	 * @var boolean

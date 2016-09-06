@@ -6,11 +6,11 @@
  * @version 1.0 - 08/01/2013
  */
 
-class tbSolicitarItem extends GenericModel {
+class tbSolicitarItem extends MinC_Db_Table_Abstract {
 
-    protected  $_banco  = 'sac';
-    protected  $_schema = 'sac';
-    protected  $_name   = 'tbsolicitaritem';
+    protected  $_banco  = 'SAC';
+    protected  $_schema = 'dbo';
+    protected  $_name   = 'tbSolicitarItem';
 
 
     public function listaSolicitacoesItens($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
@@ -27,8 +27,8 @@ class tbSolicitarItem extends GenericModel {
                     '),
                     new Zend_Db_Expr("
                         CASE
-                            WHEN  s.IdPlanilhaItens > 0 THEN 'Associação'
-                            ELSE 'Inclusão'
+                            WHEN  s.IdPlanilhaItens > 0 THEN 'Associaï¿½ï¿½o'
+                            ELSE 'InclusÃ£o'
                        END as TipoSolicitacao
                     "),
                     new Zend_Db_Expr("

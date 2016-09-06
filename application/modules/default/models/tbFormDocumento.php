@@ -9,7 +9,7 @@
  *
  * @author tisomar
  */
-class tbFormDocumento extends GenericModel {
+class tbFormDocumento extends MinC_Db_Table_Abstract {
      protected $_banco   = "BDCORPORATIVO";
      protected $_schema  = "scQuiz";
      protected $_name = 'tbFormDocumento';

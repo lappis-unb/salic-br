@@ -9,7 +9,7 @@
  *
  * @author 01129075125
  */
-class tbItensPlanilhaProduto extends GenericModel{
+class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract{
 
     protected $_banco  = 'SAC'; 
     protected $_schema = 'dbo';
@@ -17,7 +17,7 @@ class tbItensPlanilhaProduto extends GenericModel{
 
     
     /**
-     * Método para consultar o Valor Real por ano
+     * Mï¿½todo para consultar o Valor Real por ano
      * @access public
      * @param array $dados
      * @param integer $where

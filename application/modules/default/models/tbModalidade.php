@@ -9,7 +9,7 @@
  *
  * @author Emerson SIlva
  */
-class tbModalidade extends GenericModel {
+class tbModalidade extends MinC_Db_Table_Abstract {
     protected $_banco   = "SAC";
     protected $_schema  = "dbo";
     protected $_name = 'Modalidade';
