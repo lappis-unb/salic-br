@@ -4314,9 +4314,18 @@ class ReadequacoesController extends GenericControllerNew {
         
         $resultado = array();
         $i = 0;
+
+        $mensagem = array(
+            'custo_administrativo' => "O custo administrativo supera 15% do valor total do projeto. Para corrigir, reduza o valor da etapa (em R$)",
+            'remuneracao' => "A remuneração para captação de recursos supera 10% do valor do projeto ou R$ 100.000,00. O valor correto é R$",
+            'divulgacao' => "A divulgação ou a comercialização supera 20%. Para corrigir, reduza o valor da etapa (em R$)"
+        );
+        
+        //xd($mensagem);
+        
         foreach($resultadoCheckList as $item) {
             $resultado[$i]['idPronac'] = $item->idPronac;
-            $resultado[$i]['Descricao'] = utf8_encode($item->Descricao);
+            $resultado[$i]['Descricao'] = utf8_encode($mensagem[$item->Tipo]);
             $resultado[$i]['vlDiferenca'] = $item->vlDiferenca;
             $resultado[$i]['Observacao'] = $item->Observacao;
             $i++;
