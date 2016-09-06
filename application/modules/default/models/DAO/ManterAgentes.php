@@ -145,7 +145,8 @@ class ManterAgentes extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		return $db->fetchAll($Sql);
-		
+
+
 	}
 
 
