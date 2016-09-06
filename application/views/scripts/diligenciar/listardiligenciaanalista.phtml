@@ -126,8 +126,12 @@ $qtdia = 40;
                     <?php endforeach; ?>
                 </table>
             </div>
-        <?php endif; ?>
-                <?php if ($this->situacao && $this->tpDiligencia && !$diligenciaAberta) : ?>
+            <?php endif; ?>
+            <?php
+	       if ($diligenciaAberta) : ?>
+	    <? else: 
+	       if (($this->situacao && $this->tpDiligencia)) :
+	    ?>
                     <table class="tabela">
                         <tr>
                             <td >
@@ -137,7 +141,8 @@ $qtdia = 40;
                             </td>
                         </tr>
                     </table>
-                <?php endif;?>
+                    <?php endif;?>
+		    <?php endif;?>
         <table class="tabela">
             <tr>
                 <td >
