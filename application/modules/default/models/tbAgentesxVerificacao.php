@@ -5,7 +5,7 @@
  *
  * @author PEDRO GOMES
  */
-class tbAgentesxVerificacao extends GenericModel {
+class tbAgentesxVerificacao extends MinC_Db_Table_Abstract {
    
     protected  $_banco  = 'AGENTES';
     protected  $_schema = 'dbo';

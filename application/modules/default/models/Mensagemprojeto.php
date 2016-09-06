@@ -10,7 +10,7 @@
  *
  * @author augusto
  */
-class Mensagemprojeto extends GenericModel {
+class Mensagemprojeto extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'BDCORPORATIVO';
     protected $_name = 'tbmensagemprojeto';

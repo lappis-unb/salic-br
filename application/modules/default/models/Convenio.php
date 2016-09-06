@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class Convenio extends GenericModel
+class Convenio extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
 	protected $_schema = "dbo";
@@ -26,7 +26,7 @@ class Convenio extends GenericModel
                 new Zend_Db_Expr("AnoProjeto+Sequencial as PRONAC"),
                 new Zend_Db_Expr("CASE
                                     WHEN Opcao = 0
-                                         THEN 'Convênio'
+                                         THEN 'Convï¿½nio'
                                             ELSE 'Termo Aditivo'
                                      END as descOpcao
                 "),

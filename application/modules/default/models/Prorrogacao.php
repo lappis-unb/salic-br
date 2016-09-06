@@ -4,7 +4,7 @@
  *
  * @author Danilo Lisboa
  */
-class Prorrogacao extends GenericModel {
+class Prorrogacao extends MinC_Db_Table_Abstract {
 
     protected $_banco   = 'SAC';
     protected $_name    = 'prorrogacao';

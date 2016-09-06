@@ -1,5 +1,5 @@
 <?php
-class tbPauta extends GenericModel {
+class tbPauta extends MinC_Db_Table_Abstract {
 
     protected $_banco = "BDCORPORATIVO";
     protected $_schema = "scSAC";

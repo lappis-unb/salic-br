@@ -10,7 +10,7 @@
  * @link http://salic.cultura.gov.br
  */
 
-class Municipios extends GenericModel
+class Municipios extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = 'agentes';
 	protected $_name   = 'Municipios';

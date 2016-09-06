@@ -7,7 +7,7 @@
 /**
  * Description of paChecklistDeEnvioDeCumprimentoDeObjeto
  */
-class paChecklistDeEnvioDeCumprimentoDeObjeto extends GenericModel {
+class paChecklistDeEnvioDeCumprimentoDeObjeto extends MinC_Db_Table_Abstract {
         
     protected $_banco = 'SAC';
     protected $_name  = 'paChecklistDeEnvioDeCumprimentoDeObjeto';

@@ -8,7 +8,7 @@
  * paChecklistSolicitacaoProrrogacaoPrazo
  * @author Jefferson Alessandro
  */
-class paChecklistSolicitacaoProrrogacaoPrazo extends GenericModel {
+class paChecklistSolicitacaoProrrogacaoPrazo extends MinC_Db_Table_Abstract {
         
     protected $_banco = 'SAC';
     protected $_name  = 'paChecklistSolicitacaoProrrogacaoPrazo';

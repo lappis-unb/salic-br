@@ -10,7 +10,7 @@
  *
  * @author Emerson Silva
  */
-class EncaminhamentoPrestacaoContas extends GenericModel {
+class EncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
 
     protected $_name   = 'tbEncaminhamentoPrestacaoContas';
     protected $_schema = 'scSAC';
@@ -23,7 +23,7 @@ class EncaminhamentoPrestacaoContas extends GenericModel {
 					([idPronac],[idAgenteOrigem],[dtInicioEncaminhamento],[dsJustificativa]
 					,[idOrgao],[idAgenteDestino],[idTipoAgente],[dtFimEncaminhamento]
 					,[stAtivo]) 
-		VALUES (0611188,170,'2010-01-17','Modelo de Encaminhamento de Prestação de Conta para o técnico',
+		VALUES (0611188,170,'2010-01-17','Modelo de Encaminhamento de Prestaï¿½ï¿½o de Conta para o tï¿½cnico',
 					5,115,9,'2010-04-18',0)
      **/
     

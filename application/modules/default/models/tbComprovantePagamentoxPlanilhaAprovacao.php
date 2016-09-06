@@ -5,11 +5,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
+class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "BDCORPORATIVO";
@@ -18,7 +18,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
 
 
 	/**
-	 * Método para buscar as inconsistências do extrato de movimentação bancária
+	 * Mï¿½todo para buscar as inconsistï¿½ncias do extrato de movimentaï¿½ï¿½o bancï¿½ria
 	 * @param string $pronac
 	 * @param array $data_recibo
 	 * @param string $proponente
@@ -74,7 +74,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
 		//$select->order("t.dtCredito");
         //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
     
     
 	public function buscarRelacaoPagamentos($idPronac, $idPlanilhaAprovacao = null)
@@ -107,7 +107,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
                               WHEN b.tpFormaDePagamento = '1'
                                  THEN 'Cheque'
                               WHEN b.tpFormaDePagamento = '2'
-                                 THEN 'Transferencia Bancária'
+                                 THEN 'Transferencia Bancï¿½ria'
                               WHEN b.tpFormaDePagamento = '3'
                                  THEN 'Saque/Dinheiro'
                                  ELSE ''
@@ -168,7 +168,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
             $select->order("e.Descricao");
             //xd($select->assemble());
             return $this->fetchAll($select);
-        } // fecha método buscarDados()
+        } // fecha mï¿½todo buscarDados()
     
 	public function pagamentosPorUFMunicipio($idPronac)
 	{
@@ -230,7 +230,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
             ,"Agentes.dbo"
 		);
 
-        //Alteração realizada no dia 25/02/2016 a pedido da area demandante.
+        //Alteraï¿½ï¿½o realizada no dia 25/02/2016 a pedido da area demandante.
         #$select->where("c.stAtivo = ?", 'S');
         $select->where("c.idPronac = ?", $idPronac);
 		
@@ -240,7 +240,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
         #xd($select->assemble());
 
 		return $this->fetchAll($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
     
     
 	public function pagamentosConsolidadosPorUfMunicipio($idPronac)
@@ -283,7 +283,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
             ,"Agentes.dbo"
 		);
 
-        //Alteração realizada no dia 25/02/2016 a pedido da area demandante.
+        //Alteraï¿½ï¿½o realizada no dia 25/02/2016 a pedido da area demandante.
         #$select->where("c.stAtivo = ?", 'S');
         $select->where("c.idPronac = ?", $idPronac);
 		
@@ -294,7 +294,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
         #xd($select->assemble());
 
 		return $this->fetchAll($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
     
     
 	public function buscarRelatorioBensDeCapital($idPronac)
@@ -306,7 +306,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
 			,array(
                 new Zend_Db_Expr("
                     CASE
-                        WHEN tpDocumento = 1 THEN 'Boleto Bancário'
+                        WHEN tpDocumento = 1 THEN 'Boleto Bancï¿½rio'
                         WHEN tpDocumento = 2 THEN 'Cupom Fiscal'
                         WHEN tpDocumento = 3 THEN 'Nota Fiscal / Fatura'
                         WHEN tpDocumento = 4 THEN 'Recibo de Pagamento'
@@ -350,14 +350,14 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
             ,"BDCORPORATIVO.scSAC"
 		);
 
-        //Linha retirada para corrigir problema na Visualização dos Projetos (24/02/2016)
+        //Linha retirada para corrigir problema na Visualizaï¿½ï¿½o dos Projetos (24/02/2016)
         #$select->where("c.stAtivo = ?", 'S');
 
         $select->where("c.idPronac = ?", $idPronac);
 		$select->order(3);
         //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
     
     
 	public function buscarRelatorioFisico($idPronac)
@@ -412,7 +412,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
             ,"SAC.dbo"
 		);
 
-        //Linha retirada para corrigir problema na Visualização dos Projetos (24/02/2016)
+        //Linha retirada para corrigir problema na Visualizaï¿½ï¿½o dos Projetos (24/02/2016)
         //$select->where("c.stAtivo = ?", 'S');
 
         $select->where("c.idPronac = ?", $idPronac);
@@ -420,7 +420,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
 		$select->order(array(1,2));
         //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
         
     
 	public function buscarRelatorioExecucaoReceita($idPronac)
@@ -446,7 +446,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
         #xd($a->assemble());
 
         return $this->fetchAll($a);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
     
 	public function buscarRelatorioExecucaoDespesa($idPronac)
 	{   
@@ -472,7 +472,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
                 array('f' => 'tbPlanilhaEtapa'), "c.idEtapa = f.idPlanilhaEtapa",
                 array(), 'SAC.dbo'
         );
-        //Linha retirada para corrigir problema na Visualização dos Projetos (24/02/2016)
+        //Linha retirada para corrigir problema na Visualizaï¿½ï¿½o dos Projetos (24/02/2016)
         #$b->where('c.stAtivo = ?', 'S');
 
         $b->where('c.idPronac = ?', $idPronac);
@@ -480,24 +480,24 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
         $b->order(array('2','3'));
         return $this->fetchAll($b);
         
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
     
     
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @param array $dados
-	 * @return integer (retorna o último id cadastrado)
+	 * @return integer (retorna o ï¿½ltimo id cadastrado)
 	 */
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarDados()
+	} // fecha mï¿½todo cadastrarDados()
 
 
 
 	/**
-	 * Método para alterar
+	 * Mï¿½todo para alterar
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -507,21 +507,21 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
 	{
 		$where = "idTmpCaptacao = " . $where;
 		return $this->update($dados, $where);
-	} // fecha método alterarDados()
+	} // fecha mï¿½todo alterarDados()
 
 
 
 	/**
-	 * Método para excluir
+	 * Mï¿½todo para excluir
 	 * @access public
 	 * @param integer $where
-	 * @return integer (quantidade de registros excluídos)
+	 * @return integer (quantidade de registros excluï¿½dos)
 	 */
 	public function excluirDados($where)
 	{
 		$where = "idTmpCaptacao = " . $where;
 		return $this->delete($where);
-	} // fecha método excluirDados()
+	} // fecha mï¿½todo excluirDados()
 
 
     public function buscarDadosParaRemanejamento($idTmpCaptacao){
@@ -547,7 +547,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
         //xd($select->assemble());
         return $this->fetchRow($select);
 
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
     
     public function buscarValorComprovadoDoItem($idPlanilhaAprovacao)
 	{   
@@ -564,6 +564,6 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
         $select->where('a.idPlanilhaAprovacao = ?', $idPlanilhaAprovacao);
         return $this->fetchRow($select);
         
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
 
 } // fecha class

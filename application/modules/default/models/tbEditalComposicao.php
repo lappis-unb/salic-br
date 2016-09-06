@@ -1,10 +1,10 @@
 <?php 
 /*
- * Classe: EditalComposição
+ * Classe: EditalComposiï¿½ï¿½o
  * Modulo: Editais
  * Criado por: Emanuel Melo 
  */
-class tbEditalComposicao extends GenericModel {
+class tbEditalComposicao extends MinC_Db_Table_Abstract {
     
     protected  $_banco = 'SAC';
     protected  $_name = 'tbEditalComposicao';
@@ -12,7 +12,7 @@ class tbEditalComposicao extends GenericModel {
     /*
      * Metodo: buscarComposicaoEdital
      * Entrada: void
-     * Saida: Array de Composições
+     * Saida: Array de Composiï¿½ï¿½es
     */
     public function buscarComposicaoEdital(){
         $select = $this->select();

@@ -1,6 +1,6 @@
 <?php
 
-class fnLiberarLinks extends GenericModel {
+class fnLiberarLinks extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
     protected $_name = 'dbo.fnLiberarLinks';

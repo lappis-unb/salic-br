@@ -5,11 +5,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class tbArquivamento extends GenericModel {
+class tbArquivamento extends MinC_Db_Table_Abstract {
     protected $_banco  = "SAC";
     protected $_schema = "dbo";
     protected $_name   = "tbArquivamento";
@@ -32,6 +32,6 @@ class tbArquivamento extends GenericModel {
         $select->where('b.AnoProjeto+b.Sequencial = ?', $pronac);
 
         return $this->fetchRow($select);
-    } // fecha método buscarDados()
+    } // fecha mï¿½todo buscarDados()
 
 } // fecha class

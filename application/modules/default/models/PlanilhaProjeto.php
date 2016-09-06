@@ -10,7 +10,7 @@
  *
  * @author augusto
  */
-class PlanilhaProjeto extends GenericModel {
+class PlanilhaProjeto extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
     protected $_name = 'tbPlanilhaProjeto';
@@ -121,7 +121,7 @@ class PlanilhaProjeto extends GenericModel {
         return $this->fetchRow($somar);
     }
 
-/** Método para validaï¿½ï¿½o dos 15% dos cortes do Parecerista ***/
+/** Mï¿½todo para validaï¿½ï¿½o dos 15% dos cortes do Parecerista ***/
     
     public function somarPlanilhaProjetoParecerista($idpronac, $elaboracao=null, $tpPlanilha=null) 
     {
@@ -152,7 +152,7 @@ class PlanilhaProjeto extends GenericModel {
     }
     
     
-    // Método que retorna os  CUSTOS ADMINISTRATIVOS DO PROJETO
+    // Mï¿½todo que retorna os  CUSTOS ADMINISTRATIVOS DO PROJETO
 	public function somaDadosPlanilha($dados=array()) 
 	{
         $somar = $this->select();

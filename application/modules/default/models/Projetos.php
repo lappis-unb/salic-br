@@ -10,7 +10,7 @@
  *
  * @author augusto
  */
-class Projetos extends GenericModel
+class Projetos extends MinC_Db_Table_Abstract
 {
 
     protected $_name = 'projetos';

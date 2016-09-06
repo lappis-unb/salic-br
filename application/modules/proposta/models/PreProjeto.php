@@ -6,7 +6,7 @@
  * @uses   Zend_Db_Table
  * @author wouerner <wouerner@gmail.com>
  */
-class Proposta_Model_PreProjeto extends GenericModel
+class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
 {
     protected $_schema= "sac";
     protected $_name = "preprojeto";

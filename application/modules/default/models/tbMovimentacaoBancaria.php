@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class tbMovimentacaoBancaria extends GenericModel
+class tbMovimentacaoBancaria extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "SAC";
@@ -20,7 +20,7 @@ class tbMovimentacaoBancaria extends GenericModel
 
 
 	/**
-	 * Método para buscar
+	 * Mï¿½todo para buscar
 	 * @access public
 	 * @param string $pronac
 	 * @param boolean $conta_rejeitada
@@ -154,7 +154,7 @@ class tbMovimentacaoBancaria extends GenericModel
 			$select->where("mx.idTipoInconsistencia IS NULL");
 		}
 
-		// busca pelo período
+		// busca pelo perï¿½odo
 		if (!empty($periodo))
 		{
 			if ($periodo[0] == "A") // Hoje
@@ -169,7 +169,7 @@ class tbMovimentacaoBancaria extends GenericModel
 					OR CONVERT(DATE, m.dtFimMovimento) = DATEADD(DAY, -1, CONVERT(DATE, GETDATE())) 
 					OR CONVERT(DATE, mi.dtMovimento) = DATEADD(DAY, -1, CONVERT(DATE, GETDATE()))");
 			}
-			if ($periodo[0] == "C") // Últimos 7 dias
+			if ($periodo[0] == "C") // ï¿½ltimos 7 dias
 			{
 				$select->where("CONVERT(DATE, m.dtInicioMovimento) > DATEADD(DAY, -7, CONVERT(DATE, GETDATE())) 
 					OR CONVERT(DATE, m.dtFimMovimento) > DATEADD(DAY, -7, CONVERT(DATE, GETDATE())) 
@@ -232,7 +232,7 @@ class tbMovimentacaoBancaria extends GenericModel
 					     WHEN 7 THEN DATEADD(DAY, -6, CONVERT(DATE, GETDATE()))
 					  END)");
 			}
-			if ($periodo[0] == "E") // Última semana (seg-sex)
+			if ($periodo[0] == "E") // ï¿½ltima semana (seg-sex)
 			{
 				$select->where("(CONVERT(DATE, m.dtInicioMovimento) >= CASE DATEPART(DW, GETDATE())
 					     WHEN 1 THEN DATEADD(DAY, -6, CONVERT(DATE, GETDATE()))
@@ -289,7 +289,7 @@ class tbMovimentacaoBancaria extends GenericModel
 					     WHEN 7 THEN DATEADD(DAY, -1, CONVERT(DATE, GETDATE()))
 					  END)");
 			}
-			if ($periodo[0] == "F") // Este mês
+			if ($periodo[0] == "F") // Este mï¿½s
 			{
 				$select->where("DATEPART(MONTH, m.dtInicioMovimento) + DATEPART(YEAR, m.dtInicioMovimento) = DATEPART(MONTH, GETDATE()) + DATEPART(YEAR, GETDATE()) 
 					OR DATEPART(MONTH, m.dtFimMovimento) + DATEPART(YEAR, m.dtFimMovimento) = DATEPART(MONTH, GETDATE()) + DATEPART(YEAR, GETDATE()) 
@@ -301,19 +301,19 @@ class tbMovimentacaoBancaria extends GenericModel
 					OR DATEPART(YEAR, m.dtFimMovimento) = (DATEPART(YEAR, GETDATE()) - 1) 
 					OR DATEPART(YEAR, mi.dtMovimento) = (DATEPART(YEAR, GETDATE()) - 1)");
 			}
-			if ($periodo[0] == "H") // Últimos 12 meses
+			if ($periodo[0] == "H") // ï¿½ltimos 12 meses
 			{
 				$select->where("CONVERT(DATE, m.dtInicioMovimento) >= DATEADD(MONTH , -12, CONVERT(DATE, GETDATE())) 
 					OR CONVERT(DATE, m.dtFimMovimento) >= DATEADD(MONTH , -12, CONVERT(DATE, GETDATE())) 
 					OR CONVERT(DATE, mi.dtMovimento) >= DATEADD(MONTH , -12, CONVERT(DATE, GETDATE()))");
 			}
-			if ($periodo[0] == "I") // Últimos 6 meses
+			if ($periodo[0] == "I") // ï¿½ltimos 6 meses
 			{
 				$select->where("CONVERT(DATE, m.dtInicioMovimento) >= DATEADD(MONTH , -6, CONVERT(DATE, GETDATE())) 
 					OR CONVERT(DATE, m.dtFimMovimento) >= DATEADD(MONTH , -6, CONVERT(DATE, GETDATE())) 
 					OR CONVERT(DATE, mi.dtMovimento) >= DATEADD(MONTH , -6, CONVERT(DATE, GETDATE()))");
 			}
-			if ($periodo[0] == "J") // Últimos 3 meses
+			if ($periodo[0] == "J") // ï¿½ltimos 3 meses
 			{
 				$select->where("CONVERT(DATE, m.dtInicioMovimento) >= DATEADD(MONTH , -3, CONVERT(DATE, GETDATE())) 
 					OR CONVERT(DATE, m.dtFimMovimento) >= DATEADD(MONTH , -3, CONVERT(DATE, GETDATE())) 
@@ -340,7 +340,7 @@ class tbMovimentacaoBancaria extends GenericModel
 			}
 		} // fecha if periodo
 
-		// filtra pelo tipo de operação
+		// filtra pelo tipo de operaï¿½ï¿½o
 		if (!empty($operacao))
 		{
 			$select->where("mi.tpSaldoInicial = ? OR mi.tpSaldoInicial IS NULL", $operacao);
@@ -367,25 +367,25 @@ class tbMovimentacaoBancaria extends GenericModel
         }
 //x($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
 
 
 
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @param array $dados
-	 * @return integer (retorna o último id cadastrado)
+	 * @return integer (retorna o ï¿½ltimo id cadastrado)
 	 */
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarDados()
+	} // fecha mï¿½todo cadastrarDados()
 
 
 
 	/**
-	 * Método para alterar
+	 * Mï¿½todo para alterar
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -395,20 +395,20 @@ class tbMovimentacaoBancaria extends GenericModel
 	{
 		$where = "idMovimentacaoBancaria = " . $where;
 		return $this->update($dados, $where);
-	} // fecha método alterarDados()
+	} // fecha mï¿½todo alterarDados()
 
 
 
 	/**
-	 * Método para excluir
+	 * Mï¿½todo para excluir
 	 * @access public
 	 * @param integer $where
-	 * @return integer (quantidade de registros excluídos)
+	 * @return integer (quantidade de registros excluï¿½dos)
 	 */
 	public function excluirDados($where)
 	{
 		$where = "idMovimentacaoBancaria = " . $where;
 		return $this->delete($where);
-	} // fecha método excluirDados()
+	} // fecha mï¿½todo excluirDados()
 
 } // fecha class

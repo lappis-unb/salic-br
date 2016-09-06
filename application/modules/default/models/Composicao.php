@@ -1,10 +1,10 @@
 <?php 
 /*
- * Classe: Composição
+ * Classe: Composiï¿½ï¿½o
  * Modulo: Editais
  * Criado por: Emanuel Melo 
  */
-class Composicao extends GenericModel {
+class Composicao extends MinC_Db_Table_Abstract {
     
     protected  $_banco = 'SAC';
     protected  $_name = 'tbComposicao';
@@ -12,7 +12,7 @@ class Composicao extends GenericModel {
     /*
      * Metodo: buscarComposicao
      * Entrada: void
-     * Saida: Array de Composições
+     * Saida: Array de Composiï¿½ï¿½es
     */
     public function buscarComposicao($where = array(), $order = array(), $dbg = null){
         $select = $this->select();

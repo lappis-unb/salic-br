@@ -5,7 +5,7 @@
  * @author augusto
  */
 
-class CaptacaoQuotas extends GenericModel {
+class CaptacaoQuotas extends MinC_Db_Table_Abstract {
     protected $_banco   = "SAC";
     protected $_schema  = "dbo";
     protected $_name    = "CaptacaoQuotas";
@@ -15,7 +15,7 @@ class CaptacaoQuotas extends GenericModel {
         $select->setIntegrityCheck(false);
         $select->from($this);
         return $this->fetchAll($select);
-    } // fecha método buscarCaptacaoQuotas()
+    } // fecha mï¿½todo buscarCaptacaoQuotas()
 
     public function BuscarTotalCaptadoQuotas($retornaSelect = false) {
         $select = $this->select();
@@ -66,6 +66,6 @@ class CaptacaoQuotas extends GenericModel {
             //xd($this->fetchAll($select));
             return $this->fetchAll($select);
 
-	} // fecha método listasituacao()
+	} // fecha mï¿½todo listasituacao()
 
 } // fecha class

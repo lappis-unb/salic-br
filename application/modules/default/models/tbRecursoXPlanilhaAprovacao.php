@@ -7,10 +7,10 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-class tbRecursoXPlanilhaAprovacao extends GenericModel
+class tbRecursoXPlanilhaAprovacao extends MinC_Db_Table_Abstract
 {
 
     protected $_banco = "SAC";
@@ -18,7 +18,7 @@ class tbRecursoXPlanilhaAprovacao extends GenericModel
     protected $_name = "tbRecursoXPlanilhaAprovacao";
 
     /**
-     * Método para buscar o(s) recursos(s)
+     * Mï¿½todo para buscar o(s) recursos(s)
      * @access public
      * @param void
      * @return object
@@ -33,10 +33,10 @@ class tbRecursoXPlanilhaAprovacao extends GenericModel
     }
 
     /**
-     * Método para cadastrar
+     * Mï¿½todo para cadastrar
      * @access public
      * @param array $dados
-     * @return integer (retorna o último id cadastrado)
+     * @return integer (retorna o ï¿½ltimo id cadastrado)
      */
     public function cadastrarDados($dados)
     {
@@ -44,15 +44,15 @@ class tbRecursoXPlanilhaAprovacao extends GenericModel
     }
 
     /**
-     * Método para excluir
+     * Mï¿½todo para excluir
      * @access public
-     * @param integer $idPlanilha (excluir todos os recursos vinculados a planilha de aprovação)
+     * @param integer $idPlanilha (excluir todos os recursos vinculados a planilha de aprovaï¿½ï¿½o)
      * @param integer $idRecurso (excluir um determinado recurso)
-     * @return integer (quantidade de registros excluídos)
+     * @return integer (quantidade de registros excluï¿½dos)
      */
     public function excluirDados($idPlanilha = null, $idRecurso = null)
     {
-        // exclui todos os recursos vinculados a planilha de aprovação
+        // exclui todos os recursos vinculados a planilha de aprovaï¿½ï¿½o
         if (!empty($idPlanilha)) {
             $where = "idPlanilhaAprovacao = " . $idPlanilha;
         }

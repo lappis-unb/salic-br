@@ -10,7 +10,7 @@
  *
  * @author augusto
  */
-class AnaliseAprovacao extends GenericModel {
+class AnaliseAprovacao extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
     protected $_name = 'tbAnaliseAprovacao';

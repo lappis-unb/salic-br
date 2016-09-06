@@ -2,18 +2,18 @@
 /**
  * DAO tbAbrangencia
  * OBS:
- * 	-> A tabela SAC.dbo.Abrangencia armazena os locais de realização do projeto originais (aprovados)
- *  -> A tabela SAC.dbo.tbAbrangencia armazena os locais de realização do projeto que foram solicitados na readequação
+ * 	-> A tabela SAC.dbo.Abrangencia armazena os locais de realizaï¿½ï¿½o do projeto originais (aprovados)
+ *  -> A tabela SAC.dbo.tbAbrangencia armazena os locais de realizaï¿½ï¿½o do projeto que foram solicitados na readequaï¿½ï¿½o
  * @author emanuel.sampaio <emanuelonline@gmail.com>
  * @since 18/04/2012
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2012 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
-class tbAbrangencia extends GenericModel
+class tbAbrangencia extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "SAC";
@@ -23,10 +23,10 @@ class tbAbrangencia extends GenericModel
 
 
 	/**
-	 * Busca os locais de abrangência originais (aprovados)
+	 * Busca os locais de abrangï¿½ncia originais (aprovados)
 	 * @access public
 	 * @param array $where (filtros)
-	 * @param array $order (ordenação)
+	 * @param array $order (ordenaï¿½ï¿½o)
 	 * @return object
 	 */
 	public function buscarLocaisAprovados($where = array(), $order = array())
@@ -68,15 +68,15 @@ class tbAbrangencia extends GenericModel
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha método buscarLocaisAprovados()
+	} // fecha mï¿½todo buscarLocaisAprovados()
 
 
 
 	/**
-	 * Busca os locais de abrangência solicitados (readequação)
+	 * Busca os locais de abrangï¿½ncia solicitados (readequaï¿½ï¿½o)
 	 * @access public
 	 * @param array $where (filtros)
-	 * @param array $order (ordenação)
+	 * @param array $order (ordenaï¿½ï¿½o)
 	 * @return object
 	 */
 	public function buscarLocaisSolicitados($where = array(), $order = array())
@@ -119,7 +119,7 @@ class tbAbrangencia extends GenericModel
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha método buscarLocaisSolicitados()
+	} // fecha mï¿½todo buscarLocaisSolicitados()
 
 
 	public function buscarLocaisParaReadequacao($idPronac, $tabela = 'Abrangencia')
@@ -160,7 +160,7 @@ class tbAbrangencia extends GenericModel
 
         //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha método historicoReadequacao()
+	} // fecha mï¿½todo historicoReadequacao()
     
 	public function buscarLocaisConsolidadoReadequacao($idReadequacao)
 	{
@@ -192,7 +192,7 @@ class tbAbrangencia extends GenericModel
         $select->where('b.idReadequacao = ?', $idReadequacao);
         
 		return $this->fetchAll($select);
-	} // fecha método historicoReadequacao()
+	} // fecha mï¿½todo historicoReadequacao()
 
 	public function buscarDadosAbrangenciaAtual($where = array())
 	{
@@ -212,7 +212,7 @@ class tbAbrangencia extends GenericModel
 
         //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha método historicoReadequacao()
+	} // fecha mï¿½todo historicoReadequacao()
 
 
 } // fecha class

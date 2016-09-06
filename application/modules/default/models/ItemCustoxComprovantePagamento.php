@@ -9,7 +9,7 @@
  *
  * @author 01610881125
  */
-class ItemCustoxComprovantePagamento extends GenericModel {
+class ItemCustoxComprovantePagamento extends MinC_Db_Table_Abstract {
     protected $_banco   = 'bdcorporativo';
     protected $_name    = 'tbItemCustoxComprovantePagamento';
     protected $_schema  = 'scSAC';

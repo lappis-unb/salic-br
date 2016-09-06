@@ -9,7 +9,7 @@
  *
  * @author tisomar
  */
-class PessoaDados extends GenericModel {
+class PessoaDados extends MinC_Db_Table_Abstract {
 
     protected $_banco = "TABELAS";
     protected $_name = "Pessoa_Dados";

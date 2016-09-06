@@ -9,7 +9,7 @@
  *
  * @author 01129075125
  */
-class paVoltarProjetoFinalizadoComponente extends GenericModel {
+class paVoltarProjetoFinalizadoComponente extends MinC_Db_Table_Abstract {
         
     protected $_banco = 'SAC';
     protected $_name  = 'paVoltarProjetoFinalizadoComponente';

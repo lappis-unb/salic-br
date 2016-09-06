@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2012 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
-class tbPedidoAlteracaoXTipoAlteracao extends GenericModel
+class tbPedidoAlteracaoXTipoAlteracao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "BDCORPORATIVO";
@@ -20,10 +20,10 @@ class tbPedidoAlteracaoXTipoAlteracao extends GenericModel
 
 
 	/**
-	 * Busca as justificativas dos pedidos de readequação
+	 * Busca as justificativas dos pedidos de readequaï¿½ï¿½o
 	 * @access public
 	 * @param array $where (filtros)
-	 * @param array $order (ordenação)
+	 * @param array $order (ordenaï¿½ï¿½o)
 	 * @return object
 	 */
 	public function buscarPedido($where = array(), $order = array())
@@ -58,15 +58,15 @@ class tbPedidoAlteracaoXTipoAlteracao extends GenericModel
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha método buscarPedido()
+	} // fecha mï¿½todo buscarPedido()
 
 
 
 	/**
-	 * Busca os pedidos de readequação do checklist
+	 * Busca os pedidos de readequaï¿½ï¿½o do checklist
 	 * @access public
 	 * @param array $where (filtros)
-	 * @param array $order (ordenação)
+	 * @param array $order (ordenaï¿½ï¿½o)
 	 * @return object
 	 */
 	public function buscarPedidoChecklist($where = array(), $order = array())
@@ -113,6 +113,6 @@ class tbPedidoAlteracaoXTipoAlteracao extends GenericModel
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha método buscarPedidoChecklist()
+	} // fecha mï¿½todo buscarPedidoChecklist()
 
 } // fecha class

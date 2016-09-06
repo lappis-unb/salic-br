@@ -7,18 +7,18 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class Agente_Model_Internet extends GenericModel
+class Agente_Model_Internet extends MinC_Db_Table_Abstract
 {
     protected $_banco  = "AGENTES";
     protected $_schema = "dbo";
     protected $_name   = "Internet";
 
     /**
-     * Método para envio de e-mail
+     * Mï¿½todo para envio de e-mail
      * @access public
      * @param string $email
      * @param string $assunto
@@ -26,7 +26,7 @@ class Agente_Model_Internet extends GenericModel
      * @param string $perfil
      * @param string $formato
      * @return void
-     * @todo retirar SP, não foi encontrada uso do metodo no sistema, proposta de remoção.
+     * @todo retirar SP, nï¿½o foi encontrada uso do metodo no sistema, proposta de remoï¿½ï¿½o.
      */
     public function enviarEmail($email, $assunto, $texto, $perfil = "PerfilGrupoPRONAC", $formato = "HTML")
     {
@@ -42,7 +42,7 @@ class Agente_Model_Internet extends GenericModel
     }
 
     /**
-     * Método para buscar o(s) e-mail(s) do agente
+     * Mï¿½todo para buscar o(s) e-mail(s) do agente
      * @access public
      * @param string $cpfcnpj
      * @param integer $idAgente
@@ -99,10 +99,10 @@ class Agente_Model_Internet extends GenericModel
     }
 
     /**
-     * Método para cadastrar
+     * Mï¿½todo para cadastrar
      * @access public
      * @param array $dados
-     * @return integer (retorna o último id cadastrado)
+     * @return integer (retorna o ï¿½ltimo id cadastrado)
      */
     public function cadastrarEmailAgente($dados)
     {
@@ -110,11 +110,11 @@ class Agente_Model_Internet extends GenericModel
     }
 
     /**
-     * Método para excluir
+     * Mï¿½todo para excluir
      * @access public
      * @param integer $idAgente (excluir todos os e-mails de um agente)
      * @param integer $idInternet (excluir um determinado e-mail)
-     * @return integer (quantidade de registros excluídos)
+     * @return integer (quantidade de registros excluï¿½dos)
      */
     public function excluirEmailAgente($idAgente = null, $idInternet = null)
     {

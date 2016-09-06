@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class tbTmpCaptacao extends GenericModel
+class tbTmpCaptacao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "SAC";
@@ -20,7 +20,7 @@ class tbTmpCaptacao extends GenericModel
 
 
 	/**
-	 * Método para buscar as inconsistências do extrato de movimentação bancária
+	 * Mï¿½todo para buscar as inconsistï¿½ncias do extrato de movimentaï¿½ï¿½o bancï¿½ria
 	 * @param string $pronac
 	 * @param array $data_recibo
 	 * @param string $proponente
@@ -121,7 +121,7 @@ class tbTmpCaptacao extends GenericModel
 			$select->where("t.nrCpfCnpjIncentivador = ?", $incentivador);
 		}
 
-		// busca pela data do crédito
+		// busca pela data do crï¿½dito
 		if (!empty($data_credito))
 		{
 			if (!empty($data_credito[0]) && !empty($data_credito[1]))
@@ -148,7 +148,7 @@ class tbTmpCaptacao extends GenericModel
 		$select->order("t.dtCredito");
 //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
 
     public function listarProjetosInconsistentes($orgao, $idPronac = null, $order = array(), $tamanho = -1, $inicio = -1, $qtdeTotal = false)
     {
@@ -203,7 +203,7 @@ class tbTmpCaptacao extends GenericModel
     }
 
     /**
-     * Método para buscar as inconsistências do extrato de movimentação bancária
+     * Mï¿½todo para buscar as inconsistï¿½ncias do extrato de movimentaï¿½ï¿½o bancï¿½ria
      * @param string $pronac
      * @param array $data_recibo
      * @param string $proponente
@@ -286,20 +286,20 @@ class tbTmpCaptacao extends GenericModel
     }
         
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @param array $dados
-	 * @return integer (retorna o último id cadastrado)
+	 * @return integer (retorna o ï¿½ltimo id cadastrado)
 	 */
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarDados()
+	} // fecha mï¿½todo cadastrarDados()
 
 
 
 	/**
-	 * Método para alterar
+	 * Mï¿½todo para alterar
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -309,21 +309,21 @@ class tbTmpCaptacao extends GenericModel
 	{
 		$where = "idTmpCaptacao = " . $where;
 		return $this->update($dados, $where);
-	} // fecha método alterarDados()
+	} // fecha mï¿½todo alterarDados()
 
 
 
 	/**
-	 * Método para excluir
+	 * Mï¿½todo para excluir
 	 * @access public
 	 * @param integer $where
-	 * @return integer (quantidade de registros excluídos)
+	 * @return integer (quantidade de registros excluï¿½dos)
 	 */
 	public function excluirDados($where)
 	{
 		$where = "idTmpCaptacao = " . $where;
 		return $this->delete($where);
-	} // fecha método excluirDados()
+	} // fecha mï¿½todo excluirDados()
 
 
         public function buscarDadosParaRemanejamento($idTmpCaptacao){
@@ -349,6 +349,6 @@ class tbTmpCaptacao extends GenericModel
             //xd($select->assemble());
             return $this->fetchRow($select);
 
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
 
 } // fecha class

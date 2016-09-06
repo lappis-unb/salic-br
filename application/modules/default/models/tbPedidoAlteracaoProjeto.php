@@ -4,7 +4,7 @@
  *
  * @author 01610881125
  */
-class tbPedidoAlteracaoProjeto extends GenericModel {
+class tbPedidoAlteracaoProjeto extends MinC_Db_Table_Abstract {
     /* dados da tabela */
     protected $_banco   = "BDCORPORATIVO";
     protected $_schema  = "scSAC";
@@ -123,13 +123,13 @@ class tbPedidoAlteracaoProjeto extends GenericModel {
                 're.idPedidoAlteracao = rex.idPedidoAlteracao',
                 array('tpAlteracaoProjeto' => new Zend_Db_Expr("CASE WHEN rex.tpAlteracaoProjeto = 1 THEN 'Nome do Proponente'
 													WHEN rex.tpAlteracaoProjeto = 2 THEN 'Troca de Agente' 
-													WHEN rex.tpAlteracaoProjeto = 3 THEN 'Ficha Técnica' 
-													WHEN rex.tpAlteracaoProjeto = 4 THEN 'Local de Realização' 
+													WHEN rex.tpAlteracaoProjeto = 3 THEN 'Ficha Tï¿½cnica' 
+													WHEN rex.tpAlteracaoProjeto = 4 THEN 'Local de Realizaï¿½ï¿½o' 
 													WHEN rex.tpAlteracaoProjeto = 5 THEN 'Nome do Projeto' 
-													WHEN rex.tpAlteracaoProjeto = 6 THEN 'Proposta Pedagógica' 
-													WHEN rex.tpAlteracaoProjeto = 7 THEN 'Plano de Distribuição' 
-													WHEN rex.tpAlteracaoProjeto = 8 THEN 'Prorrogação de Prazo de Captação' 
-													WHEN rex.tpAlteracaoProjeto = 9 THEN 'Prorrogação de Prazo de Execução' 
+													WHEN rex.tpAlteracaoProjeto = 6 THEN 'Proposta Pedagï¿½gica' 
+													WHEN rex.tpAlteracaoProjeto = 7 THEN 'Plano de Distribuiï¿½ï¿½o' 
+													WHEN rex.tpAlteracaoProjeto = 8 THEN 'Prorrogaï¿½ï¿½o de Prazo de Captaï¿½ï¿½o' 
+													WHEN rex.tpAlteracaoProjeto = 9 THEN 'Prorrogaï¿½ï¿½o de Prazo de Execuï¿½ï¿½o' 
 													ELSE 'Itens de Custo' END"),
                 ),'BDCORPORATIVO.scSAC'
         );
@@ -208,10 +208,10 @@ class tbPedidoAlteracaoProjeto extends GenericModel {
                 array('vp.idUsuario',
                 'NomeTecnico' => new Zend_Db_Expr('(SELECT top 1 usu_nome FROM TABELAS.dbo.Usuarios tecnico WHERE tecnico.usu_codigo = vp.idUsuario)'),
                 'vp.stAnaliseProjeto',
-                'status' => new Zend_Db_Expr("CASE WHEN vp.stAnaliseProjeto IS NULL THEN 'Aguardando Análise'
-												WHEN vp.stAnaliseProjeto = '1' THEN 'Aguardando Análise' 
-												WHEN vp.stAnaliseProjeto = '2' THEN 'Em Análise' 
-												WHEN vp.stAnaliseProjeto = '3' THEN 'Análise Finalizada' 
+                'status' => new Zend_Db_Expr("CASE WHEN vp.stAnaliseProjeto IS NULL THEN 'Aguardando Anï¿½lise'
+												WHEN vp.stAnaliseProjeto = '1' THEN 'Aguardando Anï¿½lise' 
+												WHEN vp.stAnaliseProjeto = '2' THEN 'Em Anï¿½lise' 
+												WHEN vp.stAnaliseProjeto = '3' THEN 'Anï¿½lise Finalizada' 
 												WHEN vp.stAnaliseProjeto = '4' THEN 'Encaminhado para portaria' 
 												END "),
                 'DATEDIFF(day, vp.DtRecebido, GETDATE()) AS tempoAnalise',
@@ -239,7 +239,7 @@ class tbPedidoAlteracaoProjeto extends GenericModel {
 
         // xd($slct->assemble());
         return $this->fetchAll($slct);
-    } // fecha método buscarProjetosCheckList()
+    } // fecha mï¿½todo buscarProjetosCheckList()
 
 
     public function verificarProdutoSemItem($idPedidoAlteracao) {

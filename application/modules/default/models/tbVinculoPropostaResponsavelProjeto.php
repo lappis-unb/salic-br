@@ -7,7 +7,7 @@
  * @author Vinícius Feitosa da Silva <viniciusfesil@gmail.com>
  * @since 18/08/2016 14:29
  */
-class tbVinculoPropostaResponsavelProjeto extends GenericModel
+class tbVinculoPropostaResponsavelProjeto extends MinC_Db_Table_Abstract
 {
     protected $_banco = 'agentes';
     protected $_name = 'tbvinculoproposta';

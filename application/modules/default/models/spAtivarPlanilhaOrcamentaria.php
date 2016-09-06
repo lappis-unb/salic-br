@@ -4,7 +4,7 @@
  * Description of spAtivarPlanilhaOrcamentaria
  * Criado em 18/01/2016 - Fernão Lara
  */
-class spAtivarPlanilhaOrcamentaria extends GenericModel {
+class spAtivarPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
         
     protected $_banco = 'SAC';
     protected $_name  = 'spAtivarPlanilhaOrcamentaria';

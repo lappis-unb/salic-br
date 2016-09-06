@@ -1,6 +1,6 @@
 <?php
 
-class tbPlanilhaItemPlanilhaEtapa extends GenericModel {
+class tbPlanilhaItemPlanilhaEtapa extends MinC_Db_Table_Abstract {
 
     protected $_banco   = "SAC";
     protected $_schema  = "dbo";

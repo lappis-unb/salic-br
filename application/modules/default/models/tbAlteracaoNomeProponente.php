@@ -10,7 +10,7 @@
  * @link http://salic.cultura.gov.br
  */
 
-class tbAlteracaoNomeProponente extends GenericModel
+class tbAlteracaoNomeProponente extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "BDCORPORATIVO";
@@ -46,7 +46,7 @@ class tbAlteracaoNomeProponente extends GenericModel
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha método buscarPedido()
+	} // fecha mï¿½todo buscarPedido()
 
 
 
@@ -108,6 +108,6 @@ class tbAlteracaoNomeProponente extends GenericModel
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha método historicoReadequacao()
+	} // fecha mï¿½todo historicoReadequacao()
 
 } // fecha class

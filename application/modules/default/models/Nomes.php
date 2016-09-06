@@ -6,18 +6,18 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class Nomes extends GenericModel
+class Nomes extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "AGENTES";
 	protected $_schema = "dbo";
 	protected $_name   = "Nomes";
 
 	/**
-	 * Método para buscar o(s) nome(s) do agente
+	 * Mï¿½todo para buscar o(s) nome(s) do agente
 	 * @access public
 	 * @param string $cpfcnpj
 	 * @param integer $idAgente
@@ -66,29 +66,29 @@ class Nomes extends GenericModel
 		}
 
 		return $buscarTodos ? $this->fetchAll($select) : $this->fetchRow($select);
-	} // fecha método buscarNomePorCPFCNPJ()
+	} // fecha mï¿½todo buscarNomePorCPFCNPJ()
 
 
 
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @param array $dados
-	 * @return integer (retorna o último id cadastrado)
+	 * @return integer (retorna o ï¿½ltimo id cadastrado)
 	 */
 	public function cadastrarNomeAgente($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarNomeAgente()
+	} // fecha mï¿½todo cadastrarNomeAgente()
 
 
 
 	/**
-	 * Método para excluir
+	 * Mï¿½todo para excluir
 	 * @access public
 	 * @param integer $idAgente (excluir todos os nomes de um agente)
 	 * @param integer $idNome (excluir um determinado nome)
-	 * @return integer (quantidade de registros excluídos)
+	 * @return integer (quantidade de registros excluï¿½dos)
 	 */
 	public function excluirNomeAgente($idAgente = null, $idNome = null)
 	{
@@ -105,7 +105,7 @@ class Nomes extends GenericModel
 		}
 
 		return $this->delete($where);
-	} // fecha método excluirNomeAgente()
+	} // fecha mï¿½todo excluirNomeAgente()
 
 
         public function buscarPareceristas($idOrgao = '')

@@ -9,7 +9,7 @@
  *
  * @author augusto
  */
-class Edital extends GenericModel{
+class Edital extends MinC_Db_Table_Abstract{
     protected $_banco = 'SAC';
     protected $_name = 'Edital';
     protected $_schema  = 'dbo';

@@ -5,7 +5,7 @@
  *
  * @author Danilo Lisboa
  */
-class ContaBancaria extends GenericModel {
+class ContaBancaria extends MinC_Db_Table_Abstract {
     protected  $_banco = 'SAC';
     protected  $_name = 'ContaBancaria';
 
@@ -141,7 +141,7 @@ class ContaBancaria extends GenericModel {
 
 
 	/**
-	 * Método para buscar
+	 * Mï¿½todo para buscar
 	 * @access public
 	 * @param string $pronac
 	 * @param integer $idPronac
@@ -182,7 +182,7 @@ class ContaBancaria extends GenericModel {
 		}
 
 		return $buscarTodos ? $this->fetchAll($select) : $this->fetchRow($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
 
 
 	public function buscarDadosBancarios($pronac = null)

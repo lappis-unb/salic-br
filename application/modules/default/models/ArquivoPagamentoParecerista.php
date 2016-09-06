@@ -4,7 +4,7 @@
  *
  * @author Tarcisio Angelo
  */
-class ArquivoPagamentoParecerista extends GenericModel {
+class ArquivoPagamentoParecerista extends MinC_Db_Table_Abstract {
  
     protected $_name = 'tbPagamentoPareceristaXArquivo';
     protected $_schema = 'dbo';

@@ -9,7 +9,7 @@
  * @subpackage application.model.DAO
  */
 
-class Agente_Model_ManterAgentesDAO extends GenericModel
+class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
 {
     /**
      * Metodo para buscar agentes

@@ -3,9 +3,9 @@
 /**
  * Description of Projetos
  *
- * @author André Nogueira Pereira
+ * @author Andrï¿½ Nogueira Pereira
  */
-class RelatorioFiscalizacao extends GenericModel {
+class RelatorioFiscalizacao extends MinC_Db_Table_Abstract {
 
     protected $_name = 'tbRelatorioFiscalizacao';
     protected $_schema = 'dbo';

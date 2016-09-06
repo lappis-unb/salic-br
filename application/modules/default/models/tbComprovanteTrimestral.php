@@ -5,28 +5,28 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class tbComprovanteTrimestral extends GenericModel {
+class tbComprovanteTrimestral extends MinC_Db_Table_Abstract {
     protected $_banco  = "SAC";
     protected $_schema = "dbo";
     protected $_name   = "tbComprovanteTrimestral";
 
     /**
-     * Método para cadastrar
+     * Mï¿½todo para cadastrar
      * @access public
      * @param array $dados
-     * @return integer (retorna o último id cadastrado)
+     * @return integer (retorna o ï¿½ltimo id cadastrado)
      */
     public function cadastrarDados($dados) {
         return $this->insert($dados);
-    } // fecha método cadastrarDados()
+    } // fecha mï¿½todo cadastrarDados()
 
 
     /**
-     * Método para alterar
+     * Mï¿½todo para alterar
      * @access public
      * @param array $dados
      * @param integer $where
@@ -35,7 +35,7 @@ class tbComprovanteTrimestral extends GenericModel {
     public function alterarDados($dados, $where) {
         $where = "idComprovanteTrimestral = " . $where;
         return $this->update($dados, $where);
-    } // fecha método alterarDados()
+    } // fecha mï¿½todo alterarDados()
 
 
     public function buscarComprovantes($where, $all = false, $order = array()) {
@@ -66,7 +66,7 @@ class tbComprovanteTrimestral extends GenericModel {
         } else {
             return $this->fetchRow($slct);
         }
-    } // fecha método alterarDados()
+    } // fecha mï¿½todo alterarDados()
 
 
 } // fecha class

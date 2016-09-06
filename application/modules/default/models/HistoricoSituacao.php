@@ -4,14 +4,14 @@
  *
  * @author tisomar
  */
-class HistoricoSituacao extends GenericModel
+class HistoricoSituacao extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
 	protected $_schema = "dbo";
 	protected $_name   = "HistoricoSituacao";
 
 	/**
-	 * Método para buscar a situação anterior de um projeto
+	 * Mï¿½todo para buscar a situaï¿½ï¿½o anterior de um projeto
 	 * @access public
 	 * @param string $pronac
 	 * @return array
@@ -41,20 +41,20 @@ class HistoricoSituacao extends GenericModel
 		$select->order("Contador DESC");
 
 		return $this->fetchRow($select);
-	} // fecha método buscarSituacaoAnterior()
+	} // fecha mï¿½todo buscarSituacaoAnterior()
 
 
 
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @param array $dados
-	 * @return integer (retorna o último id cadastrado)
+	 * @return integer (retorna o ï¿½ltimo id cadastrado)
 	 */
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarDados()
+	} // fecha mï¿½todo cadastrarDados()
 
         public function buscarHistoricosEncaminhamento($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $qtdeTotal = false)
         {

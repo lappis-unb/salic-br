@@ -10,7 +10,7 @@
  *
  * @author tisomar
  */
-class tbDocumento extends GenericModel {
+class tbDocumento extends MinC_Db_Table_Abstract {
 
     protected $_banco = "BDCORPORATIVO";
     protected $_schema = 'scCorp';
@@ -18,7 +18,7 @@ class tbDocumento extends GenericModel {
 
     
     /**
-     * Método para cadastrar
+     * Mï¿½todo para cadastrar
      * @access public
      * @param array $dados
      * @return integer (retorna o ï¿½ltimo id cadastrado)
@@ -26,7 +26,7 @@ class tbDocumento extends GenericModel {
     public function cadastrarDados($dados)
     {
             return $this->insert($dados);
-    } // fecha método cadastrarDados()
+    } // fecha mï¿½todo cadastrarDados()
 
     
     /**

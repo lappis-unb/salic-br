@@ -1,6 +1,6 @@
 <?php
 
-class Natureza extends GenericModel
+class Natureza extends MinC_Db_Table_Abstract
 {
     //protected $_name = 'AGENTE.dbo.Natureza';
     protected $_banco = 'AGENTES';
@@ -29,7 +29,7 @@ class Natureza extends GenericModel
     }
 
     /**
-     * Método para alterar
+     * Mï¿½todo para alterar
      * @access public
      * @param array $dados
      * @param integer $where
@@ -38,7 +38,7 @@ class Natureza extends GenericModel
     public function alterarDados($dados, $idNatureza) {
         $where = "idNatureza = " . $idNatureza;
         return $this->update($dados, $where);
-    } // fecha método alterarDados()
+    } // fecha mï¿½todo alterarDados()
 
     public function pesquisaCEPIM($cnpjcpf) {
         $select = $this->select();
