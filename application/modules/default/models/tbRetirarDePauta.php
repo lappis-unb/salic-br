@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2012 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class tbRetirarDePauta extends GenericModel
+class tbRetirarDePauta extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "BDCORPORATIVO";
@@ -20,7 +20,7 @@ class tbRetirarDePauta extends GenericModel
 
 
 	/**
-	 * Método para buscar
+	 * Mï¿½todo para buscar
 	 * @access public
 	 * @param integer $idPronac
 	 * @return object
@@ -51,6 +51,6 @@ class tbRetirarDePauta extends GenericModel
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
 
 } // fecha class

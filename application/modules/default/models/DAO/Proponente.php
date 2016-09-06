@@ -1,6 +1,6 @@
 <?php
 
-Class Proponente extends GenericModel {
+Class Proponente extends MinC_Db_Table_Abstract {
 
 //    protected $_name = 'SAC.dbo.Projetos';
 

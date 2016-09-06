@@ -8,7 +8,7 @@
  * Description of Vinculo
  *
  */
-class tbDocumentoProjeto extends GenericModel {
+class tbDocumentoProjeto extends MinC_Db_Table_Abstract {
 
     protected $_banco  = "BDCORPORATIVO";
     protected $_schema = "scCorp";

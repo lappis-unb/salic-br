@@ -9,7 +9,7 @@
  *
  * @author 01610881125
  */
-class Cotacaoxplanilhaaprovacao extends GenericModel {
+class Cotacaoxplanilhaaprovacao extends MinC_Db_Table_Abstract {
     protected $_banco   = 'bdcorporativo';
     protected $_name    = 'tbCotacaoxPlanilhaAprovacao';
     protected $_schema  = 'scSAC';

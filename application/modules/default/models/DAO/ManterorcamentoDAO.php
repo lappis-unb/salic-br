@@ -1,5 +1,5 @@
 <?php
-Class ManterorcamentoDAO extends GenericModel {
+Class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public function __construct() {
         parent::__construct();

@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class tbDepositoIdentificadoCaptacao extends GenericModel
+class tbDepositoIdentificadoCaptacao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "SAC";
@@ -20,7 +20,7 @@ class tbDepositoIdentificadoCaptacao extends GenericModel
 
 
 	/**
-	 * Método para ignorar a ausência da chave primária
+	 * Mï¿½todo para ignorar a ausï¿½ncia da chave primï¿½ria
 	 */
 	/*public function _setupPrimaryKey()
 	{
@@ -30,15 +30,15 @@ class tbDepositoIdentificadoCaptacao extends GenericModel
 
 
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @param array $dados
-	 * @return integer (retorna o último id cadastrado)
+	 * @return integer (retorna o ï¿½ltimo id cadastrado)
 	 */
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarDados()
+	} // fecha mï¿½todo cadastrarDados()
         
         /**
          * Executa a Procedure spDepositoIdentificadoCaptacao

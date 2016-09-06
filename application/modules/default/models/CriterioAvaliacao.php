@@ -4,7 +4,7 @@
  * Modulo: Editais
  * Criado por: Emanuel Melo 
  */
-class CriteriosAvaliacao extends GenericModel {
+class CriteriosAvaliacao extends MinC_Db_Table_Abstract {
     
     protected  $_banco = 'SAC';
     protected  $_name = 'tbCritetriosAvaliacao';

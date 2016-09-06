@@ -10,7 +10,7 @@
  *
  * @author 01373930160
  */
-class VerificarSolicitacaodeReadequacoesDAO extends GenericModel {
+class VerificarSolicitacaodeReadequacoesDAO extends MinC_Db_Table_Abstract {
 
     protected $_banco = "SAC";
     protected $_name = "Projetos";

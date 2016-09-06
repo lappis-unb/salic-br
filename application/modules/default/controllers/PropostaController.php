@@ -3,18 +3,18 @@
 class PropostaController extends MinC_Controller_Action_Abstract
 {
 	/**
-	 * Reescreve o método init()
+	 * Reescreve o mï¿½todo init()
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
 	public function init()
 	{
-            // verifica as permissões
+            // verifica as permissï¿½es
             $PermissoesGrupo = array();
             $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
             $PermissoesGrupo[] = 94;  // Parecerista
-            $PermissoesGrupo[] = 121; // Técnico
+            $PermissoesGrupo[] = 121; // Tï¿½cnico
             $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
             parent::perfil(1, $PermissoesGrupo);
 
@@ -43,7 +43,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
             $tblAgente = new Nome();
             $rsAgente = $tblAgente->buscar(array("idAgente = ? "=>$idAgente))->current();
 
-            //Descobrindo a movimentação corrente de cada proposta
+            //Descobrindo a movimentaï¿½ï¿½o corrente de cada proposta
             if(count($rsPropostas)>0){
                 //Conectando com movimentacao
                 $tblMovimentacao = new Movimentacao();
@@ -52,7 +52,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
 
                 $movimentacoes = array();
                 foreach ($rsPropostas as $proposta){
-                    //Buscando movimentação desta proposta
+                    //Buscando movimentaï¿½ï¿½o desta proposta
                     $rsMovimentacao = $tblMovimentacao->buscar(array("idprojeto = ?"=>$proposta->idPreProjeto, "stestado = ?"=>0))->current();
 
                     //Descobrindo se esta proposta ja existe em projetos
@@ -69,7 +69,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
                         //elseif ($tecnico[0]['tecnico'] == 96 and (!count($tecnico)>0)) //Antigo, que eu acho que estava errado
                         if (!count($tecnico)>0)
                         {
-                            $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta em Análise' . "</font>";
+                            $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta em Anï¿½lise' . "</font>";
                         }
                     }
                     elseif ($rsMovimentacao->Movimentacao == 97 and (!count($rsProjeto)>0))
@@ -155,7 +155,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
                     <tr>
                         <td>Nr. Proposta</td>
                         <td>Nome da Proposta</td>
-                        <td>Dt.Movimentação</td>
+                        <td>Dt.Movimentaï¿½ï¿½o</td>
                     </tr>
                     ";
             foreach($rsProposta as $proposta){
@@ -183,7 +183,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
                     <tr>
                         <td>Nr. Proposta</td>
                         <td>Nome da Proposta</td>
-                        <td>Dt.Movimentação</td>
+                        <td>Dt.Movimentaï¿½ï¿½o</td>
                     </tr>
                     ";
             foreach($rsProposta as $proposta){
@@ -215,7 +215,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
                     <table width="100%">
                         <tr>
                             <th style="font-size:36px;">
-                                Proposta em análise final
+                                Proposta em anï¿½lise final
                             </th>
                         </tr>
                     ';
@@ -235,7 +235,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
                                     <tr>
                                         <th width="15%" style="border-bottom:1px #000000 solid;">Nr. Proposta</th>
                                         <th width="65%" style="border-bottom:1px #000000 solid;">Nome da Proposta</th>
-                                        <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimentação</th>
+                                        <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimentaï¿½ï¿½o</th>
                                     </tr>
                     ';
                                     foreach($propostas as $proposta){
@@ -282,7 +282,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
                     <table width="100%">
                         <tr>
                             <th style="font-size:36px;">
-                                Avaliação: Reavaliação
+                                Avaliaï¿½ï¿½o: Reavaliaï¿½ï¿½o
                             </th>
                         </tr>
                     ';
@@ -302,7 +302,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
                                     <tr>
                                         <th width="15%" style="border-bottom:1px #000000 solid;">Nr. Proposta</th>
                                         <th width="65%" style="border-bottom:1px #000000 solid;">Nome da Proposta</th>
-                                        <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimentação</th>
+                                        <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimentaï¿½ï¿½o</th>
                                     </tr>
                     ';
                                     foreach($propostas as $proposta){
@@ -333,7 +333,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
                     <table width="100%">
                         <tr>
                             <th style="font-size:36px;">
-                                Avaliação: Inicial
+                                Avaliaï¿½ï¿½o: Inicial
                             </th>
                         </tr>
                     ';
@@ -353,7 +353,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
                                     <tr>
                                         <th width="15%" style="border-bottom:1px #000000 solid;">Nr. Proposta</th>
                                         <th width="65%" style="border-bottom:1px #000000 solid;">Nome da Proposta</th>
-                                        <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimentação</th>
+                                        <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimentaï¿½ï¿½o</th>
                                     </tr>
                     ';
                                     foreach($propostas as $proposta){

@@ -10,7 +10,7 @@
  *
  * @author augusto
  */
-class Vinculacao extends GenericModel {
+class Vinculacao extends MinC_Db_Table_Abstract {
 
     protected $_name = 'Vinculacao';
     protected $_schema = 'dbo';
@@ -94,7 +94,7 @@ class Vinculacao extends GenericModel {
     public function Desvincular($where) {
         
         return $this->delete($where);
-    } // fecha método excluirDados()
+    } // fecha mï¿½todo excluirDados()
     
     
   

@@ -9,7 +9,7 @@
  *
  * @author 01610881125
  */
-class Arquivolicitacao extends GenericModel{
+class Arquivolicitacao extends MinC_Db_Table_Abstract{
 
     protected $_banco   = 'BDCORPORATIVO';
     protected $_name    = 'tbArquivoLicitacao';

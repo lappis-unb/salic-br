@@ -5,31 +5,31 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class tbRelatorioConsolidado extends GenericModel
+class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
 	protected $_schema = "dbo";
 	protected $_name   = "tbRelatorioConsolidado";
 
         /**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @param array $dados
-	 * @return integer (retorna o último id cadastrado)
+	 * @return integer (retorna o ï¿½ltimo id cadastrado)
 	 */
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarDados()
+	} // fecha mï¿½todo cadastrarDados()
 
 
 
 	/**
-	 * Método para alterar
+	 * Mï¿½todo para alterar
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -39,11 +39,11 @@ class tbRelatorioConsolidado extends GenericModel
 	{
 		$where = "idRelatorioConsolidado = " . $where;
 		return $this->update($dados, $where);
-	} // fecha método alterarDados()
+	} // fecha mï¿½todo alterarDados()
 
 
         /**
-	 * Método para buscar o relatório consolidado
+	 * Mï¿½todo para buscar o relatï¿½rio consolidado
 	 * @access public
 	 * @param array $dados
 	 * @return array dos dados cadastrados
@@ -68,7 +68,7 @@ class tbRelatorioConsolidado extends GenericModel
         
 
         /**
-	 * Método para consultar dados
+	 * Mï¿½todo para consultar dados
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -101,7 +101,7 @@ class tbRelatorioConsolidado extends GenericModel
 
 
         /**
-	 * Método para consultar dados
+	 * Mï¿½todo para consultar dados
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -203,7 +203,7 @@ class tbRelatorioConsolidado extends GenericModel
     }
 
     /**
-	 * Método para buscar o relatório trimestral
+	 * Mï¿½todo para buscar o relatï¿½rio trimestral
 	 * @access public
 	 * @param array $dados
 	 * @return array dos dados cadastrados
@@ -230,7 +230,7 @@ class tbRelatorioConsolidado extends GenericModel
 
 
         /**
-	 * Método para buscar o relatório trimestral
+	 * Mï¿½todo para buscar o relatï¿½rio trimestral
 	 * @access public
 	 * @param array $dados
 	 * @return array dos dados cadastrados
@@ -255,8 +255,8 @@ class tbRelatorioConsolidado extends GenericModel
         }
 
         /**
-	 * Método para liberar a finalização do relatório consolidado
-         * Se estes 3 campos estiverem preenchidos é sinal para que o toda a avaliação do relatorio consolidado foi feita.
+	 * Mï¿½todo para liberar a finalizaï¿½ï¿½o do relatï¿½rio consolidado
+         * Se estes 3 campos estiverem preenchidos ï¿½ sinal para que o toda a avaliaï¿½ï¿½o do relatorio consolidado foi feita.
 	 * @access public
 	 * @param array $dados
 	 * @return array dos dados cadastrados

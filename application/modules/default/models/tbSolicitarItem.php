@@ -6,7 +6,7 @@
  * @version 1.0 - 08/01/2013
  */
 
-class tbSolicitarItem extends GenericModel {
+class tbSolicitarItem extends MinC_Db_Table_Abstract {
    
     protected  $_banco  = 'SAC';
     protected  $_schema = 'dbo';
@@ -27,8 +27,8 @@ class tbSolicitarItem extends GenericModel {
                     '),
                     new Zend_Db_Expr("
                         CASE
-                            WHEN  s.IdPlanilhaItens > 0 THEN 'Associação'
-                            ELSE 'Inclusão'
+                            WHEN  s.IdPlanilhaItens > 0 THEN 'Associaï¿½ï¿½o'
+                            ELSE 'Inclusï¿½o'
                        END as TipoSolicitacao
                     "),
                     new Zend_Db_Expr("

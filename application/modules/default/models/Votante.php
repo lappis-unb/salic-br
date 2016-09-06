@@ -10,7 +10,7 @@
  *
  * @author augusto
  */
-class Votante extends GenericModel {
+class Votante extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'BDCORPORATIVO';
     protected $_name = 'tbVotante';

@@ -3,9 +3,9 @@
 /**
  * Description of Projetos
  *
- * @author André Nogueira Pereira
+ * @author Andrï¿½ Nogueira Pereira
  */
-class HistoricoDevolucaoFiscalizacao extends GenericModel {
+class HistoricoDevolucaoFiscalizacao extends MinC_Db_Table_Abstract {
 
     protected $_name = 'tbHistoricoDevolucaoFiscalizacao';
     protected $_schema = 'dbo';

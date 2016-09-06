@@ -9,7 +9,7 @@
  * @copyright ? 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-class tbDistribuirParecer extends GenericModel
+class tbDistribuirParecer extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "SAC";

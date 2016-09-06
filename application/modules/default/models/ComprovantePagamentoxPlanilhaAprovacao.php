@@ -9,7 +9,7 @@
  *
  * @author 01610881125
  */
-class ComprovantePagamentoxPlanilhaAprovacao extends GenericModel
+class ComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 {
     protected $_banco   = 'bdcorporativo';
     protected $_name    = 'tbComprovantePagamentoxPlanilhaAprovacao';
@@ -67,7 +67,7 @@ class ComprovantePagamentoxPlanilhaAprovacao extends GenericModel
 
     /**
      * Validacao do valor a ser comprovado, verifica o valor aprovado - total ja aprovado
-     * identificando o valor máximo permitido para comprovação 
+     * identificando o valor mï¿½ximo permitido para comprovaï¿½ï¿½o 
      */
     public function validarValorComprovado($idPronac, $idPlanilhaAprovacao, $idPlanilhaItem, $vlComprovado)
     {
@@ -83,7 +83,7 @@ class ComprovantePagamentoxPlanilhaAprovacao extends GenericModel
     		}
     	}
     	if ($valorAprovado < ($totalComprovado + $vlComprovado)) {
-    		throw new Exception('Comprovação de pagamento do item acima do valor aprovado.');
+    		throw new Exception('Comprovaï¿½ï¿½o de pagamento do item acima do valor aprovado.');
     	}
     }
 }

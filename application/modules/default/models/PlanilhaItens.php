@@ -9,7 +9,7 @@
  *
  * @author 01610881125
  */
-class PlanilhaItens   extends GenericModel
+class PlanilhaItens   extends MinC_Db_Table_Abstract
 {
     protected $_banco = "SAC";
     protected $_schema = "dbo";
@@ -336,7 +336,7 @@ class PlanilhaItens   extends GenericModel
 	 * Busca os itens de acordo com uma etapa para as combos
 	 * @access public
 	 * @param array $where (filtros)
-	 * @param array $order (ordenação)
+	 * @param array $order (ordenaï¿½ï¿½o)
 	 * @return object
 	 */
 	public function combo($where = array(), $order = array())
@@ -366,7 +366,7 @@ class PlanilhaItens   extends GenericModel
 
                 //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha método combo()
+	} // fecha mï¿½todo combo()
         
         public function buscarItens(){
             $select = $this->select();

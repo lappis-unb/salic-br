@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class tbRecurso extends GenericModel
+class tbRecurso extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
 	protected $_schema = "dbo";

@@ -10,7 +10,7 @@
  *
  * @author augusto
  */
-class HistoricoDocumento extends GenericModel {
+class HistoricoDocumento extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
     protected $_name = 'tbHistoricoDocumento';

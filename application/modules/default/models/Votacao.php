@@ -10,7 +10,7 @@
  *
  * @author augusto
  */
-class Votacao extends GenericModel {
+class Votacao extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'BDCORPORATIVO';
     protected $_schema = 'scSAC';

@@ -1,7 +1,7 @@
 <?php 
 
  
-class tbEditalTipoParticipacao extends GenericModel {
+class tbEditalTipoParticipacao extends MinC_Db_Table_Abstract {
     
     protected  $_banco = 'SAC';
     protected  $_name = 'tbEditalTipoParticipacao';

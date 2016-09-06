@@ -9,7 +9,7 @@
  *
  * @author tisomar
  */
-class tbHistoricoAlteracaoProjeto extends GenericModel {
+class tbHistoricoAlteracaoProjeto extends MinC_Db_Table_Abstract {
 
     protected $_banco = "SAC";
     protected $_name = "tbHistoricoAlteracaoProjeto";

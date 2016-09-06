@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2012 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
-class tbAvaliacaoSubItemPlanoDistribuicao extends GenericModel
+class tbAvaliacaoSubItemPlanoDistribuicao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "BDCORPORATIVO";
@@ -19,7 +19,7 @@ class tbAvaliacaoSubItemPlanoDistribuicao extends GenericModel
 
 
         /**
-	 * Busca as avalições dos itens
+	 * Busca as avaliï¿½ï¿½es dos itens
 	 * @access public
 	 */
 	public function buscarAvaliacao($idPlano, $idAvaliacao)
@@ -39,7 +39,7 @@ class tbAvaliacaoSubItemPlanoDistribuicao extends GenericModel
                 $select->where('b.idAvaliacaoItemPedidoAlteracao = ?', $idAvaliacao);
 
 		return $this->fetchRow($select);
-	} // fecha método buscarLocaisAprovados()
+	} // fecha mï¿½todo buscarLocaisAprovados()
 
 
 } // fecha class

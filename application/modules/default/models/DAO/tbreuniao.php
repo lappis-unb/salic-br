@@ -9,7 +9,7 @@
  *
  * @author 01155078179
  */
-class tbreuniao extends GenericModel{
+class tbreuniao extends MinC_Db_Table_Abstract{
     protected $_banco = 'SAC';
     protected $_schema = 'dbo';
     protected $_name  = 'tbreuniao';

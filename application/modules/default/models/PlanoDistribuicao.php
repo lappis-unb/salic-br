@@ -1,5 +1,5 @@
 <?php
-class PlanoDistribuicao extends GenericModel
+class PlanoDistribuicao extends MinC_Db_Table_Abstract
 {
     protected $_banco = "sac";
     protected $_schema = "sac";

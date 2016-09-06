@@ -9,7 +9,7 @@
  *
  * @author tisomar
  */
-class Pessoas extends GenericModel
+class Pessoas extends MinC_Db_Table_Abstract
 {
 
 

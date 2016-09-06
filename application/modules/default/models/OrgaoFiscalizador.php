@@ -9,7 +9,7 @@
  *
  * @author 01610881125
  */
-class OrgaoFiscalizador  extends GenericModel{
+class OrgaoFiscalizador  extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'SAC';
     protected $_name  = 'tbOrgaoFiscalizador';

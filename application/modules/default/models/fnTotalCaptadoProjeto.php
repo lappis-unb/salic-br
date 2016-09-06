@@ -1,6 +1,6 @@
 <?php
 
-class fnTotalCaptadoProjeto extends GenericModel {
+class fnTotalCaptadoProjeto extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
     protected $_name = 'dbo.fnTotalCaptadoProjeto';

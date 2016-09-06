@@ -10,7 +10,7 @@
  * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-class UsuarioDAO extends GenericModel
+class UsuarioDAO extends MinC_Db_Table_Abstract
 {
     protected $_banco = "tabelas";
     protected $_name = 'usuarios';

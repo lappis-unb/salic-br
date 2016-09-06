@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2014 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2014 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class tbOpinarProjeto extends GenericModel
+class tbOpinarProjeto extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
 	protected $_schema = "dbo";
