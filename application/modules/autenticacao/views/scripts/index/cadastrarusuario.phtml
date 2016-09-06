@@ -1,63 +1,63 @@
 <script>
 
-    $(document).ready( function() {
-	$("#cadastraUsuario").validate({
-		// Define as regras
-		rules:{
-                        cpf:{
-				// campoNome ser� obrigat�rio (required) e ter� tamanho m�nimo (minLength)
-				required: true, minlength: 14
-			},
-			nome:{
-				// campoNome ser� obrigat�rio (required) e ter� tamanho m�nimo (minLength)
-				required: true, minlength: 2
-			},
-			email:{
-				// campoEmail ser� obrigat�rio (required) e precisar� ser um e-mail v�lido (email)
-				required: true, email: true, minlength: 2
-			},
-                        emailConf:{
-				// campoEmail ser� obrigat�rio (required) e precisar� ser um e-mail v�lido (email)
-				required: true, email: true, minlength: 2
-			},
-			dataNasc:{
-				// campoMensagem ser� obrigat�rio (required) e ter� tamanho m�nimo (minLength)
-				required: true, minlength: 2
-			}
+$(document).ready( function() {
+    $("#cadastraUsuario").validate({
+        // Define as regras
+        rules:{
+            cpf:{
+                // campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
+                required: true, minlength: 14
+            },
+            nome:{
+                // campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
+                required: true, minlength: 2
+            },
+            email:{
+                // campoEmail será obrigatório (required) e precisará ser um e-mail válido (email)
+                required: true, email: true, minlength: 2
+            },
+            emailConf:{
+                // campoEmail será obrigatório (required) e precisará ser um e-mail válido (email)
+                required: true, email: true, minlength: 2
+            },
+            dataNasc:{
+                // campoMensagem será obrigatório (required) e terá tamanho mínimo (minLength)
+                required: true, minlength: 2
+            }
 
-		},
-		// Define as mensagens de erro para cada regra
-		messages:{
-                        cpf:{
-				required: "Digite o seu cpf",
-				minlength: "O seu cpf deve conter, no m�nimo, 14 caracteres"
-			},
-			nome:{
-				required: "Digite o seu nome",
-				minlength: "O seu nome deve conter, no m�nimo, 2 caracteres"
-			},
-			email:{
-				required: "Digite o seu e-mail",
-				email: "Digite um e-mail v�lido",
-                                minlength: "O seu nome deve conter, no m�nimo, 2 caracteres"
-			},
-			emailConf:{
-				required: "Digite o seu e-mail",
-				email: "Digite um e-mail v�lido",
-                                minlength: "O seu nome deve conter, no m�nimo, 2 caracteres"
-			},
-                        dataNasc:{
-				required: "Digite a data do seu Nascimento",
-                                minlength: "A sua mensagem deve conter, no m�nimo, 2 caracteres"
-			}
-		}
-	});
+        },
+            // Define as mensagens de erro para cada regra
+            messages:{
+                cpf:{
+                    required: "Digite o seu cpf",
+                        minlength: "O seu cpf deve conter, no mínimo, 14 caracteres"
+            },
+            nome:{
+                required: "Digite o seu nome",
+                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
+            },
+            email:{
+                required: "Digite o seu e-mail",
+                    email: "Digite um e-mail válido",
+                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
+            },
+            emailConf:{
+                required: "Digite o seu e-mail",
+                    email: "Digite um e-mail válido",
+                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
+            },
+            dataNasc:{
+                required: "Digite a data do seu Nascimento",
+                    minlength: "A sua mensagem deve conter, no mínimo, 2 caracteres"
+            }
+        }
+    });
 });
 
 
 </script>
 
-<!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div style="display:none" id="confirm">Por favor, informe seu email!</div>
 <div style="display:none" id="dialog-alert2"></div>
 <div style="display:none" id="confirmInforma">Por favor, digite seu email corretamente!</div>
@@ -69,87 +69,78 @@ $auth = Zend_Auth::getInstance();
 if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
 <ul>
 <li class="first"><a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'index')); ?>">In&iacute;cio</a></li>
-<li class="last">Cadastrar Usu�rio</li>
+<li class="last">Cadastrar Usuário</li>
 </ul>
 <?php } ?>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 
-<!-- ========== IN�CIO T�TULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 
 <div id="titulo">
-<div>Cadastrar Usu�rio<span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+<div>Cadastrar Usuário<span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 
 </div>
-<!-- ========== FIM T�TULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 
 
 
-<!-- ========== IN�CIO CONTE�DO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
+<div id="conteudo">
+    <fieldset>
+        <legend>Informações</legend>
+        <form method="POST" action="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'cadastrarusuario')); ?>" name="cadastraUsuario" id="cadastraUsuario">
 
-	<div id="conteudo">
-<fieldset><legend>Informa��es</legend>
+            <table border="1" class="tabela">
+                <thead>
+                    <tr>
+                        <th colspan="2">Cadastro de Usuário</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="200">CPF *</td>
+                        <td><input value="<?php echo $this->cpf?>"   maxlength="14" class="input_simples" type="text" name="cpf" id="cpf"  /><span style="color: red;font-weight: bold;" id="mensCPF"></span> </td>
+                    </tr>
+                    <tr>
+                        <td>Nome Completo *</td>
+                        <td><input value="<?php echo $this->nome ?>" maxlength="200" class="input_simples" type="text" name="nome" id="nome" size="50" /> </td>
+                    </tr>
+                    <tr>
+                        <td>Data de Nascimento *</td>
+                        <td><input  value="<?php echo $this->dtNascimento ?>" onblur="validaData(this)" anomenor="<?php echo date('Y-m-d');?>" onkeyup="mascara(this, format_data);" onkeydown="mascara(this, format_data);" onkeypress ="mascara(this, format_data);" maxlength="10" class="input_simples" type="text" name="dataNasc" id="dataNasc"  /> </td>
+                    </tr>
+                    <tr>
+                        <td>E-mail *</td>
+                        <td><input value="<?php echo $this->email ?>" maxlength="200"  class="input_simples" type="text" name="email" id="email" size="50" /> </td>
+                    </tr>
+                    <tr>
+                        <td>Confirme o e-mail *</td>
+                        <td><input  value="<?php echo $this->email ?>" maxlength="200"  class="input_simples" type="text" name="emailConf" id="emailConf" size="50" /><span style="color: red;font-weight: bold;" id="mensemailConf"></span> </td>
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="2">
+                        <input id='btIncluir' type='submit' value='' class='btn_salvar enviar' />
+                        <input id='btLimpar' type='reset' value='' class='btn_limpar enviar'  />
+                        <input id='btCancelar' type='button' value='' class='btn_cancelar enviar' onClick="history.go(-1)" onkeypress=" " />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </fieldset>
+</div>
 
-            <form method="POST" action="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'cadastrarusuario')); ?>" name="cadastraUsuario" id="cadastraUsuario">
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
+    <div id="rodapeConteudo"><span></span></div>
 
-                <table border="1" class="tabela">
-                    <thead>
-                        <tr>
-                            <th colspan="2">Cadastro de Usu�rio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td width="200">CPF *</td>
-                            <td><input value="<?php echo $this->cpf?>"   maxlength="14" class="input_simples" type="text" name="cpf" id="cpf"  /><span style="color: red;font-weight: bold;" id="mensCPF"></span> </td>
-                        </tr>
-                        <tr>
-                            <td>Nome Completo *</td>
-                            <td><input value="<?php echo $this->nome ?>" maxlength="200" class="input_simples" type="text" name="nome" id="nome" size="50" /> </td>
-                        </tr>
-                        <tr>
-                            <td>Data de Nascimento *</td>
-                            <td><input  value="<?php echo $this->dtNascimento ?>" onblur="validaData(this)" anomenor="<?php echo date('Y-m-d');?>" onkeyup="mascara(this, format_data);" onkeydown="mascara(this, format_data);" onkeypress ="mascara(this, format_data);" maxlength="10" class="input_simples" type="text" name="dataNasc" id="dataNasc"  /> </td>
-                        </tr>
-                        <tr>
-                            <td>E-mail *</td>
-                            <td><input value="<?php echo $this->email ?>" maxlength="200"  class="input_simples" type="text" name="email" id="email" size="50" /> </td>
-                        </tr>
-                        <tr>
-                            <td>Confirme o e-mail *</td>
-                            <td><input  value="<?php echo $this->email ?>" maxlength="200"  class="input_simples" type="text" name="emailConf" id="emailConf" size="50" /><span style="color: red;font-weight: bold;" id="mensemailConf"></span> </td>
-                        </tr>
-                        <tr>
-                            <td align="center" colspan="2">
-                            <input id='btIncluir' type='submit' value='' class='btn_salvar enviar' />
-                            <input id='btLimpar' type='reset' value='' class='btn_limpar enviar'  />
-                            <input id='btCancelar' type='button' value='' class='btn_cancelar enviar' onClick="history.go(-1)" onkeypress=" " />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-
-            </form>
-</fieldset>
-
-        </div>
-
-
-<!-- ========== FIM CONTE�DO ========== -->
-
-
-
-<!-- ========== IN�CIO RODAP� DO CONTE�DO ========== -->
-	<div id="rodapeConteudo"><span></span></div>
-
-<!-- ========== FIM RODAP� DO CONTE�DO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 <br clear="all" />
-<script>
-$(function(){
-    $('#cpf').keydown(function(){
-        validandoCPF(this);
+    <script>
+    $(function(){
+        $('#cpf').keydown(function(){
+            validandoCPF(this);
     }).keypress(function(){
         validandoCPF(this);
     }).keyup(function(){
@@ -171,21 +162,21 @@ $(function(){
 
 
     $("#cadastraUsuario").submit(function(){
-       var validado = true;
+        var validado = true;
 
-       if($('#cpf').val().length==14){
-           validandoCPF($('#cpf'));
-           if(!validaCPF($('#cpf').val())){
+        if($('#cpf').val().length==14){
+            validandoCPF($('#cpf'));
+            if(!validaCPF($('#cpf').val())){
                 validado = false;
            }
        }
 
        if($('#email').val() != $('#emailConf').val()){
-            $('#mensemailConf').html('Digite correto o seu email!');
-            validado = false;
+           $('#mensemailConf').html('Digite correto o seu email!');
+           validado = false;
        }
        else
-            $('#mensemailConf').html('');
+           $('#mensemailConf').html('');
 
        return validado;
     });
