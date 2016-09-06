@@ -145,12 +145,13 @@ class ManterAgentes extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 
 		return $db->fetchAll($Sql);
-		
+
+
 	}
 
 
 
-	public static function buscarAreasCulturais()
+/*	public static function buscarAreasCulturais()
 	{
 		$sql = "SELECT Codigo AS id, Descricao AS descricao ";
 		$sql.= "FROM SAC.dbo.Area ";
@@ -168,7 +169,7 @@ class ManterAgentes extends Zend_Db_Table
 		}
 
 		return $db->fetchAll($sql);
-	}
+	}*/
 	
 	
 // ************************** Cadatros Gerais ***************************************

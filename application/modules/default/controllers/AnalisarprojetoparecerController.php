@@ -4,7 +4,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
 
 
     /**
-     * @var integer (variável com o id do usuário logado)
+     * @var integer (variï¿½vel com o id do usuï¿½rio logado)
      * @access private
      */
     private $getIdUsuario = 0;
@@ -12,36 +12,37 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
 
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new UsuarioDAO(); // objeto usuário
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $mapperArea = new Agente_Model_AreaMapper();
+        $this->view->title = "Salic - Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura"; // tï¿½tulo da pï¿½gina
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $Usuario = new UsuarioDAO(); // objeto usuï¿½rio
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
 
-        if ($auth->hasIdentity()) { // caso o usuário esteja autenticado
+        if ($auth->hasIdentity()) { // caso o usuï¿½rio esteja autenticado
 
-            // verifica as permissões
+            // verifica as permissï¿½es
             $PermissoesGrupo = array();
             $PermissoesGrupo[] = 93;
             $PermissoesGrupo[] = 94; // parecerista
             parent::perfil(1, $PermissoesGrupo);
-            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo está no array de permissões
-                parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo estï¿½ no array de permissï¿½es
+                parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+            // pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-            // manda os dados para a visão
-            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+            // manda os dados para a visï¿½o
+            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
 
             if (isset($auth->getIdentity()->usu_codigo)) // autenticacao novo salic
             {
@@ -51,7 +52,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
 
 
         } // fecha if
-        else { // caso o usuário não esteja autenticado
+        else { // caso o usuï¿½rio nï¿½o esteja autenticado
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
 
@@ -60,8 +61,8 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
 
 
     /**
-     * Método index()
-     * Busca os produto para análise do Parecerista
+     * Mï¿½todo index()
+     * Busca os produto para anï¿½lise do Parecerista
      * @param
      * @return List
      */
@@ -71,7 +72,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
         $idusuario = $auth->getIdentity()->usu_codigo;
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
-        $idOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $idOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $UsuarioDAO = Autenticacao_Model_Usuario();
         $agente = $UsuarioDAO->getIdUsuario($idusuario);
@@ -87,14 +88,14 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
                     )
                 );
 
-        // ========== INÍCIO PAGINAÇÃO ==========
+        // ========== INï¿½CIO PAGINAï¿½ï¿½O ==========
         Zend_Paginator::setDefaultScrollingStyle('Sliding');
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
         $paginator = Zend_Paginator::factory($resp); // dados a serem paginados
 
         $currentPage = $this->_getParam('page', 1);
-        $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(10); // 10 por página
-        // ========== FIM PAGINAÇÃO ==========
+        $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(10); // 10 por pï¿½gina
+        // ========== FIM PAGINAï¿½ï¿½O ==========
 
         $this->view->qtdRegistro = count($resp);
         $this->view->situacao = $situacao;
@@ -102,7 +103,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método projetosprodutos()
+     * Mï¿½todo projetosprodutos()
      * Detalhe ?
      * @param
      * @return List
@@ -114,7 +115,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
         $idusuario 	= $this->getIdUsuario;
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
-        $idOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $idOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         $UsuarioDAO = Autenticacao_Model_Usuario();
 
         $idAgenteParecerista = $idusuario;
@@ -241,7 +242,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método paginacao()
+     * Mï¿½todo paginacao()
      * Detalhe ?
      * @param
      * @return List
@@ -274,18 +275,18 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método historico()
-     * Busca o histórico do Projeto/Produto
+     * Mï¿½todo historico()
+     * Busca o histï¿½rico do Projeto/Produto
      * @param
      * @return List
      */
     public function historicoAction() {
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idUsuario = $auth->getIdentity()->usu_codigo;
 //      $idUsuario = $this->getIdUsuario;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $idOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $idOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $getBaseUrl = Zend_Controller_Front::getInstance()->getBaseUrl();
 
@@ -338,19 +339,19 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
 
 
     /**
-     * Método produto()
-     * Lista os detalhes para análise
+     * Mï¿½todo produto()
+     * Lista os detalhes para anï¿½lise
      * @param idPronac
      * @param idProduto
      * @param stPrincipal
      * @return List
      */
     public function produtoAction() {
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         $codGrupo = $GrupoAtivo->codGrupo;
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -368,7 +369,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
         $this->view->dsArea = $projeto[0]->dsArea;
         $this->view->dsSegmento = $projeto[0]->dsSegmento;
 
-        /* Analise de conteúdo */
+        /* Analise de conteï¿½do */
         $analisedeConteudoDAO = new Analisedeconteudo();
         $analisedeConteudo = $analisedeConteudoDAO->dadosAnaliseconteudo(false, array('idPronac = ?' => $idPronac, 'idProduto = ?' => $idProduto));
 
@@ -408,8 +409,8 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
             $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Dias'] = $val->diasprop;
             $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Unidade'] = $val->UnidadeProposta;
             $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Quantidade'] = number_format($val->quantidadeprop, 0, '.', ',');
-            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Ocorrências'] = number_format($val->ocorrenciaprop, 0, '.', ',');
-            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Valor Unitário'] = $val->valorUnitarioprop;
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Ocorrï¿½ncias'] = number_format($val->ocorrenciaprop, 0, '.', ',');
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Valor Unitï¿½rio'] = $val->valorUnitarioprop;
             $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Valor Solicitado'] = $val->VlSolicitado;
             $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Justificativa do Proponente'] = $val->justificitivaproponente;
             $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Valor Sugerido pelo Parecerista'] = $val->VlSugeridoParecerista;
@@ -451,12 +452,12 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
 
         $this->view->itens = $itensCusto;
         $this->view->stPrincipal = $stPrincipal;
-        $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
         $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($projeto[0]->Area);
         $this->view->valorpossivel = $valorPossivel;
         $this->view->vlSolicitado = $valorSolicitado;
 
-        /* Se for o produto principal, envia os dados dos secundários junto *******************************/
+        /* Se for o produto principal, envia os dados dos secundï¿½rios junto *******************************/
         if($stPrincipal == 1) {
             $tbDistribuirParecerDAO = new tbDistribuirParecer();
 
@@ -489,7 +490,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
             // $this->view->produtosSecundarios = $produtosSecundarios;
             $this->view->produtosSecundariosEmAnalise = $pscount;
 
-            /** Verificar se o Produto principal já foi dado a consolidação ********************/
+            /** Verificar se o Produto principal jï¿½ foi dado a consolidaï¿½ï¿½o ********************/
             $consolidado = 'N';
             $enquadramentoDAO 		= new Enquadramento();
             $buscaEnquadramento 	= $enquadramentoDAO->buscarDados($idPronac, null, false);
@@ -510,7 +511,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
         }
 
         /****************************************************************************************************/
-        // Dados para concluir a análise
+        // Dados para concluir a anï¿½lise
         $tbDistribuirParecerDAO = new tbDistribuirParecer();
         $tbDiligencia = new tbDiligencia();
 
@@ -520,7 +521,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
         // Conta quantas diligencias existe
         $dilig = count($rsDilig);
 
-        /** Verifica se tem produtos secundários não analizados ****************************/
+        /** Verifica se tem produtos secundï¿½rios nï¿½o analizados ****************************/
         $dadosWhereSA["t.stEstado = ?"] = 0;
         $dadosWhereSA["t.FecharAnalise = ?"] = 0;
         $dadosWhereSA["t.TipoAnalise = ?"] = 3;
@@ -533,7 +534,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
         $pscount = $SecundariosAtivos;
         /***********************************************************************************/
 
-        /** Verificar se o Produto já foi dado o Parecer ***********************************/
+        /** Verificar se o Produto jï¿½ foi dado o Parecer ***********************************/
         $tbAnaliseDeConteudoDAO = new Analisedeconteudo();
         $whereAC['IdPRONAC = ?'] = $idPronac;
         $whereAC['idProduto = ?'] = $idProduto;
@@ -541,7 +542,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
         $countAnalizado = $tbAnaliseDeConteudoDAO->dadosAnaliseconteudo(null,$whereAC)->count();
         /***********************************************************************************/
 
-        /** Verificar se o Produto principal já foi dado a consolidação ********************/
+        /** Verificar se o Produto principal jï¿½ foi dado a consolidaï¿½ï¿½o ********************/
         $enquadramentoDAO = new Enquadramento();
         $buscaEnquadramento = $enquadramentoDAO->buscarDados($idPronac, null, false);
         $countEnquadramentoP = count($buscaEnquadramento);
@@ -567,7 +568,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
     public function validaRegra20Porcento($idPronac) {
 
         /**********************************************************************************************************/
-        // Validação do 20%
+        // Validaï¿½ï¿½o do 20%
         $planilhaProjeto = new PlanilhaProjeto();
         $valorProjeto = $planilhaProjeto->somarPlanilhaProjeto($idPronac, 109);
 
@@ -599,8 +600,8 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método produtosecundario()
-     * Lista os detalhes da análise dos produtos secundários
+     * Mï¿½todo produtosecundario()
+     * Lista os detalhes da anï¿½lise dos produtos secundï¿½rios
      * @param idPronac
      * @param idProduto
      * @param stPrincipal
@@ -608,11 +609,11 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
      */
     public function produtosecundarioAction() {
 
-        $auth 		 = Zend_Auth::getInstance(); // pega a autenticação
+        $auth 		 = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario 	 = $auth->getIdentity()->usu_codigo;
 
-        $GrupoAtivo  = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao 	 = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo  = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao 	 = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         $codGrupo 	 = $GrupoAtivo->codGrupo;
 
         $idPronac 	 = $this->_request->getParam("idPronac");
@@ -628,7 +629,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
         $projeto = $projetoDAO->buscaProjetosProdutosAnaliseInicial($whereProjeto);
         $this->view->projeto = $projeto[0];
 
-        /* Analise de conteúdo */
+        /* Analise de conteï¿½do */
         $analisedeConteudoDAO = new Analisedeconteudo();
         $analisedeConteudo = $analisedeConteudoDAO->dadosAnaliseconteudo(false, array('idPronac = ?' => $idPronac, 'idProduto = ?' => $idProduto));
 
@@ -670,8 +671,8 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
             $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Dias'] = $val->diasprop;
             $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Unidade'] = $val->UnidadeProposta;
             $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Quantidade'] = number_format($val->quantidadeprop, 0, '.', ',');
-            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Ocorrências'] = number_format($val->ocorrenciaprop, 0, '.', ',');
-            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Valor Unitário'] = $val->valorUnitarioprop;
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Ocorrï¿½ncias'] = number_format($val->ocorrenciaprop, 0, '.', ',');
+            $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Valor Unitï¿½rio'] = $val->valorUnitarioprop;
             $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Valor Solicitado'] = $val->VlSolicitado;
             $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Justificativa do Proponente'] = $val->justificitivaproponente;
             $itensCusto['fonte'][$val->FonteRecurso][$produto][$val->idEtapa . ' - ' . $val->Etapa][$val->UF . ' - ' . $val->Cidade]['itens'][$val->idPlanilhaProjeto]['Valor Sugerido pelo Parecerista'] = $val->VlSugeridoParecerista;
@@ -714,11 +715,11 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
 
         $this->view->itens = $itensCusto;
         $this->view->stPrincipal = $stPrincipal;
-        $this->view->comboareasculturais   = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
         $this->view->valorpossivel   = $valorPossivel;
         $this->view->vlSolicitado    = $valorSolicitado;
 
-        /* Se for o produto principal, envia os dados dos secundários junto *******************************/
+        /* Se for o produto principal, envia os dados dos secundï¿½rios junto *******************************/
         if($stPrincipal == 1) {
             $tbDistribuirParecerDAO = new tbDistribuirParecer();
 
@@ -760,7 +761,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
             $this->view->produtosSecundariosEmAnalise = $pscount;
 
 
-            /** Verificar se o Produto principal já foi dado a consolidação ********************/
+            /** Verificar se o Produto principal jï¿½ foi dado a consolidaï¿½ï¿½o ********************/
             $consolidado = 'N';
 
             $enquadramentoDAO 		= new Enquadramento();
@@ -787,7 +788,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método analisedeconteudo()
+     * Mï¿½todo analisedeconteudo()
      * @return List
      */
     public function analisedeconteudoAction() {
@@ -796,7 +797,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
 
         $dsJustificativa = isset($_POST["ParecerDeConteudo"]) ? $_POST["ParecerDeConteudo"] : '';
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
 
         $post 		= $_POST;
@@ -922,7 +923,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método alteraitemsolicitado()
+     * Mï¿½todo alteraitemsolicitado()
      * Altera os itens da planilha
      * @param idPronac
      * @param idProduto
@@ -951,7 +952,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método salvaitem()
+     * Mï¿½todo salvaitem()
      * Salva os itens da planilha
      * @param idPronac
      * @param idProduto
@@ -963,7 +964,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
 
         $dados = $_POST;
@@ -996,18 +997,18 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
 
 
     /**
-     * Método fecharparecer()
-     * informa os dados para conclusão da análise
+     * Mï¿½todo fecharparecer()
+     * informa os dados para conclusï¿½o da anï¿½lise
      * @return void
      */
     public function fecharparecerAction() {
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario 	= $auth->getIdentity()->usu_codigo;
         $dtAtual = Date("Y/m/d h:i:s");
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $idPronac 	 	= $this->_request->getParam("idPronac");
         $idProduto 	 	= $this->_request->getParam("idProduto");
@@ -1016,7 +1017,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
         $this->view->totaldivulgacao = "true";
 
         /**********************************************************************************************************/
-        // Validação do 20%
+        // Validaï¿½ï¿½o do 20%
 
         //valor total do projeto V1
 
@@ -1031,7 +1032,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
         /**********************************************************************************************************/
 
         /**********************************************************************************************************/
-        // Validação do 15%
+        // Validaï¿½ï¿½o do 15%
         if ($stPrincipal == "1") //avaliacao da regra dos 15% so deve ser feita quando a analise for do produto principal
         {
             $Situacao = false;
@@ -1043,7 +1044,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
             $V5 = '';
             $V6 = '';
 
-            $tpPlanilha = 'CO'; // O que é isso?
+            $tpPlanilha = 'CO'; // O que ï¿½ isso?
             $planilhaProjeto = new PlanilhaProjeto();
 
             /*****************************************************************************************/
@@ -1163,7 +1164,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
 
                 $tbDistribuirParecer->getAdapter()->commit();
 
-                parent::message("Análise concluída com sucesso !", "Analisarprojetoparecer/index" ,"CONFIRM");
+                parent::message("Anï¿½lise concluï¿½da com sucesso !", "Analisarprojetoparecer/index" ,"CONFIRM");
 
             } catch (Zend_Db_Exception $e) {
 
@@ -1188,7 +1189,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método formatarReal()
+     * Mï¿½todo formatarReal()
      * Converte para o formato Brasileiro
      * @param moeda
      * @return String
@@ -1204,7 +1205,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método url()
+     * Mï¿½todo url()
      * Monta a URL
      * @param array
      * @param name
@@ -1218,7 +1219,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método prestacaodecontasfinanceiro()
+     * Mï¿½todo prestacaodecontasfinanceiro()
      * @return void
      */
     public function prestacaodecontasfinanceiroAction() {
@@ -1231,7 +1232,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
         $idusuario = $auth->getIdentity()->usu_codigo;
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
-        $idOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $idOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         $UsuarioDAO = Autenticacao_Model_Usuario();
         $agente = $UsuarioDAO->getIdUsuario($idusuario);
         $idAgenteParecerista = $agente['idAgente'];
@@ -1249,7 +1250,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método consolidacaodoprojeto()
+     * Mï¿½todo consolidacaodoprojeto()
      * Consolida os dados do Projeto
      * @param idPronac
      * @param idProduto
@@ -1262,7 +1263,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
         $idusuario = $auth->getIdentity()->usu_codigo;
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
-        $idOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $idOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $idProduto 		= $this->_request->getParam('idProduto');
         $stPrincipal 		= $this->_request->getParam('stPrincipal');
@@ -1292,7 +1293,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
             $this->_helper->layout->disableLayout();
 
             try {
-                /** Fazendo um Update no Projeto enquadrando na área e Segmento ******************************/
+                /** Fazendo um Update no Projeto enquadrando na ï¿½rea e Segmento ******************************/
                 if($areaCultural <> 0) {
                     $projetoDAO = new Projetos();
                     $dadosProjeto = array('Area'=> $areaCultural, 'Segmento' => $segmentoCultural, 'Logon' => $idusuario);
@@ -1301,7 +1302,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
                 }
                 /**********************************************************************************************/
 
-                /** Gravando as informações do enquadramento do Projeto ***************************************/
+                /** Gravando as informaï¿½ï¿½es do enquadramento do Projeto ***************************************/
                 $enquadramentoDAO = new Enquadramento();
                 $dadosEnquadramento = array(
                     'IdPRONAC'=> $idPronac,
