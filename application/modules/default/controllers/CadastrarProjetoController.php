@@ -3,7 +3,6 @@
 class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
 
     public function init() {
-        $mapperArea = new Agente_Model_AreaMapper();
 //recupera ID do pre projeto (proposta)
         $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // t�tulo da p�gina
         $auth = Zend_Auth::getInstance(); // pega a autentica��o
@@ -45,6 +44,7 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
 
     public function indexAction() {
 
+        $mapperArea = new Agente_Model_AreaMapper();
         $Modalidade = new tbModalidade();
         $mecanismo = new Mecanismo();
         $mecanismo2 = $mecanismo->buscar(array('Status = ?' => 1))->toArray();
