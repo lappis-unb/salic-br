@@ -101,6 +101,4 @@ class Agente_Model_Visao extends MinC_Db_Model
     {
         $this->_stativo = $stativo;
     }
-
-
 }

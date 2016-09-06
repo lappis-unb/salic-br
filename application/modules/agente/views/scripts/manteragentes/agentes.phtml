@@ -51,7 +51,7 @@ if($this->grupoAtivo != 118)
 	</div>
 
     <form class="formAgentes form" name="formCadAgentes" id="formCadAgentes" method="post"
-		action="<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'gravaragentecompleto')); ?>">
+		action="<?php echo $this->url(array('module' => 'agente', 'controller' => 'manteragentes', 'action' => 'gravaragentecompleto')); ?>">
 
 		<input type="hidden" value="<?php echo $this->grupoativo; ?>" id="grupologado" name="grupologado" />
 

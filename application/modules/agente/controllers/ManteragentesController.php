@@ -78,6 +78,10 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             $this->getIdUsuario = (isset($_GET["idusuario"])) ? $_GET["idusuario"] : 0;
         }
 
+        if (!$this->getIdUsuario) {
+            $this->getIdUsuario = $arrAuth['idusuario'];
+        }
+
         $Cpflogado = $this->getIdUsuario;
         $this->view->cpfLogado = $Cpflogado;
         $this->view->grupoativo = $GrupoAtivo->codGrupo;
@@ -718,248 +722,58 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         } // fecha if
     } // fecha método buscarvisaoAction()
 
-
     /**
-     * Método para gravação de todos os dados do agente
-     * @access public
-     * @param void
-     * @return void
+     * Metodo para gravacao de todos os dados do agente
+     *
+     * @name gravaragentecompletoAction
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  06/09/2016
      */
     public function gravaragentecompletoAction()
     {
-
         if ($this->getRequest()->isPost()) {
+            $arrPost = array_change_key_case($this->getRequest()->getPost());
+            $arrPost['idusuario'] = $this->getIdUsuario;
+            $arrPost['cpf'] = Mascara::delMaskCPF(Mascara::delMaskCNPJ($arrPost['cpf']));
+            if ($arrPost['idagente'] === '') {
+                $tblAgentes = new Agente_Model_DbTable_Agentes();
+                $arrPost['idagente'] = $tblAgentes->findBy(array('cnpjcpf' => $arrPost['cpf']))['idagente'];
+            }
 
-            $post = Zend_Registry::get('post');
-            $idAgente = $post->idAgente;
-            $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($post->cpf)); // retira as máscaras
-            $TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa física e 19 = pessoa jurídica
-            $Usuario = $this->getIdUsuario; // id do usuário logado
-
-
-// ================================================ INÍCIO SALVAR NOME ======================================================
-
-            $nome = $post->nome;
-
+            $mprNomes = new Agente_Model_NomesMapper();
+            $mprNomes->beginTransaction();
             try {
-                // busca o nome do agente
-                $busca = NomesDAO::buscarNome($idAgente);
+                # Salvando o nome.
+                $mprNomes->saveCustom($arrPost);
 
-                if (!$busca) {
-                    $i = NomesDAO::gravarNome($idAgente, $TipoNome, $nome, 0, $Usuario);
-                } else {
-                    $i = NomesDAO::atualizaNome($idAgente, $TipoNome, $nome, 0, $Usuario);
-                }
+                # Salvando a visao.
+                $mprVisao = new Agente_Model_VisaoMapper();
+                $mprVisao->saveCustom($arrPost);
+
+                # Salvando titulacao (area/segmento do componente da comissao
+                $mprTitulacaoConselheiro = new Agente_Model_TbTitulacaoConselheiroMapper();
+                $mprTitulacaoConselheiro->saveCustom($arrPost);
+
+                # Salvando endereco.
+                $mprEnderecoNacional = new Agente_Model_EnderecoNacionalMapper();
+                $mprEnderecoNacional->saveCustom($arrPost);
+
+                # Salvando telefone.
+                $mprTelefones = new Agente_Model_TelefonesMapper();
+                $mprTelefones->saveCustom($arrPost);
+
+                # Salvando email.
+                $mprInternet = new Agente_Model_InternetMapper();
+                $mprInternet->saveCustom($arrPost);
             } catch (Exception $e) {
-                parent::message("Erro ao salvar o nome: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
+                $mprNomes->rollBack();
+                parent::message("Erro ao salvar: " . $e->getMessage(), "/agente/manteragentes/agentes?acao=cc", "ERROR");
             }
-// ================================================ FIM SALVAR NOME ======================================================
-
-
-// ================================================ INICIO SALVAR VISÂO ======================================================
-            $Visao = $post->visao;
-
-            $grupologado = $post->grupologado;
-
-
-            /*
-             * Validação - Se for componente da comissão ele não salva a visão
-             * Regra o componente da comissão não pode alterar sua visão.
-             */
-
-            if ($grupologado != 118):
-
-                $GravarVisao = array( // insert
-                    'idAgente' => $idAgente,
-                    'Visao' => $Visao,
-                    'Usuario' => $Usuario,
-                    'stAtivo' => 'A');
-
-                try {
-                    $visaoTable = new Agente_Model_DbTable_Visao();
-                    $busca = $visaoTable->buscarVisao($idAgente, $Visao);
-
-                    if (!$busca) {
-                        $i = $visaoTable->cadastrarVisao($GravarVisao);
-                    }
-                } catch (Exception $e) {
-                    parent::message("Erro ao salvar a visão: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
-                }
-
-
-// ================================================ FIM SALVAR VISÂO ======================================================
-
-
-// ===================== INÍCIO SALVAR TITULAÇÃO (ÁREA/SEGMENTO DO COMPONENTE DA COMISSÃO) ================================
-
-
-                $titular = $post->titular;
-                $areaCultural = $post->areaCultural;
-                $segmentoCultural = $post->segmentoCultural;
-
-                // só salva área e segmento para a visão de Componente da Comissão e se os campos titular e areaCultural forem informados
-                if ((int)$Visao == 210 && ((int)$titular == 0 || (int)$titular == 1) && !empty($areaCultural)) {
-                    $GravarComponente = array( // insert
-                        'idAgente' => $idAgente,
-                        'cdArea' => $areaCultural,
-                        'cdSegmento' => $segmentoCultural,
-                        'stTitular' => $titular,
-                        'stConselheiro' => 'A');
-
-                    $AtualizarComponente = array( // update
-                        'cdArea' => $areaCultural,
-                        'cdSegmento' => $segmentoCultural,
-                        'stTitular' => $titular
-                        //'stConselheiro' => 'A' -- Qual caso de uso vai ativa e desativar?
-                    );
-
-                    try {
-                        // busca a titulação do agente (titular/suplente de área cultural)
-                        $busca = TitulacaoConselheiroDAO::buscarComponente($idAgente, $Visao);
-
-                        if (!$busca) {
-                            $i = TitulacaoConselheiroDAO::gravarComponente($GravarComponente);
-                        } else {
-                            $i = TitulacaoConselheiroDAO::atualizaComponente($idAgente, $AtualizarComponente);
-                        }
-                    } catch (Exception $e) {
-                        parent::message("Erro ao salvar a Área e Segmento: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
-                    }
-                }
-
-// ============================= FIM SALVAR TITULAÇÃO (ÁREA/SEGMENTO DO COMPONENTE DA COMISSÃO) ===========================
-
-            endif; // Fecha o if da regra do componente da comissão
-
-
-// =========================================== INICIO SALVAR ENDEREÇOS ====================================================
-
-            $cepEnderecos = $post->ceps;
-            $tipoEnderecos = $post->tipoEnderecos;
-            $ufEnderecos = $post->ufs;
-            $CidadeEnderecos = $post->cidades;
-            $Enderecos = $post->logradouros;
-            $divulgarEnderecos = $post->divulgarEnderecos;
-
-
-            if (!empty($post->correspondenciaEnderecos)) {
-                $correspondenciaEnderecos = $post->correspondenciaEnderecos;
-            } else {
-                $correspondenciaEnderecos = -1;
-            }
-
-            $tipoLogradouros = $post->tipoLogradouros;
-            $numeros = $post->numeros;
-            $complementos = $post->complementos;
-            $bairros = $post->bairros;
-
-            try {
-                // exclui todos os telefones do agente
-                $delete = Agente_Model_EnderecoNacionalDAO::deletarEnderecoNacional($idAgente);
-
-                // cadastra todos os telefones
-                for ($i = 0; $i < sizeof($cepEnderecos); $i++) {
-                    if ($correspondenciaEnderecos == "end" + $i) {
-                        $correspondenciaEnderecos = 1;
-                    } else {
-                        $correspondenciaEnderecos = 0;
-                    }
-
-                    $arrayEnderecos = array(
-                        'idAgente' => $idAgente,
-                        'Cep' => str_replace(".", "", str_replace("-", "", $cepEnderecos[$i])),
-                        'TipoEndereco' => $tipoEnderecos[$i],
-                        'UF' => $ufEnderecos[$i],
-                        'Cidade' => $CidadeEnderecos[$i],
-                        'Logradouro' => $Enderecos[$i],
-                        'Divulgar' => $divulgarEnderecos[$i],
-                        'TipoLogradouro' => $tipoLogradouros[$i],
-                        'Numero' => $numeros[$i],
-                        'Complemento' => $complementos[$i],
-                        'Bairro' => $bairros[$i],
-                        'Status' => $correspondenciaEnderecos,
-                        'Usuario' => $Usuario);
-
-
-                    $insere = Agente_Model_EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
-
-                }
-
-            } catch (Exception $e) {
-                parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
-            }
-
-// ============================================= FIM SALVAR ENDEREÇOS ====================================================
-
-
-// =========================================== INICIO SALVAR TELEFONES ====================================================
-
-            $tipoFones = $post->tipoFones;
-            $ufFones = $post->ufFones;
-            $dddFones = $post->dddFones;
-            $Fones = $post->Fones;
-            $divulgarFones = $post->divulgarFones;
-
-            try {
-                // exclui todos os telefones do agente
-                $delete = Agente_Model_Telefone::excluirTodos($idAgente);
-
-                // cadastra todos os telefones
-                for ($i = 0; $i < sizeof($Fones); $i++) {
-                    $arrayTelefones = array(
-                        'idAgente' => $idAgente,
-                        'TipoTelefone' => $tipoFones[$i],
-                        'UF' => $ufFones[$i],
-                        'DDD' => $dddFones[$i],
-                        'Numero' => $Fones[$i],
-                        'Divulgar' => $divulgarFones[$i],
-                        'Usuario' => $Usuario);
-
-                    $insere = Agente_Model_Telefone::cadastrar($arrayTelefones);
-                }
-
-            } catch (Exception $e) {
-                parent::message("Erro ao salvar o componente: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
-            }
-// =========================================== FIM SALVAR TELEFONES ====================================================
-
-
-// =========================================== INICIO SALVAR EMAILS ====================================================
-
-            $tipoEmails = $post->tipoEmails;
-            $Emails = $post->Emails;
-            $divulgarEmails = $post->divulgarEmails;
-            $enviarEmails = $post->enviarEmails;
-
-            try {
-                // exclui todos os e-mails do agente
-                $delete = Email::excluirTodos($idAgente);
-
-                // cadastra todos os e-mails
-                for ($i = 0; $i < sizeof($Emails); $i++) {
-                    $arrayEmail = array(
-                        'idAgente' => $idAgente,
-                        'TipoInternet' => $tipoEmails[$i],
-                        'Descricao' => $Emails[$i],
-                        'Status' => $enviarEmails[$i],
-                        'Divulgar' => $divulgarEmails[$i],
-                        'Usuario' => $Usuario);
-
-                    $insere = Email::cadastrar($arrayEmail);
-                }
-
-            } catch (Exception $e) {
-                parent::message("Erro ao salvar o componente: " . $e->getMessage(), "manteragentes/agentes?acao=cc", "ERROR");
-            }
-
-// =========================================== FIM SALVAR EMAILS ====================================================
-
-
+            $mprNomes->commit();
+            parent::message("Cadastro realizado com sucesso!", "/agente/manteragentes/agentes?acao=cc", "CONFIRM");
         }
-
-        parent::message("Cadastro realizado com sucesso!", "manteragentes/agentes?acao=cc", "CONFIRM");
-
-
+        parent::message("Erro ao salvar: N&atilde;o existe dados para salvar!", "/agente/manteragentes/agentes?acao=cc", "ERROR");
     }
 
 
