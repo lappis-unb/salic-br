@@ -159,7 +159,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
      */
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {
-        $select = $this->select();
+        $select = $this->select()->from($this->_name, $this->_getCols(), $this->_schema);
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {

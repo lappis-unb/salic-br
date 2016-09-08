@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -113,7 +113,6 @@ class EncriptaSenhaDAO extends Zend_Db_Table
 
     public static function encriptaSenha($cpf, $senha)
     {
-//        $db= Zend_Db_Table::getDefaultAdapter();
         $db = Zend_Db_Table::getDefaultAdapter();
 
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
