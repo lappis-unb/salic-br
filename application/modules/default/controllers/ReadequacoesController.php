@@ -2713,15 +2713,21 @@ class ReadequacoesController extends GenericControllerNew {
 
         $tbDistribuirReadequacao = new tbDistribuirReadequacao();
         $dadosDistRead = $tbDistribuirReadequacao->buscar(array('idReadequacao=?'=>$idReadequacao));
-
         if(count($dadosDistRead)>0){
             //Atualiza a tabela tbDistribuirReadequacao
             $dadosDP = array();
             $dadosDP['stValidacaoCoordenador'] = 1;
             $dadosDP['DtValidacaoCoordenador'] = new Zend_Db_Expr('GETDATE()');
             $dadosDP['idCoordenador'] = $this->idUsuario;
+            
+            // atualiza com dados para enviar para cnic
+            $dadosDP['idUnidade'] = 400;
+            $dadosDP['DtEncaminhamento'] = new Zend_Db_Expr('GETDATE()');
+            $dadosDP['idAvaliador'] = $idComponente;
+            $dadosDP['dtEnvioAvaliador'] = new Zend_Db_Expr('GETDATE()');
+            
             $whereDP = "idDistribuirReadequacao = ".$dadosDistRead[0]->idDistribuirReadequacao;
-            $tbDistribuirReadequacao->update($dadosDP, $whereDP);
+            $distribuicao = $tbDistribuirReadequacao->update($dadosDP, $whereDP);
         }
 
         $reuniao = new Reuniao();
@@ -2734,16 +2740,6 @@ class ReadequacoesController extends GenericControllerNew {
         $dados['idNrReuniao'] = $idNrReuniao;
         $where = "idReadequacao = $idReadequacao";
         $return = $tbReadequacao->update($dados, $where);
-
-        //Inser um novo registro distribuindo a readequação para o componente da comissão.
-        $dadosDist = array(
-            'idReadequacao' => $idReadequacao,
-            'idUnidade' => 400,
-            'DtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
-            'idAvaliador' => $idComponente,
-            'dtEnvioAvaliador' => new Zend_Db_Expr('GETDATE()')
-        );
-        $distribuicao = $tbDistribuirReadequacao->inserir($dadosDist);
 
         if($return && $distribuicao){
             echo json_encode(array('resposta'=>true));
