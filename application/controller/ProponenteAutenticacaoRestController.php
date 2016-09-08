@@ -22,9 +22,10 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
         # Pegando parametros via POST no formato JSON
         $body = $this->getRequest()->getRawBody();
         $post = Zend_Json::decode($body);
-        $username = $post['usuario'];
-        $password = $post['senha'];
-        $registrationId = $post['registrationId'];
+
+        $username = isset($post['usuario'])? $post['usuario']: NULL;
+        $password = isset($post['senha'])? $post['senha']: NULL;
+        $registrationId = $this->registrationId;
 
         if(empty($username) || empty($password)){
             $result->msg = 'Usu&aacute;rio ou Senha inv&aacute;lidos!';
