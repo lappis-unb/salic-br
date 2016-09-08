@@ -275,11 +275,17 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         }
     }
 
+
+    /**
+     * solicitarsenhaAction
+     *
+     * @access public
+     * @return void
+     * @author wouerner <wouerner@gmail.com>
+     */
     public function solicitarsenhaAction()
     {
-
         if ($_POST) {
-            //$enviaEmail = EnviaemailController::enviaEmail("ewrwr", "tiago.rodrigues@cultura.gov.br", "tisomar@gmail.com");
             $post = Zend_Registry::get('post');
             $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf)); // recebe cpf
             $dataNasc = data::dataAmericana($post->dataNasc); // recebe dataNasc
@@ -297,18 +303,21 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $senha = Gerarsenha::gerasenha(15, true, true, true, true);
             $senhaFormatada = str_replace(">", "", str_replace("<", "", str_replace("'", "", $senha)));
 
+            $senhaFormatada = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaFormatada);
+
             $dados = array(
-                "IdUsuario" => $sgcAcessoBuscaCpfArray[0]['IdUsuario'],
-                "Senha" => $senhaFormatada,
-                "Situacao" => 1,
-                "DtSituacao" => date("Y-m-d")
+                "idusuario" => $sgcAcessoBuscaCpfArray[0]['IdUsuario'],
+                "senha" => $senhaFormatada,
+                "situacao" => 1,
+                "dtsituacao" => date("Y-m-d")
             );
+
             $sgcAcessoSave = $sgcAcesso->salvar($dados);
 
             $assunto = "Cadastro SALICWEB";
             $perfil = "SALICWEB";
             $mens = "Ol&aacute; " . $nome . ",<br><br>";
-            $mens .= "Senha....: " . $senhaFormatada . "<br><br>";
+            $mens .= "Senha....: " . $senha. "<br><br>";
             $mens .= "Esta &eacute; a sua senha tempor&aacute;ria de acesso ao Sistema de Apresenta&ccedil;&atilde;o de Projetos via Web do ";
             $mens .= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
             $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
@@ -321,6 +330,14 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         }
     }
 
+
+    /**
+     * alterarsenhaAction
+     *
+     * @access public
+     * @return void
+     * @author wouerner <wouerner@gmail.com>
+     */
     public function alterarsenhaAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -343,9 +360,9 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         if (count(Zend_Auth::getInstance()->getIdentity()) > 0) {
             $auth = Zend_Auth::getInstance();
 
-            $idUsuario = $auth->getIdentity()->idusuario;
+            $idUsuario = $auth->getIdentity()->idusuario ?$auth->getIdentity()->idusuario : $auth->getIdentity()->IdUsuario ;
 
-            $this->view->idUsuario = $auth->getIdentity()->idusuario;
+            $this->view->idUsuario = $idUsuario;
             $cpf = $auth->getIdentity()->cpf;
             $this->view->cpf = $auth->getIdentity()->cpf;
             $this->view->nome = $auth->getIdentity()->nome;
@@ -387,6 +404,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $cpfTabelas = count($buscarCPF) > 0 ? true : false;
             $senhaTabelas = $Usuarios->verificarSenha(trim($cpf), $senhaAtual);
 
+            $senhaCript = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaAtual);
+
             if ($buscarSenha[0]['situacao'] != 1) {
 
                 $comparaSenha = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaAtual);
@@ -397,7 +416,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 }
             } else {
 
-                if (trim($senhaAtualBanco) != trim($senhaAtual) && ($cpfTabelas && !$senhaTabelas)) {
+                if (trim($senhaAtualBanco) != trim($senhaCript) && ($cpfTabelas && !$senhaTabelas)) {
                     parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
                 }
             }
@@ -413,7 +432,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 $nome = $sgcAcessoBuscaCpf[0]['nome'];
                 $email = $sgcAcessoBuscaCpf[0]['email'];
                 $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaNova);
-                //$SenhaFinal = $encriptaSenha[0]->senha;
 
                 $dados = array(
                     "idusuario" => $idUsuario,

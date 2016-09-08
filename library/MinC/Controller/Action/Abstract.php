@@ -88,7 +88,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
             if (count($buscaAcesso) > 0) {
-                $this->idResponsavel = $buscaAcesso[0]->IdUsuario;
+                $this->idResponsavel = $buscaAcesso[0]->idusuario;
             }
             if (count($buscaAgente) > 0) {
                 $this->idAgente = $buscaAgente[0]->idAgente;

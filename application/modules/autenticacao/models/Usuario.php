@@ -14,11 +14,6 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
 {
 
     protected $_banco = "tabelas";
-//    protected $_name  = 'dbo.Usuarios';
-
-//    protected $_schema = 'dbo';
-
-//    protected $_banco = "TABELAS";
     protected $_name = 'usuarios';
     protected $_schema = 'tabelas';
 
@@ -1005,7 +1000,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
 
 
     /**
-     * M?todo para buscar os dados do usu?rio de acordo com login e senha
+     * Buscar os dados do usuário de acordo com login e senha
      * @access public
      * @static
      * @param @username (cpf ou cnpj do usu?rio)
@@ -1018,9 +1013,12 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         $objUsuario = $this->select();
         $senha = EncriptaSenhaDAO::encriptaSenha($username, $password);
 
-        $objUsuario->from($this->_name,
-            new Zend_Db_Expr("'{$senha}' as senha")
-            , $this->_schema);
+        $objUsuario->from(
+            $this->_name,
+            new Zend_Db_Expr("'{$senha}' as senha"),
+            $this->_schema
+        );
+
 
         $objUsuario->where('usu_identificacao = ?', $username);
         $criptSenha = $this->fetchRow($objUsuario);
@@ -1032,7 +1030,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
 
         $sql = $this->select();
         $sql->setIntegrityCheck(false);
-        $sql->from($this,
+        $sql->from($this->_name,
             array
             (
                 'usu_codigo',
@@ -1040,7 +1038,8 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
                 'usu_identificacao',
                 'usu_senha',
                 'usu_orgao'
-            )
+            ),
+            $this->_schema
         );
 
         $sql->joinInner(
