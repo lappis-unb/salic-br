@@ -7,14 +7,10 @@
  */
 
 class tbSolicitarItem extends MinC_Db_Table_Abstract {
-   
+
     protected  $_banco  = 'SAC';
     protected  $_schema = 'dbo';
     protected  $_name   = 'tbSolicitarItem';
-
-    protected  $_banco  = 'sac';
-    protected  $_schema = 'sac';
-    protected  $_name   = 'tbsolicitaritem';
 
 
     public function listaSolicitacoesItens($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
@@ -32,7 +28,7 @@ class tbSolicitarItem extends MinC_Db_Table_Abstract {
                     new Zend_Db_Expr("
                         CASE
                             WHEN  s.IdPlanilhaItens > 0 THEN 'Associa��o'
-                            ELSE 'Inclus�o'
+                            ELSE 'Inclusão'
                        END as TipoSolicitacao
                     "),
                     new Zend_Db_Expr("
