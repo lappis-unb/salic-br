@@ -3311,8 +3311,12 @@ class ReadequacoesController extends GenericControllerNew {
                                             $PlanoDivulgacaoEmQuestao = $PlanoDeDivulgacao->buscar(array('idProjeto = ?'=>$dadosPrj->idProjeto, 'idPeca = ?'=>$plano->idPeca, 'idVeiculo = ?'=>$plano->idVeiculo))->current();
                                             $tbLogomarca = new tbLogomarca();
                                             $dadosLogomarcaDaDivulgacao = $tbLogomarca->buscar(array('idPlanoDivulgacao = ?' => $PlanoDivulgacaoEmQuestao->idPlanoDivulgacao))->current();
-                                            $dadosLogomarcaDaDivulgacao->delete();
-                                            $PlanoDivulgacaoEmQuestao->delete();
+                                            if (!empty($dadosLogomarcaDaDivulgacao)) {
+                                                $dadosLogomarcaDaDivulgacao->delete();
+                                            }
+                                            if (!empty($PlanoDivulgacaoEmQuestao)) {
+                                                $PlanoDivulgacaoEmQuestao->delete();
+                                            }
 
                                         } else if($plano->tpSolicitacao == 'I') { //Se o plano de divulgação foi incluído, cria um novo registro na tabela SAC.dbo.PlanoDeDivulgacao
                                             $novoPlanoDivRead = array();
