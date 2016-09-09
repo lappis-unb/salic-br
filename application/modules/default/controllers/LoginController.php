@@ -135,7 +135,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
                     else {
                         return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
                         //$this->_redirect("/agente/agentes/incluiragenteexterno");
-                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->IdUsuario}", "ALERT");
+                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/agente/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->IdUsuario}", "ALERT");
                     }
 
                 } // fecha if

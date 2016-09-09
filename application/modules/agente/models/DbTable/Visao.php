@@ -19,10 +19,28 @@
 class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
 {
     /**
-     * Nome da tabela do banco
+     * _schema
+     *
+     * @var string
+     * @access protected
      */
-    protected $_name = 'AGENTES.dbo.Visao';
+    protected $_schema = 'agentes';
 
+    /**
+     * _name
+     *
+     * @var bool
+     * @access protected
+     */
+    protected $_name = 'visao';
+
+    /**
+     * _primary
+     *
+     * @var bool
+     * @access protected
+     */
+    protected $_primary = 'idvisao';
 
     /**
      * Metodo para buscar as visoes do agente

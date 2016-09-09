@@ -1,43 +1,42 @@
 <?php
 
 /**
- * Class Agente_Model_Internet
+ * Class Agente_Model_Nomes
  *
- * @name Agente_Model_Internet
+ * @name Agente_Model_Nomes
  * @package Modules/Agente
  * @subpackage Models
  * @version $Id$
  *
  * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 06/09/2016
+ * @since 05/09/2016
  *
  * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
-class Agente_Model_Internet extends MinC_Db_Model
+class Agente_Model_Nomes extends MinC_Db_Model
 {
-    protected $_idinternet;
+    protected $_idnome;
     protected $_idagente;
-    protected $_tipointernet;
+    protected $_tiponome;
     protected $_descricao;
     protected $_status;
-    protected $_divulgar;
     protected $_usuario;
 
     /**
      * @return mixed
      */
-    public function getIdinternet()
+    public function getIdnome()
     {
-        return $this->_idinternet;
+        return $this->_idnome;
     }
 
     /**
-     * @param mixed $idinternet
+     * @param mixed $idnome
      */
-    public function setIdinternet($idinternet)
+    public function setIdnome($idnome)
     {
-        $this->_idinternet = $idinternet;
+        $this->_idnome = $idnome;
     }
 
     /**
@@ -59,17 +58,17 @@ class Agente_Model_Internet extends MinC_Db_Model
     /**
      * @return mixed
      */
-    public function getTipointernet()
+    public function getTiponome()
     {
-        return $this->_tipointernet;
+        return $this->_tiponome;
     }
 
     /**
-     * @param mixed $tipointernet
+     * @param mixed $tiponome
      */
-    public function setTipointernet($tipointernet)
+    public function setTiponome($tiponome)
     {
-        $this->_tipointernet = $tipointernet;
+        $this->_tiponome = $tiponome;
     }
 
     /**
@@ -107,22 +106,6 @@ class Agente_Model_Internet extends MinC_Db_Model
     /**
      * @return mixed
      */
-    public function getDivulgar()
-    {
-        return $this->_divulgar;
-    }
-
-    /**
-     * @param mixed $divulgar
-     */
-    public function setDivulgar($divulgar)
-    {
-        $this->_divulgar = $divulgar;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getUsuario()
     {
         return $this->_usuario;
@@ -136,5 +119,23 @@ class Agente_Model_Internet extends MinC_Db_Model
         $this->_usuario = $usuario;
     }
 
-
+    /**
+     *
+     * @name toArray
+     * @return array
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  01/09/2016
+     */
+    public function toArray()
+    {
+        return array(
+            'idnome' => self::getIdnome(),
+            'idagente' => self::getIdagente(),
+            'tiponome' => self::getTiponome(),
+            'descricao' => self::getDescricao(),
+            'status' => self::getStatus(),
+            'usuario' => self::getUsuario()
+        );
+    }
 }

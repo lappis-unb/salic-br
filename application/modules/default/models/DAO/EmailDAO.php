@@ -12,7 +12,7 @@
 class EmailDAO extends Zend_Db_Table
 {
     /**
-     * Método para envio de e-mail
+     * Mï¿½todo para envio de e-mail
      * @access public
      * @static
      * @param string $email
@@ -35,8 +35,8 @@ class EmailDAO extends Zend_Db_Table
     }
 
      /**
-	 * Método para buscar e-mails
-     * Módulo Fiscalizar Projetos - Comunicar Proponente da Fiscalização
+	 * Mï¿½todo para buscar e-mails
+     * Mï¿½dulo Fiscalizar Projetos - Comunicar Proponente da Fiscalizaï¿½ï¿½o
 	 * @access public
 	 * @static
 	 * @param string $email

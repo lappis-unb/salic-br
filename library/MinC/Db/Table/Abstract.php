@@ -25,6 +25,11 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         return (isset($this->_primary))? $this->_primary : '';
     }
 
+    public function getSequence()
+    {
+        return (isset($this->_sequence))? $this->_sequence : true;
+    }
+
     /**
      * GenericModel constructor.
      *
@@ -427,6 +432,27 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     }
 
     /**
+     * Deleta varios registros conforme o where.
+     *
+     * @name deleteBy
+     * @param array $arrWhere - Array com os parametros para o where, onde chave do array e a coluna da tabela e o valor do array e o valor da coluna.
+     * @return int - Quantidade de rows deletadas.
+     * @throws Exception
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  06/09/2016
+     */
+    public function deleteBy(array $arrWhere) {
+
+        if (empty($arrWhere)) throw new Exception('Parametro where vazio, voce nao vai querer deletar tudo da tabela vai?');
+        $arrWhereNew = array();
+        foreach ($arrWhere as $columnName => $columnValue) {
+            $arrWhereNew[] = $this->getAdapter()->quoteInto($columnName . ' = ?', trim($columnValue));
+        }
+        return $this->delete($arrWhereNew);
+    }
+
+    /**
      *
      * @name findAll
      * @param array $where
@@ -444,4 +470,14 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         $result = $this->fetchAll($select);
         return ($result)? $result->toArray() : array();
     }
+
+    public function getExpressionDate()
+    {
+        if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            return new Zend_Db_Expr('GETDATE()');
+        } else {
+            return new Zend_Db_Expr('NOW()');
+        }
+    }
+
 }

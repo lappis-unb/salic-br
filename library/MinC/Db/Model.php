@@ -39,4 +39,27 @@ class MinC_Db_Model
         return $this;
     }
 
+    /**
+     *
+     * @name toArray
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  05/09/2016
+     */
+    public function toArray()
+    {
+        $methods = get_class_methods($this);
+        $class_vars = get_class_vars(get_class($this));
+        $array = array();
+        foreach ($class_vars as $key => $value) {
+            $key = str_replace('_', '', $key);
+            $method = 'get' . ucfirst($key);
+            if (in_array($method, $methods)) {
+                $array[$key] = $this->$method();
+            }
+        }
+
+        return $array;
+    }
+
 }
