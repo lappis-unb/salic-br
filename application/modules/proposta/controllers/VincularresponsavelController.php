@@ -106,10 +106,9 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             if ($nome != '') {
                 $where["nm.Descricao like (?)"] = "%" . $nome . "%";
             }
-
             $buscarvinculo = $ag->buscarNovoProponente($where, $this->idResponsavel);
             if ($buscarvinculo->count() > 0) {
-                $this->montaTela('proposta/vincularresponsavel/mostraragentes.phtml', array('vinculo' => $buscarvinculo, 'idResponsavel' => $this->idResponsavel));
+                $this->montaTela('vincularresponsavel/mostraragentes.phtml', array('vinculo' => $buscarvinculo, 'idResponsavel' => $this->idResponsavel));
             } else {
                 echo "<div id='msgAgenteVinculado'>Nenhum registro encontrado!</div>
                     <script>
@@ -142,28 +141,30 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $pp = new Proposta_Model_PreProjeto();
         $vprp = new tbVinculoPropostaResponsavelProjeto();
         $emailDAO = new EmailDAO();
-        $internetDAO = new Agente_Model_Internet();
+        $tableInternet = new Agente_Model_DbTable_Internet();
 
         /*Temos que ver aonde vamos buscar o email do cara?*/
-        $buscarEmail = $internetDAO->buscarEmailAgente(null, $_POST['idAgente'], 1, null, true);
+        $buscarEmail = $tableInternet->buscarEmailAgente(null, $_POST['idAgente'], 1, null, false);
+        if ($buscarEmail){
+            $buscarEmail = array_change_key_case($buscarEmail->toArray());
+        }
 
-        $emailProponente = !empty($buscarEmail->current()) ? $buscarEmail[0]->Email : null;
+        $emailProponente = $buscarEmail ? $buscarEmail['email'] : null;
         $assunto = 'Solicitação de vinculo ao responsável';
         $texto = 'Favor verificar o vinculo solicitado no Sistema SALIC WEB';
 
         if (isset($_POST['solicitarvinculo'])) {
             $idAgenteProponente = $_POST['idAgente'];
             $idUsuarioResponsavel = $this->idResponsavel;
-
-            $dados = array('idUsuarioResponsavel' => $idUsuarioResponsavel,
-                'idAgenteProponente' => $idAgenteProponente,
-                'dtVinculo' => new Zend_Db_Expr('GETDATE()'),
-                'siVinculo' => 0
+            $dados = array('idusuarioresponsavel' => $idUsuarioResponsavel,
+                'idagenteproponente' => $idAgenteProponente,
+                'dtvinculo' => $tableInternet->getExpressionDate(),
+                'sivinculo' => 0
             );
             try {
 
-                $where['idAgenteProponente   = ?'] = $idAgenteProponente;
-                $where['idUsuarioResponsavel = ?'] = $idUsuarioResponsavel;
+                $where['idagenteproponente   = ?'] = $idAgenteProponente;
+                $where['idusuarioresponsavel = ?'] = $idUsuarioResponsavel;
                 $vinculocadastrado = $v->buscar($where);
 
                 if (count($vinculocadastrado) > 0) {
@@ -176,6 +177,9 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
                 echo json_encode(array('error' => false));
             } catch (Zend_Exception $e) {
+                echo '<pre>';
+                var_dump($e->getMessage());
+                exit;
                 echo json_encode(array('error' => true));
             }
         }

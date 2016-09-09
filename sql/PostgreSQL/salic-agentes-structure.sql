@@ -516,7 +516,7 @@ CREATE TABLE agentes.tbTitulacaoConselheiro
   stConselheiro CHAR DEFAULT 'A' NOT NULL,
   CONSTRAINT fk_Agentes_01 FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
 );
-CREATE TABLE agentes.tbVinculo
+CREATE TABLE agentes.tbvinculo
 (
   idVinculo INT PRIMARY KEY NOT NULL ,
   idAgenteProponente INT NOT NULL,
@@ -525,6 +525,9 @@ CREATE TABLE agentes.tbVinculo
   idUsuarioResponsavel INT NOT NULL,
   CONSTRAINT tbVinculo_Agentes_02 FOREIGN KEY (idAgenteProponente) REFERENCES agentes.Agentes (idAgente)
 );
+CREATE SEQUENCE agentes.tbvinculo_idvinculo_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE agentes.tbvinculo ALTER COLUMN idvinculo SET DEFAULT nextval('agentes.tbvinculo_idvinculo_seq');
+ALTER SEQUENCE agentes.tbvinculo_idvinculo_seq OWNED BY agentes.tbvinculo.idvinculo;
 CREATE TABLE agentes.tbVinculoProposta
 (
   idVinculoProposta INT PRIMARY KEY NOT NULL ,

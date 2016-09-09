@@ -65,7 +65,7 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
     }
 
     /**
-     * M�todo para buscar o(s) e-mail(s) do agente
+     * Metodo para buscar o(s) e-mail(s) do agente
      * @access public
      * @param string $cpfcnpj
      * @param integer $idAgente
@@ -80,42 +80,43 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from(
             array("e" => $this->_name),
-            array("e.idInternet AS idEmail"
-            ,"e.TipoInternet AS TipoEmail"
-            ,"e.Descricao    AS Email"
-            ,"e.Status"
-            ,"e.Divulgar"),
-            'Agentes.dbo'
+            array("e.idinternet as idemail"
+            ,"e.tipointernet as tipoemail"
+            ,"e.descricao as email"
+            ,"e.status"
+            ,"e.divulgar"),
+            $this->_schema
         );
 
         $select->join(
-            array("a" => "Agentes")
-            ,"a.idAgente = e.idAgente"
-            ,array(), 'Agentes.dbo'
+            array("a" => "agentes"),
+            "a.idAgente = e.idagente",
+            array(),
+            $this->_schema
         );
 
         // busca pelo cnpj ou cpf
         if (!empty($cpfcnpj))
         {
-            $select->where("a.CNPJCPF = ?", $cpfcnpj);
+            $select->where("a.cnpjcpf = ?", $cpfcnpj);
         }
 
         // busca pelo id do agente
         if (!empty($idAgente))
         {
-            $select->where("a.idAgente = ?", $idAgente);
+            $select->where("a.idagente = ?", $idAgente);
         }
 
         // busca pelo email ativado/desativado
         if (!empty($statusEmail))
         {
-            $select->where("e.Status = ?", $statusEmail);
+            $select->where("e.status = ?", $statusEmail);
         }
 
         // busca pelo email de divulgacao
         if (!empty($statusDivulgacao))
         {
-            $select->where("e.Divulgar = ?", $statusDivulgacao);
+            $select->where("e.divulgar = ?", $statusDivulgacao);
         }
 
         return $buscarTodos ? $this->fetchAll($select) : $this->fetchRow($select);
@@ -125,7 +126,7 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
      * M�todo para cadastrar
      * @access public
      * @param array $dados
-     * @return integer (retorna o �ltimo id cadastrado)
+     * @return integer (retorna o ultimo id cadastrado)
      */
     public function cadastrarEmailAgente($dados)
     {
