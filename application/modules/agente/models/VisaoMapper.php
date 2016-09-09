@@ -20,4 +20,26 @@ class Agente_Model_VisaoMapper extends MinC_Db_Mapper
     {
         parent::setDbTable('Agente_Model_DbTable_Visao');
     }
+
+    public function saveCustom($arrData)
+    {
+        /*
+         * Validacao - Se for componente da comissao ele nao salva a visao
+         * Regra o componente da comissao nao pode alterar sua visao.
+         */
+        if ($arrData['grupologado'] != 118) {
+            $arrDataVisao = array(
+                'idagente' => $arrData['idagente'],
+                'visao' => $arrData['visao'],
+                'usuario' => $arrData['idusuario'],
+                'stativo' => 'A'
+            );
+            $arrVisao = $this->findBy(array('idagente' => $arrData['idagente'], 'visao' => $arrData['visao']));
+            if ($arrVisao) {
+                return $arrVisao['idvisao'];
+            } else {
+                return $this->save(new Agente_Model_Visao($arrDataVisao));
+            }
+        }
+    }
 }

@@ -30,12 +30,79 @@ class MinC_Db_Mapper
         return $this;
     }
 
+    /**
+     *
+     * @name getDbTable
+     * @return MinC_Db_Table_Abstract
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  ${DATE}
+     */
     public function getDbTable()
     {
 //        if (null === $this->_dbTable) {
 //            $this->setDbTable('Agente_Model_DbTable_Agentes');
 //        }
         return $this->_dbTable;
+    }
+
+    /**
+     * @see Zend_Db_Adapter_Abstract::beginTransaction
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  06/09/2016
+     */
+    public function beginTransaction()
+    {
+        $this->getDbTable()->getAdapter()->beginTransaction();
+        return $this;
+    }
+
+    /**
+     * @see Zend_Db_Adapter_Abstract::rollBack
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  06/09/2016
+     */
+    public function rollBack()
+    {
+        $this->getDbTable()->getAdapter()->rollBack();
+        return $this;
+    }
+
+    /**
+     * @see Zend_Db_Adapter_Abstract::commit
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  06/09/2016
+     */
+    public function commit()
+    {
+        $this->getDbTable()->getAdapter()->commit();
+        return $this;
+    }
+
+    public function findBy($arrData)
+    {
+        return $this->getDbTable()->findBy($arrData);
+    }
+
+    /**
+     * @see MinC_Db_Table_Abstract::deleteBy
+     */
+    public function deleteBy(array $arrWhere)
+    {
+        return $this->getDbTable()->deleteBy($arrWhere);
+    }
+
+    public function delete($intId)
+    {
+        $row = $this->getDbTable()->find($intId)->current();
+        if ($row) {
+            return $row->delete();
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -51,15 +118,24 @@ class MinC_Db_Mapper
     public function save($model)
     {
         $table = $this->getDbTable();
-        $pk = reset($table->getPrimary());
+        $pk = is_array($table->getPrimary())? reset($table->getPrimary()) : $table->getPrimary();
         $method = 'get' . ucfirst($pk);
         $pkValue = $model->$method();
-        $data = array_filter($model->toArray());
-        if (null === ($id = $pkValue)) {
-            unset($data[$pk]);
-            $this->getDbTable()->insert($data);
+        $data = array_filter($model->toArray(), 'strlen');
+
+        if ($table->getSequence()) {
+            if (null === ($pkValue)) {
+                unset($data[$pk]);
+                return $table->insert($data);
+            } else {
+                $table->update($data, array($pk . ' = ?' => $pkValue));
+                return $pkValue;
+            }
         } else {
-            $this->getDbTable()->update($data, array('id = ?' => $id));
+            $row = $table->find($pkValue)->current();
+            if (!$row) $row = $table->createRow();
+            $row->setFromArray($data)->save();
+            return $pkValue;
         }
     }
 
