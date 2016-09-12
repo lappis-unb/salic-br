@@ -4107,7 +4107,10 @@ class ReadequacoesController extends GenericControllerNew {
             }
             die();
         } else {
-            echo json_encode(array('msg' => 'Planilha existente'));
+            echo json_encode(array(
+                'msg' => 'Planilha existente',
+                'idReadequacao' => $idReadequacao
+            ));
         }
 
     }
