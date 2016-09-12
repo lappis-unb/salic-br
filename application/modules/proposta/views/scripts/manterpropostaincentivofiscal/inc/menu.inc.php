@@ -202,7 +202,7 @@
         <?php
             $idVinculoProposta = "";
             if(!empty($this->dadosVinculo[0])) {
-                $idVinculoProposta = $this->dadosVinculo[0]->idVinculoProposta;
+                $idVinculoProposta = $this->dadosVinculo[0]->idvinculoproposta;
             }
         ?>
         <input type="hidden" value="<?php echo $idVinculoProposta; ?>" name="idVinculoProposta"/>
