@@ -64,8 +64,10 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $tblAgentes = new Agente_Model_DbTable_Agentes();
         $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
 
+        //var_dump($acessos);die;
         if ($agente) {
-            $this->idResponsavel = $agente['idusuario'];
+            //$this->idResponsavel = $agente['usuario'];
+            $this->idResponsavel = $acessos['idusuario'];
             $this->idAgente = $agente['idagente'];
         }
         if ($usuario) {
@@ -80,7 +82,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $this->usuario = isset($arrAuth['usu_codigo']) ? 'func' : 'prop';
         $this->view->usuarioLogado = isset($arrAuth['usu_codigo']) ? 'func' : 'prop';
         $this->view->usuarioProponente = $this->usuarioProponente;
-
         parent::init();
 
         //recupera ID do pre projeto (proposta)

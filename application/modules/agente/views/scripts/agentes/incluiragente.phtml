@@ -1,27 +1,20 @@
-<?php if ($this->modulo != "movimentacaobancaria") : ?>
-
-    <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
-    <div id="breadcrumb">
-        <ul>
-            <li class="first"><a href="#" title="Ir para Início">Início</a></li>
-            <li><a href="#" title="Agentes">Manter Agentes</a></li>
-            <li class="last">Principal</li>
-        </ul>
-    </div>
-    <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-
-
-    <!-- ========== INÍCIO TÍTULO ========== -->
-    <div id="titulo">
-        <div id="novo">Novo cadastro<span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
-    </div>
-    <!-- ========== FIM TÍTULO ========== -->
-
-
-
-    <!-- ========== INÍCIO CONTEÚDO ========== -->
-    <div id="conteudo">
+    <?php if ($this->modulo != "movimentacaobancaria") : ?>
+        <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+        <div id="breadcrumb">
+            <ul>
+                <li class="first"><a href="#" title="Ir para Início">Início</a></li>
+                <li><a href="#" title="Agentes">Manter Agentes</a></li>
+                <li class="last">Principal</li>
+            </ul>
+        </div>
+        <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
+        <!-- ========== INÍCIO TÍTULO ========== -->
+        <div id="titulo">
+            <div id="novo">Novo cadastro<span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+        </div>
+        <!-- ========== FIM TÍTULO ========== -->
+        <!-- ========== INÍCIO CONTEÚDO ========== -->
+        <div id="conteudo">
     <?php endif; ?>
 
     <div id="confirma"></div>
@@ -39,10 +32,8 @@
             </tr>
         </table>
     </div>
-
     <div id="novocadastro">
         <form name="formCadAgentes" id="formCadAgentes" method="post" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvaagentegeral'), null, true); ?>">
-
             <input type="hidden" name="grupologado" id="grupologado" class="input_simples" value="<?php echo $this->grupoativo; ?>" />
             <input type="hidden" name="acao" id="acao" value="<?php echo $acao; ?>" />
             <input type="hidden" name="idResponsavel" id="idResponsavel" value="<?php echo $this->idResponsavelKeyLog; ?>" />
@@ -111,7 +102,6 @@
 
             <!-- ========== INÍCIO LISTA DE ÁREA ABERTA DE ACORDO COM A VISÃO ========== -->
             <div id="visaocomponente" class="sumir">
-
                 <table id="tbvisaocomponente"  class="tabela sumir">
                     <tr class="titulo_tabela">
                         <th colspan="4">LISTA DE ÁREA</th>
@@ -177,9 +167,6 @@
                 </table>
             </div>
             <!-- ========== FIM LISTA DE ÁREA ABERTA DE ACORDO COM A VISÃO ========== -->
-
-
-
             <!-- ========== INÍCIO FORMULÁRIO ENDERECO ========== -->
             <table id="tabEndereco" class="tabela">
                 <tr>
@@ -208,7 +195,6 @@
                                             <?php echo $comboestado; ?>
                                 </option>
                             <?php endforeach; ?>
-
                         </select>
                         <span id="erroUf" class="spanError"></span>
                     </td>
@@ -225,7 +211,6 @@
                                     </option>
                                 <?php endforeach; ?>
                             <?php endif; ?>
-
                         </select>
                         <span id="erroCidade" class="spanError"></span>
                     </td>
@@ -416,23 +401,16 @@
                     <td class="centro"><input type="button" class="btn_salvar" value=" " onclick="validaAgenteNovo();"  /></td>
                 </tr>
             </table>
-
         </form>
-
     </div>
-
-    <?php if ($this->modulo != "movimentacaobancaria") { ?>
-    </div>
-    <!-- ========== FIM CONTEÚDO ========== -->
-
-
-
-    <!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
-    <div id="rodapeConteudo"><span></span></div>
-    <!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
-
-    <br clear="all" />
-<?php } ?>
+    <?php if ($this->modulo != "movimentacaobancaria") : ?>
+        </div>
+        <!-- ========== FIM CONTEÚDO ========== -->
+        <!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+        <div id="rodapeConteudo"><span></span></div>
+        <!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+        <br clear="all" />
+    <?php endif ?>
 <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/agentes.js"></script>
 <?php $ponto = ''; ?>
 <?php
@@ -444,7 +422,7 @@ if (empty($_GET['acao'])) {
 ?>
 <?php if ($this->modulo != "movimentacaobancaria") : ?>
     <?php $ponto = '*'; ?>
-    <?php require_once "inc/menu.inc.php"; ?>
+    <?php echo $this->partial("agentes/inc/menu.inc.php",$this) ; ?>
 <?php endif; ?>
 
 <!-- Alysson - Adicionando Chamada ao WebService do Corporativo -->
@@ -795,12 +773,10 @@ if (empty($_GET['acao'])) {
 
     } // fecha função buscar_cep()
 
-
     $(document).ready(function() {
 
         var tipocpf = '<?php echo $this->tipocpf; ?>';
         var cpf 	= '<?php echo $this->cpf; ?>';
-
 
         if(tipocpf == 'cnpj')
         {
@@ -814,9 +790,5 @@ if (empty($_GET['acao'])) {
         $("#cpf").val(cpf);
 
         buscaragente($("#cpf").val());
-
     });
-
-
-
 </script>

@@ -1244,7 +1244,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             ->from(['a'=>'preprojeto'], null,'sac.dbo')
             ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], 'agentes.dbo')
             ->joinLeft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['c' => 'sgcacesso'], 'b.cnpjcpf = c.cpf', [], 'controledeacesso.dbo')
+            ->join(['c' => 'sgcacesso'], 'b.cnpjcpf = c.cpf', null, 'controledeacesso.dbo')
             ->where('c.idusuario = ?', $idResponsavel)
         ;
 
