@@ -925,13 +925,14 @@ else if($this->tipoPlanilha == 6){ ?>
                                 $vlAprovado = 0;
                                 foreach ($this->planilha[$fonte][$produto][$etapa][$cidade] as $planilha) {
                                     $vlAprovado += $planilha['vlAprovado'];
+                                    // soma somente quando não tiver excluído o item
                                     if($planilha['tpAcao'] != 'E'){
                                         $valorAprovadoTotalUf += $planilha['vlAprovado'];
+                                        $valorAprovadoTotalEtapa += $planilha['vlAprovado'];
+                                        $valorAprovadoTotalProduto += $planilha['vlAprovado'];
+                                        $valorAprovadoTotalIncentivo += $planilha['vlAprovado'];
+                                        $TotalAprovado += $planilha['vlAprovado'];
                                     }
-                                    $valorAprovadoTotalEtapa += $planilha['vlAprovado'];
-                                    $valorAprovadoTotalProduto += $planilha['vlAprovado'];
-                                    $valorAprovadoTotalIncentivo += $planilha['vlAprovado'];
-                                    $TotalAprovado += $planilha['vlAprovado'];
                                     ?>
                                 
                                     <?php
