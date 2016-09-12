@@ -28,7 +28,6 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
      */
     public function verificarPermissaoProposta($idPreProjeto, $idUsuarioLogado)
     {
-        //var_dump($idPreProjeto, $idUsuarioLogado);die;
         //$select = new Zend_Db_Expr("SELECT SAC.dbo.fnVerificarPermissao(1,'',$idUsuarioLogado,$idPreProjeto) as Permissao");
         $db = Zend_Db_Table::getDefaultAdapter();
 
