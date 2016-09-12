@@ -419,11 +419,13 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      * @return array
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @author wouerner <wouerner@gmail.com>
      * @since  05/09/2016
      */
     public function findBy(array $where) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
+        $select->from($this->_name, $this->_getCols(), $this->_schema);
         foreach ($where as $columnName => $columnValue) {
             $select->where($columnName . ' = ?', trim($columnValue));
         }

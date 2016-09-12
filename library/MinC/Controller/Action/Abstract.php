@@ -586,7 +586,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         if (!isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
             //Verifica Permiss?o de Projeto
             if ($projeto) {
-                $msgERRO = 'Voc? n?o tem permiss?o para acessar esse Projeto!';
+                $msgERRO = 'Você não tem permissão para acessar esse Projeto!';
                 $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
                 $idPronac = $this->_request->getParam('idpronac') ? $this->_request->getParam('idpronac') : $this->_request->getParam('idPronac');
                 if (strlen($idPronac) > 7) {
@@ -600,7 +600,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             //Verifica Permiss?o de Proposta
             if ($proposta) {
                 $msgERRO = 'Voc? n?o tem permiss?o para acessar essa Proposta!';
-                $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
+                $idUsuarioLogado = $auth->getIdentity()->idusuario;
                 $idPreProjeto = $this->_request->getParam('idPreProjeto');
 
                 $fnVerificarPermissao = new Autenticacao_Model_FnVerificarPermissao();
