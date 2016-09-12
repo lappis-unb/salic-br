@@ -4318,15 +4318,15 @@ class ReadequacoesController extends GenericControllerNew {
         $mensagem = array(
             'custo_administrativo' => array(
                 'OK' => "O custo administrativo inferior a 15% do valor total do projeto.",
-                'PENDENTE' => "O custo administrativo supera 15% do valor total do projeto. Para corrigir, reduza o valor da etapa (em R$)",
+                'PENDENTE' => "O custo administrativo supera 15% do valor total do projeto. Para corrigir, reduza o valor da etapa em R$ ",
             ),            
             'remuneracao' => array(
                 'OK' => "Remuneração para captação de recursos está dentro dos parâmetros permitidos.",
-                'PENDENTE' => "A remuneração para captação de recursos supera 10% do valor do projeto ou R$ 100.000,00. O valor correto é R$"
+                'PENDENTE' => "A remuneração para captação de recursos supera 10% do valor do projeto ou R$ 100.000,00. O valor correto é R$ "
             ),
             'divulgacao' => array(
                 'OK' => "Divulgação / Comercialização está dentro dos parâmetros permitidos.",
-                'PENDENTE' => "A divulgação ou a comercialização supera 20%. Para corrigir, reduza o valor da etapa (em R$)"
+                'PENDENTE' => "A divulgação ou a comercialização supera 20%. Para corrigir, reduza o valor da etapa em R$ "
             )
         );
         
