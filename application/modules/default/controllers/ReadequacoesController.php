@@ -1922,13 +1922,14 @@ class ReadequacoesController extends GenericControllerNew {
         //==== parametro de ordenacao  ======//
         if($this->_request->getParam("ordem")) {
             $ordem = $this->_request->getParam("ordem");
-            if($ordem == "ASC") {
-                $novaOrdem = "DESC";
-            }else {
+            if($ordem == "DESC") {
                 $novaOrdem = "ASC";
+            }else {
+                $novaOrdem = "DESC";
             }
         } else {
-            $ordem = "ASC";
+            $campo = 8;  //qtDiasAguardandoDistribuicao default
+            $ordem = "DESC";
             $novaOrdem = "ASC";
         }
         
@@ -1939,8 +1940,8 @@ class ReadequacoesController extends GenericControllerNew {
             $ordenacao = "&campo=".$campo."&ordem=".$ordem;
 
         } else {
-            $campo = null;
-            $order = array(5); //Dt. Solicitação
+            // ordenação padrão
+            $order = array($campo." ".$ordem);
             $ordenacao = null;
         }
 
