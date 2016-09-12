@@ -18,8 +18,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     public function _initPath(){
 
-        $DIR_BANCO      = "bancos_treinamento";
-        $DIR_BANCOP     = "conexao_02";
+        $DIR_BANCO      = "";
+        $DIR_BANCOP     = "";
         $DIR_LIB        = "./library/";                       // bibliotecas
         $DIR_CONFIG     = "./application/configs/$DIR_BANCO.ini"; // configuraççes
         $DIR_CONFIGP    = "./application/configs/config.ini"; // configurações
@@ -140,7 +140,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     public function _initRegistry()
     {
         $DIR_CONFIGP    = "./application/configs/config.ini";
-        $DIR_BANCOP     = "conexao_02";
+        $DIR_BANCOP     = "";
 
         /* configurações do banco de dados */
         $config = new Zend_Config_Ini($DIR_CONFIGP, $DIR_BANCOP);
