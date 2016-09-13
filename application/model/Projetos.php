@@ -54,7 +54,7 @@ class Projetos extends GenericModel
                 'Pronac',
                 'NomeProjeto'))
             ->order(array(
-                'Pronac',
+                'Pronac DESC',
                 'NomeProjeto'))
         ;
         # Filtros

@@ -60,8 +60,10 @@ class MensagemRestController extends Minc_Controller_AbstractRest{
         if($idMensagem){
             $modelMensagem = new Mensagem();
             $mensagem = $modelMensagem->find($idMensagem)->current();
-            $mensagem->dtAcesso = new Zend_Db_Expr('GETDATE()');
-            $mensagem->save();
+            if(!$mensagem->dtAcesso){
+                $mensagem->dtAcesso = new Zend_Db_Expr('GETDATE()');
+                $mensagem->save();
+            }
             $result = (object)$mensagem->toArray();
         }
         
@@ -69,7 +71,22 @@ class MensagemRestController extends Minc_Controller_AbstractRest{
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($result));
     }
 
-    public function deleteAction(){}
+    public function deleteAction(){
+        $idMensagem = $this->_request->getParam('idMensagem');
+        $result = new stdClass();
+        if($idMensagem){
+            $modelMensagem = new Mensagem();
+            $mensagem = $modelMensagem->find($idMensagem)->current();
+            if(!$mensagem->dtExclusao){
+                $mensagem->dtExclusao = new Zend_Db_Expr('GETDATE()');
+                $mensagem->save();
+            }
+            $result = (object)$mensagem->toArray();
+        }
+        
+        # Resposta do serviço.
+        $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode($result));
+    }
 
     /**
      * Formata lista de mensagens para o formato utf8.
