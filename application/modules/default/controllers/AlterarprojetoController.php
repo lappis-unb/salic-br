@@ -1354,7 +1354,8 @@ class AlterarprojetoController extends GenericControllerNew {
 
     public function salvaalterarprojetoAction() {
         $post = Zend_Registry::get('post');
-
+        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        
         //$pronac = addslashes($post->pronac);
         $pronac = $this->_request->getParam("pronac");
         //verficia se o pronac esta criptografado
