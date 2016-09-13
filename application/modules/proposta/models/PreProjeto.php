@@ -1135,7 +1135,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()->distinct()
-            ->from(['j'=>'PreProjeto'], [],'SAC.dbo')
+            ->from(['j'=>'PreProjeto'], [], 'SAC.dbo')
             ->join(['a' => 'Agentes'], 'j.idAgente = a.idAgente', [],'AGENTES.dbo')
             ->join(['v' => 'tbVinculoProposta'], 'j.idPreProjeto = v.idPreProjeto', [],'AGENTES.dbo')
             ->join(['y' => 'tbVinculo'], 'v.idVinculo = y.idVinculo', ['y.idVinculo', 'y.siVinculo', 'y.idUsuarioResponsavel'],'AGENTES.dbo')
@@ -1241,53 +1241,57 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(['a'=>'preprojeto'], null,'sac.dbo')
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], 'agentes.dbo')
-            ->joinLeft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['c' => 'sgcacesso'], 'b.cnpjcpf = c.cpf', null, 'controledeacesso.dbo')
+            ->from(['a'=>'preprojeto'], null, $this->_schema)
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], $this->getSchema('agentes'))
+            ->joinLeft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['c' => 'sgcacesso'], 'b.cnpjcpf = c.cpf', null, $this->getSchema('controledeacesso'))
             ->where('c.idusuario = ?', $idResponsavel)
         ;
 
         $sql2 = $db->select()
-            ->from(['a'=>'preprojeto'], null,'sac.dbo')
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], 'agentes.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['c' => 'tbvinculoproposta'], 'a.idpreprojeto = c.idpreprojeto', null, 'agentes.dbo')
-            ->join(['d' => 'tbvinculo'], 'c.idvinculo = d.idvinculo', null, 'agentes.dbo')
-            ->join(['f' => 'agentes'], 'd.idagenteproponente = f.idagente', null, 'agentes.dbo')
-            ->join(['e' => 'sgcacesso'], 'f.cnpjcpf = e.cpf', null, 'controledeacesso.dbo')
+            ->from(['a'=>'preprojeto'], null, $this->_schema)
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], $this->getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['c' => 'tbvinculoproposta'], 'a.idpreprojeto = c.idpreprojeto', null, $this->getSchema('agentes'))
+            ->join(['d' => 'tbvinculo'], 'c.idvinculo = d.idvinculo', null, $this->getSchema('agentes'))
+            ->join(['f' => 'agentes'], 'd.idagenteproponente = f.idagente', null, $this->getSchema('agentes'))
+            ->join(['e' => 'sgcacesso'], 'f.cnpjcpf = e.cpf', null, $this->getSchema('controledeacesso'))
             ->where('e.idusuario = ?', $idResponsavel)
             ->where('c.sivinculoproposta = 2')
             ;
 
         $sql3 = $db->select()
-            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'],'agentes.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['b' => 'vinculacao'], 'a.idagente = b.idvinculoprincipal', null, 'agentes.dbo')
-            ->join(['c' => 'agentes'], 'b.idagente = c.idagente', null, 'agentes.dbo')
-            ->join(['d' => 'sgcacesso'], 'c.cnpjcpf = d.cpf', null, 'controledeacesso.dbo')
+            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'], $this->getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['b' => 'vinculacao'], 'a.idagente = b.idvinculoprincipal', null, $this->getSchema('agentes'))
+            ->join(['c' => 'agentes'], 'b.idagente = c.idagente', null, $this->getSchema('agentes'))
+            ->join(['d' => 'sgcacesso'], 'c.cnpjcpf = d.cpf', null, $this->getSchema('controledeacesso'))
             ->where('d.idusuario = ?', $idResponsavel)
             ;
 
         $sql4 = $db->select()
-            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'],'agentes.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['b' => 'tbvinculo'], 'a.idagente = b.idagenteproponente', null, 'agentes.dbo')
-            ->join(['c' => 'sgcacesso'], 'b.idusuarioresponsavel = c.idusuario', null, 'controledeacesso.dbo')
+            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'], $this->getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['b' => 'tbvinculo'], 'a.idagente = b.idagenteproponente', null, $this->getSchema('agentes'))
+            ->join(['c' => 'sgcacesso'], 'b.idusuarioresponsavel = c.idusuario', null, $this->getSchema('controledeacesso'))
             ->where('b.sivinculo = 2')
             ->where('c.idusuario = ?', $idResponsavel)
             ;
 
         $sql5 = $db->select()
-            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'],'agentes.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['b' => 'sgcacesso'], 'a.cnpjcpf = b.cpf', null, 'controledeacesso.dbo')
+            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'], $this->getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['b' => 'sgcacesso'], 'a.cnpjcpf = b.cpf', null, $this->getSchema('controledeacesso'))
             ->where('b.idusuario = ?', $idResponsavel)
             ;
 
         $sql = $db->select()->union(array($sql, $sql2, $sql3, $sql4, $sql5))
             ->group(['a.cnpjcpf', 'a.idagente', 'n.descricao'])
             ->order(['3 asc']);
+
+//        echo '<pre>';
+//        print_r(str_replace('"', '', $sql->assemble()));
+//        exit;
 
         return $db->fetchAll($sql);
     }
