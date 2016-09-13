@@ -70,10 +70,10 @@ Release 1.10.0
   * Fix: [readequações] adicionando órgão na listagem de readequações me análise para coordenador de acompanhamento (caso não seja SEFIC)
   * Fix: [readequações na cnic] adicionando verificacao se preencheu campos obrigatórios de avaliação; fix no envio da avaliação
   * Fix: [readequações] fix na avaliação de readequações na cnic
-  * Fix: [relatorios da CNIC] Adicionado permissao para Coordenador CNIC
-  * Fix: [remanejamento] encaminhando projeto para cnic gerava entrada extra desnecessária
-  * Fix: [relatórios trimestrais] Corrigido a data nos relatorios
   * Fix: [readequações] impedindo que proponente edite itens de outras fontes
+  * Fix: [relatorios da CNIC] Adicionado permissao para Coordenador CNIC
+  * Fix: [relatórios trimestrais] Corrigido a data nos relatorios
+  * Fix: [remanejamento] encaminhando projeto para cnic gerava entrada extra desnecessária
   * Fix: [segurança] removendo sessão corretamente no logout
   * Fix: [segurança] diversas correções na tela de consulta cidadão em diversos modelos utilizados
   * Fix: [segurança] correção na UploadDAO
