@@ -13,7 +13,6 @@ class SolicitarReadequacaoDoProjetoController extends MinC_Controller_Action_Abs
      */
 	public function init()
 	{
-        $mapperArea = new Agente_Model_AreaMapper();
 
         // define perfil para o scriptcase
 		parent::perfil(2);
@@ -28,6 +27,8 @@ class SolicitarReadequacaoDoProjetoController extends MinC_Controller_Action_Abs
 	 */
 	public function indexAction()
 	{
+        $mapperArea = new Agente_Model_AreaMapper();
+        
             // combo com as �reas culturais
         $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
 
@@ -955,6 +956,8 @@ class SolicitarReadequacaoDoProjetoController extends MinC_Controller_Action_Abs
 
     public function acaoAction()
 	{
+        $mapperArea = new Agente_Model_AreaMapper();
+
         $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
         $stPedido = 'T';
 

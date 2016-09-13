@@ -8,7 +8,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
     private $intTamPag = 100;
 
     public function init() {
-        $mapperArea = new Agente_Model_AreaMapper();
+
         $this->view->title = "Salic - Sistema de Apoio �s Leis de Incentivo � Cultura"; // t�tulo da p�gina
 
         $auth = Zend_Auth::getInstance(); // instancia da autentica��o
@@ -461,6 +461,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
 
 
     public function consolidacaopareceristaAction(){
+        $mapperArea = new Agente_Model_AreaMapper();
         $OrgaosDAO      =   new Orgaos();
         $NomesDAO       =   new Nomes();
         $AreaDAO        =   new Area();

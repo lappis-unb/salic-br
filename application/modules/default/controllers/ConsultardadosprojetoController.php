@@ -27,7 +27,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     public function init() {
-        $mapperArea = new Agente_Model_AreaMapper();
+
 
         // verifica as permissoes
         $PermissoesGrupo = array();
@@ -1549,6 +1549,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
     public function recursoAction()
     {
+        $mapperArea = new Agente_Model_AreaMapper();
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $idPronac = $this->_request->getParam("idPronac");
         if (strlen($idPronac) > 7) {

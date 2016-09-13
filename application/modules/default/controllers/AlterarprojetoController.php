@@ -1049,6 +1049,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
     }
 
     public function areasegmentoAction() {
+        $mapperArea = new Agente_Model_AreaMapper();
+
         $get = Zend_Registry::get('get');
         $pronac = addslashes($get->pronac);
         $pronac = Seguranca::dencrypt($pronac);

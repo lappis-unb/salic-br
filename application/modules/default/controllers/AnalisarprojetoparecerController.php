@@ -18,7 +18,6 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     public function init() {
-        $mapperArea = new Agente_Model_AreaMapper();
         $this->view->title = "Salic - Sistema de Apoio �s Leis de Incentivo � Cultura"; // t�tulo da p�gina
         $auth = Zend_Auth::getInstance(); // pega a autentica��o
         $Usuario = new UsuarioDAO(); // objeto usu�rio
@@ -347,6 +346,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
      * @return List
      */
     public function produtoAction() {
+        $mapperArea = new Agente_Model_AreaMapper();
         $auth = Zend_Auth::getInstance(); // pega a autentica��o
         $idusuario = $auth->getIdentity()->usu_codigo;
 
@@ -608,6 +608,8 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
      * @return List
      */
     public function produtosecundarioAction() {
+
+        $mapperArea = new Agente_Model_AreaMapper();
 
         $auth 		 = Zend_Auth::getInstance(); // pega a autentica��o
         $idusuario 	 = $auth->getIdentity()->usu_codigo;

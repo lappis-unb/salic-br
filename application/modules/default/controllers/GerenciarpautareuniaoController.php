@@ -17,7 +17,6 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     public function init() {
-        $mapperArea = new Agente_Model_AreaMapper();
         $this->view->title = "Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura"; // titulo da pagina
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $Usuario = new UsuarioDAO(); // objeto usuario
@@ -1330,6 +1329,9 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     public function parecerconsolidadorecursosAction() {
+
+        $mapperArea = new Agente_Model_AreaMapper();
+
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $idPronac = $_POST['idpronac'];
 

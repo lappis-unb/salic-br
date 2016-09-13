@@ -25,7 +25,6 @@ class RecursoController extends MinC_Controller_Action_Abstract
 	 */
 	public function init()
 	{
-        $mapperArea = new Agente_Model_AreaMapper();
 	    $auth = Zend_Auth::getInstance(); // pega a autentica��o
         $this->idUsuario = $auth->getIdentity()->usu_codigo; // usu�rio logado
 
@@ -586,6 +585,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
     }
 
     public function visualizarRecursoAction(){
+
+        $mapperArea = new Agente_Model_AreaMapper();
+
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 103 && $this->idPerfil != 127){
             parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
         }
@@ -682,6 +684,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
     }
 
     public function formAvaliarRecursoAction(){
+
+        $mapperArea = new Agente_Model_AreaMapper();
 
         if($this->idPerfil != 94 && $this->idPerfil != 110){
             parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
@@ -1238,6 +1242,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
 
     public function formAvaliarRecursoCnicAction() {
+
+        $mapperArea = new Agente_Model_AreaMapper();
 
         if($this->idPerfil != 118){
             parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
