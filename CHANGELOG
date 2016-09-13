@@ -1,3 +1,9 @@
+Release 1.10.1
+  * Fix: [dados bancários] exibindo contas corretamente
+  * Fix: [manutenção] alterar projeto/situação agora grava corretamente
+  * Fix: [mobile] Correção na autenticação em função do novo componente de mascara do aplicativo mobile
+  * Fix: [mobile] Funcionalidade de excluir mensagens
+
 Release 1.10.0
   * Novo: [comprovação financeira] agora é possível atualizar comprovantes de pagamento
   * Novo: [diligenciar] técnico não pode criar nova diligência caso exista alguma sem resposta
