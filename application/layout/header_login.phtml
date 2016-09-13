@@ -29,10 +29,10 @@
                 <!-- End Piwik Code -->
                 <?php } ?>
 
-		<title>Salic - Sistema de Apoio às Leis de Incentivo à Cultura</title>
+		<title>Salic - Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="title" content="Sistema Salic" />
-		<meta name="description" content="Sistema de Apoio às Leis de Incentivo à Cultura" />
+		<meta name="description" content="Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura" />
 		<link type="image/x-icon" rel="shortcut icon" href="<?php echo $this->baseUrl(); ?>/public/img/favicon.ico" />
 		<link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/geral.css" />
 		<link type="text/css" rel="stylesheet" media="screen" href="<?php echo $this->baseUrl(); ?>/public/css/recursos/importar.css" />
@@ -63,14 +63,8 @@
 		<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/scripts.js"></script>
 		<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/json.js"></script>
 	</head>
-
-
-
 	<body>
-
-
-
-		<!-- ========== INÍCIO TOPO ========== -->
+		<!-- ========== INï¿½CIO TOPO ========== -->
 		<div id="topo">
 			<div class="barra_governo">
 				<div class="fl">
@@ -85,14 +79,13 @@
 			</div>
 		</div>
 		<!-- ========== FIM TOPO ========== -->
-
-
-
-		<!-- ========== INÍCIO MENSAGENS (ERROS, CONFIRMAÇÕES E ADVERTÊNCIAS) ========== -->
+		<!-- ========== INICIO MENSAGENS (ERROS, CONFIRMACOES E ADVERTENCIAS) ========== -->
 		<?php if (isset($this->message)) : ?>
 		<div class="msg<?php echo $this->message_type; ?>">
 			<div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msg<?php echo $this->message_type; ?>" onclick="$('.msg<?php echo $this->message_type; ?>').hide();" onkeypress="$('.msg<?php echo $this->message_type; ?>').hide();"/></div>
 			<div><?php echo $this->message; ?></div>
 		</div>
 		<?php endif; ?>
-		<!-- ========== FIM MENSAGENS (ERROS, CONFIRMAÇÕES E ADVERTÊNCIAS) ========== -->
+		<!-- ========== FIM MENSAGENS (ERROS, CONFIRMAï¿½ï¿½ES E ADVERTï¿½NCIAS) ========== -->
+
+<?php echo $this->partial('partials/environment.phtml'); ?>
