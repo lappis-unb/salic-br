@@ -1135,7 +1135,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()->distinct()
-            ->from(['j'=>'PreProjeto'], [],'SAC.dbo')
+            ->from(['j'=>'PreProjeto'], [], 'SAC.dbo')
             ->join(['a' => 'Agentes'], 'j.idAgente = a.idAgente', [],'AGENTES.dbo')
             ->join(['v' => 'tbVinculoProposta'], 'j.idPreProjeto = v.idPreProjeto', [],'AGENTES.dbo')
             ->join(['y' => 'tbVinculo'], 'v.idVinculo = y.idVinculo', ['y.idVinculo', 'y.siVinculo', 'y.idUsuarioResponsavel'],'AGENTES.dbo')
@@ -1167,14 +1167,14 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $subSql = $db->select()
-            ->from(['pr' => 'projetos'], ['idprojeto'], 'sac.dbo')
+            ->from(['pr' => 'projetos'], ['idprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
             ->where('a.idpreprojeto = pr.idprojeto')
             ;
 
         $sql = $db->select()
-            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'],'sac.dbo')
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'],'agentes.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
+            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'],Proposta_Model_PreProjeto::getSchema('sac'))
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], Proposta_Model_PreProjeto::getSchema('agentes'))
             ->where('a.idagente = ? ', $idAgente)
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
@@ -1182,17 +1182,16 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             ;
 
         $subSql = $db->select()
-            ->from(['f' => 'projetos'], ['idprojeto'], 'sac.dbo')
-            ->where('a.idpreprojeto = f.idprojeto')
-            ;
+            ->from(['f' => 'projetos'], ['idprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
+            ->where('a.idpreprojeto = f.idprojeto');
 
         $sql2 = $db->select()
-            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'], 'sac.dbo')
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'],'agentes.dbo')
-            ->join(['c' => 'vinculacao'], 'b.idagente = c.idvinculoprincipal', [],'agentes.dbo')
-            ->join(['d' => 'agentes'], 'c.idagente = d.idagente', [],'agentes.dbo')
-            ->join(['e' => 'sgcacesso'], 'd.cnpjcpf = e.cpf', [],'controledeacesso.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
+            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->join(['c' => 'vinculacao'], 'b.idagente = c.idvinculoprincipal', [], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->join(['d' => 'agentes'], 'c.idagente = d.idagente', [], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->join(['e' => 'sgcacesso'], 'd.cnpjcpf = e.cpf', [], Proposta_Model_PreProjeto::getSchema('controledeacesso'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], Proposta_Model_PreProjeto::getSchema('agentes'))
             ->where('e.idusuario = ?',$idResponsavel)
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
@@ -1200,17 +1199,17 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             ;
 
         $subSql = $db->select()
-            ->from(['z' => 'projetos'], ['idprojeto'], 'sac.dbo')
+            ->from(['z' => 'projetos'], ['idprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
             ->where('a.idpreprojeto = z.idprojeto')
             ;
 
         $sql3 = $db->select()
-            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'], 'sac.dbo')
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], 'agentes.dbo')
-            ->join(['c' => 'nomes'], 'b.idagente = c.idagente', ['c.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['d' => 'sgcacesso'], 'a.idusuario = d.idusuario', [], 'controledeacesso.dbo')
-            ->join(['e' => 'tbvinculoproposta'], 'a.idpreprojeto = e.idpreprojeto', [], 'agentes.dbo')
-            ->join(['f' => 'tbvinculo'], 'e.idvinculo = f.idvinculo', [], 'agentes.dbo')
+            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->join(['c' => 'nomes'], 'b.idagente = c.idagente', ['c.descricao as nomeproponente'], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->join(['d' => 'sgcacesso'], 'a.idusuario = d.idusuario', [], Proposta_Model_PreProjeto::getSchema('controledeacesso'))
+            ->join(['e' => 'tbvinculoproposta'], 'a.idpreprojeto = e.idpreprojeto', [], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->join(['f' => 'tbvinculo'], 'e.idvinculo = f.idvinculo', [], Proposta_Model_PreProjeto::getSchema('agentes'))
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'")
@@ -1241,53 +1240,57 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(['a'=>'preprojeto'], null,'sac.dbo')
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], 'agentes.dbo')
-            ->joinLeft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['c' => 'sgcacesso'], 'b.cnpjcpf = c.cpf', null, 'controledeacesso.dbo')
+            ->from(['a'=>'preprojeto'], null, $this->_schema)
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], $this->getSchema('agentes'))
+            ->joinLeft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['c' => 'sgcacesso'], 'b.cnpjcpf = c.cpf', null, $this->getSchema('controledeacesso'))
             ->where('c.idusuario = ?', $idResponsavel)
         ;
 
         $sql2 = $db->select()
-            ->from(['a'=>'preprojeto'], null,'sac.dbo')
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], 'agentes.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['c' => 'tbvinculoproposta'], 'a.idpreprojeto = c.idpreprojeto', null, 'agentes.dbo')
-            ->join(['d' => 'tbvinculo'], 'c.idvinculo = d.idvinculo', null, 'agentes.dbo')
-            ->join(['f' => 'agentes'], 'd.idagenteproponente = f.idagente', null, 'agentes.dbo')
-            ->join(['e' => 'sgcacesso'], 'f.cnpjcpf = e.cpf', null, 'controledeacesso.dbo')
+            ->from(['a'=>'preprojeto'], null, $this->_schema)
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], $this->getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['c' => 'tbvinculoproposta'], 'a.idpreprojeto = c.idpreprojeto', null, $this->getSchema('agentes'))
+            ->join(['d' => 'tbvinculo'], 'c.idvinculo = d.idvinculo', null, $this->getSchema('agentes'))
+            ->join(['f' => 'agentes'], 'd.idagenteproponente = f.idagente', null, $this->getSchema('agentes'))
+            ->join(['e' => 'sgcacesso'], 'f.cnpjcpf = e.cpf', null, $this->getSchema('controledeacesso'))
             ->where('e.idusuario = ?', $idResponsavel)
             ->where('c.sivinculoproposta = 2')
             ;
 
         $sql3 = $db->select()
-            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'],'agentes.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['b' => 'vinculacao'], 'a.idagente = b.idvinculoprincipal', null, 'agentes.dbo')
-            ->join(['c' => 'agentes'], 'b.idagente = c.idagente', null, 'agentes.dbo')
-            ->join(['d' => 'sgcacesso'], 'c.cnpjcpf = d.cpf', null, 'controledeacesso.dbo')
+            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'], $this->getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['b' => 'vinculacao'], 'a.idagente = b.idvinculoprincipal', null, $this->getSchema('agentes'))
+            ->join(['c' => 'agentes'], 'b.idagente = c.idagente', null, $this->getSchema('agentes'))
+            ->join(['d' => 'sgcacesso'], 'c.cnpjcpf = d.cpf', null, $this->getSchema('controledeacesso'))
             ->where('d.idusuario = ?', $idResponsavel)
             ;
 
         $sql4 = $db->select()
-            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'],'agentes.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['b' => 'tbvinculo'], 'a.idagente = b.idagenteproponente', null, 'agentes.dbo')
-            ->join(['c' => 'sgcacesso'], 'b.idusuarioresponsavel = c.idusuario', null, 'controledeacesso.dbo')
+            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'], $this->getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['b' => 'tbvinculo'], 'a.idagente = b.idagenteproponente', null, $this->getSchema('agentes'))
+            ->join(['c' => 'sgcacesso'], 'b.idusuarioresponsavel = c.idusuario', null, $this->getSchema('controledeacesso'))
             ->where('b.sivinculo = 2')
             ->where('c.idusuario = ?', $idResponsavel)
             ;
 
         $sql5 = $db->select()
-            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'],'agentes.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['b' => 'sgcacesso'], 'a.cnpjcpf = b.cpf', null, 'controledeacesso.dbo')
+            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'], $this->getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['b' => 'sgcacesso'], 'a.cnpjcpf = b.cpf', null, $this->getSchema('controledeacesso'))
             ->where('b.idusuario = ?', $idResponsavel)
             ;
 
         $sql = $db->select()->union(array($sql, $sql2, $sql3, $sql4, $sql5))
             ->group(['a.cnpjcpf', 'a.idagente', 'n.descricao'])
             ->order(['3 asc']);
+
+//        echo '<pre>';
+//        print_r(str_replace('"', '', $sql->assemble()));
+//        exit;
 
         return $db->fetchAll($sql);
     }

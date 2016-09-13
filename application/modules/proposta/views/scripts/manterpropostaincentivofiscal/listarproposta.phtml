@@ -92,8 +92,7 @@
 
                     <select name="propronente" id="propronente" class="input_simples">
                         <option value="">- Selecione -</option>
-                        <?php
-                        if(!empty($this->dadosCombo)):?>
+                        <?php if(!empty($this->dadosCombo)):?>
                             <?php $idProponente = '';?>
                                 <?php foreach ($this->dadosCombo as $dc):?>
                                     <?php if($dc['idAgenteProponente'] != $idProponente):?>
