@@ -536,6 +536,9 @@ CREATE TABLE agentes.tbVinculoProposta
   siVinculoProposta CHAR NOT NULL,
   CONSTRAINT FK_tbVinculoProposta_tbVinculo FOREIGN KEY (idVinculo) REFERENCES agentes.tbVinculo (idVinculo)
 );
+CREATE SEQUENCE agentes.tbvinculoproposta_idvinculoproposta_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE agentes.tbvinculoproposta ALTER COLUMN idvinculoproposta SET DEFAULT nextval('agentes.tbvinculoproposta_idvinculoproposta_seq');
+ALTER SEQUENCE agentes.tbvinculoproposta_idvinculoproposta_seq OWNED BY agentes.tbvinculoproposta.idvinculoproposta;
 CREATE INDEX IX_tbVinculoProposta ON agentes.tbVinculoProposta (idVinculoProposta);
 CREATE TABLE agentes.TCU
 (

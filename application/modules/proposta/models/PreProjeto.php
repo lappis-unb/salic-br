@@ -112,22 +112,11 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from($this, array("*",
-                                  "DtInicioDeExecucaoForm"=>"CONVERT(CHAR(10),DtInicioDeExecucao,103)",
-                                  "DtFinalDeExecucaoForm"=>"CONVERT(CHAR(10),DtFinalDeExecucao,103)",
-                                  "DtAtoTombamentoForm"=>"CONVERT(CHAR(10),DtAtoTombamento,103)",
-                                  "dtAceiteForm"=>"CONVERT(CHAR(10),dtAceite,103)",
-                                  "DtArquivamentoForm"=>"CONVERT(CHAR(10),DtArquivamento,103)",
-                                  "CAST(ResumoDoProjeto as TEXT) as ResumoDoProjeto",
-                                  "CAST(Objetivos as TEXT) as Objetivos",
-                                  "CAST(Justificativa as TEXT) as Justificativa",
-                                  "CAST(Acessibilidade as TEXT) as Acessibilidade",
-                                  "CAST(DemocratizacaoDeAcesso as TEXT) as DemocratizacaoDeAcesso",
-                                  "CAST(EtapaDeTrabalho as TEXT) as EtapaDeTrabalho",
-                                  "CAST(FichaTecnica as TEXT) as FichaTecnica",
-                                  "CAST(Sinopse as TEXT) as Sinopse",
-                                  "CAST(ImpactoAmbiental as TEXT) as ImpactoAmbiental",
-                                  "CAST(EspecificacaoTecnica as TEXT) as EspecificacaoTecnica",
-                                  "CAST(EstrategiadeExecucao as TEXT) as EstrategiadeExecucao"
+                                  "dtiniciodeexecucaoform"=>"dtiniciodeexecucao",
+                                  "dtfinaldeexecucaoform"=>"dtfinaldeexecucao",
+                                  "dtatotombamentoform"=>"dtatotombamento",
+                                  "dtaceiteform"=>"dtaceite",
+                                  "dtarquivamentoform"=>"dtarquivamento",
                                 ));
 
         //adiciona quantos filtros foram enviados
@@ -236,35 +225,35 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             return $this->insert($dados);
         }
         //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
-       $rsPreProjeto->idAgente              = $dados["idagente"];
-       $rsPreProjeto->NomeProjeto           = $dados["nomeprojeto"];
-       $rsPreProjeto->Mecanismo             = $dados["mecanismo"];
-       $rsPreProjeto->AgenciaBancaria       = $dados["agenciabancaria"];
-       $rsPreProjeto->AreaAbrangencia       = $dados["areaabrangencia"];
-       $rsPreProjeto->DtInicioDeExecucao    = $dados["dtiniciodeexecucao"];
-       $rsPreProjeto->DtFinalDeExecucao     = $dados["dtfinaldeexecucao"];
-       $rsPreProjeto->NrAtoTombamento       = $dados["nratotombamento"];
-       $rsPreProjeto->DtAtoTombamento       = $dados["dtatotombamento"];
-       $rsPreProjeto->EsferaTombamento      = $dados["esferatombamento"];
-       $rsPreProjeto->ResumoDoProjeto       = $dados["resumodoprojeto"];
-       $rsPreProjeto->Objetivos             = $dados["objetivos"];
-       $rsPreProjeto->Justificativa         = $dados["justificativa"];
-       $rsPreProjeto->Acessibilidade        = $dados["acessibilidade"];
-       $rsPreProjeto->DemocratizacaoDeAcesso = $dados["democratizacaodeacesso"];
-       $rsPreProjeto->EtapaDeTrabalho       = $dados["etapadetrabalho"];
-       $rsPreProjeto->FichaTecnica          = $dados["fichatecnica"];
-       $rsPreProjeto->Sinopse               = $dados["sinopse"];
-       $rsPreProjeto->ImpactoAmbiental      = $dados["impactoambiental"];
-       $rsPreProjeto->EspecificacaoTecnica  = $dados["especificacaotecnica"];
-       $rsPreProjeto->EstrategiadeExecucao  = $dados["estrategiadeexecucao"];
-       $rsPreProjeto->dtAceite              = $dados["dtaceite"];
-       $rsPreProjeto->DtArquivamento        = (isset($dados["dtarquivamento"])) ? $dados["dtarquivamento"] : null;
-       $rsPreProjeto->stEstado              = $dados["stestado"];
-       $rsPreProjeto->stDataFixa            = $dados["stdatafixa"];
-       $rsPreProjeto->stPlanoAnual          = $dados["stplanoanual"];
-       $rsPreProjeto->idUsuario             = $dados["idusuario"];
-       $rsPreProjeto->stTipoDemanda         = $dados["sttipodemanda"];
-       $rsPreProjeto->idEdital              = (isset($dados["idedital"])) ? $dados["idedital"] : null;
+       $rsPreProjeto->idagente               = $dados["idagente"];
+       $rsPreProjeto->nomeprojeto            = $dados["nomeprojeto"];
+       $rsPreProjeto->mecanismo              = $dados["mecanismo"];
+       $rsPreProjeto->agenciabancaria        = $dados["agenciabancaria"];
+       $rsPreProjeto->areaabrangencia        = $dados["areaabrangencia"];
+       $rsPreProjeto->dtiniciodeexecucao     = $dados["dtiniciodeexecucao"];
+       $rsPreProjeto->dtfinaldeexecucao      = $dados["dtfinaldeexecucao"];
+       $rsPreProjeto->nratotombamento        = $dados["nratotombamento"];
+       $rsPreProjeto->dtatotombamento        = $dados["dtatotombamento"];
+       $rsPreProjeto->esferatombamento       = $dados["esferatombamento"];
+       $rsPreProjeto->resumodoprojeto        = $dados["resumodoprojeto"];
+       $rsPreProjeto->objetivos              = $dados["objetivos"];
+       $rsPreProjeto->justificativa          = $dados["justificativa"];
+       $rsPreProjeto->acessibilidade         = $dados["acessibilidade"];
+       $rsPreProjeto->democratizacaodeacesso = $dados["democratizacaodeacesso"];
+       $rsPreProjeto->etapadetrabalho        = $dados["etapadetrabalho"];
+       $rsPreProjeto->fichatecnica           = $dados["fichatecnica"];
+       $rsPreProjeto->sinopse                = $dados["sinopse"];
+       $rsPreProjeto->impactoambiental       = $dados["impactoambiental"];
+       $rsPreProjeto->especificacaotecnica   = $dados["especificacaotecnica"];
+       $rsPreProjeto->estrategiadeexecucao   = $dados["estrategiadeexecucao"];
+       $rsPreProjeto->dtaceite               = $dados["dtaceite"];
+       $rsPreProjeto->dtarquivamento         = (isset($dados["dtarquivamento"])) ? $dados["dtarquivamento"] : null;
+       $rsPreProjeto->stestado               = $dados["stestado"];
+       $rsPreProjeto->stdatafixa             = $dados["stdatafixa"];
+       $rsPreProjeto->stplanoanual           = $dados["stplanoanual"];
+       $rsPreProjeto->idusuario              = $dados["idusuario"];
+       $rsPreProjeto->sttipodemanda          = $dados["sttipodemanda"];
+       $rsPreProjeto->idedital               = (isset($dados["idedital"])) ? $dados["idedital"] : null;
 
        //SALVANDO O OBJETO
        $id = $rsPreProjeto->save();
@@ -553,53 +542,53 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from(
                         ['pre' => $this->_name],
-                        ['nomeProjeto' => 'pre.NomeProjeto', 'pronac'=>'pre.idPreProjeto' ],
+                        ['nomeProjeto' => 'pre.nomeprojeto', 'pronac'=>'pre.idpreprojeto' ],
                         $this->_schema
                      );
 
         $select
             ->joinInner(
-                array('aval' => 'tbAvaliacaoProposta'),
-                'aval.idProjeto = pre.idPreProjeto',
+                array('aval' => 'tbavaliacaoproposta'),
+                'aval.idprojeto = pre.idpreprojeto',
                 array(
-                        'aval.stProrrogacao',
-                        'idDiligencia'=>'aval.idAvaliacaoProposta',
-                        'dataSolicitacao'=>'CONVERT(VARCHAR,aval.DtAvaliacao,120)',
-                        'dataResposta'=>'CONVERT(VARCHAR,aval.dtResposta,120)',
-                        'Solicitacao'=>'aval.Avaliacao',
-                        'Resposta'=>'aval.dsResposta',
-                        'aval.idCodigoDocumentosExigidos',
-                        'aval.stEnviado'
+                        'aval.stprorrogacao',
+                        'iddiligencia'=>'aval.idavaliacaoproposta',
+                        'datasolicitacao'=>'aval.dtavaliacao',
+                        'dataresposta'=>'aval.dtresposta',
+                        'solicitacao'=>'aval.avaliacao',
+                        'resposta'=>'aval.dsresposta',
+                        'aval.idcodigodocumentosexigidos',
+                        'aval.stenviado'
                     ),
                 $this->_schema
             );
 
         $select->joinLeft(
-                array('arq' => 'tbArquivo'),
-                'arq.idArquivo = aval.idArquivo',
+                array('arq' => 'tbarquivo'),
+                'arq.idarquivo = aval.idarquivo',
                 array(
-                        'arq.nmArquivo',
-                        'arq.idArquivo'
+                        'arq.nmarquivo',
+                        'arq.idarquivo'
                     ),
-                'BDCORPORATIVO.scCorp'
+                $this->getSchema('bdcorporativo', true, 'sccorp')
         );
 
         $select->joinLeft(
-                array('a' => 'AGENTES'),
-                'pre.idAgente = a.idAgente',
+                array('a' => 'agentes'),
+                'pre.idagente = a.idagente',
                 array(
-                        'a.idAgente'
+                        'a.idagente'
                     ),
-                $this->getSchema('AGENTES')
+                $this->getSchema('agentes')
         );
 
         $select->joinLeft(
-                array('n' => 'NOMES'),
-                'a.idAgente = n.idAgente',
+                array('n' => 'nomes'),
+                'a.idagente = n.idagente',
                 array(
-                        'n.Descricao'
+                        'n.descricao'
                     ),
-                $this->getSchema('AGENTES')
+                $this->getschema('agentes')
         );
 
         foreach ($consulta as $coluna=>$valor)

@@ -14,33 +14,33 @@ class TbVinculo extends MinC_Db_Table_Abstract{
         $slct->setIntegrityCheck(false);
 
         $slct->from(
-                array('VI' => $this->_name),
+                array('vi' => $this->_name),
                 array('*'),
                 $this->_schema
         );
 
         $slct->joinInner(
-                array('AG' => 'Agentes'), "AG.idAgente = VI.idAgenteProponente",
-                array('AG.CNPJCPF'),
+                array('ag' => 'agentes'), "ag.idagente = vi.idagenteproponente",
+                array('ag.cnpjcpf'),
                 $this->_schema
         );
 
         $slct->joinInner(
-                array('NM' => 'Nomes'), "NM.idAgente = AG.idAgente",
-                array('NM.Descricao AS NomeProponente'),
+                array('nm' => 'nomes'), "nm.idagente = ag.idagente",
+                array('nm.descricao as nomeproponente'),
                 $this->_schema
         );
 
         $slct
             ->joinLeft(
-                array('SGA' => 'SGCacesso'), "SGA.IdUsuario = VI.idUsuarioResponsavel",
-                array('SGA.IdUsuario AS idUsuarioResponsavel', 'SGA.Nome AS NomeResponsavel', 'SGA.Cpf AS CpfResponsavel'),
-                'CONTROLEDEACESSO.dbo'
+                array('sga' => 'sgcacesso'), "sga.idusuario = vi.idusuarioresponsavel",
+                array('sga.idusuario as idusuarioresponsavel', 'sga.nome as nomeresponsavel', 'sga.cpf as cpfresponsavel'),
+                $this->getSchema('controledeacesso')
             );
 
         $slct->joinLeft(
-                array('VP' => 'tbVinculoProposta'), "VP.idVinculo = VI.idVinculo",
-                array('VP.idVinculoProposta', 'VP.siVinculoProposta'),
+                array('vp' => 'tbvinculoproposta'), "vp.idvinculo = vi.idvinculo",
+                array('vp.idvinculoproposta', 'vp.sivinculoproposta'),
                 $this->_schema
         );
 
