@@ -787,6 +787,9 @@ CREATE TABLE sac.PreProjeto
   stTipoDemanda CHAR(2) DEFAULT 'NA' NOT NULL,
   idEdital INT
 );
+CREATE SEQUENCE sac.preprojeto_idpreprojeto_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.preprojeto ALTER COLUMN idpreprojeto SET DEFAULT nextval('sac.preprojeto_idpreprojeto_seq');
+ALTER SEQUENCE sac.preprojeto_idpreprojeto_seq OWNED BY sac.preprojeto.idpreprojeto;
 CREATE TABLE sac.Orgaos
 (
   Codigo INT PRIMARY KEY NOT NULL,

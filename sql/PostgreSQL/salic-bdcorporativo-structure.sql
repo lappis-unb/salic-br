@@ -179,3 +179,77 @@ ALTER TABLE bdcorporativo.tbLocalidadeVariacao ADD FOREIGN KEY (nrLocalidade) RE
 -- ALTER TABLE bdcorporativo.tbLogradouroSeccionamento ADD FOREIGN KEY (cdCep) REFERENCES bdcorporativo.;
 -- ALTER TABLE bdcorporativo.tbLogradouroVariacao ADD FOREIGN KEY (cdCep) REFERENCES bdcorporativo.;
 ALTER TABLE bdcorporativo.tbUnidadeOperacional ADD FOREIGN KEY (nrLocalidade) REFERENCES bdcorporativo.tbLocalidade (nrLocalidade);
+
+
+
+CREATE TABLE bdcorporativo.tbArquivo
+(
+    idArquivo INT PRIMARY KEY NOT NULL,
+    nmArquivo VARCHAR(255) NOT NULL,
+    sgExtensao VARCHAR(5) DEFAULT '((0))' NOT NULL,
+    nrTamanho VARCHAR(10),
+    dtEnvio TIMESTAMP NOT NULL,
+    dsHash VARCHAR(128),
+    stAtivo CHAR(1) NOT NULL,
+    dsTipoPadronizado CHAR(100),
+    idUsuario INT DEFAULT ((0)) NOT NULL
+);
+CREATE TABLE bdcorporativo.tbArquivoImagem
+(
+    idArquivo INT PRIMARY KEY NOT NULL,
+    biArquivo VARCHAR(255)
+);
+CREATE TABLE bdcorporativo.tbDocumento
+(
+    idTipoDocumento INT NOT NULL,
+    idDocumento INT NOT NULL,
+    idArquivo INT,
+    dsDocumento VARCHAR(400),
+    dtEmissaoDocumento TIMESTAMP,
+    dtValidadeDocumento TIMESTAMP,
+    idTipoEventoOrigem INT,
+    nmTitulo VARCHAR(20),
+    nrDocumento INT,
+    CONSTRAINT pk_tbDocumento PRIMARY KEY (idTipoDocumento, idDocumento)
+);
+CREATE TABLE bdcorporativo.tbDocumentoAgente
+(
+    idTipoDocumento INT NOT NULL,
+    idDocumento INT NOT NULL,
+    idAgente INT NOT NULL,
+    stAtivoDocumentoAgente NUMERIC DEFAULT (1) NOT NULL,
+    CONSTRAINT pk_tbDocumentoAgente PRIMARY KEY (idTipoDocumento, idDocumento, idAgente)
+);
+CREATE TABLE bdcorporativo.tbDocumentoProjeto
+(
+    idTipoDocumento INT NOT NULL,
+    idDocumento INT NOT NULL,
+    idPronac INT NOT NULL,
+    stAtivoDocumentoProjeto CHAR(1) DEFAULT 'E',
+    CONSTRAINT pk_tbDocumentoProjeto PRIMARY KEY (idTipoDocumento, idDocumento, idPronac)
+);
+CREATE TABLE bdcorporativo.tbDocumentoProposta
+(
+    idTipoDocumento INT NOT NULL,
+    idDocumento INT NOT NULL,
+    idProposta INT NOT NULL,
+    stAtivoDocumentoProposta NUMERIC DEFAULT (1) NOT NULL,
+    CONSTRAINT pk_tbDocumentoPreProjeto PRIMARY KEY (idTipoDocumento, idDocumento, idProposta)
+);
+CREATE TABLE bdcorporativo.tbTipoDocumento
+(
+    idTipoDocumento INT PRIMARY KEY NOT NULL,
+    dsTipoDocumento CHAR(200) NOT NULL
+);
+CREATE TABLE bdcorporativo.tbTipoEvento
+(
+    idTipoEvento INT PRIMARY KEY NOT NULL,
+    dsTipoEvento CHAR(200) NOT NULL
+);
+ALTER TABLE bdcorporativo.tbArquivoImagem ADD FOREIGN KEY (idArquivo) REFERENCES bdcorporativo.tbArquivo (idArquivo);
+ALTER TABLE bdcorporativo.tbDocumento ADD FOREIGN KEY (idTipoDocumento) REFERENCES bdcorporativo.tbTipoDocumento (idTipoDocumento) ON DELETE CASCADE;
+ALTER TABLE bdcorporativo.tbDocumento ADD FOREIGN KEY (idArquivo) REFERENCES bdcorporativo.tbArquivo (idArquivo);
+ALTER TABLE bdcorporativo.tbDocumento ADD FOREIGN KEY (idTipoEventoOrigem) REFERENCES bdcorporativo.tbTipoEvento (idTipoEvento);
+-- ALTER TABLE bdcorporativo.tbDocumentoAgente ADD FOREIGN KEY (idDocumento) REFERENCES;
+-- ALTER TABLE bdcorporativo.tbDocumentoProjeto ADD FOREIGN KEY (idDocumento) REFERENCES;
+-- ALTER TABLE bdcorporativo.tbDocumentoProposta ADD FOREIGN KEY (idDocumento) REFERENCES;

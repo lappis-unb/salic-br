@@ -323,36 +323,36 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct->setIntegrityCheck(false);
         $slct->from(
             array('ag' => $this->_name),
-            array('ag.CNPJCPF', 'ag.idAgente'),
+            array('ag.cnpjcpf', 'ag.idagente'),
             $this->_schema
         );
         $slct->joinInner(
-            array('nm' => 'Nomes'), "nm.idAgente = ag.idAgente",
-            array('nm.Descricao as NomeAgente'),
+            array('nm' => 'nomes'), "nm.idagente = ag.idagente",
+            array('nm.descricao as nomeagente'),
             $this->_schema
 
         );
         $slct->joinLeft(
-            array('vp' => 'tbVinculo'), "vp.idAgenteProponente  = ag.idAgente",
-            array("vp.idVinculo as idVinculoProponente", "siVinculo", "idUsuarioResponsavel"),
+            array('vp' => 'tbvinculo'), "vp.idagenteproponente  = ag.idagente",
+            array("vp.idvinculo as idvinculoproponente", "sivinculo", "idusuarioresponsavel"),
             $this->_schema
         );
         $slct->joinLeft(
-            array('vprp' => 'tbVinculoProposta'), "vprp.idVinculo = vp.idVinculo",
-            array("vprp.siVinculoProposta", "vprp.idPreProjeto", "vprp.idVinculo"),
+            array('vprp' => 'tbvinculoproposta'), "vprp.idvinculo = vp.idvinculo",
+            array("vprp.sivinculoproposta", "vprp.idpreprojeto", "vprp.idvinculo"),
             $this->_schema
         );
 
         $slct->joinLeft(
-            array('pr' => 'Projetos'), "pr.idProjeto = vprp.idPreProjeto",
-            array('pr.IdPRONAC'),
-            'SAC.dbo'
+            array('pr' => 'projetos'), "pr.idprojeto = vprp.idpreprojeto",
+            array('pr.idpronac'),
+            $this->getSchema('sac')
         );
 
         $slct->joinLeft(
-            array('usu' => 'Usuarios'), "usu.usu_identificacao = ag.CNPJCPF",
-            array('usu.usu_identificacao as UsuarioVinculo'),
-            'TABELAS.dbo'
+            array('usu' => 'usuarios'), "usu.usu_identificacao = ag.cnpjcpf",
+            array('usu.usu_identificacao as usuariovinculo'),
+            $this->getSchema('tabelas')
         );
 
         foreach ($where as $coluna => $valor)
