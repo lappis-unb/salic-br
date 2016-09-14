@@ -1,3 +1,6 @@
+Release 1.10.2
+  * Fix: [proponente] produtos agora listam corretamente
+
 Release 1.10.1
   * Fix: [dados bancários] exibindo contas corretamente
   * Fix: [manutenção] alterar projeto/situação agora grava corretamente
