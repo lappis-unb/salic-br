@@ -439,6 +439,7 @@ class ComprovantePagamento extends GenericModel
                     ) as produtonome,
                     pEtapa.Descricao as etapanome,
                     pit.Descricao as itemnome,
+tpDocumento,
                     (
                         CASE tpFormaDePagamento
                             WHEN 1 THEN ('Cheque')
@@ -448,12 +449,11 @@ class ComprovantePagamento extends GenericModel
                     ) as tipoFormaPagamentoNome,
                     (
                         CASE tpDocumento
-                            WHEN 1 THEN ('Boleto Banc&aacute;rio')
-                            WHEN 2 THEN ('Cupom Fiscal')
-                            WHEN 3 THEN ('Guia de Recolhimento')
-                            WHEN 4 THEN ('Nota Fiscal/Fatura')
-                            WHEN 5 THEN ('Recibo de Pagamento')
-                            WHEN 6 THEN ('RPA')
+                            WHEN 1 THEN ('Cupom Fiscal')
+                            WHEN 2 THEN ('Guia de Recolhimento')
+                            WHEN 3 THEN ('Nota Fiscal/Fatura')
+                            WHEN 4 THEN ('Recibo de Pagamento')
+                            WHEN 5 THEN ('RPA')
                         END
                     ) as tipoDocumentoNome,
                     ROUND((pa.QtItem * pa.nrOcorrencia * pa.VlUnitario),2) AS valorAprovado,
