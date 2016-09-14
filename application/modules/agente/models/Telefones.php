@@ -3,9 +3,7 @@
 /**
  * Modelo Telefone
  *
- * @package Application
  *
- * @author Equipe RUP - Politec
  * @author wouerner <wouerner@gmail.com>
  * @link   http://www.cultura.gov.br
  * @since  29/03/2010
