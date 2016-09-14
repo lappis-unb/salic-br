@@ -886,6 +886,7 @@ if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
         function validarParametrosDeComprovacaoDePagamento() {
             var msg = '';
             if (!$("#vlComprovado").val()) { msg += 'Informe o valor do item.<br />'; }
+            if (parseFloat($("#vlComprovado").val()) === 0) { msg += 'O valor do item não pode ser igual a zero.<br />'; }
             if (!$("#idAgente").val()) { msg += 'Informe um fornecedor.<br />'; }
             if (!$("#tpDocumento").val() || 0 == $("#tpDocumento").val()) { msg += 'Selecione o tipo de comprovante.<br />'; }
             if (!$("#nrComprovante").val()) { msg += 'Informe o número do comprovante.<br />'; }
