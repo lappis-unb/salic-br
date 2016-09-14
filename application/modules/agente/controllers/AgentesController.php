@@ -1840,17 +1840,19 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      *
      * @access private
      * @return void
+     * @author wouerner <wouerner@gmail.com>
+     * @todo refatorar metodo para um generico que possa salvar todas as
+     * possibilidades
      */
     private function salvaragente()
     {
         /**/
         $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = isset($auth->getIdentity()->IdUsuario) ? $auth->getIdentity()->IdUsuario : $auth->getIdentity()->usu_codigo;
+        $Usuario = isset($auth->getIdentity()->idusuario) ? $auth->getIdentity()->idusuario : $auth->getIdentity()->usu_codigo;
         // =============================================== INÍCIO SALVAR CPF/CNPJ ==================================================
 
         $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf"))); // retira as máscaras
         $Tipo = $this->_request->getParam("Tipo");
-
 
         $arrayAgente = array('CNPJCPF' => $cpf,
             'TipoPessoa' => $Tipo,
@@ -1864,7 +1866,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         $Agente = $Agentes->BuscaAgente($cpf);
 
-        $idAgente = $Agente[0]->idAgente;
+        $idAgente = $Agente[0]->idagente;
 
 
         // ================================================ FIM SALVAR CPF/CNPJ =====================================================
@@ -1878,7 +1880,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         }
 
         try {
-            $gravarNome = NomesDAO::gravarNome($idAgente, $TipoNome, $nome, 0, $Usuario);
+            $nomes = new NomesDAO();
+            $gravarNome = $nomes->inserir($idAgente, $TipoNome, $nome, 0, $Usuario);
         } catch (Exception $e) {
             parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
         }
@@ -1897,10 +1900,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         if ($grupologado != 118):
 
             $GravarVisao = array(// insert
-                'idAgente' => $idAgente,
-                'Visao' => $Visao,
-                'Usuario' => $Usuario,
-                'stAtivo' => 'A');
+                'idagente' => $idAgente,
+                'visao' => $Visao,
+                'usuario' => $Usuario,
+                'stativo' => 'A');
 
             try {
                 $visaoTable = new Agente_Model_DbTable_Visao();
@@ -1912,7 +1915,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             } catch (Exception $e) {
                 parent::message("Erro ao salvar a visão: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
             }
-
 
             // ================================================ FIM SALVAR visão ======================================================
             // ===================== INÍCIO SALVAR TITULAÇÃO (área/SEGMENTO DO COMPONENTE DA COMISSÃO) ================================
@@ -1969,25 +1971,24 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $enderecoCorrespodencia = 1;
 
         try {
-
             $arrayEnderecos = array(
-                'idAgente' => $idAgente,
-                'Cep' => str_replace(".", "", str_replace("-", "", $cepEndereco)),
-                'TipoEndereco' => $tipoEndereco,
-                'UF' => $ufEndereco,
-                'Cidade' => $CidadeEndereco,
-                'Logradouro' => $Endereco,
-                'Divulgar' => $divulgarEndereco,
-                'TipoLogradouro' => $tipoLogradouro,
-                'Numero' => $numero,
-                'Complemento' => $complemento,
-                'Bairro' => $bairro,
-                'Status' => $enderecoCorrespodencia,
-                'Usuario' => $Usuario
+                'idagente' => $idAgente,
+                'cep' => str_replace(".", "", str_replace("-", "", $cepEndereco)),
+                'tipoendereco' => $tipoEndereco,
+                'uf' => $ufEndereco,
+                'cidade' => $CidadeEndereco,
+                'logradouro' => $Endereco,
+                'divulgar' => $divulgarEndereco,
+                'tipologradouro' => $tipoLogradouro,
+                'numero' => $numero,
+                'complemento' => $complemento,
+                'bairro' => $bairro,
+                'status' => $enderecoCorrespodencia,
+                'usuario' => $Usuario
             );
 
-
-            $insere = Agente_Model_EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
+            $enderecoDAO = new Agente_Model_EnderecoNacionalDAO();
+            $insere = $enderecoDAO->inserir($arrayEnderecos);
         } catch (Exception $e) {
             parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
         }
@@ -2014,8 +2015,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                     'Divulgar' => $divulgarFone,
                     'Usuario' => $Usuario
                 );
-
-
 
                 $insere = Agente_Model_Telefone::cadastrar($arrayTelefones);
             } catch (Exception $e) {

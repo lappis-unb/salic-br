@@ -8,17 +8,10 @@
  * @package Model
  * @author  wouerner <wouerner@gmail.com>
  */
-class Agente_Model_EnderecoNacionalDAO extends Zend_Db_Table
+class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
 {
-
-	/**
-	 * _name
-	 *
-	 * @var bool
-	 * @access protected
-	 */
-	protected $_name = 'AGENTES.dbo.EnderecoNacional';
-
+	protected $_name = 'endereconacional';
+	protected $_schema = 'agentes';
 
     /**
      * buscarEnderecoNacional
@@ -75,6 +68,14 @@ class Agente_Model_EnderecoNacionalDAO extends Zend_Db_Table
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $i =  $db->insert('AGENTES.dbo.EnderecoNacional', $dados);
+    }
+
+    public function inserir($dados)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $schema = $this->getSchema($this->_schema). '.' .$this->_name;
+        $db->insert( $schema, $dados);
     }
 
     /**
