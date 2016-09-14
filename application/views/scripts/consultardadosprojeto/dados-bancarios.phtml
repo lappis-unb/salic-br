@@ -40,11 +40,11 @@
             <tr>
                 <td valign="top">
                     <b>Banco</b><br>
-                    <?php echo $contaBancaria->Banco;?>
+                    <?php echo $contaBancaria['Banco'];?>
                 </td>
                 <td valign="top" colspan="2">
                     <b>Ag&ecirc;ncia</b><br>
-                    <?php echo $contaBancaria->Agencia;?>
+                    <?php echo $contaBancaria['Agencia'];?>
                 </td>
             </tr>
             <tr class="destacar">
@@ -53,15 +53,15 @@
             <tr>
                  <td valign="top">
                     <b>N&uacute;mero</b><br>
-                    <?php echo ($contaBancaria->ContaBloqueada == '000000000000') ? " - " : $contaBancaria->ContaBloqueada;?>
+                    <?php echo ($contaBancaria['ContaBloqueada'] == '000000000000') ? " - " : $contaBancaria['ContaBloqueada'];?>
                 </td>
                 <td valign="top">
                     <b>Dt. Abertura</b><br>
-                    <?php echo (isset($contaBancaria->DtLoteRemessaCB) && !empty($contaBancaria->DtLoteRemessaCB)) ? date("d/m/Y",strtotime($contaBancaria->DtLoteRemessaCB)) : '-'; ?>
+                    <?php echo (isset($contaBancaria['DtLoteRemessaCB']) && !empty($contaBancaria['DtLoteRemessaCB'])) ? date("d/m/Y",strtotime($contaBancaria['DtLoteRemessaCB'])) : '-'; ?>
                 </td>
                 <td valign="top">
                     <b>Ocorr&ecirc;ncia</b><br>
-                    <?php echo ($contaBancaria->OcorrenciaCB == NULL) ? " - " : $contaBancaria->OcorrenciaCB;?>
+                    <?php echo ($contaBancaria['OcorrenciaCB'] == NULL) ? " - " : $contaBancaria['OcorrenciaCB'];?>
                 </td>
             </tr>
             <tr class="destacar">
@@ -70,15 +70,15 @@
             <tr>
                  <td valign="top">
                     <b>N&uacute;mero</b><br>
-                    <?php echo ($contaBancaria->ContaLivre == '000000000000') ? " - " : $contaBancaria->ContaLivre;?>
+                    <?php echo ($contaBancaria['ContaLivre'] == '000000000000') ? " - " : $contaBancaria['ContaLivre'];?>
                 </td>
                 <td valign="top">
                     <b>Dt. Abertura</b><br>
-                    <?php echo (isset($contaBancaria->DtLoteRemessaCL) && !empty($contaBancaria->DtLoteRemessaCL)) ? date("d/m/Y",strtotime($contaBancaria->DtLoteRemessaCL)) : '-';?>
+                    <?php echo (isset($contaBancaria['DtLoteRemessaCL']) && !empty($contaBancaria['DtLoteRemessaCL'])) ? date("d/m/Y",strtotime($contaBancaria['DtLoteRemessaCL'])) : '-';?>
                 </td>
                 <td valign="top">
                     <b>Ocorr&ecirc;ncia</b><br>
-                    <?php echo ($contaBancaria->OcorrenciaCL == NULL) ? " - " : $contaBancaria->OcorrenciaCL;?>
+                    <?php echo ($contaBancaria['OcorrenciaCL'] == NULL) ? " - " : $contaBancaria['OcorrenciaCL'];?>
                 </td>
             </tr>
         </table>
