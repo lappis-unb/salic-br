@@ -111,16 +111,19 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since 11/08/2016
      */
-    public function getSchema($strSchema = null, $isReturnDb = true)
+    public function getSchema($strSchema = null, $isReturnDb = true, $strNameDb = null)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
 
-
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            if (is_null($strNameDb)) {
+                $strNameDb = 'dbo';
+            }
+
             if ($isReturnDb && strpos($strSchema, '.') === false) {
-                $strSchema = $strSchema . ".dbo";
+                $strSchema = $strSchema . "." . $strNameDb;
             } elseif (strpos($strSchema, '.') === false) {
-                $strSchema = "dbo";
+                $strSchema = $strNameDb;
             }
         } else if (!$strSchema) {
             $strSchema = $this->_schema;
@@ -394,24 +397,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         return $select;
     }
 
-
-    /**
-     * @param Zend_Db_Table_Abstract::SELECT_WITHOUT_FROM_PART $withFromPart
-     * @return MinC_Db_Table_Select
-     * @author Wouerner <wouerner@gmail.com>
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
-     * @return string
-     */
-    public static function getConcatExpression()
-    {
-        $db = Zend_Db_Table::getDefaultAdapter();
-        if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
-            return ' + ';
-        }
-        return " || ";
-    }
-
     /**
      *
      * @name findBy
@@ -471,6 +456,23 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         }
         $result = $this->fetchAll($select);
         return ($result)? $result->toArray() : array();
+    }
+
+    /**
+     * @param Zend_Db_Table_Abstract::SELECT_WITHOUT_FROM_PART $withFromPart
+     * @return MinC_Db_Table_Select
+     * @author Wouerner <wouerner@gmail.com>
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return string
+     */
+    public static function getConcatExpression()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            return ' + ';
+        }
+        return " || ";
     }
 
     public function getExpressionDate()

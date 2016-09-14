@@ -128,11 +128,11 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      */
     public function indexAction() {
         $arrBusca = array();
-        $arrBusca['stEstado = ?'] = 1;
-        $arrBusca['idUsuario = ?'] = $this->idResponsavel;
+        $arrBusca['stestado = ?'] = 1;
+        $arrBusca['idusuario = ?'] = $this->idResponsavel;
         // Chama o SQL
         $tblPreProjeto = new Proposta_Model_PreProjeto();
-        $rsPreProjeto = $tblPreProjeto->buscar($arrBusca, array("idAgente ASC"));
+        $rsPreProjeto = $tblPreProjeto->buscar($arrBusca, array("idagente ASC"));
 
         //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
         $this->montaTela("manterpropostaincentivofiscal/index.phtml", array("acaoAlterar" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/editar",
@@ -180,11 +180,13 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
         //VERIFICA SE PROPONETE JA ESTA CADASTRADO
         $arrBusca = array();
-        $arrBusca['a.idAgente = ?'] = $post->idAgente;
+        $arrBusca['a.idagente = ?'] = $post->idAgente;
         $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
 
-        if (count($rsProponente) > 0) {
+        if ($rsProponente) {
+            $rsProponente = array_change_key_case($rsProponente->toArray());
+
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
             $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("proponente" => $rsProponente,
                 "acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar"));
@@ -266,7 +268,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $dtInicioDeExecucao = $dtInicio;
         $dtFinalDeExecucao = $dtFim;
         $nrAtoTombamento = $post->nrAtoTombamento;
-        $dtAtoTombamento = $dtAtoTombamento;
         $esferaTombamento = $post->esferaTombamento;
         $objetivos = $_POST['objetivos'];
         $justificativa = $_POST['justificativa'];
@@ -314,6 +315,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         } else {
             $mesagem = "Cadastro realizado com sucesso!";
         }
+
         //instancia classe modelo
         $tblPreProjeto = new Proposta_Model_PreProjeto();
 
@@ -345,9 +347,10 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
                 $vinculo2 = $tbVinculoDAO->buscar($whereVinculo);
                 if (count($vinculo2) > 0) {
-                    $novosDadosV = array('idVinculo' => $idVinculo = $vinculo2[0]->idVinculo,
+                    $vinculo2 = array_change_key_case($vinculo2[0]->toArray());
+                    $novosDadosV = array('idvinculo' => $idVinculo = $vinculo2['idvinculo'],
                         'idpreprojeto' => $idPreProjeto,
-                        'siVinculoProposta' => 2
+                        'sivinculoproposta' => 2
                     );
                     $insere = $tbVinculoPropostaDAO->inserir($novosDadosV, false);
                 }
@@ -413,7 +416,11 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $tblPreProjeto = new Proposta_Model_PreProjeto();
             $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
-            $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto->idAgente;
+            if ($rsPreProjeto) {
+                $rsPreProjeto = array_change_key_case($rsPreProjeto->toArray());
+            }
+
+            $arrBuscaProponete['a.idagente = ?'] = $rsPreProjeto['idagente'];
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
 
