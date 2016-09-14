@@ -583,7 +583,10 @@ Class ManterorcamentoDAO extends Zend_Db_Table {
 
         $select = $table->select()
             ->from(array('pre' => 'PreProjeto'),
-                array(new Zend_Db_Expr('idPreProjeto AS PreProjeto'), new Zend_Db_Expr(' pre.idPreProjeto AS idProposta')),
+                array(
+                    new Zend_Db_Expr('p.Codigo AS CodigoProduto'),
+                    new Zend_Db_Expr('idPreProjeto AS PreProjeto'),
+                    new Zend_Db_Expr(' pre.idPreProjeto AS idProposta')),
                 'SAC.dbo')
             ->joinInner(array('pd' => 'PlanoDistribuicaoProduto'),
                 'pre.idPreProjeto = pd.idProjeto AND pd.stPlanoDistribuicaoProduto = 1',
