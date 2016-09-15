@@ -39,7 +39,8 @@ include_once 'scripts/alterarprojeto/inc/menu.inc.php';
         $("#qtdepromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>").numeric();
         $("#preconormal-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>").priceFormat();
         $("#precopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>").priceFormat();
-	
+        $("#previstopromocional-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>").priceFormat();
+        
         // carrega a combo de segmentos culturais
         $('#areaCultural-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>').change(function() {
             $('#segmentoCultural-<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>').html('<option value=""> - Carregando - </option>');
