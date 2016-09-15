@@ -30,7 +30,6 @@ class PrincipalproponenteController extends MinC_Controller_Action_Abstract {
         $a = new Agente_Model_DbTable_Agentes();
         Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
         $verificarvinculo = $a->buscarAgenteVinculoResponsavel(array('vr.idAgenteProponente = ?'=>$this->idAgente, 'vprp.siVinculoProposta = ?'=>0))->count();
-
         $tbComunicados = new tbComunicados();
 		$where['stEstado = ?'] = 1;
 		$where['stOpcao = ?'] = 1;

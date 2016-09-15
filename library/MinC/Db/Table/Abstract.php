@@ -121,7 +121,11 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
             }
 
             if ($isReturnDb && strpos($strSchema, '.') === false) {
-                $strSchema = $strSchema . "." . $strNameDb;
+                if ($strSchema) {
+                    $strSchema = $strSchema . "." . $strNameDb;
+                } else {
+                    $strSchema = $strNameDb;
+                }
             } elseif (strpos($strSchema, '.') === false) {
                 $strSchema = $strNameDb;
             }
@@ -481,6 +485,16 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
             return new Zend_Db_Expr('GETDATE()');
         } else {
             return new Zend_Db_Expr('NOW()');
+        }
+    }
+
+    public function getExpressionToChar($strColumn, $strFormat = 'DD/MM/YYYY')
+    {
+
+        if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            return new Zend_Db_Expr('CONVERT(CHAR(10), ' . $strColumn . ' , 103)');
+        } else {
+            return new Zend_Db_Expr('TO_CHAR(' . $strColumn . ', \'' . $strFormat . '\')');
         }
     }
 
