@@ -586,7 +586,6 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
     public function visualizarRecursoAction(){
 
-        $mapperArea = new Agente_Model_AreaMapper();
 
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 103 && $this->idPerfil != 127){
             parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
@@ -644,7 +643,6 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-            $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
 
             $parecer = new Parecer();
