@@ -25,7 +25,6 @@ class CepController extends Zend_Controller_Action
 
         $cepObj = new Cep();
         $resultado = $cepObj->buscarCEP($cep);
-        //$resultado    = Cep::buscarCepDB($cep); // busca o cep no banco de dados
 
         if ($resultado) // caso encontre o cep
         {
