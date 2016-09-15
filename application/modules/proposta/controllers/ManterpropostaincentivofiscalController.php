@@ -446,12 +446,12 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
             $tblVinculo = new TbVinculo();
 
-            $arrBuscaP['VP.idPreProjeto = ?'] = $idPreProjeto;
-            $arrBuscaP['VI.idUsuarioResponsavel = ?'] = $this->idResponsavel;
+            $arrBuscaP['vp.idpreprojeto = ?'] = $idPreProjeto;
+            $arrBuscaP['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
             $rsVinculoP = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaP);
 
-            $arrBuscaN['VI.siVinculo IN (0,2)'] = '';
-            $arrBuscaN['VI.idUsuarioResponsavel = ?'] = $this->idResponsavel;
+            $arrBuscaN['vi.sivinculo IN (0,2)'] = '';
+            $arrBuscaN['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
             $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
 
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
