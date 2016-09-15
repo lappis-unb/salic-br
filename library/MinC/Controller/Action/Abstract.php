@@ -581,13 +581,14 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     public function verificarPermissaoAcesso($proposta = false, $projeto = false, $administrativo = false)
     {
         $msgERRO = '';
-        $auth = Zend_Auth::getInstance(); // pega a autentica??o
+        $auth = Zend_Auth::getInstance()->getIdentity(); // pega a autentica??o
+        $arrAuth = array_change_key_case((array) $auth);
 
-        if (!isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
-            //Verifica Permiss?o de Projeto
+        if (!isset($arrAuth['usu_codigo'])) { // autenticacao novo salic
+            //Verifica Permissao de Projeto
             if ($projeto) {
                 $msgERRO = 'Você não tem permissão para acessar esse Projeto!';
-                $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
+                $idUsuarioLogado = $arrAuth['idusuario'];
                 $idPronac = $this->_request->getParam('idpronac') ? $this->_request->getParam('idpronac') : $this->_request->getParam('idPronac');
                 if (strlen($idPronac) > 7) {
                     $idPronac = Seguranca::dencrypt($idPronac);
@@ -599,8 +600,8 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
             //Verifica Permiss?o de Proposta
             if ($proposta) {
-                $msgERRO = 'Voc? n?o tem permiss?o para acessar essa Proposta!';
-                $idUsuarioLogado = $auth->getIdentity()->idusuario;
+                $msgERRO = 'Voce nao tem permissao para acessar essa Proposta!';
+                $idUsuarioLogado = $arrAuth['idusuario'];
                 $idPreProjeto = $this->_request->getParam('idPreProjeto');
 
                 $fnVerificarPermissao = new Autenticacao_Model_FnVerificarPermissao();
