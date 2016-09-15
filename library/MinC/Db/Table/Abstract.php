@@ -121,7 +121,11 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
             }
 
             if ($isReturnDb && strpos($strSchema, '.') === false) {
-                $strSchema = $strSchema . "." . $strNameDb;
+                if ($strSchema) {
+                    $strSchema = $strSchema . "." . $strNameDb;
+                } else {
+                    $strSchema = $strNameDb;
+                }
             } elseif (strpos($strSchema, '.') === false) {
                 $strSchema = $strNameDb;
             }
