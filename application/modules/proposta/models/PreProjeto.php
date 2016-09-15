@@ -111,12 +111,29 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
     {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
+
+//        "DtInicioDeExecucaoForm"=>"CONVERT(CHAR(10),DtInicioDeExecucao,103)",
+//                                  "DtFinalDeExecucaoForm"=>"CONVERT(CHAR(10),DtFinalDeExecucao,103)",
+//                                  "DtAtoTombamentoForm"=>"CONVERT(CHAR(10),DtAtoTombamento,103)",
+//                                  "dtAceiteForm"=>"CONVERT(CHAR(10),dtAceite,103)",
+//                                  "DtArquivamentoForm"=>"CONVERT(CHAR(10),DtArquivamento,103)",
+//                                  "CAST(ResumoDoProjeto as TEXT) as ResumoDoProjeto",
+//                                  "CAST(Objetivos as TEXT) as Objetivos",
+//                                  "CAST(Justificativa as TEXT) as Justificativa",
+//                                  "CAST(Acessibilidade as TEXT) as Acessibilidade",
+//                                  "CAST(DemocratizacaoDeAcesso as TEXT) as DemocratizacaoDeAcesso",
+//                                  "CAST(EtapaDeTrabalho as TEXT) as EtapaDeTrabalho",
+//                                  "CAST(FichaTecnica as TEXT) as FichaTecnica",
+//                                  "CAST(Sinopse as TEXT) as Sinopse",
+//                                  "CAST(ImpactoAmbiental as TEXT) as ImpactoAmbiental",
+//                                  "CAST(EspecificacaoTecnica as TEXT) as EspecificacaoTecnica",
+//                                  "CAST(EstrategiadeExecucao as TEXT) as EstrategiadeExecucao"
         $slct->from($this, array("*",
-                                  "dtiniciodeexecucaoform"=>"dtiniciodeexecucao",
-                                  "dtfinaldeexecucaoform"=>"dtfinaldeexecucao",
-                                  "dtatotombamentoform"=>"dtatotombamento",
-                                  "dtaceiteform"=>"dtaceite",
-                                  "dtarquivamentoform"=>"dtarquivamento",
+                                  "dtiniciodeexecucaoform"=> $this->getExpressionToChar("dtiniciodeexecucao"),
+                                  "dtfinaldeexecucaoform"=> $this->getExpressionToChar("dtfinaldeexecucao"),
+                                  "dtatotombamentoform"=> $this->getExpressionToChar("dtatotombamento"),
+                                  "dtaceiteform"=> $this->getExpressionToChar("dtaceite"),
+                                  "dtarquivamentoform"=> $this->getExpressionToChar("dtarquivamento"),
                                 ));
 
         //adiciona quantos filtros foram enviados

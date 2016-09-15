@@ -484,4 +484,14 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         }
     }
 
+    public function getExpressionToChar($strColumn, $strFormat = 'DD/MM/YYYY')
+    {
+
+        if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            return new Zend_Db_Expr('CONVERT(CHAR(10), ' . $strColumn . ' , 103)');
+        } else {
+            return new Zend_Db_Expr('TO_CHAR(' . $strColumn . ', \'' . $strFormat . '\')');
+        }
+    }
+
 }
