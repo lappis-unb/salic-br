@@ -453,7 +453,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         if (!empty($modal)) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-            header("Content-Type: text/html; charset=ISO-8859-1");
             $this->view->modal = "s";
             $this->view->cpf = $this->_request->getParam("cpfCnpj");
             $this->view->caminho = $this->_request->getParam("caminho");
@@ -2007,16 +2006,18 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
             try {
                 $arrayTelefones = array(
-                    'idAgente' => $idAgente,
-                    'TipoTelefone' => $tipoFone,
-                    'UF' => $ufFone,
-                    'DDD' => $dddFone,
-                    'Numero' => $Fone,
-                    'Divulgar' => $divulgarFone,
-                    'Usuario' => $Usuario
+                    'idagente' => $idAgente,
+                    'tipotelefone' => $tipoFone,
+                    'uf' => $ufFone,
+                    'ddd' => $dddFone,
+                    'numero' => $Fone,
+                    'divulgar' => $divulgarFone,
+                    'usuario' => $Usuario
                 );
 
-                $insere = Agente_Model_Telefone::cadastrar($arrayTelefones);
+                $insereTelefone = new Agente_Model_DbTable_Telefones();
+                $insere = $insereTelefone->insert($arrayTelefones);
+
             } catch (Exception $e) {
                 parent::message("Erro ao salvar o telefone: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
             }
@@ -2034,15 +2035,16 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
             try {
                 $arrayEmail = array(
-                    'idAgente' => $idAgente,
-                    'TipoInternet' => $tipoEmail,
-                    'Descricao' => $Email,
-                    'Status' => $enviarEmail,
-                    'Divulgar' => $divulgarEmail,
-                    'Usuario' => $Usuario
+                    'idagente' => $idAgente,
+                    'tipointernet' => $tipoEmail,
+                    'descricao' => $Email,
+                    'status' => $enviarEmail,
+                    'divulgar' => $divulgarEmail,
+                    'usuario' => $Usuario
                 );
 
-                $insere = Email::cadastrar($arrayEmail);
+                $insere = new Agente_Model_Email();
+                $insere = $insere->inserir($arrayEmail);
             } catch (Exception $e) {
                 parent::message("Erro ao salvar o e-mail: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
             }
@@ -2089,6 +2091,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     				'siVinculo' => 0,
     				'idUsuarioResponsavel' => $auth->getIdentity()->IdUsuario
     		);
+            var_dump($dadosVinculo);die;
     		$tbVinculo->inserir($dadosVinculo);
     	}
 
@@ -2181,11 +2184,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'proposta/manterpropostaincentivofiscal/listarproposta',
                 'CONFIRM'
             );
-        } else {
-            // Caso não seja ele retorna para a visualização dos dados cadastrados do agente
-            # editado para atender
-            parent::message('Cadastro realizado com sucesso!', "agente/agentes/agentes/id/{$agente->id}", 'CONFIRM');
         }
+        // Caso não seja ele retorna para a visualização dos dados cadastrados do agente
+        # editado para atender
+        parent::message('Cadastro realizado com sucesso!', "agente/agentes/agentes/id/{$agente->id}", 'CONFIRM');
     }
 
     /**
