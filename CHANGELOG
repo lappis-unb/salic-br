@@ -1,3 +1,10 @@
+Release 1.10.5
+  * Fix: [alterar projetos] formatando preço promocional
+  * Fix: [api-mobile] Correção para exibir corretamente o texto do Resumo do Projeto
+  * Fix: [consultar dados projeto] correção em consulta para impressão de projeto
+  * Fix: [readequações] verificando limites orçamentários se for planilha orçamentária
+  * Fix: [readequações] removendo "planilha orçamentária" da combo da tela de "Solicitações gerais"
+
 Release 1.10.4
   * Fix: [alterar projeto] exibindo área e segmento corretamente
   * Fix: [proponente] corrigindo erro no tipo de comprovante & estilo
