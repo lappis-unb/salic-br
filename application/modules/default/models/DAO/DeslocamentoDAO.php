@@ -30,7 +30,7 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
     }
 
     public function pais() {
-        $sql = "SELECT * FROM AGENTES.dbo.Pais";
+        $sql = "SELECT * FROM " . DeslocamentoDAO::getStaticTableName('agentes', 'pais');
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -106,32 +106,32 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
         $agenteSchema = $this->getSchema('agentes');
 
         $de = [
-            'de.idDeslocamento',
-            'de.idProjeto',
-            'de.idPaisOrigem',
-            'de.idUFOrigem',
-            'de.idMunicipioOrigem',
-            'de.idPaisDestino',
-            'de.idUFDestino',
-            'de.Qtde',
-            'de.idUsuario',
-            'de.idMunicipioDestino'
+            'de.iddeslocamento',
+            'de.idprojeto',
+            'de.idpaisorigem',
+            'de.iduforigem',
+            'de.idmunicipioorigem',
+            'de.idpaisdestino',
+            'de.idufdestino',
+            'de.qtde',
+            'de.idusuario',
+            'de.idmunicipiodestino'
         ];
 
         $sql = $db->select()
             ->from(['de' => $this->_name], $de, $this->_schema)
-            ->joinLeft(['paO'=>'Pais'], 'de.idPaisOrigem = paO.idPais','paO.Descricao AS PO', $agenteSchema)
-            ->joinLeft(['ufO'=>'UF'] , 'de.idUFOrigem = ufO.idUF','ufO.Descricao AS UFO', $agenteSchema)
-            ->joinLeft(['muO' => 'Municipios'] , 'de.idMunicipioOrigem = muO.idMunicipioIBGE','muO.Descricao AS MUO', $agenteSchema)
-            ->joinLeft(['paD' => 'Pais'], 'de.idPaisDestino = paD.idPais', 'paD.Descricao AS PD', $agenteSchema)
-            ->joinLeft(['ufD' => 'UF'], 'de.idUFDestino = ufD.idUF','ufD.Descricao AS UFD', $agenteSchema)
-            ->joinLeft(['muD' => 'Municipios '], 'de.idMunicipioDestino = muD.idMunicipioIBGE', 'muD.Descricao AS MUD', $agenteSchema)
-            ->where("idProjeto = ?", $idProjeto)
+            ->joinLeft(['pao'=>'pais'], 'de.idpaisorigem = pao.idpais','pao.descricao as po', $agenteSchema)
+            ->joinLeft(['ufo'=>'uf'] , 'de.iduforigem = ufo.iduf','ufo.descricao as ufo', $agenteSchema)
+            ->joinLeft(['muo' => 'municipios'] , 'de.idmunicipioorigem = muo.idmunicipioibge','muo.descricao as muo', $agenteSchema)
+            ->joinLeft(['pad' => 'pais'], 'de.idpaisdestino = pad.idpais', 'pad.descricao as pd', $agenteSchema)
+            ->joinLeft(['ufd' => 'uf'], 'de.idufdestino = ufd.iduf','ufd.descricao as ufd', $agenteSchema)
+            ->joinLeft(['mud' => 'municipios'], 'de.idmunicipiodestino = mud.idmunicipioibge', 'mud.descricao as mud', $agenteSchema)
+            ->where("idprojeto = ?", $idProjeto)
             ;
 
             if($idDeslocamento != null)
             {
-                $sql->where('de.idDeslocamento = ?', $idDeslocamento);
+                $sql->where('de.iddeslocamento = ?', $idDeslocamento);
             }
 
         $resultado = $db->fetchAll($sql);
