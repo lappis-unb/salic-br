@@ -67,10 +67,10 @@ $('#cnpfcpf').blur(function(){
                         $('#nomeProponente').html(data.descricao);
                     } else{
                         $("#erro").dialog("destroy");
-                        $("#erro").html("Agente não cadastrado no Sistema.<br />Deseja cadastra-lo ? ");
+                        $("#erro").html("Agente nï¿½o cadastrado no Sistema.<br />Deseja cadastra-lo ? ");
                         $("#erro").dialog({
                         resizable: false,
-                        title: 'Atenção!',
+                        title: 'Atenï¿½ï¿½o!',
                         width:400,
                         height:220,
                         modal: true,
@@ -78,7 +78,7 @@ $('#cnpfcpf').blur(function(){
                             'Sim' : function(){
                                 redirecionar('<?php echo $this->baseUrl() ?>' + '/agente/agentes/incluiragente/cpf/' + CgcCpf.replace( /[^0-9]/g, '' ) + '/cadastrarprojeto/fnc');
                             },
-                            'Não' : function(){
+                            'Nï¿½o' : function(){
                                 $('#cnpfcpf').val('');
                                  $('#nomeProponente').html('');
                                 $(this).dialog('close');
@@ -105,10 +105,10 @@ $("#btn_salvar").click(function(){
 
     if(preenchimento) {
         $("#erro").dialog("destroy");
-        $("#erro").html("Dados obrigátorios não informados.");
+        $("#erro").html("Dados obrigï¿½torios nï¿½o informados.");
         $("#erro").dialog({
             resizable: false,
-            title: 'Atenção!',
+            title: 'Atenï¿½ï¿½o!',
             width:400,
             height:220,
             modal: true,
@@ -198,10 +198,10 @@ $(function()
 </script>
 <link type="image/x-icon" rel="shortcut icon" href="/NovoSalic/public/img/favicon.ico" />
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="index.phtml" title="Ir para Início">Início</a></li>
+        <li class="first"><a href="index.phtml" title="Ir para Inï¿½cio">Inï¿½cio</a></li>
         <li class="last">Cadastrar Projetos FNC	</li>
     </ul>
 </div>
@@ -218,7 +218,7 @@ $(function()
 
 
         <form action="<?php echo $this->url(array('controller' => 'cadastrarprojeto', 'action' => 'cadastrarprojetos')); ?>" name="formCadastraProjeto" method="POST" id="formCadastraProjeto">
-        <!-- ========== INÍCIO TABELA DADOS ========== -->
+        <!-- ========== INï¿½CIO TABELA DADOS ========== -->
         <?php //require_once "inc/menuabas.phtml"; // menu abas ?>
         <div id="tabDados">
             <table class="tabela">
@@ -253,13 +253,13 @@ $(function()
                 </tr>
                 <tr>
                     <td>
-                        Área *
+                        ï¿½rea *
                         <br>
                         <select id="areacultural" name="areacultural" class="select_simples focus obrigatorio">
                     <option value='' selected>--Selecione--</option>
-                <?php foreach ($this->comboareasculturais as $areacultural): ?>
-                        <option value='<?php echo $areacultural->id; ?>'>
-                    <?php echo $areacultural->descricao; ?>
+                <?php foreach ($this->comboareasculturais as $key => $value): ?>
+                        <option value='<?php echo $key; ?>'>
+                    <?php echo $value; ?>
                     </option>
                 <?php endforeach; ?>
                     </select>
@@ -304,11 +304,11 @@ $(function()
                     </td>
                 </tr>
                 <tr>
-                    <th colspan="4" class="centro">Situação do Projeto</th>
+                    <th colspan="4" class="centro">Situaï¿½ï¿½o do Projeto</th>
                 </tr>
                 <tr>
                     <td>
-                           Situação *
+                           Situaï¿½ï¿½o *
                         <br>
                         <select style="width:520px;" name="situacao" id="situacao" class="select_simples focus obrigatorio">
                             <option  value="">--Selecione--</option>
@@ -333,7 +333,7 @@ $(function()
                     </td>
                 </tr>
                 <tr>
-                    <th colspan="2" class="centro">Providência Tomada *</th>
+                    <th colspan="2" class="centro">Providï¿½ncia Tomada *</th>
                     <th colspan="2" class="centro">Valores do Projeto *</th>
                 </tr>
                 <tr>
