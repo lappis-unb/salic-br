@@ -793,22 +793,66 @@ $selected = '';
 <!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
 <br clear="all" />
 
+<script type="text/javascript" src="<?php echo $this->baseUrl();?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         acertaLayout();
         criacampo();
 
-//        CKEDITOR.config.fontSize_sizes = '14/14px;16/16px;18/18px;20/20px;22/22px;24/24px;26/26px;';
-//        CKEDITOR.config.blockedKeystrokes = [CKEDITOR.CTRL + 86]; /* Bloqueando tecla Ctrl+V */
-        <?php if ($this->grupoAtivo == 135) { // TECNICO    ?>
-        CKEDITOR.replace( 'dsObservacao', { toolbar: [] } );
-        CKEDITOR.replace( 'dsParecerTecnico', { toolbar: [] } );
-        CKEDITOR.replace( 'dsEvidencia', { toolbar: [] } );
-        CKEDITOR.replace( 'dsRecomendacaoEquipe', { toolbar: [] } );
-        <?php } else { ?>
-        CKEDITOR.replace( 'dsParecer', { toolbar: [] } );
-        <?php } ?>
+	    <?php if ($this->grupoAtivo == 135) : // TECNICO   ?>
+	tinymce.init({
+	    plugins:"paste,textcolor",
+ 	    language: "pt_BR",
+ 	    paste_as_text: true,
+            selector: '#dsObservacao',
+            height: 300,
+ 	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+ 	    menubar:"",
+	});
 
+	tinymce.init({
+	    plugins:"paste,textcolor",
+ 	    language: "pt_BR",
+ 	    paste_as_text: true,
+            selector: '#dsParecerTecnico',
+            height: 300,
+ 	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+ 	    menubar:"",
+	});
+
+	tinymce.init({
+	    plugins:"paste,textcolor",
+ 	    language: "pt_BR",
+ 	    paste_as_text: true,
+            selector: '#dsEvidencia',
+            height: 300,
+ 	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+ 	    menubar:"",
+	});
+
+	tinymce.init({
+	    plugins:"paste,textcolor",
+ 	    language: "pt_BR",
+ 	    paste_as_text: true,
+            selector: '#dsRecomendacaoEquipe',
+            height: 300,
+ 	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+ 	    menubar:"",
+	});
+
+	    <?php else: ?>	
+
+	tinymce.init({
+	    plugins:"paste,textcolor",
+ 	    language: "pt_BR",
+ 	    paste_as_text: true,
+            selector: '#dsParecer',
+            height: 300,
+ 	    toolbar : "bold,italic,underline,color,forecolor backcolor,fontsizeselect",
+ 	    menubar:"",
+	});	
+	    <?php endif; ?>
+        
         somaEmpregos();
         limparCampos();
 
@@ -1125,21 +1169,24 @@ $selected = '';
         if(mensagem== undefined){
             mensagem = '';
         }
-        
-        <?php if ($this->grupoAtivo == 135) { // TECNICO    ?>
-            var dsEvidencia = CKEDITOR.instances['dsEvidencia'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,''),
-                dsRecomendacaoEquipe = CKEDITOR.instances['dsRecomendacaoEquipe'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,''),
-                dsParecerTecnico = CKEDITOR.instances['dsParecerTecnico'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,''),
-                dsObservacao = CKEDITOR.instances['dsObservacao'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
-            if (dsEvidencia == '' || dsRecomendacaoEquipe == '' || dsParecerTecnico == '' || dsObservacao == ''){
-                erros++;
-            }
-        <?php } else { ?>
-            var dsParecer = CKEDITOR.instances['dsParecer'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
-            if (dsParecer == ''){
-                erros++;
-            }
-        <?php } ?>
+
+	    <?php if ($this->grupoAtivo == 135): // TECNICO
+	    ?>       
+        var dsEvidencia = $('#dsEvidencia').val(),
+	    dsRecomendacaoEquipe = $('#dsRecomendacaoEquipe').val(),
+            dsParecerTecnico = $('#dsParecerTecnico').val(),
+            dsObservacao = $('#dsObservacao').val();
+
+        if (dsEvidencia == '' || dsRecomendacaoEquipe == '' || dsParecerTecnico == '' || dsObservacao == ''){
+            erros++;
+        }
+	
+            <?php else : ?>
+	    var dsParecer = $('#dsParecer').val();
+        if (dsParecer == ''){
+            erros++;
+        }
+	    <?php endif; ?>
             
             
         //VOLTAR ESSA VERSÃO APÓS O COMANDO DOS GESTORES ROMULO E ALINE. - Jefferson Alessandro
@@ -1164,14 +1211,15 @@ $selected = '';
                 }
             }
         });
-        
-        if(erros > 0){
+	
+        if (erros > 0){
             if(mensagem != false){
                 janelaAlerta(mensagem);
                 return false;
             }
-        }else
+        } else {
             return true;
+        }
     }
 
     function limparCampos(){
