@@ -1,3 +1,7 @@
+Release 1.10.6
+  * Fix: [consultar dados projeto] corrigindo totalização do valor na impressão
+  * Fix: [fiscalizar projeto cultural] corrigido erro ao salvar / fckeditor estava quebrado, trocando para tinymce
+
 Release 1.10.5
   * Fix: [alterar projetos] formatando preço promocional
   * Fix: [api-mobile] Correção para exibir corretamente o texto do Resumo do Projeto
