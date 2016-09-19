@@ -127,6 +127,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @return void
      */
     public function indexAction() {
+
         $arrBusca = array();
         $arrBusca['stestado = ?'] = 1;
         $arrBusca['idusuario = ?'] = $this->idResponsavel;
@@ -135,9 +136,14 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca, array("idagente ASC"));
 
         //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
-        $this->montaTela("manterpropostaincentivofiscal/index.phtml", array("acaoAlterar" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/editar",
-            "acaoExcluir" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/excluir",
-            "dados" => $rsPreProjeto));
+        $this->montaTela(
+            "manterpropostaincentivofiscal/index.phtml",
+            array(
+                "acaoAlterar" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/editar",
+                "acaoExcluir" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/excluir",
+                "dados" => $rsPreProjeto
+            )
+        );
     }
 
     /**
@@ -280,7 +286,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $especificacaoTecnica = $_POST['especificacaoTecnica'];
         $informacoes = $_POST['informacoes'];
 
-        $dados = array("idagente" => $idAgente,
+        $dados = array(
+            "idagente" => $idAgente,
             "nomeprojeto" => $nomeProjeto,
             "mecanismo" => 1, //seguindo sistema legado
             "agenciabancaria" => $agenciaBancaria,
