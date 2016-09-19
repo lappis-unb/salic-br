@@ -10,7 +10,7 @@
  *
  * @author augusto
  */
-class Analisedeconteudo extends GenericModel {
+class Analisedeconteudo extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'sac';
     protected $_name = 'tbAnaliseDeConteudo';

@@ -7,15 +7,15 @@
 /**
  * Description of paTransformarPropostaEmProjeto
  */
-class paTransformarPropostaEmProjeto extends GenericModel {
+class paTransformarPropostaEmProjeto extends MinC_Db_Table_Abstract {
         
     protected $_banco = 'SAC';
     protected $_name  = 'paTransformarPropostaEmProjeto';
 
     #public function execSP($idProposta, $CNPJCPF, $idOrgao, $idUsuario){
     /**
-     * @author Alysson Vicuña de Oliveira
-     * Chamada da Procedure responsável por Transformar uma Proposta em Projeto dentro do Salic
+     * @author Alysson Vicuï¿½a de Oliveira
+     * Chamada da Procedure responsï¿½vel por Transformar uma Proposta em Projeto dentro do Salic
      * @param $idProposta
      * @param $CNPJCPF
      * @param $idOrgao

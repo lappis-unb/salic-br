@@ -2,9 +2,9 @@
 /**
  * Description of Projetos
  *
- * @author André Nogueira Pereira
+ * @author Andrï¿½ Nogueira Pereira
  */
-class Fiscalizacao extends GenericModel {
+class Fiscalizacao extends MinC_Db_Table_Abstract {
 
     protected $_name = 'tbFiscalizacao';
     protected $_schema = 'dbo';

@@ -3,7 +3,7 @@
  * Description of tbDocumentosPreProjeto
  */
 
-class DocumentosProjeto  extends GenericModel {
+class DocumentosProjeto  extends MinC_Db_Table_Abstract {
      protected $_banco   = "sac";
      protected $_schema  = "sac";
      protected $_name = 'documentosprojeto';

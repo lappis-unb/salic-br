@@ -10,7 +10,7 @@
  * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-class UsuarioDAO extends GenericModel
+class UsuarioDAO extends MinC_Db_Table_Abstract
 {
     protected $_banco = "tabelas";
     protected $_name = 'usuarios';
@@ -230,7 +230,7 @@ class UsuarioDAO extends GenericModel
         # Pegando apenas o primeiro resultado da consulta, transformando em array e transformando as chaves em minusculas.
         $arrUser = array_change_key_case(UsuarioDAO::buscarUsuarioScriptcase($cod)->current()->toArray());
 
-        $conexao = Zend_Registry::get('conexao_banco');
+//        $conexao = Zend_Registry::get('conexao_banco');
 
 //
 //        if ($conexao == "conexao_01") {

@@ -3,12 +3,9 @@
 /**
  * AnexarDocumentosController
  * @author Equipe RUP - Politec
+ * @author wouerner <wouerner@gmail.com>
  * @since 28/04/2010
- * @version 1.0
- * @package application
- * @subpackage application.controllers
  * @link http://www.cultura.gov.br
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
 //require_once "GenericControllerNew.php";
 
@@ -54,7 +51,7 @@ class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstrac
         parent::init(); // chama o init() do pai GenericControllerNew
     }
     public function indexAction(){
-       $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+       $this->_helper->layout->disableLayout();
 
        function verifica($var){
            if($var or $var == 1){
@@ -406,7 +403,6 @@ if($mecanismo == 'Incentivo Fiscal'){
         $texto .= '</div>
         </body>
         </html>';
-        //xd("para");
         $pdf = new PDF($texto, 'pdf');
         $pdf->gerarRelatorio();
         exit;

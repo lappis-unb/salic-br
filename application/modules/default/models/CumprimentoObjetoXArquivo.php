@@ -5,7 +5,7 @@
  *
  * @author xti
  */
-class CumprimentoObjetoXArquivo extends GenericModel
+class CumprimentoObjetoXArquivo extends MinC_Db_Table_Abstract
 {
 
     const ACESSIBILIDADE_FISICA = 0;
@@ -96,7 +96,7 @@ class CumprimentoObjetoXArquivo extends GenericModel
         $arquivoModel = new ArquivoModel();
         $cumprimentoObjetoArquivo = $this;
         array_walk($_FILES, function($file, $filename) use ($idCumprimentoDoObjeto, $arquivoModel, $cumprimentoObjetoArquivo) {
-            // Se não houve nenhum erro pode persistir o arquivo no banco
+            // Se nï¿½o houve nenhum erro pode persistir o arquivo no banco
             if (UPLOAD_ERR_OK === $file['error']) {
                 $arquivoModel->cadastrar($filename);
                 $cumprimentoObjetoArquivoRow = $cumprimentoObjetoArquivo->createRow();
@@ -110,10 +110,10 @@ class CumprimentoObjetoXArquivo extends GenericModel
 
     /**
      * 
-     * @param string $filename nome do arquivo que está sendo passado no atributo
-     * 'name' do formulario que está postando os arquivos
+     * @param string $filename nome do arquivo que estï¿½ sendo passado no atributo
+     * 'name' do formulario que estï¿½ postando os arquivos
      * @return int O numero inteiro que representa a natureza a qual se destina
-     * a imagem que está sendo feito o upload do arquivo no formulário
+     * a imagem que estï¿½ sendo feito o upload do arquivo no formulï¿½rio
      * @throws InvalidArgumentException
      */
     public function getTipoDeArquivo($filename)
@@ -126,7 +126,7 @@ class CumprimentoObjetoXArquivo extends GenericModel
             case 'imagensImpactosAmbientais':
                 return self::IMPACTOS_AMBIENTAIS;
             default:
-                throw new InvalidArgumentException("Tipo do arquivo do cumprimento do objeto ('{$filename}') não existe");
+                throw new InvalidArgumentException("Tipo do arquivo do cumprimento do objeto ('{$filename}') nï¿½o existe");
         }
     }
 
@@ -140,7 +140,7 @@ class CumprimentoObjetoXArquivo extends GenericModel
             $select->where('idPosicao = ?', $this->getPosicao());
         }
         if (0 === count($select->getPart(Zend_Db_Select::WHERE))) {
-            throw new BadMethodCallException('Não foi usado nenhum filtro');
+            throw new BadMethodCallException('Nï¿½o foi usado nenhum filtro');
         }
 
         $imagensDoObjeto = new ArrayObject();
@@ -163,10 +163,10 @@ class CumprimentoObjetoXArquivo extends GenericModel
     public function apagarArquivo()
     {
         if (null === $this->getIdCumprimentoObjeto()) {
-            throw new BadMethodCallException('Cumprimento do objeto não encontrado');
+            throw new BadMethodCallException('Cumprimento do objeto nï¿½o encontrado');
         }
         if (null === $this->getArquivo()) {
-            throw new BadMethodCallException('Arquivo não encontrado');
+            throw new BadMethodCallException('Arquivo nï¿½o encontrado');
         }
         parent::apagar(array(
             'idCumprimentoObjeto = ?' => $this->getIdCumprimentoObjeto(),

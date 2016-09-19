@@ -8,7 +8,7 @@
  * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
  */
-class Autenticacao_Model_Sgcacesso extends GenericModel
+class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
 {
 
     protected $_banco = 'controledeacesso';
@@ -159,11 +159,13 @@ class Autenticacao_Model_Sgcacesso extends GenericModel
      */
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {
-        $select = $this->select();
+        $select = $this->select()->from($this->_name, $this->_getCols(), $this->_schema);
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
-            $select->where($coluna, $valor);
+            if ($valor) {
+                $select->where($coluna, $valor);
+            }
         }
         $select->order($order);
 

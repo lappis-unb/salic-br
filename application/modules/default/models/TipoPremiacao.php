@@ -4,7 +4,7 @@
  * Modulo: Editais
  * Criado por: Emanuel Melo 
  */
-class TipoPremiacao extends GenericModel {
+class TipoPremiacao extends MinC_Db_Table_Abstract {
     
     protected  $_banco = 'SAC';
     protected  $_name = 'tbTipoPremiacao';
@@ -12,7 +12,7 @@ class TipoPremiacao extends GenericModel {
     /*
      * Metodo: buscarTipoPremiacao
      * Entrada: void
-     * Saida: Array de Tipos de Premiações
+     * Saida: Array de Tipos de Premiaï¿½ï¿½es
     */
     public function buscarTipoPremiacao(){
         $select = $this->select();

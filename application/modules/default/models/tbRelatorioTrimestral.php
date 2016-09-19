@@ -9,7 +9,7 @@
  *
  * @author 01129075125
  */
-class tbRelatorioTrimestral extends GenericModel{
+class tbRelatorioTrimestral extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'SAC';
     protected $_schema = 'dbo';
@@ -17,7 +17,7 @@ class tbRelatorioTrimestral extends GenericModel{
 
 
     /**
-     * Método para consultar se existe algum registro para o idRelatorio
+     * Mï¿½todo para consultar se existe algum registro para o idRelatorio
      * @access public
      * @param array $dados
      * @param integer $where
@@ -57,7 +57,7 @@ class tbRelatorioTrimestral extends GenericModel{
 
 
         /**
-	 * Método para buscar o relatório trimestral - Habilitar Menu
+	 * Mï¿½todo para buscar o relatï¿½rio trimestral - Habilitar Menu
 	 * @access public
 	 * @param array $dados
 	 * @return array dos dados cadastrados
@@ -83,7 +83,7 @@ class tbRelatorioTrimestral extends GenericModel{
 
 
         /**
-	 * Método para buscar o relatório trimestral
+	 * Mï¿½todo para buscar o relatï¿½rio trimestral
 	 * @access public
 	 * @param array $dados
 	 * @return array dos dados cadastrados
@@ -110,7 +110,7 @@ class tbRelatorioTrimestral extends GenericModel{
 
 
         /**
-	 * Método para buscar o relatório trimestral
+	 * Mï¿½todo para buscar o relatï¿½rio trimestral
 	 * @access public
 	 * @param array $dados
 	 * @return array dos dados cadastrados
@@ -135,7 +135,7 @@ class tbRelatorioTrimestral extends GenericModel{
         }
 
         /**
-	 * Método para buscar o relatório trimestral
+	 * Mï¿½todo para buscar o relatï¿½rio trimestral
 	 * @access public
 	 * @param array $dados
 	 * @return array dos dados cadastrados
@@ -173,7 +173,7 @@ class tbRelatorioTrimestral extends GenericModel{
         }
 
         /**
-	 * Método para buscar o relatório trimestral - Habilitar Menu
+	 * Mï¿½todo para buscar o relatï¿½rio trimestral - Habilitar Menu
 	 * @access public
 	 * @param array $dados
 	 * @return array dos dados cadastrados

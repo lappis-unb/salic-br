@@ -5,7 +5,7 @@
  * @author augusto 
  */
 
-class CaptacaoConversao extends GenericModel
+class CaptacaoConversao extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
 	protected $_schema = "dbo";
@@ -19,7 +19,7 @@ class CaptacaoConversao extends GenericModel
 		$select->setIntegrityCheck(false);
 		$select->from($this);
 		return $this->fetchAll($select);
-	} // fecha método buscarCaptacaoConversao()
+	} // fecha mï¿½todo buscarCaptacaoConversao()
 
 
 
@@ -48,6 +48,6 @@ class CaptacaoConversao extends GenericModel
 		{
 			return $this->fetchAll($select);
 		}
-	} // fecha método BuscarTotalCaptacaoConversao()
+	} // fecha mï¿½todo BuscarTotalCaptacaoConversao()
 
 } // fecha class

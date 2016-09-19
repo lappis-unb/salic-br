@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class tbReadequacao extends GenericModel
+class tbReadequacao extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
 	protected $_schema = "dbo";

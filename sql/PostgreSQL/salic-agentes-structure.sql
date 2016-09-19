@@ -110,6 +110,9 @@ CREATE TABLE agentes.Telefones
   CONSTRAINT FK_Telefones_Verificacao FOREIGN KEY (TipoTelefone) REFERENCES agentes.Verificacao (idVerificacao),
   CONSTRAINT FK_Telefones_UF FOREIGN KEY (UF) REFERENCES agentes.UF (idUF)
 );
+CREATE SEQUENCE agentes.telefones_idtelefone_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE agentes.telefones ALTER COLUMN idtelefone SET DEFAULT nextval('agentes.telefones_idtelefone_seq');
+ALTER SEQUENCE agentes.telefones_idtelefone_seq OWNED BY agentes.telefones.idtelefone;
 CREATE TABLE agentes.Sistema
 (
   idSistema INT PRIMARY KEY NOT NULL,
@@ -225,6 +228,9 @@ CREATE TABLE agentes.EnderecoNacional
   CONSTRAINT FK_EnderecoNacional_Verificacao1 FOREIGN KEY (TipoEndereco) REFERENCES agentes.Verificacao (idVerificacao),
   CONSTRAINT FK_EnderecoNacional_Verificacao2 FOREIGN KEY (TipoLogradouro) REFERENCES agentes.Verificacao (idVerificacao)
 );
+CREATE SEQUENCE agentes.endereconacional_idendereco_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE agentes.endereconacional ALTER COLUMN idendereco SET DEFAULT nextval('agentes.endereconacional_idendereco_seq');
+ALTER SEQUENCE agentes.endereconacional_idendereco_seq OWNED BY agentes.endereconacional.idendereco;
 CREATE INDEX IX_EnderecoNacional ON agentes.EnderecoNacional (idEndereco);
 CREATE INDEX IX_EnderecoNacional_1 ON agentes.EnderecoNacional (Cidade);
 CREATE INDEX IX_EnderecoNacional_2 ON agentes.EnderecoNacional (UF);
@@ -248,6 +254,9 @@ CREATE TABLE agentes.Internet
   CONSTRAINT FK_Internet_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
   CONSTRAINT FK_Internet_Verificacao FOREIGN KEY (TipoInternet) REFERENCES agentes.Verificacao (idVerificacao)
 );
+CREATE SEQUENCE agentes.internet_idinternet_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE agentes.internet ALTER COLUMN idinternet SET DEFAULT nextval('agentes.internet_idinternet_seq');
+ALTER SEQUENCE agentes.internet_idinternet_seq OWNED BY agentes.internet.idinternet;
 CREATE TABLE agentes.MesoRegiao
 (
   idMeso CHAR(4) PRIMARY KEY NOT NULL,
@@ -294,6 +303,9 @@ CREATE TABLE agentes.Nomes
   CONSTRAINT FK_Nomes_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
   CONSTRAINT FK_Nomes_Verificacao FOREIGN KEY (TipoNome) REFERENCES agentes.Verificacao (idVerificacao)
 );
+CREATE SEQUENCE agentes.nomes_idnome_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE agentes.nomes ALTER COLUMN idnome SET DEFAULT nextval('agentes.nomes_idnome_seq');
+ALTER SEQUENCE agentes.nomes_idnome_seq OWNED BY agentes.nomes.idnome;
 CREATE INDEX _dta_index_Nomes_9_5575058__K5_K2_K4 ON agentes.Nomes (Status, idAgente, Descricao);
 CREATE INDEX _dta_index_Nomes_9_5575058__K2_K4 ON agentes.Nomes (idAgente, Descricao);
 CREATE TABLE agentes.Ocupacao
@@ -334,6 +346,7 @@ CREATE TABLE agentes.Ramais
   Usuario INT DEFAULT 0 NOT NULL,
   CONSTRAINT FK_Ramais_Telefones FOREIGN KEY (idTelefone) REFERENCES agentes.Telefones (idTelefone)
 );
+
 CREATE TABLE agentes.tbAgenteFisico
 (
   idAgente INT PRIMARY KEY NOT NULL,
@@ -503,7 +516,7 @@ CREATE TABLE agentes.tbTitulacaoConselheiro
   stConselheiro CHAR DEFAULT 'A' NOT NULL,
   CONSTRAINT fk_Agentes_01 FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
 );
-CREATE TABLE agentes.tbVinculo
+CREATE TABLE agentes.tbvinculo
 (
   idVinculo INT PRIMARY KEY NOT NULL ,
   idAgenteProponente INT NOT NULL,
@@ -512,6 +525,9 @@ CREATE TABLE agentes.tbVinculo
   idUsuarioResponsavel INT NOT NULL,
   CONSTRAINT tbVinculo_Agentes_02 FOREIGN KEY (idAgenteProponente) REFERENCES agentes.Agentes (idAgente)
 );
+CREATE SEQUENCE agentes.tbvinculo_idvinculo_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE agentes.tbvinculo ALTER COLUMN idvinculo SET DEFAULT nextval('agentes.tbvinculo_idvinculo_seq');
+ALTER SEQUENCE agentes.tbvinculo_idvinculo_seq OWNED BY agentes.tbvinculo.idvinculo;
 CREATE TABLE agentes.tbVinculoProposta
 (
   idVinculoProposta INT PRIMARY KEY NOT NULL ,
@@ -520,6 +536,9 @@ CREATE TABLE agentes.tbVinculoProposta
   siVinculoProposta CHAR NOT NULL,
   CONSTRAINT FK_tbVinculoProposta_tbVinculo FOREIGN KEY (idVinculo) REFERENCES agentes.tbVinculo (idVinculo)
 );
+CREATE SEQUENCE agentes.tbvinculoproposta_idvinculoproposta_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE agentes.tbvinculoproposta ALTER COLUMN idvinculoproposta SET DEFAULT nextval('agentes.tbvinculoproposta_idvinculoproposta_seq');
+ALTER SEQUENCE agentes.tbvinculoproposta_idvinculoproposta_seq OWNED BY agentes.tbvinculoproposta.idvinculoproposta;
 CREATE INDEX IX_tbVinculoProposta ON agentes.tbVinculoProposta (idVinculoProposta);
 CREATE TABLE agentes.TCU
 (
@@ -549,6 +568,9 @@ CREATE TABLE agentes.Visao
   CONSTRAINT FK_Visao_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
   CONSTRAINT FK_Visao_Verificacao FOREIGN KEY (Visao) REFERENCES agentes.Verificacao (idVerificacao)
 );
+CREATE SEQUENCE agentes.visao_idvisao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE agentes.visao ALTER COLUMN idvisao SET DEFAULT nextval('agentes.visao_idvisao_seq');
+ALTER SEQUENCE agentes.visao_idvisao_seq OWNED BY agentes.visao.idvisao;
 CREATE INDEX IX_Visao ON agentes.Visao (idAgente);
 CREATE INDEX IX_Visao_1 ON agentes.Visao (Visao);
 CREATE TABLE agentes.vAgentes

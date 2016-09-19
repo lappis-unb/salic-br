@@ -4,7 +4,7 @@
  * Modulo: Editais
  * Criado por: Emanuel Melo 
  */
-class ItemFluxo extends GenericModel {
+class ItemFluxo extends MinC_Db_Table_Abstract {
     
     protected  $_banco = 'SAC';
     protected  $_name = 'tbTipoItemFluxo';

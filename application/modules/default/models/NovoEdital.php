@@ -9,7 +9,7 @@
  *
  * @author Emanuel Melo
  */
-class NovoEdital extends GenericModel {
+class NovoEdital extends MinC_Db_Table_Abstract {
     
     protected  $_banco = 'SAC';
     protected  $_name = 'tbEdital';

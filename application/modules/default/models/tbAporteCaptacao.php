@@ -5,10 +5,10 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2012 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
-class tbAporteCaptacao extends GenericModel
+class tbAporteCaptacao extends MinC_Db_Table_Abstract
 {
 	/**
 	 * Numero do lote usado para representar aportes de depositos equivocados
@@ -69,11 +69,11 @@ class tbAporteCaptacao extends GenericModel
     	#
     	$captacoes = $tbTmpCaptacaoModel->find($idCaptacao);
     	if (!$captacoes->count() || 1 < $captacoes->count()) {
-    		throw new Exception('Captação inválida.');
+    		throw new Exception('Captaï¿½ï¿½o invï¿½lida.');
     	}
     	$captacao = $captacoes->current();
     	if (!($captacao instanceof Zend_Db_Table_Row)) {
-    		throw new Exception('Captação inválida.');
+    		throw new Exception('Captaï¿½ï¿½o invï¿½lida.');
     	}
     	#
         $contaBancariaModel = new ContaBancaria();
@@ -82,11 +82,11 @@ class tbAporteCaptacao extends GenericModel
         	'c.Sequencial = ?' => $captacao->nrSequencial,
         ));
     	if (!$contasBancarias->count() || 1 < $contasBancarias->count()) {
-    		throw new Exception('Conta bancária inválida.');
+    		throw new Exception('Conta bancï¿½ria invï¿½lida.');
     	}
     	$contaBancaria = $contasBancarias->current();
     	if (!($contaBancaria instanceof Zend_Db_Table_Row)) {
-    		throw new Exception('Conta bancária inválida.');
+    		throw new Exception('Conta bancï¿½ria invï¿½lida.');
     	}
 		$this->getAdapter()->beginTransaction();
     	$this->inserir(array(

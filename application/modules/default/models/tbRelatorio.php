@@ -6,17 +6,17 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-class tbRelatorio extends GenericModel {
+class tbRelatorio extends MinC_Db_Table_Abstract {
 
     protected $_banco = "SAC";
     protected $_schema = "dbo";
     protected $_name = "tbRelatorio";
 
     /**
-     * Método para consultar se existe algum registro para o idPRONAC
+     * Mï¿½todo para consultar se existe algum registro para o idPRONAC
      * @access public
      * @param array $dados
      * @param integer $where
@@ -91,7 +91,7 @@ class tbRelatorio extends GenericModel {
     }
 
     /**
-     * Método para consultar se existe algum idDistribuicaoProduto para o idPRONAC
+     * Mï¿½todo para consultar se existe algum idDistribuicaoProduto para o idPRONAC
      * @access public
      * @param array $dados
      * @param integer $where
@@ -113,7 +113,7 @@ class tbRelatorio extends GenericModel {
     }
 
     /**
-     * Método para consultar os dados principais do relatorio cadastrado
+     * Mï¿½todo para consultar os dados principais do relatorio cadastrado
      * @access public
      * @param array $dados
      * @param integer $where
@@ -141,7 +141,7 @@ class tbRelatorio extends GenericModel {
 
 
     /**
-     * Método para consultar os dados principais do relatorio cadastrado
+     * Mï¿½todo para consultar os dados principais do relatorio cadastrado
      * @access public
      * @param array $dados
      * @param integer $where
@@ -167,7 +167,7 @@ class tbRelatorio extends GenericModel {
     }
 
     /**
-     * Método para consultar os dados do relatorio cadastrado
+     * Mï¿½todo para consultar os dados do relatorio cadastrado
      * @access public
      * @param array $dados
      * @param integer $where

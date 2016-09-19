@@ -9,7 +9,7 @@
  *
  * @author 01610881125
  */
-class ArquivoFiscalizacao extends GenericModel {
+class ArquivoFiscalizacao extends MinC_Db_Table_Abstract {
 
     protected $_name = 'tbArquivoFiscalizacao';
     protected $_schema = 'dbo';

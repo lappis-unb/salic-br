@@ -35,11 +35,6 @@ class GenericModel extends Zend_Db_Table_Abstract
             }
 
             if (!($this->_config instanceof Zend_Config_Ini)) {
-//            $this->_config = new Zend_Config_Ini(
-//                Zend_Registry::get('DIR_CONFIG'),
-//                'conexao_' . strtolower($this->_banco),
-//                array('allowModifications' => true,)
-//            );
                 $db = Zend_Db_Table::getDefaultAdapter();
                 $arrConfig = $db->getConfig();
 
@@ -196,6 +191,8 @@ class GenericModel extends Zend_Db_Table_Abstract
      * @param int $tamanho - numero de registros que deve retornar
      * @param int $inicio - offset
      * @return Zend_Db_Table_Rowset_Abstract
+     *
+     * @todo deletar futuramente.
      */
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {

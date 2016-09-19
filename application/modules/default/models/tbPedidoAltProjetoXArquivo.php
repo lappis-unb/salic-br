@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2012 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
-class tbPedidoAltProjetoXArquivo extends GenericModel
+class tbPedidoAltProjetoXArquivo extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "BDCORPORATIVO";
@@ -20,10 +20,10 @@ class tbPedidoAltProjetoXArquivo extends GenericModel
 
 
 	/**
-	 * Busca os arquivos da solicitação de readequação
+	 * Busca os arquivos da solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 	 * @access public
 	 * @param array $where (filtros)
-	 * @param array $order (ordenação)
+	 * @param array $order (ordenaï¿½ï¿½o)
 	 * @return object
 	 */
 	public function buscarArquivos($where = array(), $order = array())
@@ -50,6 +50,6 @@ class tbPedidoAltProjetoXArquivo extends GenericModel
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha método buscarArquivos()
+	} // fecha mï¿½todo buscarArquivos()
 
 } // fecha class

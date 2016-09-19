@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class tbPlanoDivulgacao extends GenericModel
+class tbPlanoDivulgacao extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
 	protected $_schema = "dbo";
@@ -81,7 +81,7 @@ class tbPlanoDivulgacao extends GenericModel
         $select->where('b.idReadequacao = ?', $idReadequacao);
         
 		return $this->fetchAll($select);
-	} // fecha método historicoReadequacao()
+	} // fecha mï¿½todo historicoReadequacao()
 
     
     public function buscarDadosPlanosDivulgacaoAtual($where = array())
@@ -102,6 +102,6 @@ class tbPlanoDivulgacao extends GenericModel
 
         //xd($select->assemble());
 		return $this->fetchAll($select);
-	} // fecha método historicoReadequacao()
+	} // fecha mï¿½todo historicoReadequacao()
     
 } // fecha class

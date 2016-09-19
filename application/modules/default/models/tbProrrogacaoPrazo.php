@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class tbProrrogacaoPrazo extends GenericModel
+class tbProrrogacaoPrazo extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "BDCORPORATIVO";
 	protected $_schema = "scSAC";
@@ -19,7 +19,7 @@ class tbProrrogacaoPrazo extends GenericModel
 
 
 	/**
-	 * Método para buscar os prazos de captação e execução com solicitação de readequação
+	 * Mï¿½todo para buscar os prazos de captaï¿½ï¿½o e execuï¿½ï¿½o com solicitaï¿½ï¿½o de readequaï¿½ï¿½o
 	 * @access public
 	 * @param integer $idPronac
 	 * @param string $tpProrrogacao
@@ -63,15 +63,15 @@ class tbProrrogacaoPrazo extends GenericModel
 		}
 
 		return $this->fetchAll($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
 
 
 
 	/**
-	 * Busca o histórico de readequação
+	 * Busca o histï¿½rico de readequaï¿½ï¿½o
 	 * @access public
 	 * @param array $where (filtros)
-	 * @param array $order (ordenação)
+	 * @param array $order (ordenaï¿½ï¿½o)
 	 * @return object
 	 */
 	public function historicoReadequacao($where = array(), $order = array())
@@ -126,19 +126,19 @@ class tbProrrogacaoPrazo extends GenericModel
 		$select->order($order);
 
 		return $this->fetchAll($select);
-	} // fecha método historicoReadequacao()
+	} // fecha mï¿½todo historicoReadequacao()
 
 
 
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @param array $dados
-	 * @return integer (retorna o último id cadastrado)
+	 * @return integer (retorna o ï¿½ltimo id cadastrado)
 	 */
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarDados()
+	} // fecha mï¿½todo cadastrarDados()
 
 } // fecha class

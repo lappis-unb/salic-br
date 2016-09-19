@@ -7,7 +7,7 @@
 /**
  * Description of paUsuariosDoPerfil
  */
-class sVerificaValidadeCertidaoNegativa extends GenericModel {
+class sVerificaValidadeCertidaoNegativa extends MinC_Db_Table_Abstract {
         
     protected $_banco = 'SAC';
     protected $_name  = 'sVerificaValidadeCertidaoNegativa';
@@ -24,7 +24,7 @@ class sVerificaValidadeCertidaoNegativa extends GenericModel {
                 SELECT 
                     CASE
                         WHEN c.CodigoCertidao = '49'
-                        THEN 'Quitação de Tributos Federais'
+                        THEN 'Quitaï¿½ï¿½o de Tributos Federais'
                         WHEN c.CodigoCertidao = '51'
                         THEN 'FGTS'
                         WHEN c.CodigoCertidao = '52'
@@ -39,7 +39,7 @@ class sVerificaValidadeCertidaoNegativa extends GenericModel {
                         CASE
                             WHEN c.cdSituacaoCertidao = 0
                             THEN 'Pendente'
-                            ELSE 'Não Pendente'
+                            ELSE 'Nï¿½o Pendente'
                         END
                 END AS Situacao,
                 CASE

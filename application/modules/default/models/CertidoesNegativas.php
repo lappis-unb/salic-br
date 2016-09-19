@@ -6,11 +6,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class CertidoesNegativas extends GenericModel
+class CertidoesNegativas extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = 'SAC';
@@ -20,7 +20,7 @@ class CertidoesNegativas extends GenericModel
 
 
 	/**
-	 * Método para buscar os dados de uma certidão específica
+	 * Mï¿½todo para buscar os dados de uma certidï¿½o especï¿½fica
 	 * @access public
 	 * @param string $CgcCpf
 	 * @param integer $CodigoCertidao
@@ -51,7 +51,7 @@ class CertidoesNegativas extends GenericModel
 			$select->where("c.CgcCpf = ?", $CgcCpf);
 		}
 
-		// filtra pelo código da certidão
+		// filtra pelo cï¿½digo da certidï¿½o
 		if (!empty($CodigoCertidao))
 		{
 			$select->where("c.CodigoCertidao = ?", $CodigoCertidao);
@@ -60,6 +60,6 @@ class CertidoesNegativas extends GenericModel
 		$select->order("c.idCertidoesnegativas DESC");
 
 		return $this->fetchAll($select);
-	} // fecha método buscarDados()
+	} // fecha mï¿½todo buscarDados()
 
 } // fecha class

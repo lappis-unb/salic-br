@@ -1,5 +1,5 @@
 <?php
-class Movimentacao extends GenericModel
+class Movimentacao extends MinC_Db_Table_Abstract
 {
     protected $_banco = "sac";
     protected $_schema = 'sac';
@@ -45,9 +45,9 @@ class Movimentacao extends GenericModel
         $slct->setIntegrityCheck(false);
         $slct->from($this->_name,['*'], $this->_schema);
         //echo $slct; die;
-        $slct->where('idProjeto = ? ', $idPreProjeto);
-        $slct->where('stEstado = ? ', 0);
-        $slct->order(array("DtMovimentacao DESC"));
+        $slct->where('idprojeto = ? ', $idPreProjeto);
+        $slct->where('stestado = ? ', 0);
+        $slct->order(array("dtmovimentacao DESC"));
 
         return $this->fetchRow($slct);
     }

@@ -1,136 +1,140 @@
 <?php
+
 /**
- * DAO Internet
- * @author emanuel.sampaio - Politec
- * @author wouerner <wouerner@gmail.com>
- * @since 18/02/2011
- * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
+ * Class Agente_Model_Internet
+ *
+ * @name Agente_Model_Internet
+ * @package Modules/Agente
+ * @subpackage Models
+ * @version $Id$
+ *
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+ * @since 06/09/2016
+ *
+ * @copyright Â© 2012 - Ministerio da Cultura - Todos os direitos reservados.
+ * @link http://salic.cultura.gov.br
  */
-
-class Agente_Model_Internet extends GenericModel
+class Agente_Model_Internet extends MinC_Db_Model
 {
-    protected $_banco  = "AGENTES";
-    protected $_schema = "dbo";
-    protected $_name   = "Internet";
+    protected $_idinternet;
+    protected $_idagente;
+    protected $_tipointernet;
+    protected $_descricao;
+    protected $_status;
+    protected $_divulgar;
+    protected $_usuario;
 
     /**
-     * Método para envio de e-mail
-     * @access public
-     * @param string $email
-     * @param string $assunto
-     * @param string $texto
-     * @param string $perfil
-     * @param string $formato
-     * @return void
-     * @todo retirar SP, não foi encontrada uso do metodo no sistema, proposta de remoção.
+     * @return mixed
      */
-    public function enviarEmail($email, $assunto, $texto, $perfil = "PerfilGrupoPRONAC", $formato = "HTML")
+    public function getIdinternet()
     {
-        $sql = "EXEC msdb.dbo.sp_send_dbmail
-                    @profile_name          = '" . $perfil . "'
-                    ,@recipients           = '" . $email . "'
-                    ,@body                 = '" . $texto . "'
-                    ,@body_format          = '" . $formato . "'
-                    ,@subject              = '" . $assunto . "'
-                    ,@exclude_query_output = 1;";
-
-        return $this->getAdapter()->query($sql);
+        return $this->_idinternet;
     }
 
     /**
-     * Método para buscar o(s) e-mail(s) do agente
-     * @access public
-     * @param string $cpfcnpj
-     * @param integer $idAgente
-     * @param integer $statusEmail (1 = ATIVADO, 0 = DESATIVADO)
-     * @param integer $statusDivulgacao (1 = ATIVADO, 0 = DESATIVADO)
-     * @param boolean $buscarTodos (informa se busca todos ou somente um)
-     * @return array || object
+     * @param mixed $idinternet
      */
-    public function buscarEmailAgente($cpfcnpj = null, $idAgente = null, $statusEmail = null, $statusDivulgacao = null, $buscarTodos = true)
+    public function setIdinternet($idinternet)
     {
-        $select = $this->select();
-        $select->setIntegrityCheck(false);
-        $select->from(
-            array("e" => $this->_name),
-            array("e.idInternet AS idEmail"
-                ,"e.TipoInternet AS TipoEmail"
-                ,"e.Descricao    AS Email"
-                ,"e.Status"
-                ,"e.Divulgar"),
-            'Agentes.dbo'
-        );
-
-        $select->join(
-            array("a" => "Agentes")
-            ,"a.idAgente = e.idAgente"
-            ,array(), 'Agentes.dbo'
-        );
-
-        // busca pelo cnpj ou cpf
-        if (!empty($cpfcnpj))
-        {
-            $select->where("a.CNPJCPF = ?", $cpfcnpj);
-        }
-
-        // busca pelo id do agente
-        if (!empty($idAgente))
-        {
-            $select->where("a.idAgente = ?", $idAgente);
-        }
-
-        // busca pelo email ativado/desativado
-        if (!empty($statusEmail))
-        {
-            $select->where("e.Status = ?", $statusEmail);
-        }
-
-        // busca pelo email de divulgacao
-        if (!empty($statusDivulgacao))
-        {
-            $select->where("e.Divulgar = ?", $statusDivulgacao);
-        }
-
-        return $buscarTodos ? $this->fetchAll($select) : $this->fetchRow($select);
+        $this->_idinternet = $idinternet;
     }
 
     /**
-     * Método para cadastrar
-     * @access public
-     * @param array $dados
-     * @return integer (retorna o último id cadastrado)
+     * @return mixed
      */
-    public function cadastrarEmailAgente($dados)
+    public function getIdagente()
     {
-        return $this->insert($dados);
+        return $this->_idagente;
     }
 
     /**
-     * Método para excluir
-     * @access public
-     * @param integer $idAgente (excluir todos os e-mails de um agente)
-     * @param integer $idInternet (excluir um determinado e-mail)
-     * @return integer (quantidade de registros excluídos)
+     * @param mixed $idagente
      */
-    public function excluirEmailAgente($idAgente = null, $idInternet = null)
+    public function setIdagente($idagente)
     {
-        // exclui todos os e-mails de um agente
-        if (!empty($idAgente))
-        {
-            $where['idAgente = ?'] = $idAgente;
-        }
-
-        // exclui um determinado e-mail
-        else if (!empty($idInternet))
-        {
-            $where['idInternet = ?'] = $idInternet;
-        }
-
-        return $this->delete($where);
+        $this->_idagente = $idagente;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTipointernet()
+    {
+        return $this->_tipointernet;
+    }
+
+    /**
+     * @param mixed $tipointernet
+     */
+    public function setTipointernet($tipointernet)
+    {
+        $this->_tipointernet = $tipointernet;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescricao()
+    {
+        return $this->_descricao;
+    }
+
+    /**
+     * @param mixed $descricao
+     */
+    public function setDescricao($descricao)
+    {
+        $this->_descricao = $descricao;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->_status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->_status = $status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDivulgar()
+    {
+        return $this->_divulgar;
+    }
+
+    /**
+     * @param mixed $divulgar
+     */
+    public function setDivulgar($divulgar)
+    {
+        $this->_divulgar = $divulgar;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsuario()
+    {
+        return $this->_usuario;
+    }
+
+    /**
+     * @param mixed $usuario
+     */
+    public function setUsuario($usuario)
+    {
+        $this->_usuario = $usuario;
+    }
+
 
 }

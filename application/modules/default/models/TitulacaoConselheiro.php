@@ -10,7 +10,7 @@
  *
  * @author augusto
  */
-class TitulacaoConselheiro extends GenericModel {
+class TitulacaoConselheiro extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'agentes';
     protected $_name = 'tbTitulacaoConselheiro';

@@ -1,6 +1,6 @@
 <?php
 
-class PlanoDeDivulgacao extends GenericModel {
+class PlanoDeDivulgacao extends MinC_Db_Table_Abstract {
 
     //protected $_name = 'SAC.dbo.PlanoDeDivulgacao';
     protected $_banco = 'SAC';
@@ -56,7 +56,7 @@ class PlanoDeDivulgacao extends GenericModel {
     }
 
     /**
-     * Método para alterar
+     * Mï¿½todo para alterar
      * @access public
      * @param array $dados
      * @param integer $where
@@ -65,6 +65,6 @@ class PlanoDeDivulgacao extends GenericModel {
     public function alterarDados($dados, $where) {
         $where = "idPlanoDivulgacao = " . $where;
         return $this->update($dados, $where);
-    } // fecha método alterarDados()
+    } // fecha mï¿½todo alterarDados()
 
 }

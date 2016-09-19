@@ -6,7 +6,7 @@
  * @uses   Zend_Db_Table
  * @author wouerner <wouerner@gmail.com>
  */
-class Proposta_Model_PreProjeto extends GenericModel
+class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
 {
     protected $_schema= "sac";
     protected $_name = "preprojeto";
@@ -111,23 +111,29 @@ class Proposta_Model_PreProjeto extends GenericModel
     {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
+
+//        "DtInicioDeExecucaoForm"=>"CONVERT(CHAR(10),DtInicioDeExecucao,103)",
+//                                  "DtFinalDeExecucaoForm"=>"CONVERT(CHAR(10),DtFinalDeExecucao,103)",
+//                                  "DtAtoTombamentoForm"=>"CONVERT(CHAR(10),DtAtoTombamento,103)",
+//                                  "dtAceiteForm"=>"CONVERT(CHAR(10),dtAceite,103)",
+//                                  "DtArquivamentoForm"=>"CONVERT(CHAR(10),DtArquivamento,103)",
+//                                  "CAST(ResumoDoProjeto as TEXT) as ResumoDoProjeto",
+//                                  "CAST(Objetivos as TEXT) as Objetivos",
+//                                  "CAST(Justificativa as TEXT) as Justificativa",
+//                                  "CAST(Acessibilidade as TEXT) as Acessibilidade",
+//                                  "CAST(DemocratizacaoDeAcesso as TEXT) as DemocratizacaoDeAcesso",
+//                                  "CAST(EtapaDeTrabalho as TEXT) as EtapaDeTrabalho",
+//                                  "CAST(FichaTecnica as TEXT) as FichaTecnica",
+//                                  "CAST(Sinopse as TEXT) as Sinopse",
+//                                  "CAST(ImpactoAmbiental as TEXT) as ImpactoAmbiental",
+//                                  "CAST(EspecificacaoTecnica as TEXT) as EspecificacaoTecnica",
+//                                  "CAST(EstrategiadeExecucao as TEXT) as EstrategiadeExecucao"
         $slct->from($this, array("*",
-                                  "DtInicioDeExecucaoForm"=>"CONVERT(CHAR(10),DtInicioDeExecucao,103)",
-                                  "DtFinalDeExecucaoForm"=>"CONVERT(CHAR(10),DtFinalDeExecucao,103)",
-                                  "DtAtoTombamentoForm"=>"CONVERT(CHAR(10),DtAtoTombamento,103)",
-                                  "dtAceiteForm"=>"CONVERT(CHAR(10),dtAceite,103)",
-                                  "DtArquivamentoForm"=>"CONVERT(CHAR(10),DtArquivamento,103)",
-                                  "CAST(ResumoDoProjeto as TEXT) as ResumoDoProjeto",
-                                  "CAST(Objetivos as TEXT) as Objetivos",
-                                  "CAST(Justificativa as TEXT) as Justificativa",
-                                  "CAST(Acessibilidade as TEXT) as Acessibilidade",
-                                  "CAST(DemocratizacaoDeAcesso as TEXT) as DemocratizacaoDeAcesso",
-                                  "CAST(EtapaDeTrabalho as TEXT) as EtapaDeTrabalho",
-                                  "CAST(FichaTecnica as TEXT) as FichaTecnica",
-                                  "CAST(Sinopse as TEXT) as Sinopse",
-                                  "CAST(ImpactoAmbiental as TEXT) as ImpactoAmbiental",
-                                  "CAST(EspecificacaoTecnica as TEXT) as EspecificacaoTecnica",
-                                  "CAST(EstrategiadeExecucao as TEXT) as EstrategiadeExecucao"
+                                  "dtiniciodeexecucaoform"=> $this->getExpressionToChar("dtiniciodeexecucao"),
+                                  "dtfinaldeexecucaoform"=> $this->getExpressionToChar("dtfinaldeexecucao"),
+                                  "dtatotombamentoform"=> $this->getExpressionToChar("dtatotombamento"),
+                                  "dtaceiteform"=> $this->getExpressionToChar("dtaceite"),
+                                  "dtarquivamentoform"=> $this->getExpressionToChar("dtarquivamento"),
                                 ));
 
         //adiciona quantos filtros foram enviados
@@ -183,17 +189,18 @@ class Proposta_Model_PreProjeto extends GenericModel
                                   "a.DtAtoTombamentoForm"=>"CONVERT(CHAR(10),DtAtoTombamento,103)",
                                   "a.dtAceiteForm"=>"CONVERT(CHAR(10),dtAceite,103)",
                                   "a.DtArquivamentoForm"=>"CONVERT(CHAR(10),DtArquivamento,103)"
-                                ));
+                              ),
+                          $this->_schema);
 
         $slct->joinInner(array('ag' => 'Agentes'),
                          'a.idAgente = ag.idAgente',
                          array("ag.CNPJCPF as CNPJCPF"),
-                         'AGENTES.dbo');
+                         $this->getSchema('agentes'));
 
         $slct->joinInner(array('m' => 'Nomes'),
                          'a.idAgente = m.idAgente',
                          array("m.Descricao as NomeAgente"),
-                         'AGENTES.dbo');
+                         $this->getSchema('agentes'));
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna=>$valor)
@@ -202,7 +209,6 @@ class Proposta_Model_PreProjeto extends GenericModel
         }
         $slct->where(new Zend_Db_Expr("NOT EXISTS(select 1 from SAC.dbo.Projetos pr where a.idPreProjeto = pr.idProjeto)"));
 
-        //adicionando linha order ao select
         $slct->order($order);
 
         // paginacao
@@ -236,35 +242,35 @@ class Proposta_Model_PreProjeto extends GenericModel
             return $this->insert($dados);
         }
         //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
-       $rsPreProjeto->idAgente              = $dados["idagente"];
-       $rsPreProjeto->NomeProjeto           = $dados["nomeprojeto"];
-       $rsPreProjeto->Mecanismo             = $dados["mecanismo"];
-       $rsPreProjeto->AgenciaBancaria       = $dados["agenciabancaria"];
-       $rsPreProjeto->AreaAbrangencia       = $dados["areaabrangencia"];
-       $rsPreProjeto->DtInicioDeExecucao    = $dados["dtiniciodeexecucao"];
-       $rsPreProjeto->DtFinalDeExecucao     = $dados["dtfinaldeexecucao"];
-       $rsPreProjeto->NrAtoTombamento       = $dados["nratotombamento"];
-       $rsPreProjeto->DtAtoTombamento       = $dados["dtatotombamento"];
-       $rsPreProjeto->EsferaTombamento      = $dados["esferatombamento"];
-       $rsPreProjeto->ResumoDoProjeto       = $dados["resumodoprojeto"];
-       $rsPreProjeto->Objetivos             = $dados["objetivos"];
-       $rsPreProjeto->Justificativa         = $dados["justificativa"];
-       $rsPreProjeto->Acessibilidade        = $dados["acessibilidade"];
-       $rsPreProjeto->DemocratizacaoDeAcesso = $dados["democratizacaodeacesso"];
-       $rsPreProjeto->EtapaDeTrabalho       = $dados["etapadetrabalho"];
-       $rsPreProjeto->FichaTecnica          = $dados["fichatecnica"];
-       $rsPreProjeto->Sinopse               = $dados["sinopse"];
-       $rsPreProjeto->ImpactoAmbiental      = $dados["impactoambiental"];
-       $rsPreProjeto->EspecificacaoTecnica  = $dados["especificacaotecnica"];
-       $rsPreProjeto->EstrategiadeExecucao  = $dados["estrategiadeexecucao"];
-       $rsPreProjeto->dtAceite              = $dados["dtaceite"];
-       $rsPreProjeto->DtArquivamento        = (isset($dados["dtarquivamento"])) ? $dados["dtarquivamento"] : null;
-       $rsPreProjeto->stEstado              = $dados["stestado"];
-       $rsPreProjeto->stDataFixa            = $dados["stdatafixa"];
-       $rsPreProjeto->stPlanoAnual          = $dados["stplanoanual"];
-       $rsPreProjeto->idUsuario             = $dados["idusuario"];
-       $rsPreProjeto->stTipoDemanda         = $dados["sttipodemanda"];
-       $rsPreProjeto->idEdital              = (isset($dados["idedital"])) ? $dados["idedital"] : null;
+       $rsPreProjeto->idagente               = $dados["idagente"];
+       $rsPreProjeto->nomeprojeto            = $dados["nomeprojeto"];
+       $rsPreProjeto->mecanismo              = $dados["mecanismo"];
+       $rsPreProjeto->agenciabancaria        = $dados["agenciabancaria"];
+       $rsPreProjeto->areaabrangencia        = $dados["areaabrangencia"];
+       $rsPreProjeto->dtiniciodeexecucao     = $dados["dtiniciodeexecucao"];
+       $rsPreProjeto->dtfinaldeexecucao      = $dados["dtfinaldeexecucao"];
+       $rsPreProjeto->nratotombamento        = $dados["nratotombamento"];
+       $rsPreProjeto->dtatotombamento        = $dados["dtatotombamento"];
+       $rsPreProjeto->esferatombamento       = $dados["esferatombamento"];
+       $rsPreProjeto->resumodoprojeto        = $dados["resumodoprojeto"];
+       $rsPreProjeto->objetivos              = $dados["objetivos"];
+       $rsPreProjeto->justificativa          = $dados["justificativa"];
+       $rsPreProjeto->acessibilidade         = $dados["acessibilidade"];
+       $rsPreProjeto->democratizacaodeacesso = $dados["democratizacaodeacesso"];
+       $rsPreProjeto->etapadetrabalho        = $dados["etapadetrabalho"];
+       $rsPreProjeto->fichatecnica           = $dados["fichatecnica"];
+       $rsPreProjeto->sinopse                = $dados["sinopse"];
+       $rsPreProjeto->impactoambiental       = $dados["impactoambiental"];
+       $rsPreProjeto->especificacaotecnica   = $dados["especificacaotecnica"];
+       $rsPreProjeto->estrategiadeexecucao   = $dados["estrategiadeexecucao"];
+       $rsPreProjeto->dtaceite               = $dados["dtaceite"];
+       $rsPreProjeto->dtarquivamento         = (isset($dados["dtarquivamento"])) ? $dados["dtarquivamento"] : null;
+       $rsPreProjeto->stestado               = $dados["stestado"];
+       $rsPreProjeto->stdatafixa             = $dados["stdatafixa"];
+       $rsPreProjeto->stplanoanual           = $dados["stplanoanual"];
+       $rsPreProjeto->idusuario              = $dados["idusuario"];
+       $rsPreProjeto->sttipodemanda          = $dados["sttipodemanda"];
+       $rsPreProjeto->idedital               = (isset($dados["idedital"])) ? $dados["idedital"] : null;
 
        //SALVANDO O OBJETO
        $id = $rsPreProjeto->save();
@@ -553,53 +559,53 @@ class Proposta_Model_PreProjeto extends GenericModel
         $select->setIntegrityCheck(false);
         $select->from(
                         ['pre' => $this->_name],
-                        ['nomeProjeto' => 'pre.NomeProjeto', 'pronac'=>'pre.idPreProjeto' ],
+                        ['nomeProjeto' => 'pre.nomeprojeto', 'pronac'=>'pre.idpreprojeto' ],
                         $this->_schema
                      );
 
         $select
             ->joinInner(
-                array('aval' => 'tbAvaliacaoProposta'),
-                'aval.idProjeto = pre.idPreProjeto',
+                array('aval' => 'tbavaliacaoproposta'),
+                'aval.idprojeto = pre.idpreprojeto',
                 array(
-                        'aval.stProrrogacao',
-                        'idDiligencia'=>'aval.idAvaliacaoProposta',
-                        'dataSolicitacao'=>'CONVERT(VARCHAR,aval.DtAvaliacao,120)',
-                        'dataResposta'=>'CONVERT(VARCHAR,aval.dtResposta,120)',
-                        'Solicitacao'=>'aval.Avaliacao',
-                        'Resposta'=>'aval.dsResposta',
-                        'aval.idCodigoDocumentosExigidos',
-                        'aval.stEnviado'
+                        'aval.stprorrogacao',
+                        'iddiligencia'=>'aval.idavaliacaoproposta',
+                        'datasolicitacao'=>'aval.dtavaliacao',
+                        'dataresposta'=>'aval.dtresposta',
+                        'solicitacao'=>'aval.avaliacao',
+                        'resposta'=>'aval.dsresposta',
+                        'aval.idcodigodocumentosexigidos',
+                        'aval.stenviado'
                     ),
                 $this->_schema
             );
 
         $select->joinLeft(
-                array('arq' => 'tbArquivo'),
-                'arq.idArquivo = aval.idArquivo',
+                array('arq' => 'tbarquivo'),
+                'arq.idarquivo = aval.idarquivo',
                 array(
-                        'arq.nmArquivo',
-                        'arq.idArquivo'
+                        'arq.nmarquivo',
+                        'arq.idarquivo'
                     ),
-                'BDCORPORATIVO.scCorp'
+                $this->getSchema('bdcorporativo', true, 'sccorp')
         );
 
         $select->joinLeft(
-                array('a' => 'AGENTES'),
-                'pre.idAgente = a.idAgente',
+                array('a' => 'agentes'),
+                'pre.idagente = a.idagente',
                 array(
-                        'a.idAgente'
+                        'a.idagente'
                     ),
-                $this->getSchema('AGENTES')
+                $this->getSchema('agentes')
         );
 
         $select->joinLeft(
-                array('n' => 'NOMES'),
-                'a.idAgente = n.idAgente',
+                array('n' => 'nomes'),
+                'a.idagente = n.idagente',
                 array(
-                        'n.Descricao'
+                        'n.descricao'
                     ),
-                $this->getSchema('AGENTES')
+                $this->getschema('agentes')
         );
 
         foreach ($consulta as $coluna=>$valor)
@@ -653,14 +659,16 @@ class Proposta_Model_PreProjeto extends GenericModel
      * @access public
      * @return void
      */
-    public function buscarAgentePreProjeto($consulta = array()){
+    public function buscarAgentePreProjeto($consulta = array())
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                        array('pre'=>$this->_name),
-                        array(
-                                'pre.idAgente'
-                             )
+                    array('pre'=>$this->_name),
+                    array(
+                            'pre.idAgente'
+                        ),
+                        $this->_schema
                      );
 
         foreach ($consulta as $coluna=>$valor)
@@ -1133,7 +1141,7 @@ class Proposta_Model_PreProjeto extends GenericModel
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()->distinct()
-            ->from(['j'=>'PreProjeto'], [],'SAC.dbo')
+            ->from(['j'=>'PreProjeto'], [], 'SAC.dbo')
             ->join(['a' => 'Agentes'], 'j.idAgente = a.idAgente', [],'AGENTES.dbo')
             ->join(['v' => 'tbVinculoProposta'], 'j.idPreProjeto = v.idPreProjeto', [],'AGENTES.dbo')
             ->join(['y' => 'tbVinculo'], 'v.idVinculo = y.idVinculo', ['y.idVinculo', 'y.siVinculo', 'y.idUsuarioResponsavel'],'AGENTES.dbo')
@@ -1165,14 +1173,14 @@ class Proposta_Model_PreProjeto extends GenericModel
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $subSql = $db->select()
-            ->from(['pr' => 'projetos'], ['idprojeto'], 'sac.dbo')
+            ->from(['pr' => 'projetos'], ['idprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
             ->where('a.idpreprojeto = pr.idprojeto')
             ;
 
         $sql = $db->select()
-            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'],'sac.dbo')
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'],'agentes.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
+            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'],Proposta_Model_PreProjeto::getSchema('sac'))
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], Proposta_Model_PreProjeto::getSchema('agentes'))
             ->where('a.idagente = ? ', $idAgente)
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
@@ -1180,17 +1188,16 @@ class Proposta_Model_PreProjeto extends GenericModel
             ;
 
         $subSql = $db->select()
-            ->from(['f' => 'projetos'], ['idprojeto'], 'sac.dbo')
-            ->where('a.idpreprojeto = f.idprojeto')
-            ;
+            ->from(['f' => 'projetos'], ['idprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
+            ->where('a.idpreprojeto = f.idprojeto');
 
         $sql2 = $db->select()
-            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'], 'sac.dbo')
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'],'agentes.dbo')
-            ->join(['c' => 'vinculacao'], 'b.idagente = c.idvinculoprincipal', [],'agentes.dbo')
-            ->join(['d' => 'agentes'], 'c.idagente = d.idagente', [],'agentes.dbo')
-            ->join(['e' => 'sgcacesso'], 'd.cnpjcpf = e.cpf', [],'controledeacesso.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
+            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->join(['c' => 'vinculacao'], 'b.idagente = c.idvinculoprincipal', [], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->join(['d' => 'agentes'], 'c.idagente = d.idagente', [], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->join(['e' => 'sgcacesso'], 'd.cnpjcpf = e.cpf', [], Proposta_Model_PreProjeto::getSchema('controledeacesso'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], Proposta_Model_PreProjeto::getSchema('agentes'))
             ->where('e.idusuario = ?',$idResponsavel)
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
@@ -1198,17 +1205,17 @@ class Proposta_Model_PreProjeto extends GenericModel
             ;
 
         $subSql = $db->select()
-            ->from(['z' => 'projetos'], ['idprojeto'], 'sac.dbo')
+            ->from(['z' => 'projetos'], ['idprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
             ->where('a.idpreprojeto = z.idprojeto')
             ;
 
         $sql3 = $db->select()
-            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'], 'sac.dbo')
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], 'agentes.dbo')
-            ->join(['c' => 'nomes'], 'b.idagente = c.idagente', ['c.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['d' => 'sgcacesso'], 'a.idusuario = d.idusuario', [], 'controledeacesso.dbo')
-            ->join(['e' => 'tbvinculoproposta'], 'a.idpreprojeto = e.idpreprojeto', [], 'agentes.dbo')
-            ->join(['f' => 'tbvinculo'], 'e.idvinculo = f.idvinculo', [], 'agentes.dbo')
+            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->join(['c' => 'nomes'], 'b.idagente = c.idagente', ['c.descricao as nomeproponente'], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->join(['d' => 'sgcacesso'], 'a.idusuario = d.idusuario', [], Proposta_Model_PreProjeto::getSchema('controledeacesso'))
+            ->join(['e' => 'tbvinculoproposta'], 'a.idpreprojeto = e.idpreprojeto', [], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->join(['f' => 'tbvinculo'], 'e.idvinculo = f.idvinculo', [], Proposta_Model_PreProjeto::getSchema('agentes'))
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'")
@@ -1239,53 +1246,57 @@ class Proposta_Model_PreProjeto extends GenericModel
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(['a'=>'preprojeto'], null,'sac.dbo')
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], 'agentes.dbo')
-            ->joinLeft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['c' => 'sgcacesso'], 'b.cnpjcpf = c.cpf', [], 'controledeacesso.dbo')
+            ->from(['a'=>'preprojeto'], null, $this->_schema)
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], $this->getSchema('agentes'))
+            ->joinLeft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['c' => 'sgcacesso'], 'b.cnpjcpf = c.cpf', null, $this->getSchema('controledeacesso'))
             ->where('c.idusuario = ?', $idResponsavel)
         ;
 
         $sql2 = $db->select()
-            ->from(['a'=>'preprojeto'], null,'sac.dbo')
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], 'agentes.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['c' => 'tbvinculoproposta'], 'a.idpreprojeto = c.idpreprojeto', null, 'agentes.dbo')
-            ->join(['d' => 'tbvinculo'], 'c.idvinculo = d.idvinculo', null, 'agentes.dbo')
-            ->join(['f' => 'agentes'], 'd.idagenteproponente = f.idagente', null, 'agentes.dbo')
-            ->join(['e' => 'sgcacesso'], 'f.cnpjcpf = e.cpf', null, 'controledeacesso.dbo')
+            ->from(['a'=>'preprojeto'], null, $this->_schema)
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], $this->getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['c' => 'tbvinculoproposta'], 'a.idpreprojeto = c.idpreprojeto', null, $this->getSchema('agentes'))
+            ->join(['d' => 'tbvinculo'], 'c.idvinculo = d.idvinculo', null, $this->getSchema('agentes'))
+            ->join(['f' => 'agentes'], 'd.idagenteproponente = f.idagente', null, $this->getSchema('agentes'))
+            ->join(['e' => 'sgcacesso'], 'f.cnpjcpf = e.cpf', null, $this->getSchema('controledeacesso'))
             ->where('e.idusuario = ?', $idResponsavel)
             ->where('c.sivinculoproposta = 2')
             ;
 
         $sql3 = $db->select()
-            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'],'agentes.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['b' => 'vinculacao'], 'a.idagente = b.idvinculoprincipal', null, 'agentes.dbo')
-            ->join(['c' => 'agentes'], 'b.idagente = c.idagente', null, 'agentes.dbo')
-            ->join(['d' => 'sgcacesso'], 'c.cnpjcpf = d.cpf', null, 'controledeacesso.dbo')
+            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'], $this->getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['b' => 'vinculacao'], 'a.idagente = b.idvinculoprincipal', null, $this->getSchema('agentes'))
+            ->join(['c' => 'agentes'], 'b.idagente = c.idagente', null, $this->getSchema('agentes'))
+            ->join(['d' => 'sgcacesso'], 'c.cnpjcpf = d.cpf', null, $this->getSchema('controledeacesso'))
             ->where('d.idusuario = ?', $idResponsavel)
             ;
 
         $sql4 = $db->select()
-            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'],'agentes.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['b' => 'tbvinculo'], 'a.idagente = b.idagenteproponente', null, 'agentes.dbo')
-            ->join(['c' => 'sgcacesso'], 'b.idusuarioresponsavel = c.idusuario', null, 'controledeacesso.dbo')
+            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'], $this->getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['b' => 'tbvinculo'], 'a.idagente = b.idagenteproponente', null, $this->getSchema('agentes'))
+            ->join(['c' => 'sgcacesso'], 'b.idusuarioresponsavel = c.idusuario', null, $this->getSchema('controledeacesso'))
             ->where('b.sivinculo = 2')
             ->where('c.idusuario = ?', $idResponsavel)
             ;
 
         $sql5 = $db->select()
-            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'],'agentes.dbo')
-            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], 'agentes.dbo')
-            ->join(['b' => 'sgcacesso'], 'a.cnpjcpf = b.cpf', null, 'controledeacesso.dbo')
+            ->from(['a'=>'agentes'], ['a.cnpjcpf', 'a.idagente'], $this->getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nomeproponente'], $this->getSchema('agentes'))
+            ->join(['b' => 'sgcacesso'], 'a.cnpjcpf = b.cpf', null, $this->getSchema('controledeacesso'))
             ->where('b.idusuario = ?', $idResponsavel)
             ;
 
         $sql = $db->select()->union(array($sql, $sql2, $sql3, $sql4, $sql5))
             ->group(['a.cnpjcpf', 'a.idagente', 'n.descricao'])
             ->order(['3 asc']);
+
+//        echo '<pre>';
+//        print_r(str_replace('"', '', $sql->assemble()));
+//        exit;
 
         return $db->fetchAll($sql);
     }

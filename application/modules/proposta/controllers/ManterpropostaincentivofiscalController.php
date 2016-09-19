@@ -32,7 +32,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      */
     public function init() {
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance();
+        $arrAuth = array_change_key_case((array) $auth->getIdentity());
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
 
         // verifica as permissoes
@@ -49,41 +50,38 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             parent::perfil(4, $PermissoesGrupo);
         }
 
-        $cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
+        $cpf = isset($arrAuth['usu_codigo']) ? $arrAuth['usu_identificacao'] : $arrAuth['cpf'];
 
         // Busca na SGCAcesso
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
-        $buscaAcesso = $sgcAcesso->buscar(array('cpf = ?' => $cpf));
+        $acessos = $sgcAcesso->findBy(array('cpf' => $cpf));
 
         // Busca na Usuarios
-        $usuarioDAO = new Autenticacao_Model_Usuario();
-        $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
+        $mdlusuario = new Autenticacao_Model_Usuario();
+        $usuario = $mdlusuario->findBy(array('usu_identificacao' => $cpf));
 
         // Busca na Agentes
-        $agentesDAO = new Agente_Model_DbTable_Agentes();
-        $buscaAgente = $agentesDAO->BuscaAgente($cpf);
+        $tblAgentes = new Agente_Model_DbTable_Agentes();
+        $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
 
-
-        if (count($buscaAcesso) > 0) {
-            $this->idResponsavel = $buscaAcesso[0]->IdUsuario;
+        //var_dump($acessos);die;
+        if ($agente) {
+            //$this->idResponsavel = $agente['usuario'];
+            $this->idResponsavel = $acessos['idusuario'];
+            $this->idAgente = $agente['idagente'];
         }
-        if (count($buscaAgente) > 0) {
-            $this->idAgente = $buscaAgente[0]->idAgente;
-        }
-        if (count($buscaUsuario) > 0) {
-            $this->idUsuario = $buscaUsuario[0]->usu_codigo;
-        }
-
-        if ($this->idAgente != 0) {
-            $this->usuarioProponente = "S";
+        if ($usuario) {
+            $this->idUsuario = $usuario['usu_codigo'];
+            if ($this->idAgente != 0) {
+                $this->usuarioProponente = "S";
+            }
         }
 
         $this->cpfLogado = $cpf;
         $this->idAgenteProponente = $this->idAgente;
-        $this->usuario = isset($auth->getIdentity()->usu_codigo) ? 'func' : 'prop';
-        $this->view->usuarioLogado = isset($auth->getIdentity()->usu_codigo) ? 'func' : 'prop';
+        $this->usuario = isset($arrAuth['usu_codigo']) ? 'func' : 'prop';
+        $this->view->usuarioLogado = isset($arrAuth['usu_codigo']) ? 'func' : 'prop';
         $this->view->usuarioProponente = $this->usuarioProponente;
-
         parent::init();
 
         //recupera ID do pre projeto (proposta)
@@ -130,11 +128,11 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      */
     public function indexAction() {
         $arrBusca = array();
-        $arrBusca['stEstado = ?'] = 1;
-        $arrBusca['idUsuario = ?'] = $this->idResponsavel;
+        $arrBusca['stestado = ?'] = 1;
+        $arrBusca['idusuario = ?'] = $this->idResponsavel;
         // Chama o SQL
         $tblPreProjeto = new Proposta_Model_PreProjeto();
-        $rsPreProjeto = $tblPreProjeto->buscar($arrBusca, array("idAgente ASC"));
+        $rsPreProjeto = $tblPreProjeto->buscar($arrBusca, array("idagente ASC"));
 
         //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
         $this->montaTela("manterpropostaincentivofiscal/index.phtml", array("acaoAlterar" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/editar",
@@ -182,11 +180,13 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
         //VERIFICA SE PROPONETE JA ESTA CADASTRADO
         $arrBusca = array();
-        $arrBusca['a.idAgente = ?'] = $post->idAgente;
+        $arrBusca['a.idagente = ?'] = $post->idAgente;
         $tblAgente = new Agente_Model_DbTable_Agentes();
         $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
 
-        if (count($rsProponente) > 0) {
+        if ($rsProponente) {
+            $rsProponente = array_change_key_case($rsProponente->toArray());
+
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
             $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("proponente" => $rsProponente,
                 "acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar"));
@@ -268,7 +268,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $dtInicioDeExecucao = $dtInicio;
         $dtFinalDeExecucao = $dtFim;
         $nrAtoTombamento = $post->nrAtoTombamento;
-        $dtAtoTombamento = $dtAtoTombamento;
         $esferaTombamento = $post->esferaTombamento;
         $objetivos = $_POST['objetivos'];
         $justificativa = $_POST['justificativa'];
@@ -316,6 +315,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         } else {
             $mesagem = "Cadastro realizado com sucesso!";
         }
+
         //instancia classe modelo
         $tblPreProjeto = new Proposta_Model_PreProjeto();
 
@@ -347,9 +347,10 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
                 $vinculo2 = $tbVinculoDAO->buscar($whereVinculo);
                 if (count($vinculo2) > 0) {
-                    $novosDadosV = array('idVinculo' => $idVinculo = $vinculo2[0]->idVinculo,
+                    $vinculo2 = array_change_key_case($vinculo2[0]->toArray());
+                    $novosDadosV = array('idvinculo' => $idVinculo = $vinculo2['idvinculo'],
                         'idpreprojeto' => $idPreProjeto,
-                        'siVinculoProposta' => 2
+                        'sivinculoproposta' => 2
                     );
                     $insere = $tbVinculoPropostaDAO->inserir($novosDadosV, false);
                 }
@@ -415,9 +416,16 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $tblPreProjeto = new Proposta_Model_PreProjeto();
             $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
-            $arrBuscaProponete['a.idAgente = ?'] = $rsPreProjeto->idAgente;
+            if ($rsPreProjeto) {
+                $rsPreProjeto = array_change_key_case($rsPreProjeto->toArray());
+            }
+
+            $arrBuscaProponete['a.idagente = ?'] = $rsPreProjeto['idagente'];
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
+            if ($rsProponente) {
+                $rsProponente = array_change_key_case($rsProponente->toArray());
+            }
 
             $ag = new Agente_Model_DbTable_Agentes();
             $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto, 'vprp.siVinculoProposta = ?' => 2));
@@ -441,12 +449,12 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
             $tblVinculo = new TbVinculo();
 
-            $arrBuscaP['VP.idPreProjeto = ?'] = $idPreProjeto;
-            $arrBuscaP['VI.idUsuarioResponsavel = ?'] = $this->idResponsavel;
+            $arrBuscaP['vp.idpreprojeto = ?'] = $idPreProjeto;
+            $arrBuscaP['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
             $rsVinculoP = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaP);
 
-            $arrBuscaN['VI.siVinculo IN (0,2)'] = '';
-            $arrBuscaN['VI.idUsuarioResponsavel = ?'] = $this->idResponsavel;
+            $arrBuscaN['vi.sivinculo IN (0,2)'] = '';
+            $arrBuscaN['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
             $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
 
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
@@ -1105,6 +1113,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      *
      * @access public
      * @return void
+     *
+     * @todo retirar futuramenteq
      */
     public function listarPropostasAction() {
 
@@ -1124,7 +1134,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $dadosCombo = array();
         $cpfCnpj = '';
 
-        $rsVinculo = $proposta->listarPropostasCombo($this->idResponsavel);
+        $rsVinculo = ($this->idResponsavel) ? $proposta->listarPropostasCombo($this->idResponsavel): array();
 
         $agente = array();
 

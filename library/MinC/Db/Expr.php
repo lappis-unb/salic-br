@@ -15,4 +15,15 @@ class MinC_Db_Expr
         }
         return " || ";
     }
+
+    public static function date()
+    {
+        if (Zend_Db_Table::getDefaultAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            return new Zend_Db_Expr('GETDATE()');
+        } else {
+            return new Zend_Db_Expr('NOW()');
+        }
+    }
+
+    public static function
 }

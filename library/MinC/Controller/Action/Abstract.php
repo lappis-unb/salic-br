@@ -88,7 +88,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
             if (count($buscaAcesso) > 0) {
-                $this->idResponsavel = $buscaAcesso[0]->IdUsuario;
+                $this->idResponsavel = $buscaAcesso[0]->idusuario;
             }
             if (count($buscaAgente) > 0) {
                 $this->idAgente = $buscaAgente[0]->idAgente;
@@ -180,8 +180,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
                 $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
                 $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
-            } else // caso o usu?rio n?o esteja autenticado
-            {
+            } else {
                 return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), null, true);
             }
         # autenticacao e permissoes zend (AMBIENTE MINC)
@@ -293,6 +292,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             # autenticacao migracao e autenticacao/permissao zend (AMBIENTE DE MIGRACAO E MINC)
             $codUsuario = isset($arrAuth['idusuario']) ? (int) $arrAuth['idusuario'] : $UsuarioAtivo->codusuario;
             if (isset($codUsuario) && !empty($codUsuario)) {
+
                 # ====== NICIO AUTENTICACAO MIGRACAO ==========
                 # configuracoes do layout padrao para o proponente
                 Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
@@ -300,14 +300,14 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
                 # tenta fazer a autenticacao do usuario logado no scriptcase para o zend
                 # Comentado para verificar se faz sentido autenticar duas vezes no sistema.
-//                $autenticar = UsuarioDAO::loginScriptcase($codUsuario);
+                $autenticar = UsuarioDAO::loginScriptcase($codUsuario);
 
                 # caso o usuario seja passado pelo scriptcase e esteja autenticado
-//                if ($autenticar || $auth->hasIdentity()) {
-//                    $this->view->usuario = $auth->getIdentity();
-//                } else {
-//                    $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "index", "ALERT");
-//                }
+                if ($autenticar || $auth->hasIdentity()) {
+                    $this->view->usuario = $auth->getIdentity();
+                } else {
+                    $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "index", "ALERT");
+                }
                 # ========== FIM AUTENTICACAO MIGRACAO ==========
             } else {
                 # ========== INICIO AUTENTICACAO ZEND ==========
@@ -581,13 +581,14 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     public function verificarPermissaoAcesso($proposta = false, $projeto = false, $administrativo = false)
     {
         $msgERRO = '';
-        $auth = Zend_Auth::getInstance(); // pega a autentica??o
+        $auth = Zend_Auth::getInstance()->getIdentity(); // pega a autentica??o
+        $arrAuth = array_change_key_case((array) $auth);
 
-        if (!isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
-            //Verifica Permiss?o de Projeto
+        if (!isset($arrAuth['usu_codigo'])) { // autenticacao novo salic
+            //Verifica Permissao de Projeto
             if ($projeto) {
-                $msgERRO = 'Voc? n?o tem permiss?o para acessar esse Projeto!';
-                $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
+                $msgERRO = 'Você não tem permissão para acessar esse Projeto!';
+                $idUsuarioLogado = $arrAuth['idusuario'];
                 $idPronac = $this->_request->getParam('idpronac') ? $this->_request->getParam('idpronac') : $this->_request->getParam('idPronac');
                 if (strlen($idPronac) > 7) {
                     $idPronac = Seguranca::dencrypt($idPronac);
@@ -599,8 +600,8 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
             //Verifica Permiss?o de Proposta
             if ($proposta) {
-                $msgERRO = 'Voc? n?o tem permiss?o para acessar essa Proposta!';
-                $idUsuarioLogado = $auth->getIdentity()->IdUsuario;
+                $msgERRO = 'Voce nao tem permissao para acessar essa Proposta!';
+                $idUsuarioLogado = $arrAuth['idusuario'];
                 $idPreProjeto = $this->_request->getParam('idPreProjeto');
 
                 $fnVerificarPermissao = new Autenticacao_Model_FnVerificarPermissao();

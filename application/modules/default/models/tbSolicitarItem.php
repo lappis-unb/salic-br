@@ -6,13 +6,13 @@
  * @version 1.0 - 08/01/2013
  */
 
-class tbSolicitarItem extends GenericModel {
-   
+class tbSolicitarItem extends MinC_Db_Table_Abstract {
+
     protected  $_banco  = 'SAC';
     protected  $_schema = 'dbo';
     protected  $_name   = 'tbSolicitarItem';
 
-    
+
     public function listaSolicitacoesItens($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -27,8 +27,8 @@ class tbSolicitarItem extends GenericModel {
                     '),
                     new Zend_Db_Expr("
                         CASE
-                            WHEN  s.IdPlanilhaItens > 0 THEN 'Associação'
-                            ELSE 'Inclusão'
+                            WHEN  s.IdPlanilhaItens > 0 THEN 'Associaï¿½ï¿½o'
+                            ELSE 'InclusÃ£o'
                        END as TipoSolicitacao
                     "),
                     new Zend_Db_Expr("
@@ -89,41 +89,44 @@ class tbSolicitarItem extends GenericModel {
         //xd($select->assemble());
         return $this->fetchRow($select);
     }
-    
-    public function buscarItens($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
+
+    public function buscarItens($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false)
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('sol' => $this->_name),
             array(
-                new Zend_Db_Expr("prod.Codigo as idProduto, prod.Descricao as Produto, et.idPlanilhaEtapa, et.Descricao as Etapa, sol.idSolicitarItem"),
-                new Zend_Db_Expr("CASE
-                                    WHEN  sol.IdPlanilhaItens > 0 THEN it.Descricao
-                                    ELSE sol.NomeDoItem
-                                END as ItemSolicitado, sol.Descricao as Justificativa, sol.stEstado
-                "),
-                new Zend_Db_Expr("CASE sol.stEstado
-                                    WHEN 0 THEN 'Solicitado'
-                                    WHEN 1 THEN 'Atendido'
-                                    ELSE 'Negado'
-                                END as Estado,Resposta
-                ")
-            )
+                "prod.Codigo as idProduto",
+                "prod.Descricao as Produto",
+                "et.idPlanilhaEtapa",
+                "et.Descricao as Etapa",
+                "sol.idSolicitarItem",
+                new Zend_Db_Expr("(CASE WHEN  sol.IdPlanilhaItens > 0 THEN it.Descricao ELSE sol.NomeDoItem END) as ItemSolicitado"),
+                "sol.Descricao as Justificativa",
+                "sol.stEstado",
+                new Zend_Db_Expr( "(CASE sol.stEstado WHEN 0 THEN 'Solicitado' WHEN 1 THEN 'Atendido' ELSE 'Negado' END) as Estado"),
+                "Resposta"
+            ),
+            $this->_schema
         );
 
         $select->joinInner(
             array('prod' => 'Produto'), 'sol.idProduto = prod.Codigo',
-            array(''), 'SAC.dbo'
+            null,
+            $this->_schema
         );
-        
+
         $select->joinInner(
             array('et' => 'tbPlanilhaEtapa'), 'sol.idEtapa = et.idPlanilhaEtapa',
-            array(''), 'SAC.dbo'
+            null,
+            $this->_schema
         );
-        
+
         $select->joinLeft(
             array('it' => 'TbPlanilhaItens'), 'sol.idPlanilhaItens = it.idPlanilhaItens',
-            array(''), 'SAC.dbo'
+            null,
+            $this->_schema
         );
 
        //adiciona quantos filtros foram enviados
@@ -148,7 +151,6 @@ class tbSolicitarItem extends GenericModel {
             $select->limit($tamanho, $tmpInicio);
         }
 
-        //xd($select->assemble());
         return $this->fetchAll($select);
     }
 }

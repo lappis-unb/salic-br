@@ -5,11 +5,11 @@
  * @version 1.0
  * @package application
  * @subpackage application.model
- * @copyright © 2011 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2011 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
-class vwPainelDeLiberacao extends GenericModel {
+class vwPainelDeLiberacao extends MinC_Db_Table_Abstract {
 
     /* dados da tabela */
     protected $_banco  = 'SAC';

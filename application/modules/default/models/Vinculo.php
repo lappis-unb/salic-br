@@ -10,7 +10,7 @@
  *
  * @author tisomar
  */
-class Vinculo extends GenericModel {
+class Vinculo extends MinC_Db_Table_Abstract {
 
     protected $_banco = "AGENTES";
     protected $_name = "tbVinculo";
@@ -133,7 +133,7 @@ class Vinculo extends GenericModel {
                 "acao" => $this->_urlPadrao . "/manterpropostaincentivofiscal/salvar"));
         } else {
 
-            $this->_redirect("/manteragentes/agentes");
+            $this->_redirect("/agente/manteragentes/agentes");
         }
     }
 

@@ -6,7 +6,7 @@
  */
 require_once 'Zend/Db/Table/Abstract.php';
 
-class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
+abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 {
 
     private $_config;
@@ -23,6 +23,11 @@ class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     public function getPrimary()
     {
         return (isset($this->_primary))? $this->_primary : '';
+    }
+
+    public function getSequence()
+    {
+        return (isset($this->_sequence))? $this->_sequence : true;
     }
 
     /**
@@ -106,16 +111,23 @@ class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since 11/08/2016
      */
-    public function getSchema($strSchema = null, $isReturnDb = true)
+    public function getSchema($strSchema = null, $isReturnDb = true, $strNameDb = null)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
 
-
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            if (is_null($strNameDb)) {
+                $strNameDb = 'dbo';
+            }
+
             if ($isReturnDb && strpos($strSchema, '.') === false) {
-                $strSchema = $strSchema . ".dbo";
+                if ($strSchema) {
+                    $strSchema = $strSchema . "." . $strNameDb;
+                } else {
+                    $strSchema = $strNameDb;
+                }
             } elseif (strpos($strSchema, '.') === false) {
-                $strSchema = "dbo";
+                $strSchema = $strNameDb;
             }
         } else if (!$strSchema) {
             $strSchema = $this->_schema;
@@ -384,11 +396,71 @@ class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         require_once 'Zend/Db/Table/Select.php';
         $select = new MinC_Db_Table_Select($this);
         if ($withFromPart == self::SELECT_WITH_FROM_PART) {
-            $select->from($this->info(self::NAME), Zend_Db_Table_Select::SQL_WILDCARD, $this->info(self::SCHEMA));
+            $select->from($this->info(self::NAME), $this->_getCols(), $this->info(self::SCHEMA));
         }
         return $select;
     }
 
+    /**
+     *
+     * @name findBy
+     * @param array $where
+     * @return array
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @author wouerner <wouerner@gmail.com>
+     * @since  05/09/2016
+     */
+    public function findBy(array $where) {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from($this->_name, $this->_getCols(), $this->_schema);
+        foreach ($where as $columnName => $columnValue) {
+            $select->where($columnName . ' = ?', trim($columnValue));
+        }
+        $result = $this->fetchRow($select);
+        return ($result)? $result->toArray() : array();
+    }
+
+    /**
+     * Deleta varios registros conforme o where.
+     *
+     * @name deleteBy
+     * @param array $arrWhere - Array com os parametros para o where, onde chave do array e a coluna da tabela e o valor do array e o valor da coluna.
+     * @return int - Quantidade de rows deletadas.
+     * @throws Exception
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  06/09/2016
+     */
+    public function deleteBy(array $arrWhere) {
+
+        if (empty($arrWhere)) throw new Exception('Parametro where vazio, voce nao vai querer deletar tudo da tabela vai?');
+        $arrWhereNew = array();
+        foreach ($arrWhere as $columnName => $columnValue) {
+            $arrWhereNew[] = $this->getAdapter()->quoteInto($columnName . ' = ?', trim($columnValue));
+        }
+        return $this->delete($arrWhereNew);
+    }
+
+    /**
+     *
+     * @name findAll
+     * @param array $where
+     * @return array
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  05/09/2016
+     */
+    public function findAll(array $where = array()) {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        foreach ($where as $columnName => $columnValue) {
+            $select->where($columnName . ' = ?', trim($columnValue));
+        }
+        $result = $this->fetchAll($select);
+        return ($result)? $result->toArray() : array();
+    }
 
     /**
      * @param Zend_Db_Table_Abstract::SELECT_WITHOUT_FROM_PART $withFromPart
@@ -406,4 +478,24 @@ class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         }
         return " || ";
     }
+
+    public function getExpressionDate()
+    {
+        if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            return new Zend_Db_Expr('GETDATE()');
+        } else {
+            return new Zend_Db_Expr('NOW()');
+        }
+    }
+
+    public function getExpressionToChar($strColumn, $strFormat = 'DD/MM/YYYY')
+    {
+
+        if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            return new Zend_Db_Expr('CONVERT(CHAR(10), ' . $strColumn . ' , 103)');
+        } else {
+            return new Zend_Db_Expr('TO_CHAR(' . $strColumn . ', \'' . $strFormat . '\')');
+        }
+    }
+
 }

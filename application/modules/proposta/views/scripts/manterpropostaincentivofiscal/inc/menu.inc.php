@@ -202,7 +202,7 @@
         <?php
             $idVinculoProposta = "";
             if(!empty($this->dadosVinculo[0])) {
-                $idVinculoProposta = $this->dadosVinculo[0]->idVinculoProposta;
+                $idVinculoProposta = $this->dadosVinculo[0]->idvinculoproposta;
             }
         ?>
         <input type="hidden" value="<?php echo $idVinculoProposta; ?>" name="idVinculoProposta"/>
@@ -217,14 +217,14 @@
                     CPF/CNPJ Proponente:&nbsp;
                     <select name="propronente" id="propronente" class="input_simples w240">
                         <?php $idAgente = 0; ?>
-                        <?php foreach ($this->listaProponentes as $lp): ?>
+                        <?php foreach ($this->listaProponentes as $lp): $lp = array_change_key_case($lp);?>
 
-                            <?php if ($lp->idAgenteProponente != $idAgente): ?>
+                            <?php if ($lp['idagenteproponente'] != $idAgente): ?>
                                 <option
-                                    value="<?php echo $lp->idVinculo; ?>:<?php echo $lp->idAgenteProponente; ?>"><?php echo $lp->nomeproponente; ?></option>
+                                    value="<?php echo $lp['idvinculo']; ?>:<?php echo $lp['idagenteproponente']; ?>"><?php echo $lp['nomeproponente']; ?></option>
                             <?php endif; ?>
 
-                            <?php $idAgente = $lp->idAgenteProponente; ?>
+                            <?php $idAgente = $lp['idagenteproponente']; ?>
                         <?php endforeach; ?>
                     </select>&nbsp;<span id="msgValidaProponente"></span>&nbsp;&nbsp;&nbsp;
                 </td>

@@ -5,7 +5,7 @@
  * @author augusto
  */
 
-class Captacao extends GenericModel {
+class Captacao extends MinC_Db_Table_Abstract {
     protected $_banco   = "SAC";
     protected $_schema  = "dbo";
     protected $_name    = "Captacao";
@@ -28,12 +28,12 @@ class Captacao extends GenericModel {
 
         return $this->fetchAll($select);
 
-    } // fecha método listasituacao()
+    } // fecha mï¿½todo listasituacao()
 
 
 
     /**
-     * Método para buscar
+     * Mï¿½todo para buscar
      * @access public
      * @param void
      * @return object/array
@@ -45,24 +45,24 @@ class Captacao extends GenericModel {
         $select->order('DtChegadaRecibo');
         $select->order('DtRecibo');
         return $this->fetchAll($select);
-    } // fecha método buscarDados()
+    } // fecha mï¿½todo buscarDados()
 
 
 
     /**
-     * Método para cadastrar
+     * Mï¿½todo para cadastrar
      * @access public
      * @param array $dados
-     * @return integer (retorna o último id cadastrado)
+     * @return integer (retorna o ï¿½ltimo id cadastrado)
      */
     public function cadastrarDados($dados) {
         return $this->insert($dados);
-    } // fecha método cadastrarDados()
+    } // fecha mï¿½todo cadastrarDados()
 
 
 
     /**
-     * Método para alterar
+     * Mï¿½todo para alterar
      * @access public
      * @param array $dados
      * @param integer $where
@@ -71,23 +71,23 @@ class Captacao extends GenericModel {
     public function alterarDados($dados, $where) {
         $where = "Idcaptacao = " . $where;
         return $this->update($dados, $where);
-    } // fecha método alterarDados()
+    } // fecha mï¿½todo alterarDados()
 
 
 
     /**
-     * Método para excluir
+     * Mï¿½todo para excluir
      * @access public
      * @param integer $where
-     * @return integer (quantidade de registros excluídos)
+     * @return integer (quantidade de registros excluï¿½dos)
      */
     public function excluirDados($where) {
         $where = "Idcaptacao = " . $where;
         return $this->delete($where);
-    } // fecha método excluirDados()
+    } // fecha mï¿½todo excluirDados()
 
     /**
-     * Método para buscar
+     * Mï¿½todo para buscar
      * @access public
      * @return float TotalCaptadoReal
      */
@@ -111,7 +111,7 @@ class Captacao extends GenericModel {
             return $this->fetchAll($select);
     }
     /**
-     * Método para buscar
+     * Mï¿½todo para buscar
      * @access public
      * @param integer $AnoProjeto,$Sequencial,$selectC,$selectCq,$selectCg,$selectCc
      * @return float totalCaptadoProjeto
@@ -182,7 +182,7 @@ class Captacao extends GenericModel {
         //xd($this->fetchAll($select));
         return $this->fetchAll($select);
 
-    } // fecha método listasituacao()
+    } // fecha mï¿½todo listasituacao()
 
 
 
@@ -206,7 +206,7 @@ class Captacao extends GenericModel {
                             'c.DtChegadaRecibo',
                             'c.DtRecibo',
                             'c.CaptacaoReal',
-                            'TipoApoio' =>  new Zend_Db_Expr("case when c.TipoApoio = '2' then 'Patrocínio' else 'Doaç?o' end")
+                            'TipoApoio' =>  new Zend_Db_Expr("case when c.TipoApoio = '2' then 'Patrocï¿½nio' else 'Doaï¿½?o' end")
                     )
             );
         }
@@ -220,7 +220,7 @@ class Captacao extends GenericModel {
                             'c.DtChegadaRecibo',
                             'c.DtRecibo',
                             'c.CaptacaoReal',
-                            'TipoApoio' =>  new Zend_Db_Expr("case when c.TipoApoio = '2' then 'Patrocínio' else 'Doaç?o' end")
+                            'TipoApoio' =>  new Zend_Db_Expr("case when c.TipoApoio = '2' then 'Patrocï¿½nio' else 'Doaï¿½?o' end")
                     )
             );
 
@@ -313,7 +313,7 @@ class Captacao extends GenericModel {
         //xd($this->fetchAll($select));
         return $this->fetchAll($select);
 
-    } // fecha método listasituacao()
+    } // fecha mï¿½todo listasituacao()
 
 
     public function buscaCompleta($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false){
@@ -327,7 +327,7 @@ class Captacao extends GenericModel {
                           "c.DtTransferenciaRecurso",
                           "c.DtRecibo",
                           "c.CaptacaoReal",
-                          "TipoApoio" =>  new Zend_Db_Expr("CASE WHEN c.TipoApoio = '2' THEN 'Patrocínio' ELSE 'Doação' END"),
+                          "TipoApoio" =>  new Zend_Db_Expr("CASE WHEN c.TipoApoio = '2' THEN 'Patrocï¿½nio' ELSE 'Doaï¿½ï¿½o' END"),
                         ), "SAC.dbo"
                     );
         $slct->joinInner(
@@ -593,7 +593,7 @@ class Captacao extends GenericModel {
 
             //x($slctSomatorio->assemble());
             return $this->fetchAll($slctSomatorio);
-        }//Fim Somatório do Valor Autorizado
+        }//Fim Somatï¿½rio do Valor Autorizado
         
         //RETORNA SOMATORIO - VALOR CAPTADO
 		if($blnSomatorioVlCaptado)
@@ -673,7 +673,7 @@ class Captacao extends GenericModel {
 
             //xd($slctSomatorio->assemble());
             return $this->fetchAll($slctSomatorio);
-        }//Fim Somatório do Valor Captado
+        }//Fim Somatï¿½rio do Valor Captado
         
         if(!empty($arrVlAutorizado))
         {
@@ -726,7 +726,7 @@ class Captacao extends GenericModel {
         }
     }
     
-    /*  Busca Demonstativo de Captação de Recurso da CNIC  */ 
+    /*  Busca Demonstativo de Captaï¿½ï¿½o de Recurso da CNIC  */ 
     public function buscarDemonstrativoDeCaptacao($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false, $arrVlAutorizado=array())
     {
     	$slct = $this->select();
@@ -1110,7 +1110,7 @@ class Captacao extends GenericModel {
                           "c.DtRecibo",
                           "c.CaptacaoReal",
                           "c.NumeroRecibo",
-                          "TipoApoio" => New Zend_Db_Expr("CASE WHEN c.TipoApoio = 1 then 'Patrocínio' WHEN c.TipoApoio = 2 then 'Doação' END "),
+                          "TipoApoio" => New Zend_Db_Expr("CASE WHEN c.TipoApoio = 1 then 'Patrocï¿½nio' WHEN c.TipoApoio = 2 then 'Doaï¿½ï¿½o' END "),
                           "Incentivador" =>  new Zend_Db_Expr("SAC.dbo.fnNome(a.idagente)"),
                           "DtLiberacao" =>  new Zend_Db_Expr("(SELECT TOP 1 DtLiberacao FROM SAC.dbo.Liberacao l WHERE c.AnoProjeto+c.Sequencial = l.AnoProjeto+l.Sequencial)"),
                           "Percentual" =>  new Zend_Db_Expr("SAC.dbo.fnPercentualCaptado(c.AnoProjeto, c.Sequencial)"),
@@ -1203,8 +1203,8 @@ class Captacao extends GenericModel {
                           "c.DtRecibo AS dtCaptacao",
                           "c.CaptacaoReal AS vlCaptado",
                           "c.NumeroRecibo AS numLote",
-                          "TipoApoio" => New Zend_Db_Expr("CASE WHEN c.TipoApoio = 1 then 'Patrocínio'
-                                                                WHEN c.TipoApoio = 2 then 'Doação' END "),
+                          "TipoApoio" => New Zend_Db_Expr("CASE WHEN c.TipoApoio = 1 then 'Patrocï¿½nio'
+                                                                WHEN c.TipoApoio = 2 then 'Doaï¿½ï¿½o' END "),
                           "Incentivador" =>  new Zend_Db_Expr("SAC.dbo.fnNome(a.idagente)"),
                         ), "SAC.dbo"
                     );
@@ -1326,8 +1326,8 @@ class Captacao extends GenericModel {
                     new Zend_Db_Expr("c.CgcCPfMecena, c.NumeroRecibo, c.DtTransferenciaRecurso, c.DtRecibo, c.CaptacaoReal"),
                     new Zend_Db_Expr("CASE 
                                         WHEN c.TipoApoio = '2'
-                                             THEN 'Patrocínio'
-                                             ELSE 'Doação'
+                                             THEN 'Patrocï¿½nio'
+                                             ELSE 'Doaï¿½ï¿½o'
                                         END AS TipoApoio"),
                     new Zend_Db_Expr("p.IdPRONAC, i.Nome"),
                     new Zend_Db_Expr("CASE

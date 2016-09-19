@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class tbComprovanteExecucao extends GenericModel
+class tbComprovanteExecucao extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
 	protected $_schema = "dbo";
@@ -18,7 +18,7 @@ class tbComprovanteExecucao extends GenericModel
 
 
 	/**
-	 * Método para cadastrar
+	 * Mï¿½todo para cadastrar
 	 * @access public
 	 * @param array $dados
 	 * @return integer (retorna o ï¿½ltimo id cadastrado)
@@ -26,12 +26,12 @@ class tbComprovanteExecucao extends GenericModel
 	public function cadastrarDados($dados)
 	{
 		return $this->insert($dados);
-	} // fecha método cadastrarDados()
+	} // fecha mï¿½todo cadastrarDados()
 
 
 
 	/**
-	 * Método para alterar
+	 * Mï¿½todo para alterar
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -41,11 +41,11 @@ class tbComprovanteExecucao extends GenericModel
 	{
 		$where = "idComprovanteExecucao = " . $where;
 		return $this->update($dados, $where);
-	} // fecha método alterarDados()
+	} // fecha mï¿½todo alterarDados()
 
 
         /**
-	 * Método para consultar os arquivos anexados
+	 * Mï¿½todo para consultar os arquivos anexados
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -97,7 +97,7 @@ class tbComprovanteExecucao extends GenericModel
         }
 
         /**
-	 * Método para consultar os arquivos anexados (ESPECIFICO DO COMPROVANTE DE EXCUCAï¿½?O DO UC 25)
+	 * Mï¿½todo para consultar os arquivos anexados (ESPECIFICO DO COMPROVANTE DE EXCUCAï¿½?O DO UC 25)
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -148,7 +148,7 @@ class tbComprovanteExecucao extends GenericModel
         }
 
         /**
-	 * Método para consultar os arquivos anexados (ESPECIFICO DO COMPROVANTE DE EXCUCAï¿½?O DO UC 25)
+	 * Mï¿½todo para consultar os arquivos anexados (ESPECIFICO DO COMPROVANTE DE EXCUCAï¿½?O DO UC 25)
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -199,7 +199,7 @@ class tbComprovanteExecucao extends GenericModel
         }
 
         /**
-	 * Método para consultar os arquivos anexados
+	 * Mï¿½todo para consultar os arquivos anexados
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -250,7 +250,7 @@ class tbComprovanteExecucao extends GenericModel
         }
 
         /**
-	 * Método para consultar os arquivos anexados (ESPECIFICO DO COMPROVANTE DE EXCUCAï¿½?O DO UC 25)
+	 * Mï¿½todo para consultar os arquivos anexados (ESPECIFICO DO COMPROVANTE DE EXCUCAï¿½?O DO UC 25)
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where
@@ -300,7 +300,7 @@ class tbComprovanteExecucao extends GenericModel
         }
 
         /**
-	 * Método para consultar os arquivos anexados (ESPECIFICO DO COMPROVANTE DE EXCUCAï¿½?O DO UC 25)
+	 * Mï¿½todo para consultar os arquivos anexados (ESPECIFICO DO COMPROVANTE DE EXCUCAï¿½?O DO UC 25)
 	 * @access public
 	 * @param array $dados
 	 * @param integer $where

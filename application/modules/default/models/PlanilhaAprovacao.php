@@ -10,7 +10,7 @@
  *
  * @author augusto
  */
-class PlanilhaAprovacao extends GenericModel {
+class PlanilhaAprovacao extends MinC_Db_Table_Abstract {
 
     protected $_name = 'tbPlanilhaAprovacao';
     protected $_schema = 'dbo';
@@ -167,8 +167,8 @@ class PlanilhaAprovacao extends GenericModel {
     }
 
     /**
-     * Author: Alysson Vicuña de Oliveira
-     * Descrição: Alteração realizada por pedido da Área Finalistica em 16/02/2016 as 10:48
+     * Author: Alysson Vicuï¿½a de Oliveira
+     * Descriï¿½ï¿½o: Alteraï¿½ï¿½o realizada por pedido da ï¿½rea Finalistica em 16/02/2016 as 10:48
      * @param $idpronac
      * @param null $itemAvaliadoFilter
      * @return Zend_Db_Table_Rowset_Abstract
@@ -279,7 +279,7 @@ class PlanilhaAprovacao extends GenericModel {
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
         $select->where('pAprovacao.stAtivo = ?','S');
         $select->where('pAprovacao.nrFonteRecurso = ?', 109); //Incentivo Fiscal Federal
-        $select->where('pAprovacao.tpAcao IS NULL OR pAprovacao.tpAcao <> ? ', 'E'); //Adicionado para não listar as que ja foram excluidas
+        $select->where('pAprovacao.tpAcao IS NULL OR pAprovacao.tpAcao <> ? ', 'E'); //Adicionado para nï¿½o listar as que ja foram excluidas
         $select->where('(pAprovacao.qtItem*pAprovacao.nrOcorrencia*pAprovacao.vlUnitario) > 0');
         $select->order('prod.Descricao');
         $select->order('pEtapa.idPlanilhaEtapa');
@@ -1325,10 +1325,10 @@ class PlanilhaAprovacao extends GenericModel {
 
 
     /**
-     * Método para buscar a planilha de custos no módulo de readequação
+     * Mï¿½todo para buscar a planilha de custos no mï¿½dulo de readequaï¿½ï¿½o
      * @access public
      * @param array $where (filtros)
-     * @param array $order (ordenação)
+     * @param array $order (ordenaï¿½ï¿½o)
      * @return object
      */
     public function buscarCustosReadequacao($where = array(), $order = array())
@@ -1424,15 +1424,15 @@ class PlanilhaAprovacao extends GenericModel {
 
                 //x($select->assemble());
         return $this->fetchAll($select);
-    } // fecha método buscarCustosReadequacao()
+    } // fecha mï¿½todo buscarCustosReadequacao()
 
 
 
     /**
-     * Busca o histórico de readequação
+     * Busca o histï¿½rico de readequaï¿½ï¿½o
      * @access public
      * @param array $where (filtros)
-     * @param array $order (ordenação)
+     * @param array $order (ordenaï¿½ï¿½o)
      * @return object
      */
     public function historicoReadequacao($where = array(), $order = array())
@@ -1566,7 +1566,7 @@ class PlanilhaAprovacao extends GenericModel {
         $select->order($order);
 
         return $this->fetchAll($select);
-    } // fecha método historicoReadequacao()
+    } // fecha mï¿½todo historicoReadequacao()
 
 
 

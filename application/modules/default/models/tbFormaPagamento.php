@@ -1,10 +1,10 @@
 <?php 
 /*
- * Classe: EditalComposição
+ * Classe: EditalComposiï¿½ï¿½o
  * Modulo: Editais
  * Criado por: Emanuel Melo 
  */
-class tbFormaPagamento extends GenericModel {
+class tbFormaPagamento extends MinC_Db_Table_Abstract {
     
     protected  $_banco = 'SAC';
     protected  $_name = 'tbFormaPagamento';

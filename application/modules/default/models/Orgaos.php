@@ -5,7 +5,7 @@
  * Description of Orgaos
  * @author augusto
  */
-class Orgaos extends GenericModel{
+class Orgaos extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'SAC';
     protected $_name  = 'Orgaos';
