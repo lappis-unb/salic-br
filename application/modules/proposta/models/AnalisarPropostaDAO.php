@@ -8,7 +8,7 @@
  * @package
  * @author  wouerner <wouerner@gmail.com>
  */
-class AnalisarPropostaDAO extends Zend_Db_Table{
+class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model{
 
     public static function buscarGeral($idPreProjeto){
         $sql = "SELECT
@@ -511,40 +511,7 @@ class AnalisarPropostaDAO extends Zend_Db_Table{
         $resultado = $db->fetchAll($sql);
         return $resultado;
     }
-    public static function buscarDocumentoPendente($idPreProjeto){
-            $sql = "SELECT DISTINCT
-                        vdoc.Contador,
-                        vdoc.idProjeto,
-                        vdoc.CodigoDocumento,
-                        vdoc.Opcao,
-                        doc.Descricao
-                    FROM
-                        (
-                            SELECT     Contador, dp.idProjeto, CodigoDocumento, Opcao
-                            FROM         SAC.dbo.DocumentosProponente dp INNER JOIN
-                                                  SAC.dbo.DocumentosExigidos d ON (dp.CodigoDocumento = d .Codigo) INNER JOIN
-                                                  SAC.dbo.PreProjeto p ON (dp.idProjeto = p.idPreProjeto) INNER JOIN
-                                                  SAC.dbo.tbMovimentacao m ON (m.idProjeto = p.idPreProjeto)
-                            WHERE     Movimentacao = 97 OR Movimentacao = 95 AND m.stEstado = 0
-                            UNION ALL
-                            SELECT     Contador, dpr.idProjeto, CodigoDocumento, Opcao
-                            FROM         SAC.dbo.DocumentosProjeto dpr INNER JOIN
-                                                  SAC.dbo.DocumentosExigidos d ON (dpr.CodigoDocumento = d .Codigo) INNER JOIN
-                                                  SAC.dbo.PreProjeto p ON (dpr.idProjeto = p.idPreProjeto) INNER JOIN
-                                                  SAC.dbo.tbMovimentacao m ON (m.idProjeto = p.idPreProjeto)
-                            WHERE     Movimentacao = 97 OR Movimentacao = 95 OR Movimentacao = 95 AND m.stEstado = 0
-                        ) vdoc
-                        left join SAC.dbo.DocumentosExigidos doc on vdoc.CodigoDocumento = doc.Codigo
-                    WHERE vdoc.idProjeto=$idPreProjeto
-                ";
 
-
-        $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $resultado = $db->fetchAll($sql);
-
-        return $resultado;
-    }
     public static function buscarDocumentoOpcao($idOpcao){
        $sql = "select codigo,descricao from SAC.dbo.vwDocumentosExigidosApresentacaoProposta where opcao=$idOpcao order by descricao ";
        //$sql = "select codigo,descricao from SAC.dbo.DocumentosExigidos where opcao=$idOpcao order by descricao";

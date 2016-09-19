@@ -50,7 +50,7 @@ class Uf extends MinC_Db_Table_Abstract {
     {
         $sql = 'SELECT idUF AS id, Sigla AS descricao ';
         //$sql .= 'FROM ' . GenericModel::getStaticTableName($objEstado->_schema, $objEstado->_name);
-        $sql .= 'FROM agentes.dbo.uf ';
+        $sql .= 'FROM ' . $this->getStaticTableName('agentes', 'uf') . ' ';
         $sql .= ' ORDER BY Sigla';
 
         try {
