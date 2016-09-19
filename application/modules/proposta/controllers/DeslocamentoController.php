@@ -11,30 +11,31 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
     private $idPreProjeto = null;
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init()
     {
-        $auth = Zend_Auth::getInstance();
+        $auth = Zend_Auth::getInstance()->getIdentity();
+        $arrAuth = array_change_key_case((array) $auth);
         $PermissoesGrupo = array();
 
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
-        if(isset($auth->getIdentity()->usu_codigo)){
+        if(isset($arrAuth['usu_codigo'])){
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
-            $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
+            $grupos = $Usuario->buscarUnidades($arrAuth['usu_codigo'], 21);
             foreach ($grupos as $grupo){
                 $PermissoesGrupo[] = $grupo->gru_codigo;
             }
         }
 
-        isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
+        isset($arrAuth['usu_codigo']) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
 
-        // pega o idAgente do usuário logado
-        $auxUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
+        // pega o idAgente do usuario logado
+        $auxUsuario = isset($arrAuth['usu_codigo']) ? $arrAuth['usu_codigo'] : $arrAuth['idusuario'];
         $this->getIdUsuario = UsuarioDAO::getIdUsuario($auxUsuario);
 
         if ($this->getIdUsuario) {
@@ -44,8 +45,8 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
             $this->getIdUsuario = 0;
         }
 
-        $uf = new Uf();
-        $uf = $uf->buscar();
+        $mapperUf = new Agente_Model_UFMapper();
+        $uf = $mapperUf->fetchPairs('iduf', 'sigla');
         $this->view->comboestados = $uf;
         //$this->view->comboestados = Estado::buscar();
         $paises = new DeslocamentoDAO();
@@ -62,7 +63,7 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
             $this->view->movimentacaoAtual = $rsStatusAtual->Movimentacao;
         }else {
             if($_REQUEST['idPreProjeto'] != '0'){
-                parent::message("Necessário informar o número da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
+                parent::message("Necessï¿½rio informar o nï¿½mero da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
             }
         }
     }
@@ -72,7 +73,7 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
      *
      * @access public
      * @return void
-     * @todo Refatorar metodo para user metodos padrões do Zend
+     * @todo Refatorar metodo para user metodos padrï¿½es do Zend
      */
     public function indexAction()
     {
@@ -196,7 +197,7 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
             try {
                 $excluir = DeslocamentoDAO::excluiDeslocamento($_GET['id']);
 
-                parent::message("Exclusão realizada com sucesso!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
+                parent::message("Exclusï¿½o realizada com sucesso!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
 
             }catch(Zend_Exception $ex) {
                 $this->view->message      = $e->getMessage();

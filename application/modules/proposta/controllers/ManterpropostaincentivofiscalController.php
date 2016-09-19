@@ -430,6 +430,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $arrBuscaProponete['a.idagente = ?'] = $rsPreProjeto['idagente'];
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
+            if ($rsProponente) {
+                $rsProponente = array_change_key_case($rsProponente->toArray());
+            }
 
             $ag = new Agente_Model_DbTable_Agentes();
             $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto, 'vprp.siVinculoProposta = ?' => 2));

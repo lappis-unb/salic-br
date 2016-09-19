@@ -62,7 +62,8 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         //VALIDA ITENS DO MENU (Documento pendentes)
         //*******************************************
         $get = Zend_Registry::get("get");
-        $this->view->documentosPendentes = AnalisarPropostaDAO::buscarDocumentoPendente($get->idPreProjeto);
+        $model = new Proposta_Model_DbTable_DocumentosExigidos();
+        $this->view->documentosPendentes = $model->buscarDocumentoPendente($get->idPreProjeto);
 
         if(!empty($this->view->documentosPendentes)) {
             $verificarmenu = 1;
@@ -75,7 +76,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
         //(Enviar Proposta ao MinC , Excluir Proposta)
         $mov = new Movimentacao();
-        $movBuscar = $mov->buscar(array('idProjeto = ?' => $get->idPreProjeto), array('idMovimentacao desc'), 1, 0)->current();
+        $movBuscar = $mov->buscar(array('idprojeto = ?' => $get->idPreProjeto), array('idmovimentacao desc'), 1, 0)->current();
 
         if(isset($movBuscar->Movimentacao) && $movBuscar->Movimentacao != 95) {
             $enviado = 'true';
@@ -85,7 +86,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
             $this->view->enviado = $enviado;
         }
         //*****************
-        //FIM DA VALIDA�?O
+        //FIM DA VALIDACAO
         //*****************
 
         /* =============================================================================== */

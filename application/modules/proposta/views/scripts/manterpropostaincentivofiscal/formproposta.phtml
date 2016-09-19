@@ -346,7 +346,7 @@ $(document).ready(function()
 </style>
 
 <?php
-    if (isset($this->proposta->idPreProjeto)) {
+    if (isset($this->proposta['idpreprojeto'])) {
         echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); // menu
     }
 ?>
@@ -363,7 +363,7 @@ $(document).ready(function()
 
 <!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
-    <div><?php if (!isset($this->proposta->idPreProjeto)) { echo "NOVA"; } ?> PROPOSTA <?php //echo montaBotaoVoltar($controller, $links); ?></div>
+    <div><?php if (!isset($this->proposta['idpreprojeto'])) { echo "NOVA"; } ?> PROPOSTA <?php //echo montaBotaoVoltar($controller, $links); ?></div>
 </div>
 
 <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/ckeditor.js"></script>
@@ -403,7 +403,7 @@ $(document).ready(function()
                         <div style="width: 95%">
                             <div style="float:left; width: 85%">
                                 Proponente:
-                                <span style="color: blue;"><?php echo utf8_encode($this->proponente->descricao); ?></span>
+                                <span style="color: blue;"><?php echo utf8_encode($this->proponente['descricao']); ?></span>
                                 <input type="hidden" class="input_simples" name="idAgente" value="<?php
                if (isset($this->proponente['idagente']))
                    echo $this->proponente['idagente'];
