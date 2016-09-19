@@ -47,22 +47,27 @@ class Dispositivomovel extends GenericModel{
      * @return array
      */
     public function listarPorIdPronac($idPronac){
-        $consulta = $this->select();
-        $consulta->setIntegrityCheck(false);
-        $consulta
-            ->from(array('projetos' => 'vwAgentesSeusProjetos'), array(), 'SAC.dbo')
-            ->join(array('usuario' => 'SGCacesso'), 'projetos.IdUsuario = usuario.IdUsuario', array(
-                'cpf' => 'Cpf'), 'ControleDeAcesso.dbo')
-            ->join(array('dispositivo' => 'tbDispositivoMovel'), 'usuario.Cpf = dispositivo.nrCPF', array(
-                'idDispositivoMovel',
-                'idRegistration'), 'SAC.dbo')
-            ->group(array(
-                'cpf',
-                'idDispositivoMovel',
-                'idRegistration'))
-        ;
-        
-        return $this->fetchAll($consulta);
+        if($idPronac){
+            $consulta = $this->select();
+            $consulta->setIntegrityCheck(false);
+            $consulta
+                ->from(array('projetos' => 'vwAgentesSeusProjetos'), array(), 'SAC.dbo')
+                ->join(array('usuario' => 'SGCacesso'), 'projetos.IdUsuario = usuario.IdUsuario', array(
+                    'cpf' => 'Cpf'), 'ControleDeAcesso.dbo')
+                ->join(array('dispositivo' => 'tbDispositivoMovel'), 'usuario.Cpf = dispositivo.nrCPF', array(
+                    'idDispositivoMovel',
+                    'idRegistration'), 'SAC.dbo')
+                ->where('projetos.IdPRONAC = ?', $idPronac)
+                ->group(array(
+                    'cpf',
+                    'idDispositivoMovel',
+                    'idRegistration'))
+            ;
+            $listaResultado = $this->fetchAll($consulta);
+        } else {
+            $listaResultado = array();
+        }
+        return $listaResultado;
     }
     
     /**

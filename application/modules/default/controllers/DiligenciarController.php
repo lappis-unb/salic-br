@@ -672,7 +672,6 @@ class DiligenciarController extends GenericControllerNew {
         # Envia notificação para o usuário através do aplicativo mobile.
         $modelProjeto = new Projetos();
         $projeto = $modelProjeto->buscarPorPronac((int)$this->getRequest()->getParam('idPronac'));
-        
         $this->enviarNotificacao((object)array(
             'cpf' => $projeto->CNPJCPF,
             'pronac' => $projeto->Pronac,

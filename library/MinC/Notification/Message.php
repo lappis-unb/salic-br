@@ -282,18 +282,24 @@ class Minc_Notification_Message {
      * @return \Minc_Notification_Message
      */
     public function send() {
-        $this->loadListParametersService();
-        $this->client
-            ->getHttpClient()
-                ->setHeaders(
-                    array(
-                        'Authorization: key='. $this->gcmApiKey,
-                        'Content-Type: application/json'))
-                ->setRawData(json_encode($this->listParametersService))
-                ->setUri($this->gcmUrl);
-        $this->response = json_decode($this->client->getHttpClient()->request('POST')->getBody());
-        $this->save();
-
+        if($this->listResgistrationIds){
+            $this->loadListParametersService();
+            
+            # Envia notificação se existe configurado url do serviço e o código para consumir o serviço GCM.
+            if($this->gcmUrl && $this->gcmApiKey){
+                $this->client
+                    ->getHttpClient()
+                        ->setHeaders(
+                            array(
+                                'Authorization: key='. $this->gcmApiKey,
+                                'Content-Type: application/json'))
+                        ->setRawData(json_encode($this->listParametersService))
+                        ->setUri($this->gcmUrl);
+                $this->response = json_decode($this->client->getHttpClient()->request('POST')->getBody());
+            }
+            $this->save();
+        }
+        
         return $this;
     }
     
