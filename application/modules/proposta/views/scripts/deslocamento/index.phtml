@@ -35,10 +35,10 @@
             EscClose:false,
             modal:true,
             buttons:{
-                'Cancelar':function(){
+                'Cancelar': function(){
                     $(this).dialog('close'); // fecha a modal
                 },
-                'Confirmar':function(){
+                'Confirmar': function(){
                     location.href ='<?php echo $this->baseUrl(); ?>/proposta/deslocamento/excluir?idPreProjeto='+idPreProjeto+'&id='+id;;
                 }
             }
@@ -178,15 +178,15 @@
                         <label id="LpaisOrigem">Pa&iacute;s de Origem</label>
                         <br />
                         <select name="paisOrigem" id="paisOrigem" onchange="FpaisOrigem(this.value);" class="select_simples">
-                            <?php foreach ($this->paises as $paises){ ?>
-                            <option value="<?php echo $paises->idPais; ?>"
-                                <?php if(($this->idPaisO == '') && ($paises->idPais == 31)) {
+                            <?php foreach ($this->paises as $key => $paises){ ?>
+                            <option value="<?php echo $key; ?>"
+                                <?php if(($this->idPaisO == '') && ($key == 31)) {
                                         echo "selected=\"selected\"";
-                                    } else if($paises->idPais == $this->idPaisO ) {
+                                    } else if($key == $this->idPaisO ) {
                                         echo "selected=\"selected\"";
                                     }
                                 ?>>
-                                <?php echo utf8_decode(htmlentities($paises->Descricao)); ?>
+                                <?php echo utf8_decode(htmlentities($paises)); ?>
                             </option>
                             <?php } ?>
                         </select>
@@ -234,14 +234,14 @@
                         <label id="LpaisDestino">Pa&iacute;s de Destino</label>
                         <br />
                         <select name="paisDestino" id="paisDestino" onchange="FpaisDestino(this.value);" class="select_simples" >
-                            <?php foreach ($this->paises as $paises){ ?>
-                            <option value="<?php echo $paises->idPais; ?>"
-                                <?php if(($this->idPaisD == '') && ($paises->idPais == 31)) {
+                            <?php foreach ($this->paises as $key => $paises){ ?>
+                            <option value="<?php echo $key; ?>"
+                                <?php if(($this->idPaisD == '') && ($key == 31)) {
                                         echo "selected=\"selected\"";
-                                    } else if($paises->idPais == $this->idPaisD ) {
+                                    } else if($key == $this->idPaisD ) {
                                         echo "selected=\"selected\"";
                                     }?>>
-                                    <?php echo utf8_decode(htmlentities($paises->Descricao)); ?>
+                                    <?php echo utf8_decode(htmlentities($paises)); ?>
                             </option>
                             <?php } ?>
                         </select>

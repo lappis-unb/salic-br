@@ -49,8 +49,8 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
         $uf = $mapperUf->fetchPairs('iduf', 'sigla');
         $this->view->comboestados = $uf;
         //$this->view->comboestados = Estado::buscar();
-        $paises = new DeslocamentoDAO();
-        $this->view->paises = $paises->pais();
+        $table = new Agente_Model_DbTable_Pais();
+        $this->view->paises = $table->fetchPairs('idpais', 'descricao');
         //$this->view->paises = DeslocamentoDAO::buscarPais();
 
         parent::init();
@@ -151,15 +151,15 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
         }
 
         $dados = array(
-                'idProjeto' 		=> $idPreProjeto,
-                'idPaisOrigem' 		=> $paisOrigem,
-                'idUFOrigem' 		=> $uf,
-                'idMunicipioOrigem' 	=> $cidade,
-                'idPaisDestino' 	=> $paisDestino,
-                'idUFDestino' 		=> $ufD,
-                'idMunicipioDestino'    => $cidadeD,
-                'Qtde' 			=> $quantidade,
-                'idUsuario' 		=> $this->getIdUsuario
+                'idprojeto' 		=> $idPreProjeto,
+                'idpaisorigem' 		=> $paisOrigem,
+                'iduforigem' 		=> $uf,
+                'idmunicipioorigem' 	=> $cidade,
+                'idpaisdestino' 	=> $paisDestino,
+                'idufdestino' 		=> $ufD,
+                'idmunicipiodestino'    => $cidadeD,
+                'qtde' 			=> $quantidade,
+                'idusuario' 		=> $this->getIdUsuario
         );
 
             $deslocamentos = DeslocamentoDAO::buscarDeslocamentosGeral(array("de.idPaisOrigem = "=>$dados["idPaisOrigem"],"de.idPaisDestino = "=>$dados["idPaisDestino"],

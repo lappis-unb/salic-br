@@ -171,29 +171,7 @@ class MinC_Db_Mapper
      */
     public function fetchPairs($key, $value , array $where = [], $order = '')
     {
-        if (empty($order)) $order = $value;
-
-        $table = $this->getDbTable();
-        $select = $table->select()
-            ->setIntegrityCheck(false)
-            ->order($order);
-
-        foreach ($where as $column => $columnValue) {
-            if (is_array($columnValue)) {
-                $select->where( $column. ' IN (?)', $columnValue);
-            } else {
-                $select->where( $column. ' = ?', $columnValue);
-            }
-        }
-
-        $resultSet = $table->fetchAll($select);
-        $resultSet = ($resultSet)? $resultSet->toArray() : array();
-        $entries   = array();
-        foreach ($resultSet as $row) {
-            $row = array_change_key_case($row);
-            $entries[$row[$key]] = $row[$value];
-        }
-        return $entries;
+        return $this->getDbTable()->fetchPairs($key, $value, $where, $order);
     }
 
     public function fetchAll()

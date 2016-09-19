@@ -498,4 +498,43 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         }
     }
 
+    /**
+     * Retorna o resultado com chave e valor apenas.
+     *
+     * @name fetchPairs
+     * @param string $key
+     * @param string $value
+     * @param array $where
+     * @param string $order
+     * @return array
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  01/09/2016
+     */
+    public function fetchPairs($key, $value , array $where = [], $order = '')
+    {
+        if (empty($order)) $order = $value;
+
+        $select = $this->select()
+            ->setIntegrityCheck(false)
+            ->order($order);
+
+        foreach ($where as $column => $columnValue) {
+            if (is_array($columnValue)) {
+                $select->where( $column. ' IN (?)', $columnValue);
+            } else {
+                $select->where( $column. ' = ?', $columnValue);
+            }
+        }
+
+        $resultSet = $this->fetchAll($select);
+        $resultSet = ($resultSet)? $resultSet->toArray() : array();
+        $entries   = array();
+        foreach ($resultSet as $row) {
+            $row = array_change_key_case($row);
+            $entries[$row[$key]] = $row[$value];
+        }
+        return $entries;
+    }
+
 }
