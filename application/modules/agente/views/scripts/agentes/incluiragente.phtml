@@ -183,7 +183,7 @@
                     </td>
                     <td width="30%">
                         <label for="uf">UF *</label> <br />
-                        <select name="uf" id="uf" class="input_simples" disabled="disabled" onchange="carregar_combo(this.value,'cidade','<?php echo $this->url(array('controller' => 'cidade', 'action' => 'combo')); ?>',' - Selecione primeiro o UF - ');"	>
+                        <select name="uf" id="uf" class="input_simples" disabled="disabled" onchange="carregar_combo(this.value,'cidade','<?php echo $this->url(array('module' => 'default', 'controller' => 'cidade', 'action' => 'combo')); ?>',' - Selecione primeiro o UF - ');"	>
 
                             <?php if (!isset($this->uf) || empty($this->uf)) { ?>
                                 <option value="0"> -- </option>
