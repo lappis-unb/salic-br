@@ -224,6 +224,19 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     }
 
+    public function listarDadosCadastrarCustos($idPreProjeto)
+    {
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $sql = $db->select()
+            ->from(['tpp' => 'tbplanilhaproposta'], 'tpp.idprojeto as idProposta', $this->getSchema('sac'))
+            ->where('tpp.idProjeto = ?', $idPreProjeto)
+            ->limit(1)
+            ;
+
+        return $db->fetchAll($sql);
+    }
+
     public static function buscarDadosCustos($array = array()) {
         $sql = "SELECT
                     pp.idEtapa as idEtapa,
@@ -419,6 +432,33 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         }
 
         //xd($sql);
+        return $db->fetchAll($sql);
+    }
+
+    public function listarEtapasCusto()
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $sql = $db->select()
+            ->from(['tbplanilhaetapa' ], ['idplanilhaetapa','descricao' ], $this->getSchema('sac'))
+            ->where("tpcusto = 'A'")
+            ->order('descricao')
+            ;
+
+        //$sql = "SELECT
+		//idplanilhaetapa ,
+		//Descricao
+		//FROM SAC..tbPlanilhaEtapa where tpcusto = 'A'";
+
+        //$sql.= " ORDER BY Descricao ";
+
+        try {
+        }
+        catch (Zend_Exception_Db $e) {
+            $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
+        }
+
         return $db->fetchAll($sql);
     }
 
@@ -854,23 +894,108 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
         $sql.= " ORDER BY tpe.Descricao ";
 
-		//xd($sql);
-        //echo "<pre>" .  $sql;
-
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
     }
 
-    public static function buscarCustosAdministrativos() {
-        $sql = "SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'A' AND idPlanilhaEtapa <> 6";
-
-		//xd($sql);
-        //echo "<pre>" .  $sql;
-
+    /**
+     * listarItensCustosAdministrativos
+     *
+     * @param mixed $idPreProjeto
+     * @param mixed $tipoCusto
+     * @access public
+     * @return void
+     */
+    public function listarItensCustosAdministrativos($idPreProjeto, $tipoCusto)
+    {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $tpp = [
+            'tpp.idusuario',
+            'tpp.idprojeto as idProposta',
+            'tpp.idplanilhaproposta',
+            'tpp.quantidade',
+            'tpp.ocorrencia',
+            'tpp.valorunitario',
+            'tpp.qtdedias',
+        ];
+
+        $tpe =[
+            'tpe.tpcusto as custo',
+            'tpe.descricao as etapa',
+            'tpe.idplanilhaetapa as idEtapa',
+            'tpe.tpcusto',
+        ];
+
+        $tpi = [
+            'tpi.descricao as DescricaoItem',
+            'tpi.idplanilhaitens as idItem',
+        ];
+
+        $uf =[
+            'uf.descricao as DescricaoUf',
+            'uf.sigla as SiglaUF',
+        ];
+
+        $veri =[
+            'veri.idverificacao as idFonteRecurso',
+            'veri.descricao as DescricaoFonteRecurso'
+        ];
+
+        $sql = $db->select()
+            ->from(['tpp' => 'tbplanilhaproposta'], $tpp, $this->getSchema('sac'))
+            ->joinLeft(['pd' => 'produto'], 'pd.codigo = tpp.idproduto', null, $this->getSchema('sac'))
+            ->join(['tpe' => 'tbplanilhaetapa'], 'tpe.idplanilhaetapa = tpp.idetapa', $tpe, $this->getSchema('sac'))
+            ->join(['tpi' => 'tbplanilhaitens'], 'tpi.idplanilhaitens = tpp.idplanilhaitem', $tpi, $this->getSchema('sac'))
+            ->join(['uf' => 'uf'], 'uf.iduf = tpp.ufdespesa', $uf, $this->getSchema('agentes'))
+            ->join(['municipio' => 'municipios'], 'municipio.idmunicipioibge = tpp.municipiodespesa','municipio.descricao as Municipio', $this->getSchema('agentes'))
+            ->join(['prep' => 'preprojeto'], 'prep.idpreprojeto = tpp.idprojeto', null, $this->getSchema('sac'))
+            ->join(['mec' => 'mecanismo'], 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
+            ->join(['un' => 'tbplanilhaunidade'], 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
+            ->join(['veri' => 'verificacao'], 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
+            ->where('tpe.tpcusto = ?', $tipoCusto)
+            ->where('tpp.idprojeto = ?', $idPreProjeto)
+            ->order('tpe.descricao')
+            ;
+
+        return $db->fetchAll($sql);
+    }
+
+    public static function buscarCustosAdministrativos()
+    {
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $sql = $db->select()
+            ->from('tbplanilhaetapa', ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], ('sac'))
+            ->where("tpCusto = 'A' AND idPlanilhaEtapa <> 6")
+            ;
+
+        //$sql = "SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa
+            //FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'A' AND idPlanilhaEtapa <> 6";
+
+        return $db->fetchAll($sql);
+    }
+
+    /**
+     * listarCustosAdministrativos
+     *
+     * @access public
+     * @return void
+     * @author wouerner <wouerner@gmail.com>
+     */
+    public function listarCustosAdministrativos()
+    {
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $sql = $db->select()
+            ->from('tbplanilhaetapa', ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], $this->getSchema('sac'))
+            ->where("tpCusto = 'A' AND idPlanilhaEtapa <> 6")
+            ;
 
         return $db->fetchAll($sql);
     }
