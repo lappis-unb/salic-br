@@ -233,12 +233,12 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
     public function salvar($dados)
     {
         //DECIDINDO SE INCLUI OU ALTERA UM REGISTRO
-        if(isset($dados['idpreprojeto']) && !empty ($dados['idpreprojeto'])){
+        if(!empty ($dados['idpreprojeto'])){
             //UPDATE
             $rsPreProjeto = $this->find($dados['idpreprojeto'])->current();
-        }else{
+        } else {
             //INSERT
-            $dados['idpreprojeto'] = null;
+            unset($dados['idpreprojeto']);
             return $this->insert($dados);
         }
         //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
