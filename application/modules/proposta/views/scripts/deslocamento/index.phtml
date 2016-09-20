@@ -186,7 +186,7 @@
                                         echo "selected=\"selected\"";
                                     }
                                 ?>>
-                                <?php echo utf8_decode(htmlentities($paises)); ?>
+                                <?php echo htmlentities($paises); ?>
                             </option>
                             <?php } ?>
                         </select>
@@ -241,7 +241,7 @@
                                     } else if($key == $this->idPaisD ) {
                                         echo "selected=\"selected\"";
                                     }?>>
-                                    <?php echo utf8_decode(htmlentities($paises)); ?>
+                                    <?php echo htmlentities($paises); ?>
                             </option>
                             <?php } ?>
                         </select>
@@ -322,16 +322,16 @@
                 </tr>
                 <?php foreach($this->deslocamentos as $desloca){ ?>
                 <tr>
-                    <td class="centro"><?php echo utf8_encode($desloca->PO);?></td>
-                    <td class="centro"><?php echo utf8_encode($desloca->UFO);?></td>
-                    <td class="centro"><?php echo utf8_encode( $desloca->MUO );?></td>
-                    <td class="centro"><?php echo utf8_encode($desloca->PD);?></td>
-                    <td class="centro"><?php echo utf8_encode($desloca->UFD);?></td>
-                    <td class="centro"><?php echo utf8_encode( $desloca->MUD );?></td>
-                    <td class="centro"><?php echo utf8_encode($desloca->Qtde);?></td>
+                    <td class="centro"><?php echo $desloca['po'];?></td>
+                    <td class="centro"><?php echo $desloca['ufo'];?></td>
+                    <td class="centro"><?php echo $desloca['muo'];?></td>
+                    <td class="centro"><?php echo $desloca['pd'];?></td>
+                    <td class="centro"><?php echo $desloca['ufd'];?></td>
+                    <td class="centro"><?php echo $desloca['mud'];?></td>
+                    <td class="centro"><?php echo $desloca['qtde'];?></td>
                     <td class="centro" width="200px">
-                        <input id="" type="button" title="Editar" class="btn_editar" value=" " onclick="location.href ='<?php echo $this->baseUrl(); ?>/proposta/deslocamento/index?s=s&verifica=S&idPreProjeto=<?php echo $this->idPreProjeto; ?>&id=<?php echo $desloca->idDeslocamento; ?>'" />
-                        <input id="" type="button" title="Excluir" class="btn_exclusao" value=" " onclick="confirma(<?php echo $this->idPreProjeto; ?>,<?php echo $desloca->idDeslocamento; ?>);" />
+                        <input id="" type="button" title="Editar" class="btn_editar" value=" " onclick="location.href ='<?php echo $this->baseUrl(); ?>/proposta/deslocamento/index?s=s&verifica=S&idPreProjeto=<?php echo $this->idPreProjeto; ?>&id=<?php echo $desloca['iddeslocamento']; ?>'" />
+                        <input id="" type="button" title="Excluir" class="btn_exclusao" value=" " onclick="confirma(<?php echo $this->idPreProjeto; ?>,<?php echo $desloca['iddeslocamento']; ?>);" />
                     </td>
                 </tr>
                 <?php } ?>

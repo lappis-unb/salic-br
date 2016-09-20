@@ -124,7 +124,7 @@ class MinC_Db_Mapper
         $data = array_filter($model->toArray(), 'strlen');
 
         if ($table->getSequence()) {
-            if (null === ($pkValue)) {
+            if (empty($pkValue)) {
                 unset($data[$pk]);
                 return $table->insert($data);
             } else {

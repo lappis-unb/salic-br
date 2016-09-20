@@ -89,24 +89,24 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
 
             $idPreProjeto = $this->idPreProjeto;
 
-            $deslocamentos = new DeslocamentoDAO();
-            $dados = $deslocamentos->buscarDeslocamento($idPreProjeto, $id);
+            $deslocamentos = new Proposta_Model_TbDeslocamentoMapper();
+            $dados = $deslocamentos->getDbTable()->buscarDeslocamento($idPreProjeto, $id);
 
             if($id && !empty($dados)) {
                 foreach($dados as $d) {
-                    $idPaisO 		= $d->idPaisOrigem;
-                    $idUFO		= $d->idUFOrigem;
-                    $idCidadeO 		= $d->idMunicipioOrigem;
-                    $idPaisD		= $d->idPaisDestino;
-                    $idUFD		= $d->idUFDestino;
-                    $idCidadeD 		= $d->idMunicipioDestino;
-                    $Qtde  		= $d->Qtde;
+                    $idPaisO 		= $d['idpaisorigem'];
+                    $idUFO		    = $d['iduforigem'];
+                    $idCidadeO 		= $d['idmunicipioorigem'];
+                    $idPaisD		= $d['idpaisdestino'];
+                    $idUFD		    = $d['idufdestino'];
+                    $idCidadeD 		= $d['idmunicipiodestino'];
+                    $Qtde  		    = $d['qtde'];
                 }
 
-                $cidade = new Municipios();
-                $this->view->combocidadesO = $cidade->buscar($idUFO);
+                $mapperMunicipio = new Agente_Model_MunicipiosMapper();
+                $this->view->combocidadesO = $mapperMunicipio->fetchPairs('idmunicipioibge' , 'descricao', array('idufibge' => $idUFO));
                 //$this->view->combocidadesO = Cidade::buscar($idUFO);
-                $this->view->combocidadesD = Cidade::buscar($idUFD);
+                $this->view->combocidadesD = $mapperMunicipio->fetchPairs('idmunicipioibge' , 'descricao', array('idufibge' => $idUFD));
 
                 $this->view->idPaisO 	= $idPaisO;
                 $this->view->idPaisD 	= $idPaisD;
@@ -119,74 +119,51 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
             }
 
             $this->view->idPreProjeto	= $idPreProjeto;
-            $this->view->deslocamentos = $deslocamentos->buscarDeslocamento($idPreProjeto, null);
+            $this->view->deslocamentos = $deslocamentos->getDbTable()->buscarDeslocamento($idPreProjeto, null);
         }
     }
 
     public function salvarAction() {
 
-        $post = Zend_Registry::get('post');
+        $post = array_change_key_case($this->getRequest()->getPost());
+        $mapper = new Proposta_Model_TbDeslocamentoMapper();
 
-        $idPreProjeto	= $post->idPreProjeto;
-        $idDeslocamento = $post->idDeslocamento;
-        $paisOrigem 	= $post->paisOrigem;
-        $paisDestino 	= $post->paisDestino;
-        $uf 		= $post->uf;
-        $ufD 		= $post->ufD;
-        $cidade	 	= $post->cidade;
-        $cidadeD 	= $post->cidadeD;
-        $quantidade 	= $post->quantidade;
+        $post['idprojeto'] = $post['idpreprojeto'];
+        $post['idpaisorigem'] = $post['paisorigem'];
+        $post['idpaisdestino'] = $post['paisdestino'];
+        $post['iduforigem'] = ($post['uf']) ? $post['uf'] : 0;
+        $post['idufdestino'] = ($post['ufd']) ? $post['ufd'] : 0;
+        $post['idmunicipioorigem'] = ($post['cidade']) ? $post['cidade'] : 0;
+        $post['idmunicipiodestino'] = ($post['cidaded'])? $post['cidaded'] : 0;
+        $post['qtde'] = $post['quantidade'];
+        $post['idusuario'] = $this->getIdUsuario;
 
-        if(!$uf) {
-            $uf = 0;
+        $deslocamentos = $mapper->getDbTable()->buscarDeslocamentosGeral(array(
+            "de.idpaisorigem "=>$post["idpaisorigem"],
+            "de.idpaisdestino "=> $post["idpaisdestino"],
+            "de.idmunicipioorigem "=> $post["idmunicipioorigem"],
+            "de.idmunicipiodestino "=> $post["idmunicipiodestino"],
+            "de.idprojeto "=> $post['idprojeto'],
+            "de.qtde "=>$post['qtde']), array(), array('iddeslocamento' => $post['iddeslocamento']));
+
+        if(!empty($deslocamentos)){
+            parent::message("Trecho j&aacute; cadastrado, transa&ccedil;&atilde;o cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
+            die;
         }
-        if(!$ufD) {
-            $ufD = 0;
-        }
-        if(!$cidade) {
-            $cidade = 0;
-        }
-        if(!$cidadeD) {
-            $cidadeD = 0;
-        }
 
-        $dados = array(
-                'idprojeto' 		=> $idPreProjeto,
-                'idpaisorigem' 		=> $paisOrigem,
-                'iduforigem' 		=> $uf,
-                'idmunicipioorigem' 	=> $cidade,
-                'idpaisdestino' 	=> $paisDestino,
-                'idufdestino' 		=> $ufD,
-                'idmunicipiodestino'    => $cidadeD,
-                'qtde' 			=> $quantidade,
-                'idusuario' 		=> $this->getIdUsuario
-        );
-
-            $deslocamentos = DeslocamentoDAO::buscarDeslocamentosGeral(array("de.idPaisOrigem = "=>$dados["idPaisOrigem"],"de.idPaisDestino = "=>$dados["idPaisDestino"],
-            "de.idMunicipioOrigem = "=>$dados["idMunicipioOrigem"],"de.idMunicipioDestino = "=>$dados["idMunicipioDestino"], "de.idProjeto = "=>$idPreProjeto, "de.Qtde = "=>$dados["Qtde"]));
-
-            if(!empty($deslocamentos)){
-                parent::message("Trecho j&aacute; cadastrado, transa&ccedil;&atilde;o cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
-                die;
-            }
-
-        $db = Zend_Db_Table::getDefaultAdapter();
-        $db->beginTransaction();
-
+        $mapper->beginTransaction();
         try {
-            if($idDeslocamento == '') {
-                $salvar   = DeslocamentoDAO::salvaDeslocamento($dados);
-                $db->commit();
+            $intIdSave = $mapper->save(new Proposta_Model_TbDeslocamento($post));
+            $mapper->commit();
+            if($post['iddeslocamento'] == '') {
                 parent::message("Cadastro realizado com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
             }
             else {
-                $atualizaaliza = DeslocamentoDAO::atualizaDeslocamento($paisOrigem,$uf,$cidade,$paisDestino,$ufD,$cidadeD,$quantidade,$idDeslocamento);
-                $db->commit();
                 parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
             }
 
         }catch(Zend_Exception $ex) {
-            $db->rollback();
+            $mapper->rollback();
             echo $ex->getMessage();
         }
         parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o! <br>", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ERROR");
@@ -195,22 +172,21 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
     public function excluirAction() {
         if($_GET['id']) {
             try {
-                $excluir = DeslocamentoDAO::excluiDeslocamento($_GET['id']);
-
-                parent::message("Exclus�o realizada com sucesso!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
-
+                $mapper = new Proposta_Model_TbDeslocamentoMapper();
+                $excluir = $mapper->delete($_GET['id']);
+                parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
             }catch(Zend_Exception $ex) {
-                $this->view->message      = $e->getMessage();
+                $this->view->message      = $ex->getMessage();
                 $this->vies->message_type = "ERROR";
             }
         }
-        $this->_redirect("localderealizacao\index");
+        $this->_redirect("localderealizacao\\index");
     }
 
     public function alterarAction() {
         $id = isset($_GET['id']);
         $idPreProjeto = $this->idPreProjeto;
-        $this->_redirect("localderealizacao\index?idPreProjeto=".$idPreProjeto."&id=".$id);
+        $this->_redirect("localderealizacao\\index?idPreProjeto=".$idPreProjeto."&id=".$id);
     }
 
     public function consultarcomponenteAction() {
