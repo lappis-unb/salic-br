@@ -88,18 +88,21 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @access public
      * @return void
      */
-    public function produtoscadastradosAction() {
-
-        $buscarEstado = EstadoDAO::buscar();
+    public function produtoscadastradosAction()
+    {
+        $buscarEstado = new EstadoDAO();
+        $buscarEstado = $buscarEstado->listar();
         $this->view->Estados = $buscarEstado;
 
-        $buscarProduto = ManterorcamentoDAO::buscarProdutos($this->idPreProjeto);
+        $manterOrcamento = new ManterorcamentoDAO();
+
+        $buscarProduto = $manterOrcamento->listarProdutos($this->idPreProjeto);
         $this->view->Produtos = $buscarProduto;
 
-        $buscarEtapa = ManterorcamentoDAO::buscarEtapasProdutos($this->idPreProjeto);
+        $buscarEtapa = $manterOrcamento->listarEtapasProdutos($this->idPreProjeto);
         $this->view->Etapa = $buscarEtapa;
 
-        $buscarItem = ManterorcamentoDAO::buscarItensProdutos($this->idPreProjeto);
+        $buscarItem = $manterOrcamento->listarItensProdutos($this->idPreProjeto);
         $this->view->Item = $buscarItem;
 
         $this->view->idPreProjeto = $this->idPreProjeto;
@@ -111,25 +114,26 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @access public
      * @return void
      */
-    public function custosadministrativosAction() {
-
-        $buscarEtapas = ManterorcamentoDAO::buscarCustosAdministrativos();
+    public function custosadministrativosAction()
+    {
+        $manterOrcamento = new ManterorcamentoDAO();
+        $buscarEtapas = $manterOrcamento->listarCustosAdministrativos();
         $this->view->Etapas = $buscarEtapas;
 
-        $buscarCustos = ManterorcamentoDAO::buscarItensCustosAdministrativos($this->idPreProjeto,"A");
+        $buscarCustos = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
         $this->view->EtapaCusto = $buscarCustos;
 
-        $buscaDados = ManterorcamentoDAO::buscarDadosCadastrarCustos($this->idPreProjeto);
+        $buscaDados = $manterOrcamento->listarDadosCadastrarCustos($this->idPreProjeto);
         $this->view->dados = $buscaDados;
 
-        $buscarEstado = EstadoDAO::buscar();
+        $buscarEstado = new EstadoDAO();
+        $buscarEstado = $buscarEstado->listar();
         $this->view->Estados = $buscarEstado;
 
-        $buscarEtapaCusto = ManterorcamentoDAO::buscarEtapasCusto();
+        $buscarEtapaCusto = $manterOrcamento->listarEtapasCusto();
         $this->view->Etapa = $buscarEtapaCusto;
 
         $this->view->idPreProjeto = $this->idPreProjeto;
-
     }
 
     /**
