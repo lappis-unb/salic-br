@@ -12,9 +12,8 @@
 
 class EstadoDAO extends Zend_Db_Table
 {
-	protected $_name = 'AGENTES.dbo.UF'; // nome da tabela
-
-
+	protected $_name = 'uf'; // nome da tabela
+	protected $_schema = 'agentes'; // nome da tabela
 
 	/**
 	 * M�todo para buscar os estados
@@ -46,4 +45,20 @@ class EstadoDAO extends Zend_Db_Table
 		//xd($sql);
 		return $db->fetchAll($sql);
 	} // fecha buscar()
-} // fecha class
+
+    public function listar($id = null)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $sql = $db->select()
+            ->from($this->_name, ['iduf AS id', 'sigla AS descricao'], $this->_schema);
+
+        if (!empty($id))
+        {
+            $sql->where('idUF = ?', $id);
+        }
+
+        return $db->fetchAll($sql);
+    }
+}
