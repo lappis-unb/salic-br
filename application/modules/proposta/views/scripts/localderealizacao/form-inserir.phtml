@@ -108,8 +108,8 @@
                     <td class="centro">
                         <select id="pais" name="pais" class="select_simples w240">
                             <option value="">- Selecione - </option>
-                            <?php foreach ($this->paises as $paises) { ?>
-                            <option <?php if($paises->idPais == 31){ echo 'selected="selected"'; } ?> value="<?php echo $paises->idPais; ?>"><?php echo $paises->Descricao; ?></option>
+                            <?php foreach ($this->paises as $key => $paises) { ?>
+                            <option <?php if($key == 31){ echo 'selected="selected"'; } ?> value="<?php echo $key; ?>"><?php echo $paises; ?></option>
                             <?php } ?>
                         </select>
                     </td>

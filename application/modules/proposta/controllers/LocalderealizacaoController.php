@@ -329,12 +329,14 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         $idProjeto = $get->idPreProjeto;
         $this->view->idPreProjeto = $idProjeto;
 
-        //RECUPERA OS PAISES
-        $rsPais = DeslocamentoDAO::buscarPais();
+        # RECUPERA OS PAISES
+        $tablePais = new Agente_Model_DbTable_Pais();
+        $rsPais = $tablePais->fetchPairs('idpais', 'descricao');
         $this->view->paises = $rsPais;
 
-        //RECUPERA OS ESTADOS
-        $rsEstados = Estado::buscar();
+        # RECUPERA OS ESTADOS
+        $mapperUf = new Agente_Model_UFMapper();
+        $rsEstados = $mapperUf->fetchPairs('iduf', 'descricao');
         $this->view->estados = $rsEstados;
     }
 
@@ -346,22 +348,18 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
      */
     public function cidadesAction() {
         $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
         $post = Zend_Registry::get('post');
         $idEstado = $post->idEstado;
 
-        //RECUPERA AS CIDADES
-        $Municipios = new Municipios();
-        $rsCidades = $Municipios->buscar(array('idUFIBGE = ?' => $idEstado));
-        if(count($rsCidades)>0){
-            $html = '';
-            foreach ($rsCidades as $cidades) {
-                $html .= '<option value="'.$cidades->idMunicipioIBGE.'">'.utf8_encode($cidades->Descricao).'</option>';
-            }
-            echo $html;
-        } else {
-            echo '';
+        # RECUPERA AS CIDADES
+        $table = new Agente_Model_DbTable_Municipios();
+        $arrCidades = $table->fetchPairs('idmunicipioibge', 'descricao', array('idufibge' => $idEstado));
+        $html = '';
+        foreach ($arrCidades as $key => $cidades) {
+            $html .= "<option value=\"{$key}\">{$cidades}</option>";
         }
-        die();
+        echo $html;
     }
 
     /**
