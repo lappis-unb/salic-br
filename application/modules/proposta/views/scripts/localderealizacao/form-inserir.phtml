@@ -116,8 +116,8 @@
                     <td class="centro">
                         <select id="estados" name="estados" class="select_simples w240">
                             <option value="">- Selecione - </option>
-                            <?php foreach ($this->estados as $estados) { ?>
-                            <option value="<?php echo $estados->id; ?>"><?php echo $estados->descricao; ?></option>
+                            <?php foreach ($this->estados as $key => $estados) { ?>
+                            <option value="<?php echo $key; ?>"><?php echo $estados; ?></option>
                             <?php } ?>
                         </select>
                     </td>

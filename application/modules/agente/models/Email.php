@@ -3,14 +3,17 @@
  * Modelo Email
  * @author wouerner <wouerner@gmail.com>
  * @since 29/03/2010
- * @link http://www.cultura.gov.br
- * @todo unificar metodos de e-mail nessa model
+ * @version 1.0
+ * @todo modificar o nome da tabela no banco de dados.
  */
 
 class Agente_Model_Email extends MinC_Db_Table_Abstract
 {
-	protected $_name = 'internet';
-    protected $_schema = 'agentes';
+	/**
+	 * @var nome da tabela
+	 */
+	protected $_name = 'internet'; // nome da tabela
+	protected $_schema = 'agentes'; // nome da tabela
 
 	/**
 	 * M�todo para buscar todos os e-mails de um conselheiro
@@ -18,7 +21,7 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
 	 * @param integer $idAgente
 	 * @return object $db->fetchAll($sql)
 	 */
-	public static function buscar($idAgente)
+	public  function buscar($idAgente)
 	{
 		$sql = "SELECT * ";
 		$sql.= "FROM AGENTES.dbo.Internet ";
@@ -36,6 +39,7 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
 
 		return $db->fetchAll($sql);
 	} // fecha buscar()
+
 
 
 	/**
@@ -62,13 +66,20 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
 		}
 	}
 
+    /**
+     * inserir
+     *
+     * @param mixed $dados
+     * @access public
+     * @return void
+     */
     public function inserir($dados)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
 
-        $schema = $this->getSchema($this->_schema) .'.'.$this->_name;
         try
         {
+            $schema = $this->getSchema($this->_schema) .'.'. $this->_name;
             $inserir = $db->insert($schema, $dados);
             return true;
         }
@@ -78,6 +89,8 @@ class Agente_Model_Email extends MinC_Db_Table_Abstract
             return false;
         }
     }
+
+
 
 	/**
 	 * M�todo para excluir e-mail de um conselheiro

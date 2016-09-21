@@ -46,9 +46,12 @@
                     </tr>
                     <?php foreach($this->dados as $row): ?>
                     <tr>
-                        <td align="left"><a href="<?php echo $this->acaoAlterar ?>?idPreProjeto=<?php echo $row->idPreProjeto; ?>"><?php echo $row->NomeProjeto; ?></a></td>
-                        <td align="left"><?php if($row->stTipoDemanda == 'NA'){ echo 'Incentivo Fiscal'; } ?></td>
-                        <td class="centro"><input type="button" id="btn_editar" name="editar" style="width: 88px" class="btn_editar" onclick="window.location.href='<?php echo $this->acaoAlterar ?>?idPreProjeto=<?php echo $row->idPreProjeto;?>'"><input type="button" id="btn_excluir" name="sair" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $row->idPreProjeto;?>);"></td>
+                        <td align="left"><a href="<?php echo $this->acaoAlterar ?>?idPreProjeto=<?php echo $row->idpreprojeto; ?>"><?php echo $row->nomeprojeto; ?></a></td>
+                        <td align="left"><?php if($row->sttipodemanda == 'NA'){ echo 'Incentivo Fiscal'; } ?></td>
+                        <td class="centro">
+                            <input type="button" id="btn_editar" name="editar" style="width: 88px" class="btn_editar" onclick="window.location.href='<?php echo $this->acaoAlterar ?>?idPreProjeto=<?php echo $row->idpreprojeto;?>'">
+                            <input type="button" id="btn_excluir" name="sair" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $row->idpreprojeto;?>);">
+                        </td>
                     </tr>
                     <?php endforeach; }else{ echo '<br/><span style="color:red; font-size:15px;">N&atilde;o h&aacute; propostas cadastradas para este proponente.</span><br/>'; } ?>
                 </table>

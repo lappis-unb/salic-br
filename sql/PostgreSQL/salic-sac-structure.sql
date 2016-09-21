@@ -8180,6 +8180,7 @@ CREATE TABLE sac.vwVeiculoDeDivulgacao
   VeiculoDeDivulgacao VARCHAR(100) NOT NULL,
   stEstado INTEGER NOT NULL
 );
+ALTER TABLE sac.tbdeslocamento ALTER COLUMN idmunicipioorigem TYPE VARCHAR(6) USING idmunicipioorigem::VARCHAR(6);
 -- CREATE FUNCTION Aritmetica(@idPlanilhaItem INT) RETURNS INT;
 -- CREATE PROCEDURE DecriptografaObjetosBD(@ObjetoCriptografado SYSNAME, @SegurancaAlteracao INT);
 -- CREATE PROCEDURE dt_addtosourcecontrol(@vchSourceSafeINI VARCHAR, @vchProjectName VARCHAR, @vchComment VARCHAR, @vchLoginName VARCHAR, @vchPassword VARCHAR);

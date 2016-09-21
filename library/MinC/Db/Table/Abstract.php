@@ -191,7 +191,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql && $schema) {
             $arrayPedacos = explode('.', $schema);
-            if (count($arrayPedacos) < 1) {
+            if (count($arrayPedacos) <= 1) {
                 $schema = $schema . '.dbo';
             }
         }

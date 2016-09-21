@@ -200,9 +200,9 @@
                             <option value="0"> -- </option>
                             <?php } ?>
 
-                            <?php foreach ($this->comboestados as $comboestado){ ?>
-                            <option value="<?php echo $comboestado->id; ?>" <?php if ($this->idUFO == $comboestado->id) echo "selected=\"selected\""; ?>>
-                                <?php echo $comboestado->descricao; ?>
+                            <?php foreach ($this->comboestados as $key => $comboestado){ ?>
+                            <option value="<?php echo $key; ?>" <?php if ($this->idUFO == $key) echo "selected=\"selected\""; ?>>
+                                <?php echo $comboestado; ?>
                             </option>
                             <?php } ?>
                         </select>
@@ -256,9 +256,9 @@
                             <option value="0"> -- </option>
                             <?php } ?>
 
-                            <?php foreach ($this->comboestados as $comboestado){ ?>
-                            <option value="<?php echo $comboestado->id; ?>" <?php if ($this->idUFD == $comboestado->id) echo "selected=\"selected\""; ?>>
-                                <?php echo $comboestado->descricao; ?>
+                            <?php foreach ($this->comboestados as $key => $comboestado){ ?>
+                            <option value="<?php echo $key; ?>" <?php if ($this->idUFD == $key) echo "selected=\"selected\""; ?>>
+                                <?php echo $comboestado; ?>
                             </option>
                             <?php } ?>
                         </select>
