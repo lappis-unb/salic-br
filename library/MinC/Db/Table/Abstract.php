@@ -453,11 +453,14 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  05/09/2016
      */
-    public function findAll(array $where = array()) {
+    public function findAll(array $where = array(), array $order = array()) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         foreach ($where as $columnName => $columnValue) {
             $select->where($columnName . ' = ?', trim($columnValue));
+        }
+        if ($order) {
+            $select->order($order);
         }
         $result = $this->fetchAll($select);
         return ($result)? $result->toArray() : array();
