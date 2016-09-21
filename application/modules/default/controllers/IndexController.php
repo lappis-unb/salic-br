@@ -25,6 +25,32 @@ class IndexController extends GenericControllerNew
         $this->_forward("index", "login");
     }
 
+    /*
+     * Pega o IP do usuario
+     *
+     * @return string
+     */
+    protected function buscarIp()
+    {
+        $ip = '';
+        if (isset($_SERVER['HTTP_CLIENT_IP']))
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_X_FORWARDED']))
+            $ip = $_SERVER['HTTP_X_FORWARDED'];
+        else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+            $ip = $_SERVER['HTTP_FORWARDED_FOR'];
+        else if(isset($_SERVER['HTTP_FORWARDED']))
+            $ip = $_SERVER['HTTP_FORWARDED'];
+        else if(isset($_SERVER['REMOTE_ADDR']))
+            $ip = $_SERVER['REMOTE_ADDR'];
+        else
+            $ip = 'DESCONHECIDO';
+
+        return $ip;
+    }
+
     public function loginUsuarioAction()
     {
         $this->_helper->layout->disableLayout();
@@ -47,39 +73,24 @@ class IndexController extends GenericControllerNew
 
         //Pega o IP do usuario
 
-        $ip = '';
-        if (isset($_SERVER['HTTP_CLIENT_IP']))
-            $ip = $_SERVER['HTTP_CLIENT_IP'];
-        else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        else if(isset($_SERVER['HTTP_X_FORWARDED']))
-            $ip = $_SERVER['HTTP_X_FORWARDED'];
-        else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
-            $ip = $_SERVER['HTTP_FORWARDED_FOR'];
-        else if(isset($_SERVER['HTTP_FORWARDED']))
-            $ip = $_SERVER['HTTP_FORWARDED'];
-        else if(isset($_SERVER['REMOTE_ADDR']))
-            $ip = $_SERVER['REMOTE_ADDR'];
-        else
-            $ip = 'DESCONHECIDO';
+        $ip = $this->buscarIp();
 
         $tbLoginTentativasAcesso = new tbLoginTentativasAcesso();
         $LoginAttempt = $tbLoginTentativasAcesso->consultarAcessoCpf($username,$ip);
 
 
         //Pega timestamp atual
-        $data = new DateTime();
+        $data = new Zend_Date();
         $timestamp = $data->getTimestamp();
-
 
        // VERIFICA SE USUARIO ESTA BANIDO
         if(isset($LoginAttempt)){
 
-            $TempoBan = $timestamp-strtotime($LoginAttempt->dtTentativa);
+            $TempoBan = $timestamp - strtotime($LoginAttempt->dtTentativa);
 
-            if($TempoBan <= 300 && $LoginAttempt->nrTentativa > 3)
+            if($TempoBan <= 300 && $LoginAttempt->nrTentativa >= 4)
             {
-                parent::message('Acesso bloqueado, aguarde 5 minutos!', "/", "ERROR");
+                parent::message('Acesso bloqueado, aguarde '.gmdate("i", (305 - $TempoBan) ).' minuto(s) e tente novamente!', "/", "ERROR");
 
             }else{
 
@@ -102,9 +113,7 @@ class IndexController extends GenericControllerNew
                         $Usuario = new Usuario();
                         $buscar = $Usuario->login($username, $password);
 
-                        if($TempoBan > 300 && $LoginAttempt->nrTentativa > 3){
-                            $tbLoginTentativasAcesso->removeTentativa($username,$ip);
-                        }
+
 
                         if ($buscar) // acesso permitido
                         {
@@ -124,15 +133,21 @@ class IndexController extends GenericControllerNew
                             return $this->_helper->redirector->goToRoute(array('controller' => 'principal'), null, true);
                         } // fecha if
                         else {
+                            if($TempoBan > 300){
+//                                xd('Remover Tentativa');
+                                $tbLoginTentativasAcesso->removeTentativa($username,$ip);
+                            }
+                            $LoginAttempt = $tbLoginTentativasAcesso->consultarAcessoCpf($username,$ip);
+
                             //se nenhum registro foi encontrado na tabela Usuario, ele passa a tentar se logar como proponente.
                             //neste ponto o _forward encaminha o processamento para o metodo login do controller login, que recebe
                             //o post igualmente e tenta encontrar usuario cadastrado em SGCAcesso
 
                             //INSERE OU ATUALIZA O ATUAL ATTEMPT
                             if(!$LoginAttempt) {
-                                $tbLoginTentativasAcesso->insereTentativa($username,$ip);
+                                $tbLoginTentativasAcesso->insereTentativa($username,$ip,$data->get('YYYY-MM-dd HH:mm:ss'));
                             }else{
-                                $tbLoginTentativasAcesso->atualizaTentativa($username,$ip,$LoginAttempt->nrTentativa);
+                                $tbLoginTentativasAcesso->atualizaTentativa($username,$ip,$LoginAttempt->nrTentativa,$data->get('YYYY-MM-dd HH:mm:ss'));
                             }
 
                             $this->_forward("login", "login");
