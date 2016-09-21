@@ -63,6 +63,12 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         $this->_url = $this->_helper->getHelper('Redirector');
         $this->_type = $this->_helper->getHelper('FlashMessengerType');
 
+        # Forcando o charset conforme o application.ini
+        $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+        $strCharset = $config->resources->db->params->charset;
+        $this->view->charset = $strCharset;
+        header('Content-type: text/html; charset=' . $strCharset);
+
         $this->_urlPadrao = Zend_Controller_Front::getInstance()->getBaseUrl();
         if (isset($auth->getIdentity()->usu_codigo)) {
             $Usuario = new Autenticacao_Model_Usuario();

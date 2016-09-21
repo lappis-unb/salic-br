@@ -36,6 +36,12 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
 
+        if ($resultado) {
+            echo '<pre>';
+            var_dump($resultado->toArray());
+            exit;
+        }
+
         return $resultado;
     }
 
@@ -200,7 +206,7 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
 
         $db = Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		$db->insert('SAC.dbo.tbDeslocamento', $dados);
+		$db->insert('SAC.dbo.tbdeslocamento', $dados);
 
     }
 

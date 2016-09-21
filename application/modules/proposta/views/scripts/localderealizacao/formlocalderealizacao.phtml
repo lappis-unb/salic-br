@@ -36,13 +36,13 @@ if(isset($_GET['cod'])){
         <?php $ct=500; //CONTADOR UTILIZADO PARA DEFINIR A QTDE DE SEGUNDOS QUE CADA COMBO DE CIDADE DEVERA SER CARREGADA?>
         <?php foreach ($this->localizacoes as $localizacao): ?>
 
-            //setTimeout("adicionarLinhaLocalDeRealizacao(\"qtdeLocais\", \"addLocaisDeRealizacao\" ,\"<?php echo $localizacao->idAbrangencia;?>\",\"<?php echo $localizacao->idPais;?>\",\"<?php echo $localizacao->idUF;?>\",\"<?php echo $localizacao->idMunicipioIBGE;?>\", \"<?php echo $ct;?>\");",<?php echo $ct;?>);
+            //setTimeout("adicionarLinhaLocalDeRealizacao(\"qtdeLocais\", \"addLocaisDeRealizacao\" ,\"<?php echo $localizacao['idabrangencia'];?>\",\"<?php echo $localizacao['idpais'];?>\",\"<?php echo $localizacao['iduf'];?>\",\"<?php echo $localizacao['idmunicipioibge'];?>\", \"<?php echo $ct;?>\");",<?php echo $ct;?>);
             adicionarLinhaLocalDeRealizacao("qtdeLocais",
                                             "addLocaisDeRealizacao",
-                                            <?php echo $localizacao->idAbrangencia;?>,
-                                            <?php echo $localizacao->idPais;?>,
-                                            <?php echo $localizacao->idUF;?>,
-                                            <?php echo $localizacao->idMunicipioIBGE;?>,
+                                            <?php echo $localizacao['idabrangencia'];?>,
+                                            <?php echo $localizacao['idpais'];?>,
+                                            <?php echo $localizacao['iduf'];?>,
+                                            <?php echo $localizacao['idmunicipioibge'];?>,
                                             <?php echo $ct;?>
                                             );
 
@@ -79,9 +79,9 @@ if(isset($_GET['cod'])){
                                     "<td>"+
                                         "<select id='pais_" + numLocais + "' name='pais_" + numLocais + "' class='select_simples w240' onchange='ativarDesativarUfCidade(this.value," + numLocais + ")'>"+
                                              "<option value='' selected>- Selecione -</option>"+
-                                             "<?php foreach ($this->paises as $pais): ?>"+
-                                                "<option value='<?php echo $pais->idPais; ?>'>"+
-                                                    "<?php echo $pais->Descricao; ?>"+
+                                             "<?php foreach ($this->paises as $key => $pais): ?>"+
+                                                "<option value='<?php echo $key; ?>'>"+
+                                                    "<?php echo $pais; ?>"+
                                                 "</option>"+
                                              "<?php endforeach; ?>"+
                                          "</select>"+
@@ -89,9 +89,9 @@ if(isset($_GET['cod'])){
                                     "<td>"+
                                         "<select id='uf_" + numLocais + "' name='uf_" + numLocais + "' class='select_simples w240' onchange='carregar_combo(this.value,\"cidade_" + numLocais + "\",\"<?php echo $this->url(array('module'=>'default','controller'=>'cidade', 'action'=>'combo')); ?>\",\" - Selecione uma UF - \");'>"+
                                             "<option value='' selected>- Selecione -</option>"+
-                                            "<?php foreach ($this->estados as $estado): ?>"+
-                                                "<option value='<?php echo $estado->id;?>'>"+
-                                                    "<?php echo $estado->descricao; ?> "+
+                                            "<?php foreach ($this->estados as $key => $estado): ?>"+
+                                                "<option value='<?php echo $key;?>'>"+
+                                                    "<?php echo $estado; ?> "+
                                                 "</option>"+
                                              "<?php endforeach; ?>"+
                                          "</select>"+
@@ -128,7 +128,7 @@ if(isset($_GET['cod'])){
             ativarDesativarUfCidade(idPais,numLocais);
         }
 
-        <?php if(isset($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
+        <?php if(isset($this->movimentacaoAtual) && !empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
              //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
              JSBloquearAlteracaoFormulario();
         <?php endif; ?>

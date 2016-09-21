@@ -30,10 +30,11 @@ header('P3P:CP="CAO PSA OUR"');
                 <!-- End Piwik Code -->
                 <?php } ?>
 
-		<title>Salic - Sistema de Apoio às Leis de Incentivo à Cultura</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<title>Salic - Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura</title>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->charset ?>" />
 		<meta name="title" content="Sistema Salic" />
-		<meta name="description" content="Sistema de Apoio às Leis de Incentivo à Cultura" />
+		<meta name="description" content="Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura" />
 		<link type="image/x-icon" rel="shortcut icon" href="<?php echo $this->baseUrl(); ?>/public/img/favicon.ico" />
 		<link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/geral.css" />
 		<link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/chrome.css" />
@@ -89,7 +90,7 @@ header('P3P:CP="CAO PSA OUR"');
 		<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery.wysiwyg.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl(); ?>/public/css/jquery.wysiwyg.css" />
 
-		<!-- Realizar Análise Projeto -->
+		<!-- Realizar Anï¿½lise Projeto -->
 		<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/realizaranaliseprojeto.js"></script>
 		<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/openwysiwyg/wysiwyg.js"></script>
 
@@ -117,7 +118,7 @@ header('P3P:CP="CAO PSA OUR"');
 
 	<body>
 
-		<!-- ========== MENSAGENS (ERROS, CONFIRMAÇÕES E ETC) ========== -->
+		<!-- ========== MENSAGENS (ERROS, CONFIRMAï¿½ï¿½ES E ETC) ========== -->
 		<?php if (isset($this->message)) : ?>
 		<div class="msg<?php echo $this->message_type; ?>">
 			<div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msg<?php echo $this->message_type; ?>" onclick="$('.msg<?php echo $this->message_type; ?>').hide();" onkeypress="$('.msg<?php echo $this->message_type; ?>').hide();"/></div>
