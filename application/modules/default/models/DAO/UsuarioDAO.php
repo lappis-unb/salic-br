@@ -146,26 +146,19 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
 
 
     /**
-     * M�todo para pegar o id do usu�rio logado
+     * Metodo para pegar o id do usuario logado
      * @access public
      * @static
      * @param integer
      * @return object
-     *
-     * @todo retirar o debug depois de verificar a necessidade dele.
      */
     public static function getIdUsuario($usu_codigo)
     {
-        echo '<pre>';
-        var_dump('Debug para verificacao da necessidade deste metodo, chamado de: getIdUsuario' );
-        var_dump($usu_codigo);
-        exit;
         $sql = "SELECT usu_codigo
 					,idAgente
-				FROM Tabelas.dbo.Usuarios u
-					INNER JOIN Agentes.dbo.Agentes a ON (u.usu_identificacao = a.CNPJCPF)
+				FROM " . UsuarioDAO::getStaticTableName('tabelas', 'usuarios') . " u
+					INNER JOIN " . UsuarioDAO::getStaticTableName('agentes', 'agentes') . " a ON (u.usu_identificacao = a.cnpjcpf)
 				WHERE usu_codigo = $usu_codigo";
-
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_ASSOC);
@@ -173,7 +166,7 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
         } catch (Zend_Exception_Db $objException) {
             throw new Exception($objException->getMessage(), 0, $objException);
         }
-    } // fecha m�todo getIdUsuario()
+    }
 
 
     /**
@@ -192,7 +185,7 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
     public static function buscarUsuario($cod)
     {
         $sql = "SELECT *
-				FROM TABELAS.dbo.Usuarios
+				FROM " . UsuarioDAO::getStaticTableName('tabelas', 'usuarios') . "
 				WHERE usu_codigo = $cod";
 
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -203,7 +196,7 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
     public static function buscarUsuarioCpf($cpf)
     {
         $sql = "SELECT *
-				FROM TABELAS.dbo.Usuarios
+				FROM " . UsuarioDAO::getStaticTableName('tabelas', 'usuarios') . "
 				WHERE usu_identificacao = $cpf";
 
         $db= Zend_Db_Table::getDefaultAdapter();
