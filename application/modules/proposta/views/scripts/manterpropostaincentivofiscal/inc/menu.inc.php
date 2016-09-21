@@ -15,7 +15,6 @@
         $("#titulo").css("width", fluidTitulo);
         $("#rodapeConteudo").css("width", fluidConteudo);
         $("#rodape").css("width", fluidRodape);
-
         $("div#rodapeConteudo").attr("id", "rodapeConteudo_com_menu");
     }
     /*$(function(){
@@ -218,7 +217,6 @@
                     <select name="propronente" id="propronente" class="input_simples w240">
                         <?php $idAgente = 0; ?>
                         <?php foreach ($this->listaProponentes as $lp): $lp = array_change_key_case($lp);?>
-
                             <?php if ($lp['idagenteproponente'] != $idAgente): ?>
                                 <option
                                     value="<?php echo $lp['idvinculo']; ?>:<?php echo $lp['idagenteproponente']; ?>"><?php echo $lp['nomeproponente']; ?></option>
