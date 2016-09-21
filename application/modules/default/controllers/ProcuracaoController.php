@@ -480,7 +480,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function buscarProcuradorAction() {
@@ -507,7 +507,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false,'CNPJCPF'=>$cpf));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function cadastrarProcuracaoAction(){
@@ -647,7 +647,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function avaliarProcuracaoAction() {
@@ -686,7 +686,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
 
@@ -710,7 +710,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false,'CNPJCPF'=>$cpf));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
 
@@ -727,6 +727,6 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 }

@@ -411,7 +411,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
 
             echo json_encode($result);
         } else {
-            die('0');
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -495,7 +495,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             echo json_encode($novos_valores);
         } // fecha if
         else {
-            die('0');
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     } // fecha método salvardirigenteAction()
 
@@ -613,9 +613,6 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
      */
     public function buscardirigentesAction()
     {
-        echo '<pre>';
-        var_dump('aaaa');
-        exit;
         $gmtDate = gmdate("D, d M Y H:i:s");
         header("Expires: {$gmtDate} GMT");
         header("Last-Modified: {$gmtDate} GMT");

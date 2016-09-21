@@ -8,7 +8,7 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abstract {
 
@@ -17,24 +17,24 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
     private $getIdOrgao = 0;
     private $intTamPag = 10;
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
 
-        // verifica as permissões
+        // verifica as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
         $PermissoesGrupo[] = 129;
-        $PermissoesGrupo[] = 121; // Técnico de Acompanhamento
+        $PermissoesGrupo[] = 121; // Tï¿½cnico de Acompanhamento
         parent::perfil(1, $PermissoesGrupo);
 
-        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $this->getIdAgente = $idagente['idAgente'];
         $this->getIdGrupo = $GrupoAtivo->codGrupo;
         $this->getIdOrgao = $GrupoAtivo->codOrgao;
@@ -44,11 +44,11 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
 
     public function indexAction() {
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario          = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
-        $codPerfil          = $GrupoAtivo->codGrupo; //  Órgão ativo na sessão
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
+        $codPerfil          = $GrupoAtivo->codGrupo; //  ï¿½rgï¿½o ativo na sessï¿½o
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
         /******************************************************************/
@@ -143,10 +143,10 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
     public function parecerTecnicoAction() {
 
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação	
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o	
         $idusuario          = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -166,7 +166,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $DadosRelatorio = $vw->listaRelatorios($where, array(), null, null, false);
 
         if (count($DadosRelatorio)==0) {
-            parent::message('Relatório não encontrado!', "analisarexecucaofisicatecnico", "ALERT");
+            parent::message('Relatï¿½rio nï¿½o encontrado!', "analisarexecucaofisicatecnico", "ALERT");
         }
 
         $this->view->DadosRelatorio = $DadosRelatorio;
@@ -187,10 +187,10 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
     public function etapasDeTrabalhoAction() {
 
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario          = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -209,7 +209,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $DadosRelatorio = $vw->listaRelatorios($where, array(), null, null, false);
 
         if (count($DadosRelatorio)==0) {
-            parent::message('Relatório não encontrado!', "analisarexecucaofisicatecnico", "ALERT");
+            parent::message('Relatï¿½rio nï¿½o encontrado!', "analisarexecucaofisicatecnico", "ALERT");
         }
 
         $tbComprovanteTrimestral = new tbComprovanteTrimestral();
@@ -227,10 +227,10 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
     public function localDeRealizacaoAction() {
 
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario          = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -249,7 +249,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $DadosRelatorio = $vw->listaRelatorios($where, array(), null, null, false);
 
         if (count($DadosRelatorio)==0) {
-            parent::message('Relatório não encontrado!', "analisarexecucaofisicatecnico", "ALERT");
+            parent::message('Relatï¿½rio nï¿½o encontrado!', "analisarexecucaofisicatecnico", "ALERT");
         }
 
         //****** Dados do Projeto - Cabecalho *****//
@@ -267,10 +267,10 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
     public function planoDeDivulgacaoAction() {
 
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario          = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -289,7 +289,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $DadosRelatorio = $vw->listaRelatorios($where, array(), null, null, false);
 
         if (count($DadosRelatorio)==0) {
-            parent::message('Relatório não encontrado!', "analisarexecucaofisicatecnico", "ALERT");
+            parent::message('Relatï¿½rio nï¿½o encontrado!', "analisarexecucaofisicatecnico", "ALERT");
         }
 
         //****** Dados do Projeto - Cabecalho *****//
@@ -307,10 +307,10 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
     public function planoDeDistribuicaoAction() {
 
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario          = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -329,7 +329,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $DadosRelatorio = $vw->listaRelatorios($where, array(), null, null, false);
 
         if (count($DadosRelatorio)==0) {
-            parent::message('Relatório não encontrado!', "analisarexecucaofisicatecnico", "ALERT");
+            parent::message('Relatï¿½rio nï¿½o encontrado!', "analisarexecucaofisicatecnico", "ALERT");
         }
 
         //****** Dados do Projeto - Cabecalho *****//
@@ -352,10 +352,10 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
     public function metasComprovadasAction() {
 
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario          = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -374,7 +374,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $DadosRelatorio = $vw->listaRelatorios($where, array(), null, null, false);
 
         if (count($DadosRelatorio)==0) {
-            parent::message('Relatório não encontrado!', "analisarexecucaofisicatecnico", "ALERT");
+            parent::message('Relatï¿½rio nï¿½o encontrado!', "analisarexecucaofisicatecnico", "ALERT");
         }
 
         //****** Dados do Projeto - Cabecalho *****//
@@ -385,7 +385,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $this->view->idPronac = $idpronac;
         $this->view->idRelatorio = $idrelatorio;
 
-        //****** Dados da Comprovação de Metas *****//
+        //****** Dados da Comprovaï¿½ï¿½o de Metas *****//
         $DadosCompMetas = $projetos->buscarMetasComprovadas($idpronac);
         $this->view->DadosCompMetas = $DadosCompMetas;
     }
@@ -393,10 +393,10 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
     public function itensComprovadosAction() {
 
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario          = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -415,7 +415,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $DadosRelatorio = $vw->listaRelatorios($where, array(), null, null, false);
 
         if (count($DadosRelatorio)==0) {
-            parent::message('Relatório não encontrado!', "analisarexecucaofisicatecnico", "ALERT");
+            parent::message('Relatï¿½rio nï¿½o encontrado!', "analisarexecucaofisicatecnico", "ALERT");
         }
 
         //****** Dados do Projeto - Cabecalho *****//
@@ -433,10 +433,10 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
     public function comprovantesDeExecucaoAction() {
 
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario          = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -455,7 +455,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $DadosRelatorio = $vw->listaRelatorios($where, array(), null, null, false);
 
         if (count($DadosRelatorio)==0) {
-            parent::message('Relatório não encontrado!', "analisarexecucaofisicatecnico", "ALERT");
+            parent::message('Relatï¿½rio nï¿½o encontrado!', "analisarexecucaofisicatecnico", "ALERT");
         }
 
         //****** Dados do Projeto - Cabecalho *****//
@@ -474,10 +474,10 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
     public function avaliarRelatorioTrimestralAction() {
 
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario          = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao           = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo         = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao           = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         /******************************************************************/
 
         $idpronac = $this->_request->getParam("idpronac");
@@ -495,18 +495,18 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $DadosRelatorio = $vw->listaRelatorios($where, array(), null, null, false);
 
         if (count($DadosRelatorio)==0) {
-            parent::message('Relatório não encontrado!', "analisarexecucaofisicatecnico", "ALERT");
+            parent::message('Relatï¿½rio nï¿½o encontrado!', "analisarexecucaofisicatecnico", "ALERT");
         }
 
         $tbComprovante = new tbComprovanteTrimestral();
         $dadosRel = $tbComprovante->buscarComprovantes(array('IdPRONAC=?'=>$idpronac,'nrComprovanteTrimestral=?'=>$DadosRelatorio[0]->nrComprovanteTrimestral,'idTecnicoAvaliador=?'=>$idusuario));
         
         $siComprovante = 4;
-        $msg = 'Relatório salvo com sucesso!';
+        $msg = 'Relatï¿½rio salvo com sucesso!';
         $controller = "analisarexecucaofisicatecnico/parecer-tecnico?idpronac=".$idpronac."&relatorio=".$DadosRelatorio[0]->nrComprovanteTrimestral;
         if(isset($_POST['finalizar']) && !empty($_POST['finalizar'])){
             $siComprovante = 5;
-            $msg = 'Relatório finalizado com sucesso!';
+            $msg = 'Relatï¿½rio finalizado com sucesso!';
             $controller = 'analisarexecucaofisicatecnico/';
         }
 
@@ -521,7 +521,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         if($resultado){
             parent::message($msg, $controller, "CONFIRM");
         } else {
-            parent::message('Não foi possível salvar o relatório!', "analisarexecucaofisicatecnico", "ERROR");
+            parent::message('Nï¿½o foi possï¿½vel salvar o relatï¿½rio!', "analisarexecucaofisicatecnico", "ERROR");
         }
     }
 
@@ -529,7 +529,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 
         //** Usuario Logado ************************************************/
-        $auth               = Zend_Auth::getInstance(); // pega a autenticação
+        $auth               = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario          = $auth->getIdentity()->usu_codigo;
         /******************************************************************/
 
@@ -550,7 +550,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
 }

@@ -425,7 +425,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 echo json_encode(array('resposta'=>false));
             }
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function painelRecursosAction() { //Tela do Coordenador de Parecer
@@ -582,6 +582,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             echo json_encode(array('resposta'=>false));
         }
         die();
+
     }
 
     public function visualizarRecursoAction(){
@@ -1050,7 +1051,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function coordAnaliseFinalizarRecursoAction() {
@@ -1121,6 +1122,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             echo json_encode(array('resposta'=>false));
         }
         die();
+
     }
 
     public function devolverRecursoAction() {
@@ -1621,6 +1623,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             echo json_encode(array('resposta'=>false));
         }
         die();
+
     }
 
     /**
@@ -1695,7 +1698,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function salvarAvaliacaoDoItemAction() {
@@ -1759,7 +1762,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 echo json_encode(array('resposta'=>true, 'msg'=>'Erro ao salvar os dados!'));
             }
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
 

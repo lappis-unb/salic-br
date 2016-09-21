@@ -73,7 +73,7 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
             }
             $jsonSegmento = json_encode($vSegmento);
             echo $jsonSegmento;
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
 

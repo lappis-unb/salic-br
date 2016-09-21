@@ -1536,7 +1536,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=Providencia_Tomada".$nrPronacNm.".xls;");
-            echo $html; die();
+            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
 
         } else {
             $this->view->nrPronac      = $nrPronac;
@@ -2653,7 +2653,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         } catch (Zend_Exception $e) {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function carregarValorEntrePlanilhasAction() {
@@ -2748,7 +2748,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         } catch (Zend_Exception $e) {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function remanejamentoReintegrarPlanilhaAction() {
@@ -2803,7 +2803,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         } catch (Zend_Exception $e) {
             echo json_encode(array('resposta'=>false, 'msg'=>'Ocorreu um erro durante o processo.'));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function remanejamentoAlterarItemAction() {
@@ -2904,7 +2904,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function salvarAvaliacaoDoItemRemanejamentoAction() {
@@ -2977,7 +2977,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         //VERIFICA SE O VALOR TOTAL DOS DADOS INFORMADOR PELO PROPONENTE EST� ENTRE O M�NIMO E M�XIMO PERMITIDO - 20%
         if($vlTotal < $vlAtualMin || $vlTotal > $vlAtualMax){
             echo json_encode(array('resposta'=>false, 'msg'=>'O valor total do item desejado ultrapassou a margem de 20%.'));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         $editarItem = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'RP', 'idPlanilhaAprovacaoPai=?'=>$_POST['idPlanilha']))->current();
@@ -2990,7 +2990,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         $editarItem->save();
 
         echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function prestacaoDeContasAction()

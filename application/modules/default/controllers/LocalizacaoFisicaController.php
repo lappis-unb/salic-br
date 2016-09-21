@@ -10,14 +10,14 @@ class LocalizacaoFisicaController extends MinC_Controller_Action_Abstract
      */
     public function init()
     {
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $this->permissoesGrupo = array();
         $this->permissoesOrgao = array();
 
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo){
             	if (!in_array($grupo->gru_codigo, $this->permissoesGrupo)) {
@@ -56,7 +56,7 @@ class LocalizacaoFisicaController extends MinC_Controller_Action_Abstract
                 $filtro = $this->_getParam('filtro');
                 $pronac = $this->_getParam('pronac');
                 if(isset($filtro) && 'pronac' == $filtro && empty($pronac)){
-                    parent::message("Digite o número do Pronac!", "localizacao-fisica/index", "ALERT");
+                    parent::message("Digite o nï¿½mero do Pronac!", "localizacao-fisica/index", "ALERT");
                 }
                 
                 $this->intTamPag = 10;
@@ -133,7 +133,7 @@ class LocalizacaoFisicaController extends MinC_Controller_Action_Abstract
                 
                 if((isset($_POST['pronac']) && !empty($_POST['pronac'])) || (isset($_GET['pronac']) && !empty($_GET['pronac']))){
                     if(!in_array($busca[0]->Codigo, $this->permissoesOrgao)){
-                        parent::message("Usuário sem autorização no órgão do projeto! Este projeto se encontra em {$busca[0]->Sigla}.", "localizacao-fisica/index", "ALERT");
+                        parent::message("Usuï¿½rio sem autorizaï¿½ï¿½o no ï¿½rgï¿½o do projeto! Este projeto se encontra em {$busca[0]->Sigla}.", "localizacao-fisica/index", "ALERT");
                     }
                 }
                 
@@ -250,8 +250,8 @@ class LocalizacaoFisicaController extends MinC_Controller_Action_Abstract
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Nome do Projeto</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">CPF / CNPJ</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Proponente</th>';
-                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Localização</th>';
-                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Técnico</th>';
+                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Localizaï¿½ï¿½o</th>';
+                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Tï¿½cnico</th>';
                 $html .= '</tr>';
 
                 $x=1;
@@ -273,7 +273,7 @@ class LocalizacaoFisicaController extends MinC_Controller_Action_Abstract
 
                 header("Content-Type: application/vnd.ms-excel");
                 header("Content-Disposition: inline; filename=Localizar_Projeto.xls;");
-                echo $html; die();
+                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
                 $this->view->qtdRegistros = $total;

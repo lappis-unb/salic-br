@@ -82,7 +82,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         } catch (Exception $objException) {
             echo '<pre>';
             var_dump($objException->getMessage());
-            exit;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
             parent::message($objException->getMessage(), "index", "ERROR");
         }
     }
@@ -162,7 +162,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         catch (Exception $e) {
             echo '<pre>';
             var_dump($e->getMessage());
-            exit;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
             parent::message($e->getMessage(), "index", "ERROR");
         }
     }

@@ -386,7 +386,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $arrRetorno['error'] = false;
                 $arrRetorno['msg']   = 'Projeto devolvido com sucesso!';
                 echo json_encode($arrRetorno);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
 
             }
             catch(Exception $e){
@@ -394,7 +394,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $arrRetorno['error'] = true;
                 $arrRetorno['msg']   = $e->getMessage();
                 echo json_encode($arrRetorno);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
         //DEVOLVEDO PROJETO PARA O COMPONENTE - RECURSO
@@ -411,13 +411,13 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $arrRetorno['error'] = false;
                 $arrRetorno['msg']   = 'Projeto devolvido com sucesso!';
                 echo json_encode($arrRetorno);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
             catch(Exception $e){
                 $arrRetorno['error'] = true;
                 $arrRetorno['msg']   = $e->getMessage();
                 echo json_encode($arrRetorno);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
         foreach ($buscarProjetoPauta as $buscaplenario) {
@@ -705,7 +705,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             }
             $jsonenviar = json_encode($dadosvalores);
             echo $jsonenviar;
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
         $consultaReuniao = ConsultaReuniaoDAO::listaReuniaoEncerrada();
         if (count($consultaReuniao) > 0) {
@@ -721,7 +721,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $url = "gerenciarpautareuniao/gerenciarpautareuniao";
             }
             parent::message("Pain&eacute;is de Reuni&tilde;o: Nenhuma Vota&ccedil;o Consolidada at&aacute; o momento!", $url, "ALERT");
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }*/
     }
 
@@ -756,7 +756,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 echo json_encode(array('error' => true, 'acao' => 'reload', 'status'=>'N'));
             }
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function votacaoAction() {
@@ -843,7 +843,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
             }
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function verificaArquivosVotacaoAction() {
@@ -875,7 +875,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
             echo json_encode(array('error' => true, 'qtdeArquivos' => 0, 'arrPronacs' => $arrPronacs));
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public static function ComponentesDaComissao($idpronac) {
@@ -984,7 +984,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $jsonEnviar = json_encode($arrayenviar);
 
                 echo $jsonEnviar;
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             } else {
                 echo json_encode(array('error' => true));
             }
@@ -1077,7 +1077,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('error' => true, 'status' => 'naoiniciada'));
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function verificacronometroAction() {
@@ -1099,7 +1099,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('error' => true));
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function verificavotacaocoordenadorAction() {
@@ -1121,7 +1121,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         }
         else
             echo json_encode(array('error' => 'true'));
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function atualizarstatusreuniaoAction() {
@@ -1136,7 +1136,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         } catch (Zend_Db_Table_Exception $e) {
             echo json_encode(array('error' => true));
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function verificarvotacaobancoadministrativoAction() {
@@ -1146,14 +1146,14 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             $enviar = AtualizaReuniaoDAO::verificaReuniaoAdministrativo($recebidoGet->idNrReuniao);
             if (count($enviar) > 0) {
                 echo json_encode(array('idPRONAC' => $enviar[0]->idPRONAC));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             } else {
                 echo json_encode(array('idPRONAC' => false));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         } else {
             echo json_encode(array('idPRONAC' => false));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
     }
 
@@ -1177,10 +1177,10 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             }
             $jsonEncode = json_encode($votacao);
             echo $jsonEncode;
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         } else {
             echo json_encode(array('error' => true));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
     }
 

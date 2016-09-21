@@ -923,7 +923,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                     }
                     else
                     {
-//                            $this->_forward('analisedeconteudo',null,null, array('error'=>'true','msg'=>'Erro ao efetuar alteração!'));
+//                            $this->_forward('analisedeconteudo',null,null, array('error'=>'true','msg'=>'Erro ao efetuar alteraï¿½ï¿½o!'));
                             throw new Exception("Erro ao efetuar alteracao!");
                     }
             } // fecha try
@@ -1197,7 +1197,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                                   );
                     $idparecer = isset($buscarParecer['IdParecer']) ? $buscarParecer['IdParecer'] : $buscarParecer['idParecer'];
 
-                    //se parecer ativo nao é o Componente, inativa os outros e grava o do Componente
+                    //se parecer ativo nao ï¿½ o Componente, inativa os outros e grava o do Componente
                     if(!$buscarParecer or $buscarParecer['idTipoAgente'] != $tipoAgente )
                     {
                         try{
@@ -1211,7 +1211,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                             catch(Exception $e){
                             echo json_encode(array('error'=>true, 'descricao'=>$e->getMessage()));
                         }
-                        die;
+                        $this->_helper->viewRenderer->setNoRender(TRUE); 
                     }
                     else
                     {
@@ -1223,12 +1223,12 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                             catch(Zend_Exception $e){
                             echo json_encode(array('error'=>true, 'descricao'=>$e->getMessage()));
                         }
-                        die;
+                        $this->_helper->viewRenderer->setNoRender(TRUE); 
                     }
                 }else{
 
                      echo json_encode(array('error'=>true, 'descricao'=>'N&atilde;o foi encontrado parecer v&aacute;lido da an&aacute;lise t&eacute;cnica.'));
-                     die;
+                     $this->_helper->viewRenderer->setNoRender(TRUE); 
                 }
             }
             //CASO O COMPONENTE QUEIRA SALVAR O SEU PARECER - FIM
@@ -1275,7 +1275,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 
                 if($rsParecer->count() <= 0){
                     parent::message("Para finalizar a An&aacute;lise &eacute; necess&aacute;rio emitir um parecer. O parecer n&atilde;o foi gravado corretamente.", "realizaranaliseprojeto/emitirparecer/idpronac/".$post->idPronac , "ERROR");
-                    die;
+                    $this->_helper->viewRenderer->setNoRender(TRUE); 
                 }//GARANTE A ATUALIZACAO O PARECER
                 else{
                     $idParecer = isset($rsParecer[0]->IdParecer) ? $rsParecer[0]->IdParecer : $rsParecer[0]->idParecer;
@@ -1328,7 +1328,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                         //$rsPedidoAlteracao = $tbPedidoAlteracao->alterar($dados, $where);
                     }
 
-                    //troca planilhas apenas se a decisao do componente for de aprovar a readequacao  //Se a planilha atual é SE significa que voltou da plenaria e nao entra na opcao de desativar a antiga e ativar a nova
+                    //troca planilhas apenas se a decisao do componente for de aprovar a readequacao  //Se a planilha atual ï¿½ SE significa que voltou da plenaria e nao entra na opcao de desativar a antiga e ativar a nova
                     if($post->decisao = 'AC' && $tpPlanilha != 'SE'){
 
                         try
@@ -1392,7 +1392,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                                                  );
                             $tblProjetos->alterar($dadosprojeto, 'IdPRONAC = '.$idPronac);
                             parent::message("Projeto cadastrado na Pauta com sucesso!", "areadetrabalho/index" , "CONFIRM");
-                            die;
+                            $this->_helper->viewRenderer->setNoRender(TRUE); 
                     }
                     else
                     {
@@ -1417,17 +1417,17 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                             $tbRecurso = new tbRecurso();
                             $dadosRecursoAtual = $tbRecurso->buscar(array('IdPRONAC = ?'=> $idPronac, 'stAtendimento = ?'=> 'N', 'tpSolicitacao =?'=>'EN'));
                             if(count($dadosRecursoAtual)>0){
-                                $auth = Zend_Auth::getInstance(); // pega a autenticação
+                                $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
                                 $this->idUsuario = $auth->getIdentity()->usu_codigo;
-                                //ATUALIZAÇÃO DA TABELA RECURSO//
+                                //ATUALIZAï¿½ï¿½O DA TABELA RECURSO//
                                 $dadosNovos = array(
                                     'dtAvaliacao' => new Zend_Db_Expr('GETDATE()'),
-                                    'dsAvaliacao' => 'Recurso deferido conforme solicitação do Proponente.',
+                                    'dsAvaliacao' => 'Recurso deferido conforme solicitaï¿½ï¿½o do Proponente.',
                                     'idAgenteAvaliador' => $this->idUsuario
                                 );
                                 $tbRecurso->update($dadosNovos, "idRecurso=".$dadosRecursoAtual[0]->idRecurso);
 
-                                //ATUALIZAÇÃO DA TABELA Enquadramento//
+                                //ATUALIZAï¿½ï¿½O DA TABELA Enquadramento//
                                 $Enquadramento = new Enquadramento();
                                 $dadosEnquadramentoAtual = $Enquadramento->buscarDados($idPronac, null);
                                 if(count($dadosRecursoAtual)>0){
@@ -1435,14 +1435,14 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                                     $dadosNovosEnquadramento = array(
                                         'Enquadramento' => $tpEnquadramento,
                                         'dtEnquadramento' => new Zend_Db_Expr('GETDATE()'),
-                                        'Observacao' => 'Alteração de Enquadramento conforme deferimento de recurso.',
+                                        'Observacao' => 'Alteraï¿½ï¿½o de Enquadramento conforme deferimento de recurso.',
                                         'Logon' => $this->idUsuario
                                     );
                                     $Enquadramento->update($dadosNovosEnquadramento, "IdEnquadramento=".$dadosEnquadramentoAtual[0]->IdEnquadramento);
                                 }
                             }
                             parent::message("Projeto j&aacute; est&aacute; em Pauta, sendo alterado com sucesso!", "areadetrabalho/index" , "CONFIRM");
-                            die;
+                            $this->_helper->viewRenderer->setNoRender(TRUE); 
                     }
 
                 } // fecha try
@@ -1465,7 +1465,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                     if (empty($idpronac))
                     {
                             //throw new Exception("Por favor, clique no Pronac Aguardando An&aacute;lise!");
-                            parent::message("Erro ao realizar operação.", "realizaranaliseprojeto/emitirparecer", "ERROR");
+                            parent::message("Erro ao realizar operaï¿½ï¿½o.", "realizaranaliseprojeto/emitirparecer", "ERROR");
                     }
                     else
                     {
@@ -1695,7 +1695,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 
                                 //Calculo dos 10% (complemento)
                                 $tetoCemMil = (int) '100000.00';
-                                if($valorItemCaptacaoRecurso['soma'] > $tetoCemMil){ //verfica se o valor do item de captacao de recurso é maior que R$100.000,00
+                                if($valorItemCaptacaoRecurso['soma'] > $tetoCemMil){ //verfica se o valor do item de captacao de recurso ï¿½ maior que R$100.000,00
                                     $this->view->totalcaptacaorecurso = "true";
                                     $this->view->valorReadequar10porcento = $valorItemCaptacaoRecurso['soma'] - $tetoCemMil;
                                 }
@@ -1724,7 +1724,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 
                                 //Calculo dos 10% (complemento)
                                 $tetoCemMil = (int) '100000.00';
-                                if($valorItemCaptacaoRecurso['soma'] > $tetoCemMil){ //verfica se o valor do item de captacao de recurso é maior que R$100.000,00
+                                if($valorItemCaptacaoRecurso['soma'] > $tetoCemMil){ //verfica se o valor do item de captacao de recurso ï¿½ maior que R$100.000,00
                                     $this->view->totalcaptacaorecurso = "true";
                                     $this->view->valorReadequar10porcento = $valorItemCaptacaoRecurso['soma'] - $tetoCemMil;
                                 }else{
@@ -1918,7 +1918,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
 				}
 				else
 				{
-					throw new Exception("Erro ao efetuar alteração!");
+					throw new Exception("Erro ao efetuar alteraï¿½ï¿½o!");
 				}
 		} // fecha if
 		else
@@ -2132,7 +2132,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                                         $this->view->totalproponente = $buscarsomaproposta['soma'];
                                         $this->view->totalcomponente = $buscarsomaaprovacao['soma'];
 
-                                        $auth              = Zend_Auth::getInstance(); // pega a autenticação
+                                        $auth              = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
                                         $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
                                         $idagente = $idagente['idAgente'];
                                         //-------------------------------------------------------------------------------------------------------------
@@ -2159,7 +2159,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                                                     }
                                                 }
                                                 else{
-                                                    parent::message("Não existe CNIC aberta no momento. Favor aguardar!", "principal/index", "ERROR");
+                                                    parent::message("Nï¿½o existe CNIC aberta no momento. Favor aguardar!", "principal/index", "ERROR");
                                                 }
 		} // fecha else
 	} // fecha Metodo analisedecontaAction()
@@ -2629,6 +2629,6 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             //$arrEtapas = $rsEtapas->toArray();
             //x($arrEtapas);
             echo json_encode($arrEtapas);
-            die();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 } // fecha class

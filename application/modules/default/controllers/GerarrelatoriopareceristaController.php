@@ -450,7 +450,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
 
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=file.xls;");
-            echo $html; die();
+            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
             $this->view->qtdRegistros = $total;

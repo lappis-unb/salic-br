@@ -255,7 +255,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'justificativa')
@@ -276,7 +276,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'acessibilidade')
@@ -297,7 +297,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'democratizacao')
@@ -318,7 +318,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'etapa')
             {
@@ -338,7 +338,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'ficha')
@@ -359,7 +359,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'sinopse')
@@ -380,7 +380,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'impacto')
@@ -401,7 +401,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'estrategia')
@@ -422,7 +422,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'especificacao')
@@ -443,7 +443,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                 }
                 $htmlGerado .= "</table>";
                 echo utf8_encode($htmlGerado);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'localrealizacao')
@@ -480,7 +480,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                     }
                $htmlGerado .= "</table>";
                echo utf8_encode($htmlGerado);
-               die;
+               $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'deslocamento')
@@ -521,7 +521,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                $htmlGerado .= "</table>";
 
                echo utf8_encode($htmlGerado);
-               die;
+               $this->_helper->viewRenderer->setNoRender(TRUE); 
 
             }
 
@@ -553,7 +553,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                 }
                $htmlGerado .= "</table>";
                echo utf8_encode($htmlGerado);
-               die;
+               $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'plano')
@@ -668,7 +668,7 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
                $htmlGerado .= "</table>";
                $htmlGerado .= "</td>";
                echo utf8_encode($htmlGerado);
-               die;
+               $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
 
             if(isset($_POST['tipo']) and $_POST['tipo'] == 'orcamento')
@@ -827,6 +827,6 @@ class DadosprojetoController extends MinC_Controller_Action_Abstract {
          $htmlGerado .= "</table>";
        // <!-- ========== FIM PLANILHA ========== -->
             }
-          echo utf8_encode($htmlGerado); die;
+          echo utf8_encode($htmlGerado); $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
     }// fecha class

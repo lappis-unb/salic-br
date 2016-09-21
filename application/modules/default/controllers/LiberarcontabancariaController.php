@@ -263,7 +263,7 @@ class LiberarcontabancariaController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function inabilitadosAction() {

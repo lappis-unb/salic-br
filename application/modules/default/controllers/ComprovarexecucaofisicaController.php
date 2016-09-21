@@ -353,7 +353,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function planoDeDivulgacaoAction() {
@@ -567,7 +567,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function planoDeDistribuicaoAction() {
@@ -712,7 +712,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function buscarAgenteAction() {
@@ -739,7 +739,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false,'CNPJCPF'=>$cnpjcpf));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function comprovantesDeExecucaoAction() {
@@ -845,7 +845,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function enviarRelatorioAction() {
@@ -1082,7 +1082,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function imprimirAction() {
@@ -1693,7 +1693,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function cadastrarFinalAction()
