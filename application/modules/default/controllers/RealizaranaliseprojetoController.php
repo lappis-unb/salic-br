@@ -1256,7 +1256,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                 $tblProjetos->alterar($dados, $where);
                 //$tblProjetos->alterarSituacao($idpronac, NULL, $dados['Situacao'], $dados['ProvidenciaTomada']);
                 parent::message("Projeto readequado com sucesso!", "areadetrabalho/index" , "CONFIRM");
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
 
             }
             //CASO O PROJETO VOLTE DA CNIC APROVADO PARA O COMPONENTE READEQUAR - FIM

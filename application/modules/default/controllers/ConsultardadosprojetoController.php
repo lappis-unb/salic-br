@@ -117,7 +117,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $this->_helper->flashMessenger->addMessage("Nenhum projeto encontrado com o n&uacute;mero de Pronac informado");
             $this->_helper->flashMessengerType->addMessage("ERROR");
             JS::redirecionarURL($url);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
         #xd('5555555555');
         if (!isset($auth->getIdentity()->usu_codigo)) {
@@ -1191,7 +1191,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $this->_helper->flashMessenger->addMessage("N&atilde;o foi poss&iacute;vel abrir o arquivo especificado. Tente anex&aacute;-lo novamente.");
             $this->_helper->flashMessengerType->addMessage("ERROR");
             JS::redirecionarURL($url);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -4970,7 +4970,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                 $this->_helper->flashMessenger->addMessage("N�o foi poss�vel realizar concluir a opera��o para impress�o do projeto.".$e->getMessage());
                 $this->_helper->flashMessengerType->addMessage("ERROR");
                 JS::redirecionarURL($url);
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
                 //parent::message("N�o foi poss�vel realizar a opera��o!".$ex->getMessage(), "/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
             }
         }
@@ -5778,7 +5778,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                 $this->_helper->flashMessenger->addMessage("N�o foi poss�vel realizar concluir a opera��o para impress�o do projeto.".$e->getMessage());
                 $this->_helper->flashMessengerType->addMessage("ERROR");
                 JS::redirecionarURL($url);
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
                 //parent::message("N�o foi poss�vel realizar a opera��o!".$ex->getMessage(), "/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
             }
         }

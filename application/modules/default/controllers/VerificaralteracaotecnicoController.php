@@ -903,7 +903,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 	
 	public function planilhasolicitadaAction() {
 		if (isset($_GET['v']) && $_GET['v'] == 'fim') :
-			exit();
+			$this->_helper->viewRenderer->setNoRender(TRUE);
 		endif;
 		
         $idPronac = isset($_POST['idpronac']) ? $_POST['idpronac'] : '';

@@ -1039,7 +1039,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             $this->_helper->flashMessenger->addMessage("N&atilde;o foi poss&iacute;vel abrir o arquivo especificado. Tente anex&aacute;-lo novamente.");
             $this->_helper->flashMessengerType->addMessage("ERROR");
             JS::redirecionarURL($url);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -4810,7 +4810,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                 $this->_helper->flashMessenger->addMessage("N�o foi poss�vel realizar concluir a opera��o para impress�o do projeto.".$e->getMessage());
                 $this->_helper->flashMessengerType->addMessage("ERROR");
                 JS::redirecionarURL($url);
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
                 //parent::message("N�o foi poss�vel realizar a opera��o!".$ex->getMessage(), "/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
             }
         }
@@ -5618,7 +5618,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                 $this->_helper->flashMessenger->addMessage("N�o foi poss�vel realizar concluir a opera��o para impress�o do projeto.".$e->getMessage());
                 $this->_helper->flashMessengerType->addMessage("ERROR");
                 JS::redirecionarURL($url);
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
                 //parent::message("N�o foi poss�vel realizar a opera��o!".$ex->getMessage(), "/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
             }
         }

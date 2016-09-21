@@ -481,7 +481,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         foreach ($Documento as $doc) {
             echo utf8_encode('<option value="' . $doc->Codigo . '" >' . $doc->Descricao . '</option>');
         }
-        exit(0);
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /**
@@ -1376,7 +1376,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         else{
             echo json_encode(array('error'=>true));
         }
-        exit();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /**

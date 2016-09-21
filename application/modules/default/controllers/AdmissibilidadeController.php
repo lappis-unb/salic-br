@@ -300,7 +300,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
             $this->_helper->flashMessenger->addMessage("N&atilde;o foi poss&iacute;vel abrir o arquivo especificado. Tente anex&aacute;-lo novamente.");
             $this->_helper->flashMessengerType->addMessage("ERROR");
             JS::redirecionarURL($url);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -339,7 +339,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
             $this->_helper->flashMessenger->addMessage("N&atilde;o foi poss&iacute;vel abrir o arquivo especificado. Tente anex&aacute;-lo novamente.");
             $this->_helper->flashMessengerType->addMessage("ERROR");
             JS::redirecionarURL($url);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -722,7 +722,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
             parent::message("Mensagem enviada com sucesso!", "/admissibilidade/gerenciamentodepropostas", "CONFIRM");
             return true;
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }else{
 
             parent::message("Despacho encaminhado com sucesso!", "/admissibilidade/listar-propostas", "CONFIRM");

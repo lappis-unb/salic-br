@@ -705,7 +705,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                     $dadosBuscar['idDirigente'] = $buscarMandato[0]->idDirigente;
                     $dadosBuscar['idArquivo'] = $buscarMandato[0]->idArquivo;
 //                echo json_encode($dadosBuscar);
-//                exit();
+//                $this->_helper->viewRenderer->setNoRender(TRUE);
                 }
 
                 parent::message("Cadastro realizado com sucesso!", "alterarprojeto/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente . "/pronac/" . $pronac, "CONFIRM");

@@ -174,7 +174,7 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
             if (empty($cnpjcpf)) {
                 if ($this->_request->getParam("modal") == "s") {
                     echo "<br/><br/><br/><br/><center><font color='red'>Por favor, informe o campo CPF/CNPJ!</font></center>";
-                    exit();
+                    $this->_helper->viewRenderer->setNoRender(TRUE);
                 } else {
                     parent::message('Por favor, informe o campo CPF/CNPJ!', 'manterregularidadeproponente/index' . $this->queryString, 'ALERT');
                 }
@@ -182,7 +182,7 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
             if ($this->proponente == "PF" && !Validacao::validarCPF($cnpjcpf)) {
                 if ($this->_request->getParam("modal") == "s") {
                     echo "<br/><br/><br/><br/><center><font color='red'>Por favor, informe um CPF v&aacute;lido!</font></center>";
-                    exit();
+                    $this->_helper->viewRenderer->setNoRender(TRUE);
                 } else {
                     parent::message('Por favor, informe um CPF v&aacute;lido!', 'manterregularidadeproponente/index' . $this->queryString, 'ALERT');
                 }
@@ -190,7 +190,7 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
             if ($this->proponente == "PJ" && !Validacao::validarCNPJ($cnpjcpf)) {
                 if ($this->_request->getParam("modal") == "s") {
                     echo "<br/><br/><br/><br/><center><font color='red'>Por favor, informe um CNPJ v&aacute;lido!</font></center>";
-                    exit();
+                    $this->_helper->viewRenderer->setNoRender(TRUE);
                 } else {
                     parent::message('Por favor, informe um CNPJ v&aacute;lido!', 'manterregularidadeproponente/index' . $this->queryString, 'ALERT');
                 }
@@ -207,7 +207,7 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
                 if (!$buscaAgentes[0] or !$buscaInteressados[0]) {
                     if ($this->_request->getParam("modal") == "s") {
                         echo "<br/><br/><br/><br/><center>O Agente n&atilde;o est&aacute; cadastrado!</font></center>";
-                        exit();
+                        $this->_helper->viewRenderer->setNoRender(TRUE);
                     } else {
                         parent::message("O Agente n&atilde;o est&aacute; cadastrado!", 'manterregularidadeproponente/index'. $this->queryString, "ERROR");
                     }
@@ -435,16 +435,16 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
             if (!empty($buscaPronac)) {
                 $result['existe'] = true;
                 echo json_encode($result);
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             } else {
                 $result['existe'] = false;
                 echo json_encode($result);
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         } else {
             $result['existe'] = true;
             echo json_encode($result);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -990,11 +990,11 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
             $result['existe'] = true;
             $result['dias'] = $dias;
             echo json_encode($result);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
             $result['existe'] = false;
             echo json_encode($result);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -1008,7 +1008,7 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
         if (empty($dtEmissao) && strlen($dtEmissao) < 10) {
             $result['data'] = false;
             echo json_encode($result);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         if (!empty($duracao)) {
@@ -1020,11 +1020,11 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
                 $result['existe'] = true;
                 $result['data'] = $data;
                 echo json_encode($result);
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             } else {
                 $result['data'] = false;
                 echo json_encode($result);
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
 
@@ -1035,7 +1035,7 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
             $result['error'] = true;
             $result['msg'] = utf8_encode("Data de emiss&atilde;o deve ser menor ou igual a data atual");
             echo json_encode($result);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
 
             if (!empty($tipo)) {
@@ -1056,12 +1056,12 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
                 $result['error'] = false;
                 $result['data'] = $dtEmissao;
                 echo json_encode($result);
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             } else {
                 $result['data'] = false;
                 $result['error'] = false;
                 echo json_encode($result);
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
     }

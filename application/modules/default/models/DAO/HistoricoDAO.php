@@ -41,7 +41,7 @@ class HistoricoDAO extends Zend_Db_Table
 		$db->setFetchMode(Zend_DB :: FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		
-		Zend_Debug::dump($resultado);exit();
+		Zend_Debug::dump($resultado);$this->_helper->viewRenderer->setNoRender(TRUE);
 		
 		return $resultado;
 		

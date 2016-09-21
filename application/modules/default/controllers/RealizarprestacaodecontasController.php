@@ -2835,7 +2835,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
         if (!$this->getRequest()->isPost()) {
             $this->_helper->flashMessenger->addMessage('Erro ao validar item.');
             $this->_helper->flashMessengerType->addMessage('ERROR');
-            $redirector->redirectAndExit();
+            $redirector->redirectAnd$this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         $itemValidado = false;
@@ -2868,7 +2868,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $this->_helper->flashMessenger->addMessage($e->getMessage());
                 $this->_helper->flashMessengerType->addMessage('ERROR');
                 $tblComprovantePag->getAdapter()->rollBack();
-                $redirector->redirectAndExit();
+                $redirector->redirectAnd$this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
         if ($itemValidado) {
@@ -2879,7 +2879,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $this->_helper->flashMessengerType->addMessage('ERROR');
         }
         $tblComprovantePag->getAdapter()->commit();
-        $redirector->redirectAndExit();
+        $redirector->redirectAnd$this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function dadosprojetoAction() {

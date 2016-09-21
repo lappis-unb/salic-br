@@ -97,7 +97,7 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
                 $a++;
             }
             echo json_encode($componentes);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
         $buscarArea = $ar->buscar();
         $componentes = array();

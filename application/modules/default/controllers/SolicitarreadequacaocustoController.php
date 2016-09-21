@@ -167,7 +167,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
                 $municipio['error'] = true;
             }
             echo json_encode($municipio);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         if (isset($_POST['idEtapa'])) {
@@ -186,7 +186,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
             }
 
             echo json_encode($itemEtapa);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
         //se o produto estiver setado
         if (isset($_POST['acao'])) {
@@ -480,7 +480,7 @@ class SolicitarReadequacaoCustoController extends MinC_Controller_Action_Abstrac
           }
 
           echo json_encode($itemEtapa);
-          exit();
+          $this->_helper->viewRenderer->setNoRender(TRUE);
           } */
 
         if (isset($_POST['verificaPlanilha']) and $_POST['verificaPlanilha'] == "S") {

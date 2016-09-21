@@ -3084,7 +3084,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
         $idAgente        = $filter->filter($this->_request->getPost('idAgente'));
 
  		/*echo 'Agente = '.$idAgente.'<br /> Jus '.$justificativa;
- 		exit();*/
+ 		$this->_helper->viewRenderer->setNoRender(TRUE);*/
 
 
  		$dados = ProjetosGerenciarDAO::ativarComponente($idAgente, $justificativa);
