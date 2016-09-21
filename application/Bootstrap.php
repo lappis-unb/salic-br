@@ -13,20 +13,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
 
     /**
-     *
-     * @name _initDoctype
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  ${DATE}
-     */
-//    protected function _initDoctype()
-//    {
-//        $this->bootstrap('view');
-//        $view = $this->getResource('view');
-//        $view->doctype('XHTML1_STRICT');
-//    }
-
-    /**
      * _initPath
      *
      * @access public
@@ -165,4 +151,53 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 )));
         $controller->getRouter()->addRoute('rest', $restRoute);
     }
+
+    /**
+     *
+     * @name _initDoctype
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  ${DATE}
+     */
+//    protected function _initDoctype()
+//    {
+//        $this->bootstrap('view');
+//        $view = $this->getResource('view');
+//        $view->doctype('XHTML1_STRICT');
+////        $view->headMeta()->setCharset('UTF-8');
+//        $view->setEncoding('UTF-8');
+//    }
+//    protected function _initHelperPath()
+//    {
+//
+//        $view = $this->bootstrap('view')->getResource('view');
+//
+//        $view->setHelperPath(APPLICATION_PATH . '/views/helpers', 'View_Helper');
+//
+//    }
+//    protected function _initView () {
+//        $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+//        $strCharset = $config->resources->db->params->charset;
+//        $view = new Zend_View();
+//        // snip...
+//        $view->setEncoding($strCharset);
+//        // snip...
+//        $view->headMeta()->appendHttpEquiv("content-type", "text/html; charset=" . $strCharset);
+//        return $view;
+//    }
+
+//    protected function _initFrontControllerOutput()
+//    {
+//        $this->bootstrap('FrontController');
+//        $frontController = $this->getResource('FrontController');
+////
+//        $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+//        $strCharset = $config->resources->db->params->charset;
+////
+//        $response = new Zend_Controller_Response_Http;
+//        $response->setHeader('Content-Type', 'text/html; charset=' . $strCharset, true);
+//        $frontController->setResponse($response);
+//        $frontController->setParam('useDefaultControllerAlways', false);
+//        return $frontController;
+//    }
 }

@@ -1519,6 +1519,9 @@ CREATE TABLE sac.Abrangencia
   dtFimRealizacao timestamp,
   CONSTRAINT FK_Abrangencia_PreProjeto FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto)
 );
+CREATE SEQUENCE sac.abrangencia_idabrangencia_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.abrangencia ALTER COLUMN idabrangencia SET DEFAULT nextval('sac.abrangencia_idabrangencia_seq');
+ALTER SEQUENCE sac.abrangencia_idabrangencia_seq OWNED BY sac.abrangencia.idabrangencia;
 CREATE TABLE sac.AcaoProduto
 (
   Entidade int NOT NULL,
@@ -3176,6 +3179,9 @@ CREATE TABLE sac.tbDeslocamento
   idUsuario INT NOT NULL,
   CONSTRAINT FK_tbDeslocamento_tbDeslocamento FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto)
 );
+CREATE SEQUENCE sac.tbdeslocamento_iddeslocamento_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.tbdeslocamento ALTER COLUMN iddeslocamento SET DEFAULT nextval('sac.tbdeslocamento_iddeslocamento_seq');
+ALTER SEQUENCE sac.tbdeslocamento_iddeslocamento_seq OWNED BY sac.tbdeslocamento.iddeslocamento;
 CREATE TABLE sac.tbDespacho
 (
   idDespacho INT PRIMARY KEY NOT NULL,

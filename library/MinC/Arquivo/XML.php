@@ -6,15 +6,15 @@
  * @version 1.0
  * @package library
  * @subpackage library.MinC.Arquivo
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class XML
 {
 	/**
-	 * Método para gerar o XML de um combo 
-	 * que é gerado através de outro via AJAX
+	 * Mï¿½todo para gerar o XML de um combo 
+	 * que ï¿½ gerado atravï¿½s de outro via AJAX
 	 *
 	 * @access public
 	 * @static
@@ -24,14 +24,17 @@ class XML
 	 */
 	public static function gerarComboSimplesAJAX($tag, $objeto)
 	{
+        $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+        $strCharset = $config->resources->db->params->charset;
+
 		$gmtDate = gmdate("D, d M Y H:i:s");
 		header("Expires: {$gmtDate} GMT");
 		header("Last-Modified: {$gmtDate} GMT");
 		header("Cache-Control: no-cache, must-revalidate");
 		header("Pragma: no-cache");
-		header("Content-Type: text/html; charset=ISO-8859-1", true);
+		header("Content-Type: text/html; charset={$strCharset}", true);
 
-		$xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
+		$xml = "<?xml version=\"1.0\" encoding=\"{$strCharset}\"?>\n";
 		$xml.= "<$tag>\n";
 
 		foreach ($objeto as $obj)
@@ -43,9 +46,9 @@ class XML
 		}
 
 		$xml.= "</$tag>\n";
-		Header("Content-type: application/xml; charset=iso-8859-1");
+		Header("Content-type: application/xml; charset={$strCharset}");
 
 		return $xml;
-	} // fecha método gerarComboSimplesAJAX()
+	} // fecha mï¿½todo gerarComboSimplesAJAX()
 
 } // fecha class
