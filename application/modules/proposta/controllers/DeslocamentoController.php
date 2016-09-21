@@ -11,7 +11,7 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
     private $idPreProjeto = null;
 
     /**
-     * Reescreve o m�todo init()
+     * Reescreve o metodo init()
      * @access public
      * @param void
      * @return void
@@ -73,7 +73,11 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
      *
      * @access public
      * @return void
-     * @todo Refatorar metodo para user metodos padr�es do Zend
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since 21/09/2016
+     *
+     * @todo Refatorar metodo para user metodos padroes do Zend
      */
     public function indexAction()
     {
@@ -123,6 +127,15 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
         }
     }
 
+    /**
+     *
+     * @name salvarAction
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since 21/09/2016
+     *
+     * @todo trocar futuramente no formulario para ficar igual ao banco e nao precisar fazer o tratamento mais.
+     */
     public function salvarAction() {
 
         $post = array_change_key_case($this->getRequest()->getPost());
@@ -169,6 +182,13 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
         parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o! <br>", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ERROR");
     }
 
+    /**
+     *
+     * @name excluirAction
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since 21/09/2016
+     */
     public function excluirAction() {
         if($_GET['id']) {
             try {

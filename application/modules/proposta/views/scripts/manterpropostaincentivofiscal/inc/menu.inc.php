@@ -99,7 +99,7 @@
 <div id="menu">
     <!-- início: conteúdo principal #container -->
     <div id="container">
-        <!-- início: navegação local #qm0 -->
+        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
         <?php
         $get = Zend_Registry::get("get");
         //define id do PreProjeto que sera passado as outras implementacoes
@@ -120,14 +120,14 @@
                    title="Ir para Proposta Atual">Proposta Atual </a>
                 <a class="no_seta"
                    href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'index')) . $codProjeto; ?>"
-                   title="Ir para Local de realização / deslocamento">Local de realização / Deslocamento</a>
+                   title="Ir para Local de realiza&ccedil;&atilde;o / deslocamento">Local de realiza&ccedil;&atilde;o / Deslocamento</a>
                 <!--a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'deslocamento', 'action' => 'index')) . $codProjeto; ?>" title="Ir para Deslocamento">Deslocamento</a-->
                 <a class="no_seta"
                    href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'divulgacao', 'action' => 'index')) . $codProjeto; ?>"
-                   title="Ir para Plano de divulgação">Plano de divulgação</a>
+                   title="Ir para Plano de divulga&ccedil;&atilde;o">Plano de divulga&ccedil;&atilde;o</a>
                 <a class="no_seta"
                    href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index')) . $codProjeto; ?>"
-                   title="Ir para Plano de distribuição">Plano de distribuição</a>
+                   title="Ir para Plano de distribui&ccedil;&atilde;o">Plano de distribui&ccedil;&atilde;o</a>
                 <!--<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'index')) . $codProjeto; ?>" title="Ir para Orçamento">Orçamento</a>-->
                 <a href="#" title="Orcamento" class="planilha">Planilha Or&ccedil;ament&aacute;ria</a>
                 <div id="qm0" class="sanfona sanfonaDiv" style="display: none;">
@@ -189,7 +189,7 @@
             </div>
         </div>
         <div id="alertar"></div>
-        <!-- final: navegação local #qm0 -->
+        <!-- final: navega&ccedil;&atilde;o local #qm0 -->
     </div>
 </div>
 <div id="modalExcluirProposta" style="display:none"></div>

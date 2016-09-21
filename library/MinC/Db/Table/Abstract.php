@@ -66,6 +66,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
                                 'dbname'   => $arrConfig['dbname'],
                                 'host'     => $arrConfig['host'],
                                 'port'     => $arrConfig['port'],
+                                'charset'     => $arrConfig['charset'],
                             )
                         )
                     )

@@ -1,23 +1,45 @@
 <?php
-/**
- * Abrangencia
- *
- * @uses GenericModel
- * @author  wouerner <wouerner@gmail.com>
- * @since 22/08/2016
- */
-class Abrangencia extends MinC_Db_Table_Abstract
-{
-    protected $_name = 'abrangencia';
-    protected $_schema = 'sac';
-    protected $_banco = "sac";
 
-    public function __construct() {
-        parent::__construct();
-    }
-    public function init(){
-        parent::init();
-    }
+/**
+ * Class Proposta_Model_DbTable_Abrangencia
+ *
+ * @name Proposta_Model_DbTable_Abrangencia
+ * @package Modules/Agente
+ * @subpackage Models/DbTable
+ * @version $Id$
+ *
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+ * @since 20/09/2016
+ *
+ * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
+ * @link http://salic.cultura.gov.br
+ */
+class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
+{
+    /**
+     * _schema
+     *
+     * @var string
+     * @access protected
+     */
+    protected $_schema = 'sac';
+
+    /**
+     * _name
+     *
+     * @var bool
+     * @access protected
+     */
+    protected $_name = 'abrangencia';
+
+    /**
+     * _primary
+     *
+     * @var bool
+     * @access protected
+     */
+    protected $_primary = 'idabrangencia';
+
 
     /**
      * Retorna registros do banco de dados
@@ -31,18 +53,18 @@ class Abrangencia extends MinC_Db_Table_Abstract
     {
         $sql = $this->select()
             ->setIntegrityCheck(false)
-            ->from(['a' => 'abrangencia'], ['*'], $this->_schema)
+            ->from(['a' => 'abrangencia'], $this->_getCols(), $this->_schema)
             ->join(['p' => 'pais'], 'a.idpais = p.idpais and a.stabrangencia = 1', 'p.descricao as pais', $this->getSchema('agentes'))
             ->joinLeft(['u' => 'uf'], '(a.iduf = u.iduf)', 'u.descricao as uf', $this->getSchema('agentes'))
             ->joinLeft(['m' => 'municipios'], '(a.idmunicipioibge = m.idmunicipioibge)', 'm.descricao as cidade', $this->getSchema('agentes'))
-            ;
+        ;
         foreach ($where as $coluna=>$valor)
         {
             $sql->where($coluna. '= ?', $valor);
         }
 
-        $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
-        return $this->_db->fetchAll($sql);
+        $result = $this->fetchAll($sql);
+        return ($result) ? $result->toArray() : array();
     }
 
     public function verificarIgual($idPais, $idUF, $idMunicipio, $idPreProjeto)
@@ -54,8 +76,8 @@ class Abrangencia extends MinC_Db_Table_Abstract
 				 AND stAbrangencia = 1";
 
         $db = Zend_Db_Table::getDefaultAdapter();
-		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		return $db->fetchAll($sql);
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        return $db->fetchAll($sql);
     }
 
     /**
@@ -66,17 +88,16 @@ class Abrangencia extends MinC_Db_Table_Abstract
     public function salvar($dados)
     {
         //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
-        $tblAbrangencia = new Abrangencia();
 
         //DECIDINDO SE INCLUI OU ALTERA UM REGISTRO
         $dados['stAbrangencia'] = 1;
         if(isset($dados['idAbrangencia']) && !empty ($dados['idAbrangencia'])){
             //UPDATE
-            $rsAbrangencia = $tblAbrangencia->find($dados['idAbrangencia'])->current();
+            $rsAbrangencia = $this->find($dados['idAbrangencia'])->current();
         }else{
             //INSERT
             $dados['idAbrangencia'] = null;
-            return $tblAbrangencia->insert($dados);
+            return $this->insert($dados);
             //$rsAbrangencia = $tblAbrangencia->createRow();
         }
 
@@ -86,32 +107,13 @@ class Abrangencia extends MinC_Db_Table_Abstract
         $rsAbrangencia->idUF = $dados['idUF']; //if(!empty($dados['idUF'])) { $rsAbrangencia->idUF = $dados['idUF']; }
         $rsAbrangencia->idMunicipioIBGE = $dados['idMunicipioIBGE'];//if(!empty($dados['idMunicipioIBGE'])) { $rsAbrangencia->idMunicipioIBGE = $dados['idMunicipioIBGE']; }
         if(!empty($dados['Usuario']))         { $rsAbrangencia->Usuario = $dados['Usuario']; }
-		$rsAbrangencia->stAbrangencia = 1;
+        $rsAbrangencia->stAbrangencia = 1;
 
         //SALVANDO O OBJETO
         $id = $rsAbrangencia->save();
 
         if($id){
             return $id;
-        }else{
-            return false;
-        }
-    }
-
-    /**
-     * Apaga registro do banco
-     * @param number $idAbrangencia - ID do registro que deve ser apagado
-     * @return true or false
-     * @todo colocar padr�o ORM
-     */
-    public function excluir($idAbrangencia)
-    {
-        $sql ="DELETE FROM SAC.dbo.Abrangencia WHERE idAbrangencia = ".$idAbrangencia;
-
-        $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        if($db->query($sql)){
-            return true;
         }else{
             return false;
         }
@@ -151,14 +153,14 @@ class Abrangencia extends MinC_Db_Table_Abstract
         $selectAbrangencia = $this->select();
         $selectAbrangencia->setIntegrityCheck(false);
         $selectAbrangencia->from(
-                        array($this->_name),
-                        array(
-                                'idAbrangencia'=>new Zend_Db_Expr('min(idAbrangencia)'),
-                                'idProjeto',
-                                'idUF',
-                                'idMunicipioIBGE'
-                             )
-                     );
+            array($this->_name),
+            array(
+                'idAbrangencia'=>new Zend_Db_Expr('min(idAbrangencia)'),
+                'idProjeto',
+                'idUF',
+                'idMunicipioIBGE'
+            )
+        );
         $selectAbrangencia->group('idProjeto');
         $selectAbrangencia->group('idUF');
         $selectAbrangencia->group('idMunicipioIBGE');
@@ -183,26 +185,26 @@ class Abrangencia extends MinC_Db_Table_Abstract
         $selectAbrangencia = $this->select();
         $selectAbrangencia->setIntegrityCheck(false);
         $selectAbrangencia->from(
-                        array('abr'=>$this->_name),
-                        array(
-                                'idAbrangencia'=>new Zend_Db_Expr('min(idAbrangencia)'),
-                                'idProjeto'
-                             )
-                     );
+            array('abr'=>$this->_name),
+            array(
+                'idAbrangencia'=>new Zend_Db_Expr('min(idAbrangencia)'),
+                'idProjeto'
+            )
+        );
 
         $selectAbrangencia->joinInner(
-                            array('mun'=>'Municipios'),
-                            "mun.idUFIBGE = abr.idUF and mun.idMunicipioIBGE = abr.idMunicipioIBGE",
-                            array(),
-                            'AGENTES.dbo'
-                          );
+            array('mun'=>'Municipios'),
+            "mun.idUFIBGE = abr.idUF and mun.idMunicipioIBGE = abr.idMunicipioIBGE",
+            array(),
+            'AGENTES.dbo'
+        );
         $selectAbrangencia->joinInner(
-                            array('uf'=>'UF'),
-                            "uf.idUF = abr.idUF",
-                            array(),
-                            'AGENTES.dbo'
-                );
-		$selectAbrangencia->where('abr.stAbrangencia = ?', 1);
+            array('uf'=>'UF'),
+            "uf.idUF = abr.idUF",
+            array(),
+            'AGENTES.dbo'
+        );
+        $selectAbrangencia->where('abr.stAbrangencia = ?', 1);
 
         foreach ($where as $coluna => $valor) {
             $selectAbrangencia->where($coluna, $valor);

@@ -19,7 +19,7 @@
         <!-- End Piwik Code -->
         <?php } ?>
         <title>Salic - Sistema de Apoio às Leis de Incentivo à Cultura</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->charset ?>" />
         <meta name="title" content="Sistema Salic" />
         <meta name="description" content="Sistema de Apoio às Leis de Incentivo à Cultura" />
         <link type="image/x-icon" rel="shortcut icon" href="<?php echo $this->baseUrl(); ?>/public/img/favicon.ico" />
@@ -239,7 +239,7 @@
                     <div id="div">
                         <div id="divleft"></div>
                         <div id="divmenuprincipalcenter">
-                            <a href="#menu-usuarios" title="Ir para Usuário" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Usuário</a>
+                            <a href="#menu-usuarios" title="Ir para Usu&aacute;rio" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Usu&aacute;rio</a>
                             <div id="menu-usuarios" class="hidden">
                                 <ul>
                                     <li><a href="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'alterarsenha'), '', true); ?>" title="Ir para Alterar Senha">Alterar Senha</a></li>
