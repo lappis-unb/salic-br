@@ -1,5 +1,5 @@
 # SALIC WEB - Run container Apache | PHP 5 | Debian
-docker run --name salic-web -it -v /var/www/:/var/www/ --add-host local.salic:127.0.0.1 --add-host homolog.cultura.gov.br:10.0.0.13 -p 80:80 culturagovbr/salic-web /bin/bash apachectl start
+docker run --name salic-web -it -v /var/www/:/var/www/ --add-host local.salic:127.0.0.1 --add-host local.salic.postgre:127.0.0.1  --add-host homolog.cultura.gov.br:10.0.0.13 -p 80:80 culturagovbr/salic-web
 
 # SALIC DB - Run container PostgreSQL | Debian
 docker run --name salic-db -p 5432:5432 -e POSTGRES_PASSWORD=123456 -e POSTGRES_USER=postgres -e PGDATA=/var/lib/postgresql/data -v /var/www/db/postgresql/data:/var/www/project/db/data -d culturagovbr/salic-db 
