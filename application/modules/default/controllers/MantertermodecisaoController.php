@@ -8,13 +8,13 @@
 class MantertermodecisaoController extends MinC_Controller_Action_Abstract {
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
-        // verifica as permissões
+        // verifica as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97; // Gestor Salic
 
@@ -90,7 +90,7 @@ class MantertermodecisaoController extends MinC_Controller_Action_Abstract {
                 $this->view->incluir = "";
                 $this->view->termo = $tipoTermo;
                 $this->view->parecer = $tipoParecer;
-                $this->view->texto = "Digite o texto do Termo de Decisão.";
+                $this->view->texto = "Digite o texto do Termo de Decisï¿½o.";
             }
         }
     }
@@ -139,7 +139,7 @@ class MantertermodecisaoController extends MinC_Controller_Action_Abstract {
                 $this->view->incluir = "";
                 $this->view->termo = $tipoTermo;
                 $this->view->parecer = (int) $tipoParecer;
-                $this->view->texto = "Digite o Termo de Decisão.";
+                $this->view->texto = "Digite o Termo de Decisï¿½o.";
             }
         }
     }
@@ -165,7 +165,7 @@ class MantertermodecisaoController extends MinC_Controller_Action_Abstract {
                     $rsTermoDecisao->stModeloTermoDecisao = $tipoParecer;
                     $rsTermoDecisao->meModeloTermoDecisao = $dsTermoDecisao;
                     $rsTermoDecisao->save();
-                    $msg = "Alteração realizada com sucesso";
+                    $msg = "Alteraï¿½ï¿½o realizada com sucesso";
                 } else { //insere termo de decisao
 
                     $dados = array(// insert
@@ -206,11 +206,11 @@ class MantertermodecisaoController extends MinC_Controller_Action_Abstract {
         if (!empty($verificaTermoDecisao)) {
             $result['existe'] = true;
             echo json_encode($result);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
             $result['existe'] = false;
             echo json_encode($result);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 

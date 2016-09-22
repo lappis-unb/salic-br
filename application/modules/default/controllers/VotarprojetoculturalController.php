@@ -769,7 +769,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
             {
                 echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
             }
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
         $idpronac = $this->_request->getParam("idpronac");
         $dpc = new DistribuicaoProjetoComissao();
@@ -819,7 +819,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
         $descricao = $votacao->votantesjustificativavoto($reuniaoaberta, $idpronac, $tipoReadequacao);
         if($descricao->count() <= 0){
             $valores = array(
-            'dsjustificativa' => utf8_encode("<table class='tabela'><tr class='centro'><td><font color='red'><b>A votação deste projeto foi cancelada pelo presidente da mesa.</b></font></td></tr></table> <script>window.location.reload();</script>"),
+            'dsjustificativa' => utf8_encode("<table class='tabela'><tr class='centro'><td><font color='red'><b>A votaï¿½ï¿½o deste projeto foi cancelada pelo presidente da mesa.</b></font></td></tr></table> <script>window.location.reload();</script>"),
             'aprovados' => '',
             'indeferidos' => '',
             'abstencao' => '',
@@ -829,7 +829,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
             $json = json_encode($valores);
             //xd($json);
             echo $json;
-            die();
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
         $justificativa = "<table class='tabela'>";
         $justificativa .= "<tr class='centro'>";
@@ -1085,7 +1085,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
             catch (Exception $e)
             {
                 //xd($e->getMessage());
-                parent::message("Ocorreu um erro ao inativar a distribuição desse Projeto feita ao Componente, mas as outras ações foram realizadas com sucesso.", "gerenciarpautareuniao/gerenciaradministrativo", "ALERT");
+                parent::message("Ocorreu um erro ao inativar a distribuiï¿½ï¿½o desse Projeto feita ao Componente, mas as outras aï¿½ï¿½es foram realizadas com sucesso.", "gerenciarpautareuniao/gerenciaradministrativo", "ALERT");
             }
             echo "<script>msg();</script>";
         }*/
@@ -1149,7 +1149,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
                         unlink($arquivo);
                     }
                     echo json_encode(array('error' => false));
-                    die;
+                    $this->_helper->viewRenderer->setNoRender(TRUE); 
 
                 }else{
                     throw new Exception ($sp);
@@ -1160,7 +1160,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
         catch (Exception $e) {
             //xd($e->getMessage());
             echo json_encode(array('error' => true, 'descricao' => "N&atilde;o foi poss&iacute;vel consolidar a vota&ccedil;&atilde;o do Projeto. <br />".$e->getMessage()));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
 
 
@@ -1343,7 +1343,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
             {
                 echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
                 return;
-                //parent::message("Ocorreu um erro ao inativar a distribuição desse Projeto feita ao Componente, mas as outras ações foram realizadas com sucesso.", "gerenciarpautareuniao/gerenciaradministrativo", "ALERT");
+                //parent::message("Ocorreu um erro ao inativar a distribuiï¿½ï¿½o desse Projeto feita ao Componente, mas as outras aï¿½ï¿½es foram realizadas com sucesso.", "gerenciarpautareuniao/gerenciaradministrativo", "ALERT");
             }*/
             //echo "<script>msg();</script>";
         }

@@ -25,7 +25,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 	 */
 	public function init()
 	{
-        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+	    $auth = Zend_Auth::getInstance(); // pega a autentica��o
         $this->idUsuario = $auth->getIdentity()->usu_codigo; // usu�rio logado
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
@@ -425,7 +425,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 echo json_encode(array('resposta'=>false));
             }
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function painelRecursosAction() { //Tela do Coordenador de Parecer
@@ -582,9 +582,12 @@ class RecursoController extends MinC_Controller_Action_Abstract
             echo json_encode(array('resposta'=>false));
         }
         die();
+
     }
 
     public function visualizarRecursoAction(){
+
+
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 103 && $this->idPerfil != 127){
             parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
         }
@@ -641,7 +644,6 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-            $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
 
             $parecer = new Parecer();
@@ -681,6 +683,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
     }
 
     public function formAvaliarRecursoAction(){
+
+        $mapperArea = new Agente_Model_AreaMapper();
 
         if($this->idPerfil != 94 && $this->idPerfil != 110){
             parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
@@ -738,7 +742,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-            $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+            $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
 
             $parecer = new Parecer();
@@ -1047,7 +1051,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function coordAnaliseFinalizarRecursoAction() {
@@ -1118,6 +1122,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             echo json_encode(array('resposta'=>false));
         }
         die();
+
     }
 
     public function devolverRecursoAction() {
@@ -1238,6 +1243,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
     public function formAvaliarRecursoCnicAction() {
 
+        $mapperArea = new Agente_Model_AreaMapper();
+
         if($this->idPerfil != 118){
             parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
         }
@@ -1287,7 +1294,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $Projetos = new Projetos();
             $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-            $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+            $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
 
             $parecer = new Parecer();
@@ -1616,6 +1623,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             echo json_encode(array('resposta'=>false));
         }
         die();
+
     }
 
     /**
@@ -1690,7 +1698,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function salvarAvaliacaoDoItemAction() {
@@ -1754,7 +1762,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 echo json_encode(array('resposta'=>true, 'msg'=>'Erro ao salvar os dados!'));
             }
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
 

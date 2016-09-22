@@ -8,7 +8,7 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
 
@@ -18,14 +18,14 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
 //    private $getIdUsuario = 0;
     private $intTamPag = 10;
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
 
-        // verifica as permissões
+        // verifica as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 92;
         $PermissoesGrupo[] = 93;
@@ -53,8 +53,8 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 139;
         parent::perfil(1, $PermissoesGrupo);
 
-        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 
         //SE CAIU A SECAO REDIRECIONA
         if(!$auth->hasIdentity()){
@@ -64,7 +64,7 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
 
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $idUsuarioLogado = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $this->idUsuarioLogado = $idUsuarioLogado;
         $this->getIdAgente = $idagente['idAgente'];
         $this->getIdGrupo  = $GrupoAtivo->codGrupo;
@@ -100,11 +100,11 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
             }
         } else {
             $dados = array();
-            $dados['msg'] = utf8_encode('<span style="color:red;">Projeto não encontrado.</span>');
+            $dados['msg'] = utf8_encode('<span style="color:red;">Projeto nï¿½o encontrado.</span>');
             $jsonEncode = json_encode($dados);
             echo json_encode(array('resposta'=>false,'conteudo'=>$dados));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); ;
     }
 
     public function buscarProjetosAnexosAction() {
@@ -147,18 +147,18 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
             }
         } else {
             $dados = array();
-            $dados['msg'] = utf8_encode('<span style="color:red;">Projeto não encontrado.</span>');
+            $dados['msg'] = utf8_encode('<span style="color:red;">Projeto nï¿½o encontrado.</span>');
             $jsonEncode = json_encode($dados);
             echo json_encode(array('resposta'=>false,'conteudo'=>$dados));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); ;
     }
 
     public function cadastrarDocumentoAction() {
         $pronac = $this->_request->getParam("Pronac");
         $tpDocumento = $this->_request->getParam("tpDocumento");
         if(empty($pronac) || empty($tpDocumento)){
-            parent::message("Favor preencher os dados obrigatórios!", "anexardocumentosminc", "ERROR");
+            parent::message("Favor preencher os dados obrigatï¿½rios!", "anexardocumentosminc", "ERROR");
         }
 
         try {
@@ -167,13 +167,13 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
 
             if(!empty($_FILES['arquivo']['tmp_name'])){
                 $arquivoNome     = $_FILES['arquivo']['name']; // nome
-                $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporário
+                $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporï¿½rio
                 $arquivoTipo     = $_FILES['arquivo']['type']; // tipo
                 $arquivoTamanho  = $_FILES['arquivo']['size']; // tamanho
 
                 if (!empty($arquivoNome) && !empty($arquivoTemp)){
-                    $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
-                    $arquivoBinario  = Upload::setBinario($arquivoTemp); // binário
+                    $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensï¿½o
+                    $arquivoBinario  = Upload::setBinario($arquivoTemp); // binï¿½rio
                     $arquivoHash     = Upload::setHash($arquivoTemp); // hash
                 }
 
@@ -229,7 +229,7 @@ class AnexardocumentosmincController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); ;
 
     }
 

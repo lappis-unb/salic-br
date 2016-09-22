@@ -59,7 +59,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
             } else{
                 echo json_encode(array('resposta'=>false));
             }
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
 
@@ -80,7 +80,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
         if(empty($rsProjeto)){
             if ($this->modal == "s") {
                 echo "<br/><br/><br/><br/><center><font color='red'>N&uacute;mero de Pronac inv&aacute;lido!!</font></center>";
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             } else {
                 parent::message("N&uacute;mero de Pronac inv&aacute;lido!", "mantercontabancaria/consultar", "ALERT");
             }
@@ -89,7 +89,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
         if(count($resp) < 1 && count($PronacExistente) > 0){
             if ($this->modal == "s") {
                 echo "<br/><br/><br/><br/><center><font color='red'>Voc� n�o tem acesso a esta unidade!</font></center>";
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             } else {
                 parent::message("Voc� n�o tem acesso a esta unidade!", "mantercontabancaria/consultar", "ALERT");
             }
@@ -102,7 +102,7 @@ class MantercontabancariaController extends MinC_Controller_Action_Abstract {
         } else {
             if ($this->modal == "s") {
                 echo "<br/><br/><br/><br/><center><font color='red'>Conta banc�ria inexistente!</font></center>";
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             } else {
                 parent::message("Conta banc�ria inexistente!", "mantercontabancaria/consultar", "ALERT");
             }

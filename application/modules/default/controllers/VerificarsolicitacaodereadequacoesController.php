@@ -3,12 +3,12 @@
 class VerificarSolicitacaoDeReadequacoesController extends MinC_Controller_Action_Abstract
 {
     public function init() {
-        // verifica as permissões
+        // verifica as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 94;  // Parecerista
         $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
-        $PermissoesGrupo[] = 121; // Técnico de Acompanhamento
-        $PermissoesGrupo[] = 129; // Técnico de Acompanhamento
+        $PermissoesGrupo[] = 121; // Tï¿½cnico de Acompanhamento
+        $PermissoesGrupo[] = 129; // Tï¿½cnico de Acompanhamento
         $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
         $PermissoesGrupo[] = 123; // Coordenador Geral de Acompanhamento
 
@@ -116,7 +116,7 @@ class VerificarSolicitacaoDeReadequacoesController extends MinC_Controller_Actio
 				$cont++;
 			endforeach;
 
-			// manda as informações para a visão
+			// manda as informaï¿½ï¿½es para a visï¿½o
 			$this->view->planAP = $planAP;
     }
 
@@ -143,7 +143,7 @@ class VerificarSolicitacaoDeReadequacoesController extends MinC_Controller_Actio
         $resultado = $buscaprojeto->buscarProjetos($idPronac);
         $this->view->buscaprojeto = $resultado;
 
-        // ========== INÍCIO MENSAGEM DE REDUÇÃO, COMPLEMENTO OU REMANEJAMENTO ==========
+        // ========== INï¿½CIO MENSAGEM DE REDUï¿½ï¿½O, COMPLEMENTO OU REMANEJAMENTO ==========
         $buscaProjetoProduto = new SolicitarReadequacaoCustoDAO();
         $verificarReadequacao = $buscaProjetoProduto->verificarreadequacao($idPronac);
 
@@ -152,13 +152,13 @@ class VerificarSolicitacaoDeReadequacoesController extends MinC_Controller_Actio
         $totalPlanilhaSolicitada = !empty($totalPlanilhaAprovada) ? number_format(($totalPlanilhaAprovada + $totalPlanilhaSolicitada) - $verificarReadequacao[0]['totalSolicitadoExcluido'], 2, '.', '') : $totalPlanilhaSolicitada;
 
         if ($totalPlanilhaAprovada > $totalPlanilhaSolicitada) :
-            $this->view->tipoReadeq = 'Solicitação de Redução';
+            $this->view->tipoReadeq = 'Solicitaï¿½ï¿½o de Reduï¿½ï¿½o';
         elseif ($totalPlanilhaAprovada < $totalPlanilhaSolicitada) :
-            $this->view->tipoReadeq = 'Solicitação de Complementação';
+            $this->view->tipoReadeq = 'Solicitaï¿½ï¿½o de Complementaï¿½ï¿½o';
         else :
-            $this->view->tipoReadeq = 'Solicitação de Remanejamento';
+            $this->view->tipoReadeq = 'Solicitaï¿½ï¿½o de Remanejamento';
         endif;
-        // ========== FIM MENSAGEM DE REDUÇÃO, COMPLEMENTO OU REMANEJAMENTO ==========
+        // ========== FIM MENSAGEM DE REDUï¿½ï¿½O, COMPLEMENTO OU REMANEJAMENTO ==========
 
         $buscaInformacoes = new VerificarSolicitacaodeReadequacoesDAO();
         $SolicitarReadequacaoCustoDAO = new SolicitarReadequacaoCustoDAO();
@@ -192,9 +192,9 @@ class VerificarSolicitacaoDeReadequacoesController extends MinC_Controller_Actio
         $this->view->status = $stAvaliacaoItemPedidoAlteracao;
 
         if($stAvaliacaoItemPedidoAlteracao == "AG") {
-            $this->view->statusAnalise = "Aguardando Análise";
+            $this->view->statusAnalise = "Aguardando Anï¿½lise";
         } elseif($stAvaliacaoItemPedidoAlteracao == "EA"){
-            $this->view->statusAnalise = "Em Análise";
+            $this->view->statusAnalise = "Em Anï¿½lise";
         } elseif($stAvaliacaoItemPedidoAlteracao == "AP"){
             $this->view->statusAnalise = "Aprovado";
         } elseif($stAvaliacaoItemPedidoAlteracao == "IN"){
@@ -220,7 +220,7 @@ class VerificarSolicitacaoDeReadequacoesController extends MinC_Controller_Actio
         $where = array("idAvaliacaoItemPedidoAlteracao = ?" => $resultado2->idAvaliacaoItemPedidoAlteracao);
 
         $alterarStatus = $tbAvaliacaoItemPedidoAlteracao->alterar($dados, $where);
-        parent::message("Situação alterada com sucesso!", "verificarsolicitacaodereadequacoes/planilhasolicitada?idPronac=$idPronac", "CONFIRM");
+        parent::message("Situaï¿½ï¿½o alterada com sucesso!", "verificarsolicitacaodereadequacoes/planilhasolicitada?idPronac=$idPronac", "CONFIRM");
 
     }
 
@@ -236,7 +236,7 @@ class VerificarSolicitacaoDeReadequacoesController extends MinC_Controller_Actio
         $agente = GerenciarPautaReuniaoDAO::consultaIdAgenteUsuario($auth->getIdentity()->usu_codigo);
         $agente = $db->fetchRow($agente);
         $idAgenteRemetente = $agente->idAgente;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $idPerfilRemetente = $GrupoAtivo->codGrupo;
 
         try{
@@ -303,12 +303,12 @@ class VerificarSolicitacaoDeReadequacoesController extends MinC_Controller_Actio
 
 
 //            $db->commit();
-            parent::message("Solicitação enviada com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetoparecerista" ,"CONFIRM");
+            parent::message("Solicitaï¿½ï¿½o enviada com sucesso!", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetoparecerista" ,"CONFIRM");
 
          } catch(Zend_Exception $e){
 
 //            $db->rollBack();
-            parent::message("Erro na finalização da solicitação", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetoparecerista" ,"ERROR");
+            parent::message("Erro na finalizaï¿½ï¿½o da solicitaï¿½ï¿½o", "verificarreadequacaodeprojeto/verificarreadequacaodeprojetoparecerista" ,"ERROR");
 
          }
 
@@ -366,9 +366,9 @@ class VerificarSolicitacaoDeReadequacoesController extends MinC_Controller_Actio
                 }
                
                 if (  $_POST['tpAcao'] == "N" || empty ( $_POST['tpAcao'] )) {
-                    parent::message("N&atilde;o há solicitaç&atilde;o de readequaç&atilde;o para este item.", "/verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$idPronac", "ALERT");
+                    parent::message("N&atilde;o hï¿½ solicitaï¿½&atilde;o de readequaï¿½&atilde;o para este item.", "/verificarreadequacaodeprojeto/readequacaoitensdecustoeditar?id=$idPronac", "ALERT");
                 }
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
             
         } else {

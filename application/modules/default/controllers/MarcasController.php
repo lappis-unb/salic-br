@@ -3,7 +3,7 @@
 class MarcasController extends MinC_Controller_Action_Abstract {
      
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
@@ -11,18 +11,18 @@ class MarcasController extends MinC_Controller_Action_Abstract {
     
     public function init()
     {
-        $auth = Zend_Auth::getInstance(); // pega a autenticaç?o
-        $this->view->title = "Salic - Sistema de Apoio ?s Leis de Incentivo ? Cultura"; // título da página
-        // 3 => autenticaç?o scriptcase e autenticaç?o/permiss?o zend (AMBIENTE PROPONENTE E MINC)
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½?o
+        $this->view->title = "Salic - Sistema de Apoio ?s Leis de Incentivo ? Cultura"; // tï¿½tulo da pï¿½gina
+        // 3 => autenticaï¿½?o scriptcase e autenticaï¿½?o/permiss?o zend (AMBIENTE PROPONENTE E MINC)
         // utilizar quando a Controller ou a Action for acessada via scriptcase e zend
         // define as permiss?es
 
         $this->idusuario = $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
 
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
-        $this->codGrupo = $codGrupo; //  Grupo ativo na sessão
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
+        $this->codGrupo = $codGrupo; //  Grupo ativo na sessï¿½o
         $this->codOrgao = $codOrgao;
         $this->view->codOrgao = $codOrgao;
         $this->view->codGrupo = $codGrupo;
@@ -102,7 +102,7 @@ class MarcasController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
     
 }

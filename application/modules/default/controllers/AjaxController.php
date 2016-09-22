@@ -17,10 +17,10 @@ class AjaxController extends MinC_Controller_Action_Abstract {
                 $cont++;
             }
             echo json_encode($municipio);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         } catch (Zend_Exception $e) {
             echo json_encode(array('error' => 'true'));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -46,7 +46,7 @@ class AjaxController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('error'=>true));
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function fundoClassificacaoAction(){
@@ -65,10 +65,10 @@ class AjaxController extends MinC_Controller_Action_Abstract {
             }
             //xd($dados);
             echo json_encode($dados);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         } catch (Zend_Exception $e) {
             echo json_encode(array('error' => 'true'));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
     }
@@ -90,10 +90,10 @@ class AjaxController extends MinC_Controller_Action_Abstract {
             //xd($_POST);
             //$dados = array_unique($dados);
             echo json_encode($dados);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         } catch (Zend_Exception $e) {
             echo json_encode(array('error' => 'true'));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
     }

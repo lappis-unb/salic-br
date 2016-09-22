@@ -82,6 +82,6 @@ class Agente_DddController extends Zend_Controller_Action
             } else {
                 echo json_encode(array('resposta'=>false));
             }
-            die();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 }

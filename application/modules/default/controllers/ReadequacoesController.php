@@ -100,7 +100,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $a++;
             }
             echo json_encode($cidadeArray);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
 
         if(isset($_POST['idEtapa']) && isset($_POST['idProduto'])) {
@@ -116,7 +116,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $a++;
             }
             echo json_encode($itensArray);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -254,7 +254,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
         //$jsonEncode = json_encode($dadosPlanilha);
         echo json_encode(array('resposta'=>true, 'dadosPlanilhaAtiva'=>$dadosPlanilhaAtiva, 'dadosPlanilhaEditavel'=>$dadosPlanilhaEditavel, 'valoresDoItem'=>$valoresDoItem, 'dadosProjeto'=>$dadosProjeto));
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -333,7 +333,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 } else {
             echo json_encode(array('resposta'=>false));
                 }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -432,7 +432,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             } else {
             echo json_encode(array('resposta'=>false));
             }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -519,7 +519,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $editarItem->save();
 
         echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -560,7 +560,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         $editarItem->save();
 
         echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -586,13 +586,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $editarItem->tpSolicitacao = 'N';
             } else if($editarItem->tpSolicitacao == 'I'){
                 $editarItem->delete();
-                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); die();
+                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
         $editarItem->save();
 
         echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -618,13 +618,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $editarItem->tpSolicitacao = 'N';
             } else if($editarItem->tpSolicitacao == 'I'){
                 $editarItem->delete();
-                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); die();
+                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
         $editarItem->save();
 
         echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -650,13 +650,13 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $editarItem->tpSolicitacao = 'N';
             } else if($editarItem->tpSolicitacao == 'I'){
                 $editarItem->delete();
-                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); die();
+                echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!')); $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
         $editarItem->save();
 
         echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function criarCampoTipoReadequacaoAction() {
@@ -932,7 +932,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $a++;
             }
             echo json_encode($cidadeArray);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
 
         $idPronac = $this->_request->getParam("idPronac");
@@ -1043,7 +1043,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         if($_POST['newPaisLR'] == 31){
             if(empty($_POST['newUFLR']) && empty($_POST['newMunicipioLR'])){
                 $msg = utf8_encode('Ao escolher o Brasil, os campos de UF e Munic�pio se tornam obrigat�rios no cadastro!');
-                echo json_encode(array('resposta'=>false, 'msg'=>$msg)); die();
+                echo json_encode(array('resposta'=>false, 'msg'=>$msg)); $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
             $verificaLocalRepetido = $tbAbrangencia->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S', 'idPais=?'=>$_POST['newPaisLR'], 'idUF=?'=>$_POST['newUFLR'], 'idMunicipioIBGE=?'=>$_POST['newMunicipioLR']));
         } else {
@@ -1071,7 +1071,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $msg = utf8_encode('Esse local de realiza��o j� foi cadastrado!');
             echo json_encode(array('resposta'=>false, 'msg'=>$msg));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -1140,7 +1140,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -1278,7 +1278,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $msg = utf8_encode('Esse plano de divulga��o j� foi cadastrado!');
             echo json_encode(array('resposta'=>false, 'msg'=>$msg));
     }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -1345,7 +1345,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -1511,7 +1511,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $msg = utf8_encode('Esse plano de distribui��o j� foi cadastrado!');
             echo json_encode(array('resposta'=>false, 'msg'=>$msg));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -1588,7 +1588,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -2217,7 +2217,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 echo json_encode(array('resposta'=>false));
             }
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /**
@@ -2474,7 +2474,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -2682,7 +2682,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -2770,7 +2770,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     /*
@@ -4036,7 +4036,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
                 $idReadequacao = $tbReadequacao->inserir($dados);
             } catch (Zend_Exception $e) {
                 echo json_encode(array('msg' => 'Houve um erro na cria��o do registro de tbReadequacao'));
-                die();
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
 
@@ -4083,7 +4083,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             } catch (Zend_Exception $e) {
                 echo json_encode(array('msg' => 'Houve um erro na cria��o das planilhas SR'));
             }
-            die();
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         } else {
             echo json_encode(array('msg' => 'Planilha existente'));
         }
