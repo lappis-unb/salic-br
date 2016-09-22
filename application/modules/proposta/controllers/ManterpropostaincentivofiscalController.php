@@ -454,7 +454,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
             $idAgente = $this->idResponsavel;
 
-            $tblVinculo = new TbVinculo();
+            $tblVinculo = new Agente_Model_DbTable_TbVinculo();
 
             $arrBuscaP['vp.idpreprojeto = ?'] = $idPreProjeto;
             $arrBuscaP['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;

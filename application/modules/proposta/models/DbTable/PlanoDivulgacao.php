@@ -1,17 +1,24 @@
 <?php
 /**
- * DivulgacaoDAO
+ * Class Proposta_Model_DbTable_PlanoDivulgacao
  *
- * @uses GenericModel
- * @package Webdav
- * @version //autogen//
+ * @name Proposta_Model_DbTable_PlanoDivulgacao
+ * @package Modules/Agente
+ * @subpackage Models/DbTable
+ * @version $Id$
+ *
  * @author  wouerner <wouerner@gmail.com>
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+ * @since 21/09/2016
+ *
+ * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
+ * @link http://salic.cultura.gov.br
  */
-class DivulgacaoDAO extends MinC_Db_Table_Abstract{
+class Proposta_Model_DbTable_PlanoDivulgacao extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'sac';
     protected $_schema = 'sac';
-    protected $_name  = 'PlanoDeDivulgacao';
+    protected $_name  = 'planodedivulgacao';
 
     public static function buscarDigulgacao($idPreProjeto){
         $sql = "SELECT
