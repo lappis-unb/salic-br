@@ -149,8 +149,8 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract {
         /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
 
-        $dao = new DivulgacaoDAO();
-        $this->view->itensplano = $dao->consultarDivulgacao();
+        $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
+        $this->view->itensplano = $tableVerificacao->findAll(array('idtipo' => 1), array('descricao'));
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
