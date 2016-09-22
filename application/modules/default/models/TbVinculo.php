@@ -15,7 +15,7 @@ class TbVinculo extends MinC_Db_Table_Abstract{
 
         $slct->from(
                 array('vi' => $this->_name),
-                array('*'),
+                $this->_getCols(),
                 $this->_schema
         );
 
@@ -48,7 +48,8 @@ class TbVinculo extends MinC_Db_Table_Abstract{
         {
             $slct->where($coluna, $valor);
         }
-        return $this->fetchAll($slct);
+        $result = $this->fetchAll($slct);
+        return ($result) ? $result->toArray() : array();
     }
 
 	/* M�todo que lista os vinculos do Proponente ao Responsavel
