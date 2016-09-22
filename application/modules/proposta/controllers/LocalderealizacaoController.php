@@ -14,6 +14,7 @@
 class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstract {
     private $idPreProjeto = null;
     private $usuarioLogado = null;
+    private $idUsuario = 0;
 
     /**
      * Reescreve o metodo init()
@@ -23,22 +24,23 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
      */
     public function init() {
 
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
+        $auth = Zend_Auth::getInstance();
+        $arrAuth = array_change_key_case((array) $auth->getIdentity());
         $PermissoesGrupo = array();
 
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
             //Recupera todos os grupos do Usuario
             $Usuario = new Autenticacao_Model_Usuario(); // objeto usu�rio
-            $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
+            $grupos = $Usuario->buscarUnidades($arrAuth['usu_codigo'], 21);
             foreach ($grupos as $grupo){
                 $PermissoesGrupo[] = $grupo->gru_codigo;
             }
         }
 
-        isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
+        isset($arrAuth['usu_codigo']) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
 
-        $this->usuarioLogado = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
+        $this->usuarioLogado = isset($arrAuth['usu_codigo']) ? $arrAuth['usu_codigo'] : $arrAuth['idusuario'];
         parent::init();
 
         //recupera ID do pre projeto (proposta)
@@ -55,8 +57,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
             }
         }
 
-        $auth = Zend_Auth::getInstance();
-        $this->idUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
+        $this->idUsuario = isset($arrAuth['usu_codigo']) ? $arrAuth['usu_codigo'] : $arrAuth['idusuario'];
 
         //*******************************************
         //VALIDA ITENS DO MENU (Documento pendentes)
@@ -110,7 +111,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         $arrBusca = array();
         $arrBusca['idprojeto']=$this->idPreProjeto;
         $arrBusca['stabrangencia'] = 1;
-        $tblAbrangencia = new Abrangencia();
+        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
 
         $arrDados = array("localizacoes"=>$rsAbrangencia,
@@ -133,24 +134,25 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         $idAbrangencia = $get->cod;
 
         //RECUPERA OS PAISES
-        $rsPais = DeslocamentoDAO::buscarPais();
+        $table = new Agente_Model_DbTable_Pais();
+        $arrPais = $table->fetchPairs('idpais', 'descricao');
 
         //RECUPRA OS ESTADOS
-        $rsEstados = Estado::buscar();
+        $mapperUf = new Agente_Model_UFMapper();
+        $arrUf = $mapperUf->fetchPairs('iduf', 'sigla');
 
         //RECUPERA LOCALIZACOES CADASTRADAS
-        $tblAbrangencia = new Abrangencia();
+        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $arrBusca = array();
         $arrBusca['idProjeto']=$this->idPreProjeto;
         $arrBusca['stAbrangencia']=1;
         if(!empty($idAbrangencia)) {
             $arrBusca['idAbrangencia']=$idAbrangencia;
         }
-        $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
-
-        $arrDados = array("paises"=>$rsPais,
-                "estados"=>$rsEstados,
-                "localizacoes"=>$rsAbrangencia,
+        $arrAbrangencia = $tblAbrangencia->buscar($arrBusca);
+        $arrDados = array("paises"=>$arrPais,
+                "estados"=>$arrUf,
+                "localizacoes"=>$arrAbrangencia,
                 "idAbrangencia"=>$idAbrangencia,
                 "acao"=>$this->_urlPadrao."/localderealizacao/salvar" );
 
@@ -167,7 +169,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         $post = Zend_Registry::get("post");
         $idAbrangencia = $post->cod;
         //instancia classe modelo
-        $tblAbrangencia = new Abrangencia();
+        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
 
         if(isset($_REQUEST['edital'])) {
             $edital = "&edital=s";
@@ -204,15 +206,13 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
         }
 
-        try {
+//        try {
             $global = 0;
-
             //incluindo novos registros
             if(empty($idAbrangencia)) {
                 //APAGA TODOS OS REGISTROS PARA CADASTRALOS NOVAMENTE
-                $tblAbrangencia->excluirPeloProjeto($this->idPreProjeto);
-            }
-            else {
+                $tblAbrangencia->deleteBy(array('idprojeto' => $this->idPreProjeto, 'stabrangencia' => 1));
+            } else {
 
                 foreach($locais as $d) {
 
@@ -231,7 +231,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
                 $resultado = $tblAbrangencia->verificarIgual($p, $u, $m, $this->idPreProjeto);
 
                 if(count($resultado)>0){
-                    parent::message("Registro j� cadastrado, transa��o cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
+                    parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
                     return;
                 }
 
@@ -254,16 +254,16 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
                 }
             }
             if($idAbrangencia) {
-                parent::message("Altera��o realizada com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
+                parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
             }
             else {
                 parent::message("Cadastro realizado com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
 
             }
 
-        }catch(Zend_Exception $ex) {
-            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o! <br>", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ERROR");
-        }
+//        }catch(Zend_Exception $ex) {
+//            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o! <br>", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ERROR");
+//        }
 
     }
 
@@ -282,14 +282,15 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
             $edital = "";
         }
 
-        $tblAbrangencia = new Abrangencia();
         //EXCLUI REGISTRO DA TABELA ABRANGENCIA
-        if($tblAbrangencia->excluir($idAbrangencia)) {
+        $mapper = new Proposta_Model_TbDeslocamentoMapper();
+        $excluir = $mapper->delete($_GET['id']);
+        if($excluir) {
 
-            parent::message("Exclus�o realizada com sucesso!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
+            parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
 
         }else {
-            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!", "/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ERROR");
+            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ERROR");
         }
     }
 
@@ -329,12 +330,14 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         $idProjeto = $get->idPreProjeto;
         $this->view->idPreProjeto = $idProjeto;
 
-        //RECUPERA OS PAISES
-        $rsPais = DeslocamentoDAO::buscarPais();
+        # RECUPERA OS PAISES
+        $tablePais = new Agente_Model_DbTable_Pais();
+        $rsPais = $tablePais->fetchPairs('idpais', 'descricao');
         $this->view->paises = $rsPais;
 
-        //RECUPERA OS ESTADOS
-        $rsEstados = Estado::buscar();
+        # RECUPERA OS ESTADOS
+        $mapperUf = new Agente_Model_UFMapper();
+        $rsEstados = $mapperUf->fetchPairs('iduf', 'descricao');
         $this->view->estados = $rsEstados;
     }
 
@@ -346,22 +349,18 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
      */
     public function cidadesAction() {
         $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
         $post = Zend_Registry::get('post');
         $idEstado = $post->idEstado;
 
-        //RECUPERA AS CIDADES
-        $Municipios = new Municipios();
-        $rsCidades = $Municipios->buscar(array('idUFIBGE = ?' => $idEstado));
-        if(count($rsCidades)>0){
-            $html = '';
-            foreach ($rsCidades as $cidades) {
-                $html .= '<option value="'.$cidades->idMunicipioIBGE.'">'.utf8_encode($cidades->Descricao).'</option>';
-            }
-            echo $html;
-        } else {
-            echo '';
+        # RECUPERA AS CIDADES
+        $table = new Agente_Model_DbTable_Municipios();
+        $arrCidades = $table->fetchPairs('idmunicipioibge', 'descricao', array('idufibge' => $idEstado));
+        $html = '';
+        foreach ($arrCidades as $key => $cidades) {
+            $html .= "<option value=\"{$key}\">{$cidades}</option>";
         }
-        die();
+        echo $html;
     }
 
     /**
@@ -373,7 +372,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
     public function salvarLocalRealizacaoAction() {
         $post = Zend_Registry::get("post");
         $idAbrangencia = $post->cod;
-        $tblAbrangencia = new Abrangencia();
+        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
 
         //RECUPERA LOCALIZACOES CADASTRADAS
         $arrBusca = array();
@@ -407,15 +406,15 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
         //INSERE LOCAIS DE REALIZACAO (tabela SAC.dbo.Abrangencia)
         $dados = array(
-                    "idProjeto"=>$this->idPreProjeto,
-                    "stAbrangencia" => 1,
-                    "Usuario"  =>$this->usuarioLogado,
-                    "idPais"   =>$pais,
-                    "idUF"     =>($pais==31) ? $estados : 0,
-                    "idMunicipioIBGE"=>($pais==31) ? $cidades : 0
+                    "idprojeto"=>$this->idPreProjeto,
+                    "stabrangencia" => 1,
+                    "usuario"  =>$this->usuarioLogado,
+                    "idpais"   =>$pais,
+                    "iduf"     =>($pais==31) ? $estados : 0,
+                    "idmunicipioibge"=>($pais==31) ? $cidades : 0
                 );
 
-        if (!empty($dados["idProjeto"]) && !empty($dados["idPais"])) {
+        if (!empty($dados["idprojeto"]) && !empty($dados["idpais"])) {
             $retorno = $tblAbrangencia->insert($dados);
         }
 

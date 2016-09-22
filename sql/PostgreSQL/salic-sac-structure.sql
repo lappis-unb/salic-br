@@ -364,12 +364,15 @@ CREATE TABLE sac.TetoRenuncia
   ValorUfir MONEY,
   ValorReal MONEY
 );
-CREATE TABLE sac.Tipo
+CREATE TABLE sac.tipo
 (
-  idTipo INT PRIMARY KEY NOT NULL,
-  Descricao VARCHAR(100) NOT NULL,
-  stEstado INTEGER DEFAULT 1 NOT NULL
+  idtipo INT PRIMARY KEY NOT NULL,
+  descricao VARCHAR(100) NOT NULL,
+  stestado INTEGER DEFAULT 1 NOT NULL
 );
+CREATE SEQUENCE sac.tipo_idtipo_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.tipo ALTER COLUMN idtipo SET DEFAULT nextval('sac.tipo_idtipo_seq');
+ALTER SEQUENCE sac.tipo_idtipo_seq OWNED BY sac.tipo.idtipo;
 
 CREATE TABLE sac.Verificacao
 (
@@ -1519,6 +1522,9 @@ CREATE TABLE sac.Abrangencia
   dtFimRealizacao timestamp,
   CONSTRAINT FK_Abrangencia_PreProjeto FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto)
 );
+CREATE SEQUENCE sac.abrangencia_idabrangencia_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.abrangencia ALTER COLUMN idabrangencia SET DEFAULT nextval('sac.abrangencia_idabrangencia_seq');
+ALTER SEQUENCE sac.abrangencia_idabrangencia_seq OWNED BY sac.abrangencia.idabrangencia;
 CREATE TABLE sac.AcaoProduto
 (
   Entidade int NOT NULL,
@@ -3176,6 +3182,9 @@ CREATE TABLE sac.tbDeslocamento
   idUsuario INT NOT NULL,
   CONSTRAINT FK_tbDeslocamento_tbDeslocamento FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto)
 );
+CREATE SEQUENCE sac.tbdeslocamento_iddeslocamento_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.tbdeslocamento ALTER COLUMN iddeslocamento SET DEFAULT nextval('sac.tbdeslocamento_iddeslocamento_seq');
+ALTER SEQUENCE sac.tbdeslocamento_iddeslocamento_seq OWNED BY sac.tbdeslocamento.iddeslocamento;
 CREATE TABLE sac.tbDespacho
 (
   idDespacho INT PRIMARY KEY NOT NULL,
@@ -8181,6 +8190,11 @@ CREATE TABLE sac.vwVeiculoDeDivulgacao
   stEstado INTEGER NOT NULL
 );
 ALTER TABLE sac.tbdeslocamento ALTER COLUMN idmunicipioorigem TYPE VARCHAR(6) USING idmunicipioorigem::VARCHAR(6);
+
+
+CREATE SEQUENCE sac.verificacao_idverificacao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.verificacao ALTER COLUMN idverificacao SET DEFAULT nextval('sac.verificacao_idverificacao_seq');
+ALTER SEQUENCE sac.verificacao_idverificacao_seq OWNED BY sac.verificacao.idverificacao;
 -- CREATE FUNCTION Aritmetica(@idPlanilhaItem INT) RETURNS INT;
 -- CREATE PROCEDURE DecriptografaObjetosBD(@ObjetoCriptografado SYSNAME, @SegurancaAlteracao INT);
 -- CREATE PROCEDURE dt_addtosourcecontrol(@vchSourceSafeINI VARCHAR, @vchProjectName VARCHAR, @vchComment VARCHAR, @vchLoginName VARCHAR, @vchPassword VARCHAR);
