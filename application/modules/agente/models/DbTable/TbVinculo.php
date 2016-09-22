@@ -1,5 +1,20 @@
 <?php
-class TbVinculo extends MinC_Db_Table_Abstract{
+
+/**
+ * Class Agente_Model_DbTable_TbVinculo
+ *
+ * @name Agente_Model_DbTable_TbVinculo
+ * @package Modules/Agente
+ * @subpackage Models/DbTable
+ * @version $Id$
+ *
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+ * @since 21/09/2016
+ *
+ * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
+ * @link http://salic.cultura.gov.br
+ */
+class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'agentes';
     protected $_schema = 'agentes';
@@ -12,7 +27,6 @@ class TbVinculo extends MinC_Db_Table_Abstract{
     	$slct = $this->select();
         $slct->distinct();
         $slct->setIntegrityCheck(false);
-
         $slct->from(
                 array('vi' => $this->_name),
                 $this->_getCols(),
@@ -150,7 +164,7 @@ class TbVinculo extends MinC_Db_Table_Abstract{
         return $this->fetchAll($slctUnion);
     }
 
-	/* M�todo que lista os respons�veis
+	/* Metodo que lista os responsaveis
      *
      * */
     public function buscarResponsaveis($where=array() , $idAgenteProponente)
@@ -223,7 +237,7 @@ class TbVinculo extends MinC_Db_Table_Abstract{
 		$select->order('p.NomeProjeto ASC');
 
 		return $this->fetchAll($select);
-	} // fecha m�todo buscarProponentesProjetosResponsavel()
+	}
 
 
 
