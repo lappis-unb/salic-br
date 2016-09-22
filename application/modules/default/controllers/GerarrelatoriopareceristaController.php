@@ -8,6 +8,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
     private $intTamPag = 100;
 
     public function init() {
+
         $this->view->title = "Salic - Sistema de Apoio �s Leis de Incentivo � Cultura"; // t�tulo da p�gina
 
         $auth = Zend_Auth::getInstance(); // instancia da autentica��o
@@ -449,7 +450,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
 
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=file.xls;");
-            echo $html; die();
+            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
             $this->view->qtdRegistros = $total;
@@ -460,6 +461,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
 
 
     public function consolidacaopareceristaAction(){
+        $mapperArea = new Agente_Model_AreaMapper();
         $OrgaosDAO      =   new Orgaos();
         $NomesDAO       =   new Nomes();
         $AreaDAO        =   new Area();
@@ -467,7 +469,7 @@ class GerarrelatoriopareceristaController extends MinC_Controller_Action_Abstrac
         $this->view->Orgaos         =   $OrgaosDAO->buscar(array('Status = ?'=>0,'Vinculo = ?'=>1));
         $this->view->Pareceristas   =   $NomesDAO->buscarPareceristas();
         	// O mesmo do Manter Agentes
-       		$this->view->comboareasculturais   = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
 
         $this->view->Areas          =   $AreaDAO->buscar();
         $this->view->Segmento       =   $SegmentoDAO->buscar(array('stEstado = ?'=>1));

@@ -117,7 +117,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $this->_helper->flashMessenger->addMessage("Nenhum projeto encontrado com o n&uacute;mero de Pronac informado");
             $this->_helper->flashMessengerType->addMessage("ERROR");
             JS::redirecionarURL($url);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
         #xd('5555555555');
         if (!isset($auth->getIdentity()->usu_codigo)) {
@@ -1191,7 +1191,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $this->_helper->flashMessenger->addMessage("N&atilde;o foi poss&iacute;vel abrir o arquivo especificado. Tente anex&aacute;-lo novamente.");
             $this->_helper->flashMessengerType->addMessage("ERROR");
             JS::redirecionarURL($url);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -1536,7 +1536,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=Providencia_Tomada".$nrPronacNm.".xls;");
-            echo $html; die();
+            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
 
         } else {
             $this->view->nrPronac      = $nrPronac;
@@ -1549,6 +1549,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
     public function recursoAction()
     {
+        $mapperArea = new Agente_Model_AreaMapper();
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $idPronac = $this->_request->getParam("idPronac");
         if (strlen($idPronac) > 7) {
@@ -1598,7 +1599,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             if($dados->tpSolicitacao == 'EN' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR' || $dados->tpSolicitacao == 'PI'){
                                 $this->view->projetosENReconsideracao = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-                                $this->view->comboareasculturaisReconsideracao = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+                                $this->view->comboareasculturaisReconsideracao= $mapperArea->fetchPairs('codigo',  'descricao');
                                 $this->view->combosegmentosculturaisReconsideracao = Segmentocultural::buscarSegmento($this->view->projetosENReconsideracao->cdArea);
 
                                 $parecer = new Parecer();
@@ -1636,7 +1637,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             if($dados->tpSolicitacao == 'EN' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR' || $dados->tpSolicitacao == 'PI'){
                                 $this->view->projetosENRecurso = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-                                $this->view->comboareasculturaisRecurso = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+                                $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
                                 $this->view->combosegmentosculturaisRecurso = Segmentocultural::buscarSegmento($this->view->projetosENRecurso->cdArea);
 
                                 $parecer = new Parecer();
@@ -2652,7 +2653,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         } catch (Zend_Exception $e) {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function carregarValorEntrePlanilhasAction() {
@@ -2747,7 +2748,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         } catch (Zend_Exception $e) {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function remanejamentoReintegrarPlanilhaAction() {
@@ -2802,7 +2803,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         } catch (Zend_Exception $e) {
             echo json_encode(array('resposta'=>false, 'msg'=>'Ocorreu um erro durante o processo.'));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function remanejamentoAlterarItemAction() {
@@ -2903,7 +2904,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function salvarAvaliacaoDoItemRemanejamentoAction() {
@@ -2976,7 +2977,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         //VERIFICA SE O VALOR TOTAL DOS DADOS INFORMADOR PELO PROPONENTE EST� ENTRE O M�NIMO E M�XIMO PERMITIDO - 20%
         if($vlTotal < $vlAtualMin || $vlTotal > $vlAtualMax){
             echo json_encode(array('resposta'=>false, 'msg'=>'O valor total do item desejado ultrapassou a margem de 20%.'));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         $editarItem = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'RP', 'idPlanilhaAprovacaoPai=?'=>$_POST['idPlanilha']))->current();
@@ -2989,7 +2990,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         $editarItem->save();
 
         echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function prestacaoDeContasAction()
@@ -4969,7 +4970,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                 $this->_helper->flashMessenger->addMessage("N�o foi poss�vel realizar concluir a opera��o para impress�o do projeto.".$e->getMessage());
                 $this->_helper->flashMessengerType->addMessage("ERROR");
                 JS::redirecionarURL($url);
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
                 //parent::message("N�o foi poss�vel realizar a opera��o!".$ex->getMessage(), "/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
             }
         }
@@ -5777,7 +5778,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                 $this->_helper->flashMessenger->addMessage("N�o foi poss�vel realizar concluir a opera��o para impress�o do projeto.".$e->getMessage());
                 $this->_helper->flashMessengerType->addMessage("ERROR");
                 JS::redirecionarURL($url);
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
                 //parent::message("N�o foi poss�vel realizar a opera��o!".$ex->getMessage(), "/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
             }
         }

@@ -19,6 +19,8 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
 	 */
 	public function init()
 	{
+        $mapperArea = new Agente_Model_AreaMapper();
+
             $auth = Zend_Auth::getInstance(); // instancia da autentica��o
             $PermissoesGrupo = array();
 
@@ -154,7 +156,7 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $rsLogomarcas = $tblLogomarca->buscar(array("idLogomarca=?"=>3));
         $arrDados["combologomarcas"] = $rsLogomarcas;
         $arrDados["comboprodutos"] = $rsProdutos;
-        $arrDados["comboareasculturais"] = ManterAgentes::buscarAreasCulturais();
+        $arrDados["comboareasculturais"] = $mapperArea->fetchPairs('codigo',  'descricao');
         $arrDados["acaoSalvar"] = $this->_urlPadrao."/proposta/plano-distribuicao/salvar?idPreProjeto=".$this->_idPreProjeto;
         $arrDados["urlApagar"] = $this->_urlPadrao."/proposta/plano-distribuicao/apagar?idPreProjeto=".$this->_idPreProjeto;
         $arrDados["acaoCancelar"] = $this->_urlPadrao."/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto;

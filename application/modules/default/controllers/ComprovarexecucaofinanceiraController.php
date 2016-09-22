@@ -891,7 +891,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
 
     }
 
@@ -1552,7 +1552,7 @@ class ComprovarexecucaofinanceiraController extends MinC_Controller_Action_Abstr
         else{
             echo json_encode(array('resp'=>false,'mensagem'=>utf8_encode('N&atilde;o foi poss�vel!')));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
     public function excluirdocumentoAction(){
         $this->_helper->layout->disableLayout();

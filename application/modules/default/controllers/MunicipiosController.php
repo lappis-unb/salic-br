@@ -6,13 +6,13 @@
  * @version 1.0
  * @package application
  * @subpackage application.controllers
- * @copyright © 2012 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2012 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 
 class MunicipiosController extends Zend_Controller_Action {
     /**
-     * Método para buscar as cidades de um estado
+     * Mï¿½todo para buscar as cidades de um estado
      * Busca como XML para o AJAX
      * @access public
      * @param void
@@ -25,7 +25,7 @@ class MunicipiosController extends Zend_Controller_Action {
         $post = Zend_Registry::get('post');
         $id = (int) $post->id;
 
-        // integração MODELO e VISÃO
+        // integraï¿½ï¿½o MODELO e VISï¿½O
         $Municipios = new Municipios();
         $this->view->combocidades = $Municipios->combo(array('idUFIBGE = ?' => $id));
     } // fecha comboAction()
@@ -38,7 +38,7 @@ class MunicipiosController extends Zend_Controller_Action {
         $post = Zend_Registry::get('post');
         $id = (int) $post->id;
 
-        // integração MODELO e VISÃO
+        // integraï¿½ï¿½o MODELO e VISï¿½O
         $Municipios = new Municipios();
         $result = $Municipios->combo(array('idUFIBGE = ?' => $id));
 
@@ -55,8 +55,8 @@ class MunicipiosController extends Zend_Controller_Action {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
 
-        
+
     } // fecha comboAction()
 }

@@ -44,6 +44,7 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
 
     public function indexAction() {
 
+        $mapperArea = new Agente_Model_AreaMapper();
         $Modalidade = new tbModalidade();
         $mecanismo = new Mecanismo();
         $mecanismo2 = $mecanismo->buscar(array('Status = ?' => 1))->toArray();
@@ -51,7 +52,7 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
         $tblSituacao = new Situacao();
         $rsSitucao = $tblSituacao->buscar(array("Codigo IN (?)" => array("A01", "A02", "A03", "A04", "A05", "A06", "A07", "A08", "A09", "A10", "A11", "A12", "A13", "A14", "A15", "A16", "A17", "A18", "A19", "A20", "A21", "A22", "A23", "A24", "A25", "A26", "A27", "A37", "A38", "A40", "A41", "B10", "B11", "B12", "B13", "B14", "B15", "E12")));
 
-        $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
         $this->view->comboestados = Estado::buscar();
         $this->view->mecanismo = $mecanismo2;
         $this->view->situacoes = $rsSitucao;
@@ -72,7 +73,7 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
             }
             $jsonSegmento = json_encode($vSegmento);
             echo $jsonSegmento;
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
 

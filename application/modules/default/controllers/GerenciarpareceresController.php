@@ -7,13 +7,13 @@
  * @package application
  * @subpackage application.controllers
  * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Politec - Todos os direitos reservados.
  */
 
 class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 {
 	/**
-	 * @var integer (variável com o id do usuário logado)
+	 * @var integer (variï¿½vel com o id do usuï¿½rio logado)
 	 * @access private
 	 */
 	private $getIdUsuario = 0;
@@ -21,19 +21,19 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
         
 	public function init()
 	{
-		$auth = Zend_Auth::getInstance(); // pega a autenticação
+		$auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 
-		// define as permissões
+		// define as permissï¿½es
 		$PermissoesGrupo = array();
 		$PermissoesGrupo[] = 93;  // Parecerista
 		$PermissoesGrupo[] = 94;  // Coordenador de Parecer UC 101
 		$PermissoesGrupo[] = 97;  // Gestor Salic
-		$PermissoesGrupo[] = 103;  // Coordenador de Análise
-		$PermissoesGrupo[] = 110;  // Técnico de Análise
+		$PermissoesGrupo[] = 103;  // Coordenador de Anï¿½lise
+		$PermissoesGrupo[] = 110;  // Tï¿½cnico de Anï¿½lise
 		
 		parent::perfil(1, $PermissoesGrupo);
 
-		// pega o idAgente do usuário logado
+		// pega o idAgente do usuï¿½rio logado
 		if (isset($auth->getIdentity()->usu_codigo))
 		{
 			$this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
@@ -120,11 +120,11 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
         }
 
         /** Usuario Logado ************************************************/
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario 	= $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
-        $codGrupo = $GrupoAtivo->codGrupo; //  Perfil ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
+        $codGrupo = $GrupoAtivo->codGrupo; //  Perfil ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->codGrupo = $codGrupo;
@@ -197,7 +197,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
                 $this->view->tipoPesqPronente = $tipoPesqPronente;
             }
 
-            //Data de consolidação
+            //Data de consolidaï¿½ï¿½o
             if(($dtI) && ($dtF == null)){
                 $where['convert(char(8),pa.DtParecer,112) = ?'] = str_replace("/", "", $dtI);
                 $this->view->dtI = $dtI;
@@ -211,10 +211,10 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
             }
 
 
-            /* Situação ************************************************************
+            /* Situaï¿½ï¿½o ************************************************************
             * C09 - Projeto fora da pauta - Proponente Inabilitado
-            * C20 - Análise Técnica Concluida
-            * C25 - Parecer Técnico desfavorável
+            * C20 - Anï¿½lise Tï¿½cnica Concluida
+            * C25 - Parecer Tï¿½cnico desfavorï¿½vel
             */
             if(($situacao) && ($sutuacaotc == 1)){
                 $where['p.Situacao = ?'] = "'".$situacao."'";
@@ -347,11 +347,11 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
         }
 
         /** Usuario Logado ************************************************/
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario 	= $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
-        $codGrupo = $GrupoAtivo->codGrupo; //  Perfil ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
+        $codGrupo = $GrupoAtivo->codGrupo; //  Perfil ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->codGrupo = $codGrupo;
@@ -412,7 +412,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
                 $where['n.Descricao <> ?'] = $nomeProponente;
             }
 
-            //Data de consolidação
+            //Data de consolidaï¿½ï¿½o
             if(($dtI) && ($dtF == null)){
                 $where['convert(char(8),pa.DtParecer,112) = ?'] = str_replace("/", "", $dtI);
                 //$sql .= " AND cast(convert(char(8),pa.DtParecer,112)as smalldatetime) = '".$dtI."'";
@@ -423,10 +423,10 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
                 //$sql .= " AND cast(convert(char(8),pa.DtParecer,112)as smalldatetime) between '".$dtI."' AND '".$dtF."' ";
             }
 
-            /* Situação ************************************************************
+            /* Situaï¿½ï¿½o ************************************************************
             * C09 - Projeto fora da pauta - Proponente Inabilitado
-            * C20 - Análise Técnica Concluida
-            * C25 - Parecer Técnico desfavorável
+            * C20 - Anï¿½lise Tï¿½cnica Concluida
+            * C25 - Parecer Tï¿½cnico desfavorï¿½vel
             */
             if(($situacao) && ($sutuacaotc == 1)){
                 $where['p.Situacao = ?'] = "'".$situacao."'";
@@ -523,11 +523,11 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
         }
 
         /** Usuario Logado ************************************************/
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario 	= $auth->getIdentity()->usu_codigo;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
-        $codGrupo = $GrupoAtivo->codGrupo; //  Perfil ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
+        $codGrupo = $GrupoAtivo->codGrupo; //  Perfil ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->codGrupo = $codGrupo;
@@ -587,7 +587,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
             $where['n.Descricao <> ?'] = $nomeProponente;
         }
 
-        //Data de consolidação
+        //Data de consolidaï¿½ï¿½o
         if(($dtI) && ($dtF == null)){
             $where['convert(char(8),pa.DtParecer,112) = ?'] = str_replace("/", "", $dtI);
             //$sql .= " AND cast(convert(char(8),pa.DtParecer,112)as smalldatetime) = '".$dtI."'";
@@ -598,10 +598,10 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
             //$sql .= " AND cast(convert(char(8),pa.DtParecer,112)as smalldatetime) between '".$dtI."' AND '".$dtF."' ";
         }
 
-        /* Situação ************************************************************
+        /* Situaï¿½ï¿½o ************************************************************
         * C09 - Projeto fora da pauta - Proponente Inabilitado
-        * C20 - Análise Técnica Concluida
-        * C25 - Parecer Técnico desfavorável
+        * C20 - Anï¿½lise Tï¿½cnica Concluida
+        * C25 - Parecer Tï¿½cnico desfavorï¿½vel
         */
         if(($situacao) && ($sutuacaotc == 1)){
             $where['p.Situacao = ?'] = "'".$situacao."'";
@@ -625,9 +625,9 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
                 <tr>
                     <th width='100' align='left'>PRONAC</th>
                     <th width='50' align='left'>Nome do Projeto</th>
-                    <th width='100' align='left'>Situação</th>
+                    <th width='100' align='left'>Situaï¿½ï¿½o</th>
                     <th width='100' align='center'>Nome do Proponente</th>
-                    <th width='100' align='center'>Dt. Consolidação</th>
+                    <th width='100' align='center'>Dt. Consolidaï¿½ï¿½o</th>
                 </tr>";
         
         foreach($busca as $d){
@@ -660,7 +660,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 	public function dadosdaanalisetecnicaAction()
 	{
 		/** Usuario Logado ************************************************/
-		$auth = Zend_Auth::getInstance(); // instancia da autenticação
+		$auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
 		$idusuario 	= $auth->getIdentity()->usu_codigo;
 		/******************************************************************/
 		
@@ -684,7 +684,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 	public function devolverprojetoAction() {
 
             /** Usuario Logado ************************************************/
-            $auth = Zend_Auth::getInstance(); // instancia da autenticação
+            $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
             $idusuario 	= $auth->getIdentity()->usu_codigo;
             /******************************************************************/
 	    
@@ -733,7 +733,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 
 		$orgao = $orgaos->pesquisarNomeOrgao($idorgao);
 		$projetos = new Projetos();
-		$projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Devolvido para unidade ' . $orgao[0]->NomeOrgao . ' para revisão do parecer técnico.');
+		$projetos->alterarSituacao($dp->IdPRONAC, null, 'B11', 'Devolvido para unidade ' . $orgao[0]->NomeOrgao . ' para revisï¿½o do parecer tï¿½cnico.');
                 $db->commit();
                 parent::message("Devolvido com sucesso!", "gerenciarpareceres/index", "CONFIRM");
 
@@ -747,13 +747,13 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 	public function devolveranaliseAction()
 	{
 		/** Usuario Logado ************************************************/
-		$auth = Zend_Auth::getInstance(); // instancia da autenticação
+		$auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
 		$idusuario 	= $auth->getIdentity()->usu_codigo;
 		//$idorgao 	= $auth->getIdentity()->usu_orgao;
 		
-		$GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-		//$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-		$codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+		$GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+		//$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+		$codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 		
 		
 		$this->view->codOrgao = $codOrgao;
@@ -767,7 +767,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 		
 		if((strlen($observacao) < 11) or (strlen($observacao) > 505))
 		{
-			parent::message("Campo Justificativa deve conter no mínimo 10 e no máximo 500 caracteres.", 
+			parent::message("Campo Justificativa deve conter no mï¿½nimo 10 e no mï¿½ximo 500 caracteres.", 
 							"gerenciarpareceres/devolverparaanalise/idproduto/".$idproduto."/tipoanalise/".$tipoanalise."/idpronac/".$idpronac ,
 							"ALERT");
 		}	
@@ -809,7 +809,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 		$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 		
 		/** Usuario Logado ************************************************/
-		$auth = Zend_Auth::getInstance(); // instancia da autenticação
+		$auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
 		$idusuario 	= $auth->getIdentity()->usu_codigo;
 		/******************************************************************/
 		
@@ -822,13 +822,13 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 	public function pareceresaconsolidarAction()
 	{
 		/** Usuario Logado ************************************************/
-		$auth = Zend_Auth::getInstance(); // instancia da autenticação
+		$auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
 		$idusuario 	= $auth->getIdentity()->usu_codigo;
 		//$idorgao 	= $auth->getIdentity()->usu_orgao;
 		
-		$GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-		//$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-		$codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+		$GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+		//$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+		$codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 		
 		$this->view->codOrgao = $codOrgao;
 		$this->view->idUsuarioLogado = $idusuario;
@@ -853,13 +853,13 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 	public function pcvisualizartramitacaoAction()
 	{
 		/** Usuario Logado ************************************************/
-		$auth = Zend_Auth::getInstance(); // instancia da autenticação
+		$auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
 		$idusuario 	= $auth->getIdentity()->usu_codigo;
 		//$idorgao 	= $auth->getIdentity()->usu_orgao;
 		
-		$GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-		//$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-		$codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+		$GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+		//$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+		$codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 		
 		$this->view->codOrgao = $codOrgao;
 		$this->view->idUsuarioLogado = $idusuario;
@@ -893,14 +893,14 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 		
 		$html = "<table cellspacing='0' cellpadding='2' border='1' align='center' width='99%'>
 					<tr>
-						<td colspan='6' height='30' align='center'>VISUALIZAÇÃO DE TRAMITAÇÃO</td>
+						<td colspan='6' height='30' align='center'>VISUALIZAï¿½ï¿½O DE TRAMITAï¿½ï¿½O</td>
 					</tr>
 					<tr>
 						<th width='100' align='left'>Produto</th>
 						<th width='100' align='left'>TipoAnalise</th>
 						<th width='100' align='left'>Unidade</th>
 						<th width='120' align='center'>Data de Envio</th>
-						<th width='150' align='left'>Observação</th>
+						<th width='150' align='left'>Observaï¿½ï¿½o</th>
 						<th width='100' align='left'>Usuario</th>
 					</tr>";
 					foreach($busca as $d): 
@@ -925,13 +925,13 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 	public function consolidarpareceresAction()
 	{
 		/** Usuario Logado ************************************************/
-		$auth = Zend_Auth::getInstance(); // instancia da autenticação
+		$auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
 		$idusuario 	= $auth->getIdentity()->usu_codigo;
 		//$idorgao 	= $auth->getIdentity()->usu_orgao;
 		
-		$GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-		//$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-		$codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+		$GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+		//$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+		$codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 		
 		$this->view->codOrgao = $codOrgao;
 		$this->view->idUsuarioLogado = $idusuario;
@@ -943,7 +943,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 	public function execconsolidacaoAction()
 	{
 		$exec = GerenciarPareceresDAO::execPareceres();
-		//O Procedimento foi executado, porém, não retornou resultados
+		//O Procedimento foi executado, porï¿½m, nï¿½o retornou resultados
 		if($exec)
 		{
 			parent::message("O Procedimento foi executado com sucesso!", "gerenciarpareceres/consolidarpareceres", "ALERT");	
@@ -979,7 +979,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
             $u = '';
             $html = "<table cellspacing='0' cellpadding='2' border='1' align='center' width='99%'>
                     <tr>
-                            <td colspan='7' height='30' align='center'>Tramitação do Projeto: ".$nomeProjeto."</td>
+                            <td colspan='7' height='30' align='center'>Tramitaï¿½ï¿½o do Projeto: ".$nomeProjeto."</td>
                     </tr>
                     <tr>
                             <th width='100' align='left'>Produto</th>
@@ -987,7 +987,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
                             <th width='100' align='left'>Unidade</th>
                             <th width='100' align='center'>Data de Envio</th>
                             <th width='100' align='center'>Data de Retorno</th>
-                            <th width='100' align='left'>Observação</th>
+                            <th width='100' align='left'>Observaï¿½ï¿½o</th>
                             <th width='50' align='left'>Usuario</th>
                     </tr>";
             $idproduto = '';
@@ -1037,7 +1037,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
             $u = '';
             $html = "<table cellspacing='0' cellpadding='2' border='1' align='center' width='99%'>
                     <tr>
-                            <td colspan='7' height='30' align='center'>Tramitação do Projeto: ".$nomeProjeto."</td>
+                            <td colspan='7' height='30' align='center'>Tramitaï¿½ï¿½o do Projeto: ".$nomeProjeto."</td>
                     </tr>
                     <tr>
                             <th width='100' align='left'>Produto</th>
@@ -1045,7 +1045,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
                             <th width='100' align='left'>Unidade</th>
                             <th width='100' align='center'>Data de Envio</th>
                             <th width='100' align='center'>Data de Retorno</th>
-                            <th width='100' align='left'>Observação</th>
+                            <th width='100' align='left'>Observaï¿½ï¿½o</th>
                             <th width='50' align='left'>Usuario</th>
                     </tr>";
             $idproduto = '';
@@ -1100,7 +1100,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 		$pronac 	= $this->_request->getParam("pronac");
 
 		Zend_Debug::dump($this->_request->getParams());
-		exit();
+		$this->_helper->viewRenderer->setNoRender(TRUE);
 		
 		if($idpronac && $pronac)
 		{
@@ -1108,17 +1108,17 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 			// Tem que existir
 			$emPauta = GerenciarPareceresDAO::emPauta($idpronac);
 			
-			// Não pode estár aprovado
+			// Nï¿½o pode estï¿½r aprovado
 			$projetoAprovado = GerenciarPareceresDAO::projetoAprovado($pronac);
 			
 			if(!$emPauta)
 			{
-				parent::message("O projeto não está em situação de pauta e não pode ser desconsolidado.", "gerenciarpareceres/index", "ALERT");
+				parent::message("O projeto nï¿½o estï¿½ em situaï¿½ï¿½o de pauta e nï¿½o pode ser desconsolidado.", "gerenciarpareceres/index", "ALERT");
 			}
 				
 			if($projetoAprovado)
 			{
-				parent::message("O projeto já está aprovado e não pode ser desconsolidado.", "gerenciarpareceres/index", "ALERT");
+				parent::message("O projeto jï¿½ estï¿½ aprovado e nï¿½o pode ser desconsolidado.", "gerenciarpareceres/index", "ALERT");
 			}
 			
 			$db = Zend_Registry :: get('db');
@@ -1147,7 +1147,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 		}
 		else
 		{
-			parent::message("Projeto não encontrado!", "gerenciarpareceres/index", "ERROR");
+			parent::message("Projeto nï¿½o encontrado!", "gerenciarpareceres/index", "ERROR");
 		}
 		
 		

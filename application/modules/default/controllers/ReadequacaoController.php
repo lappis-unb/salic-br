@@ -2772,8 +2772,8 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			endforeach;
 			$json = json_encode($vlJson);
 			echo $json;
-			die();
-		endif;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
+        endif;
 	} // fecha m�todo popFormCustoAction()
 
 
@@ -2806,8 +2806,8 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 			endforeach;
 			$json = json_encode($vlJson);
 			echo $json;
-			die();
-		endif;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
+        endif;
 	} // fecha m�todo popItensCustoAction()
 
 } // fecha class

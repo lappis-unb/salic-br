@@ -4,7 +4,7 @@ $(document).ready(function(){
 
         $("#enviar").click(function(){
             if($("#tipoDocumento").val()== ''){
-                alert('Favor selecione o Componente da Comissão!')
+                alert('Favor selecione o Componente da Comissï¿½o!')
                 $("#tipoDocumento").focus();
                 return false;
             }
@@ -20,30 +20,30 @@ $(document).ready(function(){
 });
 </script>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">Início</a></li>
-		<li><a href="<?php echo $this->url(array('controller' => 'areadetrabalho', 'action' => 'index')); ?>" title="Ir para Análise do Membro da Comissão">Análise do Membro da Comissão</a></li>
-		<li class="last">Histórico</li>
+		<li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Inï¿½cio">Inï¿½cio</a></li>
+		<li><a href="<?php echo $this->url(array('controller' => 'areadetrabalho', 'action' => 'index')); ?>" title="Ir para Anï¿½lise do Membro da Comissï¿½o">Anï¿½lise do Membro da Comissï¿½o</a></li>
+		<li class="last">Histï¿½rico</li>
 	</ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
-	<div>Histórico <span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+	<div>Histï¿½rico <span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 
 
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 
 <?php 
-	/*Zend_Debug::dump($this->historico);exit();*/
+	/*Zend_Debug::dump($this->historico);$this->_helper->viewRenderer->setNoRender(TRUE);*/
 
 ?>
 
@@ -69,8 +69,8 @@ $(document).ready(function(){
 <table class="tabela">
   <tr class="titulo_tabela">
     <th><div align="center">Data</div></th>
-    <th><div align="center">De Usuário</div></th>
-    <th><div align="center">Para Usuário</div></th>
+    <th><div align="center">De Usuï¿½rio</div></th>
+    <th><div align="center">Para Usuï¿½rio</div></th>
         <th><div align="center">Mensagem</div></th>
   </tr>
  <?php foreach($this->historico as $tbhistorico): ?>
@@ -94,8 +94,8 @@ $(document).ready(function(){
      <div align="center">    
      
         	<textarea  class="textarea_simples" type="text" name="descricao" id="descricao" cols="40"  rows="4" 
-	            		onclick="limpar_campo(this, 'Digite a Mensagem e depois selecione o Componente da Comissão...');" onkeypress=" "
-	            		onblur="restaurar_campo(this, 'Digite a Mensagem e depois selecione o Componente da Comissão...');">Digite a Mensagem e depois selecione o Componente da Comissão...<?php echo isset($this->dsMensagem) ? $this->dsMensagem : ''; ?></textarea>
+	            		onclick="limpar_campo(this, 'Digite a Mensagem e depois selecione o Componente da Comissï¿½o...');" onkeypress=" "
+	            		onblur="restaurar_campo(this, 'Digite a Mensagem e depois selecione o Componente da Comissï¿½o...');">Digite a Mensagem e depois selecione o Componente da Comissï¿½o...<?php echo isset($this->dsMensagem) ? $this->dsMensagem : ''; ?></textarea>
      
      
      </div></td></tr>
@@ -105,7 +105,7 @@ $(document).ready(function(){
     <div align="center" class="titulo_tabela"> <label for="tipoDocumento">Encaminhar para:</label></div>
   </td></tr>
     <tr><td align="center" >
-  <select name="componenteComissao" id="tipoDocumento" class="input_simples"><option value="">- Selecione o Componente da Comissão - </option>
+  <select name="componenteComissao" id="tipoDocumento" class="input_simples"><option value="">- Selecione o Componente da Comissï¿½o - </option>
 				<?php foreach ($this->componentecomissao as $comboComponenteComissao) { ?>
 				<option value="<?php echo $comboComponenteComissao->agente; ?>"><?php echo $comboComponenteComissao->nomeConselheiro;?></option>
 				<?php } ?>
@@ -134,12 +134,12 @@ $(document).ready(function(){
 
 
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEï¿½DO ========== -->
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 
 <br clear="all" />

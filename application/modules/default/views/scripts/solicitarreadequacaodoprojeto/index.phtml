@@ -1,18 +1,18 @@
 <script src='<?php echo $this->baseUrl(); ?>/public/js/jquery.MultiFile.js' type="text/javascript" language="javascript"></script>
 <?php require_once "inc/menu.inc.php"; // menu ?>
-<!-- início: navegação local #qm0 -->
-<div id="Teste" class="sumir" title="Enviar Solicitação"><p>Solicitação de readequação realizada com sucesso! Deseja fazer nova readequação?</p></div>
-<div id="Teste2" class="sumir" title="Enviar Solicitação"><p>Solicitação de readequação realizada com sucesso! Deseja fazer nova readequação?</p></div>
-<div id="cadastrarProduto" class="sumir" title="Cadastrar Produto"><p>Produto cadastrado com sucesso!</p><p>É necessário enviar a planilha de custo para o produto cadastrado.</p></div>
-<div id="div" class="sumir" title="Alerta">Dados obrigatórios não informados!</div>
-<div id="div-excluir-local" class="sumir" title="Exclusão de Local">O preenchimento da justificativa é obrigatório para realização da exclusão!</div>
-<div id="div-confirm" class="sumir" title="Alerta">Solicitaçao enviada com sucesso!</div>
+<!-- inï¿½cio: navegaï¿½ï¿½o local #qm0 -->
+<div id="Teste" class="sumir" title="Enviar Solicitaï¿½ï¿½o"><p>Solicitaï¿½ï¿½o de readequaï¿½ï¿½o realizada com sucesso! Deseja fazer nova readequaï¿½ï¿½o?</p></div>
+<div id="Teste2" class="sumir" title="Enviar Solicitaï¿½ï¿½o"><p>Solicitaï¿½ï¿½o de readequaï¿½ï¿½o realizada com sucesso! Deseja fazer nova readequaï¿½ï¿½o?</p></div>
+<div id="cadastrarProduto" class="sumir" title="Cadastrar Produto"><p>Produto cadastrado com sucesso!</p><p>ï¿½ necessï¿½rio enviar a planilha de custo para o produto cadastrado.</p></div>
+<div id="div" class="sumir" title="Alerta">Dados obrigatï¿½rios nï¿½o informados!</div>
+<div id="div-excluir-local" class="sumir" title="Exclusï¿½o de Local">O preenchimento da justificativa ï¿½ obrigatï¿½rio para realizaï¿½ï¿½o da exclusï¿½o!</div>
+<div id="div-confirm" class="sumir" title="Alerta">Solicitaï¿½ao enviada com sucesso!</div>
 
 
 <?php
 $enviar = $this->botao;
 
-if ($menu=="Botão") {
+if ($menu=="Botï¿½o") {
 	$readonly = 'readonly="readonly"';
 } else {
 	$readonly = '';
@@ -23,7 +23,7 @@ if ($menu=="Botão") {
    
     <!--
     /**
-     * Validação genérica de formulário com o editor de texto
+     * Validaï¿½ï¿½o genï¿½rica de formulï¿½rio com o editor de texto
      */
     function validarFormulario(form)
     {
@@ -76,16 +76,16 @@ if ($menu=="Botão") {
         $("#Teste").dialog("destroy");
 
         return verifica;
-    } // fecha função validarFormulario()
+    } // fecha funï¿½ï¿½o validarFormulario()
 
     /**
-     * Validação genérica de formulário local
+     * Validaï¿½ï¿½o genï¿½rica de formulï¿½rio local
      */
     function validarLocalDeRealizacao()
     {
         var verifica = true;
 
-        // valida uf e cidade caso seja o país brasil
+        // valida uf e cidade caso seja o paï¿½s brasil
         if (document.getElementById('pais').value == 31 && (document.getElementById('estados').value == "" || document.getElementById('cidade').value == ""))
         {
             verifica = false;
@@ -101,7 +101,7 @@ if ($menu=="Botão") {
         $("#Teste").dialog("destroy");
 
         return verifica;
-    } // fecha função validarLocalDeRealizacao()
+    } // fecha funï¿½ï¿½o validarLocalDeRealizacao()
 
     function validarProduto(form)
     {
@@ -142,7 +142,7 @@ if ($menu=="Botão") {
                 closeOnEscape: false,
                 buttons:
                     {
-                    'Não': function()
+                    'Nï¿½o': function()
                     {
                         $(this).dialog('close');
                         $('#formPlano').attr('action','<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'novoproduto2')); ?>');
@@ -226,7 +226,7 @@ if ($menu=="Botão") {
 
 
     /**
-     * Função EnviarProposta
+     * Funï¿½ï¿½o EnviarProposta
      */
     function EnviarProposta()
     {
@@ -243,7 +243,7 @@ if ($menu=="Botão") {
                 closeOnEscape: false,
                 buttons:
                     {
-                    'Não': function()
+                    'Nï¿½o': function()
                     {
                         $('#Curso').attr('action','<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'naoenviarsolicitacaoproposta')); ?>');
                         $('#Curso')[0].submit();
@@ -257,12 +257,12 @@ if ($menu=="Botão") {
             });
             $('.ui-dialog-titlebar-close').remove();
         }
-    } // fecha função EnviarProposta()
+    } // fecha funï¿½ï¿½o EnviarProposta()
 
 
 
     /**
-     * Função EnviarFicha
+     * Funï¿½ï¿½o EnviarFicha
      */
     function EnviarFicha()
     {
@@ -281,7 +281,7 @@ if ($menu=="Botão") {
                 closeOnEscape: false,
                 buttons:
                     {
-                    'Não': function()
+                    'Nï¿½o': function()
                     {
                         $(this).dialog('close');
                         $('#Ficha').attr('action','<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'termo2')); ?>');
@@ -297,12 +297,12 @@ if ($menu=="Botão") {
             });
             $('.ui-dialog-titlebar-close').remove();
         }
-    } // fecha função EnviarFicha()
+    } // fecha funï¿½ï¿½o EnviarFicha()
 
 
 
     /**
-     * Função validarCurso
+     * Funï¿½ï¿½o validarCurso
      */
     function validarCurso()
     {
@@ -321,7 +321,7 @@ if ($menu=="Botão") {
             $("#Teste").dialog("destroy");
             $("#dialog-alert").dialog('open');
         }
-    } // fecha função validarCurso()
+    } // fecha funï¿½ï¿½o validarCurso()
 
     function Janela()
     {
@@ -335,7 +335,7 @@ if ($menu=="Botão") {
             closeOnEscape: false,
             buttons:
                 {
-                'Não': function()
+                'Nï¿½o': function()
                 {
                     $(this).dialog('close');
                     $('#Curso').attr('action','<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'naoenviarsolicitacaoproposta')); ?>');
@@ -352,7 +352,7 @@ if ($menu=="Botão") {
     }
 
     /**
-     * Função EnviarLocal()
+     * Funï¿½ï¿½o EnviarLocal()
      */
     function EnviarLocal()
     {
@@ -370,7 +370,7 @@ if ($menu=="Botão") {
                 closeOnEscape: false,
                 buttons:
                     {
-                    'Não': function()
+                    'Nï¿½o': function()
                     {
                         $(this).dialog('close');
                         $('#Local').attr('action','<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'local2')); ?>');
@@ -385,12 +385,12 @@ if ($menu=="Botão") {
             });
             $('.ui-dialog-titlebar-close').remove();
         } // fecha if
-    } // fecha função EnviarLocal()
+    } // fecha funï¿½ï¿½o EnviarLocal()
 
 
 
     /**
-     * Função EnviarProjeto
+     * Funï¿½ï¿½o EnviarProjeto
      */
     function EnviarProjeto()
     {
@@ -408,7 +408,7 @@ if ($menu=="Botão") {
                 closeOnEscape: false,
                 buttons:
                     {
-                    'Não': function()
+                    'Nï¿½o': function()
                     {
                         $(this).dialog('close');
                         $('#Projeto').attr('action','<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'nomeproponente2')); ?>');
@@ -424,12 +424,12 @@ if ($menu=="Botão") {
             });
             $('.ui-dialog-titlebar-close').remove();
         } // fecha if
-    } // fecha função EnviarProjeto()
+    } // fecha funï¿½ï¿½o EnviarProjeto()
 
 
 
 	/**
-	 * Função EnviarExecucao
+	 * Funï¿½ï¿½o EnviarExecucao
 	 */
 function EnviarExecucao()
 {
@@ -437,30 +437,30 @@ function EnviarExecucao()
     var data2 = $('#datepicker2').val();
     var ano1  = $('#datepicker1').val().substr(6,4);
     var ano2  = $('#datepicker2').val().substr(6,4);
-    var dataI = $('#data1').val(); // data inicial de execução
-    var dataF = $('#data2').val(); // data final de execução
+    var dataI = $('#data1').val(); // data inicial de execuï¿½ï¿½o
+    var dataF = $('#data2').val(); // data final de execuï¿½ï¿½o
 
     if ( dataI == "" &&  dataF  == "")
     {
         if (!validarData(data1))
         {
-            var div = $("<div id='modal-validar-dataE-validacao1'></div>").html('Data de Início Inválida!').appendTo('body');
+            var div = $("<div id='modal-validar-dataE-validacao1'></div>").html('Data de Inï¿½cio Invï¿½lida!').appendTo('body');
             alertModal("Alert", "modal-validar-dataE-validacao1");
         }
         else if (!validarData(data2))
         {
-            var div = $("<div id='modal-validar-dataE-validacao2'></div>").html('Data de Fim Inválida!').appendTo('body');
+            var div = $("<div id='modal-validar-dataE-validacao2'></div>").html('Data de Fim Invï¿½lida!').appendTo('body');
             alertModal("Alert", "modal-validar-dataE-validacao2");
         }
         else if (compararDataInicialDataFinal(data1, data2) == 1)
         {
-            var div = $("<div id='modal-validar-dataE-inicio'></div>").html('Data Início não poderá ser superior a Data Fim!').appendTo('body');
+            var div = $("<div id='modal-validar-dataE-inicio'></div>").html('Data Inï¿½cio nï¿½o poderï¿½ ser superior a Data Fim!').appendTo('body');
             alertModal("Alert", "modal-validar-dataE-inicio");
         }
 
         else if (ano1 != ano2)
         {
-            var div = $("<div id='modal-validar-dataE-ano'></div>").html('As Datas deverão ser na ocorrência do mesmo ano de exercício fiscal!').appendTo('body');
+            var div = $("<div id='modal-validar-dataE-ano'></div>").html('As Datas deverï¿½o ser na ocorrï¿½ncia do mesmo ano de exercï¿½cio fiscal!').appendTo('body');
             alertModal("Alert", "modal-validar-dataE-ano");
         }
         else
@@ -479,7 +479,7 @@ function EnviarExecucao()
                     closeOnEscape: false,
                     buttons:
                         {
-                        'Não': function()
+                        'Nï¿½o': function()
                         {
 
                             $(this).dialog('close');
@@ -503,32 +503,32 @@ function EnviarExecucao()
 
         if (data1 == "" || data1 == "00/00/0000" || data2 == "" || data2 == "00/00/0000")
         {
-            var div = $("<div id='modal-validar-dataE'></div>").html('Dados obrigatórios não informados!').appendTo('body');
+            var div = $("<div id='modal-validar-dataE'></div>").html('Dados obrigatï¿½rios nï¿½o informados!').appendTo('body');
             alertModal("Alert", "modal-validar-dataE");
         }
         else if (!validarData(data1))
         {
-            var div = $("<div id='modal-validar-dataE-validacao1'></div>").html('Data de Início Inválida!').appendTo('body');
+            var div = $("<div id='modal-validar-dataE-validacao1'></div>").html('Data de Inï¿½cio Invï¿½lida!').appendTo('body');
             alertModal("Alert", "modal-validar-dataE-validacao1");
         }
         else if (!validarData(data2))
         {
-            var div = $("<div id='modal-validar-dataE-validacao2'></div>").html('Data de Fim Inválida!').appendTo('body');
+            var div = $("<div id='modal-validar-dataE-validacao2'></div>").html('Data de Fim Invï¿½lida!').appendTo('body');
             alertModal("Alert", "modal-validar-dataE-validacao2");
         }
         else if (compararDataInicialDataFinal(data1, data2) == 1)
         {
-            var div = $("<div id='modal-validar-dataE-inicio'></div>").html('Data Início não poderá ser superior a Data Fim!').appendTo('body');
+            var div = $("<div id='modal-validar-dataE-inicio'></div>").html('Data Inï¿½cio nï¿½o poderï¿½ ser superior a Data Fim!').appendTo('body');
             alertModal("Alert", "modal-validar-dataE-inicio");
         }
         else if (compararDataInicialDataFinal(dataF, data1) != 0 || diasDecorridosEntreDuasDatas(dataF, data1) != 1)
         {
-            var div = $("<div id='modal-validar-dataE-inicial'></div>").html('A nova Data de Início deve ser um dia posterior a Data Final atual!').appendTo('body');
+            var div = $("<div id='modal-validar-dataE-inicial'></div>").html('A nova Data de Inï¿½cio deve ser um dia posterior a Data Final atual!').appendTo('body');
             alertModal("Alert", "modal-validar-dataE-inicial");
         }
         else if (ano1 != ano2)
         {
-            var div = $("<div id='modal-validar-dataE-ano'></div>").html('As Datas deverão ser na ocorrência do mesmo ano de exercício fiscal!').appendTo('body');
+            var div = $("<div id='modal-validar-dataE-ano'></div>").html('As Datas deverï¿½o ser na ocorrï¿½ncia do mesmo ano de exercï¿½cio fiscal!').appendTo('body');
             alertModal("Alert", "modal-validar-dataE-ano");
         }
         else
@@ -547,7 +547,7 @@ function EnviarExecucao()
                     closeOnEscape: false,
                     buttons:
                         {
-                        'Não': function()
+                        'Nï¿½o': function()
                         {
 
                             $(this).dialog('close');
@@ -567,59 +567,59 @@ function EnviarExecucao()
         }
     } // fecha else
 
-} // fecha função EnviarExecucao()
+} // fecha funï¿½ï¿½o EnviarExecucao()
 
 
 
     /**
-     * Função EnviarCaptacao()
+     * Funï¿½ï¿½o EnviarCaptacao()
      */
     function EnviarCaptacao()
     {
         <?php if($this->dtInicioNovoPrazoE && $this->dtFimNovoPrazoE){ ?>
-        var dataEI = $('#dataSE1').val(); // data inicial de execução solicitada
-		var dataE = $('#dataSE2').val(); // data final de execução solicitada
+        var dataEI = $('#dataSE1').val(); // data inicial de execuï¿½ï¿½o solicitada
+		var dataE = $('#dataSE2').val(); // data final de execuï¿½ï¿½o solicitada
 		<?php }else {?>
-		var dataEI = $('#dataE1').val(); // data inicial de execução
-		var dataE = $('#dataE2').val(); // data final de execução
+		var dataEI = $('#dataE1').val(); // data inicial de execuï¿½ï¿½o
+		var dataE = $('#dataE2').val(); // data final de execuï¿½ï¿½o
 		<?php }?>
 
 		var data3 = $('#datepicker3').val();
 		var data4 = $('#datepicker4').val();
 		var ano3  = $('#datepicker3').val().substr(6,4);
 		var ano4  = $('#datepicker4').val().substr(6,4);
-		var dataF = $('#data4').val(); // data final de captação
+		var dataF = $('#data4').val(); // data final de captaï¿½ï¿½o
 		
                 if ( dataEI == "" && dataE == "" )
                 {
                     if (data3 == "" || data3 == "00/00/0000" || data4 == "" || data4 == "00/00/0000")
 		{
-			var div = $("<div id='modal-validar-dataC'></div>").html('Dados obrigatórios não informados!').appendTo('body');
+			var div = $("<div id='modal-validar-dataC'></div>").html('Dados obrigatï¿½rios nï¿½o informados!').appendTo('body');
 			alertModal("Alert", "modal-validar-dataC");
 		}
 		else if (!validarData(data3))
 		{
-			var div = $("<div id='modal-validar-dataC-validacao3'></div>").html('Data de Início Inválida!').appendTo('body');
+			var div = $("<div id='modal-validar-dataC-validacao3'></div>").html('Data de Inï¿½cio Invï¿½lida!').appendTo('body');
 			alertModal("Alert", "modal-validar-dataC-validacao3");
 		}
 		else if (!validarData(data4))
 		{
-			var div = $("<div id='modal-validar-dataC-validacao4'></div>").html('Data de Fim Inválida!').appendTo('body');
+			var div = $("<div id='modal-validar-dataC-validacao4'></div>").html('Data de Fim Invï¿½lida!').appendTo('body');
 			alertModal("Alert", "modal-validar-dataC-validacao4");
 		}
 		else if (compararDataInicialDataFinal(data3, data4) == 1)
 		{
-			var div = $("<div id='modal-validar-dataC-inicio'></div>").html('Data Início não poderá ser superior a Data Fim!').appendTo('body');
+			var div = $("<div id='modal-validar-dataC-inicio'></div>").html('Data Inï¿½cio nï¿½o poderï¿½ ser superior a Data Fim!').appendTo('body');
 			alertModal("Alert", "modal-validar-dataC-inicio");
 		}
 		else if (compararDataInicialDataFinal(dataF, data3) != 0 || diasDecorridosEntreDuasDatas(dataF, data3) != 1)
 		{
-			var div = $("<div id='modal-validar-dataC-inicial'></div>").html('A nova Data de Início deve ser um dia posterior a Data Final atual!').appendTo('body');
+			var div = $("<div id='modal-validar-dataC-inicial'></div>").html('A nova Data de Inï¿½cio deve ser um dia posterior a Data Final atual!').appendTo('body');
 			alertModal("Alert", "modal-validar-dataC-inicial");
 		}
 		else if (ano3 != ano4)
 		{
-			var div = $("<div id='modal-validar-dataC-ano'></div>").html('As Datas deverão ser na ocorrência do mesmo ano de exercício fiscal!').appendTo('body');
+			var div = $("<div id='modal-validar-dataC-ano'></div>").html('As Datas deverï¿½o ser na ocorrï¿½ncia do mesmo ano de exercï¿½cio fiscal!').appendTo('body');
 			alertModal("Alert", "modal-validar-dataC-ano");
 		}
 		
@@ -639,7 +639,7 @@ function EnviarExecucao()
                     closeOnEscape: false,
                     buttons:
                         {
-                        'Não': function()
+                        'Nï¿½o': function()
                         {
                             $(this).dialog('close');
                             $('#captacao').attr('action','<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'captacao2')); ?>');
@@ -660,37 +660,37 @@ function EnviarExecucao()
                 {
                     if (data3 == "" || data3 == "00/00/0000" || data4 == "" || data4 == "00/00/0000")
 		{
-			var div = $("<div id='modal-validar-dataC'></div>").html('Dados obrigatórios não informados!').appendTo('body');
+			var div = $("<div id='modal-validar-dataC'></div>").html('Dados obrigatï¿½rios nï¿½o informados!').appendTo('body');
 			alertModal("Alert", "modal-validar-dataC");
 		}
 		else if (!validarData(data3))
 		{
-			var div = $("<div id='modal-validar-dataC-validacao3'></div>").html('Data de Início Inválida!').appendTo('body');
+			var div = $("<div id='modal-validar-dataC-validacao3'></div>").html('Data de Inï¿½cio Invï¿½lida!').appendTo('body');
 			alertModal("Alert", "modal-validar-dataC-validacao3");
 		}
 		else if (!validarData(data4))
 		{
-			var div = $("<div id='modal-validar-dataC-validacao4'></div>").html('Data de Fim Inválida!').appendTo('body');
+			var div = $("<div id='modal-validar-dataC-validacao4'></div>").html('Data de Fim Invï¿½lida!').appendTo('body');
 			alertModal("Alert", "modal-validar-dataC-validacao4");
 		}
 		else if (compararDataInicialDataFinal(data3, data4) == 1)
 		{
-			var div = $("<div id='modal-validar-dataC-inicio'></div>").html('Data Início não poderá ser superior a Data Fim!').appendTo('body');
+			var div = $("<div id='modal-validar-dataC-inicio'></div>").html('Data Inï¿½cio nï¿½o poderï¿½ ser superior a Data Fim!').appendTo('body');
 			alertModal("Alert", "modal-validar-dataC-inicio");
 		}
 		else if (compararDataInicialDataFinal(dataF, data3) != 0 || diasDecorridosEntreDuasDatas(dataF, data3) != 1)
 		{
-			var div = $("<div id='modal-validar-dataC-inicial'></div>").html('A nova Data de Início deve ser um dia posterior a Data Final atual!').appendTo('body');
+			var div = $("<div id='modal-validar-dataC-inicial'></div>").html('A nova Data de Inï¿½cio deve ser um dia posterior a Data Final atual!').appendTo('body');
 			alertModal("Alert", "modal-validar-dataC-inicial");
 		}
 		else if (ano3 != ano4)
 		{
-			var div = $("<div id='modal-validar-dataC-ano'></div>").html('As Datas deverão ser na ocorrência do mesmo ano de exercício fiscal!').appendTo('body');
+			var div = $("<div id='modal-validar-dataC-ano'></div>").html('As Datas deverï¿½o ser na ocorrï¿½ncia do mesmo ano de exercï¿½cio fiscal!').appendTo('body');
 			alertModal("Alert", "modal-validar-dataC-ano");
 		}
 		else if (compararDataInicialDataFinal(data4, dataE) == 1)
 		{
-			var div = $("<div id='modal-validar-dataC-exec'></div>").html('A Data de Fim de Captação não pode ultrapassar a Data de Fim de Execução!').appendTo('body');
+			var div = $("<div id='modal-validar-dataC-exec'></div>").html('A Data de Fim de Captaï¿½ï¿½o nï¿½o pode ultrapassar a Data de Fim de Execuï¿½ï¿½o!').appendTo('body');
 			alertModal("Alert", "modal-validar-dataC-exec");
 		}
         else
@@ -709,7 +709,7 @@ function EnviarExecucao()
                     closeOnEscape: false,
                     buttons:
                         {
-                        'Não': function()
+                        'Nï¿½o': function()
                         {
                             $(this).dialog('close');
                             $('#captacao').attr('action','<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'captacao2')); ?>');
@@ -728,45 +728,45 @@ function EnviarExecucao()
                 }
 
 		
-    } // fecha função EnviarCaptacao()
+    } // fecha funï¿½ï¿½o EnviarCaptacao()
 
 
 
 	/**
-	 * Função responsável por fazer a soma dos ingressos e calcular o total
+	 * Funï¿½ï¿½o responsï¿½vel por fazer a soma dos ingressos e calcular o total
 	 */
 	function somaIngressos()
 	{
-		/* ========== INÍCIO SOMA DE INGRESSOS ========== */
+		/* ========== INï¿½CIO SOMA DE INGRESSOS ========== */
 		campo1 = document.getElementById('Patrocinador').value;
-		campo1 = campo1.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+		campo1 = campo1.replace(/\D/g, ""); // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
 		campo1 = campo1.replace(/(\d{0})(\d)/, "$1$2");
 		campo1 = parseInt(campo1); // converte para int
 
 		campo2 = document.getElementById('Divulgacao').value;
-		campo2 = campo2.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+		campo2 = campo2.replace(/\D/g, ""); // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
 		campo2 = campo2.replace(/(\d{0})(\d)/, "$1$2");
 		campo2 = parseInt(campo2); // converte para int
 
 		campo3 = document.getElementById('Beneficiario').value;
-		campo3 = campo3.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+		campo3 = campo3.replace(/\D/g, ""); // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
 		campo3 = campo3.replace(/(\d{0})(\d)/, "$1$2");
 		campo3 = parseInt(campo3); // converte para int
 
 		campo4 = document.getElementById('Normal').value;
-		campo4 = campo4.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+		campo4 = campo4.replace(/\D/g, ""); // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
 		campo4 = campo4.replace(/(\d{0})(\d)/, "$1$2");
 		campo4 = parseInt(campo4); // converte para int
 
 		campo5 = document.getElementById('Promocional').value;
-		campo5 = campo5.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+		campo5 = campo5.replace(/\D/g, ""); // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
 		campo5 = campo5.replace(/(\d{0})(\d)/, "$1$2");
 		campo5 = parseInt(campo5); // converte para int
 
 		// total de ingressos
 		total = campo1 + campo2 + campo3 + campo4 + campo5;
 
-		if (isNaN(total)) // se não for número
+		if (isNaN(total)) // se nï¿½o for nï¿½mero
 		{
 			total = '';
 		}
@@ -792,26 +792,26 @@ function EnviarExecucao()
 		/* ========== FIM SOMA DE INGRESSOS ========== */
 
 
-		/* ========== INÍCIO CALCULO DE INGRESSOS ========== */
+		/* ========== INï¿½CIO CALCULO DE INGRESSOS ========== */
 		campo6 = document.getElementById('Normal_Uni').value;
-		campo6 = campo6.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+		campo6 = campo6.replace(/\D/g, ""); // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
 		campo6 = campo6.replace(/(\d{0})(\d)/, "$1$2");
 		campo6 = campo6.replace(/(\d)(\d{2})$/, "$1.$2"); // adiciona o ponto na casa decimal
-		campo6 = parseFloat(campo6).toFixed(2); // converte para float e adiciona precisão decimal
+		campo6 = parseFloat(campo6).toFixed(2); // converte para float e adiciona precisï¿½o decimal
 
 		campo7 = document.getElementById('Proporcional').value;
-		campo7 = campo7.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+		campo7 = campo7.replace(/\D/g, ""); // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
 		campo7 = campo7.replace(/(\d{0})(\d)/, "$1$2");
 		campo7 = campo7.replace(/(\d)(\d{2})$/, "$1.$2"); // adiciona o ponto na casa decimal
-		campo7 = parseFloat(campo7).toFixed(2); // converte para float e adiciona precisão decimal
+		campo7 = parseFloat(campo7).toFixed(2); // converte para float e adiciona precisï¿½o decimal
 
-		// variável com o resultado
+		// variï¿½vel com o resultado
 		total_normal      = parseFloat(campo6 * campo4).toFixed(2); // armazena o resultado
 		total_promocional = parseFloat(campo7 * campo5).toFixed(2); // armazena o resultado
 
 
 		// total de ingressos (normal + promocional)
-		if (isNaN(total_normal) || isNaN(total_promocional)) // se não for número
+		if (isNaN(total_normal) || isNaN(total_promocional)) // se nï¿½o for nï¿½mero
 		{
 			total_geral = '';
 		}
@@ -838,7 +838,7 @@ function EnviarExecucao()
 
 
 		// total de ingressos (normal)
-		if (isNaN(total_normal)) // se não for número
+		if (isNaN(total_normal)) // se nï¿½o for nï¿½mero
 		{
 			total_normal = '';
 		}
@@ -863,7 +863,7 @@ function EnviarExecucao()
 
 
 		// total de ingressos (promocional)
-		if (isNaN(total_promocional)) // se não for número
+		if (isNaN(total_promocional)) // se nï¿½o for nï¿½mero
 		{
 			total_promocional = '';
 		}
@@ -887,14 +887,14 @@ function EnviarExecucao()
 		document.getElementById('valor2').value = total_promocional;
 		/* ========== FIM CALCULO DE INGRESSOS ========== */
 
-    } // fecha função somaIngressos()
+    } // fecha funï¿½ï¿½o somaIngressos()
 
     //-->
 </script>
 
 
 
-<!-- início: #breadcrumb -->
+<!-- inï¿½cio: #breadcrumb -->
 <div id="breadcrumb">
 	<ul>
 		<li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => 'index')); ?>" title="Ir para p&aacute;gina inicial">In&iacute;cio</a></li>
@@ -904,13 +904,13 @@ function EnviarExecucao()
 </div>
 <!-- final: #breadcrumb -->
 
-<!-- início: #titulo -->
+<!-- inï¿½cio: #titulo -->
 <div id="titulo">
     <div>Readequa&ccedil;&atilde;o de projeto <span class="voltar"><a href="javascript:voltar();">Voltar</a></span></div>
 </div>
 <!-- final: #titulo -->
 
-<!-- início: área principal #conteudo -->
+<!-- inï¿½cio: ï¿½rea principal #conteudo -->
 <div id="conteudo">
     <div id="miolo">
         <?php
@@ -975,7 +975,7 @@ function EnviarExecucao()
         }
         ?>
         <div id="dialog-message" style="display:none;">
-            Campo obrigatório não informado!
+            Campo obrigatï¿½rio nï¿½o informado!
         </div>
 
             <table class="tabela">
@@ -1010,7 +1010,7 @@ function EnviarExecucao()
 
         <div id="div_teste" style="display:none">
                 <table class="tabela">
-                    <label for="justificativaC">*Solicitação de Inclusão de Produtos</label><br />
+                    <label for="justificativaC">*Solicitaï¿½ï¿½o de Inclusï¿½o de Produtos</label><br />
                     <tr>
                         <th colspan="2">Produtos Projeto</th>
                     </tr>
@@ -1018,14 +1018,14 @@ function EnviarExecucao()
                         <td colspan="2">&nbsp;</td>
                     </tr>
                     <tr>
-                        <th align="center" colspan="2">Solicitação de Inclusão de Produtos</th>
+                        <th align="center" colspan="2">Solicitaï¿½ï¿½o de Inclusï¿½o de Produtos</th>
                     </tr>
                     <?php $i = 1;
                         if (!empty($this->buscarprodutoSolicitado)) {
                             foreach ($this->buscarprodutoSolicitado as $resultadoprodutos) {
                     ?>
                                     
-                    <!-- ========== INÍCIO FORMULÁRIO PRODUTOS ========== -->
+                    <!-- ========== INï¿½CIO FORMULï¿½RIO PRODUTOS ========== -->
                     <form name="Produto<?php echo $i; ?>" action="<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'acao')); ?>" method="post">
                         <input type="hidden" value="<?php echo $idPronac; ?>" name="idPronac"/>
                         <input type="hidden" value="<?php echo $this->escape($resultado[0]->pronac); ?>" name="pronac" />
@@ -1042,7 +1042,7 @@ function EnviarExecucao()
                             </td>
                         </tr>
                     </form>
-                    <!-- ========== FIM FORMULÁRIO PRODUTOS ========== -->
+                    <!-- ========== FIM FORMULï¿½RIO PRODUTOS ========== -->
 
                     <?php } } else { echo "Nenhum produto encontrado!"; } ?>
 
@@ -1054,7 +1054,7 @@ function EnviarExecucao()
 
 
         <div id="div_teste2" style="display:none">
-            <!-- ========== INÍCIO FORMULÁRIO CURSO ========== -->
+            <!-- ========== INï¿½CIO FORMULï¿½RIO CURSO ========== -->
             <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/ckeditor.js"></script>
             <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/_samples/sample.js"></script>
             <link type="text/css" rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/_samples/sample.css" />
@@ -1071,8 +1071,8 @@ function EnviarExecucao()
                             <td align="center">ESPECIFICA&Ccedil;&Atilde;O T&Eacute;CNICA APROVADA</td>
                         </tr>
                         <tr>
-                            <td align="center">- Especificações técnicas: propostas de edição de livro, revistas e periódicos<br />
-											   - Projeto Pedagógico/ plano de execução: propostas de cursos/workshops *</td>
+                            <td align="center">- Especificaï¿½ï¿½es tï¿½cnicas: propostas de ediï¿½ï¿½o de livro, revistas e periï¿½dicos<br />
+											   - Projeto Pedagï¿½gico/ plano de execuï¿½ï¿½o: propostas de cursos/workshops *</td>
                         </tr>
                         <?php if($this->propostaPedagogica){?>
                         <tr>
@@ -1080,16 +1080,16 @@ function EnviarExecucao()
                         </tr>
                         <?php }else{?>
                         <tr>
-                            <td><textarea class="input_simples" readonly="readonly"  style="width: 99%" id="propostaPedagogica_aprovada" name="propostaPedagogica_aprovada" rows="10"><?php echo strip_tags("Não Aplicável"); ?></textarea></td>
+                            <td><textarea class="input_simples" readonly="readonly"  style="width: 99%" id="propostaPedagogica_aprovada" name="propostaPedagogica_aprovada" rows="10"><?php echo strip_tags("Nï¿½o Aplicï¿½vel"); ?></textarea></td>
                         </tr>
                         <?php }?>
                         <tr class="destacar bold">
-                            <td align="center">OUTRAS INFORMAÇÕES APROVADA</td>
+                            <td align="center">OUTRAS INFORMAï¿½ï¿½ES APROVADA</td>
                         </tr>
                         <tr>
-                            <td align="center">- Proposta museográfica: propostas de exposição temporária ou acervo
-												<br />- Destinação do bem patrimonial adquirido, após o término do projeto: propostas com aquisição de material permanente
-												<br />- Listas dos bens históricos: propostas de inventários e organização de acervos</td>
+                            <td align="center">- Proposta museogrï¿½fica: propostas de exposiï¿½ï¿½o temporï¿½ria ou acervo
+												<br />- Destinaï¿½ï¿½o do bem patrimonial adquirido, apï¿½s o tï¿½rmino do projeto: propostas com aquisiï¿½ï¿½o de material permanente
+												<br />- Listas dos bens histï¿½ricos: propostas de inventï¿½rios e organizaï¿½ï¿½o de acervos</td>
                         </tr>
                         <?php if($this->propostaOutra){?>
                         <tr>
@@ -1097,7 +1097,7 @@ function EnviarExecucao()
                         </tr>
                         <?php }else{?>
                         <tr>
-                            <td><textarea class="input_simples" readonly="readonly"  style="width: 99%" id="propostaPedagogica_aprovada" name="propostaPedagogica_aprovada" rows="10"><?php echo strip_tags("Não Aplicável"); ?></textarea></td>
+                            <td><textarea class="input_simples" readonly="readonly"  style="width: 99%" id="propostaPedagogica_aprovada" name="propostaPedagogica_aprovada" rows="10"><?php echo strip_tags("Nï¿½o Aplicï¿½vel"); ?></textarea></td>
                         </tr>
                         <?php }?>
                         <tr class="destacar bold">
@@ -1111,7 +1111,7 @@ function EnviarExecucao()
                             </td>
                         </tr>
                         <tr class="destacar bold">
-                            <td align="center">NOVA OUTRAS INFORMAÇÕES</td>
+                            <td align="center">NOVA OUTRAS INFORMAï¿½ï¿½ES</td>
                         </tr>
                         <tr class="linha">
                             <td align="center">
@@ -1130,7 +1130,7 @@ function EnviarExecucao()
                         <?php } ?>
                     </table>
             </form>
-            <!-- ========== FIM FORMULÁRIO CURSO ========== -->
+            <!-- ========== FIM FORMULï¿½RIO CURSO ========== -->
         </div>
 
 
@@ -1139,13 +1139,13 @@ function EnviarExecucao()
         <!-- NOVO PRODUTO -->
         <!-- ************ -->
 		<div id="div_teste3" style="display:none">
-			<!-- ========== INÍCIO FORMULÁRIO PLANO ========== -->
+			<!-- ========== INï¿½CIO FORMULï¿½RIO PLANO ========== -->
 			<form name="formPlano" id="formPlano" action="<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'novoproduto')); ?>" method="post">
                             <input type="hidden" value="<?php echo $idPronac; ?>" name="idPronac" />
                             <table class="tabela">
                                 <thead>
                     	<tr>
-                    		<th colspan="6">Plano de Distribuição</th>
+                    		<th colspan="6">Plano de Distribuiï¿½ï¿½o</th>
                     	</tr>
                     	<tr>
                     		<td colspan="6">&nbsp;</td>
@@ -1172,16 +1172,16 @@ function EnviarExecucao()
 							<td>
 								<label for="tipo_produto">Produto Principal?</label><br />
                             	<select name="tipo_produto" id="tipo_produto" class="select_simples">
-                            		<option value="">Não</option>
+                            		<option value="">Nï¿½o</option>
                             	</select>
 							</td>
 							<td>
-								<label for="areaCultural">Área *</label><br />
-                                <select name="areaCultural" class="select_simples" id="areaCultural" onchange="carregar_combo(this.value, 'segmentoCultural', '<?php echo $this->url(array('controller' => 'segmentocultural', 'action' => 'combo')); ?>', ' - Selecione uma Área Cultural - ');">
+								<label for="areaCultural">ï¿½rea *</label><br />
+                                <select name="areaCultural" class="select_simples" id="areaCultural" onchange="carregar_combo(this.value, 'segmentoCultural', '<?php echo $this->url(array('controller' => 'segmentocultural', 'action' => 'combo')); ?>', ' - Selecione uma ï¿½rea Cultural - ');">
                                     <option value="0"> - Selecione - </option>
-                                        <?php foreach ($this->comboareasculturais as $comboareacultural): ?>
-                                            <option value="<?php echo $comboareacultural->id; ?>">
-                                                <?php echo $comboareacultural->descricao; ?>
+                                        <?php foreach ($this->comboareasculturais as $key=>$value): ?>
+                                            <option value="<?php echo $key; ?>">
+                                                <?php echo $value; ?>
                                             </option>
                                         <?php endforeach; ?>
                                 </select>
@@ -1198,7 +1198,7 @@ function EnviarExecucao()
                         </tr>
                         <tr class="linha">
                             <td colspan="6">
-                                <label for="posicao">Posição *</label> 
+                                <label for="posicao">Posiï¿½ï¿½o *</label> 
                                 <select name="posicao" id="posicao" class="select_simples">
                                     <option value="0"> - Selecione - </option>
                                     <?php $teste1 = $this->buscaposicao;
@@ -1210,7 +1210,7 @@ function EnviarExecucao()
                             </td>
                         </tr>
                         <tr class="destacar bold">
-                            <td colspan="3" align="center">DISTRIBUIÇÃO GRATUITA (QTDE)</td>
+                            <td colspan="3" align="center">DISTRIBUIï¿½ï¿½O GRATUITA (QTDE)</td>
                             <td colspan="2" align="center">TOTAL PARA A VENDA (QTDE)</td>
                             <td align="center">QUANTIDADE</td>
                         </tr>
@@ -1220,11 +1220,11 @@ function EnviarExecucao()
 								<input null="false" name="Patrocinador" id="Patrocinador" class="input_simples w100" type="text" onkeyup="mascara(this, format_num);" onblur="somaIngressos();" value="" maxlength="9" />
 							</td>
 							<td>
-								<label for="Divulgacao">Divulgação *</label><br />
+								<label for="Divulgacao">Divulgaï¿½ï¿½o *</label><br />
 								<input null="false" name="Divulgacao" id="Divulgacao" class="input_simples w100" type="text" onkeyup="mascara(this, format_num);" onblur="somaIngressos();" value="" maxlength="9" />
 							</td>
 							<td>
-								<label for="Beneficiario">Beneficiários *</label><br />
+								<label for="Beneficiario">Beneficiï¿½rios *</label><br />
 								<input null="false" name="Beneficiario" id="Beneficiario" class="input_simples w100" type="text" onkeyup="mascara(this, format_num);" onblur="somaIngressos();" value="" maxlength="9" />
 							</td>
 							<td>
@@ -1241,7 +1241,7 @@ function EnviarExecucao()
 							</td>
 						</tr>
 						<tr class="destacar bold">
-							<td align="center" colspan="2">PREÇO UNITÁRIO (R$)</td>
+							<td align="center" colspan="2">PREï¿½O UNITï¿½RIO (R$)</td>
 							<td align="center" colspan="2">RECEITA PREVISTA (R$)</td>
 							<td align="center" colspan="2">TOTAL RECEITA PREVISTA (R$)</td>
 						</tr>
@@ -1281,7 +1281,7 @@ function EnviarExecucao()
                     </tbody>
                 </table>
             </form>
-            <!-- ========== FIM FORMULÁRIO PLANO ========== -->
+            <!-- ========== FIM FORMULï¿½RIO PLANO ========== -->
         </div>
 
 
@@ -1290,18 +1290,18 @@ function EnviarExecucao()
         <!-- FICHA TECNCA -->
         <!-- ************ -->
         <div id="div_teste5" style="display:none">
-            <!-- ========== INÍCIO FORMULÁRIO FICHA ========== -->
+            <!-- ========== INï¿½CIO FORMULï¿½RIO FICHA ========== -->
             <form name="Ficha" id="Ficha" action="<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'termo')); ?>" method="post" enctype="multipart/form-data">
                 <input type="hidden" id="idpronac" name="idpronac" value="<?php echo $idPronac; ?>" />
                 <table class="tabela">
                     <tr>
-                        <th>Ficha Técnica</th>
+                        <th>Ficha Tï¿½cnica</th>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
                     </tr>
                     <tr class="destacar bold">
-                        <td align="center">FICHA TÉCNICA APROVADA</td>
+                        <td align="center">FICHA Tï¿½CNICA APROVADA</td>
                     </tr>
                     <?php if($this->fichaTecnica){ ?>
                     <tr>
@@ -1309,11 +1309,11 @@ function EnviarExecucao()
                     </tr>
                     <?php } else { ?>
                     <tr>
-                        <td><textarea class="input_simples" style="width: 99%;" readonly="readonly" cols="" id="fichaTecnica_aprovada" name="fichaTecnica_aprovada" rows="10"><?php echo strip_tags("Não Aplicável"); ?></textarea></td>
+                        <td><textarea class="input_simples" style="width: 99%;" readonly="readonly" cols="" id="fichaTecnica_aprovada" name="fichaTecnica_aprovada" rows="10"><?php echo strip_tags("Nï¿½o Aplicï¿½vel"); ?></textarea></td>
                     </tr>
                     <?php } ?>
                     <tr class="destacar bold">
-                        <td align="center">NOVA FICHA TÉCNICA</td>
+                        <td align="center">NOVA FICHA Tï¿½CNICA</td>
                     </tr>
                     <tr>
                         <td><textarea <?php echo $readonly; ?> class="input_simples" style="width: 99%;" cols="" id="nomeprojeto" name="nomeprojeto" rows="10"><?php echo $nomedoprojeto2; ?></textarea></td>
@@ -1348,31 +1348,31 @@ function EnviarExecucao()
                 </table>
                 <?php } ?>
             </form>
-            <!-- ========== FIM FORMULÁRIO FICHA ========== -->
+            <!-- ========== FIM FORMULï¿½RIO FICHA ========== -->
         </div>
 
 
 
         <!-- ******************* -->
-        <!-- LOCAL DE REALIZAÇÃO -->
+        <!-- LOCAL DE REALIZAï¿½ï¿½O -->
         <!-- ******************* -->
         <div id="div_teste6" style="display:none">
-            <!-- ========== INÍCIO FORMULÁRIO LOCAL ========== -->
+            <!-- ========== INï¿½CIO FORMULï¿½RIO LOCAL ========== -->
                 <form name="Local" id="Local" action="<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'local')); ?>" method="post" enctype="multipart/form-data">
                     <input type="hidden" id="idpronac" name="idpronac" value="<?php echo $idPronac; ?>" />
                     <table class="tabela">
                         <tr>
-                            <th colspan="4">Local de Realização</th>
+                            <th colspan="4">Local de Realizaï¿½ï¿½o</th>
                         </tr>
                         <tr>
                             <td colspan="4">&nbsp;</td>
                         </tr>
                         <?php if ( !empty ( $locais ) ) { ?>
                         <tr class="destacar bold">
-                            <td align="center">PAÍS</td>
+                            <td align="center">PAï¿½S</td>
                             <td align="center">UF</td>
                             <td align="center">CIDADE</td>
-                            <td align="center">AÇÃO</td>
+                            <td align="center">Aï¿½ï¿½O</td>
                         </tr>
                         <?php } ?>
                         <?php $i = 0;
@@ -1390,14 +1390,14 @@ function EnviarExecucao()
                             <td align="center">
                                 <?php echo $valores->Descricao; ?>
 
-                                <!-- ========== INÍCIO MODAL EXCLUSÃO DE LOCAL ========== -->
+                                <!-- ========== INï¿½CIO MODAL EXCLUSï¿½O DE LOCAL ========== -->
                                 <div class="sumir" id="modal-exclusao-local<?php echo $cont_local; ?>">
                                     Deseja realmente Excluir?
                                     <br /><br />
                                     <p><label for="dsJustificativaExclusao<?php echo $i; ?>">Justificativa:</label></p>
                                     <p><input type="text" name="dsJustificativaExclusao" id="dsJustificativaExclusao<?php echo $i; ?>" maxlength="255" class="input_simples" style="width:600px;" /></p>
                                 </div>
-                                <!-- ========== INÍCIO MODAL EXCLUSÃO DE LOCAL ========== -->
+                                <!-- ========== INï¿½CIO MODAL EXCLUSï¿½O DE LOCAL ========== -->
 
                             </td>
                             <td align="center"><?php echo $valores->sigla; ?></td>
@@ -1412,11 +1412,11 @@ function EnviarExecucao()
                                 <?php } else { ?>
 	                                <?php
 	                                if (trim($valores->tpAcao) == 'I') :
-	                                	echo 'Inclusão';
+	                                	echo 'Inclusï¿½o';
 	                                elseif (trim($valores->tpAcao) == 'E') :
-	                                	echo 'Exclusão';
+	                                	echo 'Exclusï¿½o';
 	                                elseif (trim($valores->tpAcao) == 'N') :
-	                                	echo 'Não alterado';                               
+	                                	echo 'Nï¿½o alterado';                               
 	                                else :
 	                                	echo '-';
 	                                endif;
@@ -1432,7 +1432,7 @@ function EnviarExecucao()
                     <table class="tabela">
                         <tr>
                             <td>
-                                <label for="estados">País:</label>
+                                <label for="estados">Paï¿½s:</label>
                                 <select name="pais" id="pais" class="input_simples">
                                     <?php foreach ($pais as $p) { ?>
                                         <option value="<?php echo $p->idPais; ?>"
@@ -1577,7 +1577,7 @@ function EnviarExecucao()
             </form>
         </div>
         <!-- ************************* -->
-        <!-- Prorrogar Prazos Execução -->
+        <!-- Prorrogar Prazos Execuï¿½ï¿½o -->
         <!-- ************************* -->
         <div id="div_teste8" style="display:none">
                 <form name="Execucao" id="Execucao" action="<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'prazo')); ?>" method="post" enctype="multipart/form-data">
@@ -1585,17 +1585,17 @@ function EnviarExecucao()
 
                     <table class="tabela">
                     	<tr>
-                    		<th colspan="4">Prorrogar Prazos de Execução</th>
+                    		<th colspan="4">Prorrogar Prazos de Execuï¿½ï¿½o</th>
                     	</tr>
                     	<tr>
                     		<td colspan="4">&nbsp;</td>
                     	</tr>
                         <tr class="destacar bold">
-                            <td align="center" colspan="2">PERÍODO DE EXECUÇÃO ATUAL</td>
-                            <td align="center" colspan="2">NOVO PERÍODO DE EXECUÇÃO</td>
+                            <td align="center" colspan="2">PERï¿½ODO DE EXECUï¿½ï¿½O ATUAL</td>
+                            <td align="center" colspan="2">NOVO PERï¿½ODO DE EXECUï¿½ï¿½O</td>
                         </tr>
                         <tr>
-                            <td>Data de Início Atual: <input  null="false" class="input_simples w100" disabled="disabled" value="<?php echo $data1;//$dataInicialOriginal; ?>" type="text" name="data1"  id="data1" maxlength="10" value="00/00/0000"
+                            <td>Data de Inï¿½cio Atual: <input  null="false" class="input_simples w100" disabled="disabled" value="<?php echo $data1;//$dataInicialOriginal; ?>" type="text" name="data1"  id="data1" maxlength="10" value="00/00/0000"
                                                               onkeyup="mascara(this, format_data);" onmouseup=" "
                                                               onclick="limpar_campo(this, '00/00/0000');" onkeypress=" "
                                                               onblur="restaurar_campo(this, '00/00/0000');" />
@@ -1605,7 +1605,7 @@ function EnviarExecucao()
                                                               onclick="limpar_campo(this, '00/00/0000');" onkeypress=" "
                                                               onblur="restaurar_campo(this, '00/00/0000');" />
                             </td>
-                            <td>Data de Início: <input  <?php echo $readonly; ?> null="false"  type="text" name="datepicker1" id="datepicker1" maxlength="10" value="<?php echo $this->dtInicioNovoPrazoE; ?>"
+                            <td>Data de Inï¿½cio: <input  <?php echo $readonly; ?> null="false"  type="text" name="datepicker1" id="datepicker1" maxlength="10" value="<?php echo $this->dtInicioNovoPrazoE; ?>"
                                                         onkeyup="mascara(this, format_data);" onmouseup=" "
                                                         onclick="limpar_campo(this, '');" onkeypress=" "
                                                         onblur="restaurar_campo(this, '');" class="input_simples w100" />
@@ -1653,23 +1653,23 @@ function EnviarExecucao()
 
 
         <!-- ************************* -->
-        <!-- Prorrogar Prazos Captação -->
+        <!-- Prorrogar Prazos Captaï¿½ï¿½o -->
         <!-- ************************* -->
         <div id="div_teste9" style="display:none">
                 <form name="captacao" id="captacao" action="<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'captacao')); ?>" method="post" enctype="multipart/form-data">
                     <input type="hidden" id="idpronac" name="idpronac" value="<?php echo $idPronac; ?>">
                     <table class="tabela">
                     	<tr>
-                    		<th colspan="2">Prorrogar Prazos de Captação</th>
+                    		<th colspan="2">Prorrogar Prazos de Captaï¿½ï¿½o</th>
                     	</tr>
                     	<tr>
                     		<td colspan="2">&nbsp;</td>
                     	</tr>
                         <tr class="destacar bold">
-                            <td colspan="2" align="center">PERÍODO DE EXECUÇÃO ATUAL</td>
+                            <td colspan="2" align="center">PERï¿½ODO DE EXECUï¿½ï¿½O ATUAL</td>
                         </tr>
                         <tr>
-                            <td width="50%">Data de Início Atual: <input class="input_simples w100" null="false" disabled="disable" value="<?php echo $data1; ?>" type="text" name="dataE1"  id="dataE1" maxlength="10" value="00/00/0000"
+                            <td width="50%">Data de Inï¿½cio Atual: <input class="input_simples w100" null="false" disabled="disable" value="<?php echo $data1; ?>" type="text" name="dataE1"  id="dataE1" maxlength="10" value="00/00/0000"
                                   onkeyup="mascara(this, format_data);" onmouseup=" "
                                   onclick="limpar_campo(this, '00/00/0000');" onkeypress=" "
                                   onblur="restaurar_campo(this, '00/00/0000');" />
@@ -1686,10 +1686,10 @@ function EnviarExecucao()
 					<div>
 					<table class="tabela">
                         <tr class="destacar bold">
-                            <td colspan="2" align="center">PERÍODO DE EXECUÇÃO SOLICITADO</td>
+                            <td colspan="2" align="center">PERï¿½ODO DE EXECUï¿½ï¿½O SOLICITADO</td>
                         </tr>
                         <tr>
-                            <td width="50%">Data de Início Solicitado: <input class="input_simples w100" null="false" disabled="disabled" value="<?php echo $this->dtInicioNovoPrazoE; ?>" type="text" name="dataSE1"  id="dataSE1" maxlength="10" value="00/00/0000"
+                            <td width="50%">Data de Inï¿½cio Solicitado: <input class="input_simples w100" null="false" disabled="disabled" value="<?php echo $this->dtInicioNovoPrazoE; ?>" type="text" name="dataSE1"  id="dataSE1" maxlength="10" value="00/00/0000"
                                   onkeyup="mascara(this, format_data);" onmouseup=" "
                                   onclick="limpar_campo(this, '00/00/0000');" onkeypress=" "
                                   onblur="restaurar_campo(this, '00/00/0000');" />
@@ -1705,11 +1705,11 @@ function EnviarExecucao()
 					<?php }?>
                     <table class="tabela">
                         <tr class="destacar bold">
-                            <td colspan="2" width="50%" align="center">PERÍODO DE CAPTAÇÃO ATUAL</td>
-                            <td colspan="2" align="center">NOVO PRAZO DE CAPTAÇÃO</td>
+                            <td colspan="2" width="50%" align="center">PERï¿½ODO DE CAPTAï¿½ï¿½O ATUAL</td>
+                            <td colspan="2" align="center">NOVO PRAZO DE CAPTAï¿½ï¿½O</td>
                         </tr>
                         <tr>
-                            <td>Data de Início Atual: <input disabled="disable" class="input_simples w100" value="<?php echo $data3; ?>"type="text" readonly  null="false" name="data3" id="data3" maxlength="10"
+                            <td>Data de Inï¿½cio Atual: <input disabled="disable" class="input_simples w100" value="<?php echo $data3; ?>"type="text" readonly  null="false" name="data3" id="data3" maxlength="10"
                                 onkeyup="mascara(this, format_data);" />
                             </td>
                             <td>Data de Fim Atual: <input disabled="disable" class="input_simples w100" type="text" readonly  null="false" value="<?php echo $data4; ?>" name="data4"  id="data4" maxlength="10"
@@ -1762,16 +1762,16 @@ function EnviarExecucao()
     </div>
 
 
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEï¿½DO ========== -->
 </div>
 
 
-<div id="dialog-alert">Dados obrigatórios não informados!</div>
+<div id="dialog-alert">Dados obrigatï¿½rios nï¿½o informados!</div>
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 
 <br clear="all" />
 
@@ -1790,7 +1790,7 @@ function EnviarExecucao()
 
                 <?php
                         $menu = SolicitarreadequacaodoprojetoController::Menu($idPronac);
-                        if ( $menu=="Botão" ){
+                        if ( $menu=="Botï¿½o" ){
                 ?>
 
                     $("div#rodapeConteudo").attr("id", "rodapeConteudo_com_menu");
@@ -1846,7 +1846,7 @@ function excluirLocais(pais, uf, cidade, idAbrangencia, i)
 			autoOpen: true,
 			buttons:
 			{
-				Não: function()
+				Nï¿½o: function()
 				{
 					$(this).dialog('close');
 				},
@@ -1906,11 +1906,11 @@ function excluirLocais(pais, uf, cidade, idAbrangencia, i)
 
 	} // fecha if
 
-} // fecha função
+} // fecha funï¿½ï¿½o
 
 
 
-<?php if (isset($_GET['ativar_menu'])) { // local de realização ?>
+<?php if (isset($_GET['ativar_menu'])) { // local de realizaï¿½ï¿½o ?>
 $('#div_teste3').hide();
 $('#div_teste').hide();
 $('#div_teste2').hide();
@@ -1928,7 +1928,7 @@ $('#div_teste6').hide();
 $('#div_teste7').hide();
 $('#div_teste8').hide();
 $('#div_teste9').hide();
-<?php } if (isset($_GET['ativar_menu_proposta'])) { // proposta pedagógica ?>
+<?php } if (isset($_GET['ativar_menu_proposta'])) { // proposta pedagï¿½gica ?>
 $('#div_teste2').toggle();
 $('#div_teste').hide();
 $('#div_teste3').hide();
@@ -1946,7 +1946,7 @@ $('#div_teste6').hide();
 $('#div_teste7').hide();
 $('#div_teste8').hide();
 $('#div_teste9').hide();
-<?php } if (isset($_GET['ativar_menu_ficha_tecnica'])) { // ficha técnica ?>
+<?php } if (isset($_GET['ativar_menu_ficha_tecnica'])) { // ficha tï¿½cnica ?>
 $('#div_teste3').hide();
 $('#div_teste').hide();
 $('#div_teste2').hide();
@@ -1964,7 +1964,7 @@ $('#div_teste5').hide();
 $('#div_teste8').hide();
 $('#div_teste7').toggle();
 $('#div_teste9').hide();
-<?php } if (isset($_GET['ativar_menu_prazo_execucao'])) { // prazo execução ?>
+<?php } if (isset($_GET['ativar_menu_prazo_execucao'])) { // prazo execuï¿½ï¿½o ?>
 $('#div_teste3').hide();
 $('#div_teste').hide();
 $('#div_teste2').hide();
@@ -1973,7 +1973,7 @@ $('#div_teste7').hide();
 $('#div_teste5').hide();
 $('#div_teste8').toggle();
 $('#div_teste9').hide();
-<?php } if (isset($_GET['ativar_menu_prazo_captacao'])) { // prazo captação ?>
+<?php } if (isset($_GET['ativar_menu_prazo_captacao'])) { // prazo captaï¿½ï¿½o ?>
 $('#div_teste3').hide();
 $('#div_teste').hide();
 $('#div_teste2').hide();
@@ -2001,7 +2001,7 @@ $('#abrir_fechar').click(function() // produtos
     $('#div_teste8').hide();
     $('#div_teste9').hide();
 });
-$('#abrir_fechar2').click(function() // proposta pedagógica
+$('#abrir_fechar2').click(function() // proposta pedagï¿½gica
 {
     if($("#div_teste2").is(":visible")){
         $("div#rodapeConteudo_com_menu").attr("id", "rodapeConteudo");
@@ -2051,7 +2051,7 @@ $('.abrir_fechar4').click(function() // vazio
     $('#div_teste8').hide();
     $('#div_teste9').hide();
 });
-$('.abrir_fechar5').click(function() // ficha técnica
+$('.abrir_fechar5').click(function() // ficha tï¿½cnica
 {
     if($("#div_teste5").is(":visible")){
         $("div#rodapeConteudo_com_menu").attr("id", "rodapeConteudo");
@@ -2067,7 +2067,7 @@ $('.abrir_fechar5').click(function() // ficha técnica
     $('#div_teste5').toggle();
     $('#div_teste9').hide();
 });
-$('.abrir_fechar6').click(function() // local de realização
+$('.abrir_fechar6').click(function() // local de realizaï¿½ï¿½o
 {
     if($("#div_teste6").is(":visible")){
         $("div#rodapeConteudo_com_menu").attr("id", "rodapeConteudo");
@@ -2101,7 +2101,7 @@ $('.abrir_fechar7').click(function() // nome do projeto
     $('#div_teste7').toggle();
     $('#div_teste9').hide();
 });
-$('.abrir_fechar8').click(function() // prorrogação de prazo de execução
+$('.abrir_fechar8').click(function() // prorrogaï¿½ï¿½o de prazo de execuï¿½ï¿½o
 {
     if($("#div_teste8").is(":visible")){
         $("div#rodapeConteudo_com_menu").attr("id", "rodapeConteudo");
@@ -2118,7 +2118,7 @@ $('.abrir_fechar8').click(function() // prorrogação de prazo de execução
     $('#div_teste8').toggle();
     $('#div_teste9').hide();
 });
-$('.abrir_fechar9').click(function() // prorrogação de prazo de captação
+$('.abrir_fechar9').click(function() // prorrogaï¿½ï¿½o de prazo de captaï¿½ï¿½o
 {
     if($("#div_teste9").is(":visible")){
         $("div#rodapeConteudo_com_menu").attr("id", "rodapeConteudo");

@@ -99,7 +99,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
                                     <td class='centro'><input type='button' class='btn_cadastrar_proponente' id='novoprop' onclick='novoproponente();' /></td>
                                 </tr>
                             </table>";
-                    exit();
+                    $this->_helper->viewRenderer->setNoRender(TRUE);
                 }
             }
 
@@ -114,7 +114,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
                     <script>
                         alertModal(null, 'msgAgenteVinculado', null, 150);
                       </script>";
-                exit();
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
 
         } else {
@@ -179,7 +179,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             } catch (Zend_Exception $e) {
                 echo '<pre>';
                 var_dump($e->getMessage());
-                exit;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
                 echo json_encode(array('error' => true));
             }
         }
@@ -227,7 +227,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             }
         }
 
-        exit();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     /* }}} */
