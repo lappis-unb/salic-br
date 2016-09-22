@@ -13,21 +13,58 @@
  */
 class ServicosReceitaFederal {
 
-    # Constante usada na classe para conexao com o WS
-    const username 		        = "3bf410091bddf5e2092be862aa25fe34";
-    #const password 		    = "QJHJWRRM"; #Produção
-    const password 		        = "123456"; #Homologação
-    #const urlServico 	        = "http://sistemasweb.cultura.gov.br/minc-pessoa/servicos/"; #Produção
-    const urlServico 	        = "http://homolog.cultura.gov.br/minc-pessoa/servicos/"; #Homologação
+    const urlPessoaFisica = "pessoa_fisica/consultar/";
+    const urlPessoaJuridica = "pessoa_juridica/consultar/";
+    const urlForcar = "?forcarBuscaNaReceita=true";
 
-    const urlPessoaFisica 	    = "pessoa_fisica/consultar/";
-    const urlPessoaJuridica 	= "pessoa_juridica/consultar/";
-    const urlForcar	            = "?forcarBuscaNaReceita=true";
+    /**
+     * Endereço do Webservice.
+     * 
+     * @var type 
+     */
+    protected $baseUrl;
+    
+    /**
+     * Nome usado para se conectar com o WebService da Receita Federal.
+     * 
+     * @var string
+     */
+    protected $user;
+    
+    /**
+     * Senha de acesso ao Webservice.
+     * 
+     * @var string
+     */
+    protected $password;
 
-    # Atributos da classe
-    #private static $objSoapCliente;
+    public function getBaseUrl() {
+        return $this->baseUrl;
+    }
 
+    public function getUser() {
+        return $this->user;
+    }
 
+    public function getPassword() {
+        return $this->password;
+    }
+
+    public function setBaseUrl(type $baseUrl) {
+        $this->baseUrl = $baseUrl;
+        return $this;
+    }
+
+    public function setUser($user) {
+        $this->user = $user;
+        return $this;
+    }
+
+    public function setPassword($password) {
+        $this->password = $password;
+        return $this;
+    }
+    
     /**
      * @author Alysson Vicuña de Oliveira
      *
@@ -36,39 +73,34 @@ class ServicosReceitaFederal {
      * @param bool $forcarBuscaReceita - Define se deve ir na Base da receita federal, mesmo já existindo o CPF na base do MINC
      * @return ArrayObject|mixed - Resultado da consulta em Json ou ArrayObject
      */
-    public function consultarPessoaJuridicaReceitaFederal($cnpj, $forcarBuscaReceita = false, $returnJSON = false)
-    {
-        $chars = array(".","/","-");
-        $cnpj = str_replace($chars,"",$cnpj);
+    public function consultarPessoaJuridicaReceitaFederal($cnpj, $forcarBuscaReceita = false, $returnJSON = false) {
+        $chars = array(".", "/", "-");
+        $cnpj = str_replace($chars, "", $cnpj);
 
         if (15 == strlen($cnpj) && !isCnpjValid($cnpj)) {
             throw new InvalidArgumentException("CPF/CNPJ inválido");
         }
 
-        $url = self::urlServico . self::urlPessoaJuridica . $cnpj;
+        $url = $this->baseUrl . self::urlPessoaJuridica . $cnpj;
         if ($forcarBuscaReceita) {
             $url .= self::urlForcar;
         }
 
-        #xd($url);
-        $username = self::username;
-        $password = self::password;
-
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
+        curl_setopt($curl, CURLOPT_USERPWD, "$this->user:$this->password");
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         $resultCurl = curl_exec($curl);
         curl_close($curl);
         $result = new ArrayObject(json_decode($resultCurl, true));
 
-        if($returnJSON){
+        if ($returnJSON) {
             $retornoResultado = $resultCurl; #Retorno do Formato JSON
-        } else{
+        } else {
             $retornoResultado = $result; #Retorno no Formato ArrayObject
         }
-        #xd($retornoResultado);
+#xd($retornoResultado);
 
         return $retornoResultado;
     }
@@ -81,35 +113,31 @@ class ServicosReceitaFederal {
      * @param bool $forcarBuscaReceita - Define se deve ir na Base da receita federal, mesmo já existindo o CPF na base do MINC
      * @return ArrayObject|mixed - Resultado da consulta em Json ou ArrayObject
      */
-    public function consultarPessoaFisicaReceitaFederal($cpf, $forcarBuscaReceita = false, $returnJSON = false)
-    {
+    public function consultarPessoaFisicaReceitaFederal($cpf, $forcarBuscaReceita = false, $returnJSON = false) {
         if (11 == strlen($cpf) && !validaCPF($cpf)) {
             throw new InvalidArgumentException("CPF/CNPJ inválido");
         }
 
-        $url = self::urlServico . self::urlPessoaFisica . $cpf;
+        $url = $this->baseUrl . self::urlPessoaFisica . $cpf;
         if ($forcarBuscaReceita) {
             $url .= self::urlForcar;
         }
 
-        $username = self::username;
-        $password = self::password;
-
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
+        curl_setopt($curl, CURLOPT_USERPWD, "$this->user:$this->password");
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         $resultCurl = curl_exec($curl);
         curl_close($curl);
         $result = new ArrayObject(json_decode($resultCurl, true));
 
-        if($returnJSON){
+        if ($returnJSON) {
             $retornoResultado = $resultCurl; #Retorno do Formato JSON
-        } else{
+        } else {
             $retornoResultado = $result; #Retorno no Formato ArrayObject
         }
-        #xd($retornoResultado);
+#xd($retornoResultado);
 
         return $retornoResultado;
     }
@@ -119,9 +147,12 @@ class ServicosReceitaFederal {
      *
      * @return VOID
      */
-    public function __construct()
-    {
-        return;
+    public function __construct() {
+        # Carrega configurações do Webservice
+        $config = new Zend_Config_Ini("./application/configs/config.ini");
+        $this->baseUrl = $config->get('default')->resources->view->service->wsReceita->baseUrl;
+        $this->user = $config->get('default')->resources->view->service->wsReceita->user;
+        $this->password = $config->get('default')->resources->view->service->wsReceita->password;
     }
 
     /**
@@ -129,8 +160,7 @@ class ServicosReceitaFederal {
      *
      * @return VOID
      */
-    public function __sleep()
-    {
+    public function __sleep() {
         return;
     }
 
@@ -139,8 +169,7 @@ class ServicosReceitaFederal {
      *
      * @return VOID
      */
-    public function __wakeup()
-    {
+    public function __wakeup() {
         return;
     }
 
@@ -151,9 +180,8 @@ class ServicosReceitaFederal {
      * @param ARRAY $arrParameters
      * @return VOID
      */
-    public function __call( $strMethod , $arrParameters )
-    {
-        debug( "O metodo " . $strMethod . " nao foi encontrado na classe " . get_class( $this ) . ".<br />" . __FILE__ . "(linha " . __LINE__ . ")" , 1 );
+    public function __call($strMethod, $arrParameters) {
+        debug("O metodo " . $strMethod . " nao foi encontrado na classe " . get_class($this) . ".<br />" . __FILE__ . "(linha " . __LINE__ . ")", 1);
     }
 
-} // end Utils_Wsdne
+}

@@ -21,9 +21,16 @@ resources.view.escape = "htmlentities"
 resources.view.basePath = APPLICATION_PATH "/views"
 resources.view.helperPath.MinC_View_Helper = APPLICATION_PATH "/../library/MinC/View/Helper"
 resources.view.service.salicMobileHash = ""
+
+; Configurações do GCM para envio de mensagens para dispositivos móveis
 resources.view.service.encryptHash = ""
 resources.view.service.gcmApiKey = ""
 resources.view.service.gcmUrl = "https://gcm-http.googleapis.com/gcm/send"
+
+; Configurações do Webservice da receita
+resources.view.service.wsReceita.baseUrl = "http://homolog.cultura.gov.br/minc-pessoa/servicos/"
+resources.view.service.wsReceita.user = "3bf410091bddf5e2092be862aa25fe34"
+resources.view.service.wsReceita.password = "123456"
 
 ; front controller
 resources.frontController.moduleDirectory = APPLICATION_PATH"/modules" 
