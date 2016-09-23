@@ -47,7 +47,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         if(!empty ($_REQUEST['idPreProjeto'])) {
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
-            $Movimentacao = new Movimentacao();
+            $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
             $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
         }else {

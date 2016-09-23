@@ -2759,6 +2759,9 @@ CREATE TABLE sac.PlanoDeDivulgacao
   CONSTRAINT FK_PlanoDeDivulgacao_Verificacao FOREIGN KEY (idPeca) REFERENCES sac.Verificacao (idVerificacao),
   CONSTRAINT FK_PlanoDeDivulgacao_Verificacao1 FOREIGN KEY (idVeiculo) REFERENCES sac.Verificacao (idVerificacao)
 );
+CREATE SEQUENCE sac.planodedivulgacao_idplanodivulgacao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.planodedivulgacao ALTER COLUMN idplanodivulgacao SET DEFAULT nextval('sac.planodedivulgacao_idplanodivulgacao_seq');
+ALTER SEQUENCE sac.planodedivulgacao_idplanodivulgacao_seq OWNED BY sac.planodedivulgacao.idplanodivulgacao;
 CREATE TABLE sac.PlanoDistribuicaoProduto
 (
   idPlanoDistribuicao INT PRIMARY KEY NOT NULL,
@@ -3990,6 +3993,9 @@ CREATE TABLE sac.VerificacaoPecaxVeiculo
   CONSTRAINT FK_VerificacaoPecaxVeiculo_Verificacao FOREIGN KEY (idVerificacaoPeca) REFERENCES sac.Verificacao (idVerificacao),
   CONSTRAINT FK_VerificacaoPecaxVeiculo_Verificacao1 FOREIGN KEY (idVerificacaoVeiculo) REFERENCES sac.Verificacao (idVerificacao)
 );
+CREATE SEQUENCE sac.verificacaopecaxveiculo_idverificacaopecaxveiculo_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.verificacaopecaxveiculo ALTER COLUMN idverificacaopecaxveiculo SET DEFAULT nextval('sac.verificacaopecaxveiculo_idverificacaopecaxveiculo_seq');
+ALTER SEQUENCE sac.verificacaopecaxveiculo_idverificacaopecaxveiculo_seq OWNED BY sac.verificacaopecaxveiculo.idverificacaopecaxveiculo;
 CREATE TABLE sac.DBA_CaptacaoAnoUfMunicipio
 (
   ANO_CAPTACAO INT,
