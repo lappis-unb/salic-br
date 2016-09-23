@@ -77,7 +77,12 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $total = $tblPlanoDistribuicao->pegaTotal(array("a.idProjeto = ?"=>$this->_idPreProjeto, "a.stPlanoDistribuicaoProduto = ?"=>1));
         $tamanho = (($inicio+$this->intTamPag)<=$total) ? $this->intTamPag : $total - ($inicio) ;
 
-        $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscar(array("a.idProjeto = ?"=>$this->_idPreProjeto, "a.stPlanoDistribuicaoProduto = ?"=>1), array("idPlanoDistribuicao DESC"), $tamanho, $inicio);
+        $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscar(
+            array("a.idprojeto = ?" => $this->_idPreProjeto, "a.stplanodistribuicaoproduto = ?" => 1),
+            array("idplanodistribuicao DESC"),
+            $tamanho,
+            $inicio
+        );
 
         if ($fim>$total) $fim = $total;
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
@@ -136,16 +141,21 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $get = Zend_Registry::get("get");
         if(!empty($get->idPlanoDistribuicao)){
             $tblPlanoDistribuicao = new PlanoDistribuicao();
-            $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscarPlanoDistribuicao(array('idPlanoDistribuicao = ?' =>$get->idPlanoDistribuicao));
+            $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscarPlanoDistribuicao(array('idplanodistribuicao = ?' =>$get->idPlanoDistribuicao));
             $arrDados["planoDistribuicao"] = $rsPlanoDistribuicao;
         }
 
         $tblProduto = new Produto();
-        $rsProdutos = $tblProduto->buscar(array("stEstado = ?"=>0),array("Descricao ASC"));
+        $rsProdutos = $tblProduto->buscar(array("stestado = ?" => 0), array("descricao ASC"));
 
         //BUSCA POR PRODUTO PRINCIPAL CADASTRADO
         $tblPlanoDistribuicao = new PlanoDistribuicao();
-        $arrPlanoDistribuicao = $tblPlanoDistribuicao->buscar(array("a.idProjeto = ?"=>$this->_idPreProjeto, "a.stPrincipal = ?"=>1, "a.stPlanoDistribuicaoProduto = ?"=>1), array("idPlanoDistribuicao DESC"))->toArray();
+        $arrPlanoDistribuicao = $tblPlanoDistribuicao->buscar(array(
+            "a.idprojeto = ?" => $this->_idPreProjeto,
+            "a.stprincipal = ?" => 1,
+            "a.stplanodistribuicaoproduto = ?" => 1), array("idplanodistribuicao DESC"))
+            ->toArray();
+
         if(!empty($arrPlanoDistribuicao)){
             $bln_exitePP = "true"; //Existe Produto Principal Cadastrado
         }
@@ -154,7 +164,9 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $rsLogomarcas = $tblLogomarca->buscar(array("idLogomarca=?"=>3));
         $arrDados["combologomarcas"] = $rsLogomarcas;
         $arrDados["comboprodutos"] = $rsProdutos;
-        $arrDados["comboareasculturais"] = ManterAgentes::buscarAreasCulturais();
+        $manterAgentes = new ManterAgentes();
+        $arrDados["comboareasculturais"] = $manterAgentes->listarAreasCulturais();
+
         $arrDados["acaoSalvar"] = $this->_urlPadrao."/proposta/plano-distribuicao/salvar?idPreProjeto=".$this->_idPreProjeto;
         $arrDados["urlApagar"] = $this->_urlPadrao."/proposta/plano-distribuicao/apagar?idPreProjeto=".$this->_idPreProjeto;
         $arrDados["acaoCancelar"] = $this->_urlPadrao."/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto;

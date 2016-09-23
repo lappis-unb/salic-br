@@ -25,5 +25,12 @@ class MinC_Db_Expr
         }
     }
 
-    public static function
+    public function convertOrToChar($strColumn)
+    {
+        if (Zend_Db_Table::getDefaultAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            return new Zend_Db_Expr('CONVERT(VARCHAR(max), ' . $strColumn . ')');
+        } else {
+            return new Zend_Db_Expr('(' . $strColumn .'::text )');
+        }
+    }
 }

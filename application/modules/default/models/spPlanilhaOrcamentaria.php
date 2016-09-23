@@ -6,9 +6,8 @@
  * @uses GenericModel
  * @author
  */
-class spPlanilhaOrcamentaria extends GenericModel {
+class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
 
-    protected $_banco = 'sac';
     protected $_schema = 'sac';
     protected $_name  = 'spPlanilhaOrcamentaria';
 
@@ -34,7 +33,6 @@ class spPlanilhaOrcamentaria extends GenericModel {
         // tipoPlanilha = 5 : Remanejamento menor que 20%
         // tipoPlanilha = 6 : Readequacao
 
-        $tipoPlanilha = 6;
         switch($tipoPlanilha){
         case 0:
             return $this->planilhaOrcamentariaProposta($idPronac);
@@ -72,48 +70,50 @@ class spPlanilhaOrcamentaria extends GenericModel {
     public function planilhaOrcamentariaProposta($idPronac)
     {
         $a = [
-            'a.idPreProjeto as idPronac',
+            'a.idpreprojeto as idPronac',
             new Zend_Db_Expr("' ' AS PRONAC"),
-            'a.NomeProjeto',
-            new Zend_Db_Expr(" CASE WHEN idProduto = 0
+            'a.nomeprojeto',
+            new Zend_Db_Expr(" CASE WHEN idproduto = 0
                        THEN 'Administração do Projeto'
-                       ELSE c.Descricao
+                       ELSE c.descricao
                   END as Produto"),
         ];
 
         $b = [
-            'b.idProduto',
-            'b.idPlanilhaProposta',
-            'b.idEtapa',
-            'b.Quantidade',
-            'b.Ocorrencia',
-            'b.ValorUnitario as vlUnitario',
-            'ROUND((b.Quantidade * b.Ocorrencia * b.ValorUnitario),2) as vlSolicitado',
-            'b.FonteRecurso as idFonte',
-            new Zend_Db_Expr('convert(varchar(max),b.dsJustificativa) as JustProponente'),
-            new Zend_Db_Expr('QtdeDias')
+            'b.idproduto',
+            'b.idplanilhaproposta',
+            'b.idetapa',
+            'b.quantidade',
+            'b.ocorrencia',
+            'b.valorunitario as vlUnitario',
+            'ROUND((b.quantidade * b.ocorrencia * b.valorunitario),2) as vlSolicitado',
+            'b.fonterecurso as idFonte',
+            new Zend_Db_Expr(MinC_Db_Expr::convertOrToChar('b.dsjustificativa').' as JustProponente'),
+            new Zend_Db_Expr('qtdedias')
         ];
 
         $db = Zend_Db_Table::getDefaultAdapter();
 
-        $sac = 'sac.dbo';
+        $sac = $this->getSchema('sac');
+        $concat = MinC_Db_Expr::concat();
+        $convert = MinC_Db_Expr::convertOrToChar('d.idplanilhaetapa');
 
         $sql = $db->select()
-            ->from(['a' => 'preprojeto '], $a, $sac)
+            ->from(['a' => 'preprojeto'], $a, $sac)
             ->joinInner(['b' => 'tbplanilhaproposta'], '(a.idpreProjeto = b.idprojeto)', $b, $sac)
             ->joinLeft(['c' => 'produto'], '(b.idproduto = c.codigo)', null, $sac)
-            ->JoinInner(['d' => 'tbplanilhaetapa '], '(b.idetapa = d.idplanilhaetapa)', 'd.Descricao as Etapa', $sac)
-            ->joinInner(['e' => 'tbplanilhaunidade'], '(b.unidade = e.idunidade)', 'e.Descricao as Unidade', $sac)
-            ->joinInner(['i' => 'tbplanilhaitens '], '(b.idplanilhaitem=i.idplanilhaitens)', 'i.Descricao as Item', $sac)
-            ->joinInner(['x' => 'verificacao'], '(b.fonterecurso = x.idverificacao)', 'x.Descricao as FonteRecurso', $sac)
-            ->joinInner(['f' => 'vufmunicipio '], '(b.ufdespesa = f.iduf and b.municipiodespesa = f.idmunicipio)', ['f.UF','f.Municipio'], 'agentes.dbo')
+            ->joinInner(['d' => 'tbplanilhaetapa'], '(b.idetapa = d.idplanilhaetapa)', 'd.descricao as Etapa', $sac)
+            ->joinInner(['e' => 'tbplanilhaunidade'], '(b.unidade = e.idunidade)', 'e.descricao as Unidade', $sac)
+            ->joinInner(['i' => 'tbplanilhaitens'], '(b.idplanilhaitem=i.idplanilhaitens)', 'i.descricao as Item', $sac)
+            ->joinInner(['x' => 'verificacao'], '(b.fonterecurso = x.idverificacao)', 'x.descricao as FonteRecurso', $sac)
+            ->joinInner(['f' => 'vufmunicipio'], '(b.ufdespesa = f.iduf and b.municipiodespesa = f.idmunicipio)', ['f.uf','f.municipio'], $this->getSchema('agentes'))
             ->where('a.idpreprojeto = ? ', $idPronac)
-            ->order("x.Descricao")
-            ->order("c.Descricao DESC")
-            ->order("CONVERT(VARCHAR(8),d.idPlanilhaEtapa) + ' - ' + d.Descricao")
-            ->order('f.UF')
-            ->order('f.Municipio')
-            ->order('i.Descricao');
+            ->order("x.descricao")
+            ->order("c.descricao DESC")
+            ->order("$convert  $concat '-'  $concat d.descricao")
+            ->order('f.uf')
+            ->order('f.municipio')
+            ->order('i.descricao');
 
         return $db->fetchAll($sql);
     }
@@ -572,7 +572,7 @@ class spPlanilhaOrcamentaria extends GenericModel {
 
         $a = ["*",];
 
-        $sql = $db->select()->from(['a' => 'tbPlanilhaAprovacao'], $a, $this->_schema)
+        $sql = $db->select()->from(['a' => 'tbplanilhaaprovacao'], $a, $this->_schema)
             ->join(['b' => 'tbReadequacao'], '(a.idPronac = b.idPronac)', null, $this->schema)
             ->where("a.idPronac = ?", $idPronac)
             ->where("a.stAtivo = 'N'")
