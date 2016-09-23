@@ -220,34 +220,12 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      */
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {
-        $select = $this->select();
+        $select = $this->select()->from($this->_name, $this->_getCols(), $this->_schema);
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
-
-
-//        $select->where('cpf = ?', '00000000000');
-        //adicionando linha order ao select
-//        $select->order($order);
-
-        // paginacao
-//        if ($tamanho > -1) {
-//            $tmpInicio = 0;
-//            if ($inicio > -1) {
-//                $tmpInicio = $inicio;
-//            }
-//            $select->limit($tamanho, $tmpInicio);
-//        }
-//        echo '<pre>';
-//        var_dump(Zend_Db_Table::getDefaultAdapter());
-//        var_dump($select->assemble());
-//        var_dump($this->fetchAll($select));
-//        var_dump($this->fetchAll($select)->toArray());
-//        var_dump($this->fetchRow($select)->toArray());
-//        exit;
-//xd($slct->__toString());
 
         try {
             $this->fetchAll($select);
