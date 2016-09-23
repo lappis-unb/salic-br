@@ -1,7 +1,6 @@
-<?php 
+<?php
 class Produto extends MinC_Db_Table_Abstract
 {
-    protected $_banco = "sac";
     protected $_schema = "sac";
     protected $_name = "Produto";
 
@@ -210,4 +209,3 @@ class Produto extends MinC_Db_Table_Abstract
 
 
 }
-?>
