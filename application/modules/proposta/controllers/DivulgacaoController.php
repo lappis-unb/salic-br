@@ -191,7 +191,8 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
         $get = Zend_Registry::get('get');
         $idPreProjeto = $get->idPreProjeto;
         $idPlanoDivulgacao = $get->cod;
-        $this->table->excluirdivulgacao($idPlanoDivulgacao);
+        $mapper = new Proposta_Model_PlanoDeDivulgacaoMapper();
+        $mapper->delete($idPlanoDivulgacao);
         parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/proposta/divulgacao/planodivulgacao?idPreProjeto=" . $idPreProjeto, "CONFIRM");
     }
 
