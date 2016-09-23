@@ -1,5 +1,7 @@
 application/configs/bancos_*.ini
 application/configs/config.ini
+application.ini
+
 index.php
 *~
 index.php
