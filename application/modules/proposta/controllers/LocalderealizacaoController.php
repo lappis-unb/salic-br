@@ -48,7 +48,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
 
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
-            $Movimentacao = new Movimentacao();
+            $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
             $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
         }else {
@@ -76,7 +76,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         }
 
         //(Enviar Proposta ao MinC , Excluir Proposta)
-        $mov = new Movimentacao();
+        $mov = new Proposta_Model_DbTable_Movimentacao();
         $movBuscar = $mov->buscar(array('idprojeto = ?' => $get->idPreProjeto), array('idmovimentacao desc'), 1, 0)->current();
 
         if(isset($movBuscar->Movimentacao) && $movBuscar->Movimentacao != 95) {

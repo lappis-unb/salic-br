@@ -46,7 +46,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
             //Descobrindo a movimenta��o corrente de cada proposta
             if(count($rsPropostas)>0){
                 //Conectando com movimentacao
-                $tblMovimentacao = new Movimentacao();
+                $tblMovimentacao = new Proposta_Model_DbTable_Movimentacao();
                 //Conectando com projetos
                 $tblProjetos = new Projetos();
 

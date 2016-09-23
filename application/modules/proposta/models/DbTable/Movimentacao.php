@@ -1,5 +1,18 @@
 <?php
-class Movimentacao extends MinC_Db_Table_Abstract
+
+/**
+ * Class Proposta_Model_DbTable_Movimentacao
+ *
+ * @name Proposta_Model_DbTable_Movimentacao
+ * @package Modules/Proposta
+ * @subpackage Models/DbTable
+ *
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+ * @since 21/09/2016
+ *
+ * @link http://salic.cultura.gov.br
+ */
+class Proposta_Model_DbTable_Movimentacao extends MinC_Db_Table_Abstract
 {
     protected $_banco = "sac";
     protected $_schema = 'sac';

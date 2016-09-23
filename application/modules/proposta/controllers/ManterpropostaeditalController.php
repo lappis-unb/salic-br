@@ -91,7 +91,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             }
 
             //(Enviar Proposta ao MinC , Excluir Proposta)
-            $mov = new Movimentacao();
+            $mov = new Proposta_Model_DbTable_Movimentacao();
             $movBuscar = $mov->buscar(array('idProjeto = ?' => $get->idPreProjeto), array('idMovimentacao desc'), 1, 0)->current();
 
             if (isset($movBuscar->Movimentacao) && $movBuscar->Movimentacao != 95) {
@@ -103,7 +103,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             }
 
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
-            $Movimentacao = new Movimentacao();
+            $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($get->idPreProjeto);
             if (count($rsStatusAtual) > 0) {
                 $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
@@ -208,7 +208,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                 $this->view->verificarmenu = $verificarmenu;
             }
 
-            $mov = new Movimentacao();
+            $mov = new Proposta_Model_DbTable_Movimentacao();
             $movBuscar = $mov->buscar(array('idProjeto = ?' => $get->idPreProjeto), array('idMovimentacao desc'), 1, 0)->current();
 
             if (isset($movBuscar->Movimentacao) && $movBuscar->Movimentacao != 95) {
@@ -327,7 +327,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                 } else {
                     $dados = ManterpropostaeditalDAO::inserirProposta($array);
                     $array['idPreProjeto'] = $dados;
-                    $tblMovimentacao = new Movimentacao();
+                    $tblMovimentacao = new Proposta_Model_DbTable_Movimentacao();
                     $dados = array(	"idProjeto" 		=> $array['idPreProjeto'],
 			                        "Movimentacao" 		=> "95", //Status = Proposta com Proponente
 			                        "DtMovimentacao" 	=> date("Y/m/d H:i:s"),
@@ -1040,7 +1040,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $arrResultado['erro'] = false;
 
         /*         * ******* MOVIMENTACAO ******** */
-        $tblMovimentacao = new Movimentacao();
+        $tblMovimentacao = new Proposta_Model_DbTable_Movimentacao();
         $rsMovimentacao = $tblMovimentacao->buscar(array("idProjeto = ?" => $idPreProjeto), array("idMovimentacao DESC"))->current();
 
         if (count($rsMovimentacao) > 0) {
@@ -1298,7 +1298,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                     //======== PERSXISTE DADOS DA MOVIMENTACAO ==========/
                     //atualiza status da ultima movimentacao
                     //$tblAvaliacao->updateEstadoMovimentacao($idPreProjeto);
-                    $tblMovimentacao = new Movimentacao();
+                    $tblMovimentacao = new Proposta_Model_DbTable_Movimentacao();
                     //Mudando as movimentacoes anteriores para o stEstado = 1
                     $rsRetorno = $tblMovimentacao->update(array("stEstado" => 1), "idProjeto = {$idPreProjeto}");
                     //Pegando ultima movimentacao
@@ -1319,7 +1319,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
                     //PERSISTE DADOS DA MOVIMENTACAO
 
-                    $tblMovimentacao = new Movimentacao();
+                    $tblMovimentacao = new Proposta_Model_DbTable_Movimentacao();
                     $dados = array("idProjeto" => $idPreProjeto,
                         "Movimentacao" => $movimentacaoDestino, //satus
                         //"DtMovimentacao" => date("Y/m/d H:i:s"),
