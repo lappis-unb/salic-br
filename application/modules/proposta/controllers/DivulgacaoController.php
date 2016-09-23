@@ -1,287 +1,251 @@
 <?php
+
 /**
- * Controller Divulga��o
+ * @name Proposta_DivulgacaoController
+ * @package proposta
+ * @subpackage controller
+ * @link http://www.cultura.gov.br
+ *
  * @author Equipe RUP - Politec
  * @author wouerner <wouerner@gmail.com>
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  * @since 15/12/2010
- * @package
- * @subpackage application.controller
- * @link http://www.cultura.gov.br
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  */
+class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
+{
+    private $idPreProjeto = null;
+    private $idUsuario = null;
 
-class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract {
-
-    private $idPreProjeto =  null;
-    private $idUsuario =  null;
     /**
-     * Reescreve o m�todo init()
-     * @access public
-     * @param void
-     * @return void
+     * @var Proposta_Model_DbTable_PlanoDeDivulgacao
      */
-    public function init() {
+    var $table;
 
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
-        $PermissoesGrupo = array();
+    /**
+     * Reescreve o metodo init()
+     *
+     * @name init
+     * @access public
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  21/09/2016
+     */
+    public function init()
+    {
+        parent::init();
 
-	//Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
-        if(isset($auth->getIdentity()->usu_codigo)){
-            //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usu�rio
-            $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
-            foreach ($grupos as $grupo){
-                $PermissoesGrupo[] = $grupo->gru_codigo;
+        $this->table = new Proposta_Model_DbTable_PlanoDeDivulgacao();
+
+        $arrIdentity = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
+
+        # dar permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
+        $arrPermissoesGrupo = array();
+        if (isset($arrIdentity['usu_codigo'])) {
+
+            # recupera todos os grupos do Usuario
+            $usuario = new Autenticacao_Model_Usuario();
+            $grupos = $usuario->buscarUnidades($arrIdentity['usu_codigo'], 21);
+            foreach ($grupos as $grupo) {
+                $arrPermissoesGrupo[] = $grupo->gru_codigo;
             }
         }
 
-        isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
-        parent::init();
+        isset($arrIdentity['usu_codigo']) ? parent::perfil(1, $arrPermissoesGrupo) : parent::perfil(4, $arrPermissoesGrupo);
 
-        //recupera ID do pre projeto (proposta)
-        if(!empty ($_REQUEST['idPreProjeto'])){
+        # recupera ID do pre projeto (proposta)
+        if (!empty ($_REQUEST['idPreProjeto'])) {
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
-            //VERIFICA SE A PROPOSTA ESTA COM O MINC
-            $Movimentacao = new Movimentacao();
-            $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
+            # verifica se a proposta esta com o minc.
+            $movimentacao = new Proposta_Model_DbTable_Movimentacao();
+            $rsStatusAtual = $movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
             $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
         }
 
-        $this->idUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
+        $this->idUsuario = isset($arrIdentity['usu_codigo']) ? $arrIdentity['usu_codigo'] : $arrIdentity['idusuario'];
     }
 
-    // fecha m�todo init()
     /**
      * Redireciona para o fluxo inicial do sistema
+     *
+     * @name indexAction
      * @access public
-     * @param void
-     * @return void
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  21/09/2016
      */
-    public function indexAction() {
-        /* =============================================================================== */
-        /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
+    public function indexAction()
+    {
         $this->verificarPermissaoAcesso(true, false, false);
-
-        $this->_redirect("/proposta/divulgacao/planodivulgacao?idPreProjeto=".$this->idPreProjeto);
+        $this->_redirect("/proposta/divulgacao/planodivulgacao?idPreProjeto=" . $this->idPreProjeto);
     }
 
     /**
-     * planodivulgacaoAction
-     *
+     * @name planodivulgacaoAction
      * @access public
-     * @return void
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  21/09/2016
      */
-    public function planodivulgacaoAction() {
-        /* =============================================================================== */
-        /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
+    public function planodivulgacaoAction()
+    {
         $this->verificarPermissaoAcesso(true, false, false);
-
-        $dao = new DivulgacaoDAO();
-
-        $rsPlanoDivulgacao = $dao->buscar(array("pd.idProjeto = ?"=>$this->idPreProjeto));
-        $this->view->itensDivulgacao = $rsPlanoDivulgacao;
+        $table = new Proposta_Model_DbTable_PlanoDeDivulgacao();
+        $this->view->itensDivulgacao = $table->buscar(array("pd.idprojeto = ?" => $this->idPreProjeto));
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
     /**
-     * consultarcomponenteAction
-     *
+     * @name consultarcomponenteAction
      * @access public
-     * @return void
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  21/09/2016
      */
-    public function consultarcomponenteAction() {
-
+    public function consultarcomponenteAction()
+    {
         $get = Zend_Registry::get('get');
         $idProjeto = $get->idPreProjeto;
-        $this->_helper->layout->disableLayout(); // desabilita o layout
-        if(!empty($idProjeto) || $idProjeto=='0') {
-            $dao = new DivulgacaoDAO();
-            $dados = $dao->buscarDigulgacao($idProjeto);
+        $this->_helper->layout->disableLayout();
+        if (!empty($idProjeto) || $idProjeto == '0') {
+            $dados = $this->table->buscarDigulgacao($idProjeto);
             $this->view->itensDivulgacao = $dados;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     /**
-     * editardivulgacaoAction
-     *
+     * @name editardivulgacaoAction
      * @access public
-     * @return void
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  21/09/2016
      */
-    public function editardivulgacaoAction() {
-
-        /* =============================================================================== */
-        /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
+    public function editardivulgacaoAction()
+    {
         $this->verificarPermissaoAcesso(true, false, false);
-
-        $get = Zend_Registry::get('get');
-        $idPlanoDivulgacao = $get->cod;
-        $idPreProjeto = $get->idPreProjeto;
-
-        $tblDivulgacao = new DivulgacaoDAO();
-
-        //busca registro especifico de plano divulgacao
-        $rsDivulgacao = $tblDivulgacao->buscar(array("pd.idPlanoDivulgacao = ?"=>$idPlanoDivulgacao))->current();
-        //busca todos
-        $this->view->itensplano = $tblDivulgacao->consultarDivulgacao();
-        $this->view->idpeca = $rsDivulgacao->idPeca;
-        $this->view->veiculo = $tblDivulgacao->consultarVeiculo($rsDivulgacao->idPeca);
-        $this->view->idveiculo = $rsDivulgacao->idVeiculo;
+        $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
+        $idPlanoDivulgacao = $this->getRequest()->getParam('cod');
+        $arrDivulgacao = $this->table->findBy($idPlanoDivulgacao);
+        $this->view->itensplano = $tableVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 1), array('descricao'));
+        $this->view->idpeca = $arrDivulgacao->idPeca;
+        $this->view->veiculo = $this->table->consultarVeiculo($arrDivulgacao['idpeca']);
+        $this->view->idveiculo = $arrDivulgacao->idVeiculo;
         $this->view->idDivulgacao = $idPlanoDivulgacao;
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
     /**
-     * novodivulgacaoAction
-     *
+     * @name novodivulgacaoAction
      * @access public
-     * @return void
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  21/09/2016
      */
-    public function novodivulgacaoAction() {
-
-        /* =============================================================================== */
-        /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
+    public function novodivulgacaoAction()
+    {
         $this->verificarPermissaoAcesso(true, false, false);
-
         $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
-        $this->view->itensplano = $tableVerificacao->findAll(array('idtipo' => 1), array('descricao'));
-
+        $this->view->itensplano = $tableVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 1), array('descricao'));
+        $this->view->veiculo = array();
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
     /**
-     * veiculoAction
-     *
+     * @name veiculoAction
      * @access public
-     * @return void
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  21/09/2016
      */
-    public function veiculoAction() {
-
+    public function veiculoAction()
+    {
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
-
-        $get                  = Zend_Registry::get('get');
-        $idOpcao              = $get->idOpcao;
-        $veiculo              = $get->veiculo;
-        $dao                  = new DivulgacaoDAO();
-
-        $options              = $dao->consultarVeiculo($idOpcao);
-
+        $get = Zend_Registry::get('get');
+        $idOpcao = $get->idOpcao;
+        $veiculo = $get->veiculo;
+        $options = $this->table->consultarVeiculo($idOpcao);
         $htmlOptions = "<option value=''> - Selecione - </option>";
-        foreach ($options as $option){
-            $htmlOptions .= "<option value='{$option->idVerificacaoVeiculo}'";
-            if($veiculo==$option->idVerificacaoVeiculo) {$htmlOptions .= ' selected="selected" ';}
-            $htmlOptions .= ">". utf8_decode(htmlentities($option->VeiculoDescicao))."</option>";
+        foreach ($options as $option) {
+            $option = array_change_key_case($option);
+            $htmlOptions .= "<option value='{$option['idverificacaoveiculo']}'";
+            if ($veiculo == $option['idverificacaoveiculo']) {
+                $htmlOptions .= ' selected="selected" ';
             }
-
+            $htmlOptions .= ">" . htmlentities($option['veiculodescicao']) . "</option>";
+        }
         echo $htmlOptions;
     }
 
     /**
-     * excluirdivulgacaoAction
-     *
      * @name excluirdivulgacaoAction
      * @access public
-     * @return void
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  15/08/2016
      */
-    public function excluirdivulgacaoAction() {
-
-        /* =============================================================================== */
-        /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
+    public function excluirdivulgacaoAction()
+    {
         $this->verificarPermissaoAcesso(true, false, false);
-
-        $get       = Zend_Registry::get('get');
-        $idPreProjeto   = $get->idPreProjeto;
+        $get = Zend_Registry::get('get');
+        $idPreProjeto = $get->idPreProjeto;
         $idPlanoDivulgacao = $get->cod;
-
-        $dao = new DivulgacaoDAO();
-        $dao->excluirdivulgacao($idPlanoDivulgacao);
-
-        parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
+        $this->table->excluirdivulgacao($idPlanoDivulgacao);
+        parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/proposta/divulgacao/planodivulgacao?idPreProjeto=" . $idPreProjeto, "CONFIRM");
     }
 
     /**
-     * updatedivulgacaoAction
-     *
      * @name updatedivulgacaoAction
      * @access public
-     * @return void
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  15/08/2016
      */
-    public function updatedivulgacaoAction() {
-
-        /* =============================================================================== */
-        /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
+    public function updatedivulgacaoAction()
+    {
         $this->verificarPermissaoAcesso(true, false, false);
-
-        $post       = Zend_Registry::get('post');
-        $idPreProjeto   = $post->idPreProjeto;
-        $peca           = $post->peca;
-        $veiculo        = $post->veiculo;
+        $post = Zend_Registry::get('post');
+        $idPreProjeto = $post->idPreProjeto;
+        $peca = $post->peca;
+        $veiculo = $post->veiculo;
         $idPlanoDivulgacao = $post->idDivulgacao;
-
-        $dao = new DivulgacaoDAO();
-        $dados = array('idplanodivulgacao <>?' => $idPlanoDivulgacao, 'idprojeto =?' => $idPreProjeto, 'idpeca =?' => $peca, 'idveiculo =?' => $veiculo);
-
-        $verifica = $dao->localiza($dados);
-        if(count($verifica) > 0){
-            parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o Cancelada!", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "ERROR");
-        }else{
-        $dao->UpdateDivulgacao($idPlanoDivulgacao, $peca, $veiculo);
-
-        parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
-
+        $dados = array('idplanodivulgacao <> ?' => $idPlanoDivulgacao, 'idprojeto' => $idPreProjeto, 'idpeca' => $peca, 'idveiculo' => $veiculo);
+        $verifica = $this->table->findAll($dados);
+        if ($verifica) {
+            parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o Cancelada!", "/proposta/divulgacao/planodivulgacao?idPreProjeto=" . $idPreProjeto, "ERROR");
+        } else {
+            $dados = array('idplanodivulgacao' => $idPlanoDivulgacao, 'idpeca' => $peca, 'idveiculo' => $veiculo);
+            $mapper = new Proposta_Model_PlanoDeDivulgacaoMapper();
+            $mapper->save(new Proposta_Model_PlanoDeDivulgacao($dados));
+            parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/proposta/divulgacao/planodivulgacao?idPreProjeto=" . $idPreProjeto, "CONFIRM");
         }
     }
 
     /**
-     * incluirdivulgacaoAction
-     *
      * @name incluirdivulgacaoAction
      * @access public
-     * @return void
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  15/08/2016
      */
-    public function incluirdivulgacaoAction(){
-
-        /* =============================================================================== */
-        /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
+    public function incluirdivulgacaoAction()
+    {
         $this->verificarPermissaoAcesso(true, false, false);
-
-        $post       = Zend_Registry::get('post');
-        $idPreProjeto   = $post->idPreProjeto;
-        $idPeca         = $post->peca;
-        $idveiculo      = $post->veiculo;
-        $usuario        = $this->idUsuario;
-        $dados = array('idprojeto =?' => $idPreProjeto, 'idpeca =?' => $idPeca, 'idveiculo =?' => $idveiculo);
-
-
-        $dao = new DivulgacaoDAO();
-        $verifica = $dao->localiza($dados);
-
-        if(count($verifica) > 0){
-            parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o Cancelada!", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "ERROR");
+        $post = Zend_Registry::get('post');
+        $idPreProjeto = $post->idPreProjeto;
+        $idPeca = $post->peca;
+        $idveiculo = $post->veiculo;
+        $usuario = $this->idUsuario;
+        $dados = array('idprojeto' => $idPreProjeto, 'idpeca' => $idPeca, 'idveiculo' => $idveiculo);
+        $verifica = $this->table->findAll($dados);
+        if ($verifica) {
+            parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o Cancelada!", "/proposta/divulgacao/planodivulgacao?idPreProjeto=" . $idPreProjeto, "ERROR");
         } else {
             $dados = array('idprojeto' => $idPreProjeto, 'idpeca' => $idPeca, 'idveiculo' => $idveiculo, 'usuario' => $usuario);
-            $dao->inserirDivulgacao($dados);
-
-            parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/proposta/divulgacao/planodivulgacao?idPreProjeto=".$idPreProjeto, "CONFIRM");
+            $mapper = new Proposta_Model_PlanoDeDivulgacaoMapper();
+            $mapper->save(new Proposta_Model_PlanoDeDivulgacao($dados));
+            parent::message("Opera&ccedil;&atilde;o realizada com sucesso", "/proposta/divulgacao/planodivulgacao?idPreProjeto=" . $idPreProjeto, "CONFIRM");
         }
     }
 }

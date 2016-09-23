@@ -603,8 +603,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $consulta = $fnVerificarPermissao->verificarPermissaoProjeto($idPronac, $idUsuarioLogado);
                 $permissao = $consulta->Permissao;
             }
-
-            //Verifica Permiss?o de Proposta
+            //Verifica Permissao de Proposta
             if ($proposta) {
                 $msgERRO = 'Voce nao tem permissao para acessar essa Proposta!';
                 $idUsuarioLogado = $arrAuth['idusuario'];

@@ -42,7 +42,7 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
             if(!empty ($_REQUEST['idPreProjeto'])){
                 $this->_idPreProjeto = $get->idPreProjeto;
                 //VERIFICA SE A PROPOSTA ESTA COM O MINC
-                $Movimentacao = new Movimentacao();
+                $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
                 $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
                 $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
             }else{
