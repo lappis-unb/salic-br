@@ -147,35 +147,22 @@ function mascara ($val, $mask) {
             <tr>
                 <th>&nbsp;</th>
                 <th colspan="2">Fornecedor</th>
-                <th colspan="3">Dados do Pagamento</th>
-                <th>&nbsp;</th>
-                <th colspan="3">Informações do Banco do Brasil</th>
-                <th>&nbsp;</th>
+                <th colspan="4">&nbsp;</th>
             </tr>
             <tr class="titulo_tabela">
                 <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">Item Or&ccedil;ament&aacute;rio</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">CNPJ / CPF</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo3=&ordem='.$this->paginacao['novaOrdem'];?>">Nome</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">N&uacute;mero</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=9&ordem='.$this->paginacao['novaOrdem'];?>">Data</a></th>
-                <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Valor</a></th>
-                <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=11&ordem='.$this->paginacao['novaOrdem'];?>">Vl. Comprovado</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=12&ordem='.$this->paginacao['novaOrdem'];?>">Lan&ccedil;amento</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=13&ordem='.$this->paginacao['novaOrdem'];?>">Dt. Lan&ccedil;amento</a></th>
-                <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=14&ordem='.$this->paginacao['novaOrdem'];?>">Vl. Debitado</a></th>
-                <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=15&ordem='.$this->paginacao['novaOrdem'];?>">Vl. Diferen&ccedil;a</a></th>
+                <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">Valor</a></th>
+                <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Vl. Comprovado</a></th>
+                <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=9&ordem='.$this->paginacao['novaOrdem'];?>">Vl. Debitado</a></th>
+                <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Vl. Diferen&ccedil;a</a></th>
  </tr>
         </thead>
     <tbody>
         <?php
             foreach ($this->dados as $d){
             $style = "";
-
-                if ($d->dsLancamento==="SEM INFORMAÇÕES BANCÁRIAS") {
-                    $d->vlDiferenca = "<center>-</center>";
-                    $d->vlDebitado = "<center>-</center>";
-                    $d->dtLancamento = "<center>-</center>";
-                }
 
                 if ((strlen($d->CNPJCPF === '14' ))) {
                    $d->CNPJCPF = mascara($d->CNPJCPF,'##.###.###/####-##');
@@ -192,21 +179,14 @@ function mascara ($val, $mask) {
                     $d->vlDiferenca = 'R$ '. @number_format(($d->vlDiferenca),2, ",", ".");
                 }
 
-                if ($d->dtLancamento <> "<center>-</center>") {
-                    $d->dtLancamento = Data::tratarDataZend($d->dtLancamento,'Brasileira');
-                }
 
          ?>
          <tr>
              <td align="center"><?php echo $d->ItemOrcamentario; ?></td>
              <td><?php echo $d->CNPJCPF; ?></td>
              <td align="center"><?php echo $d->NomeProjeto; ?></td>
-             <td><?php echo $d->nrDocumentoDePagamento; ?></td>
-             <td><?php echo Data::tratarDataZend($d->dtPagamento,'Brasileira'); ?></td>
              <td align="right"><b><?php echo 'R$ '. @number_format(($d->vlPagamento),2, ",", "."); ?></b></td>
              <td align="right"><b><?php echo 'R$ '. @number_format(($d->vlComprovado),2, ",", "."); ?></b></td>
-             <td align="center"><?php echo $d->dsLancamento; ?></td>
-             <td align="center"><?php echo $d->dtLancamento; ?></td>
              <td align="right"><?php echo $d->vlDebitado; ?></td>
              <td align="right" <?php echo $style; ?>><?php echo $d->vlDiferenca; ?></td>
          </tr>
