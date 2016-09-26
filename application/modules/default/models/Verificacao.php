@@ -20,11 +20,8 @@ class Verificacao extends MinC_Db_Table_Abstract
 	const DEVOLUCAO_FUNDO_NACIONAL_CULTURA = 350;
 	const OUTRAS_DEVOLUCOES_DE_RECURSOS_CAPTADOS = 351;
 
-	/* dados da tabela */
-	protected $_banco   = "SAC";
-	protected $_schema  = "dbo";
-	protected $_name    = "Verificacao";
-
+	protected $_schema  = "sac";
+	protected $_name    = "verificacao";
 
 
 	 /**
@@ -108,22 +105,22 @@ class Verificacao extends MinC_Db_Table_Abstract
             return $this->fetchAll($select);
 
         }
-        
-        
+
+
         function buscarOrigemRecurso($where = array()){
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(  array(new Zend_Db_Expr('SAC.dbo.Verificacao')),
                             array('idVerificacao', 'Descricao'));
-            
+
             if($where){
                 foreach ($where as $coluna => $valor) :
                     $select->where($coluna, $valor);
 		endforeach;
             }
-            
+
             return $this->fetchAll($select);
         }
 
 
-} // fecha class
+}

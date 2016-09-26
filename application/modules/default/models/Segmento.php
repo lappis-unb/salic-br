@@ -13,7 +13,6 @@
  */
 class Segmento extends MinC_Db_Table_Abstract
 {
-    protected $_banco = 'sac';
     protected $_schema = 'sac';
     protected $_name = 'Segmento';
 
@@ -23,7 +22,7 @@ class Segmento extends MinC_Db_Table_Abstract
         $slct->from(array('s'=>$this->_name),
                     array('id'=>'Codigo', 'descricao'=>'Descricao')
         );
-        
+
         $slct->joinInner(array('a'=>'Area'),'LEFT(s.Codigo, 1) = a.Codigo',
                             array(),'SAC.dbo'
         );
@@ -67,15 +66,17 @@ class Segmento extends MinC_Db_Table_Abstract
         $select = $this->select();
         $select->setIntegrityCheck(false);
 
-        $select->from(array('s' => 'vsegmento')
-            , array('s.codigo AS id'
-            , 's.segmento AS descricao'
-            )
+        $select->from(
+            array('s' => 'vSegmento'),
+            array('s.codigo AS id', 's.segmento AS descricao'),
+            $this->_schema
         );
+
         $select->joinInner(
-            array('a' => 'area')
-            , 's.area = a.codigo'
-            , array()
+            array('a' => 'area'),
+            's.area = a.codigo',
+            array(),
+            $this->_schema
         );
 
         // adiciona quantos filtros foram enviados
@@ -85,9 +86,10 @@ class Segmento extends MinC_Db_Table_Abstract
 
         // adicionando linha order ao select
         $select->order($order);
+        //echo $select;die;
 
         return $this->fetchAll($select);
-    } // fecha metodo combo()
+    }
 
     public function buscaSegmentos()
     {
