@@ -46,7 +46,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
         /*********************************************************************************************************/
 
-        $cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
+        $cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->cpf;
 
         // Busca na SGCAcesso
         $sgcAcesso 	 = new Autenticacao_Model_Sgcacesso();
@@ -61,9 +61,8 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $agentesDAO  = new Agente_Model_DbTable_Agentes();
         $buscaAgente = $agentesDAO->BuscaAgente($cpf);
 
-
-        if( count($buscaAcesso) > 0){ $this->idResponsavel = $buscaAcesso[0]->IdUsuario; }
-        if( count($buscaAgente) > 0 ){ $this->idAgente 	   = $buscaAgente[0]->idAgente; }
+        if( count($buscaAcesso) > 0){ $this->idResponsavel = $buscaAcesso[0]->idusuario; }
+        if( count($buscaAgente) > 0 ){ $this->idAgente 	   = $buscaAgente[0]->idagente; }
         if( count($buscaUsuario) > 0 ){ $this->idUsuario   = $buscaUsuario[0]->usu_codigo; }
 
         if($this->idAgente != 0)
@@ -80,7 +79,9 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         //VALIDA ITENS DO MENU (Documento pendentes)
         if (isset($_GET['idPreProjeto']) && !empty($_GET['idPreProjeto'])) {
             $get = Zend_Registry::get("get");
-            $this->view->documentosPendentes = AnalisarPropostaDAO::buscarDocumentoPendente($get->idPreProjeto);
+            //$this->view->documentosPendentes = AnalisarPropostaDAO::buscarDocumentoPendente($get->idPreProjeto);
+            $model = new Proposta_Model_DbTable_DocumentosExigidos();
+            $this->view->documentosPendentes = $model->buscarDocumentoPendente($get->idPreProjeto);
 
             if (!empty($this->view->documentosPendentes)) {
                 $verificarmenu = 1;
@@ -714,15 +715,16 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
      * @access public
      * @return void
      */
-    public function documentospendenteseditalAction() {
-
-        /* =============================================================================== */
+    public function documentospendenteseditalAction()
+    {
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
 
-        $get = Zend_Registry::get("get");
-        $this->view->documentosPendentes = AnalisarPropostaDAO::buscarDocumentoPendente($get->idPreProjeto);
+        //$get = Zend_Registry::get("get");
+        //$this->view->documentosPendentes = AnalisarPropostaDAO::buscarDocumentoPendente($get->idPreProjeto);
+
+        $model = new Proposta_Model_DbTable_DocumentosExigidos();
+        $this->view->documentosPendentes = $model->buscarDocumentoPendente($get->idPreProjeto);
     }
 
     /**
