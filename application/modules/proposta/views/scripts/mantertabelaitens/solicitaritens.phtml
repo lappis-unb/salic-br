@@ -29,7 +29,7 @@
             }
         });
 
-        <?php if(isset($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
+        <?php if(!empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
              //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
              JSBloquearAlteracaoFormulario();
         <?php endif; ?>

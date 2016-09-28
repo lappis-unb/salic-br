@@ -46,11 +46,11 @@ class Proposta_Model_DbTable_DocumentosExigidos extends MinC_Db_Table_Abstract
 //            ->from(['dp' => 'documentosproponente'], ['idprojeto', 'contador', 'codigodocumento', 'opcao'], $this->_schema)
             ->from(['dp' => 'documentosproponente'], ['contador', 'codigodocumento'], $this->_schema)
             ->joinInner(['d' => 'documentosexigidos'], 'dp.codigodocumento = d.codigo', ['opcao'], $this->_schema)
-            ->joinInner(['p' => 'preprojeto'], 'dp.idprojeto = p.idpreprojeto', [], $this->_schema)
+            ->joinInner(['p' => 'preprojeto'], 'dp.idprojeto = p.idpreprojeto', null, $this->_schema)
             ->joinInner(['m' => 'tbmovimentacao'], 'm.idprojeto = p.idpreprojeto', ['idprojeto'], $this->_schema)
             ->where('movimentacao IN (?)', [97, 95])
             ->where('m.stestado = ?', 0)
-            ->where('m.idprojeto = ?', $idPreProjeto)
+            ->where('m.idprojeto = ?', (int)$idPreProjeto)
         ;
 
         $selectProjeto = $this->select()
@@ -58,15 +58,15 @@ class Proposta_Model_DbTable_DocumentosExigidos extends MinC_Db_Table_Abstract
 //            ->from(['dpr' => 'documentosprojeto'], ['idprojeto', 'contador', 'codigodocumento', 'opcao'], $this->_schema)
             ->from(['dpr' => 'documentosprojeto'], ['contador', 'codigodocumento'], $this->_schema)
             ->joinInner(['d' => 'documentosexigidos'], 'dpr.codigodocumento = d.codigo', ['opcao'], $this->_schema)
-            ->joinInner(['p' => 'preprojeto'], 'dpr.idprojeto = p.idpreprojeto', [], $this->_schema)
+            ->joinInner(['p' => 'preprojeto'], 'dpr.idprojeto = p.idpreprojeto', null, $this->_schema)
             ->joinInner(['m' => 'tbmovimentacao'], 'm.idprojeto = p.idpreprojeto', ['idprojeto'], $this->_schema)
             ->where('movimentacao IN (?)', [97, 95])
             ->where('m.stestado = ?', 0)
-            ->where('m.idprojeto = ?', $idPreProjeto)
+            ->where('m.idprojeto = ?', (int)$idPreProjeto)
         ;
 
         $select = $this->select()
-            ->distinct()
+            //->distinct()
             ->union(array($selectProponente, $selectProjeto))
 //            ->joinLeft(['doc' => 'documentosexigidos'], 'vdoc.codigodocumento = doc.codigo', '*', $this->_schema)
 

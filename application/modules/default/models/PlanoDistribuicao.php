@@ -205,7 +205,7 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
                         $rows = $this->fetchAll($slct);
                         return $rows->count();
             }catch(Exception $e){
-                xd($slct->assemble());
+                echo ($slct->assemble());die;
             }
     }
 

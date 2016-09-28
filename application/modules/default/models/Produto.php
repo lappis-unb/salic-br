@@ -2,7 +2,7 @@
 class Produto extends MinC_Db_Table_Abstract
 {
     protected $_schema = "sac";
-    protected $_name = "Produto";
+    protected $_name = "produto";
 
     public function find()
     {
