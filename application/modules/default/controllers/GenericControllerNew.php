@@ -699,7 +699,7 @@ class GenericControllerNew extends Zend_Controller_Action
 	} // fecha método verificarPermissaoAcesso()
     
     public static function validarSenhaInicial(){
-        return 'ae56f49edf70ec03b98f53ea6d2bc622';
+        return  'c367b67ab2a9d8c3e447735a79a78544';
     }
     
     /**
