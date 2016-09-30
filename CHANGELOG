@@ -1,3 +1,5 @@
+Release 1.10.9
+  * Fix: [LOGIN] Atualização da senha de entrada.
 Release 1.10.8
   * Fix: [AGENTES] Correção na consulta de CPF dos agentes via Webservice da Receita
 
