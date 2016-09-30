@@ -25,16 +25,17 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
      * @access public
      * @return void
      */
-    public function init() {
-        $this->view->title = "Salic - Sistema de Apoio �s Leis de Incentivo � Cultura"; // t�tulo da p�gina
+    public function init()
+    {
+        $this->view->title = "Salic - Sistema de Apoio as Leis de Incentivo a Cultura";
 
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
+        $auth = Zend_Auth::getInstance(); // instancia da autenticação
         $PermissoesGrupo = array();
 
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if (isset($auth->getIdentity()->usu_codigo) ) {
             //Recupera todos os grupos do Usuario
-            $Usuario    = new Autenticacao_Model_Usuario(); // objeto usu�rio
+            $Usuario    = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
             $grupos     = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo) {
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -53,7 +54,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $this->idProduto = $this->getRequest()->getParam('idProduto');
         $this->idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
         if ($this->tpDiligencia) {
-            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
+            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
             $urlArray = array('controller' => 'verificarreadequacaodeprojeto');
 
             // ajusta o link de voltar de acordo com o tipo de dilignecia
@@ -68,9 +69,9 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
             }
         }
 
-        $this->view->btnVoltar = $this->btnVoltar; // bot�o voltar dinamico
+        $this->view->btnVoltar = $this->btnVoltar; // botï¿½o voltar dinamico
 
-        parent::init(); // chama o init() do pai GenericControllerNew
+        parent::init();
     }
 
     /**
@@ -97,14 +98,14 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $diligenciaDAO      = new Diligencia();
         $post               = Zend_Registry::get('post');
 
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
+        $auth = Zend_Auth::getInstance(); // instancia da autenticação
         $Usuario = new Autenticacao_Model_Usuario();
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $usu_identificacao = trim($idagente['usu_identificacao']);
         $idagente = $idagente['idAgente'];
 
         $utl = $diligenciaDAO->buscarUltDiligencia(array('idPronac = ?' => $this-> idPronac, 'stEnviado = ?' => 'N', 'stEstado  = ?' => 0, 'idSolicitante = ?' => new Zend_Db_Expr("isnull((SELECT usu_codigo FROM tabelas..usuarios WHERE usu_identificacao='".$usu_identificacao."'), (SELECT idAgente FROM Agentes.dbo.Agentes WHERE CNPJCPF='".$usu_identificacao."'))")))->current();
-        if(count($utl) > 0) {
+        if (count($utl) > 0) {
             $this->view->ultimo     = $utl;
         }
         $this->view->idPronac       = $this->idPronac;
@@ -128,7 +129,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         if (isset($resp) && is_object($resp) && count($resp)>0) {
             $this->view->pronac         =   $resp[0]->pronac;
             $this->view->nomeProjeto    =   $resp[0]->nomeProjeto;
-        } else{
+        } else {
             $this->view->pronac         =   '';
             $this->view->nomeProjeto    =   '';
         }
@@ -142,7 +143,10 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
     }
 
     /**
+     * visualizardiligenciaAction
      *
+     * @access public
+     * @return void
      */
     public function visualizardiligenciaAction()
     {
@@ -152,7 +156,6 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $DocumentosExigidosDao  = new DocumentosExigidos();
 
         $post = Zend_Registry::get('post');
-        //$this->view->dadosDiligencia    = $post;
         $this->view->idPronac           = $this->idPronac;
         $this->view->idPreProjeto       = $this->idPreProjeto;
         $this->view->idProduto          = $this->idProduto;
@@ -166,6 +169,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
             $this->view->nmTipo         = 'DO PROJETO';
             $this->view->tipoDiligencia = $resp[0]->tipoDiligencia;
         }
+
         if ($this->view->idAvaliacaoProposta) {
             if ($this->idPronac) {
                 $projeto        = $Projetosdao->buscar(array('IdPRONAC = ?' => $this->idPronac));
@@ -179,13 +183,11 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
             $this->view->nmCodigo   = 'Nr PROPOSTA';
             $this->view->nmTipo     = 'DA PROPOSTA';
             $this->view->Descricao  = $resp[0]->Descricao;
-
         }
 
         $this->view->stEnviado      = $resp[0]->stEnviado;
         $this->view->pronac         = $resp[0]->pronac;
         $this->view->nomeProjeto    = $resp[0]->nomeProjeto;
-        //$this->view->Proponente = $rd[0]->Proponente;
         $this->view->dataSolicitacao    = date('d/m/Y H:i', strtotime($resp[0]->dataSolicitacao));
         if ($resp[0]->dataResposta          != '')
             $this->view->dataResposta       = date('d/m/Y H:i', strtotime($resp[0]->dataResposta));
@@ -210,7 +212,8 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
      * @access public
      * @return void
      */
-    public function imprimirdiligenciaAction() {
+    public function imprimirdiligenciaAction()
+    {
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $verificacaodao         = new Verificacao();
         $Projetosdao            = new Projetos();
@@ -273,20 +276,20 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
      * @access public
      * @return void
      */
-    public function cadastrarrespostadiligenciaAction() {
-
+    public function cadastrarrespostadiligenciaAction()
+    {
         $post = Zend_Registry::get('post');
         $idArquivo = '';
         $Mensagem = '';
         if (!empty($_FILES) && is_file($_FILES['arquivo']['tmp_name'])) {
             $arquivoNome     = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome tempor�rio
+            $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporário
             $arquivoTipo     = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho  = $_FILES['arquivo']['size']; // tamanho
 
-            if (!empty($arquivoNome) && !empty($arquivoTemp)){
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens�o
-                $arquivoBinario  = Upload::setBinario($arquivoTemp); // bin�rio
+            if (!empty($arquivoNome) && !empty($arquivoTemp)) {
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
+                $arquivoBinario  = Upload::setBinario($arquivoTemp); // binário
                 $arquivoHash     = Upload::setHash($arquivoTemp); // hash
             }
 
@@ -295,7 +298,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
                 parent::message("Favor selecionar o arquivo no formato PDF!", "diligenciar/listardiligenciaproponente?idPronac=$this->idPronac", "ALERT");
             }
 
-            if(!empty ($this->idPronac) && $this->idPronac != "0"){
+            if (!empty($this->idPronac) && $this->idPronac != "0") {
 
                 $dataString = file_get_contents($arquivoTemp);
                 $arrData = unpack("H*hex", $dataString);
@@ -306,7 +309,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
                     'nmArquivo'         => $arquivoNome,
                     'sgExtensao'        => $arquivoExtensao,
                     'biArquivo'         => $data,
-                    'dsDocumento'       => 'Resposta de Dilig�ncia',
+                    'dsDocumento'       => 'Resposta de Diligência',
                     'idPronac'          => $this->idPronac,
                     'idTipoDocumento'   => 3,
                     'idDiligencia'      => $post->idDiligencia
@@ -392,13 +395,14 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
      * @access public
      * @return void
      */
-    public function excluirarquivoAction(){
+    public function excluirarquivoAction()
+    {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 
         $Arquivo = new vwAnexarDocumentoDiligencia();
         $result = $Arquivo->excluirArquivo($_POST['arquivo'], $_POST['diligencia']);
 
-        if(count($result) > 0){
+        if (count($result) > 0) {
             echo json_encode(array('resposta'=>true));
         } else {
             echo json_encode(array('resposta'=>false));
@@ -406,14 +410,16 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         die();
     }
 
-    public function listardiligenciaproponenteAction() {
-
-        //$this->operacoesDiligencia();
-        //$post                     = Zend_Registry::get('post');
+    /**
+     * listardiligenciaproponenteAction
+     *
+     * @access public
+     * @return void
+     */
+    public function listardiligenciaproponenteAction()
+    {
         $Projetosdao                = new Projetos();
         $PreProjetodao              = new Proposta_Model_PreProjeto();
-        //$dao                      = new DiligenciarDao();
-        //$this->view->idPronac     = 118389;
         $this->view->idPronac       = $this->idPronac;
         $this->view->idPreProjeto   = $this->idPreProjeto;
         $this->view->idProduto      = $this->idProduto;
@@ -431,12 +437,14 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         }
         if ($this->view->idPreProjeto) {
             $this->view->diligenciasProposta        = $PreProjetodao->listarDiligenciasPreProjeto(array('pre.idPreProjeto = ?' => $this->view->idPreProjeto,'aval.ConformidadeOK <> ? '=>9));
-            //$this->view->diligenciasProposta = $PreProjetodao->listarDiligenciasPreProjeto(array('pre.idPreProjeto = ?' => $this->view->idPreProjeto));
         }
     }
 
     /**
+     * listardiligenciaanalistaAction
      *
+     * @access public
+     * @return void
      */
     public function listardiligenciaanalistaAction()
     {
@@ -488,9 +496,8 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
      * @access private
      * @return void
      */
-    private function situacaoProjeto($situacoes, $idPronac, $texto = '') {
-
-
+    private function situacaoProjeto($situacoes, $idPronac, $texto = '')
+    {
         $ProjetoDAO             = new Projetos();
         $SituacaoDAO            = new Situacao();
         $HistoricoSituacaoDAO   = new HistoricoSituacao();
@@ -533,7 +540,8 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
      * @access public
      * @return void
      */
-    public function updatediligenciaAction() {
+    public function updatediligenciaAction()
+    {
         $post = Zend_Registry::get('post');
         $diligenciaDAO = new Diligencia();
         $AvaliacaoPropostaDAO = new AvaliacaoProposta();
@@ -545,13 +553,13 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         if (is_file($_FILES['arquivo']['tmp_name'])) {
 
             $arquivoNome     = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome tempor�rio
+            $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporário
             $arquivoTipo     = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho  = $_FILES['arquivo']['size']; // tamanho
 
-            if (!empty($arquivoNome) && !empty($arquivoTemp)){
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens�o
-                $arquivoBinario  = Upload::setBinario($arquivoTemp); // bin�rio
+            if (!empty($arquivoNome) && !empty($arquivoTemp)) {
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
+                $arquivoBinario  = Upload::setBinario($arquivoTemp); // binário
                 $arquivoHash     = Upload::setHash($arquivoTemp); // hash
             }
 
@@ -560,7 +568,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
                 parent::message("Favor selecionar o arquivo no formato PDF!", "diligenciar/listardiligenciaproponente?idPronac=$this->idPronac", "ALERT");
             }
 
-            if(!empty ($this->idPronac) && $this->idPronac != "0"){
+            if (!empty($this->idPronac) && $this->idPronac != "0") {
 
                 $dataString = file_get_contents($arquivoTemp);
                 $arrData = unpack("H*hex", $dataString);
@@ -571,7 +579,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
                     'nmArquivo'         => $arquivoNome,
                     'sgExtensao'        => $arquivoExtensao,
                     'biArquivo'         => $data,
-                    'dsDocumento'       => 'Resposta de Dilig�ncia',
+                    'dsDocumento'       => 'Resposta de Diligência',
                     'idPronac'          => $this->idPronac,
                     'idTipoDocumento'   => 3,
                     'idDiligencia'      => $post->idDiligencia
@@ -581,7 +589,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
             }
         }
 
-        if(!empty ($retorno['Mensagem'])){
+        if (!empty($retorno['Mensagem'])) {
             $post->verificaEnviado = 'N';
         }
 
@@ -611,7 +619,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
             $resp = $diligenciaDAO->update($dados, $where);
 
             if ($post->verificaEnviado == 'S')
-                $this->situacaoProjeto($this->situacaoProjetoResposta, $this->idPronac, 'Dilig�ncia respondida pelo proponente, esperando decis�o.');
+                $this->situacaoProjeto($this->situacaoProjetoResposta, $this->idPronac, 'Diligï¿½ncia respondida pelo proponente, esperando decisï¿½o.');
             $aux = "?idPronac={$this->idPronac}&idDiligencia={$this->idDiligencia}&idProduto={$this->idProduto}{$paramEdital}";
         }
 
@@ -651,14 +659,11 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
             if ($resp) {
                 if ($post->verificaEnviado == 'S') {
                     parent::message("Mensagem enviada com sucesso!", "diligenciar/listardiligenciaproponente{$aux}", "CONFIRM");
-                    //$this->view->mensagem = 'Mensagem enviada com sucesso!';
                 } else {
                     parent::message("Mensagem salva com sucesso!", "diligenciar/listardiligenciaproponente{$aux}", "CONFIRM");
-                    //$this->view->mensagem = 'Mensagem salva com sucesso!';
                 }
             } else {
                 parent::message('N&atildeo foi possivel realizar a opera&ccedil;&atildeo solicitada!', "diligenciar/listardiligenciaproponente{$aux}", "ERROR");
-                //$this->view->mensagem = 'N&atildeo foi possivel tente mais tarde!';
             }
         }
         else{
@@ -716,7 +721,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
             'stEnviado'         => 'N'
         );
 
-        if(filter_input(INPUT_POST, 'btnEnvio') == 1){
+        if (filter_input(INPUT_POST, 'btnEnvio') == 1) {
             $dados['DtSolicitacao'] = new Zend_Db_Expr('GETDATE()');
             $dados['idSolicitante'] = $idagente;
             $dados['stEnviado'] = 'S';
@@ -731,8 +736,8 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
      * @access public
      * @return void
      */
-    public function salvardiligenciaAction() {
-
+    public function salvardiligenciaAction()
+    {
         $post                   = Zend_Registry::get('post');
         $diligenciaDAO          = new Diligencia();
         $ProjetoDAO             = new Projetos();
@@ -777,7 +782,6 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
             );
         }
 
-
         if($_POST['btnEnvio'] == 1){
             $msgAlert = 'Enviado com sucesso!';
         } else {
@@ -785,9 +789,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         }
 
         $aux = "?idPronac={$this->idPronac}&situacao={$this->situacao}&tpDiligencia={$post->tpDiligencia}";
-        //parent::message("$msgAlert", "diligenciar/cadastrardiligencia{$aux}", "CONFIRM");
         parent::message("$msgAlert", "diligenciar/listardiligenciaanalista{$aux}", "CONFIRM");
-
     }
 
     /**
@@ -798,7 +800,8 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
      * @access private
      * @return void
      */
-    private function eviarEmail($idPronac,$tpDiligencia){
+    private function eviarEmail($idPronac,$tpDiligencia)
+    {
         $auth = Zend_Auth::getInstance();
         $tbTextoEmailDAO    =   new tbTextoEmail();
         $projetosDAO        =   new Projetos();
@@ -813,9 +816,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $email  =   'bruno.alexandre@cultura.gov.br';
 
         $mens = '<b>Projeto: ' . $dadosProjeto->pronac . ' - ' . $dadosProjeto->NomeProjeto . '<br> Proponente: ' .
-         $dadosProjeto->Destinatario . '<br> </b>' . $textoEmail->dsTexto;
-
-
+        $dadosProjeto->Destinatario . '<br> </b>' . $textoEmail->dsTexto;
 
         $assunto = 'Diligencia na fase de ';
         switch ($tpDiligencia){
@@ -869,8 +870,6 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
                  );
 
         $tbHistoricoEmailDAO->inserir($dados);
-
-
     }
 
     /**
@@ -879,9 +878,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
      * @access private
      * @return void
      */
-    private function operacoesDiligencia() {
-
-    }
+    private function operacoesDiligencia() {}
 
     /**
      * anexararquivo
@@ -890,19 +887,19 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     private function anexararquivo() {
-        // pega as informa��es do arquivo
+        // pega as informaï¿½ï¿½es do arquivo
         $idArquivo = '';
         $Mensagem = '';
         if (is_file($_FILES['arquivo']['tmp_name'])) {
 
             $arquivoNome     = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome tempor�rio
+            $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporário
             $arquivoTipo     = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho  = $_FILES['arquivo']['size']; // tamanho
 
             if (!empty($arquivoNome) && !empty($arquivoTemp)){
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extens�o
-                $arquivoBinario  = Upload::setBinario($arquivoTemp); // bin�rio
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
+                $arquivoBinario  = Upload::setBinario($arquivoTemp); // binário
                 $arquivoHash     = Upload::setHash($arquivoTemp); // hash
             }
 
@@ -946,7 +943,8 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
      * @access public
      * @return void
      */
-    public function imprimirAction() {
+    public function imprimirAction()
+    {
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $verificacaodao         = new Verificacao();
         $Projetosdao            = new Projetos();
@@ -1006,7 +1004,8 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
      * @access public
      * @return void
      */
-    public function prorrogarAction() {
+    public function prorrogarAction()
+    {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         $post                   = Zend_Registry::get('post');
@@ -1050,20 +1049,21 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
 
     /**
      * checarprazorespostaAction
-     * Descri�?o: checar os prazos para resposta de dilig?ncia.
-     * O cursor � utilizado por a trigger que altera a situa�?o do projeto, quando o
-     * propoenente responde a dilig?ncia, atua atrav�s do atribuito idPronac.
+     * Descrição: checar os prazos para resposta de diligencia.
+     * O cursor ï¿½ utilizado por a trigger que altera a situaï¿½?o do projeto, quando o
+     * propoenente responde a dilig?ncia, atua atravï¿½s do atribuito idPronac.
      *
      * @access public
      * @return void
      */
-    public function checarprazorespostaAction() {
+    public function checarprazorespostaAction()
+    {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
         $diligenciaDao          = new Diligencia();
         $AvaliacaoPropostaDao   = new AvaliacaoProposta();
-        //atualizar situa�?o do projeto para diligencias n?o respondidas
+        //atualizar situaï¿½?o do projeto para diligencias n?o respondidas
         $diligenciaProjeto      = $diligenciaDao->diligenciasNaoRespondidas();
         foreach ($diligenciaProjeto as $value) {
             $this->situacaoProjeto($this->situacaoProjetoNaoResposta, $value->idPronac);
@@ -1087,14 +1087,6 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         );
         $where = array('idPronac in (?)' => $diligenciaProposta);
         $AvaliacaoPropostaDao->update($data, $where);
-
-        /* $dao        = new DiligenciarDao();
-
-          $dao->checarprazoresposta();
-
-          $this->situacaoProjeto($this->situacaoProjetoNaoResposta);
-
-          $dao->checarprazorespostaProposta(); */
     }
 
     /**
@@ -1107,9 +1099,6 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
     {
         $Projetosdao   = new Projetos();
         $PreProjetodao = new Proposta_Model_PreProjeto();
-
-        ini_set('memory_limit', '-1');
-
         $this->view->diligencias         = $Projetosdao->listarDiligencias(array('dil.idTipoDiligencia = ?' => 124, 'dil.stEnviado = ?' => 'S', 'dil.stEstado = ?' => '0', 'dil.DtResposta ?' => new Zend_Db_Expr('IS NOT NULL'), 'dil.idProponente ?' => new Zend_Db_Expr('IS NOT NULL')));
         $this->view->diligenciasProposta = $PreProjetodao->listarDiligenciasPreProjeto(array('aval.dtResposta ?' => new Zend_Db_Expr('IS NOT NULL'), 'aval.stEnviado = ?' => 'S'));
     }

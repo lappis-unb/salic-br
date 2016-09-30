@@ -7,7 +7,6 @@
  * @since 28/04/2010
  * @link http://www.cultura.gov.br
  */
-//require_once "GenericControllerNew.php";
 
 class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstract
 {
@@ -87,7 +86,6 @@ class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstrac
         }else{
             $mecanismo = 'FNC';
         }
-        //xd($consultaDadosProjeto);
 
         $texto = '<html>
         <head>
