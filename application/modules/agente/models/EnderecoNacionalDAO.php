@@ -19,7 +19,6 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
      * @param mixed $idAgente
      * @static
      * @access public
-     * @return void
      */
     public static function buscarEnderecoNacional($idAgente)
     {
@@ -137,7 +136,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
         }
         catch (Zend_Exception $e)
         {
-            throw new Zend_Db_Exception("Erro ao alterar o Status dos endereços: " . $e->getMessage());
+            throw new Zend_Db_Exception("Erro ao alterar o Status dos endereï¿½os: " . $e->getMessage());
         }
     }
 
@@ -148,7 +147,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
      * @static
      * @access public
      * @return void
-     * @todo colocar orm, verificar existencia de trigger no sistema, não foi possivel testar.
+     * @todo colocar orm, verificar existencia de trigger no sistema, nï¿½o foi possivel testar.
      */
     public static function novaCorrespondencia($idAgente)
     {
@@ -164,7 +163,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
         }
         catch (Zend_Exception_Db $e)
         {
-            $this->view->message = "Erro ao alterar o Status dos endereços: " . $e->getMessage();
+            $this->view->message = "Erro ao alterar o Status dos endereï¿½os: " . $e->getMessage();
         }
 
         return $db->fetchAll($sql);

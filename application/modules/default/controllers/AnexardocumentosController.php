@@ -8,50 +8,50 @@
  * @package application
  * @subpackage application.controllers
  * @link http://www.cultura.gov.br
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 
 class AnexardocumentosController extends MinC_Controller_Action_Abstract
 {
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init()
     {
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new UsuarioDAO(); // objeto usuário
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $this->view->title = "Salic - Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura"; // tï¿½tulo da pï¿½gina
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $Usuario = new UsuarioDAO(); // objeto usuï¿½rio
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
 
-        if ($auth->hasIdentity()) // caso o usuário esteja autenticado
+        if ($auth->hasIdentity()) // caso o usuï¿½rio esteja autenticado
         {
-            // verifica as permissões
+            // verifica as permissï¿½es
             $PermissoesGrupo = array();
             //$PermissoesGrupo[] = 93;  // Coordenador de Parecerista
             //$PermissoesGrupo[] = 94;  // Parecerista
-            $PermissoesGrupo[] = 103; // Coordenador de Análise
-            $PermissoesGrupo[] = 118; // Componente da Comissão
+            $PermissoesGrupo[] = 103; // Coordenador de Anï¿½lise
+            $PermissoesGrupo[] = 118; // Componente da Comissï¿½o
             //$PermissoesGrupo[] = 119; // Presidente da Mesa
             //$PermissoesGrupo[] = 120; // Coordenador Administrativo CNIC
-            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo está no array de permissões
+            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo estï¿½ no array de permissï¿½es
             {
-                parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+                parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+            // pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-            // manda os dados para a visão
-            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+            // manda os dados para a visï¿½o
+            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
         } // fecha if
-        else // caso o usuário não esteja autenticado
+        else // caso o usuï¿½rio nï¿½o esteja autenticado
         {
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
@@ -69,7 +69,7 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
         // despacha para buscarpronac.phtml
         $pronac = $this->_request->getParam("idpronac");
         $this->_redirect("anexardocumentos/documentos-anexados/idpronac/$pronac");
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idagente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
         $idagente = $idagente['idAgente'];
         //-------------------------------------------------------------------------------------------------------------
@@ -96,12 +96,12 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                 }
             }
             else{
-                parent::message("Não existe CNIC aberta no momento. Favor aguardar!", "principal/index", "ERROR");
+                parent::message("Nï¿½o existe CNIC aberta no momento. Favor aguardar!", "principal/index", "ERROR");
             }
     }
 
     /**
-     * Método com o formulário para buscar o PRONAC
+     * Mï¿½todo com o formulï¿½rio para buscar o PRONAC
      * @access public
      * @param void
      * @return void
@@ -119,24 +119,24 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
             {
                 throw new Exception("Por favor, informe o PRONAC!");
             }
-            // valida o número do pronac
+            // valida o nï¿½mero do pronac
             else if (!is_numeric($idpronac) || strlen($idpronac) > 20)
             {
-                throw new Exception("O Nº do PRONAC é inválido!");
+                throw new Exception("O Nï¿½ do PRONAC ï¿½ invï¿½lido!");
             }
             else
             {
 //                        die('fasdfasd');
-                // integração MODELO e VISÃO
+                // integraï¿½ï¿½o MODELO e VISï¿½O
 
                 $Projetos = new Projetos();
                 $resultPronac = $Projetos->buscar(array('IdPRONAC = ?' => $idpronac));
 
-                // caso o PRONAC não esteja cadastrado
+                // caso o PRONAC nï¿½o esteja cadastrado
                 if (!$resultPronac) {
-                    throw new Exception("Registro não encontrado!");
+                    throw new Exception("Registro nï¿½o encontrado!");
                 }
-                // caso o PRONAC esteja cadastrado, vai para a página de busca
+                // caso o PRONAC esteja cadastrado, vai para a pï¿½gina de busca
                 // dos seus documentos (comprovantes)
                 else {
                     // pega o id do pronac
@@ -145,26 +145,26 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                     $buscarpronac = $resultPronac;
                     // busca os documentos (comprovantes) do pronac
 
-                    $Documentos = new DocumentosProjeto();
+                    $Documentos = new Proposta_Model_DbTable_DocumentosProjeto();
                     $resultComprovantes = $Documentos->documentosAnexados($idpronac);
 
 //                    $resultComprovantes = AnexardocumentosDAO::buscarArquivos($idpronac);
 //                    xd($resultComprovantes);
 
-                    // caso não existam comprovantes cadastrados
+                    // caso nï¿½o existam comprovantes cadastrados
                     if (count($resultComprovantes) == 0)
                     {
-                        $this->view->message = "Nenhum arquivo anexado ao PRONAC Nº " . $pronac . "!";
+                        $this->view->message = "Nenhum arquivo anexado ao PRONAC Nï¿½ " . $pronac . "!";
                         $this->view->message_type = "ALERT";
                         $this->view->buscarpronac = $buscarpronac;
                     }
                     else
                     {
-                        // manda os comprovantes para a visão
+                        // manda os comprovantes para a visï¿½o
                         $this->view->buscarcomprovantes = $resultComprovantes;
                         $this->view->buscarpronac = $buscarpronac;
-                        $auth = Zend_Auth::getInstance(); // pega a autenticação
-                        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
+                        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+                        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
                         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
                         $idagente = $idagente['idAgente'];
                         $reuniao = new Reuniao();
@@ -190,7 +190,7 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                             }
                         }
                         else{
-                            parent::message("Não existe CNIC aberta no momento. Favor aguardar!", "principal/index", "ERROR");
+                            parent::message("Nï¿½o existe CNIC aberta no momento. Favor aguardar!", "principal/index", "ERROR");
                         }
                     }
                 }
@@ -219,7 +219,7 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
         $this->view->idPronac = $idPronac;
     }
 
-    // fecha método buscardocumentosAction()
+    // fecha mï¿½todo buscardocumentosAction()
 
     public function downdocAction()
     {
@@ -235,12 +235,12 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
 
         if (!$resultado)
         {
-            $this->view->message = 'Não foi possível abrir o arquivo!';
+            $this->view->message = 'Nï¿½o foi possï¿½vel abrir o arquivo!';
             $this->view->message_type = 'ERROR';
         }
         else
         {
-            // lê os cabeçalhos formatado
+            // lï¿½ os cabeï¿½alhos formatado
             foreach ($resultado as $r)
             {
                 $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
@@ -270,7 +270,7 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
     }
 
     /**
-     * Método para buscar os documentos (comprovantes) do PRONAC
+     * Mï¿½todo para buscar os documentos (comprovantes) do PRONAC
      * @access public
      * @param void
      * @return void
@@ -279,7 +279,7 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
     {
         $this->view->combotipodocumento = Tipodocumento::buscar();
 
-        // caso o formulário seja enviado via post
+        // caso o formulï¿½rio seja enviado via post
         if ($this->getRequest()->isPost())
         {
             // recebe os dados via post
@@ -289,33 +289,33 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
             $titulo = $post->titulo;
             $descricao = $post->descricao;
 
-            // pega as informações do arquivo
+            // pega as informaï¿½ï¿½es do arquivo
             $arquivoNome = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporário
+            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporï¿½rio
             $arquivoTipo = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
             if (!empty($arquivoNome))
             {
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensï¿½o
             }
             if (!empty($arquivoTemp))
             {
-                $arquivoBinario = Upload::setBinario($arquivoTemp); // binário
+                $arquivoBinario = Upload::setBinario($arquivoTemp); // binï¿½rio
                 $arquivoHash = Upload::setHash($arquivoTemp); // hash
             }
 
             try
             {
-                // integração MODELO e VISÃO
+                // integraï¿½ï¿½o MODELO e VISï¿½O
                 // busca o PRONAC de acordo com o id no banco
                 $resultado = Pronac::buscar($pronac);
 
-                // caso o PRONAC não esteja cadastrado
+                // caso o PRONAC nï¿½o esteja cadastrado
                 if (!$resultado)
                 {
-                    parent::message("Registro não encontrado!", "buscarpronac");
+                    parent::message("Registro nï¿½o encontrado!", "buscarpronac");
                 }
-                // caso o PRONAC esteja cadastrado, vai para a página de busca
+                // caso o PRONAC esteja cadastrado, vai para a pï¿½gina de busca
                 else
                 {
                     $this->view->buscarpronac = $resultado;
@@ -328,7 +328,7 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                 }
                 else if (empty($descricao))
                 {
-                    throw new Exception("Por favor, informe a descrição do documento!");
+                    throw new Exception("Por favor, informe a descriï¿½ï¿½o do documento!");
                 }
                 else if (empty($arquivoTemp)) // nome do arquivo
                 {
@@ -336,13 +336,13 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                 }
                 else if ($arquivoExtensao == 'exe' || $arquivoExtensao == 'bat' ||
                         $arquivoTipo == 'application/exe' || $arquivoTipo == 'application/x-exe' ||
-                        $arquivoTipo == 'application/dos-exe') // extensão do arquivo
+                        $arquivoTipo == 'application/dos-exe') // extensï¿½o do arquivo
                 {
-                    throw new Exception("A extensão do arquivo é inválida!");
+                    throw new Exception("A extensï¿½o do arquivo ï¿½ invï¿½lida!");
                 }
                 else if ($arquivoTamanho > 10485760) // tamanho do arquivo: 10MB
                 {
-                    throw new Exception("O arquivo não pode ser maior do que 10MB!");
+                    throw new Exception("O arquivo nï¿½o pode ser maior do que 10MB!");
                 }
                 // faz o cadastro no banco de dados
                 else
@@ -359,14 +359,14 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                     $db->setFetchMode(Zend_DB :: FETCH_OBJ);
                     $idGerado = $db->fetchOne("SELECT MAX(idArquivo) AS id FROM BDCORPORATIVO.scCorp.tbArquivo");
 
-                    // insere o binário do arquivo
+                    // insere o binï¿½rio do arquivo
                     $sql = "INSERT INTO BDCORPORATIVO.scCorp.tbArquivoImagem " .
                             "VALUES ($idGerado, $arquivoBinario)";
                     $db = Zend_Registry :: get('db');
                     $db->setFetchMode(Zend_DB :: FETCH_OBJ);
                     $resultado = $db->query($sql);
 
-                    // insere informações do documento
+                    // insere informaï¿½ï¿½es do documento
                     $sql = "INSERT INTO BDCORPORATIVO.scSac.tbComprovanteExecucao (idPRONAC, idTipoDocumento, nmComprovante, dsComprovante, idArquivo, idSolicitante, dtEnvioComprovante, stParecerComprovante, stComprovante) " .
                             "VALUES ($pronac, $tipoDocumento, '$titulo', '$descricao', $idGerado, 9997, GETDATE(), 'AG', 'A')";
                     $db = Zend_Registry :: get('db');
@@ -392,7 +392,7 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                 $this->view->descricao = $descricao;
             }
         }
-        // quando a página é aberta
+        // quando a pï¿½gina ï¿½ aberta
         else
         {
             // recebe o pronac via get
@@ -408,16 +408,16 @@ class AnexardocumentosController extends MinC_Controller_Action_Abstract
                 }
                 else
                 {
-                    // integração MODELO e VISÃO
+                    // integraï¿½ï¿½o MODELO e VISï¿½O
                     // busca o PRONAC de acordo com o id no banco
                     $resultado = Pronac::buscar($pronac);
 
-                    // caso o PRONAC não esteja cadastrado
+                    // caso o PRONAC nï¿½o esteja cadastrado
                     if (!$resultado)
                     {
-                        parent::message("Registro não encontrado!", "buscarpronac");
+                        parent::message("Registro nï¿½o encontrado!", "buscarpronac");
                     }
-                    // caso o PRONAC esteja cadastrado, vai para a página de busca
+                    // caso o PRONAC esteja cadastrado, vai para a pï¿½gina de busca
                     else
                     {
                         $this->view->buscarpronac = $resultado;

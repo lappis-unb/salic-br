@@ -657,7 +657,8 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @param bool $consulta
      * @access public
-     * @return void
+     *
+     * @todo deletar depois, pois e so usar o findAll da abscract
      */
     public function buscarAgentePreProjeto($consulta = array())
     {

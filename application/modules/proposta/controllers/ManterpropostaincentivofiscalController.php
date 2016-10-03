@@ -917,7 +917,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         }
         if (!empty($idPreProjeto) && $valida == "s") {
             $tblPreProjeto = new Proposta_Model_PreProjeto();
-            $tblAvaliacao = new AnalisarPropostaDAO();
+            $tblAvaliacao = new Proposta_Model_AnalisarPropostaDAO();
 
             //recupera dados do projeto
             $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();

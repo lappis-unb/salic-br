@@ -1,16 +1,19 @@
 <?php
 /**
- * Controller Admissibilidade
+ * Class Proposta_AdmissibilidadeController
+ *
+ * @name Proposta_AdmissibilidadeController
+ * @package Modules/Agente
+ * @subpackage Controller
+ *
  * @author Equipe RUP - Politec
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  * @since 07/06/2010
- * @version 1.0
- * @package application
- * @subpackage application.controller
- * @link http://www.cultura.gov.br
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
- **/
-
-class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
+ *
+ * @copyright © 2010 - Ministerio da Cultura - Todos os direitos reservados.
+ * @link http://salic.cultura.gov.br
+ */
+class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
     private $idPreProjeto = null;
     private $idUsuario = null;
@@ -21,15 +24,15 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
     private $COD_CLASSIFICACAO_DOCUMENTO = 23;
 
     /**
-     * Reescreve o m�todo init()
+     * Reescreve o metodo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
+        $auth = Zend_Auth::getInstance(); // instancia da autenticacao
 
-        // verifica as permiss�es
+        // verifica as permissoes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 90;  // Protocolo - Documento
         $PermissoesGrupo[] = 91;  // Protocolo - Recebimento
@@ -40,7 +43,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 96;  // Consulta Gerencial
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
         $PermissoesGrupo[] = 99;  // Acompanhamento
-        $PermissoesGrupo[] = 100; // Presta��o de Contas
+        $PermissoesGrupo[] = 100; // Prestacao de Contas
         $PermissoesGrupo[] = 103; // Coordenador de Analise
         $PermissoesGrupo[] = 104; // Protocolo - Envio / Recebimento
         $PermissoesGrupo[] = 110; // Tecnico de Analise
@@ -109,7 +112,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
     public function exibirpropostaculturalAction() {
         $idPreProjeto = $this->idPreProjeto;
-        $dados = AnalisarPropostaDAO::buscarGeral($idPreProjeto);
+        $dados = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
         $this->view->itensGeral = $dados;
 
         //========== inicio codigo dirigente ================
@@ -159,20 +162,20 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
             $propostaPorEdital = true;
         }
         $this->view->isEdital   = $propostaPorEdital;
-        $this->view->itensTelefone              = AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
-        $this->view->itensPlanosDistribuicao    = AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
-        $this->view->itensFonteRecurso          = AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
-        $this->view->itensLocalRealiazacao      = AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
-        $this->view->itensDeslocamento          = AnalisarPropostaDAO::buscarDeslocamento($idPreProjeto);
-        $this->view->itensPlanoDivulgacao       = AnalisarPropostaDAO::buscarPlanoDeDivulgacao($idPreProjeto);
+        $this->view->itensTelefone              = Proposta_Model_AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
+        $this->view->itensPlanosDistribuicao    = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
+        $this->view->itensFonteRecurso          = Proposta_Model_AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
+        $this->view->itensLocalRealiazacao      = Proposta_Model_AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
+        $this->view->itensDeslocamento          = Proposta_Model_AnalisarPropostaDAO::buscarDeslocamento($idPreProjeto);
+        $this->view->itensPlanoDivulgacao       = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDivulgacao($idPreProjeto);
 
         //DOCUMENTOS ANEXADOS PROPOSTA
-        $tbl = new tbDocumentosPreProjeto();
+        $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
         $rs = $tbl->buscarDocumentos(array("idProjeto = ?" => $this->idPreProjeto));
         $this->view->arquivosProposta = $rs;
 
         //DOCUMENTOS ANEXADOS PROPONENTE
-        $tbA = new tbDocumentosAgentes();
+        $tbA = new Proposta_Model_DbTable_TbDocumentosAgentes();
         $rsA = $tbA->buscarDocumentos(array("idAgente = ?" => $dados[0]->idAgente));
         $this->view->arquivosProponente = $rsA;
 
@@ -199,8 +202,8 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
             $arrDocumentosExigidos[$documentoExigido["Codigo"]] = $documentoExigido;
         }
         $this->view->documentosExigidos = $arrDocumentosExigidos;
-        $this->view->itensHistorico = AnalisarPropostaDAO::buscarHistorico($idPreProjeto);
-        $this->view->itensPlanilhaOrcamentaria = AnalisarPropostaDAO::buscarPlanilhaOrcamentaria($idPreProjeto);
+        $this->view->itensHistorico = Proposta_Model_AnalisarPropostaDAO::buscarHistorico($idPreProjeto);
+        $this->view->itensPlanilhaOrcamentaria = Proposta_Model_AnalisarPropostaDAO::buscarPlanilhaOrcamentaria($idPreProjeto);
 
         $buscarProduto = ManterorcamentoDAO::buscarProdutos($this->idPreProjeto);
         $this->view->Produtos = $buscarProduto;
@@ -358,7 +361,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
     public function salvaravaliacaoAction(){
 
-         $dao                   = new AnalisarPropostaDAO();
+         $dao                   = new Proposta_Model_AnalisarPropostaDAO();
          $post                  = Zend_Registry::get('post');
          $dado                  = array();
          $dados['idProjeto']  = $post->idPreProjeto;
@@ -370,7 +373,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
          $dados['stEstado']      = 0;
          $dados['stEnviado']     = 'N';
 
-         $projetoExiste = AnalisarPropostaDAO::verificarAvaliacao($post->idPreProjeto);
+         $projetoExiste = Proposta_Model_AnalisarPropostaDAO::verificarAvaliacao($post->idPreProjeto);
 
          //Esse if so existe por que nao existe objeto de negocio.
          if(count($projetoExiste)>0){
@@ -431,8 +434,8 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $this->view->agente = $rsAgente;
 
         $idPreProjeto = $this->idPreProjeto;
-        $dao = new AnalisarPropostaDAO();
-        $this->view->itensDocumentoPendente = AnalisarPropostaDAO::buscarDocumentoPendente($idPreProjeto);
+        $dao = new Proposta_Model_AnalisarPropostaDAO();
+        $this->view->itensDocumentoPendente = Proposta_Model_AnalisarPropostaDAO::buscarDocumentoPendente($idPreProjeto);
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
@@ -444,23 +447,22 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $get                  = Zend_Registry::get('get');
         $idOpcao              = $get->idOpcao;
         $idDocumento              = $get->idDocumento;
-        $dao = new AnalisarPropostaDAO();
-
-        $options                 = AnalisarPropostaDAO::buscarDocumentoOpcao($idOpcao);
+        $tbl = new Proposta_Model_DbTable_DocumentosExigidos();
+        $options = $tbl->buscarDocumentoOpcao($idOpcao);
 
         $selected = "";
         $htmlOptions = "<option value=''> - Selecione - </option>";
         foreach ($options as $option){
             $selected = "";
-            if($option->codigo == $idDocumento) { $selected = "selected='selected' "; }
-            $htmlOptions .= "<option value='{$option->codigo}' {$selected}>".ucfirst(strtolower(utf8_decode(htmlentities($option->descricao))))." </option>";
+            if($option['codigo'] == $idDocumento) { $selected = "selected='selected' "; }
+            $htmlOptions .= "<option value='{$option['codigo']}' {$selected}>".ucfirst(strtolower(utf8_decode(htmlentities($option['descricao']))))." </option>";
         }
         echo $htmlOptions;
     }
 
     public function inserirdocumentoAction(){
 
-        $dao                    = new AnalisarPropostaDAO();
+        $dao                    = new Proposta_Model_AnalisarPropostaDAO();
         $post                   = Zend_Registry::get('post');
         $dados                   = array();
         $dados['idPreProjeto']   = $this->idPreProjeto;
@@ -468,9 +470,9 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         //xd($dados);
         try{
             if($post->tipoDocumento == 1){
-                AnalisarPropostaDAO::inserirDocumentoProponente($dados);
+                Proposta_Model_AnalisarPropostaDAO::inserirDocumentoProponente($dados);
             }else{
-                AnalisarPropostaDAO::inserirDocumentoProjeto($dados);
+                Proposta_Model_AnalisarPropostaDAO::inserirDocumentoProjeto($dados);
             }
 
             //inserir avaliacao
@@ -534,7 +536,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
     }
 
     public function updatedocumentoAction(){
-        $dao                    = new AnalisarPropostaDAO();
+        $dao                    = new Proposta_Model_AnalisarPropostaDAO();
         $post                   = Zend_Registry::get('post');
         $dado                   = array();
         $dado['idPreProjeto']   = $post->idprojeto;
@@ -542,9 +544,9 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $dado['iddocantigo']    = $post->iddocantigo;
 
         if($post->tipoDocumento == 1){
-            AnalisarPropostaDAO::updateDocumentoProponente($dado);
+            Proposta_Model_AnalisarPropostaDAO::updateDocumentoProponente($dado);
         }else{
-            AnalisarPropostaDAO::updateDocumentoProjeto($dado);
+            Proposta_Model_AnalisarPropostaDAO::updateDocumentoProjeto($dado);
         }
 
         //Enviar e-mail
@@ -554,14 +556,14 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
     }
 
     public function deletedocumentoAction(){
-        $dao                    = new AnalisarPropostaDAO();
+        $dao                    = new Proposta_Model_AnalisarPropostaDAO();
         $get                   = Zend_Registry::get('get');
 
 
         if($get->tipoDocumento == 1){
-           AnalisarPropostaDAO::deleteDocumentoProponente($get->idDocumento);
+           Proposta_Model_AnalisarPropostaDAO::deleteDocumentoProponente($get->idDocumento);
         }else{
-            AnalisarPropostaDAO::deleteDocumentoProjeto($get->idDocumento);
+            Proposta_Model_AnalisarPropostaDAO::deleteDocumentoProjeto($get->idDocumento);
         }
 
         //Enviar e-mail
@@ -574,8 +576,8 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
 
-        $dao = new AnalisarPropostaDAO();
-        $this->view->itensDespacho  = AnalisarPropostaDAO::buscarDespacho($this->idPreProjeto);
+        $dao = new Proposta_Model_AnalisarPropostaDAO();
+        $this->view->itensDespacho  = Proposta_Model_AnalisarPropostaDAO::buscarDespacho($this->idPreProjeto);
     }
 
     public function transformarPropostaEmProjetoAction() {
@@ -687,30 +689,30 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $dados['idTecnico']     = $this->idUsuario;
         $dados['despacho']      = trim($post->despacho);
 
-//        $despachoExiste = AnalisarPropostaDAO::verificarDespacho($post->idPreProjeto);
+//        $despachoExiste = Proposta_Model_AnalisarPropostaDAO::verificarDespacho($post->idPreProjeto);
 
 //        if(count($despachoExiste)>0){
-//            AnalisarPropostaDAO::updateEstadoDespacho($post->idPreProjeto);
+//            Proposta_Model_AnalisarPropostaDAO::updateEstadoDespacho($post->idPreProjeto);
 //        }
-        AnalisarPropostaDAO::inserirDespacho($dados);
+        Proposta_Model_AnalisarPropostaDAO::inserirDespacho($dados);
 
         //if($despachoExiste[0]->Tipo == 129 ){
-//        $movimentacaoExiste = AnalisarPropostaDAO::verificarMovimentcaoDespacho($post->idPreProjeto);
+//        $movimentacaoExiste = Proposta_Model_AnalisarPropostaDAO::verificarMovimentcaoDespacho($post->idPreProjeto);
 
 //        if(count($movimentacaoExiste)>0 && $movimentacaoExiste[0]->Movimentacao == 127)
 //        {
 //            $dados['movimentacao'] = 128;
 //
 //            //APAGA DOCUMENTOS PENDENTES CONFORME REGRA DA TRIGGER
-//            AnalisarPropostaDAO::deleteDocumentoProponentePeloProjeto($post->idPreProjeto);
-//            AnalisarPropostaDAO::deleteDocumentoProjetoPeloProjeto($post->idPreProjeto);
+//            Proposta_Model_AnalisarPropostaDAO::deleteDocumentoProponentePeloProjeto($post->idPreProjeto);
+//            Proposta_Model_AnalisarPropostaDAO::deleteDocumentoProjetoPeloProjeto($post->idPreProjeto);
 //
 //        }else{
 //            $dados['movimentacao'] = 127;
 //        }
         //xd($dados);
-//        AnalisarPropostaDAO::updateEstadoMovimentacao($post->idPreProjeto);
-//        AnalisarPropostaDAO::inserirMovimentacao($dados);
+//        Proposta_Model_AnalisarPropostaDAO::updateEstadoMovimentacao($post->idPreProjeto);
+//        Proposta_Model_AnalisarPropostaDAO::inserirMovimentacao($dados);
         //}
 
         //Envia Email
@@ -733,7 +735,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
 
 
     public function arquivarpropostaAction() {
-        $dao = new AnalisarPropostaDAO();
+        $dao = new Proposta_Model_AnalisarPropostaDAO();
         try{
             //Enviar e-mail informando arquivamento e a justificativa
             //$dao->deletePreProjeto($this->idPreProjeto);
@@ -768,10 +770,10 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
     }
 
     public function arquivarAction(){
-        $dao    = new AnalisarPropostaDAO();
+        $dao    = new Proposta_Model_AnalisarPropostaDAO();
         $post   = Zend_Registry::get('post');
         //xd($post);
-        AnalisarPropostaDAO::deletePreProjeto($post->idprojeto);
+        Proposta_Model_AnalisarPropostaDAO::deletePreProjeto($post->idprojeto);
         ///Enviar e-mail informando arquivamento e a justificativa
 
 
@@ -785,19 +787,19 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout();
 
         $idPreProjeto = $this->idPreProjeto;
-        $dao = new AnalisarPropostaDAO();
-        $this->view->itensGeral = AnalisarPropostaDAO::buscarGeral($idPreProjeto);
+        $dao = new Proposta_Model_AnalisarPropostaDAO();
+        $this->view->itensGeral = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
         $propostaPorEdital = false;
         if($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0){
             $propostaPorEdital = true;
         }
-        $this->view->itensTelefone              = AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
-        $this->view->itensPlanosDistribuicao    = AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
+        $this->view->itensTelefone              = Proposta_Model_AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
+        $this->view->itensPlanosDistribuicao    = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
 
-        $this->view->itensFonteRecurso          = AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
-        $this->view->itensLocalRealiazacao      = AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
-        $this->view->itensDeslocamento          = AnalisarPropostaDAO::buscarDeslocamento($idPreProjeto);
-        $this->view->itensPlanoDivulgacao       = AnalisarPropostaDAO::buscarPlanoDeDivulgacao($idPreProjeto);
+        $this->view->itensFonteRecurso          = Proposta_Model_AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
+        $this->view->itensLocalRealiazacao      = Proposta_Model_AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
+        $this->view->itensDeslocamento          = Proposta_Model_AnalisarPropostaDAO::buscarDeslocamento($idPreProjeto);
+        $this->view->itensPlanoDivulgacao       = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDivulgacao($idPreProjeto);
 
         $tblAvaliacaoProposta = new AvaliacaoProposta();
         $rsAvaliacaoProposta = $tblAvaliacaoProposta->buscar(array("idProjeto = ?"=>$idPreProjeto, "idArquivo ?"=>new Zend_Db_Expr("IS NOT NULL")));
@@ -822,7 +824,7 @@ class AdmissibilidadeController extends MinC_Controller_Action_Abstract {
         }
         $this->view->documentosExigidos = $arrDocumentosExigidos;
 
-        $this->view->itensHistorico             = AnalisarPropostaDAO::buscarHistorico($idPreProjeto);
+        $this->view->itensHistorico             = Proposta_Model_AnalisarPropostaDAO::buscarHistorico($idPreProjeto);
 
         /*
          * PEGANDO DOCUMENTOS ANEXADOS
