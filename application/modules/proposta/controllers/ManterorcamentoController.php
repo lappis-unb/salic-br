@@ -1,12 +1,13 @@
 <?php
 /**
  * Controller Disvincular Agentes
- * @author wouerner <wouerner@gmail.com>
+ * @author Equipe RUP - Politec
  * @since 07/06/2010
  * @version 1.0
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
+ * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  */
 
 class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract {
@@ -20,8 +21,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @param void
      * @return void
      */
-    public function init()
-    {
+    public function init() {
         $this->view->title = "Salic - Sistema de Apoio �s Leis de Incentivo � Cultura"; // t�tulo da p�gina
         $auth = Zend_Auth::getInstance(); // pega a autentica��o
         $PermissoesGrupo = array();
@@ -58,7 +58,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
         $this->idUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
 
+        /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
+        /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
     }
 
@@ -68,8 +70,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @param void
      * @return void
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         // Usuario Logado
         $auth = Zend_Auth::getInstance(); // instancia da autentica��o
         $idusuario = $auth->getIdentity()->usu_codigo;
@@ -84,8 +85,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
     /**
      * produtoscadastradosAction
      *
-     * @access public
-     * @return void
+     * @name produtoscadastradosAction
      */
     public function produtoscadastradosAction()
     {
@@ -141,8 +141,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @access public
      * @return void
      */
-    public function planilhaorcamentariaAction()
-    {
+    public function planilhaorcamentariaAction() {
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
@@ -152,9 +151,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @access public
      * @return void
      */
-    public function planilhaorcamentariageralAction()
-    {
-        $this->view->tipoPlanilha = 0; // 0=Planilha Orçamentaria da Proposta
+    public function planilhaorcamentariageralAction(){
+        $this->view->tipoPlanilha = 0; // 0=Planilha Or�ament�ria da Proposta
     }
 
     /**
@@ -163,9 +161,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @access public
      * @return void
      */
-    public function consultarcomponenteAction()
-    {
+    public function consultarcomponenteAction() {
         $this->_helper->layout->disableLayout(); // desabilita o layout
+
 
         if(!empty($this->idPreProjeto) || $this->idPreProjeto=='0') {
 
@@ -206,8 +204,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @access public
      * @return void
      */
-    public function cadastrarprodutosAction()
-    {
+    public function cadastrarprodutosAction() {
         $this->_helper->layout->disableLayout();
 
         $this->view->idPreProjeto = $this->idPreProjeto;
@@ -220,12 +217,12 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $this->view->idProduto = $idProduto;
         }
 
-        if (isset($_POST['iduf'])) {
+        if(isset($_POST['iduf'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $iduf = $_POST['iduf'];
             $cidade = CidadeDAO::buscar($iduf);
             $a = 0;
-            foreach ($cidade as $DadosCidade) {
+            foreach($cidade as $DadosCidade) {
                 $cidadeArray[$a]['idCidade'] = $DadosCidade->id;
                 $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->descricao);
                 $a++;
@@ -234,14 +231,14 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             die;
         }
 
-        if (isset($_POST['idetapa'])) {
+        if(isset($_POST['idetapa'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $idetapa = $_POST['idetapa'];
             $idProduto = $_POST['idProduto'];
             $item = ManterorcamentoDAO::buscarItens($idetapa,$idProduto);
             if (count($item) <= 0) { $item = ManterorcamentoDAO::buscarItens($idetapa,null); }
             $a = 0;
-            foreach ($item as $Dadositem) {
+            foreach($item as $Dadositem) {
                 $itemArray[$a]['idItem'] = $Dadositem->idPlanilhaItens;
                 $itemArray[$a]['nomeItem'] = utf8_encode($Dadositem->Descricao);
                 $a++;
@@ -279,8 +276,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @access public
      * @return void
      */
-    public function cadastrarcustosAction()
-    {
+    public function cadastrarcustosAction() {
         $this->_helper->layout->disableLayout();
 
         if  ( isset ( $_GET['idPreProjeto'] ) ) {
@@ -291,7 +287,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $this->view->dados = $buscaDados;
         }
 
-        if (isset($_GET['cadastro'])) {
+        if( isset( $_GET['cadastro'] ) ) {
             $dados_cadastrados = ManterorcamentoDAO::buscarUltimosDadosCadastrados();
             $this->view->dados_cadastrados = $dados_cadastrados;
 
@@ -305,7 +301,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $this->view->dados_cadastrados = array();
         }
 
-        if (isset($_POST['iduf'])) {
+        if(isset($_POST['iduf'])) {
 
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $iduf = $_POST['iduf'];
@@ -321,7 +317,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             die;
         }
 
-        if (isset($_POST['idetapa'])) {
+        if(isset($_POST['idetapa'])) {
         	$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $idetapa = $_POST['idetapa'];
             $item = ManterorcamentoDAO::buscarItens($idetapa);
@@ -354,17 +350,10 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
-    /**
-     * editarprodutosAction
-     *
-     * @access public
-     * @return void
-     */
-    public function editarprodutosAction()
-    {
+    public function editarprodutosAction () {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 
-        if (isset($_POST['produto'])) {
+        if(isset($_POST['produto'])) {
 
             $idProposta = $_POST['proposta'];
             $idProduto = $_POST['produto'];
@@ -396,9 +385,11 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $where = "idPlanilhaProposta = ".$_POST['proposta'];
 
             $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos(null, $idEtapa, $idProduto, $idItem, null, $idUf, $municipio);
+
         }
 
-        if (isset($_GET)) {
+        if  ( isset ( $_GET ) ) {
+
             $idProposta = $_GET['idPreProjeto'];
             $idEtapa = $_GET['etapa'];
             $idProduto = $_GET['produto'];
@@ -409,7 +400,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $this->view->Dados = $buscaDados;
         }
 
-        if (isset($_POST['iduf'])) {
+        if(isset($_POST['iduf'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $iduf = $_POST['iduf'];
             $cidade = CidadeDAO::buscar($iduf);
@@ -472,8 +463,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @access public
      * @return void
      */
-    public function editarcustosAction()
-    {
+    public function editarcustosAction () {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 
         if  ( isset ( $_GET ) && count($_GET)> 0 ) {
@@ -549,9 +539,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @access public
      * @return void
      */
-    public function salvarprodutosAction()
-    {
-        if(isset($_POST)) {
+    public function salvarprodutosAction () {
+
+        if  ( isset ( $_POST ) ) {
 
             $idProposta = $_POST['idPreProjeto'];
             $idProduto = $_POST['produto'];
@@ -567,19 +557,19 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $qtdDias = $_POST['qtdDias'];
             $justificativa = utf8_decode(substr(trim(strip_tags($_POST['editor1'])),0,500));
 
-            $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos($idProposta, $idEtapa, $idProduto, $idItem, null, $idUf);
+            $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos($idProposta, $idEtapa, $idProduto, $idItem, null, $idUf, $idMunicipio);
 
-            if ($buscarProdutos) {
-                $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-                echo "Cadastro duplicado de Produto na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada! Deseja cadastrar um novo item?";
-                die;
-            } else {
-                $salvarProdutos = ManterorcamentoDAO::salvarNovoProduto($idProposta, $idProduto, $idEtapa, $idItem, $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $fonte, $idUf, $idMunicipio, $justificativa, $this->idUsuario);
-                $this->view->SalvarNovo = $salvarProdutos;
+            if($buscarProdutos){
+            	$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+	            echo "Cadastro duplicado de Produto na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada! Deseja cadastrar um novo item?";
+	            die;
+            }else{
+	            $salvarProdutos = ManterorcamentoDAO::salvarNovoProduto($idProposta, $idProduto, $idEtapa, $idItem, $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $fonte, $idUf, $idMunicipio, $justificativa, $this->idUsuario);
+	            $this->view->SalvarNovo = $salvarProdutos;
 
-                $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-                echo "Item cadastrado com sucesso. Deseja cadastrar um novo item?";
-                die;
+	            $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+	            echo "Item cadastrado com sucesso. Deseja cadastrar um novo item?";
+	            die;
             }
         }
 
@@ -592,9 +582,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @access public
      * @return void
      */
-    public function salvarcustosAction()
-    {
-        if (isset($_POST)) {
+    public function salvarcustosAction () {
+
+        if  ( isset ( $_POST ) ) {
 
             $idProposta = $_POST['idPreProjeto'];
             $idUf = $_POST['uf'];
@@ -675,9 +665,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @access public
      * @return void
      */
-    public function salvarmesmoprodutoAction()
-    {
-        if (isset($_POST)) {
+    public function salvarmesmoprodutoAction () {
+        if  ( isset ( $_POST ) ) {
             $dados = array(
                     'idProjeto'=>$_POST['proposta'],
                     'idProduto'=> $_POST['produto'],
@@ -716,10 +705,10 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
         $resposta = ManterorcamentoDAO::excluirItensProdutos($idPlanilhaProposta);
 
-        if ($resposta) {
-            parent::message("Exclus�o realizada com sucesso!", "manterorcamento/".$retorno."?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
+        if($resposta) {
+            parent::message("Exclus�o realizada com sucesso!", "manterorcamento/".$retorno."?idPreProjeto=".$this->idPreProjeto ,"CONFIRM");
         } else {
-            parent::message("Erro ao excluir os dados", "manterorcamento/".$retorno."?idPreProjeto=".$this->idPreProjeto, "ERROR");
+            parent::message("Erro ao excluir os dados", "manterorcamento/".$retorno."?idPreProjeto=".$this->idPreProjeto ,"ERROR");
         }
         $this->view->idPreProjeto = $this->idPreProjeto;
     }

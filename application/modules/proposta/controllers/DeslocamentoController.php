@@ -40,15 +40,18 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
 
         if ($this->getIdUsuario) {
             $this->getIdUsuario = $this->getIdUsuario["idAgente"];
-        } else {
+        }
+        else {
             $this->getIdUsuario = 0;
         }
 
         $mapperUf = new Agente_Model_UFMapper();
         $uf = $mapperUf->fetchPairs('iduf', 'sigla');
         $this->view->comboestados = $uf;
+        //$this->view->comboestados = Estado::buscar();
         $table = new Agente_Model_DbTable_Pais();
         $this->view->paises = $table->fetchPairs('idpais', 'descricao');
+        //$this->view->paises = DeslocamentoDAO::buscarPais();
 
         parent::init();
         //recupera ID do pre projeto (proposta)
@@ -58,9 +61,9 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
             $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
             $this->view->movimentacaoAtual = $rsStatusAtual->Movimentacao;
-        } else {
-            if ($_REQUEST['idPreProjeto'] != '0') {
-                parent::message("Necessário informar o número da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
+        }else {
+            if($_REQUEST['idPreProjeto'] != '0'){
+                parent::message("Necess�rio informar o n�mero da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
             }
         }
     }
@@ -81,10 +84,10 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
         if (empty($_GET['verifica'])) {
             $this->_helper->layout->disableLayout();
         }
-        if ($_GET) {
+        if($_GET) {
             $id = null;
 
-            if (!empty($_GET['id'])) {
+            if(!empty($_GET['id'])) {
                 $id = $_GET['id'];
             }
 
@@ -93,28 +96,29 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
             $deslocamentos = new Proposta_Model_TbDeslocamentoMapper();
             $dados = $deslocamentos->getDbTable()->buscarDeslocamento($idPreProjeto, $id);
 
-            if ($id && !empty($dados)) {
+            if($id && !empty($dados)) {
                 foreach($dados as $d) {
-                    $idPaisO = $d['idpaisorigem'];
-                    $idUFO = $d['iduforigem'];
-                    $idCidadeO = $d['idmunicipioorigem'];
-                    $idPaisD = $d['idpaisdestino'];
-                    $idUFD = $d['idufdestino'];
-                    $idCidadeD = $d['idmunicipiodestino'];
-                    $Qtde = $d['qtde'];
+                    $idPaisO 		= $d['idpaisorigem'];
+                    $idUFO		    = $d['iduforigem'];
+                    $idCidadeO 		= $d['idmunicipioorigem'];
+                    $idPaisD		= $d['idpaisdestino'];
+                    $idUFD		    = $d['idufdestino'];
+                    $idCidadeD 		= $d['idmunicipiodestino'];
+                    $Qtde  		    = $d['qtde'];
                 }
 
                 $mapperMunicipio = new Agente_Model_MunicipiosMapper();
-                $this->view->combocidadesO = $mapperMunicipio->fetchPairs('idmunicipioibge', 'descricao', array('idufibge' => $idUFO));
-                $this->view->combocidadesD = $mapperMunicipio->fetchPairs('idmunicipioibge', 'descricao', array('idufibge' => $idUFD));
+                $this->view->combocidadesO = $mapperMunicipio->fetchPairs('idmunicipioibge' , 'descricao', array('idufibge' => $idUFO));
+                //$this->view->combocidadesO = Cidade::buscar($idUFO);
+                $this->view->combocidadesD = $mapperMunicipio->fetchPairs('idmunicipioibge' , 'descricao', array('idufibge' => $idUFD));
 
-                $this->view->idPaisO = $idPaisO;
-                $this->view->idPaisD = $idPaisD;
-                $this->view->idUFO = $idUFO;
-                $this->view->idUFD = $idUFD;
-                $this->view->idCidadeO = $idCidadeO;
-                $this->view->idCidadeD = $idCidadeD;
-                $this->view->Qtde = $Qtde;
+                $this->view->idPaisO 	= $idPaisO;
+                $this->view->idPaisD 	= $idPaisD;
+                $this->view->idUFO 	= $idUFO;
+                $this->view->idUFD 	= $idUFD;
+                $this->view->idCidadeO 	= $idCidadeO;
+                $this->view->idCidadeD 	= $idCidadeD;
+                $this->view->Qtde 	= $Qtde;
                 $this->view->idDeslocamento = $id;
             }
 
@@ -147,17 +151,13 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
         $post['qtde'] = $post['quantidade'];
         $post['idusuario'] = $this->getIdUsuario;
 
-        $deslocamentos = $mapper->getDbTable()->buscarDeslocamentosGeral(
-            array(
-                "de.idpaisorigem "=>$post["idpaisorigem"],
-                "de.idpaisdestino "=> $post["idpaisdestino"],
-                "de.idmunicipioorigem "=> $post["idmunicipioorigem"],
-                "de.idmunicipiodestino "=> $post["idmunicipiodestino"],
-                "de.idprojeto "=> $post['idprojeto'],
-                "de.qtde "=>$post['qtde']),
-            array(),
-            array('iddeslocamento' => $post['iddeslocamento'])
-        );
+        $deslocamentos = $mapper->getDbTable()->buscarDeslocamentosGeral(array(
+            "de.idpaisorigem "=>$post["idpaisorigem"],
+            "de.idpaisdestino "=> $post["idpaisdestino"],
+            "de.idmunicipioorigem "=> $post["idmunicipioorigem"],
+            "de.idmunicipiodestino "=> $post["idmunicipiodestino"],
+            "de.idprojeto "=> $post['idprojeto'],
+            "de.qtde "=>$post['qtde']), array(), array('iddeslocamento' => $post['iddeslocamento']));
 
         if(!empty($deslocamentos)){
             parent::message("Trecho j&aacute; cadastrado, transa&ccedil;&atilde;o cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
@@ -168,9 +168,10 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
         try {
             $intIdSave = $mapper->save(new Proposta_Model_TbDeslocamento($post));
             $mapper->commit();
-            if ($post['iddeslocamento'] == '') {
+            if($post['iddeslocamento'] == '') {
                 parent::message("Cadastro realizado com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
-            } else {
+            }
+            else {
                 parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
             }
 
@@ -202,24 +203,12 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
         $this->_redirect("localderealizacao\\index");
     }
 
-    /**
-     * alterarAction
-     *
-     * @access public
-     * @return void
-     */
     public function alterarAction() {
         $id = isset($_GET['id']);
         $idPreProjeto = $this->idPreProjeto;
         $this->_redirect("localderealizacao\\index?idPreProjeto=".$idPreProjeto."&id=".$id);
     }
 
-    /**
-     * consultarcomponenteAction
-     *
-     * @access public
-     * @return void
-     */
     public function consultarcomponenteAction() {
         $this->_helper->layout->disableLayout(); // desabilita o layout
         if(!empty($this->idPreProjeto)) {
@@ -228,4 +217,7 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
             die;
         }
     }
+
+
+
 }

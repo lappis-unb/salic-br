@@ -1,6 +1,8 @@
 application/configs/bancos_*.ini
 application/configs/config.ini
 application.ini
+*.swp
+*.save
 
 index.php
 *~

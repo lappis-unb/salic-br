@@ -134,20 +134,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 //        Zend_Registry::set('conexao_banco', $strConexao);
 //    }
 
-    /**
-     * _initConfig
-     *Carrega as configuracoes da aplicacao em cache
-     *
-     *@access public
-     *@return Zend_Config
-     */
-    public function _initConfig()
-    {
-        $config = new Zend_Config($this->getOptions(), true);
-        Zend_Registry::set('config', $config);
-        return $config;
-    }
-
     public function _initRouteRest()
     {
         $controller = Zend_Controller_Front::getInstance();

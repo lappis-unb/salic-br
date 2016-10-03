@@ -106,8 +106,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
      * @author wouerner <wouerner@gmail.com>
      * @since  17/08/2016
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         //RECUPERA OS LOCAIS DE REALIZACAO CADASTRADOS
         $arrBusca = array();
         $arrBusca['idprojeto']=$this->idPreProjeto;
@@ -121,6 +120,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
         //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY DADOS
         $this->montaTela("localderealizacao/index.phtml", $arrDados);
+
     }
 
     /**
@@ -128,8 +128,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
      * @param void
      * @return void
      */
-    public function formLocalDeRealizacaoAction()
-    {
+    public function formLocalDeRealizacaoAction() {
         //recupera parametros
         $get = Zend_Registry::get('get');
         $idAbrangencia = $get->cod;
@@ -147,7 +146,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         $arrBusca = array();
         $arrBusca['idProjeto']=$this->idPreProjeto;
         $arrBusca['stAbrangencia']=1;
-        if (!empty($idAbrangencia)) {
+        if(!empty($idAbrangencia)) {
             $arrBusca['idAbrangencia']=$idAbrangencia;
         }
         $arrAbrangencia = $tblAbrangencia->buscar($arrBusca);
@@ -166,8 +165,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
      * @param void
      * @return objeto
      */
-    public function salvarAction()
-    {
+    public function salvarAction() {
         $post = Zend_Registry::get("post");
         $idAbrangencia = $post->cod;
         //instancia classe modelo
@@ -208,6 +206,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
         }
 
+//        try {
             $global = 0;
             //incluindo novos registros
             if(empty($idAbrangencia)) {
@@ -259,7 +258,13 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
             }
             else {
                 parent::message("Cadastro realizado com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
+
             }
+
+//        }catch(Zend_Exception $ex) {
+//            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o! <br>", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ERROR");
+//        }
+
     }
 
     /**
@@ -267,8 +272,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
      * @param void
      * @return objeto
      */
-    public function excluirAction()
-    {
+    public function excluirAction() {
         $get = Zend_Registry::get("get");
         $idAbrangencia = $get->cod;
 
@@ -295,8 +299,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
      * @param void
      * @return objeto
      */
-    public function consultarcomponenteAction()
-    {
+    public function consultarcomponenteAction() {
         //recebe o id via GET
         $get = Zend_Registry::get('get');
         $idProjeto = $get->idPreProjeto;
@@ -322,8 +325,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
      * @access public
      * @return void
      */
-    public function formInserirAction()
-    {
+    public function formInserirAction() {
         $get = Zend_Registry::get('get');
         $idProjeto = $get->idPreProjeto;
         $this->view->idPreProjeto = $idProjeto;
@@ -345,8 +347,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
      * @access public
      * @return void
      */
-    public function cidadesAction()
-    {
+    public function cidadesAction() {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(TRUE);
         $post = Zend_Registry::get('post');
@@ -368,8 +369,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
      * @access public
      * @return void
      */
-    public function salvarLocalRealizacaoAction()
-    {
+    public function salvarLocalRealizacaoAction() {
         $post = Zend_Registry::get("post");
         $idAbrangencia = $post->cod;
         $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();

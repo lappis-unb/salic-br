@@ -459,86 +459,12 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
      */
     public function incluirAnexoAction()
     {
-        // pega as informações do arquivo
-        $idUltimoArquivo = null;
-        $post = Zend_Registry::get('post');
-        if (is_file($_FILES['arquivo']['tmp_name'])) {
-            $arquivoNome = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporário
-            $arquivoTipo = $_FILES['arquivo']['type']; // tipo
-            $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
-            if (!empty($arquivoNome) && !empty($arquivoTemp)) {
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
-                $arquivoBinario = Upload::setBinario($arquivoTemp); // binário
-                $arquivoHash = Upload::setHash($arquivoTemp); // hash
-            }
-            if ($arquivoTamanho > 10485760) // tamanho do arquivo: 10MB
-            {
-                parent::message("O arquivo não pode ser maior do que 10MB!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
-            }
-            // cadastra dados do arquivo
-
-            $tblTbDocumentoPreProjeto = new tbDocumentosPreProjeto();
-            $tblTbDocumentoAgentes = new tbDocumentosAgentes();
-            try {
-                //Verifica se tipo de documento ja esta cadastrado
-                $where = array();
-                if($post->tipoDocumento == 1){
-                    $tbPreProjeto = new Proposta_Model_PreProjeto();
-                    $dadosProjeto = $tbPreProjeto->buscarAgentePreProjeto(array('idpreprojeto = ?'=>$post->idPreProjeto))->current();
-                    $where['idagente = ?'] = $dadosProjeto->idAgente;
-                    $where['codigodocumento = ?'] = $post->documento;
-                } else {
-                    $where['idprojeto = ?'] = $post->idPreProjeto;
-                    $where['codigodocumento = ?'] = $post->documento;
-                }
-
-                if($post->tipoDocumento == 1){
-
-                    if($tblTbDocumentoAgentes->buscar($where)->count() > 0){
-                        parent::message("Tipo de documento já cadastrado!", "/proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto, "ALERT");
-                    }
-
-                    $dadosArquivo = array(
-                        'CodigoDocumento' => $post->documento,
-                        'idAgente' => $dadosProjeto->idAgente,
-                        'Data' => new Zend_Db_Expr('GETDATE()'),
-                        'imDocumento' => new Zend_Db_Expr("CONVERT(varbinary(MAX), {$arquivoBinario})"),
-                        'NoArquivo' => $arquivoNome,
-                        'TaArquivo' => $arquivoTamanho
-                    );
-                    $idUltimoArquivo = $tblTbDocumentoAgentes->inserir($dadosArquivo);
-                } else {
-
-                    if($tblTbDocumentoPreProjeto->buscar($where)->count() > 0){
-                        parent::message("Tipo de documento já cadastrado!", "/proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto, "ALERT");
-                    }
-
-                    $dadosArquivo = array(
-                        'codigodocumento' => $post->documento,
-                        'idprojeto' => $post->idPreProjeto,
-                        'data' => new Zend_Db_Expr('GETDATE()'),
-                        'imdocumento' => new Zend_Db_Expr("CONVERT(varbinary(MAX), {$arquivoBinario})"),
-                        'noarquivo' => $arquivoNome,
-                        'taarquivo' => $arquivoTamanho,
-                        'dsdocumento' => $post->observacao
-                    );
-                    $idUltimoArquivo = $tblTbDocumentoPreProjeto->inserir($dadosArquivo);
-                }
-
-                //REMOVER AS PENDENCIAS DE DOCUMENTO
-                $tblDocumentosPendentesProjeto = new DocumentosProjeto();
-                $tblDocumentosPendentesProponente = new DocumentosProponente();
-                $tblDocumentosPendentesProjeto->delete("idprojeto = {$post->idPreProjeto} AND codigodocumento = {$post->documento}");
-                $tblDocumentosPendentesProponente->delete("idprojeto = {$post->idPreProjeto} AND codigodocumento = {$post->documento}");
-            } catch (Zend_Exception $e) {
-                parent::message("Falha ao anexar arquivo!<br>{$e->getMessage()}", "/proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
-            } catch (Exception $e){
-                parent::message("Tipo de documento já cadastrado!", "/proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
-            }
-
-            if ($idUltimoArquivo) {
-                parent::message("Arquivo anexado com sucesso!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "CONFIRM");
+        if ($this->getRequest()->isPost()) {
+            $arrPost = array_change_key_case($this->getRequest()->getPost());
+            $mapperTbDocumentoAgentes = new Proposta_Model_TbDocumentosAgentesMapper();
+            $file = new Zend_File_Transfer();
+            if ($mapperTbDocumentoAgentes->saveCustom($arrPost, $file)) {
+                parent::message("Arquivo anexado com sucesso!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $arrPost['idpreprojeto'] . "&edital=" . $arrPost['edital'], "CONFIRM");
             } else {
                 parent::message($mapperTbDocumentoAgentes->getMessage(), "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $arrPost['idpreprojeto'] . "&edital=" . $arrPost['edital'], "ALERT");
             }
