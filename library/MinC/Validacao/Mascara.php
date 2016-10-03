@@ -211,13 +211,13 @@ class Mascara
 	 * @param string $texto
 	 * @return string
 	 */
-	public static function addMaskCpfCnpj($texto){ 
+	public static function addMaskCpfCnpj($texto){
         if(strlen(trim($texto)) > 11) {
             $cpfCnpj = Mascara::addMaskCNPJ($texto);
         } else {
             $cpfCnpj = Mascara::addMaskCPF($texto);
         }
-        
+
         return $cpfCnpj;
 	}
 
