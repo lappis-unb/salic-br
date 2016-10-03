@@ -156,31 +156,57 @@ class Proposta_Model_DbTable_tbSolicitarItem extends MinC_Db_Table_Abstract {
     }
 
     public  function exibirprodutoetapaitem($item=null,$nomeItem=null,$idEtapa=null,$idProduto=null) {
-        $sql = "SELECT distinct pr.Codigo as idProduto, pr.Descricao as Produto
- 				FROM sac.tbItensPlanilhaProduto p
-				INNER JOIN sac.Produto pr on (p.idProduto = pr.Codigo)
-				INNER JOIN sac.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
-				INNER JOIN sac.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)	";
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('sol' => $this->_name),
+            array(
+                "pr.Codigo as idProduto",
+                "pr.descricao as Produto",
+                "e.idPlanilhaEtapa",
+                "i.idPlanilhaItens",
+            ),
+            $this->_schema
+        );
+
+
+        $select->joinInner(
+            array('pr'=>'Produto'),'sol.idProduto = pr.Codigo',
+            null,
+            $this->_schema
+        );
+
+        $select->joinInner(
+            array('i' => 'TbPlanilhaItens'),'sol.idPlanilhaItens = i.idPlanilhaItens',
+            null,
+            $this->_schema
+        );
+
+        $select->joinInner(
+            array('e' => 'tbPlanilhaEtapa'),'sol.idEtapa = e.idPlanilhaEtapa',
+            null,
+            $this->_schema
+        );
 
 
         if(!empty($nomeItem)){
-            $sql .=" AND i.Descricao ".$nomeItem;
+            $select->where('i.Descricao = ' , $nomeItem);
         }
         if(!empty($item)){
-            $sql .=" WHERE i.idPlanilhaItens = ".$item;
+            $select->where('i.idPlanilhaItens = ?' , $item);
         }
         if(!empty($idEtapa)){
-            $sql .=" AND e.idPlanilhaEtapa = ".$idEtapa;
+            $select->where('e.idPlanilhaEtapa = ' , $idEtapa);
         }
         if(!empty($idProduto)){
-            $sql .=" AND pr.Codigo = ".$idProduto;
+            $select->where('pr.Codigo = ' , $idProduto);
         }
-        $sql .=" ORDER BY pr.Codigo ASC";
+        $select->order('pr.Codigo Asc');
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
     } // fecha m�todo buscaprodutoetapaitem()
 
 
@@ -218,64 +244,122 @@ class Proposta_Model_DbTable_tbSolicitarItem extends MinC_Db_Table_Abstract {
 
 
     public  function buscaprodutoetapaitem($item=null,$nomeItem=null) {
-        $sql = "SELECT pr.Codigo as idProduto, 
-                       p.idPlanilhaItens,
-                       e.idPlanilhaEtapa as idEtapa,
-                       pr.Descricao as Produto,
-                       e.Descricao as Etapa,
-                       i.Descricao as NomeDoItem
-                FROM SAC.tbItensPlanilhaProduto p
-		INNER JOIN SAC.Produto pr on (p.idProduto = pr.Codigo)
-		INNER JOIN SAC.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
-		INNER JOIN SAC.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)";
+
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+
+        $select->from(
+            array('p' => $this->getName('tbItensPlanilhaProduto')),
+            array(
+                "pr.Codigo as idProduto",
+                "p.idPlanilhaItens",
+                "e.idPlanilhaEtapa as idEtapa",
+                "pr.Descricao as Produto",
+                "e.Descricao as Etapa",
+                "i.Descricao as NomeDoItem"
+            ),
+            $this->_schema
+        );
+
+        $select->joinInner(
+            array('pr' => 'Produto'), 'pr.Codigo = p.idProduto' , array() , 'sac.dbo'
+        );
+
+        $select->joinInner(
+            array('e' => 'TbPlanilhaEtapa'), 'e.idPlanilhaEtapa = p.idPlanilhaEtapa', array() , 'sac.dbo'
+        );
+
+        $select->joinInner(
+            array('i' => 'TbPlanilhaItens'), 'i.idPlanilhaItens = p.idPlanilhaItens', array() , 'sac.dbo'
+        );
+
         if(!empty($item)){
-            $sql .=" WHERE i.idPlanilhaItens = ".$item;
+            $select->where('i.idPlanilhaItens = ?', $item);
         }
         if(!empty($nomeItem)){
-            $sql .=" AND i.Descricao ".$nomeItem;
+            $select->where('i.Descricao = ?', $nomeItem);
         }
+
         //XD($sql);
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        return $db->fetchRow($sql);
+        return $db->fetchRow($select);
     } // fecha m�todo buscaprodutoetapaitem()
 
 
     public  function buscaproduto($where=null) {
-        $sql = "SELECT Codigo as codproduto, Descricao as Produto
-				FROM SAC.Produto WHERE stEstado = 0 ORDER BY Produto "; //WHERE stEstado = 0
+
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+
+        $select->from(
+            array('sol' => $this->getName('produto')),
+            array(
+                "Codigo as codProduto",
+                "Descricao as Produto"
+            ),
+            $this->_schema
+    );
+
+        $select->where('stEstado = 0');
+
+        $select->order('Produto');
+
         if(!empty($where)){
-            $sql .=" AND i.Descricao ".$nomeItem;
+            $select->where('Descricao = ?' , $nomeItem);
         }
-        //xd($sql);
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
     } // fecha m�todo buscaprodutoetapaitem()
 
 
 
     public  function buscaetapa() {
-        $sql = "SELECT idPlanilhaEtapa as codetapa, Descricao as Etapa
-				FROM SAC.TbPlanilhaEtapa";
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+
+        $select->from(
+            array('sol' => $this->getName('tbplanilhaetapa')),
+            array(
+                "idplanilhaetapa as codetapa",
+                "Descricao as etapa"
+            ),
+            $this->_schema
+        );
+
+
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
     } // fecha m�todo buscaprodutoetapaitem()
 
 
 
 
     public  function buscaitem() {
-        $sql = "Select idPlanilhaItens as coditens, Descricao as Item, idUsuario from SAC.tbPlanilhaItens
-		 order by Descricao";
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+
+        $select->from(
+            array('sol' => $this->getName('tbplanilhaitens')),
+            array(
+                "idPlanilhaItens as coditens",
+                "Descricao as item",
+                "idUsuario"
+            ),
+            $this->_schema
+        );
+
+        $select->order("Descricao");
+
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
     } // fecha m�todo buscaprodutoetapaitem()
 
 
