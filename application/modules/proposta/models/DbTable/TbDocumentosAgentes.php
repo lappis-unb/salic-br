@@ -1,14 +1,43 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+
+/**
+ * Class Proposta_Model_DbTable_TbDocumentosAgentes
+ *
+ * @name Proposta_Model_DbTable_TbDocumentosAgentes
+ * @package Modules/Agente
+ * @subpackage Models/DbTable
+ *
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+ * @since 28/09/2016
+ *
+ * @link http://salic.cultura.gov.br
  */
-class tbDocumentosAgentes extends MinC_Db_Table_Abstract {
+class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
+{
 
+    /**
+     * _banco
+     *
+     * @var bool
+     * @access protected
+     */
     protected $_banco = 'sac';
-    protected $_schema = 'sac';
-    protected $_name  = 'tbdocumentosagentes';
 
+    /**
+     * _name
+     *
+     * @var bool
+     * @access protected
+     */
+    protected $_name = 'tbdocumentosagentes';
+
+    /**
+     * _schema
+     *
+     * @var string
+     * @access protected
+     */
+    protected $_schema = 'sac';
 
     public function buscarDocumentos($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
         $slct = $this->select();

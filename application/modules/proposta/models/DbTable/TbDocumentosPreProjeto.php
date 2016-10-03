@@ -1,13 +1,22 @@
 <?php
+
 /**
- * Description of tbDocumentosPreProjeto
+ * Class Proposta_Model_DbTable_TbDocumentosPreProjeto
  *
- * @author Danilo Lisboa
+ * @name Proposta_Model_DbTable_TbDocumentosPreProjeto
+ * @package Modules/Agente
+ * @subpackage Models/DbTable
+ *
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+ * @since 26/09/2016
+ *
+ * @link http://salic.cultura.gov.br
  */
-class tbDocumentosPreProjeto  extends MinC_Db_Table_Abstract {
+class Proposta_Model_DbTable_TbDocumentosPreProjeto  extends MinC_Db_Table_Abstract {
      protected $_banco   = "sac";
      protected $_schema  = "sac";
-     protected $_name = 'tbDocumentosPreProjeto';
+     protected $_name = 'tbdocumentospreprojeto';
+     protected $_primary = 'iddocumentospreprojetos';
 
 
     /**
@@ -23,13 +32,13 @@ class tbDocumentosPreProjeto  extends MinC_Db_Table_Abstract {
         $slct->setIntegrityCheck(false);
         $slct->from(
             array("a"=>$this->_name),
-            array("CodigoDocumento", new Zend_Db_Expr('(2) as tpDoc'), 'idProjeto as Codigo',
-                'Data', 'imDocumento', 'NoArquivo', 'TaArquivo', 'idDocumentosPreprojetos'),
+            array("codigodocumento", new Zend_Db_Expr('(2) as tpdoc'), 'idprojeto as codigo',
+                'data', 'imdocumento', 'noarquivo', 'taarquivo', 'iddocumentospreprojetos'),
             $this->_schema
         );
         $slct->joinInner(
-            array("b"=>"DocumentosExigidos"), "a.CodigoDocumento = b.Codigo",
-            array("Descricao"), "SAC.dbo"
+            array("b"=> "documentosexigidos"), "a.codigodocumento = b.codigo",
+            array("descricao"), $this->getSchema('sac')
         );
 
         //adiciona quantos filtros foram enviados
@@ -51,7 +60,10 @@ class tbDocumentosPreProjeto  extends MinC_Db_Table_Abstract {
 //die('w');
         //xd($slct->__toString());
         //echo $slct;die;
-        return $this->fetchAll($slct);
+
+
+        $result = $this->fetchAll($slct);
+        return $result ? $result->toArray() : array();
     }
 
     /**
@@ -67,16 +79,20 @@ class tbDocumentosPreProjeto  extends MinC_Db_Table_Abstract {
         $slct->setIntegrityCheck(false);
 
         $slct->from(
-                array("a"=>$this->_name),
-                array("NoArquivo", "imDocumento")
+                array("a"=> $this->_name),
+                array("noarquivo", "imdocumento"),
+            $this->_schema
         );
 
-        $slct->where("idDocumentosPreprojetos = ?", $id);
+        $slct->where("iddocumentospreprojetos = ?", $id);
 
         //xd($slct->__toString());
         //$this->fetchAll("SET TEXTSIZE 10485760;");
         $db = $this->getDefaultAdapter();
-        $db->fetchAll("SET TEXTSIZE 10485760;");
+        if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            $db->fetchAll("SET TEXTSIZE 10485760;");
+        }
+
         return $this->fetchAll($slct);
     }
 }

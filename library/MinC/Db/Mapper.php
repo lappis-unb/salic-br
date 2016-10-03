@@ -18,6 +18,29 @@ class MinC_Db_Mapper
 {
     public $_dbTable;
 
+    protected $arrMessages = array();
+
+    public function getMessage()
+    {
+        return reset($this->arrMessages);
+    }
+
+    public function getMessages()
+    {
+        return $this->arrMessages;
+    }
+
+    public function setMessage($mixMessage)
+    {
+        if (is_array($mixMessage)) {
+            $this->arrMessages = array_merge($this->arrMessages, $mixMessage);
+        } else {
+            $this->arrMessages[] = $mixMessage;
+        }
+        return $this;
+    }
+
+
     public function setDbTable($dbTable)
     {
         if (is_string($dbTable)) {

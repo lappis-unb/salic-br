@@ -162,7 +162,6 @@ class ErrorController extends Zend_Controller_Action
 	 */
 	public function errorAction()
 	{
-
 	    if (APPLICATION_ENV === 'development') {
             $request = clone $this->getRequest();
             // Don't set controller or module; use current values

@@ -7,7 +7,6 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 
 class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abstract {
@@ -20,68 +19,52 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
     /**
      * Reescreve o método init()
-     * @access public
-     * @param void
-     * @return void
      */
     public function init() {
         ini_set('memory_limit', '128M');
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $arrIdentity = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
         $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo');
 
 	    // verifica as permissoes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
         $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
-
-        if (isset($auth->getIdentity()->usu_codigo))
-        {
+        if (isset($arrIdentity['usu_codigo'])) {
             parent::perfil(1, $PermissoesGrupo);
-        }
-        else
-        {
+        } else {
             parent::perfil(4, $PermissoesGrupo);
         }
 
         /*********************************************************************************************************/
 
-        $cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->cpf;
+        $cpf = isset($arrIdentity['usu_codigo']) ? $arrIdentity['usu_identificacao'] : $arrIdentity['cpf'];
 
         // Busca na SGCAcesso
-        $sgcAcesso 	 = new Autenticacao_Model_Sgcacesso();
-        $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
+        $modelSgcAcesso 	 = new Autenticacao_Model_Sgcacesso();
+        $arrAcesso = $modelSgcAcesso->findBy(array('cpf' => $cpf));
 
         // Busca na Usuarios
         //Excluir ProposteExcluir Proposto
         $usuarioDAO   = new Autenticacao_Model_Usuario();
-        $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
+        $arrUsuario = $usuarioDAO->findBy(array('usu_identificacao' => $cpf));
 
         // Busca na Agentes
-        $agentesDAO  = new Agente_Model_DbTable_Agentes();
-        $buscaAgente = $agentesDAO->BuscaAgente($cpf);
+        $tableAgentes  = new Agente_Model_DbTable_Agentes();
+        $arrAgente = $tableAgentes->findBy(array('cnpjcpf' => trim($cpf)));
 
-        if( count($buscaAcesso) > 0){ $this->idResponsavel = $buscaAcesso[0]->idusuario; }
-        if( count($buscaAgente) > 0 ){ $this->idAgente 	   = $buscaAgente[0]->idagente; }
-        if( count($buscaUsuario) > 0 ){ $this->idUsuario   = $buscaUsuario[0]->usu_codigo; }
-
-        if($this->idAgente != 0)
-        {
-        	$this->usuarioProponente = "S";
-        }
-
-        /*********************************************************************************************************/
+        if ($arrAcesso)  $this->idResponsavel = $arrAcesso['idusuario'];
+        if ($arrAgente)  $this->idAgente 	  = $arrAgente['idagente'];
+        if ($arrUsuario) $this->idUsuario     = $arrUsuario['usu_codigo'];
+        if ($this->idAgente != 0) $this->usuarioProponente = "S";
         $this->cpfLogado = $cpf;
-
         parent::init();
-
-
         //VALIDA ITENS DO MENU (Documento pendentes)
         if (isset($_GET['idPreProjeto']) && !empty($_GET['idPreProjeto'])) {
             $get = Zend_Registry::get("get");
-            //$this->view->documentosPendentes = AnalisarPropostaDAO::buscarDocumentoPendente($get->idPreProjeto);
-            $model = new Proposta_Model_DbTable_DocumentosExigidos();
-            $this->view->documentosPendentes = $model->buscarDocumentoPendente($get->idPreProjeto);
+
+            $tableDocumentosExigidos = new Proposta_Model_DbTable_DocumentosExigidos();
+            $this->view->documentosPendentes = $tableDocumentosExigidos->buscarDocumentoPendente($get->idPreProjeto);
 
             if (!empty($this->view->documentosPendentes)) {
                 $verificarmenu = 1;
@@ -199,7 +182,8 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             $dados = $tblPreProjeto->buscarPropostaEditalCompleto($where);
 
             $get = Zend_Registry::get("get");
-            $this->view->documentosPendentes = AnalisarPropostaDAO::buscarDocumentoPendente($get->idPreProjeto);
+            $tableDocumentosExigidos = new Proposta_Model_DbTable_DocumentosExigidos();
+            $this->view->documentosPendentes = $tableDocumentosExigidos->buscarDocumentoPendente($get->idPreProjeto);
 
             if (!empty($this->view->documentosPendentes)) {
                 $verificarmenu = 1;
@@ -435,33 +419,26 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
     }
 
     /**
-     * enviararquivoeditalAction
+     * @name enviararquivoeditalAction
      *
-     * @access public
-     * @return void
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  02/10/2016
      */
-    public function enviararquivoeditalAction() {
-
+    public function enviararquivoeditalAction()
+    {
         ini_set('memory_limit', '-1');
-
-        /* =============================================================================== */
-        /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-
         $get = Zend_Registry::get('get');
 
-        $tbl = new tbDocumentosPreProjeto();
-        $rs = $tbl->buscarDocumentos(array("idProjeto = ?" => $get->idPreProjeto));
+        $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
+        $rs = $tbl->buscarDocumentos(array("idprojeto = ?" => $get->idPreProjeto));
         $this->view->arquivosProposta = $rs;
 
-        $tbPreProjeto = new Proposta_Model_PreProjeto();
-        $dadosProjeto = $tbPreProjeto->buscarAgentePreProjeto(array('idPreProjeto = ?'=>$get->idPreProjeto))->current();
-
-        $tbA = new tbDocumentosAgentes();
-        $rsA = $tbA->buscarDadosDocumentos(array("idagente = ?" => $dadosProjeto->idagente));
+        $tblPreProjeto = new Proposta_Model_PreProjeto();
+        $dadosProjeto = $tblPreProjeto->findBy(array('idPreProjeto' => $get->idPreProjeto));
+        $tbA = new Proposta_Model_DbTable_TbDocumentosAgentes();
+        $rsA = $tbA->buscarDadosDocumentos(array("idagente = ?" => $dadosProjeto['idagente']));
         $this->view->arquivosProponente = $rsA;
-
     }
 
     /**
@@ -486,97 +463,25 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
     }
 
     /**
-     * incluirAnexoAction
      *
-     * @access public
-     * @return void
+     * @name incluirAnexoAction
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  29/09/2016
      */
-    public function incluirAnexoAction() {
-// pega as informações do arquivo
-        $idUltimoArquivo = null;
-        $post = Zend_Registry::get('post');
-        if (is_file($_FILES['arquivo']['tmp_name'])) {
-            $arquivoNome = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporário
-            $arquivoTipo = $_FILES['arquivo']['type']; // tipo
-            $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
-            if (!empty($arquivoNome) && !empty($arquivoTemp)) {
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
-                $arquivoBinario = Upload::setBinario($arquivoTemp); // binário
-                $arquivoHash = Upload::setHash($arquivoTemp); // hash
-            }
-            if ($arquivoTamanho > 10485760) // tamanho do arquivo: 10MB
-            {
-                parent::message("O arquivo não pode ser maior do que 10MB!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
-            }
-            // cadastra dados do arquivo
-
-            $tblTbDocumentoPreProjeto = new tbDocumentosPreProjeto();
-            $tblTbDocumentoAgentes = new tbDocumentosAgentes();
-            try {
-                //Verifica se tipo de documento ja esta cadastrado
-                $where = array();
-                if($post->tipoDocumento == 1){
-                    $tbPreProjeto = new Proposta_Model_PreProjeto();
-                    $dadosProjeto = $tbPreProjeto->buscarAgentePreProjeto(array('idpreprojeto = ?'=>$post->idPreProjeto))->current();
-                    $where['idagente = ?'] = $dadosProjeto->idAgente;
-                    $where['codigodocumento = ?'] = $post->documento;
-                } else {
-                    $where['idprojeto = ?'] = $post->idPreProjeto;
-                    $where['codigodocumento = ?'] = $post->documento;
-                }
-
-                if($post->tipoDocumento == 1){
-
-                    if($tblTbDocumentoAgentes->buscar($where)->count() > 0){
-                        parent::message("Tipo de documento já cadastrado!", "/proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto, "ALERT");
-                    }
-
-                    $dadosArquivo = array(
-                        'CodigoDocumento' => $post->documento,
-                        'idAgente' => $dadosProjeto->idAgente,
-                        'Data' => new Zend_Db_Expr('GETDATE()'),
-                        'imDocumento' => new Zend_Db_Expr("CONVERT(varbinary(MAX), {$arquivoBinario})"),
-                        'NoArquivo' => $arquivoNome,
-                        'TaArquivo' => $arquivoTamanho
-                    );
-                    $idUltimoArquivo = $tblTbDocumentoAgentes->inserir($dadosArquivo);
-                } else {
-
-                    if($tblTbDocumentoPreProjeto->buscar($where)->count() > 0){
-                        parent::message("Tipo de documento já cadastrado!", "/proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto, "ALERT");
-                    }
-
-                    $dadosArquivo = array(
-                        'codigodocumento' => $post->documento,
-                        'idprojeto' => $post->idPreProjeto,
-                        'data' => new Zend_Db_Expr('GETDATE()'),
-                        'imdocumento' => new Zend_Db_Expr("CONVERT(varbinary(MAX), {$arquivoBinario})"),
-                        'noarquivo' => $arquivoNome,
-                        'taarquivo' => $arquivoTamanho,
-                        'dsdocumento' => $post->observacao
-                    );
-                    $idUltimoArquivo = $tblTbDocumentoPreProjeto->inserir($dadosArquivo);
-                }
-
-                //REMOVER AS PENDENCIAS DE DOCUMENTO
-                $tblDocumentosPendentesProjeto = new DocumentosProjeto();
-                $tblDocumentosPendentesProponente = new DocumentosProponente();
-                $tblDocumentosPendentesProjeto->delete("idprojeto = {$post->idPreProjeto} AND codigodocumento = {$post->documento}");
-                $tblDocumentosPendentesProponente->delete("idprojeto = {$post->idPreProjeto} AND codigodocumento = {$post->documento}");
-            } catch (Zend_Exception $e) {
-                parent::message("Falha ao anexar arquivo!<br>{$e->getMessage()}", "/proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
-            } catch (Exception $e){
-                parent::message("Tipo de documento já cadastrado!", "/proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ALERT");
-            }
-
-            if ($idUltimoArquivo) {
-                parent::message("Arquivo anexado com sucesso!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "CONFIRM");
+    public function incluirAnexoAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $arrPost = array_change_key_case($this->getRequest()->getPost());
+            $mapperTbDocumentoAgentes = new Proposta_Model_TbDocumentosAgentesMapper();
+            $file = new Zend_File_Transfer();
+            if ($mapperTbDocumentoAgentes->saveCustom($arrPost, $file)) {
+                parent::message("Arquivo anexado com sucesso!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $arrPost['idpreprojeto'] . "&edital=" . $arrPost['edital'], "CONFIRM");
             } else {
-                parent::message("Falha ao anexar arquivo!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
+                parent::message($mapperTbDocumentoAgentes->getMessage(), "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $arrPost['idpreprojeto'] . "&edital=" . $arrPost['edital'], "ALERT");
             }
-        }else{
-            parent::message("Falha ao anexar arquivo! O tamanho máximo permitido é de 10MB.", "/proposta/manterpropostaincentivofiscal/listarproposta?idPreProjeto=" . $post->idPreProjeto . "&edital=" . $post->edital, "ERROR");
+        } else {
+            parent::message('Dados incorretos', "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
         }
     }
 
@@ -720,6 +625,8 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         $this->verificarPermissaoAcesso(true, false, false);
 
+        $get = Zend_Registry::get("get");
+        $this->view->documentosPendentes = Proposta_Model_AnalisarPropostaDAO::buscarDocumentoPendente($get->idPreProjeto);
         //$get = Zend_Registry::get("get");
         //$this->view->documentosPendentes = AnalisarPropostaDAO::buscarDocumentoPendente($get->idPreProjeto);
 
@@ -1064,11 +971,11 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
         $dadosEndereco = Agente_Model_EnderecoNacionalDAO::buscarEnderecoNacional($rsPreProjeto->idAgente);
 
-        $dadosEmail = Email::buscar($rsPreProjeto->idAgente);
+        $dadosEmail = Agente_Model_Email::buscar($rsPreProjeto->idAgente);
 
         $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, null, null, $rsPreProjeto->idAgente);
 
-        $tblLocaisRealizacao = new Abrangencia();
+        $tblLocaisRealizacao = new Proposta_Model_DbTable_Abrangencia();
         $dadosLocais = $tblLocaisRealizacao->buscar(array("a.idProjeto" => $idPreProjeto, "a.stAbrangencia" => 1));
 
         if (count($rsProponente) > 0) {
@@ -1223,7 +1130,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
         if (!empty($idPreProjeto) && $valida == "s") {
             $tblPreProjeto = new Proposta_Model_PreProjeto();
-            $tblAvaliacao = new AnalisarPropostaDAO();
+            $tblAvaliacao = new Proposta_Model_AnalisarPropostaDAO();
 
             //recupera dados do projeto
             $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
@@ -1390,16 +1297,21 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
      */
     public function excluiranexoAction() {
         if (isset($_GET['idArquivo']) && !empty($_GET['idArquivo']) && isset($_GET['idPreProjeto']) && !empty($_GET['idPreProjeto']) && isset($_GET['tipoDocumento']) && !empty($_GET['tipoDocumento'])) :
-
             if($_GET['tipoDocumento'] == 'proposta'){
-                $tbDocumentosPreProjeto = new tbDocumentosPreProjeto();
-                $tbDocumentosPreProjeto->apagar(array('idDocumentosPreprojetos = ?' => $_GET['idArquivo']));
+                $tbDocumentosPreProjeto = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
+                $file = $tbDocumentosPreProjeto->findBy(['iddocumentospreprojetos' => $_GET['idArquivo']]);
+//                $tbDocumentosPreProjeto->apagar(array('iddocumentospreprojetos = ?' => $_GET['idArquivo']));
             } else {
-                $tbDocumentosAgentes = new tbDocumentosAgentes();
-                $tbDocumentosAgentes->apagar(array('idDocumentosAgentes = ?' => $_GET['idArquivo']));
+                $tbDocumentosAgentes = new Proposta_Model_DbTable_TbDocumentosAgentes();
+                $file = $tbDocumentosAgentes->findBy(['iddocumentosagentes' => $_GET['idArquivo']]);
+//                $tbDocumentosAgentes->apagar(array('iddocumentosagentes = ?' => $_GET['idArquivo']));
+            }
+            $filePath = APPLICATION_PATH . '/..' . $file['imdocumento'];
+            if (file_exists($filePath)) {
+                unlink($filePath);
             }
 
-            parent::message('Exclusão efetuada com sucesso!', 'proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=' . $_GET['idPreProjeto'], 'CONFIRM');
+            parent::message('Exclus&atilde;o efetuada com sucesso!', 'proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=' . $_GET['idPreProjeto'], 'CONFIRM');
         endif;
     }
 }

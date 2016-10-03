@@ -1,16 +1,16 @@
 <!--
 /**
- * Máscaras, efeitos dinâmicos e etc
+ * Mï¿½scaras, efeitos dinï¿½micos e etc
  * @author Emanuel Sampaio <contato@emanuelsampaio.com.br>
  * @since 24/03/2010
  * @version 1.0
- * @copyright © 2010 Politec - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 Politec - Todos os direitos reservados.
  * @package js
  * @link http://www.politec.com.br
  */
 
 /**
- * Máscaras para formatar DATA, VALOR E ETC
+ * Mï¿½scaras para formatar DATA, VALOR E ETC
  */
 
 function selecionartodos(field)
@@ -68,13 +68,13 @@ function exec_mascara()
     obj.value = fun(obj.value);
 }
 
-function format_num(v) // formato: somente números inteiros
+function format_num(v) // formato: somente nï¿½meros inteiros
 {
     v = v.replace(/\D/g, "");
     v = v.replace(/(\d{0})(\d)/, "$1$2");
     return v;
 }
-function format_num_pontos(v) // formato: somente números inteiros
+function format_num_pontos(v) // formato: somente nï¿½meros inteiros
 {
     v = v.replace(/\D/g, "");
     v = v.replace(/(\d+)(\d{3})$/g, "$1.$2");
@@ -189,7 +189,7 @@ function format_processo(v){
     alert(1)
 }
 
-function validar_email(email) // validação de e-mail
+function validar_email(email) // validaï¿½ï¿½o de e-mail
 {
     if (email == "" || email == "undefined")
     {
@@ -197,7 +197,7 @@ function validar_email(email) // validação de e-mail
     }
     else if ((email.indexOf("@") < 1) || (email.lastIndexOf(".") <= email.indexOf("@")) || (email.indexOf("@") == email.length))
     {
-        alertar("Email inválido!", "email");
+        alertar("Email invï¿½lido!", "email");
     }
 }
 
@@ -219,7 +219,7 @@ function alertar(msg, id)
         buttons : {
             'OK' : function(){
                 $(this).dialog('close')
-                if (id != null) // ativa o campo do formulário vazio
+                if (id != null) // ativa o campo do formulï¿½rio vazio
                 {
                     $("#"+id).focus();
                 }
@@ -232,7 +232,7 @@ function alertar(msg, id)
 
 
 /**
- * Mensagens de confirmação
+ * Mensagens de confirmaï¿½ï¿½o
  */
 function confirmar(msg)
 {
@@ -249,7 +249,7 @@ function confirmar(msg)
 
 
 /**
- * Redirecionamento de página
+ * Redirecionamento de pï¿½gina
  */
 function redirecionar(url)
 {
@@ -259,7 +259,7 @@ function redirecionar(url)
 
 
 /**
- * Voltar página anterior
+ * Voltar pï¿½gina anterior
  */
 function voltar()
 {
@@ -269,7 +269,7 @@ function voltar()
 
 
 /**
- * Imprimir página
+ * Imprimir pï¿½gina
  */
 function imprimir()
 {
@@ -296,7 +296,7 @@ function caracteresTextarea(campo, contador, limite)
 
 
 /**
- * Funções para senha segura
+ * Funï¿½ï¿½es para senha segura
  */
 function caracteres_aceitos(valor)
 {
@@ -330,7 +330,7 @@ function testa_senha(valor)
     }
     else if (q >= 8 && c >= 2 || q >= 5 && c >= 3)
     {
-        id.innerHTML = "<strong>M É D I A</strong>";
+        id.innerHTML = "<strong>M ï¿½ D I A</strong>";
         id.style.backgroundColor = "orange";
         id.style.color = "white";
     }
@@ -340,17 +340,17 @@ function testa_senha(valor)
         id.style.backgroundColor = "red";
         id.style.color = "white";
     }
-} // fecha função testa_senha()
+} // fecha funï¿½ï¿½o testa_senha()
 
 
 
 /**
- * Funções para mostra e ocultar sub-ítens: [+] e [-]
+ * Funï¿½ï¿½es para mostra e ocultar sub-ï¿½tens: [+] e [-]
  */
 
-var id_cache = ""; // variável para guardar o id ativo na memória
+var id_cache = ""; // variï¿½vel para guardar o id ativo na memï¿½ria
 
-// função para mostrar um elemento escondido
+// funï¿½ï¿½o para mostrar um elemento escondido
 function aparecer(id, exibir, ocultar)
 {
     if (id_cache != "")
@@ -367,7 +367,7 @@ function aparecer(id, exibir, ocultar)
     $("." + exibir).hide();
 }
 
-//função para esconder um elemento visível
+//funï¿½ï¿½o para esconder um elemento visï¿½vel
 function esconder(id, exibir, ocultar)
 {
     $("#" + id).hide();
@@ -382,7 +382,7 @@ function esconder(id, exibir, ocultar)
 
 
 /**
- * Função para abrir e fechar a grid (modelo 1)
+ * Funï¿½ï¿½o para abrir e fechar a grid (modelo 1)
  */
 function grid_01(elemento)
 {
@@ -399,13 +399,13 @@ function grid_01(elemento)
 		$('#' + elemento).attr({title:'Expandir'});
 	}
 	$('#div_' + elemento).toggle('slow');
-} // fecha função grid_01()
+} // fecha funï¿½ï¿½o grid_01()
 
 
 
 /**
- * Função para abrir e fechar a grid (modelo 3)
- * Foi retirada a função toggle(), pois, a mesma não funcionou com tbody no IE 7
+ * Funï¿½ï¿½o para abrir e fechar a grid (modelo 3)
+ * Foi retirada a funï¿½ï¿½o toggle(), pois, a mesma nï¿½o funcionou com tbody no IE 7
  */
 function grid_03(elemento)
 {
@@ -423,12 +423,12 @@ function grid_03(elemento)
 		$('#' + elemento).find('a').attr({title:'Expandir'});
 		$('#tbody_' + elemento).addClass('sumir');
 	}
-} // fecha função grid_03()
+} // fecha funï¿½ï¿½o grid_03()
 
 
 
 /**
- * Funções para destacar uma linha, quando o usuário clica em cima da mesma ou passa o mouse
+ * Funï¿½ï¿½es para destacar uma linha, quando o usuï¿½rio clica em cima da mesma ou passa o mouse
  */
 
 var obj_tr = "";
@@ -492,7 +492,7 @@ function click_tr(obj, cor) // onclick
 
 
 /**
- * Função para limpar campos de formulário
+ * Funï¿½ï¿½o para limpar campos de formulï¿½rio
  */
 
 function limpar_campo(campo, texto)
@@ -506,7 +506,7 @@ function limpar_campo(campo, texto)
 
 
 /**
- * Função para retornar o campo default do formulário preenchido
+ * Funï¿½ï¿½o para retornar o campo default do formulï¿½rio preenchido
  */
 
 function restaurar_campo(campo, texto)
@@ -519,7 +519,7 @@ function restaurar_campo(campo, texto)
 
 
 
-//função para validar CPF
+//funï¿½ï¿½o para validar CPF
 
 
 function valida_cnpj(cnpj)
@@ -665,7 +665,7 @@ function validaData(campo,nomeFormulario){
         });
 
         $("#dialog-alert2").dialog('open');
-        $("#dialog-alert2").html("Data Inválida");
+        $("#dialog-alert2").html("Data Invï¿½lida");
         campo.value = "";
         if ( nomeFormulario != "" ){
             $('#'+nomeFormulario).focus();
@@ -684,7 +684,7 @@ function validaDigito(e)
 {
     var controle = false;
 
-    // Pega o valor ASCII da tecla que o usuário pressionou
+    // Pega o valor ASCII da tecla que o usuï¿½rio pressionou
     if(window.event){ //Internet Explorer
         tecla   = e.keyCode;
     }
@@ -692,7 +692,7 @@ function validaDigito(e)
         tecla = e.which;
     }
 
-    // Permite a digitação das seguintes teclas: Backspace, Insert, Del, Page UP, Page Down, Home, End, setas de movimenta??o e Shift.
+    // Permite a digitaï¿½ï¿½o das seguintes teclas: Backspace, Insert, Del, Page UP, Page Down, Home, End, setas de movimenta??o e Shift.
     // Acrescentada a tecla Tab em 13/03/2007
     if (tecla == 8 || tecla == 37 || tecla == 38 || tecla == 39 ||
         tecla == 40 || tecla == 46 || tecla == 36 || tecla == 35 ||
@@ -701,22 +701,22 @@ function validaDigito(e)
         return;
     }
 
-    // Verifica se a tecla é um dígito, sendo que o shift não pode estar sendo pressionado
+    // Verifica se a tecla ï¿½ um dï¿½gito, sendo que o shift nï¿½o pode estar sendo pressionado
     if ((tecla >= 48 && tecla <= 57) && !e.shiftKey){
         return;
     }
 
-    //  Verifica se a tecla é um dígito do teclado n?m?rico
+    //  Verifica se a tecla ï¿½ um dï¿½gito do teclado n?m?rico
     if (tecla >= 96 && tecla <= 105){
         return;
     }
 
-    // Permite a digitação da tecla alt
+    // Permite a digitaï¿½ï¿½o da tecla alt
     if (e.altKey){
         return;
     }
 
-    // Verifica se foi entrada a sequência Ctrl+c ou Ctrl+v
+    // Verifica se foi entrada a sequï¿½ncia Ctrl+c ou Ctrl+v
     if((e.ctrlKey && tecla == 67) || (e.ctrlKey && tecla == 86)){
         controle = true;
         if(browser.isIE){
@@ -728,8 +728,8 @@ function validaDigito(e)
     }
     var caracter = String.fromCharCode(tecla);
 
-    //Verifica se o caractere não está entre 0-9, se foi utilizada a sequência Ctrl+c ou Ctrl+v e se a tecla Shift estava pressionada
-    //Se verdadeiro, não permite a digitação do caractere.
+    //Verifica se o caractere nï¿½o estï¿½ entre 0-9, se foi utilizada a sequï¿½ncia Ctrl+c ou Ctrl+v e se a tecla Shift estava pressionada
+    //Se verdadeiro, nï¿½o permite a digitaï¿½ï¿½o do caractere.
     if(((("0123456789".indexOf(caracter) == -1) && !controle)) || e.shiftKey)
     {
         if (window.event){ //IE
@@ -747,7 +747,7 @@ function validaDigito(e)
 
 
 /**
- * Função com o alert em forma de modal
+ * Funï¿½ï¿½o com o alert em forma de modal
  */
 function alertModal(titulo, mensagem, largura, altura, campo, url, id_formulario)
 {
@@ -769,22 +769,22 @@ function alertModal(titulo, mensagem, largura, altura, campo, url, id_formulario
 			"Ok": function()
 			{
 				$(this).dialog("close");
-				if (campo != null) // ativa o campo do formulário vazio
+				if (campo != null) // ativa o campo do formulï¿½rio vazio
 				{
 					document.getElementById(campo).focus();
 				}
-				if (url != null) // faz o redirecionamento para uma página
+				if (url != null) // faz o redirecionamento para uma pï¿½gina
 				{
 					redirecionar(url);
 				}
-				if (id_formulario != null) // envia o formulário
+				if (id_formulario != null) // envia o formulï¿½rio
 				{
 					$('#' + id_formulario).submit();
 				}
 			}
 		}
 	});
-} // fecha função alertModal()
+} // fecha funï¿½ï¿½o alertModal()
 
 function alertModalPt(titulo, mensagem, largura, altura, campo, url, id_formulario)
 {
@@ -806,25 +806,25 @@ function alertModalPt(titulo, mensagem, largura, altura, campo, url, id_formular
 			"Ok": function()
 			{
 				$(this).dialog("close");
-				if (campo != null) // ativa o campo do formulário vazio
+				if (campo != null) // ativa o campo do formulï¿½rio vazio
 				{
 					document.getElementById(campo).focus();
 				}
-				if (url != null) // faz o redirecionamento para uma página
+				if (url != null) // faz o redirecionamento para uma pï¿½gina
 				{
 					redirecionar(url);
 				}
-				if (id_formulario != null) // envia o formulário
+				if (id_formulario != null) // envia o formulï¿½rio
 				{
 					$('#' + id_formulario).submit();
 				}
 			}
 		}
 	});
-} // fecha função alertModal()
+} // fecha funï¿½ï¿½o alertModal()
 
 /**
- * Função com o confirm em forma de modal
+ * Funcao com o confirm em forma de modal
  */
 function confirmModal(titulo, mensagem, largura, altura, campo_01, url_01, id_formulario_01, campo_02, url_02, id_formulario_02)
 {
@@ -843,18 +843,18 @@ function confirmModal(titulo, mensagem, largura, altura, campo_01, url_01, id_fo
 		title: titulo,
 		buttons:
 		{
-            "Não": function()
+            "N\u00e3o": function()
 			{
 				$(this).dialog("close");
-				if (campo_02 != null) // ativa o campo do formulário vazio
+				if (campo_02 != null) // ativa o campo do formulario vazio
 				{
 					document.getElementById(campo_02).focus();
 				}
-				if (url_02 != null) // faz o redirecionamento para uma página
+				if (url_02 != null) // faz o redirecionamento para uma pagina
 				{
 					redirecionar(url_02);
 				}
-				if (id_formulario_02 != null) // envia o formulário
+				if (id_formulario_02 != null) // envia o formulario
 				{
 					$('#' + id_formulario_02).submit();
 				}
@@ -862,23 +862,23 @@ function confirmModal(titulo, mensagem, largura, altura, campo_01, url_01, id_fo
 			"Sim": function()
 			{
 				$(this).dialog("close");
-				if (campo_01 != null) // ativa o campo do formulário vazio
+				if (campo_01 != null) // ativa o campo do formulario vazio
 				{
 					document.getElementById(campo_01).focus();
 				}
-				if (url_01 != null) // faz o redirecionamento para uma página
+				if (url_01 != null) // faz o redirecionamento para uma pagina
 				{
 					redirecionar(url_01);
 				}
-				if (id_formulario_01 != null) // envia o formulário
+				if (id_formulario_01 != null) // envia o formulario
 				{
 					$('#' + id_formulario_01).submit();
 				}
 			}
-			
+
 		}
 	});
-} // fecha função confirmModal()
+}
 
 
 
@@ -898,7 +898,7 @@ function diasDecorridosEntreDuasDatas(dataInicial, dataFinal)
 	dataInicial = new Date(ano1, mes1, dia1);
 	dataFinal   = new Date(ano2, mes2, dia2);
 
-	// variáveis auxiliares
+	// variï¿½veis auxiliares
 	var minuto       = 60000;
 	var dia          = minuto * 60 * 24;
 	var horarioVerao = 0;
@@ -911,11 +911,11 @@ function diasDecorridosEntreDuasDatas(dataInicial, dataFinal)
 	dataFinal.setMinutes(0);
 	dataFinal.setSeconds(0);
 
-	// determina o fuso horário de cada objeto Date
+	// determina o fuso horï¿½rio de cada objeto Date
 	var fh1 = dataInicial.getTimezoneOffset();
 	var fh2 = dataFinal.getTimezoneOffset();
 
-	// retira a diferença do horário de verão
+	// retira a diferenï¿½a do horï¿½rio de verï¿½o
 	if (dataFinal > dataInicial)
 	{
 		horarioVerao = (fh2 - fh1) * minuto;
@@ -989,21 +989,21 @@ function validarData(campo)
 		var mes = new Number(campo.substr(3, 2));
 		var ano = new Number(campo.substr(6, 4));
 
-		// dia incorreto, o mês especificado contém no máximo 30 dias
+		// dia incorreto, o mï¿½s especificado contï¿½m no mï¿½ximo 30 dias
 		if ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia > 30)
 		{
 			return false;
 		}
 		else
 		{
-			// data incorreta, o mês especificado contém no máximo 28 dias
+			// data incorreta, o mï¿½s especificado contï¿½m no mï¿½ximo 28 dias
 			if ((ano % 4 != 0 && mes == 2) && dia > 28)
 			{
 				return false;
 			}
 			else
 			{
-				// data incorreta, o mês especificado contém no máximo 29 dias
+				// data incorreta, o mï¿½s especificado contï¿½m no mï¿½ximo 29 dias
 				if ((ano % 4 == 0 && mes == 2) && dia > 29)
 				{
 					return false;
@@ -1039,10 +1039,10 @@ function pegarDataAtual()
 
 
 /**
- * Função para somar dias a uma data
- * @param date (data no padrão brasileiro)
+ * Funï¿½ï¿½o para somar dias a uma data
+ * @param date (data no padrï¿½o brasileiro)
  * @param integer (quantidade de dias a serem adicionados/retirados na data)
- * @param char (indica se deverá ser adicionado ou retirado dias. Valores: [+] ou [-])
+ * @param char (indica se deverï¿½ ser adicionado ou retirado dias. Valores: [+] ou [-])
  * @return date
  */
 function somarData(dataAtual, qtdDias, tipoOperacao)
@@ -1080,7 +1080,7 @@ function somarData(dataAtual, qtdDias, tipoOperacao)
 	{
 		return dataAtual;
 	}
-} // fecha função somarData()
+} // fecha funï¿½ï¿½o somarData()
 
 
 
@@ -1133,7 +1133,7 @@ function JSBloquearAlteracaoFormulario()
 
 
 
-// ========== APÓS O CARREGAMENTO DA PÁGINA ==========
+// ========== APï¿½S O CARREGAMENTO DA Pï¿½GINA ==========
 $(document).ready(function()
 {
 	$('tr.registros, .registros tr').mouseover(function() // mouse em cima da linha

@@ -1,14 +1,30 @@
 <?php
 
 /**
- * AnalisarPropostaDAO
+ * Proposta_Model_AnalisarPropostaDAO
  *
  * @uses Zend
  * @uses _Db_Table
  * @package
  * @author  wouerner <wouerner@gmail.com>
  */
-class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model{
+class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model
+{
+    /**
+     * @todo deletar depois
+     */
+    public function buscarDocumentoOpcao($idOpcao)
+    {
+        die('enviado para o dbtable documentosexigidos');
+        $sql = "select codigo, descricao from SAC.dbo.vwDocumentosExigidosApresentacaoProposta where opcao = {$idOpcao} order by descricao ";
+        //$sql = "select codigo,descricao from SAC.dbo.DocumentosExigidos where opcao=$idOpcao order by descricao";
+
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $resultado = $db->fetchAll($sql);
+
+        return $resultado;
+    }
 
     public static function buscarGeral($idPreProjeto){
         $sql = "SELECT
@@ -512,16 +528,6 @@ class Proposta_Model_AnalisarPropostaDAO extends MinC_Db_Model{
         return $resultado;
     }
 
-    public static function buscarDocumentoOpcao($idOpcao){
-       $sql = "select codigo,descricao from SAC.dbo.vwDocumentosExigidosApresentacaoProposta where opcao=$idOpcao order by descricao ";
-       //$sql = "select codigo,descricao from SAC.dbo.DocumentosExigidos where opcao=$idOpcao order by descricao";
-
-        $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $resultado = $db->fetchAll($sql);
-
-        return $resultado;
-    }
     public static function inserirDocumentoProponente($dado){
         try{
             $sql = "INSERT INTO SAC.dbo.DocumentosProponente
