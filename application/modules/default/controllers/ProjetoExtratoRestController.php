@@ -7,21 +7,21 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2016 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
-class ProjetoExtratoRestController extends MinC_Controller_Rest_Abstract {
+class ProjetoExtratoRestController extends Minc_Controller_AbstractRest {
 
     public function postAction(){}
     
     public function indexAction(){
-        # Parametros da Paginação.
-        $next = $this->getRequest()->getParam('next');
-        $offset = $this->getRequest()->getParam('offset');
-        $total = $this->getRequest()->getParam('total');
+        # Parametros da Paginaï¿½ï¿½o.
+        $next = $this->_request->getParam('next');
+        $offset = $this->_request->getParam('offset');
+        $total = $this->_request->getParam('total');
         # Parametros da Consulta.
-        $projeto = $this->getRequest()->getParam('projeto');
-        $ano = $this->getRequest()->getParam('ano');
-        $mes = $this->getRequest()->getParam('mes');
+        $projeto = $this->_request->getParam('projeto');
+        $ano = $this->_request->getParam('ano');
+        $mes = $this->_request->getParam('mes');
 
         $modelProjetos = new Projetos();
         $objParam = (object) array(
@@ -30,7 +30,7 @@ class ProjetoExtratoRestController extends MinC_Controller_Rest_Abstract {
             'idPronac' => $projeto,
             'ano' => $ano,
             'mes' => $mes);
-        # Verifica se existe necessidade de buscar o número total de registros da consulta
+        # Verifica se existe necessidade de buscar o nï¿½mero total de registros da consulta
         if(!$total){
             $total = $modelProjetos->buscarTotalExtrato($objParam);
         }
@@ -44,7 +44,7 @@ class ProjetoExtratoRestController extends MinC_Controller_Rest_Abstract {
             }
         }
 
-        # Resposta da autenticação
+        # Resposta da autenticaï¿½ï¿½o
         $this->getResponse()->setHttpResponseCode(200)->setBody(json_encode((object) array('list' => $listaExtrato, 'total' => $total)));
     }
     

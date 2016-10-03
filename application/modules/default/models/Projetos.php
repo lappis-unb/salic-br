@@ -63,7 +63,7 @@ class Projetos extends MinC_Db_Table_Abstract
         # Filtros
         $this->montarFiltrosListaProjetosDeUsuario($consulta, $objParam);
 
-        # Pagina��o
+        # Paginacao
         if($objParam->next) {
             $consulta->limit($objParam->next, (int)$objParam->offset);
         }
@@ -170,12 +170,14 @@ class Projetos extends MinC_Db_Table_Abstract
             'vlLancamento',
             'stLancamento'
         ), 'dbo')
-        ->where('l.idPronac = ?', (int)$objParam->idPronac);
+        ->where('l.idPronac = ?', (int)$objParam->idPronac)
+        ->order(array('dtLancamento ASC', 'nrLancamento ASC'))
+        ;
         
         # Filtros
         $this->montarFiltrosExtrato($select, $objParam);
         
-        # Pagina��o
+        # Paginacao
         if($objParam->next) {
             $select->limit($objParam->next, (int)$objParam->offset);
         }
@@ -2769,7 +2771,7 @@ class Projetos extends MinC_Db_Table_Abstract
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-//        $select->from($this->_name, "idpronac");
+        $select->from($this->_name, "idpronac");
 
 // busca pelo pronac
         if (!empty($pronac)) {
@@ -5757,7 +5759,6 @@ class Projetos extends MinC_Db_Table_Abstract
                 ->order('Ordem')
                 ->order('CgcCpf')
                 ->order('NomeProjeto');
-//xd($slctUnion->__toString());
         return $this->fetchAll($slctUnion);
     }
 

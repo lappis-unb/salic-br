@@ -116,7 +116,7 @@ class HistoricoSituacao extends MinC_Db_Table_Abstract
                     )
                 );
 
-            $select->joinInner(
+            $select->joinLeft(
                 array('u' => 'Usuarios'), 'u.usu_codigo = h.Logon',
                 array(), 'TABELAS.dbo'
             );
