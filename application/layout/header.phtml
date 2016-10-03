@@ -134,12 +134,15 @@
                     <div id="combousuario">
                         <label for="perfilXgrupo"> </label>
                         <select name="perfilXgrupo" id="perfilXgrupo" class="perfilXgrupo" onchange="alterarPerfil(this.value);">
+
+                            <?php if ($this->arrayGrupos): ?>
                             <?php foreach ($this->arrayGrupos as $g){ ?>
                             <option value="<?php echo $g->gru_codigo; ?>:<?php echo $g->uog_orgao; ?>"
                                 <?php if ($g->gru_codigo == $this->grupoAtivo && $g->uog_orgao == $this->orgaoAtivo){ echo "selected=\"selected=\""; } ?>>
                                 &nbsp; <?php echo $g->org_siglaautorizado; ?> - <?php echo $g->gru_nome; ?> &nbsp;
                             </option>
                             <?php } ?>
+                            <?php endif; ?>
 
                             <?php if(!empty($this->arrayGrupoProponente)){ ?>
                             <option value="<?php echo $this->arrayGrupoProponente["gru_codigo"]; ?>:<?php echo $this->arrayGrupoProponente["uog_orgao"]; ?>">&nbsp; <?php echo $this->arrayGrupoProponente["gru_nome"]; ?></option>

@@ -1,4 +1,4 @@
-]<?php
+<?php
 
 /**
  * Login e autentica��o via REST
@@ -32,7 +32,7 @@ class ProponenteAutenticacaoRestController extends MinC_Controller_Rest_Abstract
         } else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)){
             $result->msg = 'CNPJ inv&aacute;lido!';
         } else {
-            $Usuario = new Sgcacesso();
+            $Usuario = new Autenticacao_Model_Sgcacesso();
             $verificaStatus = $Usuario->buscar(array ( 'Cpf = ?' => $username));
 
             $verificaSituacao = 0;

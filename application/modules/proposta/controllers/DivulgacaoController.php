@@ -6,7 +6,6 @@
  * @subpackage controller
  * @link http://www.cultura.gov.br
  *
- * @author Equipe RUP - Politec
  * @author wouerner <wouerner@gmail.com>
  * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  * @since 15/12/2010
