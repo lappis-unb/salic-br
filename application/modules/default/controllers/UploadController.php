@@ -227,58 +227,53 @@ class UploadController extends MinC_Controller_Action_Abstract {
         } // fecha else
     }
 
-// fecha abrirAction()
-
     /**
-     * M�todo para abrir um arquivo bin�rio da tabela tbDocumentosPreProjeto
-     * @access public
-     * @param void
-     * @return void
+     * Metodo para abrir um arquivo binario da tabela tbDocumentosPreProjeto
+     *
+     * @name abrirDocumentosPreProjetoAction
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since 02/10/2016
      */
     public function abrirDocumentosPreProjetoAction() {
-        // recebe o id do arquivo via get
         $get = Zend_Registry::get('get');
         $id = (int) isset($get->id) ? $get->id : $this->_request->getParam('id');
 
-        // Configura��o o php.ini para 10MB
+        # Configuracao o php.ini para 10MB
         @ini_set("mssql.textsize", 10485760);
         @ini_set("mssql.textlimit", 10485760);
         @ini_set("upload_max_filesize", "10M");
 
-        $response = new Zend_Controller_Response_Http;
-
-        // busca o arquivo
-        $tbl = new tbDocumentosPreProjeto();
+        # busca o arquivo
+        $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
         $resultado = $tbl->abrir($id)->current();
 
-        // erro ao abrir o arquivo
+        # erro ao abrir o arquivo
+        $this->_helper->layout->disableLayout();        # Desabilita o Zend Layout
+        $this->_helper->viewRenderer->setNoRender();    # Desabilita o Zend Render
         if (!$resultado) {
-            $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
-            $this->_helper->viewRenderer->setNoRender();    // Desabilita o Zend Render
             die("N&atilde;o existe o arquivo especificado");
-            $this->view->message = 'N�o foi poss�vel abrir o arquivo!';
+            $this->view->message = 'N&atilde;o foi poss&iacute;vel abrir o arquivo!';
             $this->view->message_type = 'ERROR';
         } else {
-            $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
-            $this->_helper->viewRenderer->setNoRender();    // Desabilita o Zend Render
-            Zend_Layout::getMvcInstance()->disableLayout(); // Desabilita o Zend MVC
-            $this->_response->clearBody();                  // Limpa o corpo html
-            $this->_response->clearHeaders();               // Limpa os headers do Zend
-
+            Zend_Layout::getMvcInstance()->disableLayout(); # Desabilita o Zend MVC
+            $this->_response->clearBody();                  # Limpa o corpo html
+            $this->_response->clearHeaders();               # Limpa os headers do Zend
             $up = new Upload();
-            $tipoArquivo = method_exists($up, getMimeType) ? $up->getMimeType("jpg") : "application/pdf";
-
-            $this->getResponse()
+            $tipoArquivo = method_exists($up, $up->getMimeType($resultado->noarquivo)) ? $up->getMimeType("jpg") : "application/pdf";
+            if ($tbl->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
+                $this->getResponse()
                     ->setHeader('Content-Type', $tipoArquivo)
-                    ->setHeader('Content-Disposition', 'attachment; filename="' . $resultado->NoArquivo . '"')
-                    //->setHeader("Connection", "close")
-                    //->setHeader("Content-transfer-encoding", "binary")
-                    //->setHeader("Cache-control", "private")
-                    ->setBody($resultado->imDocumento);
-        } // fecha else
+                    ->setHeader('Content-Disposition', 'attachment; filename="' . $resultado->noarquivo . '"')
+                    ->setBody($resultado->imdocumento);
+            } else {
+                $this->getResponse()
+                    ->setHeader('Content-Type', $tipoArquivo)
+                    ->setHeader('Content-Disposition', 'attachment; filename="' . $resultado->noarquivo . '"');
+                readfile(APPLICATION_PATH . '/..' . $resultado->imdocumento);
+            }
+        }
     }
-
-// fecha abrirAction()
 
     /**
      * M�todo para abrir um arquivo bin�rio da tabela tbDocumentosPreProjeto
@@ -299,7 +294,7 @@ class UploadController extends MinC_Controller_Action_Abstract {
         $response = new Zend_Controller_Response_Http;
 
         // busca o arquivo
-        $tbl = new tbDocumentosAgentes();
+        $tbl = new Proposta_Model_DbTable_TbDocumentosAgentes();
         $resultado = $tbl->abrir($id)->current();
 
         // erro ao abrir o arquivo

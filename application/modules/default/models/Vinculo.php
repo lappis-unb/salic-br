@@ -762,7 +762,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
 
         if (!empty($idPreProjeto) && $valida == "s") {
             $tblPreProjeto = new Proposta_Model_Preprojeto();
-            $tblAvaliacao = new AnalisarPropostaDAO();
+            $tblAvaliacao = new Proposta_Model_AnalisarPropostaDAO();
 
             //recupera dados do projeto
             $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
