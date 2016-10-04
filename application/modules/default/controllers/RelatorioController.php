@@ -16,13 +16,13 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
     private $getIdUsuario = 0;
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         if(empty($auth->getIdentity()->usu_codigo)){
             $script = "
                 <script>window.location.href = '".Zend_Controller_Front::getInstance()->getBaseUrl()."';</script>
@@ -30,12 +30,12 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
             die($script);
         }
 
-        // autenticação e permissões zend (AMBIENTE MINC)
+        // autenticaï¿½ï¿½o e permissï¿½es zend (AMBIENTE MINC)
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 90; // Protocolo - Documento
         $PermissoesGrupo[] = 91; // Protocolo - Recebimento
         $PermissoesGrupo[] = 92; // Tec. de Admissibilidade
-        $PermissoesGrupo[] = 93; // Coordenador - Geral de Análise (Ministro)
+        $PermissoesGrupo[] = 93; // Coordenador - Geral de Anï¿½lise (Ministro)
         $PermissoesGrupo[] = 94; // Parecerista
         $PermissoesGrupo[] = 96;  // Consulta Gerencial
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
@@ -49,22 +49,22 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 121; // Tec. de Acompanhamento
         $PermissoesGrupo[] = 122; // Coord. de Acompanhamento
         $PermissoesGrupo[] = 123; // Coord. Geral de Acompanhamento
-        $PermissoesGrupo[] = 124; // Tec. de Prestação de Contas
-        $PermissoesGrupo[] = 125; // Coord. de Prestação de Contas
-        $PermissoesGrupo[] = 126; // Coord. Geral de Prestação de Contas
-        $PermissoesGrupo[] = 127; // Coord. Geral de Análise
+        $PermissoesGrupo[] = 124; // Tec. de Prestaï¿½ï¿½o de Contas
+        $PermissoesGrupo[] = 125; // Coord. de Prestaï¿½ï¿½o de Contas
+        $PermissoesGrupo[] = 126; // Coord. Geral de Prestaï¿½ï¿½o de Contas
+        $PermissoesGrupo[] = 127; // Coord. Geral de Anï¿½lise
         $PermissoesGrupo[] = 128; // Tec. de Portaria
         $PermissoesGrupo[] = 131; // Coord. de Admissibilidade
-        $PermissoesGrupo[] = 132; // Chefe de Divisão
-        $PermissoesGrupo[] = 135; // Tec. De Fiscalização
-        $PermissoesGrupo[] = 138; // Coord. de Avaliação
-        $PermissoesGrupo[] = 139; // Tec. de Avaliação
+        $PermissoesGrupo[] = 132; // Chefe de Divisï¿½o
+        $PermissoesGrupo[] = 135; // Tec. De Fiscalizaï¿½ï¿½o
+        $PermissoesGrupo[] = 138; // Coord. de Avaliaï¿½ï¿½o
+        $PermissoesGrupo[] = 139; // Tec. de Avaliaï¿½ï¿½o
         parent::perfil(1, $PermissoesGrupo);
 
         parent::init();
     }
 
-// fecha método init()
+// fecha mï¿½todo init()
 
     public function indexAction() {
         $this->_redirect("relatorio/proposta");
@@ -83,13 +83,13 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
 
     public function buscarorgaoAction() {
 
-    	 $auth = Zend_Auth::getInstance(); // instancia da autenticação
+    	 $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
 
             $idusuario = $auth->getIdentity()->usu_codigo;
 
-            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
 
-            $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+            $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
             $this->view->codOrgao = $codOrgao;
 
@@ -461,7 +461,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         if(isset($get->xls) && $get->xls){
             $html = '';
             $html .= '<table style="border: 1px">';
-            $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="7">Relatório de Propostas - Resultado da pesquisa</td></tr>';
+            $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="7">Relatï¿½rio de Propostas - Resultado da pesquisa</td></tr>';
             $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 10" colspan="7">Data do Arquivo: '. Data::mostraData() .'</td></tr>';
             $html .='<tr><td colspan="7"></td></tr>';
 
@@ -484,13 +484,13 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
                 } else if($v->stEstado == '1' && $v->Movimentacao == '95' && $v->estadoMovimentacao == '0' && $v->ConformidadeOK == '0' && $v->estadoAvaliacao == '0'){
                     $estado = 'Proposta diligenciada';
                 } else if($v->stEstado == '1' && $v->Movimentacao == '96' && $v->estadoMovimentacao == '0' && $v->ConformidadeOK == '0' && $v->estadoAvaliacao == '0'){
-                    $estado = 'Diligência respondida';
+                    $estado = 'Diligï¿½ncia respondida';
                 } else if($v->stEstado == '1' && $v->Movimentacao == '95' && $v->estadoMovimentacao == '0' && is_null($v->ConformidadeOK) && is_null($v->estadoAvaliacao)){
-                    $estado = 'Proposta em construção';
+                    $estado = 'Proposta em construï¿½ï¿½o';
                 } else if($v->stEstado == '1' && $v->Movimentacao == '96' && $v->estadoMovimentacao == '0' && $v->ConformidadeOK == '9' && $v->estadoAvaliacao == '0'){
-                    $estado = 'Enviada ao MinC p/ avaliação';
+                    $estado = 'Enviada ao MinC p/ avaliaï¿½ï¿½o';
                 } else {
-                    $estado = 'Enviada ao MinC p/ avaliação';
+                    $estado = 'Enviada ao MinC p/ avaliaï¿½ï¿½o';
                 }
 
                 $html .= '<tr>';
@@ -508,7 +508,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
 
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=Resultado_Relatorio_Propostas.xls;");
-            echo $html; die();
+            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
             $this->view->qtdRegistros = $total;
@@ -727,7 +727,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
 //        $total = $tbl->relatorioProjeto($arrBusca , null, null, null, true);
 //
 //        if($post->tipo == 'xls' || $post->tipo == 'pdf') {
-//            //Verifica se foi solicitado a ordenação
+//            //Verifica se foi solicitado a ordenaï¿½ï¿½o
 //            if(!empty($post->ordenacao)) {
 //                $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}";
 //            } else {
@@ -761,7 +761,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
 //            $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 //            if ($fim>$total) $fim = $total;
 //
-//            //Varifica se foi solicitado a ordenação
+//            //Varifica se foi solicitado a ordenaï¿½ï¿½o
 //            if(!empty($post->ordenacao)) {
 //                $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}";
 //            }else {
@@ -904,7 +904,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
 
             $html = '';
             $html .= '<table style="border: 1px">';
-            $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="'.$colunas.'">Relatório de Projetos - Resultado da pesquisa</td></tr>';
+            $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="'.$colunas.'">Relatï¿½rio de Projetos - Resultado da pesquisa</td></tr>';
             $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 10" colspan="'.$colunas.'">Data do Arquivo: '. Data::mostraData() .'</td></tr>';
             $html .='<tr><td colspan="'.$colunas.'"></td></tr>';
 
@@ -913,13 +913,13 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">PRONAC</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Nome do Projeto</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Agente</th>';
-            $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Área</th>';
+            $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">ï¿½rea</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Segmento</th>';
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">UF</th>';
-            $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Município</th>';
+            $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Municï¿½pio</th>';
 
             if($campo != 12){
-                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situação</th>';
+                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situaï¿½ï¿½o</th>';
             }
 
             $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Vl. Solicitado</th>';
@@ -962,7 +962,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
 
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=Resultado_Relatorio_Projetos.xls;");
-            echo $html; die();
+            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
             $this->view->qtdRegistros = $total;
@@ -1022,7 +1022,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         $total = count($total);
 
         if($post->tipo == 'xls' || $post->tipo == 'pdf'){
-            //orientaçao da pagina no pdf
+            //orientaï¿½ao da pagina no pdf
             $landscape = (sizeof($post->visaoAgente) > 4)?true:false;
             //buscando os registros no banco de dados
             $tamanho = -1;
@@ -1031,7 +1031,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
             $totalPag = 0;
             $fim = 0;
 
-            // verifica se foi solicitado a ordenação
+            // verifica se foi solicitado a ordenaï¿½ï¿½o
             if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}
 
             $rs = $tbl->extratorProjeto($arrBusca, $ordem, null, null);
@@ -1055,7 +1055,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             if ($fim>$total) $fim = $total;
 
-            // verifica se foi solicitado a ordenação
+            // verifica se foi solicitado a ordenaï¿½ï¿½o
             if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('1 ASC');}
 
             $rs = $tbl->extratorProjeto($arrBusca, $ordem, $tamanho, $inicio);
@@ -1085,7 +1085,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         if($post->liquidado != ""){ $arrBusca["Pagou = ?"] = $post->liquidado; }
         $arrBusca = MinC_Controller_Action_Abstract::montaBuscaData($post, "tpDt", "dt", "Data", "dt_Final", $arrBusca);
 
-        //Varifica se foi solicitado a ordenação
+        //Varifica se foi solicitado a ordenaï¿½ï¿½o
 	if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array('15');}
 
         $tbl = new EditalDesembolso();
@@ -1093,7 +1093,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         $total = $tbl->editalDesembolsoXProjeto($arrBusca, $ordem, null, null, true);
 
         if($post->tipo == 'xls' || $post->tipo == 'pdf'){
-            //orientaçao da pagina no pdf
+            //orientaï¿½ao da pagina no pdf
             $landscape = (sizeof($post->visaoAgente) > 4)?true:false;
             //buscando os registros no banco de dados
             $tamanho = -1;
@@ -1161,7 +1161,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
             $arrBusca["i.Cidade = ?"] = $rsMunicipio->Descricao;
         }
 
-    	//Varifica se foi solicitado a ordenação
+    	//Varifica se foi solicitado a ordenaï¿½ï¿½o
 		if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }else{$ordem = array("5", "4", "3");}
 
         $tbl = new Projetos();
@@ -1212,12 +1212,12 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
     }
 
     public function visualTecnicoAction(){
-        $auth         = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario      = new Autenticacao_Model_Usuario(); // objeto usuário
-        $UsuarioAtivo = new Zend_Session_Namespace('UsuarioAtivo'); // cria a sessão com o usuário ativo
-        $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codPerfil  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-        $codOrgao  = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+        $auth         = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $Usuario      = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
+        $UsuarioAtivo = new Zend_Session_Namespace('UsuarioAtivo'); // cria a sessï¿½o com o usuï¿½rio ativo
+        $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codPerfil  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+        $codOrgao  = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
 
         $tbl = new paUsuariosDoPerfil();
         $rs = $tbl->buscarUsuarios($codPerfil, $codOrgao);

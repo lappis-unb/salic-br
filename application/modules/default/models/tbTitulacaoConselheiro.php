@@ -50,13 +50,12 @@ class tbTitulacaoConselheiro extends MinC_Db_Table_Abstract
             array('a.idAgente AS id'),
             $this->_schema
         );
-
         $select->joinInner(
             array('b'=>'Nomes'), 'a.idAgente = b.idAgente',
-            array('Nome'=>'b.Descricao AS nome'), 'AGENTES.dbo'
+            array('Nome'=>'b.Descricao AS nome'), 'agentes'
         );
         $select->where('a.stConselheiro = ?', "A");
-        $select->order('b.Descricao');
+        $select->order('b.descricao');
 
         return $this->fetchAll($select);
     }

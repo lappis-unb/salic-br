@@ -1,6 +1,6 @@
-<!-- ========== IN?CIO MENU ========== --> 
+<!-- ========== IN?CIO MENU ========== -->
 
-<script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script> 
+<script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
 <script>
 // modal
 function confirmaExcluir(obj){
@@ -87,12 +87,12 @@ function trocarproponente()
             'Trocar Proponente':function()
             {
             	$("#formtrocaproponente").submit();
-            	
+
             }
         }
     });
 
-    
+
 
     return false;
 }
@@ -100,34 +100,34 @@ function trocarproponente()
 
 
 
-<div id="menu"> 
- 
-    <!-- inￜcio: conteￜdo principal #container --> 
-    <div id="container"> 
- 
-        <!-- inￜcio: navegaￜￜo local  --> 
-        <script type="text/javascript"> 
+<div id="menu">
+
+    <!-- inￜcio: conteￜdo principal #container -->
+    <div id="container">
+
+        <!-- inￜcio: navegaￜￜo local  -->
+        <script type="text/javascript">
             function layout_fluido() {
-                var janela = $(window).width(); 
-                var fluidNavGlobal = janela - 245; 
-                var fluidConteudo = janela - 253; 
-                var fluidTitulo = janela - 252; 
-                var fluidRodape = janela - 19; 
-                $("#navglobal").css("width",fluidNavGlobal); 
-                $("#conteudo").css("width",fluidConteudo); 
-                $("#titulo").css("width",fluidTitulo); 
-                $("#rodapeConteudo").css("width",fluidConteudo); 
-                $("#rodape").css("width",fluidRodape); 
-                $("div#rodapeConteudo").attr("id", "rodapeConteudo_com_menu"); 
-            } 
-        </script> 
- 
-        <style type="text/css"> 
-            .sanfonaDiv { 
-                clear: both; 
-                display: none; 
-            } 
-        </style> 
+                var janela = $(window).width();
+                var fluidNavGlobal = janela - 245;
+                var fluidConteudo = janela - 253;
+                var fluidTitulo = janela - 252;
+                var fluidRodape = janela - 19;
+                $("#navglobal").css("width",fluidNavGlobal);
+                $("#conteudo").css("width",fluidConteudo);
+                $("#titulo").css("width",fluidTitulo);
+                $("#rodapeConteudo").css("width",fluidConteudo);
+                $("#rodape").css("width",fluidRodape);
+                $("div#rodapeConteudo").attr("id", "rodapeConteudo_com_menu");
+            }
+        </script>
+
+        <style type="text/css">
+            .sanfonaDiv {
+                clear: both;
+                display: none;
+            }
+        </style>
         <div id="corfirma" title="Confirma&ccedil;&atilde;o" style='display:none;'></div>
         <div id="ok" title="Confirma&ccedil;&atilde;o" style='display:none;'></div>
         <?php
@@ -141,13 +141,13 @@ function trocarproponente()
                 $codProjeto .= $get->idPreProjeto;
             }
         ?>
-        <div id="menuContexto"> 
-            <div class="top"></div> 
-            <div id="qm0" class="qmmc"> 
+        <div id="menuContexto">
+            <div class="top"></div>
+            <div id="qm0" class="qmmc">
                     <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'edital')); ?>" title="Ir para Informações Complementares">Minhas Propostas</a>-->
                     <a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'dadospropostaedital')); ?><?php echo $codProjeto; ?>" title="localderealizacao">Proposta Atual</a>
-                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'localderealizacao',    'action' => 'index')); ?><?php echo $codProjeto; ?>&edital=s">Local de realiza��o <!--/ Deslocamento --></a>
-                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'responderquestionarioedital')); ?><?php echo $codProjeto; ?> ">Responder Question�rio</a>
+                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'localderealizacao',    'action' => 'index')); ?><?php echo $codProjeto; ?>&edital=s">Local de realiza��o <!--/ Deslocamento --></a>
+                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'responderquestionarioedital')); ?><?php echo $codProjeto; ?> ">Responder Question�rio</a>
                     <?php //if(isset($this->blnJaEnviadaAoMinc) && $this->blnJaEnviadaAoMinc >= 1): ?>
                         <!--<a class="no_seta" href="#" onclick="return false;" style="color:#9d9d9d;">Anexar Documentos</a>-->
                     <?php //else: ?>
@@ -167,25 +167,25 @@ function trocarproponente()
                     <?php } ?>
                     <?php if($this->enviado == 'false'){ ?>
                     <a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'enviar-proposta-ao-minc')); ?><?php echo $codProjeto; ?>&edital=s">Enviar Proposta ao MINC</a>
-                    <?php } ?>
-                    
+                    <?php }?>
+
                     <?php if($this->siVinculoProponente): ?>
                     	<a class="no_seta" href="#" onclick="trocarproponente('<?php echo $codProjeto; ?>');">Trocar Proponente</a>
                 	<?php endif; ?>
                     <span class="no_seta last">&nbsp;</span>
-            </div> 
-            <div class="bottom"></div> 
- 
-        <!-- final: navegaￜￜo local --> 
-        </div> 
-    </div> 
-</div> 
+            </div>
+            <div class="bottom"></div>
+
+        <!-- final: navegaￜￜo local -->
+        </div>
+    </div>
+</div>
 <div id="confirmaExcluir" Title="Confima&ccedil;&atilde;o" style="display: none">Deseja realmente excluir sua proposta?</div>
 <!-- ========== FIM MENU ========== -->
 
 <div id="trocarproponente" style="display:none">
 
-<form id="formtrocaproponente" action="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'trocarproponente')); ?>" method="post">	
+<form id="formtrocaproponente" action="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'trocarproponente')); ?>" method="post">
 <input type="hidden" value="<?php echo $this->dadosVinculo[0]->idVinculoProposta; ?>" name="idVinculoProposta" />
 <input type="hidden" value="<?php echo $this->idPreProjeto; ?>" name="idPreProjeto" />
 <input type="hidden" value="2" name="mecanismo" />
@@ -199,16 +199,16 @@ function trocarproponente()
 				<select name="propronente" id="propronente" class="input_simples w240">
 				<?php $idAgente = 0; ?>
 				<?php foreach ($this->listaProponentes as $lp):?>
-					
+
 					<?php if($lp->idAgenteProponente != $idAgente):?>
 						<option value="<?php echo $lp->idVinculo;?>:<?php echo $lp->idAgenteProponente;?>"><?php echo $lp->NomeProponente;?></option>
 					<?php endif;?>
-					
+
 				<?php $idAgente = $lp->idAgenteProponente; ?>
 				<?php endforeach;?>
 				</select>&nbsp;<span id="msgValidaProponente"></span>&nbsp;&nbsp;&nbsp;
 			</td>
 		</tr>
 	</table>
-</form>	
+</form>
 </div>

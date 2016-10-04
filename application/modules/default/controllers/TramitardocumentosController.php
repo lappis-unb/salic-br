@@ -8,12 +8,12 @@
  * @package application
  * @subpackage application.controllers
  * @link http://www.politec.com.br
- * @copyright © 2010 - Politec - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Politec - Todos os direitos reservados.
  */
 class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
     /**
-     * @var integer (variável com o id do usuário logado)
+     * @var integer (variï¿½vel com o id do usuï¿½rio logado)
      * @access private
      */
     private $getIdUsuario = 0;
@@ -21,46 +21,46 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
     private $intTamPag = 10;
 
     public function init() {
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        // define as permisões
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        // define as permisï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 90; // Protocolo - Documento
         $PermissoesGrupo[] = 91; // Protocolo - Recebimento
         $PermissoesGrupo[] = 93; // Coordenador de Parecer
         $PermissoesGrupo[] = 97; // Gestor Salic
-        $PermissoesGrupo[] = 103; // Coordenador de Análise
+        $PermissoesGrupo[] = 103; // Coordenador de Anï¿½lise
         $PermissoesGrupo[] = 104; // Protocolo - (Envio / Recebimento)
         $PermissoesGrupo[] = 109; // Arquivo
-        $PermissoesGrupo[] = 110; // Técnico de Análise
+        $PermissoesGrupo[] = 110; // Tï¿½cnico de Anï¿½lise
         $PermissoesGrupo[] = 113; // Coordenador de Arquivo
         $PermissoesGrupo[] = 114; // Coordenador de Editais
-        $PermissoesGrupo[] = 115; // Atendimento Representações
-        $PermissoesGrupo[] = 121; // Técnico de Acompanhamento
+        $PermissoesGrupo[] = 115; // Atendimento Representaï¿½ï¿½es
+        $PermissoesGrupo[] = 121; // Tï¿½cnico de Acompanhamento
         $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
         $PermissoesGrupo[] = 123; // Coordenador Geral de Acompanhamento
-        $PermissoesGrupo[] = 124; // Técnico de Prestação de Contas
-        $PermissoesGrupo[] = 125; // Coordenador de Prestação de Contas
-        $PermissoesGrupo[] = 126; // Coordenador Geral de Prestação de Contas
-        $PermissoesGrupo[] = 127; // Coordenador Geral de Análise
-        $PermissoesGrupo[] = 128; // Técnico de Portaria
-        $PermissoesGrupo[] = 132; // Chefe de Divisão
-        $PermissoesGrupo[] = 134; // Coordenador de Fiscalização
-        $PermissoesGrupo[] = 135; // Técnico de Fiscalização
+        $PermissoesGrupo[] = 124; // Tï¿½cnico de Prestaï¿½ï¿½o de Contas
+        $PermissoesGrupo[] = 125; // Coordenador de Prestaï¿½ï¿½o de Contas
+        $PermissoesGrupo[] = 126; // Coordenador Geral de Prestaï¿½ï¿½o de Contas
+        $PermissoesGrupo[] = 127; // Coordenador Geral de Anï¿½lise
+        $PermissoesGrupo[] = 128; // Tï¿½cnico de Portaria
+        $PermissoesGrupo[] = 132; // Chefe de Divisï¿½o
+        $PermissoesGrupo[] = 134; // Coordenador de Fiscalizaï¿½ï¿½o
+        $PermissoesGrupo[] = 135; // Tï¿½cnico de Fiscalizaï¿½ï¿½o
         $PermissoesGrupo[] = 136; // Coordenador de Entidade Vinculada
         $PermissoesGrupo[] = 137; // Coordenador de Pronac
-        $PermissoesGrupo[] = 138; // Coordenador de Avaliação
-        $PermissoesGrupo[] = 139; // Técnico de Avaliação
+        $PermissoesGrupo[] = 138; // Coordenador de Avaliaï¿½ï¿½o
+        $PermissoesGrupo[] = 139; // Tï¿½cnico de Avaliaï¿½ï¿½o
         parent::perfil(1, $PermissoesGrupo);
 
-        // pega o idAgente do usuário logado
+        // pega o idAgente do usuï¿½rio logado
         if (isset($auth->getIdentity()->usu_codigo)) {
 
             $idusuario = $auth->getIdentity()->usu_codigo;
             //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
-            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-            //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-            $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+            //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+            $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
             $this->codOrgao = $GrupoAtivo->codOrgao;
 
             $this->view->codOrgao = $this->codOrgao;
@@ -73,8 +73,8 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
                 $this->getIdUsuario = 0;
             }
 
-            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo está no array de permissões
-                parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) { // verifica se o grupo ativo estï¿½ no array de permissï¿½es
+                parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
             }
         } else {
             parent::perfil(4, $PermissoesGrupo);
@@ -83,7 +83,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
     }
 
     public function indexAction() {
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         if ($GrupoAtivo->codGrupo == 90) { //Protocolo - Documento
             $this->_redirect("tramitardocumentos/despachar");
         } else {
@@ -102,7 +102,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
     public function imprimirguiaAction() {
 
         //** Usuario Logado ************************************************/
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
 
         /*         * ************************************************************** */
@@ -126,13 +126,13 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
     public function despacharAction() {
         //** Usuario Logado ************************************************/
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         $this->codOrgao = $GrupoAtivo->codOrgao;
 
         $this->view->codOrgao = $this->codOrgao;
@@ -148,7 +148,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         $arquivoNome = $_FILES['arquivo']['name']; // nome
         $arquivoTipo = $_FILES['arquivo']['type']; // tipo
         $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
-        $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
+        $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensï¿½o
 
         $tipos = array('pdf');
         if (!in_array(strtolower($arquivoExtensao), $tipos)) {
@@ -158,13 +158,13 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         } else {
 
             /** Usuario Logado *********************************************** */
-            $auth = Zend_Auth::getInstance(); // instancia da autenticação
+            $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
             $idusuario = $auth->getIdentity()->usu_codigo;
             //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
-            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-            //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-            $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+            //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+            $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
             $this->view->codOrgao = $codOrgao;
             $this->view->idUsuarioLogado = $idusuario;
             /*             * *************************************************************** */
@@ -175,17 +175,17 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
             $cod_ect = $this->_request->getParam("cod_ect");
             $idDestino = $this->_request->getParam("idDestino");
 
-            // pega as informações do arquivo
+            // pega as informaï¿½ï¿½es do arquivo
             $arquivoNome = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporário
+            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporï¿½rio
             $arquivoTipo = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
 
             if (!empty($arquivoNome)) {
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensï¿½o
             }
             if (!empty($arquivoTemp)) {
-                $arquivoBinario = Upload::setBinario($arquivoTemp); // binário
+                $arquivoBinario = Upload::setBinario($arquivoTemp); // binï¿½rio
                 $arquivoHash = Upload::setHash($arquivoTemp); // hash
             }
 
@@ -207,10 +207,10 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
                     parent::message("Por favor, informe o arquivo!!", "tramitardocumentos/despachar", "ALERT");
                 } else if (empty($arquivoTemp)) { // nome do arquivo
                     parent::message("Por favor, informe o arquivo!", "tramitardocumentos/despachar", "ALERT");
-                } else if (strtolower($arquivoExtensao) != 'pdf') { // extensão do arquivo
-                    parent::message("O arquivo não pode ser maior do que 10MB!", "tramitardocumentos/despachar", "ALERT");
+                } else if (strtolower($arquivoExtensao) != 'pdf') { // extensï¿½o do arquivo
+                    parent::message("O arquivo nï¿½o pode ser maior do que 10MB!", "tramitardocumentos/despachar", "ALERT");
                 } else if ($arquivoTamanho > 10485760) { // tamanho do arquivo: 10MB
-                    parent::message("O arquivo não pode ser maior do que 10MB!", "tramitardocumentos/despachar", "ALERT");
+                    parent::message("O arquivo nï¿½o pode ser maior do que 10MB!", "tramitardocumentos/despachar", "ALERT");
                 } else {
                     $resultado = TramitarDocumentosDAO::cadDocumento($dados);
                     $tbHistoricoDoc = array(
@@ -240,13 +240,13 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
     public function enviarAction() {
         //** Usuario Logado ************************************************/
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         $this->codOrgao = $GrupoAtivo->codOrgao;
         $this->view->codOrgao = $this->codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -292,13 +292,13 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
     public function enviouAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -357,12 +357,12 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
     public function receberAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -397,11 +397,11 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
     public function anexarAction() {
         //** Usuario Logado ************************************************/
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $orgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $orgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->lote = $this->getRequest()->getParam('lote', null);
         $this->view->pronac = $this->getRequest()->getParam('pronac', null);
@@ -412,13 +412,13 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
     public function somentereceberAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -474,13 +474,13 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
     public function anexarloteAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -525,13 +525,13 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
     public function anexardocumentoAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -580,13 +580,13 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
     public function desanexarloteAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -636,13 +636,13 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
     public function desanexardocumentoAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -691,13 +691,13 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
     public function recebereanexarAction() {
 
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -773,13 +773,13 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
     public function recusarAction() {
 
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -817,7 +817,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
                 parent::message("Documento recusado com sucesso!", "tramitardocumentos/receber", "CONFIRM");
             } catch (Zend_Exception $ex) {
                 $db->rollBack();
-                parent::message("Não foi possível recusar o Documento!", "tramitardocumentos/receber", "ERROR");
+                parent::message("Nï¿½o foi possï¿½vel recusar o Documento!", "tramitardocumentos/receber", "ERROR");
             }
         }
     }
@@ -831,12 +831,12 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
     public function guiasAction() {
 
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $this->getIdUsuario;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -876,7 +876,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
             foreach ($buscaProjeto as $p):
 
-                // Função para formatar o numero do Processo
+                // Funï¿½ï¿½o para formatar o numero do Processo
                 $Processo = FuncoesDoBanco::fnFormataProcesso($p->Processo);
 
                 $msgAjax[0]['processonome'] = utf8_encode('Processo: ' . $Processo . ' - Nome do Projeto: ' . $p->nomeprojeto);
@@ -901,7 +901,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         ;
 
 
-        // Configuração o php.ini para 10MB
+        // Configuraï¿½ï¿½o o php.ini para 10MB
         @ini_set("mssql.textsize", 10485760);
         @ini_set("mssql.textlimit", 10485760);
         @ini_set("upload_max_filesize", "10M");
@@ -913,10 +913,10 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
         // erro ao abrir o arquivo
         if (!$resultado) {
-            $this->view->message = 'Não foi possível abrir o arquivo!';
+            $this->view->message = 'Nï¿½o foi possï¿½vel abrir o arquivo!';
             $this->view->message_type = 'ERROR';
         } else {
-            // lê os cabeçalhos formatado
+            // lï¿½ os cabeï¿½alhos formatado
             foreach ($resultado as $r) {
                 $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
                 $this->_helper->viewRenderer->setNoRender();    // Desabilita o Zend Render
@@ -942,13 +942,13 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
     public function consultaguiasAction() {
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -1007,11 +1007,11 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
 
     public function consultardocumentoAction() {
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $this->view->orgaoLogado = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $this->view->orgaoLogado = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $this->view->usuarioLogado = $auth->getIdentity()->usu_codigo;
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -1178,7 +1178,7 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta' => false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function excluirdocAction() {
@@ -1204,10 +1204,10 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
     }
 
     public function solicitacoesAction() {
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
 
         $cancelOrgaos = $cancelamento = TramitarDocumentosDAO::buscarCancelOrgao($codOrgao);
@@ -1275,20 +1275,20 @@ class TramitardocumentosController extends MinC_Controller_Action_Abstract {
                 );
 //                    xd($recebe);
                 $gravarHistorico = TramitarDocumentosDAO::GravarHistorico($recebe);
-                parent::message("Solicitação não atendida!", "tramitardocumentos/solicitacoes", "CONFIRM");
+                parent::message("Solicitaï¿½ï¿½o nï¿½o atendida!", "tramitardocumentos/solicitacoes", "CONFIRM");
             }
         }
     }
 
     public function desanexarAction() {
         //** Usuario Logado ************************************************/
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idusuario = $auth->getIdentity()->usu_codigo;
         //$idorgao 	= $auth->getIdentity()->usu_orgao;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        //$codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
         $this->codOrgao = $GrupoAtivo->codOrgao;
 
         $this->view->codOrgao = $this->codOrgao;

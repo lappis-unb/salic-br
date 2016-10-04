@@ -5,41 +5,41 @@ class VerificarAlteracaoProjetoController extends MinC_Controller_Action_Abstrac
 {
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init()
     {
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new UsuarioDAO(); // objeto usuário
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $this->view->title = "Salic - Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura"; // tï¿½tulo da pï¿½gina
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $Usuario = new UsuarioDAO(); // objeto usuï¿½rio
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
 
-        if ($auth->hasIdentity()) // caso o usuário esteja autenticado
+        if ($auth->hasIdentity()) // caso o usuï¿½rio esteja autenticado
         {
-            // verifica as permissões
+            // verifica as permissï¿½es
             $PermissoesGrupo = array();
             $PermissoesGrupo[] = 93;
             $PermissoesGrupo[] = 103;
             // $PermissoesGrupo[] = 119;
             // $PermissoesGrupo[] = 120;
-            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo está no array de permissões
+            if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo estï¿½ no array de permissï¿½es
             {
-                parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+                parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
             }
 
-            // pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+            // pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 
-            // manda os dados para a visão
-            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
-            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+            // manda os dados para a visï¿½o
+            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
         } // fecha if
-        else // caso o usuário não esteja autenticado
+        else // caso o usuï¿½rio nï¿½o esteja autenticado
         {
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
@@ -113,7 +113,7 @@ class VerificarAlteracaoProjetoController extends MinC_Controller_Action_Abstrac
     }
 
     /*
-     *  View: Solicitação de Alteração do Nome do Projeto
+     *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o do Nome do Projeto
      */
 
     public function nomeprojetoAction()
@@ -147,7 +147,7 @@ class VerificarAlteracaoProjetoController extends MinC_Controller_Action_Abstrac
     }
 
     /*
-     *  View: Solicitação de Alteração Razão Social
+     *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o Razï¿½o Social
      */
 
     public function solaltrazsocAction()
@@ -180,7 +180,7 @@ class VerificarAlteracaoProjetoController extends MinC_Controller_Action_Abstrac
     }
 
     /*
-     *  View: Solicitação de Alteração do Nome do Proponente
+     *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o do Nome do Proponente
      */
 
     public function solaltnomprpAction()
@@ -213,7 +213,7 @@ class VerificarAlteracaoProjetoController extends MinC_Controller_Action_Abstrac
     }
 
     /*
-     *  View: Solicitação de Alteração do Local de Realização
+     *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o do Local de Realizaï¿½ï¿½o
      */
 
     public function solaltlocrelAction()
@@ -253,7 +253,7 @@ class VerificarAlteracaoProjetoController extends MinC_Controller_Action_Abstrac
     }
 
     /*
-     *  View: Solicitação de Alteração da Ficha técnica
+     *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o da Ficha tï¿½cnica
      */
 
     public function solaltfictecAction()
@@ -279,7 +279,7 @@ class VerificarAlteracaoProjetoController extends MinC_Controller_Action_Abstrac
     }
 
     /*
-     *  View: Solicitação de Prorrogacao de Prazos - Captação
+     *  View: Solicitaï¿½ï¿½o de Prorrogacao de Prazos - Captaï¿½ï¿½o
      */
 
     public function solaltprogprazcapAction()
@@ -321,7 +321,7 @@ class VerificarAlteracaoProjetoController extends MinC_Controller_Action_Abstrac
     }
 
     /*
-     *  View: Solicitação de Prorrogacao de Prazos - Execução
+     *  View: Solicitaï¿½ï¿½o de Prorrogacao de Prazos - Execuï¿½ï¿½o
      */
 
     public function solaltprogprazexecAction()
@@ -379,7 +379,7 @@ class VerificarAlteracaoProjetoController extends MinC_Controller_Action_Abstrac
         if ($query)
         {
             $this->_redirect('verificaralteracaocoordenador/');
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -399,7 +399,7 @@ class VerificarAlteracaoProjetoController extends MinC_Controller_Action_Abstrac
         if ($query)
         {
             $this->_redirect('verificaralteracaocoordenador/');
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 

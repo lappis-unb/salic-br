@@ -221,7 +221,10 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
     {
         // busca pelo usuario no banco de dados
         # Pegando apenas o primeiro resultado da consulta, transformando em array e transformando as chaves em minusculas.
-        $arrUser = array_change_key_case(UsuarioDAO::buscarUsuarioScriptcase($cod)->current()->toArray());
+        $arrUser = UsuarioDAO::buscarUsuarioScriptcase($cod)->current();
+        if ($arrUser) {
+            $arrUser = array_change_key_case(UsuarioDAO::buscarUsuarioScriptcase($cod)->current()->toArray());
+        }
 
 //        $conexao = Zend_Registry::get('conexao_banco');
 

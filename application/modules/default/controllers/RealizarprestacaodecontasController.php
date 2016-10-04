@@ -690,7 +690,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             } else {
                 echo json_encode(array ('resposta' => false) );
             }
-            die ();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         //IF - BUSCA NOMES DOS TECNICOS QUANDO ENVIA O ORGAO PARA ENCAMINHAR PROJETO
@@ -705,7 +705,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             } else {
                 echo "";
             }
-            die ();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         $sqllistasDeEntidadesVinculadas = ReadequacaoProjetos::retornaSQLlista ( "listasDeEntidadesVinculadas", NULL );
@@ -1470,7 +1470,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=Painel_Analisar_Laudo_Final.xls;");
-            echo $html; die();
+            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
 
         } else {
             $this->view->dados = $busca;
@@ -1804,7 +1804,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             } else {
                 echo json_encode(array ('resposta' => false) );
             }
-            die ();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -2082,7 +2082,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
                 header("Content-Type: application/vnd.ms-excel");
                 header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.xls;");
-                echo $html; die();
+                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
 
             } else {
                 $this->view->dados = $busca;
@@ -2652,7 +2652,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
                 header("Content-Type: application/vnd.ms-excel");
                 header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.xls;");
-                echo $html; die();
+                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
 
             } else {
                 $this->view->dados = $busca;
@@ -3670,7 +3670,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
                 header("Content-Type: application/vnd.ms-excel");
                 header("Content-Disposition: inline; filename=Painel_Analisar_Prestacao_de_Contas.xls;");
-                echo $html; die();
+                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
 
             } else {
                 $this->view->dados = $busca;
@@ -3917,7 +3917,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=Manter_Assinantes.xls;");
-            echo $html; die();
+            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
 
         } else {
             $this->view->dados = $busca;

@@ -55,6 +55,6 @@ class SegmentoController extends Zend_Controller_Action
                 } else {
                     echo '<option value=""> - Selecione - </option>';
                 }
-                die;
-	} // fecha comboAction()
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+    } // fecha comboAction()
 }

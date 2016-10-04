@@ -322,7 +322,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
 //	            parent::message("&Eacute; necess&aacute;rio um v&iacute;nculo para enviar o cadastramento da procura&ccedil;&atilde;o", "procuracao/index?idPreProjeto=" . $idpreprojeto, "ERROR");
 		}
 
-        exit();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function analisarAction() {
@@ -480,7 +480,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function buscarProcuradorAction() {
@@ -507,7 +507,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false,'CNPJCPF'=>$cpf));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function cadastrarProcuracaoAction(){
@@ -606,7 +606,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         catch(Zend_Exception $e) {
             parent::message("Error".$e->getMessage(), "procuracao/index", "ERROR");
         }
-        exit();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function desvincluarProjetoProcuracaoAction() {
@@ -647,7 +647,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function avaliarProcuracaoAction() {
@@ -686,7 +686,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
 
@@ -710,7 +710,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false,'CNPJCPF'=>$cpf));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
 
@@ -727,6 +727,6 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 }

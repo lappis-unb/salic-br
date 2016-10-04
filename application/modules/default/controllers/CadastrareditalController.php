@@ -107,7 +107,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
             }
 
             echo json_encode($Array);
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
 		// caso j� exista um edital cadastrado

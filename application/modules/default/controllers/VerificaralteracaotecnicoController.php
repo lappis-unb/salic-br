@@ -5,7 +5,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
@@ -14,22 +14,22 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
     {
         /* $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
         $PermissoesGrupo[] = 94;  // Parecerista*/
-        $PermissoesGrupo[] = 129; // Técnico
-        $PermissoesGrupo[] = 121; // Técnico
+        $PermissoesGrupo[] = 129; // Tï¿½cnico
+        $PermissoesGrupo[] = 121; // Tï¿½cnico
         /*$PermissoesGrupo[] = 122; // Coordenador de Acompanhamento*/
         parent::perfil(1, $PermissoesGrupo);
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
         $this->view->agente = $agente['idAgente'];
         
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $this->codGrupo = $GrupoAtivo->codGrupo;
 
         parent::init(); // chama o init() do pai GenericControllerNew
     }
 
-    // fecha método init()
+    // fecha mï¿½todo init()
 
 
 
@@ -101,7 +101,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
         $this->view->resultTotal   = $Total;
     }
     /*
-    *  View: Solicitação de Alteração do Nome do Projeto
+    *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o do Nome do Projeto
     */
     public function solaltnomprojAction()
     {
@@ -112,17 +112,17 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             if($recebidoPost->solicitacao)
             {
                 if(self::PropostaDiligenciar()){
-                    parent::message("Diligência enviada com sucesso!", "verificaralteracaotecnico/solaltnomproj?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificaralteracaotecnico/solaltnomproj?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
                 } else {
-                    //parent::message("Erro ao diligenciar a solicitação", "verificaralteracaotecnico/solaltnomproj?idpedidoalteracao=$recebidoPost->IdPronac" ,"ERROR");
-                    parent::message("Diligência enviada com sucesso!", "verificaralteracaotecnico/solaltnomproj?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
+                    //parent::message("Erro ao diligenciar a solicitaï¿½ï¿½o", "verificaralteracaotecnico/solaltnomproj?idpedidoalteracao=$recebidoPost->IdPronac" ,"ERROR");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificaralteracaotecnico/solaltnomproj?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
                 }
             }
         }
 
         if(isset($_GET['opcao'])){
-            $idPedidoAlteracao = $_GET['id']; //idPedido Alteração é o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
-            $opcao = $_GET['opcao']; //opção escolhida no select - APROVADO, INDEFERIDO ou EM ANÁLISE
+            $idPedidoAlteracao = $_GET['id']; //idPedido Alteraï¿½ï¿½o ï¿½ o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
+            $opcao = $_GET['opcao']; //opï¿½ï¿½o escolhida no select - APROVADO, INDEFERIDO ou EM ANï¿½LISE
             $IdPronac = $_GET['idpedidoalteracao'];
 
             self::streadequacaoprodutosAction($idPedidoAlteracao,$opcao,$IdPronac,'solaltnomproj');
@@ -154,7 +154,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             $this->view->dados = $dados[0];
             $idPedidoAlt = $dados[0]->idAvaliacaoItemPedidoAlteracao;
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
        
             $this->view->stResult = $db->fetchAll($sqlStatusReadequacao);
@@ -169,7 +169,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
     }
 
     /*
-    *  View: Solicitação de Alteração Razão Social
+    *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o Razï¿½o Social
     *  @abstract
     */
     public function solaltrazsocAction()
@@ -181,17 +181,17 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             if($recebidoPost->solicitacao)
             {
                 if(self::PropostaDiligenciar()){
-                    parent::message("Diligência enviada com sucesso!", "verificaralteracaotecnico/solaltrazsoc?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificaralteracaotecnico/solaltrazsoc?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
                 } else {
-                    //parent::message("Erro ao diligenciar a solicitação", "verificaralteracaotecnico/solaltrazsoc?idpedidoalteracao=$recebidoPost->IdPronac" ,"ERROR");
-                    parent::message("Diligência enviada com sucesso!", "verificaralteracaotecnico/solaltrazsoc?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
+                    //parent::message("Erro ao diligenciar a solicitaï¿½ï¿½o", "verificaralteracaotecnico/solaltrazsoc?idpedidoalteracao=$recebidoPost->IdPronac" ,"ERROR");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificaralteracaotecnico/solaltrazsoc?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
                 }
             }
         }
 
         if(isset($_GET['opcao'])){
-            $idPedidoAlteracao = $_GET['id']; //idPedido Alteração é o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
-            $opcao = $_GET['opcao']; //opção escolhida no select - APROVADO, INDEFERIDO ou EM ANÁLISE
+            $idPedidoAlteracao = $_GET['id']; //idPedido Alteraï¿½ï¿½o ï¿½ o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
+            $opcao = $_GET['opcao']; //opï¿½ï¿½o escolhida no select - APROVADO, INDEFERIDO ou EM ANï¿½LISE
             $IdPronac = $_GET['idpedidoalteracao'];
 
             self::streadequacaoprodutosAction($idPedidoAlteracao,$opcao,$IdPronac,'solaltrazsoc');
@@ -223,7 +223,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             $this->view->dados = $dados[0];
             $idPedidoAlt = $dados[0]->idAvaliacaoItemPedidoAlteracao;
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 
             $this->view->stResult = $db->fetchAll($sqlStatusReadequacao);
@@ -253,7 +253,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
     }
 
     /*
-    *  View: Solicitação de Alteração do Nome do Proponente
+    *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o do Nome do Proponente
     */
     public function solaltnomprpAction()
     {
@@ -264,17 +264,17 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             if($recebidoPost->solicitacao)
             {
                 if(self::PropostaDiligenciar()){
-                    parent::message("Diligência enviada com sucesso!", "verificaralteracaotecnico/solaltnomprp?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificaralteracaotecnico/solaltnomprp?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
                 } else {
-                    //parent::message("Erro ao diligenciar a solicitação", "verificaralteracaotecnico/solaltnomprp?idpedidoalteracao=$recebidoPost->IdPronac" ,"ERROR");
-                    parent::message("Diligência enviada com sucesso!", "verificaralteracaotecnico/solaltnomprp?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
+                    //parent::message("Erro ao diligenciar a solicitaï¿½ï¿½o", "verificaralteracaotecnico/solaltnomprp?idpedidoalteracao=$recebidoPost->IdPronac" ,"ERROR");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificaralteracaotecnico/solaltnomprp?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
                 }
             }
         }
 
         if(isset($_GET['opcao'])){
-            $idPedidoAlteracao = $_GET['id']; //idPedido Alteração é o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
-            $opcao = $_GET['opcao']; //opção escolhida no select - APROVADO, INDEFERIDO ou EM ANÁLISE
+            $idPedidoAlteracao = $_GET['id']; //idPedido Alteraï¿½ï¿½o ï¿½ o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
+            $opcao = $_GET['opcao']; //opï¿½ï¿½o escolhida no select - APROVADO, INDEFERIDO ou EM ANï¿½LISE
             $IdPronac = $_GET['idpedidoalteracao'];
 
             self::streadequacaoprodutosAction($idPedidoAlteracao,$opcao,$IdPronac,'solaltnomprp');
@@ -307,7 +307,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             $this->view->dados = $dados[0];
             $idPedidoAlt = $dados[0]->idAvaliacaoItemPedidoAlteracao;
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 
             $this->view->stResult = $db->fetchAll($sqlStatusReadequacao);
@@ -322,7 +322,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
         $this->view->resultParecerTecnico   = tbalteracaonomeprojetoDAO::buscarDadosParecerTecnico($idpedidoalteracao);*/
     }
     /*
-    *  View: Solicitação de Alteração do Local de Realização
+    *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o do Local de Realizaï¿½ï¿½o
     */
     public function solaltlocrelAction()
     {
@@ -333,17 +333,17 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             if($recebidoPost->solicitacao)
             {
                 if(self::PropostaDiligenciar()){
-                    parent::message("Diligência enviada com sucesso!", "verificaralteracaotecnico/solaltlocrel?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificaralteracaotecnico/solaltlocrel?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
                 } else {
-                    //parent::message("Erro ao diligenciar a solicitação", "verificaralteracaotecnico/solaltlocrel?idpedidoalteracao=$recebidoPost->IdPronac" ,"ERROR");
-                    parent::message("Diligência enviada com sucesso!", "verificaralteracaotecnico/solaltlocrel?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
+                    //parent::message("Erro ao diligenciar a solicitaï¿½ï¿½o", "verificaralteracaotecnico/solaltlocrel?idpedidoalteracao=$recebidoPost->IdPronac" ,"ERROR");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificaralteracaotecnico/solaltlocrel?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
                 }
             }
         }
 
         if(isset($_GET['opcao'])){
-            $idPedidoAlteracao = $_GET['id']; //idPedido Alteração é o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
-            $opcao = $_GET['opcao']; //opção escolhida no select - APROVADO, INDEFERIDO ou EM ANÁLISE
+            $idPedidoAlteracao = $_GET['id']; //idPedido Alteraï¿½ï¿½o ï¿½ o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
+            $opcao = $_GET['opcao']; //opï¿½ï¿½o escolhida no select - APROVADO, INDEFERIDO ou EM ANï¿½LISE
             $IdPronac = $_GET['idpedidoalteracao'];
 
             self::streadequacaoprodutosAction($idPedidoAlteracao,$opcao,$IdPronac,'solaltlocrel');
@@ -385,7 +385,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             $this->view->dados = $dados[0];
             $idPedidoAlt = $dados[0]->idAvaliacaoItemPedidoAlteracao;
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 
             $this->view->stResult = $db->fetchAll($sqlStatusReadequacao);
@@ -402,7 +402,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
     }
 
     /*
-    *  View: Solicitação de Alteração da Ficha técnica
+    *  View: Solicitaï¿½ï¿½o de Alteraï¿½ï¿½o da Ficha tï¿½cnica
     */
     public function solaltfictecAction()
     {
@@ -413,17 +413,17 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             if($recebidoPost->solicitacao)
             {
                 if(self::PropostaDiligenciar()){
-                    parent::message("Diligência enviada com sucesso!", "verificaralteracaotecnico/solaltfictec?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificaralteracaotecnico/solaltfictec?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
                 } else {
-                    //parent::message("Erro ao diligenciar a solicitação", "verificaralteracaotecnico/solaltfictec?idpedidoalteracao=$recebidoPost->IdPronac" ,"ERROR");
-                    parent::message("Diligência enviada com sucesso!", "verificaralteracaotecnico/solaltfictec?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
+                    //parent::message("Erro ao diligenciar a solicitaï¿½ï¿½o", "verificaralteracaotecnico/solaltfictec?idpedidoalteracao=$recebidoPost->IdPronac" ,"ERROR");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificaralteracaotecnico/solaltfictec?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
                 }
             }
         }
 
          if(isset($_GET['opcao'])){
-            $idPedidoAlteracao = $_GET['id']; //idPedido Alteração é o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
-            $opcao = $_GET['opcao']; //opção escolhida no select - APROVADO, INDEFERIDO ou EM ANÁLISE
+            $idPedidoAlteracao = $_GET['id']; //idPedido Alteraï¿½ï¿½o ï¿½ o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
+            $opcao = $_GET['opcao']; //opï¿½ï¿½o escolhida no select - APROVADO, INDEFERIDO ou EM ANï¿½LISE
             $IdPronac = $_GET['idpedidoalteracao'];
 
             self::streadequacaoprodutosAction($idPedidoAlteracao,$opcao,$IdPronac,'solaltfictec');
@@ -456,7 +456,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             $this->view->dados = $dados[0];
             $idPedidoAlt = $dados[0]->idAvaliacaoItemPedidoAlteracao;
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 
             $this->view->stResult = $db->fetchAll($sqlStatusReadequacao);
@@ -471,7 +471,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
     }
 
     /*
-    *  View: Solicitação de Prorrogacao de Prazos - Captação
+    *  View: Solicitaï¿½ï¿½o de Prorrogacao de Prazos - Captaï¿½ï¿½o
     */
     public function solaltprogprazcapAction()
     {
@@ -482,17 +482,17 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             if($recebidoPost->solicitacao)
             {
                 if(self::PropostaDiligenciar()){
-                    parent::message("Diligência enviada com sucesso!", "verificaralteracaotecnico/solaltprogprazcap?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificaralteracaotecnico/solaltprogprazcap?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
                 } else {
-                    //parent::message("Erro ao diligenciar a solicitação", "verificaralteracaotecnico/solaltprogprazcap?idpedidoalteracao=$recebidoPost->IdPronac" ,"ERROR");
-                    parent::message("Diligência enviada com sucesso!", "verificaralteracaotecnico/solaltprogprazcap?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
+                    //parent::message("Erro ao diligenciar a solicitaï¿½ï¿½o", "verificaralteracaotecnico/solaltprogprazcap?idpedidoalteracao=$recebidoPost->IdPronac" ,"ERROR");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificaralteracaotecnico/solaltprogprazcap?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
                 }
             }
         }
 
         if(isset($_GET['opcao'])){
-            $idPedidoAlteracao = $_GET['id']; //idPedido Alteração é o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
-            $opcao = $_GET['opcao']; //opção escolhida no select - APROVADO, INDEFERIDO ou EM ANÁLISE
+            $idPedidoAlteracao = $_GET['id']; //idPedido Alteraï¿½ï¿½o ï¿½ o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
+            $opcao = $_GET['opcao']; //opï¿½ï¿½o escolhida no select - APROVADO, INDEFERIDO ou EM ANï¿½LISE
             $IdPronac = $_GET['idpedidoalteracao'];
 
             self::streadequacaoprodutosAction($idPedidoAlteracao,$opcao,$IdPronac,'solaltprogprazcap');
@@ -526,7 +526,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             $this->view->dados = $dados[0];
             $idPedidoAlt = $dados[0]->idAvaliacaoItemPedidoAlteracao;
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 
             $this->view->stResult = $db->fetchAll($sqlStatusReadequacao);
@@ -543,7 +543,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
     }
 
     /*
-    *  View: Solicitação de Prorrogacao de Prazos - Execução
+    *  View: Solicitaï¿½ï¿½o de Prorrogacao de Prazos - Execuï¿½ï¿½o
     */
     public function solaltprogprazexecAction()
     {
@@ -554,17 +554,17 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             if($recebidoPost->solicitacao)
             {
                 if(self::PropostaDiligenciar()){
-                    parent::message("Diligência enviada com sucesso!", "verificaralteracaotecnico/solaltprogprazexec?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificaralteracaotecnico/solaltprogprazexec?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
                 } else {
-                    //parent::message("Erro ao diligenciar a solicitação", "verificaralteracaotecnico/solaltprogprazexec?idpedidoalteracao=$recebidoPost->IdPronac" ,"ERROR");
-                    parent::message("Diligência enviada com sucesso!", "verificaralteracaotecnico/solaltprogprazexec?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
+                    //parent::message("Erro ao diligenciar a solicitaï¿½ï¿½o", "verificaralteracaotecnico/solaltprogprazexec?idpedidoalteracao=$recebidoPost->IdPronac" ,"ERROR");
+                    parent::message("Diligï¿½ncia enviada com sucesso!", "verificaralteracaotecnico/solaltprogprazexec?idpedidoalteracao=$recebidoPost->IdPronac" ,"CONFIRM");
                 }
             }
         }
 
         if(isset($_GET['opcao'])){
-            $idPedidoAlteracao = $_GET['id']; //idPedido Alteração é o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
-            $opcao = $_GET['opcao']; //opção escolhida no select - APROVADO, INDEFERIDO ou EM ANÁLISE
+            $idPedidoAlteracao = $_GET['id']; //idPedido Alteraï¿½ï¿½o ï¿½ o idAvaliacaoItemPedidoAlteracao da tabela tbAvaliacaoItemPedidoAlteracao
+            $opcao = $_GET['opcao']; //opï¿½ï¿½o escolhida no select - APROVADO, INDEFERIDO ou EM ANï¿½LISE
             $IdPronac = $_GET['idpedidoalteracao'];
 
             self::streadequacaoprodutosAction($idPedidoAlteracao,$opcao,$IdPronac,'solaltprogprazexec');
@@ -599,7 +599,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
             $this->view->dados = $dados[0];
             $idPedidoAlt = $dados[0]->idAvaliacaoItemPedidoAlteracao;
 
-            //VERIFICA O STATUS DA SOLICITAÇÃO
+            //VERIFICA O STATUS DA SOLICITAï¿½ï¿½O
             $sqlStatusReadequacao = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlt);
 
             $this->view->stResult = $db->fetchAll($sqlStatusReadequacao);
@@ -698,14 +698,14 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 
     private function streadequacaoprodutosAction($idPedidoAlteracao , $opcao , $IdPronac , $action){
                 //retorna o id do agente logado
-                $auth = Zend_Auth::getInstance(); // pega a autenticação
+                $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
                 $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
                 $idAgente = $agente['idAgente'];
 
                 $db = Zend_Registry :: get('db');
                 $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-                //SQL PARA TRAZER OD DADOS DO REGISTRO EM QUESTÃO
+                //SQL PARA TRAZER OD DADOS DO REGISTRO EM QUESTï¿½O
                 $registro = ReadequacaoProjetos::alteraStatusReadequacao($idPedidoAlteracao);
                 $reg = $db->fetchAll($registro);
                 $idPedido = $reg[0]->idAvaliacaoItemPedidoAlteracao;
@@ -731,17 +731,17 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
                 }
 
                 if ($sqlstReadequacao != ""){
-                    parent::message("Situação alterada com sucesso!", "verificaralteracaotecnico/".$action."?idpedidoalteracao=$IdPronac" ,"CONFIRM");
+                    parent::message("Situaï¿½ï¿½o alterada com sucesso!", "verificaralteracaotecnico/".$action."?idpedidoalteracao=$IdPronac" ,"CONFIRM");
                 }
                 else{
-                    parent::message("Erro ao alterar o status da solicitação", "verificaralteracaotecnico/".$action."?idpedidoalteracao=$IdPronac" ,"ERROR");
+                    parent::message("Erro ao alterar o status da solicitaï¿½ï¿½o", "verificaralteracaotecnico/".$action."?idpedidoalteracao=$IdPronac" ,"ERROR");
                 }
         }
 
 
         public function finalizapropAction(){
          //retorna o id do agente logado
-         $auth = Zend_Auth::getInstance(); // pega a autenticação
+         $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
          $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
          $idAgenteRemetente = $agente['idAgente'];
          $idPerfilRemetente = $this->codGrupo;
@@ -802,11 +802,11 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
      }
 
       /**************************************************************************************************************************
-        * Função para diligenciar  - EDITAR (perfil técnico)
+        * Funï¿½ï¿½o para diligenciar  - EDITAR (perfil tï¿½cnico)
         * ************************************************************************************************************************/
         public function PropostaDiligenciar(){
 
-            $auth = Zend_Auth::getInstance(); // pega a autenticação
+            $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
             $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
             $AgenteLogin = $agente['idAgente'];
 //Zend_Debug::dump($AgenteLogin);exit;
@@ -831,13 +831,13 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 
 
 	/**
-	 * Método para avaliação dos locais de realização
+	 * Mï¿½todo para avaliaï¿½ï¿½o dos locais de realizaï¿½ï¿½o
 	 * @param void
 	 * @return void
 	 */
 	public function avaliarlocalrealizacaoAction()
 	{
-		// recebe os dados do formulário
+		// recebe os dados do formulï¿½rio
 		$post                           = Zend_Registry::get('post');
 		$idPronac                       = $post->idPronac;
 		$idAbrangencia                  = $post->idAbrangencia;
@@ -851,12 +851,12 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 			// valida os campos
 			if (empty($idPronac) || empty($idAbrangencia) || empty($idAvaliacaoItemPedidoAlteracao) || empty($avaliacao) || empty($dsAvaliacao))
 			{
-				throw new Exception("As informações abaixo são obrigatórias:
+				throw new Exception("As informaï¿½ï¿½es abaixo sï¿½o obrigatï¿½rias:
 					<br />- Pronac
-					<br />- Abrangência
-					<br />- Código da Avaliacao do Item de Pedido de Alteracao
-					<br />- A avaliação (Deferido / Indeferido)
-					<br />- A justificativa da avaliação");
+					<br />- Abrangï¿½ncia
+					<br />- Cï¿½digo da Avaliacao do Item de Pedido de Alteracao
+					<br />- A avaliaï¿½ï¿½o (Deferido / Indeferido)
+					<br />- A justificativa da avaliaï¿½ï¿½o");
 			}
 			// envia pro banco
 			else
@@ -868,10 +868,10 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 					,'stAvaliacaoSubItemPedidoAlteracao' => $avaliacao
 					,'dsAvaliacaoSubItemPedidoAlteracao' => $dsAvaliacao);
 
-				// cadastra a avaliação
+				// cadastra a avaliaï¿½ï¿½o
 				$dao = AbrangenciaDAO::avaliarLocalRealizacao($dados);
 
-                                // pega o último idAvaliacaoSubItemPedidoAlteracao inserido
+                                // pega o ï¿½ltimo idAvaliacaoSubItemPedidoAlteracao inserido
                                 $ultimoId = AvaliacaoSubItemPedidoAlteracaoDAO::buscarUltimo();
                                 $ultimoId = $ultimoId[0]->id;
 
@@ -885,11 +885,11 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 				// caso seja cadastrado
 				if ($dao && $dados_abrangencia)
 				{
-					parent::message("Avaliação efetuada com sucesso!", "verificaralteracaotecnico/solaltlocrel?idpedidoalteracao=" . $idPronac, "CONFIRM");
+					parent::message("Avaliaï¿½ï¿½o efetuada com sucesso!", "verificaralteracaotecnico/solaltlocrel?idpedidoalteracao=" . $idPronac, "CONFIRM");
 				}
 				else
 				{
-					throw new Exception("Erro ao tentar efetuar avaliação!");
+					throw new Exception("Erro ao tentar efetuar avaliaï¿½ï¿½o!");
 				}
 			} // fecha else
 		} // fecha try
@@ -898,12 +898,12 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 			parent::message($e->getMessage(), "verificaralteracaotecnico/solaltlocrel?idpedidoalteracao=" . $idPronac, "ERROR");
 		}
 
-	} // fecha método avaliarlocalrealizacaoAction()
+	} // fecha mï¿½todo avaliarlocalrealizacaoAction()
 	
 	
 	public function planilhasolicitadaAction() {
 		if (isset($_GET['v']) && $_GET['v'] == 'fim') :
-			exit();
+			$this->_helper->viewRenderer->setNoRender(TRUE);
 		endif;
 		
         $idPronac = isset($_POST['idpronac']) ? $_POST['idpronac'] : '';
@@ -950,7 +950,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
                 //retorna o id do agente logado
                  $agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
                  $idAgenteRemetente = $agente['idAgente'];
-                 $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+                 $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
                  $idPerfilRemetente = $GrupoAtivo->codGrupo;
 
                 $dadosinserir = array(
@@ -978,10 +978,10 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
                     $alterarStatus = $buscaInformacoes->atualizarStatus($dados, $where);
                 }
                 echo json_encode(array('Ok' => true));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             } catch (Exception $e) {
                 echo json_encode(array('error' => false, 'Descricao' => $e->getMessage()));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE);
             }
         }
         
@@ -1061,11 +1061,11 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 
         if ( $stAvaliacaoSubItemPedidoAlteracao == "AG" )
         {
-            $this->view->statusAnalise = "Aguardando Análise";
+            $this->view->statusAnalise = "Aguardando Anï¿½lise";
         }
         if ( $stAvaliacaoSubItemPedidoAlteracao == "EA" )
         {
-            $this->view->statusAnalise = "Em Análise";
+            $this->view->statusAnalise = "Em Anï¿½lise";
         }
         if ( $stAvaliacaoSubItemPedidoAlteracao == "AP" )
         {

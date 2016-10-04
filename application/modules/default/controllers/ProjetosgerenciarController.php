@@ -97,7 +97,7 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
                 $a++;
             }
             echo json_encode($componentes);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
         $buscarArea = $ar->buscar();
         $componentes = array();
@@ -251,8 +251,8 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
         $idpronac = $this->_request->getParam("idpronac");
 
         if($this->bln_readequacao == "true") {
-            echo "<br><br><br><center><font color='red'><b>Este Projeto encontra-se em Análise de Readequação.</b></font><center>";
-            die();
+            echo "<br><br><br><center><font color='red'><b>Este Projeto encontra-se em Anï¿½lise de Readequaï¿½ï¿½o.</b></font><center>";
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         $arrBusca = array();
@@ -436,7 +436,7 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
             try {
                 //ALTERA SITUACAO DO PROJETO
                 $tblProjeto = new Projetos();
-                $ProvidenciaTomada = 'Projeto devolvido para análise técnica por solicitação do Componente.';
+                $ProvidenciaTomada = 'Projeto devolvido para anï¿½lise tï¿½cnica por solicitaï¿½ï¿½o do Componente.';
                 $tblProjeto->alterarSituacao($idpronac, '', 'B11', $ProvidenciaTomada);
 
             }
@@ -479,10 +479,10 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
 
             if ($tbRetirarDePauta->alterar($dados, $where)) {
 
-                // início devolver pra vinculada
+                // inï¿½cio devolver pra vinculada
                 if ($tpAcao == 3) {
                     if ($this->bln_readequacao == "true") {
-                        throw new Exception("Este Projeto encontra-se em Análise de Readequação!");
+                        throw new Exception("Este Projeto encontra-se em Anï¿½lise de Readequaï¿½ï¿½o!");
                     }
                     $arrBusca = array();
                     $arrBusca['p.IdPRONAC = ?']    = $idPronac;
@@ -632,7 +632,7 @@ class ProjetosGerenciarController extends MinC_Controller_Action_Abstract {
                             try {
                                 //ALTERA SITUACAO DO PROJETO
                                 $tblProjeto = new Projetos();
-                                $ProvidenciaTomada = 'Projeto devolvido para análise técnica por solicitação do Componente.';
+                                $ProvidenciaTomada = 'Projeto devolvido para anï¿½lise tï¿½cnica por solicitaï¿½ï¿½o do Componente.';
                                 $tblProjeto->alterarSituacao($idPronac, '', 'B11', $ProvidenciaTomada);
                             }
                             catch (Zend_Exception $ex) {

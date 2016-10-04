@@ -303,7 +303,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
             $this->_helper->flashMessenger->addMessage("N&atilde;o foi poss&iacute;vel abrir o arquivo especificado. Tente anex&aacute;-lo novamente.");
             $this->_helper->flashMessengerType->addMessage("ERROR");
             JS::redirecionarURL($url);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -342,7 +342,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
             $this->_helper->flashMessenger->addMessage("N&atilde;o foi poss&iacute;vel abrir o arquivo especificado. Tente anex&aacute;-lo novamente.");
             $this->_helper->flashMessengerType->addMessage("ERROR");
             JS::redirecionarURL($url);
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -614,7 +614,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
             }
             //xd($rsOrgaos);
             $msg = "Deseja Transformar a proposta Nr. {$this->idPreProjeto}, em Projeto? <br>A mesma ser&aacute; enviada para a Unidade: {$rsOrgaos->Sigla}, para An&aacute;lise T&eacute;cnica.<br> Confirma a opera&ccedil;&atilde;o?";
-            die($msg);
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         //Buscando produto principal
@@ -724,7 +724,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 
             parent::message("Mensagem enviada com sucesso!", "/admissibilidade/gerenciamentodepropostas", "CONFIRM");
             return true;
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }else{
 
             parent::message("Despacho encaminhado com sucesso!", "/admissibilidade/listar-propostas", "CONFIRM");
@@ -753,7 +753,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 
             parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/admissibilidade/listar-propostas", "CONFIRM");
             return;
-            die();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }catch (Exception $e){
             parent::message("Erro ao realizar opera&ccedil;&atilde;o!", "/admissibilidade/listar-propostas", "ERROR");
         }
@@ -994,7 +994,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
             $rsOrgaoSecretaria = $tblProposta->orgaoSecretaria($rsProposta->idTecnico);
         }else{
             echo "<font color='black' size='2'><b>Nenhum registro encontrado</b></font>";
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
         //xd($rsOrgaoSecretaria);
 
@@ -1017,11 +1017,11 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 
             //parent::message("Localiza&ccedil;&atilde;o alterada com sucesso", "/admissibilidade/alterarunianalisepropostaconsulta", "CONFIRM");
             echo "<font color='green' size='2'><b>Localiza&ccedil;&atilde;o alterada com sucesso</b></font>";
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }catch(Exception $e){
             //parent::message("Falha ao realizar opera&ccedil;&atilde;o", "/admissibilidade/alterarunianalisepropostaconsulta", "CONFIRM");
             echo "<font color='red' size='2'><b>Falha ao realizar opera&ccedil;&atilde;o</b></font>";
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
@@ -2319,7 +2319,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function desarquivamentoPropostaAction(){

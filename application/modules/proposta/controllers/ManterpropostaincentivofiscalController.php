@@ -1331,7 +1331,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 					    <td class='red' align='center'>Vocï¿½ deve preencher pelo menos um campo!</td>
 					</tr>
 				</table>";
-            exit();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         } elseif (!empty($cnpjcpf)) {
             $where['SGA.Cpf = ?'] = $cnpjcpf;
         } elseif (!empty($nome)) {
