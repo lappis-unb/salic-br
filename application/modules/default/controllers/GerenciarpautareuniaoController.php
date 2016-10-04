@@ -289,7 +289,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             $buscarvotacao = $votacao->buscar(array('idNrReuniao = ?' => $reuniaoaberta, 'dtVoto is null' => ''));
             if ($buscarvotacao->count() > 0) {
                 $buscarvotacao = $buscarvotacao->current()->toArray();
-                if($buscarvotacao['tpVotacao'] == 3){ //Se for readequação
+                if($buscarvotacao['tpVotacao'] == 3){ //Se for readequaï¿½ï¿½o
                     $this->view->pronacvotacaoatual = $buscarvotacao['IdPRONAC'].'_'.$buscarvotacao['tpTipoReadequacao'];
                 } else {
                     $this->view->pronacvotacaoatual = $buscarvotacao['IdPRONAC'];
@@ -306,7 +306,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             //NAO ANALISADOS
             $arrReuniao = array();
             $arrReuniao['idNrReuniao IS NULL ']= "?";
-            $qtdprojetonaoanalisados = $tblDistribuicao->buscarProjetoEmPauta(array(), null, null, null, false, "Não analisado", $arrReuniao)->count();
+            $qtdprojetonaoanalisados = $tblDistribuicao->buscarProjetoEmPauta(array(), null, null, null, false, "Nï¿½o analisado", $arrReuniao)->count();
 
             $this->view->qtdprojetoanalisados = $qtdprojetoanalisados;
             $this->view->qtdenviadoplenaria = $contplenario;
@@ -386,7 +386,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $arrRetorno['error'] = false;
                 $arrRetorno['msg']   = 'Projeto devolvido com sucesso!';
                 echo json_encode($arrRetorno);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
 
             }
             catch(Exception $e){
@@ -394,7 +394,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $arrRetorno['error'] = true;
                 $arrRetorno['msg']   = $e->getMessage();
                 echo json_encode($arrRetorno);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
         //DEVOLVEDO PROJETO PARA O COMPONENTE - RECURSO
@@ -411,13 +411,13 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $arrRetorno['error'] = false;
                 $arrRetorno['msg']   = 'Projeto devolvido com sucesso!';
                 echo json_encode($arrRetorno);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
             catch(Exception $e){
                 $arrRetorno['error'] = true;
                 $arrRetorno['msg']   = $e->getMessage();
                 echo json_encode($arrRetorno);
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
         foreach ($buscarProjetoPauta as $buscaplenario) {
@@ -453,7 +453,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         //NAO ANALISADOS
         $arrReuniao = array();
         $arrReuniao['idNrReuniao IS NULL ']= "?";
-        $qtdprojetonaoanalisados = $tblDistribuicao->buscarProjetoEmPauta(array(), null, null, null, false, "Não analisado", $arrReuniao)->count();
+        $qtdprojetonaoanalisados = $tblDistribuicao->buscarProjetoEmPauta(array(), null, null, null, false, "Nï¿½o analisado", $arrReuniao)->count();
 
 
         $qtdplenario = count($plenario['plenario']);
@@ -540,7 +540,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             $arrReuniao['idNrReuniao IS NOT NULL ']= "?";
         }
         $ordem = array('1','21'); //ORDENACAO: analise , area cultural
-        $rsProjNaoAnalisados = $tblDistribuicao->buscarProjetoEmPauta($arrBusca, $ordem, null, null, false, "Não analisado", $arrReuniao);
+        $rsProjNaoAnalisados = $tblDistribuicao->buscarProjetoEmPauta($arrBusca, $ordem, null, null, false, "Nï¿½o analisado", $arrReuniao);
 
         //======== GRID 1 ==========/
         $arrGrid1 = array();
@@ -705,7 +705,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             }
             $jsonenviar = json_encode($dadosvalores);
             echo $jsonenviar;
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
         $consultaReuniao = ConsultaReuniaoDAO::listaReuniaoEncerrada();
         if (count($consultaReuniao) > 0) {
@@ -721,7 +721,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $url = "gerenciarpautareuniao/gerenciarpautareuniao";
             }
             parent::message("Pain&eacute;is de Reuni&tilde;o: Nenhuma Vota&ccedil;o Consolidada at&aacute; o momento!", $url, "ALERT");
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }*/
     }
 
@@ -756,7 +756,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 echo json_encode(array('error' => true, 'acao' => 'reload', 'status'=>'N'));
             }
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function votacaoAction() {
@@ -801,7 +801,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                             'idAgente' => $adicionarvotacao->idAgente,
                             'IdPRONAC' => $_POST['idpronac'],
                             'tpVotacao' => $tpVotacao, //1.Inical, 2.Recurso, 3.Readequacao
-                            'tpTipoReadequacao' => $idtipo //Se for readequação, esse campo retornará o valor do idTipoReadequacao
+                            'tpTipoReadequacao' => $idtipo //Se for readequaï¿½ï¿½o, esse campo retornarï¿½ o valor do idTipoReadequacao
                         );
                         $inserirvotacao = $votacao->inserir($dadosinserirvotacao);
                     }
@@ -817,7 +817,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                         'status' => "aberta",
                         'datahora' => date('Y-m-d H:i:s')
                     );
-                    if($tpVotacao == 3){ //Se for readequação
+                    if($tpVotacao == 3){ //Se for readequaï¿½ï¿½o
                         $dadosvotacao['idtiporeadequacao'] = $idtipo;
                     }
                     $fp = fopen($arquivo, "a+");
@@ -843,7 +843,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 echo json_encode(array('error' => true, 'descricao' => $e->getMessage()));
             }
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function verificaArquivosVotacaoAction() {
@@ -875,7 +875,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
 
             echo json_encode(array('error' => true, 'qtdeArquivos' => 0, 'arrPronacs' => $arrPronacs));
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public static function ComponentesDaComissao($idpronac) {
@@ -984,7 +984,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $jsonEnviar = json_encode($arrayenviar);
 
                 echo $jsonEnviar;
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             } else {
                 echo json_encode(array('error' => true));
             }
@@ -1077,7 +1077,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('error' => true, 'status' => 'naoiniciada'));
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function verificacronometroAction() {
@@ -1099,7 +1099,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('error' => true));
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function verificavotacaocoordenadorAction() {
@@ -1121,7 +1121,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         }
         else
             echo json_encode(array('error' => 'true'));
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function atualizarstatusreuniaoAction() {
@@ -1136,7 +1136,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         } catch (Zend_Db_Table_Exception $e) {
             echo json_encode(array('error' => true));
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function verificarvotacaobancoadministrativoAction() {
@@ -1146,14 +1146,14 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             $enviar = AtualizaReuniaoDAO::verificaReuniaoAdministrativo($recebidoGet->idNrReuniao);
             if (count($enviar) > 0) {
                 echo json_encode(array('idPRONAC' => $enviar[0]->idPRONAC));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             } else {
                 echo json_encode(array('idPRONAC' => false));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         } else {
             echo json_encode(array('idPRONAC' => false));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
     }
 
@@ -1177,10 +1177,10 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             }
             $jsonEncode = json_encode($votacao);
             echo $jsonEncode;
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         } else {
             echo json_encode(array('error' => true));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
     }
 
@@ -1329,6 +1329,9 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     public function parecerconsolidadorecursosAction() {
+
+        $mapperArea = new Agente_Model_AreaMapper();
+
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $idPronac = $_POST['idpronac'];
 
@@ -1344,7 +1347,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 if($dados->tpSolicitacao == 'PI' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
                     $d = array();
                     $d['situacao'] = 'B11';
-                    $d['ProvidenciaTomada'] = 'Recurso enviado para avaliação técnica.';
+                    $d['ProvidenciaTomada'] = 'Recurso enviado para avaliaï¿½ï¿½o tï¿½cnica.';
                     $d['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
                     $where = "IdPRONAC = $dados->IdPRONAC";
                     $Projetos = new Projetos();
@@ -1362,15 +1365,15 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                     $this->view->produtos = $dadosProdutos;
 
                     $spPlanilhaOrcamentaria = new spPlanilhaOrcamentaria();
-                    $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($dados->IdPRONAC, 4); // 4=Cortes Orçamentários Aprovados
-                    $this->view->planilha = $this->montarPlanilhaOrcamentaria($planilhaOrcamentaria, 4); // 4=Cortes Orçamentários Aprovados
+                    $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($dados->IdPRONAC, 4); // 4=Cortes Orï¿½amentï¿½rios Aprovados
+                    $this->view->planilha = $this->montarPlanilhaOrcamentaria($planilhaOrcamentaria, 4); // 4=Cortes Orï¿½amentï¿½rios Aprovados
                 }
             }
             if($dados->tpSolicitacao == 'EN' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR' || $dados->tpSolicitacao == 'PI'){
                 $Projetos = new Projetos();
                 $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
-                $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+                $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
                 $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
 
                 $parecer = new Parecer();
@@ -1390,7 +1393,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
     /*
      * Alterada em 13/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Função criada buscar os dados consolidados da readequação.
+     * Funï¿½ï¿½o criada buscar os dados consolidados da readequaï¿½ï¿½o.
     */
     public function parecerconsolidadoreadequacoesAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -2135,7 +2138,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             $projetosRecursos = $tbRecurso->buscarRecursosEnviadosPlenaria($idNrReuniao);
             $qntdPlenariaRecursos = $projetosRecursos->count();
 
-        //GRID - PROJETO SUBMETIDOS A PLENARIA - READEQUAÇÃO
+        //GRID - PROJETO SUBMETIDOS A PLENARIA - READEQUAï¿½ï¿½O
         }else if($grid == "readequacao"){
             $view = "listar-projetos-plenaria-readequacao.phtml";
             $projetosReadequacoes = $tbReadequacao->buscarReadequacoesEnviadosPlenaria($idNrReuniao);
@@ -2182,7 +2185,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                     $whereNaoAnalisados['par.TipoParecer = ?'] = 1; /**parecer de analise inicial**/
                 }
 
-                $rsProjetosNaoAnalisados = $tblDistribuicao->buscarProjetoEmPauta($whereNaoAnalisados, $ordenacaoNaoPauta->ordemNaoPauta, null, null, false, "Não analisado", $arrReuniao);
+                $rsProjetosNaoAnalisados = $tblDistribuicao->buscarProjetoEmPauta($whereNaoAnalisados, $ordenacaoNaoPauta->ordemNaoPauta, null, null, false, "Nï¿½o analisado", $arrReuniao);
 
             }else{ //SUBMETIDOS
                 $view = "listar-projetos-plenaria.phtml";
@@ -2250,7 +2253,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         $arrPronacs = array();
         if ($rsProjetosEmVotacao->count() > 0) {
             $rsProjetosEmVotacao = $rsProjetosEmVotacao->current()->toArray();
-            if($rsProjetosEmVotacao['tpVotacao'] == 3){ //Se for readequação
+            if($rsProjetosEmVotacao['tpVotacao'] == 3){ //Se for readequaï¿½ï¿½o
                 $idPronacEmVotacao = $rsProjetosEmVotacao['IdPRONAC'].'_'.$rsProjetosEmVotacao['tpTipoReadequacao'];
             } else {
                 $idPronacEmVotacao = $rsProjetosEmVotacao['IdPRONAC'];
@@ -2269,7 +2272,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
             $rsConsolidacao = $tbConsolidacao->buscar($arrBuscaConsolidacao)->current();
 
             if(empty($rsConsolidacao)){
-                if($rsUltimoProjetoVotado['tpVotacao'] == 3){ //Se for readequação
+                if($rsUltimoProjetoVotado['tpVotacao'] == 3){ //Se for readequaï¿½ï¿½o
                     $idPronacEmVotacao = $rsUltimoProjetoVotado['IdPRONAC'].'_'.$rsUltimoProjetoVotado['tpTipoReadequacao'];
                 } else {
                     $idPronacEmVotacao = $rsUltimoProjetoVotado['IdPRONAC'];
@@ -2310,7 +2313,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         /* ================== PAGINACAO ======================*/
         $where = array();
         $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-        $where['a.siRecurso = ?'] = 9; // 9=Não submetidos a plenária - Checklist Publicação
+        $where['a.siRecurso = ?'] = 9; // 9=Nï¿½o submetidos a plenï¿½ria - Checklist Publicaï¿½ï¿½o
 
         $tbRecurso = New tbRecurso();
         $recursos = $tbRecurso->recursosNaoSubmetidos($where, array());
@@ -2323,7 +2326,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
     /*
      * Alterada em 13/03/14
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
-     * Função criada acessar as readequações que não foram submetidas à plenária.
+     * Funï¿½ï¿½o criada acessar as readequaï¿½ï¿½es que nï¿½o foram submetidas ï¿½ plenï¿½ria.
     */
     public function readequacoesNaoSubmetidasAction(){
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
@@ -2332,7 +2335,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         /* ================== PAGINACAO ======================*/
         $where = array();
         $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-        $where['a.siEncaminhamento = ?'] = 9; // 9=Não submetidos a plenária - Checklist Publicação
+        $where['a.siEncaminhamento = ?'] = 9; // 9=Nï¿½o submetidos a plenï¿½ria - Checklist Publicaï¿½ï¿½o
 
         $tbReadequacao = New tbReadequacao();
         $readequacoes = $tbReadequacao->readequacoesNaoSubmetidas($where, array());

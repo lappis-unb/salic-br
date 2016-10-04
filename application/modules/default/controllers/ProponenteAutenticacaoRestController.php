@@ -32,7 +32,7 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
         } else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)){
             $result->msg = 'CNPJ inv&aacute;lido!';
         } else {
-            $Usuario = new Sgcacesso();
+            $Usuario = new Autenticacao_Model_Sgcacesso();
             $verificaStatus = $Usuario->buscar(array ( 'Cpf = ?' => $username));
 
             $verificaSituacao = 0;

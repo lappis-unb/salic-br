@@ -422,7 +422,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
                 header("Content-Type: application/vnd.ms-excel");
                 header("Content-Disposition: inline; filename=Relatorio_de_inconsistencias_de_conta_captacao.xls;");
-                echo $html; die();
+                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
 
             } else {
                 $this->view->qtdRegistros = $total;
@@ -1402,7 +1402,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
                 header("Content-Type: application/vnd.ms-excel");
                 header("Content-Disposition: inline; filename=Transferencia_de_recurso.xls;");
-                echo $html; die();
+                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
 
             } else {
                 $this->view->dados = $busca;
@@ -1544,7 +1544,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             } else {
                 echo json_encode(array('resposta'=>false));
             }
-            die();
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
 	}
 
 	/**
@@ -1821,7 +1821,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                     $arrRetorno['error'] = false;
                     $arrRetorno['msg']   = 'Rotina executada com sucesso!';
                     echo json_encode($arrRetorno);
-                    die;
+                    $this->_helper->viewRenderer->setNoRender(TRUE); 
                 }else {
                     parent::message('Rotina executada com sucesso!', 'movimentacaodeconta/listar-inconsistencias', 'CONFIRM');
                 }
@@ -1830,7 +1830,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                     $arrRetorno['error'] = true;
                     $arrRetorno['msg']   = $e->getMessage();
                     echo json_encode($arrRetorno);
-                    die;
+                    $this->_helper->viewRenderer->setNoRender(TRUE); 
                 }else {
                     parent::message( $e->getMessage() , 'movimentacaodeconta/listar-inconsistencias', 'ERROR');
                 }

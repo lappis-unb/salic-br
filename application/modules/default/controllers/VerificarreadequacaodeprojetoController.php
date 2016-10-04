@@ -106,7 +106,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 			else{
 				echo json_encode(array('resposta'=>false));
 			}
-			die;
+			$this->_helper->viewRenderer->setNoRender(TRUE); 
 		}
 
 		if(isset($_POST['verifica']) and $_POST['verifica'] == 'b')
@@ -134,7 +134,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 			else{
 				echo json_encode(array('resposta'=>false));
 			}
-			die;
+			$this->_helper->viewRenderer->setNoRender(TRUE); 
 		}
 
 		if(isset($_POST['verifica2']) and $_POST['verifica2'] == 'x')
@@ -150,7 +150,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 				else {
 					echo "";
 				}
-			die;
+			$this->_helper->viewRenderer->setNoRender(TRUE); 
 
 		}
 
@@ -2742,7 +2742,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
  		$agente = GerenciarPautaReuniaoDAO::consultaAgenteUsuario($auth->getIdentity()->usu_codigo);
 		$idAgenteEncaminhar = $agente['idAgente'];
 
-		//echo "<pre>"; print_r($_POST); die;
+		//echo "<pre>"; print_r($_POST); $this->_helper->viewRenderer->setNoRender(TRUE); 
  		$idAgenteReceber = $_POST['AgenteId'];
  		$Orgao = $_POST['passaValor'];
  		$AgentePerfil = $_POST['AgentePerfil'];
@@ -3065,7 +3065,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 				}
 			}
 
-		die;
+		$this->_helper->viewRenderer->setNoRender(TRUE); 
 
 
 	}
@@ -3084,7 +3084,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
         $idAgente        = $filter->filter($this->_request->getPost('idAgente'));
 
  		/*echo 'Agente = '.$idAgente.'<br /> Jus '.$justificativa;
- 		exit();*/
+ 		$this->_helper->viewRenderer->setNoRender(TRUE);*/
 
 
  		$dados = ProjetosGerenciarDAO::ativarComponente($idAgente, $justificativa);
@@ -3408,7 +3408,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                     // busca o idPlanoDistribuicao (vincula��o entre a tabela original e a solicitada)
                     $buscar = PlanoDistribuicaoDAO::buscar($_POST['arrayPlanos'][$i]);
                     $idPedidoAlteracao = $buscar[0]->idPedidoAlteracao;
-                    //Zend_Debug::dump($buscar);die;
+                    //Zend_Debug::dump($buscar);$this->_helper->viewRenderer->setNoRender(TRUE); 
 
                     foreach ($buscar as $b) :
 
@@ -3463,7 +3463,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
             // busca o idPlanoDistribuicao (vincula��o entre a tabela original e a solicitada)
             $buscar = PlanoDistribuicaoDAO::buscar($_POST['arrayPlanos'][0]);
             $idPedidoAlteracao = $buscar[0]->idPedidoAlteracao;
-            //Zend_Debug::dump($buscar);die;
+            //Zend_Debug::dump($buscar);$this->_helper->viewRenderer->setNoRender(TRUE); 
 
             try{
                 $db->beginTransaction();
@@ -3582,10 +3582,10 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                     $alterarStatus = $buscaInformacoes->atualizarStatus($dados, $where);
                 }
                 echo json_encode(array('error' => false));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             } catch (Exception $e) {
                 echo json_encode(array('error' => true, 'Descricao' => $e->getMessage()));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
 
@@ -3617,7 +3617,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
 
         $this->view->buscaproduto = $resultadoProduto;
 
-        //var_dump($resultadoProduto);die;
+        //var_dump($resultadoProduto);$this->_helper->viewRenderer->setNoRender(TRUE); 
 
         foreach ($resultadoProduto as $idProduto) {
             foreach ($resultadoEtapa as $idEtapa) {

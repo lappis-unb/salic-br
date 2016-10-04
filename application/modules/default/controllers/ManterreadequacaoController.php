@@ -312,7 +312,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function comboEncaminhamentoTecnicoAction(){
@@ -340,7 +340,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function comboEncaminhamentoPareceristaAction(){
@@ -368,7 +368,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        die;
+        $this->_helper->viewRenderer->setNoRender(TRUE); 
     }
 
     public function historicoAction(){

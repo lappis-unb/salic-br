@@ -705,7 +705,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                     $dadosBuscar['idDirigente'] = $buscarMandato[0]->idDirigente;
                     $dadosBuscar['idArquivo'] = $buscarMandato[0]->idArquivo;
 //                echo json_encode($dadosBuscar);
-//                exit();
+//                $this->_helper->viewRenderer->setNoRender(TRUE);
                 }
 
                 parent::message("Cadastro realizado com sucesso!", "alterarprojeto/visualizadirigente/id/" . $idAgente . "/idDirigente/" . $idDirigente . "/pronac/" . $pronac, "CONFIRM");
@@ -1049,6 +1049,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
     }
 
     public function areasegmentoAction() {
+        $mapperArea = new Agente_Model_AreaMapper();
+
         $get = Zend_Registry::get('get');
         $pronac = addslashes($get->pronac);
         $pronac = Seguranca::dencrypt($pronac);
@@ -1069,7 +1071,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             $this->view->parecer = $listaparecer[0];
             $this->view->pronac = Seguranca::encrypt($listaparecer[0]->pronac);
 
-            $this->view->comboareasculturais = Agente_Model_ManterAgentesDAO::buscarAreasCulturais();
+            $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
             $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($listaparecer[0]->Area);
 
             $documentoDao = new tbHistoricoAlteracaoProjeto();

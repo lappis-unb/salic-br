@@ -7,7 +7,7 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 
 class ConfiguracoesController extends MinC_Controller_Action_Abstract {
@@ -18,34 +18,34 @@ class ConfiguracoesController extends MinC_Controller_Action_Abstract {
     private $intTamPag = 10;
 
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
         
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $this->idUsuario = $auth->getIdentity()->usu_codigo; // usuário logado
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $this->idUsuario = $auth->getIdentity()->usu_codigo; // usuï¿½rio logado
         
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $this->idOrgao = $GrupoAtivo->codOrgao;
         $this->idPerfil = $GrupoAtivo->codGrupo;
         
-        // autenticação e permissões zend (AMBIENTE MINC)
+        // autenticaï¿½ï¿½o e permissï¿½es zend (AMBIENTE MINC)
         $PermissoesGrupo = array();
-        $PermissoesGrupo[] = 128; // Técnico de Portaria
+        $PermissoesGrupo[] = 128; // Tï¿½cnico de Portaria
         parent::perfil(1, $PermissoesGrupo);
 
         parent::init();
-    } // fecha método init()
+    } // fecha mï¿½todo init()
 
 
     public function secretariosAction() {
         
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE TEC. DE PORTARIA
+        //FUNï¿½ï¿½O ACESSADA SOMENTE PELOS PERFIS DE TEC. DE PORTARIA
         if($this->idPerfil != 128){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal", "ALERT");
         }
         
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -119,9 +119,9 @@ class ConfiguracoesController extends MinC_Controller_Action_Abstract {
     
     public function imprimirSecretariosAction() {
         
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE TEC. DE PORTARIA
+        //FUNï¿½ï¿½O ACESSADA SOMENTE PELOS PERFIS DE TEC. DE PORTARIA
         if($this->idPerfil != 128){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal", "ALERT");
         }
         
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -176,7 +176,7 @@ class ConfiguracoesController extends MinC_Controller_Action_Abstract {
         if(isset($get->xls) && $get->xls){
             $html = '';
             $html .= '<table style="border: 1px">';
-            $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="4">Lista de Secretários Cadastrados</td></tr>';
+            $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 16; font-weight: bold;" colspan="4">Lista de Secretï¿½rios Cadastrados</td></tr>';
             $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 10" colspan="4">Data do Arquivo: '. Data::mostraData() .'</td></tr>';
             $html .='<tr><td colspan="4"></td></tr>';
             
@@ -199,8 +199,8 @@ class ConfiguracoesController extends MinC_Controller_Action_Abstract {
             
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=Lista_Secretarios.xls;");
-            echo $html; die();
-            
+            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
+
         } else {
             $this->view->qtdRegistros = $total;
             $this->view->dados = $busca;
@@ -214,9 +214,9 @@ class ConfiguracoesController extends MinC_Controller_Action_Abstract {
     
     public function incluirSecretarioAction() {
         
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE TEC. DE PORTARIA
+        //FUNï¿½ï¿½O ACESSADA SOMENTE PELOS PERFIS DE TEC. DE PORTARIA
         if($this->idPerfil != 128){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal", "ALERT");
         }
         
         $tbManterPortaria = new tbManterPortaria();
@@ -241,9 +241,9 @@ class ConfiguracoesController extends MinC_Controller_Action_Abstract {
     
     public function editarSecretarioAction() {
         
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE TEC. DE PORTARIA
+        //FUNï¿½ï¿½O ACESSADA SOMENTE PELOS PERFIS DE TEC. DE PORTARIA
         if($this->idPerfil != 128){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal", "ALERT");
         }
         
         $tbManterPortaria = new tbManterPortaria();
@@ -255,9 +255,9 @@ class ConfiguracoesController extends MinC_Controller_Action_Abstract {
     
     public function salvarSecretarioAction() {
         
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE TEC. DE PORTARIA
+        //FUNï¿½ï¿½O ACESSADA SOMENTE PELOS PERFIS DE TEC. DE PORTARIA
         if($this->idPerfil != 128){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal", "ALERT");
         }
         
 //        $dt = explode('/', $_POST['dataPortaria']);
@@ -285,9 +285,9 @@ class ConfiguracoesController extends MinC_Controller_Action_Abstract {
     
     public function excluirSecretarioAction() {
         
-        //FUNÇÃO ACESSADA SOMENTE PELOS PERFIS DE TEC. DE PORTARIA
+        //FUNï¿½ï¿½O ACESSADA SOMENTE PELOS PERFIS DE TEC. DE PORTARIA
         if($this->idPerfil != 128){
-            parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
+            parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal", "ALERT");
         }
         
         $tbManterPortaria = new tbManterPortaria();
@@ -298,7 +298,7 @@ class ConfiguracoesController extends MinC_Controller_Action_Abstract {
         $tb = $tbManterPortaria->alterarDados($dados, $idManterPortaria);
             
         if($tb){
-            parent::message('Dados excluídos com sucesso!', "configuracoes/secretarios", "CONFIRM");
+            parent::message('Dados excluï¿½dos com sucesso!', "configuracoes/secretarios", "CONFIRM");
         } else {
             parent::message('Nenhum registro encontrado.', "configuracoes/secretarios", "ERROR");
         }

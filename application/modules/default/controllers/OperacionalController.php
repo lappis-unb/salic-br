@@ -2066,8 +2066,8 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		}
 		$grafico->setTituloItens($titulos);
 		@$grafico->gerar();
-		die();
-	}
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+    }
 
 
 	public function projetosAvaliadosCnicAction(){
@@ -2975,8 +2975,8 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 		}
 		$grafico->setTituloItens($titulos);
 		@$grafico->gerar();
-		die();
-	}
+        $this->_helper->viewRenderer->setNoRender(TRUE);
+    }
 
 	public function demonstrativoCaptacaoRecursoAction(){
 		$tblTbReuniao = new tbreuniao();

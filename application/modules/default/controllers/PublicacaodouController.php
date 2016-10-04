@@ -255,10 +255,10 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
             try {
                 PublicacaoDouDAO::alterardatapublicacao($dados, $portaria);
                 echo json_encode(array('error' => false, 'datagravada' => $datapublicacao));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             } catch (Exception $e) {
                 echo json_encode(array('error' => true));
-                die;
+                $this->_helper->viewRenderer->setNoRender(TRUE); 
             }
         }
 
@@ -296,7 +296,7 @@ class PublicacaoDouController extends MinC_Controller_Action_Abstract {
 
             $table.= '<table>';
             echo $table;
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE); 
         }
     }
 

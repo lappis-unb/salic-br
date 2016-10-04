@@ -184,11 +184,11 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                                   "a.ImpactoAmbiental"=>"CAST(a.ImpactoAmbiental AS TEXT) as ImpactoAmbiental",
                                   "a.EspecificacaoTecnica"=>"CAST(a.EspecificacaoTecnica AS TEXT) as EspecificacaoTecnica",
                                   "a.EstrategiadeExecucao"=>"CAST(a.EstrategiadeExecucao AS TEXT) as EstrategiadeExecucao",
-                                  "a.DtInicioDeExecucaoForm"=>"CONVERT(CHAR(10),DtInicioDeExecucao,103)",
-                                  "a.DtFinalDeExecucaoForm"=>"CONVERT(CHAR(10),DtFinalDeExecucao,103)",
-                                  "a.DtAtoTombamentoForm"=>"CONVERT(CHAR(10),DtAtoTombamento,103)",
-                                  "a.dtAceiteForm"=>"CONVERT(CHAR(10),dtAceite,103)",
-                                  "a.DtArquivamentoForm"=>"CONVERT(CHAR(10),DtArquivamento,103)"
+                                  "a.DtInicioDeExecucaoForm"=>$this->getExpressionToChar(DtInicioDeExecucao),
+//                                  "a.DtFinalDeExecucaoForm"=>"parent::getExpressionToChar(a.DtFinalDeExecucao)",
+//                                  "a.DtAtoTombamentoForm"=>"parent::getExpressionToChar(a.DtAtoTombamento)",
+//                                  "a.dtAceiteForm"=>"parent::getExpressionToChar(a.dtAceite)",
+//                                  "a.DtArquivamentoForm"=> "parent::getExpressionToChar(a.DtArquivamento)"
                               ),
                           $this->_schema);
 
@@ -207,7 +207,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         {
             $slct->where($coluna, $valor);
         }
-        $slct->where(new Zend_Db_Expr("NOT EXISTS(select 1 from SAC.dbo.Projetos pr where a.idPreProjeto = pr.idProjeto)"));
+        $slct->where(new Zend_Db_Expr("NOT EXISTS(select 1 from sac.dbo.Projetos pr where a.idPreProjeto = pr.idProjeto)"));
 
         $slct->order($order);
 
@@ -221,7 +221,6 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                 }
                 $slct->limit($tamanho, $tmpInicio);
         }
-
         return $this->fetchAll($slct);
     }
 

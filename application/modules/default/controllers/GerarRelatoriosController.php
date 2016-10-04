@@ -12,22 +12,22 @@
 
 class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
     /**
-     * @var integer (variável com o id do usuário logado)
+     * @var integer (variï¿½vel com o id do usuï¿½rio logado)
      * @access private
      */
     private $getIdUsuario = 0;
 
 
     public function init() {
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
 
 
-        // define as permissões
+        // define as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 90; // Protocolo - Documento
         $PermissoesGrupo[] = 91; // Protocolo - Recebimento
         $PermissoesGrupo[] = 92; // Tec. de Admissibilidade
-        $PermissoesGrupo[] = 93; // Coordenador - Geral de Análise (Ministro)
+        $PermissoesGrupo[] = 93; // Coordenador - Geral de Anï¿½lise (Ministro)
         $PermissoesGrupo[] = 94; // Parecerista
         $PermissoesGrupo[] = 96;  // Consulta Gerencial
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
@@ -40,20 +40,20 @@ class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 121; // Tec. de Acompanhamento
         $PermissoesGrupo[] = 122; // Coord. de Acompanhamento
         $PermissoesGrupo[] = 123; // Coord. Geral de Acompanhamento
-        $PermissoesGrupo[] = 124; // Tec. de Prestação de Contas
-        $PermissoesGrupo[] = 125; // Coord. de Prestação de Contas
-        $PermissoesGrupo[] = 126; // Coord. Geral de Prestação de Contas
-        $PermissoesGrupo[] = 127; // Coord. Geral de Análise
+        $PermissoesGrupo[] = 124; // Tec. de Prestaï¿½ï¿½o de Contas
+        $PermissoesGrupo[] = 125; // Coord. de Prestaï¿½ï¿½o de Contas
+        $PermissoesGrupo[] = 126; // Coord. Geral de Prestaï¿½ï¿½o de Contas
+        $PermissoesGrupo[] = 127; // Coord. Geral de Anï¿½lise
         $PermissoesGrupo[] = 128; // Tec. de Portaria
         $PermissoesGrupo[] = 131; // Coord. de Admissibilidade
-        $PermissoesGrupo[] = 132; // Chefe de Divisão
-        $PermissoesGrupo[] = 135; // Tec. De Fiscalização
-        $PermissoesGrupo[] = 138; // Coord. de Avaliação
-        $PermissoesGrupo[] = 139; // Tec. de Avaliação
+        $PermissoesGrupo[] = 132; // Chefe de Divisï¿½o
+        $PermissoesGrupo[] = 135; // Tec. De Fiscalizaï¿½ï¿½o
+        $PermissoesGrupo[] = 138; // Coord. de Avaliaï¿½ï¿½o
+        $PermissoesGrupo[] = 139; // Tec. de Avaliaï¿½ï¿½o
 
         parent::perfil(4, $PermissoesGrupo);
 
-        // pega o idAgente do usuário logado
+        // pega o idAgente do usuï¿½rio logado
         if (isset($auth->getIdentity()->usu_codigo)) {
             $this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
             if ($this->getIdUsuario) {
@@ -130,7 +130,7 @@ class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
         $idf = $v[0];
         $idc = $v[1];
 
-        // integração MODELO e VISÃO
+        // integraï¿½ï¿½o MODELO e VISï¿½O
         $this->view->comboeditais   = GerarRelatoriosDAO::consultaEditais($idf, $idc);
     }
 
@@ -152,13 +152,13 @@ class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout();
         header("Content-Type: text/html; charset=ISO-8859-1");
         /** Usuario Logado *********************************************** */
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $idusuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : 0;
         $idorgao   = isset($auth->getIdentity()->usu_orgao)  ? $auth->getIdentity()->usu_orgao  : 0;
         //xd($idorgao);
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessï¿½o
+        $codOrgao = $GrupoAtivo->codOrgao; //  ï¿½rgï¿½o ativo na sessï¿½o
 
         $this->view->codGrupo = $codGrupo;
         $this->view->codOrgao = $codOrgao;
@@ -174,7 +174,7 @@ class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
 
         /*Fixo:  $idOrgaos: 363 -- $idusuario: 2623*/
         $edital = new tbEditalXtbFaseEdital();
-        $dadosEdital = $edital->buscaEditalFormDocumentoLista($codOrgao); //Depois colocar dados dinâmicos
+        $dadosEdital = $edital->buscaEditalFormDocumentoLista($codOrgao); //Depois colocar dados dinï¿½micos
 
 
         $this->view->numeroEdital = $dadosEdital;
@@ -207,7 +207,7 @@ class GerarRelatoriosController extends MinC_Controller_Action_Abstract {
                 echo json_encode(array('resposta'=>false));
             }
 
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
 

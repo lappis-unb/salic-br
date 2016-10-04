@@ -14,37 +14,37 @@ class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstrac
     public function init()
     {
 
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // título da página
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = new UsuarioDAO(); // objeto usuário
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $this->view->title = "Salic - Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura"; // tï¿½tulo da pï¿½gina
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
+        $Usuario = new UsuarioDAO(); // objeto usuï¿½rio
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
 
-        if ($auth->hasIdentity()) // caso o usuário esteja autenticado
+        if ($auth->hasIdentity()) // caso o usuï¿½rio esteja autenticado
         {
-            // verifica as permissões
+            // verifica as permissï¿½es
             $PermissoesGrupo = array();
             $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
             $PermissoesGrupo[] = 94;  // Parecerista
-            $PermissoesGrupo[] = 103; // Coordenador de Análise
-            $PermissoesGrupo[] = 118; // Componente da Comissão
+            $PermissoesGrupo[] = 103; // Coordenador de Anï¿½lise
+            $PermissoesGrupo[] = 118; // Componente da Comissï¿½o
             $PermissoesGrupo[] = 119; // Presidente da Mesa
             $PermissoesGrupo[] = 120; // Coordenador Administrativo CNIC
-            //if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo está no array de permissões
+            //if (!in_array($GrupoAtivo->codGrupo, $PermissoesGrupo)) // verifica se o grupo ativo estï¿½ no array de permissï¿½es
             //{
-            //    parent::message("Você não tem permissão para acessar essa área do sistema!", "principal/index", "ALERT");
+            //    parent::message("Vocï¿½ nï¿½o tem permissï¿½o para acessar essa ï¿½rea do sistema!", "principal/index", "ALERT");
             //}
 
-            // pega as unidades autorizadas, orgãos e grupos do usuário (pega todos os grupos)
+            // pega as unidades autorizadas, orgï¿½os e grupos do usuï¿½rio (pega todos os grupos)
 //            $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
 //
-//            // manda os dados para a visão
-//            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuário para a visão
-//            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuário para a visão
-//            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuário para a visão
-//            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o órgão ativo do usuário para a visão
+//            // manda os dados para a visï¿½o
+//            $this->view->usuario = $auth->getIdentity(); // manda os dados do usuï¿½rio para a visï¿½o
+//            $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuï¿½rio para a visï¿½o
+//            $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuï¿½rio para a visï¿½o
+//            $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ï¿½rgï¿½o ativo do usuï¿½rio para a visï¿½o
 
         } // fecha if
-        else // caso o usuário não esteja autenticado
+        else // caso o usuï¿½rio nï¿½o esteja autenticado
         {
             return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
@@ -57,7 +57,7 @@ class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstrac
            if($var or $var == 1){
                return "Sim";
            }else{
-               return "Não";
+               return "Nï¿½o";
            }
        }
        function data($data){
@@ -142,19 +142,19 @@ class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstrac
 
         <p class="MsoNormal">'.$consultaDadosProjeto['ResumoDoProjeto'].'</p>
         <br /><br />
-        <h2>Abrangência geográfica da proposta cultural</h2>
+        <h2>Abrangï¿½ncia geogrï¿½fica da proposta cultural</h2>
     <br>
         <p>
             <table cellpadding="3" style="width:100%">
             <tr>
-                <th>País</th>
+                <th>Paï¿½s</th>
                 <th>UF</th>
                 <th>Cidade</th>
-                <th>Dt.Início de Execuçãoo</th>
-                <th>Dt.Final de Execução</th>
+                <th>Dt.Inï¿½cio de Execuï¿½ï¿½oo</th>
+                <th>Dt.Final de Execuï¿½ï¿½o</th>
             </tr>
                 ';
-                foreach ( GerarImprimirpdfDAO::AbrangenciaGeografica($id_projeto) as $Abrangencia )//busca locais onde o preprojeto sera realizado
+                foreach ( GerarImprimirpdfDAO::brangenciaGeografica($id_projeto) as $Abrangencia )//busca locais onde o preprojeto sera realizado
                 {
                     $texto .= '<tr bgcolor="#EEEEEE"><td">'.$Abrangencia->Pais.'</td>';
                     $texto .= '<td>'.$Abrangencia->UF.'</td>';
@@ -168,13 +168,13 @@ class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstrac
 
 if($mecanismo == 'Incentivo Fiscal'){
 ///DADOS APENAS PARA O INCENTIVO FISCAL
-        $texto .= '<h2>Informações Complementares</h2>
+        $texto .= '<h2>Informaï¿½ï¿½es Complementares</h2>
         <table style="width:100%" cellpadding="13" border="0">
             <tr>
                 <td>Mecanismo: '.$mecanismo.'</td>
                 <td><nobr>Data Fixa: '.verifica($consultaDadosProjeto['stDataFixa']).'</nobr></td>
                 <td>Plano Anual: '.verifica($consultaDadosProjeto['stPlanoAnual']).'</td>
-                <td>Ag.Bancária: '.$consultaDadosProjeto['AgenciaBancaria'].'</td>
+                <td>Ag.Bancï¿½ria: '.$consultaDadosProjeto['AgenciaBancaria'].'</td>
                 <td>Proposta Audiovisual: '.verifica($consultaDadosProjeto['AreaAbrangencia']).'</td>
             </tr>
         </table>
@@ -182,9 +182,9 @@ if($mecanismo == 'Incentivo Fiscal'){
         <table style="width:100%; margin-top:50px">
             <tr>
                 <td style="padding-right:10px">
-                    <h2>Período de Realização</h2>
+                    <h2>Perï¿½odo de Realizaï¿½ï¿½o</h2>
                     <p>
-                    Data Início: '.data($consultaDadosProjeto['DtInicioDeExecucao']).'<br />
+                    Data Inï¿½cio: '.data($consultaDadosProjeto['DtInicioDeExecucao']).'<br />
                     Data Final: '.data($consultaDadosProjeto['DtFinalDeExecucao']).'
                     </p>
                 </td>
@@ -196,7 +196,7 @@ if($mecanismo == 'Incentivo Fiscal'){
                                  Data do Ato: '.data($consultaDadosProjeto['DtAtoTombamento']).'
                                  Esfera do Ato: '.$consultaDadosProjeto['EsferaTombamento'];
                     }else{
-                      $texto .= 'Bem não tombado';
+                      $texto .= 'Bem nï¿½o tombado';
                     }
                 $texto .= '</p></td>
             </tr>
@@ -207,23 +207,23 @@ if($mecanismo == 'Incentivo Fiscal'){
         <p>'.tratatexto($consultaDadosProjeto['Justificativa']).'</p>
         <h2>Acessibilidade</h2>
         <p>'.tratatexto($consultaDadosProjeto['Acessibilidade']).'</p>
-        <h2>Democratização de Acesso</h2>
+        <h2>Democratizaï¿½ï¿½o de Acesso</h2>
         <p>'.tratatexto($consultaDadosProjeto['DemocratizacaoDeAcesso']).'</p>
         <h2>Fases do Projeto</h2>
         <p>'.tratatexto($consultaDadosProjeto['EtapaDeTrabalho']).'</p>
-        <h2>Ficha Técnica</h2>
+        <h2>Ficha Tï¿½cnica</h2>
         <p>'.tratatexto($consultaDadosProjeto['FichaTecnica']).'</p>
         <h2>Sinopse da obra</h2>
         <p>'.tratatexto($consultaDadosProjeto['Sinopse']).'</p>
         <h2>Impacto Ambiental</h2>
         <p>'.tratatexto($consultaDadosProjeto['ImpactoAmbiental']).'</p>
-        <h2>Especificações técnicas do produto</h2>
+        <h2>Especificaï¿½ï¿½es tï¿½cnicas do produto</h2>
         <p>'.tratatexto($consultaDadosProjeto['EspecificacaoTecnica']).'</p>
-        <h2>Plano básico de Divulgação</h2>
+        <h2>Plano bï¿½sico de Divulgaï¿½ï¿½o</h2>
         <p>
             <table cellpadding="3" style="width:100%">
                 ';
-                foreach (GerarImprimirpdfDAO::ConsultaDadosDivulgacao($id_projeto) as $DadosDivulgacao)//busca dados de divulgação do preprojeto
+                foreach (GerarImprimirpdfDAO::ConsultaDadosDivulgacao($id_projeto) as $DadosDivulgacao)//busca dados de divulgaï¿½ï¿½o do preprojeto
                 {
                     $texto .= '<tr bgcolor="#EEEEEE"><td width="80%">'.$DadosDivulgacao->Peca.'</td>';
                     $texto .= '<td>'.$DadosDivulgacao->Veiculo.'</td></tr>';
@@ -232,14 +232,14 @@ if($mecanismo == 'Incentivo Fiscal'){
             </table>
         </p>
         <br><br>
-      <h2>Plano de distribuição de produtos culturais</h2>
+      <h2>Plano de distribuiï¿½ï¿½o de produtos culturais</h2>
       <p>
         <table cellpadding="3" style="width:100%">
         <tr>
             <td style="font-size:8pt" valin="bottom"><b>Nome do Evento/Produto</b></td>
-            <td style="font-size:8pt"><b>Qtde.Divulgação</b></td>
+            <td style="font-size:8pt"><b>Qtde.Divulgaï¿½ï¿½o</b></td>
             <td style="font-size:8pt"><b>Qtde.Patrocinador</b></td>
-            <td style="font-size:8pt"><b>Distribuíção Gratuíta</b></td>
+            <td style="font-size:8pt"><b>Distribuï¿½ï¿½ï¿½o Gratuï¿½ta</b></td>
             <td style="font-size:8pt"><b>Total Venda</b></td>
             <td style="font-size:8pt"><b>Total Venda Promocional</b></td>
             <td style="font-size:8pt"><b>Qtde Total</b></td>
@@ -260,7 +260,7 @@ if($mecanismo == 'Incentivo Fiscal'){
                     $ReceitaNormalTotal             = 0;
                     $ReceitaProTotal                = 0;
 
-                foreach ( GerarImprimirpdfDAO::DistribuicaodeProduto($id_projeto) as $DadosDistribuicao )//busca dados de distribuição do preprojeto
+                foreach ( GerarImprimirpdfDAO::DistribuicaodeProduto($id_projeto) as $DadosDistribuicao )//busca dados de distribuiï¿½ï¿½o do preprojeto
                 {
                     $QtdeOutrosTotal                = $QtdeOutrosTotal + $DadosDistribuicao->QtdeOutros;
                     $QtdeVendaNormalTotal           = $QtdeVendaNormalTotal + $DadosDistribuicao->QtdeVendaNormal;
@@ -303,14 +303,14 @@ if($mecanismo == 'Incentivo Fiscal'){
       </p>';
 
 
-        $texto .='<h2>Planilha Orçamentária</h2>';
+        $texto .='<h2>Planilha Orï¿½amentï¿½ria</h2>';
         $etapa = -1;
         $Produto = -1;
         $TotalProduto = 0;
         $TotalEtapa = 0;
         $TotalOrcamento = 0;
 
-        foreach (GerarImprimirpdfDAO::Orcamento($id_projeto) as $Orcamento)//busca dados de orçamento do preprojeto
+        foreach (GerarImprimirpdfDAO::Orcamento($id_projeto) as $Orcamento)//busca dados de orï¿½amento do preprojeto
         {
 
             if (($Produto != $Orcamento->idProduto or $etapa != $Orcamento->idEtapa) and $Produto != -1){
@@ -355,7 +355,7 @@ if($mecanismo == 'Incentivo Fiscal'){
                     <td bgcolor="#EEEEEE" align="center"><b>Dias</b></td>
                     <td bgcolor="#EEEEEE" align="center"><b>Fonte de Recurso</b></td>
                     <td bgcolor="#EEEEEE" align="center"><b>UF</b></td>
-                    <td bgcolor="#EEEEEE" align="center"><b>Município</b></td>
+                    <td bgcolor="#EEEEEE" align="center"><b>Municï¿½pio</b></td>
                     <td bgcolor="#EEEEEE" align="center"><b>Justificativa</b></td>
                 </tr>';
                 };
@@ -393,18 +393,18 @@ if($mecanismo == 'Incentivo Fiscal'){
                                 <th colspan="9" align="left" style="font-size:11pt;">Total Etapa: '.number_format($TotalEtapa + $TotalProduto,2,',','.').'</th>
                            </tr>
                            <tr>
-                                <th colspan="9" align="left" bgcolor="#EEEEEE" style="font-size:11pt; padding-top:10px;">Orçamento Total: '.number_format($TotalOrcamento,2,',','.').'</th>
+                                <th colspan="9" align="left" bgcolor="#EEEEEE" style="font-size:11pt; padding-top:10px;">Orï¿½amento Total: '.number_format($TotalOrcamento,2,',','.').'</th>
                            </tr>
                         </table>';
 
 
    //FIM DOS DADOS POR ENCENTIVO FISCAL
-   }//Fim do IF para, este if exibe o conteudo apenas quando a proposta é por encentivo fiscal
+   }//Fim do IF para, este if exibe o conteudo apenas quando a proposta ï¿½ por encentivo fiscal
         $texto .= '</div>
         </body>
         </html>';
         $pdf = new PDF($texto, 'pdf');
         $pdf->gerarRelatorio();
-        exit;
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 }

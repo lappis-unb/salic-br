@@ -107,14 +107,14 @@ class GerarImprimirpdfDAO
         public static function AbrangenciaGeografica($id_projeto)
     {
         $sql = "SELECT CASE a.idPais
-                WHEN 0 THEN 'N�o � poss�vel informar o local de realiza��o do projeto'
+                WHEN 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'
                 ELSE p.Descricao
                 END as Pais,u.Descricao as UF,m.Descricao as Cidade,x.DtInicioDeExecucao,x.DtFinalDeExecucao
-                FROM  SAC.dbo.Abrangencia a
-                INNER JOIN SAC.dbo.PreProjeto x on (a.idProjeto = x.idPreProjeto)
-                LEFT JOIN Agentes.dbo.Pais p on (a.idPais=p.idPais)
-                LEFT JOIN Agentes.dbo.Uf u on (a.idUF=u.idUF)
-                LEFT JOIN Agentes.dbo.Municipios m on (a.idMunicipioIBGE=m.idMunicipioIBGE)
+                FROM  SAC.Abrangencia a
+                INNER JOIN SAC.PreProjeto x on (a.idProjeto = x.idPreProjeto)
+                LEFT JOIN Agentes.Pais p on (a.idPais=p.idPais)
+                LEFT JOIN Agentes.Uf u on (a.idUF=u.idUF)
+                LEFT JOIN Agentes.Municipios m on (a.idMunicipioIBGE=m.idMunicipioIBGE)
                 WHERE idProjeto=".$id_projeto." AND a.stAbrangencia = 1 
                 ORDER BY p.Descricao,u.Descricao,m.Descricao";
 

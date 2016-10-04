@@ -109,7 +109,7 @@ class CaptacaoController extends MinC_Controller_Action_Abstract
             $jsonEncode = json_encode($dadosInteressado);
             //echo $jsonEncode;
             echo json_encode(array('resposta' => "true", 'conteudo' => $dadosInteressado));
-            die;
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
             echo json_encode(array('resposta' => false));
         }

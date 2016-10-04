@@ -2,16 +2,16 @@
 <?php
 $enviar = $this->botao;
 
-if ($menu=="Botão") {
+if ($menu=="Botï¿½o") {
 	$readonly = 'readonly="readonly"';
 } else {
 	$readonly = '';
 }
 ?>
-<!-- início: navegação local #qm0 -->
-<div id="Teste" class="sumir" title="Alterar Produto"><p>Produto alterado com sucesso!</p><p>Solicitação de readequação realizada com sucesso! Deseja fazer nova readequação?</p></div>
-<div id="Excluir" class="sumir" title="Excluir"><p>Tem certeza que deseja excluir este Produto? As planilhas de custos serão deletadas!</p></div>
-<div id="Excluido" class="sumir" title="Excluir"><p>Produto excluído com sucesso!</p><p>Solicitação de readequação realizada com sucesso! Deseja fazer nova readequação?</p></div>
+<!-- inï¿½cio: navegaï¿½ï¿½o local #qm0 -->
+<div id="Teste" class="sumir" title="Alterar Produto"><p>Produto alterado com sucesso!</p><p>Solicitaï¿½ï¿½o de readequaï¿½ï¿½o realizada com sucesso! Deseja fazer nova readequaï¿½ï¿½o?</p></div>
+<div id="Excluir" class="sumir" title="Excluir"><p>Tem certeza que deseja excluir este Produto? As planilhas de custos serï¿½o deletadas!</p></div>
+<div id="Excluido" class="sumir" title="Excluir"><p>Produto excluï¿½do com sucesso!</p><p>Solicitaï¿½ï¿½o de readequaï¿½ï¿½o realizada com sucesso! Deseja fazer nova readequaï¿½ï¿½o?</p></div>
 <script type="text/javascript">
 
 function validarFormulario(form){
@@ -59,7 +59,7 @@ var verifica = true;
                 resizable: false,
                 closeOnEscape: false,
                 buttons: {
-                    'Não': function()
+                    'Nï¿½o': function()
                     {
                         $('#form').attr('action','<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto','action' => 'alterar2')); ?>');
                         $('#form').submit();
@@ -91,7 +91,7 @@ function EnviarProposta()
             resizable: false,
             closeOnEscape: false,
             buttons: {
-                'Não': function()
+                'Nï¿½o': function()
                 {
                     $(this).dialog('close');
                 },
@@ -105,7 +105,7 @@ function EnviarProposta()
 			            resizable: false,
 			            closeOnEscape: false,
 			            buttons: {
-			                'Não': function()
+			                'Nï¿½o': function()
 			                {
 			                    $(this).dialog('close');
 			                    $('#Curso').attr('action', '<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'excluir2')); ?>');
@@ -138,7 +138,7 @@ function Proposta()
             resizable: false,
             closeOnEscape: false,
             buttons: {
-                'Não': function()
+                'Nï¿½o': function()
                 {
                     $(this).dialog('close');
                     $('#Curso').attr('action','<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto','action' => 'excluir2')); ?>');
@@ -165,40 +165,40 @@ function Proposta()
 
 
 	/**
-	 * Função responsável por fazer a soma dos ingressos e calcular o total
+	 * Funï¿½ï¿½o responsï¿½vel por fazer a soma dos ingressos e calcular o total
 	 */
 	function somaIngressos()
 	{
-		/* ========== INÍCIO SOMA DE INGRESSOS ========== */
+		/* ========== INï¿½CIO SOMA DE INGRESSOS ========== */
 		campo1 = document.getElementById('Patrocinador').value;
-		campo1 = campo1.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+		campo1 = campo1.replace(/\D/g, ""); // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
 		campo1 = campo1.replace(/(\d{0})(\d)/, "$1$2");
 		campo1 = parseInt(campo1); // converte para int
 
 		campo2 = document.getElementById('Divulgacao').value;
-		campo2 = campo2.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+		campo2 = campo2.replace(/\D/g, ""); // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
 		campo2 = campo2.replace(/(\d{0})(\d)/, "$1$2");
 		campo2 = parseInt(campo2); // converte para int
 
 		campo3 = document.getElementById('Beneficiario').value;
-		campo3 = campo3.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+		campo3 = campo3.replace(/\D/g, ""); // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
 		campo3 = campo3.replace(/(\d{0})(\d)/, "$1$2");
 		campo3 = parseInt(campo3); // converte para int
 
 		campo4 = document.getElementById('Normal').value;
-		campo4 = campo4.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+		campo4 = campo4.replace(/\D/g, ""); // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
 		campo4 = campo4.replace(/(\d{0})(\d)/, "$1$2");
 		campo4 = parseInt(campo4); // converte para int
 
 		campo5 = document.getElementById('Promocional').value;
-		campo5 = campo5.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+		campo5 = campo5.replace(/\D/g, ""); // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
 		campo5 = campo5.replace(/(\d{0})(\d)/, "$1$2");
 		campo5 = parseInt(campo5); // converte para int
 
 		// total de ingressos
 		total = campo1 + campo2 + campo3 + campo4 + campo5;
 
-		if (isNaN(total)) // se não for número
+		if (isNaN(total)) // se nï¿½o for nï¿½mero
 		{
 			total = '';
 		}
@@ -224,26 +224,26 @@ function Proposta()
 		/* ========== FIM SOMA DE INGRESSOS ========== */
 
 
-		/* ========== INÍCIO CALCULO DE INGRESSOS ========== */
+		/* ========== INï¿½CIO CALCULO DE INGRESSOS ========== */
 		campo6 = document.getElementById('Normal_Uni').value;
-		campo6 = campo6.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+		campo6 = campo6.replace(/\D/g, ""); // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
 		campo6 = campo6.replace(/(\d{0})(\d)/, "$1$2");
 		campo6 = campo6.replace(/(\d)(\d{2})$/, "$1.$2"); // adiciona o ponto na casa decimal
-		campo6 = parseFloat(campo6).toFixed(2); // converte para float e adiciona precisão decimal
+		campo6 = parseFloat(campo6).toFixed(2); // converte para float e adiciona precisï¿½o decimal
 
 		campo7 = document.getElementById('Proporcional').value;
-		campo7 = campo7.replace(/\D/g, ""); // retira os pontos e as vírgulas, deixando somente números
+		campo7 = campo7.replace(/\D/g, ""); // retira os pontos e as vï¿½rgulas, deixando somente nï¿½meros
 		campo7 = campo7.replace(/(\d{0})(\d)/, "$1$2");
 		campo7 = campo7.replace(/(\d)(\d{2})$/, "$1.$2"); // adiciona o ponto na casa decimal
-		campo7 = parseFloat(campo7).toFixed(2); // converte para float e adiciona precisão decimal
+		campo7 = parseFloat(campo7).toFixed(2); // converte para float e adiciona precisï¿½o decimal
 
-		// variável com o resultado
+		// variï¿½vel com o resultado
 		total_normal      = parseFloat(campo6 * campo4).toFixed(2); // armazena o resultado
 		total_promocional = parseFloat(campo7 * campo5).toFixed(2); // armazena o resultado
 
 
 		// total de ingressos (normal + promocional)
-		if (isNaN(total_normal) || isNaN(total_promocional)) // se não for número
+		if (isNaN(total_normal) || isNaN(total_promocional)) // se nï¿½o for nï¿½mero
 		{
 			total_geral = '';
 		}
@@ -270,7 +270,7 @@ function Proposta()
 
 
 		// total de ingressos (normal)
-		if (isNaN(total_normal)) // se não for número
+		if (isNaN(total_normal)) // se nï¿½o for nï¿½mero
 		{
 			total_normal = '';
 		}
@@ -295,7 +295,7 @@ function Proposta()
 
 
 		// total de ingressos (promocional)
-		if (isNaN(total_promocional)) // se não for número
+		if (isNaN(total_promocional)) // se nï¿½o for nï¿½mero
 		{
 			total_promocional = '';
 		}
@@ -319,9 +319,9 @@ function Proposta()
 		document.getElementById('valor2').value = total_promocional;
 		/* ========== FIM CALCULO DE INGRESSOS ========== */
 
-    } // fecha função somaIngressos()
+    } // fecha funï¿½ï¿½o somaIngressos()
 </script>
-<!-- início: #breadcrumb -->
+<!-- inï¿½cio: #breadcrumb -->
 <div id="breadcrumb">
 	<ul>
 		<li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => 'index')); ?>" title="Ir para p&aacute;gina inicial">In&iacute;cio</a></li>
@@ -331,12 +331,12 @@ function Proposta()
 </div>
 <!-- final: #breadcrumb -->
 
-<!-- início: #titulo -->
-<div id="titulo"><div>Dados do projeto com Opções de Readequações <span class="voltar"><a  href="<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'index')); ?>?idpronac=<?php echo $_POST['idPronac'] ?>">Voltar</a></span></div>
+<!-- inï¿½cio: #titulo -->
+<div id="titulo"><div>Dados do projeto com Opï¿½ï¿½es de Readequaï¿½ï¿½es <span class="voltar"><a  href="<?php echo $this->url(array('controller' => 'solicitarreadequacaodoprojeto', 'action' => 'index')); ?>?idpronac=<?php echo $_POST['idPronac'] ?>">Voltar</a></span></div>
 </div>
 <!-- final: #titulo -->
 
-<!-- início: área principal #conteudo -->
+<!-- inï¿½cio: ï¿½rea principal #conteudo -->
 <div id="conteudo">
     <div id="miolo">
 
@@ -372,7 +372,7 @@ function areaCultural(idSegmento, dsSegmento)
         $idPronac=$this->escape($resultado[0]->IdPRONAC);
         ?>
         <div id="dialog-message" style="display:none;">
-            Campo obrigatório não informado!
+            Campo obrigatï¿½rio nï¿½o informado!
         </div>
         <table class="tabela">
             <thead>
@@ -419,7 +419,7 @@ function areaCultural(idSegmento, dsSegmento)
             <table width="100%" border="0" cellpadding="0" cellspacing="1" class="tabela">
                 <thead>
                     <tr>
-                        <th colspan="6">Plano de Distribuição</th>
+                        <th colspan="6">Plano de Distribuiï¿½ï¿½o</th>
                     </tr>
                     <tr>
                         <td colspan="6">&nbsp;</td>
@@ -443,22 +443,22 @@ function areaCultural(idSegmento, dsSegmento)
                             <?php
                                 $excluir = $idPronac=$this->escape($produtoacao[0]->stPrincipal);
                                 if(empty($excluir)){
-                                    echo "Não";
+                                    echo "Nï¿½o";
                                 } else {
                                     echo "Sim";
                                 }
                             ?>
                         </td>
                         <td>
-                            <label for="areaCultural">Área *</label><br />
-                            <select <?php echo $readonly; ?> class="input_simples" name="areaCultural" id="areaCultural" onchange="carregar_combo(this.value, 'segmentoCultural', '<?php echo $this->url(array('controller' => 'segmentocultural', 'action' => 'combo')); ?>', ' - Selecione uma Área Cultural - ');">
+                            <label for="areaCultural">ï¿½rea *</label><br />
+                            <select <?php echo $readonly; ?> class="input_simples" name="areaCultural" id="areaCultural" onchange="carregar_combo(this.value, 'segmentoCultural', '<?php echo $this->url(array('controller' => 'segmentocultural', 'action' => 'combo')); ?>', ' - Selecione uma ï¿½rea Cultural - ');">
                                 <?php if (!isset($this->buscarprodutoAcao[0]->cdArea) || empty($this->buscarprodutoAcao[0]->cdArea)) { ?>
                                     <option value="0"> - Selecione - </option>
                                 <?php } ?>
-                                <?php foreach ($this->comboareasculturais as $comboareacultural): ?>
-                                    <option value="<?php echo $comboareacultural->id; ?>" <?php if ($this->buscarprodutoAcao[0]->cdArea == $comboareacultural->id)
+                                <?php foreach ($this->comboareasculturais as $key => $value): ?>
+                                    <option value="<?php echo $key; ?>" <?php if ($this->buscarprodutoAcao[0]->cdArea == $key)
                                         echo "selected=\"selected\""; ?>>
-                                <?php echo $comboareacultural->descricao; ?>
+                                <?php echo $value; ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -467,7 +467,7 @@ function areaCultural(idSegmento, dsSegmento)
                             <label for="segmentoCultural">Segmento *</label><br />
                                 <select <?php echo $readonly; ?> class="input_simples" name="segmentoCultural" id="segmentoCultural">
                                     <?php if (!isset($this->buscarprodutoAcao[0]->cdArea) || empty($this->buscarprodutoAcao[0]->cdArea)) { ?>
-                                    <option value="0"> - Selecione uma Área Cultural - </option>
+                                    <option value="0"> - Selecione uma ï¿½rea Cultural - </option>
                                     <?php } else { ?>
                                         <?php if (!isset($this->buscarprodutoAcao[0]->cdSegmento) || empty($this->buscarprodutoAcao[0]->cdSegmento)) { ?>
                                         <option value=""> - Selecione - </option>
@@ -487,7 +487,7 @@ function areaCultural(idSegmento, dsSegmento)
                     </tr>
                     <tr class="linha">
                         <td colspan="6">
-                            <label for="Posicao">Posição *</label>
+                            <label for="Posicao">Posiï¿½ï¿½o *</label>
                             <select <?php echo $readonly; ?> name="Posicao" id="Posicao" class="input_simples">
                                 <?php $teste1=$this->buscaposicao; foreach ($teste1 as $value) { ?>
                                 <option value="<?php echo $this->escape($value->idVerificacao); ?>" <?php if ($this->escape($value->idVerificacao) == $idPosicacaoLogo) echo "selected=\"selected\""; ?>><?php echo $this->escape($value->Descricao); ?></option>;
@@ -496,7 +496,7 @@ function areaCultural(idSegmento, dsSegmento)
                         </td>
                     </tr>
                     <tr class="destacar bold">
-                        <td colspan="3" align="center">DISTRIBUIÇÃO GRATUITA (QTDE)</td>
+                        <td colspan="3" align="center">DISTRIBUIï¿½ï¿½O GRATUITA (QTDE)</td>
                         <td colspan="2" align="center">TOTAL PARA A VENDA (QTDE)</td>
                         <td align="center">QUANTIDADE</td>
                     </tr>
@@ -506,11 +506,11 @@ function areaCultural(idSegmento, dsSegmento)
                             <input <?php echo $readonly; ?> null="false" name="Patrocinador" id="Patrocinador" class="input_simples w100" type="text" onkeyup="mascara(this, format_num);" onblur="somaIngressos();" value="<?php echo $result = $this->escape($this->formatarMilhar($produtoacao[0]->qtPatrocinador)); ?>" maxlength="9" />
                         </td>
                         <td>
-                            <label for="Divulgacao">Divulgação *</label><br />
+                            <label for="Divulgacao">Divulgaï¿½ï¿½o *</label><br />
                             <input <?php echo $readonly; ?> null="false" name="Divulgacao" id="Divulgacao" class="input_simples w100" type="text" onkeyup="mascara(this, format_num);" onblur="somaIngressos();" value="<?php echo $result=$this->escape($this->formatarMilhar($produtoacao[0]->qtOutros));?>" maxlength="9" />
                         </td>
                         <td>
-                            <label for="Beneficiario">Beneficiários *</label><br />
+                            <label for="Beneficiario">Beneficiï¿½rios *</label><br />
                             <input <?php echo $readonly; ?> null="false" name="Beneficiario" id="Beneficiario" class="input_simples w100" type="text" onkeyup="mascara(this, format_num);" onblur="somaIngressos();" value="<?php echo $result=$this->escape($this->formatarMilhar($produtoacao[0]->qtProduzida));?>" maxlength="9" />
                         </td>
                         <td>
@@ -537,7 +537,7 @@ function areaCultural(idSegmento, dsSegmento)
                         </td>
                     </tr>
                     <tr class="destacar bold">
-                        <td align="center" colspan="2">PREÇO UNITÁRIO (R$)</td>
+                        <td align="center" colspan="2">PREï¿½O UNITï¿½RIO (R$)</td>
                         <td align="center" colspan="2">RECEITA PREVISTA (R$)</td>
                         <td align="center" colspan="2">TOTAL RECEITA PREVISTA (R$)</td>
                     </tr>
@@ -636,7 +636,7 @@ function areaCultural(idSegmento, dsSegmento)
             <table width="100%" border="0" cellpadding="0" cellspacing="1" class="tabela">
                 <thead>
                     <tr>
-                        <th colspan="6">Plano de Distribuição</th>
+                        <th colspan="6">Plano de Distribuiï¿½ï¿½o</th>
                     </tr>
                     <tr>
                         <td colspan="6">&nbsp;</td>
@@ -659,17 +659,17 @@ function areaCultural(idSegmento, dsSegmento)
                             <label for="tipo_produto">Produto Principal?</label><br />
                             <?php $excluir = $idPronac=$this->escape($produtoacao[0]->stPrincipal);
                                 if(empty($excluir)){
-                                    echo "Não";
+                                    echo "Nï¿½o";
                            	} else{
                                 echo "Sim";
                             } ?>
                         </td>
                         <td>
-                            <label for="areaCultural">Área *</label><br />
-                            <select <?php echo $readonly; ?> class="input_simples" name="areaCultural" id="areaCultural" onchange="carregar_combo(this.value, 'segmentoCultural', '../segmentocultural/combo', ' - Selecione uma Área Cultural - ');">
-                                <?php foreach ($this->comboareasculturais as $comboareacultural): ?>
-                                <option value="<?php echo $comboareacultural->id; ?>">
-                                    <?php echo $comboareacultural->descricao; ?>
+                            <label for="areaCultural">ï¿½rea *</label><br />
+                            <select <?php echo $readonly; ?> class="input_simples" name="areaCultural" id="areaCultural" onchange="carregar_combo(this.value, 'segmentoCultural', '../segmentocultural/combo', ' - Selecione uma ï¿½rea Cultural - ');">
+                                <?php foreach ($this->comboareasculturais as $key => $value): ?>
+                                <option value="<?php echo $key; ?>">
+                                    <?php echo $value; ?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
@@ -677,7 +677,7 @@ function areaCultural(idSegmento, dsSegmento)
                         <td colspan="2">
                             <label for="segmentoCultural">Segmento *</label><br />
                             <select <?php echo $readonly; ?> class="input_simples" name="segmentoCultural" id="segmentoCultural" >
-                                <option value="0"> - Selecione uma Área Cultural - </option>
+                                <option value="0"> - Selecione uma ï¿½rea Cultural - </option>
                             </select>
                             <script type="text/javascript">areaCultural(<?php echo $this->buscarprodutoAcao[0]->Segmento; ?>, '<?php echo $this->buscarprodutoAcao[0]->Descricao; ?>');</script>
                         </td>
@@ -687,7 +687,7 @@ function areaCultural(idSegmento, dsSegmento)
                     </tr>
                     <tr class="linha">
                         <td colspan="6">
-                            <label for="Posicao">Posição *</label>
+                            <label for="Posicao">Posiï¿½ï¿½o *</label>
                             <select <?php echo $readonly; ?> class="input_simples" name="Posicao" id="Posicao">
                                 <?php $teste1=$this->buscaposicao; foreach ($teste1 as $value) { ?>
                                 <option value="<?php echo $this->escape($value->idVerificacao); ?>" <?php if ($this->escape($value->idVerificacao) == $idPosicacaoLogo) echo "selected=\"selected\""; ?>><?php echo $this->escape($value->Descricao); ?></option>;
@@ -696,7 +696,7 @@ function areaCultural(idSegmento, dsSegmento)
                         </td>
                     </tr>
                     <tr class="destacar bold">
-                        <td colspan="3" align="center">DISTRIBUIÇÃO GRATUITA (QTDE)</td>
+                        <td colspan="3" align="center">DISTRIBUIï¿½ï¿½O GRATUITA (QTDE)</td>
                         <td colspan="2" align="center">TOTAL PARA A VENDA (QTDE)</td>
                         <td align="center">QUANTIDADE</td>
                     </tr>
@@ -706,11 +706,11 @@ function areaCultural(idSegmento, dsSegmento)
                             <input <?php echo $readonly; ?> null="false" name="Patrocinador" id="Patrocinador" class="input_simples w100" type="text" onkeyup="mascara(this, format_num);" onblur="somaIngressos();" value="<?php echo $result = $this->escape($this->formatarMilhar($produtoacao[0]->QtdePatrocinador)); ?>" maxlength="9" />
                         </td>
                         <td>
-                            <label for="Divulgacao">Divulgação *</label><br />
+                            <label for="Divulgacao">Divulgaï¿½ï¿½o *</label><br />
                             <input <?php echo $readonly; ?> null="false" name="Divulgacao" id="Divulgacao" class="input_simples w100" type="text" onkeyup="mascara(this, format_num);" onblur="somaIngressos();" value="<?php echo $result = $this->escape($this->formatarMilhar($produtoacao[0]->QtdeProponente)); ?>" maxlength="9" />
                         </td>
                         <td>
-                            <label for="Beneficiario">Beneficiários *</label><br />
+                            <label for="Beneficiario">Beneficiï¿½rios *</label><br />
                             <input <?php echo $readonly; ?> null="false" name="Beneficiario" id="Beneficiario" class="input_simples w100" type="text" onkeyup="mascara(this, format_num);" onblur="somaIngressos();" value="<?php echo $result = $this->escape($this->formatarMilhar($produtoacao[0]->QtdeOutros)); ?>" maxlength="9" />
                         </td>
                         <td>
@@ -737,7 +737,7 @@ function areaCultural(idSegmento, dsSegmento)
 
                     </tr>
                     <tr class="destacar bold">
-                        <td align="center" colspan="2">PREÇO UNITÁRIO (R$)</td>
+                        <td align="center" colspan="2">PREï¿½O UNITï¿½RIO (R$)</td>
                         <td align="center" colspan="2">RECEITA PREVISTA (R$)</td>
                         <td align="center" colspan="2">TOTAL RECEITA PREVISTA (R$)</td>
                     </tr>
@@ -817,14 +817,14 @@ function areaCultural(idSegmento, dsSegmento)
             }
         ?>
 <?php } ?>
-    <!-- final: conteúdo principal #conteudo -->
+    <!-- final: conteï¿½do principal #conteudo -->
 </div>
-<!-- início: detalhe final da div conteudo #rodapeConteudo -->
+<!-- inï¿½cio: detalhe final da div conteudo #rodapeConteudo -->
 <div id="rodapeConteudo"><span></span></div>
 <!-- final: detalhe final da div conteudo #rodapeConteudo -->
 
-</div><!-- final: área principal #container -->
-<div id="dialog-alert">Campos obrigatórios não preenchidos!</div>
+</div><!-- final: ï¿½rea principal #container -->
+<div id="dialog-alert">Campos obrigatï¿½rios nï¿½o preenchidos!</div>
 <br clear="all" />
 <script type="text/javascript">
     $("#dialog-alert").dialog({
