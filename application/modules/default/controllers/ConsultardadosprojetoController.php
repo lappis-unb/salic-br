@@ -444,7 +444,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
                     if(!empty ($idPreProjeto)){
                         //OUTROS DADOS PROPONENTE
-                        $this->view->itensGeral = AnalisarPropostaDAO::buscarGeral($idPreProjeto);
+                        $this->view->itensGeral = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
                     }
 
                 } else {
@@ -535,7 +535,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
                     if(!empty ($idPreProjeto)){
                         //OUTROS DADOS PROPONENTE
-                        $this->view->itensGeral = AnalisarPropostaDAO::buscarGeral($idPreProjeto);
+                        $this->view->itensGeral = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
                     }
 
                 } else {
@@ -4140,7 +4140,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
                     if(!empty ($idPreProjeto)){
                         //OUTROS DADOS PROPONENTE
-                        $this->view->itensGeral = AnalisarPropostaDAO::buscarGeral($idPreProjeto);
+                        $this->view->itensGeral = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
 
                         if(in_array('dadoscomplementares',$arrConteudoImpressao))
                         {
@@ -4219,7 +4219,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $ordem = array();
                             $ordem = array("3 DESC");
                             //if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }
-                            $tbDoc = new tbDocumentosAgentes();
+                            $tbDoc = new Proposta_Model_DbTable_TbDocumentosAgentes();
                             $rsDocs = $tbDoc->buscatodosdocumentos($idAgente, $rsProjeto->idProjeto, $rsProjeto->IdPRONAC);
                             $this->view->registrosDocAnexados = $rsDocs;
                         }
@@ -5062,7 +5062,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
                     if(!empty ($idPreProjeto)){
                         //OUTROS DADOS PROPONENTE
-                        $this->view->itensGeral = AnalisarPropostaDAO::buscarGeral($idPreProjeto);
+                        $this->view->itensGeral = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
 
                         //DADOS COMPLEMENTARES
                         $tblProposta = new Proposta_Model_PreProjeto();
@@ -5095,7 +5095,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
 
                         if(!empty ($idPreProjeto)){
 
-                            $this->view->itensPlanilhaOrcamentaria  = AnalisarPropostaDAO::buscarPlanilhaOrcamentaria($idPreProjeto);
+                            $this->view->itensPlanilhaOrcamentaria  = Proposta_Model_AnalisarPropostaDAO::buscarPlanilhaOrcamentaria($idPreProjeto);
 
                             $buscarProduto = ManterorcamentoDAO::buscarProdutos($idPreProjeto);
                             $this->view->Produtos = $buscarProduto;
@@ -5122,7 +5122,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                             $ordem = array();
                             $ordem = array("3 DESC");
                             //if(!empty($post->ordenacao)){ $ordem[] = "{$post->ordenacao} {$post->tipoOrdenacao}"; }
-                            $tbDoc = new tbDocumentosAgentes();
+                            $tbDoc = new Proposta_Model_DbTable_TbDocumentosAgentes();
                             $rsDocs = $tbDoc->buscatodosdocumentos($idAgente, $rsProjeto->idProjeto, $rsProjeto->IdPRONAC);
                             $this->view->registrosDocAnexados = $rsDocs;
                         }

@@ -47,7 +47,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         if(!empty ($_REQUEST['idPreProjeto'])) {
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
-            $Movimentacao = new Movimentacao();
+            $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
             $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
         }else {
@@ -85,8 +85,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
     /**
      * produtoscadastradosAction
      *
-     * @access public
-     * @return void
+     * @name produtoscadastradosAction
      */
     public function produtoscadastradosAction()
     {
@@ -558,7 +557,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $qtdDias = $_POST['qtdDias'];
             $justificativa = utf8_decode(substr(trim(strip_tags($_POST['editor1'])),0,500));
 
-            $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos($idProposta, $idEtapa, $idProduto, $idItem, null, $idUf);
+            $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos($idProposta, $idEtapa, $idProduto, $idItem, null, $idUf, $idMunicipio);
 
             if($buscarProdutos){
             	$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout

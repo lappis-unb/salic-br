@@ -1270,7 +1270,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             $listaparecer = $projeto->buscarTodosDadosProjeto($validapronac[0]->IdPRONAC);
             $this->view->parecer = $listaparecer[0];
             $this->view->pronac = Seguranca::encrypt($listaparecer[0]->pronac);
-            $documentosDao = new tbDocumentosAgentes();
+            $documentosDao = new Proposta_Model_DbTable_TbDocumentosAgentes();
             $documentos = $documentosDao->buscatodosdocumentos($validapronac[0]->Logon, $validapronac[0]->idProjeto, $validapronac[0]->IdPRONAC);
             $this->view->documentos = $documentos;
         } else {
@@ -1538,7 +1538,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
                 }
 
                 $Agentes = new Agente_Model_DbTable_Agentes();
-                $tbDocumentosAgentes = new tbDocumentosAgentes();
+                $tbDocumentosAgentes = new Proposta_Model_DbTable_TbDocumentosAgentes();
                 $ag = $Agentes->buscar(array('CNPJCPF = ?'=> Mascara::delMaskCPFCNPJ($post->CGCCPF)))->current();
                 $docs = $tbDocumentosAgentes->buscarDocumentos(array('a.idAgente = ?'=>$ag->idAgente));
                 if(count($docs) == 0){

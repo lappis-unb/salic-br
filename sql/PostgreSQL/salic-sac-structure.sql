@@ -2759,6 +2759,9 @@ CREATE TABLE sac.PlanoDeDivulgacao
   CONSTRAINT FK_PlanoDeDivulgacao_Verificacao FOREIGN KEY (idPeca) REFERENCES sac.Verificacao (idVerificacao),
   CONSTRAINT FK_PlanoDeDivulgacao_Verificacao1 FOREIGN KEY (idVeiculo) REFERENCES sac.Verificacao (idVerificacao)
 );
+CREATE SEQUENCE sac.planodedivulgacao_idplanodivulgacao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.planodedivulgacao ALTER COLUMN idplanodivulgacao SET DEFAULT nextval('sac.planodedivulgacao_idplanodivulgacao_seq');
+ALTER SEQUENCE sac.planodedivulgacao_idplanodivulgacao_seq OWNED BY sac.planodedivulgacao.idplanodivulgacao;
 CREATE TABLE sac.PlanoDistribuicaoProduto
 (
   idPlanoDistribuicao INT PRIMARY KEY NOT NULL,
@@ -3351,6 +3354,9 @@ CREATE TABLE sac.tbDocumentosAgentes
 CONSTRAINT FK_tbDocAgentesDocExigidos FOREIGN KEY (CodigoDocumento) REFERENCES sac.DocumentosExigidos (Codigo)
 );
 CREATE INDEX IX_tbDocumentosAgentes ON sac.tbDocumentosAgentes (idAgente);
+CREATE SEQUENCE sac.tbdocumentosagentes_iddocumentosagentes_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.tbdocumentosagentes ALTER COLUMN iddocumentosagentes SET DEFAULT nextval('sac.tbdocumentosagentes_iddocumentosagentes_seq');
+ALTER SEQUENCE sac.tbdocumentosagentes_iddocumentosagentes_seq OWNED BY sac.tbdocumentosagentes.iddocumentosagentes;
 CREATE TABLE sac.tbDocumentosAgentes20100107X
 (
   idDocumentosAgentes INT NOT NULL,
@@ -3378,6 +3384,9 @@ CONSTRAINT FK_tbDocumentosPreProjeto_PreProjeto FOREIGN KEY (idProjeto) REFERENC
 CONSTRAINT FK_tbDocumentosPreProjeto_Projetos FOREIGN KEY (idPRONAC) REFERENCES sac.Projetos (IdPRONAC)
 );
 CREATE INDEX IX_tbDocumentosPreProjeto ON sac.tbDocumentosPreProjeto (idProjeto);
+CREATE SEQUENCE sac.tbdocumentospreprojeto_iddocumentospreprojetos_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.tbdocumentospreprojeto ALTER COLUMN iddocumentospreprojetos SET DEFAULT nextval('sac.tbdocumentospreprojeto_iddocumentospreprojetos_seq');
+ALTER SEQUENCE sac.tbdocumentospreprojeto_iddocumentospreprojetos_seq OWNED BY sac.tbdocumentospreprojeto.iddocumentospreprojetos;
 CREATE TABLE sac.tbGerarPagamentoParecerista
 (
   idGerarPagamentoParecerista INT PRIMARY KEY NOT NULL,
@@ -3990,6 +3999,9 @@ CREATE TABLE sac.VerificacaoPecaxVeiculo
   CONSTRAINT FK_VerificacaoPecaxVeiculo_Verificacao FOREIGN KEY (idVerificacaoPeca) REFERENCES sac.Verificacao (idVerificacao),
   CONSTRAINT FK_VerificacaoPecaxVeiculo_Verificacao1 FOREIGN KEY (idVerificacaoVeiculo) REFERENCES sac.Verificacao (idVerificacao)
 );
+CREATE SEQUENCE sac.verificacaopecaxveiculo_idverificacaopecaxveiculo_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.verificacaopecaxveiculo ALTER COLUMN idverificacaopecaxveiculo SET DEFAULT nextval('sac.verificacaopecaxveiculo_idverificacaopecaxveiculo_seq');
+ALTER SEQUENCE sac.verificacaopecaxveiculo_idverificacaopecaxveiculo_seq OWNED BY sac.verificacaopecaxveiculo.idverificacaopecaxveiculo;
 CREATE TABLE sac.DBA_CaptacaoAnoUfMunicipio
 (
   ANO_CAPTACAO INT,
@@ -8191,10 +8203,38 @@ CREATE TABLE sac.vwVeiculoDeDivulgacao
 );
 ALTER TABLE sac.tbdeslocamento ALTER COLUMN idmunicipioorigem TYPE VARCHAR(6) USING idmunicipioorigem::VARCHAR(6);
 
+CREATE TABLE sac.tbItensPlanilhaProduto
+(
+    idItensPlanilhaProduto INT PRIMARY KEY NOT NULL,
+    idProduto INT NOT NULL,
+    idPlanilhaEtapa INT NOT NULL,
+    idPlanilhaItens INT NOT NULL,
+    idUsuario INT,
+    CONSTRAINT FK_tbItensPlanilhaProduto_tbPlanilhaEtapa FOREIGN KEY (idPlanilhaEtapa) REFERENCES sac.tbPlanilhaEtapa (idPlanilhaEtapa),
+    CONSTRAINT FK_tbItensPlanilhaProduto_tbPlanilhaItens FOREIGN KEY (idPlanilhaItens) REFERENCES sac.tbPlanilhaItens (idPlanilhaItens)
+);
+CREATE UNIQUE INDEX IX_tbItensPlanilhaProduto ON tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens);
+
 
 CREATE SEQUENCE sac.verificacao_idverificacao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE sac.verificacao ALTER COLUMN idverificacao SET DEFAULT nextval('sac.verificacao_idverificacao_seq');
 ALTER SEQUENCE sac.verificacao_idverificacao_seq OWNED BY sac.verificacao.idverificacao;
+
+
+drop TABLE sac.vwDocumentosExigidosApresentacaoProposta;
+
+CREATE VIEW sac.vwDocumentosExigidosApresentacaoProposta
+AS
+
+  -- =========================================================================================
+  -- Autor: Rômulo Menhô Barbosa
+  -- Data de Criação: 19/12/2012
+  -- Descrição: Documentos exigidos pela proposta
+  -- =========================================================================================
+
+  SELECT Codigo, Descricao,Opcao
+  FROM SAC.DocumentosExigidos
+  WHERE Codigo not in (238,229,99,194,205) AND stUpload = 1 AND stEstado = 1;
 -- CREATE FUNCTION Aritmetica(@idPlanilhaItem INT) RETURNS INT;
 -- CREATE PROCEDURE DecriptografaObjetosBD(@ObjetoCriptografado SYSNAME, @SegurancaAlteracao INT);
 -- CREATE PROCEDURE dt_addtosourcecontrol(@vchSourceSafeINI VARCHAR, @vchProjectName VARCHAR, @vchComment VARCHAR, @vchLoginName VARCHAR, @vchPassword VARCHAR);

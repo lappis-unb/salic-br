@@ -1,17 +1,10 @@
 <?php
 /**
  * MantertabelaitensController
- * @author Equipe RUP - Politec
  * @author wouerner <wouerner@gmail.com>
  * @since 10/12/2010
- * @version 1.0
- * @package application
- * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright ? 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
-set_time_limit(0);
-
 class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstract {
 
     private $getIdUsuario = 0;
@@ -24,8 +17,8 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
      * @param void
      * @return void
      */
-    public function init() {
-
+    public function init()
+    {
         // autenticaç?o e permiss?es zend (AMBIENTE MINC)
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 127; // Coordenador - Geral de Análise (Ministro)
@@ -46,7 +39,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         if(!empty ($_REQUEST['idPreProjeto'])) {
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
-            $Movimentacao = new Movimentacao();
+            $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
             $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
         }
@@ -58,7 +51,8 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
      * @param void
      * @return void
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $this->_forward("consultartabelaitens", "mantertabelaitens");
     }
 
@@ -123,26 +117,26 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
                 //recupera nome do item
                 $nomeItem = $tableManterTabelaItens->buscaprodutoetapaitem($idPlanilhaItens);
 
+                $dateFunc = MinC_Db_Expr::date();
                 $dadosassociar = array(
-                    'idPlanilhaItens' => $idPlanilhaItens,
-                    'NomeDoItem' => $nomeItem->NomeDoItem,
-                    'Descricao' => $justificativa,
-                    'idProduto' => $produto,
-                    'idEtapa' => $etapa,
-                    'idAgente' => $this->idUsuario,
-                    'DtSolicitacao' => new Zend_Db_Expr('GETDATE()'),
-                    'stEstado' => '0'
+                    'idplanilhaitens' => $idPlanilhaItens,
+                    'nomedoitem' => $nomeItem->NomeDoItem,
+                    'descricao' => $justificativa,
+                    'idproduto' => $produto,
+                    'idetapa' => $etapa,
+                    'idagente' => $this->idUsuario,
+                    'dtsolicitacao' => new Zend_Db_Expr($dateFunc),
+                    'stestado' => '0'
                 );
-
                 $dadosincluir = array(
-                    'idPlanilhaItens' => 0,
-                    'NomeDoItem' => $NomeItem,
-                    'Descricao' => $justificativa,
-                    'idProduto' => $produto,
-                    'idEtapa' => $etapa,
-                    'idAgente' => $this->idUsuario,
-                    'DtSolicitacao' => new Zend_Db_Expr('GETDATE()'),
-                    'stEstado' => '0'
+                    'idplanilhaitens' => 0,
+                    'nomedoitem' => $NomeItem,
+                    'descricao' => $justificativa,
+                    'idproduto' => $produto,
+                    'idetapa' => $etapa,
+                    'idagente' => $this->idUsuario,
+                    'dtsolicitacao' => new Zend_Db_Expr($dateFunc),
+                    'stestado' => '0'
                 );
 
                 if(!empty($idPlanilhaItens) && $idPlanilhaItens!="0") {
@@ -152,8 +146,8 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
                 }
 
                 $arrBusca = array();
-                $arrBusca['prod.Codigo'] = $produto;
-                $arrBusca['et.idPlanilhaEtapa'] = $etapa;
+                $arrBusca['prod.codigo'] = $produto;
+                $arrBusca['et.idplanilhaetapa'] = $etapa;
 
                 $res = $tableManterTabelaItens->buscarSolicitacoes($arrBusca,$itemNome);
 
@@ -316,10 +310,6 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         $this->view->intTamPag     = $this->intTamPag;
 
         $tableManterTabelaItens = new Proposta_Model_DbTable_tbSolicitarItem();
-        echo '<pre>';
-        var_dump($this->getIdUsuario);
-        var_dump($this->idUsuario);
-        exit;
         $tbsolicitacao = $tableManterTabelaItens->solicitacoes($this->idUsuario);
         $this->view->solicitacao = $tbsolicitacao;
     }
@@ -506,7 +496,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
             $this->view->item 			= $post->NomeDoItem;
 
             //CODIGO ANTIGO
-            //$tbpretitem = Mantertabelaitens::exibirprodutoetapaitem($item);
+            //$tbpretitem = MantertabelaitensDAO::exibirprodutoetapaitem($item);
             $where = null;
             if($tipoPesquisa==1) {
                 $where = " LIKE '%".$item."%'";
@@ -534,7 +524,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
 
             }catch (Exception $e)
             {
-                parent::message($e->getMessage(), "mantertabelaitens/exibirdados?idPreProjeto=".$this->idPreProjeto, "ERROR");
+                parent::message($e->getMessage(), "proposta/mantertabelaitens/exibirdados?idPreProjeto=".$this->idPreProjeto, "ERROR");
             }
         }
     }
@@ -583,7 +573,8 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
      * @access public
      * @return void
      */
-    public function consultartabelaitensAction() {
+    public function consultartabelaitensAction()
+    {
         $post = Zend_Registry::get('post');
 
         $tableManterTabelaItens = new Proposta_Model_DbTable_tbSolicitarItem();

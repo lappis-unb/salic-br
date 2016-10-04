@@ -1,4 +1,4 @@
-]<?php
+<?php
 
 /**
  * Login e autentica��o via REST
@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  * @copyright � 2016 - Minist�rio da Cultura - Todos os direitos reservados.
  */
-class ProponenteAutenticacaoRestController extends MinC_Controller_Rest_Abstract{
+class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
 
     public function init() {
         $this->setPublicMethod('post');
@@ -32,7 +32,7 @@ class ProponenteAutenticacaoRestController extends MinC_Controller_Rest_Abstract
         } else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)){
             $result->msg = 'CNPJ inv&aacute;lido!';
         } else {
-            $Usuario = new Sgcacesso();
+            $Usuario = new Autenticacao_Model_Sgcacesso();
             $verificaStatus = $Usuario->buscar(array ( 'Cpf = ?' => $username));
 
             $verificaSituacao = 0;
@@ -61,7 +61,7 @@ class ProponenteAutenticacaoRestController extends MinC_Controller_Rest_Abstract
             }
 
             if($buscar){
-                //$result->usuario = Zend_Auth::getInstance()->getIdentity();
+                $result->usuario = Zend_Auth::getInstance()->getIdentity();
                 $result->authorization = $this->encryptAuthorization();
 //                $result->authorization = Seguranca::encrypt($result->usuario->IdUsuario, $this->encryptHash);
 

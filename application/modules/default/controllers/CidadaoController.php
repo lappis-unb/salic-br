@@ -18,11 +18,11 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
         $this->usuarioInterno = false;
         $this->view->usuarioInterno = false;
         
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         if(isset($auth->getIdentity()->usu_codigo)){
             
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo){
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -40,59 +40,7 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
     }
 
     public function indexAction() {
-        if(!$this->usuarioInterno){
-            Zend_Layout::startMvc(array('layout' => 'layout_login'));
-        }
-        
-        $reuniao = new Reuniao();
-        $raberta = $reuniao->buscarReuniaoAberta();
-        $this->view->reuniao = $raberta;
-        
-        $order = array();
-
-        //==== parametro de ordenacao  ======//
-        if($this->_request->getParam("ordem")) {
-            $ordem = $this->_request->getParam("ordem");
-            if($ordem == "ASC") {
-                $novaOrdem = "DESC";
-            }else {
-                $novaOrdem = "ASC";
-            }
-        }else {
-            $ordem = "ASC";
-            $novaOrdem = "ASC";
-        }
-
-        //==== campo de ordenacao  ======//
-        if($this->_request->getParam("campo")) {
-            $campo = $this->_request->getParam("campo");
-            $order = array($campo." ".$ordem);
-            $ordenacao = "&campo=".$campo."&ordem=".$ordem;
-
-        } else {
-            $campo = null;
-            $order = array('2 DESC'); //Vl.Aprovado
-            $ordenacao = null;
-        }
-
-        /* ================== PAGINACAO ======================*/
-        $where = array();
-        $where["b.idNrReuniao = ?"] = $raberta->idNrReuniao;
-        $where["h.stAtivo = ?"] = 1;
-                
-        $Projetos = new Projetos();
-        $busca = $Projetos->projetosCnicOpinioes($where, $order);
-        
-        $this->view->qtdRegistros = count($busca);
-        $this->view->dados = $busca;
-        $this->view->novaOrdem = $novaOrdem;
-        $this->view->ordem = $ordem;
-        $this->view->campo = $campo;
-        
-        $this->view->intranet = false;
-        if(isset($_GET['intranet'])){
-            $this->view->intranet = true;
-        }
+        $this->_redirect('/cidadao/consultar');
     }
 
     public function consultarAction() {
@@ -108,7 +56,7 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
         $reuniao = new Reuniao();
         //Alysson - Na Primeira Consulta exibe dados da ultima reuniao aberta
         if(!$idNrReuniaoConsulta){
-            $raberta = null;  // Fernao: permite não filtrar
+            $raberta = null;  // Fernao: permite nï¿½o filtrar
             $this->view->idNrReuniaoConsulta = null;
         } else {
             $raberta = $reuniao->buscarReuniaoPorId($idNrReuniaoConsulta);//idNrReuniao
@@ -121,7 +69,7 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
         $this->view->listaReunioes = $reuniao->buscarTodasReunioes($order_reuniao);
         $order = array();
 
-        // Fernao: adicionando complementação da url para GET para pegar filtros POT
+        // Fernao: adicionando complementaï¿½ï¿½o da url para GET para pegar filtros POT
         $urlComplement = array();
  
         //==== parametro de ordenacao  ======//
@@ -213,7 +161,7 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
             $urlComplement[] = "idNrReuniaoConsulta=" . $idNrReuniao;           
         }
         
-        // paginação
+        // paginaï¿½ï¿½o
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
             $urlComplement[] = 'qtde=' . $this->intTamPag;
@@ -246,7 +194,7 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
         
         $busca = $Projetos->projetosCnicOpinioesPorIdReuniao($idNrReuniao, $where, $order, $limit, $offset);
 
-        // gera url completa com paginacao e variáveis
+        // gera url completa com paginacao e variï¿½veis
         $strUrlComplement = '';   // campo texto vazio
 
         // se houver complementos
@@ -354,7 +302,7 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
             $idNrReuniao = $raberta->idNrReuniao;
         }
 
-        // paginação
+        // paginaï¿½ï¿½o
         if($sess->qtde){
             $this->intTamPag = $sess->qtde;
         }
@@ -454,7 +402,7 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
             $idNrReuniao = $raberta->idNrReuniao;
         }
 
-        // paginação
+        // paginaï¿½ï¿½o
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
         }
@@ -478,13 +426,13 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
                     <th>Nome do Projeto</th>
                     <th>Proponente</th>
                     <th>UF</th>
-                    <th>Município</th>
+                    <th>Municï¿½pio</th>
                     <th>Enquadramento</th>
-                    <th>Área</th>
+                    <th>ï¿½rea</th>
                     <th>Segmento</th>
-                    <th>Avaliação</th>
-		    <th>Dt. Início Execução</th>
-		    <th>Dt. Término Execução</th>
+                    <th>Avaliaï¿½ï¿½o</th>
+		    <th>Dt. Inï¿½cio Execuï¿½ï¿½o</th>
+		    <th>Dt. Tï¿½rmino Execuï¿½ï¿½o</th>
 		    <th>Vl.Solicitado</th>
                     <th>Vl.Aprovado</th>
                     <th>Vl.Captado</th>
@@ -559,7 +507,7 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
             }
             $this->view->idPronac = $idPronac;
         } else {
-            parent::message("Projeto não encontrado!", "cidadao/index", "ALERT");
+            parent::message("Projeto nï¿½o encontrado!", "cidadao/index", "ALERT");
         }
         
         $projetos = new Projetos();
@@ -584,9 +532,9 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
         $insert = $tbOpinarProjeto->inserir($dados);
         
         if($insert){
-            parent::message("Sua opinião foi cadastrada com sucesso!", "cidadao/index", "CONFIRM");
+            parent::message("Sua opiniï¿½o foi cadastrada com sucesso!", "cidadao/index", "CONFIRM");
         } else {
-            parent::message("Não foi possível cadastrar a sua opinião!", "cidadao/index", "ERROR");
+            parent::message("Nï¿½o foi possï¿½vel cadastrar a sua opiniï¿½o!", "cidadao/index", "ERROR");
         }
     }
     
@@ -602,7 +550,7 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
             }
             $this->view->idPronac = $idPronac;
         } else {
-            parent::message("Projeto não encontrado!", "cidadao/index", "ALERT");
+            parent::message("Projeto nï¿½o encontrado!", "cidadao/index", "ALERT");
         }
         
         $projetos = new Projetos();
@@ -644,7 +592,7 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
             }
             $this->view->idPronac = $idPronac;
         } else {
-            parent::message("Projeto não encontrado!", "cidadao/index", "ALERT");
+            parent::message("Projeto nï¿½o encontrado!", "cidadao/index", "ALERT");
         }
         
         $projetos = new Projetos();
@@ -670,7 +618,7 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
             }
             $this->view->idPronac = $idPronac;
         } else {
-            parent::message("Projeto não encontrado!", "cidadao/index", "ALERT");
+            parent::message("Projeto nï¿½o encontrado!", "cidadao/index", "ALERT");
         }
         
         $Parecer = new Parecer();

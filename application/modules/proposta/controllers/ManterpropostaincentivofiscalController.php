@@ -89,7 +89,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
 
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
-            $Movimentacao = new Movimentacao();
+            $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($this->idPreProjeto);
             $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
 
@@ -561,7 +561,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
         /*         * ******* MOVIMENTACAO ******** */
         //VERIFICA SE A PROPOSTA ESTA COM O MINC
-        $Movimentacao = new Movimentacao();
+        $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
         $rsMovimentacao = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
 
         if ($rsMovimentacao->Movimentacao != 95) {
@@ -917,7 +917,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         }
         if (!empty($idPreProjeto) && $valida == "s") {
             $tblPreProjeto = new Proposta_Model_PreProjeto();
-            $tblAvaliacao = new AnalisarPropostaDAO();
+            $tblAvaliacao = new Proposta_Model_AnalisarPropostaDAO();
 
             //recupera dados do projeto
             $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
@@ -991,7 +991,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                     $tblAvaliacao->updateEstadoMovimentacao($idPreProjeto);
 
                     //PERSISTE DADOS DA MOVIMENTACAO
-                    $tblMovimentacao = new Movimentacao();
+                    $tblMovimentacao = new Proposta_Model_DbTable_Movimentacao();
                     $dados = array("idProjeto" => $idPreProjeto,
                         "Movimentacao" => "96", //satus
                         "DtMovimentacao" => date("Y/m/d H:i:s"),

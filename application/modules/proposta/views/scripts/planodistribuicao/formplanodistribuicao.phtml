@@ -17,7 +17,7 @@
             });
         });
 
-        <?php if(isset($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
+        <?php if(!empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
              //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
              JSBloquearAlteracaoFormulario();
         <?php endif; ?>
@@ -282,8 +282,8 @@
                         <?php echo (!empty($this->planoDistribuicao->idproduto)) ? " disabled='disabled'" : ""; ?>>
                     <option value=""> - Selecione - </option>
                     <?php foreach ($this->comboprodutos as $produto): ?>
-                        <option value="<?php echo $produto['Codigo']; ?>" <?php echo ($produto['Codigo'] == $this->planoDistribuicao['idproduto']) ? " selected='selected'" : ""; ?>>
-                            <?php echo $produto['Descricao']; ?>
+                        <option value="<?php echo $produto['codigo']; ?>" <?php echo ($produto['codigo'] == $this->planoDistribuicao['idproduto']) ? " selected='selected'" : ""; ?>>
+                            <?php echo $produto['descricao']; ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -334,8 +334,8 @@
                 <select class="input_simples obrigatorio" name="logomarca" id="logomarca" onchange="">
                     <option value=""> - Selecione - </option>
                     <?php foreach ($this->combologomarcas as $logomarca): ?>
-                        <option value="<?php echo $logomarca['idVerificacao']; ?>" <?php echo ($logomarca['idVerificacao'] == $this->planoDistribuicao['idposicaodalogo']) ? " selected='selected'" : ""; ?>>
-                            <?php echo $logomarca['Descricao']; ?>
+                        <option value="<?php echo $logomarca['idverificacao']; ?>" <?php echo ($logomarca['idverificacao'] == $this->planoDistribuicao['idposicaodalogo']) ? " selected='selected'" : ""; ?>>
+                            <?php echo $logomarca['descricao']; ?>
                         </option>
                     <?php endforeach; ?>
                 </select>

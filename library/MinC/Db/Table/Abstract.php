@@ -220,34 +220,12 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      */
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {
-        $select = $this->select();
+        $select = $this->select()->from($this->_name, $this->_getCols(), $this->_schema);
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
-
-
-//        $select->where('cpf = ?', '00000000000');
-        //adicionando linha order ao select
-//        $select->order($order);
-
-        // paginacao
-//        if ($tamanho > -1) {
-//            $tmpInicio = 0;
-//            if ($inicio > -1) {
-//                $tmpInicio = $inicio;
-//            }
-//            $select->limit($tamanho, $tmpInicio);
-//        }
-//        echo '<pre>';
-//        var_dump(Zend_Db_Table::getDefaultAdapter());
-//        var_dump($select->assemble());
-//        var_dump($this->fetchAll($select));
-//        var_dump($this->fetchAll($select)->toArray());
-//        var_dump($this->fetchRow($select)->toArray());
-//        exit;
-//xd($slct->__toString());
 
         try {
             $this->fetchAll($select);
@@ -412,12 +390,16 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      * @author wouerner <wouerner@gmail.com>
      * @since  05/09/2016
      */
-    public function findBy(array $where) {
+    public function findBy($where) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from($this->_name, $this->_getCols(), $this->_schema);
-        foreach ($where as $columnName => $columnValue) {
-            $select->where($columnName . ' = ?', trim($columnValue));
+        if (is_array($where)) {
+            foreach ($where as $columnName => $columnValue) {
+                $select->where($columnName . ' = ?', trim($columnValue));
+            }
+        } else {
+            $select->where(reset($this->getPrimary()) . ' = ?', trim($where));
         }
         $result = $this->fetchRow($select);
         return ($result)? $result->toArray() : array();
@@ -457,7 +439,11 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         $select = $this->select();
         $select->setIntegrityCheck(false);
         foreach ($where as $columnName => $columnValue) {
-            $select->where($columnName . ' = ?', trim($columnValue));
+            if (is_int(strpos($columnName, '?'))) {
+                $select->where($columnName, trim($columnValue));
+            } else {
+                $select->where($columnName . ' = ?', trim($columnValue));
+            }
         }
         if ($order) {
             $select->order($order);

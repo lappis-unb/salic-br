@@ -69,21 +69,21 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
             $slct->setIntegrityCheck(false);
 
             $slct->from(array("a"=> $this->_name), '*', $this->_schema);
-            $slct->joinInner(array("b"=>"Produto"),
-                            "a.idProduto = b.Codigo",
-                            array("Produto"=>"b.Descricao"),
+            $slct->joinInner(array("b"=>"produto"),
+                            "a.idproduto = b.codigo",
+                            array("Produto"=>"b.descricao"),
                             $this->_schema);
             $slct->joinInner(array("c"=>"verificacao"),
-                            "a.idPosicaoDaLogo = c.idVerificacao",
-                            array("PosicaoLogomarca"=>"c.Descricao"),  $this->_schema);
-            $slct->joinInner(array("ar"=>"Area"),
-                            "a.Area = ar.Codigo",
-                            array("DescricaoArea"=>"ar.Descricao"),  $this->_schema);
-            $slct->joinInner(array("s"=>"Segmento"),
-                            "a.Segmento = s.Codigo",
-                            array("DescricaoSegmento"=>"s.Descricao"),  $this->_schema);
+                            "a.idposicaodalogo = c.idverificacao",
+                            array("PosicaoLogomarca"=>"c.descricao"),  $this->_schema);
+            $slct->joinInner(array("ar"=>"area"),
+                            "a.area = ar.codigo",
+                            array("DescricaoArea"=>"ar.descricao"),  $this->_schema);
+            $slct->joinInner(array("s"=>"segmento"),
+                            "a.segmento = s.codigo",
+                            array("DescricaoSegmento"=>"s.descricao"),  $this->_schema);
 
-            $slct->where('a.stPlanoDistribuicaoProduto = ?', '1');
+            $slct->where('a.stplanodistribuicaoproduto = ?', '1');
 
             // adicionando clausulas where
             foreach ($where as $coluna=>$valor)
@@ -127,24 +127,24 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
         $slct->from(
                 array('a' => $this->_name),
                 array(
-                    'a.idPlanoDistribuicao',
-                    'a.idProjeto',
-                    'a.idProduto',
-                    'a.Area',
-                    'a.Segmento',
-                    'a.idPosicaoDaLogo',
-                    'a.QtdeProduzida',
-                    'a.QtdePatrocinador',
-                    'a.QtdeProponente',
-                    'a.QtdeOutros',
-                    'a.QtdeVendaNormal',
-                    'a.QtdeVendaPromocional',
-                    'a.PrecoUnitarioNormal',
-                    'a.PrecoUnitarioPromocional',
-                    'a.stPrincipal',
-                    'a.Usuario',
-                    'CAST(a.dsJustificativaPosicaoLogo AS TEXT) AS dsJustificativaPosicaoLogo',
-                    'a.Usuario'
+                    'a.idplanodistribuicao',
+                    'a.idprojeto',
+                    'a.idproduto',
+                    'a.area',
+                    'a.segmento',
+                    'a.idposicaodalogo',
+                    'a.qtdeproduzida',
+                    'a.qtdepatrocinador',
+                    'a.qtdeproponente',
+                    'a.qtdeoutros',
+                    'a.qtdevendanormal',
+                    'a.qtdevendapromocional',
+                    'a.precounitarionormal',
+                    'a.precounitariopromocional',
+                    'a.stprincipal',
+                    'a.usuario',
+                    'CAST(a.dsjustificativaposicaologo AS TEXT) AS dsJustificativaPosicaoLogo',
+                    'a.usuario'
                 ),
                 $this->_schema
         );
@@ -205,7 +205,7 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
                         $rows = $this->fetchAll($slct);
                         return $rows->count();
             }catch(Exception $e){
-                xd($slct->assemble());
+                echo ($slct->assemble());die;
             }
     }
 

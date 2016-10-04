@@ -18,6 +18,29 @@ class MinC_Db_Mapper
 {
     public $_dbTable;
 
+    protected $arrMessages = array();
+
+    public function getMessage()
+    {
+        return reset($this->arrMessages);
+    }
+
+    public function getMessages()
+    {
+        return $this->arrMessages;
+    }
+
+    public function setMessage($mixMessage)
+    {
+        if (is_array($mixMessage)) {
+            $this->arrMessages = array_merge($this->arrMessages, $mixMessage);
+        } else {
+            $this->arrMessages[] = $mixMessage;
+        }
+        return $this;
+    }
+
+
     public function setDbTable($dbTable)
     {
         if (is_string($dbTable)) {
@@ -124,8 +147,8 @@ class MinC_Db_Mapper
         $data = array_filter($model->toArray(), 'strlen');
 
         if ($table->getSequence()) {
+            unset($data[$pk]);
             if (empty($pkValue)) {
-                unset($data[$pk]);
                 return $table->insert($data);
             } else {
                 $table->update($data, array($pk . ' = ?' => $pkValue));

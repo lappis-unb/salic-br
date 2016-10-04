@@ -1,24 +1,24 @@
 <?php
 /**
- * Class Proposta_Model_DbTable_PlanoDivulgacao
+ * Class Proposta_Model_DbTable_PlanoDeDivulgacao
  *
- * @name Proposta_Model_DbTable_PlanoDivulgacao
+ * @name Proposta_Model_DbTable_PlanoDeDivulgacao
  * @package Modules/Agente
  * @subpackage Models/DbTable
  * @version $Id$
  *
+ * @link http://salic.cultura.gov.br
+ *
  * @author  wouerner <wouerner@gmail.com>
  * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  * @since 21/09/2016
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
  */
-class Proposta_Model_DbTable_PlanoDivulgacao extends MinC_Db_Table_Abstract{
+class Proposta_Model_DbTable_PlanoDeDivulgacao extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'sac';
     protected $_schema = 'sac';
     protected $_name  = 'planodedivulgacao';
+    protected $_primary  = 'idplanodivulgacao';
 
     public static function buscarDigulgacao($idPreProjeto){
         $sql = "SELECT
@@ -105,10 +105,20 @@ class Proposta_Model_DbTable_PlanoDivulgacao extends MinC_Db_Table_Abstract{
     }
 
 
-    public static function consultarVeiculo($pecaID){
+    public function consultarVeiculo($pecaID)
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(array('r' => 'verificacaopecaxveiculo'), '*', $this->_schema);
+        $select->joinLeft(array('p' => 'verificacao'), 'r.idverificacaopeca = p.idverificacao', 'descricao as pecadescicao', $this->_schema);
+        $select->joinLeft(array('v' => 'verificacao'), 'r.idverificacaoveiculo = v.idverificacao', 'descricao as veiculodescicao', $this->_schema);
+        //echo $slct; die;
+        $select->where('idverificacaopeca = ? ', $pecaID);
+//        $select->order(array("dtmovimentacao DESC"));
+        $result = $this->fetchAll($select);
+        return ($result) ? $result->toArray() : array();
 
-
-         $sql = "SELECT
+        $sql = "SELECT
 		r.idVerificacaoPeca,
 		r.idVerificacaoVeiculo,
 		P.Descricao as PecaDescicao,
@@ -132,24 +142,17 @@ class Proposta_Model_DbTable_PlanoDivulgacao extends MinC_Db_Table_Abstract{
     }
 
 
-
-
-
-
-
-
-       public function localiza($where=array(), $order=array(), $tamanho=-1, $inicio=-1){
-
+    /**
+     * @todo verificar onde esta sendo utilizado e deletar depois, usando apenas os metodos da abstract.
+     */
+       public function localiza($where=array(), $order=array(), $tamanho=-1, $inicio=-1)
+       {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(array('tbr' => $this->_name));
-
-
-        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-
         return $this->fetchAll($slct);
     }
 
@@ -158,7 +161,7 @@ class Proposta_Model_DbTable_PlanoDivulgacao extends MinC_Db_Table_Abstract{
     {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
-        $slct->from(array('pd' => $this->_name), '*', $this->_schema);
+        $slct->from(array('pd' => $this->_name), $this->_getCols(), $this->_schema);
 
         $slct->joinInner(
             array('v1' => 'Verificacao'),
@@ -189,6 +192,7 @@ class Proposta_Model_DbTable_PlanoDivulgacao extends MinC_Db_Table_Abstract{
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        return $this->fetchAll($slct);
+        $result = $this->fetchAll($slct);
+        return ($result) ? $result->toArray() : array();
     }
 }

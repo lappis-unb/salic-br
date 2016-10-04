@@ -1,18 +1,11 @@
 <?php
-
 Class Proponente extends MinC_Db_Table_Abstract {
 
-//    protected $_name = 'SAC.dbo.Projetos';
-
-//    protected $_banco = "SAC";
-//    protected $_schema = "dbo";
-//    protected $_name = "Projetos";
-//    protected $_primary = "IdPRONAC";
     protected $_banco = 'SAC';
     protected $_name = 'Projetos';
     protected $_schema = 'dbo';
     protected $_primary = 'idProjeto';
-    
+
     public function buscarProponenteProjetoDeUsuario($idUsuario){
         $consulta = $this->select();
         $consulta->setIntegrityCheck(false);
@@ -124,8 +117,10 @@ where Pr.IdPRONAC = " . $pronac . "";
         return $resultado1;
     }
 
-    public function buscarTelefone($pronac) {
-        $sql2 = "SELECT
+
+        public function buscarTelefone($pronac)
+        {
+        $sql2 =  "SELECT
 CASE 
 WHEN Tl.TipoTelefone = 22 or Tl.TipoTelefone = 24
 THEN 'Residencial'
@@ -143,7 +138,7 @@ CASE
 WHEN Tl.Divulgar = 1  
 THEN 'Sim'  
 WHEN Tl.Divulgar = 0 
-THEN 'N�o'  
+THEN 'N&atilde;o'  
 end as Divulgar
 FROM AGENTES.dbo.Telefones Tl
 LEFT JOIN AGENTES.dbo.Uf as Uf on Uf.idUF = Tl.UF
@@ -159,7 +154,9 @@ where Pr.IdPRONAC = " . $pronac . "";
         return $resultado2;
     }
 
-    public function buscarArquivados($pronac) {
+
+        public function buscarArquivados($pronac)
+        {
         $sql3 = "SELECT
                                                 Pr.IdPRONAC,
                                                 Pr.NomeProjeto,
@@ -191,7 +188,9 @@ where Pr.IdPRONAC = " . $pronac . "";
         return $resultado1;
     }
 
-    public function buscarInativos($pronac) {
+
+        public function buscarInativos($pronac)
+        {
         $sql4 = "SELECT
                                                 Pr.IdPRONAC,
                                                 Pr.NomeProjeto,

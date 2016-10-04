@@ -3,7 +3,7 @@
 <script language="javascript" type="text/javascript">
 
     $(document).ready(function(){
-        <?php if(isset($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'){ ?>
+        <?php if(!empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'){ ?>
             //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
             JSBloquearAlteracaoFormulario();
         <?php } ?>
@@ -150,18 +150,18 @@
         <?php if(!empty($this->planosDistribuicao)){ ?>
             <?php foreach($this->planosDistribuicao as $planoDistribuicao){ ?>
                 <?php
-                $totalExemplares += $planoDistribuicao->QtdeProduzida;
-                $receita = ($planoDistribuicao->QtdeVendaNormal*$planoDistribuicao->PrecoUnitarioNormal)+($planoDistribuicao->QtdeVendaPromocional*$planoDistribuicao->PrecoUnitarioPromocional);
+                $totalExemplares += $planoDistribuicao->qtdeproduzida;
+                $receita = ($planoDistribuicao->qtdevendanormal*$planoDistribuicao->precounitarionormal)+($planoDistribuicao->qtdevendapromocional*$planoDistribuicao->precounitariopromocional);
                 $totalReceita += $receita;
                 ?>
             <tr class="fundo">
                 <td class="centro"><?php echo utf8_encode($planoDistribuicao->produto); ?></td>
                 <td class="centro"><?php echo utf8_encode($planoDistribuicao->descricaoarea); ?></td>
                 <td align="right"><?php echo utf8_encode($planoDistribuicao->descricaosegmento); ?></td>
-                <td align="right"><?php echo ($planoDistribuicao->stPrincipal == 0) ? 'N&atilde;o' : 'Sim'; ?></td>
+                <td align="right"><?php echo ($planoDistribuicao->stprincipal == 0) ? 'N&atilde;o' : 'Sim'; ?></td>
                 <td class="centro" nowrap>
-                    <input type="button" class="btn_editar" id="btn_editar" onclick="editar(<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>)"/>&nbsp;
-                    <input type="button" class="btn_exclusao" id="btn_excluir" onclick="confirma('<?php echo $this->urlApagar; ?>&idPlanoDistribuicao=<?php echo $planoDistribuicao['idPlanoDistribuicao']; ?>')"/></td>
+                    <input type="button" class="btn_editar" id="btn_editar" onclick="editar(<?php echo $planoDistribuicao->idplanodistribuicao; ?>)"/>&nbsp;
+                    <input type="button" class="btn_exclusao" id="btn_excluir" onclick="confirma('<?php echo $this->urlApagar; ?>&idPlanoDistribuicao=<?php echo $planoDistribuicao['idplanodistribuicao']; ?>')"/></td>
             </tr>
             <?php } ?>
         <?php } ?>

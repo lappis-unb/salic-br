@@ -11,7 +11,6 @@
  * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  * @since 24/04/2012
  *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 class SegmentoController extends Zend_Controller_Action
@@ -27,6 +26,7 @@ class SegmentoController extends Zend_Controller_Action
      * @access public
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @author wouerner <wouerner@gmail.com>
      * @since  17/08/2016
      */
 	public function comboAction()
@@ -46,9 +46,9 @@ class SegmentoController extends Zend_Controller_Action
                     $html = '<option value=""> - Selecione - </option>';
                     foreach ($resultado as $value) {
                         if($idSegmento > 0 && $idSegmento == $value->id){
-                            $html = $html.'<option value="'.$value->id.'" selected="selected">'.utf8_encode($value->descricao).'</option>';
+                            $html = $html.'<option value="'.$value->id.'" selected="selected">'.($value->descricao).'</option>';
                         } else {
-                            $html = $html.'<option value="'.$value->id.'">'.utf8_encode($value->descricao).'</option>';
+                            $html = $html.'<option value="'.$value->id.'">'.($value->descricao).'</option>';
                         }
                     }
                     echo $html;

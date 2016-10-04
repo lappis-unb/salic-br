@@ -9,7 +9,7 @@
         $arrEnv['testing']     = 'Homologa&ccedil;&atilde;o';
         $arrEnv['staging']     = 'Treinamento';
 
-        $config = new Zend_Config_Ini(APPLICATION_PATH .'/configs/application.ini', getenv('APPLICATION_ENV'));
+        $config = new Zend_Config_Ini(APPLICATION_PATH .'/configs/application.ini', APPLICATION_ENV);
         $strDb = $config->resources->db->adapter;
         $strEnv = getenv('APPLICATION_ENV');
     } else {
