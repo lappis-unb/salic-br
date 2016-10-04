@@ -18,6 +18,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
     private $idUsuario      = 0;
     private $cpfLogado      = null;
 
+
     /**
      * Reescreve o método init()
      * @access public
