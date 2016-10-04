@@ -184,7 +184,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                                   "a.ImpactoAmbiental"=>"CAST(a.ImpactoAmbiental AS TEXT) as ImpactoAmbiental",
                                   "a.EspecificacaoTecnica"=>"CAST(a.EspecificacaoTecnica AS TEXT) as EspecificacaoTecnica",
                                   "a.EstrategiadeExecucao"=>"CAST(a.EstrategiadeExecucao AS TEXT) as EstrategiadeExecucao",
-                                  "a.DtInicioDeExecucaoForm"=>parent::getExpressionToChar(DtInicioDeExecucao),
+                                  "a.DtInicioDeExecucaoForm"=>$this->getExpressionToChar(DtInicioDeExecucao),
 //                                  "a.DtFinalDeExecucaoForm"=>"parent::getExpressionToChar(a.DtFinalDeExecucao)",
 //                                  "a.DtAtoTombamentoForm"=>"parent::getExpressionToChar(a.DtAtoTombamento)",
 //                                  "a.dtAceiteForm"=>"parent::getExpressionToChar(a.dtAceite)",
@@ -207,7 +207,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         {
             $slct->where($coluna, $valor);
         }
-        $slct->where(new Zend_Db_Expr("NOT EXISTS(select 1 from SAC.Projetos pr where a.idPreProjeto = pr.idProjeto)"));
+        $slct->where(new Zend_Db_Expr("NOT EXISTS(select 1 from sac.dbo.Projetos pr where a.idPreProjeto = pr.idProjeto)"));
 
         $slct->order($order);
 
@@ -221,7 +221,6 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                 }
                 $slct->limit($tamanho, $tmpInicio);
         }
-
         return $this->fetchAll($slct);
     }
 

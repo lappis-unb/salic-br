@@ -154,7 +154,7 @@ class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstrac
                 <th>Dt.Final de Execu��o</th>
             </tr>
                 ';
-                foreach ( GerarImprimirpdfDAO::AbrangenciaGeografica($id_projeto) as $Abrangencia )//busca locais onde o preprojeto sera realizado
+                foreach ( GerarImprimirpdfDAO::brangenciaGeografica($id_projeto) as $Abrangencia )//busca locais onde o preprojeto sera realizado
                 {
                     $texto .= '<tr bgcolor="#EEEEEE"><td">'.$Abrangencia->Pais.'</td>';
                     $texto .= '<td>'.$Abrangencia->UF.'</td>';

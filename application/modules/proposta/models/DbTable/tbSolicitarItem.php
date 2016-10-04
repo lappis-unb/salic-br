@@ -401,11 +401,12 @@ class Proposta_Model_DbTable_tbSolicitarItem extends MinC_Db_Table_Abstract {
             null,
             $this->_schema
         );
-        $select->where('sol.idAgente'.'= ?', $idAgente);
+        $select->where('sol.idAgente = '.$idAgente);
         $select->order('sol.idsolicitaritem');
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
         return $db->fetchAll($select);
     } // fecha m�todo buscaprodutoetapaitem()
 
