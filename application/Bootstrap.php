@@ -39,23 +39,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         /* classes pessoais do ministçrio da cultura */
         require_once "MinC/Loader.php";
-
-
-        //Registrando variçveis
-//        Zend_Registry::set('DIR_CONFIG', APPLICATION_PATH . '/configs/' . $strBancoAmbiente . '.ini'); // registra
-
-        /* ambientes: (DES: desenvolvimento - TES: teste - PRO: producao) */
-//        $AMBIENTE = 'DES';
-
-        /* configura para exibir as mensagens de erro */
-//        if ($AMBIENTE == 'DES') {
-//            ini_set('display_errors', true);
-//            error_reporting(E_ALL | E_STRICT);
-//            #if(getenv("APPLICATION_ENV") == 'development') {
-//            require_once 'vendor/autoload.php';
-//            #}
-//        }
-//        Zend_Registry::set('ambiente', $AMBIENTE);
     }
 
     /**
@@ -150,6 +133,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                     'projeto-extrato-mes-rest'
                 )));
         $controller->getRouter()->addRoute('rest', $restRoute);
+    }
+
+    /**
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return void
+     */
+    public function _initCarregarDependenciasComposer()
+    {
+        require_once 'vendor/autoload.php';
     }
 
     /**
