@@ -615,7 +615,6 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $this->verificarPermissaoAcesso(true, false, false);
 
         $get = Zend_Registry::get("get");
-        $this->view->documentosPendentes = Proposta_Model_AnalisarPropostaDAO::buscarDocumentoPendente($get->idPreProjeto);
         //$get = Zend_Registry::get("get");
         //$this->view->documentosPendentes = AnalisarPropostaDAO::buscarDocumentoPendente($get->idPreProjeto);
 

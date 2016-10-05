@@ -435,7 +435,8 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 
         $idPreProjeto = $this->idPreProjeto;
         $dao = new Proposta_Model_AnalisarPropostaDAO();
-        $this->view->itensDocumentoPendente = Proposta_Model_AnalisarPropostaDAO::buscarDocumentoPendente($idPreProjeto);
+        $model = new Proposta_Model_DbTable_DocumentosExigidos();
+        $this->view->itensDocumentoPendente = $model->buscarDocumentoPendente($idPreProjeto);
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
