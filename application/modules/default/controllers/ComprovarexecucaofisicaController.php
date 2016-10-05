@@ -287,12 +287,17 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
                         'dtInicioRealizacao' => $dtInicioNovo,
 			            'dtFimRealizacao' => $dtFimNovo
                     );
-                    $AbrangenciaDAO->cadastrar($dados);
+                   $success = $AbrangenciaDAO->cadastrar($dados);
                 } else {
                     parent::message('Não é possível salvar o mesmo local mais de uma vez. '
                             . '(País, Uf, Município)', $redirectUrl, 'ERROR');
                 }
             }
+
+            if(!$success) {
+                parent::message('Erro ao salvar os dados.', $redirectUrl, 'ERROR');
+            }
+
 
             parent::message('Dados salvos com sucesso!', $redirectUrl, 'CONFIRM');
         } catch (Exception $e){
@@ -315,14 +320,23 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
     }
 
     public function salvarLocalRealizacaoAction(){
+        $idpronac = $this->buscarIdPronac();
 
+        $linkFinal = '';
+        if(filter_input(INPUT_POST, 'relatoriofinal')) {
+            $linkFinal = '-final';
+        }elseif($this->_request->getParam('relatoriofinal')){
+            $linkFinal = '-final';
+        }
+//
+//xd(filter_input(INPUT_GET, 'relatoriofinal'));
         try{
 
         //** Verifica se o usuário logado tem permissão de acesso **//
         $this->verificarPermissaoAcesso(false, true, false);
 
-        $idpronac = $this->buscarIdPronac();
-        $redirectUrl = "comprovarexecucaofisica/local-de-realizacao-final/idpronac/".Seguranca::encrypt($idpronac);
+
+        $redirectUrl = "comprovarexecucaofisica/local-de-realizacao$linkFinal/idpronac/".Seguranca::encrypt($idpronac);
         $redirectUrlErroData = "comprovarexecucaofisica/manter-local-de-realizacao-final/idpronac/".Seguranca::encrypt($idpronac);
 
         $AbrangenciaDAO = new AbrangenciaDAO();
@@ -1251,6 +1265,7 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
             $idLocal = Seguranca::dencrypt($idLocal);
         }
 
+        $this->view->relatoriofinal = $this->_request->getParam("relatoriofinal");
 
         //****** Dados do Projeto - Cabecalho *****//
         $projetos = new Projetos();

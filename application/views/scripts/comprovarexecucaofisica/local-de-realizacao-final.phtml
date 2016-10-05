@@ -1,6 +1,36 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
+        // mascaras dos campos
+        $(".btn_calendario").keyup(function()
+        {
+            mascara(this, format_data); // data
+        });
+
+        // calendario
+        $.datepicker.regional['pt-BR'] =
+        {
+            closeText: 'Fechar',
+            prevText: '&#x3c;Anterior',
+            nextText: 'Pr&oacute;ximo&#x3e;',
+            currentText: 'Hoje',
+            monthNames: ['Janeiro','Fevereiro','Mar&ccedil;o','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+            monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+            dayNames: ['Domingo','Segunda-feira','Ter&ccedil;a-feira','Quarta-feira','Quinta-feira','Sexta-feira','S&aacute;bado'],
+            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'],
+            dayNamesMin: ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'],
+            weekHeader: 'Sm',
+            dateFormat: 'dd/mm/yy',
+            firstDay: 0,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
+
+        // id dos campos que utilizarï¿½o o calendï¿½rio
+        $(".btn_calendario").datepicker($.datepicker.regional['pt-BR']);
+
         // máscaras dos campos
 	$(".calendario").keyup(function(){
             mascara(this, format_data); // data
@@ -375,11 +405,11 @@
                 <th colspan="8">Local de Realização</th>
             </tr>
             <tr align="center">
-                <td class="destacar bold">Modificar</td>
+                <td class="destacar bold">Editar</td>
                 <td class="destacar bold">País</td>
                 <td class="destacar bold">UF</td>
                 <td class="destacar bold">Município</td>
-                <td class="destacar bold" width="10%">Realizado</td>
+                <td class="destacar bold" width="10%">Status</td>
                 <td class="destacar bold" width="1">Dt. In&iacute;cio Realização</td>
                 <td class="destacar bold" width="1">Dt. Fim Realização</td>
                 <td class="destacar bold" width="1">Justificativa</td>
@@ -387,7 +417,7 @@
             <?php foreach ($this->LocaisDeRealizacao as $LocaisDeRealizacao) { ?>
                 <?php if($LocaisDeRealizacao->siAbrangencia != 3){?>
             <tr>
-                <td align="center"><span id="iconeNovo"><a href="<?php echo $this->url(array('controller' => 'comprovarexecucaofisica', 'action' => 'manter-local-de-realizacao-final'), '', true); ?>?idpronac=<?php echo Seguranca::encrypt($this->idPronac); ?>&idlocal=<?php echo Seguranca::encrypt($LocaisDeRealizacao->idAbrangencia);?>"><img src="<?php echo $this->baseUrl(); ?>/public/img/botaoEditarNovo.gif" /></a></span></td>
+                <td align="center"><span id="iconeNovo"><a href="<?php echo $this->url(array('controller' => 'comprovarexecucaofisica', 'action' => 'manter-local-de-realizacao-final'), '', true); ?>?idpronac=<?php echo Seguranca::encrypt($this->idPronac); ?>&idlocal=<?php echo Seguranca::encrypt($LocaisDeRealizacao->idAbrangencia);?>&relatoriofinal=true"><img src="<?php echo $this->baseUrl(); ?>/public/img/botaoEditarNovo.gif" /></a></span></td>
                 <td><?php echo $LocaisDeRealizacao->Pais; ?></td>
                 <td><?php echo $LocaisDeRealizacao->UF; ?></td>
                 <td><?php echo $LocaisDeRealizacao->Municipio; ?></td>
@@ -438,11 +468,11 @@
                 <td class="destacar bold">País</td>
                 <td class="destacar bold">UF</td>
                 <td class="destacar bold">Município</td>
-                <td class="destacar bold" width="1">Realizado</td>
+                <td class="destacar bold" width="1">Status</td>
                 <td class="destacar bold" width="1">Dt. In&iacute;cio Realização</td>
                 <td class="destacar bold" width="1">Dt. Fim Realização</td>
-                <td class="destacar bold" width="1">Excluir</td>
                 <td class="destacar bold" width="1">Justificativa</td>
+                <td class="destacar bold" width="1">Excluir</td>
             </tr>
             <?php foreach ($this->LocaisDeRealizacao as $LocaisDeRealizacao) { ?>
             <?php     if($LocaisDeRealizacao->siAbrangencia == 3){?>
@@ -458,11 +488,11 @@
                         <div style="height: 24px; padding: 6px 0px 0px 4px;" class="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'); ?></div>
                     </td>
                     <td align="center">
-                        <input type="button" value=" " class="btn_excluir" abrg="<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" />
-                    </td>
-                    <td align="center">
                         <span class="<?php echo empty($LocaisDeRealizacao->dsJustificativa)?'sumir':''; ?> iconeJustificativa" id="icone<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><a href=""><img src="<?php echo $this->baseUrl(); ?>/public/img/table_multiple.png" /></a></span>
                         <input type="hidden" id="justificativa<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" name="justificativa<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" value="<?php echo !empty($LocaisDeRealizacao->dsJustificativa)?$LocaisDeRealizacao->dsJustificativa:''; ?>" />
+                    </td>
+                    <td align="center">
+                        <input type="button" value=" " class="btn_excluir" abrg="<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" />
                     </td>
                 </tr>
             <?php      } //fecha IF ?>
@@ -495,22 +525,13 @@
                         <option value="3">Realizado com outras fontes</option>
                     </select>
                 </td>
-                <td align="center"><input type="text" name="novoDtInicioRealizacao" id="novoDtInicioRealizacao" class="input_simples calendario input_font_pq input_pq" maxlength="10" /></td>
-                <td align="center"><input type="text" name="novoDtFimRealizacao" id="novoDtFimRealizacao" class="input_simples calendario input_font_pq input_pq" maxlength="10" /></td>
-                <td>&nbsp;</td>
-                <td align="center">
-                    <span class="sumir iconeJustificativa" id="iconeNovo"><a href=""><img src="<?php echo $this->baseUrl(); ?>/public/img/table_multiple.png" /></a></span>
-                    <input type="hidden" id="justificativaNovo" name="justificativaNovo" value="<?php echo ($LocaisDeRealizacao->siAbrangencia == 1) ? $LocaisDeRealizacao->dsJustificativa:''; ?>" />
-                </td>
+                <td align="center"><input type="text" name="novoDtInicioRealizacao" id="novoDtInicioRealizacao" class="input_simples calendario input_font_pq input_pq btn_calendario" maxlength="10" /></td>
+                <td align="center"><input type="text" name="novoDtFimRealizacao" id="novoDtFimRealizacao" class="input_simples calendario input_font_pq input_pq btn_calendario" maxlength="10" /></td>
+                <td colspan="2" align="center"><input type="button" class="btn_salvar" id="btn_salvar"></td>
             </tr>
-
+            <input type="hidden" name="relatoriofinal" value="true"/>
         </table>
     </form>
-
-    <p align="center">
-        <input type="button" class="btn_salvar" id="btn_salvar">
-    </p>
-
     <br clear="all" />
 </div>
 

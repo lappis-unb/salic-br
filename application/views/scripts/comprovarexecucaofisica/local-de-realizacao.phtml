@@ -1,6 +1,36 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
+        // mascaras dos campos
+        $(".btn_calendario").keyup(function()
+        {
+            mascara(this, format_data); // data
+        });
+
+        // calendario
+        $.datepicker.regional['pt-BR'] =
+        {
+            closeText: 'Fechar',
+            prevText: '&#x3c;Anterior',
+            nextText: 'Pr&oacute;ximo&#x3e;',
+            currentText: 'Hoje',
+            monthNames: ['Janeiro','Fevereiro','Mar&ccedil;o','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+            monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+            dayNames: ['Domingo','Segunda-feira','Ter&ccedil;a-feira','Quarta-feira','Quinta-feira','Sexta-feira','S&aacute;bado'],
+            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'],
+            dayNamesMin: ['Dom','Seg','Ter','Qua','Qui','Sex','Sab'],
+            weekHeader: 'Sm',
+            dateFormat: 'dd/mm/yy',
+            firstDay: 0,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
+        };
+        $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
+
+        // id dos campos que utilizarï¿½o o calendï¿½rio
+        $(".btn_calendario").datepicker($.datepicker.regional['pt-BR']);
+
         // máscaras dos campos
 	$(".calendario").keyup(function(){
             mascara(this, format_data); // data
@@ -338,7 +368,6 @@
     <div>Local de Realização <span class="voltar"><a href="<?php echo $this->baseUrl(); ?>/comprovarexecucaofisica/relatoriotrimestral/idpronac/<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Voltar">Voltar</a></span></div>
 </div>
 
-
 <div id="conteudo">
     <table class="tabela">
         <tr>
@@ -367,72 +396,113 @@
                 <th colspan="8">Local de Realização</th>
             </tr>
             <tr align="center">
+                <td class="destacar bold">Editar</td>
                 <td class="destacar bold">País</td>
                 <td class="destacar bold">UF</td>
                 <td class="destacar bold">Município</td>
-                <td class="destacar bold" width="1">Realizado</td>
+                <td class="destacar bold" width="10%">Status</td>
                 <td class="destacar bold" width="1">Dt. In&iacute;cio Realização</td>
                 <td class="destacar bold" width="1">Dt. Fim Realização</td>
-                <td class="destacar bold" width="1">Excluir</td>
                 <td class="destacar bold" width="1">Justificativa</td>
             </tr>
             <?php foreach ($this->LocaisDeRealizacao as $LocaisDeRealizacao) { ?>
-            <tr>
-                <td><?php echo $LocaisDeRealizacao->Pais; ?></td>
-                <td><?php echo $LocaisDeRealizacao->UF; ?></td>
-                <td><?php echo $LocaisDeRealizacao->Municipio; ?></td>
-                <td>
-                    <?php if($LocaisDeRealizacao->siAbrangencia == 3) { ?>
-                    <div style="height: 24px; padding: 6px 0px 0px 4px;">Realizado com outras fontes</div>
-                    <?php } else { ?>
-                    <select name="siAbrangencia[]" class="select_simples obrigatorio w200 selectAbrg input_font_pq">
-                        <option value="0:<?php echo $LocaisDeRealizacao->idAbrangencia; ?>">Sem Informação</option>
-                        <option value="1:<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" <?php echo($LocaisDeRealizacao->siAbrangencia == 1)?'selected="selected"':''; ?>>Não Realizado</option>
-                        <option value="2:<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" <?php echo($LocaisDeRealizacao->siAbrangencia == 2)?'selected="selected"':''; ?>>Realizado</option>
-                    </select>
-                    <?php } ?>
-                </td>
-                <td>
-                    <?php if(!empty($LocaisDeRealizacao->dtInicioRealizacao)) { ?>
-                    <input type="hidden" name="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples" value="<?php echo !empty($LocaisDeRealizacao->dtInicioRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'):''; ?>"/>
-                    <div style="height: 24px; padding: 6px 0px 0px 4px;" class="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'); ?></div>
-                    <?php } else { ?>
-                    <input type="text" name="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples calendario sumir input_font_pq input_pq dtRealizacao" maxlength="10" value="<?php echo !empty($LocaisDeRealizacao->dtInicioRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'):''; ?>" />
-                    <?php } ?>
-                </td>
-                <td>
-                    <?php if(!empty($LocaisDeRealizacao->dtFimRealizacao)) { ?>
-                    <input type="hidden" name="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples" value="<?php echo !empty($LocaisDeRealizacao->dtFimRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'):''; ?>"/>
-                    <div style="height: 24px; padding: 6px 0px 0px 4px;" class="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'); ?></div>
-                    <?php } else { ?>
-                    <input type="text" name="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples calendario sumir input_font_pq input_pq dtRealizacao" maxlength="10" value="" />
-                    <?php } ?>
-                </td>
-                <td align="center">
-                    <?php if($LocaisDeRealizacao->siAbrangencia == 3) { ?>
-                    <input type="button" value=" " class="btn_excluir" abrg="<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" />
-                    <?php } ?>
-                </td>
-                <td align="center">
-                    <span class="<?php echo empty($LocaisDeRealizacao->dsJustificativa)?'sumir':''; ?> iconeJustificativa" id="icone<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><a href=""><img src="<?php echo $this->baseUrl(); ?>/public/img/table_multiple.png" /></a></span>
-                    <input type="hidden" id="justificativa<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" name="justificativa<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" value="<?php echo !empty($LocaisDeRealizacao->dsJustificativa)?$LocaisDeRealizacao->dsJustificativa:''; ?>" />
-                </td>
-            </tr>
+                <?php if($LocaisDeRealizacao->siAbrangencia != 3){?>
+                    <tr>
+                        <td align="center"><span id="iconeNovo"><a href="<?php echo $this->url(array('controller' => 'comprovarexecucaofisica', 'action' => 'manter-local-de-realizacao-final'), '', true); ?>?idpronac=<?php echo Seguranca::encrypt($this->idPronac); ?>&idlocal=<?php echo Seguranca::encrypt($LocaisDeRealizacao->idAbrangencia);?>"><img src="<?php echo $this->baseUrl(); ?>/public/img/botaoEditarNovo.gif" /></a></span></td>
+                        <td><?php echo $LocaisDeRealizacao->Pais; ?></td>
+                        <td><?php echo $LocaisDeRealizacao->UF; ?></td>
+                        <td><?php echo $LocaisDeRealizacao->Municipio; ?></td>
+                        <td>
+                            <?php switch($LocaisDeRealizacao->siAbrangencia){
+                                case 0:
+                                    echo 'Sem Informação';
+                                    break;
+                                case 1:
+                                    echo 'Não Realizado';
+                                    break;
+                                case 2:
+                                    echo 'Realizado';
+                                    break;
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <?php if(!empty($LocaisDeRealizacao->dtInicioRealizacao)) { ?>
+                                <input type="hidden" name="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtInicioRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples" value="<?php echo !empty($LocaisDeRealizacao->dtInicioRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'):''; ?>"/>
+                                <div style="height: 24px; padding: 6px 0px 0px 4px;" class="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'); ?></div>
+                            <?php } else { ?>
+                                <input type="text" name="dtInicioRealizacao" id="dtInicioRealizacao" class="input_simples calendario sumir input_font_pq input_pq dtRealizacao" maxlength="10" value="<?php echo !empty($LocaisDeRealizacao->dtInicioRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'):''; ?>" />
+                            <?php } ?>
+                        </td>
+                        <td>
+                            <?php if(!empty($LocaisDeRealizacao->dtFimRealizacao)) { ?>
+                                <input type="hidden" name="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" id="dtFimRealizacao<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" class="input_simples" value="<?php echo !empty($LocaisDeRealizacao->dtFimRealizacao) ? Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'):''; ?>"/>
+                                <div style="height: 24px; padding: 6px 0px 0px 4px;" class="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'); ?></div>
+                            <?php } else { ?>
+                                <input type="text" name="dtFimRealizacao" id="dtFimRealizacao" class="input_simples calendario sumir input_font_pq input_pq dtRealizacao" maxlength="10" value="" />
+                            <?php } ?>
+                        </td>
+                        <td align="center">
+                            <span class="<?php echo empty($LocaisDeRealizacao->dsJustificativa)?'sumir':''; ?> iconeJustificativa" id="icone<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><a href=""><img src="<?php echo $this->baseUrl(); ?>/public/img/table_multiple.png" /></a></span>
+                            <input type="hidden" id="justificativa" name="justificativa" value="<?php echo !empty($LocaisDeRealizacao->dsJustificativa)?$LocaisDeRealizacao->dsJustificativa:''; ?>" />
+                        </td>
+                    </tr>
+                <?php      } ?>
             <?php } ?>
+        </table>
+        </br>
+        <table class="tabela">
+            <tr align="center">
+                <th colspan="8">Local de Realização (Outras fontes)</th>
+            </tr>
+            <tr align="center">
+                <td class="destacar bold">País</td>
+                <td class="destacar bold">UF</td>
+                <td class="destacar bold">Município</td>
+                <td class="destacar bold" width="1">Status</td>
+                <td class="destacar bold" width="1">Dt. In&iacute;cio Realização</td>
+                <td class="destacar bold" width="1">Dt. Fim Realização</td>
+                <td class="destacar bold" width="1">Justificativa</td>
+                <td class="destacar bold" width="1">Excluir</td>
+            </tr>
+            <?php foreach ($this->LocaisDeRealizacao as $LocaisDeRealizacao) { ?>
+                <?php     if($LocaisDeRealizacao->siAbrangencia == 3){?>
+                    <tr>
+                        <td><?php echo $LocaisDeRealizacao->Pais; ?></td>
+                        <td><?php echo $LocaisDeRealizacao->UF; ?></td>
+                        <td><?php echo $LocaisDeRealizacao->Municipio; ?></td>
+                        <td>Realizado com outras fontes</td>
+                        <td>
+                            <div align="center" style="height: 24px; padding: 6px 0px 0px 4px;" class="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtInicioRealizacao, 'Brasileira'); ?></div>
+                        </td>
+                        <td>
+                            <div style="height: 24px; padding: 6px 0px 0px 4px;" class="div_<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><?php echo Data::tratarDataZend($LocaisDeRealizacao->dtFimRealizacao, 'Brasileira'); ?></div>
+                        </td>
+                        <td align="center">
+                            <span class="<?php echo empty($LocaisDeRealizacao->dsJustificativa)?'sumir':''; ?> iconeJustificativa" id="icone<?php echo $LocaisDeRealizacao->idAbrangencia; ?>"><a href=""><img src="<?php echo $this->baseUrl(); ?>/public/img/table_multiple.png" /></a></span>
+                            <input type="hidden" id="justificativa<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" name="justificativa<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" value="<?php echo !empty($LocaisDeRealizacao->dsJustificativa)?$LocaisDeRealizacao->dsJustificativa:''; ?>" />
+                        </td>
+                        <td align="center">
+                            <input type="button" value=" " class="btn_excluir" abrg="<?php echo $LocaisDeRealizacao->idAbrangencia; ?>" />
+                        </td>
+                    </tr>
+                <?php      } //fecha IF ?>
+            <?php } //fecha foreach?>
             <tr>
                 <td>
                     <select name="novoPais" id="novoPais" class="select_simples input_font_pq">
                         <option value=""> - Selecione - </option>
                         <?php foreach ($this->Paises as $Paises) { ?>
-                        <option value="<?php echo $Paises->idPais; ?>"><?php echo $Paises->Descricao; ?></option>
+                            <option value="<?php echo $Paises->idPais; ?>"><?php echo $Paises->Descricao; ?></option>
                         <?php } ?>
                     </select>
                 </td>
+
                 <td>
                     <select name="novoUf" id="novoUf" class="select_simples input_font_pq" disabled="disabled">
                         <option value=""> - Selecione - </option>
                         <?php foreach ($this->UFs as $UFs) { ?>
-                        <option value="<?php echo $UFs->idUF; ?>"><?php echo $UFs->Descricao; ?></option>
+                            <option value="<?php echo $UFs->idUF; ?>"><?php echo $UFs->Descricao; ?></option>
                         <?php } ?>
                     </select>
                 </td>
@@ -446,21 +516,12 @@
                         <option value="3">Realizado com outras fontes</option>
                     </select>
                 </td>
-                <td align="center"><input type="text" name="novoDtInicioRealizacao" id="novoDtInicioRealizacao" class="input_simples calendario input_font_pq input_pq" maxlength="10" /></td>
-                <td align="center"><input type="text" name="novoDtFimRealizacao" id="novoDtFimRealizacao" class="input_simples calendario input_font_pq input_pq" maxlength="10" /></td>
-                <td>&nbsp;</td>
-                <td align="center">
-                    <span class="sumir iconeJustificativa" id="iconeNovo"><a href=""><img src="<?php echo $this->baseUrl(); ?>/public/img/table_multiple.png" /></a></span>
-                    <input type="hidden" id="justificativaNovo" name="justificativaNovo" value="<?php echo ($LocaisDeRealizacao->siAbrangencia == 1) ? $LocaisDeRealizacao->dsJustificativa:''; ?>" />
-                </td>
+                <td align="center"><input type="text" name="novoDtInicioRealizacao" id="novoDtInicioRealizacao" class="input_simples calendario input_font_pq input_pq btn_calendario" maxlength="10" /></td>
+                <td align="center"><input type="text" name="novoDtFimRealizacao" id="novoDtFimRealizacao" class="input_simples calendario input_font_pq input_pq btn_calendario" maxlength="10" /></td>
+                <td colspan="2" align="center"><input type="button" class="btn_salvar" id="btn_salvar"></td>
             </tr>
         </table>
     </form>
-
-    <p align="center">
-        <input type="button" class="btn_salvar" id="btn_salvar">
-    </p>
-
     <br clear="all" />
 </div>
 

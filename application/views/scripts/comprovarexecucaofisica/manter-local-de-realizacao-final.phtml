@@ -94,7 +94,7 @@
 
 
         $('#btn_cancelar').click(function(){
-            $('#formCancelar').submit();
+            window.history.back();
         });
 
         function esconderdatacampo(){
@@ -148,7 +148,6 @@
         <li class="first"><a href="#" title="In&iacute;cio">In&iacute;cio</a></li>
         <li class="second"><a href="<?php echo $this->baseUrl(); ?>/consultardadosprojeto/index?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>" title="Consultar dados do Projeto">Consultar dados do Projeto</a></li>
         <li class="third">Comprovar Realização do Objeto</li>
-        <li class="third"><a href="<?php echo $this->baseUrl(); ?>/comprovarexecucaofisica/local-de-realizacao-final?idpronac=<?php echo Seguranca::encrypt($this->idPronac); ?>">Local de Realização</a></li>
         <li class="last">Modificar Local de Realização</li>
     </ul>
 </div>
@@ -261,9 +260,8 @@
             </tr>
         </table>
             <input type="hidden" name="idAbrangencia" value="<?php echo $this->LocaisDeRealizacao[0]->idAbrangencia; ?>" />
+            <input type="hidden" name="relatoriofinal" value="<?php echo $this->relatoriofinal; ?>" />
     </form>
-
-    <form id="formCancelar" action="<?php echo $this->url(array('controller' => 'comprovarexecucaofisica', 'action' => 'local-de-realizacao-final'), '', true); ?>?idpronac=<?php echo Seguranca::encrypt($this->idPronac); ?>" method="post"></form>
 
     <p align="center">
         <input type="button" class="btn_salvar" id="btn_salvar">
