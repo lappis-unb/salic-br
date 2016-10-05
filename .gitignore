@@ -4,6 +4,8 @@ application.ini
 *.swp
 *.save
 
+nbproject
+
 index.php
 *~
 index.php
