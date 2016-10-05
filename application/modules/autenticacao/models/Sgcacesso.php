@@ -247,7 +247,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
             } else {
                 $tmpTblSgcAcesso = $tmpTblSgcAcesso->createRow();
             }
-            //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
+
             if (isset($dados['cpf'])) $tmpTblSgcAcesso->cpf = $dados['cpf'];
             if (isset($dados['nome'])) $tmpTblSgcAcesso->nome = $dados['nome'];
             if (isset($dados['dtnascimento'])) $tmpTblSgcAcesso->dtnascimento = $dados['dtnascimento'];
