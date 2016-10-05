@@ -1,8 +1,19 @@
 <?php
 
+/**
+ * AgentesControllerTest
+ *
+ * @author wouerner <woeurner@gmail.como>
+ */
 class AgentesControllerTest extends MinC_Test_ControllerActionTestCase
 {
 
+    /**
+     * TestIncluiragente Acesso a tela de incluir agente
+     *
+     * @access public
+     * @return void
+     */
     public function testIncluiragente()
     {
         $this->autenticar();
@@ -10,6 +21,6 @@ class AgentesControllerTest extends MinC_Test_ControllerActionTestCase
         $this->assertModule('agente');
         $this->assertController('agentes');
         $this->assertAction('incluiragente');
-        //$this->assertRedirect();
+        $this->assertXpath('/html/body/div[1]');
     }
 }
