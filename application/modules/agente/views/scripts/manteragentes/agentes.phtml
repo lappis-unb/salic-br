@@ -9,7 +9,7 @@ if($this->grupoAtivo != 118)
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Ir para Início">Início</a></li>
+		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
 		<li class="last">Manter Agentes</li>
 	</ul>
 </div>
@@ -21,7 +21,7 @@ if($this->grupoAtivo != 118)
 		<span class="voltar">
 
 		<?php if (isset($_GET['acao']) && $_GET['acao'] == 'cc' && isset($_GET['cpf']) && !empty($_GET['cpf']) && isset($_GET['idpronac'])) { // pega do readequação ?>
-		<a href="<?php echo $this->url(array('controller'=>'solicitaralteracao', 'action'=>'acaoprojeto')); ?>?idpronac=<?php echo $_GET['idpronac']; ?>" title="Voltar">Voltar para a Solicitação de Readequação</a>
+		<a href="<?php echo $this->url(array('controller'=>'solicitaralteracao', 'action'=>'acaoprojeto')); ?>?idpronac=<?php echo $_GET['idpronac']; ?>" title="Voltar">Voltar para a Solicita&ccedil;&atilde;o de Readequa&ccedil;&atilde;o</a>
 		<?php } else {?>
 		<a href="#" onclick="voltar();">Voltar</a>
 		<?php } ?>
@@ -47,7 +47,7 @@ if($this->grupoAtivo != 118)
 
 	<div id="erroGeral" class="msgERROR sumir">
 		<div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msgERROR" onclick="$('.msgERROR').hide();" onkeypress="$('.msgERROR').hide();"/></div>
-		<div>Dados obrigatórios não informados!</div>
+		<div>Dados obrigatórios n&atilde;o informados!</div>
 	</div>
 
     <form class="formAgentes form" name="formCadAgentes" id="formCadAgentes" method="post"

@@ -17,8 +17,8 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="#" title="Ir para Início">Início</a></li>
-        <li><a href="#" title="Tramitação de Documentos">Manter Agentes</a></li>
+        <li class="first"><a href="#" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
+        <li><a href="#" title="Tramita&ccedil;&atilde;o de Documentos">Manter Agentes</a></li>
         <li class="last">Principal</li>
     </ul>
 </div>
@@ -52,7 +52,7 @@
 
             <table id="tabEmail" class="tabela">
                 <tr>
-                    <th colspan="5">ADICIONE E-MAILS ATRAVÉS DO FORMULÁRIO ABAIXO</th>
+                    <th colspan="5">ADICIONE E-MAILS ATRAVÉS DO FORMUL&Aacute;RIO ABAIXO</th>
                 </tr>
                 <tr>
                     <td>
@@ -83,15 +83,15 @@
                         <input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
                         <label for="divulgarEmailS">Sim</label>
                         <input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked"   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-                        <label for="divulgarEmailN">Não</label>
+                        <label for="divulgarEmailN">N&atilde;o</label>
                     </td>
                     <td>
-                        <label>Para correpondência? *</label>
+                        <label>Para correpond&ecirc;ncia? *</label>
                         <br />
                         <input type="radio" name="enviarEmail" id="enviarEmailS" value="1" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
                         <label for="enviarEmailS">Sim</label>
                         <input type="radio" name="enviarEmail" id="enviarEmailN" value="0" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-                        <label for="enviarEmailN">Não</label>
+                        <label for="enviarEmailN">N&atilde;o</label>
                     </td>
                 </tr>
 
@@ -120,15 +120,15 @@
                 <td><label>Tipo</label></td>
                 <td><label>E-mail</label></td>
                 <td><label>Divulgar?</label></td>
-                <td><label>Para correpondência?</label></td>
+                <td><label>Para correpond&ecirc;ncia?</label></td>
                 <td></td>
             </tr>
             <?php foreach($this->emails as $e):?>
             <tr>
                 <td><?php echo $e->tipo ;?></td>
                 <td><?php echo $e->Descricao ;?></td>
-                <td><?php echo $e->Divulgar == "1" ? "SIM" : "NÃO" ;?></td>
-                <td><?php echo $e->Status == "1" ? "SIM" : "NÃO" ;?></td>
+                <td><?php echo $e->Divulgar == "1" ? "SIM" : "N&Atilde;O" ;?></td>
+                <td><?php echo $e->Status == "1" ? "SIM" : "N&Atilde;O" ;?></td>
                 <td width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('','<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluiemail', 'idInternet' => $e->idInternet, 'qtdEmail' => $this->qtdEmail));?>');" /></td>
             </tr>
             <?php endforeach; ?>

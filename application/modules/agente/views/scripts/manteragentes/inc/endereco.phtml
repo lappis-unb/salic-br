@@ -61,7 +61,7 @@
 
 	<tr>
 		<td colspan="2">
-			<label for="tipoEndereco">Tipo de Endereço *</label>
+			<label for="tipoEndereco">Tipo de Endere&ccedil;o *</label>
 			<select name="tipoEndereco" id="tipoEndereco" >
 
 				<?php if (!isset($this->tipoEndereco) || empty($this->tipoEndereco)) { ?>
@@ -105,7 +105,7 @@
 				<span id="erroLogradouro" class="spanError"></span>
 		</td>
 		<td colspan="2">
-			<label for="numero">Número *</label>
+			<label for="numero">N&uacute;mero *</label>
 			<input type="text" name="numero" id="numero" maxlength="10" onkeyup="mascara(this, format_num);" readonly="readonly"/>
 				<span id="erroNumero" class="spanError"></span>
 		</td>
@@ -126,20 +126,20 @@
 
 	<tr>
 		<td colspan="2">
-			<label>Autorizo divulgar o endereço</label>
+			<label>Autorizo divulgar o endere&ccedil;o</label>
 			<input type="radio" name="divulgarEndereco" id="divulgarEnderecoS" value="1" class="checkradio" />
 			<label for="divulgarEnderecoS">Sim</label>
 
 			<input type="radio" name="divulgarEndereco" id="divulgarEnderecoN" value="0" class="checkradio" checked="checked"/>
-			<label for="divulgarEnderecoN">Não</label>
+			<label for="divulgarEnderecoN">N&atilde;o</label>
 		</td>
 		<td colspan="2">
-			<label>Endereço para correspondências?</label>
+			<label>Endere&ccedil;o para correspond&ecirc;ncias?</label>
 			<input type="radio" name="enderecoCorrespondencia" id="enderecoCorrespondenciaS" value="1" class="checkradio" />
 			<label for="enderecoCorrespondenciaS">Sim</label>
 
 			<input type="radio" name="enderecoCorrespondencia" id="enderecoCorrespondenciaN" value="0" class="checkradio" checked="checked" />
-			<label for="enderecoCorrespondenciaN">Não</label>
+			<label for="enderecoCorrespondenciaN">N&atilde;o</label>
 		</td>
 	</tr>
 
@@ -149,7 +149,7 @@
 
 
 	<tr class="titulo_tabela">
-		<th colspan="4">LISTA DE ÁREA</th>
+		<th colspan="4">LISTA DE &Aacute;REA</th>
 		<th><span id="Q_suplentes" class="spanError"></span>
 		<span id="Q_titulares" class="spanError"></span>
 		<span id="msgAS" class="spanError"></span></th>
@@ -166,12 +166,12 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-			<label for="areaCultural">Área Cultural *</label>
+			<label for="areaCultural">&Aacute;rea Cultural *</label>
 			<select name="areaCultural" id="areaCultural"
 				onchange="carregar_combo(this.value,
 					'segmentoCultural',
 					'../segmentocultural/combo',
-					' - Selecione uma Área Cultural - ');">
+					' - Selecione uma &Aacute;rea Cultural - ');">
 
 				<?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
 				<option value="0"> - Selecione - </option>
@@ -192,7 +192,7 @@
 			<select name="segmentoCultural" id="segmentoCultural" onchange="buscarareasegmento();">
 
 				<?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
-				<option value="0"> - Selecione uma Área Cultural - </option>
+				<option value="0"> - Selecione uma &Aacute;rea Cultural - </option>
 				<?php } else { ?>
 
 					<?php if (!isset($this->segmentoCultural) || empty($this->segmentoCultural)) { ?>

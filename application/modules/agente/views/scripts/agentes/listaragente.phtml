@@ -3,7 +3,7 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Início">Início</a></li>
+		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="In&iacute;cio">In&iacute;cio</a></li>
 		<li><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes')); ?>?acao=cc">Manter Agentes</a></li>
 		<li><a href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'buscaragente')); ?>">Pesquisar Agentes</a></li>
 		<li class="last">Resultado da busca</li>
@@ -30,7 +30,7 @@
         <tr>
             <th>CPF/CNPJ</th>
             <th>NOME</th>
-            <th>VISÃO</th>
+            <th>VIS&Atilde;O</th>
             <th></th>
         </tr>
         <?php $cont = 0; ?>
@@ -55,7 +55,7 @@
                 ?>
             </td>
             <td class="centro">
-                <input type="button" class="btn_ver" title=" Alterar Visão " value=" "
+                <input type="button" class="btn_ver" title=" Alterar Vis&atilde;o " value=" "
                     onclick="redirecionar('<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes','id' => $b->idAgente),'',true); ?>');" />
             </td>
         </tr>

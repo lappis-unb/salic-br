@@ -43,15 +43,15 @@
 			<input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" class="checkradio" />
 			<label for="divulgarEmailS">Sim</label>
 			<input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked" />
-			<label for="divulgarEmailN">Não</label>
+			<label for="divulgarEmailN">N&atilde;o</label>
 		</td>
 		<td>
-			<label>Para correpondência? *</label>
+			<label>Para correpond&ecirc;ncia? *</label>
 			<br />
 			<input type="radio" name="enviarEmail" id="enviarEmailS" value="1" class="checkradio" checked="checked" />
 			<label for="enviarEmailS">Sim</label>
 			<input type="radio" name="enviarEmail" id="enviarEmailN" value="0" class="checkradio" />
-			<label for="enviarEmailN">Não</label>
+			<label for="enviarEmailN">N&atilde;o</label>
 		</td>
 		<td class="center" width="30">
 			<input id="btnAddEmail" type="button" title="Adicionar E-mail" class="btn_add"
@@ -67,8 +67,8 @@
 		<td class="titulo_tabela">TIPO</td>
 		<td class="titulo_tabela" >E-MAIL</td>
 		<td class="titulo_tabela" >DIVULGAR?</td>
-		<td class="titulo_tabela" >PARA CORRESPONDÊNCIA?</td>
-		<td width="60">AÇÃO</td>
+		<td class="titulo_tabela" >PARA CORRESPOND&Ecirc;NCIA?</td>
+		<td width="60">A&Ccedil;&Atilde;O</td>
 	</tr>
 
 	<?php if (isset($this->Emails)): ?>
@@ -85,11 +85,11 @@
 				<input type="hidden" name="Emails[]" id="Emails[]" value="<?php echo $this->Emails[$i]?>" />
 			</td>
 			<td class="center">
-				<?php echo $this->divulgarEmails[$i] == 1 ? 'Sim' : 'Não'; ?>
+				<?php echo $this->divulgarEmails[$i] == 1 ? 'Sim' : 'N&atilde;o'; ?>
 				<input type="hidden" name="divulgarEmails[]" id="divulgarEmails[]" value="<?php echo $this->divulgarEmails[$i]?>" />
 			</td>
 			<td class="center">
-				<?php echo $this->enviarEmails[$i] == 1 ? 'Sim' : 'Não'; ?>
+				<?php echo $this->enviarEmails[$i] == 1 ? 'Sim' : 'N&atilde;o'; ?>
 				<input type="hidden" name="enviarEmails[]" id="enviarEmails[]" value="<?php echo $this->enviarEmails[$i]?>" />
 			</td>
 			<td class="center">

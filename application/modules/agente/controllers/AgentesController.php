@@ -571,13 +571,13 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $this->_redirect('agente/agentes/incluiragente');
         }
 
-        $tbInfo = new TbInformacaoProfissional();
+        $tbInfo = new Agente_Model_DbTable_TbInformacaoProfissional();
         $this->view->formacoes = $tbInfo->BuscarInfo($idAgente, null);
 
         $ano = date('Y');
         $mes = date('m');
 
-        $tbAusencia = new TbAusencia();
+        $tbAusencia = new Agente_Model_DbTable_TbAusencia();
         $dados = $tbAusencia->BuscarAusencia($idAgente, $ano, 2, $mes);
 
         $totalDias = 0;
@@ -587,7 +587,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             }
         }
 
-        $tbCredenciamentoParecerista = new TbCredenciamentoParecerista();
+        $tbCredenciamentoParecerista = new Agente_Model_DbTable_TbCredenciamentoParecerista();
         $credenciados = $tbCredenciamentoParecerista->BuscarCredenciamentos($idAgente);
 
         $this->view->credenciados = $credenciados;
@@ -1228,7 +1228,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $tipoDocumento = $escolaridade->BuscarTipoDocumento();
         $this->view->tipoDocumento = $tipoDocumento;
 
-        $tbInfo = new TbInformacaoProfissional();
+        $tbInfo = new Agente_Model_DbTable_TbInformacaoProfissional();
 
         $this->view->formacoes = $tbInfo->BuscarInfo($idAgente, null);
 
@@ -1255,7 +1255,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $dtSaida = $this->formatadata($this->_request->getParam('dtsaida'));
         $tipoDocumento = $this->_request->getParam('tipoDocumento');
 
-        $tbInfoPro = new TbInformacaoProfissional();
+        $tbInfoPro = new Agente_Model_DbTable_TbInformacaoProfissional();
         $tbDocumento = new tbDocumento();
         $tbArquivo = new tbArquivo();
         $tbArquivoImagem = new tbArquivoImagem();
@@ -1338,7 +1338,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $idAgente = $this->_request->getParam("id");
         $ano = date('Y');
 
-        $tbAusencia = new TbAusencia();
+        $tbAusencia = new Agente_Model_DbTable_TbAusencia();
 
         $dados = $tbAusencia->BuscarAusencia($idAgente, $ano, 2, null);
 
@@ -1370,7 +1370,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $dtInicio = $this->formatadata($this->_request->getParam("dtinicio"));
         $dtFim = $this->formatadata($this->_request->getParam("dtfim"));
 
-        $tbAusencia = new TbAusencia();
+        $tbAusencia = new Agente_Model_DbTable_TbAusencia();
 
         $repetida = $tbAusencia->BuscarAusenciaRepetida($idAgente, $dtInicio, $dtFim);
 
@@ -1434,7 +1434,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
 
-            $tbAusencia = new TbAusencia();
+            $tbAusencia = new Agente_Model_DbTable_TbAusencia();
 
             if ($tipoAlteracao == 1) {
                 $dados = array('dsJustificativaAusencia' => $justificativa,
@@ -1492,7 +1492,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $idferias = $this->_request->getParam("idferias");
 
         try {
-            $tbAusencia = new TbAusencia();
+            $tbAusencia = new Agente_Model_DbTable_TbAusencia();
 
             $dados = array('dsJustificativaAusencia' => $justificativa,
                 'siAusencia' => 3
@@ -1517,7 +1517,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $idferias = $this->_request->getParam("idferias");
 
         try {
-            $tbAusencia = new TbAusencia();
+            $tbAusencia = new Agente_Model_DbTable_TbAusencia();
 
             $dados = array('siAusencia' => 1);
 
@@ -1539,7 +1539,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $idAgente = $this->_request->getParam("id");
         $ano = date('Y');
 
-        $tbAusencia = new TbAusencia();
+        $tbAusencia = new Agente_Model_DbTable_TbAusencia();
         $atestados = $tbAusencia->BuscarAusencia($idAgente, $ano, 1, null);
 
         $this->view->atestados = $atestados;
@@ -1561,7 +1561,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $dtFim = $this->formatadata($this->_request->getParam("dtfim"));
         $impacto = $this->_request->getParam("impacto");
 
-        $tbAusencia = new TbAusencia();
+        $tbAusencia = new Agente_Model_DbTable_TbAusencia();
         $tbDocumento = new tbDocumento();
         $tbArquivo = new tbArquivo();
         $tbArquivoImagem = new tbArquivoImagem();
@@ -1680,10 +1680,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         $idAgente = $this->_request->getParam("id");
 
-        $tbCredenciamentoParecerista = new TbCredenciamentoParecerista();
+        $tbCredenciamentoParecerista = new Agente_Model_DbTable_TbCredenciamentoParecerista();
         $credenciados = $tbCredenciamentoParecerista->BuscarCredenciamentos($idAgente);
 
-        $tbInformacaoProfissional = new TbInformacaoProfissional();
+        $tbInformacaoProfissional = new Agente_Model_DbTable_TbInformacaoProfissional();
         $buscaAnos = $tbInformacaoProfissional->AnosExperiencia($idAgente);
 
         $anos = 0;
@@ -1719,7 +1719,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $novoSiCredenciamento = 0;
         }
 
-        $tbCredenciamentoParecerista = new TbCredenciamentoParecerista();
+        $tbCredenciamentoParecerista = new Agente_Model_DbTable_TbCredenciamentoParecerista();
 
         try {
             $dados = array('siCredenciamento' => $novoSiCredenciamento);
@@ -1745,7 +1745,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $segmentoCultural = $this->_request->getParam("segmentoCultural");
         $nivel = $this->_request->getParam("nivel");
 
-        $tbCredenciamentoParecerista = new TbCredenciamentoParecerista();
+        $tbCredenciamentoParecerista = new Agente_Model_DbTable_TbCredenciamentoParecerista();
 
         $idArea = substr($areaCultural, 0, 1);
         $idSegmento = substr($segmentoCultural, 0, 1);
@@ -2675,7 +2675,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->autenticacao();
         $ano = date('Y');
 
-        $tbAusencia = new TbAusencia();
+        $tbAusencia = new Agente_Model_DbTable_TbAusencia();
 
         $dados = $tbAusencia->BuscarAusenciaPainel($ano);
 
@@ -2845,7 +2845,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $idAgente = $this->_request->getParam("id");
         $this->view->id = $idAgente;
 
-        $tbAgenteFisico = new tbAgenteFisico();
+        $tbAgenteFisico = new Agente_Model_DbTable_TbAgenteFisico();
         $result = $tbAgenteFisico->buscar(array('idAgente = ?'=>$idAgente))->current();
         $this->view->dadosAdicionais = $result;
     }
@@ -2870,7 +2870,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             'nrIdentificadorProcessual' => $processo
         );
 
-        $tbAgenteFisico = new tbAgenteFisico();
+        $tbAgenteFisico = new Agente_Model_DbTable_TbAgenteFisico();
 
         $result = $tbAgenteFisico->buscar(array('idAgente = ?'=>$post->agente));
 

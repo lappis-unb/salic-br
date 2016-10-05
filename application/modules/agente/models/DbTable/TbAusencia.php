@@ -1,49 +1,82 @@
 <?php
 /**
- * Description of tbAusencia
+ * Class Agente_Model_DbTable_TbAusencia
  *
- * @author Equipe Politec
+ * @name Agente_Model_DbTable_TbAusencia
+ * @package Modules/Agente
+ * @subpackage Models/DbTable
+ *
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+ * @since 05/10/2016
+ *
+ * @link http://salic.cultura.gov.br
  */
-class TbAusencia extends MinC_Db_Table_Abstract {
+class Agente_Model_DbTable_TbAusencia extends MinC_Db_Table_Abstract
+{
 
-    protected $_banco = 'Agentes';
-    protected $_name = 'tbAusencia';
-    protected $_schema  = 'dbo';
+    /**
+     * _banco
+     *
+     * @var bool
+     * @access protected
+     */
+    protected $_banco = 'agentes';
 
-    
-    public function BuscarAusencia($idAgente, $ano, $tipo, $mes) 
+    /**
+     * _name
+     *
+     * @var bool
+     * @access protected
+     */
+    protected $_name = 'tbausencia';
+
+    /**
+     * _schema
+     *
+     * @var string
+     * @access protected
+     */
+    protected $_schema = 'agentes';
+
+    public function BuscarAusencia($idAgente, $ano, $tipo, $mes)
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('A'=>$this->_name),
         			  array('*','CONVERT(CHAR(10), dtInicioAusencia, 103) as dtInicio',
         			  		'CONVERT(CHAR(10), dtFimAusencia, 103) as dtFim',
-        			  		'DATEDIFF ( DAY , dtInicioAusencia , dtFimAusencia ) as qtdDias')
+        			  		'DATEDIFF ( DAY , dtInicioAusencia , dtFimAusencia ) as qtdDias'),
+                        $this->_schema
         			  );
 
         $select->joinInner(
                 array('N'=>'Nomes'),'N.idAgente = A.idAgente',
-                array('N.Descricao as Nome')
+                array('N.Descricao as Nome'),
+            $this->_schema
         );
 
         $select->joinInner(
                 array('TP'=>'tbTipoAusencia'),'TP.idTipoAusencia = A.idTipoAusencia',
-                array('TP.nmAusencia as tipoAusencia')
+                array('TP.nmAusencia as tipoAusencia'),
+            $this->_schema
         );
 
         $select->joinLeft(
                 array('D'=>'tbDocumento'),'D.idDocumento = A.idDocumento',
-                array('*'),'BDCORPORATIVO.scCorp'
+                array('*'),
+            $this->getSchema('BDCORPORATIVO', true, 'sccorp')
         );
 
         $select->joinLeft(
                 array('TA'=>'tbArquivo'),'TA.idArquivo = D.idArquivo',
-                array('*'),'BDCORPORATIVO.scCorp'
+                array('*'),
+            $this->getSchema('BDCORPORATIVO', true, 'sccorp')
         );
 
         $select->joinLeft(
                 array('TAI'=>'tbArquivoImagem'),'TAI.idArquivo = TA.idArquivo',
-                array('*'),'BDCORPORATIVO.scCorp'
+                array('*'),
+            $this->getSchema('BDCORPORATIVO', true, 'sccorp')
         );
         
         $select->where('A.idTipoAusencia = ?', $tipo);
@@ -62,7 +95,6 @@ class TbAusencia extends MinC_Db_Table_Abstract {
         $select->order('A.idAlteracao');
         $select->order('A.idAusencia');
         
-
         return $this->fetchAll($select);
 
     }
@@ -74,32 +106,38 @@ class TbAusencia extends MinC_Db_Table_Abstract {
         $select->from(array('A'=>$this->_name),
         			  array('*','CONVERT(CHAR(10), dtInicioAusencia, 103) as dtInicio',
         			  		'CONVERT(CHAR(10), dtFimAusencia, 103) as dtFim',
-        			  		'DATEDIFF ( DAY , dtInicioAusencia , dtFimAusencia ) as qtdDias')
+        			  		'DATEDIFF ( DAY , dtInicioAusencia , dtFimAusencia ) as qtdDias'),
+                        $this->_schema
         			  );
 
         $select->joinInner(
                 array('N'=>'Nomes'),'N.idAgente = A.idAgente',
-                array('N.Descricao as Nome')
+                array('N.Descricao as Nome'),
+            $this->_schema
         );
 
         $select->joinInner(
                 array('TP'=>'tbTipoAusencia'),'TP.idTipoAusencia = A.idTipoAusencia',
-                array('TP.nmAusencia as tipoAusencia')
+                array('TP.nmAusencia as tipoAusencia'),
+            $this->_schema
         );
 
         $select->joinLeft(
                 array('D'=>'tbDocumento'),'D.idDocumento = A.idDocumento',
-                array('*'),'BDCORPORATIVO.scCorp'
+                array('*'),
+            $this->getSchema('bdcorporativo', true, 'sccorp')
         );
 
         $select->joinLeft(
                 array('TA'=>'tbArquivo'),'TA.idArquivo = D.idArquivo',
-                array('*'),'BDCORPORATIVO.scCorp'
+                array('*'),
+            $this->getSchema('bdcorporativo', true, 'sccorp')
         );
 
         $select->joinLeft(
                 array('TAI'=>'tbArquivoImagem'),'TAI.idArquivo = TA.idArquivo',
-                array('*'),'BDCORPORATIVO.scCorp'
+                array('*'),
+            $this->getSchema('bdcorporativo', true, 'sccorp')
         );
         
         $select->where('A.idTipoAusencia = ?', 2);

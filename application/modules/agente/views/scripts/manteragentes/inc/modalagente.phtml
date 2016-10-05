@@ -85,7 +85,7 @@
 
 	<tr>
 		<td colspan="2">
-			<label for="tipoEndereco">Tipo de Endereço *</label>
+			<label for="tipoEndereco">Tipo de Endere&ccedil;o *</label>
 			<select name="tipoEnderecoD" id="tipoEnderecoD">
 
 				<?php if (!isset($this->tipoEndereco) || empty($this->tipoEndereco)) { ?>
@@ -127,7 +127,7 @@
 				value="<?php echo $this->logradouro; ?>" disabled="disabled" />
 		</td>
 		<td colspan="2">
-			<label for="numero">Número *</label>
+			<label for="numero">N&uacute;mero *</label>
 			<input type="text" name="numeroD" id="numeroD" maxlength="10"
 				onkeyup="mascara(this, format_num);"
 				value="<?php echo $this->numero; ?>" />
@@ -149,22 +149,22 @@
 
 	<tr>
 		<td colspan="2">
-			<label>Autorizo divulgar o endereço</label>
+			<label>Autorizo divulgar o endere&ccedil;o</label>
 			<input type="radio" name="divulgarEnderecoD" id="divulgarEnderecoSD" value="1" class="checkradio"
 				<?php if ($this->divulgarEndereco == '1') echo "checked=\"checked\""; ?> />
 			<label for="divulgarEnderecoS">Sim</label>
 			<input type="radio" name="divulgarEnderecoD" id="divulgarEnderecoND" value="0" class="checkradio"
 				<?php if ($this->divulgarEndereco == '0' || !isset($this->divulgarEndereco)) echo "checked=\"checked\""; ?> />
-			<label for="divulgarEnderecoN">Não</label>
+			<label for="divulgarEnderecoN">N&atilde;o</label>
 		</td>
 		<td colspan="2">
-			<label>Endereço para correspondências?</label>
+			<label>Endere&ccedil;o para correspond&ecirc;ncias?</label>
 			<input type="radio" name="enderecoCorrespondenciaD" id="enderecoCorrespondenciaSD" value="1" class="checkradio"
 				<?php if ($this->enderecoCorrespondencia == '1' || !isset($this->enderecoCorrespondencia)) echo "checked=\"checked\""; ?> />
 			<label for="enderecoCorrespondenciaS">Sim</label>
 			<input type="radio" name="enderecoCorrespondenciaD" id="enderecoCorrespondenciaND" value="0" class="checkradio"
 				<?php if ($this->enderecoCorrespondencia == '0') echo "checked=\"checked\""; ?> />
-			<label for="enderecoCorrespondenciaN">Não</label>
+			<label for="enderecoCorrespondenciaN">N&atilde;o</label>
 		</td>
 	</tr>
 </table>
@@ -175,7 +175,7 @@
 <table class="tabela sumir" id="tabFoneD">
 
 	<tr class="titulo_tabela">
-		<th colspan="6">ADICIONE TELEFONES ATRAVÉS DO FORMULÁRIO ABAIXO!</th>
+		<th colspan="6">ADICIONE TELEFONES ATRAVÉS DO FORMUL&Aacute;RIO ABAIXO!</th>
 	</tr>
 
 	<tr>
@@ -225,7 +225,7 @@
 			<input type="radio" name="divulgarFoneD" id="divulgarFoneSD" value="1" class="checkradio" />
 			<label for="divulgarFoneS">Sim</label>
 			<input type="radio" name="divulgarFoneD" id="divulgarFoneND" value="0" class="checkradio" checked="checked" />
-			<label for="divulgarFoneN">Não</label>
+			<label for="divulgarFoneN">N&atilde;o</label>
 		</td>
 		<td class="center" width="30">
 			<input type="button" title="Adicionar Telefone" class="btn_add"
@@ -241,7 +241,7 @@
 <table class="tabela sumir" id="tabEmailD">
 
 	<tr class="titulo_tabela">
-		<th colspan="6">ADICIONE E-MAILS ATRAVÉS DO FORMULÁRIO ABAIXO</th>
+		<th colspan="6">ADICIONE E-MAILS ATRAVÉS DO FORMUL&Aacute;RIO ABAIXO</th>
 	</tr>
 
 	<tr>
@@ -268,15 +268,15 @@
 			<input type="radio" name="divulgarEmailD" id="divulgarEmailSD" value="1" class="checkradio" />
 			<label for="divulgarEmailS">Sim</label>
 			<input type="radio" name="divulgarEmailD" id="divulgarEmailND" value="0" class="checkradio" checked="checked" />
-			<label for="divulgarEmailN">Não</label>
+			<label for="divulgarEmailN">N&atilde;o</label>
 		</td>
 		<td>
-			<label>Para correpondência? *</label>
+			<label>Para correpond&ecirc;ncia? *</label>
 			<br />
 			<input type="radio" name="enviarEmailD" id="enviarEmailSD" value="1" class="checkradio" checked="checked" />
 			<label for="enviarEmailS">Sim</label>
 			<input type="radio" name="enviarEmailD" id="enviarEmailND" value="0" class="checkradio" />
-			<label for="enviarEmailN">Não</label>
+			<label for="enviarEmailN">N&atilde;o</label>
 		</td>
 		<td class="center" width="30">
 			<input type="button" title="Adicionar E-mail" class="btn_add"
@@ -307,7 +307,7 @@ TELEFONE E E-MAILS ADICIONADOS
 		<th>DDD</th>
 		<th>TELEFONE</th>
 		<th>DIVULGAR?</th>
-		<th width="60">AÇÃO</th>
+		<th width="60">A&Ccedil;&Atilde;O</th>
 	</tr>
 
 	<?php if (isset($this->Fones)): ?>
@@ -334,7 +334,7 @@ TELEFONE E E-MAILS ADICIONADOS
 				<input type="hidden" name="FonesD[]" id="FonesD[]" value="<?php echo $this->Fones[$i] ?>" />
 			</td>
 			<td class="center">
-				<?php echo $this->divulgarFones[$i] == 1 ? 'Sim' : 'Não'; ?>
+				<?php echo $this->divulgarFones[$i] == 1 ? 'Sim' : 'N&atilde;o'; ?>
 				<input type="hidden" name="divulgarFonesD[]" id="divulgarFonesD[]" value="<?php echo $this->divulgarFones[$i]?>" />
 			</td>
 			<td class="center">
@@ -355,8 +355,8 @@ TELEFONE E E-MAILS ADICIONADOS
 		<th>TIPO</th>
 		<th>E-MAIL</th>
 		<th>DIVULGAR?</th>
-		<th>PARA CORRESPONDÊNCIA?</th>
-		<th width="60">AÇÃO</th>
+		<th>PARA CORRESPOND&Ecirc;NCIA?</th>
+		<th width="60">A&Ccedil;&Atilde;O</th>
 	</tr>
 
 	<?php if (isset($this->Emails)): ?>
@@ -373,11 +373,11 @@ TELEFONE E E-MAILS ADICIONADOS
 				<input type="hidden" name="EmailsD[]" id="EmailsD[]" value="<?php echo $this->Emails[$i]?>" />
 			</td>
 			<td class="center">
-				<?php echo $this->divulgarEmails[$i] == 1 ? 'Sim' : 'Não'; ?>
+				<?php echo $this->divulgarEmails[$i] == 1 ? 'Sim' : 'N&atilde;o'; ?>
 				<input type="hidden" name="divulgarEmailsD[]" id="divulgarEmailsD[]" value="<?php echo $this->divulgarEmails[$i]?>" />
 			</td>
 			<td class="center">
-				<?php echo $this->enviarEmails[$i] == 1 ? 'Sim' : 'Não'; ?>
+				<?php echo $this->enviarEmails[$i] == 1 ? 'Sim' : 'N&atilde;o'; ?>
 				<input type="hidden" name="enviarEmailsD[]" id="enviarEmailsD[]" value="<?php echo $this->enviarEmails[$i]?>" />
 			</td>
 			<td class="center">

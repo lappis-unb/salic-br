@@ -1,39 +1,72 @@
 <?php
+
 /**
- * Description of tbAusencia
+ * Class Agente_Model_DbTable_TbInformacaoProfissional
  *
- * @author Equipe Politec
+ * @name Agente_Model_DbTable_TbInformacaoProfissional
+ * @package Modules/Agente
+ * @subpackage Models/DbTable
+ * @version $Id$
+ *
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+ * @since 05/10/2016
+ *
+ * @link http://salic.cultura.gov.br
  */
-class TbInformacaoProfissional extends MinC_Db_Table_Abstract {
+class Agente_Model_DbTable_TbInformacaoProfissional extends MinC_Db_Table_Abstract
+{
 
-    protected $_banco = 'Agentes';
-    protected $_name = 'tbInformacaoProfissional';
-    protected $_schema  = 'dbo';
+    /**
+     * _banco
+     *
+     * @var bool
+     * @access protected
+     */
+    protected $_banco = 'agentes';
 
-    
-    public function BuscarInfo($idAgente, $situacao) 
+    /**
+     * _name
+     *
+     * @var bool
+     * @access protected
+     */
+    protected $_name = 'tbinformacaoprofissional';
+
+    /**
+     * _schema
+     *
+     * @var string
+     * @access protected
+     */
+    protected $_schema = 'agentes';
+
+    public function BuscarInfo($idAgente, $situacao)
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         
-        $select->from(array('A'=>$this->_name),
+        $select->from(array('A' => $this->_name),
         			  array('*','CONVERT(CHAR(10), dtInicioVinculo, 103) as dtInicio',
-        			  			'CONVERT(CHAR(10), dtFimVinculo, 103) as dtFim')
+        			  			'CONVERT(CHAR(10), dtFimVinculo, 103) as dtFim'),
+            $this->_schema
         			  );
 
         $select->joinLeft(
                 array('D'=>'tbDocumento'),'D.idDocumento = A.idDocumento',
-                array('*'),'BDCORPORATIVO.scCorp'
+                array('*'),
+            $this->getSchema('BDCORPORATIVO', true, 'sccorp')
         );
 
         $select->joinLeft(
                 array('TA'=>'tbArquivo'),'TA.idArquivo = D.idArquivo',
-                array('*'),'BDCORPORATIVO.scCorp'
+                array('*'),
+            $this->getSchema('BDCORPORATIVO', true, 'sccorp')
         );
 
         $select->joinLeft(
                 array('TAI'=>'tbArquivoImagem'),'TAI.idArquivo = TA.idArquivo',
-                array('*'),'BDCORPORATIVO.scCorp'
+                array('*'),
+            $this->getSchema('BDCORPORATIVO', true, 'sccorp')
         );
         
         if(!empty($situacao))

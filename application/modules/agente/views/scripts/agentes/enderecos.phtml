@@ -33,7 +33,7 @@
 	    {
 	        if (cep.length != 10)
 	        {
-	            $('#erroCep').html("O CEP informado é inválido!");
+	            $('#erroCep').html("O CEP informado é inv&aacute;lido!");
 	        }
 	        else
 	        {
@@ -70,7 +70,7 @@
 	                bairro.value                   = " ";
 	                cidade.options[0].text         = " - Selecione - ";
 	                uf.options[0].text             = " -- ";
-	                $('#erroCep').html("O CEP informado é inválido!");
+	                $('#erroCep').html("O CEP informado é inv&aacute;lido!");
 	            }
 	            else // caso o cep exista
 	            {
@@ -188,8 +188,8 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="first"><a href="#" title="Ir para Início">Início</a></li>
-		<li><a href="#" title="Tramitação de Documentos">Manter Agentes</a></li>
+		<li class="first"><a href="#" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
+		<li><a href="#" title="Tramita&ccedil;&atilde;o de Documentos">Manter Agentes</a></li>
 		<li class="last">Principal</li>
 	</ul>
 </div>
@@ -199,7 +199,7 @@
 
 <!-- ========== INÍCIO TÍTULO ========== -->
 <div id="titulo">
-	<div>Endereços <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+	<div>Endere&ccedil;os <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
 <!-- ========== FIM TÍTULO ========== -->
 
@@ -213,7 +213,7 @@
 
 	<table class="tabela">
 		<tr>
-			<td>Para adicionar um novo endereço, clique em novo ao lado!</td>
+			<td>Para adicionar um novo endere&ccedil;o, clique em novo ao lado!</td>
 			<th width="150"><input type="button" class="btn_novo" value=" " onclick="novo();"/></th>
 		</tr>
 	</table>
@@ -227,7 +227,7 @@
 
 			<table id="tabEndereco" class="tabela">
 				<tr>
-					<th colspan="3">Novo Endereço</th>
+					<th colspan="3">Novo Endere&ccedil;o</th>
 				</tr>
 				<tr>
 					<td width="30%">
@@ -275,7 +275,7 @@
 				</tr>
 				<tr>
 					<td>
-						<label for="tipoEndereco">Tipo de Endereço *</label> <br />
+						<label for="tipoEndereco">Tipo de Endere&ccedil;o *</label> <br />
 						<select name="tipoEndereco" id="tipoEndereco" class="input_simples" style="width: 250px;">
 
 							<?php if (!isset($this->tipoEndereco) || empty($this->tipoEndereco)) { ?>
@@ -319,7 +319,7 @@
 				<tr>
 
 					<td>
-						<label for="numero">Número *</label> <br />
+						<label for="numero">N&uacute;mero *</label> <br />
 						<input class="input_simples" type="text" name="numero" id="numero" maxlength="10" size="30" />
 						<span id="erroNumero" class="spanError"></span>
 					</td>
@@ -336,18 +336,18 @@
 				</tr>
 				<tr>
 					<td>
-						<label>Autorizo divulgar o endereço</label>
+						<label>Autorizo divulgar o endere&ccedil;o</label>
 						<input type="radio" name="divulgarEndereco" id="divulgarEnderecoS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
 						<label for="divulgarFoneS">Sim</label>
 						<input type="radio" name="divulgarEndereco" id="divulgarEnderecoN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-						<label for="divulgarFoneN">Não</label>
+						<label for="divulgarFoneN">N&atilde;o</label>
 					</td>
 					<td colspan="2">
-						<label>Endereço para correspodência?</label>
+						<label>Endere&ccedil;o para correspod&ecirc;ncia?</label>
 						<input type="radio" name="enderecoCorrespodencia" id="enderecoCorrespodenciaS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
 						<label for="divulgarFoneS">Sim</label>
 						<input type="radio" name="enderecoCorrespodencia" id="enderecoCorrespodenciaN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-						<label for="divulgarFoneN">Não</label>
+						<label for="divulgarFoneN">N&atilde;o</label>
 					</td>
 				</tr>
 			</table>
@@ -374,7 +374,7 @@
 
 		<table id="tabEndereco" class="tabela">
 			<tr>
-				<th colspan="5">ENDEREÇOS</th>
+				<th colspan="5">ENDERE&Ccedil;OS</th>
 			</tr>
 			<tr>
 				<td><label>CEP:</label> <?php echo Mascara::addMaskCep($end->Cep); ?></td>
@@ -382,20 +382,20 @@
 				<td><label>Cidade:</label> <?php echo $end->Municipio; ?></td>
 			</tr>
 			<tr>
-				<td colspan="2"><label>Tipo de Endereço:</label> <?php echo $end->TipoEndereco; ?></td>
+				<td colspan="2"><label>Tipo de Endere&ccedil;o:</label> <?php echo $end->TipoEndereco; ?></td>
 				<td><label>Tipo de Logradouro:</label> <?php echo $end->dsTipoLogradouro; ?></td>
 			</tr>
 			<tr>
 				<td colspan="2"><label>Logradouro:</label> <?php echo $end->Logradouro; ?></td>
-				<td><label>Número:</label> <?php echo $end->Numero; ?></td>
+				<td><label>N&uacute;mero:</label> <?php echo $end->Numero; ?></td>
 			</tr>
 			<tr>
 				<td colspan="2"><label>Complemento:</label> <?php echo $end->Complemento; ?></td>
 				<td><label>Bairro:</label> <?php echo $end->Bairro; ?></td>
 			</tr>
 			<tr>
-				<td><label>Endereço para correspondência:</label> <?php echo $end->Status == "1" ? "SIM" : "NÃO"; ?></td>
-				<td colspan="2"><label>Autorizo divulgar o endereço:</label> <?php echo $end->Divulgar == "1" ? "SIM" : "NÃO"; ?></td>
+				<td><label>Endere&ccedil;o para correspond&ecirc;ncia:</label> <?php echo $end->Status == "1" ? "SIM" : "N&Atilde;O"; ?></td>
+				<td colspan="2"><label>Autorizo divulgar o endere&ccedil;o:</label> <?php echo $end->Divulgar == "1" ? "SIM" : "N&Atilde;O"; ?></td>
 			</tr>
 			<tr>
 				<td colspan="3" width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('', '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluiendereco','idEndereco' => $end->idEndereco, 'qtdEndereco' => $this->qtdEndereco, 'enderecoCorrespondencia' => $end->Status));?>');" /></td>
