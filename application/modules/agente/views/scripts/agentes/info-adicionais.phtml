@@ -96,7 +96,7 @@
                 <tr>
                     <td class="destacar bold" align="right" width="150px" nowrap>Data de Nascimento<span style="color: red;">*</span></td>
                     <td>
-                        <input class="input_simples btn_calendario" type="text" name="dtNascimento" id="dtNascimento" maxlength="10" value="<?php echo isset($this->dadosAdicionais) ? Data::tratarDataZend($this->dadosAdicionais->dtNascimento, 'brasileira') : ''; ?>" />
+                        <input class="input_simples btn_calendario" type="text" name="dtNascimento" id="dtNascimento" maxlength="10" value="<?php echo isset($this->dadosAdicionais) ? Data::tratarDataZend($this->dadosAdicionais->dtnascimento, 'brasileira') : ''; ?>" />
                     </td>
                 </tr>
                 <tr>
@@ -104,8 +104,8 @@
                     <td>
                         <select name="sexo" id="sexo" class="select_simples obrigatorio">
                             <option value="">- Selecione -</option>
-                            <option value="M" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stSexo == 'M' ? 'selected="selected"' : ''; ?>>Masculino</option>
-                            <option value="F" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stSexo == 'F' ? 'selected="selected"' : ''; ?>>Feminino</option>
+                            <option value="M" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stsexo == 'M' ? 'selected="selected"' : ''; ?>>Masculino</option>
+                            <option value="F" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stsexo == 'F' ? 'selected="selected"' : ''; ?>>Feminino</option>
                         </select>
                     </td>
                 </tr>
@@ -114,12 +114,12 @@
                     <td>
                         <select name="estadoCivil" id="estadoCivil" class="select_simples obrigatorio">
                             <option value="">- Selecione -</option>
-                            <option value="SO" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stEstadoCivil == 'SO' ? 'selected="selected"' : ''; ?>>Solteiro(a)</option>
-                            <option value="CA" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stEstadoCivil == 'CA' ? 'selected="selected"' : ''; ?>>Casado(a)</option>
-                            <option value="DI" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stEstadoCivil == 'DI' ? 'selected="selected"' : ''; ?>>Divorciado(a)</option>
-                            <option value="VI" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stEstadoCivil == 'VI' ? 'selected="selected"' : ''; ?>>Vi&uacute;vo(a)</option>
-                            <option value="SJ" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stEstadoCivil == 'SJ' ? 'selected="selected"' : ''; ?>>Separado(a) Judicialmente</option>
-                            <option value="OU" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stEstadoCivil == 'OU' ? 'selected="selected"' : ''; ?>>Outros</option>
+                            <option value="SO" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stestadocivil == 'SO' ? 'selected="selected"' : ''; ?>>Solteiro(a)</option>
+                            <option value="CA" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stestadocivil == 'CA' ? 'selected="selected"' : ''; ?>>Casado(a)</option>
+                            <option value="DI" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stestadocivil == 'DI' ? 'selected="selected"' : ''; ?>>Divorciado(a)</option>
+                            <option value="VI" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stestadocivil == 'VI' ? 'selected="selected"' : ''; ?>>Vi&uacute;vo(a)</option>
+                            <option value="SJ" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stestadocivil == 'SJ' ? 'selected="selected"' : ''; ?>>Separado(a) Judicialmente</option>
+                            <option value="OU" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stestadocivil == 'OU' ? 'selected="selected"' : ''; ?>>Outros</option>
                         </select>
                     </td>
                 </tr>
@@ -128,21 +128,21 @@
                     <td>
                         <select name="necEspecial" id="necEspecial" class="select_simples obrigatorio">
                             <option value="">- Selecione -</option>
-                            <option value="N" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stNecessidadeEspecial == 'N' ? 'selected="selected"' : ''; ?>>N&atilde;o</option>
-                            <option value="S" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stNecessidadeEspecial == 'S' ? 'selected="selected"' : ''; ?>>Sim</option>
+                            <option value="N" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stnecessidadeespecial == 'N' ? 'selected="selected"' : ''; ?>>N&atilde;o</option>
+                            <option value="S" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stnecessidadeespecial == 'S' ? 'selected="selected"' : ''; ?>>Sim</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td class="destacar bold" align="right" width="150px" nowrap>Nome da M&atilde;e<span style="color: red;">*</span></td>
                     <td>
-                        <input class="input_simples w300 obrigatorio" type="text" name="nomeMae" id="nomeMae" maxlength="100" value="<?php echo isset($this->dadosAdicionais) ? trim($this->dadosAdicionais->nmMae) : ''; ?>" />
+                        <input class="input_simples w300 obrigatorio" type="text" name="nomeMae" id="nomeMae" maxlength="100" value="<?php echo isset($this->dadosAdicionais) ? trim($this->dadosAdicionais->nmmae) : ''; ?>" />
                     </td>
                 </tr>
                 <tr>
                     <td class="destacar bold" align="right" width="150px" nowrap>Nome do Pai<span style="color: red;">*</span></td>
                     <td>
-                        <input class="input_simples w300 obrigatorio" type="text" name="nomePai" id="nomePai" maxlength="100" value="<?php echo isset($this->dadosAdicionais) ? trim($this->dadosAdicionais->nmPai) : ''; ?>"/>
+                        <input class="input_simples w300 obrigatorio" type="text" name="nomePai" id="nomePai" maxlength="100" value="<?php echo isset($this->dadosAdicionais) ? trim($this->dadosAdicionais->nmpai) : ''; ?>"/>
                     </td>
                 </tr>
                 <tr>
@@ -150,11 +150,11 @@
                     <td>
                         <select name="raca" id="raca" class="select_simples" style="width: 120px;">
                             <option value=""> - Selecione - </option>
-                            <option value="1" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stCorRaca == '1' ? 'selected="selected"' : ''; ?>>Branca</option>
-                            <option value="2" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stCorRaca == '2' ? 'selected="selected"' : ''; ?>>Negra</option>
-                            <option value="3" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stCorRaca == '3' ? 'selected="selected"' : ''; ?>>Parda</option>
-                            <option value="4" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stCorRaca == '4' ? 'selected="selected"' : ''; ?>>Amarela</option>
-                            <option value="5" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stCorRaca == '5' ? 'selected="selected"' : ''; ?>>Ind&iacute;gena</option>
+                            <option value="1" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stcorraca == '1' ? 'selected="selected"' : ''; ?>>Branca</option>
+                            <option value="2" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stcorraca == '2' ? 'selected="selected"' : ''; ?>>Negra</option>
+                            <option value="3" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stcorraca == '3' ? 'selected="selected"' : ''; ?>>Parda</option>
+                            <option value="4" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stcorraca == '4' ? 'selected="selected"' : ''; ?>>Amarela</option>
+                            <option value="5" <?php echo isset($this->dadosAdicionais) && $this->dadosAdicionais->stcorraca == '5' ? 'selected="selected"' : ''; ?>>Ind&iacute;gena</option>
                         </select>
                     </td>
                 </tr>
@@ -162,7 +162,7 @@
                 <tr>
                     <td class="destacar bold" align="right" width="150px" nowrap>Nº Identificador Processual</td>
                     <td>
-                        <input class="input_simples w300" type="text" name="processo" id="processo" maxlength="20" value="<?php echo isset($this->dadosAdicionais) ? trim($this->dadosAdicionais->nrIdentificadorProcessual) : ''; ?>"/>
+                        <input class="input_simples w300" type="text" name="processo" id="processo" maxlength="20" value="<?php echo isset($this->dadosAdicionais) ? trim($this->dadosAdicionais->nridentificadorprocessual) : ''; ?>"/>
                     </td>
                 </tr>
                 <?php } ?>
