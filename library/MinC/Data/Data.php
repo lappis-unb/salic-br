@@ -153,7 +153,6 @@ class Data
      *
      * @access public
      * @static
-     * @param void
      * @return string
      */
     public static function mostraData()
@@ -163,10 +162,10 @@ class Data
         $ano    = date("Y");
         $semana = date("w");
 
-        // m�s por extenso
+        // mes por extenso
         $mes_extenso[1] = "janeiro";
         $mes_extenso[2] = "fevereiro";
-        $mes_extenso[3] = "mar�o";
+        $mes_extenso[3] = "mar&ccedil;o";
         $mes_extenso[4] = "abril";
         $mes_extenso[5] = "maio";
         $mes_extenso[6] = "junho";
@@ -180,20 +179,18 @@ class Data
         // dia da semana por extenso
         $semana_extenso[0] = "Domingo";
         $semana_extenso[1] = "Segunda-feira";
-        $semana_extenso[2] = "Ter�a-feira";
+        $semana_extenso[2] = "Ter&ccedil;a-feira";
         $semana_extenso[3] = "Quarta-feira";
         $semana_extenso[4] = "Quinta-feira";
         $semana_extenso[5] = "Sexta-feira";
-        $semana_extenso[6] = "S�bado";
+        $semana_extenso[6] = "S&aacute;bado";
 
         if ($dia == 1)
         {
-            $dia = "1�";
+            $dia = "1&#176;";
         }
         return $semana_extenso[$semana] . ", " . $dia . " de " . $mes_extenso[$mes] . " de " . $ano;
-    } // fecha m�todo mostraData()
-
-
+    }
 
     /**
      * Retorna a sauda��o de acordo com a hora
