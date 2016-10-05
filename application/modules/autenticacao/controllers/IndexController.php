@@ -320,7 +320,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 $mens .= "Esta é a sua senha tempor&aacute;ria de acesso ao Sistema de Apresenta&ccedil;&atilde;o de Projetos via Web do ";
                 $mens .= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
                 $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
-                $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n?o responda.<br><br>";
+                $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor não responda.<br><br>";
                 $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
 
                 $email = $sgcAcessoBuscaCpfArray[0]['email'];
