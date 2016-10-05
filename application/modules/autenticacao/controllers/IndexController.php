@@ -286,47 +286,49 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     public function solicitarsenhaAction()
     {
         if ($_POST) {
-            $post = Zend_Registry::get('post');
-            $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf)); // recebe cpf
-            $dataNasc = data::dataAmericana($post->dataNasc); // recebe dataNasc
-            $email = $post->email; // recebe email
-            $sgcAcesso = new Autenticacao_Model_Sgcacesso();
-            $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf, "Email = ?" => $email, "DtNascimento = ?" => $dataNasc));
+            //try {
+                $post = Zend_Registry::get('post');
+                $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf)); // recebe cpf
+                $dataNasc = data::dataAmericana($post->dataNasc); // recebe dataNasc
+                $email = $post->email; // recebe email
+                $sgcAcesso = new Autenticacao_Model_Sgcacesso();
+                $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf, "Email = ?" => $email, "DtNascimento = ?" => $dataNasc));
 
-            $verificaUsuario = $sgcAcessoBuscaCpf->toArray();
-            if (empty ($verificaUsuario)) {
-                parent::message("Dados incorretos!", "/autenticacao", "ALERT");
-            }
+                $verificaUsuario = $sgcAcessoBuscaCpf->toArray();
+                if (empty ($verificaUsuario)) {
+                    parent::message("Dados incorretos!", "/autenticacao", "ALERT");
+                }
 
-            $sgcAcessoBuscaCpfArray = $sgcAcessoBuscaCpf->toArray();
-            $nome = $sgcAcessoBuscaCpfArray[0]['Nome'];
-            $senha = Gerarsenha::gerasenha(15, true, true, true, true);
-            $senhaFormatada = str_replace(">", "", str_replace("<", "", str_replace("'", "", $senha)));
+                $sgcAcessoBuscaCpfArray = $sgcAcessoBuscaCpf->toArray();
+                $nome = $sgcAcessoBuscaCpfArray[0]['Nome'];
+                $senha = Gerarsenha::gerasenha(15, true, true, true, true);
+                $senhaFormatada = str_replace(">", "", str_replace("<", "", str_replace("'", "", $senha)));
+                $senhaFormatada = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaFormatada);
 
-            $senhaFormatada = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaFormatada);
+                $dados = array(
+                    "idusuario" => $sgcAcessoBuscaCpfArray[0]['idusuario'],
+                    "senha" => $senhaFormatada,
+                    "situacao" => 1,
+                    "dtsituacao" => date("Y-m-d")
+                );
+                $sgcAcessoSave = $sgcAcesso->salvar($dados);
 
-            $dados = array(
-                "idusuario" => $sgcAcessoBuscaCpfArray[0]['IdUsuario'],
-                "senha" => $senhaFormatada,
-                "situacao" => 1,
-                "dtsituacao" => date("Y-m-d")
-            );
+                $assunto = "Cadastro SALICWEB";
+                $perfil = "SALICWEB";
+                $mens = "Ol&aacute; " . $nome . ",<br><br>";
+                $mens .= "Senha....: " . $senha. "<br><br>";
+                $mens .= "Esta é a sua senha tempor&aacute;ria de acesso ao Sistema de Apresenta&ccedil;&atilde;o de Projetos via Web do ";
+                $mens .= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
+                $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
+                $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n?o responda.<br><br>";
+                $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
 
-            $sgcAcessoSave = $sgcAcesso->salvar($dados);
-
-            $assunto = "Cadastro SALICWEB";
-            $perfil = "SALICWEB";
-            $mens = "Ol&aacute; " . $nome . ",<br><br>";
-            $mens .= "Senha....: " . $senha. "<br><br>";
-            $mens .= "Esta &eacute; a sua senha tempor&aacute;ria de acesso ao Sistema de Apresenta&ccedil;&atilde;o de Projetos via Web do ";
-            $mens .= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
-            $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
-            $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n?o responda.<br><br>";
-            $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
-
-            $email = $sgcAcessoBuscaCpfArray[0]['Email'];
-            $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
-            parent::message("Senha gerada com sucesso. Verifique seu email!", "/autenticacao", "CONFIRM");
+                $email = $sgcAcessoBuscaCpfArray[0]['email'];
+                $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
+                parent::message("Senha gerada com sucesso. Verifique seu email!", "/autenticacao", "CONFIRM");
+            /*} catch (Exception $objException) {
+                parent::message("Houve um erro na execução da funcionalidade.", "/autenticacao", "ALERT");
+            }*/
         }
     }
 
