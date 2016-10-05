@@ -1214,9 +1214,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @return void
      */
     public function consultarresponsaveisAction() {
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $idUsuario = $auth->getIdentity()->IdUsuario;
-        $cpf = $auth->getIdentity()->Cpf;
+        $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity()); // pega a autenticação
+        $idUsuario = $auth['idusuario'];
+        $cpf = $auth['cpf'];
 
         $Agentes = new Agente_Model_DbTable_Agentes();
         $buscarpendentes = $Agentes->gerenciarResponsaveisListas('0', $idUsuario);
@@ -1235,7 +1235,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @return void
      */
     public function vincularpropostasAction() {
-        $tbVinculo = new TbVinculo();
+        $tbVinculo = new Agente_Model_DbTable_TbVinculo();
         $propostas = new Proposta_Model_PreProjeto();
 
         $agentes = new Agente_Model_DbTable_Agentes();
@@ -1244,9 +1244,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
         $i = 0;
         foreach ($rsVinculo as $rs) {
-            $dadosCombo[$i]['idResponsavel'] = $rs->idUsuarioResponsavel;
-            $dadosCombo[$i]['idVinculo'] = $rs->idVinculo;
-            $dadosCombo[$i]['NomeResponsavel'] = $rs->NomeResponsavel;
+            $dadosCombo[$i]['idResponsavel'] = $rs->idusuarioresponsavel;
+            $dadosCombo[$i]['idVinculo'] = $rs->idvinculo;
+            $dadosCombo[$i]['NomeResponsavel'] = $rs->nomeresponsavel;
             $i++;
         }
 
@@ -1254,11 +1254,11 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $dadosIdAgentes = array($this->idAgenteProponente);
 
         //VERIFICA SE O USUARIO LOGADO EH DIRIGENTE DE ALGUMA EMPRESA
-        $Vinculacao = new Vinculacao();
+        $Vinculacao = new Agente_Model_DbTable_Vinculacao();
         $rsVinculucao = $Vinculacao->verificarDirigenteIdAgentes($this->cpfLogado);
 
         //CASO RETORNE ALGUM RESULTADO, ADICIONA OS IDAGENTE'S DE CADA UM AO ARRAY
-        if(count($rsVinculucao)>0){
+        if( count($rsVinculucao) > 0 ){
             foreach ($rsVinculucao as $value) {
                 $dadosIdAgentes[] = $value->idAgente;
             }

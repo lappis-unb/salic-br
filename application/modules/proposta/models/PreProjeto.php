@@ -987,18 +987,20 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                        pp.stTipoDemanda,
                        pp.idUsuario,
                        pp.idEdital,
-                       CAST(pp.ResumoDoProjeto as TEXT) as ResumoDoProjeto')
-
+                       CAST(pp.ResumoDoProjeto as TEXT) as ResumoDoProjeto'),
+            $this->_schema
         );
 
         $slct->joinLeft(
                 array('resp' => 'SGCacesso'), 'resp.IdUsuario = pp.idUsuario',
-                array('resp.Nome','resp.Cpf'),'CONTROLEDEACESSO.dbo'
+                array('resp.Nome','resp.Cpf'),
+            $this->getSchema('controledeacesso')
         );
 
         $slct->joinLeft(
                 array('pr' => 'Projetos'), 'pp.idPreProjeto = pr.idProjeto',
-                array('pr.idProjeto','(pr.AnoProjeto+pr.Sequencial) as PRONAC')
+                array('pr.idProjeto','(pr.AnoProjeto+pr.Sequencial) as PRONAC'),
+            $this->_schema
         );
 
         foreach ($where as $coluna => $valor) {
@@ -1070,12 +1072,14 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                        'pp.DtFinalDeExecucao',
                        'pp.stTipoDemanda',
                        'pp.idUsuario',
-                       'pp.idEdital')
+                       'pp.idEdital'),
+                $this->_schema
                 );
 
         $slct->joinLeft(
                 array('resp' => 'SGCacesso'), 'resp.IdUsuario = pp.idUsuario',
-                array('resp.Nome','resp.Cpf'),'CONTROLEDEACESSO.dbo'
+                array('resp.Nome','resp.Cpf'),
+                $this->getSchema('controledeacesso')
                 );
 
         $slct->where('idAgente in (?)', $arrayIdAgentes);

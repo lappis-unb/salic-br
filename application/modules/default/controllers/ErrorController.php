@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Trata as mensagens de erro do sistema
  * @author Equipe RUP - Politec
@@ -9,7 +10,6 @@
  * @copyright c 2010 - Ministerio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
-
 class ErrorController extends Zend_Controller_Action
 {
 

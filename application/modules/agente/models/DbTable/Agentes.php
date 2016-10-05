@@ -825,19 +825,20 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $a->setIntegrityCheck(false);
         $a->from(
             array('a' => $this->_name),
-            array('CNPJCPF as CNPJCPFProponente')
+            array('CNPJCPF as CNPJCPFProponente'),
+            $this->_schema
         );
         $a->joinInner(
             array('b' => 'tbVinculo'), "a.idAgente = b.idAgenteProponente",
-            array('idVinculo', 'siVinculo', 'idUsuarioResponsavel'), 'AGENTES.dbo'
+            array('idVinculo', 'siVinculo', 'idUsuarioResponsavel'), $this->_schema
         );
         $a->joinInner(
             array('c' => 'SGCacesso'), "c.IdUsuario = b.idUsuarioResponsavel",
-            array('IdUsuario', 'Cpf as CPFResponsavel', 'Nome AS NomeResponsavel'), 'CONTROLEDEACESSO.dbo'
+            array('IdUsuario', 'Cpf as CPFResponsavel', 'Nome AS NomeResponsavel'), $this->getSchema('controledeacesso')
         );
         $a->joinInner(
             array('d' => 'Nomes'), "b.idAgenteProponente = d.idAgente",
-            array('Descricao as Proponente'), 'AGENTES.dbo'
+            array('Descricao as Proponente'), $this->_schema
         );
         $a->where('c.IdUsuario = ?', $idUsuario);
         $a->where('b.siVinculo = ?', $siVinculo);
@@ -847,23 +848,24 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $b->setIntegrityCheck(false);
         $b->from(
             array('a' => $this->_name),
-            array('CNPJCPF as CNPJCPFProponente')
+            array('CNPJCPF as CNPJCPFProponente'),
+            $this->_schema
         );
         $b->joinInner(
             array('b' => 'tbVinculo'), "a.idAgente = b.idAgenteProponente",
-            array('idVinculo', 'siVinculo', 'idUsuarioResponsavel'), 'AGENTES.dbo'
+            array('idVinculo', 'siVinculo', 'idUsuarioResponsavel'), $this->_schema
         );
         $b->joinInner(
             array('c' => 'SGCacesso'), "a.CNPJCPF = c.Cpf",
-            array('IdUsuario'), 'CONTROLEDEACESSO.dbo'
+            array('IdUsuario'), $this->getSchema('controledeacesso')
         );
         $b->joinInner(
             array('e' => 'SGCacesso'), "e.IdUsuario = b.idUsuarioResponsavel",
-            array('Cpf AS CPFResponsavel', 'Nome AS NomeResponsavel'), 'CONTROLEDEACESSO.dbo'
+            array('Cpf AS CPFResponsavel', 'Nome AS NomeResponsavel'), $this->getSchema('controledeacesso')
         );
         $b->joinInner(
             array('d' => 'Nomes'), "b.idAgenteProponente = d.idAgente",
-            array('Descricao as Proponente'), 'AGENTES.dbo'
+            array('Descricao as Proponente'), $this->_schema
         );
         $b->where('c.IdUsuario = ?', $idUsuario);
         $b->where('b.siVinculo = ?', $siVinculo);
@@ -873,35 +875,36 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $c->setIntegrityCheck(false);
         $c->from(
             array('a' => $this->_name),
-            array('CNPJCPF as CNPJCPFProponente')
+            array('CNPJCPF as CNPJCPFProponente'),
+            $this->_schema
         );
         $c->joinInner(
             array('b' => 'tbVinculo'), "a.idAgente = b.idAgenteProponente",
-            array('idVinculo', 'siVinculo', 'idUsuarioResponsavel'), 'AGENTES.dbo'
+            array('idVinculo', 'siVinculo', 'idUsuarioResponsavel'), $this->_schema
         );
         $c->joinInner(
             array('c' => 'Vinculacao'), "b.idAgenteProponente = c.idVinculoPrincipal",
-            array(), 'AGENTES.dbo'
+            array(), $this->_schema
         );
         $c->joinInner(
             array('d' => 'Visao'), "c.idAgente = d.idAgente",
-            array(), 'AGENTES.dbo'
+            array(), $this->_schema
         );
         $c->joinInner(
             array('e' => 'Agentes'), "d.idAgente = e.idAgente",
-            array(), 'AGENTES.dbo'
+            array(), $this->_schema
         );
         $c->joinInner(
             array('f' => 'SGCacesso'), "e.CNPJCPF = f.Cpf",
-            array('IdUsuario'), 'CONTROLEDEACESSO.dbo'
+            array('IdUsuario'), $this->getSchema('controledeacesso')
         );
         $c->joinInner(
             array('g' => 'SGCacesso'), "g.IdUsuario = b.idUsuarioResponsavel",
-            array('Cpf as CPFResponsavel', 'Nome as NomeResponsavel'), 'CONTROLEDEACESSO.dbo'
+            array('Cpf as CPFResponsavel', 'Nome as NomeResponsavel'), $this->getSchema('controledeacesso')
         );
         $c->joinInner(
             array('h' => 'Nomes'), "c.idVinculoPrincipal = h.idAgente",
-            array('Descricao as Proponente'), 'AGENTES.dbo'
+            array('Descricao as Proponente'), $this->_schema
         );
         $c->where('d.Visao = ?', 198);
         $c->where('f.IdUsuario = ?', $idUsuario);

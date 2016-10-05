@@ -1,21 +1,23 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
-*/
-
 /**
- * Description of Projetos
+ * Class Agente_Model_DbTable_Vinculacao
  *
- * @author augusto
+ * @name Agente_Model_DbTable_Vinculacao
+ * @package Modules/Agente
+ * @subpackage Models/DbTable
+ * @version $Id$
+ *
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+ * @since 05/09/2016
+ *
+ * @link http://salic.cultura.gov.br
  */
-class Vinculacao extends MinC_Db_Table_Abstract {
-
-    protected $_name = 'Vinculacao';
-    protected $_schema = 'dbo';
-    protected $_banco = 'Agentes';
-
+class Agente_Model_DbTable_Vinculacao extends MinC_Db_Table_Abstract
+{
+    protected $_name = 'vinculacao';
+    protected $_schema = 'agentes';
+    protected $_banco = 'agentes';
 
     public function BuscarVinculos($idAgente) {
         $slct = $this->select();
@@ -64,26 +66,31 @@ class Vinculacao extends MinC_Db_Table_Abstract {
     }
 
     public function verificarDirigenteIdAgentes($cpfLogado) {
+
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
                 array('a' => $this->_name),
-                array()
+                array(),
+            $this->_schema
         );
         $slct->joinInner(
                 array('b' => 'Agentes'),
                 'a.idAgente = b.idAgente',
-                array(), 'AGENTES.dbo'
+                array(),
+            $this->_schema
         );
         $slct->joinInner(
                 array('c' => 'Agentes'),
                 'a.idVinculoPrincipal = c.idAgente',
-                array('a.idVinculoPrincipal AS idAgente'), 'AGENTES.dbo'
+                array('a.idVinculoPrincipal AS idAgente'),
+            $this->_schema
         );
         $slct->joinInner(
                 array('d' => 'Visao'),
                 'd.idAgente = a.idAgente',
-                array(), 'AGENTES.dbo'
+                array(),
+            $this->_schema
         );
         $slct->where('b.CNPJCPF = ? ', $cpfLogado);
         $slct->where('d.Visao = ? ', 198);

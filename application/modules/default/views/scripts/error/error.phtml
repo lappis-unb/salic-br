@@ -11,12 +11,12 @@
  */
 ?>
 
-<?php if ($this->ambiente == 'development') : ?>
+<?php //if ($this->ambiente == 'development') : ?>
 <div style="overflow:auto; width:90%; margin:auto; border:0.1em solid #ccc; background:#ffc;">
 	<div class="msg-exception">
 		<fieldset>
-			<legend>Exceção</legend>
-			<b>Descrição:</b> <?php echo $this->exception->getMessage() ?>
+			<legend>Exce&ccedil;&atilde;o</legend>
+			<b>Descri&ccedil;&atilde;o:</b> <?php echo $this->exception->getMessage() ?>
 		</fieldset>
 
 		<fieldset>
@@ -25,9 +25,9 @@
 		</fieldset>
 
 		<fieldset>
-			<legend>Parâmetros requisitados</legend>
+			<legend>Par&acirc;metros requisitados</legend>
 			<pre><?php echo var_export($this->request->getParams(), true) ?></pre>
 		</fieldset>
 	</div>
 </div>
-<?php endif; ?>
+<?php //endif; ?>

@@ -78,7 +78,7 @@ class RastrearagenteController extends MinC_Controller_Action_Abstract {
         $preprojetos = $preprojeto->buscar(array("idAgente = ? " => $agente[0]->idAgente));
         $preprojetos = empty($preprojetos) ? array() : $preprojetos;
 
-        $vinculo = new Vinculacao();
+        $vinculo = new Agente_Model_DbTable_Vinculacao();
         $vinculos = $vinculo->BuscarVinculos($agente[0]->idAgente);
         $vinculos = empty($vinculos) ? array() : $vinculos;
 

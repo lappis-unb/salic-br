@@ -139,7 +139,7 @@
                     <select name="responsavel" id="responsavel" class="input_simples" style="width: 350px;">
                         <option value="">- Selecione -</option>
                         <?php foreach ($this->responsaveis as $v){ ?>
-                        <option value="<?php echo $v['idVinculo'];?>:<?php echo $v['idResponsavel'];?>"><?php echo utf8_encode($v['NomeResponsavel']);?></option>
+                        <option value="<?php echo $v['idVinculo'];?>:<?php echo $v['idResponsavel'];?>"><?php echo $v['NomeResponsavel'];?></option>
                         <?php } ?>
                     </select>&nbsp;<span id="msgValidaResponsavel"></span>&nbsp;&nbsp;&nbsp;
                 </td>
@@ -157,11 +157,11 @@
             </tr>
             <?php foreach ($this->propostas as $p){ ?>
             <tr>
-                <td align="center"><?php echo $p->idPreProjeto;?></td>
-                <td><?php echo utf8_encode($p->NomeProjeto);?></td>
-                <td><?php echo Mascara::addMaskCPF($p->Cpf); ?></td>
-                <td><?php echo utf8_encode($p->Nome);?></td>
-                <td align="center"><input type="radio" name="propostas" class="propostas" value="<?php echo $p->idPreProjeto;?>" /></td>
+                <td align="center"><?php echo $p->idpreprojeto;?></td>
+                <td><?php echo $p->nomeprojeto;?></td>
+                <td><?php echo Mascara::addMaskCPF($p->cpf); ?></td>
+                <td><?php echo $p->nome;?></td>
+                <td align="center"><input type="radio" name="propostas" class="propostas" value="<?php echo $p->idpreprojeto;?>" /></td>
             </tr>
             <?php } ?>
             <tr>
@@ -189,11 +189,11 @@
             </tr>
             <?php foreach ($this->propostasD as $pd):?>
             <tr>
-                <td align="center"><?php echo $pd->idPreProjeto;?></td>
-                <td><?php echo $pd->NomeProjeto;?></td>
-                <td><?php echo Mascara::addMaskCPF($pd->Cpf); ?></td>
-                <td><?php echo $pd->Nome;?></td>
-                <td align="center"><input type="radio" name="propostas" class="propostas" value="<?php echo $pd->idPreProjeto;?>" /></td>
+                <td align="center"><?php echo $pd->idpreprojeto;?></td>
+                <td><?php echo $pd->nomeprojeto;?></td>
+                <td><?php echo Mascara::addMaskCPF($pd->cpf); ?></td>
+                <td><?php echo $pd->nome;?></td>
+                <td align="center"><input type="radio" name="propostas" class="propostas" value="<?php echo $pd->idpreprojeto;?>" /></td>
             </tr>
             <?php endforeach; ?>
             <tr>

@@ -32,8 +32,8 @@
             <div id="qm0" class="qmmc sanfona">
 
                 <?php if(1 == 1):?>
-                	<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'consultarresponsaveis')); ?>" title="Novo Responsável">Gerenciar Responsáveis</a>
-                	<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'novoresponsavel')); ?>" title="Novo Responsável">Novo Responsável</a>
+                	<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'consultarresponsaveis')); ?>" title="Novo Responsável">Gerenciar Respons&aacute;veis</a>
+                	<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'novoresponsavel')); ?>" title="Novo Respons&aacute;vel">Novo Respons&aacute;vel</a>
                 	<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'vincularpropostas')); ?>" title="Vincular Propostas">Vincular Propostas</a>
                 <?php endif;?>
             </div>

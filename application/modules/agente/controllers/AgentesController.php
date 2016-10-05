@@ -2493,7 +2493,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
 
-            $vincular = new Vinculacao();
+            $vincular = new Agente_Model_DbTable_Vinculacao();
 
             #$where = "Idcaptacao = " . $where;
 

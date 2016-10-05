@@ -719,7 +719,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         $cpfPropoenente = Mascara::delMaskCPFCNPJ($_POST['cpfProponente']);
         $cpfProcurador = Mascara::delMaskCPFCNPJ($_POST['cpfProcurador']);
 
-        $Vinculacao = new Vinculacao();
+        $Vinculacao = new Agente_Model_DbTable_Vinculacao();
         $result = $Vinculacao->verificarDirigente($cpfPropoenente, $cpfProcurador);
 
         if(count($result) > 0){

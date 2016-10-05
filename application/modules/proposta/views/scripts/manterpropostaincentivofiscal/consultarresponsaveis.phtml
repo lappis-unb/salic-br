@@ -3,9 +3,9 @@
         if(siVinculo == 1) {
             $("#confirmaracao").html('Deseja realmente rejeitar o vinculo?');
         } else if(siVinculo == 2) {
-            $("#confirmaracao").html('Deseja realmente vincular o responsável?');
+            $("#confirmaracao").html('Deseja realmente vincular o respons&aacute;vel?');
         } else if(siVinculo == 3) {
-            $("#confirmaracao").html('Deseja realmente desvincular o responsável? <br /><br /> As propostas/projetos estarão sob sua responsabilidade!');
+            $("#confirmaracao").html('Deseja realmente desvincular o respons&aacute;vel? <br /><br /> As propostas/projetos estar&atilde;o sob sua responsabilidade!');
         }
 
         $("#confirmaracao").dialog({
@@ -34,16 +34,16 @@
 <!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">Início</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">In&iacute;cio</a></li>
         <li><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
-        <li class="last">Gerenciar responsáveis</li>
+        <li class="last">Gerenciar respons&aacute;veis</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 <!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
-    <div>Gerenciar responsáveis<span class="voltar"><a href="#" onclick="voltar();"></a></span></div>
+    <div>Gerenciar respons&aacute;veis<span class="voltar"><a href="#" onclick="voltar();"></a></span></div>
 </div>
 <!-- ========== FIM Tï¿½TULO ========== -->
 
@@ -65,24 +65,24 @@
             </tr>
             <?php foreach($this->pendentes as $p){ ?>
             <tr>
-                <td align="left"><?php echo utf8_encode($p->NomeResponsavel); ?></td>
-                <td align="center"><?php echo Mascara::addMaskCPF($p->CPFResponsavel); ?></td>
-                <td align="left"><?php echo utf8_encode($p->Proponente); ?></td>
+                <td align="left"><?php echo $p['nomeresponsavel']; ?></td>
+                <td align="center"><?php echo Mascara::addMaskCPF($p['cpfresponsavel']); ?></td>
+                <td align="left"><?php echo $p['proponente']; ?></td>
                 <td align="center">
-                    <?php echo (strlen($p->CNPJCPFProponente) == 11) ? Mascara::addMaskCPF($p->CNPJCPFProponente) : Mascara::addMaskCNPJ($p->CNPJCPFProponente); ?>
+                    <?php echo (strlen($p['cnpjcpfproponente']) == 11) ? Mascara::addMaskCPF($p['cnpjcpfproponente']) : Mascara::addMaskCNPJ($p['cnpjcpfproponente']); ?>
                 </td>
                 <td align="center">
-                    <?php if($this->cpfLogado != $p->CPFResponsavel){ ?>
-                    <input type="button" value=" " class="btn_vincular" style="width: 87px;" onclick="confirmaracao('<?php echo $p->idVinculo; ?>','2');" />
-                    <input type="button" value=" " class="btn_rejeitar" style="width: 87px;" onclick="confirmaracao('<?php echo $p->idVinculo; ?>','1');" />
+                    <?php if($this->cpfLogado != $p['cpfresponsavel']){ ?>
+                    <input type="button" value=" " class="btn_vincular" style="width: 87px;" onclick="confirmaracao('<?php echo $p['idvinculo']; ?>','2');" />
+                    <input type="button" value=" " class="btn_rejeitar" style="width: 87px;" onclick="confirmaracao('<?php echo $p['idvinculo']; ?>','1');" />
                     <?php } else {
-                        if($p->siVinculo == 0){
+                        if($p['sivinculo'] == 0){
                             echo "V&iacute;nculo Solicitado";
-                        } else if($p->siVinculo == 1){
+                        } else if($p['sivinculo'] == 1){
                             echo "V&iacute;nculo Rejeitado";
-                        } else if($p->siVinculo == 2){
+                        } else if($p['sivinculo'] == 2){
                             echo "Vinculado";
-                        } else if($p->siVinculo == 3){
+                        } else if($p['sivinculo'] == 3){
                             echo "Desvinculado";
                         }
                     }?>
@@ -110,23 +110,23 @@
             </tr>
             <?php foreach($this->vinculados as $v){ ?>
             <tr>
-                <td align="left"><?php echo utf8_encode($v->NomeResponsavel); ?></td>
-                <td align="center"><?php echo Mascara::addMaskCPF($v->CPFResponsavel); ?></td>
-                <td align="left"><?php echo utf8_encode($v->Proponente); ?></td>
+                <td align="left"><?php echo $v['nomeresponsavel']; ?></td>
+                <td align="center"><?php echo Mascara::addMaskCPF($v['cpfresponsavel']); ?></td>
+                <td align="left"><?php echo $v['proponente']; ?></td>
                 <td align="center">
-                    <?php echo (strlen($v->CNPJCPFProponente) == 11) ? Mascara::addMaskCPF($v->CNPJCPFProponente) : Mascara::addMaskCNPJ($v->CNPJCPFProponente); ?>
+                    <?php echo (strlen($v['cnpjcpfproponente']) == 11) ? Mascara::addMaskCPF($v['cnpjcpfproponente']) : Mascara::addMaskCNPJ($v['cnpjcpfproponente']); ?>
                 </td>
                 <td align="center">
-                    <?php if($this->cpfLogado != $v->CPFResponsavel){ ?>
-                    <input type="button" value=" " class="btn_desvincular" style="width: 87px;" onclick="confirmaracao('<?php echo $v->idVinculo; ?>','3','<?php echo $v->idUsuarioResponsavel; ?>');" />
+                    <?php if($this->cpfLogado != $v['cpfresponsavel']){ ?>
+                    <input type="button" value=" " class="btn_desvincular" style="width: 87px;" onclick="confirmaracao('<?php echo $v['idvinculo']; ?>','3','<?php echo $v['idusuarioresponsavel']; ?>');" />
                     <?php } else {
-                        if($v->siVinculo == 0){
+                        if($v['sivinculo'] == 0){
                             echo "V&iacute;nculo Solicitado";
-                        } else if($v->siVinculo == 1){
+                        } else if($v['sivinculo'] == 1){
                             echo "V&iacute;nculo Rejeitado";
-                        } else if($v->siVinculo == 2){
+                        } else if($v['sivinculo'] == 2){
                             echo "Vinculado";
-                        } else if($v->siVinculo == 3){
+                        } else if($v['sivinculo'] == 3){
                             echo "Desvinculado";
                         }
                     }?>
