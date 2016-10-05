@@ -1,3 +1,7 @@
+Release 1.10.10
+  * Fix: [Readequações] Gravando código da unidade que está sendo encaminhado o projeto
+  * Fix: [Readequações] corrigindo código da SAV ao encaminhar avaliação
+
 Release 1.10.9
   * Fix: [LOGIN] Atualização da senha de entrada.
 Release 1.10.8
