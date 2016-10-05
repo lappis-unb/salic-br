@@ -137,7 +137,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     {
         $this->_helper->layout->disableLayout();
 
-        $v = new TbVinculo();
+        $v = new Agente_Model_DbTable_TbVinculo();
         $pp = new Proposta_Model_PreProjeto();
         $vprp = new tbVinculoPropostaResponsavelProjeto();
         $emailDAO = new EmailDAO();
@@ -285,7 +285,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
     public function vinculoproponenteAction()
     {
-        $tbVinculo = new TbVinculo();
+        $tbVinculo = new Agente_Model_DbTable_TbVinculo();
         $tbVinculoProposta = new tbVinculoPropostaResponsavelProjeto();
         $PreProjetoDAO = new Proposta_Model_PreProjeto();
 
@@ -320,7 +320,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
     public function vinculoresponsavelAction()
     {
-        $tbVinculo = new TbVinculo();
+        $tbVinculo = new Agente_Model_DbTable_TbVinculo();
         $agentes = new Agente_Model_DbTable_Agentes();
 
         $idResponsavel = $this->_request->getParam("idResponsavel");

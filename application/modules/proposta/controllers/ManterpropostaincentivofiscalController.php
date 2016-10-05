@@ -335,7 +335,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
             if ($acao == "incluir") {
                 // Salvando os dados na TbVinculoProposta
-                $tbVinculoDAO = new TbVinculo();
+                $tbVinculoDAO = new Agente_Model_DbTable_TbVinculo();
                 $tbVinculoPropostaDAO = new tbVinculoPropostaResponsavelProjeto();
 
                 $whereVinculo['idUsuarioResponsavel = ?'] = $this->idResponsavel;
@@ -1285,7 +1285,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @return void
      */
     public function vincularprojetosAction() {
-        $tbVinculo = new TbVinculo();
+        $tbVinculo = new Agente_Model_DbTable_TbVinculo();
         $propostas = new Proposta_Model_PreProjeto();
 
         $whereProjetos['pp.idAgente = ?'] = $this->idAgenteProponente;
@@ -1323,7 +1323,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $cnpjcpf = Mascara::delMaskCPF($this->_request->getParam("cnpjcpf"));
         $nome = $this->_request->getParam("nome");
 
-        $tbVinculo = new TbVinculo();
+        $tbVinculo = new Agente_Model_DbTable_TbVinculo();
 
         if ((empty($cnpjcpf)) && (empty($nome))) {
             echo "<table class='tabela'>

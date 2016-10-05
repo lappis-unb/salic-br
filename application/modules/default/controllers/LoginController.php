@@ -216,7 +216,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
 
                 /* ========== VINCULA O RESPONSAVEL A SEU PROPRIO PERFIL DE PROPONENTE ========== */
                 if ( count($buscarVisao) > 0 ) :
-                    $tbVinculo    = new TbVinculo();
+                    $tbVinculo    = new Agente_Model_DbTable_TbVinculo();
                     $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $sgcAcessoSave)); // pega o id do respons�vel cadastrado
 
                     $dadosVinculo = array(

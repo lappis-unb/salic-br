@@ -1584,7 +1584,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             $Projetos = new Projetos();
             $Agentes = new Agente_Model_DbTable_Agentes();
             $Visao = new Visao();
-            $tbVinculo = new TbVinculo();
+            $tbVinculo = new Agente_Model_DbTable_TbVinculo();
             $tbVinculoProposta = new tbVinculoProposta();
 
             /* ========== BUSCA OS DADOS DO PROPONENTE ANTIGO ========== */

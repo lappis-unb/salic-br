@@ -341,7 +341,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
             /* ========== VINCULA O RESPONSAVEL A SEU PROPRIO PERFIL DE PROPONENTE ========== */
             if (count($buscarResponsavel) > 0) :
-                $tbVinculo = new TbVinculo();
+                $tbVinculo = new Agente_Model_DbTable_TbVinculo();
 
                 $dadosVinculo = array(
                     'idAgenteProponente' => $idAgenteCadastrado
@@ -2068,7 +2068,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
             if ((!empty($acao)) && (!empty($idResponsavel))):
 
-                $tbVinculo = new TbVinculo();
+                $tbVinculo = new Agente_Model_DbTable_TbVinculo();
 
                 $dadosVinculo = array(
                     'idAgenteProponente' => $idAgente,
@@ -2084,7 +2084,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         //================ FIM VINCULA O RESPONSAVEL COM O PROPONENTE CADASTRADO ========================
     	if (isset($acao) && $acao != '') {
     		// Retorna para o listar propostas
-    		$tbVinculo = new TbVinculo();
+    		$tbVinculo = new Agente_Model_DbTable_TbVinculo();
     		$dadosVinculo = array(
     				'idAgenteProponente' => $idAgente,
     				'dtVinculo' => new Zend_Db_Expr('GETDATE()'),

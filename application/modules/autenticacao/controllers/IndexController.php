@@ -242,7 +242,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 $buscarVisao = $Visao->buscar(array('Visao = ?' => 144, 'stAtivo = ?' => 'A', 'idAgente = ?' => $idAgenteProp));
                 /* ========== VINCULA O RESPONSAVEL A SEU PROPRIO PERFIL DE PROPONENTE ========== */
                 if (count($buscarVisao) > 0) :
-                    $tbVinculo = new TbVinculo();
+                    $tbVinculo = new Agente_Model_DbTable_TbVinculo();
                     $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $sgcAcessoSave)); // pega o id do responsável cadastrado
                     $dadosVinculo = array(
                         'idAgenteProponente' => $idAgenteProp

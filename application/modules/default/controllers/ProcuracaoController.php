@@ -83,7 +83,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
      */
     public function cadastramentoAction()
     {
-        $tbVinculo = new TbVinculo();
+        $tbVinculo = new Agente_Model_DbTable_TbVinculo();
         $dadosCombo = array();
         $cpfCnpj = '';
 
@@ -151,8 +151,8 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         $tbDocumentoDAO 		= new tbDocumento();
         $ProcuracaoDAO 			= new Procuracao();
         $tbVinculoPropostaDAO 	= new tbVinculoPropostaResponsavelProjeto();
-        $tbVinculoDAO 			= new TbVinculo();
-        $Sgcacesso              = new Sgcacesso();
+        $tbVinculoDAO 			= new Agente_Model_DbTable_TbVinculo();
+        $Sgcacesso              = new Autenticacao_Model_Sgcacesso();
         $Agentes                = new Agente_Model_DbTable_Agentes();
         $Nomes                  = new Nomes();
         $Visao                  = new Visao();
@@ -400,7 +400,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
     public function aprovacaoAction()
     {
         $vinculoPropostaDAO     = new tbVinculoPropostaResponsavelProjeto();
-        $tbvinculoDAO 		= new TbVinculo();
+        $tbvinculoDAO 		= new Agente_Model_DbTable_TbVinculo();
         $procuracaoDAO 		= new Procuracao();
         $preProjetoDAO 		= new Proposta_Model_PreProjeto();
 

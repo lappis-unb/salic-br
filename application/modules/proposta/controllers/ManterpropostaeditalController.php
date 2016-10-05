@@ -223,7 +223,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                 }
             }
 
-           $tblVinculo = new TbVinculo();
+           $tblVinculo = new Agente_Model_DbTable_TbVinculo();
 
 	        $arrBuscaP['VP.idPreProjeto = ?'] 			= $dados[0]->idPreProjeto;
 	        $arrBuscaP['VI.idUsuarioResponsavel = ?'] 	= $this->idResponsavel;
@@ -316,7 +316,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
                     /*******************************************************************************************/
 	                // Salvando os dados na TbVinculoProposta
-	                $tbVinculoDAO 		  = new TbVinculo();
+	                $tbVinculoDAO 		  = new Agente_Model_DbTable_TbVinculo();
 	                $tbVinculoPropostaDAO = new tbVinculoPropostaResponsavelProjeto();
 
 	                $whereVinculo['idUsuarioResponsavel = ?'] = $this->idResponsavel;

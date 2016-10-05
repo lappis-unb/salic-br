@@ -89,7 +89,7 @@ class ListarprojetosController extends MinC_Controller_Action_Abstract {
     public function listarprojetosAction() {
 
         /***************************************************************************** */
-        $tblVinculo = new TbVinculo();
+        $tblVinculo = new Agente_Model_DbTable_TbVinculo();
         $dadosCombo = array();
         $cpfCnpj = '';
 
@@ -140,7 +140,7 @@ class ListarprojetosController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $mecanismo = $_POST['mecanismo'];
 
-        $tblVinculo = new TbVinculo();
+        $tblVinculo = new Agente_Model_DbTable_TbVinculo();
         $rsVinculo = $tblVinculo->buscarProponenteResponsavel($this->idResponsavel, $mecanismo);
         $agente = array();
 

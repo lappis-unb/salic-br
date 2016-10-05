@@ -363,7 +363,7 @@ class ReadequacaoController extends MinC_Controller_Action_Abstract
 		$this->Agentes                  = new Agente_Model_DbTable_Agentes();
 		$this->Visao                    = new Visao();
 		$this->Projetos                 = new Projetos();
-		$this->tbVinculo                = new TbVinculo();
+		$this->tbVinculo                = new Agente_Model_DbTable_TbVinculo();
 		$this->Aprovacao                = new Aprovacao();
 		$this->tbPlanilhaAprovacao      = new PlanilhaAprovacao();
 		$this->tbPedidoAlteracaoProjeto = new tbPedidoAlteracaoProjeto();
