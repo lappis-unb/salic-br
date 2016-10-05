@@ -458,7 +458,7 @@ if (empty($_GET['acao'])) {
                         $('#msgAjax').html(data.error);
                         $('#msgAjax').show();
                         $('#imgPF').hide();
-                        $('#erroCpf').html("Pessoa não encontrada...[ "+data.error+" ]");
+                        $('#erroCpf').html("Pessoa n&atilde;o encontrada...[ "+data.error+" ]");
                     }else{
                         // Preenche os dados
                         $('#idPessoa').val(data.dados.idPessoa);

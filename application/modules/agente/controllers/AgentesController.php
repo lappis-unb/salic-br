@@ -388,51 +388,51 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         try {
             if(11 == strlen( $cpf )) {
                 if (!validaCPF($cpf)) {
-                    $retorno['error'] = utf8_encode('CPF inválido');
+                    $retorno['error'] = 'CPF inv&aacute;lido';
                     $erro = 1;
                 } else {
                     $arrResultado = $wsServico->consultarPessoaFisicaReceitaFederal($cpf);
 
                     if (empty($arrResultado)) {
-                        $retorno['error'] = utf8_encode('Pessoa não encontrada!');
+                        $retorno['error'] = 'Pessoa n&atilde;o encontrada!';
                         $erro = 1;
                     }
                     if ($erro == 0 && count($arrResultado) > 0) {
                         $retorno['dados']['idPessoa'] = $arrResultado['idPessoaFisica'];
-                        $retorno['dados']['nome'] = utf8_encode($arrResultado['nmPessoaFisica']);
+                        $retorno['dados']['nome'] = $arrResultado['nmPessoaFisica'];
                         $retorno['dados']['cep'] = isset($arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep']) && $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] ? $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] : '';
                         $retorno['error'] = '';
 
                     } else {
-                        $retorno['error'] = utf8_encode('Pessoa não encontrada!!');
+                        $retorno['error'] = 'Pessoa n&atilde;o encontrada!!';
                     }
                 }
             } else if(15 == strlen($cpf)){
                 if (!isCnpjValid($cpf)) {
-                    $retorno['error'] = utf8_encode('CNPJ inválido');
+                    $retorno['error'] = 'CNPJ inv&aacute;lido';
                     $erro = 1;
                 } else {
                     $arrResultado = $wsServico->consultarPessoaJuridicaReceitaFederal($cpf);
                     if (empty($arrResultado)) {
-                        $retorno['error'] = utf8_encode('Pessoa não encontrada!!');
+                        $retorno['error'] = 'Pessoa n&atilde;o encontrada!!';
                         $erro = 1;
                     }
                     if ($erro == 0 && count($arrResultado) > 0) {
                         $retorno['dados']['idPessoa'] = $arrResultado['idPessoaJuridica'];
-                        $retorno['dados']['nome'] = utf8_encode($arrResultado['nmRazaoSocial']);
+                        $retorno['dados']['nome'] = $arrResultado['nmRazaoSocial'];
                         $retorno['dados']['cep'] = isset($arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep']) && $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] ? $arrResultado['pessoa']['enderecos'][0]['logradouro']['nrCep'] : '';
                         $retorno['error'] = '';
 
                     } else {
-                        $retorno['error'] = utf8_encode('Pessoa não encontrada!');
+                        $retorno['error'] = 'Pessoa n&atilde;o encontrada!';
                     }
                 }
             }
 
         } catch (InvalidArgumentException $exc) {
-            $retorno['error'] = utf8_encode('Pessoa não encontrada!');
+            $retorno['error'] = 'Pessoa n&atilde;o encontrada!';
         } catch (Exception $exc) {
-            $retorno['error'] = utf8_encode('Pessoa não encontrada!');
+            $retorno['error'] = 'Pessoa n&atilde;o encontrada!';
         }
 
         echo json_encode($retorno);
