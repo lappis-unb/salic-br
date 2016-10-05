@@ -189,7 +189,7 @@
                 <td class="destacar bold">País</td>
                 <td class="destacar bold">UF</td>
                 <td class="destacar bold">Município</td>
-                <td class="destacar bold">Situação</td>
+                <td class="destacar bold">Status</td>
                <?php echo ($this->LocaisDeRealizacao[0]->dtInicioRealizacao)?'<td class="destacar bold" width="1">Dt. In&iacute;cio Realização</td>':'' ?>
                <?php echo ($this->LocaisDeRealizacao[0]->dtFimRealizacao)?'<td class="destacar bold" width="1">Dt. Fim Realização</td>':'' ?>
                <?php echo ($this->LocaisDeRealizacao[0]->dsJustificativa)?'<td class="destacar bold" width="1">Justificativa</td>':'' ?>
@@ -233,7 +233,7 @@
                 <th colspan="8">Editar dados do Local de Realização</th>
             </tr>
             <tr align="left">
-                <td class="destacar bold" width="20%">Situação</td>
+                <td class="destacar bold" width="20%">Status</td>
                 <td><?php if($this->LocaisDeRealizacao[0]->siAbrangencia != 3){ ?>
                         <select name="siAbrangencia" id="siAbrangencia" class="select_simples obrigatorio w200 selectAbrg input_font_pq">
                             <option value="0" <?php echo($this->LocaisDeRealizacao[0]->siAbrangencia == 0)?'selected="selected"':''; ?>>Sem Informação</option>
