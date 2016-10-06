@@ -23,15 +23,15 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 127; // Coordenador - Geral de Análise (Ministro)
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
-        isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
+        $arrAuth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity()); // instancia da autenticação
+        isset($arrAuth['usu_codigo']) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
 
         parent::init(); // chama o init() do pai GenericControllerNew
-        $auth = Zend_Auth::getInstance(); // instancia da autenticaç?o
-        if(isset($auth->getIdentity()->usu_codigo)){
-            $this->idUsuario = $auth->getIdentity()->usu_codigo;
+
+        if(isset($arrAuth['usu_codigo'])){
+            $this->idUsuario = $arrAuth['usu_codigo'];
         } else {
-            $this->idUsuario = $auth->getIdentity()->idusuario;
+            $this->idUsuario = $arrAuth['idusuario'];
             $this->verificarPermissaoAcesso(true, false, false);
         }
 
