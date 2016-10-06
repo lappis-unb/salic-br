@@ -1884,6 +1884,7 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
                 
                 $dados = array();
                 $dados['siCumprimentoObjeto'] = 2;
+                $dados['DtEnvioDaPrestacaoContas'] = new Zend_Db_Expr('GETDATE()');
                 $where = "idPronac = $idpronac ";
 
                 $tbCumprimentoObjeto = new tbCumprimentoObjeto();
