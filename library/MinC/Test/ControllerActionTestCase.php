@@ -31,15 +31,21 @@ abstract class MinC_Test_ControllerActionTestCase extends MinC_Test_Abstract
 
     public function autenticar($login = null , $senha = null)
     {
+        $config = new Zend_Config_Ini(
+            APPLICATION_PATH. '/configs/application.ini',
+            APPLICATION_ENV
+        );
+
         $this->resetRequest()
             ->resetResponse();
 
         $this->request->setMethod('POST')
             ->setPost(array(
-                'Login' => ($login) ? $login : '23969156149',
-                'Senha' => ($senha) ? $senha : 'r239691'
+                'Login' => ($login) ? $login : $config->login,
+                'Senha' => ($senha) ? $senha : $config->password
             ));
-        $this->dispatch('/index/login');
+        //$this->dispatch('/index/login');
+        $this->dispatch('/autenticacao/index/login');
 
         $this->setAutenticado(true);
     }

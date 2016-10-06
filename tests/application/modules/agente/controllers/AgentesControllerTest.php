@@ -21,6 +21,5 @@ class AgentesControllerTest extends MinC_Test_ControllerActionTestCase
         $this->assertModule('agente');
         $this->assertController('agentes');
         $this->assertAction('incluiragente');
-        $this->assertXpath('/html/body/div[1]');
     }
 }
