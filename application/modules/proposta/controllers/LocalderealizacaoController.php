@@ -283,8 +283,9 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         }
 
         //EXCLUI REGISTRO DA TABELA ABRANGENCIA
-        $mapper = new Proposta_Model_TbDeslocamentoMapper();
-        $excluir = $mapper->delete($_GET['id']);
+        $mapper = new Proposta_Model_DbTable_Abrangencia();
+        $excluir = $mapper->delete(['idabrangencia = ?' => $_GET['cod']]);
+
         if($excluir) {
 
             parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
