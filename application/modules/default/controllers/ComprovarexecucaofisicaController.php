@@ -1884,6 +1884,16 @@ class ComprovarexecucaofisicaController extends GenericControllerNew
                 
                 $dados = array();
                 $dados['siCumprimentoObjeto'] = 2;
+
+              /*
+                1 - Salvo pelo proponente;
+                2 - Enviado pelo proponente;
+                3 - Encaminhado para Técnico de Acompanhamento;
+                4 - Em análise pelo Técnico;
+                5 - Finalizado pelo Técnico;
+                6 - Finalizado pelo Coordenador.
+              */
+
                 $dados['DtEnvioDaPrestacaoContas'] = new Zend_Db_Expr('GETDATE()');
                 $where = "idPronac = $idpronac ";
 
