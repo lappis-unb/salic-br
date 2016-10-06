@@ -410,7 +410,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
-        $this->verificarPermissaoAcesso(true, false, false);
+         $this->verificarPermissaoAcesso(true, false, false);
 
         //recupera parametros
         $get = Zend_Registry::get('get');
