@@ -23,15 +23,15 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 127; // Coordenador - Geral de Análise (Ministro)
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
-        $arrAuth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity()); // instancia da autenticação
-        isset($arrAuth['usu_codigo']) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
+        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
 
         parent::init(); // chama o init() do pai GenericControllerNew
-
-        if(isset($arrAuth['usu_codigo'])){
-            $this->idUsuario = $arrAuth['usu_codigo'];
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaç?o
+        if(isset($auth->getIdentity()->usu_codigo)){
+            $this->idUsuario = $auth->getIdentity()->usu_codigo;
         } else {
-            $this->idUsuario = $arrAuth['idusuario'];
+            $this->idUsuario = $auth->getIdentity()->idusuario;
             $this->verificarPermissaoAcesso(true, false, false);
         }
 
@@ -64,15 +64,14 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
      */
     public function produtosetapasitensAction() {
 
-        $tableManterTabelaItens = new Proposta_Model_DbTable_tbSolicitarItem();
 
-        $tbproduto = $tableManterTabelaItens->buscaproduto();
+        $tbproduto = MantertabelaitensDAO::buscaproduto();
         $this->view->produto = $tbproduto;
 
-        $tbetapa = $tableManterTabelaItens->buscaetapa();
+        $tbetapa = MantertabelaitensDAO::buscaetapa();
         $this->view->etapa = $tbetapa;
 
-        $tbitem = $tableManterTabelaItens->buscaitem();
+        $tbitem = MantertabelaitensDAO::buscaitem();
         $this->view->item = $tbitem;
     }
 
@@ -81,24 +80,24 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
      *
      * @access public
      * @return void
+     * @author <wouerner@gmail.com>
      */
-    public function solicitaritensAction() {
-        $tableManterTabelaItens = new Proposta_Model_DbTable_tbSolicitarItem();
+    public function solicitaritensAction()
+    {
+        $tbproduto = new MantertabelaitensDAO();
+        $this->view->produto = $tbproduto->listarProduto();
 
-        $tbproduto = $tableManterTabelaItens->buscaproduto();
-        $this->view->produto = $tbproduto;
+        $tbetapa = new MantertabelaitensDAO();
+        $this->view->etapa = $tbetapa->listarEtapa();
 
-        $tbetapa = $tableManterTabelaItens->buscaetapa();
-        $this->view->etapa = $tbetapa;
+        $tbitem = new MantertabelaitensDAO();
+        $this->view->item = $tbitem->listarItem();
 
-        $tbitem = $tableManterTabelaItens->buscaitem();
-        $this->view->item = $tbitem;
+        $tbsolicitacao = new MantertabelaitensDAO();
+        $this->view->solicitacao = $tbsolicitacao->solicitacao($this->idUsuario);
 
-        $tbsolicitacao = $tableManterTabelaItens->solicitacoes($this->idUsuario);
-        $this->view->solicitacao = $tbsolicitacao;
-
-        $buscardados =  $tableManterTabelaItens->buscaprodutoetapaitem();
-        $this->view->buscardados = $buscardados;
+        $buscardados = new MantertabelaitensDAO();
+        $this->view->buscardados = $buscardados->produtoEtapaItem();
 
         if ($this->getRequest()->isPost()) {
             // recebe os dados via post
@@ -115,7 +114,9 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
 
             try {
                 //recupera nome do item
-                $nomeItem = $tableManterTabelaItens->buscaprodutoetapaitem($idPlanilhaItens);
+                //$nomeItem = MantertabelaitensDAO:: buscaprodutoetapaitem($idPlanilhaItens);
+                $nomeItem = new MantertabelaitensDAO();
+                $nomeItem = $nomeItem->listarProdutoEtapaItem($idPlanilhaItens);
 
                 $dateFunc = MinC_Db_Expr::date();
                 $dadosassociar = array(
@@ -149,7 +150,9 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
                 $arrBusca['prod.codigo'] = $produto;
                 $arrBusca['et.idplanilhaetapa'] = $etapa;
 
-                $res = $tableManterTabelaItens->buscarSolicitacoes($arrBusca,$itemNome);
+                //$res = MantertabelaitensDAO::buscarSolicitacoes($arrBusca,$itemNome);
+                $res = new MantertabelaitensDAO();
+                $res = $res->listarSolicitacoes($arrBusca,$itemNome);
 
                 if(count($res)>0) {
                     throw new Exception("Cadastro duplicado de Produto na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada!");
@@ -162,14 +165,14 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
                     throw new Exception("A justificativa n&atilde;o pode conter mais de 1000 caracteres!");
 
                 }else if ($solicitacao == 'produtoetapa') {
-                    //xd($dadosassociar);
-                    $associaritem = $tableManterTabelaItens->associaritem($dadosassociar);
+                    //$associaritem = MantertabelaitensDAO::associaritem($dadosassociar);
+                    $associaritem = new MantertabelaitensDAO();
+                    $associaritem = $associaritem->associarItemObj($dadosassociar);
                     if ($associaritem) {
                         parent::message("A solicitação foi encaminhada ao Minc. Aguarde a resposta!", "/proposta/mantertabelaitens/solicitacoes?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
                     }
                 }else if ($solicitacao == 'novoitem');
                 {
-
                     $incluiritem = false;
                     if (empty($NomeItem)) {
                         throw new Exception("Por favor, informe o nome do Item!");
@@ -179,11 +182,15 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
                     }
 
                     //codigo antigo
-                    //$incluiritem = Mantertabelaitens::cadastraritem($Descricao, $this->idUsuario);
-                    $incluiritem = $tableManterTabelaItens->cadastraritem($dadosincluir);
+                    //$incluiritem = MantertabelaitensDAO::cadastraritem($Descricao, $this->idUsuario);
+                    $incluiritem = new MantertabelaitensDAO();
+                    $incluiritem = $incluiritem->cadastrarItemObj($dadosincluir);
 
                     if ($incluiritem) {
-                        $NovoItem = $tableManterTabelaItens->buscarItem($this->idUsuario);
+                        //$NovoItem = MantertabelaitensDAO::buscarItem($this->idUsuario);
+                        //$dadosassociar['idPlanilhaItens'] = $NovoItem['idPlanilhaItens'];
+                        $NovoItem = new MantertabelaitensDAO();
+                        $NovoItem = $NovoItem->listarItem($this->idUsuario);
                         $dadosassociar['idPlanilhaItens'] = $NovoItem['idPlanilhaItens'];
 
                         parent::message("Cadastro realizado com sucesso!", "proposta/mantertabelaitens/solicitacoes?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
@@ -249,10 +256,9 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
-        $auth = Zend_Auth::getInstance()->getIdentity(); // pega a autenticação
-        $arrAuth = array_change_key_case((array) $auth); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticação
         $where = array();
-        $where['sol.idAgente = ?'] = $arrAuth['idusuario'];
+        $where['sol.idAgente = ?'] = $auth->getIdentity()->IdUsuario;
         $where['sol.stEstado = ?'] = 1; // Atendido
 
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
@@ -277,8 +283,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
             $this->view->nmPagina = 'Atendido';
         }
 
-        //die('w');
-        $tbSolicitarItem = new Proposta_Model_DbTable_tbSolicitarItem();
+        $tbSolicitarItem = New tbSolicitarItem();
         $total = $tbSolicitarItem->buscarItens($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
 
@@ -309,8 +314,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
 
-        $tableManterTabelaItens = new Proposta_Model_DbTable_tbSolicitarItem();
-        $tbsolicitacao = $tableManterTabelaItens->solicitacoes($this->idUsuario);
+        $tbsolicitacao = MantertabelaitensDAO::solicitacoes($this->idUsuario);
         $this->view->solicitacao = $tbsolicitacao;
     }
 
@@ -364,7 +368,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         /* ================== PAGINACAO ======================*/
         $auth = Zend_Auth::getInstance(); // pega a autenticação
         $where = array();
-        $where['sol.idAgente = ?'] = $arrAuth['idusuario'];
+        $where['sol.idAgente = ?'] = $auth->getIdentity()->IdUsuario;
         $where['sol.stEstado = ?'] = 1; // Atendido
 
         if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
@@ -389,7 +393,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
             $this->view->nmPagina = 'Atendido';
         }
 
-        $tbSolicitarItem = new Proposta_Model_DbTable_tbSolicitarItem();
+        $tbSolicitarItem = New tbSolicitarItem();
         $total = $tbSolicitarItem->buscarItens($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
 
@@ -430,15 +434,16 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
      * @access public
      * @return void
      */
-    public function solicitacoesAction() {
-        $tableManterTabelaItens = new Proposta_Model_DbTable_tbSolicitarItem();
+    public function solicitacoesAction()
+    {
+        $tbsolicitacao = new MantertabelaitensDAO();
+        $tbsolicitacao = $tbsolicitacao->solicitacao($this->idUsuario);
 
-        $tbsolicitacao = $tableManterTabelaItens->solicitacoes($this->idUsuario);
         $this->view->solicitacao = $tbsolicitacao;
 
     	if($_POST)
         {
-        	$tbsolicitacaos = $tableManterTabelaItens->solicitacoes($this->idUsuario);
+        	$tbsolicitacaos = MantertabelaitensDAO::solicitacoes($this->idUsuario);
 
         	$html = '<table class="tabela">
 			            <tr>
@@ -480,7 +485,6 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
      * @return void
      */
     public function exibirdadosAction() {
-        $tableManterTabelaItens = new Proposta_Model_DbTable_tbSolicitarItem();
 
         if ($this->getRequest()->isPost()) {
             // recebe os dados via post
@@ -508,7 +512,8 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
                 $where = " <> '%".$item."'";
             }
 
-            $tbpretitem = $tableManterTabelaItens->exibirprodutoetapaitem($item=null,$where,$etapa,$produto);
+            $tbpretitem = new MantertabelaitensDAO();
+            $tbpretitem = $tbpretitem->listarProdutoEtapaItem($item=null,$where,$etapa,$produto);
 
             $this->view->pretitem = $tbpretitem;
 
@@ -541,8 +546,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
 
 		$idProduto = $_POST['idProduto'];
 
-        $tableManterTabelaItens = new Proposta_Model_DbTable_tbSolicitarItem();
-		$this->view->etapas = $tableManterTabelaItens->exibirEtapa($idProduto);
+		$this->view->etapas = MantertabelaitensDAO::exibirEtapa($idProduto);
 
 		$this->view->idProduto = $idProduto;
 	}
@@ -555,14 +559,13 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
      * @author wouerner <wouerner@gmail.com>
      */
     public function buscaitensAction()
-    {        $tableManterTabelaItens = new Proposta_Model_DbTable_tbSolicitarItem();
-
+    {
         $this->_helper->layout->disableLayout();
 
         $idProduto 	= $_POST['idProduto'];
         $idEtapa 	= $_POST['idEtapa'];
 
-        $this->view->itens = $tableManterTabelaItens->exibirItem($idProduto, $idEtapa);
+        $this->view->itens = MantertabelaitensDAO::exibirItem($idProduto, $idEtapa);
         $this->view->idProduto = $idProduto;
         $this->view->idEtapa = $idEtapa;
     }
@@ -577,24 +580,22 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
     {
         $post = Zend_Registry::get('post');
 
-        $tableManterTabelaItens = new Proposta_Model_DbTable_tbSolicitarItem();
-
         $item = $post->NomeDoItem;
 
-        $tbpretitem = $tableManterTabelaItens->exibirprodutoetapaitem($item);
-        $this->view->pretitem = $tbpretitem;
+        $tbpretitem = new MantertabelaitensDAO();
+        $this->view->pretitem = $tbpretitem->listarProdutoEtapaItem($item);;
 
-        $tbproduto = $tableManterTabelaItens->buscaproduto();
-        $this->view->produto = $tbproduto;
+        $tbproduto = new MantertabelaitensDAO();
+        $this->view->produto = $tbproduto->listarProduto();
 
-        $tbetapa = $tableManterTabelaItens->buscaetapa();
-        $this->view->etapa = $tbetapa;
+        $tbetapa = new MantertabelaitensDAO();
+        $this->view->etapa = $tbetapa->listarEtapa();
 
-        $tbitem = $tableManterTabelaItens->buscaitem();
-        $this->view->ites = $tbitem;
+        $tbitem = new MantertabelaitensDAO();
+        $this->view->ites = $tbitem->listarItem();
 
-        $buscardados =  $tableManterTabelaItens->buscaprodutoetapaitem();
-        $this->view->buscardados = $buscardados;
+        $buscardados =  new MantertabelaitensDAO();
+        $this->view->buscardados = $buscardados->produtoEtapaItem();
     }
 
     /**
@@ -628,8 +629,8 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         }elseif($tipoPesquisa==4) {
             $where = " <> '%".$item."'";
         }
-        $tableManterTabelaItens = new Proposta_Model_DbTable_tbSolicitarItem();
-        $tbpretitem = $tableManterTabelaItens->exibirprodutoetapaitem($item=null,$where,$etapa,$produto);
+
+        $tbpretitem = MantertabelaitensDAO::exibirprodutoetapaitem($item=null,$where,$etapa,$produto);
 
         $arr = array();
         $arrNomeProduto = array();
