@@ -9,7 +9,7 @@
         $('.btn_salvar').click(function(){
             if($('#justificativa').val().length > 250){
                 $("#msgAlerta").dialog("destroy");
-                $("#msgAlerta").html("O campo Justificativa não pode ultrapassar a quantidade de 250 caracteres!");
+                $("#msgAlerta").html("O campo Justificativa nï¿½o pode ultrapassar a quantidade de 250 caracteres!");
                 $("#msgAlerta").dialog({
                     resizable: false,
                     title: 'Alerta!',
@@ -88,7 +88,7 @@
         jQuery.validator.addMethod("validarJustificativa", function(value, element) {
             var texto = $('#justificativa').val();
             if (texto.length > 0) {
-                // verifica se o usuário clicou no botão 'Reintegração'
+                // verifica se o usuï¿½rio clicou no botï¿½o 'Reintegraï¿½ï¿½o'
                 $('#justificativa').val();
                 return true;
             } else {
