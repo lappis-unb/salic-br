@@ -26,6 +26,13 @@ class Minc_Notification_Message {
      * @var integer
      */
     protected $codePronac;
+    
+    /**
+     * Código da diligência ou idDiligencia.
+     * 
+     * @var integer
+     */
+    protected $codeDiligencia;
 
     /**
      * Lista de Id dos dispositivos dos usuários que receberão a notificação.
@@ -41,6 +48,13 @@ class Minc_Notification_Message {
      */
     protected $listResgistrationIds;
     
+    /**
+     * Tipo de mensagem.
+     * 
+     * @var integer
+     */
+    protected $tipoMensagem;
+
     /**
      * Titulo da mensagem.
      * 
@@ -112,12 +126,20 @@ class Minc_Notification_Message {
         return $this->codePronac;
     }
 
+    public function getCodeDiligencia() {
+        return $this->codeDiligencia;
+    }
+
     public function getListDeviceId() {
         return $this->listDeviceId;
     }
 
     public function getListResgistrationIds() {
         return $this->listResgistrationIds;
+    }
+
+    public function getTipoMensagem() {
+        return $this->tipoMensagem;
     }
 
     public function getTitle() {
@@ -166,6 +188,11 @@ class Minc_Notification_Message {
         return $this;
     }
 
+    public function setCodeDiligencia($codeDiligencia) {
+        $this->codeDiligencia = $codeDiligencia;
+        return $this;
+    }
+
     public function setListDeviceId($listDeviceId) {
         $this->listDeviceId = $listDeviceId;
         return $this;
@@ -173,6 +200,11 @@ class Minc_Notification_Message {
 
     public function setListResgistrationIds($listResgistrationIds) {
         $this->listResgistrationIds = $listResgistrationIds;
+        return $this;
+    }
+
+    public function setTipoMensagem($tipoMensagem) {
+        $this->tipoMensagem = $tipoMensagem;
         return $this;
     }
 
@@ -312,6 +344,8 @@ class Minc_Notification_Message {
         $messageRow = $this->modelMensagem->createRow();
         $messageRow->nrCPF = $this->cpf;
         $messageRow->idPronac = $this->codePronac;
+        $messageRow->idDiligencia = $this->codeDiligencia;
+        $messageRow->tpMensagem = $this->tipoMensagem;
         $messageRow->titulo = $this->title;
         $messageRow->descricao = $this->text;
         if($this->response && $this->response->success){

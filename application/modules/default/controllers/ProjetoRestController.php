@@ -70,6 +70,7 @@ class ProjetoRestController extends Minc_Controller_AbstractRest {
         $modelProjeto = new Projetos();
         $resultado = $modelProjeto->buscarPorPronac($pronac);
         $projeto = (object) $resultado->toArray();
+
         if($projeto){
             # Busca lancamentos no Extrato Bancário
             $listaResult = $modelProjeto->buscarAnoExtratoDeProjeto($pronac);

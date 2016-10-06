@@ -81,8 +81,10 @@ class Mensagem extends GenericModel{
         $consulta
             ->from(array('m' => 'tbMensagem'), array(
                 'idMensagem',
+                'tpMensagem',
                 'nrCPF',
                 'idPronac',
+                'idDiligencia',
                 'titulo',
                 'descricao',
                 'dtEnvio',
@@ -91,8 +93,10 @@ class Mensagem extends GenericModel{
             ->join(array('d' => 'tbDispositivoMovel'), 'md.idDispositivoMovel = d.idDispositivoMovel', array(), 'SAC.dbo')
             ->group(array(
                 'm.idMensagem',
+                'tpMensagem',
                 'm.nrCPF',
                 'm.idPronac',
+                'm.idDiligencia',
                 'm.titulo',
                 'm.descricao',
                 'm.dtEnvio',
@@ -108,7 +112,7 @@ class Mensagem extends GenericModel{
         if($objParam->next) {
             $consulta->limit($objParam->next, (int)$objParam->offset);
         }
-
+//xd($consulta->__toString());
         return $this->fetchAll($consulta);
     }
 

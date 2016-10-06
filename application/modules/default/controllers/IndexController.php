@@ -39,6 +39,7 @@ class IndexController extends GenericControllerNew
             ->setCodePronac($projeto->idPronac)
             ->setListDeviceId($modelDispositivo->listarIdDispositivoMovel($listaDispositivos))
             ->setListResgistrationIds($modelDispositivo->listarIdRegistration($listaDispositivos))
+            ->setTipoMensagem(Dominio_TipoMensagem::CAPTACAO)
             ->setTitle('Projeto '. $projeto->pronac)
             ->setText('Recebeu nova mensagem!')
             ->setListParameters(array('projeto' => $projeto->idPronac))
@@ -86,7 +87,6 @@ class IndexController extends GenericControllerNew
             $post     = Zend_Registry::get('post');
             $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->Login)); // recebe o login sem mêscaras
             $password = $post->Senha; // recebe a senha
-
             try {
                 // valida os dados
                 if (empty($username) || empty($password)) // verifica se os campos foram preenchidos

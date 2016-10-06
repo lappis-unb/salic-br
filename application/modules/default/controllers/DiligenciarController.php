@@ -667,7 +667,7 @@ class DiligenciarController extends GenericControllerNew {
             $dados['idSolicitante'] = $idagente;
             $dados['stEnviado'] = 'S';
         }
-        $diligenciaDAO->inserir($dados);
+        $rowDiligencia = $diligenciaDAO->inserir($dados);
         
         # Envia notificação para o usuário através do aplicativo mobile.
         $modelProjeto = new Projetos();
@@ -675,7 +675,8 @@ class DiligenciarController extends GenericControllerNew {
         $this->enviarNotificacao((object)array(
             'cpf' => $projeto->CNPJCPF,
             'pronac' => $projeto->Pronac,
-            'idPronac' => $projeto->IdPRONAC
+            'idPronac' => $projeto->IdPRONAC,
+            'idDiligencia' => $rowDiligencia->idDiligencia
         ));
         
         parent::message(

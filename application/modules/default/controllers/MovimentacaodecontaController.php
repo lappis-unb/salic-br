@@ -1503,6 +1503,7 @@ class MovimentacaodecontaController extends GenericControllerNew
             ->setCodePronac($projeto->idPronac)
             ->setListDeviceId($modelDispositivo->listarIdDispositivoMovel($listaDispositivos))
             ->setListResgistrationIds($modelDispositivo->listarIdRegistration($listaDispositivos))
+            ->setTipoMensagem(Dominio_TipoMensagem::CAPTACAO)
             ->setTitle('Projeto '. $projeto->pronac)
             ->setText('Recebeu R$'. $projeto->vlCaptado. ' de captação!')
             ->setListParameters(array('projeto' => $projeto->idPronac))
