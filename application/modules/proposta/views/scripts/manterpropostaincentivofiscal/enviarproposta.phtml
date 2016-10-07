@@ -1,16 +1,16 @@
 <?php
     $edital = "";
     if(isset($_GET['edital']) && $_GET['edital']=="s"){
-        $this->partial('manterpropostaedital/inc/menu.inc.php'); // menu de manter proposta por edital
+        echo $this->partial('manterpropostaedital/inc/menu.inc.php'); // menu de manter proposta por edital
         $edital = "&edital=s";
     }else{
-        $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
+        echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
     }
 ?>
 
 <!-- ========== INULO ========== -->
 <div id="titulo">
-    <div>Encaminhar Proposta Cultural ao Ministério da Cultura</div>
+    <div>Encaminhar Proposta Cultural ao Minist&eacute;rio da Cultura</div>
 </div>
 <!-- ========== FIM TITULO ========== -->
 

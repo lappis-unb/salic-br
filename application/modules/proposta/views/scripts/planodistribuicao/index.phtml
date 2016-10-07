@@ -116,7 +116,7 @@
     }
 </script>
 
-<?php $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php");?>
+<?php echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php");?>
 
 <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="confirm" title="Confirma&ccedil;&atilde;o" style="display: none">Tem certeza que deseja excluir o registro?</div>
@@ -155,9 +155,9 @@
                 $totalReceita += $receita;
                 ?>
             <tr class="fundo">
-                <td class="centro"><?php echo utf8_encode($planoDistribuicao->produto); ?></td>
-                <td class="centro"><?php echo utf8_encode($planoDistribuicao->descricaoarea); ?></td>
-                <td align="right"><?php echo utf8_encode($planoDistribuicao->descricaosegmento); ?></td>
+                <td class="centro"><?php echo $planoDistribuicao->produto; ?></td>
+                <td class="centro"><?php echo $planoDistribuicao->descricaoarea; ?></td>
+                <td align="right"><?php echo $planoDistribuicao->descricaosegmento; ?></td>
                 <td align="right"><?php echo ($planoDistribuicao->stprincipal == 0) ? 'N&atilde;o' : 'Sim'; ?></td>
                 <td class="centro" nowrap>
                     <input type="button" class="btn_editar" id="btn_editar" onclick="editar(<?php echo $planoDistribuicao->idplanodistribuicao; ?>)"/>&nbsp;

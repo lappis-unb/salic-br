@@ -1,10 +1,10 @@
 <?php
 $edital = "";
 if(isset($_GET['edital'])) {
-    $this->partial('manterpropostaedital/inc/menu.inc.php'); // menu de manter proposta por edital
+    echo $this->partial('manterpropostaedital/inc/menu.inc.php'); // menu de manter proposta por edital
     $edital = "&edital=s";
 }else {
-    $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
+    echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
 }
 $cod = null;
 if(isset($_GET['cod'])){
@@ -254,12 +254,13 @@ if(isset($_GET['cod'])){
 	label.error{ color:red; font-weight: normal; }
 </style>
 <?php
+    //@todo verificar se esta chamada eh necessaria, pois ja ocorre no inicio do arquivo
     $edital = "";
     if(isset($_GET['edital'])){
-        $this->partial('manterpropostaedital/inc/menu.inc.php'); // menu de manter proposta por edital
+        //echo $this->partial('manterpropostaedital/inc/menu.inc.php'); // menu de manter proposta por edital
         $edital = "&edital=s";
     }else{
-        $this->partial('manterpropostaincentivofiscal/inc/menu.inc.php'); // menu de manter proposta por incentivo fiscal
+       // echo $this->partial('manterpropostaincentivofiscal/inc/menu.inc.php'); // menu de manter proposta por incentivo fiscal
     }
 ?>
 <!-- ========== INICIO TITULO ========== -->

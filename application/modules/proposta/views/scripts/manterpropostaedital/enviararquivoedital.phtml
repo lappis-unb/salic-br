@@ -3,10 +3,10 @@ $buscarDocumento = $this->url(array('module' => 'proposta', 'controller' => 'adm
 $edital='';
 
 if(isset($_GET['edital']) && $_GET['edital']=="s"){
-    $this->partial('manterpropostaedital/inc/menu.inc.php');
+    echo $this->partial('manterpropostaedital/inc/menu.inc.php');
     $edital='s';
 }else{
-    $this->partial('manterpropostaincentivofiscal/inc/menu.inc.php');
+    echo $this->partial('manterpropostaincentivofiscal/inc/menu.inc.php');
 }
 
 ?>

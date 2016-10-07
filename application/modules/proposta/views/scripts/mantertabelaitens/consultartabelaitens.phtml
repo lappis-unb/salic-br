@@ -36,7 +36,7 @@ montaGuiaLinks($controller, $links);
                     <select class="input_simples" name="produto" id="produto">
                         <option value="">- Todos - </option>
                         <?php foreach($this->produto as $tbproduto) { ?>
-                        <option value="<?php echo $tbproduto->codproduto; ?>"> <?php echo utf8_encode($tbproduto->Produto); ?></option>
+                        <option value="<?php echo $tbproduto->codproduto; ?>"> <?php echo $tbproduto->Produto; ?></option>
                             <?php } ?>
                     </select>
                 </td>
@@ -48,7 +48,7 @@ montaGuiaLinks($controller, $links);
                     <select class="input_simples" name="etapa" id="etapa">
                         <option value="">- Todos - </option>
                         <?php foreach($this->etapa as $tbetapa) { ?>
-                        <option value="<?php echo $tbetapa->codetapa; ?>"> <?php echo utf8_encode($tbetapa->Etapa); ?></option>
+                        <option value="<?php echo $tbetapa->codetapa; ?>"> <?php echo $tbetapa->Etapa; ?></option>
                             <?php } ?>
                     </select>
                 </td>
