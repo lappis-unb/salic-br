@@ -397,7 +397,7 @@ class tbCumprimentoObjeto extends GenericModel
         $select->from(
                 array('a' => $this->_name),
                 array(
-                    new Zend_Db_Expr('b.IdPRONAC,b.AnoProjeto+b.Sequencial as Pronac,b.NomeProjeto,b.UfProjeto,b.Mecanismo,b.Situacao,a.dtCadastro,a.idTecnicoAvaliador,a.stResultadoAvaliacao,c.Descricao as dsSituacao')
+                    new Zend_Db_Expr('b.IdPRONAC,b.AnoProjeto+b.Sequencial as Pronac,b.NomeProjeto,b.UfProjeto,b.Mecanismo,b.Situacao,a.dtCadastro,a.idTecnicoAvaliador,a.stResultadoAvaliacao,c.Descricao as dsSituacao, co.DtEnvioDaPrestacaoContas')
                 )
         );
         $select->joinInner(
@@ -408,6 +408,11 @@ class tbCumprimentoObjeto extends GenericModel
         $select->joinInner(
                 array('c' => 'Situacao'),
                 'b.Situacao = c.Codigo',
+                array(),'SAC.dbo'
+        );
+        $select->joinInner(
+                array('co' => 'tbCumprimentoObjeto'),
+                ' b.IdPRONAC = co.idPronac',
                 array(),'SAC.dbo'
         );
 
@@ -432,7 +437,7 @@ class tbCumprimentoObjeto extends GenericModel
             $select->limit($tamanho, $tmpInicio);
         }
 
-//        xd($select->assemble());
+// xd($select->assemble());
         return $this->fetchAll($select);
     }
 
