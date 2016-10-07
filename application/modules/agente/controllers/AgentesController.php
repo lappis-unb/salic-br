@@ -2889,7 +2889,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         } catch (Exception $e) {
             parent::message("Ocorreu um erro durante a operação!", "agente/agentes/info-adicionais/id/" . $post->agente, "ERROR");
         }
-
     }
 
     /**

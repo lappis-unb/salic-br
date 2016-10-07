@@ -1,14 +1,20 @@
 # SALIC WEB - Run container Apache | PHP 5 | Debian
-docker run --name salic-web -it -v /var/www/:/var/www/ --add-host local.salic:127.0.0.1 --add-host local.salic.postgre:127.0.0.1  --add-host homolog.cultura.gov.br:10.0.0.13 -p 80:80 culturagovbr/salic-web
+    docker run --name salic-web -it -v /var/www/:/var/www/ --add-host local.salic:127.0.0.1 --add-host local.salic.postgre:127.0.0.1  --add-host homolog.cultura.gov.br:10.0.0.13 -p 80:80 culturagovbr/salic-web
 
 # SALIC DB - Run container PostgreSQL | Debian
-docker run --name salic-db -p 5432:5432 -e POSTGRES_PASSWORD=123456 -e POSTGRES_USER=postgres -e PGDATA=/var/lib/postgresql/data -v /var/www/db/postgresql/data:/var/www/project/db/data -d culturagovbr/salic-db 
+    docker run --name salic-db -p 5432:5432 -e POSTGRES_PASSWORD=123456 -e POSTGRES_USER=postgres -e PGDATA=/var/lib/postgresql/data -v /var/www/db/postgresql/data:/var/www/project/db/data -d culturagovbr/salic-db 
+
+# GRAYLOG
+    docker run -t -p 9000:9000 -p 12201:12201 -v /graylog2/data:/var/opt/graylog2/data -v /graylog2/logs:/var/log/graylog2 -e GRAYLOG_PASSWORD=123456 --name graylog graylog2/allinone
+
+# GRAYLOG SERVER
+    docker run -t -p 12900:12900 -p 12201:12201 -p 4001:4001 -e GRAYLOG_SERVER=true -v /var/log --name graylog-server --ulimit nofile=64000:64000 graylog2/allinone
+ 
+# GARYLOG WEB
+    docker run -t -p 9000:9000 -e GRAYLOG_MASTER=172.17.0.4 -e GRAYLOG_WEB=true -e GRAYLOG_PASSWORD=123456 -v /var/log --name graylog-web graylog2/allinone
 
 # Run Dockerfile
-docker build -t salic-web .
+    docker build -t salic-web .
 
 # Run compose
-docker-compose up -d
-
-
-
+    docker-compose up -d
