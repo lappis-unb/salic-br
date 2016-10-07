@@ -221,6 +221,9 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                 }
                 $slct->limit($tamanho, $tmpInicio);
         }
+        echo '<pre>';
+        echo($slct->assemble());
+        exit;
         return $this->fetchAll($slct);
     }
 

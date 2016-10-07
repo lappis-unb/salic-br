@@ -3,7 +3,7 @@
 class PlanoDeDivulgacao extends MinC_Db_Table_Abstract {
 
     //protected $_name = 'SAC.dbo.PlanoDeDivulgacao';
-    protected $_banco = 'SAC';
+    protected $_banco = 'sac';
     protected $_name = 'PlanoDeDivulgacao';
 
     public function buscarPlanoDivulgacao($idprojeto) {
@@ -67,4 +67,30 @@ class PlanoDeDivulgacao extends MinC_Db_Table_Abstract {
         return $this->update($dados, $where);
     } // fecha m�todo alterarDados()
 
+    public function ConsultaDadosDivulgacao($id_projeto)
+    {
+        $sql = "SELECT
+                idPlanoDivulgacao,
+                idProjeto,
+               
+                Usuario,
+                (select descricao from SAC.dbo.Verificacao where idverificacao = P.idPeca) as Peca,
+                (select descricao from SAC.dbo.Verificacao where idverificacao = P.idVeiculo) as Veiculo,
+                Usuario
+            FROM
+                SAC.dbo.PlanoDeDivulgacao as P
+            WHERE idProjeto=".$id_projeto;
+
+        try
+        {
+            $db= Zend_Db_Table::getDefaultAdapter();
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        }
+        catch (Zend_Exception_Db $e)
+        {
+            $this->view->message = $e->getMessage();
+        }
+
+        return $db->fetchAll($sql);
+    }
 }
