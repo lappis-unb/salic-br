@@ -16,7 +16,7 @@
 <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Início">Início</a></li>
+		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="In&iacute;cio">In&iacute;cio</a></li>
 		<li><a href="<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'agentes')); ?>?acao=cc">Manter Agentes</a></li>
 		<li><a href="<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'buscaragente')); ?>">Pesquisar Agentes</a></li>
 		<li class="last">Resultado da busca por Agentes</li>
@@ -46,8 +46,8 @@
 		<tr>
 			<th>CPF/CNPJ</th>
 			<th>NOME</th>
-			<th>VISÃO</th>
-			<th>AÇÃO</th>
+			<th>VIS&Atilde;O</th>
+			<th>A&Ccedil;&Atilde;O</th>
 		</tr>
 		<?php $cont = 0; ?>
 		<?php foreach ($this->buscar as $b) : ?>
@@ -67,7 +67,7 @@
 				endforeach;
 				?>
 			</td>
-			<td class="centro"><input type="button" class="btn_perfil" title=" Alterar Visão " value=" " onkeypress=" " onclick="redirecionar('<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'alterarvisao')); ?>?idAgente=<?php echo $b->idAgente; ?>');" /></td>
+			<td class="centro"><input type="button" class="btn_perfil" title=" Alterar Vis&atilde;o " value=" " onkeypress=" " onclick="redirecionar('<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'alterarvisao')); ?>?idAgente=<?php echo $b->idAgente; ?>');" /></td>
 		</tr>
 		<?php $cont++; ?>
 		<?php endforeach; ?>

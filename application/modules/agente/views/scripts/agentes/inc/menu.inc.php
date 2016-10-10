@@ -68,8 +68,8 @@
                     <div class="sumir">
                         <!-- Se for Proponente ou Gestor Salic -->
                         <?php if(($this->grupoativo == "144") or ($this->grupoativo == "97")){ ?>
-                        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'index'),'',true);?>" title="Ir para Vincular Responsável">Vincular Responsável </a>
-                        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'desvincularresponsavel'),'',true);?>" title="Ir para Desvincular Responsável" >Desvincular Responsável</a>
+                        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'index'),'',true);?>" title="Ir para Vincular Respons&aacute;vel">Vincular Respons&aacute;vel </a>
+                        <a class="no_seta" href="<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'desvincularresponsavel'),'',true);?>" title="Ir para Desvincular Respons&aacute;vel" >Desvincular Respons&aacute;vel</a>
                         <?php } ?>
                     </div>
 
@@ -77,7 +77,7 @@
                         <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'agentes', 'id' => $this->id),'',true);?>" title="Ir para Dados do Agente">Dados Principais</a>
 
                         <?php if(($this->grupoativo != "93")){ ?>
-                        <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'enderecos', 'id' => $this->id),'',true);?>" title="Ir para Endereços">Endereços</a>
+                        <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'enderecos', 'id' => $this->id),'',true);?>" title="Ir para Endere&ccedil;os">Endere&ccedil;os</a>
                         <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'telefones', 'id' => $this->id),'',true);?>" title="Ir para Telefones">Telefones</a>
                         <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'emails', 'id' => $this->id),'',true);?>" title="Ir para Emails">Emails</a>
                         <?php } ?>
@@ -86,8 +86,8 @@
                         <?php if(($this->grupoativo == "94") || ($this->grupoativo == "137") || ($this->grupoativo == "97") || ($this->grupoativo == "93")){ ?>
                             <?php if($this->parecerista == "sim"){ ?>
                                 <?php if(($this->grupoativo != "93")){ ?>
-                                <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'escolaridade', 'id' => $this->id),'',true);?>" title="Ir para Formação">Escolaridade/Cursos</a>
-                                <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'formacao', 'id' => $this->id),'',true);?>" title="Ir para Formação">Informações Profissionais</a>
+                                <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'escolaridade', 'id' => $this->id),'',true);?>" title="Ir para Forma&ccedil;&atilde;o">Escolaridade/Cursos</a>
+                                <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'formacao', 'id' => $this->id),'',true);?>" title="Ir para Forma&ccedil;&atilde;o">Informa&ccedil;&Otilde;es Profissionais</a>
                                 <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'ferias', 'id' => $this->id),'',true);?>" title="Ir para Férias">Férias</a>
                                 <?php } ?>
 
@@ -113,7 +113,7 @@
                         <?php } ?>
 
                         <?php if(($this->grupoativo != "94") && ($this->grupoativo != "118")&& ($this->grupoativo != "93")){ ?>
-                        <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'alterarvisao', 'id' => $this->id),'',true);?>" title="Ir para Visões">Visões</a>
+                        <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'alterarvisao', 'id' => $this->id),'',true);?>" title="Ir para Vis&Otilde;es">Vis&otilde;es</a>
                         <?php } ?>
 
 
@@ -122,7 +122,7 @@
                             <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'natureza', 'id' => $this->id),'',true);?>" title="Ir para Natureza">Natureza</a>
                         <?php } else { ?>
                             <!-- Se for CPF -->
-                            <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'info-adicionais', 'id' => $this->id),'',true);?>" title="Ir para Informações Adicionais">Informações Adicionais</a>
+                            <a class="no_seta" href="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'info-adicionais', 'id' => $this->id),'',true);?>" title="Ir para Informa&ccedil;&Otilde;es Adicionais">Informa&ccedil;&otilde;es Adicionais</a>
                         <?php } ?>
 
                         <?php if(($this->grupoativo == "120") || ($this->grupoativo == "97")){ ?>

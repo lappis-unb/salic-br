@@ -1,7 +1,7 @@
 <?php $buscarAgencia = $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'validaagencia')); ?>
 <script type="text/javascript">
     $(document).ready(function(){
-<?php if (isset($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
+<?php if (isset($this->movimentacaoAtual) && !empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
             //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
             JSBloquearAlteracaoFormulario();
 <?php endif; ?>
@@ -29,12 +29,11 @@
 
                 //se dataas nao atendem as regras de negocio, nao submete o form
                 AgenciaValida = document.getElementById("ValidaAgencia").innerHTML;
-                if(AgenciaValida != ""){
+                if(AgenciaValida != ''){
                     $('#tabs').tabs('select', 'identificacao');
                     $("#agenciaBancaria").focus();
-                    document.getElementById("ValidaAgencia").innerHTML = "<Br>Ag&ecirc;ncia invï¿½lida";
+                    document.getElementById("ValidaAgencia").innerHTML = "<Br>Ag&ecirc;ncia inv&aacute;lida";
                     JSMostraOcultaObj('identificacao');
-                    return false;
                 }else{
                     document.getElementById("ValidaAgencia").innerHTML = "";
                 }

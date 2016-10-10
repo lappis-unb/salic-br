@@ -1,15 +1,15 @@
 <?php
 $edital = "";
 if(isset($_GET['edital'])) {
-    $this->partial('manterpropostaedital/inc/menu.inc.php'); // menu de manter proposta por edital
+    echo $this->partial('manterpropostaedital/inc/menu.inc.php'); // menu de manter proposta por edital
     $edital = "&edital=s";
 }else {
-    $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
+   echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
 }
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
-        <?php if(isset($this->movimentacaoAtual) && !empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
+        <?php if(!empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
              //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
              JSBloquearAlteracaoFormulario();
         <?php endif; ?>
@@ -116,11 +116,10 @@ montaGuiaLinks($controller, $links);
                 <td class="centro"><?php echo $localizacao['uf']; ?></td>
                 <td class="centro"><?php echo $localizacao['cidade']; ?></td>
                 <td class="centro" nowrap>
-                <input type="button" id="btn_editar" name="sair" style="width: 88px" class="btn_editar" onclick="window.location.href='<?php echo $this->url(array('module'=>'proposta', 'controller'=>'localderealizacao', 'action'=>'form-local-de-realizacao')); ?>?cod=<?php echo $localizacao->idAbrangencia;?>&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>&edit=1'">
-                <input type="button" id="btn_excluir" name="sair" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $localizacao->idAbrangencia;?>);"></td>
+                <input type="button" id="btn_editar" name="sair" style="width: 88px" class="btn_editar" onclick="window.location.href='<?php echo $this->url(array('module'=>'proposta', 'controller'=>'localderealizacao', 'action'=>'form-local-de-realizacao')); ?>?cod=<?php echo $localizacao['idabrangencia'];?>&idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?><?php echo $edital;?>&edit=1'">
+                <input type="button" id="btn_excluir" name="sair" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $localizacao['idabrangencia'];?>);"></td>
             </tr>
-                <?php } ?>
-
+            <?php } ?>
         </table>
         <table class="tabela">
             <tr>

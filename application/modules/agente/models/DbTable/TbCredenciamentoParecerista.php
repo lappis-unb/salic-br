@@ -1,14 +1,42 @@
 <?php
-/**
- * Description of tbCredenciamentoParecerista
- *
- * @author Equipe Politec
- */
-class TbCredenciamentoParecerista extends MinC_Db_Table_Abstract {
 
-    protected $_banco 	= 'Agentes';
-    protected $_name 	= 'tbCredenciamentoParecerista';
-    protected $_schema  = 'dbo';
+/**
+ * Class Agente_Model_DbTable_TbCredenciamentoParecerista
+ *
+ * @name Agente_Model_DbTable_TbCredenciamentoParecerista
+ * @package Modules/Agente
+ * @subpackage Models/DbTable
+ *
+ * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+ * @since 05/10/2016
+ *
+ * @link http://salic.cultura.gov.br
+ */
+class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abstract
+{
+    /**
+     * _banco
+     *
+     * @var bool
+     * @access protected
+     */
+    protected $_banco = 'agentes';
+
+    /**
+     * _name
+     *
+     * @var bool
+     * @access protected
+     */
+    protected $_name = 'tbcredenciamentoparecerista';
+
+    /**
+     * _schema
+     *
+     * @var string
+     * @access protected
+     */
+    protected $_schema = 'agentes';
 
     
     public function BuscarCredenciamentos($idAgente) 
@@ -16,27 +44,32 @@ class TbCredenciamentoParecerista extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('C'=>$this->_name),
-            array('C.idAgente', 'C.idCredenciamentoParecerista', 'C.siCredenciamento', 'C.qtPonto', 'C.idVerificacao')
+            array('C.idAgente', 'C.idCredenciamentoParecerista', 'C.siCredenciamento', 'C.qtPonto', 'C.idVerificacao'),
+            $this->_schema
         );
 
         $select->joinInner(
             array('A'=>'Area'),'A.Codigo = C.idCodigoArea',
-            array('A.Descricao as Area'),'SAC.dbo'
+            array('A.Descricao as Area'),
+            $this->getSchema('sac')
         );
 
         $select->joinInner(
             array('S'=>'Segmento'),'S.Codigo = C.idCodigoSegmento',
-            array('S.Descricao as Segmento'),'SAC.dbo'
+            array('S.Descricao as Segmento'),
+            $this->getSchema('sac')
         );
 
         $select->joinLeft(
             array('V'=>'Verificacao'),'V.idVerificacao = C.idVerificacao',
-            array('V.Descricao as Nivel'),'AGENTES.dbo'
+            array('V.Descricao as Nivel'),
+            $this->_schema
         );
 
         $select->joinLeft(
             array('x'=>'Visao'),'x.idAgente = C.idAgente',
-            array('x.Visao'),'AGENTES.dbo'
+            array('x.Visao'),
+            $this->_schema
         );
 
         $select->where('C.idAgente = ?', $idAgente);

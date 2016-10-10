@@ -80,12 +80,12 @@ function filtroCNPJ()
 
 <table  class="tabela <?php if($this->grupoAtivo == 118){echo "sumir";} ?>">
 	<tr>
-		<th colspan="4" class="centro">VISÃO DO AGENTE</th>
+		<th colspan="4" class="centro">VIS&Atilde;O DO AGENTE</th>
 	</tr>
 	<tr>
 		<td colspan="4">
 
-			<label for="visao"> Informe a visão do Agente: </label>
+			<label for="visao"> Informe a vis&atilde;o do Agente: </label>
 
 			<select name="visao" id="visao" onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo;?>);" style="width:20%;">
 				<option value="0" selected="selected"> - Selecione - </option>
@@ -104,12 +104,12 @@ function filtroCNPJ()
 <!-- ========== FIM TABELA DADOS ========== -->
 
 
-<!-- ========== INÍCIO LISTA DE ÁREA ABERTA DE ACORDO COM A VISÃO ========== -->
+<!-- ========== INÍCIO LISTA DE &Aacute;REA ABERTA DE ACORDO COM A VISÃO ========== -->
 <div id="visaocomponente" class="sumir">
 
 <table id="tbvisaocomponente"  class="tabela sumir">
 	<tr class="titulo_tabela">
-		<th colspan="4">LISTA DE ÁREA</th>
+		<th colspan="4">LISTA DE &Aacute;REA</th>
 	</tr>
 	<tr>
 		<td colspan="4" align="center">
@@ -121,8 +121,8 @@ function filtroCNPJ()
 	</tr>
 	<tr>
 		<td colspan="2" valign="top">
-			<label for="areaCultural">Área Cultural *</label>
-			<select name="areaCultural" id="areaCultural" onchange="carregar_combo(this.value, 'segmentoCultural', '<?php echo $this->url(array('controller' => 'segmentocultural', 'action' => 'combo')); ?>', ' - Selecione uma Área Cultural - '), buscarareasegmento();">
+			<label for="areaCultural">&Aacute;rea Cultural *</label>
+			<select name="areaCultural" id="areaCultural" onchange="carregar_combo(this.value, 'segmentoCultural', '<?php echo $this->url(array('controller' => 'segmentocultural', 'action' => 'combo')); ?>', ' - Selecione uma &Aacute;rea Cultural - '), buscarareasegmento();">
 
 				<?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
 				<option value="0"> - Selecione - </option>
@@ -148,7 +148,7 @@ function filtroCNPJ()
 			<select name="segmentoCultural" id="segmentoCultural" onchange="buscarareasegmento();">
 
 				<?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
-				<option value="0"> - Selecione uma Área Cultural - </option>
+				<option value="0"> - Selecione uma &Aacute;rea Cultural - </option>
 				<?php } else { ?>
 
 					<?php if (!isset($this->segmentoCultural) || empty($this->segmentoCultural)) { ?>
@@ -230,7 +230,7 @@ function filtroCNPJ()
 	</tr>
 	<tr>
 		<td colspan="2">
-			<label for="tipoEndereco">Tipo de Endereço *</label> <br />
+			<label for="tipoEndereco">Tipo de Endere&ccedil;o *</label> <br />
 			<select name="tipoEndereco" id="tipoEndereco" >
 
 				<?php if (!isset($this->tipoEndereco) || empty($this->tipoEndereco)) { ?>
@@ -275,7 +275,7 @@ function filtroCNPJ()
 			<span id="erroLogradouro" class="spanError"></span>
 		</td>
 		<td colspan="2">
-			<label for="numero">Número</label> <br />
+			<label for="numero">N&uacute;mero</label> <br />
 			<div class="left"></div>
 			<input class="input" type="text" name="numero" id="numero" maxlength="10" size="30"  value="<?php echo (!empty($_GET['numero']) ? $_GET['numero'] : ' '); ?>" />
 			<div class="right"></div>
@@ -300,15 +300,15 @@ function filtroCNPJ()
 	</tr>
 	<tr>
 		<td colspan="2">
-			<label>Autorizo divulgar o endereço</label>
+			<label>Autorizo divulgar o endere&ccedil;o</label>
 			<input type="radio" name="divulgarEndereco" id="divulgarEnderecoS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
 			<label for="divulgarFoneS">Sim</label>
 			<input type="radio" name="divulgarEndereco" id="divulgarEnderecoN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-			<label for="divulgarFoneN">Não</label>
+			<label for="divulgarFoneN">N&atilde;o</label>
 		</td>
         <td colspan="2">
             <div class="botao_texto" style="float:right">
-    	        <a id="btnAddEndereco" class="incluir" href="#" title="Adicionar Endereço" onclick="adicionar_endereco_agente(true);">Incluir</a>
+    	        <a id="btnAddEndereco" class="incluir" href="#" title="Adicionar Endere&ccedil;o" onclick="adicionar_endereco_agente(true);">Incluir</a>
 	        </div>
         </td>
 
@@ -321,7 +321,7 @@ function filtroCNPJ()
 <!-- ========== INÍCIO FORMULÁRIO FONE ========== -->
 <table id="tabFone" class="tabela sumir">
 	<tr>
-		<th colspan="6">ADICIONE TELEFONES ATRAVÉS DO FORMULÁRIO ABAIXO!</th>
+		<th colspan="6">ADICIONE TELEFONES ATRAVÉS DO FORMUL&Aacute;RIO ABAIXO!</th>
 	</tr>
 	<tr>
 		<td>
@@ -370,7 +370,7 @@ function filtroCNPJ()
 			<input type="radio" name="divulgarFone" id="divulgarFoneS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
 			<label for="divulgarFoneS">Sim</label>
 			<input type="radio" name="divulgarFone" id="divulgarFoneN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-			<label for="divulgarFoneN">Não</label>
+			<label for="divulgarFoneN">N&atilde;o</label>
 		</td>
 		<td class="centro" width="3%">
 			<div class="botao_texto">
@@ -386,7 +386,7 @@ function filtroCNPJ()
 <!-- ========== INÍCIO FORMULÁRIO E-MAIL ========== -->
 <table id="tabEmail" class="tabela sumir">
 	<tr>
-		<th colspan="6">ADICIONE E-MAILS ATRAVÉS DO FORMULÁRIO ABAIXO</th>
+		<th colspan="6">ADICIONE E-MAILS ATRAVÉS DO FORMUL&Aacute;RIO ABAIXO</th>
 	</tr>
 	<tr>
 		<td>
@@ -416,15 +416,15 @@ function filtroCNPJ()
 			<input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
 			<label for="divulgarEmailS">Sim</label>
 			<input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked"   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-			<label for="divulgarEmailN">Não</label>
+			<label for="divulgarEmailN">N&atilde;o</label>
 		</td>
 		<td>
-			<label>Para correpondência? *</label>
+			<label>Para correpond&ecirc;ncia? *</label>
 			<br />
 			<input type="radio" name="enviarEmail" id="enviarEmailS" value="1" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
 			<label for="enviarEmailS">Sim</label>
 			<input type="radio" name="enviarEmail" id="enviarEmailN" value="0" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-			<label for="enviarEmailN">Não</label>
+			<label for="enviarEmailN">N&atilde;o</label>
 		</td>
 		<td class="centro" width="3%">
 			<div class="botao_texto">
@@ -452,12 +452,12 @@ INÍCIO TELEFONE E E-MAILS ADICIONADOS
 <table id="tabBuscarEndereco" class="tabela sumir">
 	<tr>
 		<th width="10%">CEP</th>
-        <th width="10%">TIPO DE ENDEREÇO</th>
+        <th width="10%">TIPO DE ENDERE&Ccedil;O</th>
 		<th width="6%">UF</th>
 		<th width="15%">CIDADE</th>
 		<th width="43%">LOGRADOURO</th>
-        <th width="20%">CORRESPONDÊNCIA</th>
-		<th width="6%">AÇÃO</th>
+        <th width="20%">CORRESPOND&Ecirc;NCIA</th>
+		<th width="6%">A&Ccedil;&Atilde;O</th>
 	</tr>
 
 <?php if (isset($this->Enderecos)): ?>
@@ -475,8 +475,8 @@ INÍCIO TELEFONE E E-MAILS ADICIONADOS
             <input name="tipoLogradouros[]" id="tipoLogradouros[]" value="44" type="hidden">
     	    <input name="divulgarEnderecos[]" id="divulgarEnderecos[]" value="0" type="hidden">
         </td>
-        <td> Correspondências <input style="margin: 5px;" name="correspondenciaEnderecos" id="correspondenciaEnderecos" value="end1" type="radio"></td>
-	    <td id="enter" class="centro"><div class="botao_icone"><a class="cancelar_ico" href="#" title=" Excluir Endereço " onclick='excluirFoneEmail("#endereco1");'></a></div></td>
+        <td> Correspond&ecirc;ncias <input style="margin: 5px;" name="correspondenciaEnderecos" id="correspondenciaEnderecos" value="end1" type="radio"></td>
+	    <td id="enter" class="centro"><div class="botao_icone"><a class="cancelar_ico" href="#" title=" Excluir Endere&ccedil;o " onclick='excluirFoneEmail("#endereco1");'></a></div></td>
     </tr>
 
 
@@ -502,12 +502,12 @@ INÍCIO TELEFONE E E-MAILS ADICIONADOS
 			<input type="hidden" name="Enderecos[]" id="Enderecos[]" value="<?php echo $this->Enderecos[$i] ?>" />
 		</td>
 		<td class="centro">
-			<?php echo $this->divulgarEnderecos[$i] == 1 ? 'Sim' : 'Não'; ?>
+			<?php echo $this->divulgarEnderecos[$i] == 1 ? 'Sim' : 'N&atilde;o'; ?>
 			<input type="hidden" name="divulgarEnderecos[]" id="divulgarEnderecos[]" value="<?php echo $this->divulgarEnderecos[$i]?>" />
 		</td>
 		<td class="centro">
 			<div class="botao_icone">
-				<a class="cancelar_ico" href="#" title=" Excluir Endereço " onclick="$('#endereco<?php echo $i; ?>').remove();">Incluir</a>
+				<a class="cancelar_ico" href="#" title=" Excluir Endere&ccedil;o " onclick="$('#endereco<?php echo $i; ?>').remove();">Incluir</a>
 			</div>
 		</td>
 	</tr>
@@ -528,7 +528,7 @@ INÍCIO TELEFONE E E-MAILS ADICIONADOS
 		<th>DDD</th>
 		<th>TELEFONE</th>
 		<th>DIVULGAR?</th>
-		<th width="6%">AÇÃO</th>
+		<th width="6%">A&Ccedil;&Atilde;O</th>
 	</tr>
 
 <?php if (isset($this->Fones)): ?>
@@ -555,7 +555,7 @@ INÍCIO TELEFONE E E-MAILS ADICIONADOS
 			<input type="hidden" name="Fones[]" id="Fones[]" value="<?php echo $this->Fones[$i] ?>" />
 		</td>
 		<td class="centro">
-			<?php echo $this->divulgarFones[$i] == 1 ? 'Sim' : 'Não'; ?>
+			<?php echo $this->divulgarFones[$i] == 1 ? 'Sim' : 'N&atilde;o'; ?>
 			<input type="hidden" name="divulgarFones[]" id="divulgarFones[]" value="<?php echo $this->divulgarFones[$i]?>" />
 		</td>
 		<td class="centro">
@@ -579,8 +579,8 @@ INÍCIO TELEFONE E E-MAILS ADICIONADOS
 		<th>TIPO</th>
 		<th>E-MAIL</th>
 		<th>DIVULGAR?</th>
-		<th>PARA CORRESPONDÊNCIA?</th>
-		<th>AÇÃO</th>
+		<th>PARA CORRESPOND&Ecirc;NCIA?</th>
+		<th>A&Ccedil;&Atilde;O</th>
 	</tr>
 
 	<?php if (isset($this->Emails)): ?>
@@ -597,11 +597,11 @@ INÍCIO TELEFONE E E-MAILS ADICIONADOS
 				<input type="hidden" name="Emails[]" id="Emails[]" value="<?php echo $this->Emails[$i]?>" />
 			</td>
 			<td class="centro">
-				<?php echo $this->divulgarEmails[$i] == 1 ? 'Sim' : 'Não'; ?>
+				<?php echo $this->divulgarEmails[$i] == 1 ? 'Sim' : 'N&atilde;o'; ?>
 				<input type="hidden" name="divulgarEmails[]" id="divulgarEmails[]" value="<?php echo $this->divulgarEmails[$i]?>" />
 			</td>
 			<td class="centro">
-				<?php echo $this->enviarEmails[$i] == 1 ? 'Sim' : 'Não'; ?>
+				<?php echo $this->enviarEmails[$i] == 1 ? 'Sim' : 'N&atilde;o'; ?>
 				<input type="hidden" name="enviarEmails[]" id="enviarEmails[]" value="<?php echo $this->enviarEmails[$i]?>" />
 			</td>
 			<td class="centro">
@@ -657,7 +657,7 @@ INÍCIO MODAL CADASTRAR/ALTERAR DIRIGENTES
 
 <div id="modalDirigente" title="NOVO DIRIGENTE" class="sumir">
 	<iframe name="iframeDirigente" id="iframeDirigente" class="iframeDirigente" frameborder="0" scrolling="no"
-		src="<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'dirigentes')); ?>?acao=cc" title="Frame com o formulário para cadastro de Dirigentes">
+		src="<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'dirigentes')); ?>?acao=cc" title="Frame com o formul&aacute;rio para cadastro de Dirigentes">
 	</iframe>
 </div>
 
@@ -665,7 +665,7 @@ INÍCIO MODAL CADASTRAR/ALTERAR DIRIGENTES
 
 <div id="modalAlterarDirigente" title="ALTERAR DIRIGENTE" class="sumir">
 	<iframe name="iframeAlterarDirigente" id="iframeAlterarDirigente" class="iframeDirigente" frameborder="0" scrolling="no"
-		src="#" title="Frame com o formulário para alteração de Dirigentes">
+		src="#" title="Frame com o formul&aacute;rio para altera&ccedil;&atilde;o de Dirigentes">
 	</iframe>
 </div>
 

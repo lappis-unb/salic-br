@@ -351,17 +351,18 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
 
     }
 
-
     public function abrir($id) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
 
         $slct->from(
                 array("a"=>$this->_name),
-                array("NoArquivo", "imDocumento")
+                array("noarquivo", "imdocumento"),
+            $this->_schema
         );
 
-        $slct->where("idDocumentosAgentes = ?", $id);
+        $slct->where("iddocumentosagentes = ?", $id);
+
 
         //xd($slct->__toString());
         //$this->fetchAll("SET TEXTSIZE 10485760;");

@@ -3,6 +3,7 @@ application/configs/config.ini
 application.ini
 *.swp
 *.save
+data/proposta/model/tbdocumentoagentes/*
 
 nbproject
 

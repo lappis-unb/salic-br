@@ -2,7 +2,7 @@
         <!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
         <div id="breadcrumb">
             <ul>
-                <li class="first"><a href="#" title="Ir para Início">Início</a></li>
+                <li class="first"><a href="#" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
                 <li><a href="#" title="Agentes">Manter Agentes</a></li>
                 <li class="last">Principal</li>
             </ul>
@@ -104,7 +104,7 @@
             <div id="visaocomponente" class="sumir">
                 <table id="tbvisaocomponente"  class="tabela sumir">
                     <tr class="titulo_tabela">
-                        <th colspan="4">LISTA DE ÁREA</th>
+                        <th colspan="4">LISTA DE &Aacute;REA</th>
                     </tr>
                     <tr>
                         <td colspan="4" align="center">
@@ -117,8 +117,8 @@
                     </tr>
                     <tr>
                         <td colspan="2" valign="top">
-                            <label for="areaCultural">Área Cultural *</label>
-                            <select name="areaCultural" id="areaCultural" onchange="carregar_combo(this.value, 'segmentoCultural', '<?php echo $this->url(array('controller' => 'segmentocultural', 'action' => 'combo')); ?>', ' - Selecione uma Área Cultural - '), buscarareasegmento();" class="input_simples" style="width: 200px;">
+                            <label for="areaCultural">&Aacute;rea Cultural *</label>
+                            <select name="areaCultural" id="areaCultural" onchange="carregar_combo(this.value, 'segmentoCultural', '<?php echo $this->url(array('controller' => 'segmentocultural', 'action' => 'combo')); ?>', ' - Selecione uma &Aacute;rea Cultural - '), buscarareasegmento();" class="input_simples" style="width: 200px;">
 
                                 <?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
                                     <option value="0"> - Selecione - </option>
@@ -144,7 +144,7 @@
                             <select name="segmentoCultural" id="segmentoCultural" onchange="buscarareasegmento();" class="input_simples" style="width: 200px;">
 
                                 <?php if (!isset($this->areaCultural) || empty($this->areaCultural)) { ?>
-                                    <option value="0"> - Selecione uma Área Cultural - </option>
+                                    <option value="0"> - Selecione uma &Aacute;rea Cultural - </option>
                                 <?php } else { ?>
 
                                     <?php if (!isset($this->segmentoCultural) || empty($this->segmentoCultural)) { ?>
@@ -349,7 +349,7 @@
                             <input type="radio" name="divulgarFone" id="divulgarFoneS" value="1" class="checkradio"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
                             <label for="divulgarFoneS">Sim</label>
                             <input type="radio" name="divulgarFone" id="divulgarFoneN" value="0" class="checkradio" checked="checked"  style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
-                            <label for="divulgarFoneN">Não</label>
+                            <label for="divulgarFoneN">N&atilde;o</label>
                         </td>
                     </tr>
 
@@ -389,7 +389,7 @@
                             <input type="radio" name="divulgarEmail" id="divulgarEmailS" value="1" style="background: none; border: 0%; float:none; clear:auto; display:inline;" />
                             <label for="divulgarEmailS">Sim</label>
                             <input type="radio" name="divulgarEmail" id="divulgarEmailN" value="0" class="checkradio" checked="checked"   style="background: none; border: 0%; float:none; clear:auto; display:inline;"/>
-                            <label for="divulgarEmailN">Não</label>
+                            <label for="divulgarEmailN">N&atilde;o</label>
                         </td>
                     </tr>
 
@@ -556,11 +556,11 @@ if (empty($_GET['acao'])) {
         }
         else if (Tipo == 0 && value.length != 14)
         {
-            $('#erroCpf').html('CPF inválido!');
+            $('#erroCpf').html('CPF inv&aacute;lido!');
         }
         else if (Tipo == 1 && value.length != 18)
         {
-            $('#erroCpf').html('CNPJ inválido!');
+            $('#erroCpf').html('CNPJ inv&aacute;lido!');
         }
         else
         {
@@ -595,7 +595,7 @@ if (empty($_GET['acao'])) {
                     }
                     else if (data[0].msgCPF == 'invalido')
                     {
-                        $('#erroCpf').html('CPF/CNPJ Inválido');
+                        $('#erroCpf').html('CPF/CNPJ Inv&aacute;lido');
                     }
                     else if (data[0].msgCPF == 'novo')
                     {
@@ -606,7 +606,7 @@ if (empty($_GET['acao'])) {
                 },
                 error: function (data)
                 {
-                    alert("Falha na recuperação dos dados.\nNão foi possível carregar agente!");
+                    alert("Falha na recupera&ccedil;&atilde;o dos dados.\nN&atilde;o foi poss&iacute;vel carregar agente!");
                 }
             });
 
@@ -628,7 +628,7 @@ if (empty($_GET['acao'])) {
         {
             if (cep.length != 10)
             {
-                $('#erroCep').html("O CEP informado é inválido!");
+                $('#erroCep').html("O CEP informado é inv&aacute;lido!");
             }
             else
             {
@@ -665,7 +665,7 @@ if (empty($_GET['acao'])) {
                     bairro.value                   = " ";
                     cidade.options[0].text         = " - Selecione - ";
                     uf.options[0].text             = " -- ";
-                    $('#erroCep').html("O CEP informado é inválido!");
+                    $('#erroCep').html("O CEP informado é inv&aacute;lido!");
                 }
                 else // caso o cep exista
                 {

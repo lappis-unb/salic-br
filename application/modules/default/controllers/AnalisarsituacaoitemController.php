@@ -8,7 +8,7 @@
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  */
 class AnalisarsituacaoitemController extends MinC_Controller_Action_Abstract {
 
@@ -18,21 +18,21 @@ class AnalisarsituacaoitemController extends MinC_Controller_Action_Abstract {
     private $getIdUsuario = 0;
     private $intTamPag = 10;
     /**
-     * Reescreve o método init()
+     * Reescreve o mï¿½todo init()
      * @access public
      * @param void
      * @return void
      */
     public function init() {
-        // verifica as permissões
+        // verifica as permissï¿½es
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
         parent::perfil(1, $PermissoesGrupo);
 
-        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuário
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuï¿½rio
+        $auth = Zend_Auth::getInstance(); // pega a autenticaï¿½ï¿½o
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
         $this->getIdAgente = $idagente['idAgente'];
         $this->getIdGrupo = $GrupoAtivo->codGrupo;
         $this->getIdOrgao = $GrupoAtivo->codOrgao;
@@ -82,7 +82,7 @@ class AnalisarsituacaoitemController extends MinC_Controller_Action_Abstract {
         $where = array();
         $where['s.stEstado = ?'] = 0;
 
-        $tbSolicitarItem = new tbSolicitarItem();
+        $tbSolicitarItem = new Proposta_Model_DbTable_TbSolicitarItem();
         $total = $tbSolicitarItem->listaSolicitacoesItens($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
 
@@ -122,13 +122,13 @@ class AnalisarsituacaoitemController extends MinC_Controller_Action_Abstract {
         $where = array();
         $where['s.idSolicitarItem = ?'] = $item;
 
-        $tbSolicitarItem = new tbSolicitarItem();
+        $tbSolicitarItem = new Proposta_Model_DbTable_TbSolicitarItem();
         $busca = $tbSolicitarItem->listaSolicitacoesItens($where, array(), null, null);
         $this->view->dados = $busca;
     }
 
     public function avaliarItemAction() {
-        $tbSolicitarItem = new tbSolicitarItem();
+        $tbSolicitarItem = new Proposta_Model_DbTable_TbSolicitarItem();
         $busca = $tbSolicitarItem->buscarDadosItem($_POST['idItem']);
 
         $busca->Resposta = $_POST['resposta'];
@@ -136,7 +136,7 @@ class AnalisarsituacaoitemController extends MinC_Controller_Action_Abstract {
         $busca->stEstado = $_POST['avaliacao'];
         $busca->save();
 
-        $tbSolicitarItem = new tbSolicitarItem();
+        $tbSolicitarItem = new Proposta_Model_DbTable_TbSolicitarItem();
         if($_POST['avaliacao']){
             $msg = 'rejeitado';
         } else {

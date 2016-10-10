@@ -853,7 +853,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
         $dataModificada = $mesAnoAtual.'/'.$menos10;
 
-        $ausencia = new TbAusencia();
+        $ausencia = new Agente_Model_DbTable_TbAusencia();
 
         $ferias   = $ausencia->BuscarAusenciaAtiva($idAgente, null, 2);
         $atestado = $ausencia->BuscarAusenciaAtiva($idAgente, null, 1);
@@ -876,7 +876,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
         // CREDENCIAMENTO
 
         $projetosDAO 		= new Projetos();
-        $credenciamentoDAO  = new TbCredenciamentoParecerista();
+        $credenciamentoDAO  = new Agente_Model_DbTable_TbCredenciamentoParecerista();
 
         $whereProjeto['IdPRONAC = ?'] = $idpronac;
         //$projeto = $projetosDAO->buscar($whereProjeto);
@@ -889,7 +889,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
         if($credenciamento == 0) {
             $situacao = '0';
-            $situacaoTexto .= '<br /> Parecerista n�o credenciado na �rea e segmento do Produto!';
+            $situacaoTexto .= '<br /> Parecerista n&atilde;o credenciado na &aacute;rea e segmento do Produto!';
         }
         //$situacaoTexto .= '<br /> Area: '.$projeto[0]->Area.' Segmento: '.$projeto[0]->Segmento.' idAgente: '.$idAgente;
 
@@ -897,7 +897,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
         // An�lises em eberto
         $whereAnalise['distribuirParecer.idAgenteParecerista = ?'] = $idAgente;
         $analiseEmAberto = $projetosDAO->buscaProjetosProdutos($whereAnalise);
-        $situacaoTexto .= '<br /> An�lise em aberto: '.count($analiseEmAberto);
+        $situacaoTexto .= '<br /> An&aacute;lise em aberto: '.count($analiseEmAberto);
 
         $pareceristas[] = array('situacao' => utf8_encode($situacao), 'situacaoTexto' => utf8_encode($situacaoTexto));
 
@@ -932,11 +932,11 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
     public function resconsolidacaopareceristaAction() {
         //** Usuario Logado ************************************************/
-        $auth           = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth           = Zend_Auth::getInstance(); // pega a autenticacao
 //		$idusuario 	= $auth->getIdentity()->usu_codigo;
         $idusuario          = $this->getIdUsuario;
-        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
-        $codOrgao       = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
+        $GrupoAtivo     = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessco com o grupo ativo
+        $codOrgao       = $GrupoAtivo->codOrgao; //  orgao ativo na sessco
         /******************************************************************/
 
         $tela   = 'resconsolidacaoparecerista';

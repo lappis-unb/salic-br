@@ -28,6 +28,8 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         $arrAuth = array_change_key_case((array) $auth->getIdentity());
         $PermissoesGrupo = array();
 
+        $idPreProjeto = $_GET['idPreProjeto'];
+
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
             //Recupera todos os grupos do Usuario
@@ -49,7 +51,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
             $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
-            $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
+            $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
             $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
         }else {
             if($_REQUEST['idPreProjeto'] != '0'){
@@ -64,7 +66,8 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         //*******************************************
         $get = Zend_Registry::get("get");
         $model = new Proposta_Model_DbTable_DocumentosExigidos();
-        $this->view->documentosPendentes = $model->buscarDocumentoPendente($get->idPreProjeto);
+        //$this->view->documentosPendentes = $model->buscarDocumentoPendente($get->idPreProjeto);
+        $this->view->documentosPendentes = $model->buscarDocumentoPendente($idPreProjeto);
 
         if(!empty($this->view->documentosPendentes)) {
             $verificarmenu = 1;
@@ -77,7 +80,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
         //(Enviar Proposta ao MinC , Excluir Proposta)
         $mov = new Proposta_Model_DbTable_Movimentacao();
-        $movBuscar = $mov->buscar(array('idprojeto = ?' => $get->idPreProjeto), array('idmovimentacao desc'), 1, 0)->current();
+        $movBuscar = $mov->buscar(array('idprojeto = ?' => $idPreProjeto), array('idmovimentacao desc'), 1, 0)->current();
 
         if(isset($movBuscar->Movimentacao) && $movBuscar->Movimentacao != 95) {
             $enviado = 'true';
@@ -86,13 +89,8 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
             $enviado = 'false';
             $this->view->enviado = $enviado;
         }
-        //*****************
-        //FIM DA VALIDACAO
-        //*****************
 
-        /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
     }
 
@@ -283,8 +281,9 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         }
 
         //EXCLUI REGISTRO DA TABELA ABRANGENCIA
-        $mapper = new Proposta_Model_TbDeslocamentoMapper();
-        $excluir = $mapper->delete($_GET['id']);
+        $mapper = new Proposta_Model_DbTable_Abrangencia();
+        $excluir = $mapper->delete(['idabrangencia = ?' => $_GET['cod']]);
+
         if($excluir) {
 
             parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
