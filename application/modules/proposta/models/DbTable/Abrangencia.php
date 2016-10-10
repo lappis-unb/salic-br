@@ -625,6 +625,7 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
 
     public function AbrangenciaGeografica($id_projeto)
     {
+//         Antigo SQL
 //        $sql = "SELECT CASE a.idPais
 //                WHEN 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'
 //                ELSE p.Descricao
@@ -642,15 +643,7 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
         $select->from(
             array('a' => $this->_name),
             array(
-//                new Zend_Db_Expr("
-//                    CASE WHEN a.idpais = 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'
-//                        ELSE p.Descricao
-//                    END as Pais"),
-//                new Zend_Db_Expr("CASE a.pais WHEN 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'
-//                        ELSE p.Descricao END as Pais"),
-//                'Pais' => new Zend_Db_Expr("CASE WHEN a.idpais = 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'
-//                     ELSE p.Descricao
-//                      END"),
+                 new Zend_Db_Expr("(CASE a.idpais WHEN 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'  ELSE p.descricao END) as pais"),
                 'u.Descricao as UF',
                 'm.Descricao as Cidade',
                 'x.dtInicioDeExecucao',
@@ -668,24 +661,24 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
         $select->joinLeft(
             array('p' => $this->getName('Pais')), 'a.idPais = p.idPais',
             null,
-            $this->getSchema('Agentes')
+            $this->getSchema('agentes')
         );
 
         $select->joinLeft(
             array('u' => $this->getName('Uf')), 'a.idUF = u.idUF',
             null,
-            $this->getSchema('Agentes')
+            $this->getSchema('agentes')
         );
 
         $select->joinLeft(
             array('m' => $this->getName('Municipios')), 'a.idMunicipioIBGE = m.idMunicipioIBGE',
             null,
-            $this->getSchema('Agentes')
+            $this->getSchema('agentes')
         );
 
         $select->where('idProjeto= ?', $id_projeto);
         $select->where('a.stAbrangencia = ?', 1);
-        $select->order(array('p.Descricao', 'u.Descricao', 'm.Descricao'));
+        $select->order(array('p.descricao', 'u.descricao', 'm.descricao'));
 
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
