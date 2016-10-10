@@ -32,7 +32,7 @@
         $("#precopromocional").priceFormat();
 
         //CARREGAR COMBO DE SEGMENTOS DE ACORDO COM A COMBO DE AREAS
-        <?php if(!empty($this->planoDistribuicao->Area)): ?>
+        <?php if(!empty($this->planoDistribuicao->area)): ?>
             $('#segmentoCultural').html('<option value=""> - Carregando - </option>');
             $.ajax({
                 type: 'POST',
@@ -44,7 +44,7 @@
                     $('#segmentoCultural').find('option').remove();
                     $('#segmentoCultural').append(dados);
                     $('#segmentoCultural option').each(function(){
-                       if($(this).val() == '<?php echo $this->planoDistribuicao['Segmento']; ?>'){
+                       if($(this).val() == '<?php echo $this->planoDistribuicao['segmento']; ?>'){
                            $(this).attr('selected',true);
                        }
                    });
