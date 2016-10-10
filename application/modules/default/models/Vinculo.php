@@ -260,7 +260,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
 
             if ($acao == "incluir") {
                 //persiste os dados de Movimentacao
-                $tblMovimentacao = new Proposta_Model_DbTable_Movimentacao();
+                $tblMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
                 $dados = array("idProjeto" => $idPreProjeto,
                     "Movimentacao" => "95", //Status = Proposta com Proponente
                     "DtMovimentacao" => date("Y/m/d H:i:s"),
@@ -486,7 +486,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
 
         /*         * ******* MOVIMENTACAO ******** */
         //VERIFICA SE A PROPOSTA ESTA COM O MINC
-        $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
+        $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
         $rsMovimentacao = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
 
         if ($rsMovimentacao->Movimentacao != 95) {
@@ -840,7 +840,7 @@ class Vinculo extends MinC_Db_Table_Abstract {
                     $tblAvaliacao->updateEstadoMovimentacao($idPreProjeto);
 
                     //PERSISTE DADOS DA MOVIMENTACAO
-                    $tblMovimentacao = new Proposta_Model_DbTable_Movimentacao();
+                    $tblMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
                     $dados = array("idProjeto" => $idPreProjeto,
                         "Movimentacao" => "96", //satus
                         "DtMovimentacao" => date("Y/m/d H:i:s"),

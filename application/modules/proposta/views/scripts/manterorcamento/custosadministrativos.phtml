@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <?php
-echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php"); // menu
+echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", array('movimentacaoAtual' => $this->movimentacaoAtual)); // menu
 $CadastrarCustos = $this->url(array('controller' => 'manterorcamento', 'action' => 'cadastrarcustos'))."?idPreProjeto=".$this->idPreProjeto;
 ?>
 <script>

@@ -58,9 +58,9 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
         if(!empty ($_REQUEST['idPreProjeto'])) {
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
-            $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
+            $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
-            $this->view->movimentacaoAtual = $rsStatusAtual->Movimentacao;
+            $this->view->movimentacaoAtual = $rsStatusAtual['movimentacao'];
         }else {
             if($_REQUEST['idPreProjeto'] != '0'){
                 parent::message("Necess�rio informar o n�mero da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");

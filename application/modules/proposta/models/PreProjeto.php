@@ -224,6 +224,24 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         return $this->fetchAll($slct);
     }
 
+    public function salvarMovimentacao($arrData)
+    {
+        $date = new DateTime();
+        if (!$this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            $mprMovimentacao = new Proposta_Model_TbMovimentacaoMapper();
+            $arrMovimentacaoDb = $mprMovimentacao->findBy(array('idprojeto' => $arrData['idpreprojeto']));
+            if (empty($arrMovimentacaoDb)) {
+                $arrMovimentacao = array();
+                $arrMovimentacao['idprojeto']      = $arrData['idpreprojeto'];
+                $arrMovimentacao['movimentacao']   = 95;
+                $arrMovimentacao['dtmovimentacao'] = $date->format('Y-m-d H:i:sP');
+                $arrMovimentacao['stestado']       = 0;
+                $arrMovimentacao['usuario']        = $arrData['idusuario'];
+                $mprMovimentacao->save(new Proposta_Model_TbMovimentacao($arrMovimentacao));
+            }
+        }
+    }
+
     /**
      * Grava registro. Se seja passado um ID ele altera um registro existente
      * @param array $dados - array com dados referentes as colunas da tabela no formato "nome_coluna_1"=>"valor_1","nome_coluna_2"=>"valor_2"
@@ -238,9 +256,13 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         } else {
             //INSERT
             unset($dados['idpreprojeto']);
-            return $this->insert($dados);
+            $id = $this->insert($dados);
+            $dados['idpreprojeto'] = $id;
+            $this->salvarMovimentacao($dados);
+            return $id;
         }
-        //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
+
+       # ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
        $rsPreProjeto->idagente               = $dados["idagente"];
        $rsPreProjeto->nomeprojeto            = $dados["nomeprojeto"];
        $rsPreProjeto->mecanismo              = $dados["mecanismo"];

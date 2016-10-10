@@ -8,7 +8,7 @@
     </ul>
 </div>-->
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-<?php $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php");  ?>
+<?php $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", array('movimentacaoAtual' => $this->movimentacaoAtual));  ?>
 )<script type="text/javascript">
 
     function buscaEtabas(idProduto){
@@ -29,7 +29,7 @@
 
             },
             error: function (data){
-                divMsg.html("Falha na recuperação dos dados.\nNão foi possível carregar agente!");
+                divMsg.html("Falha na recuperaï¿½ï¿½o dos dados.\nNï¿½o foi possï¿½vel carregar agente!");
             }
         });
     }
@@ -55,7 +55,7 @@
 
             },
             error: function (data){
-                divMsg.html("Falha na recuperação dos dados.\nNão foi possível carregar agente!");
+                divMsg.html("Falha na recuperaï¿½ï¿½o dos dados.\nNï¿½o foi possï¿½vel carregar agente!");
             }
         });
     }

@@ -89,9 +89,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
 
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
-            $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
+            $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($this->idPreProjeto);
-            $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
+            $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
 
             //VERIFICA SE A PROPOSTA FOI ENVIADA AO MINC ALGUMA VEZ
             $arrbusca = array();
@@ -561,7 +561,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
         /*         * ******* MOVIMENTACAO ******** */
         //VERIFICA SE A PROPOSTA ESTA COM O MINC
-        $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
+        $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
         $rsMovimentacao = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
 
         if ($rsMovimentacao->Movimentacao != 95) {
@@ -991,7 +991,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                     $tblAvaliacao->updateEstadoMovimentacao($idPreProjeto);
 
                     //PERSISTE DADOS DA MOVIMENTACAO
-                    $tblMovimentacao = new Proposta_Model_DbTable_Movimentacao();
+                    $tblMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
                     $dados = array("idProjeto" => $idPreProjeto,
                         "Movimentacao" => "96", //satus
                         "DtMovimentacao" => date("Y/m/d H:i:s"),
