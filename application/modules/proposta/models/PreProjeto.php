@@ -207,7 +207,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         {
             $slct->where($coluna, $valor);
         }
-        $slct->where(new Zend_Db_Expr("NOT EXISTS(select 1 from sac.dbo.Projetos pr where a.idPreProjeto = pr.idProjeto)"));
+        $slct->where(new Zend_Db_Expr("NOT EXISTS(select 1 from " . $this->getSchema('sac') . ".projetos pr where a.idPreProjeto = pr.idProjeto)"));
 
         $slct->order($order);
 

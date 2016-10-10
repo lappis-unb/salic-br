@@ -201,11 +201,10 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
         if(!empty($idProduto)){
             $select->where('pr.Codigo = ' , $idProduto);
         }
-        $select->order('pr.Codigo Asc');
+        $select->order('pr.codigo Asc');
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
         return $db->fetchAll($select);
     } // fecha m�todo buscaprodutoetapaitem()
 
@@ -262,15 +261,15 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
         );
 
         $select->joinInner(
-            array('pr' => 'Produto'), 'pr.Codigo = p.idProduto' , array() , 'sac.dbo'
+            array('pr' => 'Produto'), 'pr.Codigo = p.idProduto' , array() , $this->_schema
         );
 
         $select->joinInner(
-            array('e' => 'TbPlanilhaEtapa'), 'e.idPlanilhaEtapa = p.idPlanilhaEtapa', array() , 'sac.dbo'
+            array('e' => 'TbPlanilhaEtapa'), 'e.idPlanilhaEtapa = p.idPlanilhaEtapa', array() , $this->_schema
         );
 
         $select->joinInner(
-            array('i' => 'TbPlanilhaItens'), 'i.idPlanilhaItens = p.idPlanilhaItens', array() , 'sac.dbo'
+            array('i' => 'TbPlanilhaItens'), 'i.idPlanilhaItens = p.idPlanilhaItens', array() , $this->_schema
         );
 
         if(!empty($item)){
@@ -283,7 +282,9 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
         //XD($sql);
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
+//        echo '<pre>';
+//        var_dump($select->assemble());
+//        exit;
         return $db->fetchRow($select);
     } // fecha m�todo buscaprodutoetapaitem()
 
@@ -304,7 +305,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
 
         $select->where('stEstado = 0');
 
-        $select->order('Produto');
+        $select->order('produto');
 
         if(!empty($where)){
             $select->where('Descricao = ?' , $nomeItem);
@@ -354,7 +355,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
             $this->_schema
         );
 
-        $select->order("Descricao");
+        $select->order("descricao");
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
