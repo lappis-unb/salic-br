@@ -4,7 +4,7 @@
     $auth = Zend_Auth::getInstance();
     if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => 'index')); ?>">In&iacute;cio</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), '', true); ?>">In&iacute;cio</a></li>
         <li class="last">Alterar Dados</li>
     </ul>
     <?php } ?>
@@ -27,12 +27,12 @@
 <!-- ========== INÍCIO CONTEÚDO ========== -->
 
 <div id="conteudo">
-    <fieldset><legend>Informações</legend>
+    <fieldset><legend>Informa&ccedil;&otilde;es</legend>
         <form method="POST" action="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'alterardados')); ?>" name="cadastraUsuario" id="cadastraUsuario">
             <table border="1" class="tabela">
                 <thead>
                     <tr>
-                        <th colspan="2">Dados do Usuário</th>
+                        <th colspan="2">Dados do Usu&aacute;rio</th>
                     </tr>
                 </thead>
                 <tbody>
