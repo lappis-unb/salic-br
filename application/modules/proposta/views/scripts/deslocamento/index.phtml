@@ -178,17 +178,17 @@
                         <label id="LpaisOrigem">Pa&iacute;s de Origem</label>
                         <br />
                         <select name="paisOrigem" id="paisOrigem" onchange="FpaisOrigem(this.value);" class="select_simples">
-                            <?php foreach ($this->paises as $key => $paises){ ?>
-                            <option value="<?php echo $key; ?>"
-                                <?php if(($this->idPaisO == '') && ($key == 31)) {
-                                        echo "selected=\"selected\"";
-                                    } else if($key == $this->idPaisO ) {
-                                        echo "selected=\"selected\"";
-                                    }
-                                ?>>
-                                <?php echo htmlentities($paises); ?>
-                            </option>
-                            <?php } ?>
+                            <?php foreach ($this->paises as $key => $paises): ?>
+                                <option value="<?php echo $key; ?>"
+                                    <?php if(($this->idPaisO == '') && ($key == 31)) :?>
+                                        selected="selected";
+                                    <?php elseif($key == $this->idPaisO ) : ?>
+                                        selected="selected";
+                                    <?php endif; ?>
+                                >
+                                    <?php echo $paises; ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </td>
                     <td valign="top" width="33%">
@@ -234,16 +234,17 @@
                         <label id="LpaisDestino">Pa&iacute;s de Destino</label>
                         <br />
                         <select name="paisDestino" id="paisDestino" onchange="FpaisDestino(this.value);" class="select_simples" >
-                            <?php foreach ($this->paises as $key => $paises){ ?>
-                            <option value="<?php echo $key; ?>"
-                                <?php if(($this->idPaisD == '') && ($key == 31)) {
-                                        echo "selected=\"selected\"";
-                                    } else if($key == $this->idPaisD ) {
-                                        echo "selected=\"selected\"";
-                                    }?>>
-                                    <?php echo htmlentities($paises); ?>
-                            </option>
-                            <?php } ?>
+                            <?php foreach ($this->paises as $key => $paises): ?>
+                                <option value="<?php echo $key; ?>"
+                                    <?php if(($this->idPaisD == '') && ($key == 31)): ?>
+                                        selected="selected"
+                                    <?php elseif($key == $this->idPaisD ): ?>
+                                        selected="selected"
+                                    <?php endif;?>
+                                >
+                                    <?php echo $paises; ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </td>
                     <td valign="top">
