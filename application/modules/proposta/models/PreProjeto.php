@@ -256,7 +256,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         } else {
             //INSERT
             unset($dados['idpreprojeto']);
-            $id = $this->insert($dados);
+            $id = $this->insert(array_filter($dados));
             $dados['idpreprojeto'] = $id;
             $this->salvarMovimentacao($dados);
             return $id;

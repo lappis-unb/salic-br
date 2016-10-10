@@ -55,7 +55,7 @@ function abrirFrmCadastroItem(url){
 <div id="frmCadastroItem" style="text-align: center; display: none;"></div>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <?php
-echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", array('movimentacaoAtual' => $this->movimentacaoAtual)); // menu
+echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); // menu
 ?>
 <?php
         $controller = "manterorcamento";

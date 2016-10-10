@@ -1,5 +1,5 @@
 <?php
-echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", array('movimentacaoAtual' => $this->movimentacaoAtual)); // menu
+echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); // menu
 $EditarDivulgacao = $this->url(array('controller' => 'divulgacao', 'action' => 'editardivulgacao'));
 $ExcluirDivulgacao = $this->url(array('controller' => 'divulgacao', 'action' => 'excluirdivulgacao'));
 $IncluirDivulgacao = $this->url(array('controller' => 'divulgacao', 'action' => 'novodivulgacao'));
