@@ -283,7 +283,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
             $this->view->nmPagina = 'Atendido';
         }
 
-        $tbSolicitarItem = New tbSolicitarItem();
+        $tbSolicitarItem = new Proposta_Model_DbTable_TbSolicitarItem();
         $total = $tbSolicitarItem->buscarItens($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
 
@@ -393,7 +393,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
             $this->view->nmPagina = 'Atendido';
         }
 
-        $tbSolicitarItem = New tbSolicitarItem();
+        $tbSolicitarItem = new Proposta_Model_DbTable_TbSolicitarItem();
         $total = $tbSolicitarItem->buscarItens($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
 
