@@ -154,7 +154,8 @@ class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstrac
                 <th>Dt.Final de Execu��o</th>
             </tr>
                 ';
-                foreach ( GerarImprimirpdfDAO::brangenciaGeografica($id_projeto) as $Abrangencia )//busca locais onde o preprojeto sera realizado
+        $tbAb = new Proposta_Model_DbTable_Abrangencia;
+                foreach ($tbAb->AbrangenciaGeografica($id_projeto) as $Abrangencia )//busca locais onde o preprojeto sera realizado
                 {
                     $texto .= '<tr bgcolor="#EEEEEE"><td">'.$Abrangencia->Pais.'</td>';
                     $texto .= '<td>'.$Abrangencia->UF.'</td>';
@@ -223,11 +224,12 @@ if($mecanismo == 'Incentivo Fiscal'){
         <p>
             <table cellpadding="3" style="width:100%">
                 ';
-                foreach (GerarImprimirpdfDAO::ConsultaDadosDivulgacao($id_projeto) as $DadosDivulgacao)//busca dados de divulga��o do preprojeto
-                {
-                    $texto .= '<tr bgcolor="#EEEEEE"><td width="80%">'.$DadosDivulgacao->Peca.'</td>';
-                    $texto .= '<td>'.$DadosDivulgacao->Veiculo.'</td></tr>';
-                }
+
+//                foreach (GerarImprimirpdfDAO::ConsultaDadosDivulgacao($id_projeto) as $DadosDivulgacao)//busca dados de divulga��o do preprojeto
+//                {
+//                    $texto .= '<tr bgcolor="#EEEEEE"><td width="80%">'.$DadosDivulgacao->Peca.'</td>';
+//                    $texto .= '<td>'.$DadosDivulgacao->Veiculo.'</td></tr>';
+//                }
     $texto .= '
             </table>
         </p>
@@ -309,8 +311,8 @@ if($mecanismo == 'Incentivo Fiscal'){
         $TotalProduto = 0;
         $TotalEtapa = 0;
         $TotalOrcamento = 0;
-
-        foreach (GerarImprimirpdfDAO::Orcamento($id_projeto) as $Orcamento)//busca dados de or�amento do preprojeto
+        $tbPlanilhaProposta = new Proposta_Model_DbTable_PlanilhaProposta;
+        foreach ($tbPlanilhaProposta->Orcamento($id_projeto) as $Orcamento)//busca dados de or�amento do preprojeto
         {
 
             if (($Produto != $Orcamento->idProduto or $etapa != $Orcamento->idEtapa) and $Produto != -1){
