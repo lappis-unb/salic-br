@@ -6,7 +6,7 @@
  * @version 1.0 - 08/01/2013
  */
 
-class Proposta_Model_DbTable_tbSolicitarItem extends MinC_Db_Table_Abstract {
+class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
 
     protected  $_banco  = 'sac';
     protected  $_schema = 'sac';
