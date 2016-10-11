@@ -435,9 +435,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             }
 
             $ag = new Agente_Model_DbTable_Agentes();
-            $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto, 'vprp.siVinculoProposta = ?' => 2));
+            $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idpreprojeto = ?' => $idPreProjeto, 'vprp.sivinculoproposta = ?' => 2));
 
-            $verificarvinculoCount = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto))->count();
+            $verificarvinculoCount = $ag->buscarAgenteVinculoProponente(array('vprp.idpreprojeto = ?' => $idPreProjeto))->count();
 
             if ($verificarvinculoCount > 0) {
                 $this->view->verificarsolicitacaovinculo = true;
