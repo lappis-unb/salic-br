@@ -912,7 +912,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 
         $slctUnion = $this->select()
             ->union(array('('.$a.')', '('.$b.')', '('.$c.')'))
-            ->order('Nome');
+            ->order('nomeresponsavel');
 
         return $this->fetchAll($slctUnion);
     }
@@ -928,24 +928,24 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
     {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
-        $slct->from(array('a' => $this->_name),
-            array('CNPJCPF AS CNPJCPFProponente'),$this->getSchema('agentes')
+        $slct->from(
+            array('a' => $this->_name),
+            array('CNPJCPF AS CNPJCPFProponente'),
+            $this->_schema
         );
-        $slct->joinInner(array('b' => 'tbVinculo'),
-            'a.idAgente = b.idAgenteProponente',
-            array('idVinculo', 'siVinculo', 'idUsuarioResponsavel'),$this->getSchema('agentes')
+        $slct->joinInner(
+            array('b' => 'tbVinculo'), 'a.idAgente = b.idAgenteProponente',
+            array('idVinculo', 'siVinculo', 'idUsuarioResponsavel'), $this->_schema
         );
-        $slct->joinInner(array('c' => 'SGCacesso'),
-            'a.CNPJCPF = c.Cpf',
-            array('IdUsuario'),'CONTROLEDEACESSO.dbo'
+        $slct->joinInner(array('c' => 'SGCacesso'), 'a.CNPJCPF = c.Cpf',
+            array('IdUsuario'), $this->getSchema('controledeacesso')
         );
         $slct->joinInner(array('d' => 'Nomes'),
             'b.idAgenteProponente = d.idAgente',
-            array('Descricao AS Proponente'),$this->getSchema('agentes')
+            array('Descricao AS Proponente'), $this->_schema
         );
-        $slct->joinInner(array('e' => 'SGCacesso'),
-            'e.IdUsuario = b.idUsuarioResponsavel',
-            array('Cpf AS CPFResponsavel', 'Nome AS NomeResponsavel'),'CONTROLEDEACESSO.dbo'
+        $slct->joinInner(array('e' => 'SGCacesso'), 'e.IdUsuario = b.idUsuarioResponsavel',
+            array('Cpf AS CPFResponsavel', 'Nome AS NomeResponsavel'), $this->getSchema('controledeacesso')
         );
 
         $slct->where('c.IdUsuario = ?', $idResponsavel);

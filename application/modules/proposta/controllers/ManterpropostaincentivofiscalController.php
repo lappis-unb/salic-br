@@ -1212,13 +1212,16 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @return void
      */
     public function consultarresponsaveisAction() {
-        $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity()); // pega a autenticação
-        $idUsuario = $auth['idusuario'];
-        $cpf = $auth['cpf'];
 
-        $Agentes = new Agente_Model_DbTable_Agentes();
-        $buscarpendentes = $Agentes->gerenciarResponsaveisListas('0', $idUsuario);
-        $buscarvinculados = $Agentes->gerenciarResponsaveisListas('2', $idUsuario);
+        $auth = Zend_Auth::getInstance();
+        $arrAuth = array_change_key_case((array) $auth->getIdentity()); // pega a autenticação
+
+        $idUsuario = $arrAuth['idusuario'];
+        $cpf = $arrAuth['cpf'];
+
+        $tblAgentes = new Agente_Model_DbTable_Agentes();
+        $buscarpendentes = $tblAgentes->gerenciarResponsaveisListas('0', $idUsuario);
+        $buscarvinculados = $tblAgentes->gerenciarResponsaveisListas('2', $idUsuario);
 
         $this->view->pendentes = $buscarpendentes;
         $this->view->vinculados = $buscarvinculados;
@@ -1236,11 +1239,12 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $tbVinculo = new Agente_Model_DbTable_TbVinculo();
         $propostas = new Proposta_Model_PreProjeto();
 
-        $agentes = new Agente_Model_DbTable_Agentes();
+        $tblAgentes = new Agente_Model_DbTable_Agentes();
         $dadosCombo = array();
-        $rsVinculo = $agentes->listarVincularPropostaCombo($this->idResponsavel);
-
+        $rsVinculo = $tblAgentes->listarVincularPropostaCombo($this->idResponsavel);
+        $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
         $i = 0;
+
         foreach ($rsVinculo as $rs) {
             $dadosCombo[$i]['idResponsavel'] = $rs->idusuarioresponsavel;
             $dadosCombo[$i]['idVinculo'] = $rs->idvinculo;
@@ -1265,9 +1269,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         //PROCURA AS PROPOSTAS DE TODOS OS IDAGENTE'S
         $listaPropostas = $propostas->buscarVinculadosProponenteDirigentes($dadosIdAgentes);
 
-        $wherePropostaD['pp.idAgente = ?'] = $this->idAgenteProponente;
-        $wherePropostaD['pr.idProjeto IS NULL'] = '';
-        $wherePropostaD['pp.idUsuario <> ?'] = $this->idResponsavel;
+        $wherePropostaD['pp.idagente = ?'] = $this->idAgenteProponente;
+        $wherePropostaD['pr.idprojeto IS NULL'] = '';
+        $wherePropostaD['pp.idusuario <> ?'] = $this->idResponsavel;
         $listaPropostasD = $propostas->buscarPropostaProjetos($wherePropostaD);
 
         $this->view->responsaveis = $dadosCombo;

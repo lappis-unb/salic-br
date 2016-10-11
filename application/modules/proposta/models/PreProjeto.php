@@ -1031,7 +1031,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
 
         $slct->order('pp.idPreProjeto');
         $slct->order('pp.NomeProjeto');
-
+        //@todo parei aqui Cleber
         return $this->fetchAll($slct);
     }
 
@@ -1081,6 +1081,14 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
      * @return void
      */
     public function buscarVinculadosProponenteDirigentes($arrayIdAgentes){
+
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $subSql = $db->select()
+            ->from(['p' => 'projetos'], ['*'],  $this->getSchema('sac'))
+            ->where('p.idprojeto = pp.idpreprojeto');
+
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
@@ -1104,11 +1112,11 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                 $this->getSchema('controledeacesso')
                 );
 
-        $slct->where('idAgente in (?)', $arrayIdAgentes);
+        $slct->where('pp.idAgente in (?)', $arrayIdAgentes);
         $slct->where('stEstado = ?', 1);
-        $slct->where('NOT EXISTS(SELECT * FROM Projetos p WHERE p.idProjeto = pp.idPreProjeto)', '');
-        $slct->order('pp.idPreProjeto');
-        $slct->order('pp.NomeProjeto');
+        $slct->where(new Zend_Db_Expr("NOT EXISTS ($subSql)"));
+        $slct->order('pp.idpreprojeto');
+        $slct->order('pp.nomeprojeto');
 
         return $this->fetchAll($slct);
     }
