@@ -13,7 +13,7 @@
  *
  * @package			Opauth.LoginCidadao
  */
-class MinC_OAuth_Strategy_LoginCidadaoStrategy extends OpauthStrategy
+class LoginCidadaoStrategy extends OpauthStrategy
 {
 
     /**
@@ -45,7 +45,13 @@ class MinC_OAuth_Strategy_LoginCidadaoStrategy extends OpauthStrategy
     public function __construct($strategy, $env)
     {
         parent::__construct($strategy, $env);
-        $this->strategy['redirect_uri'] = get_site_url().$this->strategy['redirect_uri']; // Login Cidadao validate url, so no child blog url here
+        /*$frontController = Zend_Controller_Front::getInstance();
+        $baseUrl = $frontController->getBaseUrl();
+        xd($baseUrl, $this->strategy['url_base'], $this->strategy['redirect_uri']);
+xd($this->strategy['redirect_uri']);
+        */
+
+        $this->strategy['redirect_uri'] = $this->strategy['url_base'].$this->strategy['redirect_uri']; // Login Cidadao validate url, so no child blog url here
         /*$redirect_uri = network_site_url();
         $redirect_uri = rtrim($redirect_uri,"/");
         $this->strategy['redirect_uri'] = $redirect_uri.$this->strategy['redirect_uri'];*/
