@@ -21,11 +21,11 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
     protected $_schema = 'agentes';
 
     /**
-     * Método para buscar os estados
+     * Metodo para buscar os estados
      * @access public
      * @param void
      * @return array
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      */
     public function buscar()
     {
@@ -44,11 +44,11 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
     }
 
     /**
-     * Método para buscar os estados de acordo com a região
+     * Metodo para buscar os estados de acordo com a regiao
      * @access public
      * @param void
      * @return array
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      */
     public function buscarRegiao($regiao)
     {

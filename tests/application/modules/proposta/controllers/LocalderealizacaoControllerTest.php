@@ -27,7 +27,7 @@ class LocalderealizacaoControllerTest extends MinC_Test_ControllerActionTestCase
         //id do Pre Projeto, necessario usuario ter um pre projeto
         $idPreProjeto = $rsPreProjeto[0]->idPreProjeto;
 
-        // Acessando local de realização
+        // Acessando local de realizacao
         $this->dispatch('proposta/localderealizacao?idPreProjeto='. $idPreProjeto);
 
         $this->assertModule('proposta');

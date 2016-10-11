@@ -10,7 +10,7 @@ private $intTamPag = 10;
 
     public function init()
     {
-        // verifica as permissões
+        // verifica as permissoes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor Salic
         parent::perfil(1, $PermissoesGrupo);
@@ -175,13 +175,13 @@ private $intTamPag = 10;
 
     public function cadastrarusuarioexternoAction(){
 
-        $auth = Zend_Auth::getInstance();// instancia da autenticação
+        $auth = Zend_Auth::getInstance();// instancia da autenticacao
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idorgao = $auth->getIdentity()->usu_orgao;
         $usu_identificacao = $auth->getIdentity()->usu_identificacao;
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-        $codOrgao = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
+        $codGrupo = $GrupoAtivo->codGrupo; //  Grupo ativo na sessao
+        $codOrgao = $GrupoAtivo->codOrgao; //  Órgao ativo na sessao
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
 
@@ -329,7 +329,7 @@ private $intTamPag = 10;
             $this->view->perfisNomes = $arrPerfisNomes;
             $this->view->parametrosBusca = $_REQUEST;
 
-         	//Envia para tela que irá gerar todos os registro em PDF
+         	//Envia para tela que ira gerar todos os registro em PDF
             if(isset($_POST['imprimirResumo']) && !empty($_POST['imprimirResumo'])  && $_POST['imprimirResumo'] == 'html')
             {
 	            $resultadoOrgaoUsuario2 = $usuariosOrgaosGrupos->buscarUsuariosOrgaosGruposSigla(array(),array( 'gru_nome ASC', 'usu_nome asc'));
@@ -540,7 +540,7 @@ private $intTamPag = 10;
                 $this->view->perfisNomes = "";
             }
 
-        	//Envia para tela que irá gerar todos os registro em PDF
+        	//Envia para tela que ira gerar todos os registro em PDF
             if(isset($_POST['imprimirResumo']) && !empty($_POST['imprimirResumo'])  && $_POST['imprimirResumo'] == 'html')
             {
 	            if ( isset ( $_SESSION['dados'] ) || isset ( $dados ) )
@@ -623,7 +623,7 @@ private $intTamPag = 10;
             $this->view->perfisNomes = $arrPerfisNomes;
             $this->view->parametrosBusca = $_REQUEST;
 
-        	//Envia para tela que irá gerar todos os registro em PDF
+        	//Envia para tela que ira gerar todos os registro em PDF
             if(isset($_POST['imprimirResumo']) && !empty($_POST['imprimirResumo'])  && $_POST['imprimirResumo'] == 'html')
             {
             	$resultadoOrgaoUsuario2 = $usuariosOrgaosGrupos->buscarUsuariosOrgaosGruposSigla(array(),array( 'gru_nome ASC', 'usu_nome asc'));
@@ -690,15 +690,15 @@ private $intTamPag = 10;
 
     public function perfissalicwebAction()
     {
-            $auth = Zend_Auth::getInstance();// instancia da autenticaçao
+            $auth = Zend_Auth::getInstance();// instancia da autenticacao
 
             $idusuario         = $auth->getIdentity()->usu_codigo;
             $idorgao           = $auth->getIdentity()->usu_orgao;
             $usu_identificacao = $auth->getIdentity()->usu_identificacao;
 
-            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-            $codGrupo   = $GrupoAtivo->codGrupo; //  Grupo ativo na sessão
-            $codOrgao   = $GrupoAtivo->codOrgao; //  Órgão ativo na sessão
+            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
+            $codGrupo   = $GrupoAtivo->codGrupo; //  Grupo ativo na sessao
+            $codOrgao   = $GrupoAtivo->codOrgao; //  Órgao ativo na sessao
 
             $this->view->codOrgao = $codOrgao;
             $this->view->idUsuarioLogado = $idusuario;
@@ -826,7 +826,7 @@ private $intTamPag = 10;
             $this->view->perfil_nome = $perfilUsuario->gru_nome;
         }
 
-        	//============Trazer a Unidade para cadastrar o Perfil/Usuário externo, faz um tratamento para não trazer órgão em branco=================
+        	//============Trazer a Unidade para cadastrar o Perfil/Usuario externo, faz um tratamento para nao trazer órgao em branco=================
             $orgaos = new Orgaos();
             $this->view->orgaos  = $orgaos->buscar(array('Sigla != ?'=>''), array('Sigla'));
     }

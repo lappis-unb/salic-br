@@ -1269,7 +1269,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
     }
 
     /**
-     * Método para buscar os Proponentes - Combo Listar Propostas
+     * Metodo para buscar os Proponentes - Combo Listar Propostas
      * @access public
      * @param integer $idResponsavel
      * @return object
@@ -1593,7 +1593,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             'm.Movimentacao AS CodSituacao',
         ];
 
-        // Replace da função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgao = $db->select()
             ->from(['vwUsuariosOrgaosGrupos'], 'org_superior', 'tabelas.dbo')
             ->where('usu_codigo = x.idTecnico')
@@ -1601,7 +1601,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             ->where('gru_codigo = 92')
             ->group('org_superior');
 
-        //replace função: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
             ->from(['Usuarios'], 'usu_nome', 'tabelas.dbo')
             ->where('usu_codigo = x.idTecnico')
@@ -1724,7 +1724,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        // Replace da função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $subSql = $db->select()
             ->from(['vwUsuariosOrgaosGrupos'], 'org_superior', 'tabelas.dbo')
             ->where('usu_codigo = a.idTecnico')
@@ -1768,13 +1768,13 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             'p.NomeProjeto',
         ];
 
-        //replace função: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
             ->from(['Usuarios'], 'usu_nome', 'tabelas.dbo')
             ->where('usu_codigo = a.idTecnico')
             ;
 
-        // Replace da função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $subSql = $db->select()
             ->from(['vwUsuariosOrgaosGrupos'], 'org_superior', 'tabelas.dbo')
             ->where('usu_codigo = a.idTecnico')
@@ -1896,13 +1896,13 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         $db = $this->getAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-        //replace função: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
             ->from(['Usuarios'], 'usu_nome', 'tabelas.dbo')
             ->where('usu_codigo = a.idTecnico')
             ;
 
-        // Replace da função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgao = $db->select()
             ->from(['vwUsuariosOrgaosGrupos'], 'org_superior', 'tabelas.dbo')
             ->where('usu_codigo = a.idTecnico')
@@ -1910,7 +1910,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             ->where('gru_codigo = 92')
             ->group('org_superior');
 
-        //Replace da função: sac.dbo.fnDtUltimaDiligenciaDocumental(a.idProjeto)
+        //Replace da funcao: sac.dbo.fnDtUltimaDiligenciaDocumental(a.idProjeto)
         $diligencia = $db->select()->from(['tbMovimentacao'], "max(DtMovimentacao)")->where('Movimentacao = 97')
             ->where('idProjeto = a.idProjeto')
             ;
@@ -2024,13 +2024,13 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             'p.idAgente',
         ];
 
-        //replace função: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
             ->from(['Usuarios'], 'usu_nome', 'tabelas.dbo')
             ->where('usu_codigo = x.idTecnico')
             ;
 
-        // Replace da função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgao = $db->select()
             ->from(['vwUsuariosOrgaosGrupos'], 'org_superior', 'tabelas.dbo')
             ->where('usu_codigo = x.idTecnico')
@@ -2104,13 +2104,13 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             'p.stTipoDemanda AS TipoDemanda'
         ];
 
-        //replace função: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
             ->from(['Usuarios'], 'usu_nome', 'tabelas.dbo')
             ->where('usu_codigo = x.idTecnico')
             ;
 
-        // Replace da função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgao = $db->select()
             ->from(['vwUsuariosOrgaosGrupos'], 'org_superior', 'tabelas.dbo')
             ->where('usu_codigo = x.idTecnico')
@@ -2118,7 +2118,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             ->where('gru_codigo = 92')
             ->group('org_superior');
 
-        // Replace da função: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
         $orgaoSub = $db->select()
             ->from(['vwUsuariosOrgaosGrupos'], 'org_superior', 'tabelas.dbo')
             ->where('usu_codigo = idTecnico')
@@ -2184,7 +2184,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
      * @param mixed $nrProcesso
      * @access public
      * @return void
-     * @todo padrão ORM
+     * @todo padrao ORM
      */
     public function transformarPropostaEmProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso)
     {
@@ -2581,7 +2581,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                     ;
                 $vCadastrarProponente = $db->fetchAll($sql);
 
-                //VERIFICAR AS INFORMAÇÕES DO PROPONENTE
+                //VERIFICAR AS INFORMACOES DO PROPONENTE
                 if (empty($vCadastrarProponente)) {
                     $validacao->Descricao = 'Dados cadastrais do proponente inexistente ou não h&aacute; endereço para correspondência selecionado.';
                     $validacao->Observacao = 'PENDENTE';
@@ -2614,7 +2614,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                   //-- VERIFICAR SE HÁ OS EMAILS DO PROPONENTE CADASTRADOS
+                   //-- VERIFICAR SE HA OS EMAILS DO PROPONENTE CADASTRADOS
                     $sql = $db->select()
                         ->from(['v' => 'internet'], 'v.*', $this->getSchema('agentes'))
                         ->join(['p' => 'preprojeto'], 'v.idAgente=p.idAgente', null, $this->_schema)
@@ -2633,7 +2633,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //-- NO CASO DE PESSOA FÍSICA, VERIFICAR O LANÇAMENTO DA DATA DE NASCIMENTO
+                    //-- NO CASO DE PESSOA FISICA, VERIFICAR O LANCAMENTO DA DATA DE NASCIMENTO
                     $sql = $db->select()
                         ->from(['v' => 'agentes'], 'tipopessoa', $this->getSchema('agentes'))
                         ->where('idAgente = ?', $idAgente)
@@ -2660,7 +2660,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                         }
                     }
 
-                     //-- NO CASO DE PESSOA JURÍDICA, VERIFICAR O LANÇAMENTO DA NATUREZA DO PROPONENTE
+                     //-- NO CASO DE PESSOA JURIDICA, VERIFICAR O LANCAMENTO DA NATUREZA DO PROPONENTE
                     if ($tipoPessoa == 1) {
                         $sql = $db->select()
                             ->from(['n' => 'natureza'], '*', $this->getSchema('agentes'))
@@ -2680,7 +2680,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                             $listaValidacao[] =  clone($validacao);
                         }
 
-                        //-- VERIFICAR SE HÁ DIRIGENTE CADASTRADO
+                        //-- VERIFICAR SE HA DIRIGENTE CADASTRADO
                         $sql = $db->select()
                             ->from(['v' => 'vcadastrardirigente'], '*', $this->_schema)
                             ->join(['p' => 'preprojeto'], 'v.idVinculoPrincipal=p.idAgente', '*', $this->_schema)
@@ -2699,7 +2699,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                         }
                     }
 
-                    //-- VERIFICAR SE O LOCAL DE REALIZAÇÃO ESTÁ CADASTRADO
+                    //-- VERIFICAR SE O LOCAL DE REALIZACAO ESTA CADASTRADO
      //IF NOT EXISTS(SELECT TOP 1 * FROM Abrangencia WHERE idProjeto = @idProjeto)
 
                     $sql = $db->select()
@@ -2719,7 +2719,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //-- VERIFICAR SE O PLANO DE DIVULGAÇÃO ESTÁ PREENCHIDO
+                    //-- VERIFICAR SE O PLANO DE DIVULGACAO ESTA PREENCHIDO
                     $sql = $db->select()
                         ->from(['planodedivulgacao'], '*',  $this->_schema)
                         ->where('idProjeto = ?', $idPreProjeto)
@@ -2736,7 +2736,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                         $validacao->Observacao = 'OK';
                         $listaValidacao[] =  clone($validacao);
                     }
-                    //-- VERIFICAR SE EXISTE NO MÍNIMO 90 DIAS ENTRE A DATA DE ENVIO E O INÍCIO DO PERÍODO DE EXECUÇÃO DO PROJETO
+                    //-- VERIFICAR SE EXISTE NO MINIMO 90 DIAS ENTRE A DATA DE ENVIO E O INICIO DO PERIODO DE EXECUCAO DO PROJETO
                     $sql = $db->select()
                         ->from($this->_name, ['*'],  $this->_schema)
                         ->where('idPreProjeto = ?', $idPreProjeto)
@@ -2760,7 +2760,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //-- VERIFICAR SE O PLANO DE DISTRIBUIÇÃO DO PRODUTO ESTÁ PREENCHIDO
+                    //-- VERIFICAR SE O PLANO DE DISTRIBUICAO DO PRODUTO ESTA PREENCHIDO
                     $sql = $db->select()
                         ->from(['planodistribuicaoproduto'], '*',  $this->_schema)
                         ->where('idProjeto =  ?', $idPreProjeto)
@@ -2777,7 +2777,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //--Verificar a existência do produto principal
+                    //--Verificar a existencia do produto principal
                     //SELECT @QtdeOutros=stPrincipal FROM PlanoDistribuicaoProduto  WHERE idProjeto = @idProjeto and stPrincipal = 1
                     $sql = $db->select()
                         ->from(['planodistribuicaoproduto'], 'stprincipal',  $this->_schema)
@@ -2797,7 +2797,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //-- VERIFICAR SE EXISTE NA PLANILHA ORÇAMENTÁRIA ITENS DA FONTE INCENTIVO FISCAL FEDERAL.
+                    //-- VERIFICAR SE EXISTE NA PLANILHA ORCAMENTARIA ITENS DA FONTE INCENTIVO FISCAL FEDERAL.
                     $sql = $db->select()
                         ->from(['tbplanilhaproposta'], '*',  $this->_schema)
                         ->where('idProjeto =  ?', $idPreProjeto)
@@ -2817,7 +2817,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                         $listaValidacao[] =  clone($validacao);
                     }
 
-     //-- VERIFICAR SE EXISTE NA PLANILHA ORÇAMENTÁRIA PARA CADA PRODUTO DESCRITO NO PLANO DE DISTRIBUIÇÃO DO PRODUTO
+     //-- VERIFICAR SE EXISTE NA PLANILHA ORCAMENTARIA PARA CADA PRODUTO DESCRITO NO PLANO DE DISTRIBUICAO DO PRODUTO
                     //IF EXISTS(SELECT * FROM PlanoDistribuicaoProduto pp WHERE idProjeto = @idProjeto and
                   //NOT EXISTS(SELECT * FROM tbPlanilhaProposta pl WHERE idProjeto = @idProjeto and pp.idProduto=pl.idProduto and idProduto <> 0))
                     $subSql = $db->select()
@@ -2845,7 +2845,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //-- VERIFICAR SE EXISTE NA PLANILHA ORÇAMENTÁRIA PARA OS CUSTOS ADMINISTRATIVOS DO PROJETO
+                    //-- VERIFICAR SE EXISTE NA PLANILHA ORCAMENTARIA PARA OS CUSTOS ADMINISTRATIVOS DO PROJETO
                     $subSql = $db->select()
                         ->from(['pl' => 'tbplanilhaproposta'], '*',  $this->_schema)
                         ->where('idProjeto = ?', $idPreProjeto)
@@ -2908,7 +2908,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                             $listaValidacao[] =  clone($validacao);
                         }
                     }
-                    //-- VERIFICAR O PERCENTUAL DA REMUNERAÇÃO PARA CAPTAÇÃO DE RECURSOS
+                    //-- VERIFICAR O PERCENTUAL DA REMUNERACAO PARA CAPTACAO DE RECURSOS
                     $sql = $db->select()
                         ->from(['tbplanilhaproposta'], 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total',  $this->_schema)
                         ->where('idProjeto =  ?', $idPreProjeto)
@@ -2941,7 +2941,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //-- VERIFICAR O PERCENTUAL DA DIVULGAÇÃO E COMERCIALIZAÇÃO
+                    //-- VERIFICAR O PERCENTUAL DA DIVULGACAO E COMERCIALIZACAO
                     $sql = $db->select()
                         ->from(['tbplanilhaproposta'], 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total',  $this->_schema)
                         ->where('idProjeto =  ?', $idPreProjeto)
@@ -2952,7 +2952,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
                     $total = $db->fetchAll($sql);
                     $total = empty($total[0]->total) ? 0 : $db->fetchAll($sql)[0]->total;
 
-                    //--pega o valor de remuneração para captação
+                    //--pega o valor de remuneracao para captacao
                     $sql = $db->select()
                         ->from(['tbplanilhaproposta'], 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total',  $this->_schema)
                         ->where('idProjeto =  ?', $idPreProjeto)

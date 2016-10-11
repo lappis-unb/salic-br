@@ -79,7 +79,7 @@ class Municipios extends MinC_Db_Table_Abstract
 	}
 
     /**
-     * Método para buscar as cidades de um determinado estado
+     * Metodo para buscar as cidades de um determinado estado
      * @access public
      * @param integer $idUF
      * @return object $db->fetchAll($sql)

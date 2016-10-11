@@ -1008,7 +1008,7 @@ CLDR adds data for one or more UN M49 numeric region code such as 150.
         <region iso3166="TF">
         <!-- Part of the Antarctic claimed by France (whose sovereignty is not recognised 
         internationally), makes up the French Southern and Antarctic Lands (TAAF) 
-        administered from Saint-Pierre de la Réunion. No indigenous population -->
+        administered from Saint-Pierre de la Reunion. No indigenous population -->
             <currency iso4217="EUR" from="1999-01-01"/>
             <currency iso4217="FRF" from="1959-01-01" to="2002-02-17"/>
         </region>
@@ -2312,7 +2312,7 @@ XXX Code for transations where no currency is involved
 			<languagePopulation type="fon" populationPercent="25"/>	<!--Fon-->
 			<languagePopulation type="yo" populationPercent="6.7"/>	<!--Yoruba-->
 		</territory>
-		<territory type="BL" gdp="255000000" literacyPercent="99" population="7298">	<!--Saint Barthélemy-->
+		<territory type="BL" gdp="255000000" literacyPercent="99" population="7298">	<!--Saint Barthelemy-->
 			<languagePopulation type="fr" populationPercent="94" officialStatus="official"/>	<!--French-->
 		</territory>
 		<territory type="BM" gdp="5600000000" literacyPercent="98" population="69467">	<!--Bermuda-->
@@ -2341,8 +2341,8 @@ XXX Code for transations where no currency is involved
 			<languagePopulation type="ja" populationPercent="0.21"/>	<!--Japanese-->
 			<languagePopulation type="ko" populationPercent="0.021"/>	<!--Korean-->
 			<languagePopulation type="kgp" populationPercent="0.01"/>	<!--Kaingang-->
-			<languagePopulation type="gub" populationPercent="0.0084"/>	<!--Guajajára-->
-			<languagePopulation type="xav" populationPercent="0.005"/>	<!--Xavánte-->
+			<languagePopulation type="gub" populationPercent="0.0084"/>	<!--Guajajara-->
+			<languagePopulation type="xav" populationPercent="0.005"/>	<!--Xavante-->
 		</territory>
 		<territory type="BS" gdp="11400000000" literacyPercent="95.6" population="319031">	<!--Bahamas-->
 			<languagePopulation type="en" populationPercent="100" officialStatus="official"/>	<!--English-->
@@ -2428,7 +2428,7 @@ XXX Code for transations where no currency is involved
 		</territory>
 		<territory type="CI" gdp="43670000000" literacyPercent="56.9" population="22400800">	<!--Côte d’Ivoire-->
 			<languagePopulation type="fr" populationPercent="49" officialStatus="official"/>	<!--French-->
-			<languagePopulation type="bci" writingPercent="10" populationPercent="11"/>	<!--Baoulé-->
+			<languagePopulation type="bci" writingPercent="10" populationPercent="11"/>	<!--Baoule-->
 			<languagePopulation type="sef" writingPercent="5" populationPercent="4.3"/>	<!--Cebaara Senoufo-->
 			<languagePopulation type="dnj" writingPercent="1" populationPercent="4"/>	<!--Dan-->
 			<languagePopulation type="kfo" populationPercent="0.23"/>	<!--Koro-->
@@ -2504,7 +2504,7 @@ XXX Code for transations where no currency is involved
 			<languagePopulation type="kea" populationPercent="92" references="R1031"/>	<!--Kabuverdianu-->
 			<languagePopulation type="pt" populationPercent="76" officialStatus="official"/>	<!--Portuguese-->
 		</territory>
-		<territory type="CW" gdp="2838000000" literacyPercent="96.5" population="146836">	<!--Curaçao-->
+		<territory type="CW" gdp="2838000000" literacyPercent="96.5" population="146836">	<!--Curacao-->
 			<languagePopulation type="pap" populationPercent="81" officialStatus="de_facto_official" references="R1221"/>	<!--Papiamento-->
 			<languagePopulation type="nl" populationPercent="8" officialStatus="official" references="R1221"/>	<!--Dutch-->
 			<languagePopulation type="es" populationPercent="3.9" references="R1221"/>	<!--Spanish-->
@@ -3445,9 +3445,9 @@ XXX Code for transations where no currency is involved
 			<languagePopulation type="fa" populationPercent="11"/>	<!--Persian-->
 			<languagePopulation type="ml" populationPercent="0.32"/>	<!--Malayalam-->
 		</territory>
-		<territory type="RE" gdp="4791000000" literacyPercent="88" population="787584">	<!--Réunion-->
+		<territory type="RE" gdp="4791000000" literacyPercent="88" population="787584">	<!--Reunion-->
 			<languagePopulation type="fr" populationPercent="89" officialStatus="official" references="R1130"/>	<!--French-->
-			<languagePopulation type="rcf" populationPercent="71"/>	<!--Réunion Creole French-->
+			<languagePopulation type="rcf" populationPercent="71"/>	<!--Reunion Creole French-->
 			<languagePopulation type="ta" populationPercent="15"/>	<!--Tamil-->
 		</territory>
 		<territory type="RO" gdp="280700000000" literacyPercent="97.7" population="21790500">	<!--Romania-->
@@ -3597,7 +3597,7 @@ XXX Code for transations where no currency is involved
 			<languagePopulation type="ar" populationPercent="27" officialStatus="official" references="R1237"/>	<!--Arabic-->
 			<languagePopulation type="en" populationPercent="27" officialStatus="official" references="R1237"/>	<!--English-->
 		</territory>
-		<territory type="ST" gdp="421000000" literacyPercent="69.5" population="186817">	<!--São Tomé and Príncipe-->
+		<territory type="ST" gdp="421000000" literacyPercent="69.5" population="186817">	<!--Sao Tome and Principe-->
 			<languagePopulation type="pt" populationPercent="85" officialStatus="official"/>	<!--Portuguese-->
 		</territory>
 		<territory type="SV" gdp="47470000000" literacyPercent="84.5" population="6108590">	<!--El Salvador-->

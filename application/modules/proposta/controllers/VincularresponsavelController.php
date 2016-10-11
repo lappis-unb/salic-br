@@ -17,7 +17,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     public function init()
     {
 
-        // verifica as permissões
+        // verifica as permissoes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 97;  // Gestor Salic
 
@@ -359,7 +359,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     }
 
     /**
-     * Método trocarproponente()
+     * Metodo trocarproponente()
      * UC 89 - Fluxo FA1 - Trocar Proponente
      * @access public
      * @param void
@@ -406,7 +406,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     }
 
     /**
-     * Método trocarproponente()
+     * Metodo trocarproponente()
      * UC 89 - Fluxo FA1 - Trocar Proponente
      * @access public
      * @param void
@@ -453,7 +453,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     }
 
     /**
-     * Método vincularprojetos()
+     * Metodo vincularprojetos()
      * UC 89 - Fluxo FA8 - Desvincular Projetos
      * @access public
      * @param void
@@ -473,9 +473,9 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             $where['idPreProjeto = ?'] = $idPreProjeto;
             $alteraVP = $tbVinculoPropostaDAO->alterar($dados, $where, false);
 
-            // Cadê a procuração?
+            // Cade a procuracao?
 
-            /* Não vai cadastrar pois ele é dono da sua proposta
+            /* Nao vai cadastrar pois ele e dono da sua proposta
             $novosDados = array('idVinculo' 		=> $idVinculo,
                                 'idPreProjeto' 		=> $idPreProjeto,
                                 'siVinculoProposta' => 2

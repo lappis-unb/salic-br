@@ -5,12 +5,12 @@ Infra técnica e de desenvolvimento SALIC
 
     Histórias de uso - backlog
 
-    A1) criação de branch dev-backlog a partir do MASTER; criação dos branches dev-bl-fernao e dev-bl-pedro a partir da branch dev-backlog
-    A2) após realizar alterações em sua branch, fernao manda suas alterações para a dev-backlog
-    A3) correções de uma funcionalidade são feitas diretamente na dev-backlog, que é tageada com v1.5.1 e jogada para a master
-    A4) após realizar correções em sua branch, pedro faz um merge para pegar as atualizações da master (ou da dev-backlog, que estará sincada com a master nesse momento)
-    A5) pedro envia suas alterações para a dev-backlog
-    A6) alterações na backlog são publicadas na produção com a tag v1.5.2
+    A1) criacao de branch dev-backlog a partir do MASTER; criacao dos branches dev-bl-fernao e dev-bl-pedro a partir da branch dev-backlog
+    A2) após realizar alteracoes em sua branch, fernao manda suas alteracoes para a dev-backlog
+    A3) correcoes de uma funcionalidade sao feitas diretamente na dev-backlog, que e tageada com v1.5.1 e jogada para a master
+    A4) após realizar correcoes em sua branch, pedro faz um merge para pegar as atualizacoes da master (ou da dev-backlog, que estara sincada com a master nesse momento)
+    A5) pedro envia suas alteracoes para a dev-backlog
+    A6) alteracoes na backlog sao publicadas na producao com a tag v1.5.2
 
     A                       1          2      3        4      5     6
 
@@ -38,22 +38,22 @@ Infra técnica e de desenvolvimento SALIC
 
     Histórias de uso - nova IN:
 
-    B1) criação de branch dev-novaIN a partir do MASTER; criação dos branches dev-IN-RAFA e dev-INsyn a partir da branch dev-novaIN
-    B2) após realizar alterações em sua branch, Rafa manda suas alterações para a dev-novaIN, que são tageadas como versão alpha2.0.0
-    B3) responsável pela branch de sincronização atualiza branch com a dev-novaIN
-    B4) responsável pela branch de sincronização puxa atualizações da branch dev-backlog que foram lançadas para a master
-    B5) alterações de sync são enviadas para branch dev-novaIN
-    B6) rafa atualiza sua branch recebendo últimas alterações de sync a partir da dev-novaIN
-    B7) fernão se junta ao time e faz um branch a partir da última versão da dev-novaIN
-    B8) novo sync feito com alterações jogadas para a master
-    B9) alterações de sync são enviadas para dev-novaIN
-    B10) fernão realiza alterações na sua branch e faz merge com últimas alterações vindas do backlog/sync
-    B11) rafa realiza alterações na sua branch e faz merge com últimas alterações vindas do backlog/sync
-    B12) rafa publica suas alterações no dev-novaIN
+    B1) criacao de branch dev-novaIN a partir do MASTER; criacao dos branches dev-IN-RAFA e dev-INsyn a partir da branch dev-novaIN
+    B2) após realizar alteracoes em sua branch, Rafa manda suas alteracoes para a dev-novaIN, que sao tageadas como versao alpha2.0.0
+    B3) responsavel pela branch de sincronizacao atualiza branch com a dev-novaIN
+    B4) responsavel pela branch de sincronizacao puxa atualizacoes da branch dev-backlog que foram lancadas para a master
+    B5) alteracoes de sync sao enviadas para branch dev-novaIN
+    B6) rafa atualiza sua branch recebendo ultimas alteracoes de sync a partir da dev-novaIN
+    B7) fernao se junta ao time e faz um branch a partir da ultima versao da dev-novaIN
+    B8) novo sync feito com alteracoes jogadas para a master
+    B9) alteracoes de sync sao enviadas para dev-novaIN
+    B10) fernao realiza alteracoes na sua branch e faz merge com ultimas alteracoes vindas do backlog/sync
+    B11) rafa realiza alteracoes na sua branch e faz merge com ultimas alteracoes vindas do backlog/sync
+    B12) rafa publica suas alteracoes no dev-novaIN
     B13) sync atualiza código com base no dev-novaIN
     B14) fernao atualiza código com base no dev-novaIN
-    B15) fernão publica suas alterações no dev-novaIN
-    B16) alterações da dev-novaIN são publicadas na master
+    B15) fernao publica suas alteracoes no dev-novaIN
+    B16) alteracoes da dev-novaIN sao publicadas na master
 
 # BANCOS
 

@@ -11,19 +11,19 @@
 class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
     /**
-     * @var integer (variável com o id do usuário logado)
+     * @var integer (variavel com o id do usuario logado)
      * @access private
      */
     private $getIdUsuario = 0;
 
     /**
-     * @var integer (variável para Parecerista)
+     * @var integer (variavel para Parecerista)
      * @access private
      */
     private $getParecerista = 'N';
 
     /**
-     * @var integer (variável com o id do grupo ativo)
+     * @var integer (variavel com o id do grupo ativo)
      * @access private
      */
     private $GrupoAtivoSalic = 0;
@@ -45,7 +45,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     private $modal = "n";
 
     /**
-     * Reescreve o método init()
+     * Reescreve o metodo init()
      * @access public
      * @param void
      * @return void
@@ -63,14 +63,14 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 3));
         $this->view->combotiposemails = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 4, 'idverificacao' => array(28, 29)));
 
-        //Monta o combo das visões disponiveis
+        //Monta o combo das visoes disponiveis
         $visaoTable = new Agente_Model_DbTable_Visao();
         $visoes = $visaoTable->buscarVisao(null, null, true);
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
         $GrupoAtivo = $GrupoAtivo->codGrupo;
 
         $visoesNew = null;
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $authIdentity = array_change_key_case((array) $auth->getIdentity());
         if (isset($authIdentity['cpf'])) {
             $visoesNew[0]['idVerificacao'] = 144; //PROPONENTE
@@ -144,7 +144,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Função para tratar data
+     * Funcao para tratar data
      * @access private
      * @param Date
      * @return Date
@@ -169,17 +169,17 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     private function autenticacao() {
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
 
-        // define as permissões
+        // define as permissoes
         $PermissoesGrupo = array();
         $PermissoesGrupo[] = 93;  // Coordenador de Parecerista
         $PermissoesGrupo[] = 94;  // Parecerista
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
-        $PermissoesGrupo[] = 118; // Componente da Comissão
+        $PermissoesGrupo[] = 118; // Componente da Comissao
         $PermissoesGrupo[] = 120; // Coordenador Administrativo CNIC
-        $PermissoesGrupo[] = 121; // Técnico de Acompanhamento
+        $PermissoesGrupo[] = 121; // Tecnico de Acompanhamento
         $PermissoesGrupo[] = 122; // Coordenador de Acompanhamento
         $PermissoesGrupo[] = 123; // Coordenador Geral de Acompanhamento
         $PermissoesGrupo[] = 137; // Coordenador de PRONAC
@@ -192,7 +192,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 !empty($auth->getIdentity()->Cpf) &&
                 isset($_GET['acao']) && $_GET['acao'] == 'cc' &&
                 isset($_GET['cpf']) &&
-                !empty($_GET['cpf'])) { // pega do readequação
+                !empty($_GET['cpf'])) { // pega do readequacao
             parent::perfil(2); // scriptcase
         }
 
@@ -200,15 +200,15 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 !empty($auth->getIdentity()->Cpf) &&
                 !isset($_GET['acao']) &&
                 !isset($_GET['cpf']) &&
-                empty($_GET['cpf'])) { // pega do readequação
-            parent::perfil(4, $PermissoesGrupo); // migração e novo salic
+                empty($_GET['cpf'])) { // pega do readequacao
+            parent::perfil(4, $PermissoesGrupo); // migracao e novo salic
         } elseif (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo)) {
-            parent::perfil(1, $PermissoesGrupo); // migração e novo salic
+            parent::perfil(1, $PermissoesGrupo); // migracao e novo salic
         } else {
-            parent::perfil(4, $PermissoesGrupo); // migração e novo salic
+            parent::perfil(4, $PermissoesGrupo); // migracao e novo salic
         }
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
         if (isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
             $this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
             $this->getIdUsuario = ($this->getIdUsuario) ? $this->getIdUsuario["idAgente"] : 0;
@@ -230,7 +230,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
 
         /*         * ****************************************************************************************************** */
-        // Controle para carregar o menu lateral ou não
+        // Controle para carregar o menu lateral ou nao
 
         $menuLateral = $this->_request->getParam("menuLateral");
 
@@ -314,7 +314,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * vincular Método responsavel por vincular o Responsavel logado a seu proprio perfil de Proponente
+     * vincular Metodo responsavel por vincular o Responsavel logado a seu proprio perfil de Proponente
      *
      * @param bool $cpfCadastrado
      * @param bool $idAgenteCadastrado
@@ -355,7 +355,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método index()
+     * Metodo index()
      * @access public
      * @param void
      * @return void
@@ -376,7 +376,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        #Instancia a Classe de Serviço do WebService da Receita Federal
+        #Instancia a Classe de Servico do WebService da Receita Federal
         $wsServico = new ServicosReceitaFederal();
 
         $retorno        = array();
@@ -439,7 +439,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método incluiragente()
+     * Metodo incluiragente()
      * @access public
      * @param void
      * @return void
@@ -464,7 +464,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método incluirfonecedor()
+     * Metodo incluirfonecedor()
      * @access public
      * @param void
      * @return void
@@ -484,7 +484,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método incluirprocurador()
+     * Metodo incluirprocurador()
      * @access public
      * @param void
      * @return void
@@ -504,7 +504,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método incluirbeneficiario()
+     * Metodo incluirbeneficiario()
      * @access public
      * @param void
      * @return void
@@ -535,7 +535,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método para visualização dos dados do agente
+     * Metodo para visualizacao dos dados do agente
      * @access public
      * @param void
      * @return List
@@ -597,7 +597,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método dirigentes()
+     * Metodo dirigentes()
      * @access public
      * @param void
      * @return void
@@ -607,7 +607,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método visualizadirigente()
+     * Metodo visualizadirigente()
      * @access public
      * @param void
      * @return void
@@ -653,7 +653,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método mandato()
+     * Metodo mandato()
      * @access public
      * @param void
      * @return void
@@ -678,7 +678,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $stMandato              = 0;
             $idArquivo              = $this->_request->getParam("idArquivo");
 
-            //validação data do mandato
+            //validacao data do mandato
             $buscarMandato = $tbDirigenteMandato->mandatoRepetido($idAgente, $dtInicioVigencia, $dtTerminoVigencia);
 
             if (count($buscarMandato) > 0) {
@@ -693,7 +693,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $arquivoTipo     = $_FILES['arquivo']['type'][$key];
                 $arquivoTamanho  = $_FILES['arquivo']['size'][$key];
 
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensao
 
                 if($arquivoExtensao != "doc" && $arquivoExtensao != "docx"){
                     if(!empty($arquivoTemp)) {
@@ -758,7 +758,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método excluirmandato()
+     * Metodo excluirmandato()
      * @access public
      * @param void
      * @return void
@@ -797,8 +797,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      */
     public function cadastraranexo($arquivoNome,$arquivoTemp,$arquivoTipo,$arquivoTamanho) {
         if (!empty($arquivoNome) && !empty($arquivoTemp)) {
-            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
-            $arquivoBinario  = Upload::setBinario($arquivoTemp); // binário
+            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensao
+            $arquivoBinario  = Upload::setBinario($arquivoTemp); // binario
             $arquivoHash     = Upload::setHash($arquivoTemp); // hash
         }
 
@@ -813,11 +813,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'stAtivo'           => 'A');
         $cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);
 
-        // pega o id do último arquivo cadastrado
+        // pega o id do ultimo arquivo cadastrado
         $idUltimoArquivo = ArquivoDAO::buscarIdArquivo();
         $idUltimoArquivo = (int) $idUltimoArquivo[0]->id;
 
-        // cadastra o binário do arquivo
+        // cadastra o binario do arquivo
         $dadosBinario = array(
                 'idArquivo' => $idUltimoArquivo,
                 'biArquivo' => $arquivoBinario);
@@ -827,8 +827,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método enderecos()
-     * Visualiza, exclui e altera os endereços do agente
+     * Metodo enderecos()
+     * Visualiza, exclui e altera os enderecos do agente
      * @access public
      * @param void
      * @return void
@@ -844,8 +844,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método salvaendereco()
-     * Salva o endereço do agente
+     * Metodo salvaendereco()
+     * Salva o endereco do agente
      * @access public
      * @param void
      * @return void
@@ -853,7 +853,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     public function salvaenderecoAction() {
         $this->autenticacao();
 
-        $Usuario = $this->getIdUsuario; // id do usuário logado
+        $Usuario = $this->getIdUsuario; // id do usuario logado
         $idAgente = $this->_request->getParam("id");
         $this->view->id = $this->_request->getParam("id");
 
@@ -900,8 +900,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método excluiendereco()
-     * Exclui o endereço do agente
+     * Metodo excluiendereco()
+     * Exclui o endereco do agente
      * @access public
      * @param void
      * @return void
@@ -932,7 +932,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método telefones()
+     * Metodo telefones()
      * @access public
      * @param void
      * @return void
@@ -947,7 +947,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método salvatelefone()
+     * Metodo salvatelefone()
      * Salva o tefefone do agente
      * @access public
      * @param void
@@ -955,7 +955,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      */
     public function salvatelefoneAction(){
         $this->autenticacao();
-        $Usuario = $this->getIdUsuario; // id do usuário logado
+        $Usuario = $this->getIdUsuario; // id do usuario logado
 
         $idAgente = $this->_request->getParam("id");
         $tipoFone = $this->_request->getParam("tipoFone");
@@ -983,7 +983,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método excluitelefone()
+     * Metodo excluitelefone()
      * Exclui o tefefone do agente
      * @access public
      * @param void
@@ -1011,7 +1011,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método emails()
+     * Metodo emails()
      * @access public
      * @param void
      * @return void
@@ -1026,7 +1026,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método salvaemail()
+     * Metodo salvaemail()
      * Salva o email do agente
      * @access public
      * @param void
@@ -1034,7 +1034,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      */
     public function salvaemailAction() {
         $this->autenticacao();
-        $Usuario = $this->getIdUsuario; // id do usuário logado
+        $Usuario = $this->getIdUsuario; // id do usuario logado
 
         $idAgente = $this->_request->getParam("id");
         $tipoEmail = $this->_request->getParam("tipoEmail");
@@ -1061,7 +1061,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método excluiemail()
+     * Metodo excluiemail()
      * Exclui o email do agente
      * @access public
      * @param void
@@ -1086,7 +1086,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método escolaridade()
+     * Metodo escolaridade()
      * @access public
      * @param void
      * @return void
@@ -1108,7 +1108,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método salvaescolaridade()
+     * Metodo salvaescolaridade()
      * Salva a escolaridade do Parecerista
      * @access public
      * @param void
@@ -1135,17 +1135,17 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $tbArquivo = new tbArquivo();
             $tbArquivoImagem = new tbArquivoImagem();
 
-            // pega as informações do arquivo
+            // pega as informacoes do arquivo
             $arquivoNome = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporário
+            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporario
             $arquivoTipo = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
 
             if (!empty($arquivoNome)) {
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensao
             }
             if (!empty($arquivoTemp)) {
-                $arquivoBinario = Upload::setBinario($arquivoTemp); // binário
+                $arquivoBinario = Upload::setBinario($arquivoTemp); // binario
                 $arquivoHash = Upload::setHash($arquivoTemp); // hash
             }
         endif;
@@ -1208,7 +1208,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método formacao()
+     * Metodo formacao()
      * @access public
      * @param void
      * @return void
@@ -1238,8 +1238,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método salvaformacao()
-     * Salva a formação do Parecerista
+     * Metodo salvaformacao()
+     * Salva a formacao do Parecerista
      * @access public
      * @param void
      * @return void
@@ -1261,17 +1261,17 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $tbArquivoImagem = new tbArquivoImagem();
 
 
-        // pega as informações do arquivo
+        // pega as informacoes do arquivo
         $arquivoNome = $_FILES['arquivo']['name']; // nome
-        $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporário
+        $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporario
         $arquivoTipo = $_FILES['arquivo']['type']; // tipo
         $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
 
         if (!empty($arquivoNome)) {
-            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
+            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensao
         }
         if (!empty($arquivoTemp)) {
-            $arquivoBinario = Upload::setBinario($arquivoTemp); // binário
+            $arquivoBinario = Upload::setBinario($arquivoTemp); // binario
             $arquivoHash = Upload::setHash($arquivoTemp); // hash
         }
 
@@ -1328,7 +1328,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método ferias()
+     * Metodo ferias()
      * @access public
      * @param void
      * @return void
@@ -1356,8 +1356,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método salvaferias()
-     * Salva as férias do Parecerista
+     * Metodo salvaferias()
+     * Salva as ferias do Parecerista
      * @access public
      * @param void
      * @return void
@@ -1398,7 +1398,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             // Monta o array com o id do ultimo registro cadastrado
             $dados = array('idAlteracao' => $ultimoRegistro[0]->id);
 
-            // Alterar o ultimo registro cadastrado colocando o seu próprio id no campo idalteração
+            // Alterar o ultimo registro cadastrado colocando o seu próprio id no campo idalteracao
             $altera = $tbAusencia->alteraAusencia($dados, $ultimoRegistro[0]->id);
 
             parent::message("Suas férias foram agendas para " . $dtInicio . " à " . $dtFim . ". Aguarde Aprovação do Coordenador.
@@ -1409,8 +1409,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método alterarferias()
-     * Altera as férias do Parecerista
+     * Metodo alterarferias()
+     * Altera as ferias do Parecerista
      * @access public
      * @param void
      * @return void
@@ -1478,8 +1478,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método cancelaferias()
-     * Cancela as férias do Parecerista
+     * Metodo cancelaferias()
+     * Cancela as ferias do Parecerista
      * @access public
      * @param void
      * @return void
@@ -1506,8 +1506,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método confirmaferias()
-     * Confirma as férias do Parecerista
+     * Metodo confirmaferias()
+     * Confirma as ferias do Parecerista
      * @access public
      * @param void
      * @return void
@@ -1529,7 +1529,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método atestados()
+     * Metodo atestados()
      * @access public
      * @param void
      * @return void
@@ -1546,7 +1546,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método salvaatestado()
+     * Metodo salvaatestado()
      * Salva o atestado do Parecerista
      * @access public
      * @param void
@@ -1566,17 +1566,17 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $tbArquivo = new tbArquivo();
         $tbArquivoImagem = new tbArquivoImagem();
 
-        // pega as informações do arquivo
+        // pega as informacoes do arquivo
         $arquivoNome = $_FILES['arquivo']['name']; // nome
-        $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporário
+        $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporario
         $arquivoTipo = $_FILES['arquivo']['type']; // tipo
         $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
 
         if (!empty($arquivoNome)) {
-            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
+            $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensao
         }
         if (!empty($arquivoTemp)) {
-            $arquivoBinario = Upload::setBinario($arquivoTemp); // binário
+            $arquivoBinario = Upload::setBinario($arquivoTemp); // binario
             $arquivoHash = Upload::setHash($arquivoTemp); // hash
         }
 
@@ -1633,14 +1633,14 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             // Monta o array com o id do ultimo registro cadastrado
             $dados = array('idAlteracao' => $ultimoRegistro[0]->id);
 
-            // Alterar o ultimo registro cadastrado colocando o seu próprio id no campo idalteração
+            // Alterar o ultimo registro cadastrado colocando o seu próprio id no campo idalteracao
             $altera = $tbAusencia->alteraAusencia($dados, $ultimoRegistro[0]->id);
 
 
             /* ********************************************************************************************** */
             if ($impacto = 1) {
-                // Tem que pegar todos os produtos que estão como Parecerista e devolver para o Coord.
-                // Criar uma função para isso!
+                // Tem que pegar todos os produtos que estao como Parecerista e devolver para o Coord.
+                // Criar uma funcao para isso!
 
 
                 $tbDistribuirParecer = new tbDistribuirParecer();
@@ -1666,7 +1666,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método credenciamento()
+     * Metodo credenciamento()
      * @access public
      * @param void
      * @return void
@@ -1701,7 +1701,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método descredenciamento()
+     * Metodo descredenciamento()
      * @access public
      * @param void
      * @return void
@@ -1732,7 +1732,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método salvacredenciamento()
+     * Metodo salvacredenciamento()
      * Salva o credenciamento do Parecerista
      * @access public
      * @param void
@@ -1780,12 +1780,12 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
     /**
      * @author Alysson Vicuña de Oliveira
-     * Método agentecadastrado()
+     * Metodo agentecadastrado()
      * @access public
      * @param void
      * @return void
      */
-    public function agentecadastradoAction() { //Método chamado pela Modal
+    public function agentecadastradoAction() { //Metodo chamado pela Modal
         $this->_helper->layout->disableLayout(); // desabilita o layout
         $this->_helper->viewRenderer->setNoRender(true);
         $cpf = preg_replace('/\.|-|\//','',$_REQUEST['cpf']);
@@ -1808,7 +1808,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                     $novos_valores[0]['agente'] = $dado;
                 }
             } else {
-                #Instancia a Classe de Serviço do WebService da Receita Federal
+                #Instancia a Classe de Servico do WebService da Receita Federal
                 $wsServico = new ServicosReceitaFederal();
                 if(11 == strlen( $cpf )) {
 
@@ -1846,11 +1846,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     private function salvaragente()
     {
         /**/
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $Usuario = isset($auth->getIdentity()->idusuario) ? $auth->getIdentity()->idusuario : $auth->getIdentity()->usu_codigo;
-        // =============================================== INÍCIO SALVAR CPF/CNPJ ==================================================
+        // =============================================== INICIO SALVAR CPF/CNPJ ==================================================
 
-        $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf"))); // retira as máscaras
+        $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf"))); // retira as mascaras
         $Tipo = $this->_request->getParam("Tipo");
 
         $arrayAgente = array('CNPJCPF' => $cpf,
@@ -1869,10 +1869,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
 
         // ================================================ FIM SALVAR CPF/CNPJ =====================================================
-        // ================================================ INÍCIO SALVAR NOME ======================================================
+        // ================================================ INICIO SALVAR NOME ======================================================
 
         $nome = $this->_request->getParam("nome");
-        $TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa física e 19 = pessoa jurídica
+        $TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa fisica e 19 = pessoa juridica
 
         if($this->modal == "s"){
             $nome = Seguranca::tratarVarAjaxUFT8($nome);
@@ -1886,14 +1886,14 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         }
 
         // ================================================ FIM SALVAR NOME ======================================================
-        // ================================================ INICIO SALVAR VISÃO ======================================================
+        // ================================================ INICIO SALVAR VISAO ======================================================
         $Visao = $this->_request->getParam("visao");
 
         $grupologado = $this->_request->getParam("grupologado");
 
         /*
-         * Validação - Se for componente da comissão ele não salva a visão
-         * Regra o componente da comissão não pode alterar sua visão.
+         * Validacao - Se for componente da comissao ele nao salva a visao
+         * Regra o componente da comissao nao pode alterar sua visao.
          */
 
         if ($grupologado != 118):
@@ -1915,15 +1915,15 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 parent::message("Erro ao salvar a visão: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
             }
 
-            // ================================================ FIM SALVAR visão ======================================================
-            // ===================== INÍCIO SALVAR TITULAÇÃO (área/SEGMENTO DO COMPONENTE DA COMISSÃO) ================================
+            // ================================================ FIM SALVAR visao ======================================================
+            // ===================== INICIO SALVAR TITULACAO (area/SEGMENTO DO COMPONENTE DA COMISSAO) ================================
 
 
             $titular = $this->_request->getParam("titular");
             $areaCultural = $this->_request->getParam("areaCultural");
             $segmentoCultural = $this->_request->getParam("segmentoCultural");
 
-            // só salva área e segmento para a visão de Componente da Comissão e se os campos titular e areaCultural forem informados
+            // só salva area e segmento para a visao de Componente da Comissao e se os campos titular e areaCultural forem informados
             if ((int) $Visao == 210 && ((int) $titular == 0 || (int) $titular == 1) && !empty($areaCultural)) {
                 $GravarComponente = array(// insert
                     'idAgente' => $idAgente,
@@ -1939,7 +1939,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 );
 
                 try {
-                    // busca a titulação do agente (titular/suplente de área cultural)
+                    // busca a titulacao do agente (titular/suplente de area cultural)
                     $busca = TitulacaoConselheiroDAO::buscarComponente($idAgente, $Visao);
 
                     if (!$busca) {
@@ -1952,10 +1952,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 }
             }
 
-        // ============================= FIM SALVAR TITULAÇÃO (área/SEGMENTO DO COMPONENTE DA COMISSÃO) ===========================
+        // ============================= FIM SALVAR TITULACAO (area/SEGMENTO DO COMPONENTE DA COMISSAO) ===========================
 
-        endif; // Fecha o if da regra do componente da comissão
-        // =========================================== INICIO SALVAR ENDEREÇOS ====================================================
+        endif; // Fecha o if da regra do componente da comissao
+        // =========================================== INICIO SALVAR ENDERECOS ====================================================
 
         $cepEndereco = $this->_request->getParam("cep");
         $tipoEndereco = $this->_request->getParam("tipoEndereco");
@@ -1993,7 +1993,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         }
 
 
-        // ============================================= FIM SALVAR ENDEREÇOS ====================================================
+        // ============================================= FIM SALVAR ENDERECOS ====================================================
         // =========================================== INICIO SALVAR TELEFONES ====================================================
 
         $movimentacacaobancaria = $this->_request->getParam('movimentacaobancaria');
@@ -2095,10 +2095,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     		$tbVinculo->inserir($dadosVinculo);
     	}
 
-        // Se vim do UC 10 - solicitar alteração no Projeto
+        // Se vim do UC 10 - solicitar alteracao no Projeto
         // Chega aqui com o idpronac
         $idpronac = $this->_request->getParam('idpronac');
-        // Se vim do UC38 - Movimentação bancaria - Captação
+        // Se vim do UC38 - Movimentacao bancaria - Captacao
         $projetofnc = $this->_request->getParam('cadastrarprojeto');
 
         # tratamento para disparar "js custom event" no dispatch
@@ -2117,7 +2117,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método salvaagentegeral()
+     * Metodo salvaagentegeral()
      * Salva os dados do agente
      * @access public
      * @param void
@@ -2146,9 +2146,9 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      */
     private function salvarAgenteRedirect($agente, $idpronac = null, $projetofnc = null, $movimentacacaobancaria = null, $acao = null)
     {
-        // Se vim do UC 10 - solicitar alteração no Projeto
+        // Se vim do UC 10 - solicitar alteracao no Projeto
         $idpronac = $this->_request->getParam('idpronac');
-        // Se vim do UC38 - Movimentação bancaria - Captação
+        // Se vim do UC38 - Movimentacao bancaria - Captacao
         $projetofnc = $this->_request->getParam('cadastrarprojeto');
 
         if ($this->getRequest()->isXmlHttpRequest()) {
@@ -2185,13 +2185,13 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'CONFIRM'
             );
         }
-        // Caso não seja ele retorna para a visualização dos dados cadastrados do agente
+        // Caso nao seja ele retorna para a visualizacao dos dados cadastrados do agente
         # editado para atender
         parent::message('Cadastro realizado com sucesso!', "agente/agentes/agentes/id/{$agente->id}", 'CONFIRM');
     }
 
     /**
-     * Método incluirdirigente()
+     * Metodo incluirdirigente()
      * @access public
      * @param void
      * @return void
@@ -2201,18 +2201,18 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método salvadirigentegeral()
+     * Metodo salvadirigentegeral()
      * @access public
      * @param void
      * @return void
      */
     public function salvadirigentegeralAction() {
         $this->autenticacao();
-        $Usuario = $this->getIdUsuario; // id do usuário logado
+        $Usuario = $this->getIdUsuario; // id do usuario logado
         $idAgenteGeral = $this->_request->getParam("id"); // id da instituicao
-        // =============================================== INÍCIO SALVAR CPF/CNPJ ==================================================
+        // =============================================== INICIO SALVAR CPF/CNPJ ==================================================
 
-        $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf"))); // retira as máscaras
+        $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf"))); // retira as mascaras
         $Tipo = $this->_request->getParam("Tipo");
 
 
@@ -2234,10 +2234,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
 
         // ================================================ FIM SALVAR CPF/CNPJ =====================================================
-        // ================================================ INÍCIO SALVAR NOME ======================================================
+        // ================================================ INICIO SALVAR NOME ======================================================
 
         $nome = $this->_request->getParam("nome");
-        $TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa física e 19 = pessoa jurídica
+        $TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa fisica e 19 = pessoa juridica
 
         try {
             $gravarNome = NomesDAO::gravarNome($idAgente, $TipoNome, $nome, 0, $Usuario);
@@ -2246,14 +2246,14 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         }
 
         // ================================================ FIM SALVAR NOME ======================================================
-        // ================================================ INICIO SALVAR VISÃO ======================================================
+        // ================================================ INICIO SALVAR VISAO ======================================================
         $Visao = $this->_request->getParam("visao");
 
         $grupologado = $this->_request->getParam("grupologado");
 
         /*
-         * Validação - Se for componente da comissão ele não salva a visão
-         * Regra o componente da comissão não pode alterar sua visão.
+         * Validacao - Se for componente da comissao ele nao salva a visao
+         * Regra o componente da comissao nao pode alterar sua visao.
          */
 
         if ($grupologado != 118):
@@ -2276,15 +2276,15 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             }
 
 
-            // ================================================ FIM SALVAR visão ======================================================
-            // ===================== INÍCIO SALVAR TITULAÇÃO (área/SEGMENTO DO COMPONENTE DA COMISSÃO) ================================
+            // ================================================ FIM SALVAR visao ======================================================
+            // ===================== INICIO SALVAR TITULACAO (area/SEGMENTO DO COMPONENTE DA COMISSAO) ================================
 
 
             $titular = $this->_request->getParam("titular");
             $areaCultural = $this->_request->getParam("areaCultural");
             $segmentoCultural = $this->_request->getParam("segmentoCultural");
 
-            // só salva área e segmento para a visão de Componente da Comissão e se os campos titular e areaCultural forem informados
+            // só salva area e segmento para a visao de Componente da Comissao e se os campos titular e areaCultural forem informados
             if ((int) $Visao == 210 && ((int) $titular == 0 || (int) $titular == 1) && !empty($areaCultural)) {
                 $GravarComponente = array(// insert
                     'idAgente' => $idAgente,
@@ -2300,7 +2300,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 );
 
                 try {
-                    // busca a titulação do agente (titular/suplente de área cultural)
+                    // busca a titulacao do agente (titular/suplente de area cultural)
                     $busca = TitulacaoConselheiroDAO::buscarComponente($idAgente, $Visao);
 
                     if (!$busca) {
@@ -2313,10 +2313,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 }
             }
 
-        // ============================= FIM SALVAR TITULAÇÃO (área/SEGMENTO DO COMPONENTE DA COMISSÃO) ===========================
+        // ============================= FIM SALVAR TITULACAO (area/SEGMENTO DO COMPONENTE DA COMISSAO) ===========================
 
-        endif; // Fecha o if da regra do componente da comissão
-        // =========================================== INICIO SALVAR ENDEREÇOS ====================================================
+        endif; // Fecha o if da regra do componente da comissao
+        // =========================================== INICIO SALVAR ENDERECOS ====================================================
 
         $cepEndereco = $this->_request->getParam("cep");
         $tipoEndereco = $this->_request->getParam("tipoEndereco");
@@ -2355,7 +2355,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         }
 
 
-        // ============================================= FIM SALVAR ENDEREÇOS ====================================================
+        // ============================================= FIM SALVAR ENDERECOS ====================================================
         // =========================================== INICIO SALVAR TELEFONES ====================================================
 
         $tipoFone = $this->_request->getParam("tipoFone");
@@ -2412,7 +2412,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             // busca o dirigente vinculado ao cnpj/cpf
             $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, $idAgente, $idAgenteGeral, $idAgenteGeral);
 
-            // caso o agente não esteja vinculado, realizará a vinculação
+            // caso o agente nao esteja vinculado, realizara a vinculacao
             if (!$dadosDirigente) {
                 // associa o dirigente ao cnpj/cpf
                 $dadosVinculacao = array(
@@ -2433,15 +2433,15 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método vinculadirigente()
+     * Metodo vinculadirigente()
      * @access public
      * @param void
      * @return void
      */
     public function vinculadirigenteAction() {
         $this->autenticacao();
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
-        $Usuario = isset($auth->getIdentity()->IdUsuario) ? $auth->getIdentity()->IdUsuario : $auth->getIdentity()->usu_codigo ; // id do usuário logado
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $Usuario = isset($auth->getIdentity()->IdUsuario) ? $auth->getIdentity()->IdUsuario : $auth->getIdentity()->usu_codigo ; // id do usuario logado
         $idAgenteGeral = $this->_request->getParam("id");
         $idDirigente = $this->_request->getParam("idDirigente");
 
@@ -2449,7 +2449,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             // busca o dirigente vinculado ao cnpj/cpf
             $dadosDirigente = Agente_Model_ManterAgentesDAO::buscarVinculados(null, null, $idDirigente, $idAgenteGeral, $idAgenteGeral);
 
-            // caso o agente não esteja vinculado, realizará a vinculação
+            // caso o agente nao esteja vinculado, realizara a vinculacao
             if (count($dadosDirigente) == 0) {
                 // associa o dirigente ao cnpj/cpf
                 $dadosVinculacao = array(
@@ -2480,14 +2480,14 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método desvinculadirigente()
+     * Metodo desvinculadirigente()
      * @access public
      * @param void
      * @return void
      */
     public function desvinculadirigenteAction() {
         $this->autenticacao();
-        $Usuario = $this->getIdUsuario; // id do usuário logado
+        $Usuario = $this->getIdUsuario; // id do usuario logado
         $idAgenteGeral = $this->_request->getParam("id");
         $idDirigente = $this->_request->getParam("idDirigente");
 
@@ -2509,22 +2509,22 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método para realizar a buscar de agentes por cpf/cnpj ou por nome
+     * Metodo para realizar a buscar de agentes por cpf/cnpj ou por nome
      * @access public
      * @param void
      * @return void
      */
     public function buscaragenteAction() {
         $this->autenticacao();
-        // caso o formulário seja enviado via post
+        // caso o formulario seja enviado via post
         if ($this->getRequest()->isPost()) {
-            // recebe os dados do formulário
+            // recebe os dados do formulario
             $post = Zend_Registry::get('post');
-            $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($post->cpf)); // deleta a máscara
+            $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($post->cpf)); // deleta a mascara
             $nome = $post->nome;
 
             try {
-                // validação dos campos
+                // validacao dos campos
                 if (empty($cpf) && empty($nome)) {
                     throw new Exception("Dados obrigatórios não informados:<br /><br />é necessário informar o CPF/CNPJ ou o Nome!");
                 } else if (!empty($cpf) && strlen($cpf) != 11 && strlen($cpf) != 14) { // valida cnpj/cpf
@@ -2534,21 +2534,21 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 } else if (!empty($cpf) && strlen($cpf) == 14 && !Validacao::validarCNPJ($cpf)) { // valida cnpj
                     throw new Exception("O CNPJ informado é inválido!");
                 } else {
-                    // redireciona para a página com a busca dos dados com paginação
+                    // redireciona para a pagina com a busca dos dados com paginacao
                     $this->_redirect("agente/agentes/listaragente?cpf=" . $cpf . "&nome=" . $nome);
                 }
             }
             catch (Exception $e) {
                 $this->view->message = $e->getMessage();
                 $this->view->message_type = "ERROR";
-                $this->view->cpf = !empty($cpf) ? Validacao::mascaraCPFCNPJ($cpf) : ''; // caso exista, adiciona a máscara
+                $this->view->cpf = !empty($cpf) ? Validacao::mascaraCPFCNPJ($cpf) : ''; // caso exista, adiciona a mascara
                 $this->view->nome = $nome;
             }
         }
     }
 
     /**
-     * Método listaragente()
+     * Metodo listaragente()
      * @access public
      * @param void
      * @return List
@@ -2564,19 +2564,19 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $buscar = Agente_Model_ManterAgentesDAO::buscarAgentes($cpf, $nome);
 
         if (!$buscar) {
-            // redireciona para a página de cadastro de agentes, e, exibe uma notificação relativa ao cadastro
+            // redireciona para a pagina de cadastro de agentes, e, exibe uma notificacao relativa ao cadastro
             parent::message("Agente não cadastrado!<br /><br />Por favor, cadastre o mesmo no formulário abaixo!", "/agente/manteragentes/agentes?acao=cc&cpf=" . $cpf . "&nome=" . $nome, "ALERT");
         } else {
-            // ========== INÍCIO PAGINAÇÃO ==========
-            // criando a paginação
+            // ========== INICIO PAGINACAO ==========
+            // criando a paginacao
             Zend_Paginator::setDefaultScrollingStyle('Sliding');
             $this->view->addScriptPath(APPLICATION_PATH.'/modules/default/views/scripts/paginacao');
             Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao.phtml');
             $paginator = Zend_Paginator::factory($buscar); // dados a serem paginados
-            // página atual e quantidade de ítens por página
+            // pagina atual e quantidade de itens por pagina
             $currentPage = $this->_getParam('page', 1);
-            $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(10); // 10 por página
-            // ========== FIM PAGINAÇÃO ==========
+            $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(10); // 10 por pagina
+            // ========== FIM PAGINACAO ==========
 
             $this->view->buscar = $paginator;
             $this->view->qtdAgentes = count($buscar); // quantidade de agentes
@@ -2584,8 +2584,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método abrirarquivo()
-     * Abrir arquivo em binário
+     * Metodo abrirarquivo()
+     * Abrir arquivo em binario
      * @access public
      * @param void
      * @return void
@@ -2594,7 +2594,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->autenticacao();
         $id = $this->_request->getParam("id");
 
-        // Configuração o php.ini para 10MB
+        // Configuracao o php.ini para 10MB
         @ini_set("mssql.textsize", 10485760);
         @ini_set("mssql.textlimit", 10485760);
         @ini_set("upload_max_filesize", "10M");
@@ -2611,7 +2611,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $this->view->message = 'Não foi possível abrir o arquivo!';
             $this->view->message_type = 'ERROR';
         } else {
-            // lê os cabeçalhos formatado
+            // le os cabecalhos formatado
             foreach ($resultado as $r) {
                 $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
                 $this->_helper->viewRenderer->setNoRender();    // Desabilita o Zend Render
@@ -2632,7 +2632,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método painelcredenciamento()
+     * Metodo painelcredenciamento()
      * Painel do Coordenador de Pronac
      * @access public
      * @param void
@@ -2645,17 +2645,17 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $nome = $this->_request->getParam('nome');
         $cpf = Mascara::delMaskCPF($this->_request->getParam('cpf'));
 
-        // ========== INÍCIO PAGINAÇÃO ==========
-        // criando a paginação
+        // ========== INICIO PAGINACAO ==========
+        // criando a paginacao
         $buscar = $agentes->consultaPareceristasPainel($nome, $cpf);
 
         Zend_Paginator::setDefaultScrollingStyle('Sliding');
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
         $paginator = Zend_Paginator::factory($buscar); // dados a serem paginados
-        // página atual e quantidade de ítens por página
+        // pagina atual e quantidade de itens por pagina
         $currentPage = $this->_getParam('page', 1);
         $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(15);
-        // ========== FIM PAGINAÇÃO ==========
+        // ========== FIM PAGINACAO ==========
 
         $this->view->qtdpareceristas = count($buscar);
         $this->view->pareceristas = $paginator;
@@ -2665,7 +2665,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método painelferias()
+     * Metodo painelferias()
      * Painel do Coordenador de Parecer
      * @access public
      * @param void
@@ -2693,7 +2693,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método sempermissao()
+     * Metodo sempermissao()
      * @access public
      * @param void
      * @return void
@@ -2703,7 +2703,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     }
 
     /**
-     * Método com a página de alteração de visão
+     * Metodo com a pagina de alteracao de visao
      * @access public
      * @param void
      * @return void
@@ -2713,7 +2713,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $idAgente = $this->_request->getParam('id');
         $GrupoAtivo = $this->GrupoAtivoSalic;
 
-        // busca todas as visões
+        // busca todas as visoes
         $visaoTable = new Agente_Model_DbTable_Visao();
         $visoes = $visaoTable->buscarVisao(null, null, true);
         $a = 0;
@@ -2760,7 +2760,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         }
         $this->view->visao = $select;
 
-        // busca todas as visões do agente
+        // busca todas as visoes do agente
         $visaoTable = new Agente_Model_DbTable_Visao();
         $visoesAgente = $visaoTable->buscarVisao($idAgente);
         $b = 0;
@@ -2806,24 +2806,24 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         }
         $this->view->visaoAgente = $selectAgente;
 
-        // caso o formulário seja enviado via post
+        // caso o formulario seja enviado via post
         if ($this->getRequest()->isPost()) {
-            // recebe os dados do formulário
+            // recebe os dados do formulario
             $post = Zend_Registry::get('post');
             $visaoAgente = $post->visaoAgente;
 
             try {
 
-                // exclui todas as visões do agente
+                // exclui todas as visoes do agente
                 $visaoTable = new Agente_Model_DbTable_Visao();
                 $visaoTable->excluirVisao($idAgente);
 
-                // cadastra todas as visões do agente
+                // cadastra todas as visoes do agente
                 foreach ($visaoAgente as $visao) {
                     $dados = array(
                         'idAgente' => $idAgente,
                         'Visao' => $visao,
-                        'Usuario' => $this->getIdUsuario, // código do usuário logado
+                        'Usuario' => $this->getIdUsuario, // código do usuario logado
                         'stAtivo' => 'A');
                     $visaoTable->cadastrarVisao($dados);
                 }
@@ -2839,7 +2839,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
     public function infoAdicionaisAction() {
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
-        $this->view->idPerfil = $GrupoAtivo->codGrupo; // Busca o perfil do usuário
+        $this->view->idPerfil = $GrupoAtivo->codGrupo; // Busca o perfil do usuario
 
         $this->autenticacao();
         $idAgente = $this->_request->getParam("id");
@@ -2928,7 +2928,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      */
     public function salvarNaturezaAction() {
         $post = Zend_Registry::get('post');
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $idUsuario = isset($auth->getIdentity()->IdUsuario) ? $auth->getIdentity()->IdUsuario : $auth->getIdentity()->usu_codigo;
 
         $dados = array(

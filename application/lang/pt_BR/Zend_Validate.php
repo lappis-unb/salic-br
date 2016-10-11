@@ -24,7 +24,7 @@
  * EN-Revision: 20377
  */
 return array(
-        // Tradução do Grid
+        // Traducao do Grid
         "Show" => "Mostrar",
         "items" => "Itens",
         "Select" => "Escolha",

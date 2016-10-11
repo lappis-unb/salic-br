@@ -76,7 +76,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                     ;
                 $vCadastrarProponente = $db->fetchAll($sql);
 
-                //VERIFICAR AS INFORMAÇÕES DO PROPONENTE
+                //VERIFICAR AS INFORMACOES DO PROPONENTE
                 if (empty($vCadastrarProponente)) {
                     $validacao->Descricao = 'Dados cadastrais do proponente inexistente ou não há endereço para correspondência selecionado.';
                     $validacao->Observacao = 'PENDENTE';
@@ -108,7 +108,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                   //-- VERIFICAR SE HÁ OS EMAILS DO PROPONENTE CADASTRADOS
+                   //-- VERIFICAR SE HA OS EMAILS DO PROPONENTE CADASTRADOS
                     $sql = $db->select()
                         ->from(['v' => 'Internet'], 'v.*', 'agentes.dbo')
                         ->join(['p' => 'PreProjeto'], 'v.idAgente=p.idAgente', null, 'sac.dbo')
@@ -127,7 +127,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //-- NO CASO DE PESSOA FÍSICA, VERIFICAR O LANÇAMENTO DA DATA DE NASCIMENTO
+                    //-- NO CASO DE PESSOA FISICA, VERIFICAR O LANCAMENTO DA DATA DE NASCIMENTO
                     $sql = $db->select()
                         ->from(['v' => 'Agentes'], 'TipoPessoa', 'agentes.dbo')
                         ->where('idAgente = ?', $idAgente)
@@ -154,7 +154,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                         }
                     }
 
-                     //-- NO CASO DE PESSOA JURÍDICA, VERIFICAR O LANÇAMENTO DA NATUREZA DO PROPONENTE
+                     //-- NO CASO DE PESSOA JURIDICA, VERIFICAR O LANCAMENTO DA NATUREZA DO PROPONENTE
                     if ($tipoPessoa == 1) {
                         $sql = $db->select()
                             ->from(['n' => 'Natureza'], '*', 'agentes.dbo')
@@ -174,7 +174,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                             $listaValidacao[] =  clone($validacao);
                         }
 
-                        //-- VERIFICAR SE HÁ DIRIGENTE CADASTRADO
+                        //-- VERIFICAR SE HA DIRIGENTE CADASTRADO
                         $sql = $db->select()
                             ->from(['v' => 'vCadastrarDirigente'], '*', 'sac.dbo')
                             ->join(['p' => 'PreProjeto'], 'v.idVinculoPrincipal=p.idAgente', '*', 'sac.dbo')
@@ -193,7 +193,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                         }
                     }
 
-                    //-- VERIFICAR SE O LOCAL DE REALIZAÇÃO ESTÁ CADASTRADO
+                    //-- VERIFICAR SE O LOCAL DE REALIZACAO ESTA CADASTRADO
      //IF NOT EXISTS(SELECT TOP 1 * FROM Abrangencia WHERE idProjeto = @idProjeto)
 
                     $sql = $db->select()
@@ -213,7 +213,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //-- VERIFICAR SE O PLANO DE DIVULGAÇÃO ESTÁ PREENCHIDO
+                    //-- VERIFICAR SE O PLANO DE DIVULGACAO ESTA PREENCHIDO
                     $sql = $db->select()
                         ->from(['PlanoDeDivulgacao'], '*', 'sac.dbo')
                         ->where('idProjeto = ?', $idPreProjeto)
@@ -231,7 +231,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //-- VERIFICAR SE EXISTE NO MÍNIMO 90 DIAS ENTRE A DATA DE ENVIO E O INÍCIO DO PERÍODO DE EXECUÇÃO DO PROJETO
+                    //-- VERIFICAR SE EXISTE NO MINIMO 90 DIAS ENTRE A DATA DE ENVIO E O INICIO DO PERIODO DE EXECUCAO DO PROJETO
                     $sql = $db->select()
                         ->from(['PreProjeto'], '*', 'sac.dbo')
                         ->where('idPreProjeto = ?', $idPreProjeto)
@@ -250,7 +250,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //-- VERIFICAR SE O PLANO DE DISTRIBUIÇÃO DO PRODUTO ESTÁ PREENCHIDO
+                    //-- VERIFICAR SE O PLANO DE DISTRIBUICAO DO PRODUTO ESTA PREENCHIDO
                     $sql = $db->select()
                         ->from(['PlanoDistribuicaoProduto'], '*', 'sac.dbo')
                         ->where('idProjeto =  ?', $idPreProjeto)
@@ -267,7 +267,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //--Verificar a existência do produto principal
+                    //--Verificar a existencia do produto principal
                     //SELECT @QtdeOutros=stPrincipal FROM PlanoDistribuicaoProduto  WHERE idProjeto = @idProjeto and stPrincipal = 1
                     $sql = $db->select()
                         ->from(['PlanoDistribuicaoProduto'], 'stPrincipal', 'sac.dbo')
@@ -287,7 +287,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //-- VERIFICAR SE EXISTE NA PLANILHA ORÇAMENTÁRIA ITENS DA FONTE INCENTIVO FISCAL FEDERAL.
+                    //-- VERIFICAR SE EXISTE NA PLANILHA ORCAMENTARIA ITENS DA FONTE INCENTIVO FISCAL FEDERAL.
                     $sql = $db->select()
                         ->from(['tbPlanilhaProposta'], '*', 'sac.dbo')
                         ->where('idProjeto =  ?', $idPreProjeto)
@@ -307,7 +307,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                         $listaValidacao[] =  clone($validacao);
                     }
 
-     //-- VERIFICAR SE EXISTE NA PLANILHA ORÇAMENTÁRIA PARA CADA PRODUTO DESCRITO NO PLANO DE DISTRIBUIÇÃO DO PRODUTO
+     //-- VERIFICAR SE EXISTE NA PLANILHA ORCAMENTARIA PARA CADA PRODUTO DESCRITO NO PLANO DE DISTRIBUICAO DO PRODUTO
                     //IF EXISTS(SELECT * FROM PlanoDistribuicaoProduto pp WHERE idProjeto = @idProjeto and
                   //NOT EXISTS(SELECT * FROM tbPlanilhaProposta pl WHERE idProjeto = @idProjeto and pp.idProduto=pl.idProduto and idProduto <> 0))
                     $subSql = $db->select()
@@ -335,7 +335,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //-- VERIFICAR SE EXISTE NA PLANILHA ORÇAMENTÁRIA PARA OS CUSTOS ADMINISTRATIVOS DO PROJETO
+                    //-- VERIFICAR SE EXISTE NA PLANILHA ORCAMENTARIA PARA OS CUSTOS ADMINISTRATIVOS DO PROJETO
                     $subSql = $db->select()
                         ->from(['pl' => 'tbPlanilhaProposta'], '*', 'sac.dbo')
                         ->where('idProjeto = ?', $idPreProjeto)
@@ -398,7 +398,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                             $listaValidacao[] =  clone($validacao);
                         }
                     }
-                    //-- VERIFICAR O PERCENTUAL DA REMUNERAÇÃO PARA CAPTAÇÃO DE RECURSOS
+                    //-- VERIFICAR O PERCENTUAL DA REMUNERACAO PARA CAPTACAO DE RECURSOS
                     $sql = $db->select()
                         ->from(['tbPlanilhaProposta'], 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total', 'sac.dbo')
                         ->where('idProjeto =  ?', $idPreProjeto)
@@ -409,7 +409,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                     $total = $db->fetchAll($sql);
                     $total = empty($total[0]->total) ? 0 : $db->fetchAll($sql)[0]->total;
 
-                    //--pega o valor de remuneração para captação
+                    //--pega o valor de remuneracao para captacao
                     $sql = $db->select()
                         ->from(['tbPlanilhaProposta'], 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total', 'sac.dbo')
                         ->where('idProjeto =  ?', $idPreProjeto)
@@ -431,7 +431,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                         $listaValidacao[] =  clone($validacao);
                     }
 
-                    //-- VERIFICAR O PERCENTUAL DA DIVULGAÇÃO E COMERCIALIZAÇÃO
+                    //-- VERIFICAR O PERCENTUAL DA DIVULGACAO E COMERCIALIZACAO
                     $sql = $db->select()
                         ->from(['tbPlanilhaProposta'], 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total', 'sac.dbo')
                         ->where('idProjeto =  ?', $idPreProjeto)
@@ -442,7 +442,7 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                     $total = $db->fetchAll($sql);
                     $total = empty($total[0]->total) ? 0 : $db->fetchAll($sql)[0]->total;
 
-                    //--pega o valor de remuneração para captação
+                    //--pega o valor de remuneracao para captacao
                     $sql = $db->select()
                         ->from(['tbPlanilhaProposta'], 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total', 'sac.dbo')
                         ->where('idProjeto =  ?', $idPreProjeto)

@@ -6,14 +6,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.scripts.manteragentes
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Ministerio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
 
 <?php require_once "inc/menu.inc.php"; ?>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
 		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="In&iacute;cio">In&iacute;cio</a></li>
@@ -25,15 +25,15 @@
 
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
 	<div>Pesquisar Agentes <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM TITULO ========== -->
 
 
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
 
 
@@ -56,7 +56,7 @@
 	}
 	//-->
 	</script>
-	<!-- ========== FORMULÁRIO PARA BUSCAR PRONAC ========== -->
+	<!-- ========== FORMULARIO PARA BUSCAR PRONAC ========== -->
 	<form class="form" name="formBuscar" id="formBuscar" method="post"
 		action="<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'buscaragente')); ?>">
 
@@ -97,13 +97,13 @@
 				onkeypress="redirecionar('<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'agentes')); ?>?acao=cc');" />
 		</p>
 	</form>
-	<!-- ========== FIM FORMULÁRIO DE BUSCA PRONAC ========== -->
+	<!-- ========== FIM FORMULARIO DE BUSCA PRONAC ========== -->
 
 
 
 	<script type="text/javascript">
 	<!--
-	// valida o envio do formulário
+	// valida o envio do formulario
     $('#formBuscar').submit(function()
 	{
 		cpf = document.getElementById('cpf').value;
@@ -196,12 +196,12 @@
         <div id="dialog-alert" class="sumir">Informe um documento v&aacute;lido!</div>
         <div id="dialog-alert2" class="sumir">Dados Obrigat&oacute;rios n&atilde;o informados!</div>
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEUDO ========== -->
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 
 <br clear="all" />

@@ -369,7 +369,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
      * @param mixed $idResponsavel
      * @access public
      * @return void
-     * @todo padrão orm
+     * @todo padrao orm
      */
     public function buscarNovoProponente($where=array(), $idResponsavel)
     {

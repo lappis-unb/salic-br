@@ -8231,8 +8231,8 @@ AS
 
   -- =========================================================================================
   -- Autor: Rômulo Menhô Barbosa
-  -- Data de Criação: 19/12/2012
-  -- Descrição: Documentos exigidos pela proposta
+  -- Data de Criacao: 19/12/2012
+  -- Descricao: Documentos exigidos pela proposta
   -- =========================================================================================
 
   SELECT Codigo, Descricao,Opcao

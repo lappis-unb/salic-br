@@ -15,7 +15,7 @@
 			visao.remove(i); // remove o option do select de origem
 			i--;
 		}
-	} // fecha função addTodos()
+	} // fecha funcao addTodos()
 
 
 	function delTodos() // deleta todos os options da direita
@@ -34,7 +34,7 @@
 				i--;
 			}
 		}
-	} // fecha função delTodos()
+	} // fecha funcao delTodos()
 
 
 	function addSelecionado() // adiciona o option selecionado da esquerda para direita
@@ -53,7 +53,7 @@
 				i--;
 			}
 		}
-	} // fecha função addSelecionado()
+	} // fecha funcao addSelecionado()
 
 
 	function delSelecionado() // deleta o option selecionado da direita
@@ -72,10 +72,10 @@
 				i--;
 			}
 		}
-	} // fecha função delSelecionado()
+	} // fecha funcao delSelecionado()
 
 
-	function selecionarOptions() // função para selecionar todos os options antes do envio do formulário
+	function selecionarOptions() // funcao para selecionar todos os options antes do envio do formulario
 	{
 		visaoAgente = document.getElementById("visaoAgente"); // select de destino
 		for (i = 0; i < visaoAgente.length; i++) // varre todo o option de origem
@@ -83,12 +83,12 @@
 			visaoAgente.options[i].selected = true; // adiciona o novo option no select de destino
 		}
 		document.getElementById('form').submit();
-	} // fecha função selecionarOptions()
+	} // fecha funcao selecionarOptions()
 
 	</script>
 
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
 		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -99,15 +99,15 @@
 
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
 	<div>Adicionar Vis&atilde;o <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM TITULO ========== -->
 
 
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
 
 
@@ -129,7 +129,7 @@
 		</table>
 
 		<?php
-		// array com o id das visões do agente
+		// array com o id das visoes do agente
 		foreach ($this->visaoAgente as $visao):
 			$arrayIdVisao[] = $visao;
 		endforeach;
@@ -144,7 +144,7 @@
 					<label for="visao"> </label>
 					<select class="select w300" name="visao[]" id="visao" multiple="multiple" size="7">
 						<?php foreach ($this->combovisoes as $visao) : ?>
-						<?php if (!in_array($visao['idVerificacao'], $arrayIdVisao)) : // só mostra as visões que o agente NÃO possui ?>
+						<?php if (!in_array($visao['idVerificacao'], $arrayIdVisao)) : // só mostra as visoes que o agente NAO possui ?>
 						<option value="<?php echo $visao['idVerificacao']; ?>"><?php echo $visao['Descricao']; ?></option>
 						<?php endif; ?>
 						<?php endforeach; ?>
@@ -182,12 +182,12 @@
 
 
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEUDO ========== -->
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 
 <br clear="all" />

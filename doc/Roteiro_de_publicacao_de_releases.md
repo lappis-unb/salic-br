@@ -45,9 +45,9 @@ Adicione o texto do release ao CHANGELOG
     $ vim CHANGELOG
     
 
-    // faça o commit
+    // faca o commit
     $ git add CHANGELOG
-    $ git commit -m 'adicionando changelog da versão v1.x.x'
+    $ git commit -m 'adicionando changelog da versao v1.x.x'
     $ git push
 
 ## 4) Editar texto de tela de release
@@ -56,12 +56,12 @@ Adicione o texto do release ao CHANGELOG
 
 ## 5) Criar tag no código
 
-    // certifique-se de estar trabalhando no branch correto e faça o merge com o master, caso isso ainda não tenha sido feito
+    // certifique-se de estar trabalhando no branch correto e faca o merge com o master, caso isso ainda nao tenha sido feito
     $ git branch
       correcoes
     * master
 
-    // liste as tags que já existem
+    // liste as tags que ja existem
     $ git tag
     v1.3.0
     v1.3.1
@@ -69,16 +69,16 @@ Adicione o texto do release ao CHANGELOG
     v1.3.3
    
     // crie a tag
-    $ git tag -a v1.3.1 -m 'informações sobre o release v1.3.1'
+    $ git tag -a v1.3.1 -m 'informacoes sobre o release v1.3.1'
     
-    // envie a tag para o repositório central (ex: github, gitlab). Caso contrário a tag será apenas local
+    // envie a tag para o repositório central (ex: github, gitlab). Caso contrario a tag sera apenas local
     $ git push --follow-tags
 
 Em caso de dúvida, consultar <http://192.168.14.67/wiki/Comandos_gerais_de_GIT/#tags>
 
 ## 6) Subir para homologação
 
-    // verifique qual é a tag atual
+    // verifique qual e a tag atual
     $ git describe --tags
     v1.3.0
 
@@ -102,11 +102,11 @@ Caso haja necessidade, elaborar um email de release.
 
     # cd /var/www/novosalic.cultura.gov.br 
     
-    // verifique qual é a tag atual
+    // verifique qual e a tag atual
     # git describe --tags
     v1.3.0
     
-    // atualize as referências do repositório sem alterar os arquivos
+    // atualize as referencias do repositório sem alterar os arquivos
     # git fetch
 
     // verifique se a nova tag apareceu

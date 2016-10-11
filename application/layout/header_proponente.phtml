@@ -81,7 +81,7 @@
         <!-- Novo Manter Agentes -->
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/agentes.js"></script>
 
-        <!-- Realizar Análise Projeto -->
+        <!-- Realizar Analise Projeto -->
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/realizaranaliseprojeto.js"></script>
 
         <link type="text/css" rel="stylesheet" media="screen" href="<?php echo $this->baseUrl(); ?>/public/css/recursos/importar.css" />
@@ -106,7 +106,7 @@
 
     <body>
 
-        <!-- ========== INÍCIO TOPO ========== -->
+        <!-- ========== INICIO TOPO ========== -->
         <div id="topo">
             <div class="barra_governo">
                 <div class="fl">
@@ -159,7 +159,7 @@
                     }
                 });
                 $('.ui-dialog-titlebar-close').remove();
-            } // fecha função logout()
+            } // fecha funcao logout()
         </script>
 
 
@@ -167,12 +167,12 @@
             $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
             if ( isset ($auth['cpf']) ) :
         ?>
-        <!-- ========== INÍCIO MENU ========== -->
+        <!-- ========== INICIO MENU ========== -->
         <div id="navglobal">
             <ul>
                 <li class="noOverHere"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), '', true); ?>" class="home" title="Início"><span>Início</span></a></li>
 
-                <!-- ========== INÍCIO MENU ADMINISTRATIVO ========== -->
+                <!-- ========== INICIO MENU ADMINISTRATIVO ========== -->
                 <li>
                     <div id="div">
                         <div id="divleft"></div>
@@ -197,7 +197,7 @@
 
 
 
-                <!-- ========== INÍCIO MENU PROPOSTA ========== -->
+                <!-- ========== INICIO MENU PROPOSTA ========== -->
                 <li>
                     <div id="div">
                         <div id="divleft"></div>
@@ -217,7 +217,7 @@
 
 
 
-                <!-- ========== INÍCIO MENU PROJETO ========== -->
+                <!-- ========== INICIO MENU PROJETO ========== -->
                 <!--li>
                     <div id="div">
                         <div id="divleft"></div>
@@ -234,7 +234,7 @@
                 </li-->
                 <!-- ========== FIM MENU PROJETO ========== -->
 
-                <!-- ========== INÍCIO MENU PROTOCOLO ========== -->
+                <!-- ========== INICIO MENU PROTOCOLO ========== -->
                 <li>
                     <div id="div">
                         <div id="divleft"></div>
@@ -284,7 +284,7 @@
         <!-- =========== FIM MENU ============ -->
         <?php endif; ?>
 
-        <!-- ========== INÍCIO MENSAGENS (ERROS, CONFIRMAÇÕES E ADVERTÊNCIAS) ========== -->
+        <!-- ========== INICIO MENSAGENS (ERROS, CONFIRMACOES E ADVERTENCIAS) ========== -->
         <?php if (isset($this->message)) : ?>
         <div class="msg<?php echo $this->message_type; ?>">
             <div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msg<?php echo $this->message_type; ?>" onclick="$('.msg<?php echo $this->message_type; ?>').hide();" onkeypress="$('.msg<?php echo $this->message_type; ?>').hide();"/></div>
@@ -292,12 +292,12 @@
         </div>
         <?php endif; ?>
         <div id="novas_mensagens"></div>
-        <!-- ========== FIM MENSAGENS (ERROS, CONFIRMAÇÕES E ADVERTÊNCIAS) ========== -->
+        <!-- ========== FIM MENSAGENS (ERROS, CONFIRMACOES E ADVERTENCIAS) ========== -->
 
-        <!-- ========== INÍCIO MENSAGENS DO PROJETO PARA O USUÁRIO ========== -->
+        <!-- ========== INICIO MENSAGENS DO PROJETO PARA O USUARIO ========== -->
         <div class="msgALERT sumir">
             <div>Há uma nova mensagem referente ao Pronac <span id="pronac"></span>! <a id="link">Clique aqui</a> para acessá-la.</div>
         </div>
-        <!-- ========== FIM MENSAGENS DO PROJETO PARA O USUÁRIO ========== -->
+        <!-- ========== FIM MENSAGENS DO PROJETO PARA O USUARIO ========== -->
 
 <?php echo $this->partial('partials/environment.phtml'); ?>
