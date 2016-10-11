@@ -21,7 +21,7 @@ class EmailDAO extends Zend_Db_Table
      */
     public static function enviarEmail($email, $assunto, $texto, $perfil = 'PerfilGrupoPRONAC')
     {
-        $config = new Zend_Config_Ini(APPLICATION_PATH .'/configs/config.ini', getenv('APPLICATION_ENV'));
+        $config = new Zend_Config_Ini(APPLICATION_PATH .'/configs/application.ini', getenv('APPLICATION_ENV'));
         $config = $config->mail->transport->toArray();
 
         $transport = new Zend_Mail_Transport_Smtp($config['host'], $config);
