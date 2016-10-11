@@ -487,22 +487,20 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @param void
      * @return objeto
      */
-    public function excluirAction() {
-
-        /* =============================================================================== */
+    public function excluirAction()
+    {
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-        $get = Zend_Registry::get("get");
-        $idPreProjeto = $get->idPreProjeto;
+
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
         //BUSCANDO REGISTRO A SER ALTERADO
-        $tblPreProjeto = new Proposta_Model_PreProjeto();
-        $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
+        $preProjeto = new Proposta_Model_PreProjeto();
+        $preProjeto = $preProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
-        $rsPreProjeto->stEstado = 0;
+        $preProjeto->stestado = 0;
 
-        if ($rsPreProjeto->save()) {
+        if ($preProjeto->save()) {
             parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
         } else {
             parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
