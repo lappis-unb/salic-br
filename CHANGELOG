@@ -1,3 +1,164 @@
+Release 1.10.8
+  * Fix: [AGENTES] Correção na consulta de CPF dos agentes via Webservice da Receita
+
+Release 1.10.7
+  * Fix: [API-Serviço] Correção para erro do sistema enviar notificação de diligência para todos os dispositivos.
+
+Release 1.10.6
+  * Fix: [consultar dados projeto] corrigindo totalização do valor na impressão
+  * Fix: [fiscalizar projeto cultural] corrigido erro ao salvar / fckeditor estava quebrado, trocando para tinymce
+
+Release 1.10.5
+  * Fix: [alterar projetos] formatando preço promocional
+  * Fix: [api-mobile] Correção para exibir corretamente o texto do Resumo do Projeto
+  * Fix: [consultar dados projeto] correção em consulta para impressão de projeto
+  * Fix: [readequações] verificando limites orçamentários se for planilha orçamentária
+  * Fix: [readequações] removendo "planilha orçamentária" da combo da tela de "Solicitações gerais"
+
+Release 1.10.4
+  * Fix: [alterar projeto] exibindo área e segmento corretamente
+  * Fix: [proponente] corrigindo erro no tipo de comprovante & estilo
+  * Fix: [readequações] passando valor correto para SAV
+  * Fix: [proponente] retornando dados corretamente em quaisquer perfis
+
+Release 1.10.3
+  * Fix: [dados bancários] exibindo contas corretamente
+  * Fix: [comprovação financeira] valor do item cadastrado não pode ser igual a zero
+
+Release 1.10.2
+  * Fix: [proponente] produtos agora listam corretamente
+
+Release 1.10.1
+  * Fix: [dados bancários] exibindo contas corretamente
+  * Fix: [manutenção] alterar projeto/situação agora grava corretamente
+  * Fix: [mobile] Correção na autenticação em função do novo componente de mascara do aplicativo mobile
+  * Fix: [mobile] Funcionalidade de excluir mensagens
+
+Release 1.10.0
+  * Novo: [comprovação financeira] agora é possível atualizar comprovantes de pagamento
+  * Novo: [diligenciar] técnico não pode criar nova diligência caso exista alguma sem resposta
+  * Novo: [estrutura] Refatoração do local dos modulos, adicionando configurações padrões do zend
+  * Novo: [estrutura] Modularização inicial do salic-br
+  * Novo: [inicial]: exibindo link da mensagem de commit no rodapé
+  * Novo: [readequações] movendo planilha orcamentaria para item separado do menu com nova dinâmica de funcionamento
+  * Novo: [readequações] plano de distribuição com novo funcionamento - abre/fecha de produtos
+  * Novo: [readequações] novos painéis de readequação: aguardando distribuição, em análise, analisados e aguardando publicação no DOU
+  * Novo: [readequações] nova tela de "encaminhar para analise técnica"
+  * Novo: [readequações] adicionando botões de enviar para cnic no painel "analisados"
+  * Novo: [readequações] busca por número de Pronac nas telas de coordenador de parecer
+  * Novo: [readequações] Proponente agora consegue ver as readequações devolvidas
+  * Novo: [readequações] mensagens de verificação de limites orçamentários para pareceristas
+  * Fix: [alterar projeto] corrigindo identificação de login ao salvar alteração
+  * Fix: [arquivos] ajustes contra SQL injection na DAO uploadDAO
+  * Fix: [captação] agora é possível não cadastrar um bem/serviço, e é possível cadastrar número do recibo
+  * Fix: [captação] corrigindo padrão da view na pesquisa de registrar captaçã
+  * Fix: [cidadão] Diversos ajustes contra SQL injection na tela de Cidadão
+  * Fix: [comprovação financeira] alterando url de redirect ao salvar comprovação editada
+  * Fix: [comprovacao financeira] adicionando documentação de código e removendo debugs e alguns códigos comentados
+  * Fix: [comprovação financeira] impedindo edição da comprovação uma vez que a análise já foi iniciada
+  * Fix: [comprovação financeira] substituindo texto para "Anexar comprovante"
+  * Fix: [comprovação financeira] posicionando "valor do item" junto à forma de pagamento
+  * Fix: [comprovação financeira] limitando campo a 6 caracteres quando selecionado cheque
+  * Fix: [comprovação financeira] ajuste na posição do campo "valor do item"
+  * Fix: [comprovação pagamento] ajuste na listagem das comprovações
+  * Fix: [comprovação financeira] impedindo comprovação financeira até o dia atual
+  * Fix: [comprovar execução física] pequena correção no formulário
+  * Fix: [comprovar objeto] Agora é necessário fazer upload de documento nos campos com texto, e só poderá ser enviado um anexo. Adicionado Botão de deletar anexo e limpar pagina
+  * Fix: [consultar dados projeto] menu diligência não aparecia para proponente em determinados casos
+  * Fix: [consultar projetos] removendo link de valor aprovado, captado e comprovado caso sejam igual a zero
+  * Fix: [consultar dados projetos] só exibe data quando ela existe (inicial e prorrogação)
+  * Fix: [cnic] alterando título de menu lateral
+  * Fix: [diligências] padronizando redirecionamento e mensagens aos usuários ao enviar diligência
+  * Fix: [diligenciar] montando botão de diligenciar corretamente em cnic/avaliar readequações
+  * Fix: [dados bancários] Melhorando visualização em Captação (dados bancarios)
+  * Fix: [gestor salic] removendo menus de proposta e projetos
+  * Fix: [marcas] marcador de linhas para atender necessidade de análise de trabalho dos técnicos de acompanhamento
+  * Fix: [prestação de contas] Agora o tecnico de prestação de contas poderá ver Fornecedor e CNPJ/CPF dentro da consulta dos itens
+  * Fix: [prestação de contas] Adicionado link do consultardadosprojeto em planilha orçamentaria comprovada [ARQ-Tecnico de Prestação de Contas]
+  * Fix: [prestação de contas] Aumentando campo do número de documento de pagamento
+  * Fix: [prestação de contas] correção na formatação de data no histórico
+  * Fix: [proponente] Agora é possível cadastrar produtos de munic ípios diferentes
+  * Fix: [proponente] Em itens de custo orçamentário agora é possivel localizar para solicitar
+  * Fix: [proponente] Busca de Solicitar inclusão de itens de custo
+  * Fix: [proponente] Pesquisa de Solicitar inclusão de itens de custo
+  * Fix: [publicação DOU] Corrigido escritas em gerar arquivos de publicação DOU
+  * Fix: [publicação DOU] consertando publicação de portaria / melhoria de código
+  * Fix: [readequações] planilha orçamentária inserindo item corretamente e com idReadequacao
+  * Fix: [readequações] correções gerais na listagem dos projetos
+  * Fix: [readequações] correção ao criar planilha orçamentária; alterações iniciais da controller para plano de distribuição
+  * Fix: [readequações] corrigindo ordenação por tipo de solicitação
+  * Fix: [readequações] correção na troca de planilhas de remanejamento; correção na finalização de plano de distribuição
+  * Fix: [readequações] imprimindo corretamente nas listagens de readequações
+  * Fix: [readequações] filtrando resultados da tela de técnico de acompanhamento pelo id do usuário logado
+  * Fix: [readequações] conserto na query de buscar pareceristas
+  * Fix: [readequações] adicionando funcionalidade de encaminhar aos painéis do coordenador de parecer
+  * Fix: [readequações] removendo limite de caracteres no formulário de parecer técnico
+  * Fix: [readequações] correção ao incluir item
+  * Fix: [readequações] correção ao apagar / salvar item
+  * Fix: [readequações] mantendo pronac quando altera consulta / ordenação
+  * Fix: [readequações] mantendo filtro de pronac após finalização de projeto
+  * Fix: [readequações] montando combo de tipos de readequação corretamente
+  * Fix: [readequações] correção de erro ao encaminhar para coordenador / técnico
+  * Fix: [readequações] Painel do coordenador de acompanhamento não separa por unidade do usuário logado
+  * Fix: [readequações] corrigindo erro ao encaminhar readequação para a CNIC
+  * Fix: [readequações] ao alterar planilha orçamentária, técnico só pode editar quando for produto de incentivo federal
+  * Fix: [readequacões] alterando "estratégia de execução" para "outras informações"
+  * Fix: [readequações] adicionando órgão na listagem de readequações me análise para coordenador de acompanhamento (caso não seja SEFIC)
+  * Fix: [readequações na cnic] adicionando verificacao se preencheu campos obrigatórios de avaliação; fix no envio da avaliação
+  * Fix: [readequações] fix na avaliação de readequações na cnic
+  * Fix: [readequações] impedindo que proponente edite itens de outras fontes
+  * Fix: [relatorios da CNIC] Adicionado permissao para Coordenador CNIC
+  * Fix: [relatórios trimestrais] Corrigido a data nos relatorios
+  * Fix: [remanejamento] encaminhando projeto para cnic gerava entrada extra desnecessária
+  * Fix: [segurança] removendo sessão corretamente no logout
+  * Fix: [segurança] diversas correções na tela de consulta cidadão em diversos modelos utilizados
+  * Fix: [segurança] correção na UploadDAO
+  * Fix: [upload] Adequando mensagem de erro da validação de upload
+
+Release 1.9.1
+  * Fix: [Prestação de contas] Adicionando perfil SAV/CEP
+
+Release 1.9.0
+  * Novo: [API-Mobile] Funcionalidade de exibir mensagens novas ao iniciar o aplicativo
+  * Novo: [API-Mobile] Desenvolvimento da funcionalidade que salva as informações no Banco de Dados de mensagens enviadas
+  * Novo: [API-Mobile] Refatoração da funcionalidade de envio de notificações.
+  * Fix: [Alterar projeto] plano de distribuição não gravava valor correto para quantidade total
+  * Fix: [Análise de projeto] corrigindo enquadramento para "exibição cinematográfica" para artigo 18
+
+Release 1.8.10
+  * Fix: [Consultar dados projeto] Liberação correta dos links do menu lateral de acordo com permissões do projeto
+
+Release 1.8.9
+  * Fix: [readequação] correção ao finalizar readequação de plano de divulgação
+
+Release 1.8.8
+  * Fix: [Cidadão] redirecionando consulta /cidadao para /cidadao/consultar (consulta estava incorreta)
+  * Fix: [consultar projetos] removendo link de valor aprovado, captado e comprovado caso sejam igual a zero
+
+Release 1.8.7
+  * Fix: [readequações] removendo limite de caracteres no formulário de parecer técnico
+
+Release 1.8.6
+  * Fix: [providência tomada] Correção em query de providencias tomadas
+
+Release 1.8.5
+  * Fix: [prestação de contas] aumentando campo "nrDocumentoDePagamento" para comprovação financeira
+
+Release 1.8.4
+  * Fix: [Manter orçamentos] Agora é possível cadastrar produtos de municípios diferentes
+
+Release 1.8.3
+  * Fix: [API DE SERVIÇOS] Corrigindo erros de caracteres UTF8 na síntese de projeto que não possui tags html para conversão.
+
+Release 1.8.2
+  * Fix: [API DE SERVIÇOS] Corrigindo erros de caracteres UTF8 na síntese do projeto.
+
+Release 1.8.1
+  * Fix: Inserindo a classe abastrata para implementar o webservice provider do Salic.
+
+Release 1.8.0
+  * Novo: [API DE SERVIÇOS] Adicionando API de Serviços para realizar Autenticação, Consultas de projetos, proponentes e extrato bancário.
+
 Release 1.7.1
   * Fix: [Readequações] trocando planilhas corretamente em redução, complementação e readequação
   * Fix: [SEI] Atualizando a Unidade de SEFIC para DINPC, no serviço do SEI para criação de Processos automaticamente
@@ -166,4 +327,4 @@ Release 1.3.0
 Release 1.2
   * Os17 - movimentação bancária
   * Os32
-    * feature-publicaao-dou - #462
+  * feature-publicaao-dou - #462

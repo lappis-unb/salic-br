@@ -6,7 +6,7 @@
     $('.btnSalvar').removeClass('sumir');			
     atualizarDadosPlanilha();
     <?php endif; ?>
-        $('#btn_cancelar').click(function(){
+        $('#btn_voltar').click(function(){
             window.location = "<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'), null, true); ?>?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>";
         });
         
@@ -218,33 +218,76 @@
         });
         
         $('.btn_finalizar').click(function(){
-            $("#msgAlerta").dialog("destroy");
-            $("#msgAlerta").html('Deseja realmente finalizar as solicitações de readequação cadastradas?<br /><br />Ao finalizar, todas as solicitações serão encaminhadas ao MinC.');
-            $("#msgAlerta").dialog({
-                resizable: false,
-                title: 'Alerta!',
-                width:360,
-                modal: true,
-                buttons : {
-                    'Não' : function(){
-                        $(this).dialog('close');
-                    },
-                    'Sim' : function(){
-                        $(this).dialog('close');
-                        $("#msgAlerta").dialog("destroy");
-                        $("#msgAlerta").html('<br /><div align="center"><img src="<?php echo $this->baseUrl().'/public/img/ajax.gif'; ?>"><br />Aguarde..</div>');
-                        $("#msgAlerta").dialog({
-                            resizable: false,
-                            width:320,
-                            modal: true,
-                            title: 'Carregando..'
-                        });
-                        $('.ui-dialog-titlebar-close').remove();
-                        window.setTimeout('finalizarformulario()', 1000);
-                    }
-                }
-            });
-            $('.ui-dialog-titlebar-close').remove();
+	    $('#mensagens').html('<span style="font-weigth: bold; color: grey">Verificando limites orçamentários...</span>');
+	    // verifica limites orçamentários
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'verificar-limites-orcamentarios'), '', true); ?>?idPronac=<?php echo $this->idPronac; ?>',
+                data: {
+                    idPronac: <?php echo $this->idPronac; ?>
+                },
+                success: function(resposta){
+                    var resposta = JSON.parse(resposta),
+                        respostaErro = false;
+                    
+                    resposta.mensagens.forEach(function(mensagem) {
+                        if (mensagem.Observacao !== 'OK') {
+                            respostaErro = true;
+                        }
+                    });
+                    if (!respostaErro) {
+			$('#mensagens').html('');
+			// sem problemas de limites orcamentarios
+			
+			$("#msgAlerta").dialog("destroy");
+			$("#msgAlerta").html('Deseja realmente finalizar as solicitações de readequação cadastradas?<br /><br />Ao finalizar, todas as solicitações serão encaminhadas ao MinC.');
+			$("#msgAlerta").dialog({
+				resizable: false,
+				title: 'Alerta!',
+				width:360,
+				modal: true,
+				buttons : {
+				    'Não' : function(){
+					$(this).dialog('close');
+				    },
+				    'Sim' : function(){
+					$(this).dialog('close');
+					$("#msgAlerta").dialog("destroy");
+					$("#msgAlerta").html('<br /><div align="center"><img src="<?php echo $this->baseUrl().'/public/img/ajax.gif'; ?>"><br />Aguarde..</div>');
+					$("#msgAlerta").dialog({
+					    resizable: false,
+					    width:320,
+					    modal: true,
+					    title: 'Carregando..'
+					});
+					$('.ui-dialog-titlebar-close').remove();
+					window.setTimeout('finalizarformulario()', 1000);
+				    }
+				}
+				
+			});
+			$('.ui-dialog-titlebar-close').remove();
+			
+		    } else {
+			var saidaHtml = "<table class='tabela'><thead><th colspan='2'>Verificação de limites orçamentários</th></thead>";
+			
+			for (var m = 0; m < resposta.mensagens.length; m++) {
+			    var item = resposta.mensagens[m];
+			    if (item.Observacao == 'OK') {
+				saidaHtml += "<tr><td><img src='<?php echo $this->baseUrl(); ?>/public/img/ok_16x16.png' alt='' /></td>";
+				saidaHtml += "<td><strong>" + item.Descricao + "</strong></td>";
+			    } else {
+				saidaHtml += "<tr><td><img src='<?php echo $this->baseUrl(); ?>/public/img/delete_16x16.png' alt='' /></td>";
+                saidaHtml += "<td><strong>" + item.Descricao + " <span class='vlDiferenca'>" + moeda.formatar(item.vlDiferenca) + "</span></strong></td>";		                                    
+			    }
+			    saidaHtml += "</tr>";
+			}
+			
+			saidaHtml += "</table>";
+			$('#mensagens').html(saidaHtml);
+		    }		    
+		}
+	    });
         });
         
         $(".icn_menos").click(function(){
@@ -684,7 +727,11 @@
     $dsJustificativa = '';
 }
 ?>
-	    
+	    if (<?php echo $idReadequacao; ?> === 0) {
+		idReadequacao = $('#idReadequacao').val();
+	    } else {
+		idReadequacao = <?php echo $idReadequacao; ?>
+	    }
 	// verifica se há planilha ativa; se falso, cria uma nova planilha
 	$.ajax({
 	    url: "<?php echo $this->Url(array('controller' => 'readequacoes', 'action' => 'verificar-planilha-ativa'), '', true) ?>",
@@ -692,7 +739,7 @@
 	    data: {
 		idPronac: <?php echo $this->idPronac; ?>,
 		criarNovaPlanilha: 1,
-		idReadequacao: <?php echo $idReadequacao; ?>,
+		idReadequacao: idReadequacao,
 		idTipoReadequacao: 6,
 	    },
 	    
@@ -703,6 +750,9 @@
 
 		data = JSON.parse(data);
 		$('#idReadequacao').val(data.idReadequacao);
+		$('#btn_excluir').removeClass('sumir');
+		$('#btn_finalizar').removeClass('sumir');
+		$('#btn_exclusao').attr('readequacao', data.idReadequacao);
 	    }
         });
     }
@@ -821,17 +871,21 @@
                 </td>
             </tr>
         </table>
-    
+
+	<div align="center" id="mensagens"></div>
+	
         <table class="tabela">
             <tr>
                 <td class="centro">
-                    <input type="button" class="btn_finalizar" id="btn_finalizar" title="Finalizar" />
-                    <input type="button" class="btn_cancelar" id="btn_cancelar" title="Cancelar" />
+                  <input type="button" class="btn_finalizar sumir" id="btn_finalizar" title="Finalizar" />
+                  <input type="button" class="btn_exclusao sumir" id="btn_excluir" readequacao="<?php echo $this->readequacao[0]->idReadequacao; ?>" />
+                  <input type="button" class="btn_cancelar" id="btn_voltar" title="Voltar" />
                 </td>
             </tr>
         </table>
     </form>
-    <!-- ========== FIM FORMULÁRIO ========== -->
+                                                                                                                
+    <!-- ========== Fim FORMULÁRIO ========== -->
 
     <?php //MODAL DE AVALIAÇÃO DO ITEM ?>
     <div id="modalItem" class="sumir">

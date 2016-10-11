@@ -4,62 +4,62 @@
  */
 class FornecedorInvoice extends GenericModel
 {
-    private $id = null;
-    private $nome = null;
-    private $endereco = null;
-    private $pais = null;
+    private $idFornecedorExterior = null;
+    private $dsNome = null;
+    private $dsEndereco = null;
+    private $dsPais = null;
 
     protected $_banco = 'bdcorporativo';
     protected $_schema = 'scSAC';
     protected $_name = 'tbFonecedorExterior';
 
-    function __construct($id = null, $nome = null, $endereco = null, $pais = null)
+    function __construct($idFornecedorExterior = null, $dsNome = null, $dsEndereco = null, $dsPais = null)
     {
         parent::__construct();
-        $this->id = $id;
-        $this->nome = $nome;
-        $this->endereco = $endereco;
-        $this->pais = $pais;
+        $this->idFornecedorExterior = $idFornecedorExterior;
+        $this->dsNome = $dsNome;
+        $this->dsEndereco = $dsEndereco;
+        $this->dsPais = $dsPais;
     }
 
-    public function getId()
+    public function getIdFornecedorExterior()
     {
-        return $this->id;
+        return $this->idFornecedorExterior;
     }
 
     public function getNome()
     {
-        return $this->nome;
+        return $this->dsNome;
     }
 
     public function getEndereco()
     {
-        return $this->endereco;
+        return $this->dsEndereco;
     }
 
     public function getPais()
     {
-        return $this->pais;
+        return $this->dsPais;
     }
 
-    public function setId($id)
+    public function setIdFornecedorExterior($idFornecedorExterior)
     {
-        $this->id = $id;
+        $this->idFornecedorExterior = $idFornecedorExterior;
     }
 
-    public function setNome($nome)
+    public function setNome($dsNome)
     {
-        $this->nome = $nome;
+        $this->dsNome = $dsNome;
     }
 
-    public function setEndereco($endereco)
+    public function setEndereco($dsEndereco)
     {
-        $this->endereco = $endereco;
+        $this->dsEndereco = $dsEndereco;
     }
 
-    public function setPais($pais)
+    public function setPais($dsPais)
     {
-        $this->pais = $pais;
+        $this->dsPais = $dsPais;
     }
 
 

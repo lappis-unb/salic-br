@@ -711,7 +711,7 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             }
 
             $arquivoModel = new ArquivoModel();
-            if ('Brasil' == $pais) {
+            if ($pais == 'Brasil') {
                 $arquivoModel->cadastrar('arquivo');
                 $idArquivo = $arquivoModel->getId();
                 if (empty($idArquivo)) {
@@ -791,6 +791,8 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         try {
             //$this->verificarPermissaoAcesso(false, true, false);
             $request = $this->getRequest();
+            $pais = $request->getParam('pais');
+
             $idComprovantePagamento = $request->getParam('idComprovantePagamento');
             $paginaRedirecionar = $request->getParam('paginaRedirecionar');
             $redirectsValidos = array('comprovacaopagamento');
@@ -798,36 +800,74 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                 $paginaRedirecionar = 'comprovantes-recusados';
             }
             
-            $comprovantePagamentoModel = new ComprovantePagamento();
-            $comprovantePagamento = $comprovantePagamentoModel->find($idComprovantePagamento)->current();
-
-            # iniciando os trabalhos com objeto
-            $comprovantePagamentoModel = new ComprovantePagamento(
-                $idComprovantePagamento,
-                $request->getParam('idAgente'),
-                $request->getParam('itemId'),
-                $request->getParam('tpDocumento'),
-                $request->getParam('nrComprovante'),
-                $request->getParam('nrSerie'),
-                $request->getParam('dtEmissao') ? new DateTime(data::dataAmericana($request->getParam('dtEmissao'))) : null,
-                $comprovantePagamento->idArquivo,
-                $request->getParam('tpFormaDePagamento'),
-                new DateTime(),
-                str_replace(',', '.', str_replace('.', '', $request->getParam('vlComprovado'))),
-                $request->getParam('nrDocumentoDePagamento'),
-                $request->getParam('dsJustificativa')
-            );
+            if ($pais == 'Brasil') {
+                $comprovantePagamentoModel = new ComprovantePagamento();
+                $comprovantePagamento = $comprovantePagamentoModel->find($idComprovantePagamento)->current();
+                
+                # iniciando os trabalhos com objeto
+                $comprovantePagamentoModel = new ComprovantePagamento(
+                    $idComprovantePagamento,
+                    $request->getParam('idAgente'),
+                    $request->getParam('itemId'),
+                    $request->getParam('tpDocumento'),
+                    $request->getParam('nrComprovante'),
+                    $request->getParam('nrSerie'),
+                    $request->getParam('dtEmissao') ? new DateTime(data::dataAmericana($request->getParam('dtEmissao'))) : null,
+                    $comprovantePagamento->idArquivo,
+                    $request->getParam('tpFormaDePagamento'),
+                    new DateTime(),
+                    str_replace(',', '.', str_replace('.', '', $request->getParam('vlComprovado'))),
+                    $request->getParam('nrDocumentoDePagamento'),
+                    $request->getParam('dsJustificativa')
+                );
             
-            if($_FILES['arquivo']['name'] != '') {
-                $comprovantePagamentoModel->atualizar(4, true);
+                if($_FILES['arquivo']['name'] != '') {
+                    $comprovantePagamentoModel->atualizar(4, true);
+                } else {
+                    // nao atualiza arquivo se não houver novo upload
+                    $comprovantePagamentoModel->atualizar(4);                               
+                } 
+
+                // internacional
             } else {
-                // nao atualiza arquivo se não houver novo upload
-                $comprovantePagamentoModel->atualizar(4);                               
-            }            
+                
+                // verificar se alterou alguma coisa do idAgente
+                $fornecedorInternacional = new FornecedorInvoice();
+                
+                $dadosFornecedor = array();
+                $dadosFornecedor['dsNome'] = $pais;
+                $dadosFornecedor['dsEndereco'] = $request->getParam('nomeRazaoSocialInternacional');
+                $dadosFornecedor['dsPais'] = $request->getParam('enderecoInternacional');
+                
+                $fornecedorInternacional->update(
+                    $dadosFornecedor,
+                    sprintf('idFornecedorExterior = %d', $request->getParam('idAgente'))
+                );
+                
+                $comprovantePagamentoModel = new ComprovantePagamentoInvoice(
+                    $idComprovantePagamento,
+                    $request->getParam('idAgente'),
+                    $request->getParam('itemId'),
+                    $request->getParam('nif'),
+                    $request->getParam('nrSerieInternacional'),
+                    $request->getParam('dtEmissaoInternacional') ? new DateTime(data::dataAmericana($request->getParam('dtEmissaoInternacional'))) : null,
+                    $request->getParam('arquivo_edit'),
+                    new DateTime(),
+                    str_replace(',', '.', str_replace('.', '', $request->getParam('vlComprovadoInternacional'))),
+                    $request->getParam('dsJustificativaInternacional')
+                );
+                
+                if($_FILES['arquivoInternacional']['name'] != '') {
+                    $comprovantePagamentoModel->atualizar(4, true);
+                } else {
+                    // nao atualiza arquivo se não houver novo upload
+                    $comprovantePagamentoModel->atualizar(4);                               
+                } 
+            }
             
             # View Parameters
             $this->view->comprovantePagamento = $comprovantePagamentoModel->toStdclass();
-
+            
             $this->_helper->flashMessenger('Comprovante enviado com sucesso.');
             $this->_helper->flashMessengerType('CONFIRM');
             $this->_redirect(
@@ -840,8 +880,8 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
                             'action' => $paginaRedirecionar,
                             'idusuario' => $this->view->idusuario,
                             'idpronac' => $request->getParam('idpronac'),
-                            'idComprovantePagamento' => $this->view->comprovantePagamento->comprovantePagamento,
-                        )
+                            'idPlanilhaAprovacao' => $request->getParam('idPlanilhaAprovacao'),
+                        ), null, true
                     )
                 )
             );
@@ -1758,6 +1798,7 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         
         $fornecedorModel = new FornecedorModel();
         $fornecedor = $fornecedorModel->pesquisarFornecedorItem($idPlanilhaAprovacao);
+        
         if ($fornecedor) {
             $fornecedor = (object) array_map('utf8_encode', $fornecedor);
 
@@ -1773,21 +1814,25 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
         
         array_walk($comprovantesDePagamento, function(&$comprovanteDePagamento) use ($fornecedorModel) {
             $comprovanteDePagamento = (object) $comprovanteDePagamento;
-            $fornecedor = $fornecedorModel
+
+            if ($comprovanteDePagamento->idFornecedor) {
+                $fornecedor = $fornecedorModel
                     ->find($comprovanteDePagamento->idFornecedor)
                     ->current();
-            if ($fornecedor) {
-                $cpfCnpj = $fornecedor->CNPJCPF;
-                $fornecedorUsaCnpj = 14 == strlen($cpfCnpj);
-                $fornecedor->CNPJCPF = $fornecedorUsaCnpj ? Mascara::addMaskCNPJ($cpfCnpj) : Mascara::addMaskCPF($cpfCnpj);
-            } else {
+                if ($fornecedor) {
+                    $cpfCnpj = $fornecedor->CNPJCPF;
+                    $fornecedorUsaCnpj = 14 == strlen($cpfCnpj);
+                    $fornecedor->CNPJCPF = $fornecedorUsaCnpj ? Mascara::addMaskCNPJ($cpfCnpj) : Mascara::addMaskCPF($cpfCnpj);
+                }                
+            } else if ($comprovanteDePagamento->idFornecedorExterior) {
                 $fornecedor = new stdClass();
-                $fornecedor->CNPJCPF = '';
+                $fornecedor->CNPJCPF = '<em>Fornecedor estrangeiro</em>';
             }
+            
             $comprovanteDePagamento->fornecedor = $fornecedor;
             unset($comprovanteDePagamento->idFornecedor);
         });
-
+        
         $pais = new Pais();
         $paises = $pais->buscar(array(), 'Descricao');
 
@@ -1814,25 +1859,54 @@ class ComprovarexecucaofinanceiraController extends GenericControllerNew
             $comprovanteAtualizar = current($comprovantePagamentoModel->pesquisarComprovante($idComprovantePagamento));
             
             $this->view->idComprovantePagamento = $idComprovantePagamento;
-            $this->view->vlComprovado = $comprovanteAtualizar['valorComprovado'];
-            $this->view->idAgente = $comprovanteAtualizar['idFornecedor'];
+            $this->view->vlComprovacao = $comprovanteAtualizar['vlComprovacao'];
             
-            $fornecedorModel = new FornecedorModel();
-            $fornecedor = $fornecedorModel->pesquisarFornecedor($comprovanteAtualizar['idFornecedor']);
-            $fornecedor->usaCnpj = 14 == strlen($fornecedor->CNPJCPF);
-            $this->view->CNPJCPF = $fornecedor->CNPJCPF;
-            $this->view->fornecedor = $fornecedor;
-            $this->view->Descricao = $fornecedor->Descricao;
-            $this->view->tpDocumento = $comprovanteAtualizar['tpDocumento'];
-            $this->view->idArquivo = $comprovanteAtualizar['idArquivo'];
-            $this->view->nomeArquivo = $comprovanteAtualizar['nmArquivo'];          
-            $this->view->nrComprovante = $comprovanteAtualizar['nrComprovante'];
-            $this->view->nrSerie = $comprovanteAtualizar['nrSerie'];
-            $this->view->dtEmissao = $comprovanteAtualizar['dtEmissao'];
-            $this->view->tpFormaDePagamento = $comprovanteAtualizar['tpFormaDePagamento'];
-            $this->view->nrDocumentoDePagamento = $comprovanteAtualizar['nrDocumentoDePagamento'];
-            $this->view->JustificativaTecnico = $comprovanteAtualizar['JustificativaTecnico'];
-            $this->view->dsJustificativa = $comprovanteAtualizar['dsJustificativa'];
+            if ($comprovanteAtualizar['idFornecedor']) {
+                $fornecedorModel = new FornecedorModel();
+                $fornecedor = $fornecedorModel->pesquisarFornecedor($comprovanteAtualizar['idFornecedor']);
+                $this->view->paisFornecedor = 'Brasil';
+                $this->view->exterior = false;
+                
+                $this->view->idAgente = $comprovanteAtualizar['idFornecedor'];
+                $fornecedor->usaCnpj = 14 == strlen($fornecedor->CNPJCPF);
+                $this->view->idPlanilhaAprovacao = $idPlanilhaAprovacao;
+                $this->view->CNPJCPF = $fornecedor->CNPJCPF;
+                $this->view->fornecedor = $fornecedor;
+                $this->view->Descricao = $fornecedor->Descricao;
+                $this->view->tpDocumento = $comprovanteAtualizar['tpDocumento'];
+                $this->view->idArquivo = $comprovanteAtualizar['idArquivo'];
+                $this->view->nomeArquivo = $comprovanteAtualizar['nmArquivo'];          
+                $this->view->nrComprovante = $comprovanteAtualizar['nrComprovante'];
+                $this->view->nrSerie = $comprovanteAtualizar['nrSerie'];
+                $this->view->dtEmissao = $comprovanteAtualizar['dtEmissao'];
+                $this->view->tpFormaDePagamento = $comprovanteAtualizar['tpFormaDePagamento'];
+                $this->view->nrDocumentoDePagamento = $comprovanteAtualizar['nrDocumentoDePagamento'];
+                $this->view->JustificativaTecnico = $comprovanteAtualizar['JustificativaTecnico'];
+                $this->view->dsJustificativa = $comprovanteAtualizar['dsJustificativa'];
+                
+            } else if ($comprovanteAtualizar['idFornecedorExterior']) {
+                $fornecedorInvoice = new FornecedorInvoice();
+                
+                $where = array();
+                $where['idFornecedorExterior = ? '] = $comprovanteAtualizar['idFornecedorExterior'];
+                $fornecedor = $fornecedorInvoice->buscar($where);
+                $this->view->paisFornecedor = $fornecedor[0]->dsNome;
+                $this->view->exterior = true;
+
+                $this->view->idAgente = $comprovanteAtualizar['idFornecedorExterior'];
+                $this->view->idPlanilhaAprovacao = $idPlanilhaAprovacao;
+                $this->view->fornecedor = $fornecedor;
+                $this->view->tpDocumento = $comprovanteAtualizar['tpDocumento'];
+                $this->view->idArquivo = $comprovanteAtualizar['idArquivo'];
+                $this->view->nomeArquivo = $comprovanteAtualizar['nmArquivo'];          
+                $this->view->nrComprovante = $comprovanteAtualizar['nrComprovante'];
+                $this->view->nrSerie = $comprovanteAtualizar['nrSerie'];
+                $this->view->dtEmissao = $comprovanteAtualizar['dtEmissao'];
+                $this->view->tpFormaDePagamento = $comprovanteAtualizar['tpFormaDePagamento'];
+                $this->view->nrDocumentoDePagamento = $comprovanteAtualizar['nrDocumentoDePagamento'];
+                $this->view->JustificativaTecnico = $comprovanteAtualizar['JustificativaTecnico'];
+                $this->view->dsJustificativa = $comprovanteAtualizar['dsJustificativa'];
+            }
         }
 
         $this->view->idpronac = $this->getRequest()->getParam('idpronac');

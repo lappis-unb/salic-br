@@ -5,10 +5,15 @@
 </style>
 
 <script type="text/javascript">
-  $(document).ready(function(){
-      $('#vlComprovado').priceFormat({limit: 8});
-      $('#vlComprovadoInternacional').priceFormat({limit: 8});  
-  });
+    $(document).ready(function(){
+	// adiciona zeros a números que não tem todos os dígitos depois do zero (senão quebra)
+	$('#vlComprovado').val(parseFloat($('#vlComprovado').val()).toFixed(2));
+	$('#vlComprovadoInternacional').val(parseFloat($('#vlComprovadoInternacional').val()).toFixed(2));
+
+	// inicializa formatação de preço
+	$('#vlComprovado').priceFormat({limit: 8});
+	$('#vlComprovadoInternacional').priceFormat({limit: 8});  
+    });
 </script>
 
 <?php
@@ -60,13 +65,13 @@
             <li class="second"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => '')) . '?idPronac=' . Seguranca::encrypt($this->idpronac); ?>" title="Ir para In&iacute;cio">Consultar dados do Projeto</a></li>
             <li>Comprovar Execu&ccedil;&atilde;o Financeira</li>
             <li><a href="<?php echo $pagamentoHref; ?>" title="Pagamento" onclick="carregandoModal();">Pagamento</a></li>
-            <li class="last">Comprovar Pagamento</li>
+            <li class="last">Comprovar Pagamento </li>
         </ul>
     </div>
 <?php endif; ?>
 
 <div id="titulo">
-    <div>Comprovar Pagamento
+    <div>Comprovar Pagamento<?php if ($this->idComprovantePagamento) : ?> - editando item<?php else : ?> - cadastrar item<?php endif; ?>
         <?php if (!$this->vrSituacao || !$this->pagCompRecusado) : ?>
         <span class="voltar"><a href="<?php echo $voltarHref; ?>" title="Ir para p&aacute;gina anterior">Voltar</a></span>
         <?php endif; ?>
@@ -105,7 +110,7 @@
                         <td class="destacar"><b>Etapa</b></td>
                         <td class="destacar"><b>Itens de Custo</b></td>
                         <td class="destacar" id="campoValorAprovado"><b>Valor Aprovado</b></td>
-                        <td class="destacar" id="campoValorComprovado"><b>Valor Comprovado</b></td>
+                        <td class="destacar" id="campoValorComprovado"><b>Total Comprovado</b></td>
                     </tr>
                     </thead>
                     <tbody>
@@ -140,7 +145,12 @@
                                 <?php foreach ($this->paises as $pais) : ?>
                                 <option
                                     value="<?php echo $pais->Descricao; ?>"
-                                    <?php echo 'Brasil' == $pais->Descricao ? 'selected="selected"' : ''; ?>
+                                   <?php
+				      				      echo ($this->paisFornecedor == $pais->Descricao) ? 'selected="selected"' : '';
+if ($this->paisFornecedor == '' && $pais->Descricao == 'Brasil') {
+    echo 'selected="selected"';
+}
+?>
                                     >
                                     <?php echo $pais->Descricao; ?>
                                 </option>
@@ -262,7 +272,7 @@
 			  <td class="destacar" align="right"><b>Valor do Item <span style='color:red'>*</span></b></td>
                           <td>
                             <input type="text" name="vlComprovado" size="10" id="vlComprovado"
-                                   value="<?php echo $this->vlComprovado; ?>" />
+                                   value="<?php echo $this->vlComprovacao; ?>" />
                           </td>
                             <td class="destacar" align="right"><b>Anexar comprovante<span style='color:red'>*</span></b></td>
                             <td colspan="2">
@@ -307,7 +317,10 @@
                                     id="nomeRazaoSocialInternacional"
                                     style="width: 400px;"
                                     name="nomeRazaoSocialInternacional"
-                                    null="false"
+                                   null="false"
+				   <?php if ($this->exterior) : ?>
+				   value="<?php echo $this->fornecedor[0]->dsEndereco; ?>"
+				   <?php endif; ?>
                                     />
                             </td>
                         </tr>
@@ -320,7 +333,10 @@
                                     id="enderecoInternacional"
                                     style="width: 400px;"
                                     name="enderecoInternacional"
-                                    />
+				   <?php if ($this->exterior) : ?>
+				   value="<?php echo $this->fornecedor[0]->dsPais; ?>"
+				   <?php endif; ?>
+                                   />
                             </td>
                         </tr>
                         <tr>
@@ -329,14 +345,15 @@
                         <tr>
                             <td class="destacar" align="right" style="width: 125px;"><b>Número do documento<span style='color:red'>*</span></b></td>
                             <td colspan="3">
-                                <input type="text" id="nif" name="nif" null="false" value="<?php echo $this->nif; ?>"/>
+                              <input type="text" id="nif" name="nif" null="false" value="<?php echo $this->nrComprovante; ?>"/>
+
                             </td>
                             <td class="destacar" align="right"><b id="nmSerieTxt" colspan="3">Tipo de Documento</b></td>
                             <td>
                             	<label for="tipo_documento_invoice">Invoice
 	                                <input type="radio" name="nrSerieInternacional" id="tipo_documento_invoice" value="6"
 	                                	<?php
-	                                		if (1 == $this->nrSerie || !$this->nrSerie) :
+	                                		if (6 == $this->nrSerie || !$this->nrSerie) :
 	                                			echo 'checked="checked"';
 	                                		endif;
 	                                	?>
@@ -345,7 +362,7 @@
                             	<label for="tipo_documento_outros">Outros
 	                                <input type="radio" name="nrSerieInternacional" id="tipo_documento_outros" value="7"
 	                                	<?php
-	                                		if (1 == $this->nrSerie) :
+	                                		if (7 == $this->nrSerie) :
 	                                			echo 'checked="checked"';
 	                                		endif;
 	                                	?>
@@ -369,8 +386,8 @@
                         <tr>
 			  <td class="destacar" align="right"><b>Valor do Item <span style='color:red'>*</span></b></td>
                           <td>
-                            <input type="text" name="vlComprovadoInternacional" size="10" id="vlComprovado"
-                                   value="<?php echo $this->vlComprovado; ?>" />
+                            <input type="text" name="vlComprovadoInternacional" size="10" id="vlComprovadoInternacional"
+                                   value="<?php echo $this->vlComprovacao; ?>" />
                           </td>			  
                             <td class="destacar" align="right"><b>Anexar comprovante<span style='color:red'>*</span></b></td>
                             <td colspan="2">
@@ -406,6 +423,7 @@
                     <?php endif; ?>
 		    <?php if ($this->idComprovantePagamento): ?>
 		    <input type="submit" name="frComprovarPagamentoSubmit" id="frComprovarPagamentoSubmit" value="" class="btn_salvar" />
+		    <input type="button" name="incluirNovo" id="incluirNovo" value="" class="btn_novo" />                                                
 		    <?php else: ?>
                     <input type="submit" name="frComprovarPagamentoSubmit" id="frComprovarPagamentoSubmit" value="" class="btn_incluir" />
 		    <?php endif; ?>
@@ -425,7 +443,7 @@
                             <td class="destacar bold">Data Emiss&atilde;o</td>
                             <td class="destacar bold">Documento</td>
                             <td class="destacar bold">Valor Comprovado</td>
-                            <td class="destacar bold">A&ccedil;&atilde;o</td>
+			    <td class="destacar bold">A&ccedil;&atilde;o</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -440,7 +458,13 @@
                             <td><?php echo $comprovante->itemnome; ?></td>
                             <td nowrap><?php echo $comprovante->fornecedor->CNPJCPF; ?></td>
                             <td><?php echo $comprovante->nrComprovante; ?></td>
-                            <td><?php echo $comprovante->tipoDocumentoNome; ?></td>
+                            <td>
+			      <?php if ($comprovante->idFornecedorExterior == '') : ?>
+			      <?php echo $comprovante->tipoDocumentoNome; ?>
+			      <?php else : ?>
+			      <?php echo ($comprovante->tpDocumento == 6) ? 'Invoice' : 'Outros'; ?>
+			      <?php endif; ?>
+			    </td>
                             <td><?php echo $comprovante->dtEmissao; ?></td>
                             <td>
                                 <a
@@ -471,7 +495,7 @@
 			      <?php if ($comprovante->stItemAvaliado == 3): ?>
 			      <span class="bold"><?php echo $comprovacaoTexto[$comprovante->stItemAvaliado]; ?></span>
 			      <?php endif; ?>
-                                <a
+                                <a style="text-decoration: none !important;"
                                     href="
                                         <?php echo $this->url(
                                                 array(
@@ -543,7 +567,8 @@
                     showOn: 'button',
                     buttonImage: '<?php echo $this->baseUrl(); ?>/public/img/ico/calendar.gif',
                     buttonImageOnly: true,
-                    dateFormat:'dd/mm/yy'
+                    dateFormat:'dd/mm/yy',
+                    maxDate: '0'
             });
         });
         $(form).find('[sonumero=true]').keyup(function(){
@@ -803,6 +828,18 @@
             });
         });
 
+	    <?php if ($this->idComprovantePagamento): ?>
+	$("#incluirNovo").click(function() {
+	    window.location = "<?php echo $this->url(array(
+    'controller' => 'comprovarexecucaofinanceira',
+    'action' => 'comprovacaopagamento',
+    'idusuario' => $this->idusuario,
+    'idpronac' => $this->idpronac,  
+    'idPlanilhaAprovacao' => $this->idPlanilhaAprovacao
+), null, true); ?>";
+	});
+	    <?php endif; ?>
+    
         $("#frComprovarPagamentoSubmit").click(function() {
             var msg = ';'
             if (isInvoice()) {
@@ -849,6 +886,7 @@
         function validarParametrosDeComprovacaoDePagamento() {
             var msg = '';
             if (!$("#vlComprovado").val()) { msg += 'Informe o valor do item.<br />'; }
+            if (parseFloat($("#vlComprovado").val()) === 0) { msg += 'O valor do item não pode ser igual a zero.<br />'; }
             if (!$("#idAgente").val()) { msg += 'Informe um fornecedor.<br />'; }
             if (!$("#tpDocumento").val() || 0 == $("#tpDocumento").val()) { msg += 'Selecione o tipo de comprovante.<br />'; }
             if (!$("#nrComprovante").val()) { msg += 'Informe o número do comprovante.<br />'; }
@@ -870,7 +908,11 @@
             if (!$("#nomeRazaoSocialInternacional").val()) { msg += 'Informe o Nome/Razão Social.<br />'; }
             if (!$("#nif").val()) { msg += 'Informe o NIF.<br />'; }
             if (!$("#dtEmissaoInternacional").val()) { msg += 'Informe a data de emissão do comprovante.<br />'; }
-            if (!$("#arquivoInternacional").val()) { msg += 'Selecione um arquivo comprovante para envio.<br />'; }
+	    if ($("#arquivoInternacional").val() == '') {
+		if (!$("#arquivo_edit").val()) { msg += 'Selecione um arquivo comprovante para envio.<br />'; }
+	    } else {
+		if (!$("#arquivoInternacional").val()) { msg += 'Selecione um arquivo comprovante para envio.<br />'; }
+	    }
             return msg;
         }
 
@@ -941,8 +983,9 @@
     }
 
     toggleTabelaComprovacaoPagamentoInvoice();
-
-    var cnpjcpf = document.getElementById('CNPJCPF');
-    mascaraCNPJCPF(cnpjcpf);
+    if (!isInvoice()) {
+	var cnpjcpf = document.getElementById('CNPJCPF');
+	mascaraCNPJCPF(cnpjcpf);
+    }
 
 </script>

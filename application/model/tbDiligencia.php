@@ -171,4 +171,32 @@ class tbDiligencia extends GenericModel
 		return $db->fetchAll($sql);	
 	} // fecha método fnChecarDiligencia()
 
+   /**
+    * Busca diligência por idDiligencia.
+    * 
+    * @param integer $idDiligencia Código da diligência
+    * @return Zend_Db_Table_Row_Abstract Dados da diligência
+    */
+    public function buscarPorIdDiligencia($idDiligencia){
+        $consulta = $this->select();
+        $consulta->setIntegrityCheck(false);
+        $consulta
+            ->from(array('d' => 'tbDiligencia'), array(
+                'codigoDiligencia' => 'idDiligencia',
+                'DtSolicitacao',
+                'texto' => 'Solicitacao'
+            ),'SAC.dbo'
+        )
+            ->join(array('p' => 'vwConsultaProjetoSimplificada'), 'd.idPronac = p.IdPRONAC', array(
+                'pronac' => 'Pronac'
+            ), 'SAC.dbo')
+        ;
+
+        if (!empty($idDiligencia)) {
+            $consulta->where('d.idDiligencia = ?', $idDiligencia);
+        }
+//xd($consulta->assemble());
+        return $this->fetchRow($consulta);
+    }
+    
 } // fecha class

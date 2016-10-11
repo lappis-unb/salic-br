@@ -1,18 +1,11 @@
 <?php
+Class Proponente extends GenericModel{
 
-Class Proponente extends GenericModel {
-
-//    protected $_name = 'SAC.dbo.Projetos';
-
-//    protected $_banco = "SAC";
-//    protected $_schema = "dbo";
-//    protected $_name = "Projetos";
-//    protected $_primary = "IdPRONAC";
     protected $_banco = 'SAC';
     protected $_name = 'Projetos';
     protected $_schema = 'dbo';
     protected $_primary = 'idProjeto';
-    
+
     public function buscarProponenteProjetoDeUsuario($idUsuario){
         $consulta = $this->select();
         $consulta->setIntegrityCheck(false);
@@ -32,7 +25,8 @@ Class Proponente extends GenericModel {
         return $listaResultado;
     }
 
-    public function buscarDados($pronac) {
+    public function buscarDados($pronac)
+    {
         $sql = "SELECT a.idAgente, a.CNPJCPF,n.Descricao AS Proponente,  
 						   CASE   
 						     WHEN LEN(a.CNPJCPF) = 11  

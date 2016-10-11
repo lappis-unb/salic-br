@@ -9,7 +9,7 @@
  * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
- 
+
 require_once "Conexao/Conexao.php";
 require_once "TratarArray/TratarArray.php";
 
@@ -20,6 +20,8 @@ require_once "Arquivo/XML.php";
 require_once "Data/Data.php";
 require_once "Data/FuncoesData.php";
 require_once "Data/DateTimeCalc.php";
+require_once "Controller/AbstractRest.php";
+require_once "Notification/Message.php";
 
 require_once "PDF/PDF.php";
 

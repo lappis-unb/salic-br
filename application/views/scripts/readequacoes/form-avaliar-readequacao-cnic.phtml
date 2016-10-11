@@ -9,20 +9,37 @@
             var dsParecer = CKEDITOR.instances['dsParecer'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,''),
                 texto = CKEDITOR.instances['dsParecer'].getData(),
                 erros = 0,
-                msg = 'Favor preencher os dados obrigatórios!';
-                
+                msgs = [];
+            
             if (dsParecer == ''){
                 erros++;
+                msgs['dados'] = 'Favor preencher o parecer!';
             }
+            
+            $('.comboAvaliacao').each(function() {
+                if ($(this).val() == '') {
+                    erros++;
+                    $(this).css('border', '1px solid red');
+                    msgs['avaliacao'] = 'Preencha as avaliações!';
+                } else {
+                    $(this).css('border', 'none');
+                }
+            });
             
             if(texto.length > 8000){
                 erros++;
-                msg = 'O campo de resposta só permite 8.000 caracteres!';
+                msgs['resposta'] = 'O campo de resposta só permite 8.000 caracteres!';
             }
             
             if(erros > 0) {
+		// parse msgs
+		var msgStr = "";
+		for (var key in msgs) {
+		    msgStr += "<span>" + msgs[key] + "</span><br/>";
+		}
+                
                 $("#alerta").dialog("destroy");
-                $("#alerta").html(msg);
+                $("#alerta").html(msgStr);
                 $("#alerta").dialog({
                     resizable: false,
                     title: 'Alerta!',
@@ -600,7 +617,7 @@
     
     <p align="center">
         <input type="button" class="btn_salvar" name="btn_salvar" id="btn_salvar">
-        <input type="button" class="btn_finalizar" name="btn_salvar" id="btn_finalizar">
+        <input type="button" class="btn_finalizar" name="btn_finalizar" id="btn_finalizar">
         <input type="button" class="btn_voltar" name="btn_voltar" id="btn_voltar">
     </p>
     

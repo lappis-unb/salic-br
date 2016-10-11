@@ -1228,7 +1228,9 @@ public static function planodedistribuicao ($pronac, $idproduto=null)
                  QtdeVendaNormal*PrecoUnitarioNormal as ReceitaNormal,
                  QtdeVendaPromocional*PrecoUnitarioPromocional as ReceitaPro,
                  (QtdeVendaNormal*PrecoUnitarioNormal)
-                 +(QtdeVendaPromocional*PrecoUnitarioPromocional) as ReceitaPrevista
+                 +(QtdeVendaPromocional*PrecoUnitarioPromocional) as ReceitaPrevista,
+                 a.Codigo as idArea,
+                 b.Codigo as idSegmento
                 ')),
             'SAC.dbo')
         ->joinInner(array('y' => 'Projetos'),

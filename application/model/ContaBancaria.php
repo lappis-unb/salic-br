@@ -110,7 +110,7 @@ class ContaBancaria extends GenericModel {
                         'SAC.dbo')
                         ->where('p.IdPRONAC = ?',$idPronac);
         
-        return $db->fetchAll($select);
+        return $db->fetchAll($select, array(), Zend_Db::FETCH_ASSOC);
     }
 
     public function consultarDadosPorPronac($pronac, $orgao = NULL){

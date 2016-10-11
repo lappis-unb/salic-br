@@ -25,6 +25,7 @@ class IndexController extends GenericControllerNew
         $this->_forward("index", "login");
     }
 
+
     /*
      * Pega o IP do usuario
      *
@@ -35,20 +36,64 @@ class IndexController extends GenericControllerNew
         $ip = '';
         if (isset($_SERVER['HTTP_CLIENT_IP']))
             $ip = $_SERVER['HTTP_CLIENT_IP'];
-        else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+        else if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        else if(isset($_SERVER['HTTP_X_FORWARDED']))
+        else if (isset($_SERVER['HTTP_X_FORWARDED']))
             $ip = $_SERVER['HTTP_X_FORWARDED'];
-        else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+        else if (isset($_SERVER['HTTP_FORWARDED_FOR']))
             $ip = $_SERVER['HTTP_FORWARDED_FOR'];
-        else if(isset($_SERVER['HTTP_FORWARDED']))
+        else if (isset($_SERVER['HTTP_FORWARDED']))
             $ip = $_SERVER['HTTP_FORWARDED'];
-        else if(isset($_SERVER['REMOTE_ADDR']))
+        else if (isset($_SERVER['REMOTE_ADDR']))
             $ip = $_SERVER['REMOTE_ADDR'];
         else
             $ip = 'DESCONHECIDO';
 
         return $ip;
+    }
+
+    /**
+     * Envia notificação para o usuário através do aplicativo mobile.
+     *
+     * @param stdClass $projeto
+     */
+    protected function enviarNotificacao(stdClass $projeto) {
+        $modelDispositivo = new Dispositivomovel();
+        $listaDispositivos = $modelDispositivo->listarPorIdPronac($projeto->idPronac);
+        $notification = new Minc_Notification_Message();
+        $notification
+            ->setCpf($projeto->cpf)
+            ->setCodePronac($projeto->idPronac)
+            ->setListDeviceId($modelDispositivo->listarIdDispositivoMovel($listaDispositivos))
+            ->setListResgistrationIds($modelDispositivo->listarIdRegistration($listaDispositivos))
+            ->setTipoMensagem(Dominio_TipoMensagem::CAPTACAO)
+            ->setTitle('Projeto '. $projeto->pronac)
+            ->setText('Recebeu nova mensagem!')
+            ->setListParameters(array('projeto' => $projeto->idPronac))
+            ->send()
+        ;
+        echo var_dump($notification->getResponse()); die;
+    }
+
+    /**
+     * Método para o envio de notificações
+     *
+     * @access public
+     * @param void
+     * @return void
+     */
+    public function notificationAction() {
+        $idPronac = $this->_request->getParam('idPronac');
+
+        # Envia notificação para o usuário através do aplicativo mobile.
+        $modelProjeto = new Projetos();
+        $projeto = $modelProjeto->buscarPorPronac($idPronac?$idPronac:119079);
+        $this->enviarNotificacao((object)array(
+            'cpf' => $projeto->CNPJCPF,
+            'pronac' => $projeto->Pronac,
+            'idPronac' => $projeto->IdPRONAC
+        ));
+
     }
 
     public function loginUsuarioAction()
@@ -57,18 +102,20 @@ class IndexController extends GenericControllerNew
         $this->renderScript("/index/index.phtml");
     }
 
+
     /**
      * Efetua o login no sistema
      * @access public
-     * @param void
-     * @return void
+     * @throws Exception
+     * @throws Zend_Exception
+     * @internal param $void
      */
     public function loginAction(){
         $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
 
-        // recebe os dados do formulário via post
+        // recebe os dados do formulrio via post
         $post     = Zend_Registry::get('post');
-        $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->Login)); // recebe o login sem mêscaras
+        $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->Login)); // recebe o login sem mscaras
         $password = $post->Senha; // recebe a senha
 
         //Pega o IP do usuario
@@ -83,7 +130,7 @@ class IndexController extends GenericControllerNew
         $data = new Zend_Date();
         $timestamp = $data->getTimestamp();
 
-       // VERIFICA SE USUARIO ESTA BANIDO
+        // VERIFICA SE USUARIO ESTA BANIDO
         if(isset($LoginAttempt)){
 
             $TempoBan = $timestamp - strtotime($LoginAttempt->dtTentativa);
@@ -98,18 +145,18 @@ class IndexController extends GenericControllerNew
                     // valida os dados
                     if (empty($username) || empty($password)) // verifica se os campos foram preenchidos
                     {
-                        throw new Exception("Loginf ou Senha inválidos!");
+                        throw new Exception("Login ou Senha invalidos!");
                     }
-                    else if (strlen($username) == 11 && !Validacao::validarCPF($username)) // verifica se o CPF ï¿½ vï¿½lido
+                    else if (strlen($username) == 11 && !Validacao::validarCPF($username)) // verifica se o CPF ? v?lido
                     {
-                        throw new Exception("O CPF informado é invalido!");
+                        throw new Exception("O CPF informado  invalido!");
                     }
-                    else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)) // verifica se o CNPJ ï¿½ vï¿½lido
+                    else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)) // verifica se o CNPJ ? v?lido
                     {
-                        throw new Exception("O CNPJ informado é invalido!");
+                        throw new Exception("O CNPJ informado  invalido!");
                     }
                     else {
-                        // realiza a busca do usuário no banco, fazendo a autenticação do mesmo
+                        // realiza a busca do usurio no banco, fazendo a autenticao do mesmo
                         $Usuario = new Usuario();
                         $buscar = $Usuario->login($username, $password);
 
@@ -119,14 +166,14 @@ class IndexController extends GenericControllerNew
                         {
                             $tbLoginTentativasAcesso->removeTentativa($username,$ip);
 
-                            $auth = Zend_Auth::getInstance(); // instancia da autenticação
+                            $auth = Zend_Auth::getInstance(); // instancia da autentição
 
-                            // registra o primeiro grupo do usuário (pega unidade autorizada, orgï¿½o e grupo do usuário)
+                            // registra o primeiro grupo do usurio (pega unidade autorizada, orgão e grupo do usuário)
                             $Grupo   = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuário
 
                             $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
                             $GrupoAtivo->codGrupo = $Grupo[0]->gru_codigo; // armazena o grupo na sessão
-                            $GrupoAtivo->codOrgao = $Grupo[0]->uog_orgao; // armazena o órgão na sessão
+                            $GrupoAtivo->codOrgao = $Grupo[0]->uog_orgao; // armazena o orgão na sessão
                             $this->orgaoAtivo = $GrupoAtivo->codOrgao;
 
                             // redireciona para o Controller protegido
@@ -134,7 +181,6 @@ class IndexController extends GenericControllerNew
                         } // fecha if
                         else {
                             if($TempoBan > 300){
-//                                xd('Remover Tentativa');
                                 $tbLoginTentativasAcesso->removeTentativa($username,$ip);
                             }
                             $LoginAttempt = $tbLoginTentativasAcesso->consultarAcessoCpf($username,$ip);
@@ -151,7 +197,7 @@ class IndexController extends GenericControllerNew
                             }
 
                             $this->_forward("login", "login");
-                            //throw new Exception("Usuário inexistente!");
+                            //throw new Exception("Usurio inexistente!");
                         }
                     } // fecha else
                 } // fecha try

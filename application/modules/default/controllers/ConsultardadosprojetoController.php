@@ -146,10 +146,13 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
                 'Analise' => $linksGeral[8],
                 'Execucao' => $linksGeral[9],
                 'PrestacaoContas' => $linksGeral[10],
-                'Readequacao_20' => $linksGeral[11]
+                'Readequacao_20' => $linksGeral[11],
+                'Marcas' => $linksGeral[12],
+                'SolicitarProrrogacao' => $linksGeral[13],
+                'ReadequacaoPlanilha' => $linksGeral[14]
             );
             $this->view->fnLiberarLinks = $arrayLinks;
-
+            
             $r = new tbRelatorio();
             $rt = new tbRelatorioTrimestral();
             $rc = new tbRelatorioConsolidado();
@@ -353,12 +356,6 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
                     $cpfProponente 	= !empty($dadosProjeto[0]->CNPJCPF) ? $dadosProjeto[0]->CNPJCPF : '';
                     $respProponente     = 'R';
                     $inabilitado 	= 'N';
-                    
-                    // Indentificando o Proponente
-                    if($cpfLogado == $cpfProponente)
-                    {
-                    	$respProponente = 'P';
-                    }
                     
                     // Verificando se o Proponente est� inabilitado
 	                $inabilitadoDAO = new Inabilitado();
@@ -1035,11 +1032,14 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
             $tbReadequacao = new tbReadequacao();
             $dadosReadequacoes = $tbReadequacao->buscarDadosReadequacoes(array('a.idPronac = ?'=>$idPronac, 'a.siEncaminhamento <> ?'=>12))->toArray();
             
+            $dadosReadequacoesDevolvidas = $tbReadequacao->buscarDadosReadequacoes(array('a.idPronac = ?'=>$idPronac, 'a.siEncaminhamento = ?'=>12, 'a.stAtendimento = ?' => 'E', 'a.stEstado = ?' => 0))->toArray();
+            
             $tbReadequacaoXParecer = new tbReadequacaoXParecer();
             foreach ($dadosReadequacoes as &$dr) {
                 $dr['pareceres'] = $tbReadequacaoXParecer->buscarPareceresReadequacao(array('a.idReadequacao = ?'=>$dr['idReadequacao']))->toArray();
             }
             $this->view->readequacoes = $dadosReadequacoes;
+            $this->view->readequacoesDevolvidas = $dadosReadequacoesDevolvidas;
         }
     }
 

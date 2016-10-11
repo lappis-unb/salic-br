@@ -22,7 +22,7 @@ class spPlanilhaOrcamentaria extends GenericModel {
         $idPronac = preg_replace("/[^0-9]/","", $idPronac); //REMOVE injections
         $tipoPlanilha = preg_replace("/[^0-9]/","", $tipoPlanilha);
 
-        $sql = "exec $this->_banco.dbo.$this->_name $idPronac $tipoPlanilha";
+        $sql = "exec $this->_banco.dbo.$this->_name $idPronac, $tipoPlanilha";
 
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);

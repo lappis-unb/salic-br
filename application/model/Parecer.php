@@ -323,6 +323,7 @@ class Parecer extends GenericModel {
             $select->from(array('p' => 'Parecer'),
                     array(new Zend_Db_Expr('p.idPronac AS Codigo'),
                           new Zend_Db_Expr('p.AnoProjeto+p.Sequencial AS Pronac'),
+                          new Zend_Db_Expr('pr.NomeProjeto AS NomeProjeto'),
                           new Zend_Db_Expr('CASE
                                                 WHEN TipoParecer = \'1\' THEN \'Aprovação\'
                                                 WHEN TipoParecer = \'2\' THEN \'Complementação\'
@@ -337,7 +338,8 @@ class Parecer extends GenericModel {
                                             CASE
                                                 WHEN Enquadramento = \'1\' THEN \'Artigo 26\'
                                                 WHEN Enquadramento = \'2\' THEN \'Artigo 18\'
-                                            END AS Enquadramento')), 'SAC.dbo')
+                                            END AS Enquadramento, 
+                                            DtParecer, ResumoParecer, SugeridoReal')), 'SAC.dbo')
             ->joinLeft(array('e' => 'Enquadramento'),
                 'p.idPronac = e.idPronac',
                 array(''),

@@ -7,6 +7,7 @@
     $(document).ready(function(){
 
         //CARREGAR COMBO DE SEGMENTOS DE ACORDO COM A COMBO DE AREAS
+<?php if (!empty($this->planosDistribuicao)) : ?>
     <?php foreach ($this->planosDistribuicao as $planoDistribuicao): ?>
 		    <?php if(!empty($planoDistribuicao->Area)): ?>
 
@@ -216,6 +217,7 @@
 	    
 	
 	<?php endforeach; ?>
+<?php endif; ?>
     });
 
     //SOMA VALORES NUMERICOS
@@ -318,6 +320,7 @@
     label.error{ color:red; font-weight: normal; }
 </style>
 
+<?php if (!empty($this->planosDistribuicao)) : ?>
     <?php foreach($this->planosDistribuicao as $planoDistribuicao): ?>
     <?php $planoAlterado = ($this->planoDistribuicaoCopia[$planoDistribuicao->idProduto]) ? false : true; ?>
         <table class="tabela">
@@ -450,5 +453,6 @@
 	</tr>
 	</table>
 <?php endforeach; ?>
+<?php endif; ?>
 
 <?php } ?>

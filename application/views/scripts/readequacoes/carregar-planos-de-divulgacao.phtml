@@ -86,7 +86,7 @@
         <?php if(in_array($this->siEncaminhamento, array(4))){ ?>
         <td class="centro">
             <?php if($p->tpSolicitacao != 'N'){ ?>
-            <select class="select_simples comboPlanoDeDivulgacao" style="width: 115px;" idpldd="<?php echo $p->idPlanoDivulgacao; ?>">
+            <select class="select_simples comboPlanoDeDivulgacao comboAvaliacao" style="width: 115px;" idpldd="<?php echo $p->idPlanoDivulgacao; ?>">
                 <option value=""> - Selecione - </option>
                 <option value="D" <?php echo ($p->tpAnaliseTecnica == 'D') ? 'selected="selected"' : ''; ?>>Deferir</option>
                 <option value="I" <?php echo ($p->tpAnaliseTecnica == 'I') ? 'selected="selected"' : ''; ?>>Indeferir</option>
@@ -115,7 +115,7 @@
         <?php if(in_array($this->siEncaminhamento, array(7))){ ?>
         <td class="centro">
             <?php if($p->tpSolicitacao != 'N'){ ?>
-            <select class="select_simples comboPlanoDeDivulgacao" style="width: 115px;" idpldd="<?php echo $p->idPlanoDivulgacao; ?>">
+            <select class="select_simples comboPlanoDeDivulgacao comboAvaliacao" style="width: 115px;" idpldd="<?php echo $p->idPlanoDivulgacao; ?>">
                 <option value=""> - Selecione - </option>
                 <option value="D" <?php echo ($p->tpAnaliseComissao == 'D') ? 'selected="selected"' : ''; ?>>Deferir</option>
                 <option value="I" <?php echo ($p->tpAnaliseComissao == 'I') ? 'selected="selected"' : ''; ?>>Indeferir</option>

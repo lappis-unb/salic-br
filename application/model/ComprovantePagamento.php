@@ -218,8 +218,9 @@ class ComprovantePagamento extends GenericModel
     /**
      * 
      */
-    private function validarCadastrar()
+    private function validarCadastrar($exterior = false)
     {
+
         if (!$this->fornecedor) {
             throw new Exception('Fornecedor inválido.');
         }
@@ -239,13 +240,18 @@ class ComprovantePagamento extends GenericModel
         $projeto = $projetoModel->find($itemModel->find($this->item)->current()->IdPRONAC)->current();
         $dtInicioExecucao = new DateTime($projeto->DtInicioExecucao);
         $dtFimExecucao = new DateTime($projeto->DtFimExecucao);
+        
         if (!$this->dataEmissao || ($this->dataEmissao < $dtInicioExecucao) || ($this->dataEmissao > $dtFimExecucao)) {
             throw new Exception('A data do documento deve estar dentro do período de execução do projeto.');
         }
 
-        if (!$this->comprovanteTipo) {
-            throw new Exception('Forma de pagamento inválida.');
+        // caso seja comprovação de pagamento a empresa do exterior, não precisa comprovar
+        if (!$exterior) {
+            if (!$this->comprovanteTipo) {
+                throw new Exception('Forma de pagamento inválida.');
+            }
         }
+        
         if (!$this->comprovanteNumero) {
             throw new Exception('Número do comprovante inválido.');
         }
@@ -286,7 +292,6 @@ class ComprovantePagamento extends GenericModel
     public function atualizar($status = 4, $atualizarArquivo = false)
     {
     	$this->validarCadastrar();
-        
         // somente mexer no arquivo se houver um arquivo
         if ($atualizarArquivo) {
             $arquivoModel = new ArquivoModel();
@@ -421,57 +426,6 @@ class ComprovantePagamento extends GenericModel
      */
     public function pesquisarComprovantePorItem($item, $idPronac=false, $idEtapa=false, $idProduto = false, $idUFDespesa=false, $idMunicipioDespesa=false)
     {
-        #die($item);
-        /*$select = "SELECT
-                    comp.*,
-                    arq.nmArquivo,
-                    convert(char(10), comp.dtEmissao, 103) as dtEmissao,
-                    (
-                        CASE pa.idProduto
-                            WHEN 0 THEN ('Administração do projeto')
-                            ELSE prod.Descricao
-                        END
-                    ) as produtonome,
-                    pEtapa.Descricao as etapanome,
-                    pit.Descricao as itemnome,
-                    (
-                        CASE tpFormaDePagamento 
-                            WHEN 1 THEN ('Cheque')
-                            WHEN 2 THEN ('Transferência Bancária')
-                            WHEN 3 THEN ('Saque/Dinheiro')
-                        END
-                    ) as tipoFormaPagamentoNome,
-                    (
-                        CASE tpDocumento
-                            WHEN 1 THEN ('Boleto Banc&aacute;rio')
-                            WHEN 2 THEN ('Cupom Fiscal')
-                            WHEN 3 THEN ('Guia de Recolhimento')
-                            WHEN 4 THEN ('Nota Fiscal/Fatura')
-                            WHEN 5 THEN ('Recibo de Pagamento')
-                            WHEN 6 THEN ('RPA')
-                        END
-                    ) as tipoDocumentoNome,
-                    ROUND((pa.QtItem * pa.nrOcorrencia * pa.VlUnitario),2) AS valorAprovado,
-                    (
-                        SELECT sum(b1.vlComprovacao) AS vlPagamento
-                        FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                        INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                        INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
-                        WHERE c1.stAtivo = 'S' AND c1.idPlanilhaAprovacao = pa.idPlanilhaAprovacao
-                        GROUP BY a1.idPlanilhaAprovacao
-                    ) AS valorComprovado
-                FROM bdcorporativo.scSAC.tbComprovantePagamento AS comp
-                    INNER JOIN bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS cpxpa ON cpxpa.idComprovantePagamento = comp.idComprovantePagamento
-                    INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS pa ON pa.idPlanilhaAprovacao = cpxpa.idPlanilhaAprovacao
-                    INNER JOIN SAC.dbo.tbPlanilhaItens AS pit ON pit.idPlanilhaItens = pa.idPlanilhaItem
-                    INNER JOIN SAC.dbo.tbPlanilhaEtapa AS pEtapa ON pa.idEtapa = pEtapa.idPlanilhaEtapa 
-                    INNER JOIN BDCORPORATIVO.scCorp.tbArquivo as arq ON arq.idArquivo = comp.idArquivo
-                    LEFT JOIN SAC.dbo.Produto AS prod ON pa.idProduto = prod.Codigo
-                WHERE 
-                    pa.idPlanilhaAprovacao = ?
-                    AND pa.stAtivo = 'S'
-                ORDER BY prod.Descricao ASC";*/
-
         $select = "SELECT
                     comp.*,
                     arq.nmArquivo,
@@ -485,6 +439,7 @@ class ComprovantePagamento extends GenericModel
                     ) as produtonome,
                     pEtapa.Descricao as etapanome,
                     pit.Descricao as itemnome,
+tpDocumento,
                     (
                         CASE tpFormaDePagamento
                             WHEN 1 THEN ('Cheque')
@@ -494,12 +449,11 @@ class ComprovantePagamento extends GenericModel
                     ) as tipoFormaPagamentoNome,
                     (
                         CASE tpDocumento
-                            WHEN 1 THEN ('Boleto Banc&aacute;rio')
-                            WHEN 2 THEN ('Cupom Fiscal')
-                            WHEN 3 THEN ('Guia de Recolhimento')
-                            WHEN 4 THEN ('Nota Fiscal/Fatura')
-                            WHEN 5 THEN ('Recibo de Pagamento')
-                            WHEN 6 THEN ('RPA')
+                            WHEN 1 THEN ('Cupom Fiscal')
+                            WHEN 2 THEN ('Guia de Recolhimento')
+                            WHEN 3 THEN ('Nota Fiscal/Fatura')
+                            WHEN 4 THEN ('Recibo de Pagamento')
+                            WHEN 5 THEN ('RPA')
                         END
                     ) as tipoDocumentoNome,
                     ROUND((pa.QtItem * pa.nrOcorrencia * pa.VlUnitario),2) AS valorAprovado,
@@ -531,7 +485,6 @@ class ComprovantePagamento extends GenericModel
         $select .= "
                 ORDER BY prod.Descricao ASC";
 
-        #die($select);
         $statement = $this->getAdapter()->query($select, array($item));
 
         return $statement->fetchAll();
@@ -591,7 +544,7 @@ class ComprovantePagamento extends GenericModel
     /**
      * @todo remover esse metodo apos implementacao ideal planilha comprovacao
      */
-    private function comprovarPlanilhaAtualizarStatus($status, $idComprovantePagamento)
+    function comprovarPlanilhaAtualizarStatus($status, $idComprovantePagamento)
     {
         $comprovantePlanilha = new ComprovantePagamentoxPlanilhaAprovacao();
         $comprovantePlanilha->update(

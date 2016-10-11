@@ -1354,7 +1354,8 @@ class AlterarprojetoController extends GenericControllerNew {
 
     public function salvaalterarprojetoAction() {
         $post = Zend_Registry::get('post');
-
+        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        
         //$pronac = addslashes($post->pronac);
         $pronac = $this->_request->getParam("pronac");
         //verficia se o pronac esta criptografado
@@ -1406,7 +1407,7 @@ class AlterarprojetoController extends GenericControllerNew {
         $dados = Null;
         $dados = array(//Monta dados para o historico
             'idPRONAC' => $dadosProjeto->IdPRONAC,
-            'idLogon' => $this->idusuario,
+            'idLogon' => $auth->getIdentity()->usu_codigo,
             'cdArea' => null,
             'cdSegmento' => null,
             'nmProjeto' => null,
@@ -1708,15 +1709,15 @@ class AlterarprojetoController extends GenericControllerNew {
 
     public function alterarplanodistribuicaoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-	$post = Zend_Registry::get('post');
-
-	$pronac = $post->pronac;
+        
+        $pronac = $this->_request->getParam("pronac");
         //verficia se o pronac esta criptografado
         if (strlen($pronac) > 12) {
             $pronac = Seguranca::dencrypt($pronac);
         }
-
-        if (!empty($post->Situacao)) {
+        $situacao = $this->_request->getParam("Situacao");
+        
+        if (!empty($situacao)) {
             $providenciaTomada = $post->justificativa;
         } else {
             $providenciaTomada = '';
@@ -1724,48 +1725,48 @@ class AlterarprojetoController extends GenericControllerNew {
 
         $ano = addslashes(substr($pronac, 0, 2));
         $sequencial = addslashes(substr($pronac, 2, strlen($pronac)));
-
+        
         $arrBusca = array(
             'tbr.anoprojeto =?' => $ano,
             'tbr.sequencial =?' => $sequencial,
         );
         $tblProjeto = new Projetos();
         $validapronac = $tblProjeto->VerificaPronac($arrBusca);
-	$idPronac = $validapronac[0]->IdPRONAC;
+        $idPronac = $validapronac[0]->IdPRONAC;
 	
         if (count($validapronac) == 0) {
             parent::message("Dados obrigat&oacute;rios n&atilde;o informados", "/alterarprojeto/planodistribuicao?pronac=" . $pronac, "ERROR");
         }
-	
-	$dados = Null;
-	$dados = array(//Monta dados para o historico
-		       'idPlanoDistribuicao'       => $post->idPlanoDistribuicao,
-		       'idProjeto'                 => $post->idProjeto,
-		       'Area'                      => $post->areaCultural,
-		       'Segmento'                  => $post->segmentoCultural,
-		       'QtdePatrocinador'          => $post->qtdPatrocinador,
-		       'QtdeProponente'            => $post->qtdDivulgacao,
-		       'QtdeOutros'                => $post->qtdBeneficiarios,
-		       'QtdeVendaNormal'           => $post->qtdenormal,
-		       'QtdeVendaPromocional'      => $post->qtdepromocional,
-		       'QtdeProduzida'             => $post->qtdenormal+$post->qtdePromocional + $post->qtdePatrocinador + $post->qtdBeneficiarios + $post->qtdDivulgacao,
-		       'PrecoUnitarioNormal'       => str_replace(",", ".", str_replace('/\./g', "", $post->preconormal)),
-		       'PrecoUnitarioPromocional'  => str_replace(",", ".", str_replace('/\./g', "", $post->precopromocional)),
-		       );
-	$tblPlanoDistribuicao = new PlanoDistribuicao();
-	$planoDistribuicao = RealizarAnaliseProjetoDAO::planodedistribuicao($idPronac);
-	
-	$retorno = $tblPlanoDistribuicao->salvar($dados);
-	$pronac = Seguranca::encrypt($pronac);
-	if($retorno > 0){
-	  $this->view->pronac = $pronac;
-	  parent::message("Operação realizada com sucesso!", "/alterarprojeto/planodistribuicao?pronac=" . $pronac, "CONFIRM");
-	} else {
-	  $this->view->pronac = $pronac;
-	  parent::message("Não foi possível realizar a operação!", "/alterarprojeto/planodistribuicao?pronac=" . $pronac, "ERROR");
-	}
+        
+        $dados = Null;
+        $dados = array(//Monta dados para o historico
+            'idPlanoDistribuicao'       => $this->_request->getParam('idPlanoDistribuicao'),
+            'idProjeto'                 => $this->_request->getParam('idProjeto'),
+            'Area'                      => $this->_request->getParam('areaCultural'),
+            'Segmento'                  => $this->_request->getParam('segmentoCultural'),
+            'QtdePatrocinador'          => $this->_request->getParam('qtdPatrocinador'),
+            'QtdeProponente'            => $this->_request->getParam('qtdDivulgacao'),
+            'QtdeOutros'                => $this->_request->getParam('qtdBeneficiarios'),
+            'QtdeVendaNormal'           => $this->_request->getParam('qtdenormal'),
+            'QtdeVendaPromocional'      => $this->_request->getParam('qtdepromocional'),
+            'QtdeProduzida'             => $this->_request->getParam('nexemplares'),
+            'PrecoUnitarioNormal'       => str_replace(",", ".", str_replace('/\./g', "", $this->_request->getParam('preconormal'))),
+            'PrecoUnitarioPromocional'  => str_replace(",", ".", str_replace('/\./g', "", $this->_request->getParam('precopromocional'))),
+        );
+        $tblPlanoDistribuicao = new PlanoDistribuicao();
+        $planoDistribuicao = RealizarAnaliseProjetoDAO::planodedistribuicao($idPronac);
+        
+        $retorno = $tblPlanoDistribuicao->salvar($dados);
+        $pronac = Seguranca::encrypt($pronac);
+        if($retorno > 0){
+            $this->view->pronac = $pronac;
+            parent::message("Operação realizada com sucesso!", "/alterarprojeto/planodistribuicao?pronac=" . $pronac, "CONFIRM");
+        } else {
+            $this->view->pronac = $pronac;
+            parent::message("Não foi possível realizar a operação!", "/alterarprojeto/planodistribuicao?pronac=" . $pronac, "ERROR");
+        }
     }
-
+    
     
     /*
      *
@@ -1812,7 +1813,7 @@ class AlterarprojetoController extends GenericControllerNew {
 	      $planoDistribuicao = RealizarAnaliseProjetoDAO::planodedistribuicao($idPronac);
 	      $this->view->planoDistribuicao = $planoDistribuicao;
 	    }
-    
+        
         } else {
             parent::message("PRONAC n&atilde;o localizado!", "Alterarprojeto/consultarprojeto", "ALERT");
         }

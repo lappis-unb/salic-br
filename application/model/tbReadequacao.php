@@ -164,6 +164,9 @@ END dsSolicitacao,
             case 'analisados':
                 $total = $tbReadequacao->count('vwPainelCoordenadorReadequacaoAnalisados' , $where);
                 break;
+            case 'aguardando_publicacao':
+                $total = $tbReadequacao->count('vwPainelReadequacaoAguardandoPublicacao', $where);
+                break;
         }
 
         return $total;
@@ -200,6 +203,9 @@ END dsSolicitacao,
                 break;
             case 'analisados':
                 $select = $this->selectView('vwPainelCoordenadorReadequacaoAnalisados');
+                break;
+            case 'aguardando_publicacao':
+                $select = $this->selectView('vwPainelReadequacaoAguardandoPublicacao');
                 break;
         }
         

@@ -13,8 +13,10 @@
             window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'visualizar-readequacao')); ?>?id="+id;
         });
 
-        $('.finalizarAnaliseReadequacao').click(function(){
-            var id = $(this).attr('idReadequacao');
+        $('.finalizarAnaliseReadequacao').click(function(){          
+            var id = $(this).attr('idReadequacao'),
+                pronacSelecionado = $('#pronacSelecionado').val();
+            
             $("#alerta").dialog("destroy");
             $("#alerta").html('Deseja realmente finalizar a análise da readequação?');
             $("#alerta").dialog({
@@ -27,7 +29,8 @@
                         $(this).dialog('close');
                     },
                     'Sim' : function(){
-                        window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'encaminhar-readequacao-checklist')); ?>?id="+id;
+                        var urlComplemento = (pronacSelecionado != '') ? '&pronac=' + pronacSelecionado : '';
+                        window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'encaminhar-readequacao-checklist')); ?>?id="+id + urlComplemento;
                     }
                 }
             });
@@ -36,6 +39,7 @@
 
         $('.devolverReadequacao').click(function(){
             var id = $(this).attr('idReadequacao');
+            
             $("#alerta").dialog("destroy");
             $("#alerta").html('Deseja realmente devolver a readequação para uma nova análise?');
             $("#alerta").dialog({
@@ -140,7 +144,7 @@
         });
  
         $('.comboFiltro').change(function(){
-            window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel')); ?>?tipoFiltro=" + $(this).val();
+	    $('#formPesquisa').submit();
         });	       
     });
 </script>
@@ -149,7 +153,8 @@
 $situacoes = array(
     'aguardando_distribuicao' => 'Aguardando distribuição',
     'em_analise' => 'Em análise',
-    'analisados' => 'Analisados'
+    'analisados' => 'Analisados',
+    'aguardando_publicacao' => 'Aguardando publicação',
 );
 ?>
 
@@ -180,7 +185,7 @@ $situacoes = array(
             <tr class="divFiltroPesquisa">
                 <td class="destacar bold" width="60">PRONAC</td>
                 <td width="120">
-                    <input type="text" class="input_simples" name="pronac" maxlength="7" style="width: 70px;" value="<?php echo $this->pronac;?>">
+                    <input type="text" class="input_simples" name="pronac" maxlength="7" style="width: 70px;" value="<?php echo $this->pronac;?>" id="pronacSelecionado">
                     <input type="hidden" name="qtde" value="<?php echo $this->intTamPag;?>">
                 </td>
                 <td class="destacar bold" width="60">Situa&ccedil;&atilde;o</td>
@@ -253,13 +258,15 @@ $situacoes = array(
 
     <!-- Tabela com os dados-->
     <?php if($this->qtdRegistros > 0): ?>
-        <table class="tabela tablesorter">
-            <?php if($this->filtro == 'analisados'): ?>
-	    <?php echo $this->partial('readequacoes/partial/analisados.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'conselheiros' => $this->conselheiros, 'paginacao' => $this->paginacao)); ?>
+    <table class="tabela tablesorter">
+            <?php if($this->filtro == 'aguardando_publicacao'): ?>
+	    <?php echo $this->partial('readequacoes/partial/aguardandoPublicacao.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'conselheiros' => $this->conselheiros, 'paginacao' => $this->paginacao, 'pronac' => $this->pronac)); ?>      
+            <?php elseif($this->filtro == 'analisados'): ?>
+	    <?php echo $this->partial('readequacoes/partial/analisados.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'conselheiros' => $this->conselheiros, 'paginacao' => $this->paginacao, 'pronac' => $this->pronac)); ?>
             <?php elseif($this->filtro == 'em_analise'): ?>
-                <?php echo $this->partial('readequacoes/partial/emAnalise.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao)); ?>
+                <?php echo $this->partial('readequacoes/partial/emAnalise.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao, 'pronac' => $this->pronac)); ?>
             <?php else: ?>
-                <?php echo $this->partial('readequacoes/partial/aguardandoDistribuicao.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao)); ?>
+                <?php echo $this->partial('readequacoes/partial/aguardandoDistribuicao.phtml', array('dados' => $this->dados, 'filtro' => $this->filtro, 'paginacao' => $this->paginacao, 'pronac' => $this->pronac)); ?>
             <?php endif;?>
         </table>
 

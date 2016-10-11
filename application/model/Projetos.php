@@ -25,9 +25,6 @@ class Projetos extends GenericModel
         if($objParam->idUsuario) {
             $consulta->where('p.IdUsuario = ?', $objParam->idUsuario);
         }
-        if($objParam->idUsuario) {
-            $consulta->where('p.IdUsuario = ?', $objParam->idUsuario);
-        }
         if($objParam->idProponente) {
             $consulta->where('p.idAgente = ?', (int)$objParam->idProponente);
         }
@@ -57,7 +54,7 @@ class Projetos extends GenericModel
                 'Pronac',
                 'NomeProjeto'))
             ->order(array(
-                'Pronac',
+                'Pronac DESC',
                 'NomeProjeto'))
         ;
         # Filtros
@@ -68,7 +65,6 @@ class Projetos extends GenericModel
             $consulta->limit($objParam->next, (int)$objParam->offset);
         }
 
-//xd($consulta->__toString());
         return $this->fetchAll($consulta);
     }
     
@@ -170,7 +166,9 @@ class Projetos extends GenericModel
             'vlLancamento',
             'stLancamento'
         ), 'dbo')
-        ->where('l.idPronac = ?', (int)$objParam->idPronac);
+        ->where('l.idPronac = ?', (int)$objParam->idPronac)
+        ->order(array('dtLancamento ASC', 'nrLancamento ASC'))
+        ;
         
         # Filtros
         $this->montarFiltrosExtrato($select, $objParam);

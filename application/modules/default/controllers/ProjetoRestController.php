@@ -9,7 +9,7 @@
  * @link http://www.cultura.gov.br
  * @copyright © 2016 - Ministério da Cultura - Todos os direitos reservados.
  */
-class ProjetoRestController extends AbstractRestController {
+class ProjetoRestController extends Minc_Controller_AbstractRest {
     
     public function init(){
         $this->setPublicMethod('get');
@@ -70,6 +70,7 @@ class ProjetoRestController extends AbstractRestController {
         $modelProjeto = new Projetos();
         $resultado = $modelProjeto->buscarPorPronac($pronac);
         $projeto = (object) $resultado->toArray();
+
         if($projeto){
             # Busca lancamentos no Extrato Bancário
             $listaResult = $modelProjeto->buscarAnoExtratoDeProjeto($pronac);
@@ -94,7 +95,7 @@ class ProjetoRestController extends AbstractRestController {
             $projeto->ValorCaptado = number_format($projeto->ValorCaptado, 2, ',', '.');
             $projeto->VlComprovado = number_format($projeto->VlComprovado, 2, ',', '.');
             $projeto->PercCaptado = number_format($projeto->PercCaptado, 2, ',', '.');
-            $projeto->ResumoProjeto = utf8_encode($projeto->ResumoProjeto);
+            $projeto->ResumoProjeto = html_entity_decode(utf8_encode($projeto->ResumoProjeto), ENT_COMPAT, 'UTF-8');
             $projeto->nuLancamento = $numeroLancamentoExtrato;
         }
 

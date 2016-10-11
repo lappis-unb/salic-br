@@ -18,8 +18,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     public function _initPath(){
 
-        $DIR_BANCO      = "bancos_treinamento";
-        $DIR_BANCOP     = "conexao_02";
+        $DIR_BANCO      = "";
+        $DIR_BANCOP     = "";
         $DIR_LIB        = "./library/";                       // bibliotecas
         $DIR_CONFIG     = "./application/configs/$DIR_BANCO.ini"; // configuraççes
         $DIR_CONFIGP    = "./application/configs/config.ini"; // configurações
@@ -140,7 +140,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     public function _initRegistry()
     {
         $DIR_CONFIGP    = "./application/configs/config.ini";
-        $DIR_BANCOP     = "conexao_02";
+        $DIR_BANCOP     = "";
 
         /* configurações do banco de dados */
         $config = new Zend_Config_Ini($DIR_CONFIGP, $DIR_BANCOP);
@@ -155,5 +155,32 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         /* registra a conexão para mudar em ambiente scriptcase */
         Zend_Registry::set('conexao_banco', $DIR_BANCOP);
+    }
+    
+    /**
+     * _initRoutes Texto de descri��o do m�todo.
+     *
+     * @access public
+     * @return void
+     */
+    public function _initRoutes()
+    {
+        $controllerFront = Zend_Controller_Front::getInstance();
+        $restRoute = new Zend_Rest_Route(
+            $controllerFront,
+            array(),
+            array(
+                'default' => array(
+                    'proponente-autenticacao-rest',
+                    'proponente-rest',
+                    'projeto-rest',
+                    'dispositivo-movel-rest',
+                    'mensagem-rest',
+                    'diligencia-rest',
+                    'projeto-extrato-rest',
+                    'projeto-extrato-ano-rest',
+                    'projeto-extrato-mes-rest'
+        )));
+        $controllerFront->getRouter()->addRoute('rest', $restRoute);
     }
 }

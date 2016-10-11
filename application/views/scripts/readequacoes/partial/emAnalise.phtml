@@ -25,7 +25,7 @@
             <td align="center"><?php if ($d->dtEncaminhamento == '') { echo '---'; } else { echo Data::tratarDataZend($d->dtEncaminhamento, 'Brasileira'); } ?></td>
             <td align="center"><?php echo $d->qtDiasEncaminhar ?></td>
             <td><?php if ($d->nmTecnicoParecerista != ''): ?>
-		<?php echo $d->nmTecnicoParecerista; ?>
+<?php echo $d->nmTecnicoParecerista; ?><?php if ($d->idOrgao != 262) { echo  " / <strong>" . $d->sgUnidade . "</strong>"; } ?>
 		<?php else: ?>
 		<strong><?php echo $d->sgUnidade; ?></strong>
 		<?php endif; ?>

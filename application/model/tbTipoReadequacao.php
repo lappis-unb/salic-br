@@ -27,12 +27,17 @@ class tbTipoReadequacao extends GenericModel
         );
 
         $select->where('stReadequacao = ?', 0);
-        $select->orWhere("stReadequacao = 1 and idTipoReadequacao not in (
-            select idTipoReadequacao from SAC.dbo.tbReadequacao where idPronac = $idPronac AND siEncaminhamento != 12 
-        )");
+        $select->where('idTipoReadequacao not in (SELECT
+                  b.idTipoReadequacao FROM SAC.dbo.tbReadequacao b WHERE idPronac = ? AND
+                  b.siEncaminhamento != 15 AND b.stEstado = 0 )', $idPronac);
+
+
+        $select->orWhere("a.stReadequacao = 1 AND a.idTipoReadequacao NOT IN (SELECT
+                                                                 b.idTipoReadequacao FROM SAC.dbo.tbReadequacao b WHERE idPronac = ? AND
+                                                                 b.siEncaminhamento NOT IN (1,12))", $idPronac);
         
         $select->order('2');
-
+        
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
