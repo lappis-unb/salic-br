@@ -56,9 +56,9 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
         if (!empty ($_REQUEST['idPreProjeto'])) {
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
             # verifica se a proposta esta com o minc.
-            $movimentacao = new Proposta_Model_DbTable_Movimentacao();
+            $movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
             $rsStatusAtual = $movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
-            $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
+            $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
         }
 
         $this->idUsuario = isset($arrIdentity['usu_codigo']) ? $arrIdentity['usu_codigo'] : $arrIdentity['idusuario'];

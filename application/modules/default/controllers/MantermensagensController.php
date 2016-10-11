@@ -150,7 +150,7 @@ class MantermensagensController extends MinC_Controller_Action_Abstract {
 //*************************** NOVO *****************************************************
         $num = 0;
         /* Perfil de Coordenador e T�cnico de Adminissibilidade  */
-        $movimentacaoDAO = new Proposta_Model_DbTable_Movimentacao();
+        $movimentacaoDAO = new Proposta_Model_DbTable_TbMovimentacao();
         $atores = $movimentacaoDAO->buscarTecCoordAdmissibilidade($idpronac, $usu_codigo);
         foreach ($atores as $ator) {
             $encaminha[$num]['idAgente'] = $ator->idAgente;
@@ -423,7 +423,7 @@ class MantermensagensController extends MinC_Controller_Action_Abstract {
 //*************************** NOVO *****************************************************
         $num = 0;
         /* Perfil de Coordenador e T�cnico de Adminissibilidade  */
-        $movimentacaoDAO = new Proposta_Model_DbTable_Movimentacao();
+        $movimentacaoDAO = new Proposta_Model_DbTable_TbMovimentacao();
         $atores = $movimentacaoDAO->buscarTecCoordAdmissibilidade($idpronac, $usu_codigo);
         
         foreach ($atores as $ator) {

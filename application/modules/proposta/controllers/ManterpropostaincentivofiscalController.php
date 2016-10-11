@@ -89,9 +89,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
 
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
-            $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
+            $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($this->idPreProjeto);
-            $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
+            $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
 
             //VERIFICA SE A PROPOSTA FOI ENVIADA AO MINC ALGUMA VEZ
             $arrbusca = array();
@@ -410,7 +410,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
-        $this->verificarPermissaoAcesso(true, false, false);
+         $this->verificarPermissaoAcesso(true, false, false);
 
         //recupera parametros
         $get = Zend_Registry::get('get');
@@ -435,9 +435,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             }
 
             $ag = new Agente_Model_DbTable_Agentes();
-            $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto, 'vprp.siVinculoProposta = ?' => 2));
+            $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idpreprojeto = ?' => $idPreProjeto, 'vprp.sivinculoproposta = ?' => 2));
 
-            $verificarvinculoCount = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto))->count();
+            $verificarvinculoCount = $ag->buscarAgenteVinculoProponente(array('vprp.idpreprojeto = ?' => $idPreProjeto))->count();
 
             if ($verificarvinculoCount > 0) {
                 $this->view->verificarsolicitacaovinculo = true;
@@ -487,22 +487,20 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @param void
      * @return objeto
      */
-    public function excluirAction() {
-
-        /* =============================================================================== */
+    public function excluirAction()
+    {
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-        $get = Zend_Registry::get("get");
-        $idPreProjeto = $get->idPreProjeto;
+
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
         //BUSCANDO REGISTRO A SER ALTERADO
-        $tblPreProjeto = new Proposta_Model_PreProjeto();
-        $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
+        $preProjeto = new Proposta_Model_PreProjeto();
+        $preProjeto = $preProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
-        $rsPreProjeto->stEstado = 0;
+        $preProjeto->stestado = 0;
 
-        if ($rsPreProjeto->save()) {
+        if ($preProjeto->save()) {
             parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
         } else {
             parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
@@ -561,7 +559,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
         /*         * ******* MOVIMENTACAO ******** */
         //VERIFICA SE A PROPOSTA ESTA COM O MINC
-        $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
+        $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
         $rsMovimentacao = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
 
         if ($rsMovimentacao->Movimentacao != 95) {
@@ -991,7 +989,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                     $tblAvaliacao->updateEstadoMovimentacao($idPreProjeto);
 
                     //PERSISTE DADOS DA MOVIMENTACAO
-                    $tblMovimentacao = new Proposta_Model_DbTable_Movimentacao();
+                    $tblMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
                     $dados = array("idProjeto" => $idPreProjeto,
                         "Movimentacao" => "96", //satus
                         "DtMovimentacao" => date("Y/m/d H:i:s"),
