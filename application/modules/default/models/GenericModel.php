@@ -146,7 +146,7 @@ class GenericModel extends Zend_Db_Table_Abstract
 
     /**
      * @return string
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      */
     public function getTableName($schema = null, $tableName = null, $isReturnDb = true)
     {
@@ -158,8 +158,8 @@ class GenericModel extends Zend_Db_Table_Abstract
 
     /**
      * @return string
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
-     * @todo Implementar Inversão de controle + Singleton cascateado por Classes.
+     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
+     * @todo Implementar Inversao de controle + Singleton cascateado por Classes.
      */
     public static function getStaticTableName($schema = null, $tableName = null)
     {
@@ -366,7 +366,7 @@ class GenericModel extends Zend_Db_Table_Abstract
      * @param Zend_Db_Table_Abstract::SELECT_WITHOUT_FROM_PART $withFromPart
      * @return MinC_Db_Table_Select
      * @author Wouerner <wouerner@gmail.com>
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      */
     public function select($withFromPart = self::SELECT_WITHOUT_FROM_PART)
     {
@@ -384,7 +384,7 @@ class GenericModel extends Zend_Db_Table_Abstract
      * @return MinC_Db_Table_Select
      * @author Wouerner <wouerner@gmail.com>
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      * @return string
      */
     public static function getConcatExpression()

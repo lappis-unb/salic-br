@@ -42,7 +42,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
         ;
         $cpfLogado = $db->fetchRow($sql);
 
-        //VERIFICAR SE O CPF LOGADO ESTÁ CADASTRADO NO BANCO AGENTES
+        //VERIFICAR SE O CPF LOGADO ESTA CADASTRADO NO BANCO AGENTES
         $sql = $db->select()
             ->from('agentes', 'idagente', $this->getSchema('agentes'))
             ->where('CNPJCPF = ?', $cpfLogado['cpf'])
@@ -61,7 +61,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
         $proponente = empty($proponente) ? 0 :$proponente ;
 
         switch($acao){
-        //-- CHECAR PERMISSÃO PARA ADMINISTRATIVO
+        //-- CHECAR PERMISSAO PARA ADMINISTRATIVO
         case 0 :
             if ($proponente['tipopessoa'] == 0) {
                 if ($cpfLogado['cpf'] == $cpfCnpjProponente) {

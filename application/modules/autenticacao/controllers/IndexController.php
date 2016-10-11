@@ -3,7 +3,7 @@
 /**
  * Controller Login
  * @author tisomar - Politec
- * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+ * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
  * @since 2011
  * @version 1.0
  * @package application
@@ -15,7 +15,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     public $orgaoAtivo;
 
     /**
-     * Reescreve o método init()
+     * Reescreve o metodo init()
      * @access public
      * @param void
      * @return void
@@ -62,7 +62,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                     if($objUnidades) {
                        $objUnidades = $objUnidades->toArray();
                     }
-                    // registra o primeiro grupo do usuário (pega unidade autorizada, orgão e grupo do usuário)
+                    // registra o primeiro grupo do usuario (pega unidade autorizada, orgao e grupo do usuario)
                     $Grupo = array_change_key_case($objUnidades);
                     $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
                     $GrupoAtivo->codGrupo = $Grupo['gru_codigo'];
@@ -75,7 +75,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                     //neste ponto o _forward encaminha o processamento para o metodo login do controller login, que recebe
                     //o post igualmente e tenta encontrar usuario cadastrado em SGCAcesso
                     $this->forward("login-proponente", "index", "autenticacao");
-//                    throw new Exception("Usuário inexistente!");
+//                    throw new Exception("Usuario inexistente!");
                 }
             }
 
@@ -88,14 +88,14 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     }
 
     /**
-     * Método que efetua o login
+     * Metodo que efetua o login
      * @access public
      * @param void
      * @return void
      */
     public function loginProponenteAction()
     {
-        // recebe os dados do formulário via post
+        // recebe os dados do formulario via post
         $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
         $password = $this->getParam('Senha', null);
         $password = str_replace("##menor##", "<", $password);
@@ -109,11 +109,11 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             } else if (strlen($username) == 11 && !Validacao::validarCPF($username)) {
                 # verifica se o CPF e valido
                 parent::message("CPF inv&aacute;lido", "/login/index");
-            } else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)) // verifica se o CNPJ é válido
+            } else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)) // verifica se o CNPJ e valido
             {
                 parent::message("CNPJ inv&aacute;lido", "/login/index");
             } else {
-                // realiza a busca do usuario no banco, fazendo a autenticação do mesmo
+                // realiza a busca do usuario no banco, fazendo a autenticacao do mesmo
                 $Usuario = new Autenticacao_Model_Sgcacesso();
                 $verificaStatus = $Usuario->buscar(array('cpf = ?' => $username))->toArray();
                 if ($verificaStatus) {
@@ -243,7 +243,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 /* ========== VINCULA O RESPONSAVEL A SEU PROPRIO PERFIL DE PROPONENTE ========== */
                 if (count($buscarVisao) > 0) :
                     $tbVinculo = new Agente_Model_DbTable_TbVinculo();
-                    $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $sgcAcessoSave)); // pega o id do responsável cadastrado
+                    $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $sgcAcessoSave)); // pega o id do responsavel cadastrado
                     $dadosVinculo = array(
                         'idAgenteProponente' => $idAgenteProp
                     , 'dtVinculo' => new Zend_Db_Expr('GETDATE()')
@@ -462,19 +462,19 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     public function alterarsenhausuarioAction()
     {
         parent::perfil(0);
-        // autenticação proponente (Novo Salic)
+        // autenticacao proponente (Novo Salic)
 
-        /* ========== INÍCIO ID DO USUÁRIO LOGADO ========== */
+        /* ========== INICIO ID DO USUARIO LOGADO ========== */
         $auth = Zend_Auth::getInstance(); // pega a autentica��o
         $Usuario = new Autenticacao_Model_Usuario();
 
-        // verifica se o usuário logado é agente
+        // verifica se o usuario logado e agente
         $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->usu_identificacao);
         if (isset($auth->getIdentity()->usu_identificacao)) {
-            // caso não tenha idAgente, atribui o idUsuario
+            // caso nao tenha idAgente, atribui o idUsuario
             $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth->getIdentity()->usu_codigo;
             //$this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
-            /* ========== FIM ID DO USUÁRIO LOGADO ========== */
+            /* ========== FIM ID DO USUARIO LOGADO ========== */
 
         }
 
@@ -565,7 +565,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
             // recebe os dados do formul&aacute;rio via post
             $post = Zend_Registry::get('post');
-            $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf)); // recebe o login sem máscaras
+            $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf)); // recebe o login sem mascaras
             $password = $post->senha; // recebe a senha
             $idLogarComo = $post->logarComo;
 
@@ -592,8 +592,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 {
                     $auth = Zend_Auth::getInstance(); // instancia da autentica�?o
 
-                    // registra o primeiro grupo do usu&aacute;rio (pega unidade autorizada, organiza e grupo do usuaáio)
-                    $Grupo = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuário
+                    // registra o primeiro grupo do usu&aacute;rio (pega unidade autorizada, organiza e grupo do usuaaio)
+                    $Grupo = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuario
 
                     $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess?o com o grupo ativo
                     $GrupoAtivo->codGrupo = $Grupo[0]->gru_codigo; // armazena o grupo na sess?o
@@ -615,20 +615,20 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
      */
     public function alterardadosAction()
     {
-        // autenticação proponente (Novo Salic)
+        // autenticacao proponente (Novo Salic)
         parent::perfil(4);
 
-        /* ========== INÍCIO ID DO USUÁRIO LOGADO ========== */
+        /* ========== INICIO ID DO USUARIO LOGADO ========== */
         $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
         $Usuario = new Autenticacao_Model_Usuario();
 
-        // verifica se o usuário logado é agente
+        // verifica se o usuario logado e agente
         $idUsuario = $Usuario->getIdUsuario(null, $auth['cpf']);
 
-        // caso não tenha idAgente, atribui o idUsuario
+        // caso nao tenha idAgente, atribui o idUsuario
         $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth['idusuario'];
         $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
-        /* ========== FIM ID DO USUÁRIO LOGADO ========== */
+        /* ========== FIM ID DO USUARIO LOGADO ========== */
 
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
         $cpf = Mascara::delMaskCPF($auth['cpf']);

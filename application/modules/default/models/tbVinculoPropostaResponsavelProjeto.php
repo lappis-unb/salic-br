@@ -4,7 +4,7 @@
  * Class tbVinculoPropostaResponsavelProjeto
  * @uses GenericModel
  * @author  wouerner <wouerner@gmail.com>
- * @author Vinícius Feitosa da Silva <viniciusfesil@gmail.com>
+ * @author Vinicius Feitosa da Silva <viniciusfesil@gmail.com>
  * @since 18/08/2016 14:29
  */
 class tbVinculoPropostaResponsavelProjeto extends MinC_Db_Table_Abstract

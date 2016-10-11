@@ -1,4 +1,4 @@
- <!-- ========== INÍCIO MENU ========== -->
+ <!-- ========== INICIO MENU ========== -->
 <script language="javascript" type="text/javascript"
         src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
 <script type="text/javascript">
@@ -96,9 +96,9 @@
 
 </script>
 <div id="menu">
-    <!-- início: conteúdo principal #container -->
+    <!-- inicio: conteudo principal #container -->
     <div id="container">
-        <!-- início: navega&ccedil;&atilde;o local #qm0 -->
+        <!-- inicio: navega&ccedil;&atilde;o local #qm0 -->
         <?php
         $get = Zend_Registry::get("get");
         //define id do PreProjeto que sera passado as outras implementacoes
@@ -128,7 +128,7 @@
                 <a class="no_seta"
                    href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index')) . $codProjeto; ?>"
                    title="Ir para Plano de distribui&ccedil;&atilde;o">Plano de distribui&ccedil;&atilde;o</a>
-                <!--<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'index')) . $codProjeto; ?>" title="Ir para Orçamento">Orçamento</a>-->
+                <!--<a class="no_seta" href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'index')) . $codProjeto; ?>" title="Ir para Orcamento">Orcamento</a>-->
                 <a href="#" title="Orcamento" class="planilha">Planilha Or&ccedil;ament&aacute;ria</a>
                 <div id="qm0" class="sanfona sanfonaDiv" style="display: none;">
                     <a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados')) . $codProjeto; ?>"

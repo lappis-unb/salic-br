@@ -63,7 +63,7 @@
 	            // divide a string para colocar cada uma em seu campo
 	            var s = ajax.responseText;
 
-	            if (s == "") // caso os dados retornem vazios ou o cep não exista
+	            if (s == "") // caso os dados retornem vazios ou o cep nao exista
 	            {
 	                logradouro.value               = " ";
 	                tipoLogradouro.options[0].text = " - Selecione - ";
@@ -106,12 +106,12 @@
 
 
 	                // tipoLogradouro
-	                // seleciona o combo de acordo com a lista existente no formulário
+	                // seleciona o combo de acordo com a lista existente no formulario
 	                for (i = 0; i < tipoLogradouro.options.length; i++)
 	                {
 	                    if (txtTipoLogradouro == tipoLogradouro.options[i].text)
 	                    {
-	                        // seleciona o ítem igual
+	                        // seleciona o item igual
 	                        tipoLogradouro.options[i].selected = true;
 	                    }
 	                }
@@ -133,12 +133,12 @@
 
 
 	                // uf
-	                // seleciona o combo de acordo com a lista existente no formulário
+	                // seleciona o combo de acordo com a lista existente no formulario
 	                for (i = 0; i < uf.options.length; i++)
 	                {
 	                    if (txtUF == uf.options[i].text)
 	                    {
-	                        // seleciona o ítem igual
+	                        // seleciona o item igual
 	                        uf.options[i].selected = true;
 	                    }
 	                }
@@ -159,7 +159,7 @@
 	                // preenche o combo com a cidade
 	                else
 	                {
-	                    // deixa apenas um elemento no combo, os outros são excluídos
+	                    // deixa apenas um elemento no combo, os outros sao excluidos
 	                    document.getElementById("cidade").options.length = 0;
 
 	                    // cria um novo option
@@ -176,7 +176,7 @@
 
 	    ajax.send(null);
 
-	} // fecha função buscar_cep()
+	} // fecha funcao buscar_cep()
 
 
 
@@ -185,7 +185,7 @@
 
 </script>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
 		<li class="first"><a href="#" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -197,15 +197,15 @@
 
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
 	<div>Endere&ccedil;os <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM TITULO ========== -->
 
 
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
 
 
@@ -221,7 +221,7 @@
 
 	<div id="formNovo" class="sumir">
 
-		<!-- ========== INÍCIO FORMULÁRIO ENDERECO ========== -->
+		<!-- ========== INICIO FORMULARIO ENDERECO ========== -->
 
 		<form id="form" name="form" action="<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'salvaendereco')); ?>" method="post">
 
@@ -352,7 +352,7 @@
 				</tr>
 			</table>
 
-			<!-- ========== FIM FORMULÁRIO ENDERECO ========== -->
+			<!-- ========== FIM FORMULARIO ENDERECO ========== -->
 
 			<table class="tabela">
 				<tr>
@@ -408,12 +408,12 @@
 	</div>
 
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEUDO ========== -->
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 
 <br clear="all" />

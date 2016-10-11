@@ -157,7 +157,7 @@ For terms of use, see http://www.unicode.org/copyright.html
 		<codesByTerritory territory="BJ">	<!-- Benin -->
 			<telephoneCountryCode code="229"/>
 		</codesByTerritory>
-		<codesByTerritory territory="BL">	<!-- Saint Barthélemy -->
+		<codesByTerritory territory="BL">	<!-- Saint Barthelemy -->
 			<telephoneCountryCode code="590"/>	<!-- French Dept. of Guadeloupe / French Antilles  -->
 		</codesByTerritory>
 		<codesByTerritory territory="BM">	<!-- Bermuda -->
@@ -560,7 +560,7 @@ For terms of use, see http://www.unicode.org/copyright.html
 		<codesByTerritory territory="NA">	<!-- Namibia -->
 			<telephoneCountryCode code="264"/>
 		</codesByTerritory>
-		<codesByTerritory territory="NC">	<!-- New Caledonia (Territoire français d'outre-mer) -->
+		<codesByTerritory territory="NC">	<!-- New Caledonia (Territoire francais d'outre-mer) -->
 			<telephoneCountryCode code="687"/>
 		</codesByTerritory>
 		<codesByTerritory territory="NE">	<!-- Niger -->
@@ -602,7 +602,7 @@ For terms of use, see http://www.unicode.org/copyright.html
 		<codesByTerritory territory="PE">	<!-- Peru -->
 			<telephoneCountryCode code="51"/>
 		</codesByTerritory>
-		<codesByTerritory territory="PF">	<!-- French Polynesia (Tahiti) (Territoire français d'outre-mer) -->
+		<codesByTerritory territory="PF">	<!-- French Polynesia (Tahiti) (Territoire francais d'outre-mer) -->
 			<telephoneCountryCode code="689"/>
 		</codesByTerritory>
 		<codesByTerritory territory="PG">	<!-- Papua New Guinea -->
@@ -617,7 +617,7 @@ For terms of use, see http://www.unicode.org/copyright.html
 		<codesByTerritory territory="PL">	<!-- Poland -->
 			<telephoneCountryCode code="48"/>
 		</codesByTerritory>
-		<codesByTerritory territory="PM">	<!-- Saint Pierre and Miquelon (Collectivité territoriale de la République française) -->
+		<codesByTerritory territory="PM">	<!-- Saint Pierre and Miquelon (Collectivite territoriale de la Republique francaise) -->
 			<telephoneCountryCode code="508"/>
 		</codesByTerritory>
 		<codesByTerritory territory="PN">	<!-- Pitcairn Islands -->
@@ -643,7 +643,7 @@ For terms of use, see http://www.unicode.org/copyright.html
 			<telephoneCountryCode code="974"/>
 		</codesByTerritory>
 		<!-- telephoneCodes territory="EU" -->	<!-- European Union, see specific countries -->
-		<codesByTerritory territory="RE">	<!-- Réunion -->
+		<codesByTerritory territory="RE">	<!-- Reunion -->
 			<telephoneCountryCode code="262"/>	<!-- French Departments & Territories in the Indian Ocean -->
 		</codesByTerritory>
 		<codesByTerritory territory="RO">	<!-- Romania -->
@@ -809,7 +809,7 @@ For terms of use, see http://www.unicode.org/copyright.html
 		<codesByTerritory territory="VU">	<!-- Vanuatu -->
 			<telephoneCountryCode code="678"/>
 		</codesByTerritory>
-		<codesByTerritory territory="WF">	<!-- Wallis and Futuna (Territoire français d'outre-mer) -->
+		<codesByTerritory territory="WF">	<!-- Wallis and Futuna (Territoire francais d'outre-mer) -->
 			<telephoneCountryCode code="681"/>
 		</codesByTerritory>
 		<codesByTerritory territory="WS">	<!-- Samoa -->

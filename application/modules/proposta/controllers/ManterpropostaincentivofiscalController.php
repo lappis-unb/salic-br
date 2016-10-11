@@ -25,7 +25,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     private $usuarioProponente = "N";
 
     /**
-     * Reescreve o método init()
+     * Reescreve o metodo init()
      * @access public
      * @param void
      * @return void
@@ -1207,14 +1207,14 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * Método consultarresponsaveis()
+     * Metodo consultarresponsaveis()
      * UC 89 - Fluxo FA2 - Aceitar Vinculo
      * @access public
      * @param void
      * @return void
      */
     public function consultarresponsaveisAction() {
-        $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity()); // pega a autenticação
+        $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity()); // pega a autenticacao
         $idUsuario = $auth['idusuario'];
         $cpf = $auth['cpf'];
 
@@ -1228,7 +1228,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * Método vincularpropostas()
+     * Metodo vincularpropostas()
      * UC 89 - Fluxo FA6 - Vincular Propostas
      * @access public
      * @param void
@@ -1278,7 +1278,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * Método vincularpropostas()
+     * Metodo vincularpropostas()
      * UC 89 - Fluxo FA8 - Vincular Propostas
      * @access public
      * @param void
@@ -1297,7 +1297,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * Método novoresponsavel()
+     * Metodo novoresponsavel()
      * UC 89 - Fluxo FA4 - Vincular Responsï¿½vel
      * @access public
      * @param void
@@ -1308,7 +1308,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * Método resnovoresponsavel()
+     * Metodo resnovoresponsavel()
      * Retorno do novoresponsavel
      * UC 89 - Fluxo FA4 - Vincular Responsï¿½vel
      * @access public

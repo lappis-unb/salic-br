@@ -129,7 +129,7 @@ For terms of use, see http://www.unicode.org/copyright.html
 			<dayPeriodRule type="earlyAfternoon" from="12:00" before="14:00"/><!-- ŋdɔ -->
 			<dayPeriodRule type="afternoon" from="14:00" before="18:00"/><!-- ɣetrɔ -->
 			<dayPeriodRule type="evening" from="18:00" before="21:00"/><!-- fiẽ -->
-			<dayPeriodRule type="night" from="21:00" before="4:00"/><!-- zã -->
+			<dayPeriodRule type="night" from="21:00" before="4:00"/><!-- za -->
 		</dayPeriodRules>
 		<dayPeriodRules locales="fa">
 			<dayPeriodRule type="weeHours" from="00:00" before="01:00" /><!-- نیمه‌شب -->

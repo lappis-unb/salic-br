@@ -38,15 +38,15 @@ include_once 'inc/menu.inc.php';
 echo "<form action='" . $this->url(array('controller' => 'gerenciarpautareuniao', 'action' => 'gerenciarpresidenteemreuniao')) . "' method='post'>";
 if ($this->consultaProjetosPautaReuniaoEnvioPlenaria[0]->stEstado == 0 and $this->consultaProjetosPautaReuniaoEnvioPlenaria[0]->stPlenaria == 'N')
 {
-    echo "<div id=\"titulo\"><div>Gerenciar Pauta da Reunião Nº: " . $this->consultaProjetosPautaReuniaoEnvioPlenaria[0]->NrReuniao . " - Representante da Vinculada -  ";
-    echo "Status: Plenária Não Iniciada";
+    echo "<div id=\"titulo\"><div>Gerenciar Pauta da Reuniï¿½o Nï¿½: " . $this->consultaProjetosPautaReuniaoEnvioPlenaria[0]->NrReuniao . " - Representante da Vinculada -  ";
+    echo "Status: Plenï¿½ria Nï¿½o Iniciada";
     echo "<span>ID #23A</span> <span class=\"voltar\"><a href=\"#\">Voltar</a></span></div></div>";
     echo "<td></td>";
 }
 else if ($this->consultaProjetosPautaReuniaoEnvioPlenaria[0]->stEstado == 0 and $this->consultaProjetosPautaReuniaoEnvioPlenaria[0]->stPlenaria == 'A')
 {
-    echo "<div id=\"titulo\"><div>Gerenciar Pauta da Reunião Nº: " . $this->consultaProjetosPautaReuniaoEnvioPlenaria[0]->NrReuniao . " - Representante da Vinculada -  ";
-    echo "Status: Plenária Iniciada";
+    echo "<div id=\"titulo\"><div>Gerenciar Pauta da Reuniï¿½o Nï¿½: " . $this->consultaProjetosPautaReuniaoEnvioPlenaria[0]->NrReuniao . " - Representante da Vinculada -  ";
+    echo "Status: Plenï¿½ria Iniciada";
     echo "</div></div>";
     echo "<td></td>";
 }
@@ -57,7 +57,7 @@ echo "</form>";
         <table class="tabela">
             <tr>
                 <td>
-                    <input type="button" id="abrir_fechar" class="btn_adicionar" />Projetos em pauta da Plenária da Reunião Nº.
+                    <input type="button" id="abrir_fechar" class="btn_adicionar" />Projetos em pauta da Plenï¿½ria da Reuniï¿½o Nï¿½.
                     <?php echo $this->consultaProjetosPautaReuniaoEnvioPlenaria[0]->NrReuniao; ?>
                     <?php if (count($this->consultaProjetosPautaReuniaoEnvioPlenaria) > 0)
                     {
@@ -73,14 +73,14 @@ echo "</form>";
         <div id="pautaplenaria">
             <table class="tabela">
                 <tr class="titulo_tabela">
-                    <th>Número</th>
+                    <th>Nï¿½mero</th>
                     <th>Pronac</th>
                     <th>Nome do Projeto</th>
-                    <th>Área do Projeto</th>
+                    <th>ï¿½rea do Projeto</th>
                     <th>Segmento Cultural</th>
-                    <th>Parecer Favorável</th>
+                    <th>Parecer Favorï¿½vel</th>
                     <th>Data do Recebimento</th>
-                    <th>Componente da Comissão</th>
+                    <th>Componente da Comissï¿½o</th>
                 </tr>
 
                 <?php
@@ -112,7 +112,7 @@ echo "</form>";
                         }
                         else
                         {
-                            echo "<td class=\"centro\">Não</td>";
+                            echo "<td class=\"centro\">Nï¿½o</td>";
                         }
                     ?>
                         <td class="centro"><?php echo $this->escape($consultaProjetosPautaReuniao->DataEnvioPauta); ?></td>
@@ -129,7 +129,7 @@ echo "</form>";
             <table class="tabela">
                 <tr>
                     <td>
-                        <input type="button" id="abrir_fechar1" class="btn_adicionar" />Projetos não Submetidos a pauta da Reunião Nº.
+                        <input type="button" id="abrir_fechar1" class="btn_adicionar" />Projetos nï¿½o Submetidos a pauta da Reuniï¿½o Nï¿½.
                     <?php echo $this->consultaProjetosPautaReuniaoEnvioPlenaria[0]->NrReuniao; ?>
                     <?php if (count($this->consultaProjetosPautaReuniaoNaoAnalisado) > 0)
                     {
@@ -146,14 +146,14 @@ echo "</form>";
         <div id="naoanalisados">
             <table class="tabela">
                 <tr class="titulo_tabela">
-                    <th>Número</th>
+                    <th>Nï¿½mero</th>
                     <th>Pronac</th>
                     <th>Nome do Projeto</th>
-                    <th>Área do Projeto</th>
+                    <th>ï¿½rea do Projeto</th>
                     <th>Segmento Cultural</th>
-                    <th>Parecer Favorável</th>
+                    <th>Parecer Favorï¿½vel</th>
                     <th>Data do Recebimento</th>
-                    <th>Componente da Comissão</th>
+                    <th>Componente da Comissï¿½o</th>
                 </tr>
 
                 <?php
@@ -183,7 +183,7 @@ echo "</form>";
                         }
                         else
                         {
-                            echo "<td class=\"centro\">Não</td>";
+                            echo "<td class=\"centro\">Nï¿½o</td>";
                         }
                     ?>
                             <td class="centro"><?php echo $this->escape($consultaProjetosPautaReuniaoNaoAnalisado->DataEnvioPauta); ?></td>
@@ -199,9 +199,9 @@ echo "</form>";
         </div>
     </div>
 
-</div><!-- final: conteÃºdo principal #conteudo -->
+</div><!-- final: conteudo principal #conteudo -->
 
-<!-- inÃ­cio: detalhe final da div conteudo #rodapeConteudo -->
+<!-- inicio: detalhe final da div conteudo #rodapeConteudo -->
 <div id="rodapeConteudo"><span></span></div>
 <!-- final: detalhe final da div conteudo #rodapeConteudo -->
 

@@ -41,7 +41,7 @@ class IndexController extends MinC_Controller_Action_Abstract
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $get = Zend_Registry::get('get');
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
         $this->view->idPerfil = $GrupoAtivo->codGrupo;
 
         $this->view->idPronac = $get->idPronac;

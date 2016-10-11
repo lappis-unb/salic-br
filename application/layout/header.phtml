@@ -19,7 +19,7 @@
         <!-- End Piwik Code -->
         <?php } ?>
 
-        <title>Salic - Sistema de Apoio às Leis de Incentivo à Cultura</title>
+        <title>Salic - Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura</title>
         <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->charset ?>" />
         <meta name="title" content="Sistema Salic" />
         <meta name="description" content="Sistema de Apoio às Leis de Incentivo à Cultura" />
@@ -87,7 +87,7 @@
         <!-- Novo Manter Agentes -->
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/agentes.js"></script>
 
-        <!-- Realizar Análise Projeto -->
+        <!-- Realizar Analise Projeto -->
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/realizaranaliseprojeto.js"></script>
 
         <!-- Analisar Projeto Parecer -->
@@ -109,7 +109,7 @@
             });
 
             /**
-             * Função para mudar o perfil (órgão) do usuário
+             * Funcao para mudar o perfil (órgao) do usuario
              */
             function alterarPerfil(GrupoOrgao){
                 grupo = GrupoOrgao.substring(0, (i = GrupoOrgao.indexOf(':')));
@@ -119,7 +119,7 @@
                 url+= '?codGrupo=' + grupo;
                 url+= '&codOrgao=' + orgao;
                 redirecionar(url);
-            } // fecha função alterarPerfil()
+            } // fecha funcao alterarPerfil()
         </script>
     </head>
 
@@ -186,7 +186,7 @@
                     }
                 });
                 $('.ui-dialog-titlebar-close').remove();
-            } // fecha função logout()
+            } // fecha funcao logout()
         </script>
 
 
@@ -313,7 +313,7 @@
                                     <li><a href="<?php echo $this->url(array('controller' => 'checklistpublicacao', 'action' => 'listas'), '', true); ?>" title="Ir para CheckList de Publicação">CheckList para Publicação</a></li>
                                     <?php } ?>
 
-                                    <?php if (($this->orgaoAtivo == 272 || $this->orgaoAtivo == 166) && ($this->grupoAtivo == 121 || $this->grupoAtivo == 122 || $this->grupoAtivo == 123 || $this->grupoAtivo == 129)) : // restringe ao órgão SACAV && CAP ?>
+                                    <?php if (($this->orgaoAtivo == 272 || $this->orgaoAtivo == 166) && ($this->grupoAtivo == 121 || $this->grupoAtivo == 122 || $this->grupoAtivo == 123 || $this->grupoAtivo == 129)) : // restringe ao órgao SACAV && CAP ?>
                                     <li><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'resultado-extrato-de-conta-captacao'), '', true); ?>" title="Ir para Movimentação Bancária">Movimentação Bancária</a></li>
                                     <?php endif; ?>
 
@@ -333,7 +333,7 @@
 
                                     <?php /*if ($this->grupoAtivo == 94) : ?>
                                     <li><a href="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'confirmacao-pagamento-parecerista'), '', true); ?>" title="Meus pagamentos">Meus Pagamentos</a></li>
-                                    <li><a href="<?php echo $this->url(array('controller' => 'verificarreadequacaodeprojeto', 'action' => 'verificarreadequacaodeprojetoparecerista'), '', true); ?>" title="Verificar Readequação de Projetos">Verificar Readequação de Projeto</a></li>
+                                    <li><a href="<?php echo $this->url(array('controller' => 'verificarreadequacaodeprojeto', 'action' => 'verificarreadequacaodeprojetoparecerista'), '', true); ?>" title="Verificar Readequacao de Projetos">Verificar Readequacao de Projeto</a></li>
                                     <?php endif;*/ ?>
 
                                     <?php if(in_array($this->grupoAtivo, array(94))){ ?>
@@ -512,7 +512,7 @@
 
 
 
-				<!-- ========== INÍCIO MENU PROTOCOLO ========== -->
+				<!-- ========== INICIO MENU PROTOCOLO ========== -->
 				<?php if(in_array($this->grupoAtivo, array(90,91,97,104,109,115))){ ?>
 				<li>
                     <div id="div">
@@ -632,7 +632,7 @@
 									<?php endif; ?>
 
 									<?php /* if ($this->grupoAtivo == 93) : ?>
-									<li><a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'painelferias'), '', true); ?>" title="Pedidos de Férias dos Pareceristas">Pedidos de Férias dos Pareceristas</a></li>
+									<li><a href="<?php echo $this->url(array('controller' => 'agentes', 'action' => 'painelferias'), '', true); ?>" title="Pedidos de Ferias dos Pareceristas">Pedidos de Ferias dos Pareceristas</a></li>
 									<?php endif; */ ?>
 
 									<?php if ($this->grupoAtivo == 137) : ?>
@@ -651,7 +651,7 @@
 
 
 
-				<!-- ========== INICIO MENU PRESTAÇÃO DE CONTAS ========== -->
+				<!-- ========== INICIO MENU PRESTACAO DE CONTAS ========== -->
                 <?php if(in_array($this->grupoAtivo, array(100,124,125,126,132))){ ?>
                     <li>
                         <div id="div">
@@ -707,9 +707,9 @@
                         </div>
                     </li>
                 <?php } ?>
-				<!-- ========== FIM MENU PRESTAÇÃO DE CONTAS ========== -->
+				<!-- ========== FIM MENU PRESTACAO DE CONTAS ========== -->
 
-				<!-- ========== INICIO MENU MOVIMENTAÇÃO BANCÁRIA ========== -->
+				<!-- ========== INICIO MENU MOVIMENTACAO BANCARIA ========== -->
 				<?php /*
 				if ($this->grupoAtivo    == 121
 					|| $this->grupoAtivo == 122
@@ -720,7 +720,7 @@
 					<div id="div">
 						<div id="divleft"></div>
 						<div id="divmenuprincipalcenter">
-							<a href="#menu-movimentacaobancaria" title="Ir para Movimentação Bancária" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Movimentação Bancária</a>
+							<a href="#menu-movimentacaobancaria" title="Ir para Movimentacao Bancaria" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Movimentacao Bancaria</a>
 							<div id="menu-movimentacaobancaria" class="hidden">
 								<ul>
 									<?php if ($this->grupoAtivo == 121 || $this->grupoAtivo == 122 || $this->grupoAtivo == 123 || $this->grupoAtivo == 129) : ?>
@@ -728,7 +728,7 @@
 									<li><a href="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => 'upload'), '', true); ?>" title="Ir para Arquivo de movimenta&ccedil;&atilde;o banc&aacute;ria">Arquivo de Movimenta&ccedil;&atilde;o Banc&aacute;ria</a></li>
 									<li><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'upload'), '', true); ?>" title="Ir para Arquivo de capta&ccedil;&otilde;es n&atilde;o identificadas">Arquivo de Capta&ccedil;&otilde;es n&atilde;o Identificadas</a></li>
 									<li><a href="<?php echo $this->url(array('controller' => 'controlarmovimentacaobancaria', 'action' => ''), '', true); ?>" title="Ir para Extrato da Movimenta&ccedil;&atilde;o Banc&aacute;ria">Extrato da Movimenta&ccedil;&atilde;o Banc&aacute;ria</a></li>
-									<li><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'relatorio'), '', true); ?>" title="Ir para Relat&oacute;rio de Capta&ccedil;&otilde;es não Identificadas">Relat&oacute;rio de Capta&ccedil;&otilde;es n&atilde;o Identificadas</a></li>
+									<li><a href="<?php echo $this->url(array('controller' => 'movimentacaodeconta', 'action' => 'relatorio'), '', true); ?>" title="Ir para Relat&oacute;rio de Capta&ccedil;&otilde;es nao Identificadas">Relat&oacute;rio de Capta&ccedil;&otilde;es n&atilde;o Identificadas</a></li>
 									<?php endif; ?>
 								</ul>
 							</div>
@@ -737,7 +737,7 @@
 					</div>
 				</li>
 				<?php endif; */?>
-				<!-- ========== FIM MENU MOVIMENTAÇÃO BANCÁRIA ========== -->
+				<!-- ========== FIM MENU MOVIMENTACAO BANCARIA ========== -->
 
 				<!-- ========== INICIO MENU RELATORIOS ========== -->
                 <?php if(in_array($this->grupoAtivo, array(90,91,92,93,96,97,103,104,110,114,115,119,120,121,122,123,124,125,126,127,128,131,132,135,138,139))){ ?>
@@ -935,7 +935,7 @@
 
 
 
-		<!-- ========== INICIO MENSAGENS DO PROJETO PARA O USUÁRIO ========== -->
+		<!-- ========== INICIO MENSAGENS DO PROJETO PARA O USUARIO ========== -->
 		<div class="msgALERT sumir" id="mensagensabertasprojeto">
 			<div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msgALERT" onclick="$('.msgALERT').hide();" onkeypress="$('.msgALERT').hide();"/></div>
 			<div>
@@ -944,24 +944,24 @@
 			</div>
 		</div>
 		<div id="novas_mensagens"></div>
-		<!-- ========== FIM MENSAGENS DO PROJETO PARA O USUÁRIO ========== -->
+		<!-- ========== FIM MENSAGENS DO PROJETO PARA O USUARIO ========== -->
 
 
 
-		<!-- ========== INICIO MENSAGENS (ERROS, CONFIRMAÇÕES E ADVERTÊNCIAS) ========== -->
+		<!-- ========== INICIO MENSAGENS (ERROS, CONFIRMACOES E ADVERTENCIAS) ========== -->
 		<?php if (isset($this->message)) : ?>
 		<div class="msg<?php echo $this->message_type; ?>">
 			<div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msg<?php echo $this->message_type; ?>" onclick="$('.msg<?php echo $this->message_type; ?>').hide();" onkeypress="$('.msg<?php echo $this->message_type; ?>').hide();"/></div>
 			<div><?php echo $this->message; ?></div>
 		</div>
 		<?php endif; ?>
-		<!-- ========== FIM MENSAGENS (ERROS, CONFIRMAÇÕES E ADVERTÊNCIAS) ========== -->
+		<!-- ========== FIM MENSAGENS (ERROS, CONFIRMACOES E ADVERTENCIAS) ========== -->
 
 
 
         <?php if(in_array($this->grupoAtivo, array(92,93,94,103,110,118,121,122,123,124,125,126,129,131,132,136))){ ?>
 		<script type="text/javascript">
-		/* Função abaixo está causando conflito em alguns navegadores Firefox e IE. */
+		/* Funcao abaixo esta causando conflito em alguns navegadores Firefox e IE. */
             verificar_mensagens();
             var verificarmensagens = window.setInterval(function(){
             verificar_mensagens();
@@ -991,7 +991,7 @@
 				}
 				, dataType : 'json'
 			});
-		} // fecha função verificar_mensagens()
+		} // fecha funcao verificar_mensagens()
 
         function verificarSemMensagens(){
 			$.ajax({
@@ -1005,7 +1005,7 @@
 				}
 				, dataType : 'json'
 			});
-		} // fecha função verificar_mensagens()
+		} // fecha funcao verificar_mensagens()
 		</script>
         <?php } ?>
 

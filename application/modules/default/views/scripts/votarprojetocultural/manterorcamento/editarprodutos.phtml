@@ -49,7 +49,7 @@ $('.btn_salvar').click(function(){
 		}
 	});
 	if(validar == false){
-		$("#error").html('Dados obrigat�rios n�o informados!');
+		$("#error").html('Dados obrigat�rios n�o informados!');
 		$("#error").dialog('open');
 //		$(".ui-dialog-titlebar-close").remove();
 	}
@@ -150,7 +150,7 @@ function somaValores(){
 include_once 'scripts/manterorcamento/inc/menu.inc.php';
 ?>
 <body>
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 <div id='error'></div>
 <ul>
@@ -162,14 +162,14 @@ include_once 'scripts/manterorcamento/inc/menu.inc.php';
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
 <div>Cadastrar Planilha por Produto <span class="voltar"><a href="#"
 	onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
-<!-- ========== INÍCIO CONTEÚDO ========== -->
-<div id="conteudo"><!-- ========== INÍCIO TABELA DADOS ========== -->
+<!-- ========== FIM TITULO ========== -->
+<!-- ========== INICIO CONTEUDO ========== -->
+<div id="conteudo"><!-- ========== INICIO TABELA DADOS ========== -->
 	<?php foreach ($this->Dados as $dados):?>
 	<form name="form" id="form" action='<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'editarprodutos')); ?>' method='post'>
 	<input type="hidden" name="produto" id="produto" value="<?php echo $dados->CodigoProduto ?>"></input>
@@ -367,7 +367,7 @@ include_once 'scripts/manterorcamento/inc/menu.inc.php';
 <?php endforeach;?>
 
 </div>
-<!-- ========== FIM CONTEÚDO ========== --> <!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM CONTEUDO ========== --> <!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== --> <br clear="all" />
+<!-- ========== FIM RODAPE DO CONTEUDO ========== --> <br clear="all" />
 </body>

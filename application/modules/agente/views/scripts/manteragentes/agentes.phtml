@@ -6,7 +6,7 @@ if($this->grupoAtivo != 118)
 }
 ?>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
 		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -15,12 +15,12 @@ if($this->grupoAtivo != 118)
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
 	<div>Manter Agentes
 		<span class="voltar">
 
-		<?php if (isset($_GET['acao']) && $_GET['acao'] == 'cc' && isset($_GET['cpf']) && !empty($_GET['cpf']) && isset($_GET['idpronac'])) { // pega do readequação ?>
+		<?php if (isset($_GET['acao']) && $_GET['acao'] == 'cc' && isset($_GET['cpf']) && !empty($_GET['cpf']) && isset($_GET['idpronac'])) { // pega do readequacao ?>
 		<a href="<?php echo $this->url(array('controller'=>'solicitaralteracao', 'action'=>'acaoprojeto')); ?>?idpronac=<?php echo $_GET['idpronac']; ?>" title="Voltar">Voltar para a Solicita&ccedil;&atilde;o de Readequa&ccedil;&atilde;o</a>
 		<?php } else {?>
 		<a href="#" onclick="voltar();">Voltar</a>
@@ -29,9 +29,9 @@ if($this->grupoAtivo != 118)
 		</span>
 	</div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM TITULO ========== -->
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
 <div id="confirma"></div>
 
@@ -56,7 +56,7 @@ if($this->grupoAtivo != 118)
 		<input type="hidden" value="<?php echo $this->grupoativo; ?>" id="grupologado" name="grupologado" />
 
 		<div><?php require_once "inc/menuabas.phtml"; // menu abas ?></div>
-		<div><?php require_once "inc/form.phtml"; // formulário ?></div>
+		<div><?php require_once "inc/form.phtml"; // formulario ?></div>
 
 		<table class="tabela">
 			<tr>
@@ -73,12 +73,12 @@ if($this->grupoAtivo != 118)
 
 
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEUDO ========== -->
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 
 <br clear="all" />

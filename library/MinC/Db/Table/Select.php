@@ -2,11 +2,11 @@
 
 /**
  * Sobrescrita da classe para que possamos ajustar o schema de acordo com o Adapter utilizado.
- * Uma das nossas ações é tornar os valores e índices informadoes em minúsculo para funcionar
+ * Uma das nossas acoes e tornar os valores e indices informadoes em minusculo para funcionar
  * com os Adapters desejados.
  *
  * @author Wouerner <wouerner@gmail.com>
- * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+ * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
  * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  * @since 23/08/2016 15:43
  */

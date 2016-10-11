@@ -124,7 +124,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
      * @return bool
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      * @since  10/08/2016
      */
     public function login($username, $password)
@@ -1000,7 +1000,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
 
 
     /**
-     * Buscar os dados do usuário de acordo com login e senha
+     * Buscar os dados do usuario de acordo com login e senha
      * @access public
      * @static
      * @param @username (cpf ou cnpj do usu?rio)

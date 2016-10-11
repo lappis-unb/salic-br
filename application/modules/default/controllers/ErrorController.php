@@ -14,8 +14,8 @@ class ErrorController extends Zend_Controller_Action
 {
 
     /**
-     * Action para exibir mensagem ao usuário não logado que tentou acessar algo
-     * de usuário que necessitam estar autenticados.
+     * Action para exibir mensagem ao usuario nao logado que tentou acessar algo
+     * de usuario que necessitam estar autenticados.
      *
      * @name noauthAction
      *
@@ -33,8 +33,8 @@ class ErrorController extends Zend_Controller_Action
     }
 
     /**
-     * Action para exibir mensagem ao usuário que não tem permissão para visualizar
-     * determinado conteúdo.
+     * Action para exibir mensagem ao usuario que nao tem permissao para visualizar
+     * determinado conteudo.
      *
      * @name notallowedAction
      *
@@ -50,8 +50,8 @@ class ErrorController extends Zend_Controller_Action
     }
 
     /**
-     * Action para exibir mensagem informando que o sistema não encontrou a
-     * página solicitada.
+     * Action para exibir mensagem informando que o sistema nao encontrou a
+     * pagina solicitada.
      *
      * @name notfoundAction
      *
