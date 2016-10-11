@@ -346,6 +346,7 @@ class VerificarAlteracaoCoordenadorController extends MinC_Controller_Action_Abs
     */
     public function solaltlocrelAction()
     {
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
 
         if($_POST)
         {
@@ -391,21 +392,21 @@ class VerificarAlteracaoCoordenadorController extends MinC_Controller_Action_Abs
 
         $recebidoGet = Zend_Registry::get('get');
         $idpedidoalteracao    = $recebidoGet->idpedidoalteracao;
-		$buscaAb = AbrangenciaDAO::buscarDadosAbrangenciaSolicitadaLocal($idpedidoalteracao);
+		$buscaAb = $tbAbrangencia->buscarDadosAbrangenciaSolicitadaLocal($idpedidoalteracao);
         $resultadoBuscaPedidoAlteracao = VerificarAlteracaoProjetoDAO::BuscarDadosGenericos($idpedidoalteracao, $buscaAb[0]->idPedidoAlteracao);
         //$resultadoDadosAlteracaoLocalRealizacao = AbrangenciaDAO::buscarDadosAbrangenciaAlteracao($idpedidoalteracao);
         if (AvaliacaoSubItemPedidoAlteracaoDAO::buscar($resultadoBuscaPedidoAlteracao['idAvaliacao']))
         {
-            $resultadoDadosAlteracaoLocalRealizacao = AbrangenciaDAO::buscarDadosAbrangenciaAlteracaoCoord($idpedidoalteracao, 'COM_AVALIACAO');
+            $resultadoDadosAlteracaoLocalRealizacao = $tbAbrangencia->buscarDadosAbrangenciaAlteracaoCoord($idpedidoalteracao, 'COM_AVALIACAO');
            
         }
         else
         {
-            $resultadoDadosAlteracaoLocalRealizacao = AbrangenciaDAO::buscarDadosAbrangenciaAlteracaoCoord($idpedidoalteracao, 'SEM_AVALIACAO');
+            $resultadoDadosAlteracaoLocalRealizacao = $tbAbrangencia->buscarDadosAbrangenciaAlteracaoCoord($idpedidoalteracao, 'SEM_AVALIACAO');
         }
 
         $arquivos = VerificarAlteracaoProjetoDAO::buscarArquivosSolicitacao($idpedidoalteracao,4,$buscaAb[0]->idPedidoAlteracao);
-         $this->view->resultLocalRel     = AbrangenciaDAO::buscarDadosAbrangenciaSolicitadaLocal($idpedidoalteracao, 'N');
+         $this->view->resultLocalRel     = $tbAbrangencia->buscarDadosAbrangenciaSolicitadaLocal($idpedidoalteracao, 'N');
         $this->view->resultArquivo = $arquivos;
         $this->view->resultAbrangencia = $resultadoDadosAlteracaoLocalRealizacao;
         $this->view->resultConsulta = $resultadoBuscaPedidoAlteracao;

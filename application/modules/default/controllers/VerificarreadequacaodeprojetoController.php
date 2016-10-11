@@ -2105,7 +2105,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
  * FUN��O QUE FINALIZA A SOLICITA��O (GERAL - TELA DE COORDENADOR DE ACOMPANHAMENTO)
  * ************************************************************************************************************************/
  	public function finalizageralAction(){
-
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
             //idAcaoAvaliacaoItemPedidoAlteracao da Tabela BDCORPORATIVO.scSAC.tbAcaoAvaliacaoItemPedidoAlteracao
             $idAcao = $_GET['id'];
 
@@ -2281,7 +2281,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                                 );
 
                                                                     //if (count(AbrangenciaDAO::verificarLocalRealizacao($idProjeto, $x->idMunicipioIBGE)) <= 0) :
-                                    $local = AbrangenciaDAO::cadastrar($dados);
+                                    $local = $tbAbrangencia->cadastrar($dados);
                                 //endif;
                                 //print_r($local);
 
