@@ -44,7 +44,7 @@ abstract class MinC_Test_ControllerActionTestCase extends MinC_Test_Abstract
                 'Login' => ($login) ? $login : $config->login,
                 'Senha' => ($senha) ? $senha : $config->password
             ));
-        //$this->dispatch('/index/login');
+
         $this->dispatch('/autenticacao/index/login');
 
         $this->setAutenticado(true);
