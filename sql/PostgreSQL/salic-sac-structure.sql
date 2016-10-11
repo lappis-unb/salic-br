@@ -3576,6 +3576,9 @@ CREATE TABLE sac.tbMovimentacao
   CONSTRAINT FK_Movimentacao_Verificacao FOREIGN KEY (Movimentacao) REFERENCES sac.Verificacao (idVerificacao)
 );
 CREATE INDEX IX_Movimentacao ON sac.tbMovimentacao (idProjeto);
+CREATE SEQUENCE sac.tbmovimentacao_idmovimentacao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.tbmovimentacao ALTER COLUMN idmovimentacao SET DEFAULT nextval('sac.tbmovimentacao_idmovimentacao_seq');
+ALTER SEQUENCE sac.tbmovimentacao_idmovimentacao_seq OWNED BY sac.tbmovimentacao.idmovimentacao;
 CREATE TABLE sac.tbMovimentacaoBancariaItemxTipoInconsistencia
 (
   idMovimentacaoBancariaItem INT NOT NULL,
