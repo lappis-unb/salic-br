@@ -141,7 +141,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     public function _initCarregarDependenciasComposer()
     {
+        if(APPLICATION_ENV == "development") {
+            ini_set('display_errors', true);
+            error_reporting(E_ALL ^E_NOTICE ^E_WARNING);
+        }
         require_once 'vendor/autoload.php';
+
     }
 
     /**

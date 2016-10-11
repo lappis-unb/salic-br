@@ -5,7 +5,7 @@
  * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
  * @since 06/10/16 11:25
  */
-class Autenticacao_OAuthController extends MinC_Controller_Action_Abstract
+class Autenticacao_OauthController extends MinC_Controller_Action_Abstract
 {
     public function init()
     {
@@ -20,73 +20,35 @@ class Autenticacao_OAuthController extends MinC_Controller_Action_Abstract
          *
          * This is an example on how to instantiate Opauth
          * For this example, Opauth config is loaded from a separate file: opauth.conf.php
-         *
-         */
+            */
 
-        /**
-         * Define paths
-         */
-        define('CONF_FILE', dirname(__FILE__) . '/' . 'opauth.conf.php');
         define('OPAUTH_LIB_DIR', dirname(dirname(__FILE__)) . '/lib/Opauth/');
 
-        /**
-         * Load config
-         */
-        if (!file_exists(CONF_FILE)) {
-            trigger_error('Config file missing at ' . CONF_FILE, E_USER_ERROR);
-            exit();
-        }
+        $config = new Zend_Config_Ini(APPLICATION_PATH. '/configs/config.ini', "oauth");
 
-        require CONF_FILE;
+xd($config);
 
-        /**
-         * Instantiate Opauth with the loaded config
-         */
-        require OPAUTH_LIB_DIR . 'Opauth.php';
         $Opauth = new Opauth($config);
     }
 
     public function oauth2Callback()
     {
-        /**
-         * Callback for Opauth
-         *
-         * This file (callback.php) provides an example on how to properly receive auth response of Opauth.
-         *
-         * Basic steps:
-         * 1. Fetch auth response based on callback transport parameter in config.
-         * 2. Validate auth response
-         * 3. Once auth response is validated, your PHP app should then work on the auth response
-         *    (eg. registers or logs user in to your site, save auth data onto database, etc.)
-         *
-         */
-
-
-        /**
-         * Define paths
-         */
+        /*
         define('CONF_FILE', dirname(__FILE__) . '/' . 'opauth.conf.php');
         define('OPAUTH_LIB_DIR', dirname(dirname(__FILE__)) . '/lib/Opauth/');
 
-        /**
-         * Load config
-         */
+
         if (!file_exists(CONF_FILE)) {
             trigger_error('Config file missing at ' . CONF_FILE, E_USER_ERROR);
             exit();
         }
         require CONF_FILE;
 
-        /**
-         * Instantiate Opauth with the loaded config but not run automatically
-         */
+
         require OPAUTH_LIB_DIR . 'Opauth.php';
         $Opauth = new Opauth($config, false);
 
 
-        /**
-         * Fetch auth response, based on transport configuration for callback
-         */
         $response = null;
 
         switch ($Opauth->env['callback_transport']) {
@@ -106,17 +68,9 @@ class Autenticacao_OAuthController extends MinC_Controller_Action_Abstract
                 break;
         }
 
-        /**
-         * Check if it's an error callback
-         */
         if (array_key_exists('error', $response)) {
             echo '<strong style="color: red;">Authentication error: </strong> Opauth returns error auth response.' . "<br>\n";
-        } /**
-         * Auth response validation
-         *
-         * To validate that the auth response received is unaltered, especially auth response that
-         * is sent through GET or POST.
-         */
+        }
         else {
             if (empty($response['auth']) || empty($response['timestamp']) || empty($response['signature']) || empty($response['auth']['provider']) || empty($response['auth']['uid'])) {
                 echo '<strong style="color: red;">Invalid auth response: </strong>Missing key auth response components.' . "<br>\n";
@@ -125,18 +79,13 @@ class Autenticacao_OAuthController extends MinC_Controller_Action_Abstract
             } else {
                 echo '<strong style="color: green;">OK: </strong>Auth response is validated.' . "<br>\n";
 
-                /**
-                 * It's all good. Go ahead with your application-specific authentication logic
-                 */
             }
         }
 
 
-        /**
-         * Auth response dump
-         */
         echo "<pre>";
         print_r($response);
         echo "</pre>";
+        */
     }
 }
