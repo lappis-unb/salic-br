@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class Proposta_Model_DbTable_Movimentacao
+ * Class Proposta_Model_DbTable_TbMovimentacao
  *
- * @name Proposta_Model_DbTable_Movimentacao
+ * @name Proposta_Model_DbTable_TbMovimentacao
  * @package Modules/Proposta
  * @subpackage Models/DbTable
  *
@@ -12,11 +12,12 @@
  *
  * @link http://salic.cultura.gov.br
  */
-class Proposta_Model_DbTable_Movimentacao extends MinC_Db_Table_Abstract
+class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
 {
     protected $_banco = "sac";
     protected $_schema = 'sac';
     protected $_name = "tbmovimentacao";
+    protected $_primary = "idmovimentacao";
 
     /**
      * Grava registro. Se seja passado um ID ele altera um registro existente
@@ -56,13 +57,13 @@ class Proposta_Model_DbTable_Movimentacao extends MinC_Db_Table_Abstract
     public function buscarStatusAtualProposta($idPreProjeto) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
-        $slct->from($this->_name,['*'], $this->_schema);
+        $slct->from($this->_name, $this->_getCols(), $this->_schema);
         //echo $slct; die;
         $slct->where('idprojeto = ? ', $idPreProjeto);
         $slct->where('stestado = ? ', 0);
         $slct->order(array("dtmovimentacao DESC"));
-
-        return $this->fetchRow($slct);
+        $arrResult = $this->fetchRow($slct);
+        return ($arrResult) ? $arrResult->toArray() : array();
     }
 
     public function buscarTecCoordAdmissibilidade($idPronac, $idusuario=null) {

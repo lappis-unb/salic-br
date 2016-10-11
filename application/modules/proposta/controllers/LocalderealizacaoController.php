@@ -50,9 +50,9 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
 
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
-            $Movimentacao = new Proposta_Model_DbTable_Movimentacao();
+            $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
-            $this->view->movimentacaoAtual = isset($rsStatusAtual->Movimentacao) ? $rsStatusAtual->Movimentacao : '';
+            $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
         }else {
             if($_REQUEST['idPreProjeto'] != '0'){
                 parent::message("Necessário informar o número da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
@@ -79,7 +79,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         }
 
         //(Enviar Proposta ao MinC , Excluir Proposta)
-        $mov = new Proposta_Model_DbTable_Movimentacao();
+        $mov = new Proposta_Model_DbTable_TbMovimentacao();
         $movBuscar = $mov->buscar(array('idprojeto = ?' => $idPreProjeto), array('idmovimentacao desc'), 1, 0)->current();
 
         if(isset($movBuscar->Movimentacao) && $movBuscar->Movimentacao != 95) {

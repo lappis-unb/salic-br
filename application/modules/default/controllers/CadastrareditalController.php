@@ -2232,7 +2232,7 @@ class CadastrareditalController extends MinC_Controller_Action_Abstract
         $this->stSomenteLeitura = 'S';
         $stSomenteLeituraAux = $this->_request->getParam('stSomenteLeitura');
         if($stSomenteLeituraAux != $this->stSomenteLeitura && $this->idPreProjeto && !isset($auth->getIdentity()->usu_codigo)){
-            $tbMovimentacaoDAO = new Proposta_Model_DbTable_Movimentacao();
+            $tbMovimentacaoDAO = new Proposta_Model_DbTable_TbMovimentacao();
             $where = array(
                 'idProjeto = ?'     =>  $this->idPreProjeto
                 ,'Movimentacao = ?' =>  $this->Movimentacao
