@@ -15,20 +15,16 @@ class Autenticacao_OauthController extends MinC_Controller_Action_Abstract
 
     public function indexAction()
     {
-        /**
-         * Opauth example
-         *
-         * This is an example on how to instantiate Opauth
-         * For this example, Opauth config is loaded from a separate file: opauth.conf.php
-            */
+        $this->redirect("/autenticacao/oauth/logincidadao");
+    }
 
-        define('OPAUTH_LIB_DIR', dirname(dirname(__FILE__)) . '/lib/Opauth/');
-
-        $config = new Zend_Config_Ini(APPLICATION_PATH. '/configs/config.ini', "oauth");
-
-xd($config);
-
-        $Opauth = new Opauth($config);
+    public function logincidadaoAction()
+    {
+        $oauthConfig = new Zend_Config_Ini(APPLICATION_PATH. '/configs/application.ini', "oauth");
+        $oauthConfigArray = $oauthConfig->toArray();
+        $config = $oauthConfigArray['config'];
+        //$opauth = new MinC_OAuth_Strategy_LoginCidadaoStrategy($config);
+        $opauth = new Opauth($config, true);
     }
 
     public function oauth2Callback()
