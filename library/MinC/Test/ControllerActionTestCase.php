@@ -41,8 +41,8 @@ abstract class MinC_Test_ControllerActionTestCase extends MinC_Test_Abstract
 
         $this->request->setMethod('POST')
             ->setPost(array(
-                'Login' => ($login) ? $login : $config->login,
-                'Senha' => ($senha) ? $senha : $config->password
+                'Login' => ($login) ? $login : $config->test->params->login,
+                'Senha' => ($senha) ? $senha : $config->test->params->password
             ));
 
         $this->dispatch('/autenticacao/index/login');

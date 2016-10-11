@@ -58,7 +58,11 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     public function init()
     {
         //SE CAIU A SECAO REDIRECIONA
+        //$auth = Zend_Auth::getInstance();
+
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $arrAuth = array_change_key_case((array) $auth->getIdentity());
+
         $this->_msg = $this->_helper->getHelper('FlashMessenger');
         $this->_url = $this->_helper->getHelper('Redirector');
         $this->_type = $this->_helper->getHelper('FlashMessengerType');
@@ -74,37 +78,38 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         }
 
         $this->_urlPadrao = Zend_Controller_Front::getInstance()->getBaseUrl();
-        if (isset($auth->getIdentity()->usu_codigo)) {
+        if (isset($arrAuth['usu_codigo'])) {
             $Usuario = new Autenticacao_Model_Usuario();
-            $Agente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
+            $Agente = $Usuario->getIdUsuario($arrAuth['usu_codigo']);
             $idAgente = $Agente['idagente'];
             // manda os dados para a visao
             $this->view->idAgente = $idAgente;
         }
-        @$cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
+//        @$cpf = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_identificacao : $auth->getIdentity()->Cpf;
+        $cpf = isset($arrAuth['usu_codigo']) ? $arrAuth['usu_identificacao'] : $arrAuth['cpf'];
 
         if ($cpf) {
 
             # Busca na SGCAcesso
             $sgcAcesso = new Autenticacao_Model_Sgcacesso();
-            $buscaAcesso = $sgcAcesso->buscar(array('Cpf = ?' => $cpf));
+            $acessos = $sgcAcesso->findBy(array('cpf' => $cpf));
 
             # Busca na Usuarios
-            $usuarioDAO = new Autenticacao_Model_Usuario();
-            $buscaUsuario = $usuarioDAO->buscar(array('usu_identificacao = ?' => $cpf));
+            $mdlusuario = new Autenticacao_Model_Usuario();
+            $usuario = $mdlusuario->findBy(array('usu_identificacao' => $cpf));
 
             # Busca na Agentes
-            $agentesDAO = new Agente_Model_DbTable_Agentes();
-            $buscaAgente = $agentesDAO->BuscaAgente($cpf);
+            $tblAgentes = new Agente_Model_DbTable_Agentes();
+            $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
 
-            if (count($buscaAcesso) > 0) {
-                $this->idResponsavel = $buscaAcesso[0]->idusuario;
+            if ($acessos) {
+                $this->idResponsavel = $acessos['idusuario'];
             }
-            if (count($buscaAgente) > 0) {
-                $this->idAgente = $buscaAgente[0]->idAgente;
+            if ($agente) {
+                $this->idAgente = $agente['idagente'];
             }
-            if (count($buscaUsuario) > 0) {
-                $this->idUsuario = $buscaUsuario[0]->usu_codigo;
+            if ($usuario) {
+                $this->idUsuario = $usuario['usu_codigo'];
             }
 
             $this->view->idAgenteKeyLog = $this->idAgente;

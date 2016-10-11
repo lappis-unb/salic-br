@@ -67,7 +67,12 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
         }
 
         // configurações do banco de dados (seta uma nova conexï¿½o no arquivo config.ini)
-        $config = new Zend_Config_Ini('./application/configs/config.ini', $conexao_scriptcase);
+
+        $config = new Zend_Config_Ini(
+            APPLICATION_PATH. '/configs/application.ini',
+            $conexao_scriptcase
+        );
+
         $db = Zend_Db::factory($config->db);
         Zend_Db_Table::setDefaultAdapter($db);
 

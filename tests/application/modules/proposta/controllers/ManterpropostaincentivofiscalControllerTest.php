@@ -6,9 +6,11 @@ class ManterpropostaincentivofiscalControllerTest extends MinC_Test_ControllerAc
     public function testListarpropostaAction()
     {
         $this->autenticar();
+        $this->resetRequest()
+            ->resetResponse();
         $this->request->setMethod('GET');
         $this->dispatch('/autenticacao/perfil/alterarperfil?codGrupo=1111&codOrgao=2222');
-        $this->assertRedirectTo('/principalproponente', 'OK');
+        $this->assertRedirectTo('/principalproponente');
         //$this->dispatch('/principalproponente');
         //$this->assertModule('default');
 
