@@ -470,7 +470,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->distinct();
-        $slct->from(array('a' => $this->_name), array(), array(), 'Agentes.dbo');
+        $slct->from(array('a' => $this->_name), array(), array(), $this->getSchema('agentes'));
 
         $slct->joinInner(array('n' => 'Nomes'), 'a.idAgente = n.idAgente', array('n.idAgente AS idParecerista', 'n.Descricao AS Nome'));
 
@@ -513,11 +513,11 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct->distinct();
         $slct->from(
             array('a' => $this->_name),
-            array(), 'AGENTES.dbo'
+            array(), $this->getSchema('agentes')
         );
         $slct->joinInner(
             array('n' => 'Nomes'), 'a.idAgente = n.idAgente',
-            array('u.usu_codigo AS id', 'n.Descricao AS nome'), 'AGENTES.dbo'
+            array('u.usu_codigo AS id', 'n.Descricao AS nome'), $this->getSchema('agentes')
         );
         $slct->joinInner(
             array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_Identificacao AND sis_codigo = 21 AND (gru_codigo = 94 OR gru_codigo = 105)',
@@ -525,11 +525,11 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         );
         $slct->joinInner(
             array('v' => 'Visao'), 'n.idAgente = v.idAgente',
-            array(), 'AGENTES.dbo'
+            array(), $this->getSchema('agentes')
         );
         $slct->joinInner(
             array('c' => 'tbCredenciamentoParecerista'), 'a.idAgente = c.idAgente',
-            array(), 'AGENTES.dbo'
+            array(), $this->getSchema('agentes')
         );
 
         $dadosWhere["v.Visao = ?"] = 209;
@@ -604,7 +604,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             , array(
                 "nmParecerista" => "nm.Descricao"
             )
-            , 'AGENTES.dbo'
+            , $this->getSchema('agentes')
         );
         $select->joinLeft(
             array("cp" => "tbCredenciamentoParecerista")
@@ -613,7 +613,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
                 "nmParecerista" => "nm.Descricao",
                 "qtPonto"
             )
-            , 'AGENTES.dbo'
+            , $this->getSchema('agentes')
         );
         $select->joinLeft(
             array("ar" => "Area")
@@ -621,7 +621,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             , array(
                 'Area' => 'ar.Descricao'
             )
-            , 'SAC.dbo'
+            , $this->_schema
         );
         $select->joinLeft(
             array("seg" => "Segmento")
@@ -629,7 +629,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             , array(
                 'Segmento' => 'seg.Descricao'
             )
-            , 'SAC.dbo'
+            , $this->_schema
         );
         $select->joinLeft(
             array("au" => "tbAusencia")
@@ -638,7 +638,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
                 'au.dtFimAusencia',
                 'au.dtInicioAusencia',
             )
-            , 'AGENTES.dbo'
+            , $this->getSchema('agentes')
         );
         $select->joinInner(
             array("usu" => "Usuarios")
@@ -656,7 +656,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             array("org" => "Orgaos")
             , "org.Codigo = uog.uog_orgao"
             , array()
-            , 'SAC.dbo'
+            , $this->_schema
         );
 
         $select->where('uog.uog_grupo = 94');
@@ -708,19 +708,19 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct->setIntegrityCheck(false);
         $slct->from(array('a' => $this->_name),
             array('CNPJCPFDirigente'=>'a.CNPJCPF','idAgente')
-            ,'AGENTES.dbo'
+            ,$this->getSchema('agentes')
         );
 
         $slct->joinInner(array('v' => 'Vinculacao'),
             'a.idAgente = v.idAgente',
             array()
-            ,'AGENTES.dbo'
+            ,$this->getSchema('agentes')
         );
 
         $slct->joinInner(array('n' => 'Nomes'),
             'a.idAgente = n.idAgente',
             array('NomeDirigente'=>'n.Descricao')
-            ,'AGENTES.dbo'
+            ,$this->getSchema('agentes')
         );
 
         foreach ($where as $coluna=>$valor)
@@ -751,24 +751,24 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct->from(array('a' => $this->_name),
             array('a.CNPJCPF',
                 'a.idAgente'),
-            'AGENTES.dbo'
+            $this->getSchema('agentes')
         );
         $slct->joinInner(array('e' => 'EnderecoNacional'),
             'a.idAgente = e.idAgente',
             array(),
-            'AGENTES.dbo'
+            $this->getSchema('agentes')
         );
         $slct->joinInner(array('mun' => 'Municipios'),
             'mun.idMunicipioIBGE = e.Cidade',
             array('mun.idMunicipioIBGE',
                 'mun.idUFIBGE',
                 'mun.Descricao as DescricaoMunicipio'),
-            'AGENTES.dbo'
+            $this->getSchema('agentes')
         );
         $slct->joinInner(array('uf' => 'UF'),
             'uf.idUF = mun.idUFIBGE',
             array('*'),
-            'AGENTES.dbo'
+            $this->getSchema('agentes')
         );
 
         foreach ($where as $coluna=>$valor)
@@ -929,11 +929,11 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(array('a' => $this->_name),
-            array('CNPJCPF AS CNPJCPFProponente'),'AGENTES.dbo'
+            array('CNPJCPF AS CNPJCPFProponente'),$this->getSchema('agentes')
         );
         $slct->joinInner(array('b' => 'tbVinculo'),
             'a.idAgente = b.idAgenteProponente',
-            array('idVinculo', 'siVinculo', 'idUsuarioResponsavel'),'AGENTES.dbo'
+            array('idVinculo', 'siVinculo', 'idUsuarioResponsavel'),$this->getSchema('agentes')
         );
         $slct->joinInner(array('c' => 'SGCacesso'),
             'a.CNPJCPF = c.Cpf',
@@ -941,7 +941,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         );
         $slct->joinInner(array('d' => 'Nomes'),
             'b.idAgenteProponente = d.idAgente',
-            array('Descricao AS Proponente'),'AGENTES.dbo'
+            array('Descricao AS Proponente'),$this->getSchema('agentes')
         );
         $slct->joinInner(array('e' => 'SGCacesso'),
             'e.IdUsuario = b.idUsuarioResponsavel',
