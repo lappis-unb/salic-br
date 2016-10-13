@@ -326,6 +326,8 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
     */
     public function solaltlocrelAction()
     {
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
+
         if($_POST)
         {
             $recebidoPost = Zend_Registry::get('post');
@@ -351,20 +353,20 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 
         $recebidoGet = Zend_Registry::get('get');
         $idpedidoalteracao    = $recebidoGet->idpedidoalteracao;
-        $buscaAb = AbrangenciaDAO::buscarDadosAbrangenciaSolicitadaLocal($idpedidoalteracao);
+        $buscaAb = $tbAbrangencia->buscarDadosAbrangenciaSolicitadaLocal($idpedidoalteracao);
         $resultadoBuscaPedidoAlteracao = VerificarAlteracaoProjetoDAO::BuscarDadosGenericos($idpedidoalteracao, $buscaAb[0]->idPedidoAlteracao);
 
         if (AvaliacaoSubItemPedidoAlteracaoDAO::buscar($resultadoBuscaPedidoAlteracao['idAvaliacao']))
         {
-            $resultadoDadosAlteracaoLocalRealizacao = AbrangenciaDAO::buscarDadosAbrangenciaAlteracao($idpedidoalteracao, 'COM_AVALIACAO');
+            $resultadoDadosAlteracaoLocalRealizacao = $tbAbrangencia->buscarDadosAbrangenciaAlteracao($idpedidoalteracao, 'COM_AVALIACAO');
         }
         else
         {
-            $resultadoDadosAlteracaoLocalRealizacao = AbrangenciaDAO::buscarDadosAbrangenciaAlteracao($idpedidoalteracao, 'SEM_AVALIACAO');
+            $resultadoDadosAlteracaoLocalRealizacao = $tbAbrangencia->buscarDadosAbrangenciaAlteracao($idpedidoalteracao, 'SEM_AVALIACAO');
         }
 
         $arquivos = VerificarAlteracaoProjetoDAO::buscarArquivosSolicitacao($idpedidoalteracao,4, $buscaAb[0]->idPedidoAlteracao);
-        $this->view->resultLocalRel     = AbrangenciaDAO::buscarDadosAbrangencia($idpedidoalteracao);
+        $this->view->resultLocalRel     = $tbAbrangencia->buscarDadosAbrangencia($idpedidoalteracao);
         $this->view->resultArquivo = $arquivos;
         $this->view->resultAbrangencia = $resultadoDadosAlteracaoLocalRealizacao;
         $this->view->resultConsulta = $resultadoBuscaPedidoAlteracao;
@@ -837,6 +839,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 	 */
 	public function avaliarlocalrealizacaoAction()
 	{
+	    $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
 		// recebe os dados do formul�rio
 		$post                           = Zend_Registry::get('post');
 		$idPronac                       = $post->idPronac;
@@ -869,7 +872,7 @@ class VerificarAlteracaoTecnicoController extends MinC_Controller_Action_Abstrac
 					,'dsAvaliacaoSubItemPedidoAlteracao' => $dsAvaliacao);
 
 				// cadastra a avalia��o
-				$dao = AbrangenciaDAO::avaliarLocalRealizacao($dados);
+				$dao = $tbAbrangencia->avaliarLocalRealizacao($dados);
 
                                 // pega o �ltimo idAvaliacaoSubItemPedidoAlteracao inserido
                                 $ultimoId = AvaliacaoSubItemPedidoAlteracaoDAO::buscarUltimo();

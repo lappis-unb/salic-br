@@ -10,11 +10,11 @@
  * @link http://www.cultura.gov.br
  */
 
-class AvaliacaoSubItemAbrangenciaDAO extends Zend_Db_Table
+class AvaliacaoSubItemAbrangenciaDAO extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
-	protected $_schema  = "";
-	protected $_name    = "BDCORPORATIVO.scSAC.tbAvaliacaoSubItemAbrangencia";
+	protected $_schema  = "bdcorporativo.scsac";
+	protected $_name    = "tbavaliacaosubitemabrangencia";
 
 
 

@@ -1,7 +1,8 @@
 <?php
-class tbAbrangenciaDAO extends Zend_Db_Table
+class tbAbrangenciaDAO extends MinC_Db_Table_Abstract
 {
-    protected $_name = "SAC.dbo.Abrangencia";
+    protected $_schema = 'sac';
+    protected $_name = 'abrangencia';
 
     public static function buscarDadosAbrangencia($idprojeto=null,$idpedidoalteracao=null)
     {
