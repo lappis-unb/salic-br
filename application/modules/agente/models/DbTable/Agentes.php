@@ -63,6 +63,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $agentesM = new Agente_Model_DbTable_Agentes();
 //        $agentesM = new Agente_Model_Mapper_Agentes();
 //        $db = Zend_Db_Table::getDefaultAdapter();
+
         $schemaAgentes = parent::getSchema('agentes');
         $schemaSac = parent::getSchema('sac');
 
