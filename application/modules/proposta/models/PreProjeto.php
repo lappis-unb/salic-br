@@ -355,7 +355,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             ->from(['a' => 'preprojeto'], $aSql,  $this->_schema)
             ->join(['ag' => 'agentes'], '(a.idagente = ag.idagente)', 'ag.cnpjcpf AS CNPJCPF', $this->getSchema('agentes'))
             ->join(['m' => 'nomes'], '(a.idagente = m.idagente)', 'm.descricao AS NomeAgente', $this->getSchema('agentes'))
-            ->join(['s' => 'SGCacesso'], 'a.idUsuario = s.IdUsuario', null, 'ControleDeAcesso.dbo')
+            ->join(['s' => 'SGCacesso'], 'a.idUsuario = s.IdUsuario', null, $this->getSchema('controledeacesso'))
             ->where('a.idusuario = ?', $idResponsavel)
             ->where('ag.CNPJCPF <> s.Cpf')
             ->where(new Zend_Db_Expr('NOT EXISTS(SELECT 1 FROM sac.dbo.projetos pr WHERE  a.idpreprojeto = pr.idprojeto)'))
@@ -1045,6 +1045,14 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
      * @return void
      */
     public function buscarPropProjVinculados($idAgenteProponente){
+
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+//        $slct->where('NOT EXISTS(SELECT * FROM Projetos p WHERE p.idProjeto = pp.idPreProjeto)', '');
+        $subSql = $db->select()
+            ->from(['p' => 'projetos'], ['*'],  $this->getSchema('sac'))
+            ->where('p.idprojeto = pp.idpreprojeto');
+
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
@@ -1063,14 +1071,14 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
 
         $slct->joinLeft(
                 array('resp' => 'SGCacesso'), 'resp.IdUsuario = pp.idUsuario',
-                array('resp.Nome','resp.Cpf'),'CONTROLEDEACESSO.dbo'
+                array('resp.Nome','resp.Cpf'), $this->getSchema('controledeacesso')
                 );
 
         $slct->where('idAgente = ?', $idAgenteProponente);
         $slct->where('stEstado = ?', 1);
-        $slct->where('NOT EXISTS(SELECT * FROM Projetos p WHERE p.idProjeto = pp.idPreProjeto)', '');
-        $slct->order('pp.idPreProjeto');
-        $slct->order('pp.NomeProjeto');
+        $slct->where(new Zend_Db_Expr("NOT EXISTS ($subSql)"));
+        $slct->order('pp.idpreprojeto');
+        $slct->order('pp.nomeprojeto');
 
         return $this->fetchAll($slct);
     }
@@ -1153,7 +1161,7 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         $sql = $db->select()->distinct()
             ->from(['a'=>'Agentes'], [],$this->getSchema('agentes'))
             ->joinLeft(['v' => 'tbVinculo'], 'a.idAgente = v.idAgenteProponente', $v,$this->getSchema('agentes'))
-            ->join(['k' => 'SGCacesso'], 'k.IdUsuario = v.idUsuarioResponsavel',$k,'CONTROLEDEACESSO.dbo')
+            ->join(['k' => 'SGCacesso'], 'k.IdUsuario = v.idUsuarioResponsavel',$k,$this->getSchema('controledeacesso'))
             ->where('a.idAgente= ?', $idAgente)
             ->where('v.siVinculo = ?', $siVinculo)
             ->where('a.CNPJCPF <> k.Cpf')
@@ -1181,8 +1189,8 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             ->join(['a' => 'Agentes'], 'j.idAgente = a.idAgente', [],$this->getSchema('agentes'))
             ->join(['v' => 'tbVinculoProposta'], 'j.idPreProjeto = v.idPreProjeto', [],$this->getSchema('agentes'))
             ->join(['y' => 'tbVinculo'], 'v.idVinculo = y.idVinculo', ['y.idVinculo', 'y.siVinculo', 'y.idUsuarioResponsavel'],$this->getSchema('agentes'))
-            ->join(['k' => 'SGCacesso'], 'k.IdUsuario = y.idUsuarioResponsavel', ['k.Cpf', 'k.IdUsuario as idResponsavel', 'k.Nome AS NomeResponsavel'],'CONTROLEDEACESSO.dbo')
-            ->join(['r' => 'SGCacesso'], 'r.Cpf = a.CNPJCPF', ['r.IdUsuario'],'CONTROLEDEACESSO.dbo')
+            ->join(['k' => 'SGCacesso'], 'k.IdUsuario = y.idUsuarioResponsavel', ['k.Cpf', 'k.IdUsuario as idResponsavel', 'k.Nome AS NomeResponsavel'],$this->getSchema('controledeacesso'))
+            ->join(['r' => 'SGCacesso'], 'r.Cpf = a.CNPJCPF', ['r.IdUsuario'],$this->getSchema('controledeacesso'))
             ->where('j.idAgente= ?', $idAgente)
             ->where('y.siVinculo = ?', $siVinculo)
             ->where('a.CNPJCPF <> k.Cpf')

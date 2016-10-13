@@ -1264,10 +1264,10 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 $dadosIdAgentes[] = $value->idAgente;
             }
         }
-
+        
         //PROCURA AS PROPOSTAS DE TODOS OS IDAGENTE'S
         $listaPropostas = $propostas->buscarVinculadosProponenteDirigentes($dadosIdAgentes);
-
+        
         $wherePropostaD['pp.idagente = ?'] = $this->idAgenteProponente;
         $wherePropostaD['pr.idprojeto IS NULL'] = '';
         $wherePropostaD['pp.idusuario <> ?'] = $this->idResponsavel;
@@ -1336,7 +1336,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         } elseif (!empty($cnpjcpf)) {
             $where['SGA.Cpf = ?'] = $cnpjcpf;
         } elseif (!empty($nome)) {
-            $where['SGA.Nome like (?)'] = "%" . utf8_decode($nome) . "%";
+            $where['SGA.Nome like (?)'] = "%" . $nome . "%";
         }
 
         $busca = $tbVinculo->buscarResponsaveis($where, $this->idAgenteProponente);

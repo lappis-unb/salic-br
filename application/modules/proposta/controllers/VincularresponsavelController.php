@@ -53,13 +53,13 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             $this->emailResponsavel = $acesso['email'];
         }
         if ($agente) {
-            $this->idAgente = $acesso['idagente'];
+            $this->idAgente = $agente['idagente'];
         }
         if ($usuario) {
-            $this->idUsuario = $acesso['usu_codigo'];
+            $this->idUsuario = $usuario['usu_codigo'];
         }
 
-        $this->view->idAgenteLogado = $acesso['idagente'];
+        $this->view->idAgenteLogado = $this->idAgente;
         parent::init();
         // chama o init() do pai GenericControllerNew
     }
@@ -321,11 +321,9 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     public function vinculoresponsavelAction()
     {
         $tbVinculo = new Agente_Model_DbTable_TbVinculo();
-        $agentes = new Agente_Model_DbTable_Agentes();
-
+//        $agentes = new Agente_Model_DbTable_Agentes();
         $idResponsavel = $this->_request->getParam("idResponsavel");
         $idProponente = $this->idAgente;
-
 
         $where['idUsuarioResponsavel = ?'] = $idResponsavel;
         $where['idAgenteProponente   = ?'] = $idProponente;
@@ -333,9 +331,9 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
 
         $dados = array('idAgenteProponente' => $idProponente,
-            'dtVinculo' => new Zend_Db_Expr("GETDATE()"),
+            'dtVinculo' => $tbVinculo->getExpressionDate(),
             'siVinculo' => 2,
-            'idUsuarioResponsavel' => $idResponsavel
+            'idusuarioResponsavel' => $idResponsavel
         );
 
         try {
