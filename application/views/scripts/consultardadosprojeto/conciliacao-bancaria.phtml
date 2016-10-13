@@ -200,7 +200,7 @@ function mascara ($val, $mask) {
          <tr>
              <td align="center"><?php echo $d->ItemOrcamentario; ?></td>
              <td><?php echo $d->CNPJCPF; ?></td>
-             <td align="center"><?php echo $d->Fornecedor; ?></td>
+             <td align="center"><?php echo $d->NomeProjeto; ?></td>
              <td><?php echo $d->nrDocumentoDePagamento; ?></td>
              <td><?php echo Data::tratarDataZend($d->dtPagamento,'Brasileira'); ?></td>
              <td align="right"><b><?php echo 'R$ '. @number_format(($d->vlPagamento),2, ",", "."); ?></b></td>
