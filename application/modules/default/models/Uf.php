@@ -40,7 +40,7 @@ class Uf extends MinC_Db_Table_Abstract {
     }
 
     /**
-     * Método para buscar os estados
+     * Metodo para buscar os estados
      * @access public
      * @param void
      * @return array

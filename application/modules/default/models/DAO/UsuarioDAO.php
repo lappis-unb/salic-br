@@ -174,7 +174,7 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
      * @access public
      * @static
      * @param @cod (codigo do usuario)
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      * @return object
      */
     public static function buscarUsuarioScriptcase($idusuario)
@@ -211,7 +211,7 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
      * @param @cod (codigo do usuario)
      * @return bool
      *
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      * @author Ruy Junior Ferreira Silva <ruyjfs@mail.com>
      * @since 25/0/2016
      *

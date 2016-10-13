@@ -6,14 +6,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.view.scripts.manteragentes
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright © 2010 - Ministerio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
 
 <?php require_once "inc/menu.inc.php"; ?>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
 		<li class="first"><a href="<?php echo $this->baseUrl(); ?>" title="In&iacute;cio">In&iacute;cio</a></li>
@@ -26,15 +26,15 @@
 
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
 	<div>Resultado da busca por Agentes <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM TITULO ========== -->
 
 
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
 
 
@@ -57,11 +57,11 @@
 			<td>
 				<?php
 				$visaoTable = new Agente_Model_DbTable_Visao();
-				$visao = $visaoTable->buscarVisao($b->idAgente); // visão
+				$visao = $visaoTable->buscarVisao($b->idAgente); // visao
 				$i     = 0; // contador
 
 				foreach ($visao as $v) :
-					if ($i > 0) echo " / "; // separa por barra caso tenha mais de uma visão
+					if ($i > 0) echo " / "; // separa por barra caso tenha mais de uma visao
 					echo $v->Descricao;
 					$i++;
 				endforeach;
@@ -73,16 +73,16 @@
 		<?php endforeach; ?>
 	</table>
 
-	<!-- ========== PAGINAÇÃO ========== -->
+	<!-- ========== PAGINACAO ========== -->
 	<?php if ($this->qtdAgentes > 10) { echo "<br /><p>" . $this->buscar . "</p><br />"; } ?>
 
 	<p class="centro"><input type="button" class="btn_voltar" onkeypress=" " onclick="redirecionar('<?php echo $this->url(array('controller' => 'manteragentes', 'action' => 'buscaragente')); ?>');" /></p>
 
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEUDO ========== -->
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 
 <br clear="all" />

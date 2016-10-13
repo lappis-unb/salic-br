@@ -9,11 +9,11 @@
         var texto = CKEDITOR.instances['justificativa'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
 
         if (texto.length <= 11){
-            alertar('O campo justificativa deve ter no mínimo 11 caracteres!');
+            alertar('O campo justificativa deve ter no mï¿½nimo 11 caracteres!');
             return false;
         } else {
             
-            $("#modal").html('Deseja concluir análise e devolver para o Coordenador?');
+            $("#modal").html('Deseja concluir anï¿½lise e devolver para o Coordenador?');
             $("#modal").dialog({
                 title : 'Alerta',
                 resizable: false,
@@ -41,13 +41,13 @@
     }
 </script>
 
-<!-- ========== INÃƒÂ CIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INAï¿½ CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="modal"></div>
 <div id="total">
     <div id="breadcrumb">
         <ul>
-            <li><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para Página Inicial">Início</a></li>
-			<li><a href="<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'index'), '', true); ?>" title="Ir para Página Inicial">Projetos/Produtos para Análise</a></li>
+            <li><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Ir para Pï¿½gina Inicial">Inï¿½cio</a></li>
+			<li><a href="<?php echo $this->url(array('controller' => 'analisarprojetoparecer', 'action' => 'index'), '', true); ?>" title="Ir para Pï¿½gina Inicial">Projetos/Produtos para Anï¿½lise</a></li>
 			<li class="last">Concluir Parecer</li>
         </ul>
     </div>
@@ -55,16 +55,16 @@
 
 
 
-    <!-- ==========INÃƒÂ CIO TÃƒÂ TULO========== -->
+    <!-- ==========INAï¿½ CIO TAï¿½ TULO========== -->
 
     <div id="titulo">
-        <div>Concluir Análise e devolver para o Coordenador <span class="voltar"><a href="javascript:voltar();">Voltar</a></span></div>
+        <div>Concluir Anï¿½lise e devolver para o Coordenador <span class="voltar"><a href="javascript:voltar();">Voltar</a></span></div>
 
     </div>
 
-    <!-- ========== FIM TÃƒÂ TULO ========== -->
+    <!-- ========== FIM TAï¿½ TULO ========== -->
 
-    <!-- ========== INÃƒÂ CIO CONTEÃƒÅ¡DO ==========-->
+    <!-- ========== INAï¿½ CIO CONTEAÅ¡DO ==========-->
 
     <div id="conteudo">
     <div id="confirma"></div>
@@ -73,7 +73,7 @@
         <?php if ($this->totaldivulgacao != "true") { ?>
             <div class="msgERROR">
                 <div class="float_right"></div>
-                <div>Atenção! Custo de Divulgação/Comercialização superior a 20% do valor total do projeto. Favor readequar os custos em <b><?php echo $this->formatarReal($this->valorRetirar); ?></b> para finalizar sua análise. <br> Favor verificar em todos os produtos que possuem esta etapa!</div>
+                <div>Atenï¿½ï¿½o! Custo de Divulgaï¿½ï¿½o/Comercializaï¿½ï¿½o superior a 20% do valor total do projeto. Favor readequar os custos em <b><?php echo $this->formatarReal($this->valorRetirar); ?></b> para finalizar sua anï¿½lise. <br> Favor verificar em todos os produtos que possuem esta etapa!</div>
             </div>
             <table class="tabela">
 	            <tr>
@@ -131,7 +131,7 @@
 
         <div class="msgALERT">
 			<div class="float_right"></div>
-			<div>O acerto dos custos administrativos são maiores que 15% do valor total do projeto.<br /> Favor ajustar <?php echo $this->formatarReal($this->verifica15porcento); ?>.</div>
+			<div>O acerto dos custos administrativos sï¿½o maiores que 15% do valor total do projeto.<br /> Favor ajustar <?php echo $this->formatarReal($this->verifica15porcento); ?>.</div>
 		</div>
 		<table class="tabela">
             <tr>
@@ -153,11 +153,11 @@
         <?php } ?>
         
     </div>
-    <!-- ========== FIM CONTEÃƒÅ¡DO ========== -->
+    <!-- ========== FIM CONTEAÅ¡DO ========== -->
 
-    <!-- ========== INÃƒÂ CIO RODAPÃƒâ€° DO CONTEÃƒÅ¡DO ========== // -->
+    <!-- ========== INAï¿½ CIO RODAPAâ€° DO CONTEAÅ¡DO ========== // -->
 
     <div id="rodapeConteudo" ><span></span></div>
-    <!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+    <!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
     <br clear="all" />
 </div>

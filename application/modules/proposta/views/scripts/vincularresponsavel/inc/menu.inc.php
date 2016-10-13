@@ -1,4 +1,4 @@
-<!-- ========== INÍCIO MENU ========== -->
+<!-- ========== INICIO MENU ========== -->
 <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
 <div id="menu">
 
@@ -14,10 +14,10 @@
         });
     </script>
 
-    <!-- início: conteúdo principal #container -->
+    <!-- inicio: conteudo principal #container -->
     <div id="container">
 
-        <!-- início: navegação local #qm0 -->
+        <!-- inicio: navegacao local #qm0 -->
         <script type="text/javascript">
             function layout_fluido()
             {
@@ -50,7 +50,7 @@
         </div>
 
         <div id="alertar"></div>
-        <!-- final: navegação local #qm0 -->
+        <!-- final: navegacao local #qm0 -->
     </div>
 </div>
 <!-- ========== FIM MENU ========== -->

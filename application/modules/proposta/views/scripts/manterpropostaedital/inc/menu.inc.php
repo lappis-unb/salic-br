@@ -144,7 +144,7 @@ function trocarproponente()
         <div id="menuContexto">
             <div class="top"></div>
             <div id="qm0" class="qmmc">
-                    <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'edital')); ?>" title="Ir para Informações Complementares">Minhas Propostas</a>-->
+                    <!--<a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'edital')); ?>" title="Ir para Informacoes Complementares">Minhas Propostas</a>-->
                     <a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'dadospropostaedital')); ?><?php echo $codProjeto; ?>" title="localderealizacao">Proposta Atual</a>
                     <a class="no_seta" href="<?php echo $this->url(array('controller' => 'localderealizacao',    'action' => 'index')); ?><?php echo $codProjeto; ?>&edital=s">Local de realiza��o <!--/ Deslocamento --></a>
                     <a class="no_seta" href="<?php echo $this->url(array('controller' => 'manterpropostaedital', 'action' => 'responderquestionarioedital')); ?><?php echo $codProjeto; ?> ">Responder Question�rio</a>

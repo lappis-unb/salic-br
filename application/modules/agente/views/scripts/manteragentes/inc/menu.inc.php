@@ -1,4 +1,4 @@
-<!-- ========== INÍCIO MENU ========== -->
+<!-- ========== INICIO MENU ========== -->
 <style type="text/css">
 		.sanfonaDiv {
 			clear: both;
@@ -20,10 +20,10 @@
 	});
 	</script>
 
-	<!-- início: conteúdo principal #container -->
+	<!-- inicio: conteudo principal #container -->
 	<div id="container">
 
-		<!-- início: navegação local #qm0 -->
+		<!-- inicio: navegacao local #qm0 -->
 		<script type="text/javascript">
 		function layout_fluido()
 		{
@@ -66,7 +66,7 @@
 			});
 		});
 		</script>
-		<!-- final: navegação local #qm0 -->
+		<!-- final: navegacao local #qm0 -->
 	</div>
 </div>
 <!-- ========== FIM MENU ========== -->

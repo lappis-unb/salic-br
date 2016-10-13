@@ -28,7 +28,7 @@
 
 
 /* MENU SANFONA */
-/* Formatação de uma 'div' dentro da div qm0 */
+/* Formatacao de uma 'div' dentro da div qm0 */
 #qm0 div {	
 	visibility: inherit;
 	position:relative;
@@ -37,7 +37,7 @@
 
 
 /* MENU HORIZONTAL*/
-/* Formatação dos itens de uma sublista do menu */
+/* Formatacao dos itens de uma sublista do menu */
 #navglobal ul li ul { 
 	display:none; 
 	background:#36963F;
@@ -47,7 +47,7 @@
 	z-index:10000;	
 }
 
-/* Formatação dos 'subitens' do menu */
+/* Formatacao dos 'subitens' do menu */
 #navglobal ul li ul li  {
 	display:block;
 }
@@ -56,19 +56,19 @@
 	text-align:left;
 }
 
-/* Formatação da ação 'over' dos itens da lista do menu */
+/* Formatacao da acao 'over' dos itens da lista do menu */
 #navglobal ul li:hover ul 	{
 	display:block;
 }
 
-/* Formatação dos subitens da lista do menu */
+/* Formatacao dos subitens da lista do menu */
 #navglobal ul li ul li ul { 
 	display:none!important; 
 	border:1px solid #fff;
 	top:10px;
 }
 
-/* Formatação da ação 'over' dos subitens da lista do menu */
+/* Formatacao da acao 'over' dos subitens da lista do menu */
 #navglobal ul li ul li:hover ul { 
 	display:block !important; 
 }

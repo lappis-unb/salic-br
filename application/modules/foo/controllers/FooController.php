@@ -11,7 +11,7 @@
 class Foo_FooController extends  Zend_Controller_Action{
 
     /**
-     * init Metodo de inicialização da classe
+     * init Metodo de inicializacao da classe
      *
      * @access public
      * @return void
@@ -22,7 +22,7 @@ class Foo_FooController extends  Zend_Controller_Action{
     }
 
     /**
-     * indexAction Metodo padrão para execução da controller
+     * indexAction Metodo padrao para execucao da controller
      * @access public
      * @param void
      * @return void

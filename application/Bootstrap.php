@@ -22,7 +22,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
 //        $strBancoAmbiente      = "bancos_treinamento";
 
-        /* configuração do caminho dos includes */
+        /* configuracao do caminho dos includes */
         set_include_path('.'
                             . PATH_SEPARATOR . APPLICATION_PATH . '/modules/default/controllers'
                             . PATH_SEPARATOR . APPLICATION_PATH . '/modules/default/models'
@@ -37,7 +37,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         /* componente obrigatorio para carregar arquivos, classes e recursos */
         Zend_Loader_Autoloader::getInstance()->suppressNotFoundWarnings(true)->setFallbackAutoloader(true);
 
-        /* classes pessoais do ministçrio da cultura */
+        /* classes pessoais do ministcrio da cultura */
         require_once "MinC/Loader.php";
     }
 
@@ -49,12 +49,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
 //    public function _initLocal()
 //    {
-        /* formato, idioma e localização */
+        /* formato, idioma e localizacao */
 //        setlocale(LC_ALL, 'pt_BR');
 //        setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
 //        date_default_timezone_set('America/Sao_Paulo');
 
-        // Registra currency que será usado automáticamente pelo zend
+        // Registra currency que sera usado automaticamente pelo zend
 //        Zend_Registry::set('Zend_Currency', new Zend_Currency('pt_BR'));
 //    }
 
@@ -66,7 +66,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     public function _initSession()
     {
-        /* manipulação de sessão */
+        /* manipulacao de sessao */
         Zend_Session::start();
         Zend_Registry::set('session', new Zend_Session_Namespace()); // registra
 
@@ -80,10 +80,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     public function _initFilter()
     {
-        /* variçveis para pegar dados vindos via get e post */
+        /* varicveis para pegar dados vindos via get e post */
         $filter = new Zend_Filter();
-        $filter->addFilter(new Zend_Filter_StringTrim()); // retira espaãos antes e depois
-        $filter->addFilter(new Zend_Filter_StripTags()); // retira cçdigo html e etc
+        $filter->addFilter(new Zend_Filter_StringTrim()); // retira espaaos antes e depois
+        $filter->addFilter(new Zend_Filter_StripTags()); // retira ccdigo html e etc
         $options = array('escapeFilter' => $filter);
 
         /* registra */
@@ -102,7 +102,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 //    {
 //        $strConexao     = "conexao_02";
 //
-//        /* configurações do banco de dados */
+//        /* configuracoes do banco de dados */
 //        $config = new Zend_Config_Ini(APPLICATION_PATH. '/configs/config.ini', $strConexao);
 //        $registry = Zend_Registry::getInstance();
 //        $registry->set('config', $config); // registra
@@ -113,7 +113,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 //        $profiler = $db->getProfiler();
 //        $profiler->setEnabled(false);
 //
-//        /* registra a conexão para mudar em ambiente scriptcase */
+//        /* registra a conexao para mudar em ambiente scriptcase */
 //        Zend_Registry::set('conexao_banco', $strConexao);
 //    }
 

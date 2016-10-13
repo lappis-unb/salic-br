@@ -2,7 +2,7 @@
 
 /**
  * Description of spSelecionarPlanilhaOrcamentariaAtiva
- * Criado em 26/01/2016 - Fernão Lara
+ * Criado em 26/01/2016 - Fernao Lara
  */
 class spSelecionarPlanilhaOrcamentariaAtiva extends MinC_Db_Table_Abstract {
         

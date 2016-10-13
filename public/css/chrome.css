@@ -1,12 +1,12 @@
 @charset "utf-8";
 
 /**
- * Correções para o Chrome e Safari
+ * Correcoes para o Chrome e Safari
  */
 
 @media screen and (-webkit-min-device-pixel-ratio:0) { 
 
-	/* Formatação da tabela */
+	/* Formatacao da tabela */
 	table {
 		margin:40px 0 20px 0;
 	}

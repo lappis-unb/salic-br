@@ -4,13 +4,13 @@ $linkProjetosProdutos = $this->url(array('controller' => 'Analisarprojetoparecer
 /* INICIO DA GUIA DE LINKS */
 $controller = 'Analisarprojetoparecer';
 $links = array();
-$links[] = array('Projetos/Produtos para Análise' => array());
+$links[] = array('Projetos/Produtos para Anï¿½lise' => array());
 montaGuiaLinks($controller, $links);
 /* FIM DA GUIA DE LINKS */
 ?>
 
 
-<!-- ========== INÃƒÂ CIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INAï¿½ CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="total">
 
     <!-- ========== FIM BREADCRUMB (LINKS TOPO)========== -->
@@ -19,19 +19,19 @@ montaGuiaLinks($controller, $links);
 
     </div>
 
-    <!-- ==========INÃƒÂ CIO TÃƒÂ TULO========== -->
+    <!-- ==========INAï¿½ CIO TAï¿½ TULO========== -->
 
     <div id="titulo">
         <div>
-            Projetos/Produtos para Análise
+            Projetos/Produtos para Anï¿½lise
             <?php echo montaBotaoVoltar($controller, $links); ?>
         </div>
 
     </div>
 
-    <!-- ========== FIM TÃƒÂ TULO ========== -->
+    <!-- ========== FIM TAï¿½ TULO ========== -->
 
-    <!-- ========== INÃƒÂ CIO CONTEÃƒÅ¡DO ==========-->
+    <!-- ========== INAï¿½ CIO CONTEAÅ¡DO ==========-->
 
 
     <div id="conteudo">
@@ -40,8 +40,8 @@ montaGuiaLinks($controller, $links);
                 <td>
                     <div style="float: left"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice1.png" width="20px"/></div><div style="margin-top: 2px;margin-left: 3px; float: left"> A diligenciar</div>
                     <div style="float: left"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice.png" width="20px"/></div><div style="margin-top: 2px;margin-left: 3px; float: left"> Diligenciado</div>
-                    <div style="float: left"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice3.png" width="20px"/></div><div style="margin-top: 2px;margin-left: 3px; float: left"> Diligência não respondida</div>
-                    <div style="float: left"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice2.png" width="20px"/></div><div style="margin-top: 2px;margin-left: 3px; float: left"> Diligência respondida</div>
+                    <div style="float: left"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice3.png" width="20px"/></div><div style="margin-top: 2px;margin-left: 3px; float: left"> Diligï¿½ncia nï¿½o respondida</div>
+                    <div style="float: left"><img src="<?php echo $this->baseUrl(); ?>/public/img/notice2.png" width="20px"/></div><div style="margin-top: 2px;margin-left: 3px; float: left"> Diligï¿½ncia respondida</div>
                 </td>
             </tr>
         </table>
@@ -56,10 +56,10 @@ montaGuiaLinks($controller, $links);
 				<th width="100">Tipo de produto</th>
 				<th width="120">Data de Recebimento</th>
 				<th width="90">Tempo Restante</th>
-				<th width="70">Diligência</th>
-				<th width="120">Tempo da Diligência</th>
+				<th width="70">Diligï¿½ncia</th>
+				<th width="120">Tempo da Diligï¿½ncia</th>
 				<th width="70">Historico</th>
-				<th width="70">Conclusão</th>
+				<th width="70">Conclusï¿½o</th>
 			</tr>
 			<?php 
 				$contador = 1; 
@@ -80,7 +80,7 @@ montaGuiaLinks($controller, $links);
 			        	break;
 			        case 2:
 			        	$diligenciado = "notice2.png";
-			        	$Titlediligenciado = "Diligencia não respondida";
+			        	$Titlediligenciado = "Diligencia nï¿½o respondida";
 			        	break;
 			        case 3:
 			        	$diligenciado = "notice3.png";
@@ -116,9 +116,9 @@ montaGuiaLinks($controller, $links);
 			?>
 		</table>
 		
-			<!-- ========== PAGINAÇÃO ========== -->
+			<!-- ========== PAGINAï¿½ï¿½O ========== -->
 			<?php if($this->qtdRegistro > 5){ echo "<p>" . $this->buscar . "</p>"; } ?>
-			<!-- ========== FIM PAGINAÇÃO ========== -->
+			<!-- ========== FIM PAGINAï¿½ï¿½O ========== -->
 		
 		<?php else: ?>
 		<table class="tabela" style="width: 95%;">
@@ -131,12 +131,12 @@ montaGuiaLinks($controller, $links);
         
         
     </div>
-    <!-- ========== FIM CONTEÃƒÅ¡DO ========== -->
+    <!-- ========== FIM CONTEAÅ¡DO ========== -->
 
-    <!-- ========== INÃƒÂ CIO RODAPÃƒâ€° DO CONTEÃƒÅ¡DO ========== // -->
+    <!-- ========== INAï¿½ CIO RODAPAâ€° DO CONTEAÅ¡DO ========== // -->
 
     <div id="rodapeConteudo_com_menu" ><span></span></div>
-    <!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+    <!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
     <br clear="all" />
 </div>
 

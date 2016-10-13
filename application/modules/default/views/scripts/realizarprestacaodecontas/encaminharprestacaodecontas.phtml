@@ -28,7 +28,7 @@ header('Content-Type: text/plain; charset=ISO-8859-1');
                     if(data.resposta){
                         recebe.html('');
                         
-                        // altera texto conforme perfil do destinatário
+                        // altera texto conforme perfil do destinatario
                         if (data.conteudo[0].idperfil == 132) {                        
                             recebe.append("<option value=''>- Selecione um chefe de divis&atilde;o -</option>");
                         } else {
@@ -125,7 +125,7 @@ header('Content-Type: text/plain; charset=ISO-8859-1');
         <?php } else { ?>
         <tr>
             <td colspan="2" class="destacar bold">
-                <?php // exibe texto conforme perfil do destinatário ?>
+                <?php // exibe texto conforme perfil do destinatario ?>
                 <?php if ($this->idPerfilDestino == 132) { ?>
                       Justificativa de encaminhamento para chefe de divis&atilde;o
                 <?php } else { ?>

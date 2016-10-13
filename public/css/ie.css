@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /**
- * Correções para o I.E.
+ * Correcoes para o I.E.
  */
 
 #miolo fieldset { 
@@ -38,7 +38,7 @@ ul.simpleTabsNavigation li a {
 	*padding:0px 40px 0 0;
 }
 
-/* cabeçalho do menu estilo ipod */
+/* cabecalho do menu estilo ipod */
 .fg-menu-header {
 	padding: .4em .4em 2em .4em;
 }
