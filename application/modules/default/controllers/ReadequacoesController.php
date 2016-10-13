@@ -4231,13 +4231,15 @@ class ReadequacoesController extends GenericControllerNew {
         $idUnidade = $this->_request->getParam('vinculada');
         
         try {
-            if (in_array($idUnidade, array(171, 262))) {           
+            // se for SAV ou SEFIC
+            if (in_array($idUnidade, array(166, 262))) {           
                 // MUDANÇA DE TECNICO
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dados = array(
                     'idAvaliador' => $destinatario,
                     'DtEnvioAvaliador' => new Zend_Db_Expr('GETDATE()'),
-                    'dsOrientacao' => $dsOrientacao
+                    'dsOrientacao' => $dsOrientacao,
+                    'idUnidade' => $idUnidade
                 );
                 $where = array();
                 $where['idReadequacao = ?'] = $idReadequacao;
