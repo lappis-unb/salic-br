@@ -6490,9 +6490,8 @@ class Projetos extends GenericModel
         }
 
         $select->where('z.stDistribuicao = ?', 'A');
-        $select->where('pr.idTipoAgente = ?', 6);
+        $select->where('pr.idTipoAgente IN (1, 6, 10)');
         $select->where('pr.stAtivo = ?', 1);
-        #$select->where('r.stEstado = ?', 0);
         $select->where('y.Status = ?', 0);
 
         // adiciona quantos filtros foram enviados
@@ -6553,9 +6552,8 @@ class Projetos extends GenericModel
         }
 
         $select->where('z.stDistribuicao = ?', 'A');
-        $select->where('pr.idTipoAgente = ?', 6);
+        $select->where('pr.idTipoAgente IN (1, 6, 10)');
         $select->where('pr.stAtivo = ?', 1);
-        #$select->where('r.stEstado = ?', 0);
         $select->where('y.Status = ?', 0);
 
         // adiciona quantos filtros foram enviados
