@@ -215,6 +215,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
      * @return void
      */
     public function minhasSolicitacoesAction() {
+        $mantertbitens = new MantertabelaitensDAO();
         $this->intTamPag = 10;
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
@@ -314,7 +315,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
 
-        $tbsolicitacao = MantertabelaitensDAO::solicitacoes($this->idUsuario);
+        $tbsolicitacao = $mantertbitens->solicitacoes($this->idUsuario);
         $this->view->solicitacao = $tbsolicitacao;
     }
 
