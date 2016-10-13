@@ -316,7 +316,7 @@ For terms of use, see http://www.unicode.org/copyright.html
 		<likelySubtag from="gu" to="gu_Gujr_IN"/>
 		<!--{ Gujarati; ?; ? } => { Gujarati; Gujarati; India }-->
 		<likelySubtag from="gub" to="gub_Latn_BR"/>
-		<!--{ Guajajára; ?; ? } => { Guajajára; Latin; Brazil }-->
+		<!--{ Guajajara; ?; ? } => { Guajajara; Latin; Brazil }-->
 		<likelySubtag from="guz" to="guz_Latn_KE"/>
 		<!--{ Gusii; ?; ? } => { Gusii; Latin; Kenya }-->
 		<likelySubtag from="gv" to="gv_Latn_IM"/>
@@ -786,7 +786,7 @@ For terms of use, see http://www.unicode.org/copyright.html
 		<likelySubtag from="raj" to="raj_Latn_IN"/>
 		<!--{ Rajasthani; ?; ? } => { Rajasthani; Latin; India }-->
 		<likelySubtag from="rcf" to="rcf_Latn_RE"/>
-		<!--{ Réunion Creole French; ?; ? } => { Réunion Creole French; Latin; Réunion }-->
+		<!--{ Reunion Creole French; ?; ? } => { Reunion Creole French; Latin; Reunion }-->
 		<likelySubtag from="rej" to="rej_Latn_ID"/>
 		<!--{ Rejang; ?; ? } => { Rejang; Latin; Indonesia }-->
 		<likelySubtag from="ria" to="ria_Latn_IN"/>
@@ -1080,7 +1080,7 @@ For terms of use, see http://www.unicode.org/copyright.html
 		<likelySubtag from="wo" to="wo_Latn_SN"/>
 		<!--{ Wolof; ?; ? } => { Wolof; Latin; Senegal }-->
 		<likelySubtag from="xav" to="xav_Latn_BR"/>
-		<!--{ Xavánte; ?; ? } => { Xavánte; Latin; Brazil }-->
+		<!--{ Xavante; ?; ? } => { Xavante; Latin; Brazil }-->
 		<likelySubtag from="xh" to="xh_Latn_ZA"/>
 		<!--{ Xhosa; ?; ? } => { Xhosa; Latin; South Africa }-->
 		<likelySubtag from="xog" to="xog_Latn_UG"/>
@@ -1252,7 +1252,7 @@ For terms of use, see http://www.unicode.org/copyright.html
 		<likelySubtag from="und_BJ" to="fr_Latn_BJ"/>
 		<!--{ ?; ?; Benin } => { French; Latin; Benin }-->
 		<likelySubtag from="und_BL" to="fr_Latn_BL"/>
-		<!--{ ?; ?; Saint Barthélemy } => { French; Latin; Saint Barthélemy }-->
+		<!--{ ?; ?; Saint Barthelemy } => { French; Latin; Saint Barthelemy }-->
 		<likelySubtag from="und_BN" to="ms_Latn_BN"/>
 		<!--{ ?; ?; Brunei } => { Malay; Latin; Brunei }-->
 		<likelySubtag from="und_BO" to="es_Latn_BO"/>
@@ -1294,7 +1294,7 @@ For terms of use, see http://www.unicode.org/copyright.html
 		<likelySubtag from="und_CV" to="pt_Latn_CV"/>
 		<!--{ ?; ?; Cape Verde } => { Portuguese; Latin; Cape Verde }-->
 		<likelySubtag from="und_CW" to="pap_Latn_CW"/>
-		<!--{ ?; ?; Curaçao } => { Papiamento; Latin; Curaçao }-->
+		<!--{ ?; ?; Curacao } => { Papiamento; Latin; Curacao }-->
 		<likelySubtag from="und_CY" to="el_Grek_CY"/>
 		<!--{ ?; ?; Cyprus } => { Greek; Greek; Cyprus }-->
 		<likelySubtag from="und_CZ" to="cs_Latn_CZ"/>
@@ -1508,7 +1508,7 @@ For terms of use, see http://www.unicode.org/copyright.html
 		<likelySubtag from="und_QO" to="en_Latn_IO"/>
 		<!--{ ?; ?; Outlying Oceania } => { English; Latin; British Indian Ocean Territory }-->
 		<likelySubtag from="und_RE" to="fr_Latn_RE"/>
-		<!--{ ?; ?; Réunion } => { French; Latin; Réunion }-->
+		<!--{ ?; ?; Reunion } => { French; Latin; Reunion }-->
 		<likelySubtag from="und_RO" to="ro_Latn_RO"/>
 		<!--{ ?; ?; Romania } => { Romanian; Latin; Romania }-->
 		<likelySubtag from="und_RS" to="sr_Cyrl_RS"/>
@@ -1540,7 +1540,7 @@ For terms of use, see http://www.unicode.org/copyright.html
 		<likelySubtag from="und_SR" to="nl_Latn_SR"/>
 		<!--{ ?; ?; Suriname } => { Dutch; Latin; Suriname }-->
 		<likelySubtag from="und_ST" to="pt_Latn_ST"/>
-		<!--{ ?; ?; São Tomé and Príncipe } => { Portuguese; Latin; São Tomé and Príncipe }-->
+		<!--{ ?; ?; Sao Tome and Principe } => { Portuguese; Latin; Sao Tome and Principe }-->
 		<likelySubtag from="und_SV" to="es_Latn_SV"/>
 		<!--{ ?; ?; El Salvador } => { Spanish; Latin; El Salvador }-->
 		<likelySubtag from="und_SY" to="ar_Arab_SY"/>

@@ -1110,7 +1110,7 @@ ldml alternate approvalRequirement approvalRequirements attributeOrder attribute
             <!-- scripts -->
             <scriptAlias type="Qaai" replacement="Zinh" reason="deprecated"/>
             <!-- deprecated ISO territories in 3066 + CLDR ones (older deprecated ISO codes -->
-            <territoryAlias type="AN" replacement="CW SX BQ" reason="deprecated"/> <!-- Netherlands Antilles Curaçao largest, then Sint Martin, then BQ -->
+            <territoryAlias type="AN" replacement="CW SX BQ" reason="deprecated"/> <!-- Netherlands Antilles Curacao largest, then Sint Martin, then BQ -->
             <territoryAlias type="BU" replacement="MM" reason="deprecated"/> <!-- Burma -->
             <territoryAlias type="CS" replacement="RS ME" reason="deprecated"/> <!-- Serbia & Montenegro -->
             <territoryAlias type="CT" replacement="KI" reason="deprecated"/> <!-- CLDR: Canton and Enderbury Islands -->
@@ -1178,7 +1178,7 @@ ldml alternate approvalRequirement approvalRequirements attributeOrder attribute
 			<territoryAlias type="BHR" replacement="BH" reason="overlong"/> <!-- Bahrain -->
 			<territoryAlias type="BDI" replacement="BI" reason="overlong"/> <!-- Burundi -->
 			<territoryAlias type="BEN" replacement="BJ" reason="overlong"/> <!-- Benin -->
-			<territoryAlias type="BLM" replacement="BL" reason="overlong"/> <!-- Saint Barthélemy -->
+			<territoryAlias type="BLM" replacement="BL" reason="overlong"/> <!-- Saint Barthelemy -->
 			<territoryAlias type="BMU" replacement="BM" reason="overlong"/> <!-- Bermuda -->
 			<territoryAlias type="BRN" replacement="BN" reason="overlong"/> <!-- Brunei -->
 			<territoryAlias type="BOL" replacement="BO" reason="overlong"/> <!-- Bolivia -->
@@ -1208,7 +1208,7 @@ ldml alternate approvalRequirement approvalRequirements attributeOrder attribute
 			<territoryAlias type="SCG" replacement="RS ME" reason="overlong"/> <!-- null -->
 			<territoryAlias type="CUB" replacement="CU" reason="overlong"/> <!-- Cuba -->
 			<territoryAlias type="CPV" replacement="CV" reason="overlong"/> <!-- Cape Verde -->
-			<territoryAlias type="CUW" replacement="CW" reason="overlong"/> <!-- Curaçao -->
+			<territoryAlias type="CUW" replacement="CW" reason="overlong"/> <!-- Curacao -->
 			<territoryAlias type="CXR" replacement="CX" reason="overlong"/> <!-- Christmas Island -->
 			<territoryAlias type="CYP" replacement="CY" reason="overlong"/> <!-- Cyprus -->
 			<territoryAlias type="CZE" replacement="CZ" reason="overlong"/> <!-- Czech Republic -->
@@ -1360,7 +1360,7 @@ ldml alternate approvalRequirement approvalRequirements attributeOrder attribute
 			<territoryAlias type="QXX" replacement="QX" reason="overlong"/> <!-- Private use -->
 			<territoryAlias type="QYY" replacement="QY" reason="overlong"/> <!-- Private use -->
 			<territoryAlias type="QZZ" replacement="QZ" reason="overlong"/> <!-- Private use -->
-			<territoryAlias type="REU" replacement="RE" reason="overlong"/> <!-- Réunion -->
+			<territoryAlias type="REU" replacement="RE" reason="overlong"/> <!-- Reunion -->
 			<territoryAlias type="ROU" replacement="RO" reason="overlong"/> <!-- Romania -->
 			<territoryAlias type="SRB" replacement="RS" reason="overlong"/> <!-- Serbia -->
 			<territoryAlias type="RUS" replacement="RU" reason="overlong"/> <!-- Russia -->
@@ -1381,7 +1381,7 @@ ldml alternate approvalRequirement approvalRequirements attributeOrder attribute
 			<territoryAlias type="SOM" replacement="SO" reason="overlong"/> <!-- Somalia -->
 			<territoryAlias type="SUR" replacement="SR" reason="overlong"/> <!-- Suriname -->
 			<territoryAlias type="SSD" replacement="SS" reason="overlong"/> <!-- South Sudan -->
-			<territoryAlias type="STP" replacement="ST" reason="overlong"/> <!-- São Tomé and Príncipe -->
+			<territoryAlias type="STP" replacement="ST" reason="overlong"/> <!-- Sao Tome and Principe -->
 			<territoryAlias type="SUN" replacement="RU AM AZ BY EE GE KZ KG LV LT MD TJ TM UA UZ" reason="overlong"/> <!-- null -->
 			<territoryAlias type="SLV" replacement="SV" reason="overlong"/> <!-- El Salvador -->
 			<territoryAlias type="SXM" replacement="SX" reason="overlong"/> <!-- Sint Maarten -->
@@ -1482,7 +1482,7 @@ ldml alternate approvalRequirement approvalRequirements attributeOrder attribute
 			<territoryAlias type="048" replacement="BH" reason="overlong"/> <!-- Bahrain -->
 			<territoryAlias type="108" replacement="BI" reason="overlong"/> <!-- Burundi -->
 			<territoryAlias type="204" replacement="BJ" reason="overlong"/> <!-- Benin -->
-			<territoryAlias type="652" replacement="BL" reason="overlong"/> <!-- Saint Barthélemy -->
+			<territoryAlias type="652" replacement="BL" reason="overlong"/> <!-- Saint Barthelemy -->
 			<territoryAlias type="060" replacement="BM" reason="overlong"/> <!-- Bermuda -->
 			<territoryAlias type="096" replacement="BN" reason="overlong"/> <!-- Brunei -->
 			<territoryAlias type="068" replacement="BO" reason="overlong"/> <!-- Bolivia -->
@@ -1511,7 +1511,7 @@ ldml alternate approvalRequirement approvalRequirements attributeOrder attribute
 			<territoryAlias type="891" replacement="RS ME" reason="overlong"/> <!-- null -->
 			<territoryAlias type="192" replacement="CU" reason="overlong"/> <!-- Cuba -->
 			<territoryAlias type="132" replacement="CV" reason="overlong"/> <!-- Cape Verde -->
-			<territoryAlias type="531" replacement="CW" reason="overlong"/> <!-- Curaçao -->
+			<territoryAlias type="531" replacement="CW" reason="overlong"/> <!-- Curacao -->
 			<territoryAlias type="162" replacement="CX" reason="overlong"/> <!-- Christmas Island -->
 			<territoryAlias type="196" replacement="CY" reason="overlong"/> <!-- Cyprus -->
 			<territoryAlias type="203" replacement="CZ" reason="overlong"/> <!-- Czech Republic -->
@@ -1662,7 +1662,7 @@ ldml alternate approvalRequirement approvalRequirements attributeOrder attribute
 			<territoryAlias type="970" replacement="QX" reason="overlong"/> <!-- Private use -->
 			<territoryAlias type="971" replacement="QY" reason="overlong"/> <!-- Private use -->
 			<territoryAlias type="972" replacement="QZ" reason="overlong"/> <!-- Private use -->
-			<territoryAlias type="638" replacement="RE" reason="overlong"/> <!-- Réunion -->
+			<territoryAlias type="638" replacement="RE" reason="overlong"/> <!-- Reunion -->
 			<territoryAlias type="642" replacement="RO" reason="overlong"/> <!-- Romania -->
 			<territoryAlias type="688" replacement="RS" reason="overlong"/> <!-- Serbia -->
 			<territoryAlias type="643" replacement="RU" reason="overlong"/> <!-- Russia -->
@@ -1683,7 +1683,7 @@ ldml alternate approvalRequirement approvalRequirements attributeOrder attribute
 			<territoryAlias type="706" replacement="SO" reason="overlong"/> <!-- Somalia -->
 			<territoryAlias type="740" replacement="SR" reason="overlong"/> <!-- Suriname -->
 			<territoryAlias type="728" replacement="SS" reason="overlong"/> <!-- South Sudan -->
-			<territoryAlias type="678" replacement="ST" reason="overlong"/> <!-- São Tomé and Príncipe -->
+			<territoryAlias type="678" replacement="ST" reason="overlong"/> <!-- Sao Tome and Principe -->
 			<territoryAlias type="810" replacement="RU AM AZ BY EE GE KZ KG LV LT MD TJ TM UA UZ" reason="overlong"/> <!-- null -->
 			<territoryAlias type="222" replacement="SV" reason="overlong"/> <!-- El Salvador -->
 			<territoryAlias type="534" replacement="SX" reason="overlong"/> <!-- Sint Maarten -->

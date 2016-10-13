@@ -36,14 +36,14 @@
             var soma = 0;
             var vlunitario = $("#vlunitario").val().replace('R$ ','');
 
-        	// retira os pontos e as vírgulas, deixando somente números
+        	// retira os pontos e as virgulas, deixando somente numeros
             vlunitario = vlunitario.replace(/\D/g, "");
             vlunitario = vlunitario.replace(/(\d{0})(\d)/, "$1$2");
 
         	// adiciona o ponto na casa decimal
             vlunitario = vlunitario.replace(/(\d)(\d{2})$/, "$1.$2");
 
-        	// converte para float e adiciona precisão decimal
+        	// converte para float e adiciona precisao decimal
         	qtd        = parseFloat($("#quantidade").val()).toFixed(2);
         	ocorrencia = parseFloat($("#ocorrencia").val()).toFixed(2);
         	valor      = parseFloat(vlunitario).toFixed(2);
@@ -244,7 +244,7 @@
         return result;
     }
 
-    //Formata número tipo moeda usando o evento onKeyDown
+    //Formata numero tipo moeda usando o evento onKeyDown
 
     function Formata(campo,tammax,teclapres,decimal) {
         var tecla = teclapres.keyCode;

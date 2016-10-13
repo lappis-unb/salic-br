@@ -2,14 +2,14 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        // máscaras dos campos
+        // mascaras dos campos
         $("#dtNascimento").keyup(function(){
             mascara(this, format_data); // data
         });
 
         $('#processo').mask('99999.999999/9999-99');
 
-        // calendário
+        // calendario
         $.datepicker.regional['pt-BR'] = {
             closeText: 'Fechar',
             prevText: '&#x3c;Anterior',
@@ -29,7 +29,7 @@
         };
         $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
 
-        // id dos campos que utilizarão o calendário
+        // id dos campos que utilizarao o calendario
         $("#dtNascimento").datepicker($.datepicker.regional['pt-BR']);
 
         $("#btnsalvar").click(function(){
@@ -64,7 +64,7 @@
     });
 </script>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index'),'',true);?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -75,16 +75,16 @@
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
     <div>Informa&ccedil;&otilde;es Adicionais <span class="voltar"><a href="javascript:voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM TITULO ========== -->
 
 
 <div class="sumir" id="camposObrigatorios"></div>
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INICIO CONTEUDO ========== -->
 <div id="conteudo">
 
     <?php //require_once "inc/cabecalho.php";?>
@@ -177,11 +177,11 @@
     </div>
 
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEUDO ========== -->
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 
 <br clear="all" />

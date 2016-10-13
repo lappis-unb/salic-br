@@ -25,7 +25,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     private $usuarioProponente = "N";
 
     /**
-     * Reescreve o método init()
+     * Reescreve o metodo init()
      * @access public
      * @param void
      * @return void
@@ -435,9 +435,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             }
 
             $ag = new Agente_Model_DbTable_Agentes();
-            $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto, 'vprp.siVinculoProposta = ?' => 2));
+            $verificarvinculo = $ag->buscarAgenteVinculoProponente(array('vprp.idpreprojeto = ?' => $idPreProjeto, 'vprp.sivinculoproposta = ?' => 2));
 
-            $verificarvinculoCount = $ag->buscarAgenteVinculoProponente(array('vprp.idPreProjeto = ?' => $idPreProjeto))->count();
+            $verificarvinculoCount = $ag->buscarAgenteVinculoProponente(array('vprp.idpreprojeto = ?' => $idPreProjeto))->count();
 
             if ($verificarvinculoCount > 0) {
                 $this->view->verificarsolicitacaovinculo = true;
@@ -487,22 +487,20 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @param void
      * @return objeto
      */
-    public function excluirAction() {
-
-        /* =============================================================================== */
+    public function excluirAction()
+    {
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
-        /* =============================================================================== */
         $this->verificarPermissaoAcesso(true, false, false);
-        $get = Zend_Registry::get("get");
-        $idPreProjeto = $get->idPreProjeto;
+
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
         //BUSCANDO REGISTRO A SER ALTERADO
-        $tblPreProjeto = new Proposta_Model_PreProjeto();
-        $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
+        $preProjeto = new Proposta_Model_PreProjeto();
+        $preProjeto = $preProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
-        $rsPreProjeto->stEstado = 0;
+        $preProjeto->stestado = 0;
 
-        if ($rsPreProjeto->save()) {
+        if ($preProjeto->save()) {
             parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
         } else {
             parent::message("N&atilde;o foi possível realizar a opera&ccedil;&atilde;o!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
@@ -1207,20 +1205,22 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * Método consultarresponsaveis()
+     * Metodo consultarresponsaveis()
      * UC 89 - Fluxo FA2 - Aceitar Vinculo
      * @access public
      * @param void
      * @return void
      */
     public function consultarresponsaveisAction() {
-        $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity()); // pega a autenticação
-        $idUsuario = $auth['idusuario'];
-        $cpf = $auth['cpf'];
+        $auth = Zend_Auth::getInstance();
+        $arrAuth = array_change_key_case((array) $auth->getIdentity()); // pega a autenticação
 
-        $Agentes = new Agente_Model_DbTable_Agentes();
-        $buscarpendentes = $Agentes->gerenciarResponsaveisListas('0', $idUsuario);
-        $buscarvinculados = $Agentes->gerenciarResponsaveisListas('2', $idUsuario);
+        $idUsuario = $arrAuth['idusuario'];
+        $cpf = $arrAuth['cpf'];
+
+        $tblAgentes = new Agente_Model_DbTable_Agentes();
+        $buscarpendentes = $tblAgentes->gerenciarResponsaveisListas('0', $idUsuario);
+        $buscarvinculados = $tblAgentes->gerenciarResponsaveisListas('2', $idUsuario);
 
         $this->view->pendentes = $buscarpendentes;
         $this->view->vinculados = $buscarvinculados;
@@ -1228,7 +1228,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * Método vincularpropostas()
+     * Metodo vincularpropostas()
      * UC 89 - Fluxo FA6 - Vincular Propostas
      * @access public
      * @param void
@@ -1238,11 +1238,12 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $tbVinculo = new Agente_Model_DbTable_TbVinculo();
         $propostas = new Proposta_Model_PreProjeto();
 
-        $agentes = new Agente_Model_DbTable_Agentes();
+        $tblAgentes = new Agente_Model_DbTable_Agentes();
         $dadosCombo = array();
-        $rsVinculo = $agentes->listarVincularPropostaCombo($this->idResponsavel);
+        $rsVinculo = $tblAgentes->listarVincularPropostaCombo($this->idResponsavel);
 
         $i = 0;
+
         foreach ($rsVinculo as $rs) {
             $dadosCombo[$i]['idResponsavel'] = $rs->idusuarioresponsavel;
             $dadosCombo[$i]['idVinculo'] = $rs->idvinculo;
@@ -1267,9 +1268,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         //PROCURA AS PROPOSTAS DE TODOS OS IDAGENTE'S
         $listaPropostas = $propostas->buscarVinculadosProponenteDirigentes($dadosIdAgentes);
 
-        $wherePropostaD['pp.idAgente = ?'] = $this->idAgenteProponente;
-        $wherePropostaD['pr.idProjeto IS NULL'] = '';
-        $wherePropostaD['pp.idUsuario <> ?'] = $this->idResponsavel;
+        $wherePropostaD['pp.idagente = ?'] = $this->idAgenteProponente;
+        $wherePropostaD['pr.idprojeto IS NULL'] = '';
+        $wherePropostaD['pp.idusuario <> ?'] = $this->idResponsavel;
         $listaPropostasD = $propostas->buscarPropostaProjetos($wherePropostaD);
 
         $this->view->responsaveis = $dadosCombo;
@@ -1278,7 +1279,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * Método vincularpropostas()
+     * Metodo vincularpropostas()
      * UC 89 - Fluxo FA8 - Vincular Propostas
      * @access public
      * @param void
@@ -1297,7 +1298,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * Método novoresponsavel()
+     * Metodo novoresponsavel()
      * UC 89 - Fluxo FA4 - Vincular Responsï¿½vel
      * @access public
      * @param void
@@ -1308,7 +1309,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * Método resnovoresponsavel()
+     * Metodo resnovoresponsavel()
      * Retorno do novoresponsavel
      * UC 89 - Fluxo FA4 - Vincular Responsï¿½vel
      * @access public
@@ -1328,7 +1329,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         if ((empty($cnpjcpf)) && (empty($nome))) {
             echo "<table class='tabela'>
 					<tr>
-					    <td class='red' align='center'>Vocï¿½ deve preencher pelo menos um campo!</td>
+					    <td class='red' align='center'>Voc&eacute; deve preencher pelo menos um campo!</td>
 					</tr>
 				</table>";
             $this->_helper->viewRenderer->setNoRender(TRUE);

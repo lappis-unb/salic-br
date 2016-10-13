@@ -19,11 +19,11 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
 
     /**
-     * Reescreve o método init()
+     * Reescreve o metodo init()
      */
     public function init()
     {
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
 
         $arrIdentity = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
         $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo');
@@ -291,7 +291,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                 $array['stTipoDemanda'] = 'ED';
                 $array['ResumoDoProjeto'] = trim(TratarString::escapeString($_REQUEST['resumoProjeto']));
 
-                // Salvar o responsável
+                // Salvar o responsavel
                 $array['idUsuario'] = $this->idResponsavel;
 
                 if (isset($_REQUEST['idPreProjeto']) ) {
@@ -522,18 +522,18 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
      * @return void
      */
     private function anexararquivo() {
-        // pega as informações do arquivo
+        // pega as informacoes do arquivo
         $idUltimoArquivo = 'null';
         $post = Zend_Registry::get('post');
 
         if (is_file($_FILES['arquivo']['tmp_name'])) {
             $arquivoNome = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporário
+            $arquivoTemp = $_FILES['arquivo']['tmp_name']; // nome temporario
             $arquivoTipo = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho = $_FILES['arquivo']['size']; // tamanho
             if (!empty($arquivoNome) && !empty($arquivoTemp)) {
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
-                $arquivoBinario = Upload::setBinario($arquivoTemp); // binário
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensao
+                $arquivoBinario = Upload::setBinario($arquivoTemp); // binario
                 $arquivoHash = Upload::setHash($arquivoTemp); // hash
             }
             if ($arquivoTamanho > 10485760) // tamanho do arquivo: 10MB
@@ -551,11 +551,11 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                 'stAtivo' => 'I');
             $cadastrarArquivo = ArquivoDAO::cadastrar($dadosArquivo);
 
-            // pega o id do último arquivo cadastrado
+            // pega o id do ultimo arquivo cadastrado
             $idUltimoArquivo = ArquivoDAO::buscarIdArquivo();
             $idUltimoArquivo = (int) $idUltimoArquivo[0]->id;
 
-            // cadastra o binário do arquivo
+            // cadastra o binario do arquivo
             $dadosBinario = array(
                 'idArquivo' => $idUltimoArquivo,
                 'biArquivo' => $arquivoBinario);
@@ -968,7 +968,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
         if (count($rsProponente) > 0) {
 
-        //VERIFICA SE O PROPONENTE ESTÁ VINCULADO
+        //VERIFICA SE O PROPONENTE ESTA VINCULADO
 	        $vinculoProponente = new tbVinculoPropostaResponsavelProjeto();
 	        $whereProp['VP.idPreProjeto = ?'] 		= $idPreProjeto;
 	        $whereProp['VP.siVinculoProposta = ?'] 	= 2;
@@ -1278,7 +1278,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
     /**
      * excluiranexoAction
-     * Método para efetuar a exclusão do arquivo
+     * Metodo para efetuar a exclusao do arquivo
      *
      * @access public
      * @return void

@@ -6,7 +6,7 @@
  * @author augusto
  * @author wouerner <wouerner@gmail.com>
  * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+ * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
  */
 class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
 {
@@ -22,10 +22,10 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
     private static $instancia;
 
     /**
-     * Responsável por implementar o Singleton, retornando apenas uma instancia da classe
-     * utilizando uma chamada estática.
+     * Responsavel por implementar o Singleton, retornando apenas uma instancia da classe
+     * utilizando uma chamada estatica.
      * @return Autenticacao_Model_Sgcacesso
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      */
     public static function obterInstancia()
     {
@@ -41,7 +41,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
     }
 
     /**
-     * Método para buscar os dados do usuï¿½rio de acordo com id (login scriptcase)
+     * Metodo para buscar os dados do usuï¿½rio de acordo com id (login scriptcase)
      * @access public
      * @dinamic
      * @param @cod (codigo do usuario)
@@ -66,13 +66,18 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
             $conexao_scriptcase = "conexao_scriptcase";
         }
 
-        // configurações do banco de dados (seta uma nova conexï¿½o no arquivo config.ini)
-        $config = new Zend_Config_Ini('./application/configs/config.ini', $conexao_scriptcase);
+        // configuracoes do banco de dados (seta uma nova conexao no arquivo config.ini)
+
+        $config = new Zend_Config_Ini(
+            APPLICATION_PATH. '/configs/application.ini',
+            $conexao_scriptcase
+        );
+
         $db = Zend_Db::factory($config->db);
         Zend_Db_Table::setDefaultAdapter($db);
 
-        if ($buscar) { // realiza a autenticação
-            // configurações do banco
+        if ($buscar) { // realiza a autenticacao
+            // configuracoes do banco
             $authAdapter = new Zend_Auth_Adapter_DbTable($db);
             $authAdapter->setTableName(self::obterInstancia()->getTableName())
                 ->setIdentityColumn('cpf')
@@ -235,7 +240,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
     /**
      * @param array $dados
      * @return mixed
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      */
     public function salvar(array $dados)
     {

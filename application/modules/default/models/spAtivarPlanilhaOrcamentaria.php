@@ -2,7 +2,7 @@
 
 /**
  * Description of spAtivarPlanilhaOrcamentaria
- * Criado em 18/01/2016 - Fernão Lara
+ * Criado em 18/01/2016 - Fernao Lara
  */
 class spAtivarPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
         

@@ -48,7 +48,7 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
     }
 
     /**
-     * Pesquisa os projetos / localização de acordo com o pronac informado
+     * Pesquisa os projetos / localizacao de acordo com o pronac informado
      */
     public function pesquisarPorPronac($idPronac, $orgaosUsuario, $showOnlyLast = false)
     {
@@ -59,7 +59,7 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
     }
 
     /**
-     * Pesquisa os projetos / localização de acordo com o técnico
+     * Pesquisa os projetos / localizacao de acordo com o tecnico
      */
     public function pesquisarPorTecnico($idTecnico, $orgaosUsuario, $showOnlyLast = false)
     {
@@ -70,7 +70,7 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
     }
 
     /**
-     * Pesquisa os projetos / localização de acordo com a vinculada
+     * Pesquisa os projetos / localizacao de acordo com a vinculada
      */
     public function pesquisarPorVinculada($idVinculada, $orgaosUsuario, $showOnlyLast = false)
     {

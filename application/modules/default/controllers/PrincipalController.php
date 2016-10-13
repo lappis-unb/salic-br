@@ -11,17 +11,17 @@
 class PrincipalController extends MinC_Controller_Action_Abstract
 {
     /**
-     * Reescreve o método init()
+     * Reescreve o metodo init()
      * @access public
      * @param void
      * @return void
      */
     public function init()
     {
-        $this->view->title = "Salic - Sistema de Apoio ás Leis de Incentivo é Cultura"; // tétulo da pégina
-        $auth              = Zend_Auth::getInstance(); // pega a autenticaééo
-        $Usuario           = new Autenticacao_Model_Usuario(); // objeto usuério
-        $GrupoAtivo        = new Zend_Session_Namespace('GrupoAtivo'); // cria a sesséo com o grupo ativo
+        $this->view->title = "Salic - Sistema de Apoio ás Leis de Incentivo é Cultura"; // tetulo da pegina
+        $auth              = Zend_Auth::getInstance(); // pega a autenticaeeo
+        $Usuario           = new Autenticacao_Model_Usuario(); // objeto usuerio
+        $GrupoAtivo        = new Zend_Session_Namespace('GrupoAtivo'); // cria a sesseo com o grupo ativo
 
         parent::perfil();
 
@@ -29,7 +29,7 @@ class PrincipalController extends MinC_Controller_Action_Abstract
     }
 
     /**
-     * Pégina inicial do sistema
+     * Pegina inicial do sistema
      * @access public
      * @param void
      * @return void
@@ -49,22 +49,22 @@ class PrincipalController extends MinC_Controller_Action_Abstract
         $this->view->comunicados = $rs;
     }
 
-    public function abasAction() {} // fecha método abasAction()
+    public function abasAction() {} // fecha metodo abasAction()
 
-    public function textoAction() {} // fecha método textoAction()
+    public function textoAction() {} // fecha metodo textoAction()
 
-    public function gridAction() {} // fecha método gridAction()
+    public function gridAction() {} // fecha metodo gridAction()
 
-    public function caixadetextoAction() {} // fecha método caixadetextoAction()
+    public function caixadetextoAction() {} // fecha metodo caixadetextoAction()
 
-    public function modalAction() {} // fecha método modalAction()
+    public function modalAction() {} // fecha metodo modalAction()
 
-    public function botoesAction() {} // fecha método botoesAction()
+    public function botoesAction() {} // fecha metodo botoesAction()
 
-    public function exemplosAction() {} // fecha método exemplosAction()
+    public function exemplosAction() {} // fecha metodo exemplosAction()
 
     /**
-     * Método listarComunicados()
+     * Metodo listarComunicados()
      * @access public
      * @param void
      * @return List
@@ -127,7 +127,7 @@ class PrincipalController extends MinC_Controller_Action_Abstract
     }
 
 	/**
-	 * Método buscarProjeto()
+	 * Metodo buscarProjeto()
 	 * @access public
 	 * @param void
 	 * @return void

@@ -12,18 +12,18 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
     private $idPreProjeto = 0;
 
     /**
-     * Reescreve o método init()
+     * Reescreve o metodo init()
      * @access public
      * @param void
      * @return void
      */
     public function init()
     {
-        // autenticaç?o e permiss?es zend (AMBIENTE MINC)
+        // autenticac?o e permiss?es zend (AMBIENTE MINC)
         $PermissoesGrupo = array();
-        $PermissoesGrupo[] = 127; // Coordenador - Geral de Análise (Ministro)
+        $PermissoesGrupo[] = 127; // Coordenador - Geral de Analise (Ministro)
         $PermissoesGrupo[] = 97;  // Gestor do SALIC
-        $arrAuth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity()); // instancia da autenticação
+        $arrAuth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity()); // instancia da autenticacao
         isset($arrAuth['usu_codigo']) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
 
         parent::init(); // chama o init() do pai GenericControllerNew
@@ -257,7 +257,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $where = array();
         $where['sol.idAgente = ?'] = $auth->getIdentity()->IdUsuario;
         $where['sol.stEstado = ?'] = 1; // Atendido
@@ -367,7 +367,7 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
-        $auth = Zend_Auth::getInstance(); // pega a autenticação
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $where = array();
         $where['sol.idAgente = ?'] = $auth->getIdentity()->IdUsuario;
         $where['sol.stEstado = ?'] = 1; // Atendido
