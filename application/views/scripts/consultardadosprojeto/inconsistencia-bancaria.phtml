@@ -152,7 +152,7 @@ function mascara ($val, $mask) {
             <tr class="titulo_tabela">
                 <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">Item Or&ccedil;ament&aacute;rio</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">CNPJ / CPF</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo6=&ordem='.$this->paginacao['novaOrdem'];?>">Nome</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo3=&ordem='.$this->paginacao['novaOrdem'];?>">Nome</a></th>
                 <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">Valor</a></th>
                 <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Vl. Comprovado</a></th>
                 <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'inconsistencia-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=9&ordem='.$this->paginacao['novaOrdem'];?>">Vl. Debitado</a></th>
@@ -184,7 +184,7 @@ function mascara ($val, $mask) {
          <tr>
              <td align="center"><?php echo $d->ItemOrcamentario; ?></td>
              <td><?php echo $d->CNPJCPF; ?></td>
-             <td align="center"><?php echo $d->Fornecedor; ?></td>
+             <td align="center"><?php echo $d->NomeProjeto; ?></td>
              <td align="right"><b><?php echo 'R$ '. @number_format(($d->vlPagamento),2, ",", "."); ?></b></td>
              <td align="right"><b><?php echo 'R$ '. @number_format(($d->vlComprovado),2, ",", "."); ?></b></td>
              <td align="right"><?php echo $d->vlDebitado; ?></td>
