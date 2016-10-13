@@ -14,6 +14,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 {
     protected $_name='tbsolicitaritem';
     protected $_schema = 'sac';
+    protected $_primary = 'idsolicitaritem';
     /**
      * exibirprodutoetapaitem
      *
@@ -287,30 +288,50 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
      * @return void
      * $todo migrar metodo para $this->solicitacao
      */
-    public static function solicitacoes($idAgente) {
-        $sql = "SELECT prod.Codigo as idProduto, prod.Descricao as Produto,
-			       et.idPlanilhaEtapa, et.Descricao as Etapa,
-			       sol.idSolicitarItem,
-			       CASE
-			            WHEN  sol.IdPlanilhaItens > 0 THEN it.Descricao
-			            ELSE sol.NomeDoItem
-			       END as ItemSolicitado,
-			       sol.Descricao as Justificativa,
-			       CASE sol.stEstado
-			            WHEN 0 THEN 'Solicitado'
-			            WHEN 1 THEN 'Atendido'
-			            ELSE 'Negado'
-			       END as Estado,Resposta
-			 FROM SAC.dbo.tbSolicitarItem sol
-			      INNER JOIN SAC.dbo.Produto prod ON sol.idProduto = prod.Codigo
-			      INNER JOIN SAC.dbo.tbPlanilhaEtapa et ON sol.idEtapa = et.idPlanilhaEtapa
-			      LEFT JOIN SAC.dbo.TbPlanilhaItens it ON sol.idPlanilhaItens = it.idPlanilhaItens
-			 WHERE sol.idAgente = '".$idAgente."'
-			 ORDER BY sol.idSolicitarItem";
+    public function solicitacoes($idagente) {
+
+        $select = $this->select();
+        $select->setintegritycheck(false);
+        $select->from(
+            array('sol' => $this->_name),
+            array(
+                "prod.codigo as idproduto",
+                "prod.descricao as produto",
+                "et.idplanilhaetapa",
+                "et.descricao as etapa",
+                "sol.idsolicitaritem",
+                new zend_db_expr("(case when sol.idplanilhaitens > 0 then it.descricao else sol.nomedoitem end) as itemsolicitado"),
+                "sol.descricao as justificativa",
+                new zend_db_expr( "(case sol.stestado when 0 then 'solicitado' when 1 then 'atendido' else 'negado' end) as estado"),
+                "resposta"
+            ),
+            $this->_schema
+        );
+
+        $select->joininner(
+            array('prod'=>'produto'), 'sol.idproduto = prod.codigo',
+            null,
+            $this->_schema
+        );
+
+        $select->joininner(
+            array('et'=>'tbplanilhaetapa'), 'sol.idetapa = et.idplanilhaetapa',
+            null,
+            $this->_schema
+        );
+
+        $select->joinleft(
+            array('it' => 'tbplanilhaitens'), 'sol.idplanilhaitens = it.idplanilhaitens',
+            null,
+            $this->_schema
+        );
+        $select->where('sol.idagente = '.$idagente);
+        $select->order('sol.idsolicitaritem');
+
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
     }
 
     /**

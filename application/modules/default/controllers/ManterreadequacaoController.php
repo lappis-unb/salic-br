@@ -381,6 +381,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
     }
 
     public function finalizageralAction() {
+        $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
 
         $idAcao = $_GET['id'];
         $tipoFiltro = $_GET['tipoFiltro'].':d'; // d = DEVOLVIDOS APOS ANALISE
@@ -553,7 +554,7 @@ class ManterreadequacaoController extends MinC_Controller_Action_Abstract{
                             );
 
                             //if (count(AbrangenciaDAO::verificarLocalRealizacao($idProjeto, $x->idMunicipioIBGE)) <= 0) :
-                            $local = AbrangenciaDAO::cadastrar($dados);
+                            $local = $tbAbrangencia->cadastrar($dados);
                             //endif;
                             //print_r($local);
 
