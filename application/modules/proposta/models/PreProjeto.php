@@ -1021,7 +1021,9 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
 
         $slct->joinLeft(
                 array('pr' => 'Projetos'), 'pp.idPreProjeto = pr.idProjeto',
-                array('pr.idProjeto','(pr.AnoProjeto+pr.Sequencial) as PRONAC'),
+                array('pr.idProjeto',
+                    'PRONAC' => new Zend_Db_Expr('pr.AnoProjeto' + 'pr.Sequencial')
+                ),
             $this->_schema
         );
 
@@ -1029,9 +1031,9 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             $slct->where($coluna, $valor);
         }
 
-        $slct->order('pp.idPreProjeto');
-        $slct->order('pp.NomeProjeto');
-        //@todo parei aqui Cleber
+        $slct->order('pp.idpreprojeto');
+        $slct->order('pp.nomeprojeto');
+
         return $this->fetchAll($slct);
     }
 

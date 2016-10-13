@@ -1329,7 +1329,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         if ((empty($cnpjcpf)) && (empty($nome))) {
             echo "<table class='tabela'>
 					<tr>
-					    <td class='red' align='center'>Vocï¿½ deve preencher pelo menos um campo!</td>
+					    <td class='red' align='center'>Voc&eacute; deve preencher pelo menos um campo!</td>
 					</tr>
 				</table>";
             $this->_helper->viewRenderer->setNoRender(TRUE);
