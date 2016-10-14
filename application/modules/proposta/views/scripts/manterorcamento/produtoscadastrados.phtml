@@ -53,10 +53,7 @@ function abrirFrmCadastroItem(url){
 }
 </script>
 <div id="frmCadastroItem" style="text-align: center; display: none;"></div>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<?php
-echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); // menu
-?>
+<?php echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); ?>
 <?php
         $controller = "manterorcamento";
         $links = array(
@@ -75,7 +72,10 @@ montaGuiaLinks($controller, $links);
 <!-- ========== INCIO CONTEDO ========== -->
 <div id="conteudo">
 
-<?php if(count($this->Produtos)>0){foreach ($this->Produtos as $produtos): ?>
+<?php
+if(count($this->Produtos)>0){
+
+foreach ($this->Produtos as $produtos): ?>
 
 <div id="produto">
     <table class='tabela'>

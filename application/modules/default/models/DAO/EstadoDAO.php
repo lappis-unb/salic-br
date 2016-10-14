@@ -1,17 +1,15 @@
 <?php
 /**
  * Modelo Estado
- * @author Equipe RUP - Politec
  * @since 29/03/2010
- * @version 1.0
- * @package application
- * @subpackage application.models
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
- * @link http://www.cultura.gov.br
  */
 
 class EstadoDAO extends MinC_Db_Table_Abstract
 {
+<<<<<<< HEAD
+	protected $_name = 'uf';
+	protected $_schema = 'agentes';
+=======
 	protected $_name = 'uf'; // nome da tabela
 	protected $_schema = 'agentes'; // nome da tabela
 
@@ -45,6 +43,7 @@ class EstadoDAO extends MinC_Db_Table_Abstract
 		//xd($sql);
 		return $db->fetchAll($sql);
 	} // fecha buscar()
+>>>>>>> 2c8444b792d3daa70a31b425c3a4ae9907a65032
 
     public function listar($id = null)
     {
@@ -54,8 +53,7 @@ class EstadoDAO extends MinC_Db_Table_Abstract
         $sql = $db->select()
             ->from($this->_name, ['iduf AS id', 'sigla AS descricao'], $this->_schema);
 
-        if (!empty($id))
-        {
+        if (!empty($id)) {
             $sql->where('idUF = ?', $id);
         }
 
