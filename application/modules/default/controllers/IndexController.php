@@ -129,15 +129,18 @@ class IndexController extends GenericControllerNew
         //Pega timestamp atual
         $data = new Zend_Date();
         $timestamp = $data->getTimestamp();
+        
+        $maxTentativas = 4;
+        $tempoBan = 300; // segundos
 
         // VERIFICA SE USUARIO ESTA BANIDO
         if(isset($LoginAttempt)){
 
-            $TempoBan = $timestamp - strtotime($LoginAttempt->dtTentativa);
+            $tempoLogin = $timestamp - strtotime($LoginAttempt->dtTentativa);
 
-            if($TempoBan <= 300 && $LoginAttempt->nrTentativa >= 4)
+            if($tempoLogin <= $tempoBan && $LoginAttempt->nrTentativa >= $maxTentativas)
             {
-                parent::message('Acesso bloqueado, aguarde '.gmdate("i", (305 - $TempoBan) ).' minuto(s) e tente novamente!', "/", "ERROR");
+                parent::message('Acesso bloqueado, aguarde '.gmdate("i", ($tempoBan + 5 - $tempoLogin) ).' minuto(s) e tente novamente!', "/", "ERROR");
 
             }else{
 
@@ -180,7 +183,7 @@ class IndexController extends GenericControllerNew
                             return $this->_helper->redirector->goToRoute(array('controller' => 'principal'), null, true);
                         } // fecha if
                         else {
-                            if($TempoBan > 300){
+                            if($tempoLogin > $tempoBan){
                                 $tbLoginTentativasAcesso->removeTentativa($username,$ip);
                             }
                             $LoginAttempt = $tbLoginTentativasAcesso->consultarAcessoCpf($username,$ip);

@@ -41,7 +41,7 @@
                 messages:{
                     Login:{
                         required: " Digite o seu CPF!",
-                        minlength: " O CPF / CNPJ deve conter, no mínimo, 11 caracteres!"
+                        minlength: " O CPF deve conter exatamente 11 caracteres!"
                     },
                     Senha:{
                         required: " Digite a sua senha!",
@@ -77,7 +77,7 @@
                 <tbody>
                     <tr>
                         <td width="10%" class="destacar bold" align="right"><label for="Login">CPF</label></td>
-                        <td width="90%"><input maxlength="18" onkeydown="mascaraCnpjCpf(this);" onkeypress="mascaraCnpjCpf(this);" onkeyup="mascaraCnpjCpf(this);" class="input_simples" type="text" name="Login" id="Login" /></td>
+                        <td width="90%"><input maxlength="14" onkeyup="mascara(this, format_cpf);" class="input_simples" type="text" name="Login" id="Login" /></td>
                     </tr>
                     <tr>
                         <td width="10%" class="destacar bold" align="right"><label for="Senha">SENHA</label></td>
