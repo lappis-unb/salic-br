@@ -5,9 +5,9 @@
         $(".opcaovinculacao").each(function(indice, elemento) {
             if($(elemento).attr('checked')) {
                 if($(elemento).val() == "0"){
-                    $("#confirmartroca").html("Deseja vincular o responsável à proposta?");
+                    $("#confirmartroca").html("Deseja vincular o respons&aacute;vel &agrave; proposta?");
                 } else {
-                    $("#confirmartroca").html("Deseja desvincular o responsável da proposta?");
+                    $("#confirmartroca").html("Deseja desvincular o respons&aacute;vel da proposta?");
                 }
             }
         });
@@ -21,7 +21,7 @@
             closeOnEscape : false,
             title : 'Alerta',
             buttons: {
-                'Não': function(){
+                'N\xE3o': function(){
                     $(this).dialog('close');
                 },
                 'Sim': function(){
@@ -73,7 +73,7 @@
         }
 
         if($('#responsavel').val() == ''){
-            $("#confirma").html('Favor selecionar um responsável!');
+            $("#confirma").html('Favor selecionar um respons&aacute;vel!');
             $("#confirma").dialog({
                 resizable: false,
                 width:320,

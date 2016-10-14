@@ -6,7 +6,7 @@
  * @uses   Zend_Db_Table
  * @author wouerner <wouerner@gmail.com>
  */
-class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
+class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 {
     protected $_schema= "sac";
     protected $_name = "preprojeto";
@@ -975,7 +975,6 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
      * @param mixed $idResponsavel
      * 
      * @access public
-     * @return void
      */
     public function alteraresponsavel($idPreProjeto, $idResponsavel)
     {
@@ -1217,14 +1216,14 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $subSql = $db->select()
-            ->from(['pr' => 'projetos'], ['idprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
+            ->from(['pr' => 'projetos'], ['idprojeto'], Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
             ->where('a.idpreprojeto = pr.idprojeto')
             ;
 
         $sql = $db->select()
-            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'],Proposta_Model_PreProjeto::getSchema('sac'))
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], Proposta_Model_PreProjeto::getSchema('agentes'))
-            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'],Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->where('a.idagente = ? ', $idAgente)
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
@@ -1232,16 +1231,16 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             ;
 
         $subSql = $db->select()
-            ->from(['f' => 'projetos'], ['idprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
+            ->from(['f' => 'projetos'], ['idprojeto'], Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
             ->where('a.idpreprojeto = f.idprojeto');
 
         $sql2 = $db->select()
-            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], Proposta_Model_PreProjeto::getSchema('agentes'))
-            ->join(['c' => 'vinculacao'], 'b.idagente = c.idvinculoprincipal', [], Proposta_Model_PreProjeto::getSchema('agentes'))
-            ->join(['d' => 'agentes'], 'c.idagente = d.idagente', [], Proposta_Model_PreProjeto::getSchema('agentes'))
-            ->join(['e' => 'sgcacesso'], 'd.cnpjcpf = e.cpf', [], Proposta_Model_PreProjeto::getSchema('controledeacesso'))
-            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'], Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(['c' => 'vinculacao'], 'b.idagente = c.idvinculoprincipal', [], Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(['d' => 'agentes'], 'c.idagente = d.idagente', [], Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(['e' => 'sgcacesso'], 'd.cnpjcpf = e.cpf', [], Proposta_Model_DbTable_PreProjeto::getSchema('controledeacesso'))
+            ->joinleft(['n' => 'nomes'], 'n.idagente = b.idagente', ['n.descricao as nomeproponente'], Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->where('e.idusuario = ?',$idResponsavel)
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
@@ -1249,17 +1248,17 @@ class Proposta_Model_PreProjeto extends MinC_Db_Table_Abstract
             ;
 
         $subSql = $db->select()
-            ->from(['z' => 'projetos'], ['idprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
+            ->from(['z' => 'projetos'], ['idprojeto'], Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
             ->where('a.idpreprojeto = z.idprojeto')
             ;
 
         $sql3 = $db->select()
-            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'], Proposta_Model_PreProjeto::getSchema('sac'))
-            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], Proposta_Model_PreProjeto::getSchema('agentes'))
-            ->join(['c' => 'nomes'], 'b.idagente = c.idagente', ['c.descricao as nomeproponente'], Proposta_Model_PreProjeto::getSchema('agentes'))
-            ->join(['d' => 'sgcacesso'], 'a.idusuario = d.idusuario', [], Proposta_Model_PreProjeto::getSchema('controledeacesso'))
-            ->join(['e' => 'tbvinculoproposta'], 'a.idpreprojeto = e.idpreprojeto', [], Proposta_Model_PreProjeto::getSchema('agentes'))
-            ->join(['f' => 'tbvinculo'], 'e.idvinculo = f.idvinculo', [], Proposta_Model_PreProjeto::getSchema('agentes'))
+            ->from(['a'=>'preprojeto'], ['a.idpreprojeto', 'a.nomeprojeto'], Proposta_Model_DbTable_PreProjeto::getSchema('sac'))
+            ->join(['b' => 'agentes'], 'a.idagente = b.idagente', ['b.cnpjcpf', 'b.idagente'], Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(['c' => 'nomes'], 'b.idagente = c.idagente', ['c.descricao as nomeproponente'], Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(['d' => 'sgcacesso'], 'a.idusuario = d.idusuario', [], Proposta_Model_DbTable_PreProjeto::getSchema('controledeacesso'))
+            ->join(['e' => 'tbvinculoproposta'], 'a.idpreprojeto = e.idpreprojeto', [], Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
+            ->join(['f' => 'tbvinculo'], 'e.idvinculo = f.idvinculo', [], Proposta_Model_DbTable_PreProjeto::getSchema('agentes'))
             ->where('a.stestado = 1')
             ->where("NOT EXISTS($subSql)")
             ->where("a.mecanismo = '1'")

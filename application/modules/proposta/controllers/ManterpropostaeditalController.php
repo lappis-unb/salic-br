@@ -171,7 +171,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             $where['fd.idClassificaDocumento not in (?)'] = array(23, 24, 25);
             $where['p.idPreProjeto = ?'] = $_REQUEST['idPreProjeto'];
 
-            $tblPreProjeto = new Proposta_Model_PreProjeto();
+            $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $dados = $tblPreProjeto->buscarPropostaEditalCompleto($where);
 
             $get = Zend_Registry::get("get");
@@ -317,7 +317,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                     /*******************************************************************************************/
 	                // Salvando os dados na TbVinculoProposta
 	                $tbVinculoDAO 		  = new Agente_Model_DbTable_TbVinculo();
-	                $tbVinculoPropostaDAO = new tbVinculoPropostaResponsavelProjeto();
+	                $tbVinculoPropostaDAO = new Agente_Model_DbTable_TbVinculoProposta();
 
 	                $whereVinculo['idUsuarioResponsavel = ?'] = $this->idResponsavel;
 	                $whereVinculo['idAgenteProponente   = ?'] = $_REQUEST['idAgente'];
@@ -388,7 +388,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             $where['fd.idClassificaDocumento not in (?)'] = array(23, 24, 25);
             $where['p.idPreProjeto = ?'] = $_REQUEST['idPreProjeto'];
 
-            $tblPreProjeto = new Proposta_Model_PreProjeto();
+            $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $dados = $tblPreProjeto->buscarPropostaEditalCompleto($where);
         } else {
             parent::message("Projeto não informado!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "ERROR");
@@ -423,7 +423,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $rs = $tbl->buscarDocumentos(array("idprojeto = ?" => $get->idPreProjeto));
         $this->view->arquivosProposta = $rs;
 
-        $tblPreProjeto = new Proposta_Model_PreProjeto();
+        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $dadosProjeto = $tblPreProjeto->findBy(array('idPreProjeto' => $get->idPreProjeto));
         $tbA = new Proposta_Model_DbTable_TbDocumentosAgentes();
         $rsA = $tbA->buscarDadosDocumentos(array("idagente = ?" => $dadosProjeto['idagente']));
@@ -689,7 +689,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $idPreProjeto = $get->idPreProjeto;
 
         //BUSCANDO REGISTRO A SER ALTERADO
-        $tblPreProjeto = new Proposta_Model_PreProjeto();
+        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
         $rsPreProjeto->stEstado = 0;
@@ -927,7 +927,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         //BUSCA DADOS DO PROJETO
         $arrBusca = array();
         $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
-        $tblPreProjeto = new Proposta_Model_PreProjeto();
+        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
         /* ======== VERIFICA TODAS AS INFORMACOES NECESSARIAS AO ENVIO DA PROPOSTA ======= */
@@ -969,7 +969,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         if (count($rsProponente) > 0) {
 
         //VERIFICA SE O PROPONENTE ESTA VINCULADO
-	        $vinculoProponente = new tbVinculoPropostaResponsavelProjeto();
+	        $vinculoProponente = new Agente_Model_DbTable_TbVinculoProposta();
 	        $whereProp['VP.idPreProjeto = ?'] 		= $idPreProjeto;
 	        $whereProp['VP.siVinculoProposta = ?'] 	= 2;
 	        $rsVinculo = $vinculoProponente->buscarResponsaveisProponentes($whereProp);
@@ -1117,7 +1117,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         }
 
         if (!empty($idPreProjeto) && $valida == "s") {
-            $tblPreProjeto = new Proposta_Model_PreProjeto();
+            $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $tblAvaliacao = new Proposta_Model_AnalisarPropostaDAO();
 
             //recupera dados do projeto

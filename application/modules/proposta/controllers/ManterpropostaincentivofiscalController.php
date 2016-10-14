@@ -101,7 +101,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $this->view->blnJaEnviadaAoMinc = $rsHistMov->count();
 
             //VERIFICA SE A PROPOSTA TEM DILIGENCIAS
-            $PreProjeto = new Proposta_Model_PreProjeto();
+            $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $rsDiligencias = $PreProjeto->listarDiligenciasPreProjeto(array('pre.idpreprojeto = ?' => $this->idPreProjeto));
             $this->view->blnPossuiDiligencias = $rsDiligencias->count();
         }
@@ -115,7 +115,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @return void
      */
     public function verificaPermissaoAcessoProposta($idPreProjeto) {
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rs = $tblProposta->buscar(array("idPreProjeto = ? " => $idPreProjeto, "1=1 OR idEdital IS NULL OR idEdital > 0" => "?", "idUsuario =?" => $this->idResponsavel));
         return $rs->count();
     }
@@ -132,7 +132,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $arrBusca['stestado = ?'] = 1;
         $arrBusca['idusuario = ?'] = $this->idResponsavel;
         // Chama o SQL
-        $tblPreProjeto = new Proposta_Model_PreProjeto();
+        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca, array("idagente ASC"));
 
         //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
@@ -215,7 +215,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $agencia = $get->agencia;
 
         if ($agencia > 0) {
-            $tblProposta = new Proposta_Model_PreProjeto();
+            $tblProposta = new Proposta_Model_DbTable_PreProjeto();
             $agencia = $tblProposta->buscaragencia($agencia);
             if (count($agencia) > 0) {
                 echo "";
@@ -324,7 +324,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         }
 
         //instancia classe modelo
-        $tblPreProjeto = new Proposta_Model_PreProjeto();
+        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
 
         $db = Zend_Db_Table::getDefaultAdapter();
 
@@ -336,7 +336,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             if ($acao == "incluir") {
                 // Salvando os dados na TbVinculoProposta
                 $tbVinculoDAO = new Agente_Model_DbTable_TbVinculo();
-                $tbVinculoPropostaDAO = new tbVinculoPropostaResponsavelProjeto();
+                $tbVinculoPropostaDAO = new Agente_Model_DbTable_TbVinculoProposta();
 
                 $whereVinculo['idUsuarioResponsavel = ?'] = $this->idResponsavel;
                 $whereVinculo['idAgenteProponente   = ?'] = $idAgente;
@@ -382,7 +382,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
         $this->view->idPreProjeto = $idPreProjeto;
         // Chama o SQL
-        $tblPreProjeto = new Proposta_Model_PreProjeto();
+        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
         $arrBuscaProponete = array();
@@ -420,7 +420,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
             $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
 
-            $tblPreProjeto = new Proposta_Model_PreProjeto();
+            $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
             if ($rsPreProjeto) {
@@ -495,7 +495,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
         //BUSCANDO REGISTRO A SER ALTERADO
-        $preProjeto = new Proposta_Model_PreProjeto();
+        $preProjeto = new Proposta_Model_DbTable_PreProjeto();
         $preProjeto = $preProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
         $preProjeto->stestado = 0;
@@ -523,7 +523,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $idPreProjeto = $get->idPreProjeto;
 
         if (!empty($idPreProjeto)) {
-            $sp = new Proposta_Model_PreProjeto();
+            $sp = new Proposta_Model_DbTable_PreProjeto();
 
             $arrResultado = $sp->checklistEnvioProposta($idPreProjeto);
 
@@ -549,7 +549,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         //BUSCA DADOS DO PROJETO
         $arrBusca = array();
         $arrBusca['idPreProjeto = ?'] = $idPreProjeto;
-        $tblPreProjeto = new Proposta_Model_PreProjeto();
+        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
         /* ======== VERIFICA TODAS AS INFORMACOES NECESSARIAS AO ENVIO DA PROPOSTA ======= */
 
@@ -602,7 +602,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         if (count($rsProponente) > 0) {
 
             //VERIFICA SE O PROPONENTE ESTï¿½ VINCULADO
-            $vinculoProponente = new tbVinculoPropostaResponsavelProjeto();
+            $vinculoProponente = new Agente_Model_DbTable_TbVinculoProposta();
             $whereProp['VP.idPreProjeto = ?'] = $this->idPreProjeto;
             $whereProp['VP.siVinculoProposta = ?'] = 2;
             $rsVinculo = $vinculoProponente->buscarResponsaveisProponentes($whereProp);
@@ -914,7 +914,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $edital = "";
         }
         if (!empty($idPreProjeto) && $valida == "s") {
-            $tblPreProjeto = new Proposta_Model_PreProjeto();
+            $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $tblAvaliacao = new Proposta_Model_AnalisarPropostaDAO();
 
             //recupera dados do projeto
@@ -1135,7 +1135,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      */
     public function listarpropostaAction()
     {
-        $proposta = new Proposta_Model_PreProjeto();
+        $proposta = new Proposta_Model_DbTable_PreProjeto();
         $dadosCombo = array();
         $cpfCnpj = '';
 
@@ -1177,7 +1177,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $get = Zend_Registry::get('get');
         $idAgente = $get->idAgente;
 
-        $tblPreProjeto = new Proposta_Model_PreProjeto();
+        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->listarPropostasResultado($this->idAgente, $this->idResponsavel, $idAgente);
 
         $arrPropostas = array();
@@ -1236,7 +1236,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      */
     public function vincularpropostasAction() {
         $tbVinculo = new Agente_Model_DbTable_TbVinculo();
-        $propostas = new Proposta_Model_PreProjeto();
+        $propostas = new Proposta_Model_DbTable_PreProjeto();
 
         $tblAgentes = new Agente_Model_DbTable_Agentes();
         $dadosCombo = array();
@@ -1287,7 +1287,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      */
     public function vincularprojetosAction() {
         $tbVinculo = new Agente_Model_DbTable_TbVinculo();
-        $propostas = new Proposta_Model_PreProjeto();
+        $propostas = new Proposta_Model_DbTable_PreProjeto();
 
         $whereProjetos['pp.idAgente = ?'] = $this->idAgenteProponente;
         $whereProjetos['pp.idUsuario <> ?'] = $this->idResponsavel;

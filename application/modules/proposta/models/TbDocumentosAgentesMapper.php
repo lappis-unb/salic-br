@@ -50,7 +50,7 @@ class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
             } else {
 
                 # Verifica se tipo de documento ja esta cadastrado
-                $tbPreProjeto = new Proposta_Model_PreProjeto();
+                $tbPreProjeto = new Proposta_Model_DbTable_PreProjeto();
                 $dadosProjeto = $tbPreProjeto->findBy(array('idpreprojeto' => $arrPost['idpreprojeto']));
 
                 $where = array();

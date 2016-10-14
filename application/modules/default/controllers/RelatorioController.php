@@ -271,7 +271,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
             $this->view->estado = $get->estado;
         }
 
-        $Proposta = new Proposta_Model_PreProjeto();
+        $Proposta = new Proposta_Model_DbTable_PreProjeto();
         $total = $Proposta->relatorioPropostas($where, $having, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
 
@@ -450,7 +450,7 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
             $this->view->estado = $get->estado;
         }
 
-        $Proposta = new Proposta_Model_PreProjeto();
+        $Proposta = new Proposta_Model_DbTable_PreProjeto();
         $total = $Proposta->relatorioPropostas($where, $having, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
 
