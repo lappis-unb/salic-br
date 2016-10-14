@@ -1,27 +1,23 @@
 <?php
 /**
- * Controller Disvincular Agentes
- * @author Equipe RUP - Politec
  * @since 07/06/2010
- * @version 1.0
- * @package application
- * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  */
 
-class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract {
-
+class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
+{
     private $idUsuario = null;
     private $idPreProjeto = null;
 
     /**
-     * Reescreve o m�todo init()
+     * Reescreve o metodo init()
      * @access public
      * @param void
      * @return void
      */
-    public function init() {
+    public function init()
+    {
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
         $this->view->title = "Salic - Sistema de Apoio �s Leis de Incentivo � Cultura"; // t�tulo da p�gina
         $auth = Zend_Auth::getInstance(); // pega a autentica��o
         $PermissoesGrupo = array();
@@ -44,15 +40,15 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         parent::init(); // chama o init() do pai GenericControllerNew
 
         //recupera ID do pre projeto (proposta)
-        if(!empty ($_REQUEST['idPreProjeto'])) {
-            $this->idPreProjeto = $_REQUEST['idPreProjeto'];
+        if(!empty ($idPreProjeto)) {
+            $this->idPreProjeto = $idPreProjeto;
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
             $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-            $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
+            $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
             $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
         }else {
-            if($_REQUEST['idPreProjeto'] != '0'){
-                parent::message("Necess�rio informar o n�mero da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
+            if($idPreProjeto != '0'){
+                parent::message("Necess�rio informar o n�mero da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
             }
         }
 
@@ -90,7 +86,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
     public function produtoscadastradosAction()
     {
         $buscarEstado = new EstadoDAO();
-        $buscarEstado = $buscarEstado->listar();
+        $buscarEstado = $buscarEstado->buscar();
         $this->view->Estados = $buscarEstado;
 
         $manterOrcamento = new ManterorcamentoDAO();
