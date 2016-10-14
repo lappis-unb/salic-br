@@ -10,7 +10,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class EstadoDAO extends Zend_Db_Table
+class EstadoDAO extends MinC_Db_Table_Abstract
 {
 	protected $_name = 'uf'; // nome da tabela
 	protected $_schema = 'agentes'; // nome da tabela
@@ -21,7 +21,7 @@ class EstadoDAO extends Zend_Db_Table
 	 * @param void
 	 * @return object $db->fetchAll($sql)
 	 */
-	public static function buscar($id = null)
+	public function buscar($id = null)
 	{
 		$sql = "SELECT idUF AS id, Sigla AS descricao ";
 		$sql.= "FROM AGENTES.dbo.UF ";
