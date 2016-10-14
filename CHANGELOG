@@ -1,3 +1,16 @@
+Release 1.11.0
+  * Novo: [Segurança] Bloqueio de login caso digite senha errada muitas vezes
+  * Fix: [Analisar comprovação de objeto] Adicionado o nome dos avaliadores na visualização do relatório
+  * Fix: [Consulta cidadão] correção na busca de cidadão
+  * Fix: [Comprovação do objeto] Refatoração do cadastro de locais de realização
+  * Fix: [Comprovação de objeto] Alterada a data de analisar comprovação do objeto para data de envio da prestação de contas
+  * Fix: [Comprovação do objeto] Alterada a data de analisar comprovação do objeto para data de envio da prestação de contas
+  * Fix: [Cumprimento do objeto] agora ao realizar o envio da comprovação também é registrado a data do envio na tabela tbCumprimentoObjeto
+  * Fix: [Conciliação bancária] fix em coluna de nome do fornecedor
+  * Fix: [Inconsistência bancária] fix em coluna e imprimir
+  * Fix: [Relatórios trimestrais] Refatoração do cadastro de locais de realização
+  * Fix: [Relatório final] Adicionado o nome dos avaliadores na visualização do relatório
+
 Release 1.10.10
   * Fix: [Readequações] Gravando código da unidade que está sendo encaminhado o projeto
   * Fix: [Readequações] corrigindo código da SAV ao encaminhar avaliação
