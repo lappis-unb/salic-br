@@ -242,7 +242,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     public function alterar($dados, $where, $dbg = false)
     {
         if ($dbg) {
-            x($this->dbg($dados, $where));
+            xd($this->dbg($dados, $where));
         }
         $update = $this->update($dados, $where);
         return $update;

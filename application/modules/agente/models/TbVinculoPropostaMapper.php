@@ -35,16 +35,19 @@ class Agente_Model_TbVinculoPropostaMapper extends MinC_Db_Mapper
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $this->beginTransaction();
         try {
+            $msg = "Respons&aacute;vel vinculado com sucesso!";
+
             if ($arrData['opcaovinculacao'] == 1) {
-                $tblPreProjeto->alteraresponsavel($arrData['idpreprojeto'], $arrData['idresponsavelSessao']);
-                $this->setMessage("O respons&aacute;vel foi desvinculado.");
+                $msg = "O respons&aacute;vel foi desvinculado!";
             }
+
+            $tblPreProjeto->alteraresponsavel($arrData['idpreprojeto'], $arrData['idresponsavel']);
             $arrTbVinculoProposta['sivinculoproposta'] = 3;
             $whereTbVinculoProposta['idpreprojeto = ?'] = $arrData['idpreprojeto'];
             $this->getDbTable()->alterar($arrTbVinculoProposta, $whereTbVinculoProposta, false);
             $arrData['sivinculoproposta'] = 2;
             $this->save(new Agente_Model_TbVinculoProposta($arrData));
-            $this->setMessage("Respons&aacute;vel vinculado com sucesso!");
+            $this->setMessage($msg);
             $this->commit();
         } catch (Exception $e) {
             $this->rollBack();
