@@ -53,8 +53,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 //            );
                 $db = Zend_Db_Table::getDefaultAdapter();
                 $arrConfig = $db->getConfig();
-
-                $strDb = str_replace('.dbo', '', $this->_schema);
+                $strDb = str_replace(array('.dbo', '.scdne'), '', $this->_schema);
                 $arrConfig['dbname'] = strtoupper($strDb);
                 $this->_config = new Zend_Config(
                     array(
@@ -78,6 +77,8 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
                 # Setar o campo texto maior que 4096 caracteres aceitaveis por padrao no PHP
 //                $this->_db->query('SET TEXTSIZE 2147483647');
             }
+        } else if (is_int(strpos($this->_schema, 'scdne'))) {
+            $this->_schema = str_replace('.scdne', '', $this->_schema);
         }
 
         parent::__construct();
@@ -242,7 +243,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     public function alterar($dados, $where, $dbg = false)
     {
         if ($dbg) {
-            x($this->dbg($dados, $where));
+            xd($this->dbg($dados, $where));
         }
         $update = $this->update($dados, $where);
         return $update;
