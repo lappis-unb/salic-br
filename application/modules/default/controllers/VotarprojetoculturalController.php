@@ -933,7 +933,7 @@ class VotarProjetoCulturalController extends MinC_Controller_Action_Abstract {
 
             //verifica se o projeto e de plano anual
             $rsProjeto = $tblProjetos->buscar(array('idPronac=?'=>$idpronac))->current();
-            $tbPreProjeto = new Proposta_Model_PreProjeto();
+            $tbPreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $rsPreProjeto = $tbPreProjeto->buscar(array('idPreProjeto=?'=>$rsProjeto->idProjeto))->current();
             $this->view->stPlanoAnual = $rsPreProjeto->stPlanoAnual;
         }

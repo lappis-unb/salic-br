@@ -35,7 +35,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
             $get = Zend_Registry::get("get");
             $idAgente = $get->agente;
 
-            $tblProposta = new Proposta_Model_PreProjeto();
+            $tblProposta = new Proposta_Model_DbTable_PreProjeto();
             $rsPropostas = $tblProposta->buscar(array("idagente = ?"=>$idAgente), array("nomeprojeto ASC"));
 
 
@@ -103,7 +103,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
         public function listarPropostasAnaliseVisualTecnicoAction(){
             $usuario = $_SESSION['Zend_Auth']['storage']->usu_orgao;
 
-            $tblProposta = new Proposta_Model_PreProjeto();
+            $tblProposta = new Proposta_Model_DbTable_PreProjeto();
             $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
             $arrTecnicos = array();
@@ -124,7 +124,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
         public function listarPropostasAnaliseFinalAction(){
             $usuario = $_SESSION['Zend_Auth']['storage']->usu_orgao;
 
-            $tblProposta = new Proposta_Model_PreProjeto();
+            $tblProposta = new Proposta_Model_DbTable_PreProjeto();
             $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
             $arrTecnicos = array();
@@ -148,7 +148,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
 
             $usuario = $_SESSION['Zend_Auth']['storage']->usu_orgao;
 
-            $tblProposta = new Proposta_Model_PreProjeto();
+            $tblProposta = new Proposta_Model_DbTable_PreProjeto();
             $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
             $html = "<table>
@@ -176,7 +176,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
 
             $usuario = $_SESSION['Zend_Auth']['storage']->usu_orgao;
 
-            $tblProposta = new Proposta_Model_PreProjeto();
+            $tblProposta = new Proposta_Model_DbTable_PreProjeto();
             $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
             $html = "<table>
@@ -203,7 +203,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
             $this->_helper->viewRenderer->setNoRender();
             $usuario = $_SESSION['Zend_Auth']['storage']->usu_orgao;
 
-            $tblProposta = new Proposta_Model_PreProjeto();
+            $tblProposta = new Proposta_Model_DbTable_PreProjeto();
             $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
             $arrTecnicos = array();
@@ -270,7 +270,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
             $this->_helper->viewRenderer->setNoRender();
             $usuario = $_SESSION['Zend_Auth']['storage']->usu_orgao;
 
-            $tblProposta = new Proposta_Model_PreProjeto();
+            $tblProposta = new Proposta_Model_DbTable_PreProjeto();
             $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
             $arrTecnicos = array();
@@ -390,7 +390,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
             $usuario = $_SESSION['Zend_Auth']['storage']->usu_orgao;
 
             if(empty($post->busca)){
-                $tblProposta = new Proposta_Model_PreProjeto();
+                $tblProposta = new Proposta_Model_DbTable_PreProjeto();
                 $rsTecnicos = $tblProposta->buscarTecnicosHistoricoAnaliseVisual($usuario);
 
                 $arrDados = array(
@@ -406,7 +406,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
 
                 $situacao = (!empty($post->situacao))?$post->situacao:null;
 
-                $tblProposta = new Proposta_Model_PreProjeto();
+                $tblProposta = new Proposta_Model_DbTable_PreProjeto();
                 $rsProposta = $tblProposta->buscarHistoricoAnaliseVisual($usuario,$tecnico,$situacao,$dtInicio,$dtFim);
 
                 $arrTecnicosPropostas = array();
@@ -428,7 +428,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
             $this->_helper->layout->disableLayout();
             $this->_helper->viewRenderer->setNoRender();
 
-            $tblProposta = new Proposta_Model_PreProjeto();
+            $tblProposta = new Proposta_Model_DbTable_PreProjeto();
             $rsAvaliacao = $tblProposta->buscarAvaliacaoHistoricoAnaliseVisual($get->idAvaliacao);
 
             echo $rsAvaliacao[0]->Avaliacao;
@@ -447,7 +447,7 @@ class PropostaController extends MinC_Controller_Action_Abstract
             $rsPropostaFinal = array();
             $arrBusca['x.idTecnico = '] = $usuario;
 
-            $tblProposta = new Proposta_Model_PreProjeto();
+            $tblProposta = new Proposta_Model_DbTable_PreProjeto();
 
             if($post->numeroProposta != ""){
                 $arrBusca['p.idPreProjeto = '] = $post->numeroProposta;

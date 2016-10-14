@@ -2313,7 +2313,7 @@ class VerificarReadequacaoDeProjetoController extends MinC_Controller_Action_Abs
                         $DadosProj = $Projeto->buscar(array('IdPRONAC = ?' => $idPronac));
 
                         if(count($DadosProj) > 0 && !empty($DadosProj[0]->idProjeto)) {
-                            $PreProjeto = new Proposta_Model_PreProjeto();
+                            $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
                             $dados = array(
                                 'EstrategiadeExecucao' => $dadosSolicitado[0]['dsEstrategiaExecucao'],
                                 'EspecificacaoTecnica' => $dadosSolicitado[0]['dsEspecificacaoSolicitacao']

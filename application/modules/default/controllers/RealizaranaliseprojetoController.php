@@ -1159,7 +1159,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             $tblPlanilhaAprovacao = new PlanilhaAprovacao();
             $auth = Zend_Auth::getInstance(); // pega a autenticacao
             $tblProjetos = new Projetos();
-            $tblPreProjeto = new Proposta_Model_PreProjeto();
+            $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
 
             $ConsultaReuniaoAberta = ReuniaoDAO::buscarReuniaoAberta();
             $NumeroReuniao = $ConsultaReuniaoAberta['NrReuniao'];
@@ -1477,7 +1477,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                             $planoDistribuicao = new PlanoDistribuicao();
                             $analiseaprovacao = new AnaliseAprovacao();
                             $planilhaAprovacao = new PlanilhaAprovacao();
-                            $tbPreProjeto = new Proposta_Model_PreProjeto();
+                            $tbPreProjeto = new Proposta_Model_DbTable_PreProjeto();
                             //antigo modo
                             //$tblPauta = new Pauta();
                             //$buscaReadAprovacadoCnic = $tblPauta->buscar(array('IdPRONAC = ?'=>$idpronac, 'stAnalise = ?'=>"AS"));

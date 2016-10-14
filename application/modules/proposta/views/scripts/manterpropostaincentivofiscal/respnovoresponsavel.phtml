@@ -1,8 +1,8 @@
-<?php header('Content-Type: text/plain; charset=ISO-8859-1'); ?>
+<?php //header('Content-Type: text/plain; charset=ISO-8859-1'); ?>
 <?php if($this->dadoscount > 0):?>
 <table class="tabela">
 	<tr>
-	    <td colspan="4" class="titulo_tabela"><?php echo $this->dadoscount; ?> RESPONSÁVEIS ENCONTRADOS</td>
+	    <td colspan="4" class="titulo_tabela"><?php echo $this->dadoscount; ?> RESPONS&Aacute;VEIS ENCONTRADOS</td>
 	</tr>
 	<tr>
 	    <th width="300">Nome</th>
@@ -13,28 +13,28 @@
 	<?php
 	foreach ($this->dados as $d):
 
-	$status = 'Não vinculado';
+	$status = 'N&atilde;o vinculado';
 
-	if($d->idAgenteProponente == $this->idAgenteProponente)
+	if($d->idagenteproponente == $this->idAgenteProponente)
 	{
 
-		if($d->siVinculo == null)
+		if($d->sivinculo == null)
 		{
-			$status = 'Não vinculado';
+			$status = 'N&atilde;o vinculado';
 		}
-		elseif($d->siVinculo == 0)
+		elseif($d->sivinculo == 0)
 		{
 			$status = 'Solicitado';
 		}
-		elseif($d->siVinculo == 1)
+		elseif($d->sivinculo == 1)
 		{
 			$status = 'Vinculo Rejeitado';
 		}
-		elseif($d->siVinculo == 2)
+		elseif($d->sivinculo == 2)
 		{
 			$status = 'Vinculado';
 		}
-		elseif($d->siVinculo == 3)
+		elseif($d->sivinculo == 3)
 		{
 			$status = 'Desvinculado';
 		}
@@ -44,17 +44,17 @@
 	//if(($d->idAgenteProponente == null) || ($d->idAgenteProponente == $this->idAgenteProponente)):
 	?>
 	<tr>
-        <td><?php echo $d->NomeResponsavel; ?></td>
-        <td align="center"><?php echo Mascara::addMaskCPF($d->CpfResponsavel); ?></td>
-        <?php if(($d->UsuarioVinculo) == null): ?>
+        <td><?php echo $d->nomeresponsavel; ?></td>
+        <td align="center"><?php echo Mascara::addMaskCPF($d->cpfresponsavel); ?></td>
+        <?php if(($d->usuariovinculo) == null): ?>
             <td align="center"><?php echo $status; ?></td>
 	        <td align="center">
-	        <?php if(($d->siVinculo == null) || ($d->siVinculo == 3) || ($d->siVinculo == 1)): ?>
-	        	<input type="button" value=" " class="btn_vincular" style="width: 87px;" onclick="confirmarovinculo('<?php echo $d->idResponsavel; ?>');" />
+	        <?php if(($d->sivinculo == null) || ($d->sivinculo == 3) || ($d->sivinculo == 1)): ?>
+	        	<input type="button" value=" " class="btn_vincular" style="width: 87px;" onclick="confirmarovinculo('<?php echo $d->idresponsavel; ?>');" />
 	        <?php endif; ?>
 	        </td>
 	    <?php else: ?>
-	        <td colspan="2" align="center">Servidor do Ministério da Cultura não pode ser Responsável!</td>
+	        <td colspan="2" align="center">Servidor do Minist&eacute;rio da Cultura não pode ser Respons&aacute;vel!</td>
 	    <?php endif;?>
 	</tr>
 	<?php //endif; ?>
@@ -63,7 +63,7 @@
 <?php else:?>
 <table class="tabela">
   <tr>
-    <td align="center">NENHUM RESPONSÁVEL ENCONTRADO!</td>
+    <td align="center">NENHUM RESPONS&EacuteVEL ENCONTRADO!</td>
   </tr>
 </table>
 

@@ -11,7 +11,6 @@
  * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  * @since 21/09/2016
  *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
 class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
@@ -66,7 +65,7 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
         return ($result) ? $result->toArray() : array();
     }
 
-	/* M�todo que lista os vinculos do Proponente ao Responsavel
+	/* Metodo que lista os vinculos do Proponente ao Responsavel
      *
      * */
     public function buscarProponenteResponsavel($idUsuarioLogado, $mecanismo = false)
@@ -76,15 +75,15 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
                     ->distinct()
                     ->from(
                             array('a' => 'Projetos'),
-                            array(new Zend_Db_Expr('0 as Ordem'),'CgcCpf as CNPJCPF'), 'SAC.dbo'
+                            array(new Zend_Db_Expr('0 as Ordem'),'CgcCpf as CNPJCPF'), $this->getSchema('sac')
                     )
                     ->joinInner(
                             array('b' => 'Agentes'), "a.CgcCpf = b.CNPJCPF",
-                            array('idAgente', 'dbo.fnNome(b.idAgente) as NomeProponente'), 'AGENTES.dbo'
+                            array('idAgente', 'dbo.fnNome(b.idAgente) as NomeProponente'), $this->getSchema('agentes')
                     )
                     ->joinInner(
                             array('c' => 'SGCacesso'), "a.CgcCpf = c.Cpf",
-                            array(), 'CONTROLEDEACESSO.dbo'
+                            array(), $this->getSchema('controledeacesso')
                     )
                     ->where('c.IdUsuario = ?', $idUsuarioLogado);
 
@@ -98,27 +97,27 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
                     ->distinct()
                     ->from(
                             array('a' => 'Projetos'),
-                            array(new Zend_Db_Expr('1 as Ordem')), 'SAC.dbo'
+                            array(new Zend_Db_Expr('1 as Ordem')), $this->getSchema('sac')
                     )
                     ->joinInner(
                             array('b' => 'Agentes'), "a.CgcCpf = b.CNPJCPF",
-                            array('CNPJCPF', 'idAgente', 'dbo.fnNome(b.idAgente) as NomeProponente'), 'AGENTES.dbo'
+                            array('CNPJCPF', 'idAgente', 'dbo.fnNome(b.idAgente) as NomeProponente'), $this->getSchema('agentes')
                     )
                     ->joinInner(
                             array('c' => 'tbProcuradorProjeto'), "a.IdPRONAC = c.idPronac",
-                            array(), 'AGENTES.dbo'
+                            array(), $this->getSchema('agentes')
                     )
                     ->joinInner(
                             array('d' => 'tbProcuracao'), "c.idProcuracao = d.idProcuracao",
-                            array(), 'AGENTES.dbo'
+                            array(), $this->getSchema('agentes')
                     )
                     ->joinInner(
                             array('f' => 'Agentes'), "d.idAgente = f.idAgente",
-                            array(), 'AGENTES.dbo'
+                            array(), $this->getSchema('agentes')
                     )
                     ->joinInner(
                             array('e' => 'SGCacesso'), "f.CNPJCPF = e.Cpf",
-                            array(), 'CONTROLEDEACESSO.dbo'
+                            array(), $this->getSchema('controledeacesso')
                     )
                     ->where('c.siEstado = ?', 2)
                     ->where('e.IdUsuario = ?', $idUsuarioLogado);
@@ -132,23 +131,23 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
                     ->distinct()
                     ->from(
                             array('a' => 'Projetos'),
-                            array(new Zend_Db_Expr('2 as Ordem')), 'SAC.dbo'
+                            array(new Zend_Db_Expr('2 as Ordem')), $this->getSchema('sac')
                     )
                     ->joinInner(
                             array('b' => 'Agentes'), "a.CgcCpf = b.CNPJCPF",
-                            array('CNPJCPF', 'idAgente', 'dbo.fnNome(b.idAgente) as NomeProponente'), 'AGENTES.dbo'
+                            array('CNPJCPF', 'idAgente', 'dbo.fnNome(b.idAgente) as NomeProponente'), $this->getSchema('agentes')
                     )
                     ->joinInner(
                             array('c' => 'Vinculacao'), "b.idAgente = c.idVinculoPrincipal",
-                            array(), 'AGENTES.dbo'
+                            array(), $this->getSchema('agentes')
                     )
                     ->joinInner(
                             array('d' => 'Agentes'), "c.idAgente = d.idAgente",
-                            array(), 'AGENTES.dbo'
+                            array(), $this->getSchema('agentes')
                     )
                     ->joinInner(
                             array('e' => 'SGCacesso'), "d.CNPJCPF = e.Cpf",
-                            array(), 'CONTROLEDEACESSO.dbo'
+                            array(), $this->getSchema('controledeacesso')
                     )
                     ->where('e.IdUsuario = ?', $idUsuarioLogado);
 
@@ -158,8 +157,8 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
 
         $slctUnion = $this->select()
                             ->union(array('('.$slct1.')', '('.$slct2.')', '('.$slct3.')'))
-                            ->order('Ordem ASC')
-                            ->order('NomeProponente ASC');
+                            ->order('ordem ASC')
+                            ->order('nomeproponente ASC');
 
         return $this->fetchAll($slctUnion);
     }
@@ -169,41 +168,43 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
      * */
     public function buscarResponsaveis($where=array() , $idAgenteProponente)
     {
+
     	$slct = $this->select();
         $slct->distinct();
         $slct->setIntegrityCheck(false);
 
         $slct->from(
                 array('SGA' => 'SGCacesso'),
-                array('SGA.Nome AS NomeResponsavel', 'SGA.Cpf AS CpfResponsavel', 'SGA.IdUsuario AS idResponsavel'), 'CONTROLEDEACESSO.dbo'
+                array('SGA.Nome AS nomeresponsavel', 'SGA.Cpf AS cpfresponsavel', 'SGA.IdUsuario AS idresponsavel'), $this->getSchema('controledeacesso')
         );
 
         $slct->joinLeft(
-                array('VI' => $this->_name),'VI.idUsuarioResponsavel = SGA.IdUsuario AND idAgenteProponente = '.$idAgenteProponente,
-                array('*')
+                array('VI' => $this->_name),'VI.idUsuarioResponsavel = SGA.IdUsuario AND VI.idAgenteProponente = '.$idAgenteProponente,
+                $this->_getCols(),  $this->getSchema('agentes')
         );
 
         $slct->joinLeft(
                 array('ag' => 'Agentes'), "SGA.Cpf = ag.CNPJCPF",
-                array('ag.CNPJCPF', 'ag.idAgente')
+                array('ag.CNPJCPF', 'ag.idAgente'), $this->getSchema('agentes')
         );
+
         $slct->joinLeft(
                 array('v' => 'Visao'), "v.idAgente = ag.idAgente AND v.Visao = 146",
-                array('v.visao as UsuarioVinculo'), 'AGENTES.dbo'
+                array('v.visao as UsuarioVinculo'), $this->getSchema('agentes')
         );
 
         foreach ($where as $coluna => $valor)
         {
             $slct->where($coluna, $valor);
         }
-        //xd($slct->assemble());
+
         return $this->fetchAll($slct);
     }
 
 
 
 	/**
-	 * M�todo para buscar os Proponentes vinculados a um determinado Respons�vel, bem como, os Projetos desses Proponentes
+	 * Metodo para buscar os Proponentes vinculados a um determinado Responsavel, bem como, os Projetos desses Proponentes
 	 * @access public
 	 * @param integer $idResponsavel
 	 * @param integer $idPronac
@@ -219,22 +220,22 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
 			array('a' => 'Agentes'),
 			'v.idAgenteProponente = a.idAgente',
 			array(),
-			'AGENTES.dbo'
+            $this->getSchema('agentes')
 		);
 
 		$select->joinInner(
 			array('p' => 'Projetos'),
 			'a.CNPJCPF = p.CgcCpf',
 			array(),
-			'SAC.dbo'
+            $this->getSchema('sac')
 		);
 
 		$select->where('v.idUsuarioResponsavel = ?', $idResponsavel);
 		$select->where('p.IdPRONAC             = ?', $idPronac);
 
-		$select->order('v.idUsuarioResponsavel ASC');
-		$select->order('v.idAgenteProponente ASC');
-		$select->order('p.NomeProjeto ASC');
+		$select->order('v.idusuarioresponsavel ASC');
+		$select->order('v.idagenteproponente ASC');
+		$select->order('p.nomeprojeto ASC');
 
 		return $this->fetchAll($select);
 	}
@@ -242,7 +243,7 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
 
 
         /**
-	 * M�todo para buscar os Proponentes vinculados a um determinado Respons�vel
+	 * Metodo para buscar os Proponentes vinculados a um determinado Respons�vel
 	 * @access public
 	 * @param integer $idResponsavel
 	 * @param integer $idPronac
@@ -255,11 +256,11 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
                                 ->distinct()
                                 ->from(
                                         array('a' => 'Agentes'),
-                                        array('CNPJCPF', 'idAgente', 'dbo.fnNome(a.idAgente) AS NomeProponente'), 'AGENTES.dbo'
+                                        array('CNPJCPF', 'idAgente', 'dbo.fnNome(a.idAgente) AS NomeProponente'), $this->getSchema('agentes')
                                 )
                                 ->joinInner(
                                         array('c' => 'SGCacesso'), "a.CNPJCPF = c.Cpf",
-                                        array(), 'CONTROLEDEACESSO.dbo'
+                                        array(), $this->getSchema('controledeacesso')
                                 )
 
                                 ->where('c.IdUsuario = ?', $idResponsavel);
@@ -270,15 +271,15 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
                                 ->distinct()
                                 ->from(
                                         array('a' => 'Agentes'),
-                                        array('CNPJCPF', 'idAgente', 'dbo.fnNome(idAgente) as NomeProponente'), 'AGENTES.dbo'
+                                        array('CNPJCPF', 'idAgente', 'dbo.fnNome(idAgente) as NomeProponente'), $this->getSchema('agentes')
                                 )
                                 ->joinInner(
                                         array('v' => 'tbVinculo'), "a.idAgente = v.idAgenteProponente",
-                                        array(), 'AGENTES.dbo'
+                                        array(), $this->getSchema('agentes')
                                 )
                                 ->joinInner(
                                         array('k' => 'SGCacesso'), "k.IdUsuario = v.idUsuarioResponsavel",
-                                        array(), 'CONTROLEDEACESSO.dbo'
+                                        array(), $this->getSchema('controledeacesso')
                                 )
                                 ->where('k.IdUsuario = ?', $idResponsavel)
                                 ->where('v.siVinculo = ?', 2);
@@ -290,7 +291,7 @@ class Agente_Model_DbTable_TbVinculo extends MinC_Db_Table_Abstract{
 
             return $this->fetchAll($slctUnion);
 
-	} // fecha m�todo buscarProponentes()
+	} // fecha metodo buscarProponentes()
 
 
 }

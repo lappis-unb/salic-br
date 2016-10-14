@@ -98,6 +98,18 @@ class ServicosReceitaFederal {
         $password = self::password;
 
         $curl = curl_init();
+
+
+        xd('teste');
+
+        echo '<pre>';
+        var_dump($curl);
+        var_dump(CURLOPT_URL);
+        var_dump($url);
+        var_dump($username);
+        var_dump($password);
+        exit;
+
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");

@@ -278,7 +278,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     $arrMandatos = array();
 
                     if(!empty($this->idPreProjeto)){
-                        $preProjeto = new Proposta_Model_PreProjeto();
+                        $preProjeto = new Proposta_Model_DbTable_PreProjeto();
                         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
                         $idEmpresa = $Empresa->idAgente;
 
@@ -596,7 +596,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
 
             if(is_object($rsProjeto) && count($rsProjeto) > 0)
             {
-                $tblProposta = new Proposta_Model_PreProjeto();
+                $tblProposta = new Proposta_Model_DbTable_PreProjeto();
                 $rsProposta = $tblProposta->buscar(array('idPreProjeto=?'=>$rsProjeto->idProjeto))->current();
                 $this->view->proposta = $rsProposta;
 //                xd($rsProposta);
@@ -671,7 +671,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     $arrMandatos = array();
 
                     if(!empty($this->idPreProjeto)){
-                        $preProjeto = new Proposta_Model_PreProjeto();
+                        $preProjeto = new Proposta_Model_DbTable_PreProjeto();
                         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
                         $idEmpresa = $Empresa->idAgente;
 
@@ -828,7 +828,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
 
             // objetos
             $Projetos      = new Projetos();
-            $PreProjeto    = new Proposta_Model_PreProjeto();
+            $PreProjeto    = new Proposta_Model_DbTable_PreProjeto();
             $tbAbrangencia = new tbAbrangencia();
 
             // busca os dados aprovados do proponente e do nome do projeto
@@ -3847,7 +3847,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
 
         if(!empty($idPronac)){
             $tblProjeto = new Projetos();
-            $tblPreProjeto = new Proposta_Model_PreProjeto();
+            $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $projeto = $tblProjeto->buscar(array('IdPRONAC = ?' => $idPronac))->current();
             $this->view->projeto = $projeto;
 
@@ -3871,7 +3871,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         if(!empty($idPronac) && !empty($idDiligencia))
         {
             $Projetosdao        = new Projetos();
-            $PreProjetodao      = new Proposta_Model_PreProjeto();
+            $PreProjetodao      = new Proposta_Model_DbTable_PreProjeto();
             $DocumentosExigidosDao  = new DocumentosExigidos();
 
             if (!empty($idDiligencia) && empty($idDiligenciaPreProjeto)) {
@@ -3985,7 +3985,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                         if(in_array('dadoscomplementares',$arrConteudoImpressao))
                         {
                             //DADOS COMPLEMENTARES
-                            $tblProposta = new Proposta_Model_PreProjeto();
+                            $tblProposta = new Proposta_Model_DbTable_PreProjeto();
                             $rsProposta = $tblProposta->buscar(array('idPreProjeto=?'=>$idPreProjeto))->current();
                             $this->view->proposta = $rsProposta;
                         }
@@ -4066,7 +4066,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                    }
 
                     //DILIGENCIAS
-                    $tblPreProjeto = new Proposta_Model_PreProjeto();
+                    $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
                     if(in_array('diligencias',$arrConteudoImpressao))
                     {
                         if(isset($_POST['diligenciasProposta']) && !empty($_POST['diligenciasProposta'])){
@@ -4905,7 +4905,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                         $this->view->itensGeral = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
 
                         //DADOS COMPLEMENTARES
-                        $tblProposta = new Proposta_Model_PreProjeto();
+                        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
                         $rsProposta = $tblProposta->buscar(array('idPreProjeto=?'=>$idPreProjeto))->current();
                         $this->view->proposta = $rsProposta;
                     }
@@ -4968,7 +4968,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                         }
 
                         //DILIGENCIAS
-                        $tblPreProjeto      = new Proposta_Model_PreProjeto();
+                        $tblPreProjeto      = new Proposta_Model_DbTable_PreProjeto();
                         if(!empty($idPreProjeto)){
                             $this->view->diligenciasProposta = $tblPreProjeto->listarDiligenciasPreProjeto(array('pre.idPreProjeto = ?' => $idPreProjeto,'aval.ConformidadeOK = ? '=>0));
                         }

@@ -103,9 +103,7 @@
             });
         </script>
     </head>
-
     <body>
-
         <!-- ========== INICIO TOPO ========== -->
         <div id="topo">
             <div class="barra_governo">
@@ -130,9 +128,6 @@
             </div>
         </div>
         <!-- ========== FIM TOPO ========== -->
-
-
-
         <div id="dialog-confirm" class="sumir" title="Acesso ao Sistema"><p>Deseja realmente sair do sistema?</p></div>
         <script type="text/javascript">
             function logout()
@@ -148,7 +143,7 @@
                     closeOnEscape: false,
                     buttons:
                         {
-                        'Não': function()
+                        'N\xE3o': function()
                         {
                             $(this).dialog('close');
                         },
@@ -161,8 +156,6 @@
                 $('.ui-dialog-titlebar-close').remove();
             } // fecha funcao logout()
         </script>
-
-
         <?php
             $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
             if ( isset ($auth['cpf']) ) :
