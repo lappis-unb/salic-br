@@ -28,7 +28,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
     public function init() {
         $this->view->title = "Salic - Sistema de Apoio ï¿½s Leis de Incentivo ï¿½ Cultura"; // tï¿½tulo da pï¿½gina
 
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $PermissoesGrupo = array();
 
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
@@ -53,7 +53,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $this->idProduto = $this->getRequest()->getParam('idProduto');
         $this->idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
         if ($this->tpDiligencia) {
-            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
+            $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessï¿½o com o grupo ativo
             $urlArray = array('controller' => 'verificarreadequacaodeprojeto');
 
             // ajusta o link de voltar de acordo com o tipo de dilignecia
@@ -93,11 +93,11 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
     {
         $verificacaodao     = new Verificacao();
         $Projetosdao        = new Projetos();
-        $PreProjetodao      = new Proposta_Model_PreProjeto();
+        $PreProjetodao      = new Proposta_Model_DbTable_PreProjeto();
         $diligenciaDAO      = new Diligencia();
         $post               = Zend_Registry::get('post');
 
-        $auth = Zend_Auth::getInstance(); // instancia da autenticação
+        $auth = Zend_Auth::getInstance(); // instancia da autenticaï¿½ï¿½o
         $Usuario = new Autenticacao_Model_Usuario();
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $usu_identificacao = trim($idagente['usu_identificacao']);
@@ -148,7 +148,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
     {
         $verificacaodao         = new Verificacao();
         $Projetosdao            = new Projetos();
-        $PreProjetodao          = new Proposta_Model_PreProjeto();
+        $PreProjetodao          = new Proposta_Model_DbTable_PreProjeto();
         $DocumentosExigidosDao  = new DocumentosExigidos();
 
         $post = Zend_Registry::get('post');
@@ -214,7 +214,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $verificacaodao         = new Verificacao();
         $Projetosdao            = new Projetos();
-        $PreProjetodao          = new Proposta_Model_PreProjeto();
+        $PreProjetodao          = new Proposta_Model_DbTable_PreProjeto();
         $DocumentosExigidosDao  = new DocumentosExigidos();
 
         $post = Zend_Registry::get('get');
@@ -280,13 +280,13 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $Mensagem = '';
         if (!empty($_FILES) && is_file($_FILES['arquivo']['tmp_name'])) {
             $arquivoNome     = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporário
+            $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporï¿½rio
             $arquivoTipo     = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho  = $_FILES['arquivo']['size']; // tamanho
 
             if (!empty($arquivoNome) && !empty($arquivoTemp)){
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
-                $arquivoBinario  = Upload::setBinario($arquivoTemp); // binário
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensï¿½o
+                $arquivoBinario  = Upload::setBinario($arquivoTemp); // binï¿½rio
                 $arquivoHash     = Upload::setHash($arquivoTemp); // hash
             }
 
@@ -306,7 +306,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
                     'nmArquivo'         => $arquivoNome,
                     'sgExtensao'        => $arquivoExtensao,
                     'biArquivo'         => $data,
-                    'dsDocumento'       => 'Resposta de Diligência',
+                    'dsDocumento'       => 'Resposta de Diligï¿½ncia',
                     'idPronac'          => $this->idPronac,
                     'idTipoDocumento'   => 3,
                     'idDiligencia'      => $post->idDiligencia
@@ -328,7 +328,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
 
         $verificacaodao         = new Verificacao();
         $Projetosdao            = new Projetos();
-        $PreProjetodao          = new Proposta_Model_PreProjeto();
+        $PreProjetodao          = new Proposta_Model_DbTable_PreProjeto();
         $DocumentosExigidosDao  = new DocumentosExigidos();
 
         //xd($post);
@@ -411,7 +411,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         //$this->operacoesDiligencia();
         //$post                     = Zend_Registry::get('post');
         $Projetosdao                = new Projetos();
-        $PreProjetodao              = new Proposta_Model_PreProjeto();
+        $PreProjetodao              = new Proposta_Model_DbTable_PreProjeto();
         //$dao                      = new DiligenciarDao();
         //$this->view->idPronac     = 118389;
         $this->view->idPronac       = $this->idPronac;
@@ -441,7 +441,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
     public function listardiligenciaanalistaAction()
     {
         $Projetosdao        = new Projetos();
-        $PreProjetodao      = new Proposta_Model_PreProjeto();
+        $PreProjetodao      = new Proposta_Model_DbTable_PreProjeto();
 
         $this->view->idPronac           = $this->idPronac;
         $this->view->idPreProjeto       = $this->idPreProjeto;
@@ -537,7 +537,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $post = Zend_Registry::get('post');
         $diligenciaDAO = new Diligencia();
         $AvaliacaoPropostaDAO = new AvaliacaoProposta();
-        $tblPreProjeto = new Proposta_Model_PreProjeto();
+        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $tblProjeto = new Projetos();
 
         $idArquivo = '';
@@ -545,13 +545,13 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         if (is_file($_FILES['arquivo']['tmp_name'])) {
 
             $arquivoNome     = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporário
+            $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporï¿½rio
             $arquivoTipo     = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho  = $_FILES['arquivo']['size']; // tamanho
 
             if (!empty($arquivoNome) && !empty($arquivoTemp)){
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
-                $arquivoBinario  = Upload::setBinario($arquivoTemp); // binário
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensï¿½o
+                $arquivoBinario  = Upload::setBinario($arquivoTemp); // binï¿½rio
                 $arquivoHash     = Upload::setHash($arquivoTemp); // hash
             }
 
@@ -571,7 +571,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
                     'nmArquivo'         => $arquivoNome,
                     'sgExtensao'        => $arquivoExtensao,
                     'biArquivo'         => $data,
-                    'dsDocumento'       => 'Resposta de Diligência',
+                    'dsDocumento'       => 'Resposta de Diligï¿½ncia',
                     'idPronac'          => $this->idPronac,
                     'idTipoDocumento'   => 3,
                     'idDiligencia'      => $post->idDiligencia
@@ -737,7 +737,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $diligenciaDAO          = new Diligencia();
         $ProjetoDAO             = new Projetos();
         $AvaliacaoPropostaDAO   = new AvaliacaoProposta();
-        $PreProjetoDAO          = new Proposta_Model_PreProjeto();
+        $PreProjetoDAO          = new Proposta_Model_DbTable_PreProjeto();
         $verificacaodao         = new Verificacao();
         $auth                   = Zend_Auth::getInstance();
 
@@ -896,13 +896,13 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         if (is_file($_FILES['arquivo']['tmp_name'])) {
 
             $arquivoNome     = $_FILES['arquivo']['name']; // nome
-            $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporário
+            $arquivoTemp     = $_FILES['arquivo']['tmp_name']; // nome temporï¿½rio
             $arquivoTipo     = $_FILES['arquivo']['type']; // tipo
             $arquivoTamanho  = $_FILES['arquivo']['size']; // tamanho
 
             if (!empty($arquivoNome) && !empty($arquivoTemp)){
-                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensão
-                $arquivoBinario  = Upload::setBinario($arquivoTemp); // binário
+                $arquivoExtensao = Upload::getExtensao($arquivoNome); // extensï¿½o
+                $arquivoBinario  = Upload::setBinario($arquivoTemp); // binï¿½rio
                 $arquivoHash     = Upload::setHash($arquivoTemp); // hash
             }
 
@@ -950,7 +950,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout();        // Desabilita o Zend Layout
         $verificacaodao         = new Verificacao();
         $Projetosdao            = new Projetos();
-        $PreProjetodao          = new Proposta_Model_PreProjeto();
+        $PreProjetodao          = new Proposta_Model_DbTable_PreProjeto();
         $DocumentosExigidosDao  = new DocumentosExigidos();
 
         $post = Zend_Registry::get('post');
@@ -1106,7 +1106,7 @@ class Proposta_DiligenciarController extends MinC_Controller_Action_Abstract {
     public function listardiligenciaadmissibilidadeAction()
     {
         $Projetosdao   = new Projetos();
-        $PreProjetodao = new Proposta_Model_PreProjeto();
+        $PreProjetodao = new Proposta_Model_DbTable_PreProjeto();
 
         ini_set('memory_limit', '-1');
 

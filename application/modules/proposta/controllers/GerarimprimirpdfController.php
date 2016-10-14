@@ -79,7 +79,7 @@ class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstrac
        $id_projeto = $_REQUEST['idPreProjeto'];
 
        //$consultaDadosProjeto = GerarImprimirpdfDAO::ConsultaDadosProjeto($id_projeto);//busca dados do preprojeto na tabela PreProjeto
-       $tblPreProjeto = new Proposta_Model_PreProjeto();
+       $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
        $consultaDadosProjeto = $tblPreProjeto->buscaCompleta(array("idPreProjeto = ?"=>$id_projeto))->current()->toArray();
 
         if($consultaDadosProjeto['Mecanismo'] == "1" and ($consultaDadosProjeto['idEdital'] == NULL or ($consultaDadosProjeto['idEdital'] == "0"))){

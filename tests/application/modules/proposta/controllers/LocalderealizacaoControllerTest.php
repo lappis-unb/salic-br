@@ -21,7 +21,7 @@ class LocalderealizacaoControllerTest extends MinC_Test_ControllerActionTestCase
         $where['stestado = ?'] = 1;
         $where['idusuario = ?'] = $acessos['idusuario'];
 
-        $tblPreProjeto = new Proposta_Model_PreProjeto();
+        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->buscar($where, array("idpreprojeto ASC"));
 
         //id do Pre Projeto, necessario usuario ter um pre projeto
