@@ -6,11 +6,14 @@
  * @since 29/03/2010
  * @subpackage application.models
  * @link http://www.cultura.gov.br
+ *
+ * @todo model nao funciona com o $this, pois o zend_db nao esta reconhecendo a view para mapeamento. Verificar futuramente.
  */
-class Cep extends GenericModel
+class Cep extends MinC_Db_Table_Abstract
 {
 
-    protected $_schema = 'bddne';
+//    protected $_schema = 'bddne.scdne';
+    protected $_schema = 'bddne.scdne';
     protected $_name = 'vw_endereco';
 
     public function __construct() {
@@ -49,6 +52,17 @@ class Cep extends GenericModel
         return $db->fetchRow($sql);
     }
 
+    /**
+     *
+     * @name buscarCEP
+     * @param $cep
+     * @return null|Zend_Db_Table_Row_Abstract
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  ${DATE}
+     *
+     * @todo verificar por que o zend nao reconhece uma view para o mapeamento.
+     */
     public function buscarCEP($cep)
     {
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -69,8 +83,7 @@ class Cep extends GenericModel
 
         $sql = $db->select()
             ->from($this->_name, $cols, $this->_schema)
-            ->where('CEP = ?', $cep)
-            ;
+            ->where('CEP = ?', $cep);
 
         return $db->fetchRow($sql);
     }

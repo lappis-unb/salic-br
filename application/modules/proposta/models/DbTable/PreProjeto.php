@@ -978,11 +978,9 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      */
     public function alteraresponsavel($idPreProjeto, $idResponsavel)
     {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        $where['idpreprojeto = ?'] = $idPreProjeto;
 
-        $where['idPreProjeto = ?'] = $idPreProjeto;
-
-        return $db->update('SAC.dbo.PreProjeto', ['idUsuario' => $idResponsavel], $where);
+        return $this->alterar(['idusuario' => $idResponsavel], $where);
     }
 
     /**
