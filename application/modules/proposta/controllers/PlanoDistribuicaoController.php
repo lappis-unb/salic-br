@@ -19,6 +19,7 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
 	 */
 	public function init()
 	{
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
             $auth = Zend_Auth::getInstance(); // instancia da autentica��o
             $PermissoesGrupo = array();
 
@@ -39,14 +40,14 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
 
             //carregando variaveis vindas de GET
             $get = Zend_Registry::get('get');
-            if(!empty ($_REQUEST['idPreProjeto'])){
-                $this->_idPreProjeto = $get->idPreProjeto;
+            if(!empty ($idPreProjeto)){
+                $this->_idPreProjeto = $idPreProjeto;
                 //VERIFICA SE A PROPOSTA ESTA COM O MINC
                 $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-                $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
+                $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
                 $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
             }else{
-                if($_REQUEST['idPreProjeto'] != '0'){
+                if($idPreProjeto != '0'){
                     parent::message("Necess�rio informar o n�mero da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
                 }
             }
@@ -92,7 +93,7 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
                         "inicio"=>($inicio+1),
                         "fim"=>$fim,
                         "totalPag"=>$totalPag,
-                        "planosDistribuicao"=>$rsPlanoDistribuicao,
+                        "planosDistribuicao"=>($rsPlanoDistribuicao),
                         "formulario"=>$this->_urlPadrao."/proposta/plano-distribuicao/frm-plano-distribuicao?idPreProjeto=".$this->_idPreProjeto,
                         "urlApagar"=>$this->_urlPadrao."/proposta/plano-distribuicao/apagar?idPreProjeto=".$this->_idPreProjeto,
                         "urlPaginacao"=>$this->_urlPadrao."/prosposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto
