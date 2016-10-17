@@ -1188,9 +1188,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             if(!in_array($prop->idagente.$prop->idpreprojeto, $identificadores)) {
                 $arrPropostas[$x]['cnpjcpf'] = $prop->cnpjcpf;
                 $arrPropostas[$x]['idagente'] = $prop->idagente;
-                $arrPropostas[$x]['nomeproponente'] = utf8_encode($prop->nomeproponente);
+                $arrPropostas[$x]['nomeproponente'] = $prop->nomeproponente;
                 $arrPropostas[$x]['idpreprojeto'] = $prop->idpreprojeto;
-                $arrPropostas[$x]['nomeprojeto'] = utf8_encode($prop->nomeprojeto);
+                $arrPropostas[$x]['nomeprojeto'] = $prop->nomeprojeto;
                 $x++;
             }
             $identificadores[$i] = $prop->idagente.$prop->idpreprojeto;
