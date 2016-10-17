@@ -57,4 +57,20 @@ abstract class MinC_Test_ControllerActionTestCase extends MinC_Test_Abstract
         $this->setAutenticado(false);
     }
 
+    /**
+     * PerfAlterarilParaProponente Troca o perfil atual do usuário para perfil de Proponente
+     *
+     * @access protected
+     * @return void
+     */
+    protected function perfilParaProponente()
+    {
+        //reset para garantir respostas.
+        $this->resetRequest()
+            ->resetResponse();
+
+        $this->request->setMethod('GET');
+        $this->dispatch('/autenticacao/perfil/alterarperfil?codGrupo=1111&codOrgao=2222');
+        $this->assertRedirectTo('/principalproponente');
+    }
 }
