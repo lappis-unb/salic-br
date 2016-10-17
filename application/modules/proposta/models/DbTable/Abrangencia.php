@@ -67,15 +67,22 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
 
     public function verificarIgual($idPais, $idUF, $idMunicipio, $idPreProjeto)
     {
-        $sql = "SELECT * FROM SAC.dbo.Abrangencia WHERE idProjeto = " . $idPreProjeto . "
-				 AND idPais = " . $idPais . "
-				 AND idUF = " . $idUF . "
-				 AND idMunicipioIBGE = " . $idMunicipio . "
-				 AND stAbrangencia = 1";
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('Ab' => $this->_name),
+            $this->_getCols(),
+            $this->_schema
+        );
+        $select->where('idProjeto = ?', $idPreProjeto);
+        $select->where('idPais = ?', $idPais);
+        $select->where('idUF = ?', $idUF);
+        $select->where('idMunicipioibge = ?', $idMunicipio);
+        $select->where('stAbrangencia = ?', 1);
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
     }
 
     /**
