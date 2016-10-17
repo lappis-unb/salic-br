@@ -1261,10 +1261,10 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         //CASO RETORNE ALGUM RESULTADO, ADICIONA OS IDAGENTE'S DE CADA UM AO ARRAY
         if( count($rsVinculucao) > 0 ){
             foreach ($rsVinculucao as $value) {
-                $dadosIdAgentes[] = $value->idAgente;
+                $dadosIdAgentes[] = $value->idagente;
             }
         }
-        
+
         //PROCURA AS PROPOSTAS DE TODOS OS IDAGENTE'S
         $listaPropostas = $propostas->buscarVinculadosProponenteDirigentes($dadosIdAgentes);
         
