@@ -32,6 +32,8 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
      */
     public function init()
     {
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
+
         parent::init();
 
         $this->table = new Proposta_Model_DbTable_PlanoDeDivulgacao();
@@ -53,11 +55,11 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
         isset($arrIdentity['usu_codigo']) ? parent::perfil(1, $arrPermissoesGrupo) : parent::perfil(4, $arrPermissoesGrupo);
 
         # recupera ID do pre projeto (proposta)
-        if (!empty ($_REQUEST['idPreProjeto'])) {
-            $this->idPreProjeto = $_REQUEST['idPreProjeto'];
+        if (!empty ($idPreProjeto)) {
+            $this->idPreProjeto = $idPreProjeto;
             # verifica se a proposta esta com o minc.
             $movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-            $rsStatusAtual = $movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
+            $rsStatusAtual = $movimentacao->buscarStatusAtualProposta($idPreProjeto);
             $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
         }
 

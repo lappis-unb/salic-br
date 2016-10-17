@@ -5,8 +5,8 @@
  * @link http://www.cultura.gov.br
  */
 
-class LocalderealizacaoControllerTest extends MinC_Test_ControllerActionTestCase {
-
+class LocalderealizacaoControllerTest extends MinC_Test_ControllerActionTestCase
+{
     public function testIndex()
     {
         $this->autenticar();
