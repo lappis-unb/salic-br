@@ -96,7 +96,7 @@
                             <?php $idProponente = '';?>
                                 <?php foreach ($this->dadosCombo as $dc):?>
                                     <?php if($dc['idAgenteProponente'] != $idProponente):?>
-                                        <option value="<?php echo $dc['idAgenteProponente']; ?>">[<?php echo $dc['CPF']; ?>] - <?php echo utf8_encode($dc['Nome']); ?></option>
+                                        <option value="<?php echo $dc['idAgenteProponente']; ?>">[<?php echo $dc['CPF']; ?>] - <?php echo $dc['Nome']; ?></option>
                                     <?php endif; ?>
                                     <?php $idProponente = $dc['idAgenteProponente']; ?>
                                 <?php endforeach;?>
