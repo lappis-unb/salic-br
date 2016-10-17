@@ -291,29 +291,28 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $dataNasc = data::dataAmericana($post->dataNasc); // recebe dataNasc
             $email = $post->email; // recebe email
             $sgcAcesso = new Autenticacao_Model_Sgcacesso();
-            $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf, "Email = ?" => $email, "DtNascimento = ?" => $dataNasc));
 
+            $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf, "Email = ?" => $email, "DtNascimento = ?" => $dataNasc));
             $verificaUsuario = $sgcAcessoBuscaCpf->toArray();
             if (empty ($verificaUsuario)) {
                 parent::message("Dados incorretos!", "/autenticacao", "ALERT");
             }
 
             $sgcAcessoBuscaCpfArray = $sgcAcessoBuscaCpf->toArray();
-            $nome = $sgcAcessoBuscaCpfArray[0]['Nome'];
+            $nome = $sgcAcessoBuscaCpfArray[0]['nome'];
             $senha = Gerarsenha::gerasenha(15, true, true, true, true);
             $senhaFormatada = str_replace(">", "", str_replace("<", "", str_replace("'", "", $senha)));
 
             $senhaFormatada = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaFormatada);
 
             $dados = array(
-                "idusuario" => $sgcAcessoBuscaCpfArray[0]['IdUsuario'],
+                "idusuario" => $sgcAcessoBuscaCpfArray[0]['idusuario'],
                 "senha" => $senhaFormatada,
                 "situacao" => 1,
                 "dtsituacao" => date("Y-m-d")
             );
 
             $sgcAcessoSave = $sgcAcesso->salvar($dados);
-
             $assunto = "Cadastro SALICWEB";
             $perfil = "SALICWEB";
             $mens = "Ol&aacute; " . $nome . ",<br><br>";
@@ -324,7 +323,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n?o responda.<br><br>";
             $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
 
-            $email = $sgcAcessoBuscaCpfArray[0]['Email'];
+            $email = $sgcAcessoBuscaCpfArray[0]['email'];
+
             $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
             parent::message("Senha gerada com sucesso. Verifique seu email!", "/autenticacao", "CONFIRM");
         }
