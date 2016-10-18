@@ -1,8 +1,8 @@
 <?php
 class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
-    protected $_schema;
-    protected $_name;
+    protected $_schema = 'sac';
+    protected $_name = '';
 
     public function __construct() {
         parent::__construct();
@@ -202,21 +202,6 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                 WHERE (pd.idProduto = $idProduto and pd.idProjeto = $idPreProjeto) AND pd.stPlanoDistribuicaoProduto = 1";
 
         //x($sql);
-        $db= Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
-        return $db->fetchAll($sql);
-
-    }
-
-    public static function buscarDadosCadastrarCustos($idPreProjeto) {
-        $sql = "
-            SELECT TOP 1
-            tpp.idProjeto as idProposta
-            FROM SAC..tbPlanilhaProposta tpp
-            WHERE tpp.idProjeto = $idPreProjeto";
-
-
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

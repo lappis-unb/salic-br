@@ -278,7 +278,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         if  ( isset ( $_GET['idPreProjeto'] ) ) {
             $idPreProjeto = $_GET['idPreProjeto'];
 
-            $buscaDados = ManterorcamentoDAO::buscarDadosCadastrarCustos($idPreProjeto);
+            $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaProposta();
+            $buscaDados = $manterOrcamento->findBy(array('idprojeto' => $idPreProjeto));
+//            $buscaDados = $manterOrcamento->buscarDadosCadastrarCustos($idPreProjeto);
 
             $this->view->dados = $buscaDados;
         }
