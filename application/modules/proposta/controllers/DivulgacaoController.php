@@ -130,9 +130,9 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
         $idPlanoDivulgacao = $this->getRequest()->getParam('cod');
         $arrDivulgacao = $this->table->findBy($idPlanoDivulgacao);
         $this->view->itensplano = $tableVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 1), array('descricao'));
-        $this->view->idpeca = $arrDivulgacao->idPeca;
+        $this->view->idpeca = $arrDivulgacao['idpeca'];
         $this->view->veiculo = $this->table->consultarVeiculo($arrDivulgacao['idpeca']);
-        $this->view->idveiculo = $arrDivulgacao->idVeiculo;
+        $this->view->idveiculo = $arrDivulgacao['idveiculo'];
         $this->view->idDivulgacao = $idPlanoDivulgacao;
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
