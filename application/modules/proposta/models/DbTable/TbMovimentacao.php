@@ -54,11 +54,11 @@ class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
         }
     }
 
-    public function buscarStatusAtualProposta($idPreProjeto) {
+    public function buscarStatusAtualProposta($idPreProjeto)
+    {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from($this->_name, $this->_getCols(), $this->_schema);
-        //echo $slct; die;
         $slct->where('idprojeto = ? ', $idPreProjeto);
         $slct->where('stestado = ? ', 0);
         $slct->order(array("dtmovimentacao DESC"));
