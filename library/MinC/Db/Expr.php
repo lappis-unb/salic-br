@@ -25,7 +25,7 @@ class MinC_Db_Expr
         }
     }
 
-    public function convertOrToChar($strColumn)
+    public static function convertOrToChar($strColumn)
     {
         if (Zend_Db_Table::getDefaultAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
             return new Zend_Db_Expr('CONVERT(VARCHAR(max), ' . $strColumn . ')');
