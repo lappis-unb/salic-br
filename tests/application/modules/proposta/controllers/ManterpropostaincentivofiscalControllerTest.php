@@ -129,4 +129,43 @@ class ManterpropostaincentivofiscalControllerTest extends MinC_Test_ControllerAc
         $this->assertAction('editar');
         $this->assertQuery('html body div#titulo div', ' PROPOSTA ');
     }
+
+    public function testEnviarPropostaAoMincAction()
+    {
+        $this->autenticar();
+
+        $this->perfilParaProponente();
+
+        $auth = Zend_Auth::getInstance();
+        $usuarioCpf = $auth->getIdentity()->cpf;
+
+        // Busca na SGCAcesso
+        $sgcAcesso = new Autenticacao_Model_Sgcacesso();
+        $acessos = $sgcAcesso->findBy(['cpf' => $usuarioCpf]);
+
+        // Buscar projetos do Usuario Logado.
+        $where['stestado = ?'] = 1;
+        $where['idusuario = ?'] = $acessos['idusuario'];
+
+        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
+        $rsPreProjeto = $tblPreProjeto->buscar($where, array("idpreprojeto DESC"));
+
+        //id do Pre Projeto, necessario usuario ter um pre projeto para testar
+        $idPreProjeto = $rsPreProjeto[0]->idPreProjeto;
+
+        //reset para garantir respostas.
+        $this->resetRequest()
+            ->resetResponse();
+
+        // Acessando local de realizacao
+        $url = '/proposta/manterpropostaincentivofiscal/enviar-proposta-ao-minc?idPreProjeto='. $idPreProjeto;
+        $this->request->setMethod('GET');
+        $this->dispatch($url);
+        $this->assertNotRedirect();
+
+        $this->assertModule('proposta');
+        $this->assertController('manterpropostaincentivofiscal');
+        $this->assertAction('enviar-proposta-ao-minc');
+        $this->assertQuery('html body div#titulo div', 'Encaminhar Proposta Cultural ao Ministério da Cultura');
+    }
 }
