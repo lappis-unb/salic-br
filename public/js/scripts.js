@@ -665,7 +665,7 @@ function validaData(campo,nomeFormulario){
         });
 
         $("#dialog-alert2").dialog('open');
-        $("#dialog-alert2").html("Data Inv�lida");
+        $("#dialog-alert2").html("Data Inv\xE1lida");
         campo.value = "";
         if ( nomeFormulario != "" ){
             $('#'+nomeFormulario).focus();

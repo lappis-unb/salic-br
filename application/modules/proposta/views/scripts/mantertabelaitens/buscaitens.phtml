@@ -5,7 +5,7 @@
         </tr>
         <?php foreach($this->itens as $i): ?>
         <tr>
-        	<td style="padding-left: 50px;"><?php echo utf8_decode(htmlentities($i->NomeDoItem));?></td>
+        	<td style="padding-left: 50px;"><?php echo htmlentities($i->NomeDoItem);?></td>
         </tr>
         <?php endforeach; ?>
 </table>
