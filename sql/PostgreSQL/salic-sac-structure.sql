@@ -8217,7 +8217,9 @@ CREATE TABLE sac.tbItensPlanilhaProduto
     CONSTRAINT FK_tbItensPlanilhaProduto_tbPlanilhaItens FOREIGN KEY (idPlanilhaItens) REFERENCES sac.tbPlanilhaItens (idPlanilhaItens)
 );
 CREATE UNIQUE INDEX IX_tbItensPlanilhaProduto ON tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens);
-
+CREATE SEQUENCE sac.tbitensplanilhaproduto_iditensplanilhaproduto_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.tbitensplanilhaproduto ALTER COLUMN iditensplanilhaproduto SET DEFAULT nextval('sac.tbitensplanilhaproduto_iditensplanilhaproduto_seq');
+ALTER SEQUENCE sac.tbitensplanilhaproduto_iditensplanilhaproduto_seq OWNED BY sac.tbitensplanilhaproduto.iditensplanilhaproduto;
 
 CREATE SEQUENCE sac.verificacao_idverificacao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE sac.verificacao ALTER COLUMN idverificacao SET DEFAULT nextval('sac.verificacao_idverificacao_seq');
