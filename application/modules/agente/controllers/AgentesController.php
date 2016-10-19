@@ -392,9 +392,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                     $erro = 1;
                 } else {
                     $arrResultado = $wsServico->consultarPessoaFisicaReceitaFederal($cpf);
-echo '<pre>';
-var_dump('$arrResultado');
-exit;
+
                     if (empty($arrResultado)) {
                         $retorno['error'] = 'Pessoa n&atilde;o encontrada!';
                         $erro = 1;

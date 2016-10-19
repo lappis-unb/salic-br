@@ -34,11 +34,7 @@ class Agente_Model_AgentesMapper extends MinC_Db_Mapper
 
     public function isUniqueCpfCnpj($value)
     {
-        $where = $this->getDbTable()
-            ->getDefaultAdapter()
-            ->quoteInto('cnpjcpf = ?', $value);
-
-        return ($this->getDbTable()->fetchRow($where)) ? true : false;
+        return ($this->findBy(array('cnpjcpf = ?', $value))) ? true : false;
     }
 
     public function save(Agente_Model_Agentes $model)

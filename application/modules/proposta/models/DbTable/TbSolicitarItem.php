@@ -415,7 +415,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
 
 
 
-    public  function cadastraritem($dadosassociar) {
+    public function cadastraritem($dadosassociar) {
 
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
@@ -425,7 +425,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
         /*$sql = "insert into SAC.tbPlanilhaItens (Descricao, idUsuario)
                             values ('".$Descricao."', ".$idAgente.")";*/
 
-        $cadastrar = $db->insert("SAC.tbSolicitarItem", $dadosassociar);
+        $cadastrar = $this->insert($dadosassociar);
 
         if ($cadastrar) {
             return true;
