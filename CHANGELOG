@@ -1,3 +1,6 @@
+Release 1.11.1
+  * Fix: [Readequações] Listando técnicos da SAV ao encaminhar projeto na avaliação de readequação
+
 Release 1.11.0
   * Novo: [Segurança] Bloqueio de login caso digite senha errada muitas vezes
   * Fix: [Analisar comprovação de objeto] Adicionado o nome dos avaliadores na visualização do relatório
