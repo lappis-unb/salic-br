@@ -3,9 +3,9 @@
     $alterarDiligenciaHref      = $this->url(array('controller' => 'diligenciar', 'action' => 'cadastrarrespostadiligencia'));
     $prorrogarHref              = $this->url(array('controller' => 'diligenciar', 'action' => 'prorrogar'));
     if($this->idPronac)
-        $this->partial("diligenciar/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
+        echo $this->partial("diligenciar/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
     if($this->idPreProjeto)
-        $this->partial( "diligenciar/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
+        echo $this->partial( "diligenciar/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
 ?>
 
 <div id="titulo">
@@ -159,7 +159,7 @@
         </table>
         <br clear="all" />
     </form>
-</div><!-- final: conteúdo principal #conteudo -->
+</div><!-- final: conteï¿½do principal #conteudo -->
 <div id="rodapeConteudo" ><span></span></div>
 <br clear="all" />
 

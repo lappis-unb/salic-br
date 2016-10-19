@@ -9,7 +9,7 @@
         $('.btn_salvar').click(function(){
             if($('#justificativa').val().length > 250){
                 $("#msgAlerta").dialog("destroy");
-                $("#msgAlerta").html("O campo Justificativa n�o pode ultrapassar a quantidade de 250 caracteres!");
+                $("#msgAlerta").html("O campo Justificativa n&atilde;o pode ultrapassar a quantidade de 250 caracteres!");
                 $("#msgAlerta").dialog({
                     resizable: false,
                     title: 'Alerta!',
@@ -141,7 +141,7 @@
                     <select class="select_simples" name="produto" id="produto">
                         <option value="">- Selecione - </option>
                         <?php foreach($this->produto as $tbproduto) { ?>
-                        <option value="<?php echo $tbproduto->codproduto; ?>"> <?php echo utf8_encode($tbproduto->Produto); ?></option>
+                        <option value="<?php echo $tbproduto->codproduto; ?>"> <?php echo $tbproduto->Produto; ?></option>
                         <?php } ?>
                     </select>
                 </td>
@@ -149,7 +149,7 @@
                     <select class="select_simples" name="etapa" id="etapa">
                         <option value="">- Selecione - </option>
                         <?php foreach($this->etapa as $tbetapa) { ?>
-                        <option value="<?php echo $tbetapa->codetapa; ?>"> <?php echo utf8_encode($tbetapa->Etapa); ?></option>
+                        <option value="<?php echo $tbetapa->codetapa; ?>"> <?php echo $tbetapa->Etapa; ?></option>
                         <?php } ?>
                     </select>
                 </td>
@@ -157,7 +157,7 @@
                     <select class="input_simples" name="idPlanilhaItens" id="idPlanilhaItens" style="width: 100%;">
                         <option value="">- Selecione - </option>
                         <?php foreach($this->item as $tbitem) { ?>
-                        <option value="<?php echo $tbitem->coditens; ?>"> <?php echo utf8_encode($tbitem->Item); ?></option>
+                        <option value="<?php echo $tbitem->coditens; ?>"> <?php echo $tbitem->Item; ?></option>
                         <?php } ?>
                     </select>
                 </td>

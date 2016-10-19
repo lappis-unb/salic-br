@@ -19,6 +19,7 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
 	 */
 	public function init()
 	{
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
             $auth = Zend_Auth::getInstance(); // instancia da autentica��o
             $PermissoesGrupo = array();
 
@@ -39,15 +40,15 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
 
             //carregando variaveis vindas de GET
             $get = Zend_Registry::get('get');
-            if(!empty ($_REQUEST['idPreProjeto'])){
-                $this->_idPreProjeto = $get->idPreProjeto;
+            if(!empty ($idPreProjeto)){
+                $this->_idPreProjeto = $idPreProjeto;
                 //VERIFICA SE A PROPOSTA ESTA COM O MINC
                 $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-                $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
+                $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
                 $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
             }else{
-                if($_REQUEST['idPreProjeto'] != '0'){
-                    parent::message("Necess�rio informar o n�mero da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
+                if($idPreProjeto != '0'){
+                    parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
                 }
             }
 
@@ -92,7 +93,7 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
                         "inicio"=>($inicio+1),
                         "fim"=>$fim,
                         "totalPag"=>$totalPag,
-                        "planosDistribuicao"=>$rsPlanoDistribuicao,
+                        "planosDistribuicao"=>($rsPlanoDistribuicao),
                         "formulario"=>$this->_urlPadrao."/proposta/plano-distribuicao/frm-plano-distribuicao?idPreProjeto=".$this->_idPreProjeto,
                         "urlApagar"=>$this->_urlPadrao."/proposta/plano-distribuicao/apagar?idPreProjeto=".$this->_idPreProjeto,
                         "urlPaginacao"=>$this->_urlPadrao."/prosposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto
@@ -243,19 +244,19 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         }
 
         if(isset($post->produto)){
-            //VERIFICA SE PRODUTO JA ESTA CADASTRADO - N�O PODE GRAVAR O MESMO PRODUTO MAIS DE UMA VEZ.
+            //VERIFICA SE PRODUTO JA ESTA CADASTRADO - NAO PODE GRAVAR O MESMO PRODUTO MAIS DE UMA VEZ.
             $arrBuscaProduto['a.idProjeto = ?'] = $this->_idPreProjeto;
             $arrBuscaProduto['a.idProduto = ?'] = $post->produto;
             $objProduto = $tblPlanoDistribuicao->buscar($arrBuscaProduto);
             if($objProduto[0]['idPlanoDistribuicao']){
-                parent::message("Produto j� cadastrado no plano de distribui��o desta proposta!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+                parent::message("Produto j&aacute; cadastrado no plano de distribui&ccedil;&atilde;o desta proposta!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
             }
         }
         $retorno = $tblPlanoDistribuicao->salvar($dados);
         if($retorno > 0){
-            parent::message("Opera��o realizada com sucesso!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "CONFIRM");
+            parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "CONFIRM");
         } else {
-            parent::message("N�o foi poss�vel realizar a opera��o!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
         }
     }
 
@@ -271,9 +272,9 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $retorno = $tblPlanoDistribuicao->apagar($get->idPlanoDistribuicao);
 
         if($retorno > 0){
-            parent::message("Opera��o realizada com sucesso!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "CONFIRM");
+            parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "CONFIRM");
         }else{
-            parent::message("N�o foi poss�vel realizar a opera��o!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
+            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
         }
     }
 

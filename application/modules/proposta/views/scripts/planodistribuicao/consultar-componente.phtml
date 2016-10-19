@@ -16,9 +16,9 @@
         $totalReceita += $receita;
     ?>
     <tr class="fundo">
-        <td align="left"><?php echo utf8_decode(htmlentities($planoDistribuicao->Produto)); ?></td>
-        <td align="left"><?php echo utf8_decode(htmlentities($planoDistribuicao->PosicaoLogomarca)); ?></td>
-        <td align="right"><?php echo utf8_decode(htmlentities($planoDistribuicao->QtdeProduzida)); ?></td>
+        <td align="left"><?php echo htmlentities($planoDistribuicao->Produto); ?></td>
+        <td align="left"><?php echo htmlentities($planoDistribuicao->PosicaoLogomarca); ?></td>
+        <td align="right"><?php echo htmlentities($planoDistribuicao->QtdeProduzida); ?></td>
         <td align="right"><?php echo number_format($receita, 2, ",", "."); ?></td>
     </tr>
     <?php endforeach; ?>

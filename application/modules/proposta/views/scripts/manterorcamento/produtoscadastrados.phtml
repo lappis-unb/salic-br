@@ -82,7 +82,7 @@ foreach ($this->Produtos as $produtos): ?>
 	<tr>
         <td><input type="button" id="" class="btn_adicionar produto" />
             <?php
-                $texto = strtr(strtoupper(utf8_encode($produtos->DescricaoProduto)), array(
+                $texto = strtr(strtoupper($produtos->DescricaoProduto), array(
                     "à" => "À",
                     "è" => "È",
                     "ì" => "Ì",
@@ -115,7 +115,7 @@ foreach ($this->Produtos as $produtos): ?>
                 <tr>
                     <td width="4%" onclick="$('#itens_<?php echo $produtos->CodigoProduto."_".$etapa->idEtapa; ?>').toggle();" align="center" style="cursor: pointer;">
                         <img style="cursor: pointer; width: 14px; height: 14px; border: 0px" class="btn_adicionar" src="<?php echo $this->baseUrl(); ?>/public/img/buttons/btn_adicionar.gif" alt="Adicionar" /></td>
-                    <td width="88%" style="text-align:left; padding-left:2%;"> <?php echo utf8_encode($etapa->DescricaoEtapa); ?></td>
+                    <td width="88%" style="text-align:left; padding-left:2%;"> <?php echo $etapa->DescricaoEtapa; ?></td>
                     <td align="center" style="width: 10%"><input type="button" class="btn_novo" onclick="abrirFrmCadastroItem('<?php echo $CadastrarProduto?>');" /></td>
                </tr>
                <?php }?>
@@ -137,13 +137,13 @@ foreach ($this->Produtos as $produtos): ?>
                 <?php if ($produtos->CodigoProduto == $itens->CodigoProduto) {
                         if ($etapa->idEtapa == $itens->idEtapa){  ?>
                         <tr class='fundo'>
-                            <td class='centro'><?php echo utf8_encode($itens->DescricaoItem) ?></td>
-                            <td class='centro'><?php echo utf8_encode($itens->Unidade) ?></td>
+                            <td class='centro'><?php echo $itens->DescricaoItem; ?></td>
+                            <td class='centro'><?php echo $itens->Unidade; ?></td>
                             <td class='centro'><?php echo number_format($itens->Quantidade,0) ?></td>
                             <td class='centro'><?php echo number_format($itens->Ocorrencia,0) ?></td>
                             <td class='centro'><?php echo number_format($itens->ValorUnitario, 2, ",", ".") ?></td>
                             <td class='centro'><?php echo number_format(($itens->Quantidade * $itens->ValorUnitario) * $itens->Ocorrencia, 2, ",", ".") ?></td>
-                            <td class='centro'><?php echo utf8_encode($itens->Municipio) ?>/<?php echo utf8_encode($itens->SiglaUF) ?></td>
+                            <td class='centro'><?php echo $itens->Municipio; ?>/<?php echo $itens->SiglaUF; ?></td>
                             <td class='centro' width="5%">
                                 <input type="button" id="btn_editar" name="editar" style="width: 88px" class="btn_editar" onclick="abrirFrmCadastroItem('<?php echo $this->url(array('controller'=>'manterorcamento', 'action'=>'editarprodutos')); ?>?item=<?php echo $this->escape($itens->idItem); ?>&etapa=<?php echo $this->escape($etapa->idEtapa);?>&produto=<?php echo $this->escape($produtos->CodigoProduto);?>&idPlanilhaProposta=<?php echo $itens->idPlanilhaProposta;?>&idPreProjeto=<?php echo $this->escape($produtos->idProposta);?>');">
                             </td>
