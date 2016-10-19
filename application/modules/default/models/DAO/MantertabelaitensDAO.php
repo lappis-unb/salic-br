@@ -110,31 +110,18 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()->distinct();
-        $sql->from( array('p' => 'tbItensPlanilhaProduto'),
-            array(
-                'idEtapa' => 'e.idPlanilhaEtapa',
-                'Etapa' => 'e.Descricao'
-            ), $this->_schema
+        $sql->from(['p' => 'tbitensplanilhaproduto'], null, $this->_schema
         );
-        $sql->joinInner(array('pr'=>'Produto'), 'p.idProduto = pr.Codigo', array());
+        $sql->joinInner(array('pr'=>'produto'), 'p.idproduto = pr.codigo', null, $this->_schema);
 
-        $sql->joinInner(array('i'=>'TbPlanilhaItens'), 'p.idPlanilhaItens = i.idPlanilhaItens', array());
+        $sql->joinInner(array('i'=>'tbplanilhaitens'), 'p.idplanilhaitens = i.idplanilhaitens', null, $this->_schema);
 
-        $sql->joinInner(array('e'=>'TbPlanilhaEtapa'), 'p.idPlanilhaEtapa = e.idPlanilhaEtapa', array());
+        $sql->joinInner(array('e'=>'tbplanilhaetapa'), 'p.idplanilhaetapa = e.idplanilhaetapa',  ['e.idplanilhaetapa as idEtapa', 'e.descricao as Etapa'], $this->_schema);
 
-        $sql->where('p.idProduto = ? ', $idProduto);
-        $sql->order('e.descricao  ASC');
+        $sql->where('p.idproduto = ?', $idProduto);
+        $sql->order('Etapa ASC');
 
         return $db->fetchAll($sql);
-
-
-//    	$sql = "SELECT distinct  e.idPlanilhaEtapa as idEtapa, e.Descricao as Etapa
-//					FROM SAC.dbo.tbItensPlanilhaProduto p
-//					INNER JOIN SAC.dbo.Produto pr on (p.idProduto = pr.Codigo)
-//					INNER JOIN SAC.dbo.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
-//					INNER JOIN SAC.dbo.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)
-//						Where  idProduto = ".$idProduto."
-//						 ORDER BY  e.Descricao  ASC ";
     }
 
     public function exibirItem($idProduto, $idEtapa) {
@@ -143,34 +130,22 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select();
-        $sql->from( array('p' => 'tbItensPlanilhaProduto'),
-            array(
-                'idItem' => 'i.idPlanilhaItens',
-                'NomeDoItem' => 'i.Descricao'
-            ), $this->_schema
+        $sql->from( array('p' => 'tbitensplanilhaproduto'), null, $this->_schema
         );
-        $sql->joinInner(array('pr'=>'Produto'), 'p.idProduto = pr.Codigo', array());
+        $sql->joinInner(array('pr'=>'produto'), 'p.idproduto = pr.codigo', null, $this->_schema);
 
-        $sql->joinInner(array('i'=>'TbPlanilhaItens'), 'p.idPlanilhaItens = i.idPlanilhaItens', array());
+        $sql->joinInner(array('i'=>'tbplanilhaitens'), 'p.idplanilhaitens = i.idplanilhaitens',
+                        array('idItem' => 'i.idplanilhaitens',
+                             'NomeDoItem' => 'i.descricao'), $this->_schema
+                        );
+        $sql->joinInner(array('e'=>'tbplanilhaetapa'), 'p.idplanilhaetapa = e.idplanilhaetapa', null, $this->_schema);
 
-        $sql->joinInner(array('e'=>'TbPlanilhaEtapa'), 'p.idPlanilhaEtapa = e.idPlanilhaEtapa', array());
+        $sql->where('p.idproduto = ? ', $idProduto);
+        $sql->where('e.idplanilhaetapa = ?', $idEtapa);
 
-        $sql->where('p.idProduto = ? ', $idProduto);
-        $sql->where('e.idPlanilhaEtapa = ?', $idEtapa);
-
-        $sql->order('i.descricao  ASC');
+        $sql->order('NomeDoItem  ASC');
 
         return $db->fetchAll($sql);
-
-//        echo $sql; exit;
-//        $sql = "SELECT i.idPlanilhaItens as idItem,	i.Descricao as NomeDoItem
-//				FROM SAC.dbo.tbItensPlanilhaProduto p
-//				INNER JOIN SAC.dbo.Produto pr on (p.idProduto = pr.Codigo)
-//				INNER JOIN SAC.dbo.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
-//				INNER JOIN SAC.dbo.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)
-//					Where  p.idProduto = ".$idProduto." and e.idPlanilhaEtapa = ".$idEtapa."
-//					ORDER BY  i.Descricao  ASC";
-
     }
 
     public static function buscaprodutoetapaitem($item=null,$nomeItem=null) {

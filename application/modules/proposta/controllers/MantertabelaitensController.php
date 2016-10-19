@@ -553,7 +553,8 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
 
 		$idProduto = $_POST['idProduto'];
 
-		$this->view->etapas = MantertabelaitensDAO::exibirEtapa($idProduto);
+        $tbItens = new MantertabelaitensDAO();
+		$this->view->etapas = $tbItens->exibirEtapa($idProduto);
 
 		$this->view->idProduto = $idProduto;
 	}
