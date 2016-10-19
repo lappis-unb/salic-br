@@ -83,8 +83,7 @@ class Cep extends MinC_Db_Table_Abstract
 
         $sql = $db->select()
             ->from($this->_name, $cols, $this->_schema)
-            ->where('CEP = ?', $cep);
-
+            ->where('cep = ?', $cep);
         return $db->fetchRow($sql);
     }
 }

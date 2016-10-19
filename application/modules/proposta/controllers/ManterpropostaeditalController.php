@@ -24,6 +24,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
     public function init()
     {
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
         $arrIdentity = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
         $GrupoAtivo   = new Zend_Session_Namespace('GrupoAtivo');
@@ -61,12 +62,12 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         if ($this->idAgente != 0) $this->usuarioProponente = "S";
         $this->cpfLogado = $cpf;
         parent::init();
+
         //VALIDA ITENS DO MENU (Documento pendentes)
-        if (isset($_GET['idPreProjeto']) && !empty($_GET['idPreProjeto'])) {
-            $get = Zend_Registry::get("get");
+        if (!empty($idPreProjeto)) {
 
             $tableDocumentosExigidos = new Proposta_Model_DbTable_DocumentosExigidos();
-            $this->view->documentosPendentes = $tableDocumentosExigidos->buscarDocumentoPendente($get->idPreProjeto);
+            $this->view->documentosPendentes = $tableDocumentosExigidos->buscarDocumentoPendente($idPreProjeto);
 
             if (!empty($this->view->documentosPendentes)) {
                 $verificarmenu = 1;
@@ -78,7 +79,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
             //(Enviar Proposta ao MinC , Excluir Proposta)
             $mov = new Proposta_Model_DbTable_TbMovimentacao();
-            $movBuscar = $mov->buscar(array('idProjeto = ?' => $get->idPreProjeto), array('idMovimentacao desc'), 1, 0)->current();
+            $movBuscar = $mov->buscar(array('idProjeto = ?' => $idPreProjeto), array('idMovimentacao desc'), 1, 0)->current();
 
             if (isset($movBuscar->Movimentacao) && $movBuscar->Movimentacao != 95) {
                 $enviado = 'true';
@@ -90,7 +91,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
             $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-            $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($get->idPreProjeto);
+            $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
             if (count($rsStatusAtual) > 0) {
                 $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
             } else {
@@ -99,9 +100,9 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
             //VERIFICA SE A PROPOSTA FOI ENVIADA AO MINC ALGUMA VEZ
             $arrbusca = array();
-            $arrbusca['idProjeto = ?'] 		= $get->idPreProjeto;
-            $arrbusca['Movimentacao = ?'] 	= '96';
-            $rsHistMov 						= $Movimentacao->buscar($arrbusca);
+            $arrbusca['idProjeto = ?'] = $idPreProjeto;
+            $arrbusca['Movimentacao = ?']= '96';
+            $rsHistMov = $Movimentacao->buscar($arrbusca);
             $this->view->blnJaEnviadaAoMinc = $rsHistMov->count();
         }
     }
@@ -417,14 +418,14 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
     {
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         $this->verificarPermissaoAcesso(true, false, false);
-        $get = Zend_Registry::get('get');
 
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
         $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
-        $rs = $tbl->buscarDocumentos(array("idprojeto = ?" => $get->idPreProjeto));
+        $rs = $tbl->buscarDocumentos(array("idprojeto = ?" => $idPreProjeto));
         $this->view->arquivosProposta = $rs;
 
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
-        $dadosProjeto = $tblPreProjeto->findBy(array('idPreProjeto' => $get->idPreProjeto));
+        $dadosProjeto = $tblPreProjeto->findBy(array('idPreProjeto' => $idPreProjeto));
         $tbA = new Proposta_Model_DbTable_TbDocumentosAgentes();
         $rsA = $tbA->buscarDadosDocumentos(array("idagente = ?" => $dadosProjeto['idagente']));
         $this->view->arquivosProponente = $rsA;

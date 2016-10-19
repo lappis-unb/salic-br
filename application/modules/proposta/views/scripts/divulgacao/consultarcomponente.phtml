@@ -1,4 +1,3 @@
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <?php if(count($this->itensDivulgacao)>0) : ?>
 <table class="tabela">
     <tr class="titulo_tabela">
@@ -11,8 +10,8 @@
             //Zend_Debug::dump($divulgacao);
             ?>
                 <tr class="fundo">
-                    <td align="left"><?php echo utf8_decode(htmlentities($divulgacao->Peça)); ?></td>
-                    <td align="left"><?php echo utf8_decode(htmlentities($divulgacao->Veiculo)); ?></td>
+                    <td align="left"><?php echo htmlentities($divulgacao->Peca); ?></td>
+                    <td align="left"><?php echo htmlentities($divulgacao->Veiculo); ?></td>
                 </tr>
            <?php
         }

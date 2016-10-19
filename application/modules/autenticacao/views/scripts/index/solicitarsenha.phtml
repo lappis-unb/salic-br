@@ -20,17 +20,17 @@
 		},
 		// Define as mensagens de erro para cada regra
 		messages:{
-                        cpf:{
+                cpf:{
 				required: "Digite o seu cpf",
-				minlength: "O seu nome deve conter, no mínimo, 11 caracteres"
+				minlength: "O seu cpf deve conter, no m\xEDnimo, 11 caracteres"
 			},
 			email:{
 				required: "Digite o seu e-mail",
-				email: "Digite um e-mail válido"
+				email: "Digite um e-mail v\xE1lido"
 			},
                         dataNasc:{
 				required: "Digite a data do seu Nascimento",
-				minlength: "A sua mensagem deve conter, no mínimo, 2 caracteres"
+				minlength: "A sua mensagem deve conter, no m\xEDnimo, 2 caracteres"
 			}
 		}
 	});
@@ -80,7 +80,7 @@ function valida_email(email) // validacao de e-mail
 
 </script>
 <div style="display:none" id="dialog-alert2"></div>
-<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 <?php
 $auth = Zend_Auth::getInstance();
@@ -96,22 +96,22 @@ if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 
-<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
+<!-- ========== INICIO TITULO ========== -->
 
 <div id="titulo">
 <div>Solicitar Nova Senha<span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 
 </div>
-<!-- ========== FIM Tï¿½TULO ========== -->
+<!-- ========== FIM TITULO ========== -->
 
 
 
-<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
+<!-- ========== INICIO CONTEUDO ========== -->
 
 	<div id="conteudo">
 
 
-<fieldset><legend>Informações</legend>
+<fieldset><legend>Informa&ccedil;&otilde;es</legend>
             <form method="POST" action="<?php echo $this->url(array('module'=>'autenticacao', 'controller' => 'index', 'action' => 'solicitarsenha')); ?>" name="solicitaSenha" id="solicitaSenha">
 
                 <table border="1" class="tabela">
@@ -151,12 +151,12 @@ if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
         </div>
 
 
-<!-- ========== FIM CONTEï¿½DO ========== -->
+<!-- ========== FIM CONTEUDO ========== -->
 
 
 
-<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
+<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 	<div id="rodapeConteudo"><span></span></div>
 
-<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
+<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 			<br clear="all" />
