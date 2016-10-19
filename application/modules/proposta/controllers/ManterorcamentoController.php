@@ -111,7 +111,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      */
     public function custosadministrativosAction()
     {
-        $manterOrcamento = new ManterorcamentoDAO();
+
+        $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
         $buscarEtapas = $manterOrcamento->listarCustosAdministrativos();
         $this->view->Etapas = $buscarEtapas;
 
@@ -162,8 +163,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
 
         if(!empty($this->idPreProjeto) || $this->idPreProjeto=='0') {
-
-            $buscarEstado = EstadoDAO::buscar();
+            $uf = new Agente_Model_DbTable_UF();
+            $buscarEstado = $uf->buscar();
             $this->view->Estados = $buscarEstado;
 
             $buscarProduto = ManterorcamentoDAO::buscarProdutos($this->idPreProjeto);
@@ -247,7 +248,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $etapaSelecionada["etapaNome"] = $_GET["etapaNome"];
         $this->view->etapaSelecionada = $etapaSelecionada;
 
-        $buscarEstado = EstadoDAO::buscar();
+        $uf = new Agente_Model_DbTable_UF();
+        $buscarEstado = $uf->buscar();
         $this->view->Estados = $buscarEstado;
 
         $buscarEtapa = ManterorcamentoDAO::buscarEtapasCadastrarProdutos();
@@ -273,6 +275,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @return void
      */
     public function cadastrarcustosAction() {
+
         $this->_helper->layout->disableLayout();
 
         if  ( isset ( $_GET['idPreProjeto'] ) ) {
@@ -281,9 +284,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaProposta();
             $buscaDados = $manterOrcamento->findBy(array('idprojeto' => $idPreProjeto));
 //            $buscaDados = $manterOrcamento->buscarDadosCadastrarCustos($idPreProjeto);
-
             $this->view->dados = $buscaDados;
         }
+
 
         if( isset( $_GET['cadastro'] ) ) {
             $dados_cadastrados = ManterorcamentoDAO::buscarUltimosDadosCadastrados();
@@ -333,17 +336,18 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $etapaSelecionada["etapaNome"] = $_GET["etapaNome"];
         $this->view->etapaSelecionada = $etapaSelecionada;
 
-        $buscarEstado = EstadoDAO::buscar();
+        $buscarEstado = new Agente_Model_DbTable_UF;
         $this->view->Estados = $buscarEstado;
 
-        $buscarEtapa = ManterorcamentoDAO::buscarEtapasCusto();
-        $this->view->Etapa = $buscarEtapa;
+        $buscarEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+        $this->view->Etapa = $buscarEtapa->buscarEtapasCusto();
 
-        $buscarRecurso = ManterorcamentoDAO::buscarFonteRecurso();
-        $this->view->Recurso = $buscarRecurso;
+        $buscarRecurso = new Proposta_Model_DbTable_Verificacao();
+        $this->view->Recurso = $buscarRecurso->buscarFonteRecurso();
 
-        $buscarUnidade = ManterorcamentoDAO::buscarUnidade();
-        $this->view->Unidade = $buscarUnidade;
+
+        $buscarUnidade = new Proposta_Model_DbTable_PlanilhaUnidade();
+        $this->view->Unidade = $buscarUnidade->buscarUnidade();
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
@@ -425,8 +429,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             echo json_encode($itemArray);
             die;
         }
-
-        $buscarEstado = EstadoDAO::buscar();
+        $uf = new Agente_Model_DbTable_UF();
+        $buscarEstado = $uf->buscar();
         $this->view->Estados = $buscarEstado;
 
         $cidade = CidadeDAO::buscar($buscaDados[0]->IdUf);
@@ -498,8 +502,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             echo json_encode($itemArray);
             die;
         }
-
-        $buscarEstado = EstadoDAO::buscar();
+        $uf = new Agente_Model_DbTable_UF();
+        $buscarEstado = $uf->buscar();
         $this->view->Estados = $buscarEstado;
 
         $cidade = CidadeDAO::buscar($buscaDados[0]->IdUf);

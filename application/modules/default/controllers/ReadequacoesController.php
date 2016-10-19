@@ -132,7 +132,8 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $buscarRecurso = ManterorcamentoDAO::buscarFonteRecurso();
             $this->view->Recursos = $buscarRecurso;
 
-            $buscarEstado = EstadoDAO::buscar();
+            $uf = new Agente_Model_DbTable_UF();
+            $buscarEstado = $uf->buscar();
             $this->view->UFs = $buscarEstado;
 
             $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();

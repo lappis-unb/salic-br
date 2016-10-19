@@ -211,6 +211,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public function listarDadosCadastrarCustos($idPreProjeto)
     {
+        echo '<pre>';
+        var_dump ('Método transferido para : Proposta->Model->DbTable->TbPlanilhaEtapa');
+        exit;
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $sql = $db->select()
@@ -400,7 +403,10 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         return $db->fetchAll($sql);
     }
 
-    public static function buscarEtapasCusto() {
+    public  function buscarEtapasCusto() {
+        echo '<pre>';
+        var_dump ('Método transferido para : Proposta_Model_DbTable_TbPlanilhaEtapa');
+        exit;
         $sql = "SELECT
 		idplanilhaetapa ,
 		Descricao
@@ -422,6 +428,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public function listarEtapasCusto()
     {
+        echo '<pre>';
+        var_dump ('Método transferido para: Proposta Model DbTable TbPlanilhaProposta');
+        exit;
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -657,6 +666,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     }
 
     public static function buscarFonteRecurso() {
+        echo '<pre>';
+        var_dump ('Método transferido para: Proposta Model DbTable Verificacao');
+        exit;
         $sql = "select Verificacao.idVerificacao, ltrim(Verificacao.Descricao) as VerificacaoDescricao
                 from SAC.dbo.Verificacao as Verificacao
                 inner join SAC.dbo.Tipo as Tipo
@@ -687,6 +699,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     }
 
     public static function buscarUnidade() {
+        echo '<pre>';
+        var_dump ('Método transferido para: Proposta Model DbTable TbPlanilhaUnidade');
+        exit;
         $sql = "select idUnidade, Sigla, Descricao
         FROM SAC.dbo.tbPlanilhaUnidade order by 3";
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -895,6 +910,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
      */
     public function listarItensCustosAdministrativos($idPreProjeto, $tipoCusto)
     {
+        echo '<pre>';
+        var_dump ('Método transferido para : Proposta->Model->DbTable->TbPlanilhaEtapa');
+        exit;
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -974,6 +992,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
      */
     public function listarCustosAdministrativos()
     {
+        echo '<pre>';
+        var_dump ('Método transferido para : Proposta->Model->DbTable->TbPlanilhaEtapa');
+        exit;
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
