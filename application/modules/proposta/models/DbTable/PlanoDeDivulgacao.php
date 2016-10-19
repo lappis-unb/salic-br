@@ -118,27 +118,27 @@ class Proposta_Model_DbTable_PlanoDeDivulgacao extends MinC_Db_Table_Abstract{
         $result = $this->fetchAll($select);
         return ($result) ? $result->toArray() : array();
 
-        $sql = "SELECT
-		r.idVerificacaoPeca,
-		r.idVerificacaoVeiculo,
-		P.Descricao as PecaDescicao,
-		V.Descricao as VeiculoDescicao
-		FROM SAC.dbo.VerificacaoPecaxVeiculo as r
-
-        LEFT JOIN SAC.dbo.Verificacao as P on
-            r.idVerificacaoPeca = P.idVerificacao
-
-        LEFT JOIN SAC.dbo.Verificacao as V on
-            r.idVerificacaoVeiculo = V.idVerificacao
-
-        WHERE idVerificacaoPeca = ".$pecaID ;
-
-
-        $db = Zend_Db_Table::getDefaultAdapter();
-	$db->setFetchMode(Zend_DB::FETCH_OBJ);
-	$resultado = $db->fetchAll($sql);
-
-        return $resultado;
+//        $sql = "SELECT
+//		r.idVerificacaoPeca,
+//		r.idVerificacaoVeiculo,
+//		P.Descricao as PecaDescicao,
+//		V.Descricao as VeiculoDescicao
+//		FROM SAC.dbo.VerificacaoPecaxVeiculo as r
+//
+//        LEFT JOIN SAC.dbo.Verificacao as P on
+//            r.idVerificacaoPeca = P.idVerificacao
+//
+//        LEFT JOIN SAC.dbo.Verificacao as V on
+//            r.idVerificacaoVeiculo = V.idVerificacao
+//
+//        WHERE idVerificacaoPeca = ".$pecaID ;
+//
+//
+//        $db = Zend_Db_Table::getDefaultAdapter();
+//	$db->setFetchMode(Zend_DB::FETCH_OBJ);
+//	$resultado = $db->fetchAll($sql);
+//
+//        return $resultado;
     }
 
 

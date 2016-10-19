@@ -76,10 +76,9 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
         );
         $select->where('idProjeto = ?', $idPreProjeto);
         $select->where('idPais = ?', $idPais);
-        $select->where('idUF = ?', $idUF);
-        $select->where('idMunicipioibge = ?', $idMunicipio);
+        $select->where("idUF = '?'", $idUF);
+        $select->where("idMunicipioibge = '?'", $idMunicipio);
         $select->where('stAbrangencia = ?', 1);
-
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($select);
@@ -108,17 +107,17 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
 
         //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
         if (!empty($dados['idProjeto'])) {
-            $rsAbrangencia->idProjeto = $dados['idProjeto'];
+            $rsAbrangencia->idprojeto = $dados['idProjeto'];
         }
         if (!empty($dados['idPais'])) {
-            $rsAbrangencia->idPais = $dados['idPais'];
+            $rsAbrangencia->idpais = $dados['idPais'];
         }
-        $rsAbrangencia->idUF = $dados['idUF']; //if(!empty($dados['idUF'])) { $rsAbrangencia->idUF = $dados['idUF']; }
-        $rsAbrangencia->idMunicipioIBGE = $dados['idMunicipioIBGE'];//if(!empty($dados['idMunicipioIBGE'])) { $rsAbrangencia->idMunicipioIBGE = $dados['idMunicipioIBGE']; }
+        $rsAbrangencia->iduf = $dados['idUF']; //if(!empty($dados['idUF'])) { $rsAbrangencia->idUF = $dados['idUF']; }
+        $rsAbrangencia->idmunicipioibge = $dados['idMunicipioIBGE'];//if(!empty($dados['idmunicipioibge'])) { $rsAbrangencia->idmunicipioibge = $dados['idmunicipioibge']; }
         if (!empty($dados['Usuario'])) {
-            $rsAbrangencia->Usuario = $dados['Usuario'];
+            $rsAbrangencia->usuario = $dados['Usuario'];
         }
-        $rsAbrangencia->stAbrangencia = 1;
+        $rsAbrangencia->stabrangencia = 1;
 
         //SALVANDO O OBJETO
         $id = $rsAbrangencia->save();

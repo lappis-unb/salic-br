@@ -198,7 +198,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
                     $locais[$i]["idMunicipioIBGE"] = "0";
                 }
             }else {
-                parent::message("Registro j� cadastrado, transa��o cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
+                parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
             }
             $locaisinvalidos[$i] = $local_c;
 
@@ -208,7 +208,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
             $global = 0;
             //incluindo novos registros
             if(empty($idAbrangencia)) {
-                //APAGA TODOS OS REGISTROS PARA CADASTRALOS NOVAMENTE
+                //APAGA TODOS OS REGISTROS PARA CADASTRA-LOS NOVAMENTE
                 $tblAbrangencia->deleteBy(array('idprojeto' => $this->idPreProjeto, 'stabrangencia' => 1));
             } else {
 
@@ -216,8 +216,8 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
                     $p =  $d['idPais'];
                     if ($p == 31) {
-                        $u =  $d['idUF'];
-                        $m =  $d['idMunicipioIBGE'];
+                        $u = (int) $d['idUF'];
+                        $m = (int) $d['idMunicipioIBGE'];
                     }
                     else {
                         $u =  0;
@@ -235,14 +235,15 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
             }
 
+
             //INSERE LOCAIS DE REALIZACAO (tabela SAC.dbo.Abrangencia)
             for ($i=1; $i<=count($locais); $i++) {
                 $dados = array( "idProjeto"=>$this->idPreProjeto,
                 		"stAbrangencia" => 1,
                         "Usuario"  =>$this->usuarioLogado,
                         "idPais"   =>$locais[$i]["idPais"],
-                        "idUF"     =>($locais[$i]["idPais"]==31)?$locais[$i]["idUF"]:0,
-                        "idMunicipioIBGE"=>($locais[$i]["idPais"]==31)?$locais[$i]["idMunicipioIBGE"]:0);
+                        "idUF"     => ($locais[$i]["idPais"] == 31 ) ? $locais[$i]["idUF"] : 0,
+                        "idMunicipioIBGE"=> ($locais[$i]["idPais"] == 31) ? $locais[$i]["idMunicipioIBGE"] : 0);
 
                 $dados['stAbrangencia']=1;
                 $dados['idAbrangencia']=$idAbrangencia;

@@ -68,7 +68,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
      * @access public
      * @return void
      */
-    public function listarProdutoEtapaItem ($item=null, $nomeItem=null, $idEtapa=null, $idProduto=null)
+    public function listarProdutoEtapaItem ($item=null, $nomeItem=null, $idEtapa=null, $idProduto=null, $where=array())
     {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -94,6 +94,10 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
             $sql->where('pr.codigo = ?', $idProduto);
         }
 
+        foreach ($where as $coluna => $valor) {
+            $sql->where($coluna, $valor);
+        }
+        
         $sql->order('pr.codigo ASC');
 
         return $db->fetchAll($sql);
@@ -192,7 +196,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         $sql = "SELECT Codigo as codproduto, Descricao as Produto
 				FROM SAC.dbo.Produto WHERE stEstado = 0 ORDER BY Produto "; //WHERE stEstado = 0
         if(!empty($where)){
-            $sql .=" AND i.Descricao ".$nomeItem;
+            $sql .=" AND i.Descricao ".$where;
         }
         //xd($sql);
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -428,7 +432,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
     {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $cadastrar = $db->insert("tbsolicitaritem", $dadosassociar, $this->_schema);
+        $cadastrar = $db->insert("tbsolicitaritem", $dadosassociar);
 
         if ($cadastrar) {
             return true;

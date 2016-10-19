@@ -26,6 +26,8 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         $arrAuth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity()); // instancia da autenticacao
         isset($arrAuth['usu_codigo']) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
 
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
+
         parent::init(); // chama o init() do pai GenericControllerNew
 
         if(isset($arrAuth['usu_codigo'])){
@@ -36,11 +38,11 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         }
 
         //recupera ID do pre projeto (proposta)
-        if(!empty ($_REQUEST['idPreProjeto'])) {
-            $this->idPreProjeto = $_REQUEST['idPreProjeto'];
+        if(!empty ($idPreProjeto)) {
+            $this->idPreProjeto = $idPreProjeto;
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
             $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-            $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($_REQUEST['idPreProjeto']);
+            $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
             $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
         }
     }
@@ -504,17 +506,21 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
             //$tbpretitem = MantertabelaitensDAO::exibirprodutoetapaitem($item);
             $where = null;
             if($tipoPesquisa==1) {
-                $where = " LIKE '%".$item."%'";
+                $where["i.descricao LIKE (?)"] = "%" . $item . "%";
+//                $where = "i.descricao LIKE '%".$item."%'";
             }elseif($tipoPesquisa==2) {
-                $where = " LIKE '%".$item."'";
+                $where["i.descricao LIKE (?)"] = "%" . $item;
+//                $where = "i.descricao LIKE '%".$item."'";
             }elseif($tipoPesquisa==3) {
-                $where = " = '".$item."'";
+                $where["i.descricao = ?"] = $item;
+//                $where = "i.descricao = '".$item."'";
             }elseif($tipoPesquisa==4) {
-                $where = " <> '%".$item."'";
+                $where["i.descricao <> ?"] = "%" . $item;
+//                $where = "i.descricao  <> '%".$item."'";
             }
 
             $tbpretitem = new MantertabelaitensDAO();
-            $tbpretitem = $tbpretitem->listarProdutoEtapaItem($item=null,$where,$etapa,$produto);
+            $tbpretitem = $tbpretitem->listarProdutoEtapaItem($item=null, $nomeitem=null, $etapa, $produto, $where);
 
             $this->view->pretitem = $tbpretitem;
 
