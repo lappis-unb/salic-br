@@ -463,12 +463,12 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
 
 			            foreach($tbsolicitacaos as $tbsolicitacao):
 			$html .= 	'<tr>
-			                <td>' . $tbsolicitacao->Produto . '</td>
-			                <td>' . $tbsolicitacao->Etapa . '</td>
-			                <td>' . $tbsolicitacao->ItemSolicitado . '</td>
-			                <td>' . $tbsolicitacao->Justificativa .' </td>
-			                <td>' . $tbsolicitacao->Estado . '</td>
-			                <td>' . $tbsolicitacao->Resposta . '</td>
+			                <td>' . $tbsolicitacao->produto . '</td>
+			                <td>' . $tbsolicitacao->etapa . '</td>
+			                <td>' . $tbsolicitacao->itemsolicitado . '</td>
+			                <td>' . $tbsolicitacao->justificativa .' </td>
+			                <td>' . $tbsolicitacao->estado . '</td>
+			                <td>' . $tbsolicitacao->resposta . '</td>
 			            </tr>';
 			            endforeach;
 			$html .= '</table>';

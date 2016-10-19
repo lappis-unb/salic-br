@@ -39,14 +39,14 @@ echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); //
 
             <?php foreach($this->solicitacao as $tbsolicitacao): ?>
             <tr>
-                <td><?php echo $this->escape($tbsolicitacao->Produto);?>
-                <input type="hidden" name="produto" value="<?php echo $this->escape($tbsolicitacao->Produto);?>"></input>
+                <td><?php echo $tbsolicitacao->produto;?>
+                <input type="hidden" name="produto" value="<?php echo $tbsolicitacao->produto;?>"/>
                 </td>
-                <td><?php echo $this->escape($tbsolicitacao->Etapa);?></td>
-                <td><?php echo $this->escape($tbsolicitacao->ItemSolicitado);?></td>
-                <td><?php echo $tbsolicitacao->Justificativa;?></td>
-                <td><?php echo $this->escape($tbsolicitacao->Estado);?></td>
-                <td><?php echo $this->escape($tbsolicitacao->Resposta);?></td>
+                <td><?php echo $tbsolicitacao->etapa;?></td>
+                <td><?php echo $tbsolicitacao->itemsolicitado;?></td>
+                <td><?php echo $tbsolicitacao->justificativa;?></td>
+                <td><?php echo $tbsolicitacao->estado;?></td>
+                <td><?php echo $tbsolicitacao->resposta;?></td>
             </tr>
             <?php endforeach;?>
         </table>
