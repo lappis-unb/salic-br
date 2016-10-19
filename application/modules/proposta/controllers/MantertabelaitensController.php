@@ -572,7 +572,9 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         $idProduto 	= $_POST['idProduto'];
         $idEtapa 	= $_POST['idEtapa'];
 
-        $this->view->itens = MantertabelaitensDAO::exibirItem($idProduto, $idEtapa);
+        $tbitens = new MantertabelaitensDAO();
+        $this->view->itens = $tbitens->exibirItem($idProduto, $idEtapa);
+
         $this->view->idProduto = $idProduto;
         $this->view->idEtapa = $idEtapa;
     }
@@ -628,16 +630,17 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
 
         $where = null;
         if($tipoPesquisa==1) {
-            $where = " LIKE '%".$item."%'";
+            $where["i.descricao LIKE (?)"] = "%" . $item . "%";
         }elseif($tipoPesquisa==2) {
-            $where = " LIKE '%".$item."'";
+            $where["i.descricao LIKE (?)"] = "%" . $item;
         }elseif($tipoPesquisa==3) {
-            $where = " = '".$item."'";
+            $where["i.descricao = ?"] = $item;
         }elseif($tipoPesquisa==4) {
-            $where = " <> '%".$item."'";
+            $where["i.descricao <> ?"] = "%" . $item;
         }
 
-        $tbpretitem = MantertabelaitensDAO::exibirprodutoetapaitem($item=null,$where,$etapa,$produto);
+        $tbpretitem = new MantertabelaitensDAO();
+        $tbpretitem = $tbpretitem->listarProdutoEtapaItem($item=null, $nomeitem=null, $etapa, $produto, $where);
 
         $arr = array();
         $arrNomeProduto = array();
