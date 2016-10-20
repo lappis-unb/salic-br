@@ -365,21 +365,21 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $col = [
-            'prod.codigo as idProduto',
-            'prod.descricao as Produto',
+            'prod.codigo as idproduto',
+            'prod.descricao as produto',
             'et.idplanilhaetapa',
-            'et.descricao as Etapa',
+            'et.descricao as etapa',
             'sol.idsolicitaritem',
             new Zend_Db_Expr("CASE
                 WHEN  sol.idplanilhaitens > 0 THEN it.descricao
                 ELSE sol.nomedoitem
-            END as ItemSolicitado"),
-            'sol.descricao as Justificativa',
+            END as itemsolicitado"),
+            'sol.descricao as justificativa',
             new Zend_Db_Expr("CASE sol.stEstado
                 WHEN 0 THEN 'Solicitado'
                 WHEN 1 THEN 'Atendido'
                 ELSE 'Negado'
-            END as Estado"),
+            END as estado"),
             new Zend_Db_Expr('resposta')
             ];
 
@@ -395,13 +395,13 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         return $db->fetchAll($sql);
     }
 
-    public static function cadastraritem($dadosassociar) {
+    public function cadastraritem($dadosassociar) {
 
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
 
-        $cadastrar = $db->insert("SAC.dbo.tbSolicitarItem", $dadosassociar);
+        $cadastrar = $this->insert($dadosassociar);
 
         if ($cadastrar) {
             return true;
@@ -425,7 +425,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
     {
         $db = Zend_Db_Table::getDefaultAdapter();
 
-        $cadastrar = $db->insert($this->_schema.".tbSolicitarItem", $dadosassociar);
+        $cadastrar = $this->insert($dadosassociar);
 
         if ($cadastrar) {
             return true;
