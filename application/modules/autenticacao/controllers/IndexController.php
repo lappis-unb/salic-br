@@ -182,6 +182,12 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         $this->redirect('index');
     }
 
+    /**
+     * cadastrarusuarioAction
+     *
+     * @access public
+     * @return void
+     */
     public function cadastrarusuarioAction()
     {
         if ($_POST) {
@@ -274,7 +280,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             }
         }
     }
-
 
     /**
      * solicitarsenhaAction
