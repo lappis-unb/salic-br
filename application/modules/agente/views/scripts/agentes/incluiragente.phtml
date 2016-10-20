@@ -16,7 +16,6 @@
         <!-- ========== INICIO CONTEUDO ========== -->
         <div id="conteudo">
     <?php endif; ?>
-
     <div id="confirma"></div>
     <div id="carregando" class="sumir">
         <table class="tabela">
@@ -62,7 +61,6 @@
                         <input type="radio" name="Tipo" id="1" value="1" class="checkradio tipos" style="background: none; border: 0%; float:none; clear:auto; display:inline;" onclick="filtroCNPJ();" onkeypress="filtroCNPJ();" /> <label for="1">CNPJ</label>
                         <br />
                         <label for="cpf"> </label>
-
                         <input class="input_simples" type="text" name="cpf" id="cpf" maxlength="14"
                                onkeyup="mascara(this, format_cpf);"
                                onclick="limpar_campo(this, '');"
@@ -750,6 +748,7 @@ if (empty($_GET['acao'])) {
                     if (txtCidade == "")
                     {
                         cidade.disabled = false; // habilita para preenchimento
+                        carregar_combo($("#uf").val(), 'cidade','/cidade/combo', ' - Selecione - ');
                     }
                     // preenche o combo com a cidade
                     else
