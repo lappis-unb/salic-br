@@ -2127,12 +2127,12 @@ class ReadequacoesController extends GenericControllerNew {
         $a = 0;
         $dadosUsuarios = array();
 
-        if($vinculada == 171 || $vinculada == 262){
+        if($vinculada == 166 || $vinculada == 262){
             $dados = array();
             $dados['sis_codigo = ?'] = 21;
             $dados['uog_status = ?'] = 1;
             $dados['gru_codigo = ?'] = 121; //Tecnico de Acompanhamento
-            if($vinculada == 171){
+            if($vinculada == 166){
                 $dados['org_superior = ?'] = 160;
             } else {
                 $dados['org_superior = ?'] = 251;
