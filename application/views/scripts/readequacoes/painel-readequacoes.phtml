@@ -12,6 +12,24 @@
             var id = $(this).attr('idReadequacao');
             window.location = "<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'visualizar-readequacao')); ?>?id="+id;
         });
+
+        function alertaModal(msg){
+            $("#alerta").dialog("destroy");
+            $("#alerta").html(msg);
+            $("#alerta").dialog({
+              resizable: false,
+                    title: 'Alerta!',
+                    width:330,
+                    height:170,
+                    modal: true,
+                    buttons : {
+                  'OK' : function(){
+                        $(this).dialog('close');
+                    }
+                }
+            });
+            $('.ui-dialog-titlebar-close').remove();
+        }
         
         $('.enviarReadequacao').click(function(){
             var parecerista = $(this).parent().parent().find('select').val(),
