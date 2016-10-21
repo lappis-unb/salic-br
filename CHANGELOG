@@ -1,3 +1,7 @@
+Release 1.11.2
+  * Fix: [Readequações] Corrigindo listagem de destinatários/técnicos da SAV ao encaminhar projeto na avaliação de readequação
+  * Fix: [Readequações] Adicionando caixa de erro caso ocorra problema no encaminhamento
+
 Release 1.11.1
   * Fix: [Readequações] Listando técnicos da SAV ao encaminhar projeto na avaliação de readequação
 
