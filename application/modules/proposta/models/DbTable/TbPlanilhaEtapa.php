@@ -167,4 +167,43 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         return $db->fetchAll($sql);
     }
 
+    public function listarEtapasProdutos($idPreProjeto)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        //$sql = $db->select()
+        //->from(['pre' => 'preprojeto'], 'pre.idpreprojeto as idPreProjeto', $this->getSchema('sac'))
+        //->join(['pp' => 'tbplanilhaproposta'], '(pre.idpreprojeto = pp.idProjeto)', ['pp.idproduto as idProduto', 'pp.idetapa as idEtapa'], $this->getSchema('sac'))
+        //->join(['p' => 'produto'], '(pp.idproduto = p.codigo)', 'p.codigo as CodigoProduto', $this->getSchema('sac'))
+        //->join(['te' => 'tbplanilhaetapa'], 'te.idplanilhaetapa = pp.idetapa', 'te.descricao as DescricaoEtapa', $this->getSchema('sac'))
+        //->where('idpreprojeto = ?', $idPreProjeto)
+        //->order('te.DescricaoEtapa')
+        //;
+        //echo $sql;die;
+
+        //$sql = "SELECT
+        //distinct
+        //p.Codigo as CodigoProduto,
+        //pp.idProduto as idProduto,
+        //pp.idEtapa as idEtapa,
+        //te.Descricao as DescricaoEtapa,
+        //pre.idPreProjeto as idPreProjeto
+        //FROM SAC.dbo.PreProjeto pre
+        //INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+        //INNER JOIN SAC.dbo.Produto p ON (pp.idProduto = p.Codigo)
+        //INNER JOIN SAC..tbPlanilhaEtapa te on te.idPlanilhaEtapa = pp.idEtapa
+        //WHERE idPreProjeto = {$idPreProjeto}";
+
+        //$sql.= " ORDER BY te.DescricaoEtapa ";
+
+        $sql = $db->select()
+            ->from(['tbplanilhaetapa'], ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], $this->getSchema('sac'))
+            ->where("tpCusto = 'P'")
+        ;
+
+        //$sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
+
+        return $db->fetchAll($sql);
+    }
 } // fecha class

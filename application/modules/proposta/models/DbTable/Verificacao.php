@@ -27,7 +27,7 @@ class Proposta_Model_DbTable_Verificacao extends MinC_Db_Table_Abstract{
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-            array('V' => $this->_name),
+            array('v' => $this->_name),
             array(
                 'idverificacao',
                 $this->getExpressionTrim('v.descricao',  'verificacaodescricao'),
@@ -35,7 +35,7 @@ class Proposta_Model_DbTable_Verificacao extends MinC_Db_Table_Abstract{
             $this->_schema
             );
         $select->joinInner(array('tipo'=>'Tipo'),
-            'V.idtipo = tipo.idtipo' ,
+            'v.idtipo = tipo.idtipo' ,
             null,
             $this->_schema
         );

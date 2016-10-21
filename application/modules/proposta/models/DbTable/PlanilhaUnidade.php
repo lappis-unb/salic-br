@@ -27,6 +27,10 @@ class Proposta_Model_DbTable_PlanilhaUnidade extends MinC_Db_Table_Abstract
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
+        echo '<pre>';
+        var_dump ($select->assemble());
+        exit;
+
         return $db->fetchAll($select);
     }
 } // fecha class

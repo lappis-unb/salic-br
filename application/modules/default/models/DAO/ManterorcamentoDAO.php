@@ -263,6 +263,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public static function buscarEtapasProdutos($idPreProjeto)
     {
+        echo '<pre>';
+        var_dump ('Método transferido para : Proposta_Model_DbTable_PreProjeto');
+        exit;
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -293,6 +296,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public function listarEtapasProdutos($idPreProjeto)
     {
+        echo '<pre>';
+        var_dump ('Método transferido para proposta model dbtable PreProjeto.php');
+        exit;
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -518,6 +524,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
      */
     public function listarItensProdutos($idPreProjeto, $idItem = null)
     {
+        echo '<pre>';
+        var_dump ('método transferido para Proposta Model DbtTable PreProjeto');
+        exit;
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -700,7 +709,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public static function buscarUnidade() {
         echo '<pre>';
-        var_dump ('Método transferido para: Proposta Model DbTable TbPlanilhaUnidade');
+        var_dump ('Método transferido para: Proposta Model DbTable PlanilhaUnidade');
         exit;
         $sql = "select idUnidade, Sigla, Descricao
         FROM SAC.dbo.tbPlanilhaUnidade order by 3";
@@ -711,6 +720,10 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     }
 
     public static function buscarProdutos($idPreProjeto) {
+
+        echo '<pre>';
+        var_dump ('Método transferido para Proposta Model Dbtable PreProjeto');
+        exit;
 
         $sql = "SELECT p.Codigo as CodigoProduto,
                     p.Descricao as DescricaoProduto,
@@ -741,6 +754,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public function listarProdutos($idPreProjeto)
     {
+        echo '<pre>';
+        var_dump ('Método transferido para Proposta Model DbTable Preprojeto');
+        exit;
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
