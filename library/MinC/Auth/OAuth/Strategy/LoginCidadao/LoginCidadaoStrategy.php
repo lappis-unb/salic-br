@@ -19,7 +19,7 @@ class LoginCidadaoStrategy extends OpauthStrategy
     /**
      * Compulsory config keys, listed as unassociative arrays
      */
-    public $expects = array('client_id', 'client_secret', 'url_base');
+    public $expects = array('client_id', 'client_secret', 'application_url_base', 'oauth_url_base');
 
     /**
      * Optional config keys, without predefining any default values.
@@ -45,16 +45,7 @@ class LoginCidadaoStrategy extends OpauthStrategy
     public function __construct($strategy, $env)
     {
         parent::__construct($strategy, $env);
-        /*$frontController = Zend_Controller_Front::getInstance();
-        $baseUrl = $frontController->getBaseUrl();
-        xd($baseUrl, $this->strategy['url_base'], $this->strategy['redirect_uri']);
-xd($this->strategy['redirect_uri']);
-        */
-
-        $this->strategy['redirect_uri'] = $this->strategy['url_base'].$this->strategy['redirect_uri']; // Login Cidadao validate url, so no child blog url here
-        /*$redirect_uri = network_site_url();
-        $redirect_uri = rtrim($redirect_uri,"/");
-        $this->strategy['redirect_uri'] = $redirect_uri.$this->strategy['redirect_uri'];*/
+        $this->strategy['redirect_uri'] = $this->strategy['application_url_base'].$this->strategy['redirect_uri']; // Login Cidadao validate url, so no child blog url here
     }
 
     /**
@@ -63,9 +54,9 @@ xd($this->strategy['redirect_uri']);
     public function request()
     {
         // on Dev
-        //$url = $this->strategy['url_base'].'/web/app_dev.php/oauth/v2/auth';
+        //$url = $this->strategy['oauth_url_base'].'/web/app_dev.php/oauth/v2/auth';
         // On Prod
-        $url = $this->strategy['url_base'].'/oauth/v2/auth';
+        $url = $this->strategy['oauth_url_base'].'/oauth/v2/auth';
 
         $params = array(
             'client_id' => $this->strategy['client_id'],
@@ -88,9 +79,9 @@ xd($this->strategy['redirect_uri']);
         {
             $code = $_GET['code'];
             // on Dev use:
-            //$url = $this->strategy['url_base'].'/web/app_dev.php/oauth/v2/token';
+            //$url = $this->strategy['oauth_url_base'].'/web/app_dev.php/oauth/v2/token';
 
-            $url = $this->strategy['url_base'].'/oauth/v2/token';
+            $url = $this->strategy['oauth_url_base'].'/oauth/v2/token';
 
             $params = array(
                 'code' => $code,
@@ -99,8 +90,8 @@ xd($this->strategy['redirect_uri']);
                 'redirect_uri' => $this->strategy['redirect_uri'],
                 'grant_type' => 'authorization_code',
             );
-            if (!empty($this->strategy['state'])) $params['state'] = $this->strategy['state'];
 
+            if (!empty($this->strategy['state'])) $params['state'] = $this->strategy['state'];
             $response = static::serverPost($url, $params, null, $headers);
 
             $results = json_decode($response);
@@ -108,6 +99,7 @@ xd($this->strategy['redirect_uri']);
             if (!empty($results) && isset($results->access_token))
             {
                 $user = $this->user($results->access_token);
+
 
                 $this->auth = array(
                     'uid' => $user['id'],
@@ -132,10 +124,10 @@ xd($this->strategy['redirect_uri']);
                     $this->mapProfile($user, 'first_name', 'info.first_name');
                 }
 
-                //$this->mapProfile($user, 'last_name', 'info.last_name');
+                $this->mapProfile($user, 'last_name', 'info.last_name');
                 $this->mapProfile($user, 'email', 'info.email');
                 $this->mapProfile($user, 'avatar_url', 'info.profile_picture_url');
-
+//xd($response, $user, $this->auth);
                 $this->callback();
             }
             else
@@ -157,7 +149,7 @@ xd($this->strategy['redirect_uri']);
                 'code' => 'oauth2callback_error',
                 'raw' => $_GET
             );
-
+xf($error);
             $this->errorCallback($error);
         }
     }
@@ -171,9 +163,9 @@ xd($this->strategy['redirect_uri']);
     private function user($access_token)
     {
         // On dev use:
-        //$user = $this->serverGet( $this->strategy['url_base'].'/web/app_dev.php/api/v1/person.json', array('access_token' => $access_token), null, $headers);
+        //$user = $this->serverGet( $this->strategy['oauth_url_base'].'/web/app_dev.php/api/v1/person.json', array('access_token' => $access_token), null, $headers);
 
-        $user = $this->serverGet( $this->strategy['url_base'].'/api/v1/person.json', array('access_token' => $access_token), null, $headers);
+        $user = $this->serverGet( $this->strategy['oauth_url_base'].'/api/v1/person.json', array('access_token' => $access_token), null, $headers);
 
         if (!empty($user))
         {
@@ -228,13 +220,11 @@ xd($this->strategy['redirect_uri']);
         {
             $options = array('http' => array('header' => 'User-Agent: opauth'));
         }
-        $context = stream_context_create($options);
-
-        //$content = file_get_contents($url, false, $context);
-        //$responseHeaders = implode("\r\n", $http_response_header);
+//        $context = stream_context_create($options);
+//        $content = file_get_contents($url, false, $context);
+//        $responseHeaders = implode("\r\n", $http_response_header);
 
         $reqString=$url;
-
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $reqString);

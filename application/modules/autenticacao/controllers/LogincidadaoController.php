@@ -1,53 +1,57 @@
 <?php
 
 /**
- * Classe responsável por fazer a autenticação no sistema através de outros sistemas.
+ * Classe responsável por fazer a autenticação Utilizando o Login Cidadão.
  * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
  * @since 06/10/16 11:25
  */
-class Autenticacao_OauthController extends MinC_Controller_Action_Abstract
+class Autenticacao_LogincidadaoController extends MinC_Controller_Action_Abstract
 {
+    private $oauthConfig;
+
+    /**
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return void
+     */
     public function init()
     {
+        $this->oauthConfig = $this->obterConfiguracoesOPAuth();
         Zend_Layout::startMvc(array('layout' => 'layout_login'));
         parent::init();
     }
 
+    /**
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return void
+     */
     public function indexAction()
     {
-        $this->redirect("/autenticacao/oauth/logincidadao");
+        $opauth = new Opauth($this->oauthConfig, false);
+        $opauth->run();
     }
 
-    public function logincidadaoAction()
+    /**
+     * @return array
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return mixed
+     */
+    private function obterConfiguracoesOPAuth()
     {
-        $oauthConfig = new Zend_Config_Ini(APPLICATION_PATH. '/configs/application.ini', "oauth");
+        $oauthConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', "oauth");
         $oauthConfigArray = $oauthConfig->toArray();
-        $config = $oauthConfigArray['config'];
-        //$opauth = new MinC_OAuth_Strategy_LoginCidadaoStrategy($config);
-        $opauth = new Opauth($config, true);
+        return $oauthConfigArray['config'];
     }
 
+    /**
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return void
+     */
     public function oauth2Callback()
     {
-        /*
-        define('CONF_FILE', dirname(__FILE__) . '/' . 'opauth.conf.php');
-        define('OPAUTH_LIB_DIR', dirname(dirname(__FILE__)) . '/lib/Opauth/');
-
-
-        if (!file_exists(CONF_FILE)) {
-            trigger_error('Config file missing at ' . CONF_FILE, E_USER_ERROR);
-            exit();
-        }
-        require CONF_FILE;
-
-
-        require OPAUTH_LIB_DIR . 'Opauth.php';
-        $Opauth = new Opauth($config, false);
-
-
+        $objOputh = new Opauth($this->oauthConfig, false);
         $response = null;
 
-        switch ($Opauth->env['callback_transport']) {
+        switch ($objOputh->env['callback_transport']) {
             case 'session':
                 session_start();
                 $response = $_SESSION['opauth'];
@@ -66,22 +70,16 @@ class Autenticacao_OauthController extends MinC_Controller_Action_Abstract
 
         if (array_key_exists('error', $response)) {
             echo '<strong style="color: red;">Authentication error: </strong> Opauth returns error auth response.' . "<br>\n";
-        }
-        else {
+        } else {
             if (empty($response['auth']) || empty($response['timestamp']) || empty($response['signature']) || empty($response['auth']['provider']) || empty($response['auth']['uid'])) {
                 echo '<strong style="color: red;">Invalid auth response: </strong>Missing key auth response components.' . "<br>\n";
-            } elseif (!$Opauth->validate(sha1(print_r($response['auth'], true)), $response['timestamp'], $response['signature'], $reason)) {
+            } elseif (!$objOputh->validate(sha1(print_r($response['auth'], true)), $response['timestamp'], $response['signature'], $reason)) {
                 echo '<strong style="color: red;">Invalid auth response: </strong>' . $reason . ".<br>\n";
             } else {
                 echo '<strong style="color: green;">OK: </strong>Auth response is validated.' . "<br>\n";
-
             }
         }
 
-
-        echo "<pre>";
-        print_r($response);
-        echo "</pre>";
-        */
+        xd($response);
     }
 }
