@@ -169,32 +169,42 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     {
         # Convertendo os objetos da sessao em array, transformando as chaves em minusculas.
         $auth = Zend_Auth::getInstance();
-        $arrAuth = array_change_key_case((array) $auth->getIdentity());
+        $objIdentity = $auth->getIdentity();
+        $arrAuth = array_change_key_case((array) $objIdentity);
 
-        $Usuario = new Autenticacao_Model_Usuario(); // objeto usuario
+        $objModelUsuario = new Autenticacao_Model_Usuario(); // objeto usuario
         $UsuarioAtivo = new Zend_Session_Namespace('UsuarioAtivo'); // cria a sessao com o usuario ativo
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
+
 
         // somente autenticacao zend
         if ($tipo == 0 || empty($tipo)) {
             if ($auth->hasIdentity()) // caso o usuario esteja autenticado
             {
                 // pega as unidades autorizadas, org?os e grupos do usu?rio (pega todos os grupos)
-                if (isset($auth->getIdentity()->usu_codigo) && !empty($arrAuth['usu_codigo'])) {
-                    $grupos = $Usuario->buscarUnidades($arrAuth['usu_codigo'], 21);
-                    $Agente = $Usuario->getIdUsuario($arrAuth['usu_codigo']);
-                    $idAgente = $Agente['idagente'];
-                    $Cpflogado = $Agente['usu_identificacao'];
+                if (isset($objIdentity->usu_codigo) && !empty($arrAuth['usu_codigo'])) {
+                    $grupos = $objModelUsuario->buscarUnidades($arrAuth['usu_codigo'], 21);
+                    $objAgente = $objModelUsuario->getIdUsuario($arrAuth['usu_codigo']);
+                    $idAgente = $objAgente['idagente'];
+                    $cpfLogado = $objAgente['usu_identificacao'];
+                } elseif (isset($objIdentity['auth']) && isset($objIdentity['auth']['uid'])) {
+
+                    // - Equiparar informações da branch develop(sprint-02) com o a branch atual
+                    // - Adicionar campo "id_login_cidadao" na tabela "tabelas.usuario" para os bancos SQL Server e Postgres
+                    // Caso não possua cadastro, redireciona para o cadastro de usuário.
+                    // CAso contrário, carrega as informações comuns dps usuários
+
+                    xd($objIdentity['auth']);
                 } else {
                     return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), null, true);
                 }
 
-                // manda os dados para a vis?o
+                // manda os dados para a visao
                 $this->view->idAgente = $idAgente;
-                $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
-                $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
-                $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
-                $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
+                $this->view->usuario = $objIdentity; // manda os dados do usuario para a visao
+                $this->view->arrayGrupos = $grupos; // manda todos os grupos do usuario para a visao
+                $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usuario para a vis?o
+                $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o orgao ativo do usuario para a vis?o
             } else {
                 return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), null, true);
             }
@@ -209,17 +219,17 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 }
 
                 // pega as unidades autorizadas, org?os e grupos do usu?rio (pega todos os grupos)
-                $grupos = $Usuario->buscarUnidades($arrAuth['usu_codigo'], 21);
+                $grupos = $objModelUsuario->buscarUnidades($arrAuth['usu_codigo'], 21);
 
                 // manda os dados para a vis?o
-                $Agente = $Usuario->getIdUsuario($arrAuth['usu_codigo']);
-                $idAgente = $Agente['idagente'];
-                $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                $objAgente = $objModelUsuario->getIdUsuario($arrAuth['usu_codigo']);
+                $idAgente = $objAgente['idagente'];
+                $this->view->usuario = $objIdentity; // manda os dados do usu?rio para a vis?o
                 $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
                 $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
                 $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
-            } // fecha if
-            else // caso o usu?rio n?o esteja autenticado
+            }
+            else
             {
                 return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), null, true);
             }
@@ -246,7 +256,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             if ($autenticar && $auth->hasIdentity()) // caso o usu?rio seja passado pelo scriptcase e esteja autenticado
             {
                 // manda os dados para a vis?o
-                $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                $this->view->usuario = $objIdentity; // manda os dados do usu?rio para a vis?o
             } // fecha if
             else // caso o usu?rio n?o esteja autenticado
             {
@@ -273,7 +283,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 if ($autenticar && $auth->hasIdentity()) // caso o usu?rio seja passado pelo scriptcase e esteja autenticado
                 {
                     // manda os dados para a visao
-                    $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                    $this->view->usuario = $objIdentity; // manda os dados do usu?rio para a vis?o
                 } // fecha if
                 else // caso o usuario nao esteja autenticado
                 {
@@ -291,7 +301,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
                 # pega as unidades autorizadas, orgaos e grupos do usuario (pega todos os grupos)
                 if (isset($arrAuth['usu_codigo']) && !empty($arrAuth['usu_codigo'])) {
-                    $grupos = $Usuario->buscarUnidades($arrAuth['usu_codigo'], 21);
+                    $grupos = $objModelUsuario->buscarUnidades($arrAuth['usu_codigo'], 21);
                 } else {
                     $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
                 }
@@ -319,7 +329,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
                 # caso o usuario seja passado pelo scriptcase e esteja autenticado
                 if ($autenticar || $auth->hasIdentity()) {
-                    $this->view->usuario = $auth->getIdentity();
+                    $this->view->usuario = $objIdentity;
                 } else {
                     $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "index", "ALERT");
                 }
@@ -333,14 +343,14 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 }
 
                 // pega as unidades autorizadas, org?os e grupos do usuario (pega todos os grupos)
-                if (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo)) {
-                    $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
+                if (isset($objIdentity->usu_codigo) && !empty($objIdentity->usu_codigo)) {
+                    $grupos = $objModelUsuario->buscarUnidades($objIdentity->usu_codigo, 21);
                 } else {
                     $this->message("Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa &aacute;rea do sistema!", "principal/index", "ALERT");
                 }
 
                 // manda os dados para a visao
-                $this->view->usuario = $auth->getIdentity(); // manda os dados do usu?rio para a vis?o
+                $this->view->usuario = $objIdentity; // manda os dados do usu?rio para a vis?o
                 $this->view->arrayGrupos = $grupos; // manda todos os grupos do usu?rio para a vis?o
                 $this->view->grupoAtivo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu?rio para a vis?o
                 $this->view->orgaoAtivo = $GrupoAtivo->codOrgao; // manda o ?rg?o ativo do usu?rio para a vis?o
@@ -350,7 +360,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
         if (!empty($grupos)) {
             $tblSGCacesso = new Autenticacao_Model_Sgcacesso();
-            $rsSGCacesso = $tblSGCacesso->buscar(array("Cpf = ? " => $auth->getIdentity()->usu_identificacao));
+            $rsSGCacesso = $tblSGCacesso->buscar(array("Cpf = ? " => $objIdentity->usu_identificacao));
             if ($rsSGCacesso->count() > 0) {
                 $this->view->arrayGrupoProponente = array("gru_codigo" => 1111, "uog_orgao" => 2222, "gru_nome" => "Proponente");
             }
