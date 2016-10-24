@@ -127,7 +127,7 @@ class LoginCidadaoStrategy extends OpauthStrategy
                 $this->mapProfile($user, 'last_name', 'info.last_name');
                 $this->mapProfile($user, 'email', 'info.email');
                 $this->mapProfile($user, 'avatar_url', 'info.profile_picture_url');
-//xd($response, $user, $this->auth);
+//xd($response, $user, $this->auth); redirect_uri
                 $this->callback();
             }
             else
@@ -149,7 +149,6 @@ class LoginCidadaoStrategy extends OpauthStrategy
                 'code' => 'oauth2callback_error',
                 'raw' => $_GET
             );
-xf($error);
             $this->errorCallback($error);
         }
     }
