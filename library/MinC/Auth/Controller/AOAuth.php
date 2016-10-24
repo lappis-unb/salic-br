@@ -1,16 +1,27 @@
 <?php
 
 /**
- * Created by PhpStorm.
  * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
- * Date: 20/10/16
- * Time: 14:58
+ * @since 20/10/16 14:58
  */
-abstract class MinC_Auth_Controller_Auth extends MinC_Controller_Action_Abstract
+abstract class MinC_Auth_Controller_AOAuth extends Zend_Controller_Action
 {
+    /**
+     * @var array
+     */
     private $oauthConfig;
 
-    public abstract function successAction ();
+    /**
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return void
+     */
+    public abstract function successAction();
+
+    /**
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return void
+     */
+    public abstract function errorAction();
 
     /**
      * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
@@ -18,28 +29,16 @@ abstract class MinC_Auth_Controller_Auth extends MinC_Controller_Action_Abstract
      */
     public function init()
     {
-        $this->oauthConfig = $this->obterConfiguracoesOPAuth();
+        $this->oauthConfig = $this->getOPAuthConfiguration();
         parent::init();
     }
-
-    /**
-     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
-     * @return void
-     */
-    public function indexAction()
-    {
-        $opauth = new Opauth($this->oauthConfig, false);
-        $opauth->run();
-    }
-
-
 
     /**
      * @return array
      * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
      * @return mixed
      */
-    private function obterConfiguracoesOPAuth()
+    protected function getOPAuthConfiguration()
     {
         $oauthConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', "oauth");
         $oauthConfigArray = $oauthConfig->toArray();
@@ -50,9 +49,54 @@ abstract class MinC_Auth_Controller_Auth extends MinC_Controller_Action_Abstract
      * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
      * @return void
      */
+    public function oauthresultAction()
+    {
+        $objAdapter = new MinC_Auth_Adapter_LoginCidadao();
+        $auth = Zend_Auth::getInstance();
+        $route = $this->getRedirectRoute();
+        if ($auth->authenticate($objAdapter)->isValid()) {
+            $auth->getStorage()->write((object)$auth->getIdentity());
+            $this->redirect("{$route}success");
+        }
+        $this->redirect("{$route}error");
+    }
+
+    /**
+     * @return string
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     */
+    protected function getRedirectRoute() {
+        $module = $this->getRequest()->getModuleName();
+        $controller = $this->getRequest()->getControllerName();
+        return "/{$module}/{$controller}/";
+    }
+
+    /**
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return void
+     */
+    public function indexAction()
+    {
+        $this->start();
+    }
+
+    /**
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return void
+     */
     public function oauth2callbackAction()
     {
-        $objOpauth = new Opauth($this->oauthConfig);
-        $objOpauth->run();
+        $this->start();
     }
+
+    /**
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return void
+     */
+    protected function start()
+    {
+        $opauth = new Opauth($this->oauthConfig, false);
+        $opauth->run();
+    }
+
 }
