@@ -67,6 +67,7 @@
                         <?php endfor; ?>
                     </select>
                     &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                    <input type="button" class="btn_imprimir">
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                     <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                  </form>
@@ -196,6 +197,16 @@
     <br clear="all" />
 
 
+    <form target="_blank" class="form" name="formImpressao" id="formImpressao" method="post"
+            action='<?php echo $this->url(array('controller' => 'avaliarpedidoprorrogacao', 'action' => 'imprimir')); ?>'>
+        <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
+        <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
+        <input type="hidden" name="pag" value="<?php echo $this->paginacao['pag'];?>">
+        <input type="hidden" name="qtde" value="<?php echo $this->intTamPag;?>">
+        <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
+        <input type="hidden" name="pronac" value="<?php echo $this->pronac;?>">
+    </form>
+
 </div>
 <!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
@@ -208,5 +219,9 @@
         $("#btn_pesquisar").click(function(){
             $('#form1').submit();
         });
+    });
+
+    $('.btn_imprimir').click(function(){
+	$('#formImpressao').submit();
     });
 </script>
