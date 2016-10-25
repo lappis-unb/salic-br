@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Classe abstrata responsável por fornecer todo o fluxo necessário
+ * para a implementação do OAuth de acordo com a necessidade.
  * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
  * @since 20/10/16 14:58
  */
@@ -10,6 +12,7 @@ abstract class MinC_Auth_Controller_AOAuth extends Zend_Controller_Action
      * @var array
      */
     private $oauthConfig;
+
 
     /**
      * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
