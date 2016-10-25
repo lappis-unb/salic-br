@@ -649,7 +649,15 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
         $select->from(
             array('a' => $this->_name),
             array(
-                 new Zend_Db_Expr("(CASE a.idpais WHEN 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'  ELSE p.descricao END) as pais"),
+                new Zend_Db_Expr("
+                    CASE WHEN a.idpais = 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'
+                        ELSE p.Descricao
+                    END as Pais"),
+                new Zend_Db_Expr("CASE a.pais WHEN 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'
+                        ELSE p.Descricao END as Pais"),
+                'Pais' => new Zend_Db_Expr("CASE WHEN a.idpais = 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'
+                     ELSE p.Descricao
+                      END"),
                 'u.Descricao as UF',
                 'm.Descricao as Cidade',
                 'x.dtInicioDeExecucao',
