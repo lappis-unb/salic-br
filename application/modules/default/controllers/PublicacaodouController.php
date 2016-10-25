@@ -415,7 +415,7 @@ class PublicacaoDouController extends GenericControllerNew {
                     
                     if ($portariagerar) {
                         $dadosSituacao = array(
-                            'dtSituacao' => date('Y-m-d'),
+                            'DtSituacao' => date('Y-m-d'),
                             'DtFimExecucao' => $dtFimExecucao
                         );
                         
