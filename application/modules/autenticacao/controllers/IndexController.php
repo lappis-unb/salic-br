@@ -345,17 +345,22 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
      */
     public function alterarsenhaAction()
     {
-        $auth = Zend_Auth::getInstance();
+
+        // autenticacao proponente (Novo Salic)
+        parent::perfil(4);
+
+        /* ========== INICIO ID DO USUARIO LOGADO ========== */
+        $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
         $Usuario = new Autenticacao_Model_Usuario();
-        $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->cpf);
 
-        if ($idUsuario) {
-            $this->getIdUsuario = ($idUsuario) ? $idUsuario['idagente'] : $auth->getIdentity()->idusuario;
-            $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
-            parent::perfil(4);
-        }
+        // verifica se o usuario logado e agente
+        $idUsuario = $Usuario->getIdUsuario(null, $auth['cpf']);
 
-        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+        // caso nao tenha idAgente, atribui o idUsuario
+        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth['idusuario'];
+        $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
+
+//        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
         $this->view->cpf = "";
         $this->view->nome = "";
@@ -392,38 +397,56 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
             if (empty ($_POST['idUsuario'])) {
                 $idUsuario = $_POST['idUsuarioGet'];
-                $buscarSenha = $sgcAcesso->buscar(array('idusuario = ?' => $idUsuario))->toArray();
             } else {
                 $idUsuario = $_POST['idUsuario'];
-                $buscarSenha = $sgcAcesso->buscar(array('idusuario = ?' => $idUsuario))->toArray();
             }
-            $senhaAtualBanco = $buscarSenha[0]['senha'];
+
+            $buscarSenha = $sgcAcesso->findBy(array('idusuario' => $idUsuario));
+
+            $senhaAtualBanco = $buscarSenha['senha'];
 
             if (empty ($cpf)) {
-                $cpf = $buscarSenha[0]['cpf'];
+                $cpf = $buscarSenha['cpf'];
             }
 
             // busca a senha do banco TABELAS
-            $Usuarios = new Autenticacao_Model_Usuario();
-            $buscarCPF = $Usuarios->buscar(array('usu_identificacao = ?' => trim($cpf)));
+            $mdlUsuario = new Autenticacao_Model_Usuario();
+
+            $buscarCPF = $mdlUsuario->findBy(array('usu_identificacao' => $cpf));
+
             $cpfTabelas = count($buscarCPF) > 0 ? true : false;
-            $senhaTabelas = $Usuarios->verificarSenha(trim($cpf), $senhaAtual);
+            $senhaTabelas = $mdlUsuario->verificarSenha(trim($cpf), $senhaAtual);
 
             $senhaCript = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaAtual);
 
-            if ($buscarSenha[0]['situacao'] != 1) {
+            if ($buscarSenha['situacao'] != 1) {
 
                 $comparaSenha = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaAtual);
-                $SenhaFinal = $comparaSenha[0]->senha;
 
-                if (trim($senhaAtualBanco) != trim($SenhaFinal) && ($cpfTabelas && !$senhaTabelas)) {
+                $SenhaFinal = $comparaSenha;
+
+                //@todo verificar as regras de negocios para $cpfTabelas
+                if (trim($senhaAtualBanco) != trim($SenhaFinal) && !$senhaTabelas) {
+
                     parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
                 }
+
+                if (trim($senhaAtualBanco) != trim($SenhaFinal) && ($cpfTabelas && !$senhaTabelas)) {
+
+                    parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
+                }
+
             } else {
+
+                //@todo verificar as regras de negocios para $cpfTabelas
+                if (trim($senhaAtualBanco) != trim($senhaCript) && !$senhaTabelas) {
+                    parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
+                }
 
                 if (trim($senhaAtualBanco) != trim($senhaCript) && ($cpfTabelas && !$senhaTabelas)) {
                     parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
                 }
+
             }
             if (trim($senhaNova) == trim($repeteSenha) && !empty($senhaNova) && !empty($repeteSenha)) {
 
@@ -633,6 +656,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         // caso nao tenha idAgente, atribui o idUsuario
         $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth['idusuario'];
         $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
+
         /* ========== FIM ID DO USUARIO LOGADO ========== */
 
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
