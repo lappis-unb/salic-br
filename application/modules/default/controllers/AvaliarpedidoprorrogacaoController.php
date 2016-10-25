@@ -92,6 +92,11 @@ class AvaliarpedidoprorrogacaoController extends GenericControllerNew {
         $where['p.Situacao in (?)'] = array('E10','E11','E12','E15','E16','E23');
         $where['o.idSecretaria = ?'] = $dadosOrgaos->org_superior;
 
+        if ($this->_request->getParam('pronac')) {           
+            $where['CONCAT(p.AnoProjeto, p.Sequencial) = ?'] = $this->_request->getParam('pronac');
+            $this->view->pronac = $this->_request->getParam('pronac');
+        }
+        
         $Projetos = new Projetos();
         $total = $Projetos->pedidosDeProrrogacao($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
