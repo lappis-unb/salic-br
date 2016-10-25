@@ -2216,9 +2216,10 @@ class ReadequacoesController extends GenericControllerNew {
                 $r->stAtendimento = 'E';
             } else {
                 // deferida
-                if($this->_request->getParam('vinculada') == 262 || $this->_request->getParam('vinculada') == 171){
+                if($this->_request->getParam('vinculada') == 262 || $this->_request->getParam('vinculada') == 166){
                     $r->siEncaminhamento = 4; //4=Enviado para Análise Técnica (SAV, SEFIC)
                     $dataEnvio = new Zend_Db_Expr('GETDATE()');
+                    $r->idAvaliador = $this->_request->getParam('destinatario');
                 } else if($this->_request->getParam('vinculada') == 400) {
                     $stValidacaoCoordenador = 1;
                     $r->siEncaminhamento = 7; //7=CNIC
@@ -2240,6 +2241,7 @@ class ReadequacoesController extends GenericControllerNew {
                     'stValidacaoCoordenador' => $stValidacaoCoordenador,
                     'dsOrientacao' => $r->dsAvaliacao
                 );
+                
                 $tbDistribuirReadequacao->inserir($dados);
             }
             if ($this->idPerfil == 121) {
