@@ -3907,15 +3907,13 @@ class ReadequacoesController extends GenericControllerNew {
         if(in_array($read->idTipoReadequacao, $tiposParaChecklist)){
             // se remanejamento orcamentario
             
-            if ($read->idTipoReadequacao == 2) {
-                if ($TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RM') {
-                    $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publicação no DOU.
-                    $dados['stEstado'] = 1;
-                } else {
-                    // reducao ou complementacao orcamentaria
-                    $dados['siEncaminhamento'] = 9; //Encaminhado pelo sistema para o Checklist de Publicação
-                    $dados['stEstado'] = 0;
-                }
+            if ($read->idTipoReadequacao == 2 && $TipoDeReadequacao[0]['TipoDeReadequacao'] == 'RM') {
+                $dados['siEncaminhamento'] = 15; //Finalizam sem a necessidade de passar pela publicação no DOU.
+                $dados['stEstado'] = 1;
+            } else {
+                // reducao ou complementacao orcamentaria
+                $dados['siEncaminhamento'] = 9; //Encaminhado pelo sistema para o Checklist de Publicação
+                $dados['stEstado'] = 0;
             }
         }
         
