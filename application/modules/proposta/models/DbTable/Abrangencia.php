@@ -133,7 +133,7 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
      * Apaga locais de ralizacao a partir do ID do PreProjeto
      * @param number $idProjeto - ID do PerProjeto ao qual as lcoaliza��es est�o vinculadas
      * @return true or false
-     * @todo colocar padr�o ORM
+     * @todo colocar padrao ORM
      */
     public function excluirPeloProjeto($idProjeto)
     {
@@ -259,7 +259,7 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
      * @param array $dados
      * @return bool
      */
-    public  function excluir($where)
+    public function excluir($where)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -280,29 +280,28 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
 
 
     /**
-     * M�todo para alterar
+     * metodo para alterar
      * @access public
      * @
      * @param array $dados
      * @return bool
+     * @todo verificar impactos e remover, faz a mesma coisa da abstract
      */
-    public function alterar($dados, $where)
+    public function alterar($dados, $where, $dbg = false)
     {
-        $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idAbrangencia = $where";
-        $alterar = $db->update("SAC.dbo.Abrangencia", $dados, $where);
+        $alterar = $this->update( $dados, $where);
 
         if ($alterar) {
             return true;
         } else {
             return false;
         }
-    } // fecha m�todo alterar()
+    } // fecha metodo alterar()
 
 
-    public  function buscarAbrangenciasAtuais($idProjeto, $idPais, $idUF, $idMunicipioIBGE)
+    public function buscarAbrangenciasAtuais($idProjeto, $idPais, $idUF, $idMunicipioIBGE)
     {
         $sql = "SELECT * from SAC.dbo.Abrangencia
                     WHERE
