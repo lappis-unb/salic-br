@@ -132,7 +132,7 @@ if ($this->camposObrigatoriosException) :
                                 <?php endif; ?>
                                 <option value="<?php echo ProrrogacaoModel::DEFERIDO; ?>" <?php echo (ProrrogacaoModel::DEFERIDO == $this->analise) ? 'selected="selected"' : ''; ?>>Deferido</option>
                                 <option value="<?php echo ProrrogacaoModel::INDEFERIDO; ?>" <?php echo (ProrrogacaoModel::INDEFERIDO == $this->analise) ? 'selected="selected"' : ''; ?>>Indeferido</option>
-                                <!--<option value="<?php echo ProrrogacaoModel::PROCESSADO; ?>" <?php echo (ProrrogacaoModel::PROCESSADO == $this->analise) ? 'selected="selected"' : ''; ?>>Processado</option>-->
+                                <option value="<?php echo ProrrogacaoModel::PROCESSADO; ?>" <?php echo (ProrrogacaoModel::PROCESSADO == $this->analise) ? 'selected="selected"' : ''; ?>>Processado</option>
                             </select>
                         </div>
                         <div id="divDeferimento" style="margin-top: 10px; text-align: left;" class="sumir">
