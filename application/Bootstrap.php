@@ -8,6 +8,7 @@
  * @version 0.1
  * @author  wouerner <wouerner@gmail.com>
  * @author  Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+ * @author  Vinícius Feitosa da Silva <viniciusfesil@gmail.com>
  */
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
