@@ -240,7 +240,7 @@
         //busca dados de orcamento do preprojeto
         foreach ($this->rsOrcamento as $orcamento) : ?>
 
-            <?php if (($Produto != $Orcamento->idProduto or $etapa != $Orcamento->idEtapa) and $Produto != -1) : ?>
+            <?php if (($etapa != $Orcamento->idEtapa or $Produto != $Orcamento->idProduto) and $Produto != -1) : ?>
 
                 <tr>
                     <th colspan="9" align="left" style="font-size:9pt;">Total Produto: <?php echo number_format($TotalProduto,2,',','.'); ?></th>
@@ -257,16 +257,16 @@
                 <tr>
                     <th colspan="9" align="left" style="font-size:11pt;">Total Etapa: <?php echo number_format($TotalEtapa,2,',','.'); ?></th>
                 </tr>
-                <!-- </table> -->
+                 </table>
                 <?php
                 $TotalOrcamento = $TotalOrcamento + $TotalEtapa;
                 $TotalEtapa = 0;
             endif; ?>
 
-
             <?php if ($etapa != $Orcamento->idEtapa or $Produto != $Orcamento->idProduto) : ?>
 
                 <table border=0 cellpading="5" width="100%" style="font-size:6pt; margin-top:20px">
+
                     <tr>
                         <th colspan="11" align="left" style="font-size:12pt;">Etapa: <?php $Orcamento->Etapa; ?></th>
                     </tr>
@@ -286,29 +286,34 @@
                         <td bgcolor="#EEEEEE" align="center"><b>Munic&iacute;pio</b></td>
                         <td bgcolor="#EEEEEE" align="center"><b>Justificativa</b></td>
                     </tr>
-                    <?php endif;
+            <?php endif; ?>
 
-                    $TotalProduto = $TotalProduto + (($Orcamento->Quantidade)*($Orcamento->Ocorrencia)*($Orcamento->ValorUnitario));
-                    $etapa = $Orcamento->idEtapa;
-                    $Produto = $Orcamento->idProduto;
-                    
-                    ?>
-                    <tr>
-                        <td><?php echo $Orcamento->Item; ?></td>
-                        <td><?php echo $Orcamento->UnidadeF; ?></td>
-                        <td><?php echo (int)$Orcamento->Quantidade; ?></td>
-                        <td><?php echo (int)$Orcamento->Ocorrencia; ?></td>
-                        <td><?php echo number_format($Orcamento->ValorUnitario,2,',','.'); ?></td>
-                        <td><?php echo number_format(($Orcamento->Quantidade)*($Orcamento->Ocorrencia)*($Orcamento->ValorUnitario),2,',','.'); ?></td>
-                        <td><?php echo $Orcamento->QtdeDias; ?></td>
-                        <td><?php echo $Orcamento->FonteRecursoF; ?></td>
-                        <td><?php echo $Orcamento->UfDespesaF; ?></td>
-                        <td><?php echo $Orcamento->MunicipioDespesaF; ?></td>
-                        <td><?php echo $Orcamento->dsJustificativa; ?></td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#EEEEEE"  colspan="11" style="height:1px"></td>
-                    </tr>
+            <?php
+
+                $TotalProduto = $TotalProduto + (($Orcamento->Quantidade)*($Orcamento->Ocorrencia)*($Orcamento->ValorUnitario));
+                $etapa = $Orcamento->idEtapa;
+                $Produto = $Orcamento->idProduto;
+
+            ?>
+
+            <tr>
+                <td><?php echo $Orcamento->Item; ?></td>
+                <td><?php echo $Orcamento->UnidadeF; ?></td>
+                <td><?php echo (int)$Orcamento->Quantidade; ?></td>
+                <td><?php echo (int)$Orcamento->Ocorrencia; ?></td>
+                <td><?php echo number_format($Orcamento->ValorUnitario,2,',','.'); ?></td>
+                <td><?php echo number_format(($Orcamento->Quantidade)*($Orcamento->Ocorrencia)*($Orcamento->ValorUnitario),2,',','.'); ?></td>
+                <td><?php echo $Orcamento->QtdeDias; ?></td>
+                <td><?php echo $Orcamento->FonteRecursoF; ?></td>
+                <td><?php echo $Orcamento->UfDespesaF; ?></td>
+                <td><?php echo $Orcamento->MunicipioDespesaF; ?></td>
+                <td><?php echo $Orcamento->dsJustificativa; ?></td>
+            </tr>
+
+            <tr>
+                <td bgcolor="#EEEEEE"  colspan="11" style="height:1px"></td>
+            </tr>
+
         <?php endforeach;  // endforeach;
 
         $TotalOrcamento = $TotalOrcamento + $TotalProduto; ?>
