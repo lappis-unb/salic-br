@@ -370,7 +370,7 @@ class PublicacaoDouController extends GenericControllerNew {
                 foreach ($idsAprovacao as $idAprovacao) {
                     //busca o idPronac do projeto
                     $buscaridpronac = $aprovacao->buscar(array('idAprovacao = ?' => $idAprovacao))->current();
-                    
+
                     //busca a data final de execução do projeto em questão
                     $resultado = $projeto->buscar(array('IdPRONAC = ?'=>$buscaridpronac->IdPRONAC))->current();
                     $dtFimCaptacao = $resultado->DtFimExecucao; //É isso mesmo que vc vê. A data fim captação vai receber o mesmo valor da fim de execução.
@@ -413,7 +413,20 @@ class PublicacaoDouController extends GenericControllerNew {
                     $where['idAprovacao = ?'] = $idAprovacao;
                     $portariagerar = $aprovacao->alterar($dadosPortaria, $where);
                     
-                    if ($portariagerar) {
+                    // verifica se eh readequacao
+                    if (isset($buscaridpronac['IDREADEQUACAO'])) {
+                        $naoAlteraSituacao = array(3, 10, 12, 15);  // tipos de readequacoes para as quais não é necessário alterar a situação do projeto
+                        $tbReadequacao = new tbReadequacao();
+                        $readequacao = $tbReadequacao->buscarReadequacao($buscaridpronac['IDREADEQUACAO']);
+                        
+                        if (in_array($readequacao[0]->idTipoReadequacao, $naoAlteraSituacao)) {
+                            $atualizarSituacao = false;
+                        }
+                    } else {
+                        $atualizarSituacao = true;
+                    }
+                    
+                    if ($portariagerar && $atualizarSituacao) {
                         $dadosSituacao = array(
                             'DtSituacao' => date('Y-m-d'),
                             'DtFimExecucao' => $dtFimExecucao
