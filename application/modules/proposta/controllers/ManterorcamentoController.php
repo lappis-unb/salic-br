@@ -109,20 +109,13 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      */
     public function custosadministrativosAction()
     {
-
         $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-
         $this->view->Etapas = $manterOrcamento->listarCustosAdministrativos();
-
         $this->view->EtapaCusto = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
-
         $this->view->dados = $manterOrcamento->listarDadosCadastrarCustos($this->idPreProjeto);
-
         $buscarEstado = new Agente_Model_DbTable_UF();
         $this->view->Estados = $buscarEstado->listar();
-
         $this->view->Etapa = $manterOrcamento->listarEtapasCusto();
-
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
@@ -304,7 +297,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $this->_helper->layout->disableLayout(); // desabil ta o Zend_Layout
             $iduf = $_POST['iduf'];
 
-            $cidade = CidadeDAO::buscar($iduf);
+             $tbMun= new Agente_Model_DbTable_Municipios();
+            $cidade = $tbMun->buscar($iduf);
             $a = 0;
             foreach($cidade as $DadosCidade) {
                 $cidadeArray[$a]['idCidade'] = $DadosCidade->id;
@@ -344,9 +338,6 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
         $buscarUnidade = new Proposta_Model_DbTable_PlanilhaUnidade();
         $this->view->Unidade = $buscarUnidade->buscarUnidade();
-        echo '<pre>';
-        var_dump ($buscarUnidade->buscarUnidade());
-        exit;
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }

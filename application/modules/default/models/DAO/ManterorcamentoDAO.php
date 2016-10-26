@@ -798,6 +798,12 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     									$fonte = null, $unidade = null, $quantidade = null, $ocorrencia = null, $vlunitario = null, $qtdDias = null, $dsJustificativa = null) {
         $sql = "select  tpp.idUsuario,
                         tpp.idProjeto as idProposta,
+                        tpp.Quantidade,
+                        tpp.Ocorrencia,
+                        tpp.ValorUnitario,
+                        tpp.QtdeDias,
+                        tpp.dsJustificativa as Justificativa,
+                        tpp.idPlanilhaProposta
                         tpe.tpCusto as custo,
                         tpe.Descricao as etapa,
                         tpe.idPlanilhaEtapa as idEtapa,
@@ -808,14 +814,8 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                         mec.Descricao as mecanismo,
                         un.idUnidade as idUnidade,
                         un.Descricao as Unidade,
-                        tpp.Quantidade,
-                        tpp.Ocorrencia,
-                        tpp.ValorUnitario,
-                        tpp.QtdeDias,
                         veri.idVerificacao as idFonteRecurso,
                         veri.Descricao as DescricaoFonteRecurso,
-                        tpp.dsJustificativa as Justificativa,
-                        tpp.idPlanilhaProposta
                     FROM SAC..tbPlanilhaProposta tpp
                             left JOIN SAC..Produto pd on pd.Codigo = tpp.idProduto
                             INNER JOIN SAC..tbPlanilhaEtapa tpe on tpe.idPlanilhaEtapa = tpp.idEtapa

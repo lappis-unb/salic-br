@@ -124,6 +124,105 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
             ->order('tpe.descricao')
         ;
 
+        $tpp = [
+            'tpp.idusuario',
+            'tpp.idprojeto as idProposta',
+            'tpp.idplanilhaproposta',
+            'tpp.quantidade',
+            'tpp.ocorrencia',
+            'tpp.valorunitario',
+            'tpp.qtdedias',
+            'tpp.dsjustificativa as justificativa',
+        ];
+
+        $tpe =[
+            'tpe.tpcusto as custo',
+            'tpe.descricao as etapa',
+            'tpe.idplanilhaetapa as idEtapa',
+            'tpe.tpcusto',
+        ];
+
+        $tpi = [
+            'tpi.descricao as Item',
+            'tpi.idplanilhaitens as idItem',
+        ];
+
+        $uf =[
+            'uf.descricao as Uf',
+            'uf.sigla as SiglaUF',
+        ];
+
+        $mec = [
+            'mec.descricao as mecanismo'
+        ];
+
+        $un = [
+          'un.idunidade as idunidade',
+            'un.descricao as unidade',
+        ];
+
+        $veri =[
+            'veri.idverificacao as idFonteRecurso',
+            'veri.descricao as DescricaoFonteRecurso'
+        ];
+
+        $sql = $db->select()
+            ->from(['tpp' => 'tbplanilhaproposta'], $tpp, $this->getSchema('sac'))
+            ->joinLeft(['pd' => 'produto'], 'pd.codigo = tpp.idproduto', null, $this->getSchema('sac'))
+            ->join(['tpe' => 'tbplanilhaetapa'], 'tpe.idplanilhaetapa = tpp.idetapa', $tpe, $this->getSchema('sac'))
+            ->join(['tpi' => 'tbplanilhaitens'], 'tpi.idplanilhaitens = tpp.idplanilhaitem', $tpi, $this->getSchema('sac'))
+            ->join(['uf' => 'uf'], 'uf.iduf = tpp.ufdespesa', $uf, $this->getSchema('agentes'))
+            ->join(['municipio' => 'municipios'], 'municipio.idmunicipioibge = tpp.municipiodespesa','municipio.descricao as Municipio', $this->getSchema('agentes'))
+            ->join(['prep' => 'preprojeto'], 'prep.idpreprojeto = tpp.idprojeto', null, $this->getSchema('sac'))
+            ->join(['mec' => 'mecanismo'], 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
+            ->join(['un' => 'tbplanilhaunidade'], 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
+            ->join(['veri' => 'verificacao'], 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
+            ->where('tpe.tpcusto = ?', $tipoCusto)
+            ->where('tpp.idprojeto = ?', $idPreProjeto)
+            ->order('tpe.descricao')
+        ;
+
+        if($idEtapa){
+            $sql->where('tpe.idPlanilhaEtapa ',$idEtapa);
+        }
+        if($idItem){
+            $sql->where('tpi.idPlanilhaItens ',$idItem);;
+        }
+
+        if($idUf){
+            $sql->where('tpp.UfDespesa ',$idUf);
+        }
+
+        if($idMunicipio){
+        }
+        $sql->where('pp.MunicipioDespesa',$idMunicipio);
+        }
+
+        if($fonte){
+            $sql->where('veri.idVerificacao', $fonte);
+        }
+
+        if($unidade){
+            $sql->where('un.idUnidade', $unidade);
+        }
+
+        if($quantidade){
+            $sql->where('tpp.Quantidade', $quantidade);
+
+        if($ocorrencia){
+            $sql->where('tpp.Ocorrencia ',$ocorrencia );
+        }
+
+        if($vlunitario){
+            $sql->where('tpp.ValorUnitario ',$vlunitario );
+        }
+
+        if($qtdDias){
+            $sql->where('tpp.QtdeDias', $qtdDias);
+        }
+
+
+
         return $db->fetchAll($sql);
     }
 
@@ -146,7 +245,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(['tbplanilhaetapa' ], ['idplanilhaetapa','descricao' ], $this->getSchema('sac'))
+            ->from(['tbplanilhaetapa' ], ['idplanilhaetapa', 'descricao' ], $this->getSchema('sac'))
             ->where("tpcusto = 'A'")
             ->order('descricao')
         ;
@@ -172,30 +271,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        //$sql = $db->select()
-        //->from(['pre' => 'preprojeto'], 'pre.idpreprojeto as idPreProjeto', $this->getSchema('sac'))
-        //->join(['pp' => 'tbplanilhaproposta'], '(pre.idpreprojeto = pp.idProjeto)', ['pp.idproduto as idProduto', 'pp.idetapa as idEtapa'], $this->getSchema('sac'))
-        //->join(['p' => 'produto'], '(pp.idproduto = p.codigo)', 'p.codigo as CodigoProduto', $this->getSchema('sac'))
-        //->join(['te' => 'tbplanilhaetapa'], 'te.idplanilhaetapa = pp.idetapa', 'te.descricao as DescricaoEtapa', $this->getSchema('sac'))
-        //->where('idpreprojeto = ?', $idPreProjeto)
-        //->order('te.DescricaoEtapa')
-        //;
-        //echo $sql;die;
 
-        //$sql = "SELECT
-        //distinct
-        //p.Codigo as CodigoProduto,
-        //pp.idProduto as idProduto,
-        //pp.idEtapa as idEtapa,
-        //te.Descricao as DescricaoEtapa,
-        //pre.idPreProjeto as idPreProjeto
-        //FROM SAC.dbo.PreProjeto pre
-        //INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-        //INNER JOIN SAC.dbo.Produto p ON (pp.idProduto = p.Codigo)
-        //INNER JOIN SAC..tbPlanilhaEtapa te on te.idPlanilhaEtapa = pp.idEtapa
-        //WHERE idPreProjeto = {$idPreProjeto}";
-
-        //$sql.= " ORDER BY te.DescricaoEtapa ";
 
         $sql = $db->select()
             ->from(['tbplanilhaetapa'], ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], $this->getSchema('sac'))

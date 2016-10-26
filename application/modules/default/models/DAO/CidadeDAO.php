@@ -24,9 +24,6 @@ class CidadeDAO extends Zend_Db_Table
 	 */
 	public static function buscar($idUF, $idCidade = null)
 	{
-	    echo '<pre>';
-	    var_dump ('Método Transferido para Agente Model DbTable Municipios');
-	    exit;
 		$sql = "SELECT idMunicipioIBGE AS id, Descricao AS descricao ";
 		$sql.= "FROM AGENTES.dbo.Municipios ";
 		$sql.= "WHERE idUFIBGE = " . $idUF . " ";
@@ -47,6 +44,7 @@ class CidadeDAO extends Zend_Db_Table
 		{
 			$this->view->message = "Erro ao buscar Cidades: " . $e->getMessage();
 		}
+		throw new Exception('Método Transferido para Agente Model DbTable Municipios');
 		//xd($sql);
 		return $db->fetchAll($sql);
 	} // fecha buscar()
