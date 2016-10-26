@@ -127,9 +127,6 @@ if ($this->camposObrigatoriosException) :
                     <td align="center">
                         <div style="margin: auto;">
                             <select id="statusAnalise" class="select_simples obrigatorio" name="analise">
-                                <?php if (PerfilModel::TECNICO_DE_ACOMPANHAMENTO == $this->grupoAtivo) : ?>
-                                <option value="<?php echo ProrrogacaoModel::EM_ANALISE; ?>" <?php echo (ProrrogacaoModel::EM_ANALISE == $this->analise) ? 'selected="selected"' : ''; ?>>Em análise</option>
-                                <?php endif; ?>
                                 <option value="<?php echo ProrrogacaoModel::DEFERIDO; ?>" <?php echo (ProrrogacaoModel::DEFERIDO == $this->analise) ? 'selected="selected"' : ''; ?>>Deferido</option>
                                 <option value="<?php echo ProrrogacaoModel::INDEFERIDO; ?>" <?php echo (ProrrogacaoModel::INDEFERIDO == $this->analise) ? 'selected="selected"' : ''; ?>>Indeferido</option>
                                 <option value="<?php echo ProrrogacaoModel::PROCESSADO; ?>" <?php echo (ProrrogacaoModel::PROCESSADO == $this->analise) ? 'selected="selected"' : ''; ?>>Processado</option>
