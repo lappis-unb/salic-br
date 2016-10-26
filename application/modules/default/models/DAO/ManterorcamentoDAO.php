@@ -200,11 +200,26 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                 pd.idProjeto as idProposta
                 FROM SAC.dbo.PlanoDistribuicaoProduto AS pd
                 WHERE (pd.idProduto = $idProduto and pd.idProjeto = $idPreProjeto) AND pd.stPlanoDistribuicaoProduto = 1";
+//        $select = $this->select();
+//        $select->setIntegrityCheck(false);
+//        $select->distinct(true);
+//        $select->from(
+//            array('pd'=>$this->getName('PlanoDistribuicaoProduto')),
+//            array('codigoproduto'=>'pd.idproduto',
+//                'idproposta'=> 'pd.projeto'
+//            ),
+//            $this->_schema
+//        );
+//        $select->where('codigoproduto = ?',$idProduto);
+//        $select->where('idproposta = ?',$idPreProjeto);
+//        $select->where('pd.stplanodistribuicaoproduto = ?', 1);
 
         //x($sql);
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
+//        return $db->fetchAll($select);
+        throw new Exception("Método transferido para: Proposta_model_DbTable_PlanoDistribuicaoProduto");
         return $db->fetchAll($sql);
 
     }
@@ -220,6 +235,8 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
+        throw new Exception("Método transferido para: Proposta_Model_DbTable_PlanilhaProposta");
+
         return $db->fetchAll($sql);
 
     }
@@ -228,11 +245,12 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $sql = $db->select()
+        $sql = $this->select()
             ->from(['tpp' => 'tbplanilhaproposta'], 'tpp.idprojeto as idProposta', $this->getSchema('sac'))
             ->where('tpp.idProjeto = ?', $idPreProjeto)
             ->limit(1)
             ;
+        throw new Exception("Método transferido para: Proposta_Model_DbTable_PlanilhaProposta");
 
         return $db->fetchAll($sql);
     }
@@ -278,21 +296,6 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = "SELECT
-                    distinct
-                    p.Codigo as CodigoProduto,
-                    pp.idProduto as idProduto,
-                    pp.idEtapa as idEtapa,
-                    te.Descricao as DescricaoEtapa,
-                    pre.idPreProjeto as idPreProjeto
-                    FROM SAC.dbo.PreProjeto pre
-                    INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-                    INNER JOIN SAC.dbo.Produto p ON (pp.idProduto = p.Codigo)
-                    INNER JOIN SAC..tbPlanilhaEtapa te on te.idPlanilhaEtapa = pp.idEtapa
-                    WHERE idPreProjeto = {$idPreProjeto}";
-
-        $sql.= " ORDER BY te.DescricaoEtapa ";
-
         $sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
 
         try {
@@ -308,38 +311,12 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        //$sql = $db->select()
-            //->from(['pre' => 'preprojeto'], 'pre.idpreprojeto as idPreProjeto', $this->getSchema('sac'))
-            //->join(['pp' => 'tbplanilhaproposta'], '(pre.idpreprojeto = pp.idProjeto)', ['pp.idproduto as idProduto', 'pp.idetapa as idEtapa'], $this->getSchema('sac'))
-            //->join(['p' => 'produto'], '(pp.idproduto = p.codigo)', 'p.codigo as CodigoProduto', $this->getSchema('sac'))
-            //->join(['te' => 'tbplanilhaetapa'], 'te.idplanilhaetapa = pp.idetapa', 'te.descricao as DescricaoEtapa', $this->getSchema('sac'))
-            //->where('idpreprojeto = ?', $idPreProjeto)
-            //->order('te.DescricaoEtapa')
-            //;
-        //echo $sql;die;
-
-        //$sql = "SELECT
-                    //distinct
-                    //p.Codigo as CodigoProduto,
-                    //pp.idProduto as idProduto,
-                    //pp.idEtapa as idEtapa,
-                    //te.Descricao as DescricaoEtapa,
-                    //pre.idPreProjeto as idPreProjeto
-                    //FROM SAC.dbo.PreProjeto pre
-                    //INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
-                    //INNER JOIN SAC.dbo.Produto p ON (pp.idProduto = p.Codigo)
-                    //INNER JOIN SAC..tbPlanilhaEtapa te on te.idPlanilhaEtapa = pp.idEtapa
-                    //WHERE idPreProjeto = {$idPreProjeto}";
-
-        //$sql.= " ORDER BY te.DescricaoEtapa ";
-
         $sql = $db->select()
             ->from(['tbplanilhaetapa'], ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], $this->getSchema('sac'))
             ->where("tpCusto = 'P'")
             ;
 
-        //$sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
-
+        throw new Exception('Método transferido para Proposta_Model_DbTable_TbPlanilhaEtapa');
         return $db->fetchAll($sql);
     }
 
@@ -411,6 +388,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         catch (Zend_Exception_Db $e) {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
+        throw new Exception('Método transferido para Proposta_Model_DbTable_TbPlanilhaEtapa');
         //die($sql);
         return $db->fetchAll($sql);
     }
@@ -431,6 +409,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
 
+        throw new Exception("Método transferido para: Proposta_model_DbTable_TbPlanilhaEtapa");
         //xd($sql);
         return $db->fetchAll($sql);
     }
@@ -459,6 +438,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
 
+        throw new Exception("Método transferido para: Proposta_model_DbTable_TbPlanilhaEtapa");
         return $db->fetchAll($sql);
     }
 
@@ -677,6 +657,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                 inner join SAC.dbo.Tipo as Tipo
                 on Verificacao.idTipo = Tipo.idTipo
                 where Tipo.idTipo = 5";
+        throw new Exception('Método transferido para Proposta_Model_DbTable_Verificacao');
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -707,6 +688,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
+        throw new Exception('Método transferido para Proposta_Model_DbTable_TbPlanilhaUnidade');
         return $db->fetchAll($sql);
     }
 
@@ -977,6 +959,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         //$sql = "SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa
             //FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'A' AND idPlanilhaEtapa <> 6";
 
+        throw new Exception('Método transferido para Proposta_model_DbTable_TbPlanilhaEtapa');
         return $db->fetchAll($sql);
     }
 
@@ -997,6 +980,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             ->where("tpCusto = 'A' AND idPlanilhaEtapa <> 6")
             ;
 
+        throw new Exception('Método transferido para Proposta_model_DbTable_TbPlanilhaEtapa');
         return $db->fetchAll($sql);
     }
 

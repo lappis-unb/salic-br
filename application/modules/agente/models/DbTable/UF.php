@@ -29,15 +29,19 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
      */
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {
-        $objEstado = self::obterInstancia();
-        $sql = 'select iduf as id, sigla as descricao ';
-        $sql .= 'FROM ' . GenericModel::getStaticTableName($objEstado->_schema, $objEstado->_name);
-        $sql .= ' ORDER BY Sigla';
-
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            $this->_name,
+            array('uf'=>'iduf',
+                'descricao'=> 'sigla'),
+            $this->_schema
+        );
+        $select->order('sigla');
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
-            return $db->fetchAll($sql);
+            return $db->fetchAll($select);
         } catch (Zend_Exception_Db $objException) {
             throw new Exception("Erro ao buscar Estados: " . $objException->getMessage(), 0, $objException);
         }

@@ -135,7 +135,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $buscarEstado = EstadoDAO::buscar();
             $this->view->UFs = $buscarEstado;
 
-            $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+            $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
             $this->view->Produtos = $PlanoDistribuicaoProduto->comboProdutosParaInclusaoReadequacao($idPronac);
 
             $tbPlanilhaEtapa = new tbPlanilhaEtapa();
@@ -3239,7 +3239,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
                             // READEQUA��O DE PLANO DE DISTRIBUI��O
                             } else if($read->idTipoReadequacao == 11){ //Se for readequa��o de plano de distribui��o, atualiza os dados na SAC.dbo.PlanoDistribuicaoProduto.
-                                $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+                                $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
                                 $tbPlanoDistribuicao = new tbPlanoDistribuicao();
                                 $planosDistribuicao = $tbPlanoDistribuicao->buscar(array('idReadequacao=?'=>$idReadequacao));
 
@@ -3703,7 +3703,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
 
             // READEQUA��O DE PLANO DE DISTRIBUI��O
             } else if($read->idTipoReadequacao == 11){ //Se for readequa��o de plano de distribui��o, atualiza os dados na SAC.dbo.PlanoDistribuicaoProduto.
-                $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+                $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
                 $tbPlanoDistribuicao = new tbPlanoDistribuicao();
                 $planosDistribuicao = $tbPlanoDistribuicao->buscar(array('idReadequacao=?'=>$idReadequacao));
 
@@ -3976,7 +3976,7 @@ class ReadequacoesController extends MinC_Controller_Action_Abstract {
             $buscarEstado = EstadoDAO::buscar();
             $this->view->UFs = $buscarEstado;
 
-            $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+            $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
             $this->view->Produtos = $PlanoDistribuicaoProduto->comboProdutosParaInclusaoReadequacao($idPronac);
 
             $tbPlanilhaEtapa = new tbPlanilhaEtapa();

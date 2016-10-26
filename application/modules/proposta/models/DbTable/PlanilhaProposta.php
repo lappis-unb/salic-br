@@ -1,10 +1,11 @@
-<?php
+0<?php
 
 class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract {
 
     //protected $_name = 'SAC.dbo.tbPlanilhaProposta';
-    protected $_banco = 'SAC';
+    protected $_schema= 'sac';
     protected $_name = 'tbPlanilhaProposta';
+    protected $_primary = 'idplanilhaproposta';
 
     public function somarPlanilhaProposta($idprojeto, $fonte=null, $outras=null, $where=array()) {
         $somar = $this->select();
@@ -130,6 +131,36 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract {
         }
 
         return $db->fetchAll($sql);
+    }
+
+    public function listarDadosCadastrarCustos($idPreProjeto)
+    {
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        $sql = $db->select()
+            ->from(['tpp' => 'tbplanilhaproposta'], 'tpp.idprojeto as idProposta', $this->getSchema('sac'))
+            ->where('tpp.idProjeto = ?', $idPreProjeto)
+            ->limit(1)
+        ;
+        return $db->fetchAll($sql);
+    }
+
+    public function buscarDadosCadastrarCustos($idPreProjeto) {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('tpp'=>$this->_name),
+            array('idproposta'=>'tpp.idprojeto'),
+            $this->_schema
+        );
+        $select->limit(1);
+
+        $select->where('tpp.idprojeto = ?',$idPreProjeto);
+
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        return $db->fetchAll($select);
     }
 
 }

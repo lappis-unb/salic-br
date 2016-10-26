@@ -111,22 +111,21 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      */
     public function custosadministrativosAction()
     {
-        $manterOrcamento = new ManterorcamentoDAO();
-        $buscarEtapas = $manterOrcamento->listarCustosAdministrativos();
-        $this->view->Etapas = $buscarEtapas;
+        $tbPEtapas = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+        $this->view->Etapas = $tbPEtapas->listarCustosAdministrativos();
 
+        $manterOrcamento = new ManterorcamentoDAO();
         $buscarCustos = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
         $this->view->EtapaCusto = $buscarCustos;
 
-        $buscaDados = $manterOrcamento->listarDadosCadastrarCustos($this->idPreProjeto);
-        $this->view->dados = $buscaDados;
+        $buscaDados = new Proposta_Model_DbTable_PlanilhaProposta();
+        $this->view->dados = $buscaDados->listarDadosCadastrarCustos($this->idPreProjeto);
 
         $buscarEstado = new EstadoDAO();
         $buscarEstado = $buscarEstado->listar();
         $this->view->Estados = $buscarEstado;
 
-        $buscarEtapaCusto = $manterOrcamento->listarEtapasCusto();
-        $this->view->Etapa = $buscarEtapaCusto;
+        $this->view->Etapa = $tbPEtapas->listarEtapasCusto();
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
@@ -208,8 +207,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         if  ( isset ( $_GET['idPreProjeto'] ) && isset ( $_GET['produto'] )) {
             $idPreProjeto = $_GET['idPreProjeto'];
             $idProduto = $_GET['produto'];
-            $buscaDados = ManterorcamentoDAO::buscarDadosCadastrarProdutos($idPreProjeto, $idProduto);
-            $this->view->Dados = $buscaDados;
+            $TDP = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
+            $this->view->Dados = $TDP->buscarDadosCadastrarProdutos($idPreProjeto, $idProduto);
             $this->view->idProduto = $idProduto;
         }
 
@@ -278,9 +277,10 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         if  ( isset ( $_GET['idPreProjeto'] ) ) {
             $idPreProjeto = $_GET['idPreProjeto'];
 
-            $buscaDados = ManterorcamentoDAO::buscarDadosCadastrarCustos($idPreProjeto);
 
-            $this->view->dados = $buscaDados;
+            $buscaDados = new Proposta_Model_DbTable_PlanilhaProposta();
+
+            $this->view->dados = $buscaDados->buscarDadosCadastrarCustos($idPreProjeto);
         }
 
         if( isset( $_GET['cadastro'] ) ) {
@@ -331,17 +331,18 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $etapaSelecionada["etapaNome"] = $_GET["etapaNome"];
         $this->view->etapaSelecionada = $etapaSelecionada;
 
-        $buscarEstado = EstadoDAO::buscar();
-        $this->view->Estados = $buscarEstado;
 
-        $buscarEtapa = ManterorcamentoDAO::buscarEtapasCusto();
-        $this->view->Etapa = $buscarEtapa;
+        $buscarEstado = new Agente_Model_DbTable_UF();
+        $this->view->Estados = $buscarEstado->buscar();
 
-        $buscarRecurso = ManterorcamentoDAO::buscarFonteRecurso();
-        $this->view->Recurso = $buscarRecurso;
+        $buscarEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+        $this->view->Etapa = $buscarEtapa->buscarEtapasCusto();
 
-        $buscarUnidade = ManterorcamentoDAO::buscarUnidade();
-        $this->view->Unidade = $buscarUnidade;
+        $buscarRecurso = new Proposta_Model_DbTable_Verificacao();
+        $this->view->Recurso = $buscarRecurso->buscarFonteRecurso();
+
+        $buscarUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
+        $this->view->Unidade = $buscarUnidade->buscarUnidade();
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
@@ -447,8 +448,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
         $this->view->Item = $buscarItem;
 
-        $buscarProduto = ManterorcamentoDAO::buscarProdutos($this->idPreProjeto);
-        $this->view->Produtos = $buscarProduto;
+        $buscarProduto = new Proposta_Model_DbTable_PlanilhaProposta();
+        $this->view->Produtos = $buscarProduto->buscarProdutos($this->idPreProjeto);
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }

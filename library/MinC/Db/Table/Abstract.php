@@ -489,6 +489,11 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         }
     }
 
+    public function getExpressionTrim($strColumn)
+    {
+        $strTrim = ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) ? 'ltrim' : 'trim';
+        return new Zend_Db_Expr("{$strTrim}(' . $strColumn . ')");
+    }
     /**
      * Retorna o resultado com chave e valor apenas.
      *

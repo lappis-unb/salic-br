@@ -17,4 +17,30 @@ class Proposta_Model_DbTable_Verificacao extends MinC_Db_Table_Abstract{
 
     protected $_schema = 'sac';
     protected $_name  = 'verificacao';
+
+    public function buscarFonteRecurso() {
+
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('v' => $this->_name),
+            array(
+                'v.idverificacao',
+                'verificacaodescricao' => $this->getExpressionTrim('verificacao.descricao'),
+            ),
+            $this->_schema
+        );
+        $select->joinInner(
+            array('Tipo' => $this->getName('Tipo')), 'v.idtipo = Tipo.idtipo',
+            null,
+            $this->_schema
+
+        );
+        $select->where('Tipo.idtipo = ?','5');
+
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        return $db->fetchAll($select);
+    }
 }
