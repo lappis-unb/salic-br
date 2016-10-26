@@ -181,20 +181,26 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         if ($tipo == 0 || empty($tipo)) {
             if ($auth->hasIdentity()) // caso o usuario esteja autenticado
             {
+
                 // pega as unidades autorizadas, org?os e grupos do usu?rio (pega todos os grupos)
                 if (isset($objIdentity->usu_codigo) && !empty($arrAuth['usu_codigo'])) {
                     $grupos = $objModelUsuario->buscarUnidades($arrAuth['usu_codigo'], 21);
                     $objAgente = $objModelUsuario->getIdUsuario($arrAuth['usu_codigo']);
                     $idAgente = $objAgente['idagente'];
                     $cpfLogado = $objAgente['usu_identificacao'];
-                } elseif (isset($objIdentity['auth']) && isset($objIdentity['auth']['uid'])) {
+                } elseif (isset($objIdentity->auth) && isset($objIdentity->auth['uid'])) {
 
-                    // - Equiparar informações da branch develop(sprint-02) com o a branch atual
-                    // - Adicionar campo "id_login_cidadao" na tabela "tabelas.usuario" para os bancos SQL Server e Postgres
-                    // Caso não possua cadastro, redireciona para o cadastro de usuário.
-                    // CAso contrário, carrega as informações comuns dps usuários
+                    $objAuth = (object)$objIdentity->auth['raw'];
+x($objAuth);
+                    $tblSGCacesso = new Autenticacao_Model_Sgcacesso();
+                    $rsSGCacesso = $tblSGCacesso->findBy(array("cpf" => $objAuth->cpf));
+                    if(!$rsSGCacesso) {
+                        // Criar metodo para cadastrar um usuário utilizando as informações que já retornam da autenticação.
+                    } elseif(!$rsSGCacesso['id_login_cidadao'])
+                        // Fazer update
+xd($rsSGCacesso);
 
-                    xd($objIdentity['auth']);
+                    xd($objAuth);
                 } else {
                     return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), null, true);
                 }
