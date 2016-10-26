@@ -13,6 +13,29 @@
         // id dos campos que utilizarão o calendário
         $("#dtInicio, #dtFinal").datepicker();
 
+	// adicionando funcionalidade de excluir pedido de prorrogação
+	$("#btn_exclusao").click(function(){
+            $("#alerta").dialog("destroy");
+            $("#alerta").html('Deseja realmente excluir o pedido de prorrogação?');
+            $("#alerta").dialog({
+                resizable: false,
+                title: 'Alerta!',
+                width: 380,
+                modal: true,
+                buttons : {
+                    'Não' : function(){
+                        $(this).dialog('close');
+                    },
+                    'Sim' : function(){
+                        var urlDeletar = "<?php echo $this->url(array('controller' => 'avaliarpedidoprorrogacao', 'action' => 'deletar-prorrogacao')); ?>";
+			$('#formulario').attr('action', urlDeletar);
+			$('#formulario').submit();
+                    }
+                }
+            });
+            $('.ui-dialog-titlebar-close').remove();
+        });
+	
 <?php
 if ($this->camposObrigatoriosException) :
     ?>
@@ -46,6 +69,7 @@ if ($this->camposObrigatoriosException) :
 <div id="camposObrigatorios" class="sumir">
     Favor preencher os dados obrig&aacute;torios!
 </div>
+<div id="alerta" class="sumir"></div>
 
 <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
@@ -59,7 +83,9 @@ if ($this->camposObrigatoriosException) :
 
 
 <div id="titulo">
-    <div>Analisar Pedido de Prorrogação</div>
+    <div>Analisar Pedido de Prorrogação
+      <span class="voltar"><a href="<?php echo $this->url(array('controller' => 'avaliarpedidoprorrogacao', 'action' => 'index')); ?>">Voltar</a></span>
+    </div>
 </div>
 
 

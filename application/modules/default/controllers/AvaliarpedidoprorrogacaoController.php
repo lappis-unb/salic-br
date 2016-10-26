@@ -281,7 +281,7 @@ class AvaliarpedidoprorrogacaoController extends GenericControllerNew {
     public function deletarProrrogacaoAction()
     {
         $prorrogacaoModel = new ProrrogacaoModel();
-        $prorrogacaoModel->delete($this->getRequest()->getParam('idProrrogacao'));
+        $prorrogacaoModel->deletar($this->getRequest()->getParam('idProrrogacao'));
         parent::message("Prorrogação excluída com sucesso!", "avaliarpedidoprorrogacao", "CONFIRM");
     }
 
