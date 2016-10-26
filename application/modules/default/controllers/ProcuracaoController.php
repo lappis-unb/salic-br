@@ -103,7 +103,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
     {
     	$this->_helper->layout->disableLayout();
 
-    	$propostas = new Proposta_Model_PreProjeto();
+    	$propostas = new Proposta_Model_DbTable_PreProjeto();
     	$whereProjetos['pp.idAgente = ?'] 			=  $this->_request->getParam("idProponente");//$this->idAgente;
     	$whereProjetos['pr.idProjeto IS NOT NULL'] 	=  '';
     	$listaProjetos = $propostas->buscarPropostaProjetos($whereProjetos);
@@ -150,7 +150,7 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
         $tbArquivoImagemDAO 	= new tbArquivoImagem();
         $tbDocumentoDAO 		= new tbDocumento();
         $ProcuracaoDAO 			= new Procuracao();
-        $tbVinculoPropostaDAO 	= new tbVinculoPropostaResponsavelProjeto();
+        $tbVinculoPropostaDAO 	= new Agente_Model_DbTable_TbVinculoProposta();
         $tbVinculoDAO 			= new Agente_Model_DbTable_TbVinculo();
         $Sgcacesso              = new Autenticacao_Model_Sgcacesso();
         $Agentes                = new Agente_Model_DbTable_Agentes();
@@ -399,10 +399,10 @@ class ProcuracaoController extends MinC_Controller_Action_Abstract {
 
     public function aprovacaoAction()
     {
-        $vinculoPropostaDAO     = new tbVinculoPropostaResponsavelProjeto();
+        $vinculoPropostaDAO     = new Agente_Model_DbTable_TbVinculoProposta();
         $tbvinculoDAO 		= new Agente_Model_DbTable_TbVinculo();
         $procuracaoDAO 		= new Procuracao();
-        $preProjetoDAO 		= new Proposta_Model_PreProjeto();
+        $preProjetoDAO 		= new Proposta_Model_DbTable_PreProjeto();
 
         $responsavel   		= $this->_request->getParam("responsavel");
         $idDocumento   		= $this->_request->getParam("idDocumento");

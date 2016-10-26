@@ -260,7 +260,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 parent::message("Agente não encontrado!", "agente/agentes/buscaragente", "ALERT");
             }
 
-
             $this->view->telefones = Agente_Model_ManterAgentesDAO::buscarFones($idAgente);
             $this->view->emails = Agente_Model_ManterAgentesDAO::buscarEmails($idAgente);
             $visaoTable = new Agente_Model_DbTable_Visao();
@@ -392,7 +391,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                     $erro = 1;
                 } else {
                     $arrResultado = $wsServico->consultarPessoaFisicaReceitaFederal($cpf);
-
                     if (empty($arrResultado)) {
                         $retorno['error'] = 'Pessoa n&atilde;o encontrada!';
                         $erro = 1;
@@ -1798,13 +1796,13 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         } else {
             if (count($dados) != 0) {
                 foreach ($dados as $dado) {
-                    $dado = (array)$dado;
+                    $dado = array_change_key_case((array) $dado);
                     array_walk($dado, function($value, $key) use (&$dado){
                         $dado[$key] = utf8_encode($value);
                     });
                     $novos_valores[0]['msgCPF'] = utf8_encode('cadastrado');
-                    $novos_valores[0]['idAgente'] = utf8_encode($dado['idAgente']);
-                    $novos_valores[0]['Nome'] = utf8_encode($dado['Nome']);
+                    $novos_valores[0]['idAgente'] = utf8_encode($dado['idagente']);
+                    $novos_valores[0]['Nome'] = utf8_encode($dado['nome']);
                     $novos_valores[0]['agente'] = $dado;
                 }
             } else {
@@ -1861,12 +1859,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         $Agentes = new Agente_Model_DbTable_Agentes();
 
+
         $salvaAgente = $Agentes->inserirAgentes($arrayAgente);
-
-        $Agente = $Agentes->BuscaAgente($cpf);
-
-        $idAgente = $Agente[0]->idagente;
-
+        $agente = $Agentes->findBy(array('cnpjcpf' => trim($cpf)));
+        $idAgente = $agente['idagente'];
 
         // ================================================ FIM SALVAR CPF/CNPJ =====================================================
         // ================================================ INICIO SALVAR NOME ======================================================

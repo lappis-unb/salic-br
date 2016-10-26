@@ -22,30 +22,29 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
             $tmpRsPlanoDistribuicao = $tmpTblPlanoDistribuicao->createRow();
         }
         //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
-        if(isset($dados['idProjeto'])){ $tmpRsPlanoDistribuicao->idProjeto = $dados['idProjeto']; }
-        if(isset($dados['idProduto'])){ $tmpRsPlanoDistribuicao->idProduto = $dados['idProduto']; }
-        if(isset($dados['Area'])){ $tmpRsPlanoDistribuicao->Area = $dados['Area']; }
-        if(isset($dados['Segmento'])){ $tmpRsPlanoDistribuicao->Segmento = $dados['Segmento']; }
-        if(isset($dados['idPosicaoDaLogo'])){ $tmpRsPlanoDistribuicao->idPosicaoDaLogo = $dados['idPosicaoDaLogo']; }
-        if(isset($dados['QtdeProduzida'])){ $tmpRsPlanoDistribuicao->QtdeProduzida = $dados['QtdeProduzida']; }
-        if(isset($dados['QtdePatrocinador'])){ $tmpRsPlanoDistribuicao->QtdePatrocinador = $dados['QtdePatrocinador']; }
-        if(isset($dados['QtdeProponente'])){ $tmpRsPlanoDistribuicao->QtdeProponente = $dados['QtdeProponente']; }
-        if(isset($dados['QtdeOutros'])){ $tmpRsPlanoDistribuicao->QtdeOutros = $dados['QtdeOutros']; }
-        if(isset($dados['QtdeVendaNormal'])){ $tmpRsPlanoDistribuicao->QtdeVendaNormal = $dados['QtdeVendaNormal']; }
-        if(isset($dados['QtdeVendaPromocional'])){ $tmpRsPlanoDistribuicao->QtdeVendaPromocional = $dados['QtdeVendaPromocional']; }
-        if(isset($dados['PrecoUnitarioNormal'])){ $tmpRsPlanoDistribuicao->PrecoUnitarioNormal = $dados['PrecoUnitarioNormal']; }
-        if(isset($dados['PrecoUnitarioPromocional'])){ $tmpRsPlanoDistribuicao->PrecoUnitarioPromocional = $dados['PrecoUnitarioPromocional']; }
-        if(isset($dados['stPrincipal'])){ $tmpRsPlanoDistribuicao->stPrincipal = $dados['stPrincipal']; }
-        if(isset($dados['Usuario'])){ $tmpRsPlanoDistribuicao->Usuario = $dados['Usuario']; }
-        if(isset($dados['dsJustificativaPosicaoLogo'])){ $tmpRsPlanoDistribuicao->dsJustificativaPosicaoLogo = $dados['dsJustificativaPosicaoLogo'] ; }
-        if(isset($dados['stPlanoDistribuicaoProduto'])){ $tmpRsPlanoDistribuicao->stPlanoDistribuicaoProduto = $dados['stPlanoDistribuicaoProduto'] ; }
+        if(isset($dados['idProjeto'])){ $tmpRsPlanoDistribuicao->idprojeto = $dados['idProjeto']; }
+        if(isset($dados['idProduto'])){ $tmpRsPlanoDistribuicao->idproduto = $dados['idProduto']; }
+        if(isset($dados['Area'])){ $tmpRsPlanoDistribuicao->area = $dados['Area']; }
+        if(isset($dados['Segmento'])){ $tmpRsPlanoDistribuicao->segmento = $dados['Segmento']; }
+        if(isset($dados['idPosicaoDaLogo'])){ $tmpRsPlanoDistribuicao->idposicaodalogo = $dados['idPosicaoDaLogo']; }
+        if(isset($dados['QtdeProduzida'])){ $tmpRsPlanoDistribuicao->qtdeproduzida = $dados['QtdeProduzida']; }
+        if(isset($dados['QtdePatrocinador'])){ $tmpRsPlanoDistribuicao->qtdepatrocinador = $dados['QtdePatrocinador']; }
+        if(isset($dados['QtdeProponente'])){ $tmpRsPlanoDistribuicao->qtdeproponente = $dados['QtdeProponente']; }
+        if(isset($dados['QtdeOutros'])){ $tmpRsPlanoDistribuicao->qtdeoutros = $dados['QtdeOutros']; }
+        if(isset($dados['QtdeVendaNormal'])){ $tmpRsPlanoDistribuicao->qtdevendanormal = $dados['QtdeVendaNormal']; }
+        if(isset($dados['QtdeVendaPromocional'])){ $tmpRsPlanoDistribuicao->qtdevendapromocional = $dados['QtdeVendaPromocional']; }
+        if(isset($dados['PrecoUnitarioNormal'])){ $tmpRsPlanoDistribuicao->precounitarionormal = $dados['PrecoUnitarioNormal']; }
+        if(isset($dados['PrecoUnitarioPromocional'])){ $tmpRsPlanoDistribuicao->precounitariopromocional = $dados['PrecoUnitarioPromocional']; }
+        if(isset($dados['stPrincipal'])){ $tmpRsPlanoDistribuicao->stprincipal = $dados['stPrincipal']; }
+        if(isset($dados['Usuario'])){ $tmpRsPlanoDistribuicao->usuario = $dados['Usuario']; }
+        if(isset($dados['dsJustificativaPosicaoLogo'])){ $tmpRsPlanoDistribuicao->dsjustificativaposicaologo = $dados['dsJustificativaPosicaoLogo'] ; }
+        if(isset($dados['stPlanoDistribuicaoProduto'])){ $tmpRsPlanoDistribuicao->stplanodistribuicaoproduto = $dados['stPlanoDistribuicaoProduto'] ; }
 
         //echo "<pre>";
         //xd($tmpRsPlanoDistribuicao);
         //SALVANDO O OBJETO CRIADO
 
         $id = $tmpRsPlanoDistribuicao->save();
-
         if($id){
             return $id;
         }else{
@@ -68,7 +67,7 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
 
             $slct->setIntegrityCheck(false);
 
-            $slct->from(array("a"=> $this->_name), '*', $this->_schema);
+            $slct->from(array("a"=> $this->_name), $this->_getCols(), $this->_schema);
             $slct->joinInner(array("b"=>"produto"),
                             "a.idproduto = b.codigo",
                             array("Produto"=>"b.descricao"),

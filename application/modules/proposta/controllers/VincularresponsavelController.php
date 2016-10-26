@@ -53,13 +53,13 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
             $this->emailResponsavel = $acesso['email'];
         }
         if ($agente) {
-            $this->idAgente = $acesso['idagente'];
+            $this->idAgente = $agente['idagente'];
         }
         if ($usuario) {
-            $this->idUsuario = $acesso['usu_codigo'];
+            $this->idUsuario = $usuario['usu_codigo'];
         }
 
-        $this->view->idAgenteLogado = $acesso['idagente'];
+        $this->view->idAgenteLogado = $this->idAgente;
         parent::init();
         // chama o init() do pai GenericControllerNew
     }
@@ -138,8 +138,8 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $this->_helper->layout->disableLayout();
 
         $v = new Agente_Model_DbTable_TbVinculo();
-        $pp = new Proposta_Model_PreProjeto();
-        $vprp = new tbVinculoPropostaResponsavelProjeto();
+        $pp = new Proposta_Model_DbTable_PreProjeto();
+        $vprp = new Agente_Model_DbTable_TbVinculoProposta();
         $emailDAO = new EmailDAO();
         $tableInternet = new Agente_Model_DbTable_Internet();
 
@@ -286,8 +286,8 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     public function vinculoproponenteAction()
     {
         $tbVinculo = new Agente_Model_DbTable_TbVinculo();
-        $tbVinculoProposta = new tbVinculoPropostaResponsavelProjeto();
-        $PreProjetoDAO = new Proposta_Model_PreProjeto();
+        $tbVinculoProposta = new Agente_Model_DbTable_TbVinculoProposta();
+        $PreProjetoDAO = new Proposta_Model_DbTable_PreProjeto();
 
         $idVinculo = $this->_request->getParam("idVinculo");
         $siVinculo = $this->_request->getParam("siVinculo");
@@ -321,11 +321,9 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     public function vinculoresponsavelAction()
     {
         $tbVinculo = new Agente_Model_DbTable_TbVinculo();
-        $agentes = new Agente_Model_DbTable_Agentes();
-
+//        $agentes = new Agente_Model_DbTable_Agentes();
         $idResponsavel = $this->_request->getParam("idResponsavel");
         $idProponente = $this->idAgente;
-
 
         $where['idUsuarioResponsavel = ?'] = $idResponsavel;
         $where['idAgenteProponente   = ?'] = $idProponente;
@@ -333,9 +331,9 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
 
         $dados = array('idAgenteProponente' => $idProponente,
-            'dtVinculo' => new Zend_Db_Expr("GETDATE()"),
+            'dtVinculo' => $tbVinculo->getExpressionDate(),
             'siVinculo' => 2,
-            'idUsuarioResponsavel' => $idResponsavel
+            'idusuarioResponsavel' => $idResponsavel
         );
 
         try {
@@ -367,8 +365,8 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
      */
     public function trocarproponenteAction()
     {
-        $tbVinculoPropostaDAO = new tbVinculoPropostaResponsavelProjeto();
-        $PreProjetoDAO = new Proposta_Model_PreProjeto();
+        $tbVinculoPropostaDAO = new Agente_Model_DbTable_TbVinculoProposta();
+        $PreProjetoDAO = new Proposta_Model_DbTable_PreProjeto();
 
         $dadosPropronente = $this->_request->getParam("propronente");
 
@@ -406,49 +404,27 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
     }
 
     /**
-     * Metodo trocarproponente()
      * UC 89 - Fluxo FA1 - Trocar Proponente
-     * @access public
-     * @param void
-     * @return void
+     * @name vincularpropostasAction
+     *
+     * @author Ruy Junior Ferreira Silva
+     * @author Cleber Santos <oclebersantos@gmail.com>
+     * @since  ${DATE}
      */
     public function vincularpropostasAction()
     {
-        $tbVinculoPropostaDAO = new tbVinculoPropostaResponsavelProjeto();
-        $PreProjetoDAO = new Proposta_Model_PreProjeto();
-
-        $opcaovinculacao = $this->_request->getParam("opcaovinculacao");
-        $idPreProjeto = $this->_request->getParam("propostas");
-
+        $tblTbVinculoProposta = new Agente_Model_TbVinculoPropostaMapper();
         $dadosResponsavel = $this->_request->getParam("responsavel");
         $parte = explode(":", $dadosResponsavel);
-        $idVinculo = $parte[0];
-        $idResponsavel = $parte[1];
-
-        $idResponsavelRetirar = $parte[1];
-
-        $msg = "Responsável vinculado com sucesso!";
-        if ($opcaovinculacao == 1) {
-            $idResponsavel = $this->idResponsavel;
-            $msg = "O responsável foi desvinculado.";
-        }
-        try {
-            $dados['siVinculoProposta'] = 3;
-            $where['idPreProjeto = ?'] = $idPreProjeto;
-
-            $alteraVP = $tbVinculoPropostaDAO->alterar($dados, $where, false);
-
-            $novosDados = array(
-                'idVinculo' => $idVinculo,
-                'idPreProjeto' => $idPreProjeto,
-                'siVinculoProposta' => 2
-            );
-            $insere = $tbVinculoPropostaDAO->inserir($novosDados, false);
-            $alteraPP = $PreProjetoDAO->alteraresponsavel($idPreProjeto, $idResponsavel);
-            parent::message($msg, "proposta/manterpropostaincentivofiscal/vincularpropostas", "CONFIRM");
-
-        } catch (Exception $e) {
-            parent::message("Erro. " . $e->getMessage(), "proposta/manterpropostaincentivofiscal/vincularpropostas", "ERROR");
+        $arrData = array();
+        $arrData['opcaovinculacao'] = $this->_request->getParam("opcaovinculacao");
+        $arrData['idpreprojeto'] = $this->_request->getParam("propostas");
+        $arrData['idvinculo'] = $parte[0];
+        $arrData['idresponsavel'] = $parte[1];
+        if ($tblTbVinculoProposta->saveCustom($arrData)) {
+            parent::message($tblTbVinculoProposta->getMessage(), "proposta/manterpropostaincentivofiscal/vincularpropostas", "CONFIRM");
+        } else {
+            parent::message("Erro. " . $tblTbVinculoProposta->getMessage(), "proposta/manterpropostaincentivofiscal/vincularpropostas", "ERROR");
         }
     }
 
@@ -461,8 +437,8 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
      */
     public function vincularprojetosAction()
     {
-        $tbVinculoPropostaDAO = new tbVinculoPropostaResponsavelProjeto();
-        $PreProjetoDAO = new Proposta_Model_PreProjeto();
+        $tbVinculoPropostaDAO = new Agente_Model_DbTable_TbVinculoProposta();
+        $PreProjetoDAO = new Proposta_Model_DbTable_PreProjeto();
 
         $idPreProjeto = $this->_request->getParam("propostas");
         $idResponsavel = $this->idResponsavel;

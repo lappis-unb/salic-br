@@ -1993,7 +1993,7 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
         if(!empty($idPronac))
         {
             $tblProjeto        = new Projetos();
-            $tblPreProjeto      = new Proposta_Model_PreProjeto();
+            $tblPreProjeto      = new Proposta_Model_DbTable_PreProjeto();
             $projeto = $tblProjeto->buscar(array('IdPRONAC = ?' => $idPronac));
 
             if(isset($projeto[0]->idProjeto) && !empty($projeto[0]->idProjeto)){

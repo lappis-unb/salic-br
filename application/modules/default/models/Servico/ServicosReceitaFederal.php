@@ -15,8 +15,8 @@ class ServicosReceitaFederal {
 
     # Constante usada na classe para conexao com o WS
     const username 		        = "3bf410091bddf5e2092be862aa25fe34";
-    #const password 		    = "QJHJWRRM"; #Produ��o
-    const password 		        = "123456"; #Homologa��o
+    const password 		    = "QJHJWRRM"; #Producao
+//    const password 		        = "123456"; #Homologa��o
     #const hostServico           = "sistemasweb.cultura.gov.br";
     #const urlServico 	        = "/minc-pessoa/servicos/"; #Produ��o
     const hostServico           = "homolog.cultura.gov.br";
@@ -98,6 +98,7 @@ class ServicosReceitaFederal {
         $password = self::password;
 
         $curl = curl_init();
+
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");

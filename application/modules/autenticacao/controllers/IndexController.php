@@ -182,6 +182,12 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         $this->redirect('index');
     }
 
+    /**
+     * cadastrarusuarioAction
+     *
+     * @access public
+     * @return void
+     */
     public function cadastrarusuarioAction()
     {
         if ($_POST) {
@@ -275,7 +281,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         }
     }
 
-
     /**
      * solicitarsenhaAction
      *
@@ -286,49 +291,47 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     public function solicitarsenhaAction()
     {
         if ($_POST) {
-            //try {
-                $post = Zend_Registry::get('post');
-                $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf)); // recebe cpf
-                $dataNasc = data::dataAmericana($post->dataNasc); // recebe dataNasc
-                $email = $post->email; // recebe email
-                $sgcAcesso = new Autenticacao_Model_Sgcacesso();
-                $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf, "Email = ?" => $email, "DtNascimento = ?" => $dataNasc));
+            $post = Zend_Registry::get('post');
+            $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf)); // recebe cpf
+            $dataNasc = data::dataAmericana($post->dataNasc); // recebe dataNasc
+            $email = $post->email; // recebe email
+            $sgcAcesso = new Autenticacao_Model_Sgcacesso();
 
-                $verificaUsuario = $sgcAcessoBuscaCpf->toArray();
-                if (empty ($verificaUsuario)) {
-                    parent::message("Dados incorretos!", "/autenticacao", "ALERT");
-                }
+            $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf, "Email = ?" => $email, "DtNascimento = ?" => $dataNasc));
+            $verificaUsuario = $sgcAcessoBuscaCpf->toArray();
+            if (empty ($verificaUsuario)) {
+                parent::message("Dados incorretos!", "/autenticacao", "ALERT");
+            }
 
-                $sgcAcessoBuscaCpfArray = $sgcAcessoBuscaCpf->toArray();
-                $nome = $sgcAcessoBuscaCpfArray[0]['Nome'];
-                $senha = Gerarsenha::gerasenha(15, true, true, true, true);
-                $senhaFormatada = str_replace(">", "", str_replace("<", "", str_replace("'", "", $senha)));
-                $senhaFormatada = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaFormatada);
+            $sgcAcessoBuscaCpfArray = $sgcAcessoBuscaCpf->toArray();
+            $nome = $sgcAcessoBuscaCpfArray[0]['nome'];
+            $senha = Gerarsenha::gerasenha(15, true, true, true, true);
+            $senhaFormatada = str_replace(">", "", str_replace("<", "", str_replace("'", "", $senha)));
 
-                $dados = array(
-                    "idusuario" => $sgcAcessoBuscaCpfArray[0]['idusuario'],
-                    "senha" => $senhaFormatada,
-                    "situacao" => 1,
-                    "dtsituacao" => date("Y-m-d")
-                );
-                $sgcAcessoSave = $sgcAcesso->salvar($dados);
+            $senhaFormatada = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaFormatada);
 
-                $assunto = "Cadastro SALICWEB";
-                $perfil = "SALICWEB";
-                $mens = "Ol&aacute; " . $nome . ",<br><br>";
-                $mens .= "Senha....: " . $senha. "<br><br>";
-                $mens .= "Esta é a sua senha tempor&aacute;ria de acesso ao Sistema de Apresenta&ccedil;&atilde;o de Projetos via Web do ";
-                $mens .= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
-                $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
-                $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor não responda.<br><br>";
-                $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
+            $dados = array(
+                "idusuario" => $sgcAcessoBuscaCpfArray[0]['idusuario'],
+                "senha" => $senhaFormatada,
+                "situacao" => 1,
+                "dtsituacao" => date("Y-m-d")
+            );
 
-                $email = $sgcAcessoBuscaCpfArray[0]['email'];
-                $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
-                parent::message("Senha gerada com sucesso. Verifique seu email!", "/autenticacao", "CONFIRM");
-            /*} catch (Exception $objException) {
-                parent::message("Houve um erro na execução da funcionalidade.", "/autenticacao", "ALERT");
-            }*/
+            $sgcAcessoSave = $sgcAcesso->salvar($dados);
+            $assunto = "Cadastro SALICWEB";
+            $perfil = "SALICWEB";
+            $mens = "Ol&aacute; " . $nome . ",<br><br>";
+            $mens .= "Senha....: " . $senha. "<br><br>";
+            $mens .= "Esta &eacute; a sua senha tempor&aacute;ria de acesso ao Sistema de Apresenta&ccedil;&atilde;o de Projetos via Web do ";
+            $mens .= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
+            $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
+            $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n?o responda.<br><br>";
+            $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
+
+            $email = $sgcAcessoBuscaCpfArray[0]['email'];
+
+            $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
+            parent::message("Senha gerada com sucesso. Verifique seu email!", "/autenticacao", "CONFIRM");
         }
     }
 
@@ -342,17 +345,22 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
      */
     public function alterarsenhaAction()
     {
-        $auth = Zend_Auth::getInstance();
+
+        // autenticacao proponente (Novo Salic)
+        parent::perfil(4);
+
+        /* ========== INICIO ID DO USUARIO LOGADO ========== */
+        $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
         $Usuario = new Autenticacao_Model_Usuario();
-        $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->cpf);
 
-        if ($idUsuario) {
-            $this->getIdUsuario = ($idUsuario) ? $idUsuario['idagente'] : $auth->getIdentity()->idusuario;
-            $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
-            parent::perfil(4);
-        }
+        // verifica se o usuario logado e agente
+        $idUsuario = $Usuario->getIdUsuario(null, $auth['cpf']);
 
-        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+        // caso nao tenha idAgente, atribui o idUsuario
+        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth['idusuario'];
+        $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
+
+//        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
         $this->view->cpf = "";
         $this->view->nome = "";
@@ -389,34 +397,50 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
             if (empty ($_POST['idUsuario'])) {
                 $idUsuario = $_POST['idUsuarioGet'];
-                $buscarSenha = $sgcAcesso->buscar(array('idusuario = ?' => $idUsuario))->toArray();
             } else {
                 $idUsuario = $_POST['idUsuario'];
-                $buscarSenha = $sgcAcesso->buscar(array('idusuario = ?' => $idUsuario))->toArray();
             }
-            $senhaAtualBanco = $buscarSenha[0]['senha'];
+
+            $buscarSenha = $sgcAcesso->findBy(array('idusuario' => $idUsuario));
+
+            $senhaAtualBanco = $buscarSenha['senha'];
 
             if (empty ($cpf)) {
-                $cpf = $buscarSenha[0]['cpf'];
+                $cpf = $buscarSenha['cpf'];
             }
 
             // busca a senha do banco TABELAS
-            $Usuarios = new Autenticacao_Model_Usuario();
-            $buscarCPF = $Usuarios->buscar(array('usu_identificacao = ?' => trim($cpf)));
+            $mdlUsuario = new Autenticacao_Model_Usuario();
+
+            $buscarCPF = $mdlUsuario->findBy(array('usu_identificacao' => $cpf));
+
             $cpfTabelas = count($buscarCPF) > 0 ? true : false;
-            $senhaTabelas = $Usuarios->verificarSenha(trim($cpf), $senhaAtual);
+            $senhaTabelas = $mdlUsuario->verificarSenha(trim($cpf), $senhaAtual);
 
             $senhaCript = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaAtual);
 
-            if ($buscarSenha[0]['situacao'] != 1) {
+            if ($buscarSenha['situacao'] != 1) {
 
                 $comparaSenha = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaAtual);
-                $SenhaFinal = $comparaSenha[0]->senha;
+
+                $SenhaFinal = $comparaSenha;
+
+                //@todo verificar as regras de negocios para $cpfTabelas
+                if (trim($senhaAtualBanco) != trim($SenhaFinal) && !$senhaTabelas) {
+
+                    parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
+                }
 
                 if (trim($senhaAtualBanco) != trim($SenhaFinal) && ($cpfTabelas && !$senhaTabelas)) {
+
                     parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
                 }
             } else {
+
+                //@todo verificar as regras de negocios para $cpfTabelas
+                if (trim($senhaAtualBanco) != trim($senhaCript) && !$senhaTabelas) {
+                    parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
+                }
 
                 if (trim($senhaAtualBanco) != trim($senhaCript) && ($cpfTabelas && !$senhaTabelas)) {
                     parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
@@ -630,6 +654,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         // caso nao tenha idAgente, atribui o idUsuario
         $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth['idusuario'];
         $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
+
         /* ========== FIM ID DO USUARIO LOGADO ========== */
 
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();

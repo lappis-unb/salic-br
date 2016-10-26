@@ -27,7 +27,7 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
      * @return array
      * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      */
-    public function buscar()
+    public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {
         $objEstado = self::obterInstancia();
         $sql = 'select iduf as id, sigla as descricao ';
@@ -53,8 +53,8 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
     public function buscarRegiao($regiao)
     {
         $objEstado = self::obterInstancia();
-        $sql = 'SELECT idUF AS id, Descricao AS descricao 
-			FROM ' . GenericModel::getStaticTableName($objEstado->_schema, $objEstado->_name) . " 
+        $sql = 'SELECT idUF AS id, Descricao AS descricao
+			FROM ' . GenericModel::getStaticTableName($objEstado->_schema, $objEstado->_name) . "
 			WHERE Regiao = '{$regiao}'
 			ORDER BY Sigla";
 

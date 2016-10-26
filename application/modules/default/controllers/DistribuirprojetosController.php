@@ -179,7 +179,7 @@ class DistribuirprojetosController extends MinC_Controller_Action_Abstract {
      public function projetosparaavaliadoresAction(){
          $this->_helper->layout->disableLayout ();
 
-         $tblPreProjeto = new Proposta_Model_PreProjeto();
+         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
 
          $idPreProjeto = '';
          $PreProjetos = '';
@@ -209,7 +209,7 @@ class DistribuirprojetosController extends MinC_Controller_Action_Abstract {
 
          $Avaliador = !empty($_POST['Avaliador']) ? $_POST['Avaliador'] : 0;
 
-         $tblPreProjeto = new Proposta_Model_PreProjeto();
+         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
 
          $idPreProjeto = '';
          $PreProjetos = '';
@@ -583,7 +583,7 @@ class DistribuirprojetosController extends MinC_Controller_Action_Abstract {
     }
 
     public function listaavaliadoresAction(){
-            $tblPreProjeto = new Proposta_Model_PreProjeto();
+            $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $Avaliadores = $tblPreProjeto->listaApenasAvaliadores(array('pp.idEdital = ?' => $_GET['idEdital']));
             $idAvaliador = !empty($_GET['idAvaliador']) ? $_GET['idAvaliador'] : 0;
             foreach ($Avaliadores as $A) {

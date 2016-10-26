@@ -1,10 +1,81 @@
 <?php
+function d() {
+    $debug = debug_backtrace();
+    echo <<<HTML
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <style>
+        html,body{
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            font-family: verdana;
+            font-size: 16px !important;
+            color: #fff;
+            width: 100%;
+            background: #070707 url("../../public/images/planet.jpg")  no-repeat;
+            /*filter: grayscale(1)*/
+            /*text-shadow: 0px 0px 5px #FFF;*/
+        }
+        h3{
+            color: #fff;
+            text-shadow: 0px 0px 5px #FFF;
+        }
+        fieldset{
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
+        }
+        h3 {
+            margin: 10px;
+        }
+        </style>
+    </head>
+    <body>
+    <div class="msg-error exception">
+    <span>
+        <h3>Salic Debug</h3>
+        <!--<p>Debug:</p>-->
+    </span>
+    </div>
+        <div class="msg-exception">
+            <fieldset>
+                <legend>Par&acirc;metros</legend>
+HTML;
+    for ($i = 0; $i < func_num_args(); $i++) {
+        $value = func_get_arg($i);
+        var_dump($value);
+    }
+    echo <<<HTML
+            </fieldset>
+            <fieldset>
+                <legend>Local</legend>
+                <p><b>Classe:</b> {$debug[1]['class']}</p>
+                <p><b>M&eacute;todo:</b> {$debug[1]['function']}</p>
+                <p><b>Arquivo:</b> {$debug[0]['file']} ({$debug[0]['line']})</p>
+            </fieldset>
+HTML;
+    for ($i = 2; $i < count($debug); $i++) {
+        if (is_int(strpos($debug[$i]['class'], 'Zend'))) {
+            break;
+        }
+        $intBacktrace = $i - 1;
+        echo <<<HTML
+            <fieldset>
+                <legend>Rastro por onde passou {$intBacktrace}</legend>
+                <p><b>Classe:</b> {$debug[$i]['class']}</p>
+                <p><b>M&eacute;todo:</b> {$debug[$i]['function']}</p>
+                <p><b>Arquivo:</b> {$debug[$i - 1]['file']} ({$debug[$i - 1]['line']})</p>
+            </fieldset>
+HTML;
+    }
+    echo <<<HTML
+</table>
+            </div>
+    </body>
+</html>
+HTML;
+    exit;
+}
 
 /* FUN��O �TIL PARA DEBUG */
 /*

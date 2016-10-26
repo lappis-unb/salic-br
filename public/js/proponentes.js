@@ -153,7 +153,7 @@ function buscar_cep(cep)
                 {
                     // deixa apenas um elemento no combo, os outros s�o exclu�dos
                     document.getElementById("cidade").options.length = 0;
-	
+
                     // cria um novo option
                     var novo   = document.createElement("option");
                     novo.value = txtCodCidade; // atribui um valor ao option
@@ -255,7 +255,7 @@ function buscardados(valor)
             data: {
                 cpf: cpf
             },
-            url: '../manteragentes/salvaragente',
+            url: '/agente/manteragentes/salvaragente',
             success: function (data)
             {
                 if (data[0].msgCPF == 'ok')

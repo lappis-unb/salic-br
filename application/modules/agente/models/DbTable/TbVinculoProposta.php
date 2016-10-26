@@ -1,13 +1,16 @@
 <?php
-
 /**
- * Class tbVinculoPropostaResponsavelProjeto
- * @uses GenericModel
- * @author  wouerner <wouerner@gmail.com>
- * @author Vinicius Feitosa da Silva <viniciusfesil@gmail.com>
+ * @name Agente_Model_DbTable_TbVinculo
+ * @package Modules/Agente
+ * @subpackage Models/DbTable
+ * @version $Id$
+ *
+ * @author Equipe UFABC
  * @since 18/08/2016 14:29
+ *
+ * @link http://salic.cultura.gov.br
  */
-class tbVinculoPropostaResponsavelProjeto extends MinC_Db_Table_Abstract
+class Agente_Model_DbTable_TbVinculoProposta extends MinC_Db_Table_Abstract
 {
     protected $_banco = 'agentes';
     protected $_name = 'tbvinculoproposta';

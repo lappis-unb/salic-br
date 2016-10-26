@@ -119,7 +119,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
         /*==================================================*/
         $arrMandatos = array();
         $this->view->mandatos = $arrMandatos;
-        $preProjeto = new Proposta_Model_PreProjeto();
+        $preProjeto = new Proposta_Model_DbTable_PreProjeto();
         $rsDirigentes = array();
 
         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
@@ -351,7 +351,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 
         //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
         $this->view->nomeProjeto  = strip_tags($rsProposta->NomeProjeto);
@@ -388,7 +388,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
     private function eviarEmail($idProjeto,$Mensagem,$pronac = null){
         $auth = Zend_Auth::getInstance();
         $tbTextoEmailDAO    =   new tbTextoEmail();
-        $preProjetosDAO     =   new Proposta_Model_PreProjeto();
+        $preProjetosDAO     =   new Proposta_Model_DbTable_PreProjeto();
 
         $dadosProjeto   =   $preProjetosDAO->dadosProjetoDiligencia($idProjeto);
 
@@ -425,7 +425,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 
     public function analisedocumentalAction() {
 
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto = ?"=>$this->idPreProjeto))->current();
         $this->view->proposta = $rsProposta;
 
@@ -592,7 +592,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
         $auth = Zend_Auth::getInstance(); // instancia da autentica��o
         $idOrgao = $auth->getIdentity()->usu_orgao;
 
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto = ?"=>$this->idPreProjeto))->current();
 
         //O codigo deste IF serve apenas para mostrar a mensagem ao usuario
@@ -676,7 +676,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
     public function encaminharpropostaAction() {
         //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
         $this->view->nomeProjeto  = isset($rsProposta->NomeProjeto) ? strip_tags($rsProposta->NomeProjeto) : '';
@@ -740,7 +740,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
         try{
             //Enviar e-mail informando arquivamento e a justificativa
             //$dao->deletePreProjeto($this->idPreProjeto);
-            $tblPreProjeto = new Proposta_Model_PreProjeto();
+            $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $rsPreProjeto = $tblPreProjeto->find($this->idPreProjeto)->current();
             $rsPreProjeto->DtArquivamento=date("Y/m/d H:i:s");
             $rsPreProjeto->stEstado = 0;
@@ -763,7 +763,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 
     public function confirmararquivarpropostaAction() {
 
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
         $this->view->nomeProjeto  = strip_tags($rsProposta->NomeProjeto);
@@ -877,7 +877,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
         /*==================================================*/
         $arrMandatos = array();
         $this->view->mandatos = $arrMandatos;
-        $preProjeto = new Proposta_Model_PreProjeto();
+        $preProjeto = new Proposta_Model_DbTable_PreProjeto();
         $rsDirigentes = array();
 
         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
@@ -988,7 +988,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 
     public function frmalterarunianalisepropostaAction() {
         $this->_helper->layout->disableLayout();
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->unidadeAnaliseProposta($_POST["nrProposta"])->current();
         //xd($rsProposta->toArray());
         if($rsProposta){
@@ -1090,7 +1090,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
             $msgComplementar = "Altera&ccedil;&atilde;o realizada com sucesso!";
 
             if((int)$params->uog_status === 0){
-                $tblPreProjeto = new Proposta_Model_PreProjeto();
+                $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
                 $tecnicoTemProposta = $tblPreProjeto->tecnicoTemProposta($params->usu_cod);
 
                 if($tecnicoTemProposta){
@@ -1241,7 +1241,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 
         //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
         $this->view->nomeProjeto  = strip_tags($rsProposta->NomeProjeto);
@@ -1252,7 +1252,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
         $get = Zend_Registry::get("get");
         $idAgente = $get->agente;
 
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsPropostas = $tblProposta->buscar(array("idagente = ?"=>$idAgente), array("nomeprojeto ASC"));
 
 
@@ -1384,7 +1384,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
         if(is_numeric($post->avaliacao)){ $arrBusca["ConformidadeOK = "] = "'$post->avaliacao'"; }
         if(!empty($post->tecnico)){ $arrBusca["Tecnico = "] = "'$post->tecnico'"; }
 
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico($arrBusca, array("Tecnico ASC"));
         //xd($rsProposta);
         $arrTecnicosPropostasReavaliacao = array();
@@ -1425,7 +1425,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
     public function listarPropostasAnaliseDocumentalTecnicoAction(){
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseDocumentalTecnico(array("sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) = "=>$usuario, "ConformidadeOK = "=>1), array("Tecnico ASC"));
 
         $arrTecnicosPropostas = array();
@@ -1452,7 +1452,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
     public function listarPropostasAnaliseFinalAction(){
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $arrTecnicosPropostas = array();
@@ -1477,7 +1477,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $html = "<table>
@@ -1507,7 +1507,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $html = "<table>
@@ -1534,7 +1534,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
         $this->_helper->viewRenderer->setNoRender();
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $arrTecnicos = array();
@@ -1603,7 +1603,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 
         $usuario = $this->codOrgaoSuperior;
 
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
 
         $arrTecnicos = array();
@@ -1723,7 +1723,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
         $usuario = $this->codOrgaoSuperior;
 
         if(empty($post->busca)){
-            $tblProposta = new Proposta_Model_PreProjeto();
+            $tblProposta = new Proposta_Model_DbTable_PreProjeto();
             $rsTecnicos = $tblProposta->buscarTecnicosHistoricoAnaliseVisual($usuario);
 
             $arrDados = array(
@@ -1739,7 +1739,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 
             $situacao = (!empty($post->situacao))?$post->situacao:null;
 
-            $tblProposta = new Proposta_Model_PreProjeto();
+            $tblProposta = new Proposta_Model_DbTable_PreProjeto();
             $rsProposta = $tblProposta->buscarHistoricoAnaliseVisual($usuario,$tecnico,$situacao,$dtInicio,$dtFim);
 
             $arrTecnicosPropostas = array();
@@ -1798,7 +1798,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsAvaliacao = $tblProposta->buscarAvaliacaoHistoricoAnaliseVisual($get->idAvaliacao);
 
         $avaliacao = trim($rsAvaliacao[0]->Avaliacao);
@@ -1822,7 +1822,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
         $rsPropostaFinal = array();
         $arrBusca['x.idTecnico = '] = $usuario;
 
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
 
         if($post->numeroProposta != ""){
             $arrBusca['p.idPreProjeto = '] = $post->numeroProposta;
@@ -1915,7 +1915,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 
         $rsPropostasNaoEnviadas = array();
 
-        $tblProposta = new Proposta_Model_PreProjeto();
+        $tblProposta = new Proposta_Model_DbTable_PreProjeto();
 
         // =========== PROPOSTAS NAO ENVIADAS AO MINC AINDA =======================
         $arrBusca['m.Movimentacao = ?'] = 95;
@@ -2300,7 +2300,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
             $dados['idPreProjeto = ?'] = $nrProposta;
             $dados['stEstado = ?'] = 0;
             $dados['dtArquivamento is not null'] = '';
-            $PreProjeto = new Proposta_Model_PreProjeto();
+            $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $result = $PreProjeto->buscar($dados);
 
             $a = 0;
@@ -2335,7 +2335,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
             );
             $where = array('idPreProjeto = ?' => $post->nrProposta);
 
-            $PreProjeto = new Proposta_Model_PreProjeto();
+            $PreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $result = $PreProjeto->update($dados, $where);
 
             parent::message("Proposta desarquivada com sucesso!", "/admissibilidade/desarquivarpropostas", "CONFIRM");

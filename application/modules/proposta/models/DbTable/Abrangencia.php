@@ -67,15 +67,21 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
 
     public function verificarIgual($idPais, $idUF, $idMunicipio, $idPreProjeto)
     {
-        $sql = "SELECT * FROM SAC.dbo.Abrangencia WHERE idProjeto = " . $idPreProjeto . "
-				 AND idPais = " . $idPais . "
-				 AND idUF = " . $idUF . "
-				 AND idMunicipioIBGE = " . $idMunicipio . "
-				 AND stAbrangencia = 1";
-
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('Ab' => $this->_name),
+            $this->_getCols(),
+            $this->_schema
+        );
+        $select->where('idProjeto = ?', $idPreProjeto);
+        $select->where('idPais = ?', $idPais);
+        $select->where("idUF = '?'", $idUF);
+        $select->where("idMunicipioibge = '?'", $idMunicipio);
+        $select->where('stAbrangencia = ?', 1);
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
     }
 
     /**
@@ -101,17 +107,17 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
 
         //ATRIBUINDO VALORES AOS CAMPOS QUE FORAM PASSADOS
         if (!empty($dados['idProjeto'])) {
-            $rsAbrangencia->idProjeto = $dados['idProjeto'];
+            $rsAbrangencia->idprojeto = $dados['idProjeto'];
         }
         if (!empty($dados['idPais'])) {
-            $rsAbrangencia->idPais = $dados['idPais'];
+            $rsAbrangencia->idpais = $dados['idPais'];
         }
-        $rsAbrangencia->idUF = $dados['idUF']; //if(!empty($dados['idUF'])) { $rsAbrangencia->idUF = $dados['idUF']; }
-        $rsAbrangencia->idMunicipioIBGE = $dados['idMunicipioIBGE'];//if(!empty($dados['idMunicipioIBGE'])) { $rsAbrangencia->idMunicipioIBGE = $dados['idMunicipioIBGE']; }
+        $rsAbrangencia->iduf = $dados['idUF']; //if(!empty($dados['idUF'])) { $rsAbrangencia->idUF = $dados['idUF']; }
+        $rsAbrangencia->idmunicipioibge = $dados['idMunicipioIBGE'];//if(!empty($dados['idmunicipioibge'])) { $rsAbrangencia->idmunicipioibge = $dados['idmunicipioibge']; }
         if (!empty($dados['Usuario'])) {
-            $rsAbrangencia->Usuario = $dados['Usuario'];
+            $rsAbrangencia->usuario = $dados['Usuario'];
         }
-        $rsAbrangencia->stAbrangencia = 1;
+        $rsAbrangencia->stabrangencia = 1;
 
         //SALVANDO O OBJETO
         $id = $rsAbrangencia->save();
@@ -643,7 +649,15 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
         $select->from(
             array('a' => $this->_name),
             array(
-                 new Zend_Db_Expr("(CASE a.idpais WHEN 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'  ELSE p.descricao END) as pais"),
+                new Zend_Db_Expr("
+                    CASE WHEN a.idpais = 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'
+                        ELSE p.Descricao
+                    END as Pais"),
+                new Zend_Db_Expr("CASE a.pais WHEN 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'
+                        ELSE p.Descricao END as Pais"),
+                'Pais' => new Zend_Db_Expr("CASE WHEN a.idpais = 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'
+                     ELSE p.Descricao
+                      END"),
                 'u.Descricao as UF',
                 'm.Descricao as Cidade',
                 'x.dtInicioDeExecucao',
