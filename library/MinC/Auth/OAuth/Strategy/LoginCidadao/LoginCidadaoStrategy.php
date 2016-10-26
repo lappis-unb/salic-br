@@ -32,7 +32,7 @@ class LoginCidadaoStrategy extends OpauthStrategy
      */
     public $defaults = array(
         'redirect_uri' => '{path_to_strategy}oauth2callback',
-        'scope' => 'email public_profile logout',
+        'scope' => 'email public_profile logout cpf full_name birthdate',
         'response_type' => 'code'
     );
 
@@ -100,7 +100,6 @@ class LoginCidadaoStrategy extends OpauthStrategy
             {
                 $user = $this->user($results->access_token);
 
-
                 $this->auth = array(
                     'uid' => $user['id'],
                     'info' => array(
@@ -126,7 +125,11 @@ class LoginCidadaoStrategy extends OpauthStrategy
 
                 $this->mapProfile($user, 'last_name', 'info.last_name');
                 $this->mapProfile($user, 'email', 'info.email');
+                $this->mapProfile($user, 'cpf', 'info.email');
+                $this->mapProfile($user, 'full_name', 'info.fullname');
+                $this->mapProfile($user, 'birthdate', 'info.birthdate');
                 $this->mapProfile($user, 'avatar_url', 'info.profile_picture_url');
+
 //xd($response, $user, $this->auth); redirect_uri
                 $this->callback();
             }
