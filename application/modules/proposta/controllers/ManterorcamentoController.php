@@ -592,7 +592,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $dsJustificativa = utf8_decode(substr(trim(strip_tags($_POST['editor1'])),0,500));
             $tipoCusto = 'A';
 
-            try {
+//            try {
 
                 $db= Zend_Db_Table::getDefaultAdapter();
                 $dados = array(	'idProjeto'=>$idProposta,
@@ -616,7 +616,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
                 if($_POST['acao']== 'alterar') {
 
-                	$buscarCustos = ManterorcamentoDAO::buscarCustos($idProposta, $tipoCusto, $idEtapa, $idItem, $idUf, $idMunicipio,
+                	$buscarCustos =  new Proposta_Model_DbTable_PlanilhaProposta();
+                    $buscarCustos->buscarCustos($idProposta, $tipoCusto, $idEtapa, $idItem, $idUf, $idMunicipio,
                 								$fonte, $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $dsJustificativa);
 	                    $where = 'idPlanilhaProposta = ' . $_POST['idPlanilhaProposta'];
 
@@ -626,7 +627,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 	                    die;
                 }
                 else {
-                	$buscarCustos = ManterorcamentoDAO::buscarCustos($idProposta, $tipoCusto, $idEtapa, $idItem, $idUf, $idMunicipio);
+                	$TPP = new Proposta_Model_DbTable_PlanilhaProposta();
+                    $buscarCustos = $TPP->buscarCustos($idProposta, $tipoCusto, $idEtapa, $idItem, $idUf, $idMunicipio);
                 	if($buscarCustos){
                 		$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 			            echo "Cadastro duplicado de Custo na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada! Deseja cadastrar um novo item?";
@@ -640,13 +642,13 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 	}
                 }
             }
-            catch (Zend_Exception $e) {
-
-                $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-                echo "Erro ao cadastrar dados";
-                die;
-            }
-        }
+////            catch (Zend_Exception $e) {
+//
+//                $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+//                echo "Erro ao cadastrar dados";
+//                die;
+//            }
+//        }
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }

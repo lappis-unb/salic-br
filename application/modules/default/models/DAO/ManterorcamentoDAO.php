@@ -866,8 +866,10 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         	$sql .= " AND tpp.QtdeDias = $qtdDias";
         }
 
+
         $sql.= " ORDER BY tpe.Descricao ";
 
+        throw new Exception('Método transferido para tbplanilhaproposta')
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

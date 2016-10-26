@@ -1,20 +1,22 @@
 <?php
 
-class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract {
+class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
+{
 
     //protected $_name = 'SAC.dbo.tbPlanilhaProposta';
     protected $_banco = 'SAC';
     protected $_name = 'tbPlanilhaProposta';
 
-    public function somarPlanilhaProposta($idprojeto, $fonte=null, $outras=null, $where=array()) {
+    public function somarPlanilhaProposta($idprojeto, $fonte = null, $outras = null, $where = array())
+    {
         $somar = $this->select();
         $somar->from($this,
-                        array(
-                            'sum(Quantidade*Ocorrencia*ValorUnitario) as soma'
-                        )
-                )
-                ->where('idProjeto = ?', $idprojeto)
-                ->where('idProduto <> ?', '206');
+            array(
+                'sum(Quantidade*Ocorrencia*ValorUnitario) as soma'
+            )
+        )
+            ->where('idProjeto = ?', $idprojeto)
+            ->where('idProduto <> ?', '206');
         if ($fonte) {
             $somar->where('FonteRecurso = ?', $fonte);
         }
@@ -30,15 +32,16 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract {
         return $this->fetchRow($somar);
     }
 
-    public function somarPlanilhaPropostaDivulgacao($idprojeto, $fonte=null, $outras=null) {
+    public function somarPlanilhaPropostaDivulgacao($idprojeto, $fonte = null, $outras = null)
+    {
         $somar = $this->select();
         $somar->from($this,
-                        array(
-                            'sum(Quantidade*Ocorrencia*ValorUnitario) as soma'
-                        )
-                )
-                ->where('idProjeto = ?', $idprojeto)
-                ->where('idEtapa = ?', 3);
+            array(
+                'sum(Quantidade*Ocorrencia*ValorUnitario) as soma'
+            )
+        )
+            ->where('idProjeto = ?', $idprojeto)
+            ->where('idEtapa = ?', 3);
         if ($fonte) {
             $somar->where('FonteRecurso = ?', $fonte);
         }
@@ -50,17 +53,18 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract {
     }
 
     //Criado no dia 07/10/2013 - Jefferson Alessandro
-    public function buscarDadosAvaliacaoDeItem($idPlanilhaProposta){
+    public function buscarDadosAvaliacaoDeItem($idPlanilhaProposta)
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('a' => $this->_name),
-                array(
-                    New Zend_Db_Expr('a.idPlanilhaProposta, a.idProduto, b.Descricao as descProduto, a.idEtapa,
+            array('a' => $this->_name),
+            array(
+                New Zend_Db_Expr('a.idPlanilhaProposta, a.idProduto, b.Descricao as descProduto, a.idEtapa,
                         c.Descricao as descEtapa, a.idPlanilhaItem, d.Descricao as descItem, a.Unidade, e.Descricao as descUnidade,
                         a.Quantidade, a.Ocorrencia, a.ValorUnitario, a.QtdeDias'
-                    )
                 )
+            )
         );
         $select->joinLeft(
             array('b' => 'Produto'), "a.idProduto = b.Codigo",
@@ -83,7 +87,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract {
         return $this->fetchAll($select);
     }
 
-    public  function Orcamento($id_projeto)
+    public function Orcamento($id_projeto)
     {
         $sql = "SELECT
                     idPlanilhaProposta,
@@ -115,19 +119,123 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract {
                 FROM
                     SAC.dbo.tbPlanilhaProposta as P
                 WHERE
-                    idProjeto = ".$id_projeto."
+                    idProjeto = " . $id_projeto . "
                 ORDER BY
                     idEtapa,idProduto";
 
-        try
-        {
-            $db= Zend_Db_Table::getDefaultAdapter();
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        }
-        catch (Zend_Exception_Db $e)
-        {
+        } catch (Zend_Exception_Db $e) {
             $this->view->message = $e->getMessage();
         }
+
+        return $db->fetchAll($sql);
+    }
+
+    public function buscarCustos($idPreProjeto, $tipoCusto, $idEtapa = null, $idItem = null, $idUf = null, $idMunicipio = null,
+                                        $fonte = null, $unidade = null, $quantidade = null, $ocorrencia = null, $vlunitario = null, $qtdDias = null, $dsJustificativa = null)
+    {
+        $tpp = [
+            'tpp.idusuario',
+            'tpp.idprojeto as idProposta',
+            'tpp.idplanilhaproposta',
+            'tpp.quantidade',
+            'tpp.ocorrencia',
+            'tpp.valorunitario',
+            'tpp.qtdedias',
+            'tpp.dsjustificativa as justificativa',
+        ];
+
+        $tpe = [
+            'tpe.tpcusto as custo',
+            'tpe.descricao as etapa',
+            'tpe.idplanilhaetapa as idEtapa',
+            'tpe.tpcusto',
+        ];
+
+        $tpi = [
+            'tpi.descricao as Item',
+            'tpi.idplanilhaitens as idItem',
+        ];
+
+        $uf = [
+            'uf.descricao as Uf',
+            'uf.sigla as SiglaUF',
+        ];
+
+        $mec = [
+            'mec.descricao as mecanismo'
+        ];
+
+        $un = [
+            'un.idunidade as idunidade',
+            'un.descricao as unidade',
+        ];
+
+        $veri = [
+            'veri.idverificacao as idFonteRecurso',
+            'veri.descricao as DescricaoFonteRecurso'
+        ];
+
+        $sql = $this->select()
+            ->setIntegrityCheck(false)
+            ->from(['tpp' => 'tbplanilhaproposta'], $tpp, $this->getSchema('sac'))
+            ->joinLeft(['pd' => 'produto'], 'pd.codigo = tpp.idproduto', null, $this->getSchema('sac'))
+            ->join(['tpe' => 'tbplanilhaetapa'], 'tpe.idplanilhaetapa = tpp.idetapa', $tpe, $this->getSchema('sac'))
+            ->join(['tpi' => 'tbplanilhaitens'], 'tpi.idplanilhaitens = tpp.idplanilhaitem', $tpi, $this->getSchema('sac'))
+            ->join(['uf' => 'uf'], 'uf.iduf = tpp.ufdespesa', $uf, $this->getSchema('agentes'))
+            ->join(['municipio' => 'municipios'], 'municipio.idmunicipioibge = tpp.municipiodespesa', 'municipio.descricao as Municipio', $this->getSchema('agentes'))
+            ->join(['prep' => 'preprojeto'], 'prep.idpreprojeto = tpp.idprojeto', null, $this->getSchema('sac'))
+            ->join(['mec' => 'mecanismo'], 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
+            ->join(['un' => 'tbplanilhaunidade'], 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
+            ->join(['veri' => 'verificacao'], 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
+            ->where('tpe.tpcusto = ?', $tipoCusto)
+            ->where('tpp.idprojeto = ?', $idPreProjeto)
+            ->order('tpe.descricao');
+
+        if ($idEtapa) {
+            $sql->where('tpe.idPlanilhaEtapa = ?', $idEtapa);
+        }
+        if ($idItem) {
+            $sql->where('tpi.idPlanilhaItens = ?', $idItem);;
+        }
+
+        if ($idUf) {
+            $sql->where('tpp.UfDespesa = ?', $idUf);
+        }
+
+        if ($idMunicipio) {
+        }
+        $sql->where('tpp.MunicipioDespesa = ?', $idMunicipio);
+
+
+        if ($fonte) {
+            $sql->where('veri.idVerificacao = ?', $fonte);
+        }
+
+        if ($unidade) {
+            $sql->where('un.idUnidade = ?', $unidade);
+        }
+
+        if ($quantidade) {
+            $sql->where('tpp.Quantidade = ?', $quantidade);
+        }
+
+        if ($ocorrencia) {
+            $sql->where('tpp.Ocorrencia = ?', $ocorrencia);
+        }
+
+        if ($vlunitario) {
+            $sql->where('tpp.ValorUnitario = ?', $vlunitario);
+        }
+
+        if ($qtdDias) {
+            $sql->where('tpp.QtdeDias = ?', $qtdDias);
+        }
+
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
     }
