@@ -259,6 +259,13 @@ class AvaliarpedidoprorrogacaoController extends GenericControllerNew {
                     $this->getRequest()->getParam('analise'),
                     $this->getIdUsuario
                 );
+            } else if(ProrrogacaoModel::PROCESSADO == $this->getRequest()->getParam('analise')) {
+                $prorrogacaoModel->indeferir(
+                    $idProrrogacao,
+                    $this->getRequest()->getParam('justificativa'),
+                    $this->getRequest()->getParam('analise'),
+                    $this->getIdUsuario
+                );
             } else {
                 parent::message("Não foi encontrada nenhuma análise. Favor preencher o campo obrigatório!", "avaliarpedidoprorrogacao/detalhar/prorrogacao/{$idProrrogacao}", "ERROR");
             }
