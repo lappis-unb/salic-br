@@ -2301,13 +2301,13 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
 	$spSelecionarPlanilhaOrcamentariaAtiva = new spSelecionarPlanilhaOrcamentariaAtiva();
 	$tpPlanilhaAtiva = $spSelecionarPlanilhaOrcamentariaAtiva->exec($idPronac);
 
-
 	$spPlanilhaOrcamentaria = new spPlanilhaOrcamentaria();
 	if ($countTpPlanilhaRemanej == 0) {
-	  $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($idPronac, 3);
+        $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($idPronac, $tpPlanilhaAtiva);
 	} else {
-	  $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($idPronac, 5);
+        $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($idPronac, $tpPlanilhaAtiva);
 	}
+    
 	$planilha = $this->montarPlanilhaOrcamentaria($planilhaOrcamentaria, 5);
 	$this->view->planilha = $planilha;
 	$this->view->tipoPlanilha = 5;
