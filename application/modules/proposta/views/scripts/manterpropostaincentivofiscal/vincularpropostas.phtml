@@ -98,10 +98,10 @@
 
 <?php require_once "inc/menu_responsavel.inc.php"; // menu ?>
 
-<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">In&iacute;cio</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?>" title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>
         <li><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'listar-propostas')); ?>" title="Ir para  Lista propostas">Lista propostas</a></li>
         <li class="last">Vincular Propostas </li>
     </ul>
