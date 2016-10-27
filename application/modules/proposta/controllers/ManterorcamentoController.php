@@ -595,23 +595,23 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 //            try {
 
                 $db= Zend_Db_Table::getDefaultAdapter();
-                $dados = array(	'idProjeto'=>$idProposta,
-                                'idEtapa'=>$idEtapa,
-                                'idPlanilhaItem'=>$idItem,
-                                'Descricao'=>'',
-                                'Unidade'=>$unidade,
-                                'Quantidade'=>$quantidade,
-                                'Ocorrencia'=>$ocorrencia,
-                                'ValorUnitario'=>$vlunitario,
-                                'QtdeDias'=>$qtdDias,
-                                'TipoDespesa'=>'0',
-                                'TipoPessoa'=>'0',
-                                'Contrapartida'=>'0',
-                                'FonteRecurso'=>$fonte,
-                                'UfDespesa'=>$idUf,
-                                'MunicipioDespesa'=>$idMunicipio,
-                                'idUsuario'=>462,
-                                'dsJustificativa'=>$dsJustificativa
+                $dados = array(	'idprojeto'=>$idProposta,
+                                'idetapa'=>$idEtapa,
+                                'idplanilhaitem'=>$idItem,
+                                'descricao'=>'',
+                                'unidade'=>$unidade,
+                                'quantidade'=>$quantidade,
+                                'ocorrencia'=>$ocorrencia,
+                                'valorunitario'=>$vlunitario,
+                                'qtdedias'=>$qtdDias,
+                                'tipodespesa'=>'0',
+                                'tipopessoa'=>'0',
+                                'contrapartida'=>'0',
+                                'fonterecurso'=>$fonte,
+                                'ufdespesa'=>$idUf,
+                                'municipiodespesa'=>$idMunicipio,
+                                'idusuario'=>462,
+                                'dsjustificativa'=>$dsJustificativa
                                 );
 
                 if($_POST['acao']== 'alterar') {
@@ -619,7 +619,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 	$buscarCustos =  new Proposta_Model_DbTable_PlanilhaProposta();
                     $buscarCustos->buscarCustos($idProposta, $tipoCusto, $idEtapa, $idItem, $idUf, $idMunicipio,
                 								$fonte, $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $dsJustificativa);
-	                    $where = 'idPlanilhaProposta = ' . $_POST['idPlanilhaProposta'];
+	                    $where = 'idplanilhaproposta = ' . $_POST['idPlanilhaProposta'];
 
 	                    $db->update('SAC.dbo.tbPlanilhaProposta',$dados, $where);
 	                    $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -634,7 +634,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 			            echo "Cadastro duplicado de Custo na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada! Deseja cadastrar um novo item?";
 			            die;
                 	}else{
-	                    $db->insert('SAC.dbo.tbPlanilhaProposta',$dados);
+
+	                    $db->insert('sac.tbplanilhaproposta',$dados);
 
 	                    $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 	                    echo "Item cadastrado com sucesso. Deseja cadastrar um novo item?";
