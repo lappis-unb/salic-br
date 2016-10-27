@@ -213,6 +213,9 @@ CREATE TABLE sac.tbPlanilhaUnidade
   Sigla VARCHAR(20) NOT NULL,
   Descricao VARCHAR(50) NOT NULL
 );
+CREATE SEQUENCE sac.tbplanilhaunidade_idunidade_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.tbplanilhaunidade ALTER COLUMN idunidade SET DEFAULT nextval('sac.tbplanilhaunidade_idunidade_seq');
+ALTER SEQUENCE sac.tbplanilhaunidade_idunidade_seq OWNED BY sac.tbplanilhaunidade.idunidade;
 CREATE TABLE sac.tbReuniao
 (
   idNrReuniao INT PRIMARY KEY NOT NULL,
