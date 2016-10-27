@@ -2300,7 +2300,7 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
 	// seleciona planilha ativa
 	$spSelecionarPlanilhaOrcamentariaAtiva = new spSelecionarPlanilhaOrcamentariaAtiva();
 	$tpPlanilhaAtiva = $spSelecionarPlanilhaOrcamentariaAtiva->exec($idPronac);
-
+    
 	$spPlanilhaOrcamentaria = new spPlanilhaOrcamentaria();
 	if ($countTpPlanilhaRemanej == 0) {
         $planilhaOrcamentaria = $spPlanilhaOrcamentaria->exec($idPronac, $tpPlanilhaAtiva);
@@ -2397,10 +2397,10 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
         
         $id = Seguranca::encrypt($idPronac);
         if($erros > 0){
-            parent::message("<b>A T E N � � O !!!</b> Somente poder� finalizar a opera��o de remanejamento se os valores dos grupos A, B, C e D forem iguais a R$0,00 (zero real)!", "consultardadosprojeto/remanejamento-menor?idPronac=$id", "ERROR");
+            parent::message("<b>A T E N Ç Ã O !!!</b> Somente poderá finalizar a operação de remanejamento se os valores dos grupos A, B, C e D forem iguais a R$0,00 (zero real)!", "consultardadosprojeto/remanejamento-menor?idPronac=$id", "ERROR");
         } else {
             
-            $auth = Zend_Auth::getInstance(); // pega a autentica��o
+            $auth = Zend_Auth::getInstance(); // pega a autenticação
             $tblAgente = new Agentes();
             $rsAgente = $tblAgente->buscar(array('CNPJCPF=?'=>$auth->getIdentity()->Cpf))->current();
                 
@@ -2416,19 +2416,6 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
             $dadosReadequacao['stEstado'] = 1;
             $idReadequacao = $tbReadequacao->inserir($dadosReadequacao);
             
-            /*if($idReadequacao > 0){
-                $tbReadequacaoXtbTipoReadequacao = new tbReadequacaoXtbTipoReadequacao();
-                $dadosReadequacaoTipo = array();
-                $dadosReadequacaoTipo['idReadequacao'] = $idReadequacao;
-                $dadosReadequacaoTipo['idTipoReadequacao'] = 1;
-                $dadosReadequacaoTipo['dtSolicitacao'] = new Zend_Db_Expr('GETDATE()');
-                $dadosReadequacaoTipo['idSolicitante'] = $rsAgente->idAgente;
-                $dadosReadequacaoTipo['dsSolicitacao'] = 'Readequa��o at� 20%';
-                $idReadequacaoTipo = $tbReadequacaoXtbTipoReadequacao->inserir($dadosReadequacaoTipo);
-            } else {
-                parent::message("Ocorreu um erro durante o cadastro do remanejamento!", "consultardadosprojeto?idPronac=$id", "ERROR");
-            }*/
-
             if($idReadequacao > 0){
                 $d = array('stAtivo' => 'S');
                 $w = array('IdPRONAC = ?' => $idPronac, 'tpPlanilha = ?' => 'RP', 'stAtivo = ?' => 'N');
