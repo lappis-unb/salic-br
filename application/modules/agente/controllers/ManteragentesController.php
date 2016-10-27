@@ -88,7 +88,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
 //        ini_set('display_errors', true);
 //        error_reporting(E_ALL ^E_NOTICE ^E_WARNING);
         $this->view->comboestados = $mapperUF->fetchPairs('iduf', 'sigla');
-        
+
         $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', ['idtipo' => 2]);
         $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 13));
         $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
@@ -739,8 +739,9 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             }
 
             $mprNomes = new Agente_Model_NomesMapper();
-            $mprNomes->beginTransaction();
+            //$mprNomes->beginTransaction();
             try {
+                //var_dump($arrPost);die;
                 # Salvando o nome.
                 $mprNomes->saveCustom($arrPost);
 
@@ -762,6 +763,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
 
                 # Salvando email.
                 $mprInternet = new Agente_Model_InternetMapper();
+                $mprNomes->beginTransaction();
                 $mprInternet->saveCustom($arrPost);
             } catch (Exception $e) {
                 $mprNomes->rollBack();

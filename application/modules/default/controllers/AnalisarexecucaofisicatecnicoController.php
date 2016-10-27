@@ -340,7 +340,7 @@ class AnalisarexecucaofisicatecnicoController extends MinC_Controller_Action_Abs
         $this->view->idPronac = $idpronac;
         $this->view->idRelatorio = $idrelatorio;
 
-        $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 

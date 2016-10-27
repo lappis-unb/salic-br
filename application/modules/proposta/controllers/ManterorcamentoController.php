@@ -93,6 +93,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $tbPreprojeto = new Proposta_Model_DbTable_PreProjeto();
         $this->view->Produtos = $tbPreprojeto->listarProdutos($this->idPreProjeto);
 
+        $buscarEtapa = $manterOrcamento->listarEtapasProdutos($this->idPreProjeto);
+        $this->view->Etapa = $buscarEtapa;
 
         $this->view->Etapa = $tbPreprojeto->listarEtapasProdutos($this->idPreProjeto);
 
@@ -109,13 +111,22 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      */
     public function custosadministrativosAction()
     {
-        $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-        $this->view->Etapas = $manterOrcamento->listarCustosAdministrativos();
-        $this->view->EtapaCusto = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
-        $this->view->dados = $manterOrcamento->listarDadosCadastrarCustos($this->idPreProjeto);
-        $buscarEstado = new Agente_Model_DbTable_UF();
-        $this->view->Estados = $buscarEstado->listar();
-        $this->view->Etapa = $manterOrcamento->listarEtapasCusto();
+        $tbPEtapas = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+        $this->view->Etapas = $tbPEtapas->listarCustosAdministrativos();
+
+        $manterOrcamento = new ManterorcamentoDAO();
+        $buscarCustos = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
+        $this->view->EtapaCusto = $buscarCustos;
+
+        $buscaDados = new Proposta_Model_DbTable_PlanilhaProposta();
+        $this->view->dados = $buscaDados->listarDadosCadastrarCustos($this->idPreProjeto);
+
+        $buscarEstado = new EstadoDAO();
+        $buscarEstado = $buscarEstado->listar();
+        $this->view->Estados = $buscarEstado;
+
+        $this->view->Etapa = $tbPEtapas->listarEtapasCusto();
+
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
@@ -195,8 +206,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         if  ( isset ( $_GET['idPreProjeto'] ) && isset ( $_GET['produto'] )) {
             $idPreProjeto = $_GET['idPreProjeto'];
             $idProduto = $_GET['produto'];
-            $buscaDados = ManterorcamentoDAO::buscarDadosCadastrarProdutos($idPreProjeto, $idProduto);
-            $this->view->Dados = $buscaDados;
+            $TDP = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
+            $this->view->Dados = $TDP->buscarDadosCadastrarProdutos($idPreProjeto, $idProduto);
             $this->view->idProduto = $idProduto;
         }
 
@@ -261,18 +272,16 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @return void
      */
     public function cadastrarcustosAction() {
-
         $this->_helper->layout->disableLayout();
 
         if  ( isset ( $_GET['idPreProjeto'] ) ) {
             $idPreProjeto = $_GET['idPreProjeto'];
 
-            $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaProposta();
-            $buscaDados = $manterOrcamento->findBy(array('idprojeto' => $idPreProjeto));
-//            $buscaDados = $manterOrcamento->buscarDadosCadastrarCustos($idPreProjeto);
-            $this->view->dados = $buscaDados;
-        }
 
+            $buscaDados = new Proposta_Model_DbTable_PlanilhaProposta();
+
+            $this->view->dados = $buscaDados->buscarDadosCadastrarCustos($idPreProjeto);
+        }
 
         if( isset( $_GET['cadastro'] ) ) {
             $dados_cadastrados = ManterorcamentoDAO::buscarUltimosDadosCadastrados();
@@ -281,9 +290,6 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $mun = new Agente_Model_DbTable_Municipios();
             $cidade = $mun->buscar($dados_cadastrados[0]['UfDespesa']);
             $this->view->municipios = $cidade;
-            echo '<pre>';
-            var_dump ($this->view->municipios);
-            exit;
 
             $itens = ManterorcamentoDAO::buscarItens($dados_cadastrados[0]['idEtapa']);
             $this->view->item = $itens;
@@ -294,7 +300,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
         if(isset($_POST['iduf'])) {
 
-            $this->_helper->layout->disableLayout(); // desabil ta o Zend_Layout
+            $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $iduf = $_POST['iduf'];
 
              $tbMun= new Agente_Model_DbTable_Municipios();
@@ -327,8 +333,10 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $etapaSelecionada["etapaNome"] = $_GET["etapaNome"];
         $this->view->etapaSelecionada = $etapaSelecionada;
 
-        $buscarEstado = new Agente_Model_DbTable_UF;
-        $this->view->Estados = $buscarEstado->listar();
+
+
+        $buscarEstado = new Agente_Model_DbTable_UF();
+        $this->view->Estados = $buscarEstado->buscar();
 
         $buscarEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
         $this->view->Etapa = $buscarEtapa->buscarEtapasCusto();
@@ -336,7 +344,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $buscarRecurso = new Proposta_Model_DbTable_Verificacao();
         $this->view->Recurso = $buscarRecurso->buscarFonteRecurso();
 
-        $buscarUnidade = new Proposta_Model_DbTable_PlanilhaUnidade();
+        $buscarUnidade = new Proposta_Model_DbTable_TbPlanilhaUnidade();
         $this->view->Unidade = $buscarUnidade->buscarUnidade();
 
         $this->view->idPreProjeto = $this->idPreProjeto;
@@ -443,8 +451,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
         $this->view->Item = $buscarItem;
 
-        $buscarProduto = ManterorcamentoDAO::buscarProdutos($this->idPreProjeto);
-        $this->view->Produtos = $buscarProduto;
+        $buscarProduto = new Proposta_Model_DbTable_PlanilhaProposta();
+        $this->view->Produtos = $buscarProduto->buscarProdutos($this->idPreProjeto);
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
@@ -592,7 +600,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $dsJustificativa = utf8_decode(substr(trim(strip_tags($_POST['editor1'])),0,500));
             $tipoCusto = 'A';
 
-//            try {
+            try {
 
                 $db= Zend_Db_Table::getDefaultAdapter();
                 $dados = array(	'idprojeto'=>$idProposta,

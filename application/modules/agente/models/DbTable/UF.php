@@ -29,20 +29,15 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
      */
     public function buscar()
     {
-
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-            array('uf' => $this->_name),
-            array('iduf as id',
-                'sigla as descricao'
-                ),
+            $this->_name,
+            array('uf'=>'iduf',
+                'descricao'=> 'sigla'),
             $this->_schema
         );
-
         $select->order('sigla');
-
-
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -62,8 +57,8 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
     public function buscarRegiao($regiao)
     {
         $objEstado = self::obterInstancia();
-        $sql = 'SELECT idUF AS id, Descricao AS descricao 
-			FROM ' . GenericModel::getStaticTableName($objEstado->_schema, $objEstado->_name) . " 
+        $sql = 'SELECT idUF AS id, Descricao AS descricao
+			FROM ' . GenericModel::getStaticTableName($objEstado->_schema, $objEstado->_name) . "
 			WHERE Regiao = '{$regiao}'
 			ORDER BY Sigla";
 

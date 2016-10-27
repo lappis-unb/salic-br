@@ -213,6 +213,9 @@ CREATE TABLE sac.tbPlanilhaUnidade
   Sigla VARCHAR(20) NOT NULL,
   Descricao VARCHAR(50) NOT NULL
 );
+CREATE SEQUENCE sac.tbplanilhaunidade_idunidade_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.tbplanilhaunidade ALTER COLUMN idunidade SET DEFAULT nextval('sac.tbplanilhaunidade_idunidade_seq');
+ALTER SEQUENCE sac.tbplanilhaunidade_idunidade_seq OWNED BY sac.tbplanilhaunidade.idunidade;
 CREATE TABLE sac.tbReuniao
 (
   idNrReuniao INT PRIMARY KEY NOT NULL,
@@ -8217,7 +8220,9 @@ CREATE TABLE sac.tbItensPlanilhaProduto
     CONSTRAINT FK_tbItensPlanilhaProduto_tbPlanilhaItens FOREIGN KEY (idPlanilhaItens) REFERENCES sac.tbPlanilhaItens (idPlanilhaItens)
 );
 CREATE UNIQUE INDEX IX_tbItensPlanilhaProduto ON tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens);
-
+CREATE SEQUENCE sac.tbitensplanilhaproduto_iditensplanilhaproduto_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.tbitensplanilhaproduto ALTER COLUMN iditensplanilhaproduto SET DEFAULT nextval('sac.tbitensplanilhaproduto_iditensplanilhaproduto_seq');
+ALTER SEQUENCE sac.tbitensplanilhaproduto_iditensplanilhaproduto_seq OWNED BY sac.tbitensplanilhaproduto.iditensplanilhaproduto;
 
 CREATE SEQUENCE sac.verificacao_idverificacao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE sac.verificacao ALTER COLUMN idverificacao SET DEFAULT nextval('sac.verificacao_idverificacao_seq');

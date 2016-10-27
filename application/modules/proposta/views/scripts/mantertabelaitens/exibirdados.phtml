@@ -15,7 +15,7 @@
         var id = idProduto,
             divMsg = $('#divMsg');
         divMsg.show();
-        divMsg.html('<center><img src="../public/img/ajax.gif" /><br />Carregando...<center>');
+        divMsg.html('<center><img src="<?php echo $this->baseUrl(); ?>/../public/img/ajax.gif" /><br />Carregando...<center>');
 
         $.ajax({
             type: 'POST',
@@ -29,7 +29,7 @@
 
             },
             error: function (data){
-                divMsg.html("Falha na recupera��o dos dados.\nN�o foi poss�vel carregar agente!");
+                divMsg.html("Falha na recupera&ccedil;&atilde;o dos dados.\nN&atilde;o foi poss&iacute;vel carregar agente!");
             }
         });
     }
@@ -40,7 +40,7 @@
 
         var divMsg = $('#divMsg2');
         divMsg.show();
-        divMsg.html('<center><img src="../public/img/ajax.gif" /><br />Carregando...<center>');
+        divMsg.html('<center><img src="<?php echo $this->baseUrl(); ?>/../public/img/ajax.gif" /><br />Carregando...<center>');
 
         $.ajax({
             type: 'POST',
@@ -55,7 +55,7 @@
 
             },
             error: function (data){
-                divMsg.html("Falha na recupera��o dos dados.\nN�o foi poss�vel carregar agente!");
+                divMsg.html("Falha na recupera&ccedil;&atilde;o dos dados.\nN&atilde;o foi poss&iacute;vel carregar agente!");
             }
         });
     }

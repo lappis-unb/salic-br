@@ -498,22 +498,11 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         }
     }
 
-    public function getExpressionTrim($string, $strAlias = null)
+    public function getExpressionTrim($strColumn)
     {
-        if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
-            $strTrim = 'ltrim';
-        } else {
-            $strTrim = 'trim';
-        }
-
-        if (is_null($strAlias)) {
-            return new Zend_Db_Expr("{$strTrim}( {$string})");
-        } else {
-            return new Zend_Db_Expr("({$strTrim} ({$string})) as {$strAlias}");
-        }
+        $strTrim = ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) ? 'ltrim' : 'trim';
+        return new Zend_Db_Expr("{$strTrim}(' . $strColumn . ')");
     }
-
-
     /**
      * Retorna o resultado com chave e valor apenas.
      *

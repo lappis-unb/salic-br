@@ -82,9 +82,6 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
 
         $sql->order(['e.status Desc', 'n.descricao Asc']);
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-//        echo '<pre>';
-//        print_r($sql->assemble());
-//        exit;
         return $db->fetchAll($sql);
     }
 

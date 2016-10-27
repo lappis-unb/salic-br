@@ -9,11 +9,10 @@
  * @link http://www.cultura.gov.br
  */
 
-class PlanoDistribuicaoProduto extends MinC_Db_Table_Abstract {
-    protected $_banco  = "SAC";
-    protected $_schema = "dbo";
-    protected $_name   = "PlanoDistribuicaoProduto";
-
+class Proposta_model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abstract {
+    protected $_schema = 'sac';
+    protected $_name   = 'PlanoDistribuicaoProduto';
+    protected $_primary = 'idplanodistribuicao';
 
     /**
      * M�todo para cadastrar
@@ -113,4 +112,30 @@ class PlanoDistribuicaoProduto extends MinC_Db_Table_Abstract {
         return $this->fetchAll($slctUnion);
     }
 
+    public function buscarDadosCadastrarProdutos($idPreProjeto, $idProduto) {
+        $select = $this->select();
+
+        $select->setIntegrityCheck(false);
+
+        $select->distinct(true);
+
+        $select->from(
+            array('pd'=>$this->getName('PlanoDistribuicaoProduto')),
+            array('codigoproduto'=>'pd.idproduto',
+                'idproposta'=> 'pd.idprojeto'
+            ),
+            $this->_schema
+        );
+
+        $select->where('idproduto = ?',$idProduto);
+
+        $select->where('idprojeto = ?',$idPreProjeto);
+
+        $select->where('pd.stplanodistribuicaoproduto = ?', 1);
+
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        return $db->fetchAll($select);
+    }
 } // fecha class
