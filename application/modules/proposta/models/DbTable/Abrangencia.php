@@ -133,7 +133,7 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
      * Apaga locais de ralizacao a partir do ID do PreProjeto
      * @param number $idProjeto - ID do PerProjeto ao qual as lcoaliza��es est�o vinculadas
      * @return true or false
-     * @todo colocar padr�o ORM
+     * @todo colocar padrao ORM
      */
     public function excluirPeloProjeto($idProjeto)
     {
@@ -259,7 +259,7 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
      * @param array $dados
      * @return bool
      */
-    public  function excluir($where)
+    public function excluir($where)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -280,29 +280,28 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
 
 
     /**
-     * M�todo para alterar
+     * metodo para alterar
      * @access public
      * @
      * @param array $dados
      * @return bool
+     * @todo verificar impactos e remover, faz a mesma coisa da abstract
      */
-    public function alterar($dados, $where)
+    public function alterar($dados, $where, $dbg = false)
     {
-        $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idAbrangencia = $where";
-        $alterar = $db->update("SAC.dbo.Abrangencia", $dados, $where);
+        $alterar = $this->update( $dados, $where);
 
         if ($alterar) {
             return true;
         } else {
             return false;
         }
-    } // fecha m�todo alterar()
+    } // fecha metodo alterar()
 
 
-    public  function buscarAbrangenciasAtuais($idProjeto, $idPais, $idUF, $idMunicipioIBGE)
+    public function buscarAbrangenciasAtuais($idProjeto, $idPais, $idUF, $idMunicipioIBGE)
     {
         $sql = "SELECT * from SAC.dbo.Abrangencia
                     WHERE
@@ -649,7 +648,15 @@ LEFT JOIN BDCORPORATIVO.scSAC.tbAvaliacaoSubItemPedidoAlteracao tasipa ON (tasip
         $select->from(
             array('a' => $this->_name),
             array(
-                 new Zend_Db_Expr("(CASE a.idpais WHEN 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'  ELSE p.descricao END) as pais"),
+                new Zend_Db_Expr("
+                    CASE WHEN a.idpais = 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'
+                        ELSE p.Descricao
+                    END as Pais"),
+                new Zend_Db_Expr("CASE a.pais WHEN 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'
+                        ELSE p.Descricao END as Pais"),
+                'Pais' => new Zend_Db_Expr("CASE WHEN a.idpais = 0 THEN 'N&atilde;o &eacute; possivel informar o local de realiza&ccedil;&atilde;o do projeto'
+                     ELSE p.Descricao
+                      END"),
                 'u.Descricao as UF',
                 'm.Descricao as Cidade',
                 'x.dtInicioDeExecucao',

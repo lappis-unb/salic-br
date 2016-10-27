@@ -1,11 +1,11 @@
-0<?php
+<?php
 
 class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract {
 
     //protected $_name = 'SAC.dbo.tbPlanilhaProposta';
+    protected $_banco = 'sac';
     protected $_schema= 'sac';
-    protected $_name = 'tbPlanilhaProposta';
-    protected $_primary = 'idplanilhaproposta';
+    protected $_name = 'tbplanilhaproposta';
 
     public function somarPlanilhaProposta($idprojeto, $fonte=null, $outras=null, $where=array()) {
         $somar = $this->select();
@@ -84,83 +84,69 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract {
         return $this->fetchAll($select);
     }
 
-    public  function Orcamento($id_projeto)
+    public function Orcamento($id_projeto)
     {
-        $sql = "SELECT
-                    idPlanilhaProposta,
-                    idProjeto,
-                    idProduto,
-                    idEtapa,
-                    idPlanilhaItem,
-                    Descricao,
-                    Unidade,
-                    Quantidade,
-                    Ocorrencia,
-                    ValorUnitario,
-                    QtdeDias,
-                    TipoDespesa,
-                    TipoPessoa,
-                    Contrapartida,
-                    FonteRecurso,
-                    UfDespesa,
-                    MunicipioDespesa,
-                    idUsuario,
-                    CAST(dsJustificativa AS TEXT) AS dsJustificativa,
-                    (SELECT Descricao FROM SAC.dbo.tbPlanilhaEtapa WHERE idPlanilhaEtapa = P.idEtapa) as Etapa,
-                    (select Descricao from SAC.dbo.tbPlanilhaItens where idPlanilhaItens = P.idPlanilhaItem) as Item,
-                    (select descricao from SAC.dbo.tbPlanilhaUnidade where idUnidade = P.Unidade) as UnidadeF,
-                    (select Descricao from SAC.dbo.Verificacao where idVerificacao=P.FonteRecurso)as FonteRecursoF,
-                    (select descricao from Agentes.dbo.uf where iduf = P.UfDespesa) as UfDespesaF,
-                    (select descricao from agentes.dbo.Municipios where idMunicipioIBGE=P.MunicipioDespesa) as MunicipioDespesaF,
-                    (SELECT Descricao from SAC.dbo.Produto where Codigo = P.idProduto) as ProdutoF
-                FROM
-                    SAC.dbo.tbPlanilhaProposta as P
-                WHERE
-                    idProjeto = ".$id_projeto."
-                ORDER BY
-                    idEtapa,idProduto";
+    // @todo limpar
+//        $sql = "SELECT
+//                    idPlanilhaProposta,
+//                    idProjeto,
+//                    idProduto,
+//                    idEtapa,
+//                    idPlanilhaItem,
+//                    Descricao,
+//                    Unidade,
+//                    Quantidade,
+//                    Ocorrencia,
+//                    ValorUnitario,
+//                    QtdeDias,
+//                    TipoDespesa,
+//                    TipoPessoa,
+//                    Contrapartida,
+//                    FonteRecurso,
+//                    UfDespesa,
+//                    MunicipioDespesa,
+//                    idUsuario,
+//                    CAST(dsJustificativa AS TEXT) AS dsJustificativa,
+//                    (SELECT Descricao FROM SAC.dbo.tbPlanilhaEtapa WHERE idPlanilhaEtapa = P.idEtapa) as Etapa,
+//                    (select Descricao from SAC.dbo.tbPlanilhaItens where idPlanilhaItens = P.idPlanilhaItem) as Item,
+//                    (select descricao from SAC.dbo.tbPlanilhaUnidade where idUnidade = P.Unidade) as UnidadeF,
+//                    (select Descricao from SAC.dbo.Verificacao where idVerificacao=P.FonteRecurso)as FonteRecursoF,
+//                    (select descricao from Agentes.dbo.uf where iduf = P.UfDespesa) as UfDespesaF,
+//                    (select descricao from agentes.dbo.Municipios where idMunicipioIBGE=P.MunicipioDespesa) as MunicipioDespesaF,
+//                    (SELECT Descricao from SAC.dbo.Produto where Codigo = P.idProduto) as ProdutoF
+//                FROM
+//                    SAC.dbo.tbPlanilhaProposta as P
+//                WHERE
+//                    idProjeto = ".$id_projeto."
+//                ORDER BY
+//                    idEtapa,idProduto";
 
-        try
-        {
-            $db= Zend_Db_Table::getDefaultAdapter();
-            $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        }
-        catch (Zend_Exception_Db $e)
-        {
-            $this->view->message = $e->getMessage();
-        }
-
-        return $db->fetchAll($sql);
-    }
-
-    public function listarDadosCadastrarCustos($idPreProjeto)
-    {
-        $db= Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $sql = $db->select()
-            ->from(['tpp' => 'tbplanilhaproposta'], 'tpp.idprojeto as idProposta', $this->getSchema('sac'))
-            ->where('tpp.idProjeto = ?', $idPreProjeto)
-            ->limit(1)
-        ;
-        return $db->fetchAll($sql);
-    }
-
-    public function buscarDadosCadastrarCustos($idPreProjeto) {
-        $select = $this->select();
-        $select->setIntegrityCheck(false);
-        $select->from(
-            array('tpp'=>$this->_name),
-            array('idproposta'=>'tpp.idprojeto'),
-            $this->_schema
-        );
-        $select->limit(1);
-
-        $select->where('tpp.idprojeto = ?',$idPreProjeto);
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        return $db->fetchAll($select);
+        $sql = $this->select()
+            ->setIntegrityCheck(false)
+            ->from(['p' => $this->_name], $this->_getCols(), $this->_schema);
+
+        $sql->joinLeft(array('e' => 'tbplanilhaetapa'), 'e.idplanilhaetapa = p.idetapa',  array( 'etapa' => 'e.descricao'), $this->_schema);
+
+        $sql->joinLeft(array('i' => 'tbplanilhaitens'), 'i.idplanilhaitens = p.idplanilhaitem', array( 'item' => 'i.descricao'), $this->_schema);
+
+        $sql->joinLeft(array('u' => 'tbplanilhaunidade'),'u.idUnidade = p.unidade', array('unidadef' => 'u.descricao'), $this->_schema );
+
+        $sql->joinLeft(array('v' => 'verificacao'),'v.idverificacao = p.fonterecurso', array('fonterecursof' => 'v.descricao'), $this->_schema );
+
+        $sql->joinLeft(array('pr' => 'produto'),'pr.codigo = p.idproduto', array('ProdutoF' => 'pr.descricao'), $this->_schema );
+
+        $sql->joinLeft(array('uf' => 'uf'), 'uf.iduf = p.ufdespesa', array('ufdespesaf' => 'uf.descricao'), $this->getSchema('agentes'));
+
+        $sql->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = p.municipiodespesa', array('municipiodespesaf' => 'm.descricao'), $this->getSchema('agentes'));
+
+        $sql->where('p.idprojeto = ?', $id_projeto);
+        $sql->order('p.idetapa','p.idproduto');
+
+       return $db->fetchAll($sql);
     }
 
 }

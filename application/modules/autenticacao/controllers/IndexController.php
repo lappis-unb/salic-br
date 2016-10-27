@@ -48,11 +48,11 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
             if (empty($username) || empty($password))
             {
-                throw new Exception("Login ou Senha inválidos!");
+                throw new Exception("Login ou Senha inv&aacute;lidos!");
             } else if (strlen($username) == 11 && !Validacao::validarCPF($username)) {
-                throw new Exception("O CPF informado é invalido!");
+                throw new Exception("O CPF informado &eacute; inv&aacute;lido!");
             } else if (strlen($username) == 14 && !Validacao::validarCNPJ($username)) {
-                throw new Exception("O CPF informado é invalido!");
+                throw new Exception("O CPF informado &eacute; inv&aacute;lido!");
             } else {
                 $Usuario = new Autenticacao_Model_Usuario();
                 $buscar = $Usuario->login($username, $password);
@@ -325,7 +325,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $mens .= "Esta &eacute; a sua senha tempor&aacute;ria de acesso ao Sistema de Apresenta&ccedil;&atilde;o de Projetos via Web do ";
             $mens .= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
             $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
-            $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n?o responda.<br><br>";
+            $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n&atilde;o responda.<br><br>";
             $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
 
             $email = $sgcAcessoBuscaCpfArray[0]['email'];
@@ -345,17 +345,22 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
      */
     public function alterarsenhaAction()
     {
-        $auth = Zend_Auth::getInstance();
+
+        // autenticacao proponente (Novo Salic)
+        parent::perfil(4);
+
+        /* ========== INICIO ID DO USUARIO LOGADO ========== */
+        $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
         $Usuario = new Autenticacao_Model_Usuario();
-        $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->cpf);
 
-        if ($idUsuario) {
-            $this->getIdUsuario = ($idUsuario) ? $idUsuario['idagente'] : $auth->getIdentity()->idusuario;
-            $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
-            parent::perfil(4);
-        }
+        // verifica se o usuario logado e agente
+        $idUsuario = $Usuario->getIdUsuario(null, $auth['cpf']);
 
-        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+        // caso nao tenha idAgente, atribui o idUsuario
+        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth['idusuario'];
+        $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
+
+//        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
         $this->view->cpf = "";
         $this->view->nome = "";
@@ -392,38 +397,56 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
             if (empty ($_POST['idUsuario'])) {
                 $idUsuario = $_POST['idUsuarioGet'];
-                $buscarSenha = $sgcAcesso->buscar(array('idusuario = ?' => $idUsuario))->toArray();
             } else {
                 $idUsuario = $_POST['idUsuario'];
-                $buscarSenha = $sgcAcesso->buscar(array('idusuario = ?' => $idUsuario))->toArray();
             }
-            $senhaAtualBanco = $buscarSenha[0]['senha'];
+
+            $buscarSenha = $sgcAcesso->findBy(array('idusuario' => $idUsuario));
+
+            $senhaAtualBanco = $buscarSenha['senha'];
 
             if (empty ($cpf)) {
-                $cpf = $buscarSenha[0]['cpf'];
+                $cpf = $buscarSenha['cpf'];
             }
 
             // busca a senha do banco TABELAS
-            $Usuarios = new Autenticacao_Model_Usuario();
-            $buscarCPF = $Usuarios->buscar(array('usu_identificacao = ?' => trim($cpf)));
+            $mdlUsuario = new Autenticacao_Model_Usuario();
+
+            $buscarCPF = $mdlUsuario->findBy(array('usu_identificacao' => $cpf));
+
             $cpfTabelas = count($buscarCPF) > 0 ? true : false;
-            $senhaTabelas = $Usuarios->verificarSenha(trim($cpf), $senhaAtual);
+            $senhaTabelas = $mdlUsuario->verificarSenha(trim($cpf), $senhaAtual);
 
             $senhaCript = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaAtual);
 
-            if ($buscarSenha[0]['situacao'] != 1) {
+            if ($buscarSenha['situacao'] != 1) {
 
                 $comparaSenha = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaAtual);
-                $SenhaFinal = $comparaSenha[0]->senha;
 
-                if (trim($senhaAtualBanco) != trim($SenhaFinal) && ($cpfTabelas && !$senhaTabelas)) {
+                $SenhaFinal = $comparaSenha;
+
+                //@todo verificar as regras de negocios para $cpfTabelas
+                if (trim($senhaAtualBanco) != trim($SenhaFinal) && !$senhaTabelas) {
+
                     parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
                 }
+
+                if (trim($senhaAtualBanco) != trim($SenhaFinal) && ($cpfTabelas && !$senhaTabelas)) {
+
+                    parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
+                }
+
             } else {
+
+                //@todo verificar as regras de negocios para $cpfTabelas
+                if (trim($senhaAtualBanco) != trim($senhaCript) && !$senhaTabelas) {
+                    parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
+                }
 
                 if (trim($senhaAtualBanco) != trim($senhaCript) && ($cpfTabelas && !$senhaTabelas)) {
                     parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
                 }
+
             }
             if (trim($senhaNova) == trim($repeteSenha) && !empty($senhaNova) && !empty($repeteSenha)) {
 
@@ -453,9 +476,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 $mens = "Ol&aacute; " . $nome . ",<br><br>";
                 $mens .= "Senha....: " . $senhaNova . "<br><br>";
                 $mens .= "Esta &eacute; a sua nova senha de acesso ao Sistema de Apresenta&ccedil;&atilde;o de Projetos via Web do ";
-                $mens .= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
-                $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
-                $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor não responda.<br><br>";
+                $mens .= "Minist&eacute;rio da Cultura.<br><br>";
+                $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n&atilde;o responda.<br><br>";
                 $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
 
                 $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
@@ -470,7 +492,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         // autenticacao proponente (Novo Salic)
 
         /* ========== INICIO ID DO USUARIO LOGADO ========== */
-        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $Usuario = new Autenticacao_Model_Usuario();
 
         // verifica se o usuario logado e agente
@@ -489,7 +511,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         $this->view->nome = "";
 
         if (count(Zend_Auth::getInstance()->getIdentity()) > 0) {
-            $auth = Zend_Auth::getInstance();// instancia da autentica��o
+            $auth = Zend_Auth::getInstance();// instancia da autenticacao
 
             $idUsuario = $auth->getIdentity()->usu_codigo;
             $cpf = $auth->getIdentity()->usu_identificacao;
@@ -540,7 +562,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             }
 
             if (strlen(trim($senhaNova)) < 5) {
-                parent::message("Por favor, sua nova senha dever� conter no m�nimo 5 d�gitos!", "/autenticacao/index/alterarsenhausuario?idUsuario=$idUsuario", "ALERT");
+                parent::message("Por favor, sua nova senha dever&aacute; conter no m&iacute;nimo 5 d&iacute;gitos!", "/autenticacao/index/alterarsenhausuario?idUsuario=$idUsuario", "ALERT");
             }
 
             $alterar = $Usuario->alterarSenhaSalic($cpf, $senhaNova);
@@ -595,7 +617,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
                 if ($buscar) // acesso permitido
                 {
-                    $auth = Zend_Auth::getInstance(); // instancia da autentica�?o
+                    $auth = Zend_Auth::getInstance(); // instancia da autenticacao
 
                     // registra o primeiro grupo do usu&aacute;rio (pega unidade autorizada, organiza e grupo do usuaaio)
                     $Grupo = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuario
@@ -633,6 +655,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         // caso nao tenha idAgente, atribui o idUsuario
         $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth['idusuario'];
         $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
+
         /* ========== FIM ID DO USUARIO LOGADO ========== */
 
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
