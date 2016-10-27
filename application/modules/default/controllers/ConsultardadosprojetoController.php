@@ -2703,8 +2703,8 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
         
         /* DADOS DO ITEM ATIVO */
         $where = array();
-        $where['idPlanilhaAprovacao = ? or idPlanilhaAprovacaoPai = ?'] = $idPlanilhaAprovacao;
-        $where['stAtivo = ?'] = 'S';
+        $where['(idPlanilhaAprovacao = ? or idPlanilhaAprovacaoPai = ?)'] = $idPlanilhaAprovacao;
+
         $planilhaAtiva = $tbPlanilhaAprovacao->buscarDadosAvaliacaoDeItemRemanejamento($where);
         
         /* DADOS DO ITEM PARA EDICAO DO REMANEJAMENTO */
@@ -2856,7 +2856,13 @@ class ConsultarDadosProjetoController extends GenericControllerNew {
         }
         
         //BUSCA OS DADOS DO ITEM ORIGINAL PARA VALIDA��O DE VALORES
-        $valoresItem = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'StAtivo=?'=>'S', 'idPlanilhaAprovacao=?'=>$_POST['idPlanilha']))->current();
+        $valoresItem = $tbPlanilhaAprovacao->buscar(
+            array(
+                'IdPRONAC=?'=>$idPronac,
+                'StAtivo=?'=>'S',
+                '(idPlanilhaAprovacaoPai=? OR idPlanilhaAprovacao=?)'=> $_POST['idPlanilha']
+            )
+        )->current();
         $vlAtual = @number_format(($valoresItem['qtItem']*$valoresItem['nrOcorrencia']*$valoresItem['vlUnitario']), 2, '', '');
         $vlAtualPerc = $vlAtual*20/100;
         
