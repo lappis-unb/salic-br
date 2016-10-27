@@ -200,19 +200,6 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                 pd.idProjeto as idProposta
                 FROM SAC.dbo.PlanoDistribuicaoProduto AS pd
                 WHERE (pd.idProduto = $idProduto and pd.idProjeto = $idPreProjeto) AND pd.stPlanoDistribuicaoProduto = 1";
-//        $select = $this->select();
-//        $select->setIntegrityCheck(false);
-//        $select->distinct(true);
-//        $select->from(
-//            array('pd'=>$this->getName('PlanoDistribuicaoProduto')),
-//            array('codigoproduto'=>'pd.idproduto',
-//                'idproposta'=> 'pd.projeto'
-//            ),
-//            $this->_schema
-//        );
-//        $select->where('codigoproduto = ?',$idProduto);
-//        $select->where('idproposta = ?',$idPreProjeto);
-//        $select->where('pd.stplanodistribuicaoproduto = ?', 1);
 
         //x($sql);
         $db= Zend_Db_Table::getDefaultAdapter();
@@ -293,6 +280,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public static function buscarEtapasProdutos($idPreProjeto)
     {
+        echo '<pre>';
+        var_dump ('Método transferido para : Proposta_Model_DbTable_PreProjeto');
+        exit;
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -308,6 +298,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public function listarEtapasProdutos($idPreProjeto)
     {
+
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -393,7 +384,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         return $db->fetchAll($sql);
     }
 
-    public static function buscarEtapasCusto() {
+    public  function buscarEtapasCusto() {
         $sql = "SELECT
 		idplanilhaetapa ,
 		Descricao
@@ -504,6 +495,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
      */
     public function listarItensProdutos($idPreProjeto, $idItem = null)
     {
+        echo '<pre>';
+        var_dump ('método transferido para Proposta Model DbtTable PreProjeto');
+        exit;
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -694,6 +688,10 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public static function buscarProdutos($idPreProjeto) {
 
+        echo '<pre>';
+        var_dump ('Método transferido para Proposta Model Dbtable PreProjeto');
+        exit;
+
         $sql = "SELECT p.Codigo as CodigoProduto,
                     p.Descricao as DescricaoProduto,
                     pre.idPreProjeto as PreProjeto,
@@ -723,6 +721,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public function listarProdutos($idPreProjeto)
     {
+        echo '<pre>';
+        var_dump ('Método transferido para Proposta Model DbTable Preprojeto');
+        exit;
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -764,6 +765,12 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     									$fonte = null, $unidade = null, $quantidade = null, $ocorrencia = null, $vlunitario = null, $qtdDias = null, $dsJustificativa = null) {
         $sql = "select  tpp.idUsuario,
                         tpp.idProjeto as idProposta,
+                        tpp.Quantidade,
+                        tpp.Ocorrencia,
+                        tpp.ValorUnitario,
+                        tpp.QtdeDias,
+                        tpp.dsJustificativa as Justificativa,
+                        tpp.idPlanilhaProposta
                         tpe.tpCusto as custo,
                         tpe.Descricao as etapa,
                         tpe.idPlanilhaEtapa as idEtapa,
@@ -774,14 +781,8 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                         mec.Descricao as mecanismo,
                         un.idUnidade as idUnidade,
                         un.Descricao as Unidade,
-                        tpp.Quantidade,
-                        tpp.Ocorrencia,
-                        tpp.ValorUnitario,
-                        tpp.QtdeDias,
                         veri.idVerificacao as idFonteRecurso,
                         veri.Descricao as DescricaoFonteRecurso,
-                        tpp.dsJustificativa as Justificativa,
-                        tpp.idPlanilhaProposta
                     FROM SAC..tbPlanilhaProposta tpp
                             left JOIN SAC..Produto pd on pd.Codigo = tpp.idProduto
                             INNER JOIN SAC..tbPlanilhaEtapa tpe on tpe.idPlanilhaEtapa = tpp.idEtapa
@@ -834,6 +835,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
         $sql.= " ORDER BY tpe.Descricao ";
 
+        throw new Exception('Método transferido para tbplanilhaproposta')
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -892,6 +894,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
      */
     public function listarItensCustosAdministrativos($idPreProjeto, $tipoCusto)
     {
+        echo '<pre>';
+        var_dump ('Método transferido para : Proposta->Model->DbTable->TbPlanilhaEtapa');
+        exit;
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

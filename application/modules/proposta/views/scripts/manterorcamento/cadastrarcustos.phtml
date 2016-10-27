@@ -326,7 +326,7 @@
                                 <select name="fonterecurso" class="select_simples" style="width: 90%" id="fonterecurso">
                                     <option value="<?php echo "" ?>"> - Selecione - </option>
                                     <?php foreach($this->Recurso as $recurso) {?>
-                                    <option value="<?php echo $recurso->idVerificacao ?>"><?php echo $recurso->VerificacaoDescricao ?></option>
+                                    <option value="<?php echo $recurso->idverificacao ?>"><?php echo $recurso->verificacaodescricao ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -379,28 +379,15 @@
                     <input type="hidden" name="etapa" id="etapa" value="<?php echo $this->etapaSelecionada["id"]; ?>" />
                     <table cellpadding="0" cellspacing="0" width="100%">
                         <tr>
-                            <!--
                             <td align="justify" width="20%"><label for="etapa">ETAPA / META</label>
                                 <br />
                                 <select class="select_simples valida" id='etapa' name="etapa">
                                     <option value=""> - Selecione - </option>
                                         <?php foreach($this->Etapa as $etapa) {?>
-                                    <option value="<?php echo $etapa->idplanilhaetapa ?>"><?php echo $etapa->Descricao ?></option>
+                                    <option value="<?php echo $etapa->idplanilhaetapa ?>"><?php echo $etapa->descricao ?></option>
                                             <?php } ?>
                                 </select>
-
                             </td>
-                            -->
-                            <td align="left"><label for="item">ITEM<span class="red">*</span></label><br />
-                                <select class="select_simples valida" id='item' name="item" style="width:250px">
-                                    <option> - Selecione uma Etapa - </option>
-                                </select>
-                            </td>
-                            <!--
-                            <td align="center"><br />
-                                <label><input type="button" class="btn_alterar" id='alteraretapa'></label>
-                            </td>
-                            -->
                         </tr>
                     </table>
                 </fieldset>
@@ -416,7 +403,7 @@
                                 <select name="unidade" class="select_simples" id="unidade" style="width: 200px">
                                     <option value="<?php echo "" ?>"> - Selecione - </option>
                                     <?php foreach($this->Unidade as $unidade) {?>
-                                    <option value="<?php echo $unidade->idUnidade ?>"><?php echo $unidade->Descricao ?></option>
+                                    <option value="<?php echo $unidade->idunidade ?>"><?php echo $unidade->descricao ?></option>
                                         <?php } ?>
 
                                 </select>
