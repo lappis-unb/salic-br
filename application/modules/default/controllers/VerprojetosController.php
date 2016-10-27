@@ -1432,7 +1432,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                             if($dados->siFaseProjeto == 2){
                                 if($dados->tpSolicitacao == 'PI' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
 
-                                    $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+                                    $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
                                     $dadosProdutos = $PlanoDistribuicaoProduto->buscarProdutosProjeto($dados->IdPRONAC);
                                     $this->view->produtosReconsideracao = $dadosProdutos;
 
@@ -1470,7 +1470,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                             if($dados->siFaseProjeto == 2){
                                 if($dados->tpSolicitacao == 'PI' || $dados->tpSolicitacao == 'EO' || $dados->tpSolicitacao == 'OR'){
 
-                                    $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+                                    $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
                                     $dadosProdutos = $PlanoDistribuicaoProduto->buscarProdutosProjeto($dados->IdPRONAC);
                                     $this->view->produtosRecurso = $dadosProdutos;
 
@@ -2046,7 +2046,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         $PlanoDeDivulgacao = $projetos->buscarPlanoDeDivulgacao($idpronac);
         $this->view->PlanoDeDivulgacao = $PlanoDeDivulgacao;
 
-        $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 
@@ -2089,7 +2089,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         $PlanoDeDivulgacao = $projetos->buscarPlanoDeDivulgacao($idpronac);
         $this->view->PlanoDeDivulgacao = $PlanoDeDivulgacao;
 
-        $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 
@@ -2135,7 +2135,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
             $PlanoDeDivulgacao = $projetos->buscarPlanoDeDivulgacao($idpronac);
             $this->view->PlanoDeDivulgacao = $PlanoDeDivulgacao;
 
-            $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+            $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
             $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
             $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 
@@ -2194,7 +2194,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         $PlanoDeDivulgacao = $projetos->buscarPlanoDeDivulgacao($idpronac);
         $this->view->PlanoDeDivulgacao = $PlanoDeDivulgacao;
 
-        $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+        $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
         $PlanoDeDistribuicao = $PlanoDistribuicaoProduto->buscarPlanoDeDistribuicao($idpronac);
         $this->view->PlanoDeDistribuicao = $PlanoDeDistribuicao;
 

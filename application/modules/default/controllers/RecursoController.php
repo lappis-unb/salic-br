@@ -617,7 +617,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
 //                $tbDistribuicaoProjetoComissao = new tbDistribuicaoProjetoComissao();
 //                $tbDistribuicaoProjetoComissao->update($e, $w);
 
-                $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+                $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
                 $dadosProdutos = $PlanoDistribuicaoProduto->buscarProdutosProjeto($dados->IdPRONAC);
                 $this->view->produtos = $dadosProdutos;
 
@@ -715,7 +715,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $tbDistribuicaoProjetoComissao = new tbDistribuicaoProjetoComissao();
                 $tbDistribuicaoProjetoComissao->update($e, $w);
 
-                $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+                $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
                 $dadosProdutos = $PlanoDistribuicaoProduto->buscarProdutosProjeto($dados->IdPRONAC);
                 $this->view->produtos = $dadosProdutos;
 
@@ -1267,7 +1267,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     $this->view->nmPagina = 'Or�amento';
                 }
 
-                $PlanoDistribuicaoProduto = new PlanoDistribuicaoProduto();
+                $PlanoDistribuicaoProduto = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
                 $dadosProdutos = $PlanoDistribuicaoProduto->buscarProdutosProjeto($dados->IdPRONAC);
                 $this->view->produtos = $dadosProdutos;
 
