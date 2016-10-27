@@ -1,3 +1,17 @@
+Release 1.12.0
+  * Novo: [Avaliar pedido de prorrogação] Imprimir lista de pedidos de prorrogação
+  * Novo: [Avaliar pedido de prorrogação] Incluir pesquisa por PRONAC
+  * Fix: [Avaliar pedido de prorrogração] Adicionando possibilidade de gravar como "PROCESSADO" na tabela prorrogacaoModel
+  * Fix: [Avaliar pedido de prorrogração] removendo opção desnecessária
+  * Fix: [Publicação DOU] fix de sql - não altera situação do projeto se for alteração de "nome", "resumo", "razão social" ou "proponente"
+  * Fix: [Avaliar pedido de prorrogração] Adicionada opção de "processado"
+  * Fix: [Avaliar pedido de prorrogração] Botão de excluir funcional
+  * Fix: [Publicação DOU] corrigindo erro de SQL, que fazia com que não redirecionasse para portaria correta
+  * Fix: [Readequações] Em readequação de 20%, selecionando planilha correta quando já fez algum tipo de readequação anteriormente
+  * Fix: [Readequações] corrigindo mensagem de erro e limpando código comentado
+  * Fix: [Readequações] Distribuir/encaminhar readequação SAV gravando idAvaliador e siEncaminhamento correto
+  * Fix: [Readequações] Projetos que devem ser encaminhados para DOU não estavam sendo corretamente encaminhados - nome do projeto, resumo, alteração de razão social e alteração de proponente
+
 Release 1.11.2
   * Fix: [Readequações] Corrigindo listagem de destinatários/técnicos da SAV ao encaminhar projeto na avaliação de readequação
   * Fix: [Readequações] Adicionando caixa de erro caso ocorra problema no encaminhamento
