@@ -377,28 +377,28 @@
 				<th colspan="5">ENDERE&Ccedil;OS</th>
 			</tr>
 			<tr>
-				<td><label>CEP:</label> <?php echo Mascara::addMaskCep($end->Cep); ?></td>
-				<td><label>UF:</label> <?php echo $end->UF; ?></td>
-				<td><label>Cidade:</label> <?php echo $end->Municipio; ?></td>
+				<td><label>CEP:</label> <?php echo Mascara::addMaskCep($end->cep); ?></td>
+				<td><label>UF:</label> <?php echo $end->uf; ?></td>
+				<td><label>Cidade:</label> <?php echo $end->municipio; ?></td>
 			</tr>
 			<tr>
-				<td colspan="2"><label>Tipo de Endere&ccedil;o:</label> <?php echo $end->TipoEndereco; ?></td>
-				<td><label>Tipo de Logradouro:</label> <?php echo $end->dsTipoLogradouro; ?></td>
+				<td colspan="2"><label>Tipo de Endere&ccedil;o:</label> <?php echo $end->tipoendereco; ?></td>
+				<td><label>Tipo de Logradouro:</label> <?php echo $end->dstipologradouro; ?></td>
 			</tr>
 			<tr>
-				<td colspan="2"><label>Logradouro:</label> <?php echo $end->Logradouro; ?></td>
-				<td><label>N&uacute;mero:</label> <?php echo $end->Numero; ?></td>
+				<td colspan="2"><label>Logradouro:</label> <?php echo $end->logradouro; ?></td>
+				<td><label>N&uacute;mero:</label> <?php echo $end->numero; ?></td>
 			</tr>
 			<tr>
-				<td colspan="2"><label>Complemento:</label> <?php echo $end->Complemento; ?></td>
-				<td><label>Bairro:</label> <?php echo $end->Bairro; ?></td>
+				<td colspan="2"><label>Complemento:</label> <?php echo $end->complemento; ?></td>
+				<td><label>Bairro:</label> <?php echo $end->bairro; ?></td>
 			</tr>
 			<tr>
-				<td><label>Endere&ccedil;o para correspond&ecirc;ncia:</label> <?php echo $end->Status == "1" ? "SIM" : "N&Atilde;O"; ?></td>
-				<td colspan="2"><label>Autorizo divulgar o endere&ccedil;o:</label> <?php echo $end->Divulgar == "1" ? "SIM" : "N&Atilde;O"; ?></td>
+				<td><label>Endere&ccedil;o para correspond&ecirc;ncia:</label> <?php echo $end->status == "1" ? "SIM" : "N&Atilde;O"; ?></td>
+				<td colspan="2"><label>Autorizo divulgar o endere&ccedil;o:</label> <?php echo $end->divulgar == "1" ? "SIM" : "N&Atilde;O"; ?></td>
 			</tr>
 			<tr>
-				<td colspan="3" width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('', '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluiendereco','idEndereco' => $end->idEndereco, 'qtdEndereco' => $this->qtdEndereco, 'enderecoCorrespondencia' => $end->Status));?>');" /></td>
+				<td colspan="3" width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('', '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluiendereco','idEndereco' => $end->idendereco, 'qtdEndereco' => $this->qtdendereco, 'enderecoCorrespondencia' => $end->status));?>');" /></td>
 			</tr>
 		</table>
 

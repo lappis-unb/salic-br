@@ -831,9 +831,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      */
     public function enderecosAction() {
         $this->autenticacao();
-
         $idAgente = $this->_request->getParam("id");
-        $lista = Agente_Model_ManterAgentesDAO::buscarEnderecos($idAgente);
+
+        $tblEndereco = new Agente_Model_DbTable_EnderecoNacional();
+
+        $lista = $tblEndereco->buscarEnderecos($idAgente);
 
         $this->view->endereco = $lista;
         $this->view->qtdEndereco = count($lista);

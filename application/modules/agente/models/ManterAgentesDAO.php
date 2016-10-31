@@ -152,6 +152,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
      * @static
      * @param integer $idAgente
      * @return object
+     * @deprecated utilizar buscarEnderecos da DbTable Endereco Nacional
      */
     public static function buscarEnderecos($idAgente = null)
     {
