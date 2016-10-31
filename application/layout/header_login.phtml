@@ -64,16 +64,17 @@
 		<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/json.js"></script>
 	</head>
 	<body>
+        <?php echo $this->render('partials/barraBrasil.phtml')?>
 		<!-- ========== IN�CIO TOPO ========== -->
 		<div id="topo">
-			<div class="barra_governo">
+			<!-- div class="barra_governo">
 				<div class="fl">
 					<div class="fr">
 						<p><img src="<?php echo $this->baseUrl(); ?>/public/img/gov/brasil.png" alt="Governo Federal - Brasil - Pa&iacute;s rico &eacute; pa&iacute;s sem pobreza" title="Governo Federal - Brasil - Pa&iacute;s rico &eacute; pa&iacute;s sem pobreza" /></p>
 					</div>
 					<div id="combousuario"></div>
 				</div>
-			</div>
+			</div-->
 			<div id="logo">
 				<h1><a href="<?php echo $this->url(array('controller' => 'index', 'action' => ''), '', true); ?>" title="Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura">Salic</a></h1>
 			</div>

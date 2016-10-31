@@ -217,7 +217,4 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
             die;
         }
     }
-
-
-
 }
