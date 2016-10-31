@@ -21,7 +21,7 @@ class Proposta_Model_TbDeslocamentoMapper extends MinC_Db_Mapper
         parent::setDbTable('Proposta_Model_DbTable_TbDeslocamento');
     }
 
-    public function save(Proposta_Model_TbDeslocamento $model)
+    public function save($model)
     {
         return parent::save($model);
     }

@@ -122,15 +122,12 @@
             } // fecha funcao alterarPerfil()
         </script>
     </head>
-
     <body>
+        <?php echo $this->render('partials/barraBrasil.phtml')?>
         <!-- ========== INICIO TOPO ========== -->
         <div id="topo">
             <div class="barra_governo">
-                <div class="fl">
-                    <div class="fr">
-                        <p><img src="<?php echo $this->baseUrl(); ?>/public/img/gov/brasil.png" alt="Governo Federal - Brasil - Pa&iacute;s rico &eacute; pa&iacute;s sem pobreza" title="Governo Federal - Brasil - Pa&iacute;s rico &eacute; pa&iacute;s sem pobreza" /></p>
-                    </div>
+                <div >
                     <div id="combousuario">
                         <label for="perfilXgrupo"> </label>
                         <select name="perfilXgrupo" id="perfilXgrupo" class="perfilXgrupo" onchange="alterarPerfil(this.value);">
@@ -151,9 +148,6 @@
                     </div>
                 </div>
             </div>
-            <div id="logo">
-                <h1><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura">Salic</a></h1>
-            </div>
             <div id="atalhos">
                 <ul>
                     <?php if (!empty($this->usuario->usu_identificacao) && !empty($this->usuario->usu_nome)){ ?>
@@ -161,6 +155,9 @@
                     <?php } ?>
                     <li class="sair"><a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), '', true); ?>" id="sairSistema" title="Sair do Sistema" onclick="logout(); return false;">Sair</a></li>
                 </ul>
+            </div>
+            <div id="logo">
+                <h1><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" title="Sistema de Apoio &agrave;s Leis de Incentivo &agrave; Cultura">Salic</a></h1>
             </div>
         </div>
         <!-- ========== FIM TOPO ========== -->
