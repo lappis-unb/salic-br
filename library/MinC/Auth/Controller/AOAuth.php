@@ -6,7 +6,7 @@
  * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
  * @since 20/10/16 14:58
  */
-abstract class MinC_Auth_Controller_AOAuth extends Zend_Controller_Action
+abstract class MinC_Auth_Controller_AOAuth extends MinC_Controller_Action_Abstract
 {
     /**
      * @var array
