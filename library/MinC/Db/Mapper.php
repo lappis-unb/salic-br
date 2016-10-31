@@ -128,11 +128,14 @@ class MinC_Db_Mapper
         }
     }
 
+    public function isValid()
+    {
+        return true;
+    }
+
     /**
-     *
      * @name save
      * @param $model
-     *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  01/09/2016
      *
@@ -140,25 +143,29 @@ class MinC_Db_Mapper
      */
     public function save($model)
     {
-        $table = $this->getDbTable();
-        $pk = is_array($table->getPrimary())? reset($table->getPrimary()) : $table->getPrimary();
-        $method = 'get' . ucfirst($pk);
-        $pkValue = $model->$method();
-        $data = array_filter($model->toArray(), 'strlen');
+        if ($this->isValid()) {
 
-        if ($table->getSequence()) {
-            unset($data[$pk]);
-            if (empty($pkValue)) {
-                return $table->insert($data);
+            $table = $this->getDbTable();
+            $pk = is_array($table->getPrimary())? reset($table->getPrimary()) : $table->getPrimary();
+            $method = 'get' . ucfirst($pk);
+            $pkValue = $model->$method();
+            $data = array_filter($model->toArray(), 'strlen');
+
+            if ($table->getSequence()) {
+                unset($data[$pk]);
+                if (empty($pkValue)) {
+                    return $table->insert($data);
+                } else {
+                    $table->update($data, array($pk . ' = ?' => $pkValue));
+                    return $pkValue;
+                }
             } else {
-                $table->update($data, array($pk . ' = ?' => $pkValue));
+                $row = $table->find($pkValue)->current();
+                if (!$row) $row = $table->createRow();
+                $row->setFromArray($data)->save();
                 return $pkValue;
             }
-        } else {
-            $row = $table->find($pkValue)->current();
-            if (!$row) $row = $table->createRow();
-            $row->setFromArray($data)->save();
-            return $pkValue;
+
         }
     }
 
