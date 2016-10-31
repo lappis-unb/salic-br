@@ -481,7 +481,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 
     public function getExpressionToChar($strColumn, $strFormat = 'DD/MM/YYYY')
     {
-
         if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
             return new Zend_Db_Expr('CONVERT(CHAR(10), ' . $strColumn . ' , 103)');
         } else {
@@ -510,6 +509,24 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
             return new Zend_Db_Expr("{$strTrim}( {$string})");
         } else {
             return new Zend_Db_Expr("({$strTrim} ({$string})) as {$strAlias}");
+        }
+    }
+
+    public function getExpressionDateDiff($strColumn, $strColumnTwo, $strDatePart = 'day')
+    {
+        if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            return new Zend_Db_Expr("DATEDIFF ( {$strDatePart} , {$strColumn} , {$strColumnTwo})");
+        } else {
+            return new Zend_Db_Expr("DATE_PART('{$strDatePart}', {$strColumn}) - DATE_PART('{$strDatePart}', {$strColumnTwo})");
+        }
+    }
+
+    public function getExpressionDatePart($strColumn, $strDatePart = 'month')
+    {
+        if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            return new Zend_Db_Expr("{$strDatePart}({$strColumn})");
+        } else {
+            return new Zend_Db_Expr("DATE_PART('{$strDatePart}', {$strColumn})");
         }
     }
 

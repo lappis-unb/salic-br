@@ -56,7 +56,7 @@ class Agente_Model_Agentes extends MinC_Db_Model
      */
     public function setCnpjcpf($cnpjcpf)
     {
-        $this->_cnpjcpf = $cnpjcpf;
+        $this->_cnpjcpf = Mascara::delMaskCNPJ(trim($cnpjcpf));
         return $this;
     }
 

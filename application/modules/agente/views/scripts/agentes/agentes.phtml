@@ -29,7 +29,7 @@
     <div id="confirma"></div>
     <div>
         <?php require_once "inc/cabecalho.php";?>
-        <table class="tabela <?php echo $this->dados[0]->idEndereco ? 'sumir' : ''; ?>">
+        <table class="tabela <?php echo $this->dados[0]->idendereco ? 'sumir' : ''; ?>">
             <tr>
                 <th>ENDERE&Ccedil;OS</th>
             </tr>
@@ -38,30 +38,30 @@
             </tr>
         </table>
 
-        <table id="tabEndereco" class="tabela <?php echo $this->dados[0]->idEndereco ? '' : 'sumir'; ?>">
+        <table id="tabEndereco" class="tabela <?php echo $this->dados[0]->idendereco ? '' : 'sumir'; ?>">
             <tr>
                 <th colspan="3">ENDERE&Ccedil;OS</th>
             </tr>
             <tr>
-                <td><label>CEP:</label> <?php echo Mascara::addMaskCep($this->dados[0] ->CEP); ?></td>
-                <td><label>UF:</label> <?php echo $this->dados[0] ->dsUF; ?></td>
-                <td><label>Cidade:</label> <?php echo !empty($this->dados[0]->dsCidade) ? $this->dados[0]->dsCidade : '' ?></td>
+                <td><label>CEP:</label> <?php echo Mascara::addMaskCep($this->dados[0] ->cep); ?></td>
+                <td><label>UF:</label> <?php echo $this->dados[0] ->dsuf; ?></td>
+                <td><label>Cidade:</label> <?php echo !empty($this->dados[0]->dscidade) ? $this->dados[0]->dscidade : '' ?></td>
             </tr>
             <tr>
-                <td colspan="2"><label>Tipo de Endere&ccedil;o:</label> <?php echo $this->dados[0] ->dsTipoEndereco; ?></td>
-                <td><label>Tipo de Logradouro:</label> <?php echo $this->dados[0] ->dsTipoLogradouro; ?></td>
+                <td colspan="2"><label>Tipo de Endere&ccedil;o:</label> <?php echo $this->dados[0] ->dstipoendereco; ?></td>
+                <td><label>Tipo de Logradouro:</label> <?php echo $this->dados[0] ->dstipologradouro; ?></td>
             </tr>
             <tr>
-                <td colspan="2"><label>Logradouro:</label> <?php echo $this->dados[0] ->Logradouro; ?></td>
-                <td><label>N&uacute;mero:</label> <?php echo $this->dados[0] ->Numero; ?></td>
+                <td colspan="2"><label>Logradouro:</label> <?php echo $this->dados[0] ->logradouro; ?></td>
+                <td><label>N&uacute;mero:</label> <?php echo $this->dados[0]->numero; ?></td>
             </tr>
             <tr>
-                <td colspan="2"><label>Complemento:</label> <?php echo $this->dados[0] ->Complemento; ?></td>
-                <td><label>Bairro:</label> <?php echo $this->dados[0] ->Bairro; ?></td>
+                <td colspan="2"><label>Complemento:</label> <?php echo $this->dados[0] ->complemento; ?></td>
+                <td><label>Bairro:</label> <?php echo $this->dados[0] ->bairro; ?></td>
             </tr>
             <tr>
-                <td><label>Endere&ccedil;o para correspond&ecirc;ncia:</label> <?php echo $this->dados[0] ->Status == "1" ? "SIM" : "N&Atilde;O"; ?></td>
-                <td colspan="2"><label>Autorizo divulgar o endere&ccedil;o:</label> <?php echo $this->dados[0] ->DivulgarEndereco == "1" ? "SIM" : "N&Atilde;O"; ?></td>
+                <td><label>Endere&ccedil;o para correspond&ecirc;ncia:</label> <?php echo $this->dados[0] ->status == "1" ? "SIM" : "N&Atilde;O"; ?></td>
+                <td colspan="2"><label>Autorizo divulgar o endere&ccedil;o:</label> <?php echo $this->dados[0]->divulgarendereco == "1" ? "SIM" : "N&Atilde;O"; ?></td>
             </tr>
         </table>
 
@@ -87,11 +87,11 @@
             </tr>
             <?php foreach($this->telefones as $t):?>
             <tr>
-                <td><?php echo $t->dsTelefone ;?></td>
-                <td align="center"><?php echo $t->ufSigla ;?></td>
-                <td align="center"><?php echo $t->DDD ;?></td>
-                <td><?php echo $t->Numero ;?></td>
-                <td><?php echo $t->Divulgar == "1" ? "SIM" : "N&Atilde;O"; ?></td>
+                <td><?php echo $t->dstelefone ;?></td>
+                <td align="center"><?php echo $t->ufsigla ;?></td>
+                <td align="center"><?php echo $t->ddd ;?></td>
+                <td><?php echo $t->numero ;?></td>
+                <td><?php echo $t->divulgar == "1" ? "SIM" : "N&Atilde;O"; ?></td>
             </tr>
             <?php endforeach; ?>
         </table>
@@ -118,9 +118,9 @@
             <?php foreach($this->emails as $e):?>
             <tr>
                 <td><?php echo $e->tipo ;?></td>
-                <td><?php echo $e->Descricao ;?></td>
-                <td><?php echo $e->Divulgar == "1" ? "SIM" : "N&Atilde;O" ;?></td>
-                <td><?php echo $e->Status == "1" ? "SIM" : "N&Atilde;O" ;?></td>
+                <td><?php echo $e->descricao ;?></td>
+                <td><?php echo $e->divulgar == "1" ? "SIM" : "N&Atilde;O" ;?></td>
+                <td><?php echo $e->status == "1" ? "SIM" : "N&Atilde;O" ;?></td>
             </tr>
             <?php endforeach; ?>
         </table>
@@ -142,11 +142,11 @@
                         </tr>
                         <?php foreach($this->formacoes as $f){ ?>
                         <tr>
-                            <td><?php echo $f->nmProfissao; ?></td>
-                            <td><?php echo $f->nmCargo; ?></td>
-                            <td><?php echo $f->dsEndereco; ?></td>
-                            <td align="center"><?php echo $f->dtInicio; ?></td>
-                            <td align="center"><?php echo $f->dtFim; ?></td>
+                            <td><?php echo $f->nmprofissao; ?></td>
+                            <td><?php echo $f->nmcargo; ?></td>
+                            <td><?php echo $f->dsendereco; ?></td>
+                            <td align="center"><?php echo $f->dtinicio; ?></td>
+                            <td align="center"><?php echo $f->dtfim; ?></td>
                         </tr>
                         <?php } ?>
                     </table>
