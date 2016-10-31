@@ -240,29 +240,26 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
     /**
      * @param array $dados
      * @return mixed
-     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      */
     public function salvar(array $dados)
     {
         try {
-            $tmpTblSgcAcesso = new Autenticacao_Model_Sgcacesso();
-
             if (isset($dados['idusuario'])) {
-                $tmpTblSgcAcesso = $tmpTblSgcAcesso->buscar(array("idusuario = ?" => $dados['idusuario']))->current();
+                $objSgcAcesso = $this->buscar(array("idusuario = ?" => $dados['idusuario']))->current();
             } else {
-                $tmpTblSgcAcesso = $tmpTblSgcAcesso->createRow();
+                $objSgcAcesso = $this->createRow();
             }
 
-            if (isset($dados['cpf'])) $tmpTblSgcAcesso->cpf = $dados['cpf'];
-            if (isset($dados['nome'])) $tmpTblSgcAcesso->nome = $dados['nome'];
-            if (isset($dados['dtnascimento'])) $tmpTblSgcAcesso->dtnascimento = $dados['dtnascimento'];
-            if (isset($dados['email'])) $tmpTblSgcAcesso->email = $dados['email'];
-            if (isset($dados['senha'])) $tmpTblSgcAcesso->senha = $dados['senha'];
-            if (isset($dados['dtcadastro'])) $tmpTblSgcAcesso->dtcadastro = $dados['dtcadastro'];
-            if (isset($dados['situacao'])) $tmpTblSgcAcesso->situacao = $dados['situacao'];
-            if (isset($dados['dtsituacao'])) $tmpTblSgcAcesso->dtsituacao = $dados['dtsituacao'];
-
-            return $tmpTblSgcAcesso->save();
+            if (isset($dados['cpf'])) $objSgcAcesso->cpf = $dados['cpf'];
+            if (isset($dados['nome'])) $objSgcAcesso->nome = $dados['nome'];
+            if (isset($dados['dtnascimento'])) $objSgcAcesso->dtnascimento = $dados['dtnascimento'];
+            if (isset($dados['email'])) $objSgcAcesso->email = $dados['email'];
+            if (isset($dados['senha'])) $objSgcAcesso->senha = $dados['senha'];
+            if (isset($dados['dtcadastro'])) $objSgcAcesso->dtcadastro = $dados['dtcadastro'];
+            if (isset($dados['situacao'])) $objSgcAcesso->situacao = $dados['situacao'];
+            if (isset($dados['dtsituacao'])) $objSgcAcesso->dtsituacao = $dados['dtsituacao'];
+            if (isset($dados['id_login_cidadao'])) $objSgcAcesso->id_login_cidadao = $dados['id_login_cidadao'];
+            return $objSgcAcesso->save();
         } catch (Exception $objException) {
             throw new Exception($objException->getMessage(), 0, $objException);
         }
@@ -301,5 +298,23 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
         return $this->fetchAll($slct);
     }
 
+
+    public function hasCPFCadastrado($cpf)
+    {
+        $sgcAcessoBuscaCpf = $this->buscar(array("Cpf = ?" => $cpf))->toArray();
+        if (!empty ($sgcAcessoBuscaCpf)) {
+            return false;
+        }
+        return true;
+    }
+
+    public function hasEmailCadastrado($email)
+    {
+        $sgcAcessoBuscaEmail = $this->buscar(array("Email = ?" => $email))->toArray();
+        if (!empty ($sgcAcessoBuscaEmail)) {
+            return false;
+        }
+        return true;
+    }
 }
 

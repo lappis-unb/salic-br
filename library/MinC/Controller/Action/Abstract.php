@@ -135,7 +135,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
     }
 
     /**
-     * Reescreve o m?todo postDispatch() que e responsavel
+     * Reescreve o metodo postDispatch() que e responsavel
      * por executar uma acao apos a execucao de um metodo
      * @access public
      * @param void
@@ -189,18 +189,14 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                     $idAgente = $objAgente['idagente'];
                     $cpfLogado = $objAgente['usu_identificacao'];
                 } elseif (isset($objIdentity->auth) && isset($objIdentity->auth['uid'])) {
+                    $isDadosTratados = $this->tratarPerfilOAuth($objIdentity);
+                    if($isDadosTratados) {
 
-                    $objAuth = (object)$objIdentity->auth['raw'];
-x($objAuth);
-                    $tblSGCacesso = new Autenticacao_Model_Sgcacesso();
-                    $rsSGCacesso = $tblSGCacesso->findBy(array("cpf" => $objAuth->cpf));
-                    if(!$rsSGCacesso) {
-                        // Criar metodo para cadastrar um usuário utilizando as informações que já retornam da autenticação.
-                    } elseif(!$rsSGCacesso['id_login_cidadao'])
-                        // Fazer update
-xd($rsSGCacesso);
-
-                    xd($objAuth);
+                        $grupos = $objModelUsuario->buscarUnidades($arrAuth['usu_codigo'], 21);
+                        $objAgente = $objModelUsuario->getIdUsuario($arrAuth['usu_codigo']);
+                        $idAgente = $objAgente['idagente'];
+                        $cpfLogado = $objAgente['usu_identificacao'];
+                    }
                 } else {
                     return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), null, true);
                 }
@@ -808,6 +804,39 @@ xd($rsSGCacesso);
         }
         //xd($planilha);
         return $planilha;
-    } // fecha m?todo verificarPermissaoAcesso()
+    }
+
+    private function tratarPerfilOAuth($objIdentity)
+    {
+        try {
+            $arrayOAuth = $objIdentity->auth['raw'];
+            $objSGCacesso = new Autenticacao_Model_Sgcacesso();
+            $arraySGCacesso = $objSGCacesso->findBy(array("cpf" => $arrayOAuth['cpf']));
+            if($arraySGCacesso) {
+                if(!$arraySGCacesso['id_login_cidadao']) {
+                    $arraySGCacesso['id_login_cidadao'] = $arrayOAuth['id'];
+                    $objSGCacesso->salvar($arraySGCacesso);
+                }
+                return true;
+            } else {
+                $this->redirecionarParaCadastroOauth($arrayOAuth);
+                return false;
+            }
+
+        } catch (Exception $objException) {
+            xd($objException->getMessage());
+        }
+    }
+
+    private function redirecionarParaCadastroOauth($objAuth)
+    {
+        $request = clone $this->getRequest();
+        $request->setModuleName("autenticacao")
+            ->setControllerName("Logincidadao")
+            ->setActionName("cadastrarusuario")
+            ->setPost($objAuth);
+        $this->_helper->actionStack($request);
+    }
+
 
 }
