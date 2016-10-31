@@ -28,7 +28,7 @@
 	    uf             = document.getElementById("uf");
 
 	    ajax = xmlhttp(); // instancia ajax
-	    ajax.open("GET", "<?php echo $this->url(array('controller' => 'cep', 'action' => 'cep'));?>?cep=" + cep, true);
+	    ajax.open("GET", "<?php echo $this->url(array('module'=> 'default', 'controller' => 'cep', 'action' => 'cep'));?>?cep=" + cep, true);
 	    ajax.onreadystatechange = function()
 	    {
 	        if (cep.length != 10)
@@ -155,6 +155,7 @@
 	                if (txtCidade == "")
 	                {
 	                    cidade.disabled = false; // habilita para preenchimento
+						carregar_combo($("#uf").val(), 'cidade','/cidade/combo', ' - Selecione - ');
 	                }
 	                // preenche o combo com a cidade
 	                else
@@ -233,23 +234,23 @@
 					<td width="30%">
 						<label for="cep">CEP *</label><br />
 						<input class="input_simples"  type="text" name="cep" id="cep" maxlength="10" onkeyup="mascara(this, format_cep);" onblur="buscarcep(this.value);"
-							onclick="limpar_campo(this, ' ');" onkeypress="limpar_campo(this, ' ');"
-							onblur="restaurar_campo(this, ' ');" onmouseout="restaurar_campo(this, ' ');" value=" " />
+							onclick="limpar_campo(this, '');" onkeypress="limpar_campo(this, '');"
+							onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');" value=" " />
 
 			            &nbsp; <span id="erroCep" class="spanError"></span>
 					</td>
 					<td width="30%">
 						<label for="uf">UF *</label> <br />
-						<select name="uf" id="uf" class="input_simples" disabled="disabled" onchange="carregar_combo(this.value,'cidade','<?php echo $this->url(array('controller' => 'cidade', 'action' => 'combo'));?>',' - Selecione primeiro o UF - ');"	>
+						<select name="uf" id="uf" class="input_simples" disabled="disabled" onchange="carregar_combo(this.value,'cidade','<?php echo $this->url(array('module' => 'default', 'controller' => 'cidade', 'action' => 'combo')); ?>',' - Selecione primeiro o UF - ');"	>
 
 							<?php if (!isset($this->uf) || empty($this->uf)) { ?>
 							<option value="0"> -- </option>
 							<?php } ?>
 
-							<?php foreach ($this->comboestados as $comboestado): ?>
-							<option value="<?php echo $comboestado->id; ?>"
-								<?php if ($this->uf == $comboestado->id) echo "selected=\"selected\""; ?> >
-								<?php echo $comboestado->descricao; ?>
+							<?php foreach ($this->comboestados as $key => $comboestado): ?>
+							<option value="<?php echo $key; ?>"
+								<?php if ($this->uf == $key) echo "selected=\"selected\""; ?> >
+								<?php echo $comboestado; ?>
 							</option>
 							<?php endforeach; ?>
 
@@ -260,14 +261,15 @@
 						<label for="cidade">Cidade *</label> <br />
 						<select name="cidade" id="cidade" disabled="disabled" class="input_simples" style="width: 250px;">
 							<option value="0"> - Selecione - </option>
-
-							<?php foreach ($this->combocidades as $combocidade): ?>
-							<option value="<?php echo $combocidade->id; ?>"
-								id="<?php echo $combocidade->idUF; ?>"
-								<?php if ($this->cidade == $combocidade->id) echo "selected=\"selected\""; ?>>
-								<?php echo $combocidade->descricao; ?>
-							</option>
-							<?php endforeach; ?>
+							<?php if ($this->combocidades) : ?>
+								<?php foreach ($this->combocidades as  $key => $combocidade): ?>
+								<option value="<?php echo $key; ?>"
+									id="<?php echo $key; ?>"
+									<?php if ($this->cidade == $key) echo "selected=\"selected\""; ?>>
+									<?php echo $combocidade; ?>
+								</option>
+								<?php endforeach; ?>
+							<?php endif; ?>
 
 						</select>
 						<span id="erroCidade" class="spanError"></span>
@@ -282,10 +284,10 @@
 							<option value="0"> - Selecione - </option>
 							<?php } ?>
 
-							<?php foreach ($this->combotiposenderecos as $combotipoendereco): ?>
-							<option value="<?php echo $combotipoendereco->id; ?>"
-								<?php if ($this->tipoEndereco == $combotipoendereco->id) echo "selected=\"selected\""; ?>>
-								<?php echo $combotipoendereco->descricao; ?>
+							<?php foreach ($this->combotiposenderecos as $key => $combotipoendereco): ?>
+							<option value="<?php echo $key; ?>"
+								<?php if ($this->tipoEndereco == $key) echo "selected=\"selected\""; ?>>
+								<?php echo $combotipoendereco; ?>
 							</option>
 							<?php endforeach; ?>
 
@@ -300,10 +302,10 @@
 							<option value="0"> - Selecione - </option>
 							<?php } ?>
 
-							<?php foreach ($this->combotiposlogradouros as $combotipologradouro): ?>
-							<option value="<?php echo $combotipologradouro->id; ?>"
-								<?php if ($this->tipoLogradouro == $combotipologradouro->id) echo "selected=\"selected\""; ?>>
-								<?php echo $combotipologradouro->descricao; ?>
+							<?php foreach ($this->combotiposlogradouros as $key => $combotipologradouro): ?>
+							<option value="<?php echo $key; ?>"
+								<?php if ($this->tipoLogradouro == $key) echo "selected=\"selected\""; ?>>
+								<?php echo $combotipologradouro; ?>
 							</option>
 							<?php endforeach; ?>
 
