@@ -822,7 +822,6 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                 $this->redirecionarParaCadastroOauth($arrayOAuth);
                 return false;
             }
-
         } catch (Exception $objException) {
             xd($objException->getMessage());
         }
