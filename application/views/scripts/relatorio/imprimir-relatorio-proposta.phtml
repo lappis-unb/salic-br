@@ -136,7 +136,7 @@
                             echo 'Proposta diligenciada';
                         } else if($d->stEstado == '1' && $d->Movimentacao == '96' && $d->estadoMovimentacao == '0' && $d->ConformidadeOK == '0' && $d->estadoAvaliacao == '0'){
                             echo 'Diligência respondida';
-                        } else if($d->stEstado == '1' && $d->Movimentacao == '95' && $d->estadoMovimentacao == '0' && is_null($d->ConformidadeOK) && is_null($d->estadoAvaliacao)){
+                        } else if($d->stEstado == '1' && $d->Movimentacao == '95' && $d->estadoMovimentacao == '0' && $d->ConformidadeOK == NULL && $d->estadoAvaliacao == '0'){
                             echo 'Proposta em construção';
                         } else if($d->stEstado == '1' && $d->Movimentacao == '96' && $d->estadoMovimentacao == '0' && $d->ConformidadeOK == '9' && $d->estadoAvaliacao == '0'){
                             echo 'Enviada ao MinC p/ avaliação';
