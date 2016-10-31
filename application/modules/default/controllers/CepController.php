@@ -7,7 +7,7 @@
  * @link http://www.cultura.gov.br
  */
 
-class CepController extends Zend_Controller_Action
+class CepController extends MinC_Controller_Action_Abstract
 {
     /**
      * Metodo para buscar o endereuo de acordo com o cep informado
@@ -17,6 +17,11 @@ class CepController extends Zend_Controller_Action
      */
     public function cepAction()
     {
+
+        $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+        $strCharset = $config->resources->db->params->charset;
+        $this->view->charset = $strCharset;
+        header('Content-type: text/html; charset=' . $strCharset);
         $this->_helper->layout->disableLayout();
 
         // recebe o cep sem mascara vindo via ajax
