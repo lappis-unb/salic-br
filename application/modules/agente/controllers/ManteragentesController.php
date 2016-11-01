@@ -81,7 +81,6 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         if (!$this->getIdUsuario) {
             $this->getIdUsuario = $arrAuth['idusuario'];
         }
-
         $Cpflogado = $this->getIdUsuario;
         $this->view->cpfLogado = $Cpflogado;
         $this->view->grupoativo = $GrupoAtivo->codGrupo;
@@ -403,13 +402,12 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
                     $data = array('cnpjcpf' => $cpf);
                     $agentesMapple = new Agente_Model_AgentesMapper();
                     $insere = $agentesMapple->save(new Agente_Model_Agentes($data));
-//                    $arrayCNPJCPF = array('cnpjcpf' => $cpf);
-//                    $insere = Agente_Model_ManterAgentesDAO::cadastrarAgente($arrayCNPJCPF);
                     $result[0]['Agente'] = 'novo';
                 }
             }
 
-            echo json_encode($result);
+            //echo json_encode($result);
+            $this->_helper->json($result);
         } else {
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
@@ -741,7 +739,6 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             $mprNomes = new Agente_Model_NomesMapper();
             //$mprNomes->beginTransaction();
             try {
-                //var_dump($arrPost);die;
                 # Salvando o nome.
                 $mprNomes->saveCustom($arrPost);
 
