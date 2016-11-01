@@ -831,9 +831,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      */
     public function enderecosAction() {
         $this->autenticacao();
-
         $idAgente = $this->_request->getParam("id");
-        $lista = Agente_Model_ManterAgentesDAO::buscarEnderecos($idAgente);
+
+        $tblEndereco = new Agente_Model_DbTable_EnderecoNacional();
+
+        $lista = $tblEndereco->buscarEnderecos($idAgente);
 
         $this->view->endereco = $lista;
         $this->view->qtdEndereco = count($lista);
@@ -883,12 +885,14 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'Usuario' => $Usuario
             );
 
+            $tblEndereco = new Agente_Model_DbTable_EnderecoNacional();
 
             if ($enderecoCorrespodencia == "1") {
-                $alteraEnderecoCorrespondencia = Agente_Model_EnderecoNacionalDAO::mudaCorrespondencia($idAgente);
+                $tblEndereco->mudaCorrespondencia($idAgente);
             }
 
-            $insere = Agente_Model_EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
+            $tblEndereco->insert($arrayEnderecos);
+
             parent::message("Cadastro realizado com sucesso!", "agente/agentes/enderecos/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
             parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "agente/agentes/enderecos/id/" . $idAgente, "ERROR");
@@ -911,19 +915,21 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $enderecoCorrespondencia = $this->_request->getParam("enderecoCorrespondencia");
 
         if ($qtdEndereco <= 1) {
-            parent::message("Você tem que ter pelo menos um endereço cadastrado!", "agente/agentes/enderecos/id/" . $idAgente, "ALERT");
+            parent::message("Voc&ecirc; tem que ter pelo menos um endere&ccedil;o cadastrado!", "agente/agentes/enderecos/id/" . $idAgente, "ALERT");
         }
 
         try {
-            $excluir = Agente_Model_EnderecoNacionalDAO::deletarEnderecoNacional($idEndereco);
+            $tblEndereco = new Agente_Model_DbTable_EnderecoNacional();
+
+            $tblEndereco->delete($idEndereco);
 
             if ($enderecoCorrespondencia == "1") {
-                $novaCorrespondencia = Agente_Model_EnderecoNacionalDAO::novaCorrespondencia($idAgente);
+                $tblEndereco->novaCorrespondencia($idAgente);
             }
 
-            parent::message("Exclusão realizada com sucesso!", "agente/agentes/enderecos/id/" . $idAgente, "CONFIRM");
+            parent::message("Exclus&atilde;o realizada com sucesso!", "agente/agentes/enderecos/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao excluir o enderço: " . $e->getMessage(), "agente/agentes/enderecos/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao excluir o endere&ccedil;o: " . $e->getMessage(), "agente/agentes/enderecos/id/" . $idAgente, "ERROR");
         }
     }
 
