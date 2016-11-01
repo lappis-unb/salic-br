@@ -1032,7 +1032,12 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $idAgente = $this->_request->getParam("id");
 
 
-        $lista = Agente_Model_ManterAgentesDAO::buscarEmails($idAgente);
+//        $lista = Agente_Model_ManterAgentesDAO::buscarEmails($idAgente);
+
+
+        $modelInternet = new Agente_Model_DbTable_Internet();
+        $lista = $modelInternet->buscarEmails($idAgente);
+//        var_dump($lista); die;
 
         $this->view->emails = $lista;
         $this->view->qtdEmail = count($lista);
@@ -1057,18 +1062,25 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrayEmail = array(
-                'idAgente' => $idAgente,
-                'TipoInternet' => $tipoEmail,
-                'Descricao' => $Email,
-                'Status' => $enviarEmail,
-                'Divulgar' => $divulgarEmail,
-                'Usuario' => $Usuario
+                'idagente' => $idAgente,
+                'tipointernet' => $tipoEmail,
+                'descricao' => $Email,
+                'status' => $enviarEmail,
+                'divulgar' => $divulgarEmail,
+                'usuario' => $Usuario
             );
 
-            $insere = Email::cadastrar($arrayEmail);
+            $modelInternet = new Agente_Model_Internet($arrayEmail);
+            $mapperInternet = new Agente_Model_InternetMapper();
+
+            $mapperInternet->beginTransaction();
+            $mapperInternet->save($modelInternet);
+
+            $mapperInternet->commit();
 
             parent::message("Cadastro realizado com sucesso!", "agente/agentes/emails/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
+            $mapperInternet->rollBack();
             parent::message("Erro ao salvar o e-mail: " . $e->getMessage(), "agente/agentes/emails/id/" . $idAgente, "ERROR");
         }
     }
@@ -1090,7 +1102,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             parent::message("Você tem que ter pelo menos um email cadastrado!", "agente/agentes/emails/id/" . $idAgente, "ALERT");
         } else {
             try {
-                $excluir = Email::excluir($idInternet);
+
+                $mapperTelefones = new Agente_Model_InternetMapper();
+                $mapperTelefones->deleteBy(array("idInternet" => $idInternet));
+
                 parent::message("Exclusão realizada com sucesso!", "agente/agentes/emails/id/" . $idAgente, "CONFIRM");
             } catch (Exception $e) {
                 parent::message("Erro ao excluir o e-mail: " . $e->getMessage(), "agente/agentes/emails/id/" . $idAgente, "ERROR");
