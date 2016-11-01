@@ -265,6 +265,10 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         if  ( isset ( $_GET['idPreProjeto'] ) ) {
             $idPreProjeto = $_GET['idPreProjeto'];
 
+            $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaProposta();
+            $buscaDados = $manterOrcamento->findBy(array('idprojeto' => $idPreProjeto));
+//            $buscaDados = $manterOrcamento->buscarDadosCadastrarCustos($idPreProjeto);
+            $this->view->dados = $buscaDados;
 
             $buscaDados = new Proposta_Model_DbTable_PlanilhaProposta();
 
@@ -319,8 +323,6 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $etapaSelecionada["id"] = $_GET["etapa"];
         $etapaSelecionada["etapaNome"] = $_GET["etapaNome"];
         $this->view->etapaSelecionada = $etapaSelecionada;
-
-
 
         $buscarEstado = new Agente_Model_DbTable_UF();
         $this->view->Estados = $buscarEstado->buscar();

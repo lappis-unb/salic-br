@@ -15,74 +15,64 @@
 class Agente_Model_DbTable_TbCredenciamentoParecerista extends MinC_Db_Table_Abstract
 {
     /**
-     * _banco
-     *
-     * @var bool
+     * @var string
      * @access protected
      */
     protected $_banco = 'agentes';
 
     /**
-     * _name
-     *
-     * @var bool
-     * @access protected
-     */
-    protected $_name = 'tbcredenciamentoparecerista';
-
-    /**
-     * _schema
-     *
      * @var string
      * @access protected
      */
     protected $_schema = 'agentes';
 
-    
-    public function BuscarCredenciamentos($idAgente) 
+    /**
+     * @var string
+     * @access protected
+     */
+    protected $_name = 'tbcredenciamentoparecerista';
+
+    public function carregar($idAgente)
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from(array('C'=>$this->_name),
-            array('C.idAgente', 'C.idCredenciamentoParecerista', 'C.siCredenciamento', 'C.qtPonto', 'C.idVerificacao'),
+        $select->from(array('c'=>$this->_name),
+            array('c.idagente', 'c.idcredenciamentoparecerista', 'c.sicredenciamento', 'c.qtponto', 'c.idverificacao'),
             $this->_schema
         );
 
         $select->joinInner(
-            array('A'=>'Area'),'A.Codigo = C.idCodigoArea',
-            array('A.Descricao as Area'),
+            array('a'=>'area'),'a.codigo = c.idcodigoarea',
+            array('a.descricao as area'),
             $this->getSchema('sac')
         );
 
         $select->joinInner(
-            array('S'=>'Segmento'),'S.Codigo = C.idCodigoSegmento',
-            array('S.Descricao as Segmento'),
+            array('s'=>'segmento'),'s.codigo = c.idcodigosegmento',
+            array('s.descricao as segmento'),
             $this->getSchema('sac')
         );
 
         $select->joinLeft(
-            array('V'=>'Verificacao'),'V.idVerificacao = C.idVerificacao',
-            array('V.Descricao as Nivel'),
+            array('v'=>'verificacao'),'v.idverificacao = c.idverificacao',
+            array('v.descricao as nivel'),
             $this->_schema
         );
 
         $select->joinLeft(
-            array('x'=>'Visao'),'x.idAgente = C.idAgente',
-            array('x.Visao'),
+            array('x'=>'visao'),'x.idagente = c.idagente',
+            array('x.visao'),
             $this->_schema
         );
 
-        $select->where('C.idAgente = ?', $idAgente);
-        $select->where('x.Visao = ?', 209);
-        $select->order('A.Descricao');
-        $select->order('S.Descricao');
-
-//        xd($select->assemble());
+        $select->where('c.idagente = ?', $idAgente);
+        $select->where('x.visao = ?', 209);
+        $select->order('a.descricao');
+        $select->order('s.descricao');
 
         return $this->fetchAll($select);
     }
 
-    
     //Select count(distinct idCodigoArea) as qtdArea from AGENTES..tbCredenciamentoParecerista where idCodigoSegmento LIKE '1%'
 	//Select count(distinct idCodigoSegmento) as qtdSeguimentos from AGENTES..tbCredenciamentoParecerista where idCodigoSegmento LIKE '1%'
     

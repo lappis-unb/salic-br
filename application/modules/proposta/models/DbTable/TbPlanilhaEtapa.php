@@ -181,7 +181,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(['tbplanilhaetapa' ], ['idplanilhaetapa','descricao' ], $this->getSchema('sac'))
+            ->from(['tbplanilhaetapa' ], ['idplanilhaetapa', 'descricao' ], $this->getSchema('sac'))
             ->where("tpcusto = 'A'")
             ->order('descricao')
         ;

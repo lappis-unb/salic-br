@@ -169,7 +169,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     private function autenticacao() {
-        $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $arrAuth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity()); // pega a autenticacao
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo');
 
         // define as permissoes
@@ -188,29 +188,28 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $PermissoesGrupo[] = 103; // Coordenador de Analise
         $PermissoesGrupo[] = 142; // Coordenador de Convenios
 
-        if (isset($auth->getIdentity()->Cpf) &&
-                !empty($auth->getIdentity()->Cpf) &&
+        if (isset($arrAuth['cpf']) &&
+                !empty($arrAuth['cpf']) &&
                 isset($_GET['acao']) && $_GET['acao'] == 'cc' &&
                 isset($_GET['cpf']) &&
                 !empty($_GET['cpf'])) { // pega do readequacao
             parent::perfil(2); // scriptcase
         }
 
-        if (isset($auth->getIdentity()->Cpf) &&
-                !empty($auth->getIdentity()->Cpf) &&
+        if (isset($arrAuth['cpf']) &&
+                !empty($arrAuth['cpf']) &&
                 !isset($_GET['acao']) &&
                 !isset($_GET['cpf']) &&
                 empty($_GET['cpf'])) { // pega do readequacao
             parent::perfil(4, $PermissoesGrupo); // migracao e novo salic
-        } elseif (isset($auth->getIdentity()->usu_codigo) && !empty($auth->getIdentity()->usu_codigo)) {
+        } elseif (isset($arrAuth['usu_codigo']) && !empty($arrAuth['usu_codigo'])) {
             parent::perfil(1, $PermissoesGrupo); // migracao e novo salic
         } else {
             parent::perfil(4, $PermissoesGrupo); // migracao e novo salic
         }
 
-        $auth = Zend_Auth::getInstance(); // pega a autenticacao
-        if (isset($auth->getIdentity()->usu_codigo)) { // autenticacao novo salic
-            $this->getIdUsuario = UsuarioDAO::getIdUsuario($auth->getIdentity()->usu_codigo);
+        if (isset($arrAuth['usu_codigo'])) { // autenticacao novo salic
+            $this->getIdUsuario = UsuarioDAO::getIdUsuario($arrAuth['usu_codigo']);
             $this->getIdUsuario = ($this->getIdUsuario) ? $this->getIdUsuario["idAgente"] : 0;
         } else { // autenticacao scriptcase
             $this->getIdUsuario = (isset($_GET["idusuario"])) ? $_GET["idusuario"] : 0;
@@ -576,17 +575,16 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $mes = date('m');
 
         $tbAusencia = new Agente_Model_DbTable_TbAusencia();
-        $dados = $tbAusencia->BuscarAusencia($idAgente, $ano, 2, $mes);
-
+        $dados = $tbAusencia->carregarAusencia($idAgente, $ano, 2, $mes);
         $totalDias = 0;
         foreach ($dados as $d) {
-            if (($d->siAusencia == 0) OR ($d->siAusencia == 1)) {
-                $totalDias = $totalDias + $d->qtdDias;
+            if (($d['siausencia'] == 0) OR ($d['siausencia'] == 1)) {
+                $totalDias = $totalDias + $d['qtddias'];
             }
         }
 
         $tbCredenciamentoParecerista = new Agente_Model_DbTable_TbCredenciamentoParecerista();
-        $credenciados = $tbCredenciamentoParecerista->BuscarCredenciamentos($idAgente);
+        $credenciados = $tbCredenciamentoParecerista->carregar($idAgente);
 
         $this->view->credenciados = $credenciados;
         $this->view->totalDias = $totalDias;
@@ -833,9 +831,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      */
     public function enderecosAction() {
         $this->autenticacao();
-
         $idAgente = $this->_request->getParam("id");
-        $lista = Agente_Model_ManterAgentesDAO::buscarEnderecos($idAgente);
+
+        $tblEndereco = new Agente_Model_DbTable_EnderecoNacional();
+
+        $lista = $tblEndereco->buscarEnderecos($idAgente);
 
         $this->view->endereco = $lista;
         $this->view->qtdEndereco = count($lista);
@@ -885,12 +885,14 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'Usuario' => $Usuario
             );
 
+            $tblEndereco = new Agente_Model_DbTable_EnderecoNacional();
 
             if ($enderecoCorrespodencia == "1") {
-                $alteraEnderecoCorrespondencia = Agente_Model_EnderecoNacionalDAO::mudaCorrespondencia($idAgente);
+                $tblEndereco->mudaCorrespondencia($idAgente);
             }
 
-            $insere = Agente_Model_EnderecoNacionalDAO::gravarEnderecoNacional($arrayEnderecos);
+            $tblEndereco->insert($arrayEnderecos);
+
             parent::message("Cadastro realizado com sucesso!", "agente/agentes/enderecos/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
             parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "agente/agentes/enderecos/id/" . $idAgente, "ERROR");
@@ -913,19 +915,21 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $enderecoCorrespondencia = $this->_request->getParam("enderecoCorrespondencia");
 
         if ($qtdEndereco <= 1) {
-            parent::message("Você tem que ter pelo menos um endereço cadastrado!", "agente/agentes/enderecos/id/" . $idAgente, "ALERT");
+            parent::message("Voc&ecirc; tem que ter pelo menos um endere&ccedil;o cadastrado!", "agente/agentes/enderecos/id/" . $idAgente, "ALERT");
         }
 
         try {
-            $excluir = Agente_Model_EnderecoNacionalDAO::deletarEnderecoNacional($idEndereco);
+            $tblEndereco = new Agente_Model_DbTable_EnderecoNacional();
+
+            $tblEndereco->delete($idEndereco);
 
             if ($enderecoCorrespondencia == "1") {
-                $novaCorrespondencia = Agente_Model_EnderecoNacionalDAO::novaCorrespondencia($idAgente);
+                $tblEndereco->novaCorrespondencia($idAgente);
             }
 
-            parent::message("Exclusão realizada com sucesso!", "agente/agentes/enderecos/id/" . $idAgente, "CONFIRM");
+            parent::message("Exclus&atilde;o realizada com sucesso!", "agente/agentes/enderecos/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao excluir o enderço: " . $e->getMessage(), "agente/agentes/enderecos/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao excluir o endere&ccedil;o: " . $e->getMessage(), "agente/agentes/enderecos/id/" . $idAgente, "ERROR");
         }
     }
 
@@ -1338,7 +1342,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         $tbAusencia = new Agente_Model_DbTable_TbAusencia();
 
-        $dados = $tbAusencia->BuscarAusencia($idAgente, $ano, 2, null);
+        $dados = $tbAusencia->carregarAusencia($idAgente, $ano, 2, null);
 
         $totalDias = 0;
 
@@ -1538,7 +1542,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $ano = date('Y');
 
         $tbAusencia = new Agente_Model_DbTable_TbAusencia();
-        $atestados = $tbAusencia->BuscarAusencia($idAgente, $ano, 1, null);
+        $atestados = $tbAusencia->carregarAusencia($idAgente, $ano, 1, null);
 
         $this->view->atestados = $atestados;
     }
@@ -1679,7 +1683,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $idAgente = $this->_request->getParam("id");
 
         $tbCredenciamentoParecerista = new Agente_Model_DbTable_TbCredenciamentoParecerista();
-        $credenciados = $tbCredenciamentoParecerista->BuscarCredenciamentos($idAgente);
+        $credenciados = $tbCredenciamentoParecerista->carregar($idAgente);
 
         $tbInformacaoProfissional = new Agente_Model_DbTable_TbInformacaoProfissional();
         $buscaAnos = $tbInformacaoProfissional->AnosExperiencia($idAgente);
@@ -1843,43 +1847,39 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      */
     private function salvaragente()
     {
-        /**/
-        $auth = Zend_Auth::getInstance(); // pega a autenticacao
-        $Usuario = isset($auth->getIdentity()->idusuario) ? $auth->getIdentity()->idusuario : $auth->getIdentity()->usu_codigo;
-        // =============================================== INICIO SALVAR CPF/CNPJ ==================================================
+        $arrAuth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
+        $usuario = isset($arrAuth['idusuario']) ? $arrAuth['idusuario'] : $arrAuth['usu_codigo'];
 
-        $cpf = Mascara::delMaskCPF(Mascara::delMaskCNPJ($this->_request->getParam("cpf"))); // retira as mascaras
-        $Tipo = $this->_request->getParam("Tipo");
-
-        $arrayAgente = array('CNPJCPF' => $cpf,
-            'TipoPessoa' => $Tipo,
-            'Status' => 0,
-            'Usuario' => $Usuario
+        $arrayAgente = array('cnpjcpf' => $this->_request->getParam("cpf"),
+            'tipopessoa' => $this->_request->getParam("Tipo"),
+            'status' => 0,
+            'usuario' => $usuario
         );
+        $mprAgentes = new Agente_Model_AgentesMapper();
+        $mdlAgente = new Agente_Model_Agentes($arrayAgente);
+        $mprAgentes->beginTransaction();
+        $teste = $mprAgentes->save($mdlAgente);
+        $mprAgentes->rollBack();
+        d($teste);
+//        $agente = $mprAgentes->findBy(array('cnpjcpf' => $mdlAgente->getCnpjcpf()));
 
-        $Agentes = new Agente_Model_DbTable_Agentes();
 
-
-        $salvaAgente = $Agentes->inserirAgentes($arrayAgente);
-        $agente = $Agentes->findBy(array('cnpjcpf' => trim($cpf)));
         $idAgente = $agente['idagente'];
-
-        // ================================================ FIM SALVAR CPF/CNPJ =====================================================
-        // ================================================ INICIO SALVAR NOME ======================================================
-
         $nome = $this->_request->getParam("nome");
-        $TipoNome = (strlen($cpf) == 11 ? 18 : 19); // 18 = pessoa fisica e 19 = pessoa juridica
-
+        $TipoNome = (strlen($mdlAgente->getCnpjcpf()) == 11 ? 18 : 19); // 18 = pessoa fisica e 19 = pessoa juridica
         if($this->modal == "s"){
             $nome = Seguranca::tratarVarAjaxUFT8($nome);
         }
-
-        try {
+        $mprAgentes->rollBack();
+        d('asd');
+//        try {
             $nomes = new NomesDAO();
-            $gravarNome = $nomes->inserir($idAgente, $TipoNome, $nome, 0, $Usuario);
-        } catch (Exception $e) {
-            parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
-        }
+        d('asd');
+            $gravarNome = $nomes->inserir($idAgente, $TipoNome, $nome, 0, $usuario);
+        d($gravarNome);
+//        } catch (Exception $e) {
+//            parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
+//        }
 
         // ================================================ FIM SALVAR NOME ======================================================
         // ================================================ INICIO SALVAR VISAO ======================================================
@@ -1897,7 +1897,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $GravarVisao = array(// insert
                 'idagente' => $idAgente,
                 'visao' => $Visao,
-                'usuario' => $Usuario,
+                'usuario' => $usuario,
                 'stativo' => 'A');
 
             try {
@@ -1979,7 +1979,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'complemento' => $complemento,
                 'bairro' => $bairro,
                 'status' => $enderecoCorrespodencia,
-                'usuario' => $Usuario
+                'usuario' => $usuario
             );
 
             $enderecoDAO = new Agente_Model_EnderecoNacionalDAO();
@@ -2008,7 +2008,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                     'ddd' => $dddFone,
                     'numero' => $Fone,
                     'divulgar' => $divulgarFone,
-                    'usuario' => $Usuario
+                    'usuario' => $usuario
                 );
 
                 $insereTelefone = new Agente_Model_DbTable_Telefones();
@@ -2036,7 +2036,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                     'descricao' => $Email,
                     'status' => $enviarEmail,
                     'divulgar' => $divulgarEmail,
-                    'usuario' => $Usuario
+                    'usuario' => $usuario
                 );
 
                 $insere = new Agente_Model_Email();
@@ -2085,7 +2085,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     				'idAgenteProponente' => $idAgente,
     				'dtVinculo' => new Zend_Db_Expr('GETDATE()'),
     				'siVinculo' => 0,
-    				'idUsuarioResponsavel' => $auth->getIdentity()->IdUsuario
+    				'idUsuarioResponsavel' => $arrAuth->getIdentity()->IdUsuario
     		);
             var_dump($dadosVinculo);die;
     		$tbVinculo->inserir($dadosVinculo);

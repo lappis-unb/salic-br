@@ -152,6 +152,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
      * @static
      * @param integer $idAgente
      * @return object
+     * @deprecated utilizar buscarEnderecos da DbTable Endereco Nacional
      */
     public static function buscarEnderecos($idAgente = null)
     {
@@ -210,26 +211,26 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
      */
     public static function buscarEmails($idAgente = null)
     {
+        $tblAgentes = new Agente_Model_DbTable_Agentes();
         $db = Zend_Db_Table::getDefaultAdapter();
 
         $i = [
-            'I.idInternet'
-            ,'I.idAgente'
-            ,'I.TipoInternet'
-            ,'I.Descricao'
-            ,'I.Status'
-            ,'I.Divulgar'
+            'i.idinternet'
+            ,'i.idagente'
+            ,'i.tipointernet'
+            ,'i.descricao'
+            ,'i.status'
+            ,'i.divulgar'
         ];
 
         $sql = $db->select()
-            ->from(['I' => 'Internet'], $i, 'AGENTES.dbo')
-            ->join(['V' => 'Verificacao'], 'I.TipoInternet = V.idVerificacao', 'V.Descricao as tipo', 'AGENTES.dbo')
-            ->join(['T' => 'Tipo'], 'T.idTipo = V.IdTipo', null, 'AGENTES.dbo')
-        ;
+            ->from(['i' => 'internet'], $i, $tblAgentes->getSchema('agentes'))
+            ->join(['v' => 'verificacao'], 'i.tipointernet = v.idverificacao', 'v.descricao as tipo', $tblAgentes->getSchema('agentes'))
+            ->join(['t' => 'tipo'], 't.idtipo = v.idtipo', null, $tblAgentes->getSchema('agentes'));
 
         if (!empty($idAgente)) {// busca de acordo com o id do agente
 
-            $sql->where('I.idAgente = ?', $idAgente);
+            $sql->where('i.idagente = ?', $idAgente);
         }
 
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -246,41 +247,42 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
      */
     public static function buscarFones($idAgente = null)
     {
+        $tblAgentes = new Agente_Model_DbTable_Agentes();
         $db = Zend_Db_Table::getDefaultAdapter();
 
         $tl = [
-            'Tl.idTelefone',
-            'Tl.TipoTelefone',
-            'Tl.Numero',
-            'Tl.Divulgar',
+            'tl.idtelefone',
+            'tl.tipotelefone',
+            'tl.numero',
+            'tl.divulgar',
             new Zend_Db_Expr("
                     CASE
-                    WHEN Tl.TipoTelefone = 22 or Tl.TipoTelefone = 24
+                    WHEN tl.tipotelefone = 22 or tl.tipotelefone = 24
                     THEN 'Residencial'
-                    WHEN Tl.TipoTelefone = 23 or Tl.TipoTelefone = 25
+                    WHEN tl.tipotelefone = 23 or tl.tipotelefone = 25
                     THEN 'Comercial'
-                    WHEN Tl.TipoTelefone = 26
+                    WHEN tl.tipotelefone = 26
                     THEN 'Celular'
-                    WHEN Tl.TipoTelefone = 27
+                    WHEN tl.tipotelefone = 27
                     THEN 'Fax'
-                    END as dsTelefone
+                    END as dstelefone
             ")
         ];
 
         $ddd = [
-            'ddd.Codigo as DDD',
-            'ddd.Codigo as Codigo',
+            'ddd.codigo as ddd',
+            'ddd.codigo as codigo',
         ];
 
         $sql = $db->select()
-            ->from(['Tl' => 'Telefones'], $tl, 'AGENTES.dbo')
-            ->join(['Uf' => 'Uf'], 'Uf.idUF = Tl.UF', ['Uf.Sigla as ufSigla'], 'AGENTES.dbo')
-            ->join(['Ag' => 'Agentes'], 'Ag.IdAgente = Tl.IdAgente', ['Ag.IdAgente'], 'AGENTES.dbo')
-            ->joinLeft(['ddd' => 'DDD'], 'Tl.DDD = ddd.Codigo', $ddd, 'AGENTES.dbo')
+            ->from(['tl' => 'telefones'], $tl, $tblAgentes->getSchema('agentes'))
+            ->join(['uf' => 'uf'], 'uf.iduf = tl.uf', ['uf.sigla as ufsigla'], $tblAgentes->getSchema('agentes'))
+            ->join(['ag' => 'agentes'], 'ag.idagente = tl.idagente', ['ag.idagente'], $tblAgentes->getSchema('agentes'))
+            ->joinLeft(['ddd' => 'ddd'], 'tl.ddd = ddd.codigo', $ddd, $tblAgentes->getSchema('agentes'))
             ;
 
         if (!empty($idAgente)) { // busca de acordo com o id do agente
-            $sql->where('Tl.idAgente = ?',$idAgente);
+            $sql->where('tl.idagente = ?', $idAgente);
         }
 
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

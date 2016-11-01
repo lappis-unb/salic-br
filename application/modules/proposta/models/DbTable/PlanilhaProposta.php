@@ -90,7 +90,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 
     public function Orcamento($id_projeto)
     {
-    // @todo limpar
+// @todo limpar
 //        $sql = "SELECT
 //                    idPlanilhaProposta,
 //                    idProjeto,
@@ -156,7 +156,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
         $sql->where('p.idprojeto = ?', $id_projeto);
         $sql->order('p.idetapa','p.idproduto');
 
-        return $db->fetchAll($sql);
+       return $db->fetchAll($sql);
     }
 
     public function buscarCustos($idPreProjeto, $tipoCusto, $idEtapa = null, $idItem = null, $idUf = null, $idMunicipio = null,

@@ -298,6 +298,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public function listarEtapasProdutos($idPreProjeto)
     {
+
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -687,6 +688,10 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public static function buscarProdutos($idPreProjeto) {
 
+        echo '<pre>';
+        var_dump ('Método transferido para Proposta Model Dbtable PreProjeto');
+        exit;
+
         $sql = "SELECT p.Codigo as CodigoProduto,
                     p.Descricao as DescricaoProduto,
                     pre.idPreProjeto as PreProjeto,
@@ -716,6 +721,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public function listarProdutos($idPreProjeto)
     {
+        echo '<pre>';
+        var_dump ('Método transferido para Proposta Model DbTable Preprojeto');
+        exit;
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 

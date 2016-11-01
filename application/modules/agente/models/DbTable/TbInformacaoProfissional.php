@@ -45,38 +45,38 @@ class Agente_Model_DbTable_TbInformacaoProfissional extends MinC_Db_Table_Abstra
         $select = $this->select();
         $select->setIntegrityCheck(false);
         
-        $select->from(array('A' => $this->_name),
-        			  array('*','CONVERT(CHAR(10), dtInicioVinculo, 103) as dtInicio',
-        			  			'CONVERT(CHAR(10), dtFimVinculo, 103) as dtFim'),
+        $select->from(array('a' => $this->_name),
+        			  array('*', $this->getExpressionToChar('dtiniciovinculo') . ' as dtinicio',
+                          $this->getExpressionToChar('dtfimvinculo') . ' as dtfim'),
             $this->_schema
         			  );
 
         $select->joinLeft(
-                array('D'=>'tbDocumento'),'D.idDocumento = A.idDocumento',
+                array('d'=>'tbdocumento'),'d.iddocumento = a.iddocumento',
                 array('*'),
-            $this->getSchema('BDCORPORATIVO', true, 'sccorp')
+            $this->getSchema('bdcorporativo', true, 'sccorp')
         );
 
         $select->joinLeft(
-                array('TA'=>'tbArquivo'),'TA.idArquivo = D.idArquivo',
+                array('ta'=>'tbarquivo'),'ta.idarquivo = d.idarquivo',
                 array('*'),
-            $this->getSchema('BDCORPORATIVO', true, 'sccorp')
+            $this->getSchema('bdcorporativo', true, 'sccorp')
         );
 
         $select->joinLeft(
-                array('TAI'=>'tbArquivoImagem'),'TAI.idArquivo = TA.idArquivo',
+                array('tai'=>'tbarquivoimagem'),'tai.idarquivo = ta.idarquivo',
                 array('*'),
-            $this->getSchema('BDCORPORATIVO', true, 'sccorp')
+            $this->getSchema('bdcorporativo', true, 'sccorp')
         );
         
         if(!empty($situacao))
         {
-        	$select->where('A.siInformacao = ?', $situacao);	
+        	$select->where('a.siinformacao = ?', $situacao);
         }
         
-        $select->where('A.idAgente = ?', $idAgente);
+        $select->where('a.idagente = ?', $idAgente);
         
-        $select->order('A.dtInicioVinculo');
+        $select->order('a.dtiniciovinculo');
         
         return $this->fetchAll($select);
 
