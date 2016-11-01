@@ -267,4 +267,29 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
         return $db->fetchAll($sql);
     }
 
+    public function buscarDadosCadastrarCustos($idPreProjeto) {
+//        $sql = "
+//            SELECT TOP 1
+//            tpp.idProjeto as idProposta
+//            FROM SAC..tbPlanilhaProposta tpp
+//            WHERE tpp.idProjeto = $idPreProjeto";
+
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('tpp'=>$this->_name),
+            array(
+                'idproposta'=>'tpp.idprojeto',
+            ),
+            $this->_schema
+        );
+        $select->where('tpp.idprojeto = ?',$idPreProjeto);
+
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        return $db->fetchRow($select);
+
+    }
+
 }

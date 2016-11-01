@@ -27,13 +27,13 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
      * @return array
      * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      */
-    public function buscar()
+    public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
             $this->_name,
-            array('uf'=>'iduf',
+            array('id'=>'iduf',
                 'descricao'=> 'sigla'),
             $this->_schema
         );
@@ -82,7 +82,7 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
             ->from($this->_name, ['iduf AS id', 'sigla AS descricao'], $this->_schema);
 
         if (!empty($id)) {
-            $sql->where('idUF = ?', $id);
+            $sql->where('iduf = ?', $id);
         }
 
         return $db->fetchAll($sql);

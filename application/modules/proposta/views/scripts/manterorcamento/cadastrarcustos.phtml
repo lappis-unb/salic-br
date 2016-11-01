@@ -196,6 +196,7 @@
 
         $('#uf').change(function(){
 
+            console.log($(this).val() == 0);
             if($(this).val() == 0){
                 $("#municipio").find('option').remove();
                 $("#municipio").append('<option value=""> - Selecione uma UF - </option>');
@@ -344,8 +345,8 @@
                                 <select name="uf" class="select_simples valida" id='uf'>
                                     <option value="<?php echo "" ?>"> - Selecione - </option>
                                     <?php foreach($this->Estados as $estados) {?>
-                                    <?php $selected = (isset($this->dados_cadastrados[0]['UfDespesa']) && $estados->id == $this->dados_cadastrados[0]['UfDespesa'])?'selected=selected':''; ?>
-                                    <option <?php echo $selected ?> value="<?php echo $estados->id ?>"><?php echo $estados->descricao ?></option>
+                                        <?php $selected = (isset($this->dados_cadastrados[0]['UfDespesa']) && $estados->id == $this->dados_cadastrados[0]['UfDespesa'])?'selected=selected':''; ?>
+                                        <option <?php echo $selected ?> value="<?php echo $estados->id ?>"><?php echo $estados->descricao ?></option>
                                     <?php } ?>
                                 </select>
                             </td>

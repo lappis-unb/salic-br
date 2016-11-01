@@ -15,8 +15,6 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
 	protected $_schema = 'sac';
 	protected $_name   = 'tbplanilhaetapa';
     protected $_primary = 'idplanilhaetapa';
-	protected $_name   = 'tbPlanilhaEtapa';
-	protected $_primary   = 'idplanilhaetapa';
 
     public function listarEtapasProdutos($idPreProjeto)
     {
@@ -55,13 +53,6 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
     }
 
     public  function buscarEtapasCusto() {
-//        $sql = "SELECT
-//		idplanilhaetapa ,
-//		Descricao
-//		FROM SAC..tbPlanilhaEtapa where tpcusto = 'A'";
-
-//
-//        $sql.= " ORDER BY Descricao ";
 
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -184,13 +175,6 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         return $db->fetchAll($sql);
     }
 
-=======
-
-        //xd($sql);
-        return $db->fetchAll($select);
-    }
-
->>>>>>> origin/salic-br-sprint-02
     public function listarEtapasCusto()
     {
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -217,34 +201,4 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
 
         return $db->fetchAll($sql);
     }
-
-    public function listarEtapasProdutos($idPreProjeto)
-    {
-        $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
-
-
-        $sql = $db->select()
-            ->from(['tbplanilhaetapa'], ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], $this->getSchema('sac'))
-            ->where("tpCusto = 'P'")
-        ;
-
-        //$sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
-
-        return $db->fetchAll($sql);
-    }
-
-    public function listarCustosAdministrativos()
-    {
-        $db= Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
-        $sql = $db->select()
-            ->from('tbplanilhaetapa', ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], $this->getSchema('sac'))
-            ->where("tpCusto = 'A' AND idPlanilhaEtapa <> 6")
-        ;
-        return $db->fetchAll($sql);
-    }
-
 } // fecha class

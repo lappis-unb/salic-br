@@ -88,15 +88,12 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $buscarEstado = new Agente_Model_DbTable_UF();
         $this->view->Estados = $buscarEstado->buscar();
 
-//        $manterOrcamento = new ManterorcamentoDAO();
 
         $tbPreprojeto = new Proposta_Model_DbTable_PreProjeto();
         $this->view->Produtos = $tbPreprojeto->listarProdutos($this->idPreProjeto);
 
-        $buscarEtapa = $manterOrcamento->listarEtapasProdutos($this->idPreProjeto);
-        $this->view->Etapa = $buscarEtapa;
-
-        $this->view->Etapa = $tbPreprojeto->listarEtapasProdutos($this->idPreProjeto);
+        $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+        $this->view->Etapa = $manterOrcamento->listarEtapasProdutos($this->idPreProjeto);
 
         $this->view->Item = $tbPreprojeto->listarItensProdutos($this->idPreProjeto);
 
@@ -111,22 +108,13 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      */
     public function custosadministrativosAction()
     {
-        $tbPEtapas = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-        $this->view->Etapas = $tbPEtapas->listarCustosAdministrativos();
-
-        $manterOrcamento = new ManterorcamentoDAO();
-        $buscarCustos = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
-        $this->view->EtapaCusto = $buscarCustos;
-
-        $buscaDados = new Proposta_Model_DbTable_PlanilhaProposta();
-        $this->view->dados = $buscaDados->listarDadosCadastrarCustos($this->idPreProjeto);
-
-        $buscarEstado = new EstadoDAO();
-        $buscarEstado = $buscarEstado->listar();
-        $this->view->Estados = $buscarEstado;
-
-        $this->view->Etapa = $tbPEtapas->listarEtapasCusto();
-
+        $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+        $this->view->Etapas = $manterOrcamento->listarCustosAdministrativos();
+        $this->view->EtapaCusto = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
+        $this->view->dados = $manterOrcamento->listarDadosCadastrarCustos($this->idPreProjeto);
+        $buscarEstado = new Agente_Model_DbTable_UF();
+        $this->view->Estados = $buscarEstado->listar();
+        $this->view->Etapa = $manterOrcamento->listarEtapasCusto();
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
@@ -299,12 +287,11 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         }
 
         if(isset($_POST['iduf'])) {
-
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $iduf = $_POST['iduf'];
 
              $tbMun= new Agente_Model_DbTable_Municipios();
-            $cidade = $tbMun->buscar($iduf);
+            $cidade = $tbMun->listar($iduf);
             $a = 0;
             foreach($cidade as $DadosCidade) {
                 $cidadeArray[$a]['idCidade'] = $DadosCidade->id;
@@ -651,13 +638,13 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 	}
                 }
             }
-////            catch (Zend_Exception $e) {
-//
-//                $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-//                echo "Erro ao cadastrar dados";
-//                die;
-//            }
-//        }
+            catch (Zend_Exception $e) {
+
+                $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+                echo "Erro ao cadastrar dados";
+                die;
+            }
+        }
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
