@@ -232,7 +232,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $sql = $this->select()
+        $sql = $db->select()
             ->from(['tpp' => 'tbplanilhaproposta'], 'tpp.idprojeto as idProposta', $this->getSchema('sac'))
             ->where('tpp.idProjeto = ?', $idPreProjeto)
             ->limit(1)

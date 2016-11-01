@@ -3070,6 +3070,8 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         //$sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
 
+        throw new Exception('Método transferido para Proposta_Model_DbTable_TbPlanilhaEtapa');
+
         return $db->fetchAll($sql);
     }
 

@@ -16,22 +16,55 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
 	protected $_name   = 'tbplanilhaetapa';
     protected $_primary = 'idplanilhaetapa';
 
-    public  function buscarEtapasCusto() {
-//        $sql = "SELECT
-//		idplanilhaetapa ,
-//		Descricao
-//		FROM SAC..tbPlanilhaEtapa where tpcusto = 'A'";
+    public function listarEtapasProdutos($idPreProjeto)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-//        $sql.= " ORDER BY Descricao ";
+        $sql = $db->select()
+            ->from(['tbplanilhaetapa'], ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], $this->getSchema('sac'))
+            ->where("tpCusto = 'P'")
+        ;
+
+        //$sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
+
+        return $db->fetchAll($sql);
+    }
+
+    public  function buscarEtapasCadastrarProdutos() {
+
+        $sql = "SELECT
+                idplanilhaetapa ,
+                Descricao
+                FROM SAC.dbo.tbPlanilhaEtapa where tpCusto = 'P'";
+
+
+        $sql.= " ORDER BY Descricao ";
+
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        }
+        catch (Zend_Exception_Db $e) {
+            $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
+        }
+        //die($sql);
+        return $db->fetchAll($sql);
+    }
+
+    public  function buscarEtapasCusto() {
+
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-            array( $this->_name),
-            array('idplanilhaetapa',
-                'descricao'),
+            array($this->_name),
+            array(
+                'idplanilhaetapa',
+                'descricao'
+            ),
             $this->_schema
         );
-        $select->where('tpcusto = ?', 'A');
+        $select->where('tpcusto = ?','A');
         $select->order('descricao');
 
         try {
@@ -165,23 +198,6 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         catch (Zend_Exception_Db $e) {
             $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
         }
-
-        return $db->fetchAll($sql);
-    }
-
-    public function listarEtapasProdutos($idPreProjeto)
-    {
-        $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
-
-
-        $sql = $db->select()
-            ->from(['tbplanilhaetapa'], ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], $this->getSchema('sac'))
-            ->where("tpCusto = 'P'")
-        ;
-
-        //$sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
 
         return $db->fetchAll($sql);
     }

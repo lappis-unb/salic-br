@@ -30,7 +30,7 @@ class Proposta_Model_DbTable_Verificacao extends MinC_Db_Table_Abstract{
             array('v' => $this->_name),
             array(
                 'idverificacao',
-                $this->getExpressionTrim('v.descricao',  'verificacaodescricao'),
+                $this->getExpressionTrim('v.descricao','verificacaodescricao'),
             ),
             $this->_schema
             );
