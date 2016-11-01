@@ -115,20 +115,11 @@
                 <th>Nome do Projeto</th>
                 <th>Situação</th>
                 <th>Área / Segmento</th>
-                <th>Estado</th>
                 <th>Mecanismo</th>
-                <?php if(!isset($this->filtro) || (isset($this->filtro) && $this->filtro != 'devolvidos')){ ?>
-                    <?php if(isset($this->filtro) && $this->filtro == 'emanalise'){ ?>
-                    <th>Dt. Encaminhamento</th>
-                    <?php } else { ?>
-                    <th>Dt. Recebimento</th>
-                    <?php } ?>
-                <?php } else { ?>
-                <th>Dt. Início</th>
-                <th>Dt. Fim</th>
-                <?php } ?>
                 <?php if(isset($this->filtro) && ($this->filtro == 'emanalise')){ ?>
                 <th>Técnico</th>
+                <th>Dt.Envio</th>
+                <th>Dias em Análise</th>
                 <?php } ?>
             </tr>
         </thead>
@@ -140,20 +131,11 @@
                 <td><?php echo $projeto->NomeProjeto; ?></td>
                 <td align="center"><?php echo $projeto->Situacao; ?></td>
                 <td><?php echo $projeto->Area.' / '.$projeto->Segmento; ?></td>
-                <td align="center"><?php echo $projeto->UfProjeto; ?></td>
                 <td align="center"><?php $mecanismo = $projeto->Mecanismo; if ($mecanismo == 'Mecenato'){ echo "Incentivo Fiscal"; }else{ echo $projeto->Mecanismo;}?></td>
-                <?php if(!isset($this->filtro) || (isset($this->filtro) && $this->filtro != 'devolvidos')){ ?>
-                    <?php if(isset($this->filtro) && $this->filtro == 'emanalise'){ ?>
-                    <td align="center"><?php echo Data::tratarDataZend($projeto->dtInicioEncaminhamento, 'brasileira');?></td>
-                    <?php } else { ?>
-                    <td align="center"><?php echo Data::tratarDataZend($projeto->DtSituacao, 'brasileira');?></td>
-                    <?php } ?>
-                <?php } else { ?>
-                    <td align="center"><?php echo Data::tratarDataZend($projeto->dtInicioEncaminhamento, 'brasileira'); ?></td>
-                    <td align="center"><?php echo Data::tratarDataZend($projeto->dtFimEncaminhamento, 'brasileira'); ?></td>
-                <?php } ?>
                 <?php if(isset($this->filtro) && ($this->filtro == 'emanalise')){ ?>
-                    <td align="center"><?php echo $projeto->nmAgente; ?></td>
+                    <td align="center"><?php echo $projeto->usu_nome; ?></td>
+                    <td align="center"><?php echo Data::tratarDataZend($projeto->dtInicioEncaminhamento, 'brasileira'); ?></td>
+                    <td align="center"><?php echo $projeto->qtDiasAnalise; ?></td>
                 <?php } ?>
             </tr>
             <?php $x++; } ?>
