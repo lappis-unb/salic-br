@@ -88,13 +88,12 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $buscarEstado = new Agente_Model_DbTable_UF();
         $this->view->Estados = $buscarEstado->buscar();
 
-//        $manterOrcamento = new ManterorcamentoDAO();
 
         $tbPreprojeto = new Proposta_Model_DbTable_PreProjeto();
         $this->view->Produtos = $tbPreprojeto->listarProdutos($this->idPreProjeto);
 
-
-        $this->view->Etapa = $tbPreprojeto->listarEtapasProdutos($this->idPreProjeto);
+        $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+        $this->view->Etapa = $manterOrcamento->listarEtapasProdutos($this->idPreProjeto);
 
         $this->view->Item = $tbPreprojeto->listarItensProdutos($this->idPreProjeto);
 
@@ -261,12 +260,15 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @return void
      */
     public function cadastrarcustosAction() {
-
         $this->_helper->layout->disableLayout();
 
         if  ( isset ( $_GET['idPreProjeto'] ) ) {
             $idPreProjeto = $_GET['idPreProjeto'];
 
+            $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaProposta();
+            $buscaDados = $manterOrcamento->findBy(array('idprojeto' => $idPreProjeto));
+//            $buscaDados = $manterOrcamento->buscarDadosCadastrarCustos($idPreProjeto);
+            $this->view->dados = $buscaDados;
 
             $buscaDados = new Proposta_Model_DbTable_PlanilhaProposta();
 
@@ -289,12 +291,11 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         }
 
         if(isset($_POST['iduf'])) {
-
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $iduf = $_POST['iduf'];
 
              $tbMun= new Agente_Model_DbTable_Municipios();
-            $cidade = $tbMun->buscar($iduf);
+            $cidade = $tbMun->listar($iduf);
             $a = 0;
             foreach($cidade as $DadosCidade) {
                 $cidadeArray[$a]['idCidade'] = $DadosCidade->id;
@@ -322,7 +323,6 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $etapaSelecionada["id"] = $_GET["etapa"];
         $etapaSelecionada["etapaNome"] = $_GET["etapaNome"];
         $this->view->etapaSelecionada = $etapaSelecionada;
-
 
         $buscarEstado = new Agente_Model_DbTable_UF();
         $this->view->Estados = $buscarEstado->buscar();

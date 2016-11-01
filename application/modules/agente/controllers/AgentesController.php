@@ -535,7 +535,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      * Metodo para visualizacao dos dados do agente
      * @access public
      * @param void
-     * @return List
      */
     public function agentesAction() {
         $this->autenticacao();

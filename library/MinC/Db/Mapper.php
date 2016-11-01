@@ -141,7 +141,10 @@ class MinC_Db_Mapper
     public function save($model)
     {
         $table = $this->getDbTable();
-        $pk = is_array($table->getPrimary())? reset($table->getPrimary()) : $table->getPrimary();
+
+        $primary = $table->getPrimary();
+
+        $pk = is_array($primary)? reset($primary) : $primary;
         $method = 'get' . ucfirst($pk);
         $pkValue = $model->$method();
         $data = array_filter($model->toArray(), 'strlen');
