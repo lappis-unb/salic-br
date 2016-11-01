@@ -276,50 +276,6 @@ function buscardados(valor)
                         $("#cpf").attr('disabled','disabled');
                         $("#idAgente").val(data[i].idAgente);
 
-                        //						$("#cep").val(data[i].CEP);
-                        //						$("#cep").attr('readonly','');
-                        //						$("#numero").attr('readonly','');
-                        //						$("#complemento").attr('readonly','');
-                        //						$("#uf").val(data[i].UF);
-
-                        //						if (data[i].UF == "" || data[i].UF == " " || data[i].UF == 0)
-                        //						{
-                        //							carregar_combo(data[i].UF, 'cidade', '../cidade/combo', ' - Selecione - ', data[i].Cidade);
-                        //						}
-                        //						else
-                        //						{
-                        //							document.getElementById('cidade').options.length = 0;
-                        //							var novoOption = document.createElement("option");
-                        //							novoOption.value = data[i].Cidade; // atribui um valor ao option
-                        //							novoOption.text  = data[i].dsCidade; // atribui um texto ao option
-                        //							document.getElementById('cidade').options.add(novoOption); // adiciona o novo elemento
-                        //						}
-
-                        //						$("#tipoEndereco")		.val(data[i].TipoEndereco);
-                        //						$("#tipoLogradouro")	.val(data[i].TipoLogradouro);
-                        //						$("#logradouro")		.val(data[i].Logradouro);
-                        //						$("#numero")			.val(data[i].Numero);
-                        //						$("#complemento")		.val(data[i].Complemento);
-                        //						$("#bairro")			.val(data[i].Bairro);
-
-                        //						if (data[i].DivulgarEndereco == 1)
-                        //						{
-                        //							$("input[name='divulgarEndereco'][value='1']").attr('checked','checked');
-                        //						}
-                        //						else
-                        //						{
-                        //							$("input[name='divulgarEndereco'][value='0']").attr('checked','checked');
-                        //						}
-                        //
-                        //						if (data[i].EnderecoCorrespondencia == 1)
-                        //						{
-                        //							$("input[name='enderecoCorrespondencia'][value='1']").attr('checked','checked');
-                        //						}
-                        //						else
-                        //						{
-                        //							$("input[name='enderecoCorrespondencia'][value='0']").attr('checked','checked');
-                        //						}
-
                         buscarEnderecos();
                         buscarTelefones(); // busca os telefones do agente
                         buscarEmails(); // busca os e-mails do agente
@@ -333,12 +289,12 @@ function buscardados(valor)
                 }
                 else // novo cpf/cnpj
                 {
-                    $("#nome")	.attr('readonly','');
-                    $("#cpf")	.attr('disabled','disabled');
-                    $("#nome")	.attr('readonly','');
-                    $("#cep")	.attr('readonly','');
-                    $("#cep")	.attr('readonly','');
-                    $("#uf")	.val(data[i].UF);
+                    $("#nome").attr('readonly','');
+                    $("#cpf").attr('disabled','disabled');
+                    $("#nome").attr('readonly','');
+                    $("#cep").attr('readonly','');
+                    $("#cep").attr('readonly','');
+                    //$("#uf").val(data[i].UF);
                 } // fecha else
             },
             error: function (data)
@@ -559,7 +515,7 @@ function buscarEnderecos()
             }
         }
     });
-} // fecha fun��o buscarEnderecos()
+}
 
 function buscarEmails()
 {
