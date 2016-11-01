@@ -14,11 +14,12 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
 	protected $_schema = 'agentes';
 
     /**
-     * buscarEnderecoNacional
+     * buscarendereconacional
      *
-     * @param mixed $idAgente
+     * @param mixed $idagente
      * @static
      * @access public
+     * @deprecated Utilizar método da DbTable
      */
     public static function buscarEnderecoNacional($idAgente)
     {
@@ -61,6 +62,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
      * @static
      * @access public
      * @return void
+     * @deprecated Utilizar método da DbTable
      */
     public static function gravarEnderecoNacional($dados)
     {
@@ -85,6 +87,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
      * @static
      * @access public
      * @return void
+     * @deprecated Utilizar método da DbTable
      */
     public static function atualizaEnderecoNacional($idAgente, $dados)
     {
@@ -103,6 +106,8 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
      * @static
      * @access public
      * @return void
+     * @deprecated Utilizar método da DbTable
+     *
      */
     public static function deletarEnderecoNacional($idEndereco)
     {
@@ -125,6 +130,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
      * @static
      * @access public
      * @return void
+     * @deprecated Utilizar método da DbTable
      */
     public static function mudaCorrespondencia($idAgente)
     {
@@ -147,7 +153,7 @@ class Agente_Model_EnderecoNacionalDAO extends MinC_Db_Table_Abstract
      * @static
      * @access public
      * @return void
-     * @todo colocar orm, verificar existencia de trigger no sistema, n�o foi possivel testar.
+     * @deprecated Utilizar método da DbTable
      */
     public static function novaCorrespondencia($idAgente)
     {

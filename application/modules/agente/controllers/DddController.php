@@ -48,7 +48,7 @@ class Agente_DddController extends Zend_Controller_Action
         $id = (int) $post->id;
 
         $dddMapper = new Agente_Model_DDDMapper();
-        $this->view->comboddds = $dddMapper->fetchPairs('idddd', 'codigo', array('iduf' => $id));
+        $this->view->comboddds = $dddMapper->fetchPairs('codigo', 'codigo', array('iduf' => $id));
     }
 
 
