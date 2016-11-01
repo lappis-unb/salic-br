@@ -914,8 +914,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         $enderecoCorrespondencia = $this->_request->getParam("enderecoCorrespondencia");
 
-        if ($qtdEndereco <= 1) { //@todo Cleber:parei aqui, verificar quantidade
-            parent::message("Você tem que ter pelo menos um endereço cadastrado!", "agente/agentes/enderecos/id/" . $idAgente, "ALERT");
+        if ($qtdEndereco <= 1) {
+            parent::message("Voc&ecirc; tem que ter pelo menos um endere&ccedil;o cadastrado!", "agente/agentes/enderecos/id/" . $idAgente, "ALERT");
         }
 
         try {
@@ -927,9 +927,9 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $tblEndereco->novaCorrespondencia($idAgente);
             }
 
-            parent::message("Exclusão realizada com sucesso!", "agente/agentes/enderecos/id/" . $idAgente, "CONFIRM");
+            parent::message("Exclus&atilde;o realizada com sucesso!", "agente/agentes/enderecos/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
-            parent::message("Erro ao excluir o endereço: " . $e->getMessage(), "agente/agentes/enderecos/id/" . $idAgente, "ERROR");
+            parent::message("Erro ao excluir o endere&ccedil;o: " . $e->getMessage(), "agente/agentes/enderecos/id/" . $idAgente, "ERROR");
         }
     }
 

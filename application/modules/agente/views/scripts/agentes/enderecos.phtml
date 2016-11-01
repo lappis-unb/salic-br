@@ -400,7 +400,7 @@
 				<td colspan="2"><label>Autorizo divulgar o endere&ccedil;o:</label> <?php echo $end->divulgar == "1" ? "SIM" : "N&Atilde;O"; ?></td>
 			</tr>
 			<tr>
-				<td colspan="3" width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('', '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluiendereco','idEndereco' => $end->idendereco, 'qtdEndereco' => $this->qtdendereco, 'enderecoCorrespondencia' => $end->status));?>');" /></td>
+				<td colspan="3" width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('', '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluiendereco','idEndereco' => $end->idendereco, 'qtdEndereco' => $this->qtdEndereco, 'enderecoCorrespondencia' => $end->status));?>');" /></td>
 			</tr>
 		</table>
 
