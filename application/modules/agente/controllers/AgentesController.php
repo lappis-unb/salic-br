@@ -942,7 +942,9 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     public function telefonesAction() {
         $this->autenticacao();
         $idAgente = $this->_request->getParam("id");
-        $lista = Agente_Model_ManterAgentesDAO::buscarFones($idAgente);
+
+        $mdlTelefones = new Agente_Model_DbTable_Telefones();
+        $lista = $mdlTelefones->buscarFones($idAgente);
 
         $this->view->telefones = $lista;
         $this->view->qtdTel = count($lista);
@@ -968,18 +970,26 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         try {
             $arrayTelefones = array(
-                'idAgente' => $idAgente,
-                'TipoTelefone' => $tipoFone,
-                'UF' => $ufFone,
-                'DDD' => $dddFone,
-                'Numero' => $Fone,
-                'Divulgar' => $divulgarFone,
-                'Usuario' => $Usuario
+                'idagente' => $idAgente,
+                'tipotelefone' => $tipoFone,
+                'uf' => $ufFone,
+                'ddd' => $dddFone,
+                'numero' => $Fone,
+                'divulgar' => $divulgarFone,
+                'usuario' => $Usuario
             );
-            Agente_Model_Telefone::cadastrar($arrayTelefones);
-            parent::message("Cadastro realizado com sucesso!", "agente/agentes/telefones/id/" . $idAgente, "CONFIRM");
 
+            # Salvando telefone.
+            $mapperTelefones = new Agente_Model_TelefonesMapper();
+            $modelTelefones = new Agente_Model_Telefones($arrayTelefones);
+
+            $mapperTelefones->beginTransaction();
+            $mapperTelefones->save($modelTelefones);
+
+            $mapperTelefones->commit();
+            parent::message("Cadastro realizado com sucesso!", "agente/agentes/telefones/id/" . $idAgente, "CONFIRM");
         } catch (Exception $e) {
+            $mapperTelefones->rollBack();
             parent::message("Erro ao salvar o Telefone: " . $e->getMessage(), "agente/agentes/telefones/id/" . $idAgente, "ERROR");
         }
     }
@@ -1002,8 +1012,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         } else {
 
             try {
-
-                $excluir = Agente_Model_Telefone::excluir($idTelefone);
+                $mapperTelefones = new Agente_Model_TelefonesMapper();
+                $mapperTelefones->deleteBy(array("idTelefone" => $idTelefone));
 
                 parent::message("Exclusão realizada com sucesso!", "agente/agentes/telefones/id/" . $idAgente, "CONFIRM");
             } catch (Exception $e) {
@@ -1021,6 +1031,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     public function emailsAction() {
         $this->autenticacao();
         $idAgente = $this->_request->getParam("id");
+
+
         $lista = Agente_Model_ManterAgentesDAO::buscarEmails($idAgente);
 
         $this->view->emails = $lista;
