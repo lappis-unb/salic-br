@@ -12,12 +12,12 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
     {
         $somar = $this->select();
         $somar->from($this,
-            array(
-                'sum(Quantidade*Ocorrencia*ValorUnitario) as soma'
-            )
-        )
-            ->where('idProjeto = ?', $idprojeto)
-            ->where('idProduto <> ?', '206');
+                        array(
+                            'sum(Quantidade*Ocorrencia*ValorUnitario) as soma'
+                        )
+                )
+                ->where('idProjeto = ?', $idprojeto)
+                ->where('idProduto <> ?', '206');
         if ($fonte) {
             $somar->where('FonteRecurso = ?', $fonte);
         }
@@ -125,6 +125,12 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 //                ORDER BY
 //                    idEtapa,idProduto";
 
+        try {
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        } catch (Zend_Exception_Db $e) {
+            $this->view->message = $e->getMessage();
+        }
 
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -150,7 +156,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
         $sql->where('p.idprojeto = ?', $id_projeto);
         $sql->order('p.idetapa','p.idproduto');
 
-        return $db->fetchAll($sql);
+       return $db->fetchAll($sql);
     }
 
     public function buscarCustos($idPreProjeto, $tipoCusto, $idEtapa = null, $idItem = null, $idUf = null, $idMunicipio = null,
@@ -259,6 +265,31 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 
 
         return $db->fetchAll($sql);
+    }
+
+    public function buscarDadosCadastrarCustos($idPreProjeto) {
+//        $sql = "
+//            SELECT TOP 1
+//            tpp.idProjeto as idProposta
+//            FROM SAC..tbPlanilhaProposta tpp
+//            WHERE tpp.idProjeto = $idPreProjeto";
+
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('tpp'=>$this->_name),
+            array(
+                'idproposta'=>'tpp.idprojeto',
+            ),
+            $this->_schema
+        );
+        $select->where('tpp.idprojeto = ?',$idPreProjeto);
+
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        return $db->fetchRow($select);
+
     }
 
 }
