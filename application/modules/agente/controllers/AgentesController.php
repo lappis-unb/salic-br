@@ -2843,16 +2843,16 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 // cadastra todas as visoes do agente
                 foreach ($visaoAgente as $visao) {
                     $dados = array(
-                        'idAgente' => $idAgente,
-                        'Visao' => $visao,
-                        'Usuario' => $this->getIdUsuario, // código do usuario logado
-                        'stAtivo' => 'A');
+                        'idagente' => $idAgente,
+                        'visao' => $visao,
+                        'usuario' => $this->getIdUsuario, // código do usuario logado
+                        'stativo' => 'A');
                     $visaoTable->cadastrarVisao($dados);
                 }
 
-                parent::message("Alteração realizada com sucesso!", "agente/agentes/alterarvisao/id/" . $idAgente, "CONFIRM");
+                parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "agente/agentes/alterarvisao/id/" . $idAgente, "CONFIRM");
             } catch (Exception $e) {
-                parent::message("Erro ao efetuar alteração das visões do agente! " . $e->getMessage(), "agente/agentes/alterarvisao/id/" . $idAgente, "ERROR");
+                parent::message("Erro ao efetuar altera&ccedil;&atilde;o das vis&otilde;es do agente! " . $e->getMessage(), "agente/agentes/alterarvisao/id/" . $idAgente, "ERROR");
             }
         }
 

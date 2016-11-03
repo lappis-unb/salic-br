@@ -120,12 +120,12 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
      */
     public function alterarVisao($idAgente, $dados)
     {
-        $db= Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+//        $db= Zend_Db_Table::getDefaultAdapter();
+//        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idAgente = " . $idAgente; // condi��o para altera��o
 
-        $update = $db->update('AGENTES.dbo.Visao', $dados, $where); // altera
+        $update = $this->update($dados, $where); // altera
 
         if ($update) {
             return true;
@@ -144,12 +144,12 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
      */
     public function excluirVisao($idAgente)
     {
-        $db= Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+//        $db= Zend_Db_Table::getDefaultAdapter();
+//        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $where = "idAgente = " . $idAgente; // condi��o para exclus�o
 
-        $delete = $db->delete('AGENTES.dbo.Visao', $where); // exclui
+        $delete = $this->delete($where); // exclui
 
         if ($delete) {
             return true;
