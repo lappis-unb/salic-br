@@ -2770,7 +2770,7 @@ CREATE TABLE sac.PlanoDistribuicaoProduto
   idPlanoDistribuicao INT PRIMARY KEY NOT NULL,
   idProjeto INT NOT NULL,
   idProduto int NOT NULL,
-  Area CHAR,
+  Area INT,
   Segmento CHAR(2),
   idPosicaoDaLogo INT DEFAULT 0 NOT NULL,
   QtdeProduzida INT DEFAULT 0 NOT NULL,
