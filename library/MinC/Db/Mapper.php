@@ -144,18 +144,12 @@ class MinC_Db_Mapper
      */
     public function save($model)
     {
-//        if ($this->_isBeginTransaction) {
-//            $this->beginTransaction();
-//        }
         $table = $this->getDbTable();
-
         $primary = $table->getPrimary();
-
         $pk = is_array($primary)? reset($primary) : $primary;
         $method = 'get' . ucfirst($pk);
         $pkValue = $model->$method();
         $data = array_filter($model->toArray(), 'strlen');
-
         if ($table->getSequence()) {
             unset($data[$pk]);
             if (empty($pkValue)) {
@@ -174,9 +168,6 @@ class MinC_Db_Mapper
 
     public function find()
     {
-        echo '<pre>';
-        var_dump('haha');
-        exit;
         $result = $this->getDbTable()->find($id);
 //        if (0 == count($result)) {
 //            return;

@@ -19,8 +19,7 @@ class Agente_Model_AgentesMapper extends MinC_Db_Mapper
 
     public function __construct()
     {
-        $this->_dbTable = new Agente_Model_DbTable_Agentes();
-        var_dump('teste');
+        $this->setDbTable('Agente_Model_DbTable_Agentes');
     }
 
     public function fetchAll()
@@ -41,14 +40,10 @@ class Agente_Model_AgentesMapper extends MinC_Db_Mapper
 
     public function save( $model)
     {
-//        if (self::isUniqueCpfCnpj($model->getCnpjcpf())) {
-//            throw new Exception('CNPJ ou CPF j&aacute; cadastrado.');
-//        } else {
-        d($this->getDbTable());
-        $teste = $this->findBy(array("cnpjcpf = '?'", $model->getCnpjcpf()));
-        $this->rollBack();
-            d($teste);
+        if (self::isUniqueCpfCnpj($model->getCnpjcpf())) {
+            throw new Exception('CNPJ ou CPF j&aacute; cadastrado.');
+        } else {
             return parent::save($model);
-//        }
+        }
     }
 }
