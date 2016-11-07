@@ -407,4 +407,21 @@ function isCnpjValid($cnpj) {
 
 
 // FIM DO METODO montaGuiaLinks
+
+function salictmpfile($file){
+
+$temp = tmpfile();
+
+fwrite($temp, "Testing, testing.");
+//Rewind to the start of file
+rewind($temp);
+
+//Read 1k from file
+echo fread($temp,1024);
+
+//This removes the file
+fclose($temp);
+
+}
+
 ?>

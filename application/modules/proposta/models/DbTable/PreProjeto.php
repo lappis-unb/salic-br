@@ -2762,7 +2762,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         $validacao->Observacao = 'PENDENTE';
                         $listaValidacao[] =  clone($validacao);
                     } else {
-                        $validacao->Descricao = 'Prazo de início de execu&ccedil;&atilde;o maior do que 90 dias.';
+                        $validacao->Descricao = 'Prazo de in&iacute;cio de execu&ccedil;&atilde;o maior do que 90 dias.';
                         $validacao->Observacao = 'OK';
                         $listaValidacao[] =  clone($validacao);
                     }
@@ -2870,7 +2870,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     $custoAdministrativos = $db->fetchAll($sql);
 
                     if (!empty($custoAdministrativos)){
-                        $validacao->Descricao = 'A planilha de custos administrativos do projeto não est&aacute; cadastrada.';
+                        $validacao->Descricao = 'A planilha de custos administrativos do projeto n&atilde;o est&aacute; cadastrada.';
                         $validacao->Observacao = 'PENDENTE';
                         $listaValidacao[] =  clone($validacao);
                     } else {

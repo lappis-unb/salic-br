@@ -761,7 +761,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                     $valorRetirar = $valorPropostaDivulgacao - $porcentProposta;
                     $arrResultado['erro'] = true;
                     $arrResultado['planodivulgacao']['erro'] = true;
-                    //$arrResultado['planodivulgacao']['msg'] = "Custo de Divulgaï¿½ï¿½o/Comercializaï¿½ï¿½o superior a 20% do valor total do projeto";
+                    //$arrResultado['planodivulgacao']['msg'] = "Custo de Divulgacao/Comercializacao superior a 20% do valor total do projeto";
                     $arrResultado['planodivulgacao']['msg'] = "Custo de Divulga&ccedil;&atilde;o/Comercializa&ccedil;&atilde;o superior a 20% do valor total da proposta. Favor readequar os custos em <b>R$ " . number_format($valorRetirar, '2', ',', '.') . "</b> para enviar a sua proposta ao Ministï¿½rio da Cultura.";
                 }
             } else {
@@ -881,7 +881,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             if (($data_validacao <= date('Ymd')) && ($ano_envio >= $ano_execucao)) {
                 $arrResultado['erro'] = true;
                 $arrResultado['planoanual']['erro'] = true;
-                $arrResultado['planoanual']['msg'] = "De acordo com a súmula 10, projetos de plano anual só poderão ser enviados até 30 de setembro do ano vigente, e o período de execução deverá ser do ano seguinte a data de envio.";
+                $arrResultado['planoanual']['msg'] = "De acordo com a s&uacute;mula 10, projetos de plano anual s&oacute; poder&atilde;o ser enviados at&eacute; 30 de setembro do ano vigente, e o per&iacute;odo de execu&ccedil;&atilde;o dever&aacute; ser do ano seguinte a data de envio.";
             }else  {
                 $arrResultado['planoanual']['erro'] = false;
                 $arrResultado['planoanual']['msg'] = "Plano Anual";
@@ -1030,7 +1030,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     }
 
     /**
-     * M?todo responsavel por validar as datas do formulario
+     * Metodo responsavel por validar as datas do formulario
      * @param void
      * @return objeto
      */
@@ -1070,7 +1070,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 $bln = "false";
             }
             if (!$objData->validarData($get->dtInicio)) {
-                $mensagem = "<br><font color='red'>O período de execução de projetos de plano anual dever ser posterior ao ano vigente</font>";
+                $mensagem = "<br><font color='red'>O per&iacute;odo de execu&ccedil;&atilde;o de projetos de plano anual dever ser posterior ao ano vigente</font>";
                 $bln = "false";
             }
 
@@ -1308,7 +1308,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
     /**
      * Metodo resnovoresponsavel()
      * Retorno do novoresponsavel
-     * UC 89 - Fluxo FA4 - Vincular Responsï¿½vel
+     * UC 89 - Fluxo FA4 - Vincular Responsaveis
      * @access public
      * @param void
      * @return void
