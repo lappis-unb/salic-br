@@ -4,15 +4,15 @@
  * Classe abstrata responsável por fornecer todo o fluxo necessário
  * para a implementação do OAuth de acordo com a necessidade.
  * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+ * @author Cleber Santos <oclebersantos@gmail.com>
  * @since 20/10/16 14:58
  */
-abstract class MinC_Auth_Controller_AOAuth extends MinC_Controller_Action_Abstract
+abstract class MinC_Auth_Controller_AOAuth extends Zend_Controller_Action
 {
     /**
      * @var array
      */
     private $oauthConfig;
-
 
     /**
      * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
@@ -43,9 +43,11 @@ abstract class MinC_Auth_Controller_AOAuth extends MinC_Controller_Action_Abstra
      */
     protected function getOPAuthConfiguration()
     {
-        $oauthConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', "oauth");
+        $oauthConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', "oauth_" . APPLICATION_ENV);
         $oauthConfigArray = $oauthConfig->toArray();
-        return $oauthConfigArray['config'];
+        if($oauthConfigArray && $oauthConfigArray['OAuth']['servicoHabilitado'] == true) {
+            return $oauthConfigArray['OAuth'];
+        }
     }
 
     /**

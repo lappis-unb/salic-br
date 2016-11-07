@@ -8,10 +8,11 @@
  * @package      Opauth.LoginCidadaoStrategy
  * @license      MIT License
  */
+
 /**
  * Do strategy for Opauth
  *
- * @package			Opauth.LoginCidadao
+ * @package            Opauth.LoginCidadao
  */
 class LoginCidadaoStrategy extends OpauthStrategy
 {
@@ -45,7 +46,7 @@ class LoginCidadaoStrategy extends OpauthStrategy
     public function __construct($strategy, $env)
     {
         parent::__construct($strategy, $env);
-        $this->strategy['redirect_uri'] = $this->strategy['application_url_base'].$this->strategy['redirect_uri']; // Login Cidadao validate url, so no child blog url here
+        $this->strategy['redirect_uri'] = $this->strategy['application_url_base'] . $this->strategy['redirect_uri']; // Login Cidadao validate url, so no child blog url here
     }
 
     /**
@@ -56,15 +57,14 @@ class LoginCidadaoStrategy extends OpauthStrategy
         // on Dev
         //$url = $this->strategy['oauth_url_base'].'/web/app_dev.php/oauth/v2/auth';
         // On Prod
-        $url = $this->strategy['oauth_url_base'].'/oauth/v2/auth';
+        $url = $this->strategy['oauth_url_base'] . '/oauth/v2/auth';
 
         $params = array(
             'client_id' => $this->strategy['client_id'],
             'redirect_uri' => $this->strategy['redirect_uri'],
 
         );
-        foreach ($this->optionals as $key)
-        {
+        foreach ($this->optionals as $key) {
             if (!empty($this->strategy[$key])) $params[$key] = $this->strategy[$key];
         }
         $this->clientGet($url, $params);
@@ -75,13 +75,12 @@ class LoginCidadaoStrategy extends OpauthStrategy
      */
     public function oauth2callback()
     {
-        if (array_key_exists('code', $_GET) && !empty($_GET['code']))
-        {
+        if (array_key_exists('code', $_GET) && !empty($_GET['code'])) {
             $code = $_GET['code'];
             // on Dev use:
             //$url = $this->strategy['oauth_url_base'].'/web/app_dev.php/oauth/v2/token';
 
-            $url = $this->strategy['oauth_url_base'].'/oauth/v2/token';
+            $url = $this->strategy['oauth_url_base'] . '/oauth/v2/token';
 
             $params = array(
                 'code' => $code,
@@ -96,8 +95,7 @@ class LoginCidadaoStrategy extends OpauthStrategy
 
             $results = json_decode($response);
 
-            if (!empty($results) && isset($results->access_token))
-            {
+            if (!empty($results) && isset($results->access_token)) {
                 $user = $this->user($results->access_token);
 
                 $this->auth = array(
@@ -112,13 +110,11 @@ class LoginCidadaoStrategy extends OpauthStrategy
                     'raw' => $user
                 );
 
-                if(array_key_exists('given_name', $user))
-                {
+                if (array_key_exists('given_name', $user)) {
                     $this->auth['info']['display_name'] = $user['given_name'];
                     $this->mapProfile($user, 'name', 'info.display_name');
                 }
-                if(array_key_exists('first_name', $user))
-                {
+                if (array_key_exists('first_name', $user)) {
                     $this->auth['info']['first_name'] = $user['first_name'];
                     $this->mapProfile($user, 'first_name', 'info.first_name');
                 }
@@ -132,9 +128,7 @@ class LoginCidadaoStrategy extends OpauthStrategy
 
 //xd($response, $user, $this->auth); redirect_uri
                 $this->callback();
-            }
-            else
-            {
+            } else {
                 $error = array(
                     'code' => 'access_token_error',
                     'message' => 'Failed when attempting to obtain access token',
@@ -145,9 +139,7 @@ class LoginCidadaoStrategy extends OpauthStrategy
                 );
                 $this->errorCallback($error);
             }
-        }
-        else
-        {
+        } else {
             $error = array(
                 'code' => 'oauth2callback_error',
                 'raw' => $_GET
@@ -167,14 +159,11 @@ class LoginCidadaoStrategy extends OpauthStrategy
         // On dev use:
         //$user = $this->serverGet( $this->strategy['oauth_url_base'].'/web/app_dev.php/api/v1/person.json', array('access_token' => $access_token), null, $headers);
 
-        $user = $this->serverGet( $this->strategy['oauth_url_base'].'/api/v1/person.json', array('access_token' => $access_token), null, $headers);
+        $user = $this->serverGet($this->strategy['oauth_url_base'] . '/api/v1/person.json', array('access_token' => $access_token), null, $headers);
 
-        if (!empty($user))
-        {
+        if (!empty($user)) {
             return $this->recursiveGetObjectVars(json_decode($user));
-        }
-        else
-        {
+        } else {
             $error = array(
                 'code' => 'userinfo_error',
                 'message' => 'Failed when attempting to query the Do API for user information',
@@ -207,44 +196,35 @@ class LoginCidadaoStrategy extends OpauthStrategy
     public static function httpRequest($url, $options = null, &$responseHeaders = null)
     {
         $context = null;
-        if (!empty($options) && is_array($options))
-        {
-            if (empty($options['http']['header']))
-            {
+        if (!empty($options) && is_array($options)) {
+            if (empty($options['http']['header'])) {
                 $options['http']['header'] = "User-Agent: opauth";
-            }
-            else
-            {
+            } else {
                 $options['http']['header'] .= "\r\nUser-Agent: opauth";
             }
-        }
-        else
-        {
+        } else {
             $options = array('http' => array('header' => 'User-Agent: opauth'));
         }
 //        $context = stream_context_create($options);
 //        $content = file_get_contents($url, false, $context);
 //        $responseHeaders = implode("\r\n", $http_response_header);
 
-        $reqString=$url;
+        $reqString = $url;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $reqString);
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        if(isset($options['http']['method']) && $options['http']['method'] == "POST" )
-        {
+        if (isset($options['http']['method']) && $options['http']['method'] == "POST") {
             curl_setopt($ch, CURLOPT_POST, 1);
         }
-        if(isset($options['http']['content']))
-        {
+        if (isset($options['http']['content'])) {
             $dataString = $options['http']['content'];
             curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
         }
         curl_setopt($ch, CURLOPT_HEADER, 0);
         $content = curl_exec($ch);
-        if($content === false)
-        {
+        if ($content === false) {
             $error = curl_error($ch);
             curl_close($ch);
             throw new Exception($error);
@@ -262,7 +242,8 @@ class LoginCidadaoStrategy extends OpauthStrategy
      * @param string $responseHeaders Response headers after HTTP call. Useful for error debugging.
      * @return string Content resulted from request, without headers
      */
-    public static function serverPost($url, $data, $options = array(), &$responseHeaders = null) {
+    public static function serverPost($url, $data, $options = array(), &$responseHeaders = null)
+    {
         if (!is_array($options)) {
             $options = array();
         }
