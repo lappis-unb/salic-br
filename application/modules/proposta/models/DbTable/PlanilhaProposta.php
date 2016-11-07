@@ -4,9 +4,10 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 {
 
     //protected $_name = 'SAC.dbo.tbPlanilhaProposta';
-    protected $_banco = 'sac';
+    protected $_primary = 'idPlanilhaProposta';
     protected $_schema= 'sac';
     protected $_name = 'tbplanilhaproposta';
+//    @todo : esse arquivo deverá ter seus metodos transferidos para Proposta_Model_DbTable_TbPlanilhaProposta e o arquivo apagado
 
     public function somarPlanilhaProposta($idprojeto, $fonte = null, $outras = null, $where = array())
     {

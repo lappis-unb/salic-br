@@ -52,7 +52,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         return $db->fetchAll($sql);
     }
 
-    public  function buscarEtapasCusto() {
+    public function buscarEtapasCusto() {
 
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -156,7 +156,6 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
             ->where('tpe.tpcusto = ?', $tipoCusto)
             ->where('tpp.idprojeto = ?', $idPreProjeto)
             ->order('tpe.descricao');
-
         return $db->fetchAll($sql);
     }
 

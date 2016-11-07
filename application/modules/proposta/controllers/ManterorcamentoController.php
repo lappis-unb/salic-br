@@ -121,6 +121,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
     /**
      * planilhaorcamentariaAction
      *
+     *
      * @access public
      * @return void
      */
@@ -283,8 +284,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $cidade = $mun->buscar($dados_cadastrados[0]['UfDespesa']);
             $this->view->municipios = $cidade;
 
-            $itens = ManterorcamentoDAO::buscarItens($dados_cadastrados[0]['idEtapa']);
-            $this->view->item = $itens;
+            $itens = new tbItensPlanilhaProduto();
+            $this->view->item = $itens->buscarItens($dados_cadastrados[0]['idEtapa']);
 
         } else {
             $this->view->dados_cadastrados = array();
@@ -309,11 +310,12 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         if(isset($_POST['idetapa'])) {
         	$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $idetapa = $_POST['idetapa'];
-            $item = ManterorcamentoDAO::buscarItens($idetapa);
+            $item = new tbItensPlanilhaProduto();
+            $item = $item->buscarItens($idetapa);
             $a = 0;
             foreach($item as $Dadositem) {
                 $itemArray[$a]['idItem'] = $Dadositem->idPlanilhaItens;
-                $itemArray[$a]['nomeItem'] = utf8_encode($Dadositem->Descricao);
+                $itemArray[$a]['nomeItem'] = $Dadositem->Descricao;
                 $a++;
             }
             echo json_encode($itemArray);
@@ -586,10 +588,10 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $ocorrencia = $_POST['ocorrencia'];
             $vlunitario = str_replace(",", ".", str_replace(".", "",  $_POST['vlunitario']));
             $qtdDias = $_POST['qtdDias'];
-            $dsJustificativa = utf8_decode(substr(trim(strip_tags($_POST['editor1'])),0,500));
+            $dsJustificativa = substr(trim(strip_tags($_POST['editor1'])),0,500);
             $tipoCusto = 'A';
 
-            try {
+//            try {
 
                 $db= Zend_Db_Table::getDefaultAdapter();
                 $dados = array(	'idprojeto'=>$idProposta,
@@ -631,22 +633,20 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 			            echo "Cadastro duplicado de Custo na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada! Deseja cadastrar um novo item?";
 			            die;
                 	}else{
-
-	                    $db->insert('sac.tbplanilhaproposta',$dados);
-
+                        $TPP->insert($dados);
 	                    $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 	                    echo "Item cadastrado com sucesso. Deseja cadastrar um novo item?";
 	                    die;
                 	}
                 }
             }
-            catch (Zend_Exception $e) {
-
-                $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-                echo "Erro ao cadastrar dados";
-                die;
-            }
-        }
+//            catch (Zend_Exception $e) {
+//
+//                $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+//                echo "Erro ao cadastrar dados";
+//                die;
+//            }
+//        }
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }

@@ -230,6 +230,7 @@
                 idPreProjeto : <?php echo $this->idPreProjeto;?>
             },
             success: function(valor){
+                console.log(valor);
                 $("#item").find('option').remove();
                 $("#item").append('<option value=""> - Selecione - </option>');
 
@@ -375,11 +376,30 @@
                 </fieldset>
             </div>
 
+<!--            <div style="float: left; width: 34%">-->
+<!--                    <fieldset><legend>Etapa / Meta - --><?php //echo $this->etapaSelecionada["etapaNome"]; ?><!--</legend>-->
+<!--                    <input type="hidden" name="etapa" id="etapa" value="--><?php //echo $this->etapaSelecionada["id"]; ?><!--" />-->
+<!--                    <table cellpadding="0" cellspacing="0" width="100%">-->
+<!--                        <tr>-->
+<!--                            <td align="justify" width="20%"><label for="etapa">ETAPA / META</label>-->
+<!--                                <br />-->
+<!--                                <select class="select_simples valida" id='etapa' name="etapa">-->
+<!--                                    <option value=""> - Selecione - </option>-->
+<!--                                        --><?php //foreach($this->Etapa as $etapa) {?>
+<!--                                    <option value="--><?php //echo $etapa->idplanilhaetapa ?><!--">--><?php //echo $etapa->descricao ?><!--</option>-->
+<!--                                            --><?php //} ?>
+<!--                                </select>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                </fieldset>-->
+<!--            </div>-->
             <div style="float: left; width: 34%">
-                    <fieldset><legend>Etapa / Meta - <?php echo $this->etapaSelecionada["etapaNome"]; ?></legend>
+                <fieldset><legend>Etapa / Meta - <?php echo $this->etapaSelecionada["etapaNome"]; ?></legend>
                     <input type="hidden" name="etapa" id="etapa" value="<?php echo $this->etapaSelecionada["id"]; ?>" />
                     <table cellpadding="0" cellspacing="0" width="100%">
                         <tr>
+                            <!--
                             <td align="justify" width="20%"><label for="etapa">ETAPA / META</label>
                                 <br />
                                 <select class="select_simples valida" id='etapa' name="etapa">
@@ -388,7 +408,22 @@
                                     <option value="<?php echo $etapa->idplanilhaetapa ?>"><?php echo $etapa->descricao ?></option>
                                             <?php } ?>
                                 </select>
+
                             </td>
+                            -->
+                            <td align="left"><label for="item">ITEM<span class="red">*</span></label><br />
+                                <select class="select_simples valida" id='item' name="item" style="width:250px">
+                                    <option> - Selecione uma Etapa - </option>
+                                    <?php foreach($this->Etapa as $etapa) {?>
+                                        <option value="<?php echo $etapa->idplanilhaetapa ?>"><?php echo $etapa->descricao ?></option>
+                                    <?php } ?>
+                                </select>
+                            </td>
+                            <!--
+                            <td align="center"><br />
+                                <label><input type="button" class="btn_alterar" id='alteraretapa'></label>
+                            </td>
+                            -->
                         </tr>
                     </table>
                 </fieldset>
