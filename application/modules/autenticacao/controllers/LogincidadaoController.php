@@ -9,11 +9,34 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
 {
     /**
      * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @author Cleber Santos <oclebersantos@gmail.com>
      * @return void
      */
     public function successAction()
     {
-        $this->redirect("/principal");
+        $objSgcAcesso = new Autenticacao_Model_Sgcacesso();
+        $auth = Zend_Auth::getInstance();
+        $objIdentity = $auth->getIdentity();
+
+        $cpf = $objIdentity->auth['raw']['cpf'];
+        $id = $objIdentity->auth['raw']['id'];
+
+        $arraySGCAcesso = $objSgcAcesso->buscar(array('cpf = ?' => $cpf))->toArray();
+
+        $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $id);
+        if($senhaCriptografada != $arraySGCAcesso[0]['senha']) {
+            $senhaCriptografada = $arraySGCAcesso[0]['senha'];
+        }
+
+        $objSgcAcesso->loginSemCript($cpf, $senhaCriptografada);
+
+        $agentes = new Agente_Model_DbTable_Agentes();
+        $hasAgentes = $agentes->buscar(array('cnpjcpf = ?' => $cpf))->current();
+        if(count($hasAgentes) < 1) {
+            $this->_helper->viewRenderer->setNoRender(true);
+            $this->_helper->flashMessenger->addMessage("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.");
+        }
+        $this->redirect("/principalproponente");
     }
 
     /**
@@ -29,6 +52,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
      * @access public
      * @return void
      * @author Vinícius Feitosa da Silva <viniciusfesil@gmail.com>
+     * @author Cleber Santos <oclebersantos@gmail.com>
      */
     public function cadastrarusuarioAction()
     {
@@ -36,6 +60,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
             if (!$_POST) {
                 throw new Exception("Tentativa de acesso inv&aacute;lido.");
             }
+
             $objPost = $this->getAllParams();
             $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($objPost["cpf"]));
             $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $objPost["id"]);
@@ -65,7 +90,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
             $objVisao = new Visao();
             $buscarVisao = $objVisao->buscar(array('visao = ?' => 144, 'stativo = ?' => 'A', 'idagente = ?' => $idAgenteProp));
 
-            if (count($buscarVisao) > 0)  {
+            if (count($buscarVisao->toArray()) > 0)  {
                 $tbVinculo = new Agente_Model_DbTable_TbVinculo();
                 $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $pkSgcAcessoSave));
                 $dadosVinculo = array(
@@ -77,7 +102,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
                 $tbVinculo->inserir($dadosVinculo);
             }
 
-            parent::message("Bem vindo!", "/principal", "CONFIRM");
+            parent::message("Bem vindo!", "/principalproponente", "CONFIRM");
 
         } catch (Exception $objException) {
             parent::message($objException->getMessage(), "/autenticacao", "ALERT");
