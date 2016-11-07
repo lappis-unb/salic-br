@@ -16,14 +16,16 @@
  */
 class Agente_Model_AgentesMapper extends MinC_Db_Mapper
 {
+
     public function __construct()
     {
-        parent::setDbTable('Agente_Model_DbTable_Agentes');
+        $this->_dbTable = new Agente_Model_DbTable_Agentes();
+        var_dump('teste');
     }
 
     public function fetchAll()
     {
-        $resultSet = $this->getDbTable()->fetchAll();
+        $resultSet = $this->fetchAll();
         $entries   = array();
         foreach ($resultSet as $row) {
             $entry = new Agente_Model_Agentes($row->toArray());
@@ -39,10 +41,14 @@ class Agente_Model_AgentesMapper extends MinC_Db_Mapper
 
     public function save( $model)
     {
-        if (self::isUniqueCpfCnpj($model->getCnpjcpf())) {
-            throw new Exception('CNPJ ou CPF j&aacute; cadastrado.');
-        } else {
+//        if (self::isUniqueCpfCnpj($model->getCnpjcpf())) {
+//            throw new Exception('CNPJ ou CPF j&aacute; cadastrado.');
+//        } else {
+        d($this->getDbTable());
+        $teste = $this->findBy(array("cnpjcpf = '?'", $model->getCnpjcpf()));
+        $this->rollBack();
+            d($teste);
             return parent::save($model);
-        }
+//        }
     }
 }

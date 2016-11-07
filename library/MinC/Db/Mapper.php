@@ -16,7 +16,8 @@
  */
 class MinC_Db_Mapper
 {
-    public $_dbTable;
+    protected $_isBeginTransaction = false;
+    protected $_dbTable;
 
     protected $arrMessages = array();
 
@@ -43,11 +44,13 @@ class MinC_Db_Mapper
 
     public function setDbTable($dbTable)
     {
-        if (is_string($dbTable)) {
+        if (!$this->_dbTable && is_string($dbTable)) {
             $dbTable = new $dbTable();
-        }
-        if (!$dbTable instanceof Zend_Db_Table_Abstract) {
-            throw new Exception('Invalid table data gateway provided');
+            if (!$dbTable instanceof Zend_Db_Table_Abstract) {
+                throw new Exception('Invalid table data gateway provided');
+            }
+        } else {
+            $dbTable = $this->_dbTable;
         }
         $this->_dbTable = $dbTable;
         return $this;
@@ -77,6 +80,7 @@ class MinC_Db_Mapper
      */
     public function beginTransaction()
     {
+        $this->_isBeginTransaction = true;
         $this->getDbTable()->getAdapter()->beginTransaction();
         return $this;
     }
@@ -107,7 +111,7 @@ class MinC_Db_Mapper
 
     public function findBy($arrData)
     {
-        return $this->getDbTable()->findBy($arrData);
+        return $this->_dbTable->findBy($arrData);
     }
 
     /**
@@ -140,6 +144,9 @@ class MinC_Db_Mapper
      */
     public function save($model)
     {
+//        if ($this->_isBeginTransaction) {
+//            $this->beginTransaction();
+//        }
         $table = $this->getDbTable();
 
         $primary = $table->getPrimary();

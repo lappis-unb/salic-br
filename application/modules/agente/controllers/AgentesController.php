@@ -1882,13 +1882,25 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             'usuario' => $usuario
         );
         $mprAgentes = new Agente_Model_AgentesMapper();
+        $tblAgentes = new Agente_Model_DbTable_Agentes();
+        $mprNomes = new Agente_Model_NomesMapper();
         $mdlAgente = new Agente_Model_Agentes($arrayAgente);
-        $mprAgentes->beginTransaction();
-        $teste = $mprAgentes->save($mdlAgente);
-        $mprAgentes->rollBack();
-        d($teste);
-//        $agente = $mprAgentes->findBy(array('cnpjcpf' => $mdlAgente->getCnpjcpf()));
 
+        $mprAgentes->beginTransaction();
+        $teste1 = $tblAgentes->findBy(array("cnpjcpf = '?'", $mdlAgente->getCnpjcpf()));
+        $mprAgentes->beginTransaction();
+        $teste2 = $tblAgentes->findBy(array("cnpjcpf = '?'", $mdlAgente->getCnpjcpf()));
+        $mprAgentes->rollBack();
+        d($teste1, $teste2);
+
+
+        $teste = $mprAgentes->save($mdlAgente);
+
+
+        $mprAgentes->rollBack();
+
+        d($teste);
+        $agente = $mprAgentes->findBy(array('cnpjcpf' => $mdlAgente->getCnpjcpf()));
 
         $idAgente = $agente['idagente'];
         $nome = $this->_request->getParam("nome");
@@ -1896,17 +1908,21 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         if($this->modal == "s"){
             $nome = Seguranca::tratarVarAjaxUFT8($nome);
         }
-        $mprAgentes->rollBack();
-        d('asd');
 //        try {
-            $nomes = new NomesDAO();
-        d('asd');
-            $gravarNome = $nomes->inserir($idAgente, $TipoNome, $nome, 0, $usuario);
-        d($gravarNome);
+        $arrNome = [
+            'idagente' => $idAgente,
+            'tiponome' => $TipoNome,
+            'descricao' => $nome,
+            'status' => 0,
+            'usuario' => $usuario
+        ];
+        $teste = $mprNomes->save(new Agente_Model_Nomes($arrNome));
+
+//        $mprAgentes->rollBack();
+        d($teste);
 //        } catch (Exception $e) {
 //            parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
 //        }
-
         // ================================================ FIM SALVAR NOME ======================================================
         // ================================================ INICIO SALVAR VISAO ======================================================
         $Visao = $this->_request->getParam("visao");
