@@ -28,6 +28,12 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
     public function indexAction()
     {
+        $oauthConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', "oauth_" . APPLICATION_ENV);
+        $oauthConfigArray = $oauthConfig->toArray();
+        $this->view->habilitarServicoLoginCidadao = false;
+        if($oauthConfigArray && $oauthConfigArray['OAuth']) {
+            $this->view->habilitarServicoLoginCidadao = (bool)$oauthConfigArray['OAuth']['servicoHabilitado'];
+        }
     }
 
     /**
@@ -41,10 +47,12 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     public function loginAction()
     {
         $this->_helper->layout->disableLayout();
-        $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
-        $password = $this->getParam('Senha', null);
+
+
 
         try {
+            $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
+            $password = $this->getParam('Senha', null);
 
             if (empty($username) || empty($password))
             {
@@ -95,6 +103,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
      */
     public function loginProponenteAction()
     {
+
         // recebe os dados do formulario via post
         $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
         $password = $this->getParam('Senha', null);
@@ -136,8 +145,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                     $buscar = $Usuario->loginSemCript($username, $SenhaFinal);
                 }
 
-                if ($buscar) // acesso permitido
-                {
+                if ($buscar) {
                     $verificaSituacao = $verificaStatus['situacao'];
                     if ($verificaSituacao == 1) {
                         parent::message("Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha.", "/autenticacao/index/alterarsenha?idUsuario=" . $IdUsuario, "ALERT");
