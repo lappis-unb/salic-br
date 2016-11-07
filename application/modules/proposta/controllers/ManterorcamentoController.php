@@ -263,6 +263,10 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
     public function cadastrarcustosAction() {
         $this->_helper->layout->disableLayout();
 
+        # Forcando o charset conforme o application.ini
+        $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+        $this->view->charset = $config->resources->db->params->charset;
+
         if  ( isset ( $_GET['idPreProjeto'] ) ) {
             $idPreProjeto = $_GET['idPreProjeto'];
 
