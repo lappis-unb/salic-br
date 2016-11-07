@@ -106,12 +106,12 @@ class PublicacaoDouController extends GenericControllerNew {
             $this->view->orgaoFiltro = $_GET['orgaoFiltro'];
             $wherenaopublicados['pr.Orgao = ?'] = $_GET['orgaoFiltro'];
         }
-        
+
         if(isset($_GET['situacao'])){
             $filtro = $_GET['situacao'];
             $this->view->filtro = $filtro;
             switch ($filtro) {
-                case '':
+                case 'aprovacaoInicial':
                     $wherenaopublicados['pr.Situacao in (?)'] = array('D27');
                     $wherenaopublicados['ap.TipoAprovacao = ?'] = 1;
                     break;
@@ -145,8 +145,12 @@ class PublicacaoDouController extends GenericControllerNew {
                     $wherenaopublicados['r.siEncaminhamento = ?'] = 9;
                     $wherenaopublicados['ap.TipoAprovacao = ?'] = 8;
                     break;
+                default:
+                    //$wherenaopublicados['pr.Situacao in (?)'] = array('D27');
+                    //$wherenaopublicados['ap.TipoAprovacao = ?'] = 1;
             }
         } else {
+            $this->view->filtro = 'aprovacaoInicial';
             $wherenaopublicados['pr.Situacao in (?)'] = array('D27');
             $wherenaopublicados['ap.TipoAprovacao = ?'] = 1;
         }
@@ -206,7 +210,7 @@ class PublicacaoDouController extends GenericControllerNew {
         if(isset($_GET['situacao'])){
             $filtro = $_GET['situacao'];
             switch ($filtro) {
-                case '':
+                case 'aprovacaoInicial':
                     $wherepublicados['pr.Situacao = ?'] = 'D09';
                     $wherepublicados['ap.TipoAprovacao = ?'] = 1;
                     break;
@@ -315,7 +319,7 @@ class PublicacaoDouController extends GenericControllerNew {
             $nrPortaria = $this->_request->getParam('nrPortaria');
             $nome = $this->_request->getParam('nome');
             $cargo = $this->_request->getParam('cargo');
-
+            //xd($tipoPublicacao);
             // variaveis definidas localmente
             $dia = (int) date("d");
             $mes = (int) date("m");
@@ -411,21 +415,21 @@ class PublicacaoDouController extends GenericControllerNew {
 
                     $where = array();
                     $where['idAprovacao = ?'] = $idAprovacao;
+
                     $portariagerar = $aprovacao->alterar($dadosPortaria, $where);
-                    
+
                     // verifica se eh readequacao
-                    if (isset($buscaridpronac['IDREADEQUACAO'])) {
+                    if (isset($buscaridpronac['IDREADEQUACAO']) && ! empty($buscaridpronac['IDREADEQUACAO'])) {
                         $naoAlteraSituacao = array(3, 10, 12, 15);  // tipos de readequacoes para as quais não é necessário alterar a situação do projeto
                         $tbReadequacao = new tbReadequacao();
                         $readequacao = $tbReadequacao->buscarReadequacao($buscaridpronac['IDREADEQUACAO']);
-                        
+
                         if (in_array($readequacao[0]->idTipoReadequacao, $naoAlteraSituacao)) {
                             $atualizarSituacao = false;
                         }
                     } else {
                         $atualizarSituacao = true;
                     }
-                    
                     if ($portariagerar && $atualizarSituacao) {
                         $dadosSituacao = array(
                             'DtSituacao' => date('Y-m-d'),
@@ -435,10 +439,9 @@ class PublicacaoDouController extends GenericControllerNew {
                         if($tipoPublicacao == 'prorrogacao' && (empty($dtInicioExecucao) || $dtInicioExecucao == '')){
                             $dadosSituacao['DtInicioExecucao'] = $datas[0]->DtInicio;
                         }
-                        
                         if(isset($tipoPublicacao)){
                             switch ($tipoPublicacao) {
-                                case '':
+                                case 'aprovacaoInicial':
                                     $dadosSituacao['Situacao'] = 'D09';
                                     $dadosSituacao['ProvidenciaTomada'] = 'Portaria de aprovação inicial encaminhada à Imprensa Nacional para publicação no Diário Oficial da União.';
                                     break;
@@ -467,10 +470,12 @@ class PublicacaoDouController extends GenericControllerNew {
                             $dadosSituacao['Situacao'] = 'D09';
                             $dadosSituacao['ProvidenciaTomada'] = 'Portaria de aprovação inicial encaminhada à Imprensa Nacional para publicação no Diário Oficial da União.';
                         }
-                        
-                        $projeto->alterarSituacao($buscaridpronac->IdPRONAC, null, $dadosSituacao['Situacao'], $dadosSituacao['ProvidenciaTomada']);                        
+
+
+                        $projeto->alterarSituacao($buscaridpronac->IdPRONAC, null, $dadosSituacao['Situacao'], $dadosSituacao['ProvidenciaTomada']);
                     } // fecha if
                 } // fecha foreach
+
 
                 // @todo pelo amor dos meus filhinhos, tirar esse if bizarro abaixo e armazenar numa tabela!
                 if($nome == 1){ //Ana Cristina da Cunha Wanzeler
@@ -512,6 +517,7 @@ class PublicacaoDouController extends GenericControllerNew {
 
     public function retirarportariaAction() {
         ini_set('memory_limit', '-1');
+     //   $_GET['tipo'] = 'aprovacaoInicial';
 
         if ($_GET['PortariaAprovacao']) {
             $PortariaAprovacao = $_GET['PortariaAprovacao'];
@@ -519,7 +525,7 @@ class PublicacaoDouController extends GenericControllerNew {
             $dados = array();
             if(isset($_GET['tipo'])){
                 switch ($_GET['tipo']) {
-                    case '':
+                    case 'aprovacaoInicial':
                         $dados['Situacao'] = 'D27';
                         $tipoPublicacao = 1;
                         break;
@@ -600,7 +606,7 @@ class PublicacaoDouController extends GenericControllerNew {
             
             if(isset($_GET['tipo'])){
                 switch ($_GET['tipo']) {
-                    case '':
+                    case 'aprovacaoInicial':
                         $TipoAprovacao = 1;
                         $situacaoAtual = 'D09';
                         break;
@@ -795,7 +801,7 @@ class PublicacaoDouController extends GenericControllerNew {
 
         $numeroPortaria = $this->_getParam('portaria');
         $situacao = $this->_getParam('situacao');
-        
+
         //Se foi feito a pesquisa pelo filtro
         if($_GET){
             
@@ -820,7 +826,7 @@ class PublicacaoDouController extends GenericControllerNew {
             if(isset($situacao)){
                 $filtro = $situacao;
                 switch ($filtro) {
-                    case '':
+                    case 'aprovacaoInicial':
                         $where['a.Situacao = ?'] = 'D09';
                         $where['b.TipoAprovacao = ?'] = 1;
                         break;
@@ -922,7 +928,7 @@ class PublicacaoDouController extends GenericControllerNew {
         if(isset($_POST['filtro'])){
             $filtro = $_POST['filtro'];
             switch ($filtro) {
-                case '':
+                case 'aprovacaoInicial':
                     $where['a.Situacao = ?'] = 'D09';
                     $where['b.TipoAprovacao = ?'] = 1;
                     break;
