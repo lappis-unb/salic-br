@@ -3108,22 +3108,14 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         if($idItem) {
             $sql->where("pp.idPlanilhaItem = ?", $idItem);
         }
-        echo $sql; die;
+
         return $db->fetchAll($sql);
     }
 
     public function buscarProdutos($idPreProjeto) {
 
-
-        $sql = "SELECT p.Codigo as CodigoProduto,
-                    p.Descricao as DescricaoProduto,
-                    pre.idPreProjeto as PreProjeto,
-                    pre.idPreProjeto as idProposta
-                    FROM SAC.dbo.PreProjeto pre
-                    INNER JOIN SAC.dbo.PlanoDistribuicaoProduto pd ON (pre.idPreProjeto = pd.idProjeto AND pd.stPlanoDistribuicaoProduto = 1)
-                    INNER JOIN SAC.dbo.Produto p ON (pd.idProduto = p.Codigo)
-                   where idPreProjeto = {$idPreProjeto} group by p.Codigo, p.Descricao, idPreProjeto ";
-        $sql.= " ORDER BY p.Descricao ";
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -3154,12 +3146,9 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $select->where('idpreprojeto = ?', $idPreProjeto);
 
-        $select->group(array('p.Codigo, p.Descricao, idPreProjeto'));
+        $select->group(array('p.codigo', 'p.descricao', 'idpreprojeto'));
 
-        $db= Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
     }
 
     public function buscarEtapasProdutos($idPreProjeto)

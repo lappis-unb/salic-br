@@ -52,8 +52,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             }
         }
 
-        $this->idUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->IdUsuario;
-
+        $this->idUsuario = isset($auth->getIdentity()->usu_codigo) ? $auth->getIdentity()->usu_codigo : $auth->getIdentity()->idusuario;
         /* =============================================================================== */
         /* ==== VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO ====== */
         /* =============================================================================== */
@@ -203,11 +202,15 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         if(isset($_POST['iduf'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $iduf = $_POST['iduf'];
-            $cidade = CidadeDAO::buscar($iduf);
+
+//            $cidade = CidadeDAO::buscar($iduf);
+            $tbMun= new Agente_Model_DbTable_Municipios();
+            $cidade = $tbMun->listar($iduf);
+
             $a = 0;
             foreach($cidade as $DadosCidade) {
                 $cidadeArray[$a]['idCidade'] = $DadosCidade->id;
-                $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->descricao);
+                $cidadeArray[$a]['nomeCidade'] = $DadosCidade->descricao;
                 $a++;
             }
             echo json_encode($cidadeArray);
@@ -218,12 +221,16 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $idetapa = $_POST['idetapa'];
             $idProduto = $_POST['idProduto'];
-            $item = ManterorcamentoDAO::buscarItens($idetapa,$idProduto);
-            if (count($item) <= 0) { $item = ManterorcamentoDAO::buscarItens($idetapa,null); }
+
+//            $item = ManterorcamentoDAO::buscarItens($idetapa,$idProduto);
+            $itensPlanilhaProduto = new tbItensPlanilhaProduto();
+            $item = $itensPlanilhaProduto->buscarItens($idetapa, $idProduto);
+
+            if (count($item) <= 0) { $item = $itensPlanilhaProduto->buscarItens($idetapa,null); }
             $a = 0;
             foreach($item as $Dadositem) {
-                $itemArray[$a]['idItem'] = $Dadositem->idPlanilhaItens;
-                $itemArray[$a]['nomeItem'] = utf8_encode($Dadositem->Descricao);
+                $itemArray[$a]['idItem'] = $Dadositem->idplanilhaitens;
+                $itemArray[$a]['nomeItem'] = $Dadositem->descricao;
                 $a++;
             }
             echo json_encode($itemArray);
@@ -252,9 +259,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 //        $buscarItem = ManterorcamentoDAO::buscarItensProdutos($this->idPreProjeto);
         $buscarItem = new Proposta_Model_DbTable_PreProjeto();
         $this->view->Item = $buscarItem->listarItensProdutos($this->idPreProjeto);
-        echo '<pre>';
-        var_dump( $buscarItem->listarItensProdutos($this->idPreProjeto));
-        exit;
+//        echo '<pre>';
+//        var_dump( $buscarItem->listarItensProdutos($this->idPreProjeto));
+//        exit;
 //        $buscarProduto = ManterorcamentoDAO::buscarProdutos($this->idPreProjeto);
         $buscarProduto = new Proposta_Model_DbTable_PreProjeto();
         $this->view->Produtos = $buscarProduto->buscarProdutos($this->idPreProjeto);
@@ -311,7 +318,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $a = 0;
             foreach($cidade as $DadosCidade) {
                 $cidadeArray[$a]['idCidade'] = $DadosCidade->id;
-                $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->descricao);
+                $cidadeArray[$a]['nomeCidade'] = $DadosCidade->descricao;
                 $a++;
             }
             echo json_encode($cidadeArray);
@@ -325,8 +332,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $item = $item->buscarItens($idetapa);
             $a = 0;
             foreach($item as $Dadositem) {
-                $itemArray[$a]['idItem'] = $Dadositem->idPlanilhaItens;
-                $itemArray[$a]['nomeItem'] = $Dadositem->Descricao;
+                $itemArray[$a]['idItem'] = $Dadositem->idplanilhaitens;
+                $itemArray[$a]['nomeItem'] = $Dadositem->descricao;
                 $a++;
             }
             echo json_encode($itemArray);
@@ -354,6 +361,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
     public function editarprodutosAction () {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+        $tblanilhaProposta = Proposta_Model_DbTable_TbPlanilhaProposta();
+        $mun = new Agente_Model_DbTable_Municipios();
 
         if(isset($_POST['produto'])) {
 
@@ -386,7 +395,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
             $where = "idPlanilhaProposta = ".$_POST['proposta'];
 
-            $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos(null, $idEtapa, $idProduto, $idItem, null, $idUf, $municipio);
+            $buscarProdutos = $tblanilhaProposta->buscarDadosEditarProdutos(null, $idEtapa, $idProduto, $idItem, null, $idUf, $municipio);
 
         }
 
@@ -398,18 +407,20 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $idItem = $_GET['item'];
             $idPlanilhaProposta = $_GET['idPlanilhaProposta'];
 
-            $buscaDados = ManterorcamentoDAO::buscarDadosEditarProdutos($idProposta, $idEtapa, $idProduto, $idItem, $idPlanilhaProposta);
+            $buscaDados = $tblanilhaProposta->buscarDadosEditarProdutos($idProposta, $idEtapa, $idProduto, $idItem, $idPlanilhaProposta);
             $this->view->Dados = $buscaDados;
         }
 
         if(isset($_POST['iduf'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $iduf = $_POST['iduf'];
-            $cidade = CidadeDAO::buscar($iduf);
+
+            $cidade = $mun->buscar($iduf);
+
             $a = 0;
             foreach($cidade as $DadosCidade) {
                 $cidadeArray[$a]['idCidade'] = $DadosCidade->id;
-                $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->descricao);
+                $cidadeArray[$a]['nomeCidade'] = $DadosCidade->descricao);
                 $a++;
             }
             echo json_encode($cidadeArray);
@@ -419,11 +430,15 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         if(isset($_POST['idetapa'])) {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $idetapa = $_POST['idetapa'];
-            $item = ManterorcamentoDAO::buscarItens($idetapa);
+
+//            $item = ManterorcamentoDAO::buscarItens($idetapa);
+            $tbItensPlanilhaProduto= new tbItensPlanilhaProduto();
+            $item = $tbItensPlanilhaProduto->buscarItens($idetapa);
+
             $a = 0;
             foreach($item as $Dadositem) {
-                $itemArray[$a]['idItem'] = $Dadositem->idPlanilhaItens;
-                $itemArray[$a]['nomeItem'] = utf8_encode($Dadositem->Descricao);
+                $itemArray[$a]['idItem'] = $Dadositem->idplanilhaitens;
+                $itemArray[$a]['nomeItem'] = $Dadositem->descricao);
                 $a++;
             }
             echo json_encode($itemArray);
@@ -433,15 +448,16 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $buscarEstado = $uf->buscar();
         $this->view->Estados = $buscarEstado;
 
-        $cidade = CidadeDAO::buscar($buscaDados[0]->IdUf);
+
+        $cidade = $mun->buscar($buscaDados[0]->IdUf);
         $this->view->Cidades = $cidade;
 
-        $itensEtapaCusto = ManterorcamentoDAO::buscarEtapasCusto();
-        $this->view->itensEtapaCusto = $itensEtapaCusto;
+        $buscarEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+        $this->view->itensEtapaCusto = $buscarEtapa->buscarEtapasCusto();
 
-        $buscarEtapa = ManterorcamentoDAO::buscarEtapasCadastrarProdutos();
+        $tbPlanilhaEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
 
-        $this->view->Etapa = $buscarEtapa;
+        $this->view->Etapa = $tbPlanilhaEtapa->buscarEtapasCadastrarProdutos();
 
         $buscarRecurso = new Proposta_Model_DbTable_Verificacao();
         $this->view->Recurso = $buscarRecurso->buscarFonteRecurso();
@@ -449,9 +465,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $buscarUnidade = new Proposta_Model_DbTable_PlanilhaUnidade();
         $this->view->Unidade = $buscarUnidade->buscarUnidade();
 
-        $buscarItem = ManterorcamentoDAO::buscarItens($_GET['etapa']);
-
-        $this->view->Item = $buscarItem;
+        $buscarItem = new Proposta_Model_DbTable_PreProjeto();
+        $this->view->Item = $buscarItem->listarItensProdutos($this->idPreProjeto);
 
         $buscarProduto = new Proposta_Model_DbTable_PlanilhaProposta();
         $this->view->Produtos = $buscarProduto->buscarProdutos($this->idPreProjeto);
@@ -545,6 +560,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
         if  ( isset ( $_POST ) ) {
 
+            $tbPlanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
+
             $idProposta = $_POST['idPreProjeto'];
             $idProduto = $_POST['produto'];
             $idUf = $_POST['uf'];
@@ -558,16 +575,14 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $vlunitario = str_replace(",", ".",  str_replace(".", "",  $_POST['vlunitario']));
             $qtdDias = $_POST['qtdDias'];
             $justificativa = utf8_decode(substr(trim(strip_tags($_POST['editor1'])),0,500));
-
-            $buscarProdutos = ManterorcamentoDAO::buscarDadosEditarProdutos($idProposta, $idEtapa, $idProduto, $idItem, null, $idUf, $idMunicipio);
+            $buscarProdutos = $tbPlanilhaProposta->buscarDadosEditarProdutos($idProposta, $idEtapa, $idProduto, $idItem, null, $idUf, $idMunicipio);
 
             if($buscarProdutos){
             	$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 	            echo "Cadastro duplicado de Produto na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada! Deseja cadastrar um novo item?";
 	            die;
             }else{
-	            $salvarProdutos = ManterorcamentoDAO::salvarNovoProduto($idProposta, $idProduto, $idEtapa, $idItem, $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $fonte, $idUf, $idMunicipio, $justificativa, $this->idUsuario);
-	            $this->view->SalvarNovo = $salvarProdutos;
+	            $this->view->SalvarNovo = $tbPlanilhaProposta->salvarNovoProduto($idProposta, $idProduto, $idEtapa, $idItem, $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $fonte, $idUf, $idMunicipio, $justificativa, $this->idUsuario);
 
 	            $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 	            echo "Item cadastrado com sucesso. Deseja cadastrar um novo item?";

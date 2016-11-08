@@ -106,6 +106,7 @@ foreach ($this->Produtos as $produtos): ?>
         </td>
 	</tr>
     </table>
+
     <?php foreach ($this->Etapa as $etapa):?>
     <?php $CadastrarProduto = $this->url(array('controller' => 'manterorcamento', 'action' => 'cadastrarprodutos'))."?produto=".$produtos->CodigoProduto."&etapa=".$etapa->idEtapa."&etapaNome=".$etapa->DescricaoEtapa."&idPreProjeto=".$produtos->idProposta;?>
     <div class="etapas" style="display: none;">
@@ -133,6 +134,7 @@ foreach ($this->Produtos as $produtos): ?>
                     <!--<th>Mecanismo</th>-->
                     <th colspan="2" width="10%">A&ccedil;&atilde;o</th>
             </tr>
+                <?php //var_dump($this->Item ); ?>
             <?php foreach ($this->Item as $itens): ?>
                 <?php if ($produtos->CodigoProduto == $itens->CodigoProduto) {
                         if ($etapa->idEtapa == $itens->idEtapa){  ?>

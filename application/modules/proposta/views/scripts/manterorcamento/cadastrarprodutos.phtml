@@ -1,4 +1,5 @@
 <?php
+    header("Content-Type: text/html; charset={$this->charset}");
     $SalvarProduto = $this->url(array('module'=>'proposta', 'controller' => 'manterorcamento', 'action' => 'salvarprodutos'));
 ?>
 <script type="text/javascript">
@@ -14,7 +15,7 @@
         <?php endif; ?>
 
             $.ajax({
-                url : '<?php echo $this->url(array('controller' => 'Manterorcamento', 'action' => 'cadastrarprodutos')); ?>',
+                url : '<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'cadastrarprodutos')); ?>',
                 type: "POST",
                 data :{
                     idetapa : $('#etapa').val(),
@@ -133,7 +134,7 @@
                     var jstv = $('#editor1').val();
                     if(jstv.length > 500){
                         $("#justificativaErro").dialog("destroy");
-                        $("#justificativaErro").html('O campo Justificativa não pode ultrapassar 500 caracteres!');
+                        $("#justificativaErro").html('O campo Justificativa n&atilde;o pode ultrapassar 500 caracteres!');
                         $("#justificativaErro").dialog ({
                             width:320,
                             height:180,
@@ -180,7 +181,7 @@
                             $("#editor1").val("");
                         },
                         buttons: {
-                            'Nao': function() {
+                            'N\xE3o': function() {
                                 $("#frmCadastroItem").dialog("destroy");
                                 window.location.reload();
                             },
@@ -293,8 +294,8 @@
     <div id="conteudo" style="width: 97%;"><!-- ========== INCIO TABELA DADOS ========== -->
         <?php foreach ($this->Dados as $dados):?>
         <form name="form" id="form" method="post" action ="<?php echo $this->url(array('module'=>'proposta', 'controller' => 'manterorcamento', 'action' => 'salvarprodutos')); ?>">
-            <input type="hidden" name="produto" id="produto" value="<?php echo $dados->CodigoProduto ?>" />
-            <input type="hidden" name="proposta" id="proposta" value="<?php echo $dados->idProposta ?>" />
+            <input type="hidden" name="produto" id="produto" value="<?php echo $dados->codigoproduto ?>" />
+            <input type="hidden" name="proposta" id="proposta" value="<?php echo $dados->idproposta ?>" />
             <input type="hidden" name="idPreProjeto" id="idPreProjeto" value="<?php echo $this->idPreProjeto ?>" />
             <div style="float: left; width: 25%">
                 <fieldset><legend>Despesas</legend>
@@ -304,7 +305,7 @@
                                 <select class="select_simples valida" style="width: 90%" id="fonterecurso" name="fonterecurso">
                                     <option value="<?php echo "" ?>"> - Selecione - </option>
                                     <?php foreach($this->Recurso as $recurso) {?>
-                                    <option value="<?php echo $recurso->idVerificacao ?>"><?php echo utf8_encode($recurso->VerificacaoDescricao) ?></option>
+                                    <option value="<?php echo $recurso->idverificacao ?>"><?php echo $recurso->verificacaodescricao ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -367,7 +368,7 @@
                                 <select class="select_simples valida" id="unidade" name="unidade" style="width: 200px">
                                     <option value="<?php echo "" ?>"> - Selecione - </option>
                                     <?php foreach($this->Unidade as $unidade) {?>
-                                    <option value="<?php echo $unidade->idUnidade ?>"><?php echo $unidade->Descricao ?></option>
+                                    <option value="<?php echo $unidade->idunidade ?>"><?php echo $unidade->descricao ?></option>
                                     <?php } ?>
                                 </select>
                             </td>

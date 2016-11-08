@@ -33,10 +33,6 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
 
     public  function buscarEtapasCadastrarProdutos() {
 
-//        $sql = "SELECT
-//                idplanilhaetapa ,
-//                Descricao
-//                FROM SAC.dbo.tbPlanilhaEtapa where tpCusto = 'P'";
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
