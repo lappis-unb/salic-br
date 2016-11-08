@@ -125,8 +125,7 @@ class LoginCidadaoStrategy extends OpauthStrategy
                 $this->mapProfile($user, 'full_name', 'info.fullname');
                 $this->mapProfile($user, 'birthdate', 'info.birthdate');
                 $this->mapProfile($user, 'avatar_url', 'info.profile_picture_url');
-
-//xd($response, $user, $this->auth); redirect_uri
+                
                 $this->callback();
             } else {
                 $error = array(

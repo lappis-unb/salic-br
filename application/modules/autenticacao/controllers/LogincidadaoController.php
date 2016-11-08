@@ -14,29 +14,37 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
      */
     public function successAction()
     {
-        $objSgcAcesso = new Autenticacao_Model_Sgcacesso();
-        $auth = Zend_Auth::getInstance();
-        $objIdentity = $auth->getIdentity();
+        $this->_helper->viewRenderer->setNoRender(true);
+        try {
+            $objSgcAcesso = new Autenticacao_Model_Sgcacesso();
+            $auth = Zend_Auth::getInstance();
+            $objIdentity = $auth->getIdentity();
 
-        $cpf = $objIdentity->auth['raw']['cpf'];
-        $id = $objIdentity->auth['raw']['id'];
+            $this->validarAcesso($objIdentity->auth['raw']);
 
-        $arraySGCAcesso = $objSgcAcesso->buscar(array('cpf = ?' => $cpf))->toArray();
+            $cpf = $objIdentity->auth['raw']['cpf'];
+            $id = $objIdentity->auth['raw']['id'];
 
-        $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $id);
-        if($senhaCriptografada != $arraySGCAcesso[0]['senha']) {
-            $senhaCriptografada = $arraySGCAcesso[0]['senha'];
+            $arraySGCAcesso = $objSgcAcesso->buscar(array('cpf = ?' => $cpf))->toArray();
+
+            $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $id);
+            if($senhaCriptografada != $arraySGCAcesso[0]['senha']) {
+                $senhaCriptografada = $arraySGCAcesso[0]['senha'];
+            }
+
+            $objSgcAcesso->loginSemCript($cpf, $senhaCriptografada);
+
+            $agentes = new Agente_Model_DbTable_Agentes();
+            $hasAgentes = $agentes->buscar(array('cnpjcpf = ?' => $cpf))->current();
+            if(count($hasAgentes) < 1) {
+                $this->_helper->flashMessenger->addMessage("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.");
+            }
+            $urlRedirecionamento = '/principalproponente';
+        } catch (Exception $objException) {
+            $this->_helper->flashMessenger->addMessage($objException->getMessage());
+            $urlRedirecionamento = '/autenticacao';
         }
-
-        $objSgcAcesso->loginSemCript($cpf, $senhaCriptografada);
-
-        $agentes = new Agente_Model_DbTable_Agentes();
-        $hasAgentes = $agentes->buscar(array('cnpjcpf = ?' => $cpf))->current();
-        if(count($hasAgentes) < 1) {
-            $this->_helper->viewRenderer->setNoRender(true);
-            $this->_helper->flashMessenger->addMessage("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.");
-        }
-        $this->redirect("/principalproponente");
+        $this->redirect($urlRedirecionamento);
     }
 
     /**
@@ -78,7 +86,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
                 "dtsituacao" => date("Y-m-d"),
                 "id_login_cidadao" => $objPost["id"]
             );
-           
+
             $this->validarCadastro($dados);
 
             $sgcAcesso = new Autenticacao_Model_Sgcacesso();
@@ -114,7 +122,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
      * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
      * @return void
      */
-    private function validarCadastro($dados)
+    private function validarCadastro(array $dados)
     {
         $objSgcAcesso = new Autenticacao_Model_Sgcacesso();
         if (!$objSgcAcesso->hasCPFCadastrado($dados['cpf'])) {
@@ -123,6 +131,17 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
 
         if(!$objSgcAcesso->hasEmailCadastrado($dados['email'])) {
             throw new Exception('E-mail j&aacute; cadastrado');
+        }
+    }
+
+    private function validarAcesso(array $dados)
+    {
+        if(!$dados['raw']['cpf']) {
+            throw new Exception('O sistema precisa que seja concedido acesso ao CPF.');
+        }
+
+        if(!$dados['raw']['email']) {
+            throw new Exception('O sistema precisa que seja concedido acesso ao E-Mail.');
         }
     }
 }
