@@ -496,7 +496,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     public function listarItensProdutos($idPreProjeto, $idItem = null)
     {
         echo '<pre>';
-        var_dump ('método transferido para Proposta Model DbtTable PreProjeto');
+        var_dump ('método transferido para Proposta_Model_DbtTable_PreProjeto');
         exit;
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -652,6 +652,7 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                 inner join SAC.dbo.Tipo as Tipo
                 on Verificacao.idTipo = Tipo.idTipo
                 where Tipo.idTipo = 5";
+
         throw new Exception('Método transferido para Proposta_Model_DbTable_Verificacao');
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);

@@ -3108,7 +3108,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         if($idItem) {
             $sql->where("pp.idPlanilhaItem = ?", $idItem);
         }
-
+        echo $sql; die;
         return $db->fetchAll($sql);
     }
 

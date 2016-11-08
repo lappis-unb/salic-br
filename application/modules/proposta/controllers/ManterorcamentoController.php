@@ -238,20 +238,27 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $buscarEstado = $uf->buscar();
         $this->view->Estados = $buscarEstado;
 
-        $buscarEtapa = ManterorcamentoDAO::buscarEtapasCadastrarProdutos();
-        $this->view->Etapa = $buscarEtapa;
+//        $buscarEtapa = ManterorcamentoDAO::buscarEtapasCadastrarProdutos();
+        $buscarEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+        $this->view->Etapa = $buscarEtapa->buscarEtapasCadastrarProdutos();
 
-        $buscarRecurso = ManterorcamentoDAO::buscarFonteRecurso();
-        $this->view->Recurso = $buscarRecurso;
+//        $buscarRecurso = ManterorcamentoDAO::buscarFonteRecurso();
+        $buscarRecurso = new Proposta_Model_DbTable_Verificacao();
+        $this->view->Recurso = $buscarRecurso->buscarFonteRecurso();
 
         $buscarUnidade = new Proposta_Model_DbTable_PlanilhaUnidade();
         $this->view->Unidade = $buscarUnidade->buscarUnidade();
 
-        $buscarItem = ManterorcamentoDAO::buscarItensProdutos($this->idPreProjeto);
-        $this->view->Item = $buscarItem;
+//        $buscarItem = ManterorcamentoDAO::buscarItensProdutos($this->idPreProjeto);
+        $buscarItem = new Proposta_Model_DbTable_PreProjeto();
+        $this->view->Item = $buscarItem->listarItensProdutos($this->idPreProjeto);
+        echo '<pre>';
+        var_dump( $buscarItem->listarItensProdutos($this->idPreProjeto));
+        exit;
+//        $buscarProduto = ManterorcamentoDAO::buscarProdutos($this->idPreProjeto);
+        $buscarProduto = new Proposta_Model_DbTable_PreProjeto();
+        $this->view->Produtos = $buscarProduto->buscarProdutos($this->idPreProjeto);
 
-        $buscarProduto = ManterorcamentoDAO::buscarProdutos($this->idPreProjeto);
-        $this->view->Produtos = $buscarProduto;
     }
 
     /**

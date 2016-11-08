@@ -47,6 +47,8 @@ $CadastrarCustos = $this->url(array('controller' => 'manterorcamento', 'action' 
 
 <!-- ========== INCIO CONTEDO ========== -->
 <div id="conteudo">
+<!--    --><?php //var_dump($this->Etapas); ?>
+<!--    --><?php //var_dump($this->EtapaCusto);exit; ?>
     <?php foreach ($this->Etapas as $etapa):?>
     <?php $CadastrarProduto = $this->url(array('controller' => 'manterorcamento', 'action' => 'cadastrarcustos'))."?etapa=".$etapa->idEtapa."&etapaNome=".$etapa->DescricaoEtapa."&idPreProjeto=".$this->idPreProjeto;?>
     <div class="etapas">
@@ -80,7 +82,7 @@ $CadastrarCustos = $this->url(array('controller' => 'manterorcamento', 'action' 
                     <td align="right"><?php echo  number_format(($itens->Quantidade * $itens->ValorUnitario) * $itens->Ocorrencia, 2, ",", ".") ?></td>
                     <td><?php echo utf8_encode($itens->Municipio) ?>/<?php echo $itens->SiglaUF ?></td>
                     <td class='centro' width="5%">
-                        <input type="button" id="btn_editar" name="editar" class="btn_editar" onclick="abrirFrmCadastroItem('<?php echo $this->url(array('controller'=>'manterorcamento', 'action'=>'editarcustos')); ?>?item=<?php echo $this->escape($itens->idItem);?>&etapa=<?php echo $this->escape($itens->idEtapa);?>&idPlanilhaProposta=<?php echo $itens->idPlanilhaProposta?>&idPreProjeto=<?php echo $this->idPreProjeto;?>');">
+                        <input type="button" id="btn_editar" name="editar" class="btn_editar" onclick="abrirFrmCadastroItem('<?php echo $this->url(array('controller'=>'manterorcamento', 'action'=>'editarcustos')); ?>?item=<?php echo $itens->idItem;?>&etapa=<?php echo $itens->idEtapa;?>&idPlanilhaProposta=<?php echo $itens->idPlanilhaProposta?>&idPreProjeto=<?php echo $this->idPreProjeto;?>');">
                     </td>
                     <td class='centro' width="5%">
                         <input type="button" id="btn_excluir" name="excluir" class="btn_exclusao" onclick="excluir(<?php echo $itens->idPlanilhaProposta; ?>);">
