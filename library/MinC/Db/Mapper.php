@@ -134,8 +134,10 @@ class MinC_Db_Mapper
     }
 
     /**
+     *
      * @name save
      * @param $model
+     *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  01/09/2016
      *

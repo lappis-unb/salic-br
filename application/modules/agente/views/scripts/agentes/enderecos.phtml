@@ -28,7 +28,7 @@
 	    uf             = document.getElementById("uf");
 
 	    ajax = xmlhttp(); // instancia ajax
-	    ajax.open("GET", "<?php echo $this->url(array('controller' => 'cep', 'action' => 'cep'));?>?cep=" + cep, true);
+	    ajax.open("GET", "<?php echo $this->url(array('module'=> 'default', 'controller' => 'cep', 'action' => 'cep'));?>?cep=" + cep, true);
 	    ajax.onreadystatechange = function()
 	    {
 	        if (cep.length != 10)
@@ -155,6 +155,7 @@
 	                if (txtCidade == "")
 	                {
 	                    cidade.disabled = false; // habilita para preenchimento
+						carregar_combo($("#uf").val(), 'cidade','/cidade/combo', ' - Selecione - ');
 	                }
 	                // preenche o combo com a cidade
 	                else
@@ -188,7 +189,7 @@
 <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="first"><a href="#" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
+		<li class="first"><a href="<?php echo $this->url(array('controller' => 'principalproponente', 'action' => ''), null, true); ?>" title="Ir para p&aacute;gina inicial" onclick="carregandoModal();">In&iacute;cio</a></li>
 		<li><a href="#" title="Tramita&ccedil;&atilde;o de Documentos">Manter Agentes</a></li>
 		<li class="last">Principal</li>
 	</ul>
@@ -233,23 +234,23 @@
 					<td width="30%">
 						<label for="cep">CEP *</label><br />
 						<input class="input_simples"  type="text" name="cep" id="cep" maxlength="10" onkeyup="mascara(this, format_cep);" onblur="buscarcep(this.value);"
-							onclick="limpar_campo(this, ' ');" onkeypress="limpar_campo(this, ' ');"
-							onblur="restaurar_campo(this, ' ');" onmouseout="restaurar_campo(this, ' ');" value=" " />
+							onclick="limpar_campo(this, '');" onkeypress="limpar_campo(this, '');"
+							onblur="restaurar_campo(this, '');" onmouseout="restaurar_campo(this, '');" value=" " />
 
 			            &nbsp; <span id="erroCep" class="spanError"></span>
 					</td>
 					<td width="30%">
 						<label for="uf">UF *</label> <br />
-						<select name="uf" id="uf" class="input_simples" disabled="disabled" onchange="carregar_combo(this.value,'cidade','<?php echo $this->url(array('controller' => 'cidade', 'action' => 'combo'));?>',' - Selecione primeiro o UF - ');"	>
+						<select name="uf" id="uf" class="input_simples" disabled="disabled" onchange="carregar_combo(this.value,'cidade','<?php echo $this->url(array('module' => 'default', 'controller' => 'cidade', 'action' => 'combo')); ?>',' - Selecione primeiro o UF - ');"	>
 
 							<?php if (!isset($this->uf) || empty($this->uf)) { ?>
 							<option value="0"> -- </option>
 							<?php } ?>
 
-							<?php foreach ($this->comboestados as $comboestado): ?>
-							<option value="<?php echo $comboestado->id; ?>"
-								<?php if ($this->uf == $comboestado->id) echo "selected=\"selected\""; ?> >
-								<?php echo $comboestado->descricao; ?>
+							<?php foreach ($this->comboestados as $key => $comboestado): ?>
+							<option value="<?php echo $key; ?>"
+								<?php if ($this->uf == $key) echo "selected=\"selected\""; ?> >
+								<?php echo $comboestado; ?>
 							</option>
 							<?php endforeach; ?>
 
@@ -260,14 +261,15 @@
 						<label for="cidade">Cidade *</label> <br />
 						<select name="cidade" id="cidade" disabled="disabled" class="input_simples" style="width: 250px;">
 							<option value="0"> - Selecione - </option>
-
-							<?php foreach ($this->combocidades as $combocidade): ?>
-							<option value="<?php echo $combocidade->id; ?>"
-								id="<?php echo $combocidade->idUF; ?>"
-								<?php if ($this->cidade == $combocidade->id) echo "selected=\"selected\""; ?>>
-								<?php echo $combocidade->descricao; ?>
-							</option>
-							<?php endforeach; ?>
+							<?php if ($this->combocidades) : ?>
+								<?php foreach ($this->combocidades as  $key => $combocidade): ?>
+								<option value="<?php echo $key; ?>"
+									id="<?php echo $key; ?>"
+									<?php if ($this->cidade == $key) echo "selected=\"selected\""; ?>>
+									<?php echo $combocidade; ?>
+								</option>
+								<?php endforeach; ?>
+							<?php endif; ?>
 
 						</select>
 						<span id="erroCidade" class="spanError"></span>
@@ -282,10 +284,10 @@
 							<option value="0"> - Selecione - </option>
 							<?php } ?>
 
-							<?php foreach ($this->combotiposenderecos as $combotipoendereco): ?>
-							<option value="<?php echo $combotipoendereco->id; ?>"
-								<?php if ($this->tipoEndereco == $combotipoendereco->id) echo "selected=\"selected\""; ?>>
-								<?php echo $combotipoendereco->descricao; ?>
+							<?php foreach ($this->combotiposenderecos as $key => $combotipoendereco): ?>
+							<option value="<?php echo $key; ?>"
+								<?php if ($this->tipoEndereco == $key) echo "selected=\"selected\""; ?>>
+								<?php echo $combotipoendereco; ?>
 							</option>
 							<?php endforeach; ?>
 
@@ -300,10 +302,10 @@
 							<option value="0"> - Selecione - </option>
 							<?php } ?>
 
-							<?php foreach ($this->combotiposlogradouros as $combotipologradouro): ?>
-							<option value="<?php echo $combotipologradouro->id; ?>"
-								<?php if ($this->tipoLogradouro == $combotipologradouro->id) echo "selected=\"selected\""; ?>>
-								<?php echo $combotipologradouro->descricao; ?>
+							<?php foreach ($this->combotiposlogradouros as $key => $combotipologradouro): ?>
+							<option value="<?php echo $key; ?>"
+								<?php if ($this->tipoLogradouro == $key) echo "selected=\"selected\""; ?>>
+								<?php echo $combotipologradouro; ?>
 							</option>
 							<?php endforeach; ?>
 
@@ -377,28 +379,28 @@
 				<th colspan="5">ENDERE&Ccedil;OS</th>
 			</tr>
 			<tr>
-				<td><label>CEP:</label> <?php echo Mascara::addMaskCep($end->Cep); ?></td>
-				<td><label>UF:</label> <?php echo $end->UF; ?></td>
-				<td><label>Cidade:</label> <?php echo $end->Municipio; ?></td>
+				<td><label>CEP:</label> <?php echo Mascara::addMaskCep($end->cep); ?></td>
+				<td><label>UF:</label> <?php echo $end->uf; ?></td>
+				<td><label>Cidade:</label> <?php echo $end->municipio; ?></td>
 			</tr>
 			<tr>
-				<td colspan="2"><label>Tipo de Endere&ccedil;o:</label> <?php echo $end->TipoEndereco; ?></td>
-				<td><label>Tipo de Logradouro:</label> <?php echo $end->dsTipoLogradouro; ?></td>
+				<td colspan="2"><label>Tipo de Endere&ccedil;o:</label> <?php echo $end->tipoendereco; ?></td>
+				<td><label>Tipo de Logradouro:</label> <?php echo $end->dstipologradouro; ?></td>
 			</tr>
 			<tr>
-				<td colspan="2"><label>Logradouro:</label> <?php echo $end->Logradouro; ?></td>
-				<td><label>N&uacute;mero:</label> <?php echo $end->Numero; ?></td>
+				<td colspan="2"><label>Logradouro:</label> <?php echo $end->logradouro; ?></td>
+				<td><label>N&uacute;mero:</label> <?php echo $end->numero; ?></td>
 			</tr>
 			<tr>
-				<td colspan="2"><label>Complemento:</label> <?php echo $end->Complemento; ?></td>
-				<td><label>Bairro:</label> <?php echo $end->Bairro; ?></td>
+				<td colspan="2"><label>Complemento:</label> <?php echo $end->complemento; ?></td>
+				<td><label>Bairro:</label> <?php echo $end->bairro; ?></td>
 			</tr>
 			<tr>
-				<td><label>Endere&ccedil;o para correspond&ecirc;ncia:</label> <?php echo $end->Status == "1" ? "SIM" : "N&Atilde;O"; ?></td>
-				<td colspan="2"><label>Autorizo divulgar o endere&ccedil;o:</label> <?php echo $end->Divulgar == "1" ? "SIM" : "N&Atilde;O"; ?></td>
+				<td><label>Endere&ccedil;o para correspond&ecirc;ncia:</label> <?php echo $end->status == "1" ? "SIM" : "N&Atilde;O"; ?></td>
+				<td colspan="2"><label>Autorizo divulgar o endere&ccedil;o:</label> <?php echo $end->divulgar == "1" ? "SIM" : "N&Atilde;O"; ?></td>
 			</tr>
 			<tr>
-				<td colspan="3" width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('', '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluiendereco','idEndereco' => $end->idEndereco, 'qtdEndereco' => $this->qtdEndereco, 'enderecoCorrespondencia' => $end->Status));?>');" /></td>
+				<td colspan="3" width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('', '<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluiendereco','idEndereco' => $end->idendereco, 'qtdEndereco' => $this->qtdEndereco, 'enderecoCorrespondencia' => $end->status));?>');" /></td>
 			</tr>
 		</table>
 

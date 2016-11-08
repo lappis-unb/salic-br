@@ -1,22 +1,22 @@
 <?php
 /**
- * Solicitar REcurso da Decisão 
+ * Solicitar REcurso da Decisï¿½o 
  * @author Equipe RUP - Politec
  * @since 21/07/2010
  * @version 1.0
  * @package application
  * @subpackage application.view.scripts.solicitarrecursodedecisao
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 ?>
 
 
 				
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 	<div id="breadcrumb">
 		<ul>
-			<li class="last">Solicitar Recurso da Decisão </li>
+			<li class="last">Solicitar Recurso da Decisï¿½o </li>
 		</ul>
 	</div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
@@ -24,16 +24,16 @@
 				
 				
 				
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 	<div id="titulo">
-		<div>Planilha de Orçamento Aprovado <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+		<div>Planilha de Orï¿½amento Aprovado <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 	</div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 				
 				
 				
 				
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 	<div id="conteudo">
 				
 		<?php require_once "topo.phtml"; ?>
@@ -47,7 +47,7 @@
 
 	<table class="tabela">
 		<tr>
-			<th colspan="12" class="center">Planilha de Orçamento Aprovado</th>
+			<th colspan="12" class="center">Planilha de Orï¿½amento Aprovado</th>
 		</tr>
 
 
@@ -57,8 +57,8 @@
 		<tr>
 			<td colspan="12">
 				<strong>
-					<div id="icn_maisIFF" class="sumir"><a href="#icn_maisIFF" onclick="closeIFF('IFF');" onkeypress=" "><div class="icn_mais" style="width:90%"><span class="red del_link">Planilha de Orçamento</span></div></a></div>
-					<div id="icn_menosIFF"><a href="#icn_menosIFF" onclick="openIFF('IFF');" onkeypress=" "><div class="icn_menos" style="width:90%"><span class="red del_link">Planilha de Orçamento</span></div></a></div>
+					<div id="icn_maisIFF" class="sumir"><a href="#icn_maisIFF" onclick="closeIFF('IFF');" onkeypress=" "><div class="icn_mais" style="width:90%"><span class="red del_link">Planilha de Orï¿½amento</span></div></a></div>
+					<div id="icn_menosIFF"><a href="#icn_menosIFF" onclick="openIFF('IFF');" onkeypress=" "><div class="icn_menos" style="width:90%"><span class="red del_link">Planilha de Orï¿½amento</span></div></a></div>
 				</strong>
 			</td>
 		</tr>
@@ -68,7 +68,7 @@
 
 
 
-		<!-- ========== INÍCIO BUSCA POR PRODUTO ========== -->
+		<!-- ========== INï¿½CIO BUSCA POR PRODUTO ========== -->
 		<?php
 		$item = 1; // contador para os itens
 		$contadorProd  = 0;
@@ -87,7 +87,7 @@
 
 
 
-			<!-- ========== INÍCIO BUSCA POR ETAPA ========== -->
+			<!-- ========== INï¿½CIO BUSCA POR ETAPA ========== -->
 			<?php
 			// inicializa valor total por etapa
 			$totalVal_01_Etapa = (float) 0;
@@ -100,7 +100,7 @@
 			<tr class="IFF IFF_PRODUTO<?php echo $contadorProd; ?>">
 				<td colspan="12">
 					<strong style="margin-left:2%;">
-						<?php foreach ($this->planilhaEtapa as $etapa) : // Nome ou Descrição da Etapa ?>
+						<?php foreach ($this->planilhaEtapa as $etapa) : // Nome ou Descriï¿½ï¿½o da Etapa ?>
 							<?php if ($buscarEtapa->idEtapa == $etapa->idPlanilhaEtapa) : ?>
 								<div id="icn_maisIFF_ETAPA<?php echo $contadorEtapa; ?>" class="sumir"><a href="#icn_menosIFF_ETAPA<?php echo $contadorEtapa; ?>" onclick="$('#icn_menosIFF_ETAPA<?php echo $contadorEtapa; ?>, .IFF_ETAPA<?php echo $contadorEtapa; ?>').show(); $('#icn_maisIFF_ETAPA<?php echo $contadorEtapa; ?>').hide();" onkeypress=" "><div class="icn_mais" style="width:90%; margin-left:4%;"><span class="orange del_link"><?php echo $buscarEtapa->idEtapa; ?> - <?php echo $etapa->Descricao; ?></span></div></a></div>
 								<div id="icn_menosIFF_ETAPA<?php echo $contadorEtapa; ?>"><a href="#icn_maisIFF_ETAPA<?php echo $contadorEtapa; ?>" onclick="$('#icn_maisIFF_ETAPA<?php echo $contadorEtapa; ?>').show(); $('#icn_menosIFF_ETAPA<?php echo $contadorEtapa; ?>, .IFF_ETAPA<?php echo $contadorEtapa; ?>').hide();" onkeypress=" "><div class="icn_menos" style="width:90%; margin-left:4%;"><span class="orange del_link"><?php echo $buscarEtapa->idEtapa; ?> - <?php echo $etapa->Descricao; ?></span></div></a></div>
@@ -112,7 +112,7 @@
 
 
 
-				<!-- ========== INÍCIO BUSCA POR UF ========== -->
+				<!-- ========== INï¿½CIO BUSCA POR UF ========== -->
 				<?php
 				// inicializa valor total por uf
 				$totalVal_01_UF = (float) 0;
@@ -126,7 +126,8 @@
 					<td colspan="12">
 						<strong style="margin-left:3%;">
 							<?php
-							$uf     = EstadoDAO::buscar($buscarUF->idUFDespesa); // nome da UF
+							$tbuf = new Agente_Model_DbTable_UF();
+							$uf     = $tbuf->buscar($buscarUF->idUFDespesa); // nome da UF
 							$cidade = CidadeDAO::buscar($buscarUF->idUFDespesa, $buscarUF->idMunicipioDespesa); // nome da cidade
 							?>
 							<div id="icn_maisIFF_UF<?php echo $contadorUF; ?>" class="sumir"><a href="#icn_menosIFF_UF<?php echo $contadorUF; ?>" onclick="$('#icn_menosIFF_UF<?php echo $contadorUF; ?>, .IFF_UF<?php echo $contadorUF; ?>').show(); $('#icn_maisIFF_UF<?php echo $contadorUF; ?>').hide();" onkeypress=" "><div class="icn_mais" style="width:90%; margin-left:6%"><span class="black del_link"><?php echo $uf[0]->descricao; ?> - <?php echo $cidade[0]->descricao; ?></span></div></a></div>
@@ -137,7 +138,7 @@
 
 
 
-					<!-- ========== INÍCIO ÍTENS ========== -->
+					<!-- ========== INï¿½CIO ï¿½TENS ========== -->
 				    <tr class="IFF IFF_PRODUTO<?php echo $contadorProd; ?> IFF_ETAPA<?php echo $contadorEtapa; ?> IFF_UF<?php echo $contadorUF; ?>">
 						<th>&nbsp;</th>
 				        <th>Item</th>
@@ -145,7 +146,7 @@
 						<th>Unidade</th>
 						<th>Qtde</th>
 						<th>Ocor.</th>
-				        <th width="12%">Vl. Unitário</th>
+				        <th width="12%">Vl. Unitï¿½rio</th>
 				        <th width="12%">Vl. Solicitado</th>
 				        <th width="12%">Vl. Sugerido do Parecerista</th>
 				        <th>Justificativa do Parecerista</th>
@@ -158,13 +159,13 @@
 					$totalItens = 0;
 					if (count(RealizarAnaliseProjetoDAO::analiseDeConta($buscarUF->IdPRONAC, $buscarUF->idProduto, $buscarUF->idEtapa, $buscarUF->idUFDespesa, $buscarUF->idMunicipioDespesa, true)) > 0)
 					{
-						// inicializa valor total de ítens
+						// inicializa valor total de ï¿½tens
 						$totalVal_01 = (float) 0;
 						$totalVal_02 = (float) 0;
 						$totalVal_03 = (float) 0;
 
 						foreach (RealizarAnaliseProjetoDAO::analiseDeConta($buscarUF->IdPRONAC, $buscarUF->idProduto, $buscarUF->idEtapa, $buscarUF->idUFDespesa, $buscarUF->idMunicipioDespesa, true) as $resposta) :
-							$i = $resposta->idPlanilhaAprovacao; // criará id únido
+							$i = $resposta->idPlanilhaAprovacao; // criarï¿½ id ï¿½nido
 
 							// ===== CALCULA TOTAL ITENS =====
 							$totalVal_01 += (float) $resposta->VlSolicitado;
@@ -193,8 +194,8 @@
 				        <td>
 
 
-							<!-- ========== INÍCIO MODAL ========== -->
-							<div id="dialog-modal<?php echo $i; ?>" class="sumir" title="Atualização da Planilha de Projeto">
+							<!-- ========== INï¿½CIO MODAL ========== -->
+							<div id="dialog-modal<?php echo $i; ?>" class="sumir" title="Atualizaï¿½ï¿½o da Planilha de Projeto">
 								<form id='form<?php echo $i; ?>' class="form" action="<?php echo $this->url(array('controller' => 'realizaranaliseprojeto','action' => 'analisedecustos')); ?>" method="post">
 								<input type="hidden" name="idProduto" value="<?php echo $resposta->idProduto; ?>" />
 								<input type="hidden" name="idPronac" value="<?php echo $resposta->IdPRONAC; ?>" />
@@ -205,7 +206,7 @@
 										<td colspan="3"><strong>Nome do Projeto:</strong><br /><?php echo $resposta->NomeProjeto; ?></td>
 									</tr>
 									<tr valign="top">
-										<td colspan="2"><strong>Produto:</strong><br /><?php echo (empty($resposta->Produto) ? 'Administração do Projeto' : $resposta->Produto); ?></td>
+										<td colspan="2"><strong>Produto:</strong><br /><?php echo (empty($resposta->Produto) ? 'Administraï¿½ï¿½o do Projeto' : $resposta->Produto); ?></td>
 										<td colspan="2">
 											<strong>Etapa:</strong><br />
 											<?php echo $resposta->idEtapa; ?> - 
@@ -231,11 +232,11 @@
 											<input class="input_simples w50" type="text" onkeyup="calcular_planilha_projeto(<?php echo $i; ?>); validar_val_parec_relat(<?php echo $i; ?>, <?php echo $resposta->VlSugeridoParecerista; ?>); mascara(this, format_num);" onkeydown="calcular_planilha_projeto(<?php echo $i; ?>); mascara(this, format_num);" name="qtd" id="qtd<?php echo $i; ?>" maxlength="5" value="<?php echo (int) $resposta->quantidade_con; ?>" />
 										</td>
 										<td>
-											<label for="ocorrencia<?php echo $i; ?>"><strong>Ocorrência:</strong></label><br />
+											<label for="ocorrencia<?php echo $i; ?>"><strong>Ocorrï¿½ncia:</strong></label><br />
 											<input class="input_simples w50" type="text" onkeyup="calcular_planilha_projeto(<?php echo $i; ?>); validar_val_parec_relat(<?php echo $i; ?>, <?php echo $resposta->VlSugeridoParecerista; ?>); mascara(this, format_num);" onkeydown="calcular_planilha_projeto(<?php echo $i; ?>); mascara(this, format_num);" name="ocorrencia" id="ocorrencia<?php echo $i; ?>" maxlength="5" value="<?php echo (int) $resposta->ocorrencia_con; ?>" />
 										</td>
 										<td>
-											<label for="vlunitario<?php echo $i; ?>"><strong>Vl Unitário:</strong></label><br />
+											<label for="vlunitario<?php echo $i; ?>"><strong>Vl Unitï¿½rio:</strong></label><br />
 											<input class="input_simples w100" type="text" onkeyup="calcular_planilha_projeto(<?php echo $i; ?>); validar_val_parec_relat(<?php echo $i; ?>, <?php echo $resposta->VlSugeridoParecerista; ?>); mascara(this, format_moeda);" onkeydown="calcular_planilha_projeto(<?php echo $i; ?>); mascara(this, format_moeda);" name="vlunitario" id="vlunitario<?php echo $i; ?>" maxlength="13" value="<?php echo str_replace("R$ ", "", $this->formatarReal($resposta->valorUnitario_con)); ?>" />
 										</td>
 										<td>
@@ -293,7 +294,7 @@
 					$totalVal_02_UF += (float) $totalVal_02;
 					$totalVal_03_UF += (float) $totalVal_03;
 					?>
-					<!-- ========== FIM ÍTENS ========== -->
+					<!-- ========== FIM ï¿½TENS ========== -->
 
 
 
@@ -398,12 +399,12 @@
 		
 				
 	</div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEï¿½DO ========== -->
 				
 				
 				
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 	<div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 
 <br clear="all" />

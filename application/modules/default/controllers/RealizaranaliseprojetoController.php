@@ -1007,7 +1007,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
             $tblPlanilhaProposta = new PlanilhaProposta();
             $tblPlanilhaProjeto = new PlanilhaProjeto();
             $tblProjetos = new Projetos();
-            $tblPlanoDistribuicao = new PlanoDistribuicaoProduto();
+            $tblPlanoDistribuicao = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
             $tblAnaliseAprovacao = new AnaliseAprovacao();
 
             $rsPlanilhaAtual = $tblPlanilhaAprovacao->buscar(array('IdPRONAC = ?'=>$idpronac), array('dtPlanilha DESC'))->current();
@@ -2178,7 +2178,7 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
                 $tblPlanilhaAprovacao = new PlanilhaAprovacao();
                 $tblPlanilhaProposta = new PlanilhaProposta();
                 $tblPlanilhaProjeto = new PlanilhaProjeto();
-                $tblPlanoDistribuicao = new PlanoDistribuicaoProduto();
+                $tblPlanoDistribuicao = new Proposta_model_DbTable_PlanoDistribuicaoProduto();
                 $tblAnaliseAprovacao = new AnaliseAprovacao();
 		// caso o formulario seja enviado via post
 		// atualiza a planilha

@@ -31,7 +31,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * @param mixed $idUsuario
      * @param mixed $idUsuarioR
      * @param mixed $idAgente
-     * 
+     *
      * @access public
      * @return void
      */
@@ -50,7 +50,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @param mixed $siVinculoProposta
      * @param mixed $idVinculo
-     * 
+     *
      * @access public
      * @return void
      */
@@ -67,7 +67,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * listaProjetos
      *
      * @param mixed $idUsuario
-     * 
+     *
      * @access public
      * @return void
      */
@@ -309,7 +309,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * @param mixed $idAgente
      * @param mixed $idResponsavel
      * @param mixed $arrBusca
-     * 
+     *
      * @access public
      * @return void
      */
@@ -377,7 +377,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * consultaprojetos
      *
      * @param mixed $idagente
-     * 
+     *
      * @access public
      * @return void
      */
@@ -397,7 +397,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * inserirProposta
      *
      * @param mixed $dados
-     * 
+     *
      * @access public
      * @return void
      */
@@ -421,7 +421,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @param mixed $dados
      * @param mixed $where
-     * 
+     *
      * @access public
      * @return void
      */
@@ -443,7 +443,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     /**
      * listaUF
      *
-     * 
+     *
      * @access public
      * @return void
      */
@@ -461,7 +461,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * buscaIdAgente
      *
      * @param mixed $CNPJCPF
-     * 
+     *
      * @access public
      * @return void
      */
@@ -478,7 +478,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * inserirAgentes
      *
      * @param mixed $dadosAgentes
-     * 
+     *
      * @access public
      * @return void
      */
@@ -491,7 +491,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * inserirNomes
      *
      * @param mixed $dadosNomes
-     * 
+     *
      * @access public
      * @return void
      */
@@ -504,7 +504,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * inserirEnderecoNacional
      *
      * @param mixed $dadosEnderecoNacional
-     * 
+     *
      * @access public
      * @return void
      */
@@ -517,7 +517,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * inserirVisao
      *
      * @param mixed $dadosVisao
-     * 
+     *
      * @access public
      * @return void
      */
@@ -530,7 +530,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * editarproposta
      *
      * @param mixed $idPreProjeto
-     * 
+     *
      * @access public
      * @return void
      */
@@ -856,7 +856,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * analiseDeCustos
      *
      * @param mixed $idPreProjeto
-     * 
+     *
      * @access public
      * @return void
      */
@@ -955,7 +955,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @param mixed $idPreProjeto
      * @param mixed $idAgente
-     * 
+     *
      * @access public
      * @return void
      */
@@ -973,7 +973,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @param mixed $idPreProjeto
      * @param mixed $idResponsavel
-     * 
+     *
      * @access public
      */
     public function alteraresponsavel($idPreProjeto, $idResponsavel)
@@ -1133,7 +1133,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @param mixed $siVinculo
      * @param bool $idAgente
-     * 
+     *
      * @access public
      * @return void
      */
@@ -1172,7 +1172,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @param mixed $siVinculo
      * @param bool $idAgente
-     * 
+     *
      * @access public
      * @return void
      */
@@ -1203,7 +1203,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * @param mixed $idAgente
      * @param mixed $idResponsavel
      * @param mixed $idAgenteCombo
-     * 
+     *
      * @access public
      * @return void
      * @author wouerner <wouerner@gmail.com>
@@ -3015,5 +3015,216 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
 
         return $listaValidacao;
+    }
+
+    public function listarProdutos($idPreProjeto)
+    {
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $sql = $db->select()
+            ->from(['pre' => 'preprojeto'], ['pre.idpreprojeto as PreProjeto', 'pre.idpreprojeto as idProposta'], $this->getSchema('sac'))
+            ->join(['pd' => 'planodistribuicaoproduto'], '(pre.idpreprojeto = pd.idProjeto AND pd.stplanodistribuicaoproduto = 1)', null, $this->getSchema('sac'))
+            ->join(['p' => 'produto'], '(pd.idproduto = p.codigo)', ['p.codigo as CodigoProduto', 'p.descricao as DescricaoProduto'],  $this->getSchema('sac'))
+            ->where('idpreprojeto = ?', $idPreProjeto)
+            ->group(['p.codigo', 'p.descricao', 'idpreprojeto'])
+        ;
+
+        return $db->fetchAll($sql);
+    }
+
+    public function listarEtapasProdutos($idPreProjeto)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        //$sql = $db->select()
+        //->from(['pre' => 'preprojeto'], 'pre.idpreprojeto as idPreProjeto', $this->getSchema('sac'))
+        //->join(['pp' => 'tbplanilhaproposta'], '(pre.idpreprojeto = pp.idProjeto)', ['pp.idproduto as idProduto', 'pp.idetapa as idEtapa'], $this->getSchema('sac'))
+        //->join(['p' => 'produto'], '(pp.idproduto = p.codigo)', 'p.codigo as CodigoProduto', $this->getSchema('sac'))
+        //->join(['te' => 'tbplanilhaetapa'], 'te.idplanilhaetapa = pp.idetapa', 'te.descricao as DescricaoEtapa', $this->getSchema('sac'))
+        //->where('idpreprojeto = ?', $idPreProjeto)
+        //->order('te.DescricaoEtapa')
+        //;
+        //echo $sql;die;
+
+        //$sql = "SELECT
+        //distinct
+        //p.Codigo as CodigoProduto,
+        //pp.idProduto as idProduto,
+        //pp.idEtapa as idEtapa,
+        //te.Descricao as DescricaoEtapa,
+        //pre.idPreProjeto as idPreProjeto
+        //FROM SAC.dbo.PreProjeto pre
+        //INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+        //INNER JOIN SAC.dbo.Produto p ON (pp.idProduto = p.Codigo)
+        //INNER JOIN SAC..tbPlanilhaEtapa te on te.idPlanilhaEtapa = pp.idEtapa
+        //WHERE idPreProjeto = {$idPreProjeto}";
+
+        //$sql.= " ORDER BY te.DescricaoEtapa ";
+
+        $sql = $db->select()
+            ->from(['tbplanilhaetapa'], ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], $this->getSchema('sac'))
+            ->where("tpCusto = 'P'")
+        ;
+
+        //$sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
+
+        throw new Exception('Método transferido para Proposta_Model_DbTable_TbPlanilhaEtapa');
+
+        return $db->fetchAll($sql);
+    }
+
+    public function listarItensProdutos($idPreProjeto, $idItem = null)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $pp = [
+            'pp.idetapa as idEtapa',
+            'pp.idplanilhaitem as idItem',
+            'pp.ufdespesa as IdUf',
+            'pp.quantidade',
+            'pp.ocorrencia',
+            'pp.valorunitario',
+            'pp.qtdedias',
+            'pp.idplanilhaproposta',
+        ];
+
+        $sql = $db->select()->distinct()
+            ->from(['pre' => 'preprojeto'], null, $this->getSchema('sac'))
+            ->join(['pp' => 'tbplanilhaproposta' ],  '(pre.idPreProjeto = pp.idProjeto)', $pp, $this->getSchema('sac'))
+            ->join(['p' => 'produto'], '(pp.idProduto = p.codigo)', ['p.codigo as CodigoProduto'], $this->getSchema('sac'))
+            ->join(['ti' => 'tbplanilhaitens'] , 'ti.idplanilhaitens = pp.idplanilhaitem', ['ti.descricao as DescricaoItem'], $this->getSchema('sac'))
+            ->join(['uf' => 'uf'],  'uf.codufibge = pp.ufdespesa', ['uf.descricao as DescricaoUf', 'uf.uf as SiglaUF'], $this->getSchema('sac'))
+            ->join(['municipio' => 'municipios'], 'municipio.idmunicipioibge = pp.municipiodespesa', ['municipio.descricao as Municipio' ], $this->getSchema('agentes'))
+            ->join(['mec' => 'mecanismo'], 'mec.codigo = pre.mecanismo', ['mec.descricao as DescricaoMecanismo' ], $this->getSchema('sac'))
+            ->join(['un' => 'tbplanilhaunidade'],  'un.idunidade = pp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
+            ->join(['veri' => 'verificacao'],  'veri.idverificacao = pp.fonterecurso', ['veri.idverificacao as idFonteRecurso', 'veri.descricao as DescricaoFonteRecurso' ], $this->getSchema('sac'))
+            ->where('idpreprojeto = ?', $idPreProjeto)
+            ->order('ti.descricao')
+        ;
+
+        if($idItem) {
+            $sql->where("pp.idPlanilhaItem = ?", $idItem);
+        }
+
+        return $db->fetchAll($sql);
+    }
+
+    public function buscarProdutos($idPreProjeto) {
+
+
+        $sql = "SELECT p.Codigo as CodigoProduto,
+                    p.Descricao as DescricaoProduto,
+                    pre.idPreProjeto as PreProjeto,
+                    pre.idPreProjeto as idProposta
+                    FROM SAC.dbo.PreProjeto pre
+                    INNER JOIN SAC.dbo.PlanoDistribuicaoProduto pd ON (pre.idPreProjeto = pd.idProjeto AND pd.stPlanoDistribuicaoProduto = 1)
+                    INNER JOIN SAC.dbo.Produto p ON (pd.idProduto = p.Codigo)
+                   where idPreProjeto = {$idPreProjeto} group by p.Codigo, p.Descricao, idPreProjeto ";
+        $sql.= " ORDER BY p.Descricao ";
+
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('pre'=>$this->_name),
+            array(
+                'p.codigo as codigoproduto',
+                'p.descricao as descricaoproduto',
+                'pre.idpreprojeto as preprojeto',
+                'pre.idpreprojeto as idproposta'
+            ),
+            $this->_schema
+        );
+
+        $select->joinInner(
+            array('pd'=>'PlanoDistribuicaoProduto'),
+            'pre.idPreProjeto = pd.idProjeto AND pd.stPlanoDistribuicaoProduto = 1',
+            null,
+            $this->_schema
+        );
+
+        $select->joinInner(
+            array('p'=>'Produto'),
+            'pd.idproduto = p.codigo',
+            null,
+            $this->_schema
+        );
+
+        $select->where('idpreprojeto = ?', $idPreProjeto);
+
+        $select->group(array('p.Codigo, p.Descricao, idPreProjeto'));
+
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        return $db->fetchAll($sql);
+    }
+
+    public function buscarEtapasProdutos($idPreProjeto)
+    {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $sql = "SELECT
+                    distinct
+                    p.Codigo as CodigoProduto,
+                    pp.idProduto as idProduto,
+                    pp.idEtapa as idEtapa,
+                    te.Descricao as DescricaoEtapa,
+                    pre.idPreProjeto as idPreProjeto
+                    FROM SAC.dbo.PreProjeto pre
+                    INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON (pre.idPreProjeto = pp.idProjeto)
+                    INNER JOIN SAC.dbo.Produto p ON (pp.idProduto = p.Codigo)
+                    INNER JOIN SAC..tbPlanilhaEtapa te on te.idPlanilhaEtapa = pp.idEtapa
+                    WHERE idPreProjeto = {$idPreProjeto}";
+
+        $sql.= " ORDER BY te.DescricaoEtapa ";
+
+        $sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
+
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->distinct();
+        $select->from(
+            array('pre' => 'PreProjeto'),
+            array(
+                'p.codigo as codigoproduto',
+                'pp.idproduto as idproduto',
+                'pp.idetapa as idetapa',
+                'te.descricao as descricaoetapa',
+                'pre.idpreprojeto as idpreprojeto'
+            ),
+            $this->_schema
+        );
+
+        $select->joinInner(
+            array('pp'=>'tbPlanilhaProposta'),
+            'pre.idpreprojeto = pp.idprojeto',
+            null,
+            $this->_schema
+        );
+
+        $select->joinInner(
+            array('p'=>'Produto'),
+            'pp.idproduto = p.codigo',
+            null,
+            $this->_schema
+        );
+
+        $select->joinInner(
+            array('p'=>'Produto'),
+            'pd.idproduto = p.codigo',
+            null,
+            $this->_schema
+        );
+
+        try {
+        }
+        catch (Zend_Exception_Db $e) {
+            $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
+        }
+        return $db->fetchAll($sql);
     }
 }
