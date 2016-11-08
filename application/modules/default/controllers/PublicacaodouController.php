@@ -412,21 +412,22 @@ class PublicacaoDouController extends GenericControllerNew {
 
                     $where = array();
                     $where['idAprovacao = ?'] = $idAprovacao;
-
                     $portariagerar = $aprovacao->alterar($dadosPortaria, $where);
-
+                    
                     // verifica se eh readequacao
                     if (isset($buscaridpronac['IDREADEQUACAO']) && ! empty($buscaridpronac['IDREADEQUACAO'])) {
                         $naoAlteraSituacao = array(3, 10, 12, 15);  // tipos de readequacoes para as quais não é necessário alterar a situação do projeto
                         $tbReadequacao = new tbReadequacao();
                         $readequacao = $tbReadequacao->buscarReadequacao($buscaridpronac['IDREADEQUACAO']);
-
-                        if (in_array($readequacao[0]->idTipoReadequacao, $naoAlteraSituacao)) {
+                        if (in_array($readequacao->current()->idTipoReadequacao, $naoAlteraSituacao)) {
                             $atualizarSituacao = false;
+                        } else {
+                            $atualizarSituacao = true;
                         }
                     } else {
                         $atualizarSituacao = true;
                     }
+                    
                     if ($portariagerar && $atualizarSituacao) {
                         $dadosSituacao = array(
                             'DtSituacao' => date('Y-m-d'),
