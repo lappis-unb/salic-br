@@ -33,12 +33,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
             }
 
             $objSgcAcesso->loginSemCript($cpf, $senhaCriptografada);
-
-            $agentes = new Agente_Model_DbTable_Agentes();
-            $hasAgentes = $agentes->buscar(array('cnpjcpf = ?' => $cpf))->current();
-            if(count($hasAgentes) < 1) {
-                $this->_helper->flashMessenger->addMessage("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.");
-            }
+            //$this->_helper->flashMessenger->addMessage("Bem vindo!");
             $urlRedirecionamento = '/principalproponente';
         } catch (Exception $objException) {
             $this->_helper->flashMessenger->addMessage($objException->getMessage());
