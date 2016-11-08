@@ -136,11 +136,11 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
 
     private function validarAcesso(array $dados)
     {
-        if(!$dados['raw']['cpf']) {
+        if(!$dados['cpf']) {
             throw new Exception('O sistema precisa que seja concedido acesso ao CPF.');
         }
 
-        if(!$dados['raw']['email']) {
+        if(!$dados['email']) {
             throw new Exception('O sistema precisa que seja concedido acesso ao E-Mail.');
         }
     }

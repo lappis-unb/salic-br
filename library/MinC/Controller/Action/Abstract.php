@@ -190,15 +190,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
                     $cpfLogado = $objAgente['usu_identificacao'];
                 } elseif (isset($objIdentity->auth) && isset($objIdentity->auth['uid'])) {
 
-                    $isDadosTratados = $this->tratarPerfilOAuth($objIdentity);
-                    if($isDadosTratados) {
-                        /*
-                        $grupos = $objModelUsuario->buscarUnidades($arrAuth['usu_codigo'], 21);
-                        $objAgente = $objModelUsuario->getIdUsuario($arrAuth['usu_codigo']);
-                        $idAgente = $objAgente['idagente'];
-                        $cpfLogado = $objAgente['usu_identificacao'];
-                        */
-                    }
+                    $this->tratarPerfilOAuth($objIdentity);
                 } else {
                     return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), null, true);
                 }
