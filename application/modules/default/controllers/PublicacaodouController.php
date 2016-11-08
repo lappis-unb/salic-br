@@ -145,9 +145,6 @@ class PublicacaoDouController extends GenericControllerNew {
                     $wherenaopublicados['r.siEncaminhamento = ?'] = 9;
                     $wherenaopublicados['ap.TipoAprovacao = ?'] = 8;
                     break;
-                default:
-                    //$wherenaopublicados['pr.Situacao in (?)'] = array('D27');
-                    //$wherenaopublicados['ap.TipoAprovacao = ?'] = 1;
             }
         } else {
             $this->view->filtro = 'aprovacaoInicial';
@@ -319,7 +316,7 @@ class PublicacaoDouController extends GenericControllerNew {
             $nrPortaria = $this->_request->getParam('nrPortaria');
             $nome = $this->_request->getParam('nome');
             $cargo = $this->_request->getParam('cargo');
-            //xd($tipoPublicacao);
+            
             // variaveis definidas localmente
             $dia = (int) date("d");
             $mes = (int) date("m");
@@ -517,8 +514,7 @@ class PublicacaoDouController extends GenericControllerNew {
 
     public function retirarportariaAction() {
         ini_set('memory_limit', '-1');
-     //   $_GET['tipo'] = 'aprovacaoInicial';
-
+        
         if ($_GET['PortariaAprovacao']) {
             $PortariaAprovacao = $_GET['PortariaAprovacao'];
             
