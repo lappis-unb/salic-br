@@ -31,7 +31,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * @param mixed $idUsuario
      * @param mixed $idUsuarioR
      * @param mixed $idAgente
-     * 
+     *
      * @access public
      * @return void
      */
@@ -50,7 +50,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @param mixed $siVinculoProposta
      * @param mixed $idVinculo
-     * 
+     *
      * @access public
      * @return void
      */
@@ -67,7 +67,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * listaProjetos
      *
      * @param mixed $idUsuario
-     * 
+     *
      * @access public
      * @return void
      */
@@ -309,7 +309,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * @param mixed $idAgente
      * @param mixed $idResponsavel
      * @param mixed $arrBusca
-     * 
+     *
      * @access public
      * @return void
      */
@@ -377,7 +377,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * consultaprojetos
      *
      * @param mixed $idagente
-     * 
+     *
      * @access public
      * @return void
      */
@@ -397,7 +397,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * inserirProposta
      *
      * @param mixed $dados
-     * 
+     *
      * @access public
      * @return void
      */
@@ -421,7 +421,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @param mixed $dados
      * @param mixed $where
-     * 
+     *
      * @access public
      * @return void
      */
@@ -443,7 +443,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     /**
      * listaUF
      *
-     * 
+     *
      * @access public
      * @return void
      */
@@ -461,7 +461,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * buscaIdAgente
      *
      * @param mixed $CNPJCPF
-     * 
+     *
      * @access public
      * @return void
      */
@@ -478,7 +478,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * inserirAgentes
      *
      * @param mixed $dadosAgentes
-     * 
+     *
      * @access public
      * @return void
      */
@@ -491,7 +491,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * inserirNomes
      *
      * @param mixed $dadosNomes
-     * 
+     *
      * @access public
      * @return void
      */
@@ -504,7 +504,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * inserirEnderecoNacional
      *
      * @param mixed $dadosEnderecoNacional
-     * 
+     *
      * @access public
      * @return void
      */
@@ -517,7 +517,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * inserirVisao
      *
      * @param mixed $dadosVisao
-     * 
+     *
      * @access public
      * @return void
      */
@@ -530,7 +530,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * editarproposta
      *
      * @param mixed $idPreProjeto
-     * 
+     *
      * @access public
      * @return void
      */
@@ -856,7 +856,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * analiseDeCustos
      *
      * @param mixed $idPreProjeto
-     * 
+     *
      * @access public
      * @return void
      */
@@ -955,7 +955,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @param mixed $idPreProjeto
      * @param mixed $idAgente
-     * 
+     *
      * @access public
      * @return void
      */
@@ -973,7 +973,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @param mixed $idPreProjeto
      * @param mixed $idResponsavel
-     * 
+     *
      * @access public
      */
     public function alteraresponsavel($idPreProjeto, $idResponsavel)
@@ -1133,7 +1133,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @param mixed $siVinculo
      * @param bool $idAgente
-     * 
+     *
      * @access public
      * @return void
      */
@@ -1172,7 +1172,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      *
      * @param mixed $siVinculo
      * @param bool $idAgente
-     * 
+     *
      * @access public
      * @return void
      */
@@ -1203,7 +1203,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * @param mixed $idAgente
      * @param mixed $idResponsavel
      * @param mixed $idAgenteCombo
-     * 
+     *
      * @access public
      * @return void
      * @author wouerner <wouerner@gmail.com>
@@ -2762,7 +2762,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         $validacao->Observacao = 'PENDENTE';
                         $listaValidacao[] =  clone($validacao);
                     } else {
-                        $validacao->Descricao = 'Prazo de início de execu&ccedil;&atilde;o maior do que 90 dias.';
+                        $validacao->Descricao = 'Prazo de in&iacute;cio de execu&ccedil;&atilde;o maior do que 90 dias.';
                         $validacao->Observacao = 'OK';
                         $listaValidacao[] =  clone($validacao);
                     }
@@ -2870,7 +2870,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     $custoAdministrativos = $db->fetchAll($sql);
 
                     if (!empty($custoAdministrativos)){
-                        $validacao->Descricao = 'A planilha de custos administrativos do projeto não est&aacute; cadastrada.';
+                        $validacao->Descricao = 'A planilha de custos administrativos do projeto n&atilde;o est&aacute; cadastrada.';
                         $validacao->Observacao = 'PENDENTE';
                         $listaValidacao[] =  clone($validacao);
                     } else {

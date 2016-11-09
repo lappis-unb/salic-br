@@ -87,7 +87,7 @@ function filtroCNPJ()
 
 			<label for="visao"> Informe a vis&atilde;o do Agente: </label>
 
-			<select name="visao" id="visao" onchange="verificarVisao(this.value, <?php echo $this->grupoAtivo;?>);" style="width:20%;">
+            <select name="visao" id="visao" onchange="verificarVisao(this.value, <?php echo $this->grupoativo;?>);" style="width:20%;">
 				<option value="0" selected="selected"> - Selecione - </option>
                 <?php foreach ($this->combovisoes as $key => $value): ?>
 					<option value="<?php echo $key; ?>"> <?php echo $value; ?> </option>
