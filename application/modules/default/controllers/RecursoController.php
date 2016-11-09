@@ -1096,13 +1096,10 @@ class RecursoController extends GenericControllerNew
         //ATUALIZA A SITUAÇÃO DO PROJETO
         $Projetos = new Projetos();
         $w = array();
-        $w['situacao'] = 'C10';
-        $w['ProvidenciaTomada'] = 'Projeto encaminhado à reunião da CNIC para avaliação do componente da comissão.';
-        $w['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
-        $w['Logon'] = $this->idUsuario;
-        $where = "IdPRONAC = $idPronac";
-        $Projetos->update($w, $where);
-        
+        $w['situacao'] = 'D20';
+        $w['ProvidenciaTomada'] = 'Recurso encaminhado à reunião da CNIC para avaliação do componente da comissão.';
+	$Projetos->alterarSituacao($idPRONAC, null, $w['situacao'], $w['ProvidenciaTomada']);
+
         $reuniao = new Reuniao();
         $raberta = $reuniao->buscarReuniaoAberta();
         
