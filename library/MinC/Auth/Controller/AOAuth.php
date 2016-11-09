@@ -53,6 +53,7 @@ abstract class MinC_Auth_Controller_AOAuth extends Zend_Controller_Action
     /**
      * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
      * @return void
+     * @todo abstrair instância de "MinC_Auth_Adapter_LoginCidadao" para classe que implemente interface.
      */
     public function oauthresultAction()
     {
@@ -70,7 +71,8 @@ abstract class MinC_Auth_Controller_AOAuth extends Zend_Controller_Action
      * @return string
      * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
      */
-    protected function getRedirectRoute() {
+    protected function getRedirectRoute()
+    {
         $module = $this->getRequest()->getModuleName();
         $controller = $this->getRequest()->getControllerName();
         return "/{$module}/{$controller}/";

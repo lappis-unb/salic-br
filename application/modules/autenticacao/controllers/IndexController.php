@@ -187,7 +187,19 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         $auth->clearIdentity();
         Zend_Session::destroy();
         unset($_SESSION);
-        $this->redirect('index');
+
+        $arrayOauthConfiguration = $this->getOPAuthConfiguration();
+        if(count($arrayOauthConfiguration) > 0) {
+            //https://id.cultura.gov.br/openid/connect/session/end?post_logout_redirect_uri=http://local.salic/principal
+            //https://id.cultura.gov.br/logout&post_logout_redirect_uri=http://local.salic/principal
+            //$this->redirect($arrayOauthConfiguration['logout_uri']);
+
+            $url = $arrayOauthConfiguration['logout_uri'];
+
+            $this->redirect($url);
+        } else {
+            $this->redirect('index');
+        }
     }
 
     /**
