@@ -821,15 +821,76 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         }
     }
 
-    private function redirecionarParaCadastroOauth($objAuth)
+    /**
+     * @param $objAuth
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return void
+     */
+    protected function redirecionarParaCadastroOauth($objAuth)
+    {
+        $this->postFoward("autenticacao", "Logincidadao", "cadastrarusuario", $objAuth);
+    }
+
+    /**
+     * @param $module
+     * @param $controllerName
+     * @param $actionName
+     * @param $parameters
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return void
+     */
+    protected function postFoward($module, $controllerName, $actionName, $parameters)
     {
         $request = clone $this->getRequest();
-        $request->setModuleName("autenticacao")
-            ->setControllerName("Logincidadao")
-            ->setActionName("cadastrarusuario")
-            ->setPost($objAuth);
+        $request->setModuleName($module)
+            ->setControllerName($controllerName)
+            ->setActionName($actionName)
+            ->setPost($parameters);
         $this->_helper->actionStack($request);
     }
 
+    /**
+     * @param $url
+     * @param array $data
+     * @param array|null $headers
+     * @throws Exception
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return void
+     */
+    public function postRedirector($url, array $data, array $headers = null) {
+        $params = array(
+            'http' => array(
+                'method' => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+        if (!is_null($headers)) {
+            $params['http']['header'] = '';
+            foreach ($headers as $k => $v) {
+                $params['http']['header'] .= "$k: $v\n";
+            }
+        }
+        $ctx = stream_context_create($params);
+        $fp = @fopen($url, 'rb', false, $ctx);
+        if ($fp) {
+            echo @stream_get_contents($fp);
+            die();
+        } else {
+            throw new Exception("Error loading '$url', $php_errormsg");
+        }
+    }
 
+    /**
+     * @return array
+     * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+     * @return mixed
+     */
+    protected function getOPAuthConfiguration()
+    {
+        $oauthConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', "oauth_" . APPLICATION_ENV);
+        $oauthConfigArray = $oauthConfig->toArray();
+        if($oauthConfigArray && $oauthConfigArray['OAuth']['servicoHabilitado'] == true) {
+            return $oauthConfigArray['OAuth'];
+        }
+    }
 }
