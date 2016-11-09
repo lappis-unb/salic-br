@@ -277,6 +277,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $this->view->dirigentes = $dirigentes;
             }
 
+//            d($dados);
             $this->view->dados = $dados;
             $this->view->qtdDirigentes = $qtdDirigentes;
             $this->view->parecerista = $this->getParecerista;
@@ -1875,7 +1876,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     {
         $arrAuth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
         $usuario = isset($arrAuth['idusuario']) ? $arrAuth['idusuario'] : $arrAuth['usu_codigo'];
-
         $arrayAgente = array('cnpjcpf' => $this->_request->getParam("cpf"),
             'tipopessoa' => $this->_request->getParam("Tipo"),
             'status' => 0,
@@ -1887,7 +1887,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $mdlAgente = new Agente_Model_Agentes($arrayAgente);
         $mprAgentes->save($mdlAgente);
         $agente = $mprAgentes->findBy(array('cnpjcpf' => $mdlAgente->getCnpjcpf()));
-
         $cpf = preg_replace('/\.|-|\//','',$_REQUEST['cpf']);
         $idAgente = $agente['idagente'];
         $nome = $this->_request->getParam("nome");
@@ -1916,17 +1915,14 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
          * Regra o componente da comissao nao pode alterar sua visao.
          */
         if ($grupologado != 118):
-
             $GravarVisao = array(// insert
                 'idagente' => $idAgente,
                 'visao' => $Visao,
                 'usuario' => $usuario,
                 'stativo' => 'A');
-
             try {
                 $visaoTable = new Agente_Model_DbTable_Visao();
                 $busca = $visaoTable->buscarVisao($idAgente, $Visao);
-
                 if (!$busca) {
                     $i = $visaoTable->cadastrarVisao($GravarVisao);
                 }
