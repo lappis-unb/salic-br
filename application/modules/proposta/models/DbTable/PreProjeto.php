@@ -3074,7 +3074,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         return $db->fetchAll($sql);
     }
-
+    //@todo lugar certo é tbPlanilhaProposta, remover do ManterOrcamentoDAO tbm
     public function listarItensProdutos($idPreProjeto, $idItem = null)
     {
         $db = Zend_Db_Table::getDefaultAdapter();

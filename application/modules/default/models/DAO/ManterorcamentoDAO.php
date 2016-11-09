@@ -214,6 +214,10 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     }
 
+    /**
+     * @todo Proposta_Model_DbTable_PlanilhaProposta
+     * @deprecated  Proposta_Model_DbTable_PlanilhaProposta
+     */
     public static function buscarDadosCadastrarCustos($idPreProjeto) {
         $sql = "
             SELECT TOP 1
@@ -245,6 +249,10 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         return $db->fetchAll($sql);
     }
 
+    /**
+     * @todo Utilizar buscarDadosCustos em Proposta_Model_DbTable_TbPlanilhaProposta
+     * @deprecated Utilizar buscarDadosCustos em Proposta_Model_DbTable_TbPlanilhaProposta
+     */
     public static function buscarDadosCustos($array = array()) {
         $sql = "SELECT
                     pp.idEtapa as idEtapa,
@@ -277,6 +285,8 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         //xd($sql);
+
+        throw new Exception('Utilizar buscarDadosCustos em Proposta_Model_DbTable_TbPlanilhaProposta');
         return $db->fetchAll($sql);
 
     }
@@ -444,7 +454,14 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         return $db->fetchAll($sql);
     }
 
+    /**
+     * @todo utitilizar listarItensProdutos em Proposta_Model_DbtTable_PreProjeto
+     * @deprecated  utitilizar listarItensProdutos em Proposta_Model_DbtTable_PreProjeto
+     */
     public function buscarItensProdutos($idPreProjeto, $idItem = null) {
+
+        throw new Exception("Utitilizar listarItensProdutos em Proposta_Model_DbtTable_PreProjeto");
+
         $sql = "
             SELECT
             DISTINCT
@@ -502,12 +519,13 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
      * @param bool $idItem
      * @access public
      * @return void
+     * @todo método transferido para Proposta_Model_DbtTable_PreProjeto
+     * @deprecated método transferido para Proposta_Model_DbtTable_PreProjeto'
      */
     public function listarItensProdutos($idPreProjeto, $idItem = null)
     {
-        echo '<pre>';
-        var_dump ('método transferido para Proposta_Model_DbtTable_PreProjeto');
-        exit;
+        throw new Exception('método transferido para Proposta_Model_DbtTable_PreProjeto');
+
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -626,8 +644,8 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     }
 
     /**
-     * @todo Utilizar listarItens em Proposta_Model_DbTable_PreProjeto
-     * @deprecated  Utilizar listarItens em Proposta_Model_DbTable_PreProjeto
+     * @todo Utilizar buscarItens em tbItensPlanilhaProduto
+     * @deprecated  Utilizar buscarItens em tbItensPlanilhaProduto
      */
     public static function buscarItens($idEtapa, $idproduto = null) {
     /*    $sql = "select distinct

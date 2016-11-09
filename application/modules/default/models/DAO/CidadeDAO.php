@@ -21,6 +21,8 @@ class CidadeDAO extends Zend_Db_Table
 	 * @access public
 	 * @param integer $idUF
 	 * @return object $db->fetchAll($sql)
+     * @todo utilizar o metoddo listar em Agente_Model_DbTable_Municipios
+     * @deprecated  utilizar o metodo listar em Agente_Model_DbTable_Municipios
 	 */
 	public static function buscar($idUF, $idCidade = null)
 	{
