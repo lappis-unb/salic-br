@@ -420,7 +420,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $a = 0;
             foreach($cidade as $DadosCidade) {
                 $cidadeArray[$a]['idCidade'] = $DadosCidade->id;
-                $cidadeArray[$a]['nomeCidade'] = $DadosCidade->descricao);
+                $cidadeArray[$a]['nomeCidade'] = $DadosCidade->descricao;
                 $a++;
             }
             echo json_encode($cidadeArray);
@@ -438,7 +438,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $a = 0;
             foreach($item as $Dadositem) {
                 $itemArray[$a]['idItem'] = $Dadositem->idplanilhaitens;
-                $itemArray[$a]['nomeItem'] = $Dadositem->descricao);
+                $itemArray[$a]['nomeItem'] = $Dadositem->descricao;
                 $a++;
             }
             echo json_encode($itemArray);
