@@ -65,6 +65,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
             }
 
             $objPost = $this->getAllParams();
+
             $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($objPost["cpf"]));
             $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $objPost["id"]);
             $arrayDTNascimento = explode("T", $objPost["birthdate"]);
@@ -97,10 +98,10 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
                 $tbVinculo = new Agente_Model_DbTable_TbVinculo();
                 $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $pkSgcAcessoSave));
                 $dadosVinculo = array(
-                    'idAgenteProponente' => $idAgenteProp
-                    ,'dtVinculo' => new Zend_Db_Expr('GETDATE()')
-                    ,'siVinculo' => 2
-                    ,'idUsuarioResponsavel' => $idResp[0]->idusuario
+                    'idagenteproponente' => $idAgenteProp
+                    ,'dtvinculo' => new Zend_Db_Expr('GETDATE()')
+                    ,'sivinculo' => 2
+                    ,'idusuarioresponsavel' => $idResp[0]->idusuario
                 );
                 $tbVinculo->inserir($dadosVinculo);
             }
