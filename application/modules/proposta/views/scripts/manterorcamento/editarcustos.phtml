@@ -1,4 +1,4 @@
-<?php header("Content-Type: text/html; charset=ISO-8859-1"); ?>
+<?php  header("Content-Type: text/html; charset={$this->charset}"); ?>
 <script type="text/javascript">
     $(document).ready(function(){
         //$("#vlunitario").val(format_moeda($("#vlunitario").val()));
@@ -67,7 +67,7 @@
             var jstv = $('#editor1').val();
             if(jstv.length > 500){
                 $("#justificativaErro").dialog("destroy");
-                $("#justificativaErro").html('O campo Justificativa não pode ultrapassar 500 caracteres!');
+                $("#justificativaErro").html('O campo Justificativa nï¿½o pode ultrapassar 500 caracteres!');
                 $("#justificativaErro").dialog ({
                     width:320,
                     height:180,
@@ -120,7 +120,7 @@
     
     } else {
         $.ajax({
-            url : '<?php echo $this->url(array('controller' => 'Manterorcamento', 'action' => 'editarcustos')); ?>',
+            url : '<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'editarcustos')); ?>',
             type: "POST",
             data :{
                 iduf : $(this).val(),
@@ -181,10 +181,9 @@
 <!-- ========== FIM TTULO ========== -->
 <!-- ========== INCIO CONTEDO ========== -->
 <div id="conteudo" style="width: 97%"><!-- ========== INCIO TABELA DADOS ========== -->
-	<?php foreach ($this->Dados as $dados): ?>
+	<?php /*var_dump($this->Dados); die; */foreach ($this->Dados as $dados): ?>
 	<form name="form" id="form" action="<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'salvarcustos')); ?>" method="post">
 	<input name='acao' type='hidden' value='alterar'/>
-	<!--<input type="hidden" name="proposta" id="proposta" value="<?php echo $this->dados[0]->idProposta ?>">-->
 	<input type="hidden" name="idPreProjeto" id="idPreProjeto" value="<?php echo $this->idPreProjeto ?>">
 	<input type="hidden" name="idPlanilhaProposta" id="proposta" value="<?php echo $_GET['idPlanilhaProposta'] ?>">
         <div style="float: left; width: 25%">
@@ -194,13 +193,14 @@
                     <tr>
                         <td align="justify">
                             <label for="uf">FONTE DE RECURSO</label> <br />
+
                             <select class="select_simples" style="width: 90%" id="fonterecurso" name='fonterecurso'>
                                     <option value="<?php echo "" ?>">Selecione...</option>
                                     <?php foreach($this->Recurso as $recursos){
-                                    if ($dados->Recurso == $recursos->idVerificacao) { ?>
-                                    <option selected="selected" value="<?php echo $recursos->idVerificacao ?>"><?php echo $recursos->VerificacaoDescricao ?></option>
+                                    if ($dados->recurso == $recursos->idverificacao) { ?>
+                                    <option selected="selected" value="<?php echo $recursos->idverificacao ?>"><?php echo $recursos->verificacaodescricao ?></option>
                                     <?php } else { ?>
-                                    <option value="<?php echo $recursos->idVerificacao ?>"><?php echo $recursos->VerificacaoDescricao ?></option>
+                                    <option value="<?php echo $recursos->idverificacao ?>"><?php echo $recursos->verificacaodescricao ?></option>
                                     <?php } } ?>
                             </select>
                         </td>
@@ -218,7 +218,7 @@
                     		<select class="select_simples valida" id='uf' name='uf'>
                     			<option>Selecione...</option>
                     			<?php foreach($this->Estados as $estados){
-                    			if($dados->IdUf == $estados->id){?>
+                    			if($dados->iduf == $estados->id){?>
                     				<option selected="selected" value="<?php echo $estados->id ?>"><?php echo $estados->descricao ?></option>
                     			<?php } else { ?>
                     			<option value="<?php echo $estados->id ?>"><?php echo $estados->descricao ?></option>
@@ -231,7 +231,7 @@
                     		<select class="select_simples valida" style="width: 80%" id='municipio' name='municipio'>
                     			<option>Selecione...</option>
                     			<?php foreach($this->Cidades as $cidades){
-                    			if($dados->Municipio == $cidades->id){?>
+                    			if($dados->municipio == $cidades->id){?>
                     				<option selected="selected" value="<?php echo $cidades->id ?>"><?php echo $cidades->descricao ?></option>
                     			<?php } else { ?>
                     			<option value="<?php echo $cidades->id ?>"><?php echo $cidades->descricao ?></option>
@@ -257,27 +257,27 @@
                   <tr>
                     <td align="justify" width="20%">
                     	<label for="etapa">ETAPA / META*</label> <br />
-                                <input type="hidden" name="etapa" value="<?php echo $dados->idEtapa; ?>"/>
+                                <input type="hidden" name="etapa" value="<?php echo $dados->idetapa; ?>"/>
                     		<select class="select_simples valida" id='etapa' name='etapa'>
                     			<option value="<?php echo "" ?>">Selecione...</option>
                     			<?php foreach($this->itensEtapaCusto as $itensCusto){
-                    			if ($dados->idEtapa == $itensCusto->idplanilhaetapa) { ?>
-                    			<option selected="selected" value="<?php echo $itensCusto->idplanilhaetapa ?>"><?php echo $itensCusto->Descricao ?></option>
+                    			if ($dados->idetapa == $itensCusto->idplanilhaetapa) { ?>
+                    			<option selected="selected" value="<?php echo $itensCusto->idplanilhaetapa ?>"><?php echo $itensCusto->descricao ?></option>
                     			<?php } else { ?>
-                    			<option value="<?php echo $itensCusto->idplanilhaetapa ?>"><?php echo $itensCusto->Descricao ?></option>
+                    			<option value="<?php echo $itensCusto->idplanilhaetapa ?>"><?php echo $itensCusto->descricao ?></option>
                     			<?php } } ?>
                     		</select>
                     </td>
                     <td align="left">
                     	<label for="item">ITEM*</label><br />
-                                <input type="hidden" name="item" value="<?php echo $dados->idItem; ?>"/>
+                                <input type="hidden" name="item" value="<?php echo $dados->iditem; ?>"/>
                     		<select class="select_simples valida" style="width: 80%" id='item' name='item'>
                     			<option value="">Selecione...</option>
                     			<?php foreach($this->ListaItens as $ListaItens){
-                    			if ($dados->idItem == $ListaItens->idPlanilhaItens) { ?>
-                    			<option selected="selected" value="<?php echo $ListaItens->idPlanilhaItens ?>"><?php echo $ListaItens->Descricao ?></option>
+                    			if ($dados->iditem == $ListaItens->idplanilhaitens) { ?>
+                    			<option selected="selected" value="<?php echo $ListaItens->idplanilhaitens ?>"><?php echo $ListaItens->descricao ?></option>
                     			<?php } else { ?>
-                    			<option value="<?php echo $ListaItens->idPlanilhaItens ?>"><?php echo $ListaItens->Descricao ?></option>
+                    			<option value="<?php echo $ListaItens->idplanilhaitens ?>"><?php echo $ListaItens->descricao ?></option>
                     			<?php } } ?>
                     		</select>
 
@@ -304,20 +304,20 @@
                     		<select class="select_simples valida" id="unidade" name='unidade'>
                     			<option value="<?php echo "" ?>">Selecione...</option>
                     			<?php foreach($this->Unidade as $unidades){
-                    			if ($dados->Unidade == $unidades->idUnidade) { ?>
-                    			<option selected="selected" value="<?php echo $unidades->idUnidade ?>"><?php echo $unidades->Descricao ?></option>
+                    			if ($dados->unidade == $unidades->idunidade) { ?>
+                    			<option selected="selected" value="<?php echo $unidades->idunidade ?>"><?php echo $unidades->descricao ?></option>
                     			<?php } else { ?>
-                    			<option value="<?php echo $unidades->idUnidade ?>"><?php echo $unidades->Descricao ?></option>
+                    			<option value="<?php echo $unidades->idunidade ?>"><?php echo $unidades->descricao ?></option>
                     			<?php } } ?>
                     		</select>
                     </td>
                     <td>
                     	<label for="qtd">QTD*</label><br />
-                    		<input type="text" class="input_simples valida soma numero" size="1" id="qtd" name="qtd" value="<?php echo (int) $dados->Quantidade?>"/>
+                    		<input type="text" class="input_simples valida soma numero" size="1" id="qtd" name="qtd" value="<?php echo (int) $dados->quantidade?>"/>
                     </td>
                     <td>
                     	<label for="ocorrencia">OCORR&Ecirc;NCIA*</label><br />
-                    		<input type="text" class="input_simples valida soma numero" size="1" id="ocorrencia" name="ocorrencia" value="<?php echo (int) $dados->Ocorrencia?>"/>
+                    		<input type="text" class="input_simples valida soma numero" size="1" id="ocorrencia" name="ocorrencia" value="<?php echo (int) $dados->ocorrencia?>"/>
                     </td>
                 </tr>
             </table>
@@ -330,7 +330,7 @@
                 <tr>
                     <td nowrap align="left">
                     	<label for="uf">VALOR UNIT&Aacute;RIO*</label> <br />
-                    		<input type="text" class="input_simples valida soma numero" size="10" id="vlunitario" name="vlunitario" value="<?php echo $dados->ValorUnitario ?>" />
+                    		<input type="text" class="input_simples valida soma numero" size="10" id="vlunitario" name="vlunitario" value="<?php echo $dados->valorunitario ?>" />
                     </td>
                     <td nowrap align="left">
                         <label for="uf">&nbsp;&nbsp;&nbsp;&nbsp;TOTAL:</label> <br />
@@ -348,7 +348,7 @@
                 <tr>
                     <td align="justify">
                     	<label for="uf">QTD DE DIAS*</label> <br />
-                    		<input type="text" class="input_simples valida numero" size="15" name="qtdDias" value="<?php echo (int) $dados->QtdDias ?>" />
+                    		<input type="text" class="input_simples valida numero" size="15" name="qtdDias" value="<?php echo (int) $dados->qtddias ?>" />
                     </td>
                 </tr>
             </table>
@@ -361,7 +361,7 @@
             <table cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td align="justify">
-                        <textarea cols="80" id="editor1" name="editor1" class="valida" rows="7" class="textarea_simples" style="width:99%;"><?php echo $dados->Justificativa; ?></textarea>
+                        <textarea cols="80" id="editor1" name="editor1" class="valida" rows="7" class="textarea_simples" style="width:99%;"><?php echo $dados->justificativa; ?></textarea>
                     </td>
                 </tr>
             </table>
