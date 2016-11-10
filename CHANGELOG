@@ -1,3 +1,7 @@
+Release 1.12.3
+  * Fix: [CNIC] Avaliar recurso pelo componente da comissão adiciona nova entrada de parecer
+  * Fix: [Readequações] Verificando se parecer favorável ou não para fazer encaminhamento devido (portaria ou finalizado)
+
 Release 1.12.2
   * Fix: [Publicação DOU] Corrigindo publicação de portaria de redução
 
