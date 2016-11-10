@@ -52,7 +52,7 @@
 
             <table id="tabEmail" class="tabela">
                 <tr>
-                    <th colspan="5">ADICIONE E-MAILS ATRAVÉS DO FORMUL&Aacute;RIO ABAIXO</th>
+                    <th colspan="5">NOVO E-MAIL</th>
                 </tr>
                 <tr>
                     <td>
@@ -61,8 +61,8 @@
                         <select name="tipoEmail" id="tipoEmail" class="input_simples">
                             <option value="0">- Selecione - </option>
 
-                            <?php foreach ($this->combotiposemails as $combotipoemail) { ?>
-                            <option value="<?php echo $combotipoemail->id; ?>"><?php echo $combotipoemail->descricao; ?></option>
+                            <?php foreach ($this->combotiposemails as $key => $combotipoemail) { ?>
+                            <option value="<?php echo $key; ?>"><?php echo $combotipoemail; ?></option>
                             <?php } ?>
 
                         </select>
@@ -126,10 +126,10 @@
             <?php foreach($this->emails as $e):?>
             <tr>
                 <td><?php echo $e->tipo ;?></td>
-                <td><?php echo $e->Descricao ;?></td>
-                <td><?php echo $e->Divulgar == "1" ? "SIM" : "N&Atilde;O" ;?></td>
-                <td><?php echo $e->Status == "1" ? "SIM" : "N&Atilde;O" ;?></td>
-                <td width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('','<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluiemail', 'idInternet' => $e->idInternet, 'qtdEmail' => $this->qtdEmail));?>');" /></td>
+                <td><?php echo $e->descricao ;?></td>
+                <td><?php echo $e->divulgar == "1" ? "SIM" : "N&Atilde;O" ;?></td>
+                <td><?php echo $e->status == "1" ? "SIM" : "N&Atilde;O" ;?></td>
+                <td width="120" class="centro"><input type="button" class="btn_exclusao" value=" " style="width: 87px;" onclick="confirmaExclusao('','<?php echo $this->url(array('module'=>'agente', 'controller' => 'agentes', 'action' => 'excluiemail', 'idInternet' => $e->idinternet, 'qtdEmail' => $this->qtdEmail));?>');" /></td>
             </tr>
             <?php endforeach; ?>
         </table>

@@ -157,8 +157,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                         //                                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/manteragentes/agentes?acao=cc&idusuario={$verificaStatus[0]->IdUsuario}", "ALERT");
                         return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
                     } else {
-//                        return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
-                        parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/agente/manteragentes/agentes?acao=cc&idusuario={$verificaStatus['idusuario']}", "ALERT");
+                        return $this->_helper->redirector->goToRoute(array('controller' => 'principalproponente'), null, true);
+                        //parent::message("Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente, por favor fa&ccedil;a isso agora.", "/agente/manteragentes/agentes?acao=cc&idusuario={$verificaStatus['idusuario']}", "ALERT");
                     }
 
                 }

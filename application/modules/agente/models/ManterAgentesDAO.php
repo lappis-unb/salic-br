@@ -208,6 +208,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
      * @static
      * @param integer $idAgente
      * @return object
+     * @deprecated Utilizar metodo da Dbtable
      */
     public static function buscarEmails($idAgente = null)
     {
@@ -244,6 +245,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
      * @static
      * @param integer $idAgente
      * @return object
+     * @deprecated Utilizar metodo da Dbtable
      */
     public static function buscarFones($idAgente = null)
     {

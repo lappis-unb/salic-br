@@ -123,6 +123,42 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
     }
 
     /**
+     * Metodo para buscar os e-mails do agente
+     *
+     * @access public
+     * @static
+     * @param integer $idAgente
+     * @return object
+     */
+    public function buscarEmails($idAgente = null)
+    {
+        $tblAgentes = new Agente_Model_DbTable_Agentes();
+        $db = Zend_Db_Table::getDefaultAdapter();
+
+        $i = [
+            'i.idinternet',
+            'i.idagente',
+            'i.tipointernet',
+            'i.descricao',
+            'i.status',
+            'i.divulgar'
+        ];
+
+        $sql = $db->select()
+            ->from(['i' => 'internet'], $i, $this->_schema)
+            ->join(['v' => 'verificacao'], 'i.tipointernet = v.idverificacao', 'v.descricao as tipo', $this->_schema)
+            ->join(['t' => 'tipo'], 't.idtipo = v.idtipo', null, $this->_schema);
+
+        if (!empty($idAgente)) {// busca de acordo com o id do agente
+
+            $sql->where('i.idagente = ?', $idAgente);
+        }
+
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        return $db->fetchAll($sql);
+    }
+
+    /**
      * M�todo para cadastrar
      * @access public
      * @param array $dados

@@ -241,11 +241,11 @@ class spValidarApresentacaoDeProjeto extends MinC_Db_Table_Abstract {
                     $minimo90 = $db->fetchAll($sql);
 
                     if (!empty($minimo90)) {
-                        $validacao->Descricao = 'A diferença em dias entre a data de envio do projeto ao MinC e a data de início de execução do projeto está menor do que 90 dias.';
+                        $validacao->Descricao = 'A diferença em dias entre a data de envio do projeto ao MinC e a data de in&iacute;cio de execu&ccedil;&atilde;o do projeto est&aacute; menor do que 90 dias.';
                         $validacao->Observacao = 'PENDENTE';
                         $listaValidacao[] =  clone($validacao);
                     } else {
-                        $validacao->Descricao = 'Prazo de início de execução maior do que 90 dias.';
+                        $validacao->Descricao = 'Prazo de in&iacute;cio de execu&ccedil;&atilde;o maior do que 90 dias.';
                         $validacao->Observacao = 'OK';
                         $listaValidacao[] =  clone($validacao);
                     }
