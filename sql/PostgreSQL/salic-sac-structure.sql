@@ -781,7 +781,7 @@ CREATE TABLE sac.PreProjeto
   Justificativa VARCHAR,
   NrAtoTombamento VARCHAR(25) DEFAULT ' ',
   DtAtoTombamento timestamp,
-  EsferaTombamento int DEFAULT 0 NOT NULL,
+  EsferaTombamento NUMERIC DEFAULT 0,
   ResumoDoProjeto VARCHAR DEFAULT ' ',
   Objetivos VARCHAR,
   Acessibilidade VARCHAR,

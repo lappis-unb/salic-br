@@ -42,7 +42,6 @@
 </div>
 <!-- ========== FIM TITULO ========== -->
 
-
 <div id="conteudo">
     <form name="formPesquisa" id="formPesquisa" action="<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'minhas-solicitacoes'));?>" method="get">
         <table class="tabela">
@@ -132,12 +131,12 @@
         <tbody>
             <?php foreach($this->dados as $d){ ?>
             <tr>
-                <td><?php echo utf8_encode($d->Produto); ?></td>
-                <td><?php echo utf8_encode($d->Etapa); ?></td>
-                <td><?php echo utf8_encode($d->ItemSolicitado); ?></td>
-                <td><?php echo utf8_encode($d->Justificativa); ?></td>
-                <td><?php echo utf8_encode($d->Estado); ?></td>
-                <td><?php echo utf8_encode($d->Resposta); ?></td>
+                <td><?php echo $d->produto; ?></td>
+                <td><?php echo $d->etapa; ?></td>
+                <td><?php echo $d->itemsolicitado; ?></td>
+                <td><?php echo $d->justificativa; ?></td>
+                <td><?php echo $d->estado; ?></td>
+                <td><?php echo $d->resposta; ?></td>
             </tr>
             <?php } ?>
         </tbody>
