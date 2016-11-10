@@ -277,7 +277,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $this->view->dirigentes = $dirigentes;
             }
 
-//            d($dados);
             $this->view->dados = $dados;
             $this->view->qtdDirigentes = $qtdDirigentes;
             $this->view->parecerista = $this->getParecerista;

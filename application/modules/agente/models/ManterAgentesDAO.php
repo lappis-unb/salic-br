@@ -257,18 +257,6 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
             'tl.tipotelefone',
             'tl.numero',
             'tl.divulgar',
-            new Zend_Db_Expr("
-                    CASE
-                    WHEN tl.tipotelefone = 22 or tl.tipotelefone = 24
-                    THEN 'Residencial'
-                    WHEN tl.tipotelefone = 23 or tl.tipotelefone = 25
-                    THEN 'Comercial'
-                    WHEN tl.tipotelefone = 26
-                    THEN 'Celular'
-                    WHEN tl.tipotelefone = 27
-                    THEN 'Fax'
-                    END as dstelefone
-            ")
         ];
 
         $ddd = [
@@ -281,12 +269,11 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
             ->join(['uf' => 'uf'], 'uf.iduf = tl.uf', ['uf.sigla as ufsigla'], $tblAgentes->getSchema('agentes'))
             ->join(['ag' => 'agentes'], 'ag.idagente = tl.idagente', ['ag.idagente'], $tblAgentes->getSchema('agentes'))
             ->joinLeft(['ddd' => 'ddd'], 'tl.ddd = ddd.codigo', $ddd, $tblAgentes->getSchema('agentes'))
+            ->joinLeft(['v' => 'verificacao'], 'v.idverificacao = tl.tipotelefone', array('v.descricao as dstelefone'), $tblAgentes->getSchema('agentes'))
             ;
-
         if (!empty($idAgente)) { // busca de acordo com o id do agente
             $sql->where('tl.idagente = ?', $idAgente);
         }
-//d($db->fetchAll($sql));
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
