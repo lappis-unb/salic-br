@@ -43,8 +43,7 @@ abstract class MinC_Auth_Controller_AOAuth extends Zend_Controller_Action
      */
     protected function getOPAuthConfiguration()
     {
-        $oauthConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', "oauth_" . APPLICATION_ENV);
-        $oauthConfigArray = $oauthConfig->toArray();
+        $oauthConfigArray = Zend_Registry::get("config")->toArray();
         if($oauthConfigArray && $oauthConfigArray['OAuth']['servicoHabilitado'] == true) {
             return $oauthConfigArray['OAuth'];
         }

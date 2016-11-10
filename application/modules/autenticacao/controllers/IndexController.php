@@ -28,8 +28,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
     public function indexAction()
     {
-        $oauthConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', "oauth_" . APPLICATION_ENV);
-        $oauthConfigArray = $oauthConfig->toArray();
+        $oauthConfigArray = Zend_Registry::get("config")->toArray();
         $this->view->habilitarServicoLoginCidadao = false;
         if($oauthConfigArray && $oauthConfigArray['OAuth']) {
             $this->view->habilitarServicoLoginCidadao = (bool)$oauthConfigArray['OAuth']['servicoHabilitado'];

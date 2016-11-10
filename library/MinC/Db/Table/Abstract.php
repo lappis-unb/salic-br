@@ -55,21 +55,26 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
                 $arrConfig = $db->getConfig();
                 $strDb = str_replace(array('.dbo', '.scdne'), '', $this->_schema);
                 $arrConfig['dbname'] = strtoupper($strDb);
+
                 $this->_config = new Zend_Config(
-                    array(
-                        'db' => array(
-                            'adapter' => 'PDO_MSSQL',
-                            'params'  => array(
-                                'username' => $arrConfig['username'],
-                                'password' => $arrConfig['password'],
-                                'dbname'   => $arrConfig['dbname'],
-                                'host'     => $arrConfig['host'],
-                                'port'     => $arrConfig['port'],
-                                'charset'     => $arrConfig['charset'],
+                    array_merge(
+                        Zend_Registry::get('config')->toArray(),
+                        array(
+                            'db' => array(
+                                'adapter' => 'PDO_MSSQL',
+                                'params'  => array(
+                                    'username' => $arrConfig['username'],
+                                    'password' => $arrConfig['password'],
+                                    'dbname'   => $arrConfig['dbname'],
+                                    'host'     => $arrConfig['host'],
+                                    'port'     => $arrConfig['port'],
+                                    'charset'     => $arrConfig['charset'],
+                                )
                             )
                         )
                     )
                 );
+
 
                 Zend_Registry::getInstance()->set('config', $this->_config);
                 Zend_Db_Table::setDefaultAdapter(Zend_Db::factory($this->_config->db));
