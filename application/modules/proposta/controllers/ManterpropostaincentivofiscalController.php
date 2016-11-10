@@ -296,7 +296,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             "dtfinaldeexecucao" => $dtFinalDeExecucao,
             "nratotombamento" => $nrAtoTombamento,
             "dtatotombamento" => $dtAtoTombamento,
-            "esferatombamento" => $esferaTombamento,
+            "esferatombamento" => ($esferaTombamento) ? $esferaTombamento : '0',
             "resumodoprojeto" => $resumoDoProjeto,
             "objetivos" => $objetivos,
             "justificativa" => $justificativa,
