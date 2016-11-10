@@ -74,7 +74,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             new Zend_Db_Expr("' ' AS PRONAC"),
             'a.nomeprojeto',
             new Zend_Db_Expr(" CASE WHEN idproduto = 0
-                       THEN 'Administração do Projeto'
+                       THEN 'Administra&ccedil;&atilde;o do Projeto'
                        ELSE c.descricao
                   END as Produto"),
         ];
@@ -83,16 +83,17 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             'b.idproduto',
             'b.idplanilhaproposta',
             'b.idetapa',
-            'b.quantidade',
-            'b.ocorrencia',
+            'b.quantidade as Quantidade',
+            'b.ocorrencia as Ocorrencia',
             'b.valorunitario as vlUnitario',
             'ROUND((b.quantidade * b.ocorrencia * b.valorunitario),2) as vlSolicitado',
             'b.fonterecurso as idFonte',
             new Zend_Db_Expr(MinC_Db_Expr::convertOrToChar('b.dsjustificativa').' as JustProponente'),
-            new Zend_Db_Expr('qtdedias')
+            new Zend_Db_Expr('QtdeDias')
         ];
 
         $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sac = $this->getSchema('sac');
         $concat = MinC_Db_Expr::concat();
@@ -106,13 +107,14 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             ->joinInner(['e' => 'tbplanilhaunidade'], '(b.unidade = e.idunidade)', 'e.descricao as Unidade', $sac)
             ->joinInner(['i' => 'tbplanilhaitens'], '(b.idplanilhaitem=i.idplanilhaitens)', 'i.descricao as Item', $sac)
             ->joinInner(['x' => 'verificacao'], '(b.fonterecurso = x.idverificacao)', 'x.descricao as FonteRecurso', $sac)
-            ->joinInner(['f' => 'vufmunicipio'], '(b.ufdespesa = f.iduf and b.municipiodespesa = f.idmunicipio)', ['f.uf','f.municipio'], $this->getSchema('agentes'))
+            ->joinInner(['f' => 'municipios'], '(b.municipiodespesa = f.idmunicipioibge)',['u.sigla as Uf'],$this->getSchema('agentes'))
+            ->joinInner(['u' => 'uf'], '(f.idufibge = u.iduf and b.ufdespesa = u.iduf)',['f.descricao as Municipio'],$this->getSchema('agentes'))
             ->where('a.idpreprojeto = ? ', $idPronac)
             ->order("x.descricao")
             ->order("c.descricao DESC")
             ->order("$convert  $concat '-'  $concat d.descricao")
-            ->order('f.uf')
-            ->order('f.municipio')
+            ->order('u.sigla')
+            ->order('f.descricao')
             ->order('i.descricao');
 
         return $db->fetchAll($sql);

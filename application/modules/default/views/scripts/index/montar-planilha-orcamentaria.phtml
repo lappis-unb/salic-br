@@ -1,4 +1,4 @@
-<?php header('Content-Type: text/plain; charset=ISO-8859-1'); ?>
+<?php  header("Content-Type: text/html; charset={$this->charset}"); ?>
 <script type="text/javascript">
     function AbrirFecharPlanilha(elemento)
     {
@@ -96,7 +96,7 @@
 <div class="sumir centro" id="modalComprovantes">Carregando...</div>
 
 <?php
-//MONTANDO A PLANILHA DO TIPO 0 = Planilha Orçamentária da Proposta
+//MONTANDO A PLANILHA DO TIPO 0 = Planilha OrÃ§amentaria da Proposta
 if($this->tipoPlanilha == 0){ ?>
 <table class="tabela">
     <?php
@@ -260,7 +260,7 @@ if($this->tipoPlanilha == 0){ ?>
 </table>
 
 <?php }
-//MONTANDO A PLANILHA DO TIPO 1 = Planilha Orçamentária do Proponente
+//MONTANDO A PLANILHA DO TIPO 1 = Planilha Orï¿½amentï¿½ria do Proponente
 else if($this->tipoPlanilha == 1){ ?>
 <table class="tabela">
     <?php
@@ -424,7 +424,7 @@ else if($this->tipoPlanilha == 1){ ?>
 </table>
 
 <?php }
-//MONTANDO A PLANILHA DO TIPO 2 = Planilha Orçamentária do Parecerista
+//MONTANDO A PLANILHA DO TIPO 2 = Planilha Orï¿½amentï¿½ria do Parecerista
 else if($this->tipoPlanilha == 2){ ?>
 
 <table class="tabela">
@@ -621,7 +621,7 @@ else if($this->tipoPlanilha == 2){ ?>
 
 
 <?php }
-//MONTANDO A PLANILHA DO TIPO 3 = Planilha Orçamentária Aprovada Ativa
+//MONTANDO A PLANILHA DO TIPO 3 = Planilha Orï¿½amentï¿½ria Aprovada Ativa
 else if($this->tipoPlanilha == 3){ ?>
 <table class="tabela">
     <?php
@@ -842,7 +842,7 @@ else if($this->tipoPlanilha == 3){ ?>
 </table>
 
 <?php }
-//MONTANDO A PLANILHA DO TIPO 6 = Readequação
+//MONTANDO A PLANILHA DO TIPO 6 = Readequaï¿½ï¿½o
 else if($this->tipoPlanilha == 6){ ?>
 <table class="tabela">
     <?php
@@ -910,10 +910,10 @@ else if($this->tipoPlanilha == 6){ ?>
                                     <th>Vl. Unit&aacute;rio</th>
                                     <th>Vl. Aprovado</th>
                                     <th>Vl. Comprovado</th>
-                                    <th>Justif. Readequação</th>
+                                    <th>Justif. Readequaï¿½ï¿½o</th>
                                     
                                     <?php //if($this->link && $this->idPerfil == 1111){ ?>
-                                        <th>Ação</th>
+                                        <th>Aï¿½ï¿½o</th>
                                     <?php //} ?>
                                 </tr>
                                 <?php
@@ -974,22 +974,22 @@ else if($this->tipoPlanilha == 6){ ?>
                                         <td class="excluirItem centro" style="width: 1%;">
                                         <?php if($this->link && $this->idPerfil == 1111){ ?>
                                             <?php if($planilha['tpAcao'] == 'E'){ ?>
-                                                Item excluído
+                                                Item excluï¿½do
                                                 <img src="<?php echo $this->baseUrl(); ?>/public/img/refresh.gif" style="cursor: pointer;" class="restaurarItem" tipo="<?php echo $planilha['tpAcao']; ?>" idPlanilha="<?php echo $planilha['idPlanilhaAprovacao']; ?>" title="<?php echo 'restaurar item'; ?>"/>
                                             <?php } else { ?>
                                                 <?php if(empty($planilha['vlComprovado'])){ ?>
-                                                <input type="button" class="btn_excluir excluirItemPlanilha" title="Solicitar exclusão de item" idPlanilhaAprovacao="<?php echo $planilha['idPlanilhaAprovacao']; ?>">
+                                                <input type="button" class="btn_excluir excluirItemPlanilha" title="Solicitar exclusï¿½o de item" idPlanilhaAprovacao="<?php echo $planilha['idPlanilhaAprovacao']; ?>">
                                             <?php } } ?>
                                         <?php } else { ?>
                                             <?php $title = '';
                                                 switch ($planilha['tpAcao']) {
                                                     case 'E':
-                                                        echo 'Excluído';
+                                                        echo 'Excluï¿½do';
                                                         $title = 'restaurar item';
                                                         break;
                                                     case 'I':
-                                                        echo 'Incluído';
-                                                        $title = 'recusar inclusão de item';
+                                                        echo 'Incluï¿½do';
+                                                        $title = 'recusar inclusï¿½o de item';
                                                         break;
                                                     case 'A':
                                                         echo 'Alterado';
