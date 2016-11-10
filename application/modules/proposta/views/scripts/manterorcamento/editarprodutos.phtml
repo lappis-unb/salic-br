@@ -79,7 +79,7 @@
                 var jstv = $('#editor1').val();
                 if(jstv.length > 500){
                     $("#justificativaErro").dialog("destroy");
-                    $("#justificativaErro").html('O campo Justificativa não pode ultrapassar 500 caracteres!');
+                    $("#justificativaErro").html('O campo Justificativa nï¿½o pode ultrapassar 500 caracteres!');
                     $("#justificativaErro").dialog ({
                         width:320,
                         height:180,
@@ -130,7 +130,7 @@
             }
             else{
                 $.ajax({
-                    url : '<?php echo $this->url(array('controller' => 'Manterorcamento', 'action' => 'cadastrarprodutos')); ?>',
+                    url : '<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'cadastrarprodutos')); ?>',
                     type: "POST",
                     data :{
                         iduf : $(this).val(),
@@ -155,7 +155,7 @@
             }
             else{
                 $.ajax({
-                    url : '<?php echo $this->url(array('controller' => 'Manterorcamento', 'action' => 'cadastrarprodutos')); ?>',
+                    url : '<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'cadastrarprodutos')); ?>',
                     type: "POST",
                     data :{
                         idetapa : $(this).val(),
@@ -200,7 +200,7 @@
         return result;
     }
 
-    //Formata número tipo moeda usando o evento onKeyDown
+    //Formata nï¿½mero tipo moeda usando o evento onKeyDown
     function Formata(campo,tammax,teclapres,decimal) {
         var tecla = teclapres.keyCode;
         vr = Limpar(campo.value,"0123456789");
@@ -273,10 +273,10 @@
                                 <select class="select_simples valida" style="width: 90%" id="fonterecurso" name='fonterecurso'>
                                     <option value=""> - Selecione - </option>
                                         <?php foreach($this->Recurso as $recursos) {
-                                            if ($dados->Recurso == $recursos->idVerificacao) { ?>
-                                    <option selected="selected" value="<?php echo $recursos->idVerificacao ?>"><?php echo utf8_encode($recursos->VerificacaoDescricao); ?></option>
+                                            if ($dados->Recurso == $recursos->idverificacao) { ?>
+                                    <option selected="selected" value="<?php echo $recursos->idverificacao ?>"><?php echo $recursos->verificacaodescricao; ?></option>
                                                 <?php } else { ?>
-                                    <option value="<?php echo $recursos->idVerificacao ?>"><?php echo utf8_encode($recursos->VerificacaoDescricao); ?></option>
+                                    <option value="<?php echo $recursos->idverificacao ?>"><?php echo $recursos->verificacaodescricao; ?></option>
                                                 <?php }
                                         }
                                         ?>
@@ -313,9 +313,9 @@
                                     <option> - Selecione - </option>
                                         <?php foreach($this->Cidades as $cidades) {
                                             if($dados->Municipio == $cidades->id) {?>
-                                    <option selected="selected" value="<?php echo $cidades->id ?>"><?php echo utf8_encode($cidades->descricao); ?></option>
+                                    <option selected="selected" value="<?php echo $cidades->id ?>"><?php echo $cidades->descricao; ?></option>
                                                 <?php } else { ?>
-                                    <option value="<?php echo $cidades->id ?>"><?php echo utf8_encode($cidades->descricao); ?></option>
+                                    <option value="<?php echo $cidades->id ?>"><?php echo $cidades->descricao; ?></option>
                                                 <?php }
                                         }
                                         ?>
@@ -345,9 +345,9 @@
 
                                         <?php foreach($this->Etapa as $etapa) {
                                             if ($dados->idEtapa == $etapa->idplanilhaetapa) { ?>
-                                    <option selected="selected" value="<?php echo $etapa->idplanilhaetapa ?>"><?php echo utf8_encode($etapa->Descricao); ?></option>
+                                    <option selected="selected" value="<?php echo $etapa->idplanilhaetapa ?>"><?php echo $etapa->descricao; ?></option>
                                                 <?php } else { ?>
-                                    <option value="<?php echo $etapa->idplanilhaetapa ?>"><?php echo utf8_encode($etapa->Descricao); ?></option>
+                                    <option value="<?php echo $etapa->idplanilhaetapa ?>"><?php echo $etapa->descricao; ?></option>
                                                 <?php }
                                         }
                                         ?>
@@ -359,10 +359,10 @@
                                 <select class="select_simples valida" style="width: 80%" id='item' name='item'>
                                     <option value="<?php echo "" ?>"> - Selecione - </option>
                                         <?php foreach($this->Item as $itens) {
-                                            if ($dados->idItem == $itens->idPlanilhaItens) { ?>
-                                    <option selected="selected" value="<?php echo $itens->idPlanilhaItens ?>"><?php echo $itens->Descricao ?></option>
+                                            if ($dados->idItem == $itens->idplanilhaitens) { ?>
+                                    <option selected="selected" value="<?php echo $itens->idplanilhaitens ?>"><?php echo $itens->descricao ?></option>
                                                 <?php } else { ?>
-                                    <option value="<?php echo $itens->idPlanilhaItens ?>"><?php echo $itens->Descricao ?></option>
+                                    <option value="<?php echo $itens->idplanilhaitens ?>"><?php echo $itens->descricao ?></option>
                                                 <?php }
 
                                         }
@@ -391,10 +391,10 @@
                                 <select class="select_simples valida" id="unidade" name='unidade'>
                                     <option value="<?php echo "" ?>"> - Selecione - </option>
                                         <?php foreach($this->Unidade as $unidades) {
-                                            if ($dados->Unidade == $unidades->idUnidade) { ?>
-                                    <option selected="selected" value="<?php echo $unidades->idUnidade ?>"><?php echo utf8_encode($unidades->Descricao); ?></option>
+                                            if ($dados->Unidade == $unidades->idunidade) { ?>
+                                    <option selected="selected" value="<?php echo $unidades->idunidade ?>"><?php echo $unidades->descricao; ?></option>
                                                 <?php } else { ?>
-                                    <option value="<?php echo $unidades->idUnidade ?>"><?php echo utf8_encode($unidades->Descricao); ?></option>
+                                    <option value="<?php echo $unidades->idunidade ?>"><?php echo $unidades->descricao; ?></option>
                                                 <?php }
                                         }
                                         ?>

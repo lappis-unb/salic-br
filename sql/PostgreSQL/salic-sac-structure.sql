@@ -79,12 +79,20 @@ CREATE TABLE sac.tbPlanilhaEtapa
   stEstado INTEGER DEFAULT 1,
   tpGrupo CHAR
 );
+CREATE SEQUENCE sac.tbplanilhaetapa_idplanilhaetapa_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.tbplanilhaetapa ALTER COLUMN idplanilhaetapa SET DEFAULT nextval('sac.tbplanilhaetapa_idplanilhaetapa_seq');
+ALTER SEQUENCE sac.tbplanilhaetapa_idplanilhaetapa_seq OWNED BY sac.tbplanilhaetapa.idplanilhaetapa;
+
 CREATE TABLE sac.tbPlanilhaItens
 (
   idPlanilhaItens INT PRIMARY KEY NOT NULL,
   Descricao VARCHAR(250) NOT NULL,
   idUsuario INT DEFAULT 0 NOT NULL
 );
+CREATE SEQUENCE sac.tbplanilhaitens_idplanilhaitens_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac.tbplanilhaitens ALTER COLUMN idplanilhaitens SET DEFAULT nextval('sac.tbplanilhaitens_idplanilhaitens_seq');
+ALTER SEQUENCE sac.tbplanilhaitens_idplanilhaitens_seq OWNED BY sac.tbplanilhaitens.idplanilhaitens;
+
 CREATE TABLE sac.tbAvaliacaoProposta
 (
   idAvaliacaoProposta INT PRIMARY KEY NOT NULL,
@@ -765,7 +773,7 @@ CREATE TABLE sac.PreProjeto
   idPreProjeto INT PRIMARY KEY NOT NULL,
   idAgente INT NOT NULL,
   NomeProjeto VARCHAR(300) NOT NULL,
-  Mecanismo INT DEFAULT 1 NOT NULL,
+  Mecanismo CHAR DEFAULT 1 NOT NULL,
   AgenciaBancaria VARCHAR(5) DEFAULT '00000',
   AreaAbrangencia INTEGER DEFAULT 0 NOT NULL,
   DtInicioDeExecucao timestamp DEFAULT NOW(),
@@ -773,7 +781,7 @@ CREATE TABLE sac.PreProjeto
   Justificativa VARCHAR,
   NrAtoTombamento VARCHAR(25) DEFAULT ' ',
   DtAtoTombamento timestamp,
-  EsferaTombamento int DEFAULT 0 NOT NULL,
+  EsferaTombamento NUMERIC DEFAULT 0,
   ResumoDoProjeto VARCHAR DEFAULT ' ',
   Objetivos VARCHAR,
   Acessibilidade VARCHAR,
@@ -3672,7 +3680,7 @@ CREATE TABLE sac.tbPlanilhaProposta
   Contrapartida int DEFAULT 0 NOT NULL,
   FonteRecurso int DEFAULT 0 NOT NULL,
   UfDespesa INT NOT NULL,
-  MunicipioDespesa INT NOT NULL,
+  MunicipioDespesa VARCHAR(6) NOT NULL,
   idUsuario INT DEFAULT 0 NOT NULL,
   dsJustificativa VARCHAR(500),
   CONSTRAINT FK_tbPlanilhaProposta_PreProjeto FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto),

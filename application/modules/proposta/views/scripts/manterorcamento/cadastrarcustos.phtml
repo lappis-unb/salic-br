@@ -1,5 +1,5 @@
 <?php
-    header("Content-Type: text/html; charset=ISO-8859-1");
+    header("Content-Type: text/html; charset={$this->charset}");
     //require_once "scripts/manterpropostaincentivofiscal/inc/menu.inc.php"; // menu
     $SalvarCustos = $this->url(array('controller' => 'manterorcamento', 'action' => 'salvarcustos'));
 ?>
@@ -134,7 +134,7 @@
                     var jstv = $('#editor1').val();
                     if(jstv.length > 500){
                         $("#justificativaErro").dialog("destroy");
-                        $("#justificativaErro").html('O campo Justificativa não pode ultrapassar 500 caracteres!');
+                        $("#justificativaErro").html('O campo Justificativa n&atilde;o pode ultrapassar 500 caracteres!');
                         $("#justificativaErro").dialog ({
                             width:320,
                             height:180,
@@ -230,6 +230,7 @@
                 idPreProjeto : <?php echo $this->idPreProjeto;?>
             },
             success: function(valor){
+                console.log(valor);
                 $("#item").find('option').remove();
                 $("#item").append('<option value=""> - Selecione - </option>');
 
@@ -315,7 +316,6 @@
 
         <form name="formu" id="formu" method="post" action ="<?php echo $this->url(array('controller' => 'manterorcamento', 'action' => 'salvarcustos')); ?>" >
             <input name='acao' type='hidden' value='incluir'/>
-                    <!--<input type="hidden" name="proposta" id="proposta" value="<?php echo $this->dados[0]->idProposta ?>">-->
             <input type="hidden" name="idPreProjeto" id="idPreProjeto" value="<?php echo $this->idPreProjeto ?>">
             <div style="float: left; width: 25%">
                 <fieldset>
@@ -375,11 +375,30 @@
                 </fieldset>
             </div>
 
+<!--            <div style="float: left; width: 34%">-->
+<!--                    <fieldset><legend>Etapa / Meta - --><?php //echo $this->etapaSelecionada["etapaNome"]; ?><!--</legend>-->
+<!--                    <input type="hidden" name="etapa" id="etapa" value="--><?php //echo $this->etapaSelecionada["id"]; ?><!--" />-->
+<!--                    <table cellpadding="0" cellspacing="0" width="100%">-->
+<!--                        <tr>-->
+<!--                            <td align="justify" width="20%"><label for="etapa">ETAPA / META</label>-->
+<!--                                <br />-->
+<!--                                <select class="select_simples valida" id='etapa' name="etapa">-->
+<!--                                    <option value=""> - Selecione - </option>-->
+<!--                                        --><?php //foreach($this->Etapa as $etapa) {?>
+<!--                                    <option value="--><?php //echo $etapa->idplanilhaetapa ?><!--">--><?php //echo $etapa->descricao ?><!--</option>-->
+<!--                                            --><?php //} ?>
+<!--                                </select>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                </fieldset>-->
+<!--            </div>-->
             <div style="float: left; width: 34%">
-                    <fieldset><legend>Etapa / Meta - <?php echo $this->etapaSelecionada["etapaNome"]; ?></legend>
+                <fieldset><legend>Etapa / Meta - <?php echo $this->etapaSelecionada["etapaNome"]; ?></legend>
                     <input type="hidden" name="etapa" id="etapa" value="<?php echo $this->etapaSelecionada["id"]; ?>" />
                     <table cellpadding="0" cellspacing="0" width="100%">
                         <tr>
+                            <!--
                             <td align="justify" width="20%"><label for="etapa">ETAPA / META</label>
                                 <br />
                                 <select class="select_simples valida" id='etapa' name="etapa">
@@ -388,7 +407,22 @@
                                     <option value="<?php echo $etapa->idplanilhaetapa ?>"><?php echo $etapa->descricao ?></option>
                                             <?php } ?>
                                 </select>
+
                             </td>
+                            -->
+                            <td align="left"><label for="item">ITEM<span class="red">*</span></label><br />
+                                <select class="select_simples valida" id='item' name="item" style="width:250px">
+                                    <option> - Selecione uma Etapa - </option>
+                                    <?php foreach($this->Etapa as $etapa) {?>
+                                        <option value="<?php echo $etapa->idplanilhaetapa ?>"><?php echo $etapa->descricao ?></option>
+                                    <?php } ?>
+                                </select>
+                            </td>
+                            <!--
+                            <td align="center"><br />
+                                <label><input type="button" class="btn_alterar" id='alteraretapa'></label>
+                            </td>
+                            -->
                         </tr>
                     </table>
                 </fieldset>

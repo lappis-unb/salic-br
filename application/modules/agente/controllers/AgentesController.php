@@ -1875,72 +1875,61 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     {
         $arrAuth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
         $usuario = isset($arrAuth['idusuario']) ? $arrAuth['idusuario'] : $arrAuth['usu_codigo'];
-
         $arrayAgente = array('cnpjcpf' => $this->_request->getParam("cpf"),
             'tipopessoa' => $this->_request->getParam("Tipo"),
             'status' => 0,
             'usuario' => $usuario
         );
         $mprAgentes = new Agente_Model_AgentesMapper();
+//        $tblAgentes = new Agente_Model_DbTable_Agentes();
+        $mprNomes = new Agente_Model_NomesMapper();
         $mdlAgente = new Agente_Model_Agentes($arrayAgente);
-        $mprAgentes->beginTransaction();
-        $teste = $mprAgentes->save($mdlAgente);
-        $mprAgentes->rollBack();
-        d($teste);
-//        $agente = $mprAgentes->findBy(array('cnpjcpf' => $mdlAgente->getCnpjcpf()));
-
-
+        $mprAgentes->save($mdlAgente);
+        $agente = $mprAgentes->findBy(array('cnpjcpf' => $mdlAgente->getCnpjcpf()));
+        $cpf = preg_replace('/\.|-|\//','',$_REQUEST['cpf']);
         $idAgente = $agente['idagente'];
         $nome = $this->_request->getParam("nome");
         $TipoNome = (strlen($mdlAgente->getCnpjcpf()) == 11 ? 18 : 19); // 18 = pessoa fisica e 19 = pessoa juridica
         if($this->modal == "s"){
             $nome = Seguranca::tratarVarAjaxUFT8($nome);
         }
-        $mprAgentes->rollBack();
-        d('asd');
-//        try {
-            $nomes = new NomesDAO();
-        d('asd');
-            $gravarNome = $nomes->inserir($idAgente, $TipoNome, $nome, 0, $usuario);
-        d($gravarNome);
-//        } catch (Exception $e) {
-//            parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
-//        }
-
+        try {
+            $arrNome = [
+                'idagente' => $idAgente,
+                'tiponome' => $TipoNome,
+                'descricao' => $nome,
+                'status' => 0,
+                'usuario' => $usuario
+            ];
+            $mprNomes->save(new Agente_Model_Nomes($arrNome));
+        } catch (Exception $e) {
+            parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
+        }
         // ================================================ FIM SALVAR NOME ======================================================
         // ================================================ INICIO SALVAR VISAO ======================================================
         $Visao = $this->_request->getParam("visao");
-
         $grupologado = $this->_request->getParam("grupologado");
-
         /*
          * Validacao - Se for componente da comissao ele nao salva a visao
          * Regra o componente da comissao nao pode alterar sua visao.
          */
-
         if ($grupologado != 118):
-
             $GravarVisao = array(// insert
                 'idagente' => $idAgente,
                 'visao' => $Visao,
                 'usuario' => $usuario,
                 'stativo' => 'A');
-
             try {
                 $visaoTable = new Agente_Model_DbTable_Visao();
                 $busca = $visaoTable->buscarVisao($idAgente, $Visao);
-
                 if (!$busca) {
                     $i = $visaoTable->cadastrarVisao($GravarVisao);
                 }
             } catch (Exception $e) {
                 parent::message("Erro ao salvar a visão: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
             }
-
             // ================================================ FIM SALVAR visao ======================================================
             // ===================== INICIO SALVAR TITULACAO (area/SEGMENTO DO COMPONENTE DA COMISSAO) ================================
-
-
             $titular = $this->_request->getParam("titular");
             $areaCultural = $this->_request->getParam("areaCultural");
             $segmentoCultural = $this->_request->getParam("segmentoCultural");
@@ -2013,11 +2002,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         } catch (Exception $e) {
             parent::message("Erro ao salvar o endereço: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
         }
-
-
         // ============================================= FIM SALVAR ENDERECOS ====================================================
         // =========================================== INICIO SALVAR TELEFONES ====================================================
-
         $movimentacacaobancaria = $this->_request->getParam('movimentacaobancaria');
         if (empty($movimentacacaobancaria)) {
             $tipoFone = $this->_request->getParam("tipoFone");
@@ -2044,11 +2030,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 parent::message("Erro ao salvar o telefone: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
             }
         }
-
         // =========================================== FIM SALVAR TELEFONES ====================================================
         // =========================================== INICIO SALVAR EMAILS ====================================================
-
-
         if (empty($movimentacacaobancaria)) {
             $tipoEmail = $this->_request->getParam("tipoEmail");
             $Email = $this->_request->getParam("email");
@@ -2085,22 +2068,16 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $acao = $this->_request->getParam('acao');
             #$idResponsavel = $this->idResponsavel;
             $idResponsavel = 0;
-
             // ============== VINCULA O RESPONSAVEL COM O PROPONENTE CADASTRADO =============================
-
             if ((!empty($acao)) && (!empty($idResponsavel))):
-
                 $tbVinculo = new Agente_Model_DbTable_TbVinculo();
-
                 $dadosVinculo = array(
                     'idAgenteProponente' => $idAgente,
                     'dtVinculo' => new Zend_Db_Expr('GETDATE()'),
                     'siVinculo' => 0,
                     'idUsuarioResponsavel' => $idResponsavel
                 );
-
                 $tbVinculo->inserir($dadosVinculo);
-
             endif;
         }
         //================ FIM VINCULA O RESPONSAVEL COM O PROPONENTE CADASTRADO ========================

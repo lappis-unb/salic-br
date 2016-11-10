@@ -58,7 +58,7 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
         $sql = $db->select()->distinct()->from(['a' => 'agentes'], $a, $schemaAgentes)
             ->joinLeft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nome'], $schemaAgentes)
             ->joinLeft(['e' => 'endereconacional'], 'e.idagente = a.idagente', $e, $schemaAgentes)
-            ->joinLeft(['m' => 'municipios'], 'm.idmunicipioibge = e.cidade', '*', $schemaAgentes)
+            ->joinLeft(['m' => 'municipios'], 'm.idmunicipioibge = e.cidade', ['*', 'm.descricao as dscidade'], $schemaAgentes)
             ->joinLeft(['u' => 'uf'], 'u.iduf = e.uf', 'u.sigla as dsuf', $schemaAgentes)
             ->joinLeft(['ve' => 'verificacao'], 've.idverificacao = e.tipoendereco', 've.descricao as dstipoendereco', $schemaAgentes)
             ->joinLeft(['vl' => 'verificacao'], 'vl.idverificacao = e.tipologradouro', 'vl.descricao as dstipologradouro', $schemaAgentes)
@@ -257,18 +257,6 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
             'tl.tipotelefone',
             'tl.numero',
             'tl.divulgar',
-            new Zend_Db_Expr("
-                    CASE
-                    WHEN tl.tipotelefone = 22 or tl.tipotelefone = 24
-                    THEN 'Residencial'
-                    WHEN tl.tipotelefone = 23 or tl.tipotelefone = 25
-                    THEN 'Comercial'
-                    WHEN tl.tipotelefone = 26
-                    THEN 'Celular'
-                    WHEN tl.tipotelefone = 27
-                    THEN 'Fax'
-                    END as dstelefone
-            ")
         ];
 
         $ddd = [
@@ -281,12 +269,11 @@ class Agente_Model_ManterAgentesDAO extends MinC_Db_Table_Abstract
             ->join(['uf' => 'uf'], 'uf.iduf = tl.uf', ['uf.sigla as ufsigla'], $tblAgentes->getSchema('agentes'))
             ->join(['ag' => 'agentes'], 'ag.idagente = tl.idagente', ['ag.idagente'], $tblAgentes->getSchema('agentes'))
             ->joinLeft(['ddd' => 'ddd'], 'tl.ddd = ddd.codigo', $ddd, $tblAgentes->getSchema('agentes'))
+            ->joinLeft(['v' => 'verificacao'], 'v.idverificacao = tl.tipotelefone', array('v.descricao as dstelefone'), $tblAgentes->getSchema('agentes'))
             ;
-
         if (!empty($idAgente)) { // busca de acordo com o id do agente
             $sql->where('tl.idagente = ?', $idAgente);
         }
-
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }

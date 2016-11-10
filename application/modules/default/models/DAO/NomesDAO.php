@@ -69,6 +69,8 @@ class NomesDAO extends MinC_Db_Table_Abstract
      * @param mixed $Usuario
      * @access public
      * @return void
+     *
+     * @todo remover futuramente.
      */
     public function inserir($idAgente, $TipoNome, $Descricao, $Status, $Usuario)
     {

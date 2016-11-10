@@ -9,13 +9,13 @@
  *
  * @author 01129075125
  */
-class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract{
+class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
+{
 
-    protected $_banco  = 'SAC'; 
-    protected $_schema = 'dbo';
-    protected $_name   = 'tbItensPlanilhaProduto';
+    protected $_schema = 'sac';
+    protected $_name = 'tbitensplanilhaproduto';
 
-    
+
     /**
      * M�todo para consultar o Valor Real por ano
      * @access public
@@ -23,114 +23,118 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract{
      * @param integer $where
      * @return integer (quantidade de registros alterados)
      */
-    public function buscaItemProduto($where=array()) {
-    	$this->_db->beginTransaction();
-		try {
-		    $select = $this->select();
-			$select->setIntegrityCheck(false);		    
-			    	
-			$select->from(
-                            array('p' => $this->_schema . '.' . $this->_name),
-                            array('p.idPlanilhaItens')
-                            ); 
-							       
-			$select->joinInner(
-                            array('pr' => 'Produto'),'p.idProduto = pr.Codigo',
-                            array('pr.Descricao as Produto')
-                            ); 
-							       
-			$select->joinInner(
-                            array('e' => 'TbPlanilhaEtapa'),'p.idPlanilhaEtapa = e.idPlanilhaEtapa',
-                            array('e.Descricao as Etapa')
-                            );  
-							  
-			$select->joinInner(
-                            array('i' => 'TbPlanilhaItens'),'p.idPlanilhaItens = i.idPlanilhaItens',
-                            array('i.Descricao as Item')
-                            );						        
-							    
-	    	//adiciona quantos filtros foram enviados
-			foreach ($where as $coluna => $valor) {
-				$select->where($coluna, $valor);
-			}			
-	
-			$select->order('e.Descricao');
-			$select->order('i.Descricao');		
-			$this->_db->commit();		
-			return $this->fetchAll($select);
-		} catch (Exception $e) {
-			$this->_db->rollBack();
-    		return false;
-		}
+    public function buscaItemProduto($where = array())
+    {
+        $this->_db->beginTransaction();
+        try {
+            $select = $this->select();
+            $select->setIntegrityCheck(false);
+
+            $select->from(
+                array('p' => $this->_schema . '.' . $this->_name),
+                array('p.idPlanilhaItens')
+            );
+
+            $select->joinInner(
+                array('pr' => 'Produto'), 'p.idProduto = pr.Codigo',
+                array('pr.Descricao as Produto')
+            );
+
+            $select->joinInner(
+                array('e' => 'TbPlanilhaEtapa'), 'p.idPlanilhaEtapa = e.idPlanilhaEtapa',
+                array('e.Descricao as Etapa')
+            );
+
+            $select->joinInner(
+                array('i' => 'TbPlanilhaItens'), 'p.idPlanilhaItens = i.idPlanilhaItens',
+                array('i.Descricao as Item')
+            );
+
+            //adiciona quantos filtros foram enviados
+            foreach ($where as $coluna => $valor) {
+                $select->where($coluna, $valor);
+            }
+
+            $select->order('e.Descricao');
+            $select->order('i.Descricao');
+            $this->_db->commit();
+            return $this->fetchAll($select);
+        } catch (Exception $e) {
+            $this->_db->rollBack();
+            return false;
+        }
     }
-    
-    public function totalBuscaPaginacao($where=array()){
-    $this->_db->beginTransaction();
-		try {
-		    $select = $this->select();
-			$select->setIntegrityCheck(false);		    
-			    	
-			$select->from(
-							array('p' => $this->_schema . '.' . $this->_name),
-							array('total'=>'count(*)')
-							); 
-							       
-			$select->joinInner(
-							array('pr' => 'Produto'),'p.idProduto = pr.Codigo',
-							array('pr.Descricao as Produto')
-							); 
-							       
-			$select->joinInner(
-							array('e' => 'TbPlanilhaEtapa'),'p.idPlanilhaEtapa = e.idPlanilhaEtapa',
-							array('e.Descricao as Etapa')
-							);  
-							  
-			$select->joinInner(
-							array('i' => 'TbPlanilhaItens'),'p.idPlanilhaItens = i.idPlanilhaItens',
-							array('i.Descricao as Item')
-							);						        
-							    
-	    	//adiciona quantos filtros foram enviados
-			foreach ($where as $coluna => $valor) {
-				$select->where($coluna, $valor);
-			}		
-			$this->_db->commit();		
-			return $this->fetchAll($select);
-		} catch (Exception $e) {
-			$this->_db->rollBack();
-    		return false;
-		}    	
+
+    public function totalBuscaPaginacao($where = array())
+    {
+        $this->_db->beginTransaction();
+        try {
+            $select = $this->select();
+            $select->setIntegrityCheck(false);
+
+            $select->from(
+                array('p' => $this->_schema . '.' . $this->_name),
+                array('total' => 'count(*)')
+            );
+
+            $select->joinInner(
+                array('pr' => 'Produto'), 'p.idProduto = pr.Codigo',
+                array('pr.Descricao as Produto')
+            );
+
+            $select->joinInner(
+                array('e' => 'TbPlanilhaEtapa'), 'p.idPlanilhaEtapa = e.idPlanilhaEtapa',
+                array('e.Descricao as Etapa')
+            );
+
+            $select->joinInner(
+                array('i' => 'TbPlanilhaItens'), 'p.idPlanilhaItens = i.idPlanilhaItens',
+                array('i.Descricao as Item')
+            );
+
+            //adiciona quantos filtros foram enviados
+            foreach ($where as $coluna => $valor) {
+                $select->where($coluna, $valor);
+            }
+            $this->_db->commit();
+            return $this->fetchAll($select);
+        } catch (Exception $e) {
+            $this->_db->rollBack();
+            return false;
+        }
     }
-    
-    public function buscarEtapasDoItem($where=array(), $order=array()) {
-    	
+
+    public function buscarEtapasDoItem($where = array(), $order = array())
+    {
+
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->distinct();
         $select->from(
-                array('p' => $this->_schema . '.' . $this->_name), 
-                array('p.idPlanilhaItens',
-                      'p.idPlanilhaEtapa')
+            array('p' => $this->_schema . '.' . $this->_name),
+            array('p.idPlanilhaItens',
+                'p.idPlanilhaEtapa')
         );
 
         $select->joinInner(
-                array('e' => 'tbPlanilhaEtapa'), 
-                'p.idPlanilhaEtapa = e.idPlanilhaEtapa', 
-                array('e.Descricao as Etapa')
+            array('e' => 'tbPlanilhaEtapa'),
+            'p.idPlanilhaEtapa = e.idPlanilhaEtapa',
+            array('e.Descricao as Etapa')
         );
-        
+
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
-        
+
         $select->order($order);
         //xd($select->assemble());
-        return $this->fetchAll($select);	
+        return $this->fetchAll($select);
     }
-    
-    public function itensPorItemEEtapaReadequacao($idEtapa, $idProduto){
-    	
+
+    public function itensPorItemEEtapaReadequacao($idEtapa, $idProduto)
+    {
+
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -139,17 +143,61 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract{
         );
 
         $select->joinInner(
-            array('b' => 'tbPlanilhaItens'), 'a.idPlanilhaItens = b.idPlanilhaItens', 
+            array('b' => 'tbPlanilhaItens'), 'a.idPlanilhaItens = b.idPlanilhaItens',
             array('Descricao as Item')
         );
-        
+
         $select->where('a.idPlanilhaEtapa = ?', $idEtapa);
         $select->where('a.idProduto = ?', $idProduto);
-        
+
         $select->order('2'); // Descricao
-        
+
         //xd($select->assemble());
-        return $this->fetchAll($select);	
-}
+        return $this->fetchAll($select);
+    }
+
+    public function buscarItens($idEtapa, $idproduto = null)
+    {
+        /*    $sql = "select distinct
+                        pp.idPlanilhaItem as idPlanilhaItens,
+                        right(i.Descricao,40) as Descricao
+                    from SAC.dbo.tbPlanilhaProposta pp
+                        inner join SAC.dbo.tbPlanilhaItens as i on pp.idPlanilhaItem = i.idPlanilhaItens
+                        inner join SAC.dbo.tbPlanilhaEtapa as e on pp.idEtapa = e.idPlanilhaEtapa
+                    where idEtapa = $idEtapa order by i.Descricao "; */
+//
+//        $sql = "select distinct a.idPlanilhaItens,b.Descricao
+//                   FROM SAC..tbItensPlanilhaProduto a
+//                   INNER JOIN SAC..tbPlanilhaItens b on (a.idPlanilhaItens = b.idPlanilhaItens)
+//                   WHERE idPlanilhaEtapa = " . $idEtapa . " ";
+
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('a' => $this->_name),
+            array(
+                'a.idplanilhaitens',
+                'b.descricao'
+            ),
+            $this->_schema
+        );
+        $select->joinInner(
+            array('b' => 'tbplanilhaitens'), 'a.idplanilhaitens = b.idplanilhaitens',
+            array(''), $this->_schema
+        );
+        $select->where('idplanilhaetapa = ?',$idEtapa);
+
+        if (!empty($idproduto)) {
+            $select->where('idproduto = ?',$idproduto);
+        }
+        $select->order('b.descricao');
+
+//        echo '<pre>';
+//        var_dump ($select->assemble());
+//        exit;
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        return $db->fetchAll($select);
+    }
 }
 ?>
