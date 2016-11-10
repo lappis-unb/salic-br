@@ -907,14 +907,12 @@ class RecursoController extends GenericControllerNew
             $providenciaProjeto = 'Recurso deferido na CNIC pelo componente da comissão.';
             $stAnalise = 'AC';
         }
-        
+	
         try {
             //ATUALIAZA A SITUAÇÃO, ÁREA E SEGMENTO DO PROJETO
             $d = array();
             $d['situacao'] = $situacaoProjeto;
             $d['ProvidenciaTomada'] = $providenciaProjeto;
-            $d['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
-            $d['Logon'] = $this->idUsuario;
             if(isset($_POST['areaCultural'])){
                 $d['Area'] = $areaCultural;
             }
@@ -924,7 +922,8 @@ class RecursoController extends GenericControllerNew
             $where = "IdPRONAC = $idPronac";
             $Projetos = new Projetos();
             $Projetos->update($d, $where);
-            
+	    $Projetos->alterarSituacao($idPronac, null, $d['situacao'], $d['ProvidenciaTomada']);
+	    
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac));
             if(count($dadosProjeto)>0){
                 //CADASTRA OU ATUALIZA O ENQUADRAMENTO DO PROJETO
@@ -964,7 +963,7 @@ class RecursoController extends GenericControllerNew
                     'Atendimento' => 'S',
                     'idEnquadramento' => $buscaEnquadramento['IdEnquadramento'],
                     'stAtivo' => 1,
-                    'idTipoAgente' => 1,
+                    'idTipoAgente' => 6,
                     'Logon' => $idusuario
                 );
                 
@@ -978,7 +977,7 @@ class RecursoController extends GenericControllerNew
                     $alteraParecer = $parecerDAO->alterar($parecerAntigo, $whereUpdateParecer);
                 }
                 
-                $buscarParecer = $parecerDAO->buscar(array('IdPRONAC = ?' => $idPronac, 'AnoProjeto = ?' => $dadosProjeto[0]->AnoProjeto, 'Sequencial = ?' => $dadosProjeto[0]->Sequencial, 'TipoParecer = ?' => 7, 'idTipoAgente = ?' =>1));
+                $buscarParecer = $parecerDAO->buscar(array('IdPRONAC = ?' => $idPronac, 'AnoProjeto = ?' => $dadosProjeto[0]->AnoProjeto, 'Sequencial = ?' => $dadosProjeto[0]->Sequencial, 'TipoParecer = ?' => 7, 'idTipoAgente = ?' =>6));
                 if(count($buscarParecer) > 0){
                     $buscarParecer = $buscarParecer->current();
                     $whereUpdateParecer = 'IdParecer = '.$buscarParecer->IdParecer;
@@ -1096,13 +1095,10 @@ class RecursoController extends GenericControllerNew
         //ATUALIZA A SITUAÇÃO DO PROJETO
         $Projetos = new Projetos();
         $w = array();
-        $w['situacao'] = 'C10';
-        $w['ProvidenciaTomada'] = 'Projeto encaminhado à reunião da CNIC para avaliação do componente da comissão.';
-        $w['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
-        $w['Logon'] = $this->idUsuario;
-        $where = "IdPRONAC = $idPronac";
-        $Projetos->update($w, $where);
-        
+        $w['situacao'] = 'D20';
+        $w['ProvidenciaTomada'] = 'Recurso encaminhado à reunião da CNIC para avaliação do componente da comissão.';
+	$Projetos->alterarSituacao($idPRONAC, null, $w['situacao'], $w['ProvidenciaTomada']);
+
         $reuniao = new Reuniao();
         $raberta = $reuniao->buscarReuniaoAberta();
         

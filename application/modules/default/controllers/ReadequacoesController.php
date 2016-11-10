@@ -3536,7 +3536,7 @@ class ReadequacoesController extends GenericControllerNew {
                         'idReadequacao' => $idReadequacao
                     );
                     
-                    $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
+		    $idAprovacao = $tbAprovacao->inserir($dadosAprovacao);
                 }
 
                 // READEQUAÇÃO DE ALTERAÇÃO DE RAZÃO SOCIAL
@@ -3914,11 +3914,21 @@ class ReadequacoesController extends GenericControllerNew {
                 $dados['stEstado'] = 1;
             } else {
                 // reducao ou complementacao orcamentaria
-                $dados['siEncaminhamento'] = 9; //Encaminhado pelo sistema para o Checklist de Publicação
-                $dados['stEstado'] = 0;
+
+		// verificacao do tipo de parecer.
+		// $parecerTecnico->ParecerFavoravel   
+		// 1 = desfavorável
+		// 2 = favorável
+		if ($parecerTecnico->ParecerFavoravel === '1') { // desfavoravel
+		    $dados['siEncaminhamento'] = 15;
+		    $dados['stEstado'] = 1;
+		} else {		
+		    $dados['stEstado'] = 0;
+		    $dados['siEncaminhamento'] = 9; //Encaminhado pelo sistema para o Checklist de Publicação
+		}
             }
         }
-        
+	
         // atualiza registro de tbReadequacao
         $dados['idNrReuniao'] = $idNrReuniao;
         $where["idReadequacao = ?"] = $idReadequacao;
