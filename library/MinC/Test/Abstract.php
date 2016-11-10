@@ -1,4 +1,5 @@
 <?php
+
 require_once 'Zend/Test/PHPUnit/ControllerTestCase.php';
 
 abstract class MinC_Test_Abstract extends Zend_Test_PHPUnit_ControllerTestCase

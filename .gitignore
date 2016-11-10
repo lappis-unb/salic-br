@@ -5,6 +5,8 @@ application.ini
 *.save
 data/proposta/model/tbdocumentoagentes/*
 
+nbproject
+
 index.php
 *~
 index.php

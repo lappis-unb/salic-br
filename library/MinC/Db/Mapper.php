@@ -132,6 +132,11 @@ class MinC_Db_Mapper
         }
     }
 
+    public function isValid()
+    {
+        return true;
+    }
+
     /**
      *
      * @name save
@@ -144,25 +149,29 @@ class MinC_Db_Mapper
      */
     public function save($model)
     {
-        $table = $this->getDbTable();
-        $primary = $table->getPrimary();
-        $pk = is_array($primary)? reset($primary) : $primary;
-        $method = 'get' . ucfirst($pk);
-        $pkValue = $model->$method();
-        $data = array_filter($model->toArray(), 'strlen');
-        if ($table->getSequence()) {
-            unset($data[$pk]);
-            if (empty($pkValue)) {
-                return $table->insert($data);
+        if ($this->isValid()) {
+
+            $table = $this->getDbTable();
+            $pk = is_array($table->getPrimary())? reset($table->getPrimary()) : $table->getPrimary();
+            $method = 'get' . ucfirst($pk);
+            $pkValue = $model->$method();
+            $data = array_filter($model->toArray(), 'strlen');
+
+            if ($table->getSequence()) {
+                unset($data[$pk]);
+                if (empty($pkValue)) {
+                    return $table->insert($data);
+                } else {
+                    $table->update($data, array($pk . ' = ?' => $pkValue));
+                    return $pkValue;
+                }
             } else {
-                $table->update($data, array($pk . ' = ?' => $pkValue));
+                $row = $table->find($pkValue)->current();
+                if (!$row) $row = $table->createRow();
+                $row->setFromArray($data)->save();
                 return $pkValue;
             }
-        } else {
-            $row = $table->find($pkValue)->current();
-            if (!$row) $row = $table->createRow();
-            $row->setFromArray($data)->save();
-            return $pkValue;
+
         }
     }
 

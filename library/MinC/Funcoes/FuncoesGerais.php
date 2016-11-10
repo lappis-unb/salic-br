@@ -236,8 +236,8 @@ function montaGuiaLinks($controller, $links = array()) {
         } else {
             print "<span style='color: red;'>Erro na apresenta�?o da guia! - controller invalido</span>";
         }
-    } catch (Zend_Exception $e) {
-        parent::message("Erro ao montar guia de links", "projetosgerenciar/projetosgerenciar", "ERROR");
+    } catch (Zend_Exception $objException) {
+        throw new Exception("Erro ao montar guia de links", 0, $objException);
     }
 }
 

@@ -75,6 +75,8 @@
                     </tr>
                 </thead>
                 <tbody>
+                <?php
+                if(!$this->habilitarServicoLoginCidadao): ?>
                     <tr>
                         <td width="10%" class="destacar bold" align="right"><label for="Login">CPF</label></td>
                         <td width="90%"><input maxlength="18" onkeydown="mascaraCnpjCpf(this);" onkeypress="mascaraCnpjCpf(this);" onkeyup="mascaraCnpjCpf(this);" class="input_simples" type="text" name="Login" id="Login" /></td>
@@ -94,6 +96,16 @@
                             <input id="btConfirmar" type="submit" value=" " class="btn_confirmar enviar" title="Acessar o sistema" style="width: 88px;" />
                         </td>
                     </tr>
+                <?php else: ?>
+                    <tr>
+                        <td align="center" colspan="2">
+                            <p>Entre no sistema utilizando o serviço abaixo:</p>
+                            <a href="<?php echo $this->url(array('controller' => 'logincidadao', 'module' => 'autenticacao')) ?>">
+                                <img style="border: 1px solid black" src="<?php echo $this->baseUrl(); ?>/public/img/buttons/id_cultura.png" alt="Governo Federal - Brasil - Pa&iacute;s rico &eacute; pa&iacute;s sem pobreza" title="Governo Federal - Brasil - Pa&iacute;s rico &eacute; pa&iacute;s sem pobreza" />
+                            </a>
+                        </td>
+                    </tr>
+                <?php endif; ?>
                 </tbody>
             </table>
         </form>
