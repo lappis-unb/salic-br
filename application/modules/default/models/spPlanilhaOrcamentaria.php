@@ -88,8 +88,8 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             'b.valorunitario as vlUnitario',
             'ROUND((b.quantidade * b.ocorrencia * b.valorunitario),2) as vlSolicitado',
             'b.fonterecurso as idFonte',
+            'b.qtdedias as QtdeDias',
             new Zend_Db_Expr(MinC_Db_Expr::convertOrToChar('b.dsjustificativa').' as JustProponente'),
-            new Zend_Db_Expr('QtdeDias')
         ];
 
         $db = Zend_Db_Table::getDefaultAdapter();
