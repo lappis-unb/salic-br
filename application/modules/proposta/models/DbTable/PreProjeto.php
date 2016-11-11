@@ -2752,7 +2752,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
                     $sql->where('DATEDIFF(DAY,GETDATE(),DtInicioDeExecucao) < 90');
                 } else {
-                    $sql->where("(DATE_PART('day', now()) - DATE_PART('day', DtInicioDeExecucao)) < 90");
+                    $sql->where("DATE_PART('day', dtiniciodeexecucao - now()) < 90");
                 }
                 $minimo90 = $db->fetchAll($sql);
 
