@@ -142,12 +142,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     public function _initCarregarDependenciasComposer()
     {
-        if(APPLICATION_ENV == "development") {
-            ini_set('display_errors', true);
-            error_reporting(E_ALL ^E_NOTICE ^E_WARNING);
+        $objZendConfig = new Zend_Config($this->getOptions(), true);
+        $config = $objZendConfig->toArray();
+        if($config && $config['OAuth']['servicoHabilitado'] == true) {
+//            if(APPLICATION_ENV == "development") {
+//                ini_set('display_errors', true);
+//                error_reporting(E_ALL ^E_NOTICE ^E_WARNING);
+//            }
+            require_once 'vendor/autoload.php';
         }
-        require_once 'vendor/autoload.php';
-
     }
 
     /**
