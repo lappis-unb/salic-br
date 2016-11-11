@@ -711,7 +711,7 @@ class GerenciarpareceresController extends MinC_Controller_Action_Abstract
 			    'idAgenteParecerista'       => $dp->idAgenteParecerista,
 			    'DtDistribuicao'            => $dp->DtDistribuicao,
 			    'DtDevolucao'               => $dp->DtDevolucao,
-                            'DtEnvio'       		=> new Zend_Db_Expr("GETDATE()"),
+                            'DtEnvio'       		=> MinC_Db_Expr::date(),
                             'DtRetorno'     		=> null,
                             'FecharAnalise' 		=> 2,
                             'Observacao'    		=> $observacao,

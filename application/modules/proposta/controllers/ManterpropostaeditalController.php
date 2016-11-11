@@ -327,7 +327,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 	                if(count($vinculo) == 0)
 	                {
 						$dadosV = array( 'idAgenteProponente'		=> $_REQUEST['idAgente'],
-	    				   				'dtVinculo' 				=> new Zend_Db_Expr("GETDATE()"),
+	    				   				'dtVinculo' 				=> MinC_Db_Expr::date(),
 	    				   				'siVinculo' 				=> 2,
 	    				   				'idUsuarioResponsavel' 		=> $this->idResponsavel
 	    				);

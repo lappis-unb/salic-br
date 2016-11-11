@@ -293,7 +293,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $siVinculo = $this->_request->getParam("siVinculo");
         $idUsuarioR = $this->_request->getParam("idUsuario");
 
-        $dados = array('siVinculo' => $siVinculo, 'dtVinculo' => new Zend_Db_Expr("GETDATE()"));
+        $dados = array('siVinculo' => $siVinculo, 'dtVinculo' => MinC_Db_Expr::date());
         $where['idVinculo = ?'] = $idVinculo;
         $msg = '';
 

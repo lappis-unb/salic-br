@@ -796,7 +796,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     'AnoProjeto' => $dadosProjeto[0]->AnoProjeto,
                     'Sequencial'=> $dadosProjeto[0]->Sequencial,
                     'Enquadramento' => $enquadramentoProjeto,
-                    'DtEnquadramento' => new Zend_Db_Expr("GETDATE()"),
+                    'DtEnquadramento' => MinC_Db_Expr::date(),
                     'Observacao' => '',
                     'Logon' => $idusuario
                 );
@@ -819,7 +819,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     'Sequencial' => $dadosProjeto[0]->Sequencial,
                     'TipoParecer' => 7,
                     'ParecerFavoravel' => $parecerProjeto,
-                    'DtParecer' => new Zend_Db_Expr("GETDATE()"),
+                    'DtParecer' => MinC_Db_Expr::date(),
                     'NumeroReuniao' => null,
                     'ResumoParecer' => $dsParecer,
                     'SugeridoReal' => 0,
@@ -936,7 +936,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     'AnoProjeto' => $dadosProjeto[0]->AnoProjeto,
                     'Sequencial'=> $dadosProjeto[0]->Sequencial,
                     'Enquadramento' => $enquadramentoProjeto,
-                    'DtEnquadramento' => new Zend_Db_Expr("GETDATE()"),
+                    'DtEnquadramento' => MinC_Db_Expr::date(),
                     'Observacao' => '',
                     'Logon' => $idusuario
                 );
@@ -959,7 +959,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     'Sequencial' => $dadosProjeto[0]->Sequencial,
                     'TipoParecer' => 7,
                     'ParecerFavoravel' => $parecerProjeto,
-                    'DtParecer' => new Zend_Db_Expr("GETDATE()"),
+                    'DtParecer' => MinC_Db_Expr::date(),
                     'NumeroReuniao' => null,
                     'ResumoParecer' => $dsParecer,
                     'SugeridoReal' => 0,
@@ -1344,7 +1344,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     'AnoProjeto' => $dadosProjeto[0]->AnoProjeto,
                     'Sequencial'=> $dadosProjeto[0]->Sequencial,
                     'Enquadramento' => $enquadramentoProjeto,
-                    'DtEnquadramento' => new Zend_Db_Expr("GETDATE()"),
+                    'DtEnquadramento' => MinC_Db_Expr::date(),
                     'Observacao' => '',
                     'Logon' => $idusuario
                 );
@@ -1367,7 +1367,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     'Sequencial' => $dadosProjeto[0]->Sequencial,
                     'TipoParecer' => 7,
                     'ParecerFavoravel' => $parecerProjeto,
-                    'DtParecer' => new Zend_Db_Expr("GETDATE()"),
+                    'DtParecer' => MinC_Db_Expr::date(),
                     'NumeroReuniao' => null,
                     'ResumoParecer' => $dsParecer,
                     'SugeridoReal' => 0,

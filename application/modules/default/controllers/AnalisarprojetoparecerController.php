@@ -1145,7 +1145,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
                             'DtEnvio' => $dp->DtEnvio,
                             'idAgenteParecerista' => $dp->idAgenteParecerista,
                             'DtDistribuicao' => $dp->DtDistribuicao,
-                            'DtDevolucao' => new Zend_Db_Expr("GETDATE()"),
+                            'DtDevolucao' => MinC_Db_Expr::date(),
                             'DtRetorno' => null,
                             'FecharAnalise' => 0,
                             'Observacao' => $justificativa,
@@ -1313,7 +1313,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
                     'AnoProjeto' => $anoProjeto,
                     'Sequencial'=> $sequencial,
                     'Enquadramento' => $enquadramentoProjeto,
-                    'DtEnquadramento' => new Zend_Db_Expr("GETDATE()"),
+                    'DtEnquadramento' => MinC_Db_Expr::date(),
                     'Observacao' => '',
                     'Logon' => $idusuario
                 );
@@ -1336,7 +1336,7 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
                         'Sequencial' => $sequencial,
                         'TipoParecer' => 1,
                         'ParecerFavoravel' => $parecerProjeto,
-                        'DtParecer' => new Zend_Db_Expr("GETDATE()"),
+                        'DtParecer' => MinC_Db_Expr::date(),
                         'NumeroReuniao' => null,
                         'ResumoParecer' => $dsConsolidacao,
                         'SugeridoReal' => $sugeridoReal,

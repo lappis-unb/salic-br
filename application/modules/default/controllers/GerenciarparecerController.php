@@ -372,7 +372,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
                     $dadosE = array(
                             'idOrgao'       		=> $orgaoDestino,
-                            'DtEnvio'       		=> new Zend_Db_Expr("GETDATE()"),
+                            'DtEnvio'       		=> MinC_Db_Expr::date(),
                             'idAgenteParecerista'	=> null,
                             'DtDistribuicao'		=> null,
                             'DtDevolucao'   		=> null,
@@ -407,7 +407,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
                             'idOrgao'       		=> $dp->idOrgao,
                             'DtEnvio'       		=> $dp->DtEnvioMincVinculada,
                             'idAgenteParecerista'	=> $idAgenteParecerista,
-                            'DtDistribuicao'		=> new Zend_Db_Expr("GETDATE()"),
+                            'DtDistribuicao'		=> MinC_Db_Expr::date(),
                             'DtDevolucao'   		=> null,
                             'DtRetorno'     		=> null,
                             'FecharAnalise' 		=> $dp->FecharAnalise,
@@ -577,7 +577,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
 
                     $dadosE = array(
                             'idOrgao'       		=> $orgaoDestino,
-                            'DtEnvio'       		=> new Zend_Db_Expr("GETDATE()"),
+                            'DtEnvio'       		=> MinC_Db_Expr::date(),
                             'idAgenteParecerista'	=> null,
                             'DtDistribuicao'		=> null,
                             'DtDevolucao'   		=> null,
@@ -611,7 +611,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
                             'idOrgao'       		=> $dp->idOrgao,
                             'DtEnvio'       		=> $dp->DtEnvioMincVinculada,
                             'idAgenteParecerista'	=> $idAgenteParecerista,
-                            'DtDistribuicao'		=> new Zend_Db_Expr("GETDATE()"),
+                            'DtDistribuicao'		=> MinC_Db_Expr::date(),
                             'DtDevolucao'   		=> null,
                             'DtRetorno'     		=> null,
                             'FecharAnalise' 		=> $dp->FecharAnalise,
@@ -726,7 +726,7 @@ class GerenciarparecerController extends MinC_Controller_Action_Abstract {
                         'idAgenteParecerista'	=> $dp->idAgenteParecerista,
                         'DtDistribuicao'		=> $dp->DtDistribuicao,
                         'DtDevolucao'   		=> $dp->DtDevolucao,
-                        'DtRetorno'     		=> new Zend_Db_Expr("GETDATE()"),
+                        'DtRetorno'     		=> MinC_Db_Expr::date(),
                         'Observacao'    		=> $observacao,
                         'idUsuario'     		=> $idusuario,
                         'FecharAnalise' 		=> $fecharAnalise,
