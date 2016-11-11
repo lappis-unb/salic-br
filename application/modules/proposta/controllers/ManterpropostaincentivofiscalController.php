@@ -514,6 +514,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      */
     public function enviarPropostaAoMincAction()
     {
+
         //VERIFICA PERMISSAO DE ACESSO DO PROPONENTE A PROPOSTA OU AO PROJETO
         $this->verificarPermissaoAcesso(true, false, false);
 
