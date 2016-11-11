@@ -43,15 +43,15 @@ class CepController extends MinC_Controller_Action_Abstract
             {
                 // caso a cidade nao exista na tabela de municipios (tabela associada aos agentes)
                 // pega a primeira cidade do estado
-                $_cod_cidade = $resultado['idCidadeUF'];
-                $_cidade     = $resultado['dsCidadeUF'];
+                $_cod_cidade = $resultado['idcidadeuf'];
+                $_cidade     = $resultado['dscidadeuf'];
             }
             else
             {
                 // caso a cidade exista na tabela de municipios (tabela associada aos agentes)
                 // pega a cidade da tabela de municipios
-                $_cod_cidade = $resultado['idCidadeMunicipios'];
-                $_cidade     = $resultado['dsCidadeMunicipios'];
+                $_cod_cidade = $resultado['idcidademunicipios'];
+                $_cidade     = $resultado['dscidademunicipios'];
             }
 
             $buscarCEP = $_end . ":" . $_complemento . ":" . $_bairro . ":" . $_cod_cidade . ":" . $_cidade . ":" . $_uf . ";";
