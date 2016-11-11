@@ -2992,7 +2992,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->where('idPreProjeto =  ?', $idPreProjeto)
             ;
 
-        $usuario = $db->fetchAll($sql)[0]->idUsuario;
+        $usuario = $db->fetchAll($sql)[0]->idusuario;
 
         $validado= true;
         foreach ($listaValidacao as $valido){
@@ -3003,7 +3003,17 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
 
         if($validado) {
-            $insert = $db->insert('sac.dbo.tbMovimentacao', [$idPreProjeto, 96, new Zend_Db_Expr('getdate()'), 0,$usuario]);
+
+            $dados = array(
+                'idprojeto' => $idPreProjeto,
+                'movimentacao' => 96,
+                'dtmovimentacao' => MinC_Db_Expr::date(),
+                'stestado' => 0,
+                'usuario' => $usuario
+            );
+
+            $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
+            $insert = $tbMovimentacao->insert($dados);
 
             $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL FOI ENCAMINHADA COM SUCESSO AO MINISTÉRIO DA CULTURA.</b></font>';
             $validacao->Observacao = 'OK';
