@@ -1097,7 +1097,7 @@ class RecursoController extends GenericControllerNew
         $w = array();
         $w['situacao'] = 'D20';
         $w['ProvidenciaTomada'] = 'Recurso encaminhado à reunião da CNIC para avaliação do componente da comissão.';
-	$Projetos->alterarSituacao($idPRONAC, null, $w['situacao'], $w['ProvidenciaTomada']);
+        $Projetos->alterarSituacao($idPronac, null, $w['situacao'], $w['ProvidenciaTomada']);
 
         $reuniao = new Reuniao();
         $raberta = $reuniao->buscarReuniaoAberta();
