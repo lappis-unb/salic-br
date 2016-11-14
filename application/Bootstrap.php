@@ -144,11 +144,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         $objZendConfig = new Zend_Config($this->getOptions(), true);
         $config = $objZendConfig->toArray();
-        if($config && $config['OAuth']['servicoHabilitado'] == true) {
-//            if(APPLICATION_ENV == "development") {
-//                ini_set('display_errors', true);
-//                error_reporting(E_ALL ^E_NOTICE ^E_WARNING);
-//            }
+        if($config && $config['OAuth']['servicoHabilitado'] == true && file_exists('vendor/autoload.php')) {
             require_once 'vendor/autoload.php';
         }
     }
