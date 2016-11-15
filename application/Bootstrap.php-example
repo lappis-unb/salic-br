@@ -12,7 +12,6 @@
  */
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
-
     /**
      * _initPath
      *
@@ -36,6 +35,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         );
 
         /* componente obrigatorio para carregar arquivos, classes e recursos */
+
         Zend_Loader_Autoloader::getInstance()->suppressNotFoundWarnings(true)->setFallbackAutoloader(true);
 
         /* classes pessoais do ministcrio da cultura */
@@ -91,32 +91,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Registry::set('post', new Zend_Filter_Input(NULL, NULL, $_POST, $options));
         Zend_Registry::set('get',  new Zend_Filter_Input(NULL, NULL, $_GET,  $options));
     }
-    
 
     /**
-     * _initRegistry
+     * _initView
      *
      * @access public
      * @return void
      */
-//    public function _initRegistry()
-//    {
-//        $strConexao     = "conexao_02";
-//
-//        /* configuracoes do banco de dados */
-//        $config = new Zend_Config_Ini(APPLICATION_PATH. '/configs/config.ini', $strConexao);
-//        $registry = Zend_Registry::getInstance();
-//        $registry->set('config', $config); // registra
-//
-//        $db = Zend_Db::factory($config->db);
-//        Zend_Db_Table::setDefaultAdapter($db);
-//        Zend_Registry::set('db', $db); // registra
-//        $profiler = $db->getProfiler();
-//        $profiler->setEnabled(false);
-//
-//        /* registra a conexao para mudar em ambiente scriptcase */
-//        Zend_Registry::set('conexao_banco', $strConexao);
-//    }
+    public function _initView()
+    {
+        /* configuraççes do layout padrão do sistema */
+        Zend_Layout::startMvc(array(
+                'layout'     => 'layout',
+                'layoutPath' => APPLICATION_PATH.'/layout/',
+                'contentKey' => 'content'));
+
+        # paginacao
+        Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacaoMinc.phtml');
+    }
 
     public function _initRouteRest()
     {
@@ -149,54 +141,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
     }
 
-    /**
-     *
-     * @name _initDoctype
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since  ${DATE}
-     */
-//    protected function _initDoctype()
-//    {
-//        $this->bootstrap('view');
-//        $view = $this->getResource('view');
-//        $view->doctype('XHTML1_STRICT');
-////        $view->headMeta()->setCharset('UTF-8');
-//        $view->setEncoding('UTF-8');
-//    }
-//    protected function _initHelperPath()
-//    {
-//
-//        $view = $this->bootstrap('view')->getResource('view');
-//
-//        $view->setHelperPath(APPLICATION_PATH . '/views/helpers', 'View_Helper');
-//
-//    }
-//    protected function _initView () {
-//        $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
-//        $strCharset = $config->resources->db->params->charset;
-//        $view = new Zend_View();
-//        // snip...
-//        $view->setEncoding($strCharset);
-//        // snip...
-//        $view->headMeta()->appendHttpEquiv("content-type", "text/html; charset=" . $strCharset);
-//        return $view;
-//    }
-
-//    protected function _initFrontControllerOutput()
-//    {
-//        $this->bootstrap('FrontController');
-//        $frontController = $this->getResource('FrontController');
-////
-//        $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
-//        $strCharset = $config->resources->db->params->charset;
-////
-//        $response = new Zend_Controller_Response_Http;
-//        $response->setHeader('Content-Type', 'text/html; charset=' . $strCharset, true);
-//        $frontController->setResponse($response);
-//        $frontController->setParam('useDefaultControllerAlways', false);
-//        return $frontController;
-//    }
 
     /**
      * @return Zend_Config
@@ -207,5 +151,32 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $config = new Zend_Config($this->getOptions(), true);
         Zend_Registry::set('config', $config);
         return $config;
+    }
+
+    /**
+     * _initRoutes Texto de descri��o do m�todo.
+     *
+     * @access public
+     * @return void
+     */
+    public function _initRoutes()
+    {
+        $controllerFront = Zend_Controller_Front::getInstance();
+        $restRoute = new Zend_Rest_Route(
+            $controllerFront,
+            array(),
+            array(
+                'default' => array(
+                    'proponente-autenticacao-rest',
+                    'proponente-rest',
+                    'projeto-rest',
+                    'dispositivo-movel-rest',
+                    'mensagem-rest',
+                    'diligencia-rest',
+                    'projeto-extrato-rest',
+                    'projeto-extrato-ano-rest',
+                    'projeto-extrato-mes-rest'
+        )));
+        $controllerFront->getRouter()->addRoute('rest', $restRoute);
     }
 }

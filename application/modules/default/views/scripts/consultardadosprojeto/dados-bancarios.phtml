@@ -31,7 +31,8 @@
         </tr>
     </table>
 
-    <?php if(is_object($this->dadosContaBancaria) && count($this->dadosContaBancaria)>0): ?>
+    <?php if(count($this->dadosContaBancaria)>0): ?>
+    <?php $contaBancaria = $this->dadosContaBancaria[0]; ?>
         <table class="tabela">
             <tr class="destacar">
                 <td align="center" colspan="3"><b>Dados da Conta</b></td>
@@ -39,11 +40,11 @@
             <tr>
                 <td valign="top">
                     <b>Banco</b><br>
-                    <?php echo $this->dadosContaBancaria->Banco;?>
+                    <?php echo $contaBancaria['Banco'];?>
                 </td>
                 <td valign="top" colspan="2">
                     <b>Ag&ecirc;ncia</b><br>
-                    <?php echo $this->dadosContaBancaria->Agencia;?>
+                    <?php echo $contaBancaria['Agencia'];?>
                 </td>
             </tr>
             <tr class="destacar">
@@ -52,15 +53,15 @@
             <tr>
                  <td valign="top">
                     <b>N&uacute;mero</b><br>
-                    <?php echo ($this->dadosContaBancaria->ContaBloqueada == '000000000000') ? " - " : $this->dadosContaBancaria->ContaBloqueada;?>
+                    <?php echo ($contaBancaria['ContaBloqueada'] == '000000000000') ? " - " : $contaBancaria['ContaBloqueada'];?>
                 </td>
                 <td valign="top">
                     <b>Dt. Abertura</b><br>
-                    <?php echo (isset($this->dadosContaBancaria->DtLoteRemessaCB) && !empty($this->dadosContaBancaria->DtLoteRemessaCB)) ? date("d/m/Y",strtotime($this->dadosContaBancaria->DtLoteRemessaCB)) : '-'; ?>
+                    <?php echo (isset($contaBancaria['DtLoteRemessaCB']) && !empty($contaBancaria['DtLoteRemessaCB'])) ? date("d/m/Y",strtotime($contaBancaria['DtLoteRemessaCB'])) : '-'; ?>
                 </td>
                 <td valign="top">
                     <b>Ocorr&ecirc;ncia</b><br>
-                    <?php echo ($this->dadosContaBancaria->OcorrenciaCB == NULL) ? " - " : $this->dadosContaBancaria->OcorrenciaCB;?>
+                    <?php echo ($contaBancaria['OcorrenciaCB'] == NULL) ? " - " : $contaBancaria['OcorrenciaCB'];?>
                 </td>
             </tr>
             <tr class="destacar">
@@ -69,15 +70,15 @@
             <tr>
                  <td valign="top">
                     <b>N&uacute;mero</b><br>
-                    <?php echo ($this->dadosContaBancaria->ContaLivre == '000000000000') ? " - " : $this->dadosContaBancaria->ContaLivre;?>
+                    <?php echo ($contaBancaria['ContaLivre'] == '000000000000') ? " - " : $contaBancaria['ContaLivre'];?>
                 </td>
                 <td valign="top">
                     <b>Dt. Abertura</b><br>
-                    <?php echo (isset($this->dadosContaBancaria->DtLoteRemessaCL) && !empty($this->dadosContaBancaria->DtLoteRemessaCL)) ? date("d/m/Y",strtotime($this->dadosContaBancaria->DtLoteRemessaCL)) : '-';?>
+                    <?php echo (isset($contaBancaria['DtLoteRemessaCL']) && !empty($contaBancaria['DtLoteRemessaCL'])) ? date("d/m/Y",strtotime($contaBancaria['DtLoteRemessaCL'])) : '-';?>
                 </td>
                 <td valign="top">
                     <b>Ocorr&ecirc;ncia</b><br>
-                    <?php echo ($this->dadosContaBancaria->OcorrenciaCL == NULL) ? " - " : $this->dadosContaBancaria->OcorrenciaCL;?>
+                    <?php echo ($contaBancaria['OcorrenciaCL'] == NULL) ? " - " : $contaBancaria['OcorrenciaCL'];?>
                 </td>
             </tr>
         </table>

@@ -238,47 +238,6 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
             }
 
             $AbrangenciaDAO = new AbrangenciaDAO();
-            foreach ($_POST['siAbrangencia'] as $valores) {
-                list($abrangenciaSituacao, $abrangenciaId) = explode(':', $valores);
-
-                $dtInicio = null;
-                $dtFim = null;
-                if (filter_input(INPUT_POST, 'dtInicioRealizacao' . $abrangenciaId)) {
-                    $dtInicio = Data::dataAmericana(filter_input(INPUT_POST, 'dtInicioRealizacao' . $abrangenciaId));
-                    $validacaoInicio = Data::validarData(filter_input(INPUT_POST, 'dtInicioRealizacao' . $abrangenciaId));
-                    $dtFim = Data::dataAmericana(filter_input(INPUT_POST, 'dtFimRealizacao' . $abrangenciaId));
-                    $validacaoFim = Data::validarData(filter_input(INPUT_POST, 'dtFimRealizacao' . $abrangenciaId));
-
-                    if (!$validacaoInicio || !$validacaoFim) {
-                        parent::message('Data inv�lida.', $redirectUrl, 'ERROR');
-                    }
-                }
-
-                $abrangenciaRow = $AbrangenciaDAO->find($abrangenciaId)->current();
-
-                if ($abrangenciaRow) {
-                    if ($abrangenciaRow->siAbrangencia != 2 && $abrangenciaSituacao == 2) {
-                        $abrangenciaRow->dtInicioRealizacao = $dtInicio;
-                        $abrangenciaRow->dtFimRealizacao = $dtFim;
-                    } elseif ($abrangenciaSituacao != 2) {
-                        $abrangenciaRow->dtInicioRealizacao = null;
-                        $abrangenciaRow->dtFimRealizacao = null;
-                    }
-                    if ($abrangenciaSituacao == 1) {
-                        $justificativa = filter_input(INPUT_POST, 'justificativa' . $abrangenciaId);
-                        if (!empty($justificativa)) {
-                            $abrangenciaRow->dsJustificativa = $justificativa;
-                        }
-                    } else {
-                        $abrangenciaRow->dsJustificativa = null;
-                    }
-
-
-                    $abrangenciaRow->siAbrangencia = $abrangenciaSituacao;
-                    $abrangenciaRow->Usuario = $this->IdUsuario;
-                    $abrangenciaRow->save();
-                }
-            }
 
             if (filter_input(INPUT_POST, 'novoPais')) {
                 if (31 == \filter_input(\INPUT_POST, 'novoPais')) { //31=Brasil
@@ -325,13 +284,117 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
                         'siAbrangencia' => filter_input(INPUT_POST, 'novoRealizado'),
                         'dsJustificativa' => $dsJustificativa,
                         'dtInicioRealizacao' => $dtInicioNovo,
-			'dtFimRealizacao' => $dtFimNovo
+			            'dtFimRealizacao' => $dtFimNovo
                     );
-                    $AbrangenciaDAO->cadastrar($dados);
+                   $success = $AbrangenciaDAO->cadastrar($dados);
                 } else {
                     parent::message('N�o � poss�vel salvar o mesmo local mais de uma vez. '
                             . '(Pa�s, Uf, Munic�pio)', $redirectUrl, 'ERROR');
                 }
+            }
+
+            if(!$success) {
+                parent::message('Erro ao salvar os dados.', $redirectUrl, 'ERROR');
+            }
+
+
+            parent::message('Dados salvos com sucesso!', $redirectUrl, 'CONFIRM');
+        } catch (Exception $e){
+            parent::message('Erro ao salvar os dados.', $redirectUrl, 'ERROR');
+        }
+
+    }
+
+    /**
+     * m�todo para pegar o idpronac
+     *
+     * @return mixed|string
+     */
+    protected function buscarIdPronac(){
+        $idpronac = $this->_request->getParam("idpronac");
+        if (strlen($idpronac) > 7) {
+            $idpronac = Seguranca::dencrypt($idpronac);
+        }
+        return $idpronac;
+    }
+
+    public function salvarLocalRealizacaoAction(){
+        $idpronac = $this->buscarIdPronac();
+
+        $linkFinal = '';
+        if(filter_input(INPUT_POST, 'relatoriofinal')) {
+            $linkFinal = '-final';
+        }elseif($this->_request->getParam('relatoriofinal')){
+            $linkFinal = '-final';
+        }
+//
+//xd(filter_input(INPUT_GET, 'relatoriofinal'));
+        try{
+
+        //** Verifica se o usu�rio logado tem permiss�o de acesso **//
+        $this->verificarPermissaoAcesso(false, true, false);
+
+
+        $redirectUrl = "comprovarexecucaofisica/local-de-realizacao$linkFinal/idpronac/".Seguranca::encrypt($idpronac);
+        $redirectUrlErroData = "comprovarexecucaofisica/manter-local-de-realizacao-final/idpronac/".Seguranca::encrypt($idpronac);
+
+        $AbrangenciaDAO = new AbrangenciaDAO();
+
+        $abrangenciaId = $this->_request->getParam('idAbrangencia');
+        $abrangenciaSituacao = $this->_request->getParam('siAbrangencia');
+
+
+        $dtInicio = null;
+        $dtFim = null;
+        if (filter_input(INPUT_POST, 'dtInicioRealizacao')) {
+            $dtInicio = Data::dataAmericana(filter_input(INPUT_POST, 'dtInicioRealizacao'));
+            $validacaoInicio = Data::validarData(filter_input(INPUT_POST, 'dtInicioRealizacao'));
+            $dtFim = Data::dataAmericana(filter_input(INPUT_POST, 'dtFimRealizacao'));
+            $validacaoFim = Data::validarData(filter_input(INPUT_POST, 'dtFimRealizacao'));
+
+            if (!$validacaoInicio || !$validacaoFim) {
+                parent::message('Data inv�lida.', $redirectUrlErroData, 'ERROR');
+            }
+        }
+
+            if(strlen(filter_input(INPUT_POST,'dsJustificativa')) > 500){ //limite m�ximo de caracteres
+                parent::message('N�mero de caracteres inv�lido. Limite de 500 caracteres!', $redirectUrlErroData, 'ERROR');
+            }
+
+
+        $abrangenciaRow = $AbrangenciaDAO->find($abrangenciaId)->current();
+
+            if ($abrangenciaRow) {
+                if ($abrangenciaRow->siAbrangencia != 2 && $abrangenciaSituacao == 2) {
+                    $abrangenciaRow->dtInicioRealizacao = $dtInicio;
+                    $abrangenciaRow->dtFimRealizacao = $dtFim;
+                } elseif ($abrangenciaSituacao != 2) {
+                    $abrangenciaRow->dtInicioRealizacao = null;
+                    $abrangenciaRow->dtFimRealizacao = null;
+                }
+                if ($abrangenciaSituacao == 1) {
+                    $justificativa = filter_input(INPUT_POST, 'dsJustificativa');
+
+                    if (!empty($justificativa)) {
+                        $abrangenciaRow->dsJustificativa = $justificativa;
+                    }
+                } else {
+                    $abrangenciaRow->dsJustificativa = null;
+                }
+
+                if($abrangenciaSituacao == 2){
+                    $abrangenciaRow->dtInicioRealizacao = $dtInicio;
+                    $abrangenciaRow->dtFimRealizacao = $dtFim;
+                }
+
+                if(strtotime($abrangenciaRow->dtInicioRealizacao) > strtotime($abrangenciaRow->dtFimRealizacao)){
+                    parent::message('Data inv�lida.', $redirectUrlErroData , 'ERROR');
+                }
+
+
+                $abrangenciaRow->siAbrangencia = $abrangenciaSituacao;
+                $abrangenciaRow->Usuario = $this->IdUsuario;
+                $abrangenciaRow->save();
             }
 
             parent::message('Dados salvos com sucesso!', $redirectUrl, 'CONFIRM');
@@ -353,7 +416,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function planoDeDivulgacaoAction() {
@@ -567,7 +630,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function planoDeDistribuicaoAction() {
@@ -712,7 +775,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function buscarAgenteAction() {
@@ -739,7 +802,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false,'CNPJCPF'=>$cnpjcpf));
         }
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function comprovantesDeExecucaoAction() {
@@ -845,7 +908,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function enviarRelatorioAction() {
@@ -1082,7 +1145,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function imprimirAction() {
@@ -1187,7 +1250,43 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         $this->view->UFs = $ufs;
     }
 
-    public function planoDeDivulgacaoFinalAction() {
+    public function manterLocalDeRealizacaoFinalAction()
+    {
+        //** Verifica se o usu�rio logado tem permiss�o de acesso **//
+        $this->verificarPermissaoAcesso(false, true, false);
+
+        $idpronac = $this->_request->getParam("idpronac");
+        $idLocal = $this->_request->getParam("idlocal");
+
+        if (strlen($idpronac) > 7) {
+            $idpronac = Seguranca::dencrypt($idpronac);
+            $idLocal = Seguranca::dencrypt($idLocal);
+        }
+
+        $this->view->relatoriofinal = $this->_request->getParam("relatoriofinal");
+
+        //****** Dados do Projeto - Cabecalho *****//
+        $projetos = new Projetos();
+        $DadosProjeto = $projetos->buscarProjetoXProponente(array('idPronac = ?' => $idpronac))->current();
+        $this->view->DadosProjeto = $DadosProjeto;
+
+        $LocaisDeRealizacao = $projetos->buscarLocaisDeRealizacao($idpronac,$idLocal);
+        $this->view->LocaisDeRealizacao = $LocaisDeRealizacao;
+
+      //  xd($LocaisDeRealizacao);
+
+        $pais = new Pais();
+        $paises = $pais->buscar(array(), 'Descricao');
+        $this->view->Paises = $paises;
+
+        $uf = new Uf();
+        $ufs = $uf->buscar(array(), 'Descricao');
+        $this->view->UFs = $ufs;
+    }
+
+
+    public function planoDeDivulgacaoFinalAction()
+    {
 
         //** Verifica se o usu�rio logado tem permiss�o de acesso **//
         $this->verificarPermissaoAcesso(false, true, false);
@@ -1693,7 +1792,7 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function cadastrarFinalAction()
@@ -1783,6 +1882,17 @@ class ComprovarexecucaofisicaController extends MinC_Controller_Action_Abstract
 
                 $dados = array();
                 $dados['siCumprimentoObjeto'] = 2;
+
+              /*
+                1 - Salvo pelo proponente;
+                2 - Enviado pelo proponente;
+                3 - Encaminhado para T�cnico de Acompanhamento;
+                4 - Em an�lise pelo T�cnico;
+                5 - Finalizado pelo T�cnico;
+                6 - Finalizado pelo Coordenador.
+              */
+
+                $dados['DtEnvioDaPrestacaoContas'] = new Zend_Db_Expr('GETDATE()');
                 $where = "idPronac = $idpronac ";
 
                 $tbCumprimentoObjeto = new tbCumprimentoObjeto();

@@ -155,7 +155,7 @@ function mascara ($val, $mask) {
             <tr class="titulo_tabela">
                 <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">Item Or&ccedil;ament&aacute;rio</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">CNPJ / CPF</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo3=&ordem='.$this->paginacao['novaOrdem'];?>">Nome</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=6&ordem='.$this->paginacao['novaOrdem'];?>">Fornecedor</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">N&uacute;mero</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=9&ordem='.$this->paginacao['novaOrdem'];?>">Data</a></th>
                 <th width="75px"><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'conciliacao-bancaria')).'?pag=1&qtde='.$this->paginacao['qtde'].'&idPronac='.$this->idPronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Valor</a></th>
@@ -200,7 +200,7 @@ function mascara ($val, $mask) {
          <tr>
              <td align="center"><?php echo $d->ItemOrcamentario; ?></td>
              <td><?php echo $d->CNPJCPF; ?></td>
-             <td align="center"><?php echo $d->NomeProjeto; ?></td>
+             <td align="center"><?php echo $d->Fornecedor; ?></td>
              <td><?php echo $d->nrDocumentoDePagamento; ?></td>
              <td><?php echo Data::tratarDataZend($d->dtPagamento,'Brasileira'); ?></td>
              <td align="right"><b><?php echo 'R$ '. @number_format(($d->vlPagamento),2, ",", "."); ?></b></td>

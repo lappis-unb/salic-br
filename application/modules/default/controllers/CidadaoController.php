@@ -45,8 +45,8 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
 
     public function consultarAction() {
 
-	#Pedro - Criando a variavel de Sessao para Usar na impressao PDF 
-	$sess = new Zend_Session_Namespace('Filtro_de_Pesquisa');
+        #Pedro - Criando a variavel de Sessao para Usar na impressao PDF
+        $sess = new Zend_Session_Namespace('Filtro_de_Pesquisa');
 
         if(!$this->usuarioInterno){
             Zend_Layout::startMvc(array('layout' => 'layout_login'));
@@ -64,14 +64,12 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
         }
         $this->view->reuniao = $raberta;
 
-	//Alysson - Metodos Que Busca Todas as reunioes
         $order_reuniao = array("NrReuniao DESC");
         $this->view->listaReunioes = $reuniao->buscarTodasReunioes($order_reuniao);
         $order = array();
 
-        // Fernao: adicionando complementa��o da url para GET para pegar filtros POT
         $urlComplement = array();
- 
+
         //==== parametro de ordenacao  ======//
         if($this->_request->getParam("ordem")) {
             $ordem = $this->_request->getParam("ordem");
@@ -84,40 +82,36 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
             $ordem = "DESC";
             $novaOrdem = "DESC";
         }
-	#Pedro
+
         $sess->novaOrdem = $novaOrdem;
         $sess->ordem = $ordem;
 
-        if($this->_request->getParam("pag")) {
+        if ($this->_request->getParam("pag")) {
            $pag = $this->_request->getParam("pag");
            $urlComplement[] = "pag=" . $pag;
-	   #Pedro - Criando a variavel de Sessao para Usar na impressao 
            $sess->pag = $pag;
         }
-        // xd($this->_request); 
         //==== campo de ordenacao  ======//
         if($this->_request->getParam("campo")) {
             $campo = $this->_request->getParam("campo");
             $ordenacao = "&campo=".$campo;
             $urlComplement[] = "campo=$campo";
             $urlComplement[] = "ordem=$ordem";
-	    $sess->campo = $campo;
-
+            $sess->campo = $campo;
         } else {
             $campo = 2;
             $ordem = 'DESC';
             $ordenacao = null;
             $urlComplement[] = "ordem=" . $ordem;
             $urlComplement[] = "campo=" . $campo;
-	    $sess->campo = $campo;
-	    $sess->ordem = $ordem;
+            $sess->campo = $campo;
+            $sess->ordem = $ordem;
         }
 
         $order = array("$campo $ordem");
         
         /* ================== PAGINACAO ======================*/
         $where = array();
-        //$where["t.idNrReuniao = ?"] = $raberta->idNrReuniao;
         $where["stAtivo = ?"] = 1;
        
         // Fernao: adicionando filtros
@@ -134,7 +128,7 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
             $where["x.CNPJCPF = ?"] = $CnpjCpf;
             $this->view->cnpjCpf = $CnpjCpf;
             $urlComplement[] = "CNPJCPF=$CnpjCpf";
-	    $sess->CnpjCpf = $CnpjCpf;
+            $sess->CnpjCpf = $CnpjCpf;
          }
         if ($this->_request->getParam("ProponenteConsulta")) {
             $ProponenteConsulta = $this->_request->getParam("ProponenteConsulta");
@@ -152,8 +146,7 @@ class CidadaoController extends MinC_Controller_Action_Abstract {
         }
        
         $Projetos = new Projetos();
-        
-        //Alysson
+
         if(!$idNrReuniaoConsulta){
             $idNrReuniao = null;
         } else {

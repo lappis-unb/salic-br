@@ -181,12 +181,10 @@ class Mascara
 
 	/**
 	 * adiciona no cep
-	 *
 	 * @access public
 	 * @static
 	 * @param string $cep
 	 * @return string
-     *
      * @author Ruy Junior Ferreira Silva
      * @since 01/05/2016
 	 */
@@ -220,7 +218,6 @@ class Mascara
 
         return $cpfCnpj;
 	}
-
 
 	/**
 	 * adiciona no cpf

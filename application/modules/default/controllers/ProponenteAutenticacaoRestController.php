@@ -22,8 +22,10 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
         # Pegando parametros via POST no formato JSON
         $body = $this->getRequest()->getRawBody();
         $post = Zend_Json::decode($body);
-        $username = $post['usuario'];
-        $password = $post['senha'];
+
+        $username = isset($post['usuario'])? $post['usuario']: NULL;
+        $password = isset($post['senha'])? $post['senha']: NULL;
+        $registrationId = $this->registrationId;
 
         if(empty($username) || empty($password)){
             $result->msg = 'Usu&aacute;rio ou Senha inv&aacute;lidos!';
@@ -67,15 +69,18 @@ class ProponenteAutenticacaoRestController extends Minc_Controller_AbstractRest{
 
                 $verificaSituacao = $verificaStatus[0]->Situacao;
                 if($verificaSituacao == 1) {
-                    $result->msg = 'Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha.';
+                    $result->msg = 'Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha depois.';
                 }
 
-                $agentes = new Agente_Model_DbTable_Agentes();
-                $verificaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $username))->current();
+                $modelDispositivoMovel = new Dispositivomovel();
+                $result->dispositivo = $modelDispositivoMovel->salvar($registrationId, $username);
 
-                if(empty($verificaAgentes)){
-                    $result->msg = 'Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente!';
-                }
+//                $agentes = new Agentes();
+//                $verificaAgentes = $agentes->buscar(array('CNPJCPF = ?' => $username))->current();
+//
+//                if(empty($verificaAgentes)){
+//                    $result->msg = 'Voc&ecirc; ainda n&atilde;o est&aacute; cadastrado como proponente!';
+//                }
 
             } else {
                 $result->msg = 'Usu&aacute;rio ou Senha inv&aacute;lidos!';

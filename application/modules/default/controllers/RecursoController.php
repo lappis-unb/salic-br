@@ -915,8 +915,6 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $d = array();
             $d['situacao'] = $situacaoProjeto;
             $d['ProvidenciaTomada'] = $providenciaProjeto;
-            $d['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
-            $d['Logon'] = $this->idUsuario;
             if(isset($_POST['areaCultural'])){
                 $d['Area'] = $areaCultural;
             }
@@ -926,6 +924,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $where = "IdPRONAC = $idPronac";
             $Projetos = new Projetos();
             $Projetos->update($d, $where);
+
+	    $Projetos->alterarSituacao($idPronac, null, $d['situacao'], $d['ProvidenciaTomada']);
 
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac));
             if(count($dadosProjeto)>0){
@@ -966,7 +966,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     'Atendimento' => 'S',
                     'idEnquadramento' => $buscaEnquadramento['IdEnquadramento'],
                     'stAtivo' => 1,
-                    'idTipoAgente' => 1,
+                    'idTipoAgente' => 6,
                     'Logon' => $idusuario
                 );
 
@@ -979,8 +979,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     $whereUpdateParecer = 'IdPRONAC = '.$idPronac;
                     $alteraParecer = $parecerDAO->alterar($parecerAntigo, $whereUpdateParecer);
                 }
-
-                $buscarParecer = $parecerDAO->buscar(array('IdPRONAC = ?' => $idPronac, 'AnoProjeto = ?' => $dadosProjeto[0]->AnoProjeto, 'Sequencial = ?' => $dadosProjeto[0]->Sequencial, 'TipoParecer = ?' => 7, 'idTipoAgente = ?' =>1));
+                
+                $buscarParecer = $parecerDAO->buscar(array('IdPRONAC = ?' => $idPronac, 'AnoProjeto = ?' => $dadosProjeto[0]->AnoProjeto, 'Sequencial = ?' => $dadosProjeto[0]->Sequencial, 'TipoParecer = ?' => 7, 'idTipoAgente = ?' =>6));
                 if(count($buscarParecer) > 0){
                     $buscarParecer = $buscarParecer->current();
                     $whereUpdateParecer = 'IdParecer = '.$buscarParecer->IdParecer;
@@ -1051,7 +1051,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function coordAnaliseFinalizarRecursoAction() {
@@ -1098,12 +1098,9 @@ class RecursoController extends MinC_Controller_Action_Abstract
         //ATUALIZA A SITUA��O DO PROJETO
         $Projetos = new Projetos();
         $w = array();
-        $w['situacao'] = 'C10';
-        $w['ProvidenciaTomada'] = 'Projeto encaminhado � reuni�o da CNIC para avalia��o do componente da comiss�o.';
-        $w['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
-        $w['Logon'] = $this->idUsuario;
-        $where = "IdPRONAC = $idPronac";
-        $Projetos->update($w, $where);
+        $w['situacao'] = 'D20';
+        $w['ProvidenciaTomada'] = 'Recurso encaminhado � reuni�o da CNIC para avalia��o do componente da comiss�o.';
+        $Projetos->alterarSituacao($idPronac, null, $w['situacao'], $w['ProvidenciaTomada']);
 
         $reuniao = new Reuniao();
         $raberta = $reuniao->buscarReuniaoAberta();

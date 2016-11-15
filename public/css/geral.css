@@ -1122,6 +1122,7 @@ div.plan span {
 .btn_abrir,
 .btn_ver,
 .btn_avaliar,
+.btn_analisar,
 .btn_aprovar,
 .btn_aprovar-off,
 .btn_perfil,
@@ -1258,6 +1259,7 @@ div.plan span {
 .btn_abrir:hover,
 .btn_ver:hover,
 .btn_avaliar:hover,
+.btn_analisar:hover,
 .btn_aprovar:hover,
 .btn_aprovar-off:hover,
 .btn_perfil:hover,
@@ -1368,6 +1370,7 @@ div.plan span {
 .btn_finalizar,
 .btn_finalizar-off,
 .btn_avaliar,
+.btn_analisar,
 .btn_aprovar,
 .btn_aprovar-off,
 .btn_abrir,
@@ -1570,6 +1573,7 @@ div.plan span {
 .btn_abrir                                      { background:url(../img/buttons/abrir.gif) left center no-repeat; }
 .btn_ver                                        { background:url(../img/buttons/ver.gif) left center no-repeat; }
 .btn_avaliar                                    { background:url(../img/buttons/avaliar.gif) left center no-repeat; }
+.btn_analisar                                   { background:url(../img/buttons/analisar.gif) left center no-repeat; }
 .btn_aprovar                                    { background:url(../img/buttons/aprovar.gif) left center no-repeat; }
 .btn_aprovar-off                                { background:url(../img/buttons/aprovar-off.gif) left center no-repeat; }
 .btn_perfil                                     { background:url(../img/buttons/perfil-p.gif) left center no-repeat; }

@@ -54,12 +54,6 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                 $idPronac = Seguranca::dencrypt($idPronac);
             }
 
-            $verificaCompravacaoFinanceira = ConsultarDadosProjetoDAO::verificaComprovarExecucaoFinanceira($idPronac);
-            if (!empty($verificaCompravacaoFinanceira)) {
-                $this->view->menuCompExecFin = true;
-            } else {
-                $this->view->menuCompExecFin = false;
-            }
 
             $dados = array();
             $dados['idPronac'] = (int) $idPronac;
@@ -131,7 +125,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     //VERIFICA OS DADOS DE ARQUIVAMENTO, CASO EXISTA //
                     $ArquivamentoProjeto = array();
                     $tbArquivamento = new tbArquivamento();
-                    $dadosArquivamentoProjeto = $tbArquivamento->confirirArquivamentoProjeto($pronac);
+                    $dadosArquivamentoProjeto = $tbArquivamento->conferirArquivamentoProjeto($pronac);
                     if(count($dadosArquivamentoProjeto)){
                         $ArquivamentoProjeto = $dadosArquivamentoProjeto;
                     }
@@ -1384,7 +1378,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
 
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=Providencia_Tomada".$nrPronacNm.".xls;");
-            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
+            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
             $this->view->nrPronac      = $nrPronac;
@@ -2493,7 +2487,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         } catch (Zend_Exception $e) {
             echo json_encode(array('resposta'=>false));
         }
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function carregarValorEntrePlanilhasAction() {
@@ -2588,7 +2582,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         } catch (Zend_Exception $e) {
             echo json_encode(array('resposta'=>false));
         }
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function remanejamentoReintegrarPlanilhaAction() {
@@ -2643,7 +2637,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         } catch (Zend_Exception $e) {
             echo json_encode(array('resposta'=>false, 'msg'=>'Ocorreu um erro durante o processo.'));
         }
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function remanejamentoAlterarItemAction() {
@@ -2744,7 +2738,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         } else {
             echo json_encode(array('resposta'=>false));
         }
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function salvarAvaliacaoDoItemRemanejamentoAction() {
@@ -2817,7 +2811,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         //VERIFICA SE O VALOR TOTAL DOS DADOS INFORMADOR PELO PROPONENTE EST� ENTRE O M�NIMO E M�XIMO PERMITIDO - 20%
         if($vlTotal < $vlAtualMin || $vlTotal > $vlAtualMax){
             echo json_encode(array('resposta'=>false, 'msg'=>'O valor total do item desejado ultrapassou a margem de 20%.'));
-            $this->_helper->viewRenderer->setNoRender(TRUE); 
+            $this->_helper->viewRenderer->setNoRender(TRUE);
         }
 
         $editarItem = $tbPlanilhaAprovacao->buscar(array('IdPRONAC=?'=>$idPronac, 'tpPlanilha=?'=>'RP', 'idPlanilhaAprovacaoPai=?'=>$_POST['idPlanilha']))->current();
@@ -2830,7 +2824,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         $editarItem->save();
 
         echo json_encode(array('resposta'=>true, 'msg'=>'Dados salvos com sucesso!'));
-        $this->_helper->viewRenderer->setNoRender(TRUE); 
+        $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
     public function prestacaoDeContasAction()

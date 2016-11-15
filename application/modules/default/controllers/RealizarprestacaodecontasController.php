@@ -1470,7 +1470,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=Painel_Analisar_Laudo_Final.xls;");
-            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
+            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
             $this->view->dados = $busca;
@@ -2082,7 +2082,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
                 header("Content-Type: application/vnd.ms-excel");
                 header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.xls;");
-                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
+                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
                 $this->view->dados = $busca;
@@ -2652,7 +2652,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
                 header("Content-Type: application/vnd.ms-excel");
                 header("Content-Disposition: inline; filename=Analisar_Prestacao_de_Contas.xls;");
-                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
+                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
                 $this->view->dados = $busca;
@@ -3329,8 +3329,8 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             }
 
             $tblSituacao = new Situacao();
-            $rsSitucao = $tblSituacao->buscar(array("Codigo IN (?)"=>array('C08', 'E16', 'E17', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54')));
-
+            $rsSitucao = $tblSituacao->buscar(array("Codigo IN (?)"=>array('C08', 'E16', 'E17', 'E18', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54')));
+	    
             $this->view->situacoes = $rsSitucao;
             $this->intTamPag = 10;
 
@@ -3404,7 +3404,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                         $where['e.cdGruposDestino in (?)'] = array('125','126');
                         $where['e.cdGruposOrigem = ?'] = 132;
                         $where['e.stAtivo = ?'] = 1;
-			$where['d.stEstado = ?'] = 0;
+		            	$where['d.stEstado = ?'] = 0;
                         $where['d.idTipoDiligencia = ?'] = 174;
                         break;
                     case 'tce': //Projetos em TCE
@@ -3413,8 +3413,8 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                         $where['e.idSituacaoEncPrestContas in (?)'] = array('2');
 			//                        $where['e.cdGruposDestino in (?)'] = array('125','126');
                         $where['e.stAtivo = ?'] = 1;
-			$where['d.idTipoDiligencia = ?'] = 174;
-			$where['d.stEstado = ?'] = 0;
+			            $where['d.idTipoDiligencia = ?'] = 174;
+			              $where['d.stEstado = ?'] = 0;
                         break;
                     default: //Aguardando An�lise
                         $where['p.Orgao = ?'] = $this->codOrgao;
@@ -3498,8 +3498,14 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $ordenacao = null;
             }
 
-            $pag = 1;
             $post  = Zend_Registry::get('post');
+
+            if($this->_request->getParam("pag")){
+                $pag = $this->_request->getParam("pag");
+            }else{
+                $pag = 1;
+            }
+
             if (isset($post->pag)) $pag = $post->pag;
             $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
 
@@ -3519,45 +3525,42 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                     case 'emanalise': //Em an�lise
                         $this->view->tituloPag = 'Em an�lise';
                         $where['p.Orgao = ?'] = $this->codOrgao;
-                        $where['p.Situacao in (?)'] = array('E27');
-                        $where['e.idSituacaoEncPrestContas in (?)'] = array('1');
-                        $where['e.cdGruposDestino in (?)'] = array('124');
-                        $where['e.cdGruposOrigem = ?'] = 125;
+                        $where['p.Situacao in (?)'] = array('E17','E18', 'E20', 'E27', 'E30', 'E46', 'G08', 'G21', 'G22');
+                        $where['e.idSituacaoEncPrestContas in (?)'] = array('2');
                         $where['e.stAtivo = ?'] = 1;
                         break;
-                    case 'devolvidos': //Devolvidos ap�s an�lise
-                        $this->view->tituloPag = 'Devolvidos ap�s an�lise';
+                    case 'analisados': // Analisados
+                        $this->view->tituloPag = 'Analisados';
                         $where['p.Orgao = ?'] = $this->codOrgao;
-                        $where['p.Situacao in (?)'] = array('E27');
-                        $where['e.idSituacaoEncPrestContas in (?)'] = array('1','2');
-                        $where['e.cdGruposDestino in (?)'] = array('125','126');
-                        $where['e.cdGruposOrigem = ?'] = 132;
+                        $where['p.Situacao in (?)'] = array('E14','E18', 'E27', 'E46', 'G08', 'G21', 'G22');
+                        $where['e.idSituacaoEncPrestContas in (?)'] = array('3');
+                        $where['e.cdGruposDestino in (?)'] = array('125', '126');
                         $where['e.stAtivo = ?'] = 1;
                         break;
                     case 'diligenciados': //Projetos diligenciados
                         $this->view->tituloPag = 'Projetos diligenciados';
                         $where['p.Orgao = ?'] = $this->codOrgao;
                         $where['p.Situacao in (?)'] = array('E17', 'E20', 'E30');
-                        $where['e.idSituacaoEncPrestContas in (?)'] = array('1','2');
+                        $where['e.idSituacaoEncPrestContas in (?)'] = array('2');
                         $where['e.cdGruposDestino in (?)'] = array('125','126');
                         $where['e.cdGruposOrigem = ?'] = 132;
                         $where['e.stAtivo = ?'] = 1;
-                        $where['d.DtSolicitacao = (SELECT top 1 d2.DtSolicitacao FROM SAC.dbo.tbDiligencia d2 WHERE d2.idPronac = d.idPronac ORDER BY d2.DtSolicitacao DESC)'] = '';
+                        $where['d.stEstado = ?'] = 0;
                         $where['d.idTipoDiligencia = ?'] = 174;
                         break;
                     case 'tce': //Projetos em TCE
                         $this->view->tituloPag = 'Projetos em TCE';
                         $where['p.Orgao = ?'] = $this->codOrgao;
-                        $where['p.Situacao in (?)'] = array('E22', 'L05', 'L06');
-                        $where['e.idSituacaoEncPrestContas in (?)'] = array('1','2');
-                        $where['e.cdGruposDestino in (?)'] = array('125','126');
-                        $where['e.cdGruposOrigem = ?'] = 132;
+                        $where['p.Situacao in (?)'] = array('E22');
+                        $where['e.idSituacaoEncPrestContas in (?)'] = array('2');
                         $where['e.stAtivo = ?'] = 1;
+                        $where['d.idTipoDiligencia = ?'] = 174;
+                        $where['d.stEstado = ?'] = 0;
                         break;
                     default: //Aguardando An�lise
                         $this->view->tituloPag = 'Aguardando An�lise';
                         $where['p.Orgao = ?'] = $this->codOrgao;
-                        $where['p.Situacao in (?)'] = array('E68', 'E77');
+                        $where['p.Situacao in (?)'] = array('C08', 'E16', 'E17', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54');
                         break;
                 }
 
@@ -3581,6 +3584,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
             $busca = $Projetos->buscarPainelPrestacaoDeContas($where, $order, $tamanho, $inicio, false, $filtro);
 
+
             if(isset($post->xls) && $post->xls){
                 if(!isset($filtro) || (isset($filtro) && $filtro != 'devolvidos')){
                     $colspan = 8;
@@ -3598,20 +3602,10 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $html .='<tr><td style="border: 1px dotted black; background-color: #EAF1DD; font-size: 10" colspan="'.$colspan.'">Data do Arquivo: '. Data::mostraData() .'</td></tr>';
                 $html .='<tr><td colspan="'.$colspan.'"></td></tr>';
 
-                if(!isset($filtro) || (isset($filtro) && $filtro != 'devolvidos')){
-                    if(isset($filtro) && $filtro == 'emanalise'){
-                        $addLinha = '<th style="border: 1px dotted black; background-color: #9BBB59;">Dt. Encaminhamento</th>';
-                    } else {
-                        $addLinha = '<th style="border: 1px dotted black; background-color: #9BBB59;">Dt. Recebimento</th>';
-                    }
-                } else {
-                    $addLinha = '<th style="border: 1px dotted black; background-color: #9BBB59;">Dt. In�cio</th>
-                                 <th style="border: 1px dotted black; background-color: #9BBB59;">Dt. Fim</th>';
-                }
-
-                $addTec = '';
                 if(isset($filtro) && $filtro == 'emanalise'){
                     $addTec = '<th style="border: 1px dotted black; background-color: #9BBB59;">T�cnico</th>';
+                    $addDataEnvio = '<th style="border: 1px dotted black; background-color: #9BBB59;">Dt. Envio</th>';
+                    $addDiasAnalise = '<th style="border: 1px dotted black; background-color: #9BBB59;">Dias em An�lise</th>';
                 }
 
                 $html .= '<tr>';
@@ -3620,10 +3614,12 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Nome do Projeto</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Situa��o</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">�rea / Segmento</th>';
-                $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Estado</th>';
                 $html .= '<th style="border: 1px dotted black; background-color: #9BBB59;">Mecanismo</th>';
-                $html .= $addLinha;
-                $html .= $addTec;
+                if(isset($filtro) && $filtro == 'emanalise'){
+                    $html .= $addTec;
+                    $html .= $addDataEnvio;
+                    $html .= $addDiasAnalise;
+                }
                 $html .= '</tr>';
 
                 $i=1;
@@ -3633,24 +3629,14 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                     if($mecanismo == 'Mecenato'){
                         $mecanismo = "Incentivo Fiscal";
                     }
+                    
 
-                    if(!isset($filtro) || (isset($filtro) && $filtro != 'devolvidos')){
-                        if(isset($filtro) && $filtro == 'emanalise'){
-                            $dt = Data::tratarDataZend($projeto->dtInicioEncaminhamento, 'brasileira');
-                        } else {
-                            $dt = Data::tratarDataZend($projeto->DtSituacao, 'brasileira');
-                        }
-                        $addValores = '<td style="border: 1px dotted black;">'.$dt.'</td>';
-                    } else {
-                        $dtInicioEncaminhamento = Data::tratarDataZend($projeto->dtInicioEncaminhamento, 'brasileira');
-                        $dtFimEncaminhamento = Data::tratarDataZend($projeto->dtFimEncaminhamento, 'brasileira');
-                        $addValores = '<td style="border: 1px dotted black;">'.$dtInicioEncaminhamento.'</td>
-                                       <td style="border: 1px dotted black;">'.$dtFimEncaminhamento.'</td>';
-                    }
-
+                    
                     $addValTec = '';
                     if(isset($filtro) && $filtro == 'emanalise'){
-                        $addValTec = '<td style="border: 1px dotted black;">'.$projeto->nmAgente.'</td>';
+                        $addValTec = '<td style="border: 1px dotted black;">'.$projeto->usu_nome.'</td>';
+                        $addValDiasAnalise = '<td style="border: 1px dotted black;">'.$projeto->qtDiasAnalise.'</td>';
+                        $addValDataEnvio = '<td style="border: 1px dotted black;">'.Data::tratarDataZend($projeto->dtInicioEncaminhamento, 'brasileira').'</td>';
                     }
 
                     $html .= '<tr>';
@@ -3659,10 +3645,12 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
                     $html .= '<td style="border: 1px dotted black;">'.$projeto->NomeProjeto.'</td>';
                     $html .= '<td style="border: 1px dotted black;">'.$projeto->Situacao.'</td>';
                     $html .= '<td style="border: 1px dotted black;">'.$projeto->Area.' / '.$projeto->Segmento.'</td>';
-                    $html .= '<td style="border: 1px dotted black;">'.$projeto->UfProjeto.'</td>';
                     $html .= '<td style="border: 1px dotted black;">'.$mecanismo.'</td>';
-                    $html .= $addValores;
-                    $html .= $addValTec;
+                    if(isset($filtro) && $filtro == 'emanalise'){
+                        $html .= $addValTec;
+                        $html .= $addValDataEnvio;
+                        $html .= $addValDiasAnalise;
+                    }
                     $html .= '</tr>';
                     $i++;
                 }
@@ -3670,7 +3658,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
                 header("Content-Type: application/vnd.ms-excel");
                 header("Content-Disposition: inline; filename=Painel_Analisar_Prestacao_de_Contas.xls;");
-                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
+                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
                 $this->view->dados = $busca;
@@ -3917,7 +3905,7 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
 
             header("Content-Type: application/vnd.ms-excel");
             header("Content-Disposition: inline; filename=Manter_Assinantes.xls;");
-            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
+            echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
         } else {
             $this->view->dados = $busca;

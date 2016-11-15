@@ -1,3 +1,4 @@
+application/Bootstrap.php
 application/configs/bancos_*.ini
 application/configs/config.ini
 application.ini
@@ -9,6 +10,9 @@ nbproject
 
 index.php
 *~
+#*
+*#
+.#*
 index.php
 public/plenaria/log_exec_paEncerrarCNIC.txt
 .directory

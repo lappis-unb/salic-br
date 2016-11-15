@@ -108,6 +108,7 @@
                 <th>Proponente</th>
                 <th>Ag&ecirc;ncia</th>
                 <th>Conta</th>
+                <th>Dilig&ecirc;ncia</th>
                 <th>Ação</th>
             </tr>
         </thead>
@@ -117,6 +118,9 @@
                 $inconsistenciaUrl = $this->url(array(
                     'controller' => 'movimentacaodeconta', 'action' => 'listar-inconsistencia-detalhe', 'idPronac' => $projeto->IdPRONAC
                 ));
+                $arrPrazo = $this->prazoRespostaDiligencia($projeto->IdPRONAC, 183);
+                $icone = $arrPrazo['iconeDiligencia']['icone'];
+                $title = $arrPrazo['iconeDiligencia']['title'];
                 ?>
                 <tr>
                     <td align="center">
@@ -138,6 +142,9 @@
                     <td align="center"><?php echo Validacao::mascaraCPFCNPJ($projeto->nrCpfCnpjProponente); ?></td>
                     <td align="center"><?php echo!empty($projeto->Agencia) ? $projeto->Agencia : '<em>Não informada</em>'; ?></td>
                     <td align="center"><?php echo!empty($projeto->ContaBloqueada) ? $projeto->ContaBloqueada : '<em>Não informada</em>'; ?></td>
+                    <td align="center">
+                        <a target="_blank" href="<?php echo $this->url(array('controller' => 'diligenciar', 'action' => 'listardiligenciaanalista')) . '?idPronac=' . $projeto->IdPRONAC . '&situacao=E50&tpDiligencia=183'; ?>" ><img src="<?php echo $this->baseUrl(); ?>/public/img/<?php echo $icone; ?>" title="<?php echo $title; ?>" width="30px"/></a>
+                    </td>
                     <td align="center">
                         <input type="button" url-inconsistencia="<?php echo $inconsistenciaUrl; ?>" class="btn_ver verinconsistencia" />
                     </td>

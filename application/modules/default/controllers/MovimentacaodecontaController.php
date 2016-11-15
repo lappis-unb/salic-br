@@ -16,9 +16,9 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 	 * @access private
 	 * @var integer (idAgente do usu�rio logado)
 	 */
-    private $getIdUsuario = 0; // c�digo do usu�rio logado
-	private $getIdGrupo   = 0; // c�digo do grupo logado
-	private $getIdOrgao   = 0; // c�digo do �rg�o logado
+    private $getIdUsuario = 0; // codigo do usuorio logado
+	private $getIdGrupo   = 0; // codigo do grupo logado
+	private $getIdOrgao   = 0; // codigo do orgoo logado
     private $intTamPag    = 10;
     private $modal = "n";
 
@@ -422,7 +422,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
                 header("Content-Type: application/vnd.ms-excel");
                 header("Content-Disposition: inline; filename=Relatorio_de_inconsistencias_de_conta_captacao.xls;");
-                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
+                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
                 $this->view->qtdRegistros = $total;
@@ -1402,7 +1402,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
 
                 header("Content-Type: application/vnd.ms-excel");
                 header("Content-Disposition: inline; filename=Transferencia_de_recurso.xls;");
-                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE); 
+                echo $html; $this->_helper->viewRenderer->setNoRender(TRUE);
 
             } else {
                 $this->view->dados = $busca;
@@ -1471,6 +1471,15 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                 if (count($buscar)==0) {
                     $liberar->inserir($dados);
                 }
+
+                # Envia notifica��o para o usu�rio atrav�s do aplicativo mobile.
+                $this->enviarNotificacaoCapitacao((object)array(
+                    'cpf' => $dadosProjetos[0]->CgcCpf,
+                    'pronac' => $AnoProjeto. $Sequencial,
+                    'idPronac' => $dadosProjetos[0]->IdPRONAC,
+                    'vlCaptado' => number_format($vlCaptado, 2, ',', '.')
+                ));
+
                 parent::message('Transfer�ncia executada com sucesso!', 'movimentacaodeconta/resultado-extrato-de-conta-captacao', 'CONFIRM');
 
             } else {
@@ -1478,7 +1487,30 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             }
 	}
 
-	public function transferenciaColetivaContaCaptacaoAction(){
+    /**
+     * Envia notifica��o para o usu�rio atrav�s do aplicativo mobile.
+     *
+     * @param stdClass $projeto
+     */
+    protected function enviarNotificacaoCapitacao(stdClass $projeto) {
+        $modelDispositivo = new Dispositivomovel();
+        $listaDispositivos = $modelDispositivo->listarPorIdPronac($projeto->idPronac);
+        $notification = new Minc_Notification_Message();
+        $notification
+            ->setCpf($projeto->cpf)
+            ->setCodePronac($projeto->idPronac)
+            ->setListDeviceId($modelDispositivo->listarIdDispositivoMovel($listaDispositivos))
+            ->setListResgistrationIds($modelDispositivo->listarIdRegistration($listaDispositivos))
+            ->setTipoMensagem(Dominio_TipoMensagem::CAPTACAO)
+            ->setTitle('Projeto '. $projeto->pronac)
+            ->setText('Recebeu R$'. $projeto->vlCaptado. ' de capta��o!')
+            ->setListParameters(array('projeto' => $projeto->idPronac))
+            ->send()
+        ;
+//xd($notification->getResponse());
+    }
+
+    public function transferenciaColetivaContaCaptacaoAction(){
 
             if(!is_array($_POST)){
                 parent::message('N�o foi poss�vel realizar a transfer�ncia.', 'movimentacaodeconta/resultado-extrato-de-conta-captacao', 'ERROR');
@@ -1544,7 +1576,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
             } else {
                 echo json_encode(array('resposta'=>false));
             }
-            $this->_helper->viewRenderer->setNoRender(TRUE); 
+            $this->_helper->viewRenderer->setNoRender(TRUE);
 	}
 
 	/**
@@ -1821,7 +1853,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                     $arrRetorno['error'] = false;
                     $arrRetorno['msg']   = 'Rotina executada com sucesso!';
                     echo json_encode($arrRetorno);
-                    $this->_helper->viewRenderer->setNoRender(TRUE); 
+                    $this->_helper->viewRenderer->setNoRender(TRUE);
                 }else {
                     parent::message('Rotina executada com sucesso!', 'movimentacaodeconta/listar-inconsistencias', 'CONFIRM');
                 }
@@ -1830,7 +1862,7 @@ class MovimentacaodecontaController extends MinC_Controller_Action_Abstract
                     $arrRetorno['error'] = true;
                     $arrRetorno['msg']   = $e->getMessage();
                     echo json_encode($arrRetorno);
-                    $this->_helper->viewRenderer->setNoRender(TRUE); 
+                    $this->_helper->viewRenderer->setNoRender(TRUE);
                 }else {
                     parent::message( $e->getMessage() , 'movimentacaodeconta/listar-inconsistencias', 'ERROR');
                 }

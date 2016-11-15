@@ -92,6 +92,11 @@ class AvaliarpedidoprorrogacaoController extends MinC_Controller_Action_Abstract
         $where['p.Situacao in (?)'] = array('E10','E11','E12','E15','E16','E23');
         $where['o.idSecretaria = ?'] = $dadosOrgaos->org_superior;
 
+        if ($this->_request->getParam('pronac')) {           
+            $where['CONCAT(p.AnoProjeto, p.Sequencial) = ?'] = $this->_request->getParam('pronac');
+            $this->view->pronac = $this->_request->getParam('pronac');
+        }
+        
         $Projetos = new Projetos();
         $total = $Projetos->pedidosDeProrrogacao($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
@@ -121,6 +126,78 @@ class AvaliarpedidoprorrogacaoController extends MinC_Controller_Action_Abstract
         $this->view->intTamPag     = $this->intTamPag;
     }
 
+    public function imprimirAction(){
+        //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+        if($this->_request->getParam("qtde")) {
+            $this->intTamPag = $this->_request->getParam("qtde");
+        }
+        $order = array();
+
+        //==== parametro de ordenacao  ======//
+        if($this->_request->getParam("ordem")) {
+            $ordem = $this->_request->getParam("ordem");
+            if($ordem == "ASC") {
+                $novaOrdem = "DESC";
+            }else {
+                $novaOrdem = "ASC";
+            }
+        }else {
+            $ordem = "ASC";
+            $novaOrdem = "ASC";
+        }
+
+        //==== campo de ordenacao  ======//
+        if($this->_request->getParam("campo")) {
+            $campo = $this->_request->getParam("campo");
+            $order = array($campo." ".$ordem);
+            $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+
+        }else {
+            $campo = null;
+            $order = array(6);
+            $ordenacao = null;
+        }
+
+        $pag = 1;
+        $get = Zend_Registry::get('get');
+        if (isset($get->pag)) $pag = $get->pag;
+        $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+
+        $Usuariosorgaosgrupos = new Usuariosorgaosgrupos();
+        $dadosOrgaos = $Usuariosorgaosgrupos->buscarOrgaoSuperiorUnico($this->getIdOrgao);
+
+
+        /* ================== PAGINACAO ======================*/
+        $where = array();
+        if (PerfilModel::TECNICO_DE_ACOMPANHAMENTO == $this->getIdGrupo) {
+            $where['pr.Atendimento = ?'] = ProrrogacaoModel::EM_ANALISE;
+        } elseif (PerfilModel::COORDENADOR_DE_ACOMPANHAMENTO == $this->getIdGrupo) {
+            $where['pr.Atendimento = ?'] = ProrrogacaoModel::DEFERIDO;
+        }
+        $where['p.Situacao in (?)'] = array('E10','E11','E12','E15','E16','E23');
+        $where['o.idSecretaria = ?'] = $dadosOrgaos->org_superior;
+
+        if ($this->_request->getParam('pronac')) {           
+            $where['CONCAT(p.AnoProjeto, p.Sequencial) = ?'] = $this->_request->getParam('pronac');
+            $this->view->pronac = $this->_request->getParam('pronac');
+        }
+        
+        $Projetos = new Projetos();
+        $total = $Projetos->pedidosDeProrrogacao($where, $order, null, null, true);
+        $fim = $inicio + $this->intTamPag;
+
+        $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+        $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
+
+        $busca = $Projetos->pedidosDeProrrogacao($where, $order, $tamanho, $inicio);
+        
+        $this->view->qtdRelatorios = $total;
+        $this->view->dados         = $busca;
+        $this->view->intTamPag     = $this->intTamPag;
+        $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
+    }
+    
+    
     public function detalharAction() {
         $prorrogacao = 0;
         if($this->_request->getParam("prorrogacao")) {
@@ -182,6 +259,13 @@ class AvaliarpedidoprorrogacaoController extends MinC_Controller_Action_Abstract
                     $this->getRequest()->getParam('analise'),
                     $this->getIdUsuario
                 );
+            } else if(ProrrogacaoModel::PROCESSADO == $this->getRequest()->getParam('analise')) {
+                $prorrogacaoModel->indeferir(
+                    $idProrrogacao,
+                    $this->getRequest()->getParam('justificativa'),
+                    $this->getRequest()->getParam('analise'),
+                    $this->getIdUsuario
+                );
             } else {
                 parent::message("Não foi encontrada nenhuma análise. Favor preencher o campo obrigatório!", "avaliarpedidoprorrogacao/detalhar/prorrogacao/{$idProrrogacao}", "ERROR");
             }
@@ -204,7 +288,7 @@ class AvaliarpedidoprorrogacaoController extends MinC_Controller_Action_Abstract
     public function deletarProrrogacaoAction()
     {
         $prorrogacaoModel = new ProrrogacaoModel();
-        $prorrogacaoModel->delete($this->getRequest()->getParam('idProrrogacao'));
+        $prorrogacaoModel->deletar($this->getRequest()->getParam('idProrrogacao'));
         parent::message("Prorrogação excluída com sucesso!", "avaliarpedidoprorrogacao", "CONFIRM");
     }
 

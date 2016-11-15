@@ -283,7 +283,7 @@
                 <th><a href="<?php echo $this->url(array('controller' => 'avaliaracompanhamentoprojeto', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->tipoFiltro.'&campo=4&ordem='.$this->paginacao['novaOrdem'];?>">UF</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'avaliaracompanhamentoprojeto', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->tipoFiltro.'&campo=5&ordem='.$this->paginacao['novaOrdem'];?>">Mecanismo</a></th>
                 <th><a href="<?php echo $this->url(array('controller' => 'avaliaracompanhamentoprojeto', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->tipoFiltro.'&campo=6&ordem='.$this->paginacao['novaOrdem'];?>">Situação</a></th>
-                <th><a href="<?php echo $this->url(array('controller' => 'avaliaracompanhamentoprojeto', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->tipoFiltro.'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">Dt.&nbsp;Relatório</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'avaliaracompanhamentoprojeto', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->tipoFiltro.'&campo=11&ordem='.$this->paginacao['novaOrdem'];?>">Dt.&nbsp;Envio da Prestação de Contas</a></th>
                 <th>Técnico</th>
                 
                 <?php if(!isset($_GET['tipoFiltro']) || (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] != 'emanalise')){ ?>
@@ -312,7 +312,7 @@
                 ?>
             </td>
             <td nowrap><?php echo $dp->Situacao.' - '.$dp->dsSituacao; ?></td>
-            <td align="center"><?php echo Data::tratarDataZend($dp->dtCadastro, 'Brasileiro'); ?></td>
+            <td align="center"><?php echo ($dp->DtEnvioDaPrestacaoContas) ? Data::tratarDataZend($dp->DtEnvioDaPrestacaoContas, 'Brasileiro') : ' - '; ?></td>
             
             <?php if(!isset($_GET['tipoFiltro']) || (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro'] != 'emanalise')){ ?>
             <td align="center">

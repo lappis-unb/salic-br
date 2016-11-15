@@ -15,13 +15,31 @@
 
 <div id="conteudo">
 
-    <?php if(count($this->dados)>0){ ?>
+  <?php if(count($this->dados)>0){ ?>
     <!-- ============ PAGINAÇÃO ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
         <tbody>
             <tr>
                 <td align="center">
                 <form name="form1" id="form1" action="<?php echo $this->url(array('controller' => 'avaliarpedidoprorrogacao', 'action' => 'index'));?>" method="get">
+		<table class="tabela">
+		  <tbody>
+		    <tr>
+		      <th colspan="3">Filtro de Pesquisa</th>
+		    </tr>
+		    <tr class="divFiltroPesquisa">
+		      <td width="60" class="destacar bold">PRONAC</td>
+		      <td width="120">
+			<input type="text" id="pronac" value="<?php if (isset($this->pronac)) { echo $this->pronac; } ?>" style="width: 70px;" maxlength="7" name="pronac" class="input_simples">
+			<input type="hidden" value="10" name="qtde">
+		      </td>
+		      <td align="rigth" colspan="6">
+			<input type="button" value="" class="btn_pesquisar" id="btn_pesquisar" name="btn_pesquisar">
+		      </td>
+		    </tr>
+		  </tbody>
+		</table>
+		
                     <?php if($this->paginacao['pag']>1) { ?>
                     <input class="btn_inicio" id="btn_inicio" type="button" class="btn_inicio"
                            onclick="location.href='<?php echo $this->url(array('controller' => 'avaliarpedidoprorrogacao', 'action' => 'index')).'?pag=1'."&qtde=".$this->paginacao['qtde'].$this->paginacao['ordenacao']; ?>'">
@@ -49,6 +67,7 @@
                         <?php endfor; ?>
                     </select>
                     &nbsp;Registros por página:<input type="text" size="1" name="qtde" id="qtde" class="input_simples" value="<?php echo $this->intTamPag;?>"><input type="submit" class="btn_recarregar" value="">
+                    <input type="button" class="btn_imprimir">
                     <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
                     <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
                  </form>
@@ -178,8 +197,31 @@
     <br clear="all" />
 
 
+    <form target="_blank" class="form" name="formImpressao" id="formImpressao" method="post"
+            action='<?php echo $this->url(array('controller' => 'avaliarpedidoprorrogacao', 'action' => 'imprimir')); ?>'>
+        <input type="hidden" name="campo" value="<?php echo $this->paginacao['campo'];?>">
+        <input type="hidden" name="ordem" value="<?php echo $this->paginacao['ordem'];?>">
+        <input type="hidden" name="pag" value="<?php echo $this->paginacao['pag'];?>">
+        <input type="hidden" name="qtde" value="<?php echo $this->intTamPag;?>">
+        <input type="hidden" name="tipoFiltro" value="<?php echo $this->filtro;?>">
+        <input type="hidden" name="pronac" value="<?php echo $this->pronac;?>">
+    </form>
+
 </div>
 <!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
 <!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
 <br clear="all" />
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#btn_pesquisar").click(function(){
+            $('#form1').submit();
+        });
+    });
+
+    $('.btn_imprimir').click(function(){
+	$('#formImpressao').submit();
+    });
+</script>

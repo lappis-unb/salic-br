@@ -1362,6 +1362,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
 
     public function salvaalterarprojetoAction() {
         $post = Zend_Registry::get('post');
+        $auth = Zend_Auth::getInstance(); // pega a autentica��o
 
         //$pronac = addslashes($post->pronac);
         $pronac = $this->_request->getParam("pronac");
@@ -1414,7 +1415,7 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
         $dados = Null;
         $dados = array(//Monta dados para o historico
             'idPRONAC' => $dadosProjeto->IdPRONAC,
-            'idLogon' => $this->idusuario,
+            'idLogon' => $auth->getIdentity()->usu_codigo,
             'cdArea' => null,
             'cdSegmento' => null,
             'nmProjeto' => null,
