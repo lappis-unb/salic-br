@@ -944,7 +944,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         $mdlTelefones = new Agente_Model_DbTable_Telefones();
         $lista = $mdlTelefones->buscarFones($idAgente);
-
         $this->view->telefones = $lista;
         $this->view->qtdTel = count($lista);
     }
@@ -1014,7 +1013,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $mapperTelefones = new Agente_Model_TelefonesMapper();
                 $mapperTelefones->deleteBy(array("idTelefone" => $idTelefone));
 
-                parent::message("Exclusão realizada com sucesso!", "agente/agentes/telefones/id/" . $idAgente, "CONFIRM");
+                parent::message("Exclus&atilde;o realizada com sucesso!", "agente/agentes/telefones/id/" . $idAgente, "CONFIRM");
             } catch (Exception $e) {
                 parent::message("Erro ao excluir o telefone: " . $e->getMessage(), "agente/agentes/telefones/id/" . $idAgente, "ERROR");
             }
@@ -1106,7 +1105,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $mapperTelefones = new Agente_Model_InternetMapper();
                 $mapperTelefones->deleteBy(array("idInternet" => $idInternet));
 
-                parent::message("Exclusão realizada com sucesso!", "agente/agentes/emails/id/" . $idAgente, "CONFIRM");
+                parent::message("Exclus&atilde;o realizada com sucesso!", "agente/agentes/emails/id/" . $idAgente, "CONFIRM");
             } catch (Exception $e) {
                 parent::message("Erro ao excluir o e-mail: " . $e->getMessage(), "agente/agentes/emails/id/" . $idAgente, "ERROR");
             }
@@ -1403,7 +1402,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $repetida = $tbAusencia->BuscarAusenciaRepetida($idAgente, $dtInicio, $dtFim);
 
         if (count($repetida) > 0) {
-            parent::message("Já existe agendamento de férias para o período solicitado!", "agente/agentes/ferias/id/" . $idAgente . "?dtInicio=" . $this->_request->getParam("dtinicio") . "&dtFim=" . $this->_request->getParam("dtfim"), "ALERT");
+            parent::message("Já existe agendamento de f&eacute;rias para o per&iacute;odo solicitado!", "agente/agentes/ferias/id/" . $idAgente . "?dtInicio=" . $this->_request->getParam("dtinicio") . "&dtFim=" . $this->_request->getParam("dtfim"), "ALERT");
         }
 
         try {

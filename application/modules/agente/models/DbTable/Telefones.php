@@ -79,7 +79,7 @@ class Agente_Model_DbTable_Telefones extends MinC_Db_Table_Abstract
             'ddd.codigo as codigo',
         ];
 
-        $sql = $db->select()
+        $sql = $db->select()->distinct()
             ->from(['tl' => $this->_name], $tl, $this->_schema)
             ->join(['uf' => 'uf'], 'uf.iduf = tl.uf', ['uf.sigla as ufsigla'], $this->_schema)
             ->join(['ag' => 'agentes'], 'ag.idagente = tl.idagente', ['ag.idagente'], $this->_schema)
