@@ -1,4 +1,3 @@
-application/Bootstrap.php
 application/configs/bancos_*.ini
 application/configs/config.ini
 application.ini
