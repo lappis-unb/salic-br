@@ -909,7 +909,7 @@ class RecursoController extends GenericControllerNew
         }
 	
         try {
-            //ATUALIAZA A SITUAÇÃO, ÁREA E SEGMENTO DO PROJETO
+            //ATUALIZA A SITUAÇÃO, ÁREA E SEGMENTO DO PROJETO
             $d = array();
             $d['situacao'] = $situacaoProjeto;
             $d['ProvidenciaTomada'] = $providenciaProjeto;
@@ -921,9 +921,8 @@ class RecursoController extends GenericControllerNew
             }
             $where = "IdPRONAC = $idPronac";
             $Projetos = new Projetos();
-            $Projetos->update($d, $where);
-	    $Projetos->alterarSituacao($idPronac, null, $d['situacao'], $d['ProvidenciaTomada']);
-	    
+            $Projetos->alterarSituacao($idPronac, null, $d['situacao'], $d['ProvidenciaTomada']);
+            
             $dadosProjeto = $Projetos->buscar(array('IdPRONAC = ?'=>$idPronac));
             if(count($dadosProjeto)>0){
                 //CADASTRA OU ATUALIZA O ENQUADRAMENTO DO PROJETO
