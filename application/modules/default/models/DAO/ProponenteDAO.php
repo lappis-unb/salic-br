@@ -7,16 +7,13 @@ Class ProponenteDAO extends Zend_Db_Table
 
     public function execPaProponente($idPronac)
     {
+        $idPronac = preg_replace("/[^0-9]/","", $idPronac); //REMOVE injections
         $sql = "exec SAC.dbo.paAgente $idPronac";
-//        $sql = "exec SAC.dbo.paProponente $idPronac ";
-//        $sql = "exec SAC.dbo.paProponente $pronac ";
-//        $sql = "SELECT SAC.dbo.fnLiberarLinks(1,'23969156149',236,159062) as links";
-//        $sql = "Select top 1000 * from SAC.dbo.Projetos";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-//        x($sql);
         $resultado = $db->fetchAll($sql);
-//        xd($resultado);
+
+
         return $resultado;
     }
 
@@ -33,89 +30,116 @@ Class ProponenteDAO extends Zend_Db_Table
 
     public function buscarDadosProponente($idpronac)
     {
-        $sql = "SELECT
-		itn.Nome,
-		itn.Endereco,
-		itn.CgcCpf,
-		itn.Uf,
-		itn.Cidade,
-		itn.Esfera,
-		itn.Responsavel,
-		nat.Direito,
-                itn.Cep,
-                itn.Administracao,
-                itn.Utilidade,
-		case
-		when ag.tipoPessoa = 0 then 'Pessoa F�sica'
-		when ag.tipoPessoa = 1 then 'Pessoa Jur�dica'
-		end as tipoPessoa
-		FROM  SAC.dbo.Projetos  pr
-		JOIN SAC.dbo.Interessado  itn ON pr.CgcCpf = itn.CgcCpf
-		left JOIN Agentes.dbo.Agentes ag on ag.CNPJCPF = pr.CgcCpf
-		left JOIN AGENTES.dbo.Natureza AS nat ON nat.idAgente = ag.idAgente
-		WHERE pr.IdPRONAC = $idpronac";
-        $db= Zend_Db_Table::getDefaultAdapter();
+        $table = Zend_Db_Table::getDefaultAdapter();
+
+        $select = $table->select()
+            ->from(array('pr' => 'Projetos'),
+                array(new Zend_Db_Expr('
+                    case
+                        when ag.tipoPessoa = 0 then \'Pessoa F�sica\'
+                        when ag.tipoPessoa = 1 then \'Pessoa Jur�dica\'
+                    end as tipoPessoa')),
+                'SAC.dbo')
+            ->joinInner(array('itn' => 'Interessado'),
+                'pr.CgcCpf = itn.CgcCpf',
+                array('Nome', 'Endereco', 'CgcCpf', 'Uf', 'Cidade', 'Esfera', 'Responsavel', 'Cep', 'Administracao', 'Utilidade'),
+                'SAC.dbo')
+            ->joinLeft(array('ag' => 'Agentes'),
+                'ag.CNPJCPF = pr.CgcCpf',
+                array(''),
+                'Agentes.dbo')
+            ->joinLeft(array('nat' => 'Natureza'),
+                'nat.idAgente = ag.idAgente',
+                array('Direito'),
+                'AGENTES.dbo')
+            ->where('pr.IdPRONAC = ?', $idpronac);
+
+        $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $resultado = $db->fetchAll($sql);
+        $resultado = $db->fetchAll($select);
         return $resultado;
     }
 
     public function buscarEmail($idpronac)
     {
-        $sql1 = "SELECT
-                *,
-                CASE
-                WHEN It.TipoInternet = 28
-                    THEN 'Email Particular'
-                WHEN It.TipoInternet = 29
-                    THEN 'Email Institucional'
-                End as TipoInternet,
-                It.Descricao as Email
-            FROM AGENTES.dbo.Internet as It
-            LEFT JOIN AGENTES.dbo.Agentes Ag on Ag.IdAgente = It.IdAgente
-            LEFT JOIN SAC.dbo.Projetos Pr ON Ag.CNPJCPF = Pr.CgcCpf
-            where Pr.IdPRONAC = " . $idpronac ;
-
-        $db= Zend_Db_Table::getDefaultAdapter();
+        $table = Zend_Db_Table::getDefaultAdapter();
+        $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $resultado1 = $db->fetchAll($sql1);
 
-        return $resultado1;
+        $select = $table->select()
+            ->from('Internet',
+                array(new Zend_db_Expr('*'),new Zend_db_Expr("
+                    CASE
+                    WHEN Internet.TipoInternet = 28
+                        THEN 'Email Particular'
+                    WHEN Internet.TipoInternet = 29
+                        THEN 'Email Institucional'
+                    End as TipoInternet,
+                    Internet.Descricao as Email    
+                ")),
+                'AGENTES.dbo')
+            ->where('Projetos.IdPRONAC = ?', $idpronac)
+            ->joinLeft('Agentes',
+                'Agentes.IdAgente = Internet.IdAgente',
+                array(''),
+                'AGENTES.dbo')
+            ->joinLeft('Projetos',
+                'Agentes.CNPJCPF = Projetos.CgcCpf',
+                array(''),
+                'SAC.dbo');
+
+        $resultado = $db->fetchAll($select);
+
+        return $resultado;
     }
 
     public function buscarTelefone($idpronac)
     {
-        $sql2 = "SELECT
-                    CASE
-                    WHEN Tl.TipoTelefone = 22 or Tl.TipoTelefone = 24
-                    THEN 'Residencial'
-                    WHEN Tl.TipoTelefone = 23 or Tl.TipoTelefone = 25
-                    THEN 'Comercial'
-                    WHEN Tl.TipoTelefone = 26
-                    THEN 'Celular'
-                    WHEN Tl.TipoTelefone = 27
-                    THEN 'Fax'
-                    END as TipoTelefone,
-                    Uf.Descricao as UF,
-                    Tl.DDD as DDDTelefone,
-                    Tl.Numero as NumeroTelefone,
-                    CASE
-                    WHEN Tl.Divulgar = 1
-                    THEN 'Sim'
-                    WHEN Tl.Divulgar = 0
-                    THEN 'N�o'
-                    end as Divulgar
-                FROM AGENTES.dbo.Telefones Tl
-                    INNER JOIN AGENTES.dbo.Uf as Uf on Uf.idUF = Tl.UF
-                    INNER JOIN AGENTES.dbo.Agentes Ag on Ag.IdAgente = Tl.IdAgente
-                    INNER JOIN SAC.dbo.Projetos Pr On Ag.CNPJCPF = Pr.CgcCpf
-                    WHERE Pr.IdPRONAC = " . $idpronac ;
-
-        $db= Zend_Db_Table::getDefaultAdapter();
+        $table = Zend_Db_Table::getDefaultAdapter();
+        $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-        $resultado2 = $db->fetchAll($sql2);
 
-        return $resultado2;
+        $select = $table->select()
+            ->from('Telefones',
+                array(new Zend_db_Expr("
+                    CASE
+                        WHEN Telefones.TipoTelefone = 22 or Telefones.TipoTelefone = 24
+                            THEN 'Residencial'
+                        WHEN Telefones.TipoTelefone = 23 or Telefones.TipoTelefone = 25
+                            THEN 'Comercial'
+                        WHEN Telefones.TipoTelefone = 26
+                            THEN 'Celular'
+                        WHEN Telefones.TipoTelefone = 27
+                            THEN 'Fax'
+                        END as TipoTelefone,
+                        Uf.Descricao as UF,
+                        Telefones.DDD as DDDTelefone,
+                        Telefones.Numero as NumeroTelefone,
+                        CASE
+                        WHEN Telefones.Divulgar = 1
+                            THEN 'Sim'
+                        WHEN Telefones.Divulgar = 0
+                            THEN 'N�o'
+                    end as Divulgar
+                ")),
+                'AGENTES.dbo')
+            ->where('Projetos.IdPRONAC = ?', $idpronac)
+            ->joinInner('Uf',
+                'Uf.idUF = Telefones.UF',
+                array(''),
+                'AGENTES.dbo')
+            ->joinInner('Agentes',
+                'Agentes.IdAgente = Telefones.IdAgente',
+                array(''),
+                'AGENTES.dbo')
+            ->joinInner('Projetos',
+                'Agentes.CNPJCPF = Projetos.CgcCpf',
+                array(''),
+                'SAC.dbo');
+
+        $resultado = $db->fetchAll($select);
+
+        return $resultado;
     }
 
     public function dadospronacs($idpronac)

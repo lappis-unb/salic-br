@@ -151,7 +151,7 @@ header('Content-Type: text/plain; charset=ISO-8859-1');
                             //177 = GM/AECI
                             //270 = GEAR/SPCIN
                             //303 = ARQ/CGEPC
-                        if(in_array($listaEntidades->Codigo, array(12,177,270,303))): ?>
+                        if(in_array($listaEntidades->Codigo, array(12,167,177,270,303))): ?>
                             <option value="<?php echo $listaEntidades->Codigo; ?>"><?php echo utf8_decode(htmlentities($listaEntidades->Sigla));?></option>
                         <?php endif; ?>
                     <?php endforeach; ?>
