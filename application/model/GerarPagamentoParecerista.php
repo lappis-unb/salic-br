@@ -10,7 +10,7 @@ class GerarPagamentoParecerista extends GenericModel {
     protected $_schema = 'dbo';
     protected $_banco = 'SAC';
 
-    public function buscarDespachos($where = array()) {
+    public function buscarDespachos($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
 
         $select = $this->select()->distinct();
         $select->setIntegrityCheck(false);
@@ -30,7 +30,23 @@ class GerarPagamentoParecerista extends GenericModel {
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
-        
+
+        //Total de dados da paginação
+        if ($qtdeTotal) {
+            return $this->fetchAll($select)->count();
+        }
+
+        //adicionando linha order ao select
+        $select->order($order);
+
+        // paginacao
+        if ($tamanho > -1) {
+            $tmpInicio = 0;
+            if ($inicio > -1) {
+                $tmpInicio = $inicio;
+            }
+            $select->limit($tamanho, $tmpInicio);
+        }
 //        xd($select->assemble());
         
         return $this->fetchAll($select);
