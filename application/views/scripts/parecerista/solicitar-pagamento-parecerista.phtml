@@ -14,7 +14,6 @@
     <div>Solicitar Pagamento de Parecerista <span class="voltar"><a href="javascript:voltar();" title="Página Anterior">Voltar</a></span></div>
 </div>
 <!-- ========== INÍCIO CONTEÚDO ========== -->
-
 <div id="conteudo">
     
     <?php if(count($this->dados)>0):?>
@@ -66,9 +65,9 @@
         
         <table class="tabela">
             <tr>
-                <th width="100">Despacho</th>
-                <th>Parecerista</th>
-                <th width="110">Valor Total</th>
+                <th width="100"><a href="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'solicitar-pagamento-parecerista')).'?pag=1&qtde='.$this->paginacao['qtde'].'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">Despacho</a></th>
+                <th><a href="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'solicitar-pagamento-parecerista')).'?pag=1&qtde='.$this->paginacao['qtde'].'&campo=11&ordem='.$this->paginacao['novaOrdem'];?>">Parecerista</th>
+                <th width="110"><a href="<?php echo $this->url(array('controller' => 'parecerista', 'action' => 'solicitar-pagamento-parecerista')).'?pag=1&qtde='.$this->paginacao['qtde'].'&campo=9&ordem='.$this->paginacao['novaOrdem'];?>">Valor Total</th>
                 <th width="90"></th>
                 <th width="90"></th>
                 <th width="90"></th>

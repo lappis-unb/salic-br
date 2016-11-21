@@ -767,7 +767,7 @@ class PareceristaController extends GenericControllerNew {
 
         } else {
             $campo = null;
-            $order = array(4); //Coluna inicial de ordenação do banco de dados
+            $order = array(7); //Coluna NrDespacho
             $ordenacao = null;
         }
 
@@ -787,7 +787,7 @@ class PareceristaController extends GenericControllerNew {
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
         $busca = $DadosGerarPagamentoParecerista->buscarDespachos(array('gpp.siPagamento = ?' => 1), $order, $tamanho, $inicio);
-
+        
         $paginacao = array(
             "pag"=>$pag,
             "qtde"=>$this->intTamPag,
@@ -820,11 +820,11 @@ class PareceristaController extends GenericControllerNew {
             $despachos[$d]['nrDespacho']                    = $de->nrDespacho;
             $despachos[$d]['vlTotalPagamento']              = $de->vlTotalPagamento;
             $despachos[$d]['siPagamento']                   = $de->siPagamento;
+            $despachos[$d]['nmParecerista']                 = $de->nmParecerista;
 
             $listaDePagamentos = $dadosPagarParecerista->buscarPagamentos(array('pp.idGerarPagamentoParecerista = ?' => $de->idGerarPagamentoParecerista));
 
             $despachos[$d]['idParecerista'] = $listaDePagamentos[0]->idParecerista;
-            $despachos[$d]['nmParecerista'] = $listaDePagamentos[0]->nmParecerista;
 
             $dados = array();
             $pr = 0;
@@ -853,7 +853,6 @@ class PareceristaController extends GenericControllerNew {
 
             $d++;
         }
-
 
         $this->view->paginacao         = $paginacao;
         $this->view->qtd               = $total;

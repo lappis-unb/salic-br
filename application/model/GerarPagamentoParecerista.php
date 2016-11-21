@@ -21,12 +21,23 @@ class GerarPagamentoParecerista extends GenericModel {
                                 'CONVERT(VARCHAR(10), gpp.dtEfetivacaoPagamento ,103) as dtEfetivacaoPagamento',
                                 'CONVERT(VARCHAR(10), gpp.dtOrdemBancaria ,103) as dtOrdemBancaria',
                                 'gpp.nrOrdemBancaria',
-                                'gpp.nrDespacho',
+                                'CONVERT(INT, gpp.nrDespacho) as nrDespacho',
                                 'gpp.siPagamento',
                                 'gpp.vlTotalPagamento',
                                 'gpp.idUsuario')
         );
-        
+        $select->joinInner(array('pp'=> 'tbPagarParecerista'), "pp.idGerarPagamentoParecerista = gpp.idGerarPagamentoParecerista",
+            array(),'SAC.dbo'
+        );
+        $select->joinInner(array('ag'=> 'Agentes'), "pp.idParecerista = ag.idAgente",
+            array(''),'AGENTES.dbo'
+        );
+
+        $select->joinInner(array('nm'=> 'Nomes'), "ag.idAgente = nm.idAgente",
+            array(new Zend_Db_Expr('nm.Descricao AS nmParecerista')),'AGENTES.dbo'
+        );
+
+
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
@@ -47,7 +58,6 @@ class GerarPagamentoParecerista extends GenericModel {
             }
             $select->limit($tamanho, $tmpInicio);
         }
-//        xd($select->assemble());
         
         return $this->fetchAll($select);
     }
