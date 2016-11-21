@@ -33,10 +33,10 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = "SELECT distinct pr.Codigo as idProduto, pr.Descricao as Produto
-                FROM SAC.dbo.tbItensPlanilhaProduto p
-                INNER JOIN SAC.dbo.Produto pr on (p.idProduto = pr.Codigo)
-                INNER JOIN SAC.dbo.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
-                INNER JOIN SAC.dbo.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)	";
+ 				FROM SAC.dbo.tbItensPlanilhaProduto p
+				INNER JOIN SAC.dbo.Produto pr on (p.idProduto = pr.Codigo)
+				INNER JOIN SAC.dbo.TbPlanilhaItens i on (p.idPlanilhaItens = i.idPlanilhaItens)
+				INNER JOIN SAC.dbo.TbPlanilhaEtapa e on (p.idPlanilhaEtapa = e.idPlanilhaEtapa)	";
 
 
         if(!empty($nomeItem)){

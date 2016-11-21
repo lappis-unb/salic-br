@@ -107,90 +107,88 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         return $db->fetchAll($sql);
     }
 
-    /**
-     * @todo utilizar buscarDadosEditarProdutos em Proposta_Model_DbTable_TbPlanilhaProposta
-     * @deprecated utilizar buscarDadosEditarProdutos em Proposta_Model_DbTable_TbPlanilhaProposta
-     */
     public static function buscarDadosEditarProdutos($idPreProjeto = null, $idEtapa = null, $idProduto = null, $idItem = null, $idPlanilhaProposta=null, $idUf = null, $municipio = null,
-                                                                    $unidade = null, $qtd = null, $ocorrencia = null, $valor = null, $qtdDias = null, $fonte = null) {
+            														$unidade = null, $qtd = null, $ocorrencia = null, $valor = null, $qtdDias = null, $fonte = null) {
+        $sql = "
+                SELECT
+                    pp.idPlanilhaProposta as idPlanilhaProposta,
+                    P.Codigo AS CodigoProduto,
+                    pre.idPreProjeto as idProposta,
+                    pp.idEtapa as idEtapa,
+                    pe.Descricao as DescricaoEtapa,
+                    pp.idPlanilhaItem AS idItem,
+                    ti.Descricao as DescricaoItem,
+                    pp.UfDespesa AS IdUf,
+                    uf.Descricao AS DescricaoUf,
+                    pp.MunicipioDespesa as Municipio,
+                    mun.Descricao as DescricaoMunicipio,
+                    pp.FonteRecurso as Recurso,
+                    rec.Descricao as DescricaoRecurso,
+                    pp.Unidade as Unidade,
+                    uni.Descricao as DescricaoUnidade,
+                    pp.Quantidade as Quantidade,
+                    pp.Ocorrencia as Ocorrencia,
+                    pp.ValorUnitario as ValorUnitario,
+                    CAST(pp.dsJustificativa AS TEXT) as Justificativa,
+                    pp.QtdeDias as QtdDias
+                    FROM SAC.dbo.PreProjeto AS pre
+                    INNER JOIN SAC.dbo.tbPlanilhaProposta pp ON pre.idPreProjeto = pp.idProjeto
+                    INNER JOIN SAC.dbo.Produto AS P ON pp.idProduto = P.Codigo
+                    INNER JOIN SAC.dbo.tbPlanilhaItens ti ON ti.idPlanilhaItens = pp.idPlanilhaItem
+                    INNER JOIN SAC.dbo.Uf AS uf ON uf.CodUfIbge = pp.UfDespesa
+                    INNER JOIN AGENTES.dbo.Municipios mun ON mun.idMunicipioIBGE = pp.MunicipioDespesa
+                    INNER JOIN SAC.dbo.tbPlanilhaEtapa pe ON pp.idEtapa = pe.idPlanilhaEtapa
+                    INNER JOIN SAC.dbo.Verificacao rec ON rec.idVerificacao = pp.FonteRecurso
+                    INNER JOIN SAC.dbo.tbPlanilhaUnidade uni ON uni.idUnidade = pp.Unidade
+                    WHERE pp.idEtapa = $idEtapa ";
 
-        $db = Zend_Db_Table::getDefaultAdapter();
-
-        $pp = [
-                'pp.idPlanilhaProposta as idPlanilhaProposta',
-                'pp.idEtapa as idEtapa',
-                'pp.UfDespesa AS IdUf',
-                'pp.MunicipioDespesa as Municipio',
-                'pp.idPlanilhaItem AS idItem',
-                'pp.FonteRecurso as Recurso',
-                'pp.Quantidade as Quantidade',
-                'pp.Ocorrencia as Ocorrencia',
-                'pp.ValorUnitario as ValorUnitario',
-                'CAST(pp.dsJustificativa AS TEXT) as Justificativa',
-                'pp.QtdeDias as QtdDias',
-                'pp.Unidade as Unidade',
-        ];
-
-        $sacSchema = parent::getSchema('sac');
-        $sql = $db->select()->from(['pre' => 'PreProjeto' ],'pre.idPreProjeto as idProposta' , $sacSchema)
-            ->join(['pp' => 'tbPlanilhaProposta'], 'pre.idPreProjeto = pp.idProjeto', $pp, $sacSchema)
-            ->join(['p' => 'Produto'] , 'pp.idProduto = p.codigo', 'P.Codigo AS CodigoProduto', $sacSchema)
-            ->join(['ti' => 'tbPlanilhaItens'], 'ti.idPlanilhaItens = pp.idPlanilhaItem', 'ti.Descricao as DescricaoItem', $sacSchema)
-            ->join(['uf' => 'Uf' ], 'uf.CodUfIbge = pp.UfDespesa', 'uf.Descricao AS DescricaoUf', $sacSchema)
-            ->join(['mun' => 'Municipios'], 'mun.idMunicipioIBGE = pp.MunicipioDespesa','mun.Descricao as DescricaoMunicipio', parent::getSchema('agentes'))
-            ->join(['pe' => 'tbPlanilhaEtapa'], 'pp.idEtapa = pe.idPlanilhaEtapa', 'pe.Descricao as DescricaoEtapa', $sacSchema)
-            ->join(['rec' => 'Verificacao'], 'rec.idVerificacao = pp.FonteRecurso', 'rec.Descricao as DescricaoRecurso', $sacSchema)
-            ->join(['uni' => 'tbPlanilhaUnidade'], 'uni.idUnidade = pp.Unidade', 'uni.Descricao as DescricaoUnidade', $sacSchema)
-            ->where('pp.idEtapa = ?', $idEtapa)
-            ;
-
-        if($idPreProjeto){
-            $sql->where('pre.idPreProjeto = ?', $idPreProjeto);
+        //echo "<pre>"; die($sql);
+    	if($idPreProjeto){
+            $sql .= " AND pre.idPreProjeto = ".$idPreProjeto;
         }
-        if($idProduto){
-            $sql->where('p.Codigo = ?', $idProduto);
+    	if($idProduto){
+            $sql .= " AND p.Codigo = ".$idProduto;
         }
-        if($idItem){
-            $sql->where('pp.idPlanilhaItem = ?', $idItem);
+    	if($idItem){
+            $sql .= " AND pp.idPlanilhaItem = ".$idItem;
         }
         if($idPlanilhaProposta){
-            $sql->where('pre.idPreProjeto  = ?', $idPreProjeto);
+            $sql .= " AND pp.idPlanilhaProposta = ".$idPlanilhaProposta;
         }
 
-        if($idUf){
-            $sql->where('pp.UfDespesa = ?', $idUf);
+    	if($idUf){
+            $sql .= " AND pp.UfDespesa = ".$idUf;
         }
 
-           if($municipio){
-            $sql->where('pp.MunicipioDespesa = ?', $municipio);
+       	if($municipio){
+            $sql .= " AND pp.MunicipioDespesa = ".$municipio;
         }
 
         if($unidade){
-            $sql->where('pp.Unidade = ?', $unidade);
+            $sql .= " AND pp.Unidade = ".$unidade;
         }
 
         if($qtd){
-            $sql->where('pp.Quantidade = ?', $qtd);
+            $sql .= " AND pp.Quantidade = ".$qtd;
         }
 
         if($ocorrencia){
-            $sql->where('pp.Ocorrencia = ?', $ocorrencia);
+            $sql .= " AND pp.Ocorrencia = ".$ocorrencia;
         }
 
         if($valor){
-            $sql->where('pp.ValorUnitario = ?', $valor);
+            $sql .= " AND pp.ValorUnitario = ".$valor;
         }
 
         if($qtdDias){
-            $sql->where('pp.QtdeDias = ?', $qtdDias);
+            $sql .= " AND pp.QtdeDias = ".$qtdDias;
         }
 
         if($fonte){
-            $sql->where('pp.FonteRecurso = ?', $fonte);
+            $sql .= " AND pp.FonteRecurso = ".$fonte;
         }
 
-        echo $sql; die;
-
+        $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
@@ -204,7 +202,6 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                 FROM SAC.dbo.PlanoDistribuicaoProduto AS pd
                 WHERE (pd.idProduto = $idProduto and pd.idProjeto = $idPreProjeto) AND pd.stPlanoDistribuicaoProduto = 1";
 
-        //x($sql);
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
@@ -293,35 +290,13 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public static function buscarEtapasProdutos($idPreProjeto)
     {
-        echo '<pre>';
-        var_dump ('Método transferido para : Proposta_Model_DbTable_PreProjeto');
-        exit;
-        $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        throw new Exception('Método transferido para : Proposta_Model_DbTable_PreProjeto');
 
-        $sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
-
-        try {
-        }
-        catch (Zend_Exception_Db $e) {
-            $this->view->message = "Erro ao buscar Etapas: " . $e->getMessage();
-        }
-        return $db->fetchAll($sql);
     }
 
     public function listarEtapasProdutos($idPreProjeto)
     {
-
-        $db = Zend_Db_Table::getDefaultAdapter();
-        $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
-        $sql = $db->select()
-            ->from(['tbplanilhaetapa'], ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], $this->getSchema('sac'))
-            ->where("tpCusto = 'P'")
-            ;
-
         throw new Exception('Método transferido para Proposta_Model_DbTable_TbPlanilhaEtapa');
-        return $db->fetchAll($sql);
     }
 
     public static function buscarEtapasProdutosPlanilha($idPreProjeto) {
@@ -720,37 +695,35 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
         return $db->fetchAll($sql);
     }
 
-    public static function buscarProdutos($idPreProjeto) {
+    public static function buscarProdutos($idPreProjeto)
+    {
+        $table = Zend_Db_Table::getDefaultAdapter();
 
-        echo '<pre>';
-        var_dump ('Método transferido para Proposta Model Dbtable PreProjeto');
-        exit;
+        $select = $table->select()
+            ->from(array('pre' => 'PreProjeto'),
+                array(
+                    new Zend_Db_Expr('p.Codigo AS CodigoProduto'),
+                    new Zend_Db_Expr('idPreProjeto AS PreProjeto'),
+                    new Zend_Db_Expr(' pre.idPreProjeto AS idProposta')),
+                'SAC.dbo')
+            ->joinInner(array('pd' => 'PlanoDistribuicaoProduto'),
+                'pre.idPreProjeto = pd.idProjeto AND pd.stPlanoDistribuicaoProduto = 1',
+                array(''),
+                'SAC.dbo')
+            ->joinInner(array('p' => 'Produto'),
+                'pd.idProduto = p.Codigo',
+                array(new Zend_Db_Expr('Descricao AS DescricaoProduto')),
+                'SAC.dbo')
+            ->where('idPreProjeto = ?', $idPreProjeto)
+            ->group('p.Codigo')
+            ->group('p.Descricao')
+            ->group('idPreProjeto')
+            ->group('p.Descricao');
 
-        $sql = "SELECT p.Codigo as CodigoProduto,
-                    p.Descricao as DescricaoProduto,
-                    pre.idPreProjeto as PreProjeto,
-                    pre.idPreProjeto as idProposta
-                    FROM SAC.dbo.PreProjeto pre
-                    INNER JOIN SAC.dbo.PlanoDistribuicaoProduto pd ON (pre.idPreProjeto = pd.idProjeto AND pd.stPlanoDistribuicaoProduto = 1)
-                    INNER JOIN SAC.dbo.Produto p ON (pd.idProduto = p.Codigo)
-                   where idPreProjeto = {$idPreProjeto} group by p.Codigo, p.Descricao, idPreProjeto ";
-
-        /*$sql = "SELECT p.Codigo as CodigoProduto,
-                    p.Descricao as DescricaoProduto,
-                    pre.idPreProjeto as PreProjeto,
-                    pre.idPreProjeto as idProposta
-                    FROM SAC.dbo.PreProjeto pre
-                    INNER JOIN SAC.dbo.PlanoDistribuicaoProduto pd ON (pre.idPreProjeto = pd.idProjeto AND pd.stPlanoDistribuicaoProduto = 1)
-                    INNER JOIN SAC.dbo.Produto p ON (pd.idProduto = p.Codigo)
-                       where idPreProjeto = {$idPreProjeto} group by p.Codigo, p.Descricao, idPreProjeto";*/
-
-        //xd($sql);
-        $sql.= " ORDER BY p.Descricao ";
-
-        $db= Zend_Db_Table::getDefaultAdapter();
+        $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        return $db->fetchAll($sql);
+        return $db->fetchAll($select);
     }
 
     public function listarProdutos($idPreProjeto)
@@ -799,12 +772,6 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
     									$fonte = null, $unidade = null, $quantidade = null, $ocorrencia = null, $vlunitario = null, $qtdDias = null, $dsJustificativa = null) {
         $sql = "select  tpp.idUsuario,
                         tpp.idProjeto as idProposta,
-                        tpp.Quantidade,
-                        tpp.Ocorrencia,
-                        tpp.ValorUnitario,
-                        tpp.QtdeDias,
-                        tpp.dsJustificativa as Justificativa,
-                        tpp.idPlanilhaProposta
                         tpe.tpCusto as custo,
                         tpe.Descricao as etapa,
                         tpe.idPlanilhaEtapa as idEtapa,
@@ -815,8 +782,14 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
                         mec.Descricao as mecanismo,
                         un.idUnidade as idUnidade,
                         un.Descricao as Unidade,
+                        tpp.Quantidade,
+                        tpp.Ocorrencia,
+                        tpp.ValorUnitario,
+                        tpp.QtdeDias,
                         veri.idVerificacao as idFonteRecurso,
                         veri.Descricao as DescricaoFonteRecurso,
+                        tpp.dsJustificativa as Justificativa,
+                        tpp.idPlanilhaProposta
                     FROM SAC..tbPlanilhaProposta tpp
                             left JOIN SAC..Produto pd on pd.Codigo = tpp.idProduto
                             INNER JOIN SAC..tbPlanilhaEtapa tpe on tpe.idPlanilhaEtapa = tpp.idEtapa
