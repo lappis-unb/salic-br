@@ -17,7 +17,6 @@ class tbTipoDocumentoBDCORPORATIVO extends MinC_Db_Table_Abstract
 	protected $_schema  = "scCorp";
 	protected $_name    = "tbTipoDocumento";
 
-
         /**
 	 * M�todo para consultar
 	 * @access public
@@ -25,5 +24,5 @@ class tbTipoDocumentoBDCORPORATIVO extends MinC_Db_Table_Abstract
 	 * @param integer $where
 	 * @return integer (quantidade de registros alterados)
 	 */
-    
+
 } // fecha class

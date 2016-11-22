@@ -134,9 +134,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     public function _initCarregarDependenciasComposer()
     {
-        $objZendConfig = new Zend_Config($this->getOptions(), true);
-        $config = $objZendConfig->toArray();
-        if($config && $config['OAuth']['servicoHabilitado'] == true && file_exists('vendor/autoload.php')) {
+        if(file_exists('vendor/autoload.php')) {
             require_once 'vendor/autoload.php';
         }
     }
