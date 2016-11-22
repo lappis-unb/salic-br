@@ -47,8 +47,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     {
         $this->_helper->layout->disableLayout();
 
-
-
         try {
             $username = Mascara::delMaskCNPJ(Mascara::delMaskCPF($this->getParam('Login', null)));
             $password = $this->getParam('Senha', null);
@@ -127,8 +125,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 if ($verificaStatus) {
                     $verificaStatus = array_change_key_case(reset($verificaStatus));
 
-                    $IdUsuario = $verificaStatus['idusuario'];
-                    $verificaSituacao = $verificaStatus['situacao'];
+                    $IdUsuario = $verificaStatus['IdUsuario'];
+                    $verificaSituacao = $verificaStatus['Situacao'];
 
                     if (md5($password) != $this->validarSenhaInicial()) {
                         $SenhaFinal = EncriptaSenhaDAO::encriptaSenha($username, $password);
@@ -145,7 +143,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 }
 
                 if ($buscar) {
-                    $verificaSituacao = $verificaStatus['situacao'];
+                    $verificaSituacao = $verificaStatus['Situacao'];
                     if ($verificaSituacao == 1) {
                         parent::message("Voc&ecirc; logou com uma senha tempor&aacute;ria. Por favor, troque a senha.", "/autenticacao/index/alterarsenha?idUsuario=" . $IdUsuario, "ALERT");
                     }
@@ -189,12 +187,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
         $arrayOauthConfiguration = $this->getOPAuthConfiguration();
         if(count($arrayOauthConfiguration) > 0) {
-            //https://id.cultura.gov.br/openid/connect/session/end?post_logout_redirect_uri=http://local.salic/principal
-            //https://id.cultura.gov.br/logout&post_logout_redirect_uri=http://local.salic/principal
-            //$this->redirect($arrayOauthConfiguration['logout_uri']);
-
             $url = $arrayOauthConfiguration['logout_uri'];
-
             $this->redirect($url);
         } else {
             $this->redirect('index');
@@ -218,20 +211,19 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             }
 
             $senha = Gerarsenha::gerasenha(15, true, true, true, false);
-            $db= Zend_Db_Table::getDefaultAdapter();
-            $senhaCriptografada = $senha;
+            $db = Zend_Db_Table::getDefaultAdapter();
             $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $senha);
             $dataFinal = data::dataAmericana($post->dataNasc);
 
             $dados = array(
-                "cpf" => $cpf,
-                "nome" => $post->nome,
-                "dtnascimento" => $dataFinal,
-                "email" => $post->email,
-                "senha" => $senhaCriptografada,
-                "dtcadastro" => date("Y-m-d"),
-                "situacao" => 1,
-                "dtsituacao" => date("Y-m-d")
+                "Cpf" => $cpf,
+                "Nome" => $post->nome,
+                "DtNascimento" => $dataFinal,
+                "Email" => $post->email,
+                "Senha" => $senhaCriptografada,
+                "DtCadastro" => date("Y-m-d"),
+                "Situacao" => 1,
+                "DtSituacao" => date("Y-m-d")
             );
 
             $sgcAcesso = new Autenticacao_Model_Sgcacesso();
@@ -313,7 +305,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $post = Zend_Registry::get('post');
             $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf)); // recebe cpf
             $dataNasc = data::dataAmericana($post->dataNasc); // recebe dataNasc
-            $email = $post->email; // recebe email
+            $email = $post->email;
             $sgcAcesso = new Autenticacao_Model_Sgcacesso();
 
             $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf, "Email = ?" => $email, "DtNascimento = ?" => $dataNasc));
@@ -323,17 +315,17 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             }
 
             $sgcAcessoBuscaCpfArray = $sgcAcessoBuscaCpf->toArray();
-            $nome = $sgcAcessoBuscaCpfArray[0]['nome'];
+            $nome = $sgcAcessoBuscaCpfArray[0]['Nome'];
             $senha = Gerarsenha::gerasenha(15, true, true, true, true);
             $senhaFormatada = str_replace(">", "", str_replace("<", "", str_replace("'", "", $senha)));
 
             $senhaFormatada = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaFormatada);
 
             $dados = array(
-                "idusuario" => $sgcAcessoBuscaCpfArray[0]['idusuario'],
-                "senha" => $senhaFormatada,
-                "situacao" => 1,
-                "dtsituacao" => date("Y-m-d")
+                "IdUsuario" => $sgcAcessoBuscaCpfArray[0]['IdUsuario'],
+                "Senha" => $senhaFormatada,
+                "Situacao" => 1,
+                "DtSituacao" => date("Y-m-d")
             );
 
             $sgcAcessoSave = $sgcAcesso->salvar($dados);
@@ -347,7 +339,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n&atilde;o responda.<br><br>";
             $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
 
-            $email = $sgcAcessoBuscaCpfArray[0]['email'];
+            $email = $sgcAcessoBuscaCpfArray[0]['Email'];
 
             $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
             parent::message("Senha gerada com sucesso. Verifique seu email!", "/autenticacao", "CONFIRM");
@@ -369,14 +361,14 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         parent::perfil(4);
 
         /* ========== INICIO ID DO USUARIO LOGADO ========== */
-        $auth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
+        $auth = (array) Zend_Auth::getInstance()->getIdentity();
         $Usuario = new Autenticacao_Model_Usuario();
 
         // verifica se o usuario logado e agente
-        $idUsuario = $Usuario->getIdUsuario(null, $auth['cpf']);
+        $idUsuario = $Usuario->getIdUsuario(null, $auth['Cpf']);
 
         // caso nao tenha idAgente, atribui o idUsuario
-        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth['idusuario'];
+        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth['IdUsuario'];
         $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
 
 //        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
@@ -389,15 +381,15 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         if (count(Zend_Auth::getInstance()->getIdentity()) > 0) {
             $auth = Zend_Auth::getInstance();
 
-            $idUsuario = $auth->getIdentity()->idusuario ?$auth->getIdentity()->idusuario : $auth->getIdentity()->IdUsuario ;
+            $idUsuario = $auth->getIdentity()->IdUsuario ?$auth->getIdentity()->IdUsuario : $auth->getIdentity()->IdUsuario ;
 
             $this->view->idUsuario = $idUsuario;
-            $cpf = $auth->getIdentity()->cpf;
-            $this->view->cpf = $auth->getIdentity()->cpf;
-            $this->view->nome = $auth->getIdentity()->nome;
-            $dataFormatada = data::formatarDataMssql($auth->getIdentity()->dtnascimento);
+            $cpf = $auth->getIdentity()->Cpf;
+            $this->view->cpf = $auth->getIdentity()->Cpf;
+            $this->view->nome = $auth->getIdentity()->Nome;
+            $dataFormatada = data::formatarDataMssql($auth->getIdentity()->DtNascimento);
             $this->view->dtNascimento = $dataFormatada;
-            $this->view->email = $auth->getIdentity()->email;
+            $this->view->email = $auth->getIdentity()->Email;
 
         }
 
@@ -420,12 +412,12 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 $idUsuario = $_POST['idUsuario'];
             }
 
-            $buscarSenha = $sgcAcesso->findBy(array('idusuario' => $idUsuario));
+            $buscarSenha = $sgcAcesso->findBy(array('idUsuario' => $idUsuario));
 
-            $senhaAtualBanco = $buscarSenha['senha'];
+            $senhaAtualBanco = $buscarSenha['Senha'];
 
             if (empty ($cpf)) {
-                $cpf = $buscarSenha['cpf'];
+                $cpf = $buscarSenha['Cpf'];
             }
 
             // busca a senha do banco TABELAS
@@ -471,20 +463,19 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                     $post = Zend_Registry::get('post');
                     $idUsuario = $post->idUsuario;
                 }
-                $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("idusuario = ?" => $idUsuario));
+                $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("IdUsuario = ?" => $idUsuario));
 
-                $cpf = $sgcAcessoBuscaCpf[0]['cpf'];
-                $nome = $sgcAcessoBuscaCpf[0]['nome'];
-                $email = $sgcAcessoBuscaCpf[0]['email'];
+                $cpf = $sgcAcessoBuscaCpf[0]['Cpf'];
+                $nome = $sgcAcessoBuscaCpf[0]['Nome'];
+                $email = $sgcAcessoBuscaCpf[0]['Email'];
                 $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaNova);
 
                 $dados = array(
-                    "idusuario" => $idUsuario,
-                    "senha" => $senhaCriptografada,
-                    "situacao" => 3,
-                    "dtsituacao" => date("Y-m-d")
+                    "IdUsuario" => $idUsuario,
+                    "Senha" => $senhaCriptografada,
+                    "Situacao" => 3,
+                    "DtSituacao" => date("Y-m-d")
                 );
-
 
                 $sgcAcessoSave = $sgcAcesso->salvar($dados);
 
@@ -551,13 +542,11 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $senhaAtual = str_replace("##maior##", ">", $senhaAtual);
             $senhaAtual = str_replace("##aspa##", "'", $senhaAtual);
 
+            $idUsuario = $_POST['idUsuario'];
             if (empty ($_POST['idUsuario'])) {
                 $idUsuario = $_POST['idUsuarioGet'];
-                $buscarSenha = $Usuario->buscar(array('usu_codigo = ?' => $idUsuario))->toArray();
-            } else {
-                $idUsuario = $_POST['idUsuario'];
-                $buscarSenha = $Usuario->buscar(array('usu_codigo = ?' => $idUsuario))->toArray();
             }
+            $buscarSenha = $Usuario->buscar(array('usu_codigo = ?' => $idUsuario))->toArray();
             $senhaAtualBanco = $buscarSenha[0]['usu_senha'];
 
             $comparaSenha = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaAtual);
@@ -594,7 +583,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     public function logarcomoAction()
     {
 
-        $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
+        $this->_helper->layout->disableLayout();
         Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
         $buscaUsuario = new Usuariosorgaosgrupos();
@@ -613,16 +602,12 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $password = $post->senha; // recebe a senha
             $idLogarComo = $post->logarComo;
 
-            $sql = "SELECT tabelas.dbo.fnEncriptaSenha('" . $username . "', '" . $password . "') as senha";
-            $db= Zend_Db_Table::getDefaultAdapter();
-            $db->setFetchMode(Zend_DB::FETCH_OBJ);
-            $senha = $db->fetchRow($sql);
-
-            $SenhaFinal = $senha->senha;
+            $senhaFinal = EncriptaSenhaDAO::encriptaSenha($username, $password);
 
             $usuario = new Autenticacao_Model_Usuario();
             $usuarioRs = $usuario->buscar(
-                array('usu_identificacao = ?' => $username, 'usu_senha = ?' => $SenhaFinal));
+                array('usu_identificacao = ?' => $username, 'usu_senha = ?' => $senhaFinal)
+            );
 
             if (!empty ($usuarioRs)) {
                 $usuarioRs = $usuario->buscar(
@@ -632,8 +617,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 $Usuario = new Autenticacao_Model_Usuario();
                 $buscar = $Usuario->loginSemCript($idLogarComo, $senha);
 
-                if ($buscar) // acesso permitido
-                {
+                if ($buscar) {
                     $auth = Zend_Auth::getInstance(); // instancia da autenticacao
 
                     // registra o primeiro grupo do usu&aacute;rio (pega unidade autorizada, organiza e grupo do usuaaio)
@@ -645,7 +629,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
                     // redireciona para o Controller protegido
                     return $this->_helper->redirector->goToRoute(array('controller' => 'principal'), null, true);
-                } // fecha if
+                }
             }
         }
     }

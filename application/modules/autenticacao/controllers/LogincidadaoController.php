@@ -14,11 +14,14 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
      */
     public function successAction()
     {
+
+        (new Autenticacao_Model_Sgcacesso())->loginSemCript(1,1);
+
+
         $this->_helper->viewRenderer->setNoRender(true);
         try {
             $objSgcAcesso = new Autenticacao_Model_Sgcacesso();
-            $auth = Zend_Auth::getInstance();
-            $objIdentity = $auth->getIdentity();
+            $objIdentity = Zend_Auth::getInstance()->getIdentity();
 
             $this->validarAcesso($objIdentity->auth['raw']);
 
@@ -28,8 +31,8 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
             $arraySGCAcesso = $objSgcAcesso->buscar(array('cpf = ?' => $cpf))->toArray();
 
             $senhaCriptografada = EncriptaSenhaDAO::encriptaSenha($cpf, $id);
-            if($senhaCriptografada != $arraySGCAcesso[0]['senha']) {
-                $senhaCriptografada = $arraySGCAcesso[0]['senha'];
+            if($senhaCriptografada != $arraySGCAcesso[0]['Senha']) {
+                $senhaCriptografada = $arraySGCAcesso[0]['Senha'];
             }
 
             $objSgcAcesso->loginSemCript($cpf, $senhaCriptografada);
@@ -72,14 +75,14 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
             $dtNascimento = $arrayDTNascimento[0];
 
             $dados = array(
-                "cpf" => $cpf,
-                "nome" => $objPost["full_name"],
-                "dtnascimento" => $dtNascimento,
-                "email" => $objPost["email"],
-                "senha" => $senhaCriptografada,
-                "dtcadastro" => date("Y-m-d"),
-                "situacao" => 3,
-                "dtsituacao" => date("Y-m-d"),
+                "Cpf" => $cpf,
+                "Nome" => $objPost["full_name"],
+                "DtNascimento" => $dtNascimento,
+                "Email" => $objPost["email"],
+                "Senha" => $senhaCriptografada,
+                "DtCadastro" => date("Y-m-d"),
+                "Situacao" => 3,
+                "DtSituacao" => date("Y-m-d"),
                 "id_login_cidadao" => $objPost["id"]
             );
 
@@ -90,7 +93,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
 
             $objAgentes = new Agente_Model_DbTable_Agentes();
             $buscarAgente = $objAgentes->buscar(array('cnpjcpf = ?' => $cpf));
-            $idAgenteProp = count($buscarAgente) > 0 ? $buscarAgente[0]->idagente : 0;
+            $idAgenteProp = count($buscarAgente) > 0 ? $buscarAgente[0]->idAgente : 0;
             $objVisao = new Visao();
             $buscarVisao = $objVisao->buscar(array('visao = ?' => 144, 'stativo = ?' => 'A', 'idagente = ?' => $idAgenteProp));
 
@@ -98,10 +101,10 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
                 $tbVinculo = new Agente_Model_DbTable_TbVinculo();
                 $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $pkSgcAcessoSave));
                 $dadosVinculo = array(
-                    'idagenteproponente' => $idAgenteProp
-                    ,'dtvinculo' => new Zend_Db_Expr('GETDATE()')
-                    ,'sivinculo' => 2
-                    ,'idusuarioresponsavel' => $idResp[0]->idusuario
+                    'idAgenteProponente' => $idAgenteProp
+                    ,'dtVinculo' => new Zend_Db_Expr('GETDATE()')
+                    ,'siVinculo' => 2
+                    ,'idUsuarioResponsavel' => $idResp[0]->IdUsuario
                 );
                 $tbVinculo->inserir($dadosVinculo);
             }
