@@ -498,7 +498,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $preProjeto = new Proposta_Model_DbTable_PreProjeto();
         $preProjeto = $preProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
-        $preProjeto->stestado = 0;
+        $preProjeto->stEstado = 0;
 
         if ($preProjeto->save()) {
             parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
