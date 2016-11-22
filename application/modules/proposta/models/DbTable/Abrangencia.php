@@ -13,6 +13,17 @@
  *
  * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
+
+    idAbrangencia
+    idProjeto
+    idPais
+    idUF
+    idMunicipioIBGE
+    Usuario
+    stAbrangencia
+    siAbrangencia
+    dsJustificativa
+    dtInicioRealizacaodtFimRealizacao
  */
 class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
 {
@@ -38,7 +49,7 @@ class Proposta_Model_DbTable_Abrangencia extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_primary = 'idabrangencia';
+    protected $_primary = 'idAbrangencia';
 
 
     /**

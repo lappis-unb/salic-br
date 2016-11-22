@@ -75,11 +75,11 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             $this->getIdUsuario = UsuarioDAO::getIdUsuario($arrAuth['usu_codigo']);
             $this->getIdUsuario = ($this->getIdUsuario) ? $this->getIdUsuario["idAgente"] : 0;
         } else { // autenticacao scriptcase
-            $this->getIdUsuario = (isset($_GET["idusuario"])) ? $_GET["idusuario"] : 0;
+            $this->getIdUsuario = (isset($_GET["IdUsuario"])) ? $_GET["IdUsuario"] : 0;
         }
 
         if (!$this->getIdUsuario) {
-            $this->getIdUsuario = $arrAuth['idusuario'];
+            $this->getIdUsuario = $arrAuth['IdUsuario'];
         }
         $Cpflogado = $this->getIdUsuario;
         $this->view->cpfLogado = $Cpflogado;
@@ -721,7 +721,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
     {
         if ($this->getRequest()->isPost()) {
             $arrPost = array_change_key_case($this->getRequest()->getPost());
-            $arrPost['idusuario'] = $this->getIdUsuario;
+            $arrPost['IdUsuario'] = $this->getIdUsuario;
             $arrPost['cpf'] = Mascara::delMaskCPF(Mascara::delMaskCNPJ($arrPost['cpf']));
             if ($arrPost['idagente'] === '') {
                 $tblAgentes = new Agente_Model_DbTable_Agentes();

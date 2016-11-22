@@ -13,6 +13,16 @@
  *
  * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
+
+    idDeslocamento
+    idProjeto
+    idPaisOrigem
+    idUFOrigem
+    idMunicipioOrigem
+    idPaisDestino
+    idUFDestino
+    idMunicipioDestino
+    QtdeidUsuario
  */
 class Proposta_Model_DbTable_TbDeslocamento extends MinC_Db_Table_Abstract
 {
@@ -38,7 +48,7 @@ class Proposta_Model_DbTable_TbDeslocamento extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_primary = 'iddeslocamento';
+    protected $_primary = 'idDeslocamento';
 
     public function buscarDeslocamentosGeral($where = array(), $order = array(), $arrNot = [])
     {

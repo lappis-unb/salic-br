@@ -12,6 +12,16 @@
  * @since 01/09/2016
  *
  * @link http://salic.cultura.gov.br
+ *
+    idAgente
+    CNPJCPF
+    CNPJCPFSuperior
+    TipoPessoa
+    DtCadastro
+    DtAtualizacao
+    DtValidade
+    Status
+    Usuario
  */
 class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
 {
@@ -45,7 +55,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_primary = 'idagente';
+    protected $_primary = 'idAgente';
 
     /**
      * Metodo para buscar agentes
@@ -382,16 +392,19 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             array('ag.cnpjcpf', 'ag.idagente'),
             $this->_schema
         );
+
         $select->joinInner(
             array('nm' => 'nomes'), "nm.idagente = ag.idagente",
             array('nm.descricao as nomeagente'),
             $this->_schema
         );
+
         $select->joinLeft(
             array('vp' => 'tbvinculo'), "vp.idagenteproponente  = ag.idagente and vp.idusuarioresponsavel = $idResponsavel",
             array("vp.idvinculo as idvinculoproponente", "sivinculo", "idusuarioresponsavel"),
             $this->_schema
         );
+
         $select->joinLeft(
             array('v' => 'visao'), "v.idagente = ag.idagente and v.visao = 146",
             array('v.visao as usuariovinculo'),

@@ -10,7 +10,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 {
     protected $_schema= "sac";
     protected $_name = "preprojeto";
-    protected $_primary = "idpreprojeto";
+    protected $_primary = "idPreProjeto";
     protected $_banco = "sac";
 
     public $_totalRegistros = null;

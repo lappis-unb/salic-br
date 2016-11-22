@@ -31,7 +31,7 @@ class Agente_Model_VisaoMapper extends MinC_Db_Mapper
             $arrDataVisao = array(
                 'idagente' => $arrData['idagente'],
                 'visao' => $arrData['visao'],
-                'usuario' => $arrData['idusuario'],
+                'usuario' => $arrData['IdUsuario'],
                 'stativo' => 'A'
             );
             $arrVisao = $this->findBy(array('idagente' => $arrData['idagente'], 'visao' => $arrData['visao']));

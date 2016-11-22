@@ -39,7 +39,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         // Busca na SGCAcesso
         $sgcAcesso = new Autenticacao_Model_Sgcacesso();
         $acesso = $sgcAcesso->findBy(array('cpf' => $cpf));
-
+        
         // Busca na Usuarios
         $mdlUsuario = new Autenticacao_Model_Usuario();
         $usuario = $mdlUsuario->findBy(array('usu_identificacao' => $cpf));
@@ -49,11 +49,11 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $agente = $tblAgentes->findBy(['cnpjcpf' => $cpf]);
 
         if ($acesso) {
-            $this->idResponsavel = $acesso['idusuario'];
-            $this->emailResponsavel = $acesso['email'];
+            $this->idResponsavel = $acesso['IdUsuario'];
+            $this->emailResponsavel = $acesso['Email'];
         }
         if ($agente) {
-            $this->idAgente = $agente['idagente'];
+            $this->idAgente = $agente['idAgente'];
         }
         if ($usuario) {
             $this->idUsuario = $usuario['usu_codigo'];
@@ -323,6 +323,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
         $tbVinculo = new Agente_Model_DbTable_TbVinculo();
 //        $agentes = new Agente_Model_DbTable_Agentes();
         $idResponsavel = $this->_request->getParam("idResponsavel");
+x($idResponsavel);
         $idProponente = $this->idAgente;
 
         $where['idUsuarioResponsavel = ?'] = $idResponsavel;
