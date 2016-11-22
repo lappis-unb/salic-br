@@ -14,7 +14,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
 {
 	protected $_schema = 'sac';
 	protected $_name   = 'tbplanilhaetapa';
-    protected $_primary = 'idplanilhaetapa';
+    protected $_primary = 'idPlanilhaEtapa';
 
     public function listarEtapasProdutos($idPreProjeto)
     {
@@ -22,7 +22,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(['tbplanilhaetapa'], ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], $this->getSchema('sac'))
+            ->from(['tbplanilhaetapa'], ['idPlanilhaEtapa as idEtapa', 'Descricao as DescricaoEtapa'], $this->getSchema('sac'))
             ->where("tpCusto = 'P'")
         ;
 
@@ -38,13 +38,13 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         $select->from(
             array($this->_name),
             array(
-                'idplanilhaetapa',
-                'descricao'
+                'idPlanilhaEtapa',
+                'Descricao'
             ),
             $this->_schema
         );
-        $select->where('tpcusto = ?', 'P');
-        $select->order('descricao');
+        $select->where('tpCusto = ?', 'P');
+        $select->order('Descricao');
 //        $sql.= " ORDER BY Descricao ";
 
         try {
@@ -65,13 +65,13 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         $select->from(
             array($this->_name),
             array(
-                'idplanilhaetapa',
-                'descricao'
+                'idPlanilhaEtapa',
+                'Descricao'
             ),
             $this->_schema
         );
         $select->where('tpcusto = ?','A');
-        $select->order('descricao');
+        $select->order('Descricao');
 
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
@@ -89,7 +89,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
     {
 
 //        $sql = $db->select()
-//            ->from('tbplanilhaetapa', ['idplanilhaetapa as idEtapa', 'descricao as DescricaoEtapa'], $this->getSchema('sac'))
+//            ->from('tbplanilhaetapa', ['idplanilhaetapa as idEtapa', 'Descricao as DescricaoEtapa'], $this->getSchema('sac'))
 //            ->where("tpCusto = 'A' AND idPlanilhaEtapa <> 6")
 //        ;
 
@@ -99,12 +99,12 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
             array('pet'=>$this->_name),
             array(
                 'idplanilhaetapa as idetapa',
-                'descricao as descricaoEtapa'
+                'Descricao as descricaoEtapa'
             ),
             $this->_schema
         );
         $select->where('tpcusto = ?', 'A');
-        $select->where('idplanilhaetapa != ? ', '6');
+        $select->where('idPlanilhaEtapa != ? ', '6');
 
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -119,8 +119,8 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         $tpp = [
             'tpp.idusuario',
             'tpp.idprojeto as idProposta',
-            'tpp.idplanilhaproposta',
-            'tpp.quantidade',
+            'tpp.idPlanilhaProposta',
+            'tpp.Quantidade',
             'tpp.ocorrencia',
             'tpp.valorunitario',
             'tpp.qtdedias',
@@ -129,7 +129,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         $tpe = [
             'tpe.tpcusto as custo',
             'tpe.descricao as etapa',
-            'tpe.idplanilhaetapa as idEtapa',
+            'tpe.idPlanilhaEtapa as idEtapa',
             'tpe.tpcusto',
         ];
 
@@ -151,7 +151,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         $sql = $db->select()
             ->from(['tpp' => 'tbplanilhaproposta'], $tpp, $this->getSchema('sac'))
             ->joinLeft(['pd' => 'produto'], 'pd.codigo = tpp.idproduto', null, $this->getSchema('sac'))
-            ->join(['tpe' => 'tbplanilhaetapa'], 'tpe.idplanilhaetapa = tpp.idetapa', $tpe, $this->getSchema('sac'))
+            ->join(['tpe' => 'tbplanilhaetapa'], 'tpe.idPlanilhaEtapa = tpp.idetapa', $tpe, $this->getSchema('sac'))
             ->join(['tpi' => 'tbplanilhaitens'], 'tpi.idplanilhaitens = tpp.idplanilhaitem', $tpi, $this->getSchema('sac'))
             ->join(['uf' => 'uf'], 'uf.iduf = tpp.ufdespesa', $uf, $this->getSchema('agentes'))
             ->join(['municipio' => 'municipios'], 'municipio.idmunicipioibge = tpp.municipiodespesa', 'municipio.descricao as Municipio', $this->getSchema('agentes'))
@@ -189,13 +189,13 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from(['tbplanilhaetapa' ], ['idplanilhaetapa', 'descricao' ], $this->getSchema('sac'))
+            ->from(['tbplanilhaetapa' ], ['idPlanilhaEtapa', 'descricao' ], $this->getSchema('sac'))
             ->where("tpcusto = 'A'")
             ->order('descricao')
         ;
 
         //$sql = "SELECT
-        //idplanilhaetapa ,
+        //idPlanilhaEtapa ,
         //Descricao
         //FROM SAC..tbPlanilhaEtapa where tpcusto = 'A'";
 

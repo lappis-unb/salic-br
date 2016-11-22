@@ -304,10 +304,10 @@
                     		<select class="select_simples valida" id="unidade" name='unidade'>
                     			<option value="<?php echo "" ?>">Selecione...</option>
                     			<?php foreach($this->Unidade as $unidades){
-                    			if ($dados->unidade == $unidades->idunidade) { ?>
-                    			<option selected="selected" value="<?php echo $unidades->idunidade ?>"><?php echo $unidades->descricao ?></option>
+                    			if ($dados->unidade == $unidades->idUnidade) { ?>
+                    			<option selected="selected" value="<?php echo $unidades->idUnidade ?>"><?php echo $unidades->Descricao ?></option>
                     			<?php } else { ?>
-                    			<option value="<?php echo $unidades->idunidade ?>"><?php echo $unidades->descricao ?></option>
+                    			<option value="<?php echo $unidades->idUnidade ?>"><?php echo $unidades->Descricao ?></option>
                     			<?php } } ?>
                     		</select>
                     </td>

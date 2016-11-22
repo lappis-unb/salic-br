@@ -67,11 +67,11 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      */
     public function indexAction() {
         // Usuario Logado
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
+        $auth = Zend_Auth::getInstance(); // instancia da autenticacao
         $idusuario = $auth->getIdentity()->usu_codigo;
 
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
-        $codOrgao = $GrupoAtivo->codOrgao; //  �rg�o ativo na sess�o
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessao com o grupo ativo
+        $codOrgao = $GrupoAtivo->codOrgao; //  orgao ativo na sessao
 
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
@@ -212,7 +212,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $a = 0;
             foreach($cidade as $DadosCidade) {
                 $cidadeArray[$a]['idCidade'] = $DadosCidade->id;
-                $cidadeArray[$a]['nomeCidade'] = $DadosCidade->descricao;
+                $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->Descricao);
                 $a++;
             }
             echo json_encode($cidadeArray);
@@ -231,8 +231,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             if (count($item) <= 0) { $item = $itensPlanilhaProduto->buscarItens($idetapa,null); }
             $a = 0;
             foreach($item as $Dadositem) {
-                $itemArray[$a]['idItem'] = $Dadositem->idplanilhaitens;
-                $itemArray[$a]['nomeItem'] = $Dadositem->descricao;
+                $itemArray[$a]['idItem'] = $Dadositem->idPlanilhaItens;
+                $itemArray[$a]['nomeItem'] = utf8_encode($Dadositem->Descricao);
                 $a++;
             }
             echo json_encode($itemArray);
@@ -287,7 +287,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $idPreProjeto = $_GET['idPreProjeto'];
 
             $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaProposta();
-            $buscaDados = $manterOrcamento->findBy(array('idprojeto' => $idPreProjeto));
+            $buscaDados = $manterOrcamento->findBy(array('idProjeto' => $idPreProjeto));
 //            $buscaDados = $manterOrcamento->buscarDadosCadastrarCustos($idPreProjeto);
             $this->view->dados = $buscaDados;
 
@@ -320,7 +320,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $a = 0;
             foreach($cidade as $DadosCidade) {
                 $cidadeArray[$a]['idCidade'] = $DadosCidade->id;
-                $cidadeArray[$a]['nomeCidade'] = $DadosCidade->descricao;
+                $cidadeArray[$a]['nomeCidade'] = utf8_encode($DadosCidade->Descricao);
                 $a++;
             }
             echo json_encode($cidadeArray);
@@ -335,7 +335,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $a = 0;
             foreach($item as $Dadositem) {
                 $itemArray[$a]['idItem'] = $Dadositem->idplanilhaitens;
-                $itemArray[$a]['nomeItem'] = $Dadositem->descricao;
+                $itemArray[$a]['nomeItem'] = utf8_encode($Dadositem->Descricao);
                 $a++;
             }
             echo json_encode($itemArray);
@@ -396,7 +396,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                     'dsjustificativa' =>$_POST['editor1']
             );
 
-            $where = "idplanilhaproposta = ".$_POST['proposta'];
+            $where = "idPlanilhaProposta = ".$_POST['proposta'];
 
             $buscarProdutos = $tblanilhaProposta->buscarDadosEditarProdutos(null, $idEtapa, $idProduto, $idItem, null, $idUf, $municipio);
 
@@ -667,7 +667,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                     $buscarCustos =  new Proposta_Model_DbTable_PlanilhaProposta();
 //                   $buscarCustos->buscarCustos($idProposta, $tipoCusto, $idEtapa, $idItem, $idUf, $idMunicipio,
 //                								$fonte, $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $dsJustificativa);
-                    $where = 'idplanilhaproposta = ' . $_POST['idPlanilhaProposta'];
+                    $where = 'idPlanilhaProposta = ' . $_POST['idPlanilhaProposta'];
 
                     $buscarCustos->update($dados, $where);
                     $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
