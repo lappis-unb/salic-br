@@ -2879,7 +2879,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 $tbAgenteFisico->alterarDados($dados, $post->agente);
             } else {
                 $msg = 'cadastrados';
-                $tbAgenteFisico->inserir($dados);
+                $tbAgenteFisico->insert($dados);
             }
 
             parent::message("Dados $msg com sucesso!", "agente/agentes/info-adicionais/id/" . $post->agente, "CONFIRM");
