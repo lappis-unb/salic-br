@@ -212,7 +212,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $this->getIdUsuario = UsuarioDAO::getIdUsuario($arrAuth['usu_codigo']);
             $this->getIdUsuario = ($this->getIdUsuario) ? $this->getIdUsuario["idAgente"] : 0;
         } else { // autenticacao scriptcase
-            $this->getIdUsuario = (isset($_GET["idusuario"])) ? $_GET["idusuario"] : 0;
+            $this->getIdUsuario = (isset($_GET["IdUsuario"])) ? $_GET["IdUsuario"] : 0;
         }
 
         $Cpflogado = $this->getIdUsuario;
@@ -1873,7 +1873,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     private function salvaragente()
     {
         $arrAuth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
-        $usuario = isset($arrAuth['idusuario']) ? $arrAuth['idusuario'] : $arrAuth['usu_codigo'];
+        $usuario = isset($arrAuth['IdUsuario']) ? $arrAuth['IdUsuario'] : $arrAuth['usu_codigo'];
         $arrayAgente = array('cnpjcpf' => $this->_request->getParam("cpf"),
             'tipopessoa' => $this->_request->getParam("Tipo"),
             'status' => 0,

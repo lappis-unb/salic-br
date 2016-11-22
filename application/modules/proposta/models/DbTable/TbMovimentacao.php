@@ -11,13 +11,19 @@
  * @since 21/09/2016
  *
  * @link http://salic.cultura.gov.br
+ *
+  idMovimentacao
+  idProjeto
+  Movimentacao
+  DtMovimentacao
+  stEstado,Usuario
  */
 class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
 {
     protected $_banco = "sac";
     protected $_schema = 'sac';
     protected $_name = "tbmovimentacao";
-    protected $_primary = "idmovimentacao";
+    protected $_primary = "idMovimentacao";
 
     /**
      * Grava registro. Se seja passado um ID ele altera um registro existente

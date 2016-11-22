@@ -402,7 +402,7 @@ $(document).ready(function()
                         <div style="width: 95%">
                             <div style="float:left; width: 85%">
                                 Proponente:
-                                <span style="color: blue;"><?php echo utf8_encode($this->proponente['descricao']); ?></span>
+                                <span style="color: blue;"><?php echo $this->proponente['descricao']; ?></span>
                                 <input type="hidden" class="input_simples" name="idAgente" value="<?php
                if (isset($this->proponente['idagente']))
                    echo $this->proponente['idagente'];

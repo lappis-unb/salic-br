@@ -64,11 +64,10 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $tblAgentes = new Agente_Model_DbTable_Agentes();
         $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
 
-        //var_dump($acessos);die;
         if ($agente) {
             //$this->idResponsavel = $agente['usuario'];
-            $this->idResponsavel = $acessos['idusuario'];
-            $this->idAgente = $agente['idagente'];
+            $this->idResponsavel = $acessos['IdUsuario'];
+            $this->idAgente = $agente['idAgente'];
         }
         if ($usuario) {
             $this->idUsuario = $usuario['usu_codigo'];

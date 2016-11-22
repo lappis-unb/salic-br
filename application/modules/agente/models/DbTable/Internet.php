@@ -13,6 +13,14 @@
  *
  * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
+ *
+ * idInternet,
+ * idAgente,
+ * TipoInternet,
+ * Descricao,
+ * Status,
+ * Divulgar,
+ * Usuario
  */
 class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
 {
@@ -38,7 +46,7 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_primary = 'idinternet';
+    protected $_primary = 'idInternet';
 
     /**
      * M�todo para envio de e-mail

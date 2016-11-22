@@ -46,7 +46,7 @@ class Agente_Model_EnderecoNacionalMapper extends MinC_Db_Mapper
                 'complemento' => $arrData['complementos'][$i],
                 'bairro' => $arrData['bairros'][$i],
                 'status' => $correspondenciaEnderecos,
-                'usuario' => $arrData['idusuario']);
+                'usuario' => $arrData['IdUsuario']);
             $arrId[] = $this->save(new Agente_Model_EnderecoNacional($arrayEnderecos));
         }
 

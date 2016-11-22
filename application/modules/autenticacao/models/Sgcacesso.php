@@ -7,6 +7,18 @@
  * @author wouerner <wouerner@gmail.com>
  * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
  * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
+ *
+ *
+    IdUsuario
+    Cpf
+    Nome
+    DtNascimento
+    Email
+    Senha
+    DtCadastro
+    Situacao
+    DtSituacao
+    id_login_cidadao
  */
 class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
 {
@@ -14,7 +26,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
     protected $_banco = 'controledeacesso';
     protected $_schema = 'controledeacesso';
     protected $_name = 'sgcacesso';
-    protected $_primary = 'idusuario';
+    protected $_primary = 'IdUsuario';
 
     /**
      * @var Zend_Db_Table
