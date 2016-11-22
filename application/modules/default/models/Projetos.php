@@ -100,10 +100,8 @@ class Projetos extends MinC_Db_Table_Abstract
         ), 'dbo')
         ->where('l.idPronac = ?', (int)$idPronac)
         ->group(array(new Zend_Db_Expr('CONVERT(CHAR(4), l.dtLancamento, 120)')))
-        ->order(array('ano ASC'))
-        ;
+        ->order(array('ano ASC'));
 
-//xd($select->__toString());
         return $this->fetchAll($select);
     }
     
@@ -864,8 +862,6 @@ class Projetos extends MinC_Db_Table_Abstract
         //$select->order('p.DtSituacao Desc');
         $select->order($order);
 
-//xd($select->assemble());
-
         return $this->fetchAll($select);
     }
 
@@ -991,7 +987,7 @@ class Projetos extends MinC_Db_Table_Abstract
             $select->where("pr.IdPRONAC = ?", $idpronac);
         }
         $select->order("tbRel.idRelatorio desc");
-//        xd($select->__toString());
+
         return $this->fetchAll($select);
     }
 
