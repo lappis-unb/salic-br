@@ -38,7 +38,7 @@ class Agente_Model_DbTable_TbTitulacaoConselheiro extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_primary = 'idagente';
+    protected $_primary = 'idAgente';
 
 
     /**

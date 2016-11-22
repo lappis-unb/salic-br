@@ -38,7 +38,7 @@ class Agente_Model_DbTable_Telefones extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_primary = 'idtelefone';
+    protected $_primary = 'idTelefone';
 
 
 

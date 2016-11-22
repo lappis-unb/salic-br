@@ -18,6 +18,7 @@ class Agente_Model_DbTable_Municipios extends MinC_Db_Table_Abstract
 {
     protected $_name = 'municipios';
     protected $_schema = 'agentes';
+    protected $_primary = 'idMunicipioIBGE';
 
 
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
@@ -26,19 +27,19 @@ class Agente_Model_DbTable_Municipios extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from(
             array($this->_name),
-            array('idmunicipioibge as id',
-            'descricao'),
+            array('idMunicipioIBGE as id',
+            'Descricao'),
             $this->_schema
         );
 
-        $select->where('idufibge = ?' , $idUF);
+        $select->where('idUFIBGE= ?' , $idUF);
 
         if (!empty($idCidade))
         {
-            $select->where('idmunicipioibge = ?' , $idCidade);
+            $select->where('idMunicipioIBGE = ?' , $idCidade);
         }
 
-        $select->order('descricao');
+        $select->order('Descricao');
 
         try
         {
@@ -59,8 +60,8 @@ class Agente_Model_DbTable_Municipios extends MinC_Db_Table_Abstract
         $select->setIntegrityCheck(false);
         $select->from(
             array($this->_name),
-            array('idmunicipioibge as id',
-                'descricao'),
+            array('idMunicipioIBGE as id',
+                'Descricao'),
             $this->_schema
         );
 
@@ -68,10 +69,10 @@ class Agente_Model_DbTable_Municipios extends MinC_Db_Table_Abstract
 
         if (!empty($idCidade))
         {
-            $select->where('idmunicipioibge = ?' , $idCidade);
+            $select->where('idMunicipioIBGE = ?' , $idCidade);
         }
 
-        $select->order('descricao');
+        $select->order('Descricao');
 
         try
         {
