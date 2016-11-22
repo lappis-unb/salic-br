@@ -97,6 +97,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $this->view->Item = $tbPreprojeto->listarItensProdutos($this->idPreProjeto);
 
         $this->view->idPreProjeto = $this->idPreProjeto;
+
+        $this->view->charset = Zend_Registry::get('config')->db->params->charset;
     }
 
     /**

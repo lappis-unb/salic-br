@@ -4,14 +4,14 @@
  * @author IVIA / POLITEC
  * @since 2010/2011
  * @version 1.0
- * @copyright © 2010/2011 Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010/2011 Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @package css
  * @link http://salic.cultura.gov.br
  */
 
 @charset "utf-8";
 
-/* ========== INÍCIO ESTRUTURA GERAL DO LAYOUT ========== */
+/* ========== INï¿½CIO ESTRUTURA GERAL DO LAYOUT ========== */
 * {
 	margin:0;
 	padding:0;
@@ -214,7 +214,7 @@ a:hover {
 	background:none;
 	padding:0 6px 3px 0;
 }
-#breadcrumb ul li.last { /* último elemento do breadcrumb */
+#breadcrumb ul li.last { /* ï¿½ltimo elemento do breadcrumb */
 	/*color:#666;*/
 	color:#000;
 	font-weight:bold;
@@ -420,7 +420,7 @@ ul.fg-menu-footer {
 
 
 
-/* ========== INÍCIO JQUERY ========== */
+/* ========== INï¿½CIO JQUERY ========== */
 #Jquery {
 	margin:50px;
 	font:12px "Trebuchet MS", sans-serif;
@@ -429,7 +429,7 @@ ul.fg-menu-footer {
 
 
 
-/* ========== INÍCIO TABELAS ========== */
+/* ========== INï¿½CIO TABELAS ========== */
 table caption {
     border: 2px solid #cecece;
     border-bottom-width: 0px;
@@ -491,13 +491,13 @@ table tfoot td strong {
 .tabela_busca { /* tabela para consulta de dados centralizada na tela */
 	margin:100px auto;
 }
-.titulo_tabela { /* títulos de tabelas */
+.titulo_tabela { /* tï¿½tulos de tabelas */
 	background:#36963f;
 	color:#fff;
 	font-weight:bold;
 	text-align:center;
 }
-.titulo_campo { /* títulos de campos */
+.titulo_campo { /* tï¿½tulos de campos */
 	background:#fff url(../img/bg-celulas.gif) repeat-x;
 	font-weight:bold;
 	text-align:center;
@@ -508,7 +508,7 @@ table tfoot td strong {
 .fundo_linha3, .fundo_linha3 td { background:#ffffe8 url(../img/bg-celulas3.gif) top left repeat-x; }
 .fundo_linha4, .fundo_linha4 td { background:#ffcd82 url(../img/bg-celulas4.gif) top left repeat-x; }
 .fundo_linha5, .fundo_linha5 td { background:#d5e5b4 url(../img/bg-celulas5.gif) top left repeat-x; }
-.delFormatTD { /* apaga a formatação das celulas */
+.delFormatTD { /* apaga a formataï¿½ï¿½o das celulas */
 	margin:0 auto;
 	padding:0;
 	border:none;
@@ -518,7 +518,7 @@ table tfoot td strong {
 
 
 
-/* ========== INÍCIO ABAS ========== */
+/* ========== INï¿½CIO ABAS ========== */
 div.simpleTabs {
 	padding:0 2px 0 0;
 	position:relative;
@@ -574,7 +574,7 @@ div.simpleTabsContent.currentTab {
 
 
 
-/* ========== INÍCIO FORMULÁRIOS ========== */
+/* ========== INï¿½CIO FORMULï¿½RIOS ========== */
 .input_simples, .textarea_simples, .select_simples, .input_simples2 {
 	background:#fff url(../img/input-bg.gif) repeat-x;
 	border:1px solid #ccc;
@@ -736,11 +736,11 @@ label {
 .off-textarea .left {
 	background:url(../img/textarea-borda-left-off.gif) no-repeat !important;
 }
-/* ========== FIM FORMULÁRIOS ========== */
+/* ========== FIM FORMULï¿½RIOS ========== */
 
 
 
-/* ========== INÍCIO TAMANHOS ========== */
+/* ========== INï¿½CIO TAMANHOS ========== */
 .w100 input { width:100px; }
 .w200 input { width:200px; }
 .w250 input { width:250px; }
@@ -808,7 +808,7 @@ label {
 
 
 
-/* ========== INÍCIO CORES ========== */
+/* ========== INï¿½CIO CORES ========== */
 .red, .red a       { color:#c30; }
 .green, .green a   { color:#096; }
 .blue, .blue a     { color:#06c; }
@@ -833,7 +833,7 @@ label.error { color:red; }
 .AI { color:#f00; }
 .CS { color:#06f; }
 
-/* formatação de planilhas */
+/* formataï¿½ï¿½o de planilhas */
 .planilha_incentivo div.plan, .total_planilha_incentivo {
 	color:#c30;
 	font-size:17pt;
@@ -874,7 +874,7 @@ div.plan span {
 
 
 
-/* ========== INÍCIO ALINHAMENTOS ========== */
+/* ========== INï¿½CIO ALINHAMENTOS ========== */
 .float_left  { float:left; }
 .float_right { float:right; }
 .esquerda    { text-align:left; }
@@ -885,7 +885,7 @@ div.plan span {
 
 
 
-/* ========== INÍCIO EXIBIÇÕES E MENSAGENS DO SISTEMA ========== */
+/* ========== INï¿½CIO EXIBIï¿½ï¿½ES E MENSAGENS DO SISTEMA ========== */
 .carregando, .msg, .msgALERT, .msgCONFIRM, .msgERROR, .carregando_ajax {
 	background:#ffc;
 	border:1px solid #ccc;
@@ -934,12 +934,12 @@ div.plan span {
 .sumir {
 	display:none;
 }
-/* ========== FIM EXIBIÇÕES E MENSAGENS DO SISTEMA ========== */
+/* ========== FIM EXIBIï¿½ï¿½ES E MENSAGENS DO SISTEMA ========== */
 
 
 
-/* ========== INÍCIO MENU SANFONA ========== */
-/* ajustes para ativação do highlight no menu 'sanfona' */
+/* ========== INï¿½CIO MENU SANFONA ========== */
+/* ajustes para ativaï¿½ï¿½o do highlight no menu 'sanfona' */
 .qmactive { background:url(../img/seta-menu-contexto-on.png) no-repeat !important; }
 #space_menu {
 	background:#f8f8f8;
@@ -949,7 +949,7 @@ div.plan span {
 
 
 
-/* ========== INÍCIO LOADER ========== */
+/* ========== INï¿½CIO LOADER ========== */
 .loader {
 	background:url(../img/ajax.gif) no-repeat center;
 	padding:5px 0 50px;
@@ -967,7 +967,7 @@ div.plan span {
 
 
 
-/* ========== INÍCIO REGULARIDADE ========== */
+/* ========== INï¿½CIO REGULARIDADE ========== */
 #regularidade {
 	width:200px;
 	height:auto;
@@ -1009,7 +1009,7 @@ div.plan span {
 
 
 
-/* ========== INÍCIO BOTÕES ========== */
+/* ========== INï¿½CIO BOTï¿½ES ========== */
 .btn_close, .btn_help {
 	float:right;
 	cursor:pointer;
@@ -1616,7 +1616,7 @@ div.plan span {
 .btn_visualizar2                                { background:url(../img/buttons/visualizar.gif) center center no-repeat; }
 .btn_historico                                  { background:url(../img/buttons/historico.gif) center center no-repeat; }
 .btn_encaminhar                                 { background:url(../img/user_gray.png) center center no-repeat; }
-/* ========== FIM BOTÕES ========== */
+/* ========== FIM BOTï¿½ES ========== */
 -->
 /*loader*/
 .loader {
@@ -1665,4 +1665,8 @@ div.plan span {
     left: -300%;
     font-size: 12px;
     line-height: 1.3em;   
+}
+
+.texto_maiusculo {
+	text-transform: uppercase
 }

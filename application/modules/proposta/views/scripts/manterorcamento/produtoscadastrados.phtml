@@ -80,28 +80,10 @@ foreach ($this->Produtos as $produtos): ?>
 <div id="produto">
     <table class='tabela'>
 	<tr>
-        <td><input type="button" id="" class="btn_adicionar produto" />
+        <td class="texto_maiusculo">
+            <input type="button" id="" class="btn_adicionar produto" />
             <?php
-                $texto = strtr(strtoupper($produtos->DescricaoProduto), array(
-                    "à" => "À",
-                    "è" => "È",
-                    "ì" => "Ì",
-                    "ò" => "Ò",
-                    "ù" => "Ù",
-                    "á" => "Á",
-                    "é" => "É",
-                    "í" => "Í",
-                    "ó" => "Ó",
-                    "ú" => "Ú",
-                    "â" => "Â",
-                    "ê" => "Ê",
-                    "î" => "Î",
-                    "ô" => "Ô",
-                    "û" => "Û",
-                    "ç" => "Ç",
-                    "ã" => "Ã",
-                ));
-                echo ($texto);
+                echo $produtos->DescricaoProduto;
             ?>
         </td>
 	</tr>

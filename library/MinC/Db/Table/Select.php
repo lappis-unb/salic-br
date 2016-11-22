@@ -22,18 +22,6 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
         return parent::__construct($table);
     }
 
-    private function prepareToLowerCase($name)
-    {
-        if (is_string($name)) {
-            $name = strtolower($name);
-        } elseif (is_array($name)) {
-            $name = array_change_key_case($name);
-            $name = array_map('strtolower', $name);
-        }
-
-        return $name;
-    }
-
     /**
      * @param array|string|Zend_Db_Expr|Zend_Db_Table_Abstract $name
      * @param array|string|Zend_Db_Expr $cols
@@ -43,8 +31,6 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
     public function from($name, $cols = self::SQL_WILDCARD, $schema = null)
     {
         $schema = $this->getSchema($schema);
-        $name = $this->prepareToLowerCase($name);
-        $cols = $this->prepareToLowerCase($cols);
 
         return parent::from($name, $cols, $schema);
     }
@@ -59,9 +45,6 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
     public function join($name, $cond, $cols = self::SQL_WILDCARD, $schema = null)
     {
         $schema = $this->getSchema($schema);
-        $name = $this->prepareToLowerCase($name);
-        $cond = $this->prepareToLowerCase($cond);
-        $cols = $this->prepareToLowerCase($cols);
 
         return parent::join($name, $cond, $cols, $schema);
     }
@@ -76,9 +59,6 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
     public function joinInner($name, $cond, $cols = self::SQL_WILDCARD, $schema = null)
     {
         $schema = $this->getSchema($schema);
-        $name = $this->prepareToLowerCase($name);
-        $cond = $this->prepareToLowerCase($cond);
-        $cols = $this->prepareToLowerCase($cols);
 
         return parent::joinInner($name, $cond, $cols, $schema);
     }
@@ -93,25 +73,10 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
     public function joinLeft($name, $cond, $cols = self::SQL_WILDCARD, $schema = null)
     {
         $schema = $this->getSchema($schema);
-        $name = $this->prepareToLowerCase($name);
-        $cond = $this->prepareToLowerCase($cond);
-        $cols = $this->prepareToLowerCase($cols);
 
         return parent::joinLeft($name, $cond, $cols, $schema);
     }
 
-    /**
-     * @param string $cond
-     * @param null $value
-     * @param null $type
-     * @return Zend_Db_Select
-     */
-    public function where($cond, $value = null, $type = null)
-    {
-        $cond = $this->prepareToLowerCase($cond);
-
-        return parent::where($cond, $value, $type);
-    }
 
     /**
      * @param $strSchema
@@ -119,10 +84,13 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      */
     public function getSchema($strSchema)
     {
-        $db = Zend_Db_Table::getDefaultAdapter();
+        if(!$strSchema) {
+            $strSchema = $this->_info['schema'];
+        }
 
+        $db = Zend_Db_Table::getDefaultAdapter();
         if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
-            if (!is_int(strpos($strSchema, '.'))) {
+            if (!is_int(strpos($strSchema, '.')) && $strSchema != "dbo") {
                 $strSchema = $strSchema . '.dbo';
             }
         }

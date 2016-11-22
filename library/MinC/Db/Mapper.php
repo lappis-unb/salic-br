@@ -175,20 +175,6 @@ class MinC_Db_Mapper
         }
     }
 
-    public function find()
-    {
-        $result = $this->getDbTable()->find($id);
-//        if (0 == count($result)) {
-//            return;
-//        }
-//        $row = $result->current();
-//        $agentes->setId($row->id)
-//            ->setEmail($row->email)
-//            ->setComment($row->comment)
-//            ->setCreated($row->created);
-        return $result;
-    }
-
     /**
      * Retorna o resultado com chave e valor apenas.
      *
@@ -207,23 +193,4 @@ class MinC_Db_Mapper
         return $this->getDbTable()->fetchPairs($key, $value, $where, $order);
     }
 
-    public function fetchAll()
-    {
-        $resultSet = $this->getDbTable()->fetchAll();
-//        $entries   = array();
-//        foreach ($resultSet as $row) {
-//            $entry = new Agente_Model_DbTable_Agentes();
-//            $entry->setId($row->id)
-//                ->setEmail($row->email)
-//                ->setComment($row->comment)
-//                ->setCreated($row->created);
-//            $entries[] = $entry;
-//        }
-//        echo '<pre>';
-//        var_dump('$entry');
-//        var_dump($entry);
-//        exit;
-//        return $entries;
-        return $resultSet;
-    }
 }
