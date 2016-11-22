@@ -176,23 +176,23 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
         $select->from(
             array('a' => $this->_name),
             array(
-                'a.idplanilhaitens',
-                'b.descricao'
+                'a.idPlanilhaItens',
+                'b.Descricao'
             ),
             $this->_schema
         );
         $select->joinInner(
-            array('b' => 'tbplanilhaitens'), 'a.idplanilhaitens = b.idplanilhaitens',
+            array('b' => 'tbplanilhaitens'), 'a.idPlanilhaItens = b.idPlanilhaItens',
             array(''), $this->_schema
         );
-        $select->where('idplanilhaetapa = ?',$idEtapa);
+        $select->where('idPlanilhaEtapa = ?',$idEtapa);
 
         if (!empty($idproduto)) {
-            $select->where('idproduto = ?',$idproduto);
+            $select->where('idProduto = ?',$idproduto);
         }
-        $select->order('b.descricao');
+        $select->order('b.Descricao');
 
-//        echo '<pre>';
+//        echo /'<pre>';
 //        var_dump ($select->assemble());
 //        exit;
         $db = Zend_Db_Table::getDefaultAdapter();
