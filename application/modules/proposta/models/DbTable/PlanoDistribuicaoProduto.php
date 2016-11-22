@@ -7,12 +7,14 @@
  * @subpackage application.model
  * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
+ *
+
  */
 
 class Proposta_model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abstract {
     protected $_schema = 'sac';
     protected $_name   = 'PlanoDistribuicaoProduto';
-    protected $_primary = 'idplanodistribuicao';
+    protected $_primary = 'idPlanoDistribuicao';
 
     /**
      * M�todo para cadastrar
