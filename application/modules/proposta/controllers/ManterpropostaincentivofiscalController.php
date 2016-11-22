@@ -424,14 +424,14 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $rsPreProjeto = $tblPreProjeto->buscar($arrBusca)->current();
 
             if ($rsPreProjeto) {
-                $rsPreProjeto = array_change_key_case($rsPreProjeto->toArray());
+                $rsPreProjeto = $rsPreProjeto->toArray();
             }
 
-            $arrBuscaProponete['a.idagente = ?'] = $rsPreProjeto['idagente'];
+            $arrBuscaProponete['a.idagente = ?'] = $rsPreProjeto['idAgente'];
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $rsProponente = $tblAgente->buscarAgenteNome($arrBuscaProponete)->current();
             if ($rsProponente) {
-                $rsProponente = array_change_key_case($rsProponente->toArray());
+                $rsProponente = ($rsProponente->toArray());
             }
 
             $ag = new Agente_Model_DbTable_Agentes();
@@ -498,7 +498,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $preProjeto = new Proposta_Model_DbTable_PreProjeto();
         $preProjeto = $preProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
-        $preProjeto->stestado = 0;
+        $preProjeto->stEstado = 0;
 
         if ($preProjeto->save()) {
             parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
