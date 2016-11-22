@@ -71,6 +71,10 @@ class GerenciarparecerController extends GenericControllerNew {
         $this->view->idUsuarioLogado = $idusuario;
         /******************************************************************/
 
+        if(!$this->_request->getParam("tipoFiltro")){
+            $_POST['tipoFiltro'] = 'aguardando_distribuicao';
+        }
+
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -80,14 +84,14 @@ class GerenciarparecerController extends GenericControllerNew {
         //==== parametro de ordenacao  ======//
         if($this->_request->getParam("ordem")) {
             $ordem = $this->_request->getParam("ordem");
-            if($ordem == "ASC") {
-                $novaOrdem = "DESC";
-            }else {
+            if($ordem == "DESC") {
                 $novaOrdem = "ASC";
+            }else {
+                $novaOrdem = "DESC";
             }
         }else {
-            $ordem = "ASC";
-            $novaOrdem = "ASC";
+            $ordem = "DESC";
+            $novaOrdem = "DESC";
         }
 
         //==== campo de ordenacao  ======//
@@ -98,7 +102,7 @@ class GerenciarparecerController extends GenericControllerNew {
 
         }else {
             $campo = null;
-            $order = array('DtEnvioMincVinculada','NomeProjeto','stPrincipal desc');
+            $order = array('DtEnvioMincVinculada','NomeProjeto','stPrincipal');
             $ordenacao = null;
         }
 
@@ -109,7 +113,7 @@ class GerenciarparecerController extends GenericControllerNew {
 
         /* ================== PAGINACAO ======================*/
         $where = array();
-	$where["idOrgao = ?"] = $codOrgao;
+	    $where["idOrgao = ?"] = $codOrgao;
 	
         if((isset($_POST['pronac']) && !empty($_POST['pronac'])) || (isset($_GET['pronac']) && !empty($_GET['pronac']))){
 	    $pronac = isset($_POST['pronac']) ? $_POST['pronac'] : $_GET['pronac'];
@@ -160,7 +164,7 @@ class GerenciarparecerController extends GenericControllerNew {
                 "Itenspag"=>$this->intTamPag,
                 "tamanho"=>$tamanho
          );
-
+        
         $this->view->paginacao     = $paginacao;
         $this->view->qtdDocumentos = $total;
         $this->view->dados         = $busca;
@@ -345,15 +349,15 @@ class GerenciarparecerController extends GenericControllerNew {
 
         $dadosWhere["IdPRONAC = ?"]               = $idPronac;
         $dadosWhere["idOrgao = ?"]                = $codOrgao;
-	$buscaDadosProjeto = $tbDistribuirParecer->painelAnaliseTecnica($dadosWhere, null, null, null, null, $tipoFiltro);
+	    $buscaDadosProjeto = $tbDistribuirParecer->painelAnaliseTecnica($dadosWhere, null, null, null, null, $tipoFiltro);
 	
-	$error = "";
+	    $error = "";
         $msg = "Distribuição Realizada com sucesso!";
 
         $db = Zend_Registry :: get('db');
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
         $db->beginTransaction();
-	$projetos = new Projetos();
+	    $projetos = new Projetos();
 	
         try {
 
