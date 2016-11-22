@@ -125,11 +125,12 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
      * @access public
      * @return void
      */
-    public function indexAction() {
-
+    public function indexAction()
+    {
         $arrBusca = array();
         $arrBusca['stestado = ?'] = 1;
         $arrBusca['idusuario = ?'] = $this->idResponsavel;
+        //var_dump($this->idResponsavel);die;
         // Chama o SQL
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca, array("idagente ASC"));
@@ -342,23 +343,25 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 $vinculo = $tbVinculoDAO->buscar($whereVinculo);
 
                 if (count($vinculo) == 0) {
-                    $dadosV = array('idAgenteProponente' => $idAgente,
+                    $dadosV = array(
+                        'idAgenteProponente' => $idAgente,
                         'dtVinculo' => MinC_Db_Expr::date(),
                         'siVinculo' => 2,
                         'idUsuarioResponsavel' => $this->idResponsavel
                     );
 
-                    $insere = $tbVinculoDAO->inserir($dadosV);
+                    $insere = $tbVinculoDAO->insert($dadosV);
                 }
 
                 $vinculo2 = $tbVinculoDAO->buscar($whereVinculo);
                 if (count($vinculo2) > 0) {
-                    $vinculo2 = array_change_key_case($vinculo2[0]->toArray());
-                    $novosDadosV = array('idvinculo' => $idVinculo = $vinculo2['idvinculo'],
-                        'idpreprojeto' => $idPreProjeto,
-                        'sivinculoproposta' => 2
+                    $vinculo2 = $vinculo2[0]->toArray();
+                    $novosDadosV = array(
+                        'idVinculo' => $idVinculo = $vinculo2['idVinculo'],
+                        'idPreProjeto' => $idPreProjeto,
+                        'siVinculoProposta' => 2
                     );
-                    $insere = $tbVinculoPropostaDAO->inserir($novosDadosV, false);
+                    $insere = $tbVinculoPropostaDAO->insert($novosDadosV);
                 }
                 /* **************************************************************************************** */
             }
