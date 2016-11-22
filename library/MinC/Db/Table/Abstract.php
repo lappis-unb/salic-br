@@ -250,14 +250,14 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         return $delete;
     }
 
-    public function inserir($dados, $dbg = null)
-    {
-        if ($dbg) {
-            xd($this->dbg($dados));
-        }
-        $insert = $this->insert($dados);
-        return $insert;
-    }
+    //public function inserir($dados, $dbg = null)
+    //{
+        //if ($dbg) {
+            //xd($this->dbg($dados));
+        //}
+        //$insert = $this->insert($dados);
+        //return $insert;
+    //}
 
     public function dbg($dados, $where = null)
     {
