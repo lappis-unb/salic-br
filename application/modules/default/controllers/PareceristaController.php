@@ -970,7 +970,6 @@ class PareceristaController extends GenericControllerNew {
 
         $busca = $DadosGerarPagamentoParecerista->buscarDespachos(array('gpp.siPagamento = ?' => 3), $order, $tamanho, $inicio);
 
-        //xd($busca);
         $paginacao = array(
             "pag"=>$pag,
             "qtde"=>$this->intTamPag,
@@ -1051,19 +1050,81 @@ class PareceristaController extends GenericControllerNew {
      * @return void
      */
     public function finalizarPagamentoPareceristaAction(){
-        
-        $modelPagarParecerista          = new PagarParecerista();
-        $modelGerarPagamentoParecerista = new GerarPagamentoParecerista();
+
+        //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
+        if($this->_request->getParam("qtde")) {
+            $this->intTamPag = $this->_request->getParam("qtde");
+        }
+        $order = array();
+
+        //==== parametro de ordenacao  ======//
+        if($this->_request->getParam("ordem")) {
+            $ordem = $this->_request->getParam("ordem");
+            if($ordem == "ASC") {
+                $novaOrdem = "DESC";
+            }else {
+                $novaOrdem = "ASC";
+            }
+        }else {
+            $ordem = "ASC";
+            $novaOrdem = "ASC";
+        }
+
+        //==== campo de ordenacao  ======//
+        if($this->_request->getParam("campo")) {
+            $campo = $this->_request->getParam("campo");
+            $order = array($campo." ".$ordem);
+            $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+
+        } else {
+            $campo = null;
+            $order = array(7); //Coluna NrDespacho
+            $ordenacao = null;
+        }
+
+        $pag = 1;
+        $get = Zend_Registry::get('get');
+        if (isset($get->pag)) $pag = $get->pag;
+        $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+
+        /* ================== PAGINACAO ======================*/
+
+        $DadosGerarPagamentoParecerista = new GerarPagamentoParecerista();
+
+        $total = $DadosGerarPagamentoParecerista->buscarDespachos(array('gpp.siPagamento = ?' => 5), $order, null, null, true);
+        $fim = $inicio + $this->intTamPag;
+
+        $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+        $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
+
+        $busca = $DadosGerarPagamentoParecerista->buscarDespachos(array('gpp.siPagamento = ?' => 5), $order, $tamanho, $inicio);
+
+        $paginacao = array(
+            "pag"=>$pag,
+            "qtde"=>$this->intTamPag,
+            "campo"=>$campo,
+            "ordem"=>$ordem,
+            "ordenacao"=>$ordenacao,
+            "novaOrdem"=>$novaOrdem,
+            "total"=>$total,
+            "inicio"=>($inicio+1),
+            "fim"=>$fim,
+            "totalPag"=>$totalPag,
+            "Itenspag"=>$this->intTamPag,
+            "tamanho"=>$tamanho
+        );
+
+        $dadosPagarParecerista          = new PagarParecerista();
         $arquivoPagamentoParecerista    = new ArquivoPagamentoParecerista();
-        
-        $listaDespachos = $modelGerarPagamentoParecerista->buscarDespachos(array('gpp.siPagamento = ?' => 5));
-        
+
         $despachos = array();
-        
+
         $d = 0;
-        foreach($listaDespachos as $de){
-            
+
+        foreach($busca as $de){
+
             $despachos[$d]['idGerarPagamentoParecerista']   = $de->idGerarPagamentoParecerista;
+            $despachos[$d]['idConfigurarPagamento']         = $de->idConfigurarPagamento;
             $despachos[$d]['dtGeracaoPagamento']            = $de->dtGeracaoPagamento;
             $despachos[$d]['dtEfetivacaoPagamento']         = $de->dtEfetivacaoPagamento;
             $despachos[$d]['dtOrdemBancaria']               = $de->dtOrdemBancaria;
@@ -1071,53 +1132,48 @@ class PareceristaController extends GenericControllerNew {
             $despachos[$d]['nrDespacho']                    = $de->nrDespacho;
             $despachos[$d]['vlTotalPagamento']              = $de->vlTotalPagamento;
             $despachos[$d]['siPagamento']                   = $de->siPagamento;
-            
-            $listaDePagamentos = $modelPagarParecerista->buscarPagamentos(array('pp.idGerarPagamentoParecerista = ?' => $de->idGerarPagamentoParecerista));
-            
+            $despachos[$d]['nmParecerista']                 = $de->nmParecerista;
+
+            $listaDePagamentos = $dadosPagarParecerista->buscarPagamentos(array('pp.idGerarPagamentoParecerista = ?' => $de->idGerarPagamentoParecerista));
+
             $despachos[$d]['idParecerista'] = $listaDePagamentos[0]->idParecerista;
-            $despachos[$d]['nmParecerista'] = $listaDePagamentos[0]->nmParecerista;
-            
+
             $dados = array();
             $pr = 0;
             $valorTotal = 0;
             $pronac = $listaDePagamentos[0]->pronac;
-            foreach($listaDePagamentos as $pag){
 
-                $valorTotal = $pag->vlPagamento + $valorTotal;
-            
-                if($pronac != $pag->pronac){
+            foreach($listaDePagamentos as $pagmt){
+
+                $valorTotal = $pagmt->vlPagamento + $valorTotal;
+
+                if($pronac != $pagmt->pronac){
                     $pr++;
-                    $valorTotal = $pag->vlPagamento;
+                    $valorTotal = $pagmt->vlPagamento;
                 }
-                
-                $dados[$pr]['idPronac']             = $pag->idpronac;
-                $dados[$pr]['pronac']               = $pag->pronac;
-                $dados[$pr]['NomeProjeto']          = $pag->NomeProjeto;
-                $dados[$pr]['UnidadeAnalise']       = $pag->Vinculada;
+
+                $dados[$pr]['idPronac']             = $pagmt->idpronac;
+                $dados[$pr]['pronac']               = $pagmt->pronac;
+                $dados[$pr]['NomeProjeto']          = $pagmt->NomeProjeto;
+                $dados[$pr]['UnidadeAnalise']       = $pagmt->Vinculada;
                 $dados[$pr]['vlPagamento']          = $valorTotal;
 
-                $pronac = $pag->pronac;
-                
+                $pronac = $pagmt->pronac;
             }
-            
+
             $despachos[$d]['Projetos'] = $dados;
-            
+
             $arquivos = $arquivoPagamentoParecerista->buscarArquivo(array('arqpa.idGerarPagamentoParecerista = ?' => $de->idGerarPagamentoParecerista));
-            
+
             $despachos[$d]['Arquivos'] = $arquivos;
-            
+
             $d++;
         }
 
-        Zend_Paginator::setDefaultScrollingStyle('Sliding');
-        Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
-        $paginator          = Zend_Paginator::factory($despachos); // dados a serem paginados
-        $currentPage        = $this->_getParam('page', 1);
-        $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(10);
-
-        $this->view->listaDePagamentos	= $paginator;
-        $this->view->qtdlistaDePagamentos      = count($despachos); // quantidade
-
+        $this->view->paginacao         = $paginacao;
+        $this->view->qtd               = $total;
+        $this->view->dados             = $despachos;
+        $this->view->intTamPag         = $this->intTamPag;
     }
     
     /**
