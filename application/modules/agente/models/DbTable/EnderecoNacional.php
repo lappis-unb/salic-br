@@ -38,7 +38,7 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_primary = 'idendereco';
+    protected $_primary = 'idEndereco';
 
     /**
      * Metodo para buscar os enderecos do agente

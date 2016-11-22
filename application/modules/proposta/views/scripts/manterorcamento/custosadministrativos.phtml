@@ -47,15 +47,15 @@ $CadastrarCustos = $this->url(array('controller' => 'manterorcamento', 'action' 
 
 <!-- ========== INCIO CONTEDO ========== -->
 <div id="conteudo">
-<!--    --><?php //var_dump($this->Etapas); ?>
-<!--    --><?php //var_dump($this->EtapaCusto);exit; ?>
-    <?php foreach ($this->Etapas as $etapa):?>
-    <?php $CadastrarProduto = $this->url(array('controller' => 'manterorcamento', 'action' => 'cadastrarcustos'))."?etapa=".$etapa->idetapa."&etapaNome=".$etapa->descricaoetapa."&idPreProjeto=".$this->idPreProjeto;?>
+    <?php //var_dump($this->Etapas); ?>
+    <?php //var_dump($this->EtapaCusto);exit; ?>
+    <?php foreach ($this->Etapas as $etapa): ?>
+    <?php $CadastrarProduto = $this->url(array('controller' => 'manterorcamento', 'action' => 'cadastrarcustos'))."?etapa=".$etapa->idetapa."&etapaNome=".$etapa->descricaoEtapa."&idPreProjeto=".$this->idPreProjeto;?>
     <div class="etapas">
 
         <table class="tabela">
             <tr>
-                <td><input type="button" name="grid1" id="itens_<?php echo $etapa->idetapa; ?>" class="btn_adicionar" title="Expandir" /><?php echo $etapa->descricaoetapa; ?></td>
+                <td><input type="button" name="grid1" id="itens_<?php echo $etapa->idetapa; ?>" class="btn_adicionar" title="Expandir" /><?php echo $etapa->descricaoEtapa; ?></td>
                 <td align="center" style="width: 10%"><input type="button" class="btn_novo" onclick="abrirFrmCadastroItem('<?php echo $CadastrarProduto?>');" /></td>
             </tr>
         </table>
@@ -76,16 +76,16 @@ $CadastrarCustos = $this->url(array('controller' => 'manterorcamento', 'action' 
                 <tr class="fundo">
                     <td><?php echo $itens->DescricaoItem ?></td>
                     <td><?php echo $itens->Unidade ?></td>
-                    <td align="right"><?php echo number_format($itens->quantidade,0) ?></td>
-                    <td align="right"><?php echo number_format($itens->ocorrencia,0) ?></td>
-                    <td align="right"><?php echo number_format($itens->valorunitario, 2, ",", ".") ?></td>
-                    <td align="right"><?php echo  number_format(($itens->quantidade * $itens->valorunitario) * $itens->ocorrencia, 2, ",", ".") ?></td>
+                    <td align="right"><?php echo number_format($itens->Quantidade,0) ?></td>
+                    <td align="right"><?php echo number_format($itens->Ocorrencia,0) ?></td>
+                    <td align="right"><?php echo number_format($itens->ValorUnitario, 2, ",", ".") ?></td>
+                    <td align="right"><?php echo  number_format(($itens->Quantidade * $itens->ValorUnitario) * $itens->Ocorrencia, 2, ",", ".") ?></td>
                     <td><?php echo $itens->Municipio ?>/<?php echo $itens->SiglaUF ?></td>
                     <td class='centro' width="5%">
-                        <input type="button" id="btn_editar" name="editar" class="btn_editar" onclick="abrirFrmCadastroItem('<?php echo $this->url(array('controller'=>'manterorcamento', 'action'=>'editarcustos')); ?>?item=<?php echo $itens->idItem;?>&etapa=<?php echo $itens->idEtapa;?>&idPlanilhaProposta=<?php echo $itens->idplanilhaproposta?>&idPreProjeto=<?php echo $this->idPreProjeto;?>');">
+                        <input type="button" id="btn_editar" name="editar" class="btn_editar" onclick="abrirFrmCadastroItem('<?php echo $this->url(array('controller'=>'manterorcamento', 'action'=>'editarcustos')); ?>?item=<?php echo $itens->idItem;?>&etapa=<?php echo $itens->idEtapa;?>&idPlanilhaProposta=<?php echo $itens->idPlanilhaProposta?>&idPreProjeto=<?php echo $this->idPreProjeto;?>');">
                     </td>
                     <td class='centro' width="5%">
-                        <input type="button" id="btn_excluir" name="excluir" class="btn_exclusao" onclick="excluir(<?php echo $itens->idplanilhaproposta; ?>);">
+                        <input type="button" id="btn_excluir" name="excluir" class="btn_exclusao" onclick="excluir(<?php echo $itens->idPlanilhaProposta; ?>);">
                     </td>
                 </tr>
                 <?php endif; ?>
