@@ -125,7 +125,7 @@
                         type: "post",
                         url: "<?php echo $this->url(array('controller' => 'vincularresponsavel', 'action' => 'vinculo')); ?>",
                         data:{
-                            solicitarvinculoproposta : '1' <?php if (isset($_GET['idPreProjeto'])) { ?>,idpreprojeto : '<?php echo $_GET['idPreProjeto'] ?>'<?php } ?>
+                            solicitarvinculoproposta : '1' <?php if (isset($_GET['idPreProjeto'])) { ?>,idPreProjeto : '<?php echo $_GET['idPreProjeto'] ?>'<?php } ?>
                         },
                         success: function(data)
                         {
@@ -345,7 +345,7 @@ $(document).ready(function()
 </style>
 
 <?php
-    if (isset($this->proposta['idpreprojeto'])) {
+    if (isset($this->proposta['idPreProjeto'])) {
         echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); // menu
     }
 ?>
@@ -362,7 +362,7 @@ $(document).ready(function()
 
 <!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
-    <div><?php if (!isset($this->proposta['idpreprojeto'])) { echo "NOVA"; } ?> PROPOSTA <?php //echo montaBotaoVoltar($controller, $links); ?></div>
+    <div><?php if (!isset($this->proposta['idPreProjeto'])) { echo "NOVA"; } ?> PROPOSTA <?php //echo montaBotaoVoltar($controller, $links); ?></div>
 </div>
 
 <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/ckeditor.js"></script>
@@ -379,11 +379,11 @@ $(document).ready(function()
     <form action="<?php echo $this->acao; ?>" method="post" id="frmProposta" name="frmProposta">
 
         <input type="hidden" name="idPreProjeto" id="idPreProjeto" value="<?php
-        if (isset($this->proposta['idpreprojeto']))
-            echo $this->proposta['idpreprojeto'];
+        if (isset($this->proposta['idPreProjeto']))
+            echo $this->proposta['idPreProjeto'];
 ?>">
         <input type="hidden" name="acao" id="acao" value="<?php
-               if (isset($this->proposta['idpreprojeto'])) {
+               if (isset($this->proposta['idPreProjeto'])) {
                    echo "alterar";
                } else {
                    echo "incluir";
@@ -402,16 +402,16 @@ $(document).ready(function()
                         <div style="width: 95%">
                             <div style="float:left; width: 85%">
                                 Proponente:
-                                <span style="color: blue;"><?php echo $this->proponente['descricao']; ?></span>
+                                <span style="color: blue;"><?php echo $this->proponente['Descricao']; ?></span>
                                 <input type="hidden" class="input_simples" name="idAgente" value="<?php
-               if (isset($this->proponente['idagente']))
-                   echo $this->proponente['idagente'];
+               if (isset($this->proponente['idAgente']))
+                   echo $this->proponente['idAgente'];
 ?>">
                             </div>
                             <div style="float:left; width: 15%">
                                 Nr da Proposta:<br/><span style="color: blue;"><?php
-                                       if (isset($this->proposta['idpreprojeto']))
-                                           echo $this->proposta['idpreprojeto'];
+                                       if (isset($this->proposta['idPreProjeto']))
+                                           echo $this->proposta['idPreProjeto'];
 ?></span>
                             </div>
                         </div>
@@ -420,8 +420,8 @@ $(document).ready(function()
                 <tr class="esquerda">
                     <td colspan="5">Nome da Proposta Cultural *
                         <input type="text" class="input_simples" name="nomeProjeto" id="nomeProjeto" maxlength="500" title="Nome da Proposta Cultural"  style="width:50em;" value="<?php
-                                    if (isset($this->proposta['idpreprojeto']))
-                                        echo str_replace("'", "", str_replace("\"", "", ($this->proposta['nomeprojeto'])));
+                                    if (isset($this->proposta['idPreProjeto']))
+                                        echo str_replace("'", "", str_replace("\"", "", ($this->proposta['NomeProjeto'])));
 ?>"/>
                     </td>
                 </tr>
@@ -433,8 +433,8 @@ $(document).ready(function()
 
                         <!-- ========== EDITOR ========== -->
                         <textarea cols="80" id="resumoDoProjeto" obrigatorio="1" name="resumoDoProjeto" rows="10"><?php
-                               if (isset($this->proposta['idpreprojeto']))
-                                   echo $this->proposta['resumodoprojeto'];
+                               if (isset($this->proposta['idPreProjeto']))
+                                   echo $this->proposta['ResumoDoProjeto'];
 ?></textarea>
                     </td>
                 </tr>
@@ -446,14 +446,14 @@ $(document).ready(function()
                     <td class="centro">Data Fixa
                         <select class="select_simples" name="stDataFixa" id="stDataFixa" style="width: 5em">
                             <option value="0" <?php
-                            if (isset($this->proposta['idpreprojeto']))
-                                if ($this->proposta['stdatafixa'] == "0") {
+                            if (isset($this->proposta['idPreProjeto']))
+                                if ($this->proposta['stDataFixa'] == "0") {
                                     echo "selected";
                                 }
 ?>>N&atilde;o</option>
                             <option value="1" <?php
-                                    if (isset($this->proposta['idpreprojeto']))
-                                        if ($this->proposta['stdatafixa'] == "1") {
+                                    if (isset($this->proposta['idPreProjeto']))
+                                        if ($this->proposta['stDataFixa'] == "1") {
                                             echo "selected";
                                         }
 ?>>Sim</option>
@@ -462,14 +462,14 @@ $(document).ready(function()
                     <td class="centro">Plano Anual
                         <select class="select_simples" name="stPlanoAnual" id="stPlanoAnual" style="width: 5em">
                             <option value="0" <?php
-                                    if (isset($this->proposta['idpreprojeto']))
-                                        if ($this->proposta['stplanoanual'] == "0") {
+                                    if (isset($this->proposta['idPreProjeto']))
+                                        if ($this->proposta['stPlanoAnual'] == "0") {
                                             echo "selected";
                                         }
 ?>>N&atilde;o</option>
                             <option value="1" <?php
-                                    if (isset($this->proposta['idpreprojeto']))
-                                        if ($this->proposta['stplanoanual'] == "1") {
+                                    if (isset($this->proposta['idPreProjeto']))
+                                        if ($this->proposta['stPlanoAnual'] == "1") {
                                             echo "selected";
                                         }
 ?>>Sim</option>
@@ -478,22 +478,22 @@ $(document).ready(function()
                     </td>
                     <td class="centro">Ag&ecirc;ncia Banc&aacute;ria *
                         <input type="text" class="input_simples" name="agenciaBancaria" id="agenciaBancaria" maxlength="12"  style="width:50px;" value="<?php
-                                    if (isset($this->proposta['idpreprojeto']))
-                                        echo $this->proposta['agenciabancaria'];
+                                    if (isset($this->proposta['idPreProjeto']))
+                                        echo $this->proposta['AgenciaBancaria'];
 ?>"/>
                         <div id="ValidaAgencia" name="ValidaAgencia" style="color:#FF0000" > </div>
                     </td>
                     <td class="centro">&Eacute; proposta de audiovisual?
                         <select class="select_simples" name="propostaAudioVisual" id="propostaAudioVisual" style="width: 5em">
                             <option value="0" <?php
-                               if (isset($this->proposta['idpreprojeto']))
-                                   if ($this->proposta['areaabrangencia'] == "0") {
+                               if (isset($this->proposta['idPreProjeto']))
+                                   if ($this->proposta['AreaAbrangencia'] == "0") {
                                        echo "selected";
                                    }
 ?>>N&atilde;o</option>
                             <option value="1" <?php
-                                    if (isset($this->proposta['idpreprojeto']))
-                                        if ($this->proposta['areaabrangencia'] == "1") {
+                                    if (isset($this->proposta['idPreProjeto']))
+                                        if ($this->proposta['AreaAbrangencia'] == "1") {
                                             echo "selected";
                                         }
 ?>>Sim</option>
@@ -507,7 +507,7 @@ $(document).ready(function()
                 <tr>
                     <td class="centro">Data de In&iacute;cio *</td>
                     <td>
-                        <input type="text" name="dtInicioDeExecucao" id="dtInicioDeExecucao" maxlength="10" class="input_simples btn_calendario" value="<?php if (isset($this->proposta['idpreprojeto'])) echo $this->proposta['dtiniciodeexecucaoform']; ?>"/>
+                        <input type="text" name="dtInicioDeExecucao" id="dtInicioDeExecucao" maxlength="10" class="input_simples btn_calendario" value="<?php if (isset($this->proposta['idPreProjeto'])) echo $this->proposta['dtiniciodeexecucaoform']; ?>"/>
                         <!--<input type="text" class="input_simples" name="dtInicioDeExecucao" id="dtInicioDeExecucao" autocomplete="off" onkeyup="mascara(this,
                             format_data);" maxlength="10" value="<?php
                                     //if (isset($this->proposta->idPreProjeto))
@@ -516,12 +516,12 @@ $(document).ready(function()
                     </td>
                     <td>dd/mm/aaaa. A data inicial de realiza&ccedil;&atilde;o dever&aacute; ser no m&iacute;nimo 90 dias ap&oacute;s a data atual.</td>
                     <td>N&uacute;mero do Ato </td>
-                    <td><input type="text" class="input_simples" name="nrAtoTombamento" id="nrAtoTombamento" maxlength="12" onkeyup="ativarDesativarObrigatoriedadeDtAto()" value="<?php if (isset($this->proposta['idpreprojeto'])) echo trim($this->proposta['nratotombamento']); ?>"/></td>
+                    <td><input type="text" class="input_simples" name="nrAtoTombamento" id="nrAtoTombamento" maxlength="12" onkeyup="ativarDesativarObrigatoriedadeDtAto()" value="<?php if (isset($this->proposta['idPreProjeto'])) echo trim($this->proposta['nratotombamento']); ?>"/></td>
                 </tr>
                 <tr>
                     <td class="centro">Data Final *</td>
                     <td>
-                        <input type="text" name="dtFinalDeExecucao" id="dtFinalDeExecucao" maxlength="10" class="input_simples btn_calendario" value="<?php if (isset($this->proposta['idpreprojeto'])) echo $this->proposta['dtfinaldeexecucaoform']; ?>"/>
+                        <input type="text" name="dtFinalDeExecucao" id="dtFinalDeExecucao" maxlength="10" class="input_simples btn_calendario" value="<?php if (isset($this->proposta['idPreProjeto'])) echo $this->proposta['dtfinaldeexecucaoform']; ?>"/>
                        <!-- <input type="text" class="input_simples" name="dtFinalDeExecucao" id="dtFinalDeExecucao"  autocomplete="off" onkeyup="mascara(this, format_data);"
                        maxlength="10" value="<?php
                         //if (isset($this->proposta->idPreProjeto))
@@ -530,7 +530,7 @@ $(document).ready(function()
                     </td>
                     <td></td>
                     <td>Data do Ato </td>
-                    <td><input type="text" name="dtAtoTombamento" id="dtAtoTombamento" maxlength="10" class="input_simples btn_calendario" readonly="readonly" value="<?php if (isset($this->proposta['idpreprojeto'])) echo $this->proposta['dtatotombamentoform']; ?>"/>
+                    <td><input type="text" name="dtAtoTombamento" id="dtAtoTombamento" maxlength="10" class="input_simples btn_calendario" readonly="readonly" value="<?php if (isset($this->proposta['idPreProjeto'])) echo $this->proposta['dtatotombamentoform']; ?>"/>
                     <!--<td><input type="text" class="input_simples" name="dtAtoTombamento" id="dtAtoTombamento" maxlength="10" onkeyup="mascara(this, format_data);" value="<?php
                         //if (isset($this->proposta->idPreProjeto))
                         //echo $this->proposta->DtAtoTombamentoForm;
@@ -543,20 +543,20 @@ $(document).ready(function()
                     <td><select class="select_simples" name="esferaTombamento" id="esferaTombamento" style="width: 10em">
                             <option value="" selected>- Selecione-</option>
                             <option value="1" <?php
-                        if (isset($this->proposta['idpreprojeto']))
-                            if ($this->proposta['esferatombamento'] == "1") {
+                        if (isset($this->proposta['idPreProjeto']))
+                            if ($this->proposta['EsferaTombamento'] == "1") {
                                 echo "selected";
                             }
 ?>>Municipal</option>
                             <option value="2" <?php
-                                    if (isset($this->proposta['idpreprojeto']))
-                                        if ($this->proposta['esferatombamento'] == "2") {
+                                    if (isset($this->proposta['idPreProjeto']))
+                                        if ($this->proposta['EsferaTombamento'] == "2") {
                                             echo "selected";
                                         }
 ?>>Estadual</option>
                             <option value="3" <?php
-                                    if (isset($this->proposta['idpreprojeto']))
-                                        if ($this->proposta['esferatombamento'] == "3") {
+                                    if (isset($this->proposta['idPreProjeto']))
+                                        if ($this->proposta['EsferaTombamento'] == "3") {
                                             echo "selected";
                                         }
 ?>>Federal</option>
@@ -585,8 +585,8 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     <td colspan="2">
                         <!-- ========== EDITOR ========== -->
                         <textarea cols="80" id="objetivos" name="objetivos" rows="10"><?php
-                                    if (isset($this->proposta['idpreprojeto']))
-                                        echo $this->proposta['objetivos'];
+                                    if (isset($this->proposta['idPreProjeto']))
+                                        echo $this->proposta['Objetivos'];
 ?></textarea>
                     </td>
                 </tr>
@@ -611,8 +611,8 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     <td colspan="2">
                         <!-- ========== EDITOR ========== -->
                         <textarea cols="80" id="justificativa" name="justificativa" rows="10"><?php
-                            if (isset($this->proposta['idpreprojeto']))
-                                echo $this->proposta['justificativa'];
+                            if (isset($this->proposta['idPreProjeto']))
+                                echo $this->proposta['Justificativa'];
 ?></textarea>
                     </td>
                 </tr>
@@ -638,8 +638,8 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     <td colspan="2">
                         <!-- ========== EDITOR ========== -->
                         <textarea cols="80" id="acessibilidade" name="acessibilidade" rows="10"><?php
-                            if (isset($this->proposta['idpreprojeto']))
-                                echo $this->proposta['acessibilidade'];
+                            if (isset($this->proposta['idPreProjeto']))
+                                echo $this->proposta['Acessibilidade'];
 ?></textarea>
                     </td>
                 </tr>
@@ -665,8 +665,8 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     <td colspan="2">
                         <!-- ========== EDITOR ========== -->
                         <textarea cols="80" id="democratizacaoDeAcesso" name="democratizacaoDeAcesso" rows="10"><?php
-                            if (isset($this->proposta['idpreprojeto']))
-                                echo $this->proposta['democratizacaodeacesso'];
+                            if (isset($this->proposta['idPreProjeto']))
+                                echo $this->proposta['DemocratizacaoDeAcesso'];
 ?></textarea>
                     </td>
                 </tr>
@@ -692,8 +692,8 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     <td colspan="2">
                         <!-- ========== EDITOR ========== -->
                         <textarea cols="80" id="etapaDeTrabalho" name="etapaDeTrabalho" rows="10"><?php
-                            if (isset($this->proposta['idpreprojeto']))
-                                echo $this->proposta['etapadetrabalho'];
+                            if (isset($this->proposta['idPreProjeto']))
+                                echo $this->proposta['EtapaDeTrabalho'];
 ?></textarea>
                     </td>
                 </tr>
@@ -719,8 +719,8 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     <td colspan="2">
                         <!-- ========== EDITOR ========== -->
                         <textarea cols="80" id="fichaTecnica" name="fichaTecnica" rows="10"><?php
-                            if (isset($this->proposta['idpreprojeto']))
-                                echo $this->proposta['fichatecnica'];
+                            if (isset($this->proposta['idPreProjeto']))
+                                echo $this->proposta['FichaTecnica'];
 ?></textarea>
                     </td>
                 </tr>
@@ -746,8 +746,8 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     <td colspan="2">
                         <!-- ========== EDITOR ========== -->
                         <textarea cols="80" id="sinopse" name="sinopse" rows="10"><?php
-                            if (isset($this->proposta['idpreprojeto']))
-                                echo $this->proposta['sinopse'];
+                            if (isset($this->proposta['idPreProjeto']))
+                                echo $this->proposta['Sinopse'];
 ?></textarea>
                     </td>
                 </tr>
@@ -772,8 +772,8 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     <td colspan="2">
                         <!-- ========== EDITOR ========== -->
                         <textarea cols="80" id="impactoAmbiental" name="impactoAmbiental" rows="10"><?php
-                            if (isset($this->proposta['idpreprojeto']))
-                                echo $this->proposta['impactoambiental'];
+                            if (isset($this->proposta['idPreProjeto']))
+                                echo $this->proposta['ImpactoAmbiental'];
 ?></textarea>
                     </td>
                 </tr>
@@ -801,8 +801,8 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     <td colspan="2">
                         <!-- ========== EDITOR ========== -->
                         <textarea cols="80" id="especificacaoTecnica" name="especificacaoTecnica" rows="10"><?php
-                            if (isset($this->proposta['idpreprojeto']))
-                                echo $this->proposta['especificacaotecnica'];
+                            if (isset($this->proposta['idPreProjeto']))
+                                echo $this->proposta['EspecificacaoTecnica'];
 ?></textarea>
                     </td>
                 </tr>
@@ -824,8 +824,8 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
                     <td colspan="2">
                         <!-- ========== EDITOR ========== -->
                         <textarea cols="80" id="informacoes" name="informacoes" rows="10"><?php
-                            if (isset($this->proposta['idpreprojeto']))
-                                echo $this->proposta['estrategiadeexecucao'];
+                            if (isset($this->proposta['idPreProjeto']))
+                                echo $this->proposta['EstrategiadeExecucao'];
 ?></textarea>
                     </td>
                 </tr>
