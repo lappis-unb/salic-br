@@ -12,6 +12,8 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     private $_config;
     protected $_rowClass = "MinC_Db_Table_Row";
 
+    private static $databaseInstance;
+
     public function init()
     {
         # Tratando o nome da tabela conforme o tipo de banco.
@@ -37,20 +39,24 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      */
     public function __construct()
     {
+        $this->createConnection();
+        parent::__construct();
+    }
+
+    private function createConnection () {
         # FECHANDO A CONEXAO EXISTENTE JA QUE UMA NOVA SERA ABERTA
         $dbAdapter = Zend_Db_Table::getDefaultAdapter();
-        if ($dbAdapter instanceof Zend_Db_Adapter_Pdo_Mssql) {
+
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $arrConfig = $db->getConfig();
+        if ($dbAdapter instanceof Zend_Db_Adapter_Pdo_Mssql && strtolower($arrConfig['dbname']) != strtolower($this->_schema)) {
             if (!empty($dbAdapter)) {
                 $dbAdapter->closeConnection();
                 unset ($dbAdapter);
             }
 
             if (!($this->_config instanceof Zend_Config_Ini)) {
-//            $this->_config = new Zend_Config_Ini(
-//                Zend_Registry::get('DIR_CONFIG'),
-//                'conexao_' . strtolower($this->_banco),
-//                array('allowModifications' => true,)
-//            );
+
                 $db = Zend_Db_Table::getDefaultAdapter();
                 $arrConfig = $db->getConfig();
                 $strDb = str_replace(array('.dbo', '.scdne'), '', $this->_schema);
@@ -75,18 +81,16 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
                     )
                 );
 
-
                 Zend_Registry::getInstance()->set('config', $this->_config);
                 Zend_Db_Table::setDefaultAdapter(Zend_Db::factory($this->_config->db));
 
                 # Setar o campo texto maior que 4096 caracteres aceitaveis por padrao no PHP
-                $db->query('SET TEXTSIZE 2147483647');
+                $db->query(' SET TEXTSIZE 2147483647 ');
+
             }
         } else if (is_int(strpos($this->_schema, 'scdne'))) {
             $this->_schema = str_replace('.scdne', '', $this->_schema);
         }
-
-        parent::__construct();
     }
 
 
@@ -155,18 +159,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      */
     public function getName($strName = '', $strSchema = '')
     {
-//        $db = Zend_Db_Table::getDefaultAdapter();
-
-//        if ($strSchema === '') $strSchema = $this->_schema;
-//        if ($strName === '') $strName = $this->_name;
-
-//        if ($db->getConfig()['host'] != '10.1.20.44') {
-//            $strName = ucfirst($strSchema) . '.dbo.' . $strName;
-//            $strName = ucfirst($strName);
-//        } else {
-//            $strName = strtolower($strSchema) . '.' . $strName;
-//            $strName = strtolower($strName);
-//        }
 
         $strName = strtolower($strName);
 
@@ -202,8 +194,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
                 $schema = $schema . '.dbo';
             }
         }
-
-        $tableName = strtolower($tableName);
 
         return $schema . '.' . $tableName;
     }
@@ -289,86 +279,8 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         xd($sql);
     }
 
-    protected function _getCols()
-    {
-        if (null === $this->_cols) {
-            $this->_setupMetadata();
-            $this->_cols = array_keys($this->_metadata);
-            foreach ($this->_cols as $indice => $coluna) {
-                $this->_cols[$indice] = strtolower($coluna);
-            }
-        }
 
-        return $this->_cols;
-    }
 
-    /**
-     * Initialize primary key from metadata.
-     * If $_primary is not defined, discover primary keys
-     * from the information returned by describeTable().
-     *
-     * @return void
-     * @throws Zend_Db_Table_Exception
-     */
-    protected function _setupPrimaryKey()
-    {
-
-        if (!$this->_primary) {
-            $this->_setupMetadata();
-            $this->_primary = array();
-            foreach ($this->_metadata as $col) {
-                if ($col['PRIMARY']) {
-                    $this->_primary[$col['PRIMARY_POSITION']] = $col['COLUMN_NAME'];
-                    if ($col['IDENTITY']) {
-                        $this->_identity = $col['PRIMARY_POSITION'];
-                    }
-                }
-            }
-            // if no primary key was specified and none was found in the metadata
-            // then throw an exception.
-            if (empty($this->_primary)) {
-                require_once 'Zend/Db/Table/Exception.php';
-                throw new Zend_Db_Table_Exception('A table must have a primary key, but none was found');
-            }
-        } else if (!is_array($this->_primary)) {
-            $this->_primary = array(1 => $this->_primary);
-        } else if (isset($this->_primary[0])) {
-            array_unshift($this->_primary, null);
-            unset($this->_primary[0]);
-        }
-
-        $this->_primary[1] = strtolower($this->_primary[1]);
-
-        $cols = $this->_getCols();
-        if (!array_intersect((array)$this->_primary, $cols) == (array)$this->_primary) {
-            require_once 'Zend/Db/Table/Exception.php';
-            throw new Zend_Db_Table_Exception("Primary key column(s) ("
-                . implode(',', (array)$this->_primary)
-                . ") are not columns in this table ("
-                . implode(',', $cols)
-                . ")");
-        }
-
-        $primary = (array)$this->_primary;
-        $pkIdentity = $primary[(int)$this->_identity];
-
-        /**
-         * Special case for PostgreSQL: a SERIAL key implicitly uses a sequence
-         * object whose name is "<table>_<column>_seq".
-         */
-        if ($this->_sequence === true && $this->_db instanceof Zend_Db_Adapter_Pdo_Pgsql) {
-            $this->_sequence = $this->_db->quoteIdentifier("{$this->_name}_{$pkIdentity}_seq");
-            if ($this->_schema) {
-                $this->_sequence = $this->_db->quoteIdentifier($this->_schema) . '.' . $this->_sequence;
-            }
-        }
-    }
-
-    public function insert(array $data)
-    {
-        $arrayIndicesMinusculos = array_change_key_case($data);
-        return parent::insert($arrayIndicesMinusculos);
-    }
 
     /**
      * @param Zend_Db_Table_Abstract::SELECT_WITHOUT_FROM_PART $withFromPart
@@ -569,7 +481,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         $resultSet = ($resultSet)? $resultSet->toArray() : array();
         $entries   = array();
         foreach ($resultSet as $row) {
-            $row = array_change_key_case($row);
             $entries[$row[$key]] = $row[$value];
         }
         return $entries;
