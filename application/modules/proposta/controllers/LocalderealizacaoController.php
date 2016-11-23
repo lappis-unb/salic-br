@@ -107,7 +107,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
     public function indexAction() {
         //RECUPERA OS LOCAIS DE REALIZACAO CADASTRADOS
         $arrBusca = array();
-        $arrBusca['idprojeto']=$this->idPreProjeto;
+        $arrBusca['idprojeto'] = $this->idPreProjeto;
         $arrBusca['stabrangencia'] = 1;
         $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $rsAbrangencia = $tblAbrangencia->buscar($arrBusca);
@@ -133,16 +133,16 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
         //RECUPERA OS PAISES
         $table = new Agente_Model_DbTable_Pais();
-        $arrPais = $table->fetchPairs('idpais', 'descricao');
+        $arrPais = $table->fetchPairs('idPais', 'Descricao');
 
         //RECUPRA OS ESTADOS
         $mapperUf = new Agente_Model_UFMapper();
-        $arrUf = $mapperUf->fetchPairs('iduf', 'sigla');
+        $arrUf = $mapperUf->fetchPairs('idUF', 'Sigla');
 
         //RECUPERA LOCALIZACOES CADASTRADAS
         $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $arrBusca = array();
-        $arrBusca['idProjeto']=$this->idPreProjeto;
+        $arrBusca['idProjeto'] = $this->idPreProjeto;
         $arrBusca['stAbrangencia']=1;
         if(!empty($idAbrangencia)) {
             $arrBusca['idAbrangencia']=$idAbrangencia;
@@ -174,7 +174,6 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         }else {
             $edital = "";
         }
-
         $qtdeLocais = $post->qtdeLocais;
         $locais = array();
         $locaisinvalidos = array();
@@ -247,6 +246,8 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
                 $dados['stAbrangencia']=1;
                 $dados['idAbrangencia']=$idAbrangencia;
+
+
                 if (!empty($dados["idProjeto"]) && !empty($dados["idPais"])) {
 
                     $retorno = $tblAbrangencia->salvar($dados);
@@ -332,12 +333,12 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
         # RECUPERA OS PAISES
         $tablePais = new Agente_Model_DbTable_Pais();
-        $rsPais = $tablePais->fetchPairs('idpais', 'descricao');
+        $rsPais = $tablePais->fetchPairs('idPais', 'Descricao');
         $this->view->paises = $rsPais;
 
         # RECUPERA OS ESTADOS
         $mapperUf = new Agente_Model_UFMapper();
-        $rsEstados = $mapperUf->fetchPairs('iduf', 'descricao');
+        $rsEstados = $mapperUf->fetchPairs('idUF', 'Descricao');
         $this->view->estados = $rsEstados;
     }
 
@@ -355,7 +356,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
         # RECUPERA AS CIDADES
         $table = new Agente_Model_DbTable_Municipios();
-        $arrCidades = $table->fetchPairs('idmunicipioibge', 'descricao', array('idufibge' => $idEstado));
+        $arrCidades = $table->fetchPairs('idMunicipioIBGE', 'Descricao', array('idufibge' => $idEstado));
         $html = '';
         foreach ($arrCidades as $key => $cidades) {
             $html .= "<option value=\"{$key}\">{$cidades}</option>";

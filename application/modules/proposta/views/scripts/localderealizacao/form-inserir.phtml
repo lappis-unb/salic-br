@@ -1,9 +1,9 @@
 <?php $edital = "";
     if(isset($_GET['edital'])) {
-        $this->partial('/manterpropostaedital/inc/menu.inc.php'); // menu de manter proposta por edital
+        echo $this->partial('/manterpropostaedital/inc/menu.inc.php'); // menu de manter proposta por edital
         $edital = "&edital=s";
     } else {
-        $this->partial("/manterpropostaincentivofiscal/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
+        echo $this->partial("/manterpropostaincentivofiscal/inc/menu.inc.php"); // menu de manter proposta por incentivo fiscal
     }
 ?>
 <script type="text/javascript">
@@ -83,8 +83,6 @@
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-
 <div id="titulo">
     <div>Local de Realiza&ccedil;&atilde;o <?php if (!isset($_GET['edital'])): ?>/ Deslocamento<?php endif; ?>
         <span class="voltar">
@@ -93,8 +91,6 @@
     </div>
 </div>
 <div id="modalAlerta" class="sumir">Favor preencher os dados.</div>
-
-
 <div id="conteudo">
     <div id="localderealizacao">
         <form method="post" id="formulario" name="formulario" action="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'localderealizacao', 'action' => 'salvar-local-realizacao')); ?>?idPreProjeto=<?php if($_GET['idPreProjeto'])echo $_GET['idPreProjeto'];?>">
