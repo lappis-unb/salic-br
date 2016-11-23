@@ -181,8 +181,6 @@ class LoginController extends MinC_Controller_Action_Abstract {
                     "Situacao" => 1,
                     "DtSituacao" => date("Y-m-d")
             );
-//                xd($dados);
-
 
             $sgcAcesso = new Autenticacao_Model_Sgcacesso();
             $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf));
