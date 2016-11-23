@@ -223,6 +223,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
     public function salvar(array $dados)
     {
         try {
+            $dados = array_change_key_case($dados);
             if (isset($dados['idusuario'])) {
                 $objSgcAcesso = $this->buscar(array("idusuario = ?" => $dados['idusuario']))->current();
             } else {
