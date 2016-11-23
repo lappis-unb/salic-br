@@ -46,11 +46,11 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
         }
 
         $mapperUf = new Agente_Model_UFMapper();
-        $uf = $mapperUf->fetchPairs('iduf', 'sigla');
+        $uf = $mapperUf->fetchPairs('idUF', 'Sigla');
         $this->view->comboestados = $uf;
         //$this->view->comboestados = Estado::buscar();
         $table = new Agente_Model_DbTable_Pais();
-        $this->view->paises = $table->fetchPairs('idpais', 'descricao');
+        $this->view->paises = $table->fetchPairs('idPais', 'Descricao');
         //$this->view->paises = DeslocamentoDAO::buscarPais();
 
         parent::init();
