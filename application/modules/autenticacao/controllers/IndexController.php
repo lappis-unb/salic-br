@@ -202,7 +202,9 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
      */
     public function cadastrarusuarioAction()
     {
+
         if ($_POST) {
+
             $post = Zend_Registry::get('post');
             $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf));
 
@@ -243,8 +245,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             }
 
             if (empty ($sgcAcessoBuscaCpfArray) && empty ($sgcAcessoBuscaEmailArray)) {
-                $sgcAcessoSave = $sgcAcesso->salvar($dados);
-
                 /**
                  * ==============================================================
                  * INICIO DO VINCULO DO RESPONSAVEL COM ELE MESMO (PROPONENTE)
@@ -254,18 +254,23 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 $Agentes = new Agente_Model_DbTable_Agentes();
                 $Visao = new Visao();
 
+                $sgcAcessoSave = $sgcAcesso->salvar($dados);
+
                 $buscarAgente = $Agentes->buscar(array('CNPJCPF = ?' => $cpf));
+
                 $idAgenteProp = count($buscarAgente) > 0 ? $buscarAgente[0]->idagente : 0;
                 $buscarVisao = $Visao->buscar(array('Visao = ?' => 144, 'stAtivo = ?' => 'A', 'idAgente = ?' => $idAgenteProp));
+
                 /* ========== VINCULA O RESPONSAVEL A SEU PROPRIO PERFIL DE PROPONENTE ========== */
                 if (count($buscarVisao) > 0) :
                     $tbVinculo = new Agente_Model_DbTable_TbVinculo();
                     $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $sgcAcessoSave)); // pega o id do responsavel cadastrado
                     $dadosVinculo = array(
                         'idAgenteProponente' => $idAgenteProp
-                    , 'dtVinculo' => new Zend_Db_Expr('GETDATE()')
-                    , 'siVinculo' => 2
-                    , 'idUsuarioResponsavel' => $idResp[0]->idusuario);
+                        ,'dtVinculo' => new Zend_Db_Expr('GETDATE()')
+                        ,'siVinculo' => 2
+                        ,'idUsuarioResponsavel' => $idResp[0]->IdUsuario
+                    );
                     $tbVinculo->inserir($dadosVinculo);
                 endif;
 
@@ -274,7 +279,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                  * FIM DO VINCULO DO RESPONSAVEL COM ELE MESMO (PROPONENTE)
                  * ==============================================================
                  */
-
                 /* ========== ENVIA O E-MAIL PARA O USUARIO ========== */
                 $assunto = "Cadastro SALICWEB";
                 $perfil = 'SALICWEB';
