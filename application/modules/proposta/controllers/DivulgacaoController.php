@@ -29,6 +29,7 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  21/09/2016
+     * @deprecated Plano de divulgação foi removido da proposta em 23/11/2016
      */
     public function init()
     {
@@ -74,6 +75,7 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  21/09/2016
+     * @deprecated Plano de divulgação foi removido da proposta em 23/11/2016
      */
     public function indexAction()
     {
@@ -102,6 +104,7 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  21/09/2016
+     * @deprecated Plano de divulgação foi removido da proposta em 23/11/2016
      */
     public function consultarcomponenteAction()
     {
@@ -122,6 +125,7 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  21/09/2016
+     * @deprecated Plano de divulgação foi removido da proposta em 23/11/2016
      */
     public function editardivulgacaoAction()
     {
@@ -143,12 +147,13 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  21/09/2016
+     * @deprecated Plano de divulgação foi removido da proposta em 23/11/2016
      */
     public function novodivulgacaoAction()
     {
         $this->verificarPermissaoAcesso(true, false, false);
         $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
-        $this->view->itensplano = $tableVerificacao->fetchPairs('idverificacao', 'descricao', array('idtipo' => 1), array('descricao'));
+        $this->view->itensplano = $tableVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 1), array('descricao'));
         $this->view->veiculo = array();
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
@@ -159,6 +164,7 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  21/09/2016
+     * @deprecated Plano de divulgação foi removido da proposta em 23/11/2016
      */
     public function veiculoAction()
     {
@@ -175,7 +181,7 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
             if ($veiculo == $option['idverificacaoveiculo']) {
                 $htmlOptions .= ' selected="selected" ';
             }
-            $htmlOptions .= ">" . htmlentities($option['veiculodescicao']) . "</option>";
+            $htmlOptions .= ">" . $option['veiculodescicao'] . "</option>";
         }
         echo $htmlOptions;
     }
@@ -186,6 +192,7 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  15/08/2016
+     * @deprecated Plano de divulgação foi removido da proposta em 23/11/2016
      */
     public function excluirdivulgacaoAction()
     {
@@ -204,6 +211,7 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  15/08/2016
+     * @deprecated Plano de divulgação foi removido da proposta em 23/11/2016
      */
     public function updatedivulgacaoAction()
     {
@@ -238,6 +246,7 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  15/08/2016
+     * @deprecated Plano de divulgação foi removido da proposta em 23/11/2016
      */
     public function incluirdivulgacaoAction()
     {
