@@ -220,16 +220,19 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
-            $select->where($coluna, $valor);
+            if ($valor) {
+                $select->where($coluna, $valor);
+            }
         }
+        $select->order($order);
 
-        try {
-            $this->fetchAll($select);
-        } catch (Exception $e) {
-            echo '<pre>';
-            var_dump($select->assemble());
-            var_dump($e->getMessage());
-            exit;
+        // paginacao
+        if ($tamanho > -1) {
+            $tmpInicio = 0;
+            if ($inicio > -1) {
+                $tmpInicio = $inicio;
+            }
+            $select->limit($tamanho, $tmpInicio);
         }
 
         return $this->fetchAll($select);
