@@ -191,8 +191,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $rsProponente = $tblAgente->buscarAgenteNome($arrBusca)->current();
 
         if ($rsProponente) {
-            $rsProponente = array_change_key_case($rsProponente->toArray());
-
+            $rsProponente = $rsProponente->toArray();
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
             $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("proponente" => $rsProponente,
                 "acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar"));
@@ -370,7 +369,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             }
             return;
         } catch (Zend_Exception $ex) {
-            parent::message("Não foi possível realizar a operação!" . $ex->getMessage(), "/proposta/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
+            parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!" . $ex->getMessage(), "/proposta/manterpropostaincentivofiscal/index?idPreProjeto=" . $idPreProjeto, "ERROR");
         }
     }
 
