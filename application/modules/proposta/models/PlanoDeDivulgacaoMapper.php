@@ -21,7 +21,7 @@ class Proposta_Model_PlanoDeDivulgacaoMapper extends MinC_Db_Mapper
         parent::setDbTable('Proposta_Model_DbTable_PlanoDeDivulgacao');
     }
 
-    public function save(Proposta_Model_PlanoDeDivulgacao $model)
+    public function save($model)
     {
         return parent::save($model);
     }
