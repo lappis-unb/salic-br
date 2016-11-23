@@ -27,7 +27,7 @@ montaGuiaLinks($controller, $links);
 <div id="conteudo">
     <form id="formBuscar" name="formBuscar" method="post" action="<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'exibirdados')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto'];?>">
         <table class="tabela">
-            <th colspan="3">Localizar Produtos / Etapas / Itens </th>
+            <th colspan="3">Pesquisar Produtos / Etapas / Itens </th>
             <tr><td colspan="3"></td></tr>
             <tr>
                 <td class="esquerda" ><label for="produto" ><b>Produto </b></label></td>
@@ -67,7 +67,7 @@ montaGuiaLinks($controller, $links);
             </tr>
             <tr  class="centro">
                 <td colspan="3" class="centro">
-                    <input type="submit" title=" Pesquisar " class="btn_localizar" value=" " />
+                    <input type="submit" title=" Pesquisar " class="btn_pesquisar" value=" " />
                     &nbsp;
                     <input type="button" name="novo" class="btn_novo" value="" onclick="window.location='<?php echo $this->url(array('controller' => 'mantertabelaitens', 'action' => 'solicitaritens')); ?>?idPreProjeto=<?php if(isset($_GET['idPreProjeto']))echo $_GET['idPreProjeto'];?>'">&nbsp;
                     <input type="reset" title=" Cancelar " class="btn_limpar" value=" " />
