@@ -26,7 +26,7 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
     protected $_banco = 'controledeacesso';
     protected $_schema = 'controledeacesso';
     protected $_name = 'sgcacesso';
-    protected $_primary = 'IdUsuario';
+    protected $_primary = 'Cpf';
 
     /**
      * @var Zend_Db_Table
@@ -230,14 +230,14 @@ class Autenticacao_Model_Sgcacesso extends MinC_Db_Table_Abstract
                 $objSgcAcesso = $this->createRow();
             }
 
-            if (isset($dados['cpf'])) $objSgcAcesso->cpf = $dados['cpf'];
-            if (isset($dados['nome'])) $objSgcAcesso->nome = $dados['nome'];
-            if (isset($dados['dtnascimento'])) $objSgcAcesso->dtnascimento = $dados['dtnascimento'];
-            if (isset($dados['email'])) $objSgcAcesso->email = $dados['email'];
-            if (isset($dados['senha'])) $objSgcAcesso->senha = $dados['senha'];
-            if (isset($dados['dtcadastro'])) $objSgcAcesso->dtcadastro = $dados['dtcadastro'];
-            if (isset($dados['situacao'])) $objSgcAcesso->situacao = $dados['situacao'];
-            if (isset($dados['dtsituacao'])) $objSgcAcesso->dtsituacao = $dados['dtsituacao'];
+            if (isset($dados['cpf'])) $objSgcAcesso->Cpf = $dados['cpf'];
+            if (isset($dados['nome'])) $objSgcAcesso->Nome = $dados['nome'];
+            if (isset($dados['dtnascimento'])) $objSgcAcesso->DtNascimento = $dados['dtnascimento'];
+            if (isset($dados['email'])) $objSgcAcesso->Email = $dados['email'];
+            if (isset($dados['senha'])) $objSgcAcesso->Senha = $dados['senha'];
+            if (isset($dados['dtcadastro'])) $objSgcAcesso->DtCadastro = $dados['dtcadastro'];
+            if (isset($dados['situacao'])) $objSgcAcesso->Situacao = $dados['situacao'];
+            if (isset($dados['dtsituacao'])) $objSgcAcesso->DtSituacao = $dados['dtsituacao'];
             if (isset($dados['id_login_cidadao'])) $objSgcAcesso->id_login_cidadao = $dados['id_login_cidadao'];
             return $objSgcAcesso->save();
         } catch (Exception $objException) {
