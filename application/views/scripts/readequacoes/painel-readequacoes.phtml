@@ -32,7 +32,7 @@
         }
         
         $('.enviarReadequacao').click(function(){
-            var parecerista = $(this).parent().parent().find('select').val(),
+            var parecerista = $('#tecnico').val(),
                 idDistRead = $(this).attr('idDistRead'),
                 idReadequacao = $(this).attr('idReadequacao');
                 

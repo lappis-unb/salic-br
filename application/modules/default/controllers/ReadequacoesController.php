@@ -2270,7 +2270,7 @@ class ReadequacoesController extends GenericControllerNew {
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 121){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-
+        
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -2427,34 +2427,52 @@ class ReadequacoesController extends GenericControllerNew {
     */
     public function encaminharReadequacaoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        //$vinculada = $this->idOrgao;
-
-        $post = Zend_Registry::get('post');
-
-        $idAvaliador = $this->_request->getParam('parecerista');
+        $vinculada = $this->idOrgao;
+        
         $idDistRead = $this->_request->getParam('idDistRead');
         $idReadequacao = $this->_request->getParam('idReadequacao');
-
-        //Atualiza a tabela tbDistribuirReadequacao
-        $dados = array();
-        $dados['idAvaliador'] = $idAvaliador;
-        $dados['DtEnvioAvaliador'] = new Zend_Db_Expr('GETDATE()');
-        $where["idDistribuirReadequacao = ? "] = $idDistRead;
-        $tbDistribuirReadequacao = new tbDistribuirReadequacao();
-        $return = $tbDistribuirReadequacao->update($dados, $where);
         
-        //Atualiza a tabela tbReadequacao
-        $dados = array();
-        $dados['siEncaminhamento'] = 4; // Enviado para análise técnica
-        $where = array();
-        $where['idReadequacao = ?'] = $idReadequacao;
-        $tbReadequacao = new tbReadequacao();
-        $return2 = $tbReadequacao->update($dados, $where);
+        //Atualiza a tabela tbDistribuirReadequacao
+        if ($vinculada != 91) { // todos os casos exceto IPHAN
+            $idAvaliador = $this->_request->getParam('parecerista');
+            
+            $dados = array();
+            $dados['idAvaliador'] = $idAvaliador;
+            $dados['DtEnvioAvaliador'] = new Zend_Db_Expr('GETDATE()');
+            $where["idDistribuirReadequacao = ? "] = $idDistRead;
+            $tbDistribuirReadequacao = new tbDistribuirReadequacao();
+            $return = $tbDistribuirReadequacao->update($dados, $where);
+            
+            //Atualiza a tabela tbReadequacao
+            $dados = array();
+            $dados['siEncaminhamento'] = 4; // Enviado para análise técnica
+            $where = array();
+            $where['idReadequacao = ?'] = $idReadequacao;
+            $tbReadequacao = new tbReadequacao();
+            $return2 = $tbReadequacao->update($dados, $where);
 
-        if($return && $return2){
-            echo json_encode(array('resposta'=>true));
+            if($return && $return2){
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
+
         } else {
-            echo json_encode(array('resposta'=>false));
+            // IPHAN
+            
+            $idVinculada = $this->_request->getParam('parecerista');
+
+            $dados = array();
+            $dados['idUnidade'] = $idVinculada;
+            $where["idDistribuirReadequacao = ? "] = $idDistRead;
+            $tbDistribuirReadequacao = new tbDistribuirReadequacao();
+            $return = $tbDistribuirReadequacao->update($dados, $where);
+
+            if ($return) {
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
         }
         die();
     }
