@@ -358,7 +358,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     {
 
         // autenticacao proponente (Novo Salic)
-        parent::perfil(4);
+        //parent::perfil(4);
 
         /* ========== INICIO ID DO USUARIO LOGADO ========== */
         $auth = (array) Zend_Auth::getInstance()->getIdentity();
@@ -368,7 +368,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         $idUsuario = $Usuario->getIdUsuario(null, $auth['Cpf']);
 
         // caso nao tenha idAgente, atribui o idUsuario
-        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth['IdUsuario'];
+        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idagente'] : $auth['IdUsuario'];
         $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
 
 //        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
@@ -406,14 +406,12 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
             $sgcAcesso = new Autenticacao_Model_Sgcacesso();
 
+            $idUsuario = $_POST['idUsuario'];
             if (empty ($_POST['idUsuario'])) {
                 $idUsuario = $_POST['idUsuarioGet'];
-            } else {
-                $idUsuario = $_POST['idUsuario'];
             }
 
             $buscarSenha = $sgcAcesso->findBy(array('idUsuario' => $idUsuario));
-
             $senhaAtualBanco = $buscarSenha['Senha'];
 
             if (empty ($cpf)) {
@@ -430,20 +428,16 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
             $senhaCript = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaAtual);
 
-            if ($buscarSenha['situacao'] != 1) {
-
+            if ($buscarSenha['Situacao'] != 1) {
                 $comparaSenha = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaAtual);
-
                 $SenhaFinal = $comparaSenha;
 
                 //@todo verificar as regras de negocios para $cpfTabelas
                 if (trim($senhaAtualBanco) != trim($SenhaFinal) && !$senhaTabelas) {
-
                     parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
                 }
 
                 if (trim($senhaAtualBanco) != trim($SenhaFinal) && ($cpfTabelas && !$senhaTabelas)) {
-
                     parent::message("Por favor, digite a senha atual correta!", "/autenticacao/index/alterarsenha?idUsuario=$idUsuario", "ALERT");
                 }
             } else {
@@ -507,7 +501,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         $idUsuario = $Usuario->getIdUsuario(null, $auth->getIdentity()->usu_identificacao);
         if (isset($auth->getIdentity()->usu_identificacao)) {
             // caso nao tenha idAgente, atribui o idUsuario
-            $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth->getIdentity()->usu_codigo;
+            $this->getIdUsuario = ($idUsuario) ? $idUsuario['idagente'] : $auth->getIdentity()->usu_codigo;
             //$this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
             /* ========== FIM ID DO USUARIO LOGADO ========== */
 
@@ -622,7 +616,6 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
                     // registra o primeiro grupo do usu&aacute;rio (pega unidade autorizada, organiza e grupo do usuaaio)
                     $Grupo = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21); // busca todos os grupos do usuario
-
                     $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess?o com o grupo ativo
                     $GrupoAtivo->codGrupo = $Grupo[0]->gru_codigo; // armazena o grupo na sess?o
                     $GrupoAtivo->codOrgao = $Grupo[0]->uog_orgao; // armazena o org?o na sess?o
@@ -654,7 +647,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
         $idUsuario = $Usuario->getIdUsuario(null, $auth['cpf']);
 
         // caso nao tenha idAgente, atribui o idUsuario
-        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idAgente'] : $auth['idusuario'];
+        $this->getIdUsuario = ($idUsuario) ? $idUsuario['idagente'] : $auth['idusuario'];
         $this->getIdUsuario = empty($this->getIdUsuario) ? 0 : $this->getIdUsuario;
 
         /* ========== FIM ID DO USUARIO LOGADO ========== */
