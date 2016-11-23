@@ -46,11 +46,11 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
         }
 
         $mapperUf = new Agente_Model_UFMapper();
-        $uf = $mapperUf->fetchPairs('iduf', 'sigla');
+        $uf = $mapperUf->fetchPairs('idUF', 'Sigla');
         $this->view->comboestados = $uf;
         //$this->view->comboestados = Estado::buscar();
         $table = new Agente_Model_DbTable_Pais();
-        $this->view->paises = $table->fetchPairs('idpais', 'descricao');
+        $this->view->paises = $table->fetchPairs('idPais', 'Descricao');
         //$this->view->paises = DeslocamentoDAO::buscarPais();
 
         parent::init();
@@ -84,6 +84,7 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
         if (empty($_GET['verifica'])) {
             $this->_helper->layout->disableLayout();
         }
+
         if($_GET) {
             $id = null;
 
@@ -108,9 +109,9 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
                 }
 
                 $mapperMunicipio = new Agente_Model_MunicipiosMapper();
-                $this->view->combocidadesO = $mapperMunicipio->fetchPairs('idmunicipioibge' , 'descricao', array('idufibge' => $idUFO));
+                $this->view->combocidadesO = $mapperMunicipio->fetchPairs('idMunicipioIBGE' , 'Descricao', array('idufibge' => $idUFO));
                 //$this->view->combocidadesO = Cidade::buscar($idUFO);
-                $this->view->combocidadesD = $mapperMunicipio->fetchPairs('idmunicipioibge' , 'descricao', array('idufibge' => $idUFD));
+                $this->view->combocidadesD = $mapperMunicipio->fetchPairs('idMunicipioIBGE' , 'Descricao', array('idufibge' => $idUFD));
 
                 $this->view->idPaisO 	= $idPaisO;
                 $this->view->idPaisD 	= $idPaisD;

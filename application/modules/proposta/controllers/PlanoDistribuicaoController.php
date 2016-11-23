@@ -142,9 +142,10 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $get = Zend_Registry::get("get");
         if(!empty($get->idPlanoDistribuicao)){
             $tblPlanoDistribuicao = new PlanoDistribuicao();
-            $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscarPlanoDistribuicao(array('idplanodistribuicao = ?' =>$get->idPlanoDistribuicao));
+            $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscarPlanoDistribuicao(array('idPlanoDistribuicao = ?' =>$get->idPlanoDistribuicao));
             $arrDados["planoDistribuicao"] = $rsPlanoDistribuicao;
         }
+//        xd($rsPlanoDistribuicao);
 
         $tblProduto = new Produto();
         $rsProdutos = $tblProduto->buscar(array("stestado = ?" => 0), array("descricao ASC"));
@@ -159,6 +160,9 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
 
         if(!empty($arrPlanoDistribuicao)){
             $bln_exitePP = "true"; //Existe Produto Principal Cadastrado
+
+            $tblSegmento = new Segmento();
+            $arrDados["segmento"] = $tblSegmento->buscar(array("codigo=?" =>$arrPlanoDistribuicao[0]['Segmento']));
         }
 
         $tblLogomarca = new Verificacao();
