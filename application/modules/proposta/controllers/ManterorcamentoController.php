@@ -18,10 +18,10 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
     public function init()
     {
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
-        $this->view->title = "Salic - Sistema de Apoio �s Leis de Incentivo � Cultura"; // t�tulo da p�gina
-        $auth = Zend_Auth::getInstance(); // pega a autentica��o
+        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // t?tulo da p?gina
+        $auth = Zend_Auth::getInstance(); // pega a autentica??o
         $PermissoesGrupo = array();
-        if (!$auth->hasIdentity()) // caso o usu�rio esteja autenticado
+        if (!$auth->hasIdentity()) // caso o usu?rio esteja autenticado
         {
              return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
@@ -29,7 +29,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usu�rio
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usu?rio
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo){
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -48,7 +48,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
         }else {
             if($idPreProjeto != '0'){
-                parent::message("Necess�rio informar o n�mero da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
+                parent::message("Necessário informar o número da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
             }
         }
 
@@ -106,6 +106,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
+     * @deprecated Custos administrativos foi desativado em Proposta em 23/11/2016
      */
     public function custosadministrativosAction()
     {
@@ -137,7 +138,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * @return void
      */
     public function planilhaorcamentariageralAction(){
-        $this->view->tipoPlanilha = 0; // 0=Planilha Or�ament�ria da Proposta
+        $this->view->tipoPlanilha = 0; // 0=Planilha Or?ament?ria da Proposta
     }
 
     /**
@@ -275,6 +276,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
+     * @deprecated Custos administrativos foi desativado em Proposta em 23/11/2016
      */
     public function cadastrarcustosAction() {
         $this->_helper->layout->disableLayout();
@@ -488,6 +490,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
+     * @deprecated Custos administrativos foi desativado na Proposta em 23/11/2016
      */
     public function editarcustosAction () {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -578,6 +581,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
+     * @deprecated Custos administrativos foi desativado na Proposta em 23/11/2016
      */
     public function salvarprodutosAction () {
 
@@ -621,6 +625,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
+     * @deprecated Custos administrativos foi desativado na Proposta em 23/11/2016
      */
     public function salvarcustosAction () {
 
