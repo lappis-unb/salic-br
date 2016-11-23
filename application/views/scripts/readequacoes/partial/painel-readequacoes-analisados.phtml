@@ -19,7 +19,11 @@
 
 		<th><a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'painel-readequacoes')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=11&ordem='.$this->paginacao['novaOrdem'];?>">Total em dias p/ avaliar</a></th>
                 <th>Visualizar</th>
-		<th>Selecionar parecerista</th>
+		<?php if ($this->idOrgao == 91) { ?>
+		<th style="width: 130px;">Superintend&ecirc;ncias do IPHAN</th>      
+		<?php } else { ?>
+		<th style="width: 130px;">Parecerista</th>
+		<?php } ?>
 		<th>Encaminhar</th>
 		<th>Finalizar</th>
 
@@ -49,23 +53,38 @@
 		  <input type="button" class="btn_ver" idReadequacao="<?php echo Seguranca::encrypt($d->idReadequacao); ?>" />
 		</td>			
         <td align="center">
-          <?php 
-             $p = new Projetos();
-             $dadosProjetos = $p->buscar(array('IdPRONAC = ?'=>$d->idPronac))->current();
-
-          $Pareceristas = array();
-          if(count($dadosProjetos)>0){
+	  <?php
+	   $p = new Projetos();
+	   $dadosProjetos = $p->buscar(array('IdPRONAC = ?'=>$d->idPronac))->current();
+	
+	  if(count($dadosProjetos)>0){
+	  $outrasVinculadas = array(92, 93, 94, 95, 335); // Vinculadas exceto IPHAN
+	  if ($this->idOrgao == 91) { // especificidade do IPHAN
+          $o = new Orgaos();
+          $superindendencias = $o->buscarSuperintendencias();
+      } else if (!in_array($this->idOrgao, $outrasVinculadas)) {
           $a = new Agentes();
+          $Pareceristas = array();
+          $Pareceristas = $a->buscarPareceristasIphan($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
+	  } else {
+          $a = new Agentes();
+          $Pareceristas = array();
           $Pareceristas = $a->buscarPareceristas($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
-          }
-          ?>
-            <select name="tecnico" class="select_simples comboTecnico">
-		<option value=""> - Selecione - </option>
-            <?php foreach ($Pareceristas as $Parecerista) : ?>
-              <option value='<?php echo $Parecerista->id; ?>' <?php echo ($d->nmParecerista == $Parecerista->nome) ? 'selected="selected"' : ''; ?> >
-	    <?php echo $Parecerista->nome; ?></option>
-	      <?php endforeach; ?>
-	    </select>
+	  }
+    }
+?>
+	  <select name="tecnico" id="tecnico" class="select_simples comboTecnico">
+	      <option value=""> - Selecione - </option>
+	      <?php if ($this->idOrgao == 91): ?>
+	        <?php foreach ($superindendencias as $superindendencia): ?>
+	          <option value="<?php echo $superindendencia->Codigo; ?>"><?php echo $superindendencia->Sigla; ?></option>
+	        <?php endforeach; ?>
+	      <?php else: ?>
+	        <?php foreach ($Pareceristas as $Parecerista): ?>
+	          <option value="<?php echo $Parecerista->id; ?>"><?php echo $Parecerista->nome; ?></option>
+	        <?php endforeach; ?>
+	      <?php endif; ?>
+	</select>
 	</td>
 
 	<td>

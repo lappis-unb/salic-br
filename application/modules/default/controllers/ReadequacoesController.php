@@ -2631,23 +2631,32 @@ class ReadequacoesController extends GenericControllerNew {
                     $tbReadequacaoXParecer->inserir($dadosInclusao);
                 }
             }
-
+            
             if(isset($_POST['finalizarAvaliacao']) && $_POST['finalizarAvaliacao'] == 1){
 
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dDP = $tbDistribuirReadequacao->buscar(array('idReadequacao = ?'=>$idReadequacao));
 
                 if(count($dDP)>0){
+                    
+                    $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
                     //ATUALIZA A TABELA tbDistribuirReadequacao
                     $dadosDP = array();
                     $dadosDP['DtRetornoAvaliador'] = new Zend_Db_Expr('GETDATE()');
                     $whereDP = "idDistribuirReadequacao = ".$dDP[0]->idDistribuirReadequacao;
-                    $x = $tbDistribuirReadequacao->update($dadosDP, $whereDP);
 
+                    // se estiver com uma vinculada do IPHAN, retorna para IPHAN central
+                    if (!in_array($this->idOrgao, $outrasVinculadas)) {
+                        $dadosDP['idUnidade'] = 91; // retorna para IPHAN (topo)
+                    }
+                    
+                    $x = $tbDistribuirReadequacao->update($dadosDP, $whereDP);
+                    
                     $siEncaminhamento = 5; //Devolvido da análise técnica
                     if($this->idPerfil == 121){
                         $siEncaminhamento = 10; //Devolver para Coordenador do MinC
                     }
+                    
                     //ATUALIZA A TABELA tbReadequacao
                     $dados = array();
                     $dados['siEncaminhamento'] = $siEncaminhamento;
