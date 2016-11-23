@@ -175,7 +175,7 @@
 
             if(!preenchimento){
                 i++;
-                erros = erros + i+' - Favor preencher os campos obrigatórios.';
+                erros = erros + i+' - Favor preencher os campos obrigat&oacute;rios.';
             }
 
             if(i>0){
@@ -268,8 +268,8 @@
 <div id="confirma" class="sumir"></div>
 <div id="msgAlerta" class="sumir"></div>
 <form action="<?php echo $this->acaoSalvar; ?>" name="frmPlanoDistribuicao" id="frmPlanoDistribuicao" method="post">
-    <input type="hidden" name="idPlanoDistribuicao" id="idPlanoDistribuicao" value="<?php echo $this->planoDistribuicao['idplanodistribuicao']; ?>">
-    <input type="hidden" name="idProjeto" id="idProjeto" value="<?php echo $this->planoDistribuicao['idprojeto']; ?>">
+    <input type="hidden" name="idPlanoDistribuicao" id="idPlanoDistribuicao" value="<?php echo $this->planoDistribuicao['idPlanoDistribuicao']; ?>">
+    <input type="hidden" name="idProjeto" id="idProjeto" value="<?php echo $this->planoDistribuicao['idProjeto']; ?>">
     <!-- ========== INICIO TABELA DADOS ========== -->
     <table  class="tabela">
         <tr>
@@ -282,19 +282,19 @@
                         <?php echo (!empty($this->planoDistribuicao->idproduto)) ? " disabled='disabled'" : ""; ?>>
                     <option value=""> - Selecione - </option>
                     <?php foreach ($this->comboprodutos as $produto): ?>
-                        <option value="<?php echo $produto['codigo']; ?>" <?php echo ($produto['codigo'] == $this->planoDistribuicao['idproduto']) ? " selected='selected'" : ""; ?>>
-                            <?php echo $produto['descricao']; ?>
+                        <option value="<?php echo $produto['Codigo']; ?>" <?php echo ($produto['Codigo'] == $this->planoDistribuicao['idProduto']) ? " selected='selected'" : ""; ?>>
+                            <?php echo $produto['Descricao']; ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
             </td>
             <td class="destacar bold w150">Produto Principal? <span style="color: red;">*</span></td>
             <td>
-                <?php if (($this->bln_exitePP == "false") || isset($this->planoDistribuicao['idplanodistribuicao'])): //Verifica se existe produto principal ja cadastrado ?>
+                <?php if (($this->bln_exitePP == "false") || isset($this->planoDistribuicao['idPlanoDistribuicao'])): //Verifica se existe produto principal ja cadastrado ?>
                     <select class="input_simples w100 obrigatorio" name="prodprincipal" id="prodprincipal">
                         <option value="" selected>- Selecione -</option>
-                        <option value="0" <?php echo ($this->planoDistribuicao['stprincipal'] == "0") ? " selected='selected'" : ""; ?>>N&atilde;o</option>
-                        <option value="1" <?php echo ($this->planoDistribuicao['stprincipal'] == "1") ? " selected='selected'" : ""; ?>>Sim</option>
+                        <option value="0" <?php echo ($this->planoDistribuicao['stPrincipal'] == "0") ? " selected='selected'" : ""; ?>>N&atilde;o</option>
+                        <option value="1" <?php echo ($this->planoDistribuicao['stPrincipal'] == "1") ? " selected='selected'" : ""; ?>>Sim</option>
                     </select>
                 <?php else: ?>
                     <select class="input_simples w100" name="prodprincipal" id="prodprincipal">
@@ -307,9 +307,9 @@
             <td class="destacar bold" style="width: 1px;">&Aacute;rea <span style="color: red;">*</span></td>
             <td>
                 <select class="input_simples obrigatorio" name="areaCultural" id="areaCultural">
-                    <option value=""> - Selecione uma área cultural - </option>
+                    <option value=""> - Selecione uma &Aacute;rea Cultural - </option>
                     <?php foreach ($this->comboareasculturais as $comboareacultural): ?>
-                        <option value="<?php echo $comboareacultural->id; ?>" <?php echo ($comboareacultural->id == $this->planoDistribuicao['area']) ? " selected='selected'" : ""; ?>>
+                        <option value="<?php echo $comboareacultural->id; ?>" <?php echo ($comboareacultural->id == $this->planoDistribuicao['Area']) ? " selected='selected'" : ""; ?>>
                             <?php echo $comboareacultural->descricao; ?>
                         </option>
                     <?php endforeach; ?>
@@ -318,12 +318,20 @@
             <td class="destacar bold" style="width: 1px;">Segmento <span style="color: red;">*</span></td>
             <td>
                 <select class="input_simples obrigatorio" name="segmentoCultural" id="segmentoCultural">
-                    <option value=""> <?php echo " - Selecione um segmento cultural - "; ?> </option>
+                    <?php if( $this->segmento ) : ?>
+                        <?php foreach ($this->segmento  as $segmento): ?>
+                            <option value="<?php echo $segmento['Codigo']; ?>" selected='selected'>
+                                <?php echo $segmento['Descricao']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <option value=""> <?php echo " - Selecione um segmento cultural - "; ?> </option>
+                    <?php endif; ?>
                 </select>
             </td>
         </tr>
     </table>
-
+    <?php if(true) : ?>
     <table class="tabela">
         <tr>
             <th colspan="2" align="center">Posi&ccedil;&atilde;o da Logomarca</th>
@@ -334,14 +342,15 @@
                 <select class="input_simples obrigatorio" name="logomarca" id="logomarca" onchange="">
                     <option value=""> - Selecione - </option>
                     <?php foreach ($this->combologomarcas as $logomarca): ?>
-                        <option value="<?php echo $logomarca['idverificacao']; ?>" <?php echo ($logomarca['idverificacao'] == $this->planoDistribuicao['idposicaodalogo']) ? " selected='selected'" : ""; ?>>
-                            <?php echo $logomarca['descricao']; ?>
+                        <option value="<?php echo $logomarca['idVerificacao']; ?>" <?php echo ($logomarca['idVerificacao'] == $this->planoDistribuicao['idPosicaoDaLogo']) ? " selected='selected'" : ""; ?>>
+                            <?php echo $logomarca['Descricao']; ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
             </td>
         </tr>
     </table>
+    <?php endif; ?>
 
     <table class="tabela">
         <tr>
@@ -354,13 +363,13 @@
         </tr>
         <tr>
             <td align="center">
-                <input class="input_simples" type="text" name="patrocinador" id="patrocinador" value="<?php echo $this->planoDistribuicao['qtdepatrocinador']; ?>" maxlength="8" size="10">
+                <input class="input_simples" type="text" name="patrocinador" id="patrocinador" value="<?php echo $this->planoDistribuicao['QtdePatrocinador']; ?>" maxlength="8" size="10">
             </td>
             <td align="center">
-                <input class="input_simples" type="text" name="divulgacao" id="divulgacao" value="<?php echo $this->planoDistribuicao['qtdeproponente']; ?>" maxlength="8" size="10">
+                <input class="input_simples" type="text" name="divulgacao" id="divulgacao" value="<?php echo $this->planoDistribuicao['QtdeProponente']; ?>" maxlength="8" size="10">
             </td>
             <td align="center">
-                <input class="input_simples" type="text" name="beneficiarios" id="beneficiarios" value="<?php echo $this->planoDistribuicao['qtdeoutros']; ?>" maxlength="8" size="10">
+                <input class="input_simples" type="text" name="beneficiarios" id="beneficiarios" value="<?php echo $this->planoDistribuicao['QtdeOutros']; ?>" maxlength="8" size="10">
             </td>
         </tr>
     </table>
@@ -376,13 +385,13 @@
         </tr>
         <tr>
             <td align="center">
-                <input class="input_simples obrigatorio" type="text" name="qtdenormal" id="qtdenormal" value="<?php echo $this->planoDistribuicao['qtdevendanormal']; ?>" maxlength="8" size="10">
+                <input class="input_simples obrigatorio" type="text" name="qtdenormal" id="qtdenormal" value="<?php echo $this->planoDistribuicao['QtdeVendaNormal']; ?>" maxlength="8" size="10">
             </td>
             <td align="center">
-                <input class="input_simples obrigatorio" type="text" name="qtdepromocional" id="qtdepromocional" value="<?php echo $this->planoDistribuicao['qtdevendapromocional']; ?>" maxlength="8" size="10">
+                <input class="input_simples obrigatorio" type="text" name="qtdepromocional" id="qtdepromocional" value="<?php echo $this->planoDistribuicao['QtdeVendaPromocional']; ?>" maxlength="8" size="10">
             </td>
             <td align="center">
-                <input disabled="disabled"  name="nexemplares" id="nexemplares" class="input_simples" type="text" maxlength="10" value="<?php echo $this->planoDistribuicao['qtdeproduzida']; ?>">
+                <input disabled="disabled"  name="nexemplares" id="nexemplares" class="input_simples" type="text" maxlength="10" value="<?php echo $this->planoDistribuicao['QtdeProduzida']; ?>">
             </td>
         </tr>
     </table>
@@ -402,20 +411,20 @@
         </tr>
         <tr>
             <td align="center">
-                <input class="input_simples obrigatorio" type="text" name="preconormal" id="preconormal" value="<?php echo $this->planoDistribuicao['precounitarionormal']; ?>" maxlength="9" size="10">
+                <input class="input_simples obrigatorio" type="text" name="preconormal" id="preconormal" value="<?php echo $this->planoDistribuicao['PrecoUnitarioNormal']; ?>" maxlength="9" size="10">
             </td>
             <td align="center">
-                <input class="input_simples obrigatorio" type="text" name="precopromocional" id="precopromocional" value="<?php echo $this->planoDistribuicao['precounitariopromocional']; ?>" maxlength="9" size="10">
+                <input class="input_simples obrigatorio" type="text" name="precopromocional" id="precopromocional" value="<?php echo $this->planoDistribuicao['PrecoUnitarioPromocional']; ?>" maxlength="9" size="10">
             </td>
             <td align="center">
-                <input   name="previstonormal"  disabled="disabled"  id="previstonormal" class="input_simples" type="text" maxlength="10" value="<?php echo number_format($this->planoDistribuicao['qtdevendanormal'] * $this->planoDistribuicao['precounitarionormal'], 2, ',', '.'); ?>" size="10">
+                <input   name="previstonormal"  disabled="disabled"  id="previstonormal" class="input_simples" type="text" maxlength="10" value="<?php echo number_format($this->planoDistribuicao['QtdeVendaNormal'] * $this->planoDistribuicao['PrecoUnitarioNormal'], 2, ',', '.'); ?>" size="10">
             </td>
             <td align="center">
-                <input class="input_simples"  disabled="disabled"  name="previstopromocional" id="previstopromocional" type="text" maxlength="10" value="<?php echo $this->planoDistribuicao['qtdevendapromocional'] * str_replace(",", ".", $this->planoDistribuicao['precounitariopromocional']); ?>" size="10">
+                <input class="input_simples"  disabled="disabled"  name="previstopromocional" id="previstopromocional" type="text" maxlength="10" value="<?php echo $this->planoDistribuicao['QtdeVendaPromocional'] * str_replace(",", ".", $this->planoDistribuicao['PrecoUnitarioPromocional']); ?>" size="10">
             </td>
             <td align="center">
                 <input disabled="disabled"  name="totalprevisto" id="totalprevisto" class="input_simples" type="text" maxlength="10"
-                    value="<?php echo number_format($this->planoDistribuicao['qtdevendanormal'] * $this->planoDistribuicao['precounitarionormal'] + $this->planoDistribuicao['qtdevendapromocional'] * $this->planoDistribuicao['precounitariopromocional'], 2, ',', '.'); ?>">
+                    value="<?php echo number_format($this->planoDistribuicao['QtdeVendaNormal'] * $this->planoDistribuicao['PrecoUnitarioNormal'] + $this->planoDistribuicao['QtdeVendaPromocional'] * $this->planoDistribuicao['PrecoUnitarioPromocional'], 2, ',', '.'); ?>">
             </td>
         </tr>
     </table>
@@ -425,7 +434,7 @@
         </tr>
         <tr>
             <td colspan="5">
-                <textarea class="textarea_simples" style="width: 99%" id="dsJustificativaPosicaoLogo" name="dsJustificativaPosicaoLogo" cols="" rows="6"><?php echo $this->planoDistribuicao['dsjustificativaposicaologo']; ?></textarea>
+                <textarea class="textarea_simples" style="width: 99%" id="dsJustificativaPosicaoLogo" name="dsJustificativaPosicaoLogo" cols="" rows="6"><?php echo $this->planoDistribuicao['dsJustificativaPosicaoLogo']; ?></textarea>
             </td>
         </tr>
     </table>
