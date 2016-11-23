@@ -586,8 +586,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
         );
 
         $select->joinInner(
-            array(
-                'a' => 'agentes'),
+            array('a' => 'agentes'),
             'u.usu_identificacao = a.cnpjcpf',
             array('a.idagente'),
             parent::getSchema('agentes')
@@ -610,8 +609,6 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
 
     public function inserirUsuarios($dados)
     {
-
-//            $this->dbg($dados);
         $insert = $this->insert($dados);
     }
 
@@ -699,7 +696,6 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
             $tmpTblUsuario->usu_telefone = $dados['usu_telefone'];
         }
 
-//xd($tmpTblUsuario);
         try {
             $id = $tmpTblUsuario->save();
         } catch (Exception $e) {
@@ -944,9 +940,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
 
         if (!empty($orgao)) {
             $select->where("a.uog_orgao = ?", $orgao);
-//			$select->where("a.usu_orgao = ?", $orgao);
         }
-//xd($select->__toString());
         return $this->fetchAll($select);
     }
 
@@ -994,7 +988,7 @@ class Autenticacao_Model_Usuario extends MinC_Db_Table_Abstract
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        //xd($slct->__toString());
+
         return $this->fetchAll($slct);
     }
 
