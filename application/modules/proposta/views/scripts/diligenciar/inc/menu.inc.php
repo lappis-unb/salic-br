@@ -55,8 +55,8 @@
                 $projeto = $get->idPreProjeto;
             }
         ?>
-        <div id="menuContexto"> 
-            <div class="top"></div> 
+        <div id="menuContexto">
+            <div class="top"></div>
             <div id="qm0" class="qmmc">
                 <?php if(!empty($pronac)):?>
                 <a class="no_seta" href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')); ?><?php echo $codPronac;?>">Dados do Projeto</a>
@@ -74,11 +74,11 @@
                 <div class="sanfonaDiv"></div>
                 <a class="no_seta" href="<?php echo $this->url(array('controller' => 'mantermensagens', 'action' => 'consultarmensagem')); ?>/idpronac/<?php echo $this->idPronac; ?>">Mensagens</a>
                 <?php } ?>
-            </div> 
+            </div>
             <div class="bottom"></div>
             <div id="space_menu"></div>
-        <!-- final: navegaￜￜo local --> 
-        </div> 
+        <!-- final: navegaￜￜo local -->
+        </div>
     </div> 
 </div> 
 <!-- ========== FIM MENU ========== -->
