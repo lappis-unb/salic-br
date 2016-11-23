@@ -150,18 +150,18 @@
         <?php if(!empty($this->planosDistribuicao)){ ?>
             <?php foreach($this->planosDistribuicao as $planoDistribuicao){ ?>
                 <?php
-                $totalExemplares += $planoDistribuicao->qtdeproduzida;
-                $receita = ($planoDistribuicao->qtdevendanormal*$planoDistribuicao->precounitarionormal)+($planoDistribuicao->qtdevendapromocional*$planoDistribuicao->precounitariopromocional);
+                $totalExemplares += $planoDistribuicao->QtdeProduzida;
+                $receita = ($planoDistribuicao->QtdeVendaNormal*$planoDistribuicao->PrecoUnitarioNormal)+($planoDistribuicao->QtdeVendaPromocional*$planoDistribuicao->PrecoUnitarioPromocional);
                 $totalReceita += $receita;
                 ?>
             <tr class="fundo">
-                <td class="centro"><?php echo $planoDistribuicao->produto; ?></td>
-                <td class="centro"><?php echo $planoDistribuicao->descricaoarea; ?></td>
-                <td align="right"><?php echo $planoDistribuicao->descricaosegmento; ?></td>
-                <td align="right"><?php echo ($planoDistribuicao->stprincipal == 0) ? 'N&atilde;o' : 'Sim'; ?></td>
+                <td class="centro"><?php echo $planoDistribuicao->Produto; ?></td>
+                <td class="centro"><?php echo $planoDistribuicao->DescricaoArea; ?></td>
+                <td align="right"><?php echo $planoDistribuicao->DescricaoSegmento; ?></td>
+                <td align="right"><?php echo ($planoDistribuicao->stPrincipal == 0) ? 'N&atilde;o' : 'Sim'; ?></td>
                 <td class="centro" nowrap>
-                    <input type="button" class="btn_editar" id="btn_editar" onclick="editar(<?php echo $planoDistribuicao->idplanodistribuicao; ?>)"/>&nbsp;
-                    <input type="button" class="btn_exclusao" id="btn_excluir" onclick="confirma('<?php echo $this->urlApagar; ?>&idPlanoDistribuicao=<?php echo $planoDistribuicao['idplanodistribuicao']; ?>')"/></td>
+                    <input type="button" class="btn_editar" id="btn_editar" onclick="editar(<?php echo $planoDistribuicao->idPlanoDistribuicao; ?>)"/>&nbsp;
+                    <input type="button" class="btn_exclusao" id="btn_excluir" onclick="confirma('<?php echo $this->urlApagar; ?>&idPlanoDistribuicao=<?php echo $planoDistribuicao['idPlanoDistribuicao']; ?>')"/></td>
             </tr>
             <?php } ?>
         <?php } ?>
