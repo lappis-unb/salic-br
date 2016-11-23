@@ -213,7 +213,14 @@ class Proposta_DivulgacaoController extends MinC_Controller_Action_Abstract
         $peca = $post->peca;
         $veiculo = $post->veiculo;
         $idPlanoDivulgacao = $post->idDivulgacao;
-        $dados = array('idplanodivulgacao <> ?' => $idPlanoDivulgacao, 'idprojeto' => $idPreProjeto, 'idpeca' => $peca, 'idveiculo' => $veiculo);
+
+        $dados = array(
+            'idplanodivulgacao <> ?' => $idPlanoDivulgacao,
+            'idprojeto' => $idPreProjeto,
+            'idpeca' => $peca,
+            'idveiculo' => $veiculo
+        );
+
         $verifica = $this->table->findAll($dados);
         if ($verifica) {
             parent::message("Registro j&aacute; cadastrado, transa&ccedil;&atilde;o Cancelada!", "/proposta/divulgacao/planodivulgacao?idPreProjeto=" . $idPreProjeto, "ERROR");
