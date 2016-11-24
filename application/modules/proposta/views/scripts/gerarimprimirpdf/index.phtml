@@ -180,35 +180,34 @@
                 $receitapro      = 0;
                 $receitaprevista = 0;
 
+                $DadosDistribuicao->PrecoUnitarioNormal = str_replace('$','', $DadosDistribuicao->PrecoUnitarioNormal);
+                $DadosDistribuicao->PrecoUnitarioPromocional = str_replace('$','', $DadosDistribuicao->PrecoUnitarioPromocional);
 
-                $DadosDistribuicao->precounitarionormal = str_replace('$','', $DadosDistribuicao->precounitarionormal);
-                $DadosDistribuicao->precounitariopromocional = str_replace('$','', $DadosDistribuicao->precounitariopromocional);
-
-                $receitanormal   = ($DadosDistribuicao->qtdevendanormal*$DadosDistribuicao->precounitarionormal);
-                $receitapro      = ($DadosDistribuicao->qtdevendapromocional*$DadosDistribuicao->precounitariopromocional);
+                $receitanormal   = ($DadosDistribuicao->QtdeVendaNormal*$DadosDistribuicao->PrecoUnitarioNormal);
+                $receitapro      = ($DadosDistribuicao->QtdeVendaPromocional*$DadosDistribuicao->PrecoUnitarioPromocional);
                 $receitaprevista = $receitanormal + $receitapro;
 
-                $QtdeOutrosTotal                = $QtdeOutrosTotal + $DadosDistribuicao->qtdeoutros;
-                $QtdeVendaNormalTotal           = $QtdeVendaNormalTotal + $DadosDistribuicao->qtdevendanormal;
-                $QtdeVendaPromocionalTotal      = $QtdeVendaPromocionalTotal + $DadosDistribuicao->qtdevendapromocional;
-                $QtdeProduzidaTotal             = $QtdeProduzidaTotal + $DadosDistribuicao->qtdeproduzida;
-                $PrecoUnitarioPromocionalTotal  = $PrecoUnitarioPromocionalTotal + $DadosDistribuicao->precounitariopromocional;
-                $PrecoUnitarioNormalTotal       = $PrecoUnitarioNormalTotal + $DadosDistribuicao->precounitarionormal;
+                $QtdeOutrosTotal                = $QtdeOutrosTotal + $DadosDistribuicao->QtdeOutros;
+                $QtdeVendaNormalTotal           = $QtdeVendaNormalTotal + $DadosDistribuicao->QtdeVendaNormal;
+                $QtdeVendaPromocionalTotal      = $QtdeVendaPromocionalTotal + $DadosDistribuicao->QtdeVendaPromocional;
+                $QtdeProduzidaTotal             = $QtdeProduzidaTotal + $DadosDistribuicao->QtdeProduzida;
+                $PrecoUnitarioPromocionalTotal  = $PrecoUnitarioPromocionalTotal + $DadosDistribuicao->PrecoUnitarioPromocional;
+                $PrecoUnitarioNormalTotal       = $PrecoUnitarioNormalTotal + $DadosDistribuicao->PrecoUnitarioNormal;
                 $ReceitaNormalTotal             = $ReceitaNormalTotal + $receitanormal;
                 $ReceitaProTotal                = $ReceitaProTotal + $receitapro;
                 $Total++;
 
                 ?>
                     <tr bgcolor="#EEEEEE">
-                        <td><?php echo $DadosDistribuicao->produto; ?></td>
-                        <td><?php echo $DadosDistribuicao->qtdeproponente; ?></td>
-                        <td><?php echo $DadosDistribuicao->qtdepatrocinador; ?></td>
-                        <td><?php echo $DadosDistribuicao->qtdeoutros; ?></td>
-                        <td><?php echo $DadosDistribuicao->qtdevendanormal; ?></td>
-                        <td><?php echo $DadosDistribuicao->qtdevendapromocional; ?></td>
-                        <td><?php echo $DadosDistribuicao->qtdeproduzida; ?></td>
-                        <td><?php echo number_format($DadosDistribuicao->precounitariopromocional,"2",",","."); ?></td>
-                        <td><?php echo number_format($DadosDistribuicao->precounitarionormal,"2",",","."); ?></td>
+                        <td><?php echo $DadosDistribuicao->Produto; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeProponente; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdePatrocinador; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeOutros; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeVendaNormal; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeVendaPromocional; ?></td>
+                        <td><?php echo $DadosDistribuicao->QtdeProduzida; ?></td>
+                        <td><?php echo number_format($DadosDistribuicao->PrecoUnitarioPromocional,"2",",","."); ?></td>
+                        <td><?php echo number_format($DadosDistribuicao->PrecoUnitarioNormal,"2",",","."); ?></td>
                         <td><?php echo number_format($receitanormal,"2",",","."); ?></td>
                         <td><?php echo number_format($receitapro,"2",",","."); ?></td>
                     </tr>

@@ -2551,7 +2551,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $sql = $db->select()
             ->from($this->_name, $this->_getCols(), $this->_schema)
             ->where('idPreProjeto = ?', $idPreProjeto);
-        $idAgente = $db->fetchRow($sql)->idagente;
+        $idAgente = $db->fetchRow($sql)->idAgente;
         $sql = $db->select()
             ->from(['tbmovimentacao'], '*', $this->_schema)
             ->where('idProjeto = ?', $idPreProjeto)
