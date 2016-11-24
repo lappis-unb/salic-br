@@ -32,7 +32,7 @@
         $("#precopromocional").priceFormat();
 
         //CARREGAR COMBO DE SEGMENTOS DE ACORDO COM A COMBO DE AREAS
-        <?php if(!empty($this->planoDistribuicao->area)): ?>
+        <?php if(!empty($this->planoDistribuicao->Area)): ?>
             $('#segmentoCultural').html('<option value=""> - Carregando - </option>');
             $.ajax({
                 type: 'POST',
@@ -44,7 +44,7 @@
                     $('#segmentoCultural').find('option').remove();
                     $('#segmentoCultural').append(dados);
                     $('#segmentoCultural option').each(function(){
-                       if($(this).val() == '<?php echo $this->planoDistribuicao['segmento']; ?>'){
+                       if($(this).val() == '<?php echo $this->planoDistribuicao['Segmento']; ?>'){
                            $(this).attr('selected',true);
                        }
                    });
@@ -279,7 +279,7 @@
             <td class="destacar bold w150">Produto <span style="color: red;">*</span></td>
             <td>
                 <select class="input_simples w300 obrigatorio" name="produto" id="produto"
-                        <?php echo (!empty($this->planoDistribuicao->idproduto)) ? " disabled='disabled'" : ""; ?>>
+                        <?php echo (!empty($this->planoDistribuicao->idProduto)) ? " disabled='disabled'" : ""; ?>>
                     <option value=""> - Selecione - </option>
                     <?php foreach ($this->comboprodutos as $produto): ?>
                         <option value="<?php echo $produto['Codigo']; ?>" <?php echo ($produto['Codigo'] == $this->planoDistribuicao['idProduto']) ? " selected='selected'" : ""; ?>>
@@ -318,15 +318,7 @@
             <td class="destacar bold" style="width: 1px;">Segmento <span style="color: red;">*</span></td>
             <td>
                 <select class="input_simples obrigatorio" name="segmentoCultural" id="segmentoCultural">
-                    <?php if( $this->segmento ) : ?>
-                        <?php foreach ($this->segmento  as $segmento): ?>
-                            <option value="<?php echo $segmento['Codigo']; ?>" selected='selected'>
-                                <?php echo $segmento['Descricao']; ?>
-                            </option>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <option value=""> <?php echo " - Selecione um segmento cultural - "; ?> </option>
-                    <?php endif; ?>
+                    <option value=""> <?php echo " - Selecione um segmento cultural - "; ?> </option>
                 </select>
             </td>
         </tr>

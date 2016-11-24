@@ -218,10 +218,10 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $arrBusca = array();
         $arrBusca['a.idProjeto = ?'] = $this->_idPreProjeto;
         $arrBusca['a.stPrincipal = ?'] = 1;
-       !empty( $post->idPlanoDistribuicao ) ? $arrBusca['idplanodistribuicao <> ?'] = $post->idPlanoDistribuicao :'' ;
+       !empty( $post->idPlanoDistribuicao ) ? $arrBusca['idPlanoDistribuicao <> ?'] = $post->idPlanoDistribuicao :'' ;
         //$arrBusca['idPlanoDistribuicao <> ?'] = $post->idPlanoDistribuicao;
-        $arrBusca['stplanodistribuicaoproduto = ?'] = 1;
-        $arrPlanoDistribuicao = $tblPlanoDistribuicao->buscar($arrBusca, array("idplanodistribuicao DESC"))->toArray();
+        $arrBusca['stPlanoDistribuicaoProduto = ?'] = 1;
+        $arrPlanoDistribuicao = $tblPlanoDistribuicao->buscar($arrBusca, array("idPlanoDistribuicao DESC"))->toArray();
 
         if( $post->patrocinador!=0 || $post->divulgacao!=0 || $post->beneficiarios!=0 || $post->qtdenormal!=0 || $post->qtdepromocional!=0){
             if(!empty($arrPlanoDistribuicao) && $post->prodprincipal == "1"){
