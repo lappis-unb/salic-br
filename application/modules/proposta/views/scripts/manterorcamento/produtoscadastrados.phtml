@@ -116,7 +116,6 @@ foreach ($this->Produtos as $produtos): ?>
                     <!--<th>Mecanismo</th>-->
                     <th colspan="2" width="10%">A&ccedil;&atilde;o</th>
             </tr>
-                <?php //var_dump($this->Item ); ?>
             <?php foreach ($this->Item as $itens): ?>
                 <?php if ($produtos->CodigoProduto == $itens->CodigoProduto) {
                         if ($etapa->idEtapa == $itens->idEtapa){  ?>
@@ -132,7 +131,7 @@ foreach ($this->Produtos as $produtos): ?>
                                 <input type="button" id="btn_editar" name="editar" style="width: 88px" class="btn_editar" onclick="abrirFrmCadastroItem('<?php echo $this->url(array('controller'=>'manterorcamento', 'action'=>'editarprodutos')); ?>?item=<?php echo $this->escape($itens->idItem); ?>&etapa=<?php echo $this->escape($etapa->idEtapa);?>&produto=<?php echo $this->escape($produtos->CodigoProduto);?>&idPlanilhaProposta=<?php echo $itens->idPlanilhaProposta;?>&idPreProjeto=<?php echo $this->escape($produtos->idProposta);?>');">
                             </td>
                             <td class='centro' width="5%">
-                                <input type="button" id="btn_excluir" name="excluir" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $itens->idplanilhaproposta; ?>);">
+                                <input type="button" id="btn_excluir" name="excluir" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $itens->idPlanilhaProposta; ?>);">
                             </td>
                         </tr>
                     <?php } ?>
