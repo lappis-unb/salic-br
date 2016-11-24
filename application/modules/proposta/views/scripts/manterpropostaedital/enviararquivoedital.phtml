@@ -102,10 +102,10 @@ if(isset($_GET['edital']) && $_GET['edital']=="s"){
         </tr>
         <?php foreach ($this->arquivosProponente as $arquivosProponente) { ?>
         <tr>
-            <td><?php echo $arquivosProponente['descricao']; ?></td>
-            <td align="center"><?php echo Data::tratarDataZend($arquivosProponente['data'], 'Brasileira'); ?></td>
-            <td><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir-documentos-agentes')); ?>?id=<?php echo $arquivosProponente['iddocumentosagentes']; ?>"><?php echo $arquivosProponente['noarquivo']; ?></a></td>
-            <td align="center"><input type="button" class="btn_exclusao" onclick="excluirAnexos(<?php echo $arquivosProponente['iddocumentosagentes']; ?>, <?php echo trim($_GET['idPreProjeto']); ?>, 'proponente');" /></td>
+            <td><?php echo $arquivosProponente['Descricao']; ?></td>
+            <td align="center"><?php echo Data::tratarDataZend($arquivosProponente['Data'], 'Brasileira'); ?></td>
+            <td><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir-documentos-agentes')); ?>?id=<?php echo $arquivosProponente['idDocumentosAgentes']; ?>"><?php echo $arquivosProponente['NoArquivo']; ?></a></td>
+            <td align="center"><input type="button" class="btn_exclusao" onclick="excluirAnexos(<?php echo $arquivosProponente['idDocumentosAgentes']; ?>, <?php echo trim($_GET['idPreProjeto']); ?>, 'proponente');" /></td>
         <?php } ?>
     </table>
     <?php } ?>
