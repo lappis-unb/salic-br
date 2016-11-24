@@ -93,7 +93,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
             $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
             if (count($rsStatusAtual) > 0) {
-                $this->view->movimentacaoAtual = isset($rsStatusAtual['movimentacao']) ? $rsStatusAtual['movimentacao'] : '';
+                $this->view->movimentacaoAtual = isset($rsStatusAtual['Movimentacao']) ? $rsStatusAtual['Movimentacao'] : '';
             } else {
                 $this->view->movimentacaoAtual = null;
             }
@@ -693,7 +693,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->find($idPreProjeto)->current();
         //altera Estado da proposta
-        $rsPreProjeto->stestado = 0;
+        $rsPreProjeto->stEstado = 0;
 
         if ($rsPreProjeto->save()) {
             parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterpropostaincentivofiscal/listar-propostas", "CONFIRM");
