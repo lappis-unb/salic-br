@@ -115,15 +115,13 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
             $produto = $post->produto;
 
             try {
-                //recupera nome do item
-                //$nomeItem = MantertabelaitensDAO:: buscaprodutoetapaitem($idPlanilhaItens);
                 $nomeItem = new MantertabelaitensDAO();
                 $nomeItem = $nomeItem->listarProdutoEtapaItem($idPlanilhaItens);
 
                 $dateFunc = MinC_Db_Expr::date();
                 $dadosassociar = array(
                     'idplanilhaitens' => $idPlanilhaItens,
-                    'nomedoitem' => $nomeItem->NomeDoItem,
+                    'nomedoitem' => $nomeItem[0]->NomeDoItem,
                     'descricao' => $justificativa,
                     'idproduto' => $produto,
                     'idetapa' => $etapa,
@@ -143,10 +141,11 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
                 );
 
                 if(!empty($idPlanilhaItens) && $idPlanilhaItens!="0") {
-                    $itemNome = $nomeItem->NomeDoItem;
+                    $itemNome = $nomeItem[0]->NomeDoItem;
                 }else {
                     $itemNome = $post->Descricao;
                 }
+
 
                 $arrBusca = array();
                 $arrBusca['prod.codigo'] = $produto;
@@ -155,7 +154,6 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
                 //$res = MantertabelaitensDAO::buscarSolicitacoes($arrBusca,$itemNome);
                 $res = new MantertabelaitensDAO();
                 $res = $res->listarSolicitacoes($arrBusca,$itemNome);
-
                 if(count($res)>0) {
                     throw new Exception("Cadastro duplicado de Produto na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada!");
                 }

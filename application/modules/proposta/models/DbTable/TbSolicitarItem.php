@@ -11,7 +11,7 @@ class Proposta_Model_DbTable_TbSolicitarItem extends MinC_Db_Table_Abstract {
     protected  $_banco  = 'sac';
     protected  $_schema = 'sac';
     protected  $_name   = 'tbsolicitaritem';
-    protected  $_primary = 'idsolicitaritem';
+    protected  $_primary = 'idSolicitarItem';
 
 
     public function listaSolicitacoesItens($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
