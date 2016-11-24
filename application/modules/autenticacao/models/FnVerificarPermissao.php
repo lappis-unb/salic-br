@@ -41,7 +41,6 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
             ->where('IdUsuario = ?', $idUsuarioLogado)
         ;
         $cpfLogado = $db->fetchRow($sql);
-
         //VERIFICAR SE O CPF LOGADO ESTA CADASTRADO NO BANCO AGENTES
         $sql = $db->select()
             ->from('agentes', 'idagente', $this->getSchema('agentes'))
@@ -59,6 +58,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
 
         $proponente = $db->fetchRow($sql);
         $proponente = empty($proponente) ? 0 :$proponente ;
+
 
         switch($acao){
         //-- CHECAR PERMISSAO PARA ADMINISTRATIVO

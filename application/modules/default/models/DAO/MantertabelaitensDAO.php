@@ -14,7 +14,7 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 {
     protected $_name='tbsolicitaritem';
     protected $_schema = 'sac';
-    protected $_primary = 'idsolicitaritem';
+    protected $_primary = 'idSolicitarItem';
     /**
      * exibirprodutoetapaitem
      *
@@ -75,7 +75,16 @@ class MantertabelaitensDAO extends  MinC_Db_Table_Abstract
 
         $sql = $db->select()->distinct()
             ->from(['p' => 'tbitensplanilhaproduto'], null, $this->_schema)
-            ->join(['pr' => 'produto'], '(p.idproduto = pr.codigo)', ['pr.codigo as idProduto', 'pr.descricao as Produto'], $this->_schema)
+            ->join(
+                ['pr' => 'produto']
+                ,'(p.idproduto = pr.codigo)'
+                ,[
+                    'pr.codigo as idProduto'
+                    ,'pr.descricao as Produto'
+                    ,'i.descricao as NomeDoItem'
+                ]
+                , $this->_schema
+            )
             ->join(['i' => 'tbplanilhaitens'], '(p.idplanilhaitens = i.idplanilhaitens)', null, $this->_schema)
             ->join(['e' => 'tbplanilhaetapa'], '(p.idplanilhaetapa = e.idplanilhaetapa)', null, $this->_schema)
             ;

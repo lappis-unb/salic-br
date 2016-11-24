@@ -604,9 +604,9 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         $msgERRO = '';
         $auth = Zend_Auth::getInstance()->getIdentity(); // pega a autentica??o
         $arrAuth = array_change_key_case((array) $auth);
-
         if (!isset($arrAuth['usu_codigo'])) { // autenticacao novo salic
             //Verifica Permissao de Projeto
+
             if ($projeto) {
                 $msgERRO = 'Você não tem permissão para acessar esse Projeto!';
                 $idUsuarioLogado = $arrAuth['idusuario'];

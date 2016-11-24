@@ -318,7 +318,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                 parent::message("Dados incorretos!", "/autenticacao", "ALERT");
             }
 
-            $sgcAcessoBuscaCpfArray = $sgcAcessoBuscaCpf->toArray();
+            $sgcAcessoBuscaCpfArray = $verificaUsuario;
             $nome = $sgcAcessoBuscaCpfArray[0]['Nome'];
             $senha = Gerarsenha::gerasenha(15, true, true, true, true);
             $senhaFormatada = str_replace(">", "", str_replace("<", "", str_replace("'", "", $senha)));
