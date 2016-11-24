@@ -165,10 +165,10 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
             $arrDados["segmento"] = $tblSegmento->buscar(array("codigo=?" =>$arrPlanoDistribuicao[0]['Segmento']));
         }
 
-        $tblLogomarca = new Verificacao();
-        $rsLogomarcas = $tblLogomarca->buscar(array("idtipo=?"=>3));
-
-        $arrDados["combologomarcas"] = $rsLogomarcas;
+//        $tblLogomarca = new Verificacao();
+//        $listaLogomarcas = $tblLogomarca->buscar(array("idtipo=?"=>3));
+//
+//        $arrDados["combologomarcas"] = $listaLogomarcas;
         $arrDados["comboprodutos"] = $rsProdutos;
         $manterAgentes = new ManterAgentes();
         $arrDados["comboareasculturais"] = $manterAgentes->listarAreasCulturais();
@@ -196,7 +196,7 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
                  "Area"=>$post->areaCultural,
                  "idProjeto"=>$this->_idPreProjeto,
                  "idProduto"=>$post->produto,
-                 "idPosicaoDaLogo"=>$post->logomarca,
+//                 "idPosicaoDaLogo"=>$post->logomarca,
                  "Segmento"=>$post->segmentoCultural,
                  "QtdeProduzida"=>$QtdeProduzida,
                  "QtdeVendaNormal"=>$post->qtdenormal,

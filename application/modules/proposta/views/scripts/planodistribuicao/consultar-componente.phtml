@@ -3,7 +3,7 @@
 <table class="tabela">
     <tr class="titulo_tabela">
         <th align="left" width="25%">Nome do Evento / Produto</th>
-        <th align="left" width="25%">Posi&ccedil;&atilde;o da Logomarca</th>
+        <!--<th align="left" width="25%">Posi&ccedil;&atilde;o da Logomarca</th>-->
         <th align="right" width="15%">Nu. Exemplares / Ingressos</th>
         <th align="right" width="15%">Total de Receita Prevista (R$)</th>
     </tr>
@@ -17,7 +17,7 @@
     ?>
     <tr class="fundo">
         <td align="left"><?php echo htmlentities($planoDistribuicao->Produto); ?></td>
-        <td align="left"><?php echo htmlentities($planoDistribuicao->PosicaoLogomarca); ?></td>
+        <!--<td align="left"><?php //echo htmlentities($planoDistribuicao->PosicaoLogomarca); ?></td>-->
         <td align="right"><?php echo htmlentities($planoDistribuicao->QtdeProduzida); ?></td>
         <td align="right"><?php echo number_format($receita, 2, ",", "."); ?></td>
     </tr>
