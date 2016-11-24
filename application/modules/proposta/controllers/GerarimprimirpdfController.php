@@ -102,7 +102,7 @@ class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstrac
         }
 
         $this->_helper->layout->disableLayout();
-        
+
         $html = $this->view->render('/gerarimprimirpdf/index.phtml');
 
         $pdf = new PDF($html, 'pdf');
