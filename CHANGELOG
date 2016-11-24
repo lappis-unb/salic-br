@@ -1,3 +1,8 @@
+Release 1.13.0
+  * Novo: [Readequações] IPHAN pode encaminhar para superintendências
+  * Novo: [Readequações] Devolvendo projeto da superintendência para IPHAN nacional
+  * Novo: [Readequações] Puxando lista de pareceristas das superintendências do IPHAN
+
 Release 1.12.4
   * Fix: [Recurso] correção de variável errada
 
