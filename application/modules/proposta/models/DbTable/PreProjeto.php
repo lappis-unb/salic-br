@@ -3096,7 +3096,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             'pp.ocorrencia',
             'pp.valorunitario',
             'pp.qtdedias',
-            'pp.idplanilhaproposta',
+            'pp.idPlanilhaProposta',
         ];
 
         $sql = $db->select()->distinct()
