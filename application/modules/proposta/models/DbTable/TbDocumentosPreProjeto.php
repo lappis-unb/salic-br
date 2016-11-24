@@ -16,7 +16,7 @@ class Proposta_Model_DbTable_TbDocumentosPreProjeto  extends MinC_Db_Table_Abstr
      protected $_banco   = "sac";
      protected $_schema  = "sac";
      protected $_name = 'tbdocumentospreprojeto';
-     protected $_primary = 'iddocumentospreprojetos';
+     protected $_primary = 'idDocumentosPreprojetos';
 
 
     /**
