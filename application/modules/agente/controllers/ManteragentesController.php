@@ -85,7 +85,7 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         $this->view->cpfLogado = $Cpflogado;
         $this->view->grupoativo = $GrupoAtivo->codGrupo;
         $this->view->comboestados = $mapperUF->fetchPairs('idUF', 'Sigla');
-        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', ['idtipo' => 2]);
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 2));
         $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 13));
         $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
         $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 3));
@@ -724,7 +724,8 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
             $arrPost['cpf'] = Mascara::delMaskCPF(Mascara::delMaskCNPJ($arrPost['cpf']));
             if ($arrPost['idagente'] === '') {
                 $tblAgentes = new Agente_Model_DbTable_Agentes();
-                $arrPost['idagente'] = $tblAgentes->findBy(array('cnpjcpf' => $arrPost['cpf']))['idagente'];
+                $result = $tblAgentes->findBy(array('cnpjcpf' => $arrPost['cpf']));
+                $arrPost['idagente'] = $result['idagente'];
             }
 
             $mprNomes = new Agente_Model_NomesMapper();

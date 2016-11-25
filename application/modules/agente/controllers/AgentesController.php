@@ -56,7 +56,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $mapperVerificacao = new Agente_Model_VerificacaoMapper();
         $mapperUF = new Agente_Model_UFMapper();
         $this->view->comboestados = $mapperUF->fetchPairs('idUF', 'Sigla');
-        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', ['idtipo' => 2]);
+        $this->view->combotiposenderecos = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 2));
         $this->view->combotiposlogradouros = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 13));
         $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
         $this->view->combotipostelefones = $mapperVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idtipo' => 3));
@@ -1892,13 +1892,13 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
             $nome = Seguranca::tratarVarAjaxUFT8($nome);
         }
         try {
-            $arrNome = [
+            $arrNome = array(
                 'idagente' => $idAgente,
                 'tiponome' => $TipoNome,
                 'descricao' => $nome,
                 'status' => 0,
                 'usuario' => $usuario
-            ];
+            );
             $mprNomes->save(new Agente_Model_Nomes($arrNome));
         } catch (Exception $e) {
             parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
