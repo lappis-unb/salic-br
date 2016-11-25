@@ -456,7 +456,7 @@ class Proposta_AdmissibilidadeController extends MinC_Controller_Action_Abstract
         foreach ($options as $option){
             $selected = "";
             if($option['codigo'] == $idDocumento) { $selected = "selected='selected' "; }
-            $htmlOptions .= "<option value='{$option['codigo']}' {$selected}>".ucfirst(strtolower(utf8_decode(htmlentities($option['descricao']))))." </option>";
+            $htmlOptions .= "<option value='{$option['codigo']}' {$selected}>".ucfirst(((($option['descricao']))))." </option>";
         }
         echo $htmlOptions;
     }
