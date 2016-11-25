@@ -462,13 +462,13 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
     public function incluirAnexoAction()
     {
         if ($this->getRequest()->isPost()) {
-            $arrPost = array_change_key_case($this->getRequest()->getPost());
+            $arrPost = ($this->getRequest()->getPost());
             $mapperTbDocumentoAgentes = new Proposta_Model_TbDocumentosAgentesMapper();
             $file = new Zend_File_Transfer();
             if ($mapperTbDocumentoAgentes->saveCustom($arrPost, $file)) {
-                parent::message("Arquivo anexado com sucesso!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $arrPost['idpreprojeto'] . "&edital=" . $arrPost['edital'], "CONFIRM");
+                parent::message("Arquivo anexado com sucesso!", "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $arrPost['idPreProjeto'] . "&edital=" . $arrPost['edital'], "CONFIRM");
             } else {
-                parent::message($mapperTbDocumentoAgentes->getMessage(), "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $arrPost['idpreprojeto'] . "&edital=" . $arrPost['edital'], "ALERT");
+                parent::message($mapperTbDocumentoAgentes->getMessage(), "proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=" . $arrPost['idPreProjeto'] . "&edital=" . $arrPost['edital'], "ALERT");
             }
         } else {
             parent::message('Dados incorretos', "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
