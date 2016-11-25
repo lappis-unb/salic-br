@@ -73,7 +73,7 @@
 	  }
     }
 ?>
-	  <select name="tecnico" id="tecnico" class="select_simples comboTecnico">
+	  <select name="tecnico" id="tecnico-<?php echo $d->idPronac ?>" class="select_simples comboTecnico">	    
 	      <option value=""> - Selecione - </option>
 	      <?php if ($this->idOrgao == 91): ?>
 	        <?php foreach ($superindendencias as $superindendencia): ?>
@@ -88,7 +88,7 @@
 	</td>
 
 	<td>
-	    <input type="button" name="btn_enviar" class="btn_enviar enviarReadequacao" idDistRead="<?php echo $d->idDistribuirReadequacao; ?>" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar">
+	  <input type="button" name="btn_enviar" class="btn_enviar enviarReadequacao"  idPronac="<?php echo $d->idPronac; ?>" idDistRead="<?php echo $d->idDistribuirReadequacao; ?>" idReadequacao="<?php echo $d->idReadequacao; ?>" title="Enviar">
 	</td>
 	
 		<td align="center">
