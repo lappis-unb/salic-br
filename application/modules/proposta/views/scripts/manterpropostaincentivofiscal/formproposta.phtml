@@ -460,7 +460,7 @@ $(document).ready(function()
 ?>>Sim</option>
                         </select>
                     </td>
-                    <td class="centro">Plano Execução Imediata
+                    <td class="centro">Plano Execu&ccedil;&atilde;o Imediata
                         <select class="select_simples" name="stProposta" id="stProposta">
                             <?php foreach ($this->listaExecucaoImediata as $key => $execucao) : ?>
                                 <option value="<?php echo $key; ?>"
@@ -469,7 +469,7 @@ $(document).ready(function()
                                             if ($this->proposta['stProposta'] == $key) {
                                                 echo "selected";
                                             }
-                                        ?>><?php echo utf8_encode($execucao->Descricao); ?>
+                                        ?>><?php echo $execucao->Descricao; ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
