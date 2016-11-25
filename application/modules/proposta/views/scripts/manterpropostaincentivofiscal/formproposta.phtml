@@ -14,7 +14,7 @@
                 dtInicioDeExecucao: { required: true },
                 dtFinalDeExecucao: { required: true },
                 resumoDoProjeto: { validarResumoDoProjeto: true },
-                stPlanoAnual: { required: true}
+                stProposta: { required: true} // @todo NovaIn
             },
             messages: {
                 nomeProjeto: { required: function(){ JSMostraOcultaObj('identificacao'); return "<br>Dado obrigat&oacute;rio n&atilde;o informado" } },
@@ -23,7 +23,7 @@
                 dtInicioDeExecucao: { required: function(){ JSMostraOcultaObj('identificacao'); return "<br>Dado obrigat&oacute;rio n&atilde;o informado" } },
                 dtFinalDeExecucao: { required: function(){ JSMostraOcultaObj('identificacao'); return "<br>Dado obrigat&oacute;rio n&atilde;o informado" } },
                 resumoDoProjeto: { validarResumoDoProjeto: function(){ JSMostraOcultaObj('identificacao'); return "Dado obrigat&oacute;rio n&atilde;o informado" } },
-                stPlanoAnual: { required: function() { JSMostraOcultaObj('identificacao'); return "<br>A data da criacão da proposta não pode ultrapassar 30/09 do ano anterior a execução do projeto." }}
+                stProposta: { required: function() { JSMostraOcultaObj('identificacao'); return "<br>A data da criacão da proposta não pode ultrapassar 30/09 do ano anterior a execução do projeto." }} //@todo novaIn
             },
             submitHandler: function(form) {
 
@@ -64,21 +64,22 @@
                     $("#msgValidaData").focus();
                     return false;
                 }
-                //valida data do ano anual
-                if ($("#stPlanoAnual").val() == '1' && $("#dtInicioDeExecucao").val().length == 10){
+                //valida data do ano anual @todo novaIN
+                if ($("#stProposta").val() == '4' && $("#dtInicioDeExecucao").val().length == 10){
                     ano_vigente = <?php echo date('Y')?>;
                     ano_execucao    = new Number($('#dtInicioDeExecucao').val().substr(6, 4));
                     if (ano_vigente >= ano_execucao) {
 //                        JSMostraOcultaObj('identificacao');
-                        $("#ValidaPlanoAnual").html("<font color='red'>O período de execução de projetos de plano anual dever ser posterior ao ano vigente</font>");
+                        $("#ValidaStProposta").html("<font color='red'>O período de execução de projetos de plano anual dever ser posterior ao ano vigente</font>");
+                        $("#dtInicioDeExecucao").focusin();
                         return false;
 
                     }else{
-                        $("#ValidaPlanoAnual").html("");
+                        $("#ValidaStProposta").html("");
                     }
 
                 }else{
-                    $("#ValidaPlanoAnual").html("");
+                    $("#ValidaStProposta").html("");
                 }
             form.submit();
         }
@@ -92,7 +93,7 @@
 
         if (texto.length > 0)
         {
-            // verifica se o usuï¿½rio clicou no botï¿½o 'Reintegraï¿½ï¿½o'
+            // verifica se o usuario clicou no botao 'Reintegracao'
 
             $('#resumoDoProjeto').val(CKEDITOR.instances['resumoDoProjeto'].getData());
             return true;
@@ -301,7 +302,7 @@ function JSMostraOcultaObj(idObjConteudo,obj){
     }
 }
 /**
- * Funï¿½ï¿½es que sï¿½o chamadas apï¿½s a pï¿½gina ser carregada
+ * Funcoes que sao chamadas apos a pagina ser carregada
  */
 $(document).ready(function()
 {
@@ -459,22 +460,20 @@ $(document).ready(function()
 ?>>Sim</option>
                         </select>
                     </td>
-                    <td class="centro">Plano Anual
-                        <select class="select_simples" name="stPlanoAnual" id="stPlanoAnual" style="width: 5em">
-                            <option value="0" <?php
-                                    if (isset($this->proposta['idPreProjeto']))
-                                        if ($this->proposta['stPlanoAnual'] == "0") {
-                                            echo "selected";
-                                        }
-?>>N&atilde;o</option>
-                            <option value="1" <?php
-                                    if (isset($this->proposta['idPreProjeto']))
-                                        if ($this->proposta['stPlanoAnual'] == "1") {
-                                            echo "selected";
-                                        }
-?>>Sim</option>
+                    <td class="centro">Plano Execução Imediata
+                        <select class="select_simples" name="stProposta" id="stProposta">
+                            <?php foreach ($this->listaExecucaoImediata as $key => $execucao) : ?>
+                                <option value="<?php echo $key; ?>"
+                                    <?php
+                                        if (isset($this->proposta['idPreProjeto']))
+                                            if ($this->proposta['stProposta'] == $key) {
+                                                echo "selected";
+                                            }
+                                        ?>><?php echo utf8_encode($execucao->Descricao); ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
-                        <div id="ValidaPlanoAnual" name="ValidaPlanoAnual" style="color:#FF0000" > </div>
+                        <div id="ValidaStProposta" name="ValidaStProposta" style="color:#FF0000" > </div>
                     </td>
                     <td class="centro">Ag&ecirc;ncia Banc&aacute;ria *
                         <input type="text" class="input_simples" name="agenciaBancaria" id="agenciaBancaria" maxlength="12"  style="width:50px;" value="<?php

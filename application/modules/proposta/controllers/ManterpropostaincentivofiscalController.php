@@ -76,6 +76,10 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             }
         }
 
+        // Busca na tabela apoio ExecucaoImediata
+        $tblExecucaoImediata = new Proposta_Model_DbTable_ExecucaoImediata();
+        $this->view->listaExecucaoImediata = $tblExecucaoImediata->buscar();
+
         $this->cpfLogado = $cpf;
         $this->idAgenteProponente = $this->idAgente;
         $this->usuario = isset($arrAuth['usu_codigo']) ? 'func' : 'prop';
@@ -267,7 +271,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         //***NAO TIRAR ESSA QUEBRA DE LINHA - FAZ PARTE DA PROGRAMACAO****
 
         $stDataFixa = $post->stDataFixa;
-        $stPlanoAnual = $post->stPlanoAnual;
+        $stProposta = $post->stProposta;
         $agenciaBancaria = $post->agenciaBancaria;
         $propostaAudioVisual = $post->propostaAudioVisual;
         $dtInicioDeExecucao = $dtInicio;
@@ -284,6 +288,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $impactoAmbiental = $_POST['impactoAmbiental'];
         $especificacaoTecnica = $_POST['especificacaoTecnica'];
         $informacoes = $_POST['informacoes'];
+        $stProposta = $_POST['stProposta']; //Execucao Imediata
 
         $dados = array(
             "idagente" => $idAgente,
@@ -310,7 +315,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             "dtaceite" => date("Y/m/d H:i:s"),
             "stestado" => 1,
             "stdatafixa" => $stDataFixa,
-            "stplanoanual" => $stPlanoAnual,
+            "stproposta" => $stProposta,
             "idusuario" => $this->idResponsavel,
             "sttipodemanda" => "NA", //seguindo sistema legado
         );
@@ -326,7 +331,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
 
         $db = Zend_Db_Table::getDefaultAdapter();
-
         try {
             //persiste os dados do Pre Projeto
             $idPreProjeto = $tblPreProjeto->salvar($dados);
@@ -395,7 +399,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $arrDados = array("proposta" => $rsPreProjeto,
             "proponente" => $rsProponente);
         return $arrDados;
-        //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
+        //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMETROS NECESSARIOS DENTRO DO ARRAY
         $this->montaTela("manterpropostaincentivofiscal/formproposta.phtml", array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar",
             "proposta" => $rsPreProjeto,
             "proponente" => $rsProponente));
@@ -875,7 +879,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $arrResultado['proponente']['msg'] = "Dados cadastrais do proponente inexistente ou n&atilde;o h&aacute; endere&ccedil;o para correspond&ecirc;ncia selecionado";
         }
         //=========== PLANO ANUAL==========
-        if ($rsPreProjeto->stPlanoAnual <> 0) {
+        if ($rsPreProjeto->stProposta <> 0) {
             $ano_envio = date("Y");
             $ano_execucao = explode ('/',data::formatarDataMssql($rsPreProjeto->DtInicioDeExecucao));
             $ano_execucao = $ano_execucao[2];

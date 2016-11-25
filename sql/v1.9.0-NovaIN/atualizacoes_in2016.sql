@@ -17,29 +17,47 @@ UPDATE SAC.dbo.tbPlanilhaEtapa
 SET Descricao='Pós-Produção'
 WHERE idPlanilhaEtapa=3;
 
--- Altera a coluna idPolicaoDaLogo
+-- Remove Not Null na coluna idPolicaoDaLogo
 ALTER TABLE sac.dbo.PlanoDistribuicaoProduto ALTER COLUMN idPosicaoDaLogo INT;
 
-CREATE TABLE sac.tbMovimentacaoBancariaItem
+-- cria coluna para lista de Execucao Imediata na Proposta
+CREATE TABLE sac.dbo.ExecucaoImediata
 (
-  idMovimentacaoBancariaItem INT PRIMARY KEY NOT NULL,
-  tpRegistro CHAR,
-  nrAgencia CHAR(5),
-  nrConta VARCHAR(12),
-  nmTituloRazao VARCHAR(12),
-  nmAbreviado VARCHAR(30),
-  dtAberturaConta timestamp,
-  nrCNPJCPF VARCHAR(14),
-  vlSaldoInicial DECIMAL(12,2),
-  stSaldoInicial CHAR,
-  vlSaldoFinal DECIMAL(12,2),
-  stSaldoFinal CHAR,
-  dtMovimento timestamp,
-  cdHistorico CHAR(4),
-  dsHistorico VARCHAR(15),
-  nrDocumento VARCHAR(10),
-  vlMovimento DECIMAL(12,2),
-  stMovimento CHAR,
-  idMovimentacaoBancaria INT NOT NULL,
-  CONSTRAINT fk_tbMovimentacaoBancariaItem_tbMovimentacaoBancaria FOREIGN KEY (idMovimentacaoBancaria) REFERENCES sac.tbMovimentacaoBancaria (idMovimentacaoBancaria)
+  idExecucaoImediata INT PRIMARY KEY NOT NULL,
+  Descricao VARCHAR(200)
 );
+
+-- Popula a tabela ExecucaoImediata
+
+INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
+VALUES (0,'Proposta normal');
+
+INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
+VALUES (1,'Proteção do patrimônio material');
+
+INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
+VALUES (2,'Proteção do patrimônio imaterial');
+
+INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
+VALUES (3,'Proteção de acervos');
+
+INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
+VALUES (4,'Planos anuais');
+
+INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
+VALUES (5,'Proposta museológica');
+
+INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
+VALUES (6,'Proposta de manutenção de corpos estáveis');
+
+INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
+VALUES (7,'Proposta de construção de equipamentos culturais');
+
+INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
+VALUES (8,'Proposta aprovado em editais');
+
+INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
+VALUES (9,'Proposta  com contratos de patrocínios');
+
+-- Remove Not Null na coluna stPlanoAnual
+ALTER TABLE sac.dbo.PreProjeto ALTER COLUMN stPlanoAnual BIT;

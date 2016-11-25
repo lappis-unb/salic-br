@@ -288,7 +288,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
        $rsPreProjeto->DtArquivamento         = (isset($dados["dtarquivamento"])) ? $dados["dtarquivamento"] : null;
        $rsPreProjeto->stEstado               = $dados["stestado"];
        $rsPreProjeto->stDataFixa             = $dados["stdatafixa"];
-       $rsPreProjeto->stPlanoAnual           = $dados["stplanoanual"];
+       $rsPreProjeto->stProposta             = $dados["stproposta"];
        $rsPreProjeto->idUsuario              = $dados["idusuario"];
        $rsPreProjeto->stTipoDemanda          = $dados["sttipodemanda"];
        $rsPreProjeto->idEdital               = (isset($dados["idedital"])) ? $dados["idedital"] : null;
