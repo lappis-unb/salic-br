@@ -18,7 +18,7 @@ class EstadoDAO extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $sql = $db->select()
-            ->from($this->_name, ['iduf AS id', 'sigla AS descricao'], $this->_schema);
+            ->from($this->_name, array('iduf AS id', 'sigla AS descricao'), $this->_schema);
 
         if (!empty($id)) {
             $sql->where('idUF = ?', $id);

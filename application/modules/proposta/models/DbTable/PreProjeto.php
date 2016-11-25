@@ -42,7 +42,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $where['idUsuario = ?'] = $idUsuarioR;
         $where['idAgente = ?'] = $idAgente;
 
-        return $db->update('SAC.dbo.PreProjeto', ['idUsuario' => $idUsuario], $where);
+        return $db->update('SAC.dbo.PreProjeto', array('idUsuario' => $idUsuario), $where);
     }
 
     /**
@@ -60,7 +60,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $where['idVinculo = ? '] = $idVinculo;
 
-        return $db->update('Agentes.dbo.tbVinculoProposta', ['siVinculoProposta' => $siVinculoProposta], $where);
+        return $db->update('Agentes.dbo.tbVinculoProposta', array('siVinculoProposta' => $siVinculoProposta), $where);
     }
 
     /**
@@ -77,19 +77,19 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $subSql = $db->select()
-            ->from(['pr' => 'projetos'], ['*'],  $this->_schema)
+            ->from(array('pr' => 'projetos'), array('*'),  $this->_schema)
             ->where('pr.idProjeto = p.idPreProjeto');
 
-        $p = [
+        $p = array(
             'p.idPreProjeto',
             'idagente',
             'NomeProjeto',
             'Mecanismo',
             'stTipoDemanda'
-        ];
+        );
 
         $sql = $db->select()
-            ->from(['p' => 'PreProjeto'], $p,  $this->_schema)
+            ->from(array('p' => 'PreProjeto'), $p,  $this->_schema)
             ->where('stEstado = 1')
             ->where("stTipoDemanda like 'NA'")
             ->where('idUsuario = ?', $idUsuario)
@@ -318,23 +318,23 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $a = [
+        $a = array(
             new Zend_Db_Expr('0 as Ordem'),
             'a.idPreProjeto',
             'a.NomeProjeto',
             'a.idUsuario',
             'a.idAgente'
-        ];
+        );
 
         $subSql = $db->select()
-            ->from(['pr' => 'projetos'], new Zend_Db_Expr('1'),  $this->_schema)
+            ->from(array('pr' => 'projetos'), new Zend_Db_Expr('1'),  $this->_schema)
             ->where('a.idpreprojeto = pr.idprojeto')
             ;
 
         $sql = $db->select()
-            ->from(['a' => 'preprojeto'], $a,  $this->_schema)
-            ->join(['ag' => 'agentes'], 'a.idagente = ag.idagente', 'ag.cnpjcpf AS CNPJCPF',$this->getSchema('agentes'))
-            ->join(['m' => 'nomes'], 'a.idagente = m.idagente', 'm.descricao AS NomeAgente',$this->getSchema('agentes'))
+            ->from(array('a' => 'preprojeto'), $a,  $this->_schema)
+            ->join(array('ag' => 'agentes'), 'a.idagente = ag.idagente', 'ag.cnpjcpf AS CNPJCPF',$this->getSchema('agentes'))
+            ->join(array('m' => 'nomes'), 'a.idagente = m.idagente', 'm.descricao AS NomeAgente',$this->getSchema('agentes'))
             ->where('a.idAgente = ?', $idAgente)
             ->where(new Zend_Db_Expr("NOT EXISTS($subSql)"))
             ;
@@ -343,19 +343,19 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             $sql->where($value);
         }
 
-        $aSql = [
+        $aSql = array(
             new Zend_Db_Expr('1 as Ordem'),
             'a.idPreProjeto',
             'a.NomeProjeto',
             'a.idUsuario',
             'a.idAgente'
-        ];
+        );
 
         $sql2 = $db->select()
-            ->from(['a' => 'preprojeto'], $aSql,  $this->_schema)
-            ->join(['ag' => 'agentes'], '(a.idagente = ag.idagente)', 'ag.cnpjcpf AS CNPJCPF', $this->getSchema('agentes'))
-            ->join(['m' => 'nomes'], '(a.idagente = m.idagente)', 'm.descricao AS NomeAgente', $this->getSchema('agentes'))
-            ->join(['s' => 'SGCacesso'], 'a.idUsuario = s.IdUsuario', null, $this->getSchema('controledeacesso'))
+            ->from(array('a' => 'preprojeto'), $aSql,  $this->_schema)
+            ->join(array('ag' => 'agentes'), '(a.idagente = ag.idagente)', 'ag.cnpjcpf AS CNPJCPF', $this->getSchema('agentes'))
+            ->join(array('m' => 'nomes'), '(a.idagente = m.idagente)', 'm.descricao AS NomeAgente', $this->getSchema('agentes'))
+            ->join(array('s' => 'SGCacesso'), 'a.idUsuario = s.IdUsuario', null, $this->getSchema('controledeacesso'))
             ->where('a.idusuario = ?', $idResponsavel)
             ->where('ag.CNPJCPF <> s.Cpf')
             ->where(new Zend_Db_Expr('NOT EXISTS(SELECT 1 FROM sac.dbo.projetos pr WHERE  a.idpreprojeto = pr.idprojeto)'))
@@ -386,7 +386,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = $db->select()->from('PreProjeto',['idPreProjeto', 'idagente', 'NomeProjeto', 'Mecanismo'], $this->_schema)
+        $sql = $db->select()->from('PreProjeto', array('idPreProjeto', 'idagente', 'NomeProjeto', 'Mecanismo'), $this->_schema)
             ->where('idagente = ?',$idagente)
             ->order('nomeprojeto');
 
@@ -452,7 +452,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = $db->select()->from('UF',['*'],$this->getSchema('agentes'))->order('Sigla');
+        $sql = $db->select()->from('UF', array('*'),$this->getSchema('agentes'))->order('Sigla');
 
         return $db->fetchAll($sql);
     }
@@ -469,7 +469,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = $db->select()->from('Agentes',['*'],$this->getSchema('agentes'))->where('CNPJCPF = ?', $CNPJCPF);
+        $sql = $db->select()->from('Agentes', array('*'),$this->getSchema('agentes'))->where('CNPJCPF = ?', $CNPJCPF);
 
         return $db->fetchAll($sql);
     }
@@ -539,7 +539,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $sql = $db->select()->from('PreProjeto',['*'], $this->_schema)->where('idPreProjeto = ?', $idPreProjeto);
+        $sql = $db->select()->from('PreProjeto', array('*'), $this->_schema)->where('idPreProjeto = ?', $idPreProjeto);
 
         return $db->fetchAll($sql);
     }
