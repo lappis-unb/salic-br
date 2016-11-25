@@ -77,14 +77,14 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $schemaAgentes = parent::getSchema('agentes');
         $schemaSac = parent::getSchema('sac');
 
-        $a = [
+        $a = array(
             'a.idagente'
             ,'a.cnpjcpf'
             ,'a.cnpjcpfsuperior'
             ,'a.tipopessoa'
-        ];
+        );
 
-        $e = [
+        $e = array(
             'e.tipologradouro'
             ,'e.cidade'
             ,'e.cep as cep'
@@ -98,30 +98,30 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             ,'e.bairro'
             ,'e.divulgar as divulgarendereco'
             ,'e.status as enderecocorrespondencia'
-        ];
+        );
 
-        $t = [
+        $t = array(
             't.sttitular'
             ,'t.cdarea'
             ,'t.cdsegmento'
-        ];
+        );
 
 //        $sql = $db->select()->distinct()->from(['a' => 'agentes'], $a, $schemaAgentes)
 
         $select = $this->select()
             ->setIntegrityCheck(false)
             ->distinct()
-            ->from(['a' => 'agentes'], $a, $schemaAgentes)
-            ->joinLeft(['n' => 'nomes'], 'n.idagente = a.idagente', ['n.descricao as nome'], $schemaAgentes)
-            ->joinLeft(['e' => 'endereconacional'], 'e.idagente = a.idagente', $e, $schemaAgentes)
-            ->joinLeft(['m' => 'municipios'], 'm.idmunicipioibge = e.cidade', '*', $schemaAgentes)
-            ->joinLeft(['u' => 'uf'], 'u.iduf = e.uf', 'u.sigla as dsuf', $schemaAgentes)
-            ->joinLeft(['ve' => 'verificacao'], 've.idverificacao = e.tipoendereco', 've.descricao as dstipoendereco', $schemaAgentes)
-            ->joinLeft(['vl' => 'verificacao'], 'vl.idverificacao = e.tipologradouro', 'vl.descricao as dstipologradouro', $schemaAgentes)
-            ->joinLeft(['t' => 'tbtitulacaoconselheiro'], 't.idagente = a.idagente', $t, $schemaAgentes)
-            ->joinLeft(['v' => 'visao'], 'v.idagente = a.idagente', '*', $schemaAgentes)
-            ->joinLeft(['sa' => 'area'], 'sa.codigo = t.cdarea', 'sa.descricao as dsarea', $schemaSac)
-            ->joinLeft(['ss' => 'segmento'], 'ss.codigo = t.cdsegmento', 'ss.descricao as dssegmento', $schemaSac)
+            ->from(array('a' => 'agentes'), $a, $schemaAgentes)
+            ->joinLeft(array('n' => 'nomes'), 'n.idagente = a.idagente', array('n.descricao as nome'), $schemaAgentes)
+            ->joinLeft(array('e' => 'endereconacional'), 'e.idagente = a.idagente', $e, $schemaAgentes)
+            ->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = e.cidade', '*', $schemaAgentes)
+            ->joinLeft(array('u' => 'uf'), 'u.iduf = e.uf', 'u.sigla as dsuf', $schemaAgentes)
+            ->joinLeft(array('ve' => 'verificacao'), 've.idverificacao = e.tipoendereco', 've.descricao as dstipoendereco', $schemaAgentes)
+            ->joinLeft(array('vl' => 'verificacao'), 'vl.idverificacao = e.tipologradouro', 'vl.descricao as dstipologradouro', $schemaAgentes)
+            ->joinLeft(array('t' => 'tbtitulacaoconselheiro'), 't.idagente = a.idagente', $t, $schemaAgentes)
+            ->joinLeft(array('v' => 'visao'), 'v.idagente = a.idagente', '*', $schemaAgentes)
+            ->joinLeft(array('sa' => 'area'), 'sa.codigo = t.cdarea', 'sa.descricao as dsarea', $schemaSac)
+            ->joinLeft(array('ss' => 'segmento'), 'ss.codigo = t.cdsegmento', 'ss.descricao as dssegmento', $schemaSac)
             ->where('a.tipopessoa = 0 or a.tipopessoa = 1')
         ;
 
@@ -137,7 +137,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
             $select->where('a.idagente = ?',$idAgente);
         }
 
-        $select->order(['e.status Desc', 'n.descricao Asc']);
+        $select->order(array('e.status Desc', 'n.descricao Asc'));
         $result = $this->fetchAll($select);
         $result = ($result)? $result->toArray() : array();
 
@@ -213,7 +213,7 @@ class Agente_Model_DbTable_Agentes extends MinC_Db_Table_Abstract
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(array('a' => $this->_name), '*', $this->_schema);
-        $slct->joinInner(array('m' => 'nomes'), 'a.idagente=m.idagente', ['*'], $this->_schema);
+        $slct->joinInner(array('m' => 'nomes'), 'a.idagente=m.idagente', array('*'), $this->_schema);
 
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);

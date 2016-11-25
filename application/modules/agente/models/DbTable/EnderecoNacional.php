@@ -50,30 +50,30 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
      */
     public function buscarEnderecos($idAgente = null)
     {
-        $ve = [
+        $ve = array(
             've.descricao as tipoendereco',
             've.idverificacao as codtipoendereco',
-        ];
+        );
 
-        $m = [
+        $m = array(
             'm.descricao as municipio',
             'm.idmunicipioibge as codmun',
-        ];
+        );
 
-        $u = [
+        $u = array(
             'u.sigla as uf',
             'u.iduf as coduf'
-        ];
+        );
 
         $sql = $this->select()
             ->setIntegrityCheck(false)
-            ->from(['e' => 'endereconacional'], $this->_getCols(), $this->_schema)
-            ->joinLeft(['ve' => 'verificacao'], 've.idverificacao = e.tipoendereco', $ve, $this->_schema)
-            ->joinLeft(['m' => 'municipios'], 'm.idmunicipioibge = e.cidade', $m, $this->_schema)
-            ->joinLeft(['u' => 'uf'], 'U.iduf = e.uf', $u, $this->_schema)
-            ->joinLeft(['vl' => 'verificacao'], 'vl.idverificacao = e.tipologradouro', ['vl.descricao as dstipologradouro'], $this->_schema)
+            ->from(array('e' => 'endereconacional'), $this->_getCols(), $this->_schema)
+            ->joinLeft(array('ve' => 'verificacao'), 've.idverificacao = e.tipoendereco', $ve, $this->_schema)
+            ->joinLeft(array('m' => 'municipios'), 'm.idmunicipioibge = e.cidade', $m, $this->_schema)
+            ->joinLeft(array('u' => 'uf'), 'U.iduf = e.uf', $u, $this->_schema)
+            ->joinLeft(array('vl' => 'verificacao'), 'vl.idverificacao = e.tipologradouro', array('vl.descricao as dstipologradouro'), $this->_schema)
             ->where('e.idagente = ?', $idAgente)
-            ->order(['status DESC'])
+            ->order(array('status DESC'))
         ;
 
         return $this->fetchAll($sql);
@@ -91,7 +91,7 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
     {
         try
         {
-            return $resultado = $this->update( array('status' => 0),['idagente = ?' => $idAgente]);
+            return $resultado = $this->update( array('status' => 0),array('idagente = ?' => $idAgente));
         }
         catch (Zend_Exception $e)
         {
@@ -143,7 +143,7 @@ class Agente_Model_DbTable_EnderecoNacional extends MinC_Db_Table_Abstract
      */
     public function delete($idEndereco)
     {
-        return parent::delete(['idEndereco = ? '=> $idEndereco]);
+        return parent::delete(array('idEndereco = ? '=> $idEndereco));
     }
 
 }
