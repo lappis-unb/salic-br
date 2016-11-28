@@ -143,10 +143,10 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
             'uf.sigla as SiglaUF',
         );
 
-        $veri = [
+        $veri = array(
             'veri.idverificacao as idFonteRecurso',
             'veri.descricao as DescricaoFonteRecurso'
-        ];
+        );
 
         $sql = $db->select()
             ->from(array('tpp' => 'tbplanilhaproposta'), $tpp, $this->getSchema('sac'))
