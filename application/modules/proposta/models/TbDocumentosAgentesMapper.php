@@ -70,8 +70,9 @@ class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
                     'noarquivo' => $arquivoNome,
                     'taarquivo' => $arquivoTamanho,
                     'dsdocumento' => $arrPost['observacao'],
-                    'idagente' => $dadosProjeto['idgente'],
+                    'idagente' => $dadosProjeto['idAgente'],
                 );
+                //var_dump($dadosArquivo);die;
 
                 if ($arrPost['tipoDocumento'] == 1) {
                     $table = $this;
