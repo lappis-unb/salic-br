@@ -487,23 +487,28 @@ class RecursoController extends GenericControllerNew
         }
         $where['d.stEstado = ?'] = 0;
 
-        if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
-            $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
+        if(($this->_request->getParam('tipoFiltro') !== null) || ($this->_request->getParam('tipoFiltro') !== null)){
+            $filtro = ($this->_request->getParam('tipoFiltro') !== null) ? $this->_request->getParam('tipoFiltro') : $this->_request->getParam('tipoFiltro');
             $this->view->filtro = $filtro;
             switch ($filtro) {
-                case '':
-                    if($this->idPerfil == 93){ //Coord. de Parecer
-                        $where['d.siRecurso = ?'] = 3;
-                        $where['a.idAvaliador IS NULL'] = '';
-                    } else if($this->idPerfil == 94){
-                        $where['d.siRecurso = ?'] = 4;
-                        $where['a.idAvaliador = ?'] = count($dadosAgente)>0 ? $dadosAgente->idAgente : 0;
-                    }
-                    break;
-                case 'analisados':
-                    $where['d.siRecurso = ?'] = 5;
-                    $this->view->nmPagina = 'Analisados';
-                    break;
+            case '':
+                if($this->idPerfil == 93){ //Coord. de Parecer
+                    $where['d.siRecurso = ?'] = 3;
+                    $where['a.idAvaliador IS NULL'] = '';
+                } else if($this->idPerfil == 94){
+                    $where['d.siRecurso = ?'] = 4;
+                    $where['a.idAvaliador = ?'] = count($dadosAgente)>0 ? $dadosAgente->idAgente : 0;
+                }
+                break;
+            case 'emanalise':
+                $where['d.siRecurso = ?'] = 4;
+                $where['a.idAvaliador IS NOT NULL'] = '';
+                $this->view->nmPagina = 'Em análise';
+                break;
+            case 'analisados':
+                $where['d.siRecurso = ?'] = 5;
+                $this->view->nmPagina = 'Analisados';
+                break;
             }
         } else {
             $this->view->nmPagina = 'Aguardando Análise';
