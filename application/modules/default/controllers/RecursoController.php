@@ -428,8 +428,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
-    public function painelRecursosAction() { //Tela do Coordenador de Parecer
-
+    public function painelRecursosAction()
+    { //Tela do Coordenador de Parecer
         $auth = Zend_Auth::getInstance();
         $ag = new Agente_Model_DbTable_Agentes();
         $dadosAgente = $ag->buscar(array('CNPJCPF = ?'=>$auth->getIdentity()->usu_identificacao))->current();
@@ -979,7 +979,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
                     $whereUpdateParecer = 'IdPRONAC = '.$idPronac;
                     $alteraParecer = $parecerDAO->alterar($parecerAntigo, $whereUpdateParecer);
                 }
-                
+
                 $buscarParecer = $parecerDAO->buscar(array('IdPRONAC = ?' => $idPronac, 'AnoProjeto = ?' => $dadosProjeto[0]->AnoProjeto, 'Sequencial = ?' => $dadosProjeto[0]->Sequencial, 'TipoParecer = ?' => 7, 'idTipoAgente = ?' =>6));
                 if(count($buscarParecer) > 0){
                     $buscarParecer = $buscarParecer->current();
