@@ -36,19 +36,19 @@
 	   $dadosProjetos = $p->buscar(array('IdPRONAC = ?'=>$d->idPronac))->current();
 	
 	  if(count($dadosProjetos)>0){
-	  $outrasVinculadas = array(92, 93, 94, 95, 335); // Vinculadas exceto IPHAN
-	  if ($this->idOrgao == 91) { // especificidade do IPHAN
-          $o = new Orgaos();
-          $superindendencias = $o->buscarSuperintendencias();
-      } else if (!in_array($this->idOrgao, $outrasVinculadas)) {
-          $a = new Agentes();
-          $Pareceristas = array();
-          $Pareceristas = $a->buscarPareceristasIphan($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
-	  } else {
-          $a = new Agentes();
-          $Pareceristas = array();
-          $Pareceristas = $a->buscarPareceristas($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
-	  }
+          $outrasVinculadas = array(92, 93, 94, 95, 335); // Vinculadas exceto IPHAN
+          if ($this->idOrgao == 91) { // especificidade do IPHAN
+              $o = new Orgaos();
+              $superindendencias = $o->buscarSuperintendencias();
+          } else if (!in_array($this->idOrgao, $outrasVinculadas)) {
+              $a = new Agentes();
+              $Pareceristas = array();
+              $Pareceristas = $a->buscarPareceristasIphan($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
+          } else {
+              $a = new Agentes();
+              $Pareceristas = array();
+              $Pareceristas = $a->buscarPareceristas($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
+          }
 	  }
 ?>
 	  <select name="tecnico" id="tecnico-<?php echo $d->idDistribuirReadequacao ?>" class="select_simples comboTecnico">

@@ -2645,8 +2645,9 @@ class ReadequacoesController extends GenericControllerNew {
                     $dadosDP['DtRetornoAvaliador'] = new Zend_Db_Expr('GETDATE()');
                     $whereDP = "idDistribuirReadequacao = ".$dDP[0]->idDistribuirReadequacao;
 
-                    // se estiver com uma vinculada do IPHAN, retorna para IPHAN central
-                    if (!in_array($this->idOrgao, $outrasVinculadas)) {
+                    // se estiver com uma vinculada do IPHAN, retorna para IPHAN central. Senão, permanece na unidade
+                    $perfilCoordenadorVinculada = 93;
+                    if (!in_array($this->idOrgao, $outrasVinculadas) && $this->idPerfil == $perfilCoordenadorVinculada) {
                         $dadosDP['idUnidade'] = 91; // retorna para IPHAN (topo)
                     }
                     
@@ -2892,7 +2893,7 @@ class ReadequacoesController extends GenericControllerNew {
         $this->view->dados = $dados;
         $this->view->idPronac = $dados->idPronac;
         $this->view->nmPagina = $dados->dsReadequacao;
-
+        
         //DADOS DO PROJETO
         $Projetos = new Projetos();
         $p = $Projetos->buscarProjetoXProponente(array('idPronac = ?' => $dados->idPronac))->current();

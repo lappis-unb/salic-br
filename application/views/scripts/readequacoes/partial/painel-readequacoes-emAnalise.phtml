@@ -36,10 +36,20 @@
              $dadosProjetos = $p->buscar(array('IdPRONAC = ?'=>$d->idPronac))->current();
 
           $Pareceristas = array();
-          if(count($dadosProjetos)>0){
-          $a = new Agentes();
-          $Pareceristas = $a->buscarPareceristas($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
-          }
+		    if(count($dadosProjetos)>0){
+                $outrasVinculadas = array(92, 93, 94, 95, 335); // Vinculadas exceto IPHAN
+                $a = new Agentes();
+
+                if (!in_array($this->idOrgao, $outrasVinculadas)) {
+                    $a = new Agentes();
+                    $Pareceristas = array();
+                    $Pareceristas = $a->buscarPareceristasIphan($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
+                } else {
+                    $a = new Agentes();
+                    $Pareceristas = array();
+                    $Pareceristas = $a->buscarPareceristas($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
+                }
+            }
           ?>
 	  <select name="tecnico" id="tecnico-<?php echo $d->idDistribuirReadequacao ?>" class="select_simples comboTecnico">			
             <option value=""> - Selecione - </option>
