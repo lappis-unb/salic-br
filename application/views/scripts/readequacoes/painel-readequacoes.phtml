@@ -33,10 +33,10 @@
         
         $('.enviarReadequacao').click(function(){
             var idPronac = $(this).attr('idPronac'),
-                parecerista = $('#tecnico-' + idPronac).val(),
                 idDistRead = $(this).attr('idDistRead'),
-                idReadequacao = $(this).attr('idReadequacao');
-            
+		parecerista = $('#tecnico-' + idDistRead).val(),
+		idReadequacao = $(this).attr('idReadequacao');
+	    
             if(parecerista==''){
                 $("#alerta").dialog("destroy");
                 $("#alerta").html('Favor selecionar o destinatário!');

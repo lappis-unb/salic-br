@@ -41,7 +41,7 @@
           $Pareceristas = $a->buscarPareceristas($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
           }
           ?>
-	  <select name="tecnico" id="tecnico-<?php echo $d->idPronac ?>" class="select_simples comboTecnico">             
+	  <select name="tecnico" id="tecnico-<?php echo $d->idDistribuirReadequacao ?>" class="select_simples comboTecnico">			
             <option value=""> - Selecione - </option>
             <?php foreach ($Pareceristas as $Parecerista) : ?>
             <option value='<?php echo $Parecerista->id; ?>' <?php echo ($d->nmParecerista == $Parecerista->nome) ? 'selected="selected"' : ''; ?> >

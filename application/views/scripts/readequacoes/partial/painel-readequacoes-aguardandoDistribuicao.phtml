@@ -49,9 +49,9 @@
           $Pareceristas = array();
           $Pareceristas = $a->buscarPareceristas($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
 	  }
-    }
+	  }
 ?>
-	  <select name="tecnico" id="tecnico-<?php echo $d->idPronac ?>" class="select_simples comboTecnico">
+	  <select name="tecnico" id="tecnico-<?php echo $d->idDistribuirReadequacao ?>" class="select_simples comboTecnico">
 	      <option value=""> - Selecione - </option>
 	      <?php if ($this->idOrgao == 91): ?>
 	        <?php foreach ($superindendencias as $superindendencia): ?>
