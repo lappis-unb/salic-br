@@ -1769,10 +1769,10 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
 
-        $p = [
+        $p = array(
             'p.idPreProjeto',
             'p.NomeProjeto',
-        ];
+        );
 
         //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
@@ -1876,7 +1876,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         );
 
         $sql = $db->select()
-            ->from(['vw' => 'vwAnaliseVisualPorTecnico'], $vw, $this->_schema);
+            ->from(array('vw' => 'vwAnaliseVisualPorTecnico'), $vw, $this->_schema);
 
         ($order) ? $sql->order($order) : null;
 
