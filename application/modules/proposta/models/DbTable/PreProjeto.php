@@ -2727,23 +2727,24 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         $listaValidacao[] =  clone($validacao);
                     }
 
+//todo novaIn planodedivulgacao
                     //-- VERIFICAR SE O PLANO DE DIVULGACAO ESTA PREENCHIDO
-                    $sql = $db->select()
-                        ->from(array('planodedivulgacao'), '*',  $this->_schema)
-                        ->where('idProjeto = ?', $idPreProjeto)
-                        ->limit(1);
-
-                    $planoDivulgacao = $db->fetchAll($sql);
-
-                    if (empty($planoDivulgacao)){
-                        $validacao->Descricao = 'O Plano B&aacute;sico de Divulga&ccedil;&atilde;o n&atilde;o foi preenchido.';
-                        $validacao->Observacao = 'PENDENTE';
-                        $listaValidacao[] =  clone($validacao);
-                    } else {
-                        $validacao->Descricao = 'Plano B&aacute;sico de Divulga&ccedil;&atilde;o cadastrado.';
-                        $validacao->Observacao = 'OK';
-                        $listaValidacao[] =  clone($validacao);
-                    }
+//                    $sql = $db->select()
+//                        ->from(array('planodedivulgacao'), '*',  $this->_schema)
+//                        ->where('idProjeto = ?', $idPreProjeto)
+//                        ->limit(1);
+//
+//                    $planoDivulgacao = $db->fetchAll($sql);
+//
+//                    if (empty($planoDivulgacao)){
+//                        $validacao->Descricao = 'O Plano B&aacute;sico de Divulga&ccedil;&atilde;o n&atilde;o foi preenchido.';
+//                        $validacao->Observacao = 'PENDENTE';
+//                        $listaValidacao[] =  clone($validacao);
+//                    } else {
+//                        $validacao->Descricao = 'Plano B&aacute;sico de Divulga&ccedil;&atilde;o cadastrado.';
+//                        $validacao->Observacao = 'OK';
+//                        $listaValidacao[] =  clone($validacao);
+//                    }
                     //-- VERIFICAR SE EXISTE NO MINIMO 90 DIAS ENTRE A DATA DE ENVIO E O INICIO DO PERIODO DE EXECUCAO DO PROJETO
                     $sql = $db->select()
                         ->from($this->_name, array('*'),  $this->_schema)
@@ -2853,69 +2854,70 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         $listaValidacao[] =  clone($validacao);
                     }
 
+//@todo novaIN custosadministrativos
                     //-- VERIFICAR SE EXISTE NA PLANILHA ORCAMENTARIA PARA OS CUSTOS ADMINISTRATIVOS DO PROJETO
-                    $subSql = $db->select()
-                        ->from(array('pl' => 'tbplanilhaproposta'), '*',  $this->_schema)
-                        ->where('idProjeto = ?', $idPreProjeto)
-                        ->where('pl.idProduto = 0')
-                        ->where('idEtapa = 4')
-                        ->where('idPlanilhaItem != 5249')
-                        ;
+//                    $subSql = $db->select()
+//                        ->from(array('pl' => 'tbplanilhaproposta'), '*',  $this->_schema)
+//                        ->where('idProjeto = ?', $idPreProjeto)
+//                        ->where('pl.idProduto = 0')
+//                        ->where('idEtapa = 4')
+//                        ->where('idPlanilhaItem != 5249')
+//                        ;
+//
+//                    $sql = $db->select()
+//                        ->from(array('pp' => 'planodistribuicaoproduto'), '*',  $this->_schema)
+//                        ->where('idProjeto =  ?', $idPreProjeto)
+//                        ->where(new Zend_Db_Expr("NOT EXISTS($subSql)"))
+//                        ;
+//
+//                    $custoAdministrativos = $db->fetchAll($sql);
+//
+//                    if (!empty($custoAdministrativos)){
+//                        $validacao->Descricao = 'A planilha de custos administrativos do projeto n&atilde;o est&aacute; cadastrada.';
+//                        $validacao->Observacao = 'PENDENTE';
+//                        $listaValidacao[] =  clone($validacao);
+//                    } else {
+//                        $validacao->Descricao = 'Planilha de custos administrativos cadastrada.';
+//                        $validacao->Observacao = 'OK';
+//                        $listaValidacao[] =  clone($validacao);
+//                    }
 
-                    $sql = $db->select()
-                        ->from(array('pp' => 'planodistribuicaoproduto'), '*',  $this->_schema)
-                        ->where('idProjeto =  ?', $idPreProjeto)
-                        ->where(new Zend_Db_Expr("NOT EXISTS($subSql)"))
-                        ;
-
-                    $custoAdministrativos = $db->fetchAll($sql);
-
-                    if (!empty($custoAdministrativos)){
-                        $validacao->Descricao = 'A planilha de custos administrativos do projeto n&atilde;o est&aacute; cadastrada.';
-                        $validacao->Observacao = 'PENDENTE';
-                        $listaValidacao[] =  clone($validacao);
-                    } else {
-                        $validacao->Descricao = 'Planilha de custos administrativos cadastrada.';
-                        $validacao->Observacao = 'OK';
-                        $listaValidacao[] =  clone($validacao);
-                    }
-
+//@todo novaIN custosadministrativos
                     //--Pega o custo total do projeto
-                    $sql = $db->select()
-                        ->from(array('tbplanilhaproposta'), 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total',  $this->_schema)
-                        ->where('idProjeto =  ?', $idPreProjeto)
-                        ->where('idEtapa <> 4')
-                        ->where('FonteRecurso = 109')
-                        ;
-
-                    $total = $db->fetchAll($sql);
-                    $total = empty($total[0]->total) ? 0 : $total[0]->total;
-
+//                    $sql = $db->select()
+//                        ->from(array('tbplanilhaproposta'), 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total',  $this->_schema)
+//                        ->where('idProjeto =  ?', $idPreProjeto)
+//                        ->where('idEtapa <> 4')
+//                        ->where('FonteRecurso = 109')
+//                        ;
+//
+//                    $total = $db->fetchAll($sql);
+//                    $total = empty($total[0]->total) ? 0 : $total[0]->total;
                     //--pega o valor de custo administrativo
-                    $sql = $db->select()
-                        ->from(array('tbplanilhaproposta'), 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total',  $this->_schema)
-                        ->where('idProjeto =  ?', $idPreProjeto)
-                        ->where('idEtapa <> 4')
-                        ->where('FonteRecurso = 109')
-                        ->where('idPlanilhaItem <> 5249')
-                        ;
+//                    $sql = $db->select()
+//                        ->from(array('tbplanilhaproposta'), 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total',  $this->_schema)
+//                        ->where('idProjeto =  ?', $idPreProjeto)
+//                        ->where('idEtapa <> 4')
+//                        ->where('FonteRecurso = 109')
+//                        ->where('idPlanilhaItem <> 5249')
+//                        ;
+//
+//                    $custoAdm = $db->fetchAll($sql);
+//                    $custoAdm = empty($custoAdm[0]->total) ? 0 : $custoAdm[0]->total;
 
-                    $custoAdm = $db->fetchAll($sql);
-                    $custoAdm = empty($custoAdm[0]->total) ? 0 : $custoAdm[0]->total;
-
-                    if ($total != 0 && $custoAdm != 0) {
-                        $resultadoPercentual = $custoAdm/$total*100;
-
-                        if($resultadoPercentual > 15){
-                            $validacao->Descricao = 'Custo administrativo superior a 15% do valor total do projeto.';
-                            $validacao->Observacao = 'PENDENTE';
-                            $listaValidacao[] =  clone($validacao);
-                        } else {
-                            $validacao->Descricao = 'Custo administrativo inferior a 15% do valor total do projeto.';
-                            $validacao->Observacao = 'OK';
-                            $listaValidacao[] =  clone($validacao);
-                        }
-                    }
+//                    if ($total != 0 && $custoAdm != 0) {
+//                        $resultadoPercentual = $custoAdm/$total*100;
+//
+//                        if($resultadoPercentual > 15){
+//                            $validacao->Descricao = 'Custo administrativo superior a 15% do valor total do projeto.';
+//                            $validacao->Observacao = 'PENDENTE';
+//                            $listaValidacao[] =  clone($validacao);
+//                        } else {
+//                            $validacao->Descricao = 'Custo administrativo inferior a 15% do valor total do projeto.';
+//                            $validacao->Observacao = 'OK';
+//                            $listaValidacao[] =  clone($validacao);
+//                        }
+//                    }
                     //-- VERIFICAR O PERCENTUAL DA REMUNERACAO PARA CAPTACAO DE RECURSOS
                     $sql = $db->select()
                         ->from(array('tbplanilhaproposta'), 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total',  $this->_schema)
