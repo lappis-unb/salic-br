@@ -242,6 +242,7 @@
                 <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=7&ordem='.$this->paginacao['novaOrdem'];?>">Tipo Recurso</a></th>
                 <?php if($this->filtro == 'emanalise'){ ?>
                 <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Situação</a></th>
+		<th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=10&ordem='.$this->paginacao['novaOrdem'];?>">Vinculada</a></th>
                 <?php } ?>
                 
                 <?php if($this->filtro == 'analisados'){ ?>
@@ -290,6 +291,7 @@
                         }
                     ?>
                 </td>
+		<td align="center"><?php echo $d->Vinculada; ?></td>
                 <?php } ?>
                 
                 <?php if($this->filtro == 'analisados'){ ?>

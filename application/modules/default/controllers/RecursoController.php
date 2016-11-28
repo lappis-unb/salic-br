@@ -142,6 +142,10 @@ class RecursoController extends GenericControllerNew
                 $where['b.Area = ?'] = 0;
             }
         }
+
+        $where['c.tpDistribuicao = ?'] = 'A';
+        $where['c.stFecharAnalise = ?'] = '0';
+        $where['c.stEstado = ?'] = '0';
         
         $tbRecurso = New tbRecurso();
         $total = $tbRecurso->painelRecursos($where, $order, null, null, true);
