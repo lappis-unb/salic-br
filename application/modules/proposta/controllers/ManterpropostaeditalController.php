@@ -424,8 +424,31 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $rs = $tbl->buscarDocumentos(array("idprojeto = ?" => $idPreProjeto));
         $this->view->arquivosProposta = $rs;
 
+        $arquivosAnexados = $rs;
+
+        $tblDocumentos = new DocumentosExigidos();
+
+        $where = array(
+            'stUpload = ?' => true,
+            'Area = ?' => '4'
+        );
+
+        $listaDeArquivos = $tblDocumentos->buscar($where, 'Descricao desc');
+
+        foreach ($listaDeArquivos  as $item) {
+            $novoItem = $item->toArray();
+
+            if(array_search($item->Codigo, array_column($arquivosAnexados, 'codigodocumento')))
+                $novoItem['Anexado'] = true;
+            else
+                $novoItem['Anexado'] = false;
+            $novaLista[] = $novoItem;
+        }
+        $this->view->documentosObrigatorios = $novaLista;
+
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $dadosProjeto = $tblPreProjeto->findBy(array('idPreProjeto' => $idPreProjeto));
+
         $tbA = new Proposta_Model_DbTable_TbDocumentosAgentes();
         $rsA = $tbA->buscarDadosDocumentos(array("idagente = ?" => $dadosProjeto['idAgente']));
         $this->view->arquivosProponente = $rsA;
