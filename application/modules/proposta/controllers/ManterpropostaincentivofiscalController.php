@@ -823,37 +823,38 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                     $arrResultado['planilhaproduto']['msg'] = "Existe produto cadastrado sem a respectiva planilha or&ccedil;ament&aacute;ria lan&ccedil;ada";
                 }
 
+//@todo novaIN custosadministrativos
                 //=========== PLANILHA CUSTO ADMINISTRATIVO ==========
-                $arrBuscaPlanilhaCustoAdmin['idProjeto = ?'] = $idPreProjeto;
-                $arrBuscaPlanilhaCustoAdmin['idProduto = ?'] = 0; //planilha de custo admin. n&atilde;o tem produto
-                $arrBuscaPlanilhaCustoAdmin['idEtapa = ?'] = 4; //etapa 4 = Custo/Adminitrativo
-
-                $planilhaCustoAdmin = $tblPlanilhaProposta->buscar($arrBuscaPlanilhaCustoAdmin);
-                $valorCustoAdmin = 0;
-                if (count($planilhaCustoAdmin) > 0) {
-                    $arrResultado['planilhacustoadmin']['erro'] = false;
-                    $arrResultado['planilhacustoadmin']['msg'] = "Planilha de custos administrativos lan&ccedil;ada";
-
-                    //realiza calculo para encontrar custo administrativo do projeto
-                    for ($i = 0; $i < sizeof($planilhaCustoAdmin); $i++) {
-                        $valorCustoAdmin += ( $planilhaCustoAdmin[$i]->Quantidade * $planilhaCustoAdmin[$i]->Ocorrencia * $planilhaCustoAdmin[$i]->ValorUnitario);
-                    }
-                } else {
-                    $arrResultado['erro'] = true;
-                    $arrResultado['planilhacustoadmin']['erro'] = true;
-                    $arrResultado['planilhacustoadmin']['msg'] = "A planilha de custos administrativos da proposta n&atilde;o est&aacute; lan&ccedil;ada";
-                }
+//                $arrBuscaPlanilhaCustoAdmin['idProjeto = ?'] = $idPreProjeto;
+//                $arrBuscaPlanilhaCustoAdmin['idProduto = ?'] = 0; //planilha de custo admin. n&atilde;o tem produto
+//                $arrBuscaPlanilhaCustoAdmin['idEtapa = ?'] = 4; //etapa 4 = Custo/Adminitrativo
+//
+//                $planilhaCustoAdmin = $tblPlanilhaProposta->buscar($arrBuscaPlanilhaCustoAdmin);
+//                $valorCustoAdmin = 0;
+//                if (count($planilhaCustoAdmin) > 0) {
+//                    $arrResultado['planilhacustoadmin']['erro'] = false;
+//                    $arrResultado['planilhacustoadmin']['msg'] = "Planilha de custos administrativos lan&ccedil;ada";
+//
+//                    //realiza calculo para encontrar custo administrativo do projeto
+//                    for ($i = 0; $i < sizeof($planilhaCustoAdmin); $i++) {
+//                        $valorCustoAdmin += ( $planilhaCustoAdmin[$i]->Quantidade * $planilhaCustoAdmin[$i]->Ocorrencia * $planilhaCustoAdmin[$i]->ValorUnitario);
+//                    }
+//                } else {
+//                    $arrResultado['erro'] = true;
+//                    $arrResultado['planilhacustoadmin']['erro'] = true;
+//                    $arrResultado['planilhacustoadmin']['msg'] = "A planilha de custos administrativos da proposta n&atilde;o est&aacute; lan&ccedil;ada";
+//                }
 
                 //calcula percentual do custo administrativo
-                $quinzecentoprojeto = ($valorProjeto * 0.15);
+//                $quinzecentoprojeto = ($valorProjeto * 0.15);
 
                 //if ($percentual > 15) {
-                if ($valorCustoAdmin > $quinzecentoprojeto) {
-                    $valorRetirarCustoAdm = $valorCustoAdmin - $quinzecentoprojeto;
-                    $arrResultado['erro'] = true;
-                    $arrResultado['percentualcustoadmin']['erro'] = true;
-                    $arrResultado['percentualcustoadmin']['msg'] = "Custo administrativo  superior a 15% do valor total da proposta. Favor readequar os custos em <b>R$ " . number_format($valorRetirarCustoAdm, '2', ',', '.') . "</b> para enviar a sua proposta ao Ministï¿½rio da Cultura.";
-                }
+//                if ($valorCustoAdmin > $quinzecentoprojeto) {
+//                    $valorRetirarCustoAdm = $valorCustoAdmin - $quinzecentoprojeto;
+//                    $arrResultado['erro'] = true;
+//                    $arrResultado['percentualcustoadmin']['erro'] = true;
+//                    $arrResultado['percentualcustoadmin']['msg'] = "Custo administrativo  superior a 15% do valor total da proposta. Favor readequar os custos em <b>R$ " . number_format($valorRetirarCustoAdm, '2', ',', '.') . "</b> para enviar a sua proposta ao Ministï¿½rio da Cultura.";
+//                }
                 if ($qtdeProdutoPrincial <= 0) {
                     $arrResultado['erro'] = true;
                     $arrResultado['produtoprincipal']['erro'] = true;
@@ -892,6 +893,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             }
 
         }
+        xd($arrResultado);
         return $arrResultado;
     }
 

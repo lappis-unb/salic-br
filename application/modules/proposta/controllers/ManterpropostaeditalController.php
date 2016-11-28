@@ -420,11 +420,17 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $this->verificarPermissaoAcesso(true, false, false);
 
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
+
         $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
         $rs = $tbl->buscarDocumentos(array("idprojeto = ?" => $idPreProjeto));
         $this->view->arquivosProposta = $rs;
 
-        $arquivosAnexados = $rs;
+        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
+        $dadosProjeto = $tblPreProjeto->findBy(array('idPreProjeto' => $idPreProjeto));
+
+        $tbA = new Proposta_Model_DbTable_TbDocumentosAgentes();
+        $rsA = $tbA->buscarDadosDocumentos(array("idagente = ?" => $dadosProjeto['idAgente']));
+        $this->view->arquivosProponente = $rsA;
 
         $tblDocumentos = new DocumentosExigidos();
 
@@ -438,7 +444,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         foreach ($listaDeArquivos  as $item) {
             $novoItem = $item->toArray();
 
-            if(array_search($item->Codigo, array_column($arquivosAnexados, 'codigodocumento')))
+            if(in_array($item->Codigo, array_column($rs, 'codigodocumento')))
                 $novoItem['Anexado'] = true;
             else
                 $novoItem['Anexado'] = false;
@@ -446,12 +452,6 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         }
         $this->view->documentosObrigatorios = $novaLista;
 
-        $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
-        $dadosProjeto = $tblPreProjeto->findBy(array('idPreProjeto' => $idPreProjeto));
-
-        $tbA = new Proposta_Model_DbTable_TbDocumentosAgentes();
-        $rsA = $tbA->buscarDadosDocumentos(array("idagente = ?" => $dadosProjeto['idAgente']));
-        $this->view->arquivosProponente = $rsA;
     }
 
     /**
