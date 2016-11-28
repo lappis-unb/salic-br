@@ -13,7 +13,7 @@
 class tbReadequacao extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
-	protected $_schema = "dbo";
+	protected $_schema = "sac";
 	protected $_name   = "tbReadequacao";
 
 
@@ -162,7 +162,7 @@ class tbReadequacao extends MinC_Db_Table_Abstract
         $select = $db->select()->from(
             array('a' => $table),
             array('*'),
-            $this->_banco.'.'.$this->_schema
+            $this->_schema
         );
 
         //adiciona quantos filtros foram enviados
