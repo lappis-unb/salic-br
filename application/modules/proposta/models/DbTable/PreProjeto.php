@@ -2562,7 +2562,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         $movimentacao = $db->fetchAll($sql);
 
         if (!empty( $movimentacao )) {
-            $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL ENCONTRA-SE NO MINISTÉRIO DA CULTURA.</b></font>';
+            $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL ENCONTRA-SE NO MINIST&Eacute;RIO DA CULTURA.</b></font>';
             $validacao->Observacao = '';
             $listaValidacao[] =  clone($validacao);
         } else {
@@ -2995,8 +2995,10 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->where('idPreProjeto =  ?', $idPreProjeto)
             ;
         $resultUsuario = $db->fetchAll($sql);
+
+        $usuario = null;
         if(count($resultUsuario) > 0) {
-            $usuario = $resultUsuario[0]->idusuario;
+            $usuario = $resultUsuario[0]->idUsuario;
         }
 
         $validado= true;
@@ -3020,7 +3022,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
             $insert = $tbMovimentacao->insert($dados);
 
-            $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL FOI ENCAMINHADA COM SUCESSO AO MINISTÉRIO DA CULTURA.</b></font>';
+            $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL FOI ENCAMINHADA COM SUCESSO AO MINIST&Eacute;RIO DA CULTURA.</b></font>';
             $validacao->Observacao = 'OK';
             $listaValidacao[] =  clone($validacao);
         } else {

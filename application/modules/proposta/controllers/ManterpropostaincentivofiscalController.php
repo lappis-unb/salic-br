@@ -893,7 +893,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             }
 
         }
-        xd($arrResultado);
+
         return $arrResultado;
     }
 
