@@ -2529,7 +2529,7 @@ class ReadequacoesController extends GenericControllerNew {
 	{
         if($this->idPerfil != 94 && $this->idPerfil != 121){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
-        }
+       }
 
         $idPronac = $_POST['idPronac'];
         $idReadequacao = $_POST['idReadequacao'];
@@ -2677,16 +2677,27 @@ class ReadequacoesController extends GenericControllerNew {
 
     public function coordParecerFinalizarReadequacaoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-
-        $post = Zend_Registry::get('post');
-        $idReadequacao = (int) $post->idReadequacao;
-
-        //Atualiza a tabela tbReadequacao
-        $dados = array();
-        $dados['siEncaminhamento'] = 6; // Devolvido para o coordenador geral de acompanhamento
-        $where = "idReadequacao = $idReadequacao";
-        $tbReadequacao = new tbReadequacao();
-        $return = $tbReadequacao->update($dados, $where);
+        
+        $idReadequacao = $this->_request->getParam("idReadequacao");
+        $idDistribuirReadequacao = $this->_request->getParam("idDistProj");
+        
+        // Se estiver com vinculada do IPHAN, volta para sede IPHAN
+        $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
+        if (!in_array($this->idOrgao, $outrasVinculadas)) {
+            $dadosDR = array();
+            $whereDR = array();
+            $tbDistribuirReadequacao = new tbDistribuirReadequacao();
+            $whereDR = "idDistribuirReadequacao = " . $idDistribuirReadequacao;
+            $dadosDR['idUnidade'] = 91; // retorna para IPHAN
+            $return = $tbDistribuirReadequacao->update($dadosDR, $whereDR);           
+        } else {
+            //Atualiza a tabela tbReadequacao
+            $dados = array();
+            $dados['siEncaminhamento'] = 6; // Devolvido para o coordenador geral de acompanhamento
+            $where = "idReadequacao = $idReadequacao";
+            $tbReadequacao = new tbReadequacao();
+            $return = $tbReadequacao->update($dados, $where);
+        }
 
         if($return){
             echo json_encode(array('resposta'=>true));
