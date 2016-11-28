@@ -3100,10 +3100,10 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             'pp.idetapa as idEtapa',
             'pp.idplanilhaitem as idItem',
             'pp.ufdespesa as IdUf',
-            'pp.quantidade',
-            'pp.ocorrencia',
-            'pp.valorunitario',
-            'pp.qtdedias',
+            'pp.Quantidade',
+            'pp.Ocorrencia',
+            'pp.ValorUnitario',
+            'pp.qtdeDias',
             'pp.idPlanilhaProposta',
         );
 
