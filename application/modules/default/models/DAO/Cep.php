@@ -68,7 +68,7 @@ class Cep extends MinC_Db_Table_Abstract
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_ASSOC);
 
-        $cols = [
+        $cols = array(
             'cep',
             'logradouro',
             'tipo_logradouro',
@@ -79,7 +79,7 @@ class Cep extends MinC_Db_Table_Abstract
             'dscidademunicipios',
             'idcidadeuf',
             'dscidademunicipios as dscidadeuf'
-        ];
+        );
 
         $sql = $db->select()
             ->from($this->_name, $cols, $this->_schema)

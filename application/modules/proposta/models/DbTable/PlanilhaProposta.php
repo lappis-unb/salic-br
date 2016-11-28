@@ -170,7 +170,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 
         $sql = $this->select()
             ->setIntegrityCheck(false)
-            ->from(['p' => $this->_name], $this->_getCols(), $this->_schema);
+            ->from(array('p' => $this->_name), $this->_getCols(), $this->_schema);
 
         $sql->joinLeft(array('e' => 'tbplanilhaetapa'), 'e.idplanilhaetapa = p.idetapa',  array( 'etapa' => 'e.descricao'), $this->_schema);
 
@@ -195,7 +195,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
     public function buscarCustos($idPreProjeto, $tipoCusto, $idEtapa = null, $idItem = null, $idUf = null, $idMunicipio = null,
                                         $fonte = null, $unidade = null, $quantidade = null, $ocorrencia = null, $vlunitario = null, $qtdDias = null, $dsJustificativa = null)
     {
-        $tpp = [
+        $tpp = array(
             'tpp.idusuario',
             'tpp.idprojeto as idProposta',
             'tpp.idPlanilhaProposta',
@@ -204,51 +204,51 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
             'tpp.valorunitario',
             'tpp.qtdedias',
             'tpp.dsjustificativa as justificativa',
-        ];
+        );
 
-        $tpe = [
+        $tpe = array(
             'tpe.tpcusto as custo',
             'tpe.descricao as etapa',
             'tpe.idplanilhaetapa as idEtapa',
             'tpe.tpcusto',
-        ];
+        );
 
-        $tpi = [
+        $tpi = array(
             'tpi.descricao as Item',
             'tpi.idplanilhaitens as idItem',
-        ];
+        );
 
-        $uf = [
+        $uf = array(
             'uf.descricao as Uf',
             'uf.sigla as SiglaUF',
-        ];
+        );
 
-        $mec = [
+        $mec = array(
             'mec.descricao as mecanismo'
-        ];
+        );
 
-        $un = [
+        $un = array(
             'un.idunidade as idunidade',
             'un.descricao as unidade',
-        ];
+        );
 
-        $veri = [
+        $veri = array(
             'veri.idverificacao as idFonteRecurso',
             'veri.descricao as DescricaoFonteRecurso'
-        ];
+        );
 
         $sql = $this->select()
             ->setIntegrityCheck(false)
-            ->from(['tpp' => 'tbplanilhaproposta'], $tpp, $this->getSchema('sac'))
-            ->joinLeft(['pd' => 'produto'], 'pd.codigo = tpp.idproduto', null, $this->getSchema('sac'))
-            ->join(['tpe' => 'tbplanilhaetapa'], 'tpe.idplanilhaetapa = tpp.idetapa', $tpe, $this->getSchema('sac'))
-            ->join(['tpi' => 'tbplanilhaitens'], 'tpi.idplanilhaitens = tpp.idplanilhaitem', $tpi, $this->getSchema('sac'))
-            ->join(['uf' => 'uf'], 'uf.iduf = tpp.ufdespesa', $uf, $this->getSchema('agentes'))
-            ->join(['municipio' => 'municipios'], 'municipio.idmunicipioibge = tpp.municipiodespesa', 'municipio.descricao as Municipio', $this->getSchema('agentes'))
-            ->join(['prep' => 'preprojeto'], 'prep.idpreprojeto = tpp.idprojeto', null, $this->getSchema('sac'))
-            ->join(['mec' => 'mecanismo'], 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
-            ->join(['un' => 'tbplanilhaunidade'], 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
-            ->join(['veri' => 'verificacao'], 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
+            ->from(array('tpp' => 'tbplanilhaproposta'), $tpp, $this->getSchema('sac'))
+            ->joinLeft(array('pd' => 'produto'), 'pd.codigo = tpp.idproduto', null, $this->getSchema('sac'))
+            ->join(array('tpe' => 'tbplanilhaetapa'), 'tpe.idplanilhaetapa = tpp.idetapa', $tpe, $this->getSchema('sac'))
+            ->join(array('tpi' => 'tbplanilhaitens'), 'tpi.idplanilhaitens = tpp.idplanilhaitem', $tpi, $this->getSchema('sac'))
+            ->join(array('uf' => 'uf'), 'uf.iduf = tpp.ufdespesa', $uf, $this->getSchema('agentes'))
+            ->join(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = tpp.municipiodespesa', 'municipio.descricao as Municipio', $this->getSchema('agentes'))
+            ->join(array('prep' => 'preprojeto'), 'prep.idpreprojeto = tpp.idprojeto', null, $this->getSchema('sac'))
+            ->join(array('mec' => 'mecanismo'), 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
+            ->join(array('un' => 'tbplanilhaunidade'), 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
+            ->join(array('veri' => 'verificacao'), 'veri.idverificacao = tpp.fonterecurso', $veri, $this->getSchema('sac'))
             ->where('tpe.tpcusto = ?', $tipoCusto)
             ->where('tpp.idprojeto = ?', $idPreProjeto)
             ->order('tpe.descricao');

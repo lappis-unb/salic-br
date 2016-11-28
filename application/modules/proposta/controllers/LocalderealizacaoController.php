@@ -284,7 +284,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
 
         //EXCLUI REGISTRO DA TABELA ABRANGENCIA
         $mapper = new Proposta_Model_DbTable_Abrangencia();
-        $excluir = $mapper->delete(['idabrangencia = ?' => $_GET['cod']]);
+        $excluir = $mapper->delete(array('idabrangencia = ?' => $_GET['cod']));
 
         if($excluir) {
 

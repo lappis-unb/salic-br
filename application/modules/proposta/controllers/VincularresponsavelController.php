@@ -46,7 +46,7 @@ class Proposta_VincularresponsavelController extends MinC_Controller_Action_Abst
 
         // Busca na Agentes
         $tblAgentes = new Agente_Model_DbTable_Agentes();
-        $agente = $tblAgentes->findBy(['cnpjcpf' => $cpf]);
+        $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
 
         if ($acesso) {
             $this->idResponsavel = $acesso['IdUsuario'];
