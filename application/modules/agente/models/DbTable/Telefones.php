@@ -74,10 +74,10 @@ class Agente_Model_DbTable_Telefones extends MinC_Db_Table_Abstract
             ")
         );
 
-        $ddd = [
+        $ddd = array(
             'ddd.codigo as ddd',
             'ddd.codigo as codigo',
-        ];
+        );
 
         $sql = $db->select()->distinct()
             ->from(array('tl' => $this->_name), $tl, $this->_schema)

@@ -76,7 +76,7 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
 
         $db = Zend_Db_Table::getDefaultAdapter();
 
-        $pp = [
+        $pp = array(
             'pp.idplanilhaproposta as idPlanilhaProposta',
             'pp.idetapa as idEtapa',
             'pp.ufdespesa AS IdUf',
@@ -89,18 +89,18 @@ class Proposta_Model_DbTable_TbPlanilhaProposta extends MinC_Db_Table_Abstract
             'CAST(pp.dsjustificativa AS TEXT) as Justificativa',
             'pp.qtdedias as QtdDias',
             'pp.unidade as Unidade',
-        ];
+        );
 
         $sacSchema = $this->_schema;
-        $sql = $db->select()->from(['pre' => 'preprojeto' ],'pre.idpreprojeto as idProposta' , $sacSchema)
-            ->join(['pp' => 'tbplanilhaproposta'], 'pre.idpreprojeto = pp.idprojeto', $pp, $sacSchema)
-            ->join(['p' => 'produto'] , 'pp.idproduto = p.codigo', 'p.codigo AS CodigoProduto', $sacSchema)
-            ->join(['ti' => 'tbplanilhaitens'], 'ti.idplanilhaitens = pp.idplanilhaitem', 'ti.descricao as DescricaoItem', $sacSchema)
-            ->join(['uf' => 'uf' ], 'uf.CodUfIbge = pp.ufdespesa', 'uf.descricao AS DescricaoUf', $sacSchema)
-            ->join(['mun' => 'municipios'], 'mun.idmunicipioibge = pp.municipiodespesa','mun.descricao as DescricaoMunicipio', $this->getSchema('agentes'))
-            ->join(['pe' => 'tbplanilhaetapa'], 'pp.idetapa = pe.idplanilhaetapa', 'pe.descricao as DescricaoEtapa', $sacSchema)
-            ->join(['rec' => 'verificacao'], 'rec.idverificacao = pp.fonterecurso', 'rec.descricao as DescricaoRecurso', $sacSchema)
-            ->join(['uni' => 'tbplanilhaunidade'], 'uni.idunidade = pp.unidade', 'uni.descricao as DescricaoUnidade', $sacSchema)
+        $sql = $db->select()->from(array('pre' => 'preprojeto'),'pre.idpreprojeto as idProposta' , $sacSchema)
+            ->join(array('pp' => 'tbplanilhaproposta'), 'pre.idpreprojeto = pp.idprojeto', $pp, $sacSchema)
+            ->join(array('p' => 'produto'), 'pp.idproduto = p.codigo', 'p.codigo AS CodigoProduto', $sacSchema)
+            ->join(array('ti' => 'tbplanilhaitens'), 'ti.idplanilhaitens = pp.idplanilhaitem', 'ti.descricao as DescricaoItem', $sacSchema)
+            ->join(array('uf' => 'uf'), 'uf.CodUfIbge = pp.ufdespesa', 'uf.descricao AS DescricaoUf', $sacSchema)
+            ->join(array('mun' => 'municipios'), 'mun.idmunicipioibge = pp.municipiodespesa','mun.descricao as DescricaoMunicipio', $this->getSchema('agentes'))
+            ->join(array('pe' => 'tbplanilhaetapa'), 'pp.idetapa = pe.idplanilhaetapa', 'pe.descricao as DescricaoEtapa', $sacSchema)
+            ->join(array('rec' => 'verificacao'), 'rec.idverificacao = pp.fonterecurso', 'rec.descricao as DescricaoRecurso', $sacSchema)
+            ->join(array('uni' => 'tbplanilhaunidade'), 'uni.idunidade = pp.unidade', 'uni.descricao as DescricaoUnidade', $sacSchema)
             ->where('pp.idetapa = ?', $idEtapa)
         ;
 

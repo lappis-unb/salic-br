@@ -179,7 +179,8 @@ class UsuarioDAO extends MinC_Db_Table_Abstract
      */
     public static function buscarUsuarioScriptcase($idusuario)
     {
-        return (new Autenticacao_Model_Sgcacesso())->buscar(array('idusuario = ?' => $idusuario));
+        $objSGCAcesso = new Autenticacao_Model_Sgcacesso();
+        return $objSGCAcesso->buscar(array('idusuario = ?' => $idusuario));
     }
 
     public static function buscarUsuario($cod)
