@@ -1311,11 +1311,11 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         if (isset($_GET['idArquivo']) && !empty($_GET['idArquivo']) && isset($_GET['idPreProjeto']) && !empty($_GET['idPreProjeto']) && isset($_GET['tipoDocumento']) && !empty($_GET['tipoDocumento'])) :
             if($_GET['tipoDocumento'] == 'proposta'){
                 $tbDocumentosPreProjeto = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
-                $file = $tbDocumentosPreProjeto->findBy(['iddocumentospreprojetos' => $_GET['idArquivo']]);
+                $file = $tbDocumentosPreProjeto->findBy(array('iddocumentospreprojetos' => $_GET['idArquivo']));
                 $tbDocumentosPreProjeto->apagar(array('iddocumentospreprojetos = ?' => $_GET['idArquivo']));
             } else {
                 $tbDocumentosAgentes = new Proposta_Model_DbTable_TbDocumentosAgentes();
-                $file = $tbDocumentosAgentes->findBy(['iddocumentosagentes' => $_GET['idArquivo']]);
+                $file = $tbDocumentosAgentes->findBy(array('iddocumentosagentes' => $_GET['idArquivo']));
                 $tbDocumentosAgentes->apagar(array('iddocumentosagentes = ?' => $_GET['idArquivo']));
             }
             $filePath = APPLICATION_PATH . '/..' . $file['imdocumento'];

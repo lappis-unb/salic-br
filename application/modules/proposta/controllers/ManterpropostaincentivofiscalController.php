@@ -134,7 +134,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $arrBusca = array();
         $arrBusca['stestado = ?'] = 1;
         $arrBusca['idusuario = ?'] = $this->idResponsavel;
-        //var_dump($this->idResponsavel);die;
         // Chama o SQL
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
         $rsPreProjeto = $tblPreProjeto->buscar($arrBusca, array("idagente ASC"));
@@ -466,7 +465,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $arrBuscaN['vi.sivinculo IN (0,2)'] = '';
             $arrBuscaN['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
             $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
-
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
             $this->montaTela(
                 "manterpropostaincentivofiscal/formproposta.phtml",

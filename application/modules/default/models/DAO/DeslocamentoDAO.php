@@ -61,7 +61,7 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $agenteSchema = parent::getStaticTableName('agentes');
 
-        $de = [
+        $de = array(
             'de.idDeslocamento',
             'de.idProjeto',
             'de.idPaisOrigem',
@@ -72,16 +72,16 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
             'de.Qtde',
             'de.idUsuario',
             'de.idMunicipioDestino'
-        ];
+        );
 
         $sql = $db->select()
-            ->from(['de' => 'tbDeslocamento'], $de, parent::getStaticTableName('tbdeslocamento'))
-            ->joinLeft(['paO'=>'Pais'], 'de.idPaisOrigem = paO.idPais','paO.Descricao AS PO', $agenteSchema)
-            ->joinLeft(['ufO'=>'UF'] , 'de.idUFOrigem = ufO.idUF','ufO.Descricao AS UFO', $agenteSchema)
-            ->joinLeft(['muO' => 'Municipios'] , 'de.idMunicipioOrigem = muO.idMunicipioIBGE','muO.Descricao AS MUO', $agenteSchema)
-            ->joinLeft(['paD' => 'Pais'], 'de.idPaisDestino = paD.idPais', 'paD.Descricao AS PD', $agenteSchema)
-            ->joinLeft(['ufD' => 'UF'], 'de.idUFDestino = ufD.idUF','ufD.Descricao AS UFD', $agenteSchema)
-            ->joinLeft(['muD' => 'Municipios '], 'de.idMunicipioDestino = muD.idMunicipioIBGE', 'muD.Descricao AS MUD', $agenteSchema)
+            ->from(array('de' => 'tbDeslocamento'), $de, parent::getStaticTableName('tbdeslocamento'))
+            ->joinLeft(array('paO'=>'Pais'), 'de.idPaisOrigem = paO.idPais','paO.Descricao AS PO', $agenteSchema)
+            ->joinLeft(array('ufO'=>'UF'), 'de.idUFOrigem = ufO.idUF','ufO.Descricao AS UFO', $agenteSchema)
+            ->joinLeft(array('muO' => 'Municipios'), 'de.idMunicipioOrigem = muO.idMunicipioIBGE','muO.Descricao AS MUO', $agenteSchema)
+            ->joinLeft(array('paD' => 'Pais'), 'de.idPaisDestino = paD.idPais', 'paD.Descricao AS PD', $agenteSchema)
+            ->joinLeft(array('ufD' => 'UF'), 'de.idUFDestino = ufD.idUF','ufD.Descricao AS UFD', $agenteSchema)
+            ->joinLeft(array('muD' => 'Municipios '), 'de.idMunicipioDestino = muD.idMunicipioIBGE', 'muD.Descricao AS MUD', $agenteSchema)
             ->where("idProjeto = ?", $idProjeto)
             ;
 
@@ -111,7 +111,7 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $agenteSchema = $this->getSchema('agentes');
 
-        $de = [
+        $de = array(
             'de.iddeslocamento',
             'de.idprojeto',
             'de.idpaisorigem',
@@ -122,16 +122,16 @@ class DeslocamentoDAO extends MinC_Db_Table_Abstract {
             'de.qtde',
             'de.idusuario',
             'de.idmunicipiodestino'
-        ];
+        );
 
         $sql = $db->select()
-            ->from(['de' => $this->_name], $de, $this->_schema)
-            ->joinLeft(['pao'=>'pais'], 'de.idpaisorigem = pao.idpais','pao.descricao as po', $agenteSchema)
-            ->joinLeft(['ufo'=>'uf'] , 'de.iduforigem = ufo.iduf','ufo.descricao as ufo', $agenteSchema)
-            ->joinLeft(['muo' => 'municipios'] , 'de.idmunicipioorigem = muo.idmunicipioibge','muo.descricao as muo', $agenteSchema)
-            ->joinLeft(['pad' => 'pais'], 'de.idpaisdestino = pad.idpais', 'pad.descricao as pd', $agenteSchema)
-            ->joinLeft(['ufd' => 'uf'], 'de.idufdestino = ufd.iduf','ufd.descricao as ufd', $agenteSchema)
-            ->joinLeft(['mud' => 'municipios'], 'de.idmunicipiodestino = mud.idmunicipioibge', 'mud.descricao as mud', $agenteSchema)
+            ->from(array('de' => $this->_name), $de, $this->_schema)
+            ->joinLeft(array('pao'=>'pais'), 'de.idpaisorigem = pao.idpais','pao.descricao as po', $agenteSchema)
+            ->joinLeft(array('ufo'=>'uf'), 'de.iduforigem = ufo.iduf','ufo.descricao as ufo', $agenteSchema)
+            ->joinLeft(array('muo' => 'municipios'), 'de.idmunicipioorigem = muo.idmunicipioibge','muo.descricao as muo', $agenteSchema)
+            ->joinLeft(array('pad' => 'pais'), 'de.idpaisdestino = pad.idpais', 'pad.descricao as pd', $agenteSchema)
+            ->joinLeft(array('ufd' => 'uf'), 'de.idufdestino = ufd.iduf','ufd.descricao as ufd', $agenteSchema)
+            ->joinLeft(array('mud' => 'municipios'), 'de.idmunicipiodestino = mud.idmunicipioibge', 'mud.descricao as mud', $agenteSchema)
             ->where("idprojeto = ?", $idProjeto)
             ;
 
