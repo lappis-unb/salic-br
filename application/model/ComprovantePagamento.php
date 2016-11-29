@@ -426,68 +426,106 @@ class ComprovantePagamento extends GenericModel
      */
     public function pesquisarComprovantePorItem($item, $idPronac=false, $idEtapa=false, $idProduto = false, $idUFDespesa=false, $idMunicipioDespesa=false)
     {
-        $select = "SELECT
-                    comp.*,
-                    arq.nmArquivo,
-                    cpxpa.stItemAvaliado,
-                    convert(char(10), comp.dtEmissao, 103) as dtEmissao,
-                    (
-                        CASE pa.idProduto
-                            WHEN 0 THEN ('Administração do projeto')
-                            ELSE prod.Descricao
-                        END
-                    ) as produtonome,
-                    pEtapa.Descricao as etapanome,
-                    pit.Descricao as itemnome,
-tpDocumento,
-                    (
-                        CASE tpFormaDePagamento
-                            WHEN 1 THEN ('Cheque')
-                            WHEN 2 THEN ('Transferência Bancária')
-                            WHEN 3 THEN ('Saque/Dinheiro')
-                        END
-                    ) as tipoFormaPagamentoNome,
-                    (
-                        CASE tpDocumento
-                            WHEN 1 THEN ('Cupom Fiscal')
-                            WHEN 2 THEN ('Guia de Recolhimento')
-                            WHEN 3 THEN ('Nota Fiscal/Fatura')
-                            WHEN 4 THEN ('Recibo de Pagamento')
-                            WHEN 5 THEN ('RPA')
-                        END
-                    ) as tipoDocumentoNome,
-                    ROUND((pa.QtItem * pa.nrOcorrencia * pa.VlUnitario),2) AS valorAprovado,
-                    (
-                        SELECT sum(b1.vlComprovacao) AS vlPagamento
-                        FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
-                        INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
-                        INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
-                        WHERE c1.stAtivo = 'S' AND c1.idPlanilhaAprovacao = pa.idPlanilhaAprovacao
-                        GROUP BY a1.idPlanilhaAprovacao
-                    ) AS valorComprovado
-                FROM bdcorporativo.scSAC.tbComprovantePagamento AS comp
-                    INNER JOIN bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS cpxpa ON cpxpa.idComprovantePagamento = comp.idComprovantePagamento
-                    INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS pa ON pa.idPlanilhaAprovacao = cpxpa.idPlanilhaAprovacao
-                    INNER JOIN SAC.dbo.tbPlanilhaItens AS pit ON pit.idPlanilhaItens = pa.idPlanilhaItem
-                    INNER JOIN SAC.dbo.tbPlanilhaEtapa AS pEtapa ON pa.idEtapa = pEtapa.idPlanilhaEtapa
-                    INNER JOIN BDCORPORATIVO.scCorp.tbArquivo as arq ON arq.idArquivo = comp.idArquivo
-                    LEFT JOIN SAC.dbo.Produto AS prod ON pa.idProduto = prod.Codigo
-                WHERE
-                    pa.idPlanilhaItem = ?
-                    AND pa.nrFonteRecurso = 109 -- BATIZADO: Incentivo Fiscal Federal
-        ";
 
-        $select .= $idPronac ? " AND pa.idPronac = " . $idPronac . " " : "";
-        $select .= $idEtapa ? " AND pa.idEtapa = " . $idEtapa . " " : "";
-        $select .= $idProduto ? " AND pa.idProduto = " . $idProduto . " " : "";
-        $select .= $idUFDespesa ? " AND pa.idUFDespesa = " . $idUFDespesa . " " : "";
-        $select .= $idMunicipioDespesa ? " AND pa.idMunicipioDespesa = " . $idMunicipioDespesa . " " : "";
-        $select .= "
-                ORDER BY prod.Descricao ASC";
 
-        $statement = $this->getAdapter()->query($select, array($item));
 
-        return $statement->fetchAll();
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(array('comp' => $this->_name),
+            array('*',
+                'tpDocumento',
+                new Zend_Db_Expr('convert(char(10), comp.dtEmissao, 103) as dtEmissao'),
+                new Zend_Db_Expr('(
+                                        CASE pa.idProduto
+                                            WHEN 0 THEN (\'Administração do projeto\')
+                                            ELSE prod.Descricao
+                                        END
+                                     ) AS produtonome'),
+                new Zend_Db_Expr('pEtapa.Descricao AS etapanome'),
+                new Zend_Db_Expr('pit.Descricao AS itemnome'),
+                new Zend_Db_Expr('(
+                                            CASE tpFormaDePagamento
+                                                WHEN 1 THEN (\'Cheque\')
+                                                WHEN 2 THEN (\'Transferência Bancária\')
+                                                WHEN 3 THEN (\'Saque/Dinheiro\')
+                                            END
+                                         ) AS tipoFormaPagamentoNome'),
+                new Zend_Db_Expr('(
+                                            CASE tpDocumento
+                                                WHEN 1 THEN (\'Cupom Fiscal\')
+                                                WHEN 2 THEN (\'Guia de Recolhimento\')
+                                                WHEN 3 THEN (\'Nota Fiscal/Fatura\')
+                                                WHEN 4 THEN (\'Recibo de Pagamento\')
+                                                WHEN 5 THEN (\'RPA\')
+                                            END
+                                         ) AS tipoDocumentoNome'),
+                new Zend_Db_Expr('ROUND((pa.QtItem * pa.nrOcorrencia * pa.VlUnitario),2) AS valorAprovado'),
+                new Zend_Db_Expr('(
+                                            SELECT sum(b1.vlComprovacao) AS vlPagamento
+                                            FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
+                                            INNER JOIN BDCORPORATIVO.scSAC.tbComprovantePagamento AS b1 ON (a1.idComprovantePagamento = b1.idComprovantePagamento)
+                                            INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c1 ON (a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)
+                                            WHERE c1.stAtivo = \'S\' AND c1.idPlanilhaAprovacao = pa.idPlanilhaAprovacao
+                                            GROUP BY a1.idPlanilhaAprovacao
+                                   ) AS valorComprovado')
+            ),
+            'bdcorporativo.scSAC')
+            ->joinInner(array('cpxpa' => 'tbComprovantePagamentoxPlanilhaAprovacao'),
+                'cpxpa.idComprovantePagamento = comp.idComprovantePagamento',
+                array('cpxpa.stItemAvaliado'),
+                'bdcorporativo.scSAC')
+            ->joinInner(array('pa' => 'tbPlanilhaAprovacao'),
+                'pa.idPlanilhaAprovacao = cpxpa.idPlanilhaAprovacao',
+                array(''),
+                'SAC.dbo')
+            ->joinInner(array('pit' => 'tbPlanilhaItens'),
+                'pit.idPlanilhaItens = pa.idPlanilhaItem',
+                array(''),
+                'SAC.dbo')
+            ->joinInner(array('pEtapa' => 'tbPlanilhaEtapa'),
+                'pa.idEtapa = pEtapa.idPlanilhaEtapa',
+                array(''),
+                'SAC.dbo')
+            ->joinInner(array('arq' => 'tbArquivo'),
+                'arq.idArquivo = comp.idArquivo',
+                array('nmArquivo'),
+                'BDCORPORATIVO.scCorp')
+            ->joinLeft(array('prod' => 'Produto'),
+                'pa.idProduto = prod.Codigo',
+                array(''),
+                'SAC.dbo')
+            ->where('pa.idPlanilhaItem = ?', $item)
+            ->where('pa.nrFonteRecurso = 109'); //BATIZADO: Incentivo Fiscal Federal
+
+        if($idPronac){
+            $select->where('pa.idPronac = ?', $idPronac);
+        }
+
+        if($idEtapa){
+            $select->where('pa.idEtapa = ?', $idEtapa);
+        }
+
+        if($idProduto){
+            $select->where('pa.idProduto = ?', $idProduto);
+        }
+
+        if($idUFDespesa){
+            $select->where('pa.idUFDespesa = ?', $idUFDespesa);
+        }
+
+        if($idMunicipioDespesa){
+            $select->where('pa.idMunicipioDespesa = ?', $idMunicipioDespesa);
+        }
+
+        $select->order('prod.Descricao ASC');
+
+        try {
+            $db = Zend_Registry::get('db');
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        } catch (Zend_Exception_Db $e) {
+            $this->view->message = $e->getMessage();
+        }
+        return $db->fetchAll($select);
     }
 
     /**
