@@ -8,7 +8,7 @@
 class HistoricoDevolucaoFiscalizacao extends MinC_Db_Table_Abstract {
 
     protected $_name = 'tbHistoricoDevolucaoFiscalizacao';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_banco = 'SAC';
 
     public function buscaHistoricoDevolucaoFiscalizacao($where) {
@@ -45,4 +45,3 @@ class HistoricoDevolucaoFiscalizacao extends MinC_Db_Table_Abstract {
 
 }
 
-// fecha class

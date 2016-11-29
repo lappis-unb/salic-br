@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * DAO vwDespacharProjeto
  * @since 01/03/2013
@@ -13,7 +13,7 @@ class vwDespacharProjeto extends MinC_Db_Table_Abstract {
 
     /* dados da tabela */
     protected $_banco  = 'SAC';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_name   = 'vwDespacharProjeto';
 
     public function inserirTramitacao($idPronac,$idUnidade,$idUsuarioEmissor,$meDespacho) {
