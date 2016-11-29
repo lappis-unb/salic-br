@@ -486,7 +486,7 @@ class RecursoController extends GenericControllerNew
             $where['a.idUnidade = ?'] = $this->idOrgao;
         }
         $where['d.stEstado = ?'] = 0;
-
+        
         if(($this->_request->getParam('tipoFiltro') !== null) || ($this->_request->getParam('tipoFiltro') !== null)){
             $filtro = ($this->_request->getParam('tipoFiltro') !== null) ? $this->_request->getParam('tipoFiltro') : $this->_request->getParam('tipoFiltro');
             $this->view->filtro = $filtro;
@@ -517,8 +517,11 @@ class RecursoController extends GenericControllerNew
                 $where['a.idAvaliador IS NULL'] = '';
             } else if($this->idPerfil == 94 || $this->idPerfil == 110){
                 $where['d.siRecurso = ?'] = 4;
-                
-                if($this->idPerfil == 110){
+
+                // se for iphan
+                $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto IPHAN
+                $pareceristaDoIphan = in_array($this->idOrgao, $outrasVinculadas) ? false : true;
+                if($this->idPerfil == 110 || ($this->idPerfil == 94 && $pareceristaDoIphan)){
                     $where['a.idAvaliador = ?'] = $this->idUsuario;
                 } else {
                     $where['a.idAvaliador = ?'] = count($dadosAgente)>0 ? $dadosAgente->idAgente : 0;
@@ -566,31 +569,47 @@ class RecursoController extends GenericControllerNew
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $vinculada = $this->idOrgao;
         
-        $post = Zend_Registry::get('post');
-        $idAvaliador = (int) $post->parecerista;
-        $idDistProj = (int) $post->idDistProj;
-        $idRecurso = (int) $post->idRecurso;
-        
-        //Atualiza a tabela tbDistribuirProjeto
-        $dados = array();
-        $dados['idAvaliador'] = $idAvaliador;
-        $dados['idUsuario'] = $this->idUsuario;
-        $dados['dtDistribuicao'] = new Zend_Db_Expr('GETDATE()');
-        $where = "idDistribuirProjeto = $idDistProj";
-        $tbDistribuirProjeto = new tbDistribuirProjeto();
-        $return = $tbDistribuirProjeto->update($dados, $where);
-        
-        //Atualiza a tabela tbRecurso
-        $dados = array();
-        $dados['siRecurso'] = 4; // Enviado para análise técnica
-        $where = "idRecurso = $idRecurso";
-        $tbRecurso = new tbRecurso();
-        $return2 = $tbRecurso->update($dados, $where);
-        
-        if($return && $return2){
-            echo json_encode(array('resposta'=>true));
+        $idAvaliador = $this->_request->getParam('parecerista');
+        $idDistProj = $this->_request->getParam('idDistProj');
+        $idRecurso = $this->_request->getParam('idRecurso');
+
+        if ($vinculada != 91) { // todos os casos exceto IPHAN
+            //Atualiza a tabela tbDistribuirProjeto
+            $dados = array();
+            $dados['idAvaliador'] = $idAvaliador;
+            $dados['idUsuario'] = $this->idUsuario;
+            $dados['dtDistribuicao'] = new Zend_Db_Expr('GETDATE()');
+            $where = "idDistribuirProjeto = $idDistProj";
+            $tbDistribuirProjeto = new tbDistribuirProjeto();
+            $return = $tbDistribuirProjeto->update($dados, $where);
+            
+            //Atualiza a tabela tbRecurso
+            $dados = array();
+            $dados['siRecurso'] = 4; // Enviado para análise técnica
+            $where = "idRecurso = $idRecurso";
+            $tbRecurso = new tbRecurso();
+            $return2 = $tbRecurso->update($dados, $where);
+
+            if($return && $return2){
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
         } else {
-            echo json_encode(array('resposta'=>false));
+            // IPHAN
+            $idVinculada = $this->_request->getParam('parecerista');
+
+            $dados = array();
+            $dados['idUnidade'] = $idVinculada;
+            $where["idDistribuirProjeto = ? "] = $idDistProj;
+            $tbDistribuirProjeto = new tbDistribuirProjeto();
+            $return = $tbDistribuirProjeto->update($dados, $where);
+            
+            if ($return) {
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
         }
         die();
     }
