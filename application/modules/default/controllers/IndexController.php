@@ -323,6 +323,8 @@ class IndexController extends MinC_Controller_Action_Abstract
      */
     public function montarPlanilhaOrcamentariaAction()
     {
+
+
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $get = Zend_Registry::get('get');
 
