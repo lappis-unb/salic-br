@@ -1,5 +1,5 @@
-<?php 
-/* 
+<?php
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -11,6 +11,7 @@
  */
 class Area extends MinC_Db_Table_Abstract {
     protected  $_banco = 'SAC';
+    protected  $_schema = 'SAC';
     protected  $_name = 'Area';
 
     public function  BuscarAreaProjeto($idpronac=false){
@@ -39,7 +40,7 @@ class Area extends MinC_Db_Table_Abstract {
                         array('a'=>$this->_name),
                         array('a.*')
                      );
-        
+
         return $this->fetchAll($select);
     }
 
