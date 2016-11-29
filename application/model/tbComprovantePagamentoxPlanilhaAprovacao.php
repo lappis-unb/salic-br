@@ -93,12 +93,11 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends GenericModel
                             e.Descricao as Fornecedor,
                             b.DtPagamento as DtComprovacao,
                             CASE tpDocumento
-                                WHEN 1 THEN ('Boleto Banc&aacute;rio')
-                                WHEN 2 THEN ('Cupom Fiscal')
-                                WHEN 3 THEN ('Guia de Recolhimento')
-                                WHEN 4 THEN ('Nota Fiscal/Fatura')
-                                WHEN 5 THEN ('Recibo de Pagamento')
-                                WHEN 6 THEN ('RPA')
+                                WHEN 1 THEN ('Cupom Fiscal')
+                                WHEN 2 THEN ('Guia de Recolhimento')
+                                WHEN 3 THEN ('Nota Fiscal/Fatura')
+                                WHEN 4 THEN ('Recibo de Pagamento')
+                                WHEN 5 THEN ('RPA')
                                 ELSE ''
                             END as tbDocumento,
                             b.nrComprovante,
