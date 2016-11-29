@@ -1,4 +1,4 @@
-<?php 
+<?php
 class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
 {
 	/**
@@ -7,15 +7,15 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
 	const MOSTRAR_APENAS_ULTIMA_LOCALIZACAO = true;
 
 	/**
-	 * 
+	 *
 	 * @var unknown
 	 */
     protected $_banco = "SAC";
-    protected $_schema = "dbo";
+    protected $_schema = "SAC";
     protected $_name = "LocalizacaoFisica";
 
     /**
-     * 
+     *
      */
     public function getTecnicos($orgaos)
     {
@@ -32,7 +32,7 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
     }
 
     /**
-     * 
+     *
      */
     public function getVinculadas($orgaosUsuario)
     {
@@ -81,7 +81,7 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
     }
 
     /**
-     * 
+     *
      */
     public function pesquisar($idPronac, $showOnlyLast = false)
     {
@@ -103,7 +103,7 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
     }
 
     /**
-     * 
+     *
      */
     private function pesquisarProjeto($showOnlyLast = false)
     {
@@ -133,11 +133,11 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
     	$select->where('proj.AnoProjeto + proj.Sequencial = ?', $idPronac);
     	return $this->fetchRow($select);
     }
-    
+
     public function localizarProjetos($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('p' => 'Projetos'),
             array(
                 new Zend_Db_Expr('p.idPronac, p.AnoProjeto+p.Sequencial AS Pronac, p.NomeProjeto, p.CgcCpf'),
@@ -145,7 +145,7 @@ class LocalizacaoFisicaModel extends MinC_Db_Table_Abstract
     		'Localizacao' => new Zend_Db_Expr("(SELECT Localizacao FROM SAC.dbo.LocalizacaoFisica loc WHERE loc.IdPronac = p.IdPronac AND id = (SELECT max(id) FROM SAC.dbo.LocalizacaoFisica loc1 WHERE loc1.IdPronac = p.IdPronac))")
            ), 'SAC.dbo'
         );
-        
+
         $select->joinInner(
             array('a' => 'Interessado'), 'a.CgcCpf = p.CgcCpf',
             array('a.Nome AS NomeProponente'), 'SAC.dbo'
