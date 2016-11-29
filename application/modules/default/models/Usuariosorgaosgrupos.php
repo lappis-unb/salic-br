@@ -13,6 +13,7 @@
 class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'Tabelas';
+    protected $_schema = 'Tabelas';
     protected $_name = 'UsuariosXOrgaosXGrupos';
 
     public function buscarUsuariosOrgaosGrupos($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
@@ -278,11 +279,11 @@ class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
         //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
         $tmpTblUsuariosOrgaosGrupos = new Usuariosorgaosgrupos();
 
-        if ($comando == 1) 
+        if ($comando == 1)
         {
             $tmpTblUsuariosOrgaosGrupos = $tmpTblUsuariosOrgaosGrupos->createRow();
-        } 
-        else 
+        }
+        else
         {
             $tmpTblUsuariosOrgaosGrupos = $this->buscar(
                             array('uog_usuario = ?' => $dados['uog_usuario'],
@@ -358,11 +359,11 @@ class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
-        
+
         $select->where('uog.uog_status = ?', 1);
-        
+
         $select->where('uog.sis_codigo = ?', 21);
-        
+
 
         $select->order(array('uog.usu_nome'));
         return $this->fetchAll($select);
@@ -393,4 +394,3 @@ class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
     }
 }
 
-?>
