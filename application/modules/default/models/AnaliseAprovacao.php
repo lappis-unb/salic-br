@@ -1,9 +1,4 @@
-<?php 
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+<?php
 
 /**
  * Description of AnaliseAprovacao
@@ -13,6 +8,7 @@
 class AnaliseAprovacao extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
+    protected $_schema = 'SAC';
     protected $_name = 'tbAnaliseAprovacao';
 
     public function inserirAnaliseAprovacao($data) {
@@ -25,7 +21,7 @@ class AnaliseAprovacao extends MinC_Db_Table_Abstract {
     }
 
     public function buscarAnaliseProduto($tpanalise, $idpronac, $order=array(), $where=array(), $tamanho=-1, $inicio=-1, $count=false) {
-        
+
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -98,7 +94,7 @@ class AnaliseAprovacao extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
-        
+
         if($count){
 
             $slctContador = $this->select();
@@ -129,7 +125,7 @@ class AnaliseAprovacao extends MinC_Db_Table_Abstract {
 
             $slctContador->where('aa.tpAnalise = ?', $tpanalise);
             $slctContador->where('aa.idPronac = ?', $idpronac);
-            
+
             //adiciona quantos filtros foram enviados
             foreach ($where as $coluna => $valor) {
                 $slctContador->where($coluna, $valor);
@@ -137,7 +133,7 @@ class AnaliseAprovacao extends MinC_Db_Table_Abstract {
             $rs = $this->fetchAll($slctContador)->current();
             if($rs){ return $rs->total; }else{ return 0; }
         }
-        
+
         //adicionando linha order ao select
         $select->order($order);
 
@@ -247,4 +243,3 @@ class AnaliseAprovacao extends MinC_Db_Table_Abstract {
     }
 }
 
-?>

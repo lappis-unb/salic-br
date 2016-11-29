@@ -10,7 +10,7 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
      * Zend Table
      */
     protected $_banco = 'bdcorporativo';
-    protected $_schema = 'scSAC';
+    protected $_schema = 'bdcorporativo.scSAC';
     protected $_name = 'tbComprovantePagamento';
 
     function __construct(
@@ -51,7 +51,7 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
     }
 
     /**
-     * 
+     *
      */
     private function validarCadastrar()
     {
@@ -74,11 +74,11 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
         $projeto = $projetoModel->find($itemModel->find($this->item)->current()->IdPRONAC)->current();
         $dtInicioExecucao = new DateTime($projeto->DtInicioExecucao);
         $dtFimExecucao = new DateTime($projeto->DtFimExecucao);
-        
+
         if (!$this->dataEmissao || ($this->dataEmissao < $dtInicioExecucao) || ($this->dataEmissao > $dtFimExecucao)) {
             throw new Exception('A data do documento deve estar dentro do período de execução do projeto.');
         }
-        
+
         if (!$this->comprovanteValor) {
             throw new Exception('Valor do item inválido.');
         }
@@ -144,7 +144,7 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
         } else {
             $arquivoId = $this->arquivo;
         }
-        
+
         $this->update(
         	array(
                 'idFornecedorExterior' => $this->fornecedor,
@@ -163,5 +163,5 @@ class ComprovantePagamentoInvoice extends ComprovantePagamento
         );
         $this->comprovarPlanilhaAtualizarStatus($status, $this->comprovantePagamento);
     }
-    
+
 }

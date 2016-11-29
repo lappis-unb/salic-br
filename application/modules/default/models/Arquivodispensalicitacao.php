@@ -1,9 +1,4 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Arquivodispensalicitacao
  *
@@ -13,7 +8,7 @@ class Arquivodispensalicitacao  extends MinC_Db_Table_Abstract{
 
     protected $_banco   = 'BDCORPORATIVO';
     protected $_name    = 'tbArquivoDispensaLicitacao';
-    protected $_schema  = 'scSAC';
+    protected $_schema  = 'BDCORPORATIVO.scSAC';
 
     public function buscarArquivos($iddispensalicitacao){
         $select = $this->select();
@@ -36,4 +31,3 @@ class Arquivodispensalicitacao  extends MinC_Db_Table_Abstract{
         return $this->fetchAll($select);
     }
 }
-?>

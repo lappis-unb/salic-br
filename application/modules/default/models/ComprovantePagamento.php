@@ -23,11 +23,11 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
      * Zend Table
      */
     protected $_banco = 'bdcorporativo';
-    protected $_schema = 'scSAC';
+    protected $_schema = 'bdcorporativo.scSAC';
     protected $_name = 'tbComprovantePagamento';
 
     /**
-     * 
+     *
      */
     public function __construct(
         $comprovantePagamento = null,
@@ -192,7 +192,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
     }
 
     /**
-     * 
+     *
      */
     public function inserirComprovantePagamento($data){
         $insert = $this->insert($data);
@@ -216,7 +216,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
     }
 
     /**
-     * 
+     *
      */
     private function validarCadastrar()
     {
@@ -281,7 +281,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
     }
 
     /**
-     * 
+     *
      */
     public function atualizar($status = 4)
     {
@@ -311,7 +311,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
     }
 
     /**
-     * 
+     *
      */
     public function deletar()
     {
@@ -322,7 +322,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
         $tbComprovantePagamentoxPlanilhaAprovacao->delete(array('idComprovantePagamento = ?' => $this->comprovantePagamento));
         $vwAnexarComprovantes = new vwAnexarComprovantes();
         $vwAnexarComprovantes->excluirArquivo($this->comprovantePagamento);
-        
+
         $tbComprovantePagamento = new ComprovantePagamento();
         $comprovantePagamentoRow = $tbComprovantePagamento->fetchRow(array('idComprovantePagamento = ?' => $this->comprovantePagamento));
 
@@ -369,7 +369,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                     pEtapa.Descricao as etapanome,
                     pit.Descricao as itemnome,
                     (
-                        CASE tpFormaDePagamento 
+                        CASE tpFormaDePagamento
                             WHEN 1 THEN ('Cheque')
                             WHEN 2 THEN ('Transfer�ncia Banc�ria')
                             WHEN 3 THEN ('Saque/Dinheiro')
@@ -398,10 +398,10 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                     INNER JOIN bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS cpxpa ON cpxpa.idComprovantePagamento = comp.idComprovantePagamento
                     INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS pa ON pa.idPlanilhaAprovacao = cpxpa.idPlanilhaAprovacao
                     INNER JOIN SAC.dbo.tbPlanilhaItens AS pit ON pit.idPlanilhaItens = pa.idPlanilhaItem
-                    INNER JOIN SAC.dbo.tbPlanilhaEtapa AS pEtapa ON pa.idEtapa = pEtapa.idPlanilhaEtapa 
+                    INNER JOIN SAC.dbo.tbPlanilhaEtapa AS pEtapa ON pa.idEtapa = pEtapa.idPlanilhaEtapa
                     INNER JOIN BDCORPORATIVO.scCorp.tbArquivo as arq ON arq.idArquivo = comp.idArquivo
                     LEFT JOIN SAC.dbo.Produto AS prod ON pa.idProduto = prod.Codigo
-                WHERE 
+                WHERE
                     cpxpa.idComprovantePagamento = ?";
         $statement = $this->getAdapter()->query($select, array($idComprovante));
         return $statement->fetchAll();
@@ -429,7 +429,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                     pEtapa.Descricao as etapanome,
                     pit.Descricao as itemnome,
                     (
-                        CASE tpFormaDePagamento 
+                        CASE tpFormaDePagamento
                             WHEN 1 THEN ('Cheque')
                             WHEN 2 THEN ('Transfer�ncia Banc�ria')
                             WHEN 3 THEN ('Saque/Dinheiro')
@@ -458,10 +458,10 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                     INNER JOIN bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS cpxpa ON cpxpa.idComprovantePagamento = comp.idComprovantePagamento
                     INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS pa ON pa.idPlanilhaAprovacao = cpxpa.idPlanilhaAprovacao
                     INNER JOIN SAC.dbo.tbPlanilhaItens AS pit ON pit.idPlanilhaItens = pa.idPlanilhaItem
-                    INNER JOIN SAC.dbo.tbPlanilhaEtapa AS pEtapa ON pa.idEtapa = pEtapa.idPlanilhaEtapa 
+                    INNER JOIN SAC.dbo.tbPlanilhaEtapa AS pEtapa ON pa.idEtapa = pEtapa.idPlanilhaEtapa
                     INNER JOIN BDCORPORATIVO.scCorp.tbArquivo as arq ON arq.idArquivo = comp.idArquivo
                     LEFT JOIN SAC.dbo.Produto AS prod ON pa.idProduto = prod.Codigo
-                WHERE 
+                WHERE
                     pa.idPlanilhaAprovacao = ?
                     AND pa.stAtivo = 'S'
                 ORDER BY prod.Descricao ASC";*/
@@ -542,7 +542,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
       $db->setFetchMode(Zend_DB::FETCH_ASSOC);
 
       try {
-	
+
 	$update = "UPDATE bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao
                    SET stItemAvaliado = 4
                    FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a
@@ -550,9 +550,9 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
                    INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c ON c.idPlanilhaAprovacao = a.idPlanilhaAprovacao
                    WHERE stItemAvaliado = 3
                    AND IdPRONAC = $idPronac";
-	
+
 	$db->fetchRow($update);
-	
+
 	$update2 = "UPDATE sac.dbo.tbDiligencia
                     SET DtResposta = GETDATE(),
                     RESPOSTA  = 'O PROPONENTE J� REALIZOU O AJUSTE DOS COMPROVANTES QUE HAVIAM SIDO RECUSADOS PELO MINIST�RIO DA CULTURA.'
@@ -562,12 +562,12 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
 
       } catch (Exception $e) {
 	die("ERRO: " . $e->getMessage());
-      }      
-    }      
-    
+      }
+    }
+
 
     /**
-     * 
+     *
      */
     public function pesquisarComprovanteRecusado($idPronac)
     {
@@ -581,10 +581,10 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
             FROM bdcorporativo.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a
             INNER JOIN bdcorporativo.scSAC.tbComprovantePagamento AS b ON b.idComprovantePagamento = a.idComprovantePagamento
             INNER JOIN SAC.dbo.tbPlanilhaAprovacao AS c ON c.idPlanilhaAprovacao = a.idPlanilhaAprovacao
-            INNER JOIN SAC.dbo.tbPlanilhaEtapa AS d ON d.idPlanilhaEtapa = c.idEtapa 
+            INNER JOIN SAC.dbo.tbPlanilhaEtapa AS d ON d.idPlanilhaEtapa = c.idEtapa
             INNER JOIN SAC.dbo.tbPlanilhaItens AS e ON e.idPlanilhaItens = c.idPlanilhaItem
             LEFT JOIN SAC.dbo.Produto AS f ON f.Codigo = c.idProduto
-            WHERE 
+            WHERE
                 stItemAvaliado = 3
                 AND IdPRONAC = ?
             ORDER BY 1 DESC";
@@ -593,7 +593,7 @@ class ComprovantePagamento extends MinC_Db_Table_Abstract
     }
 
     /**
-     * 
+     *
      */
     public function toStdclass()
     {

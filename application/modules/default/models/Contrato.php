@@ -1,8 +1,4 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of Contrato
@@ -12,7 +8,7 @@
 class Contrato  extends MinC_Db_Table_Abstract {
     protected $_banco   = 'bdcorporativo';
     protected $_name    = 'tbContrato';
-    protected $_schema  = 'scSAC';
+    protected $_schema  = 'bdcorporativo.scSAC';
 
     public function inserirContrato($data){
         $insert = $this->insert($data);
@@ -114,4 +110,3 @@ class Contrato  extends MinC_Db_Table_Abstract {
 
     }
 }
-?>
