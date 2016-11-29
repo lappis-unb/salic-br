@@ -7,7 +7,7 @@
 class tbTipoInabilitado extends MinC_Db_Table_Abstract {
 
     protected $_name   = 'tbTipoInabilitado';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_banco  = 'SAC';
 
 
@@ -17,4 +17,3 @@ class tbTipoInabilitado extends MinC_Db_Table_Abstract {
     }
 
 }
-?>

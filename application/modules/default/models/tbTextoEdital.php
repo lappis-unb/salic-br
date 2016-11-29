@@ -1,17 +1,11 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- * 
- */
-
 class tbTextoEdital extends MinC_Db_Table_Abstract {
-    
+
     protected  $_banco = 'SAC';
     protected  $_name = 'tbTextoEdital';
-    protected  $_schema  = 'dbo';
-    
+    protected  $_schema  = 'SAC';
+
     public function buscarTextoEdital($idEdital){
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -19,7 +13,7 @@ class tbTextoEdital extends MinC_Db_Table_Abstract {
         $select->order('nrTexto');
         return $this->fetchAll($select);
     }
-    
+
     public function buscarUltimaOrdem($idEdital){
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -28,7 +22,6 @@ class tbTextoEdital extends MinC_Db_Table_Abstract {
         $select->order('nrTexto DESC');
         return $this->fetchAll($select)->toArray();
     }
-    
+
 }
 
-?>

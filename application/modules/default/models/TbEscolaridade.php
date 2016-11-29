@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Description of Agentes
  *
@@ -10,19 +9,19 @@ class TbEscolaridade extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'Agentes';
     protected $_name = 'tbEscolaridade';
-    protected $_schema  = 'dbo';
+    protected $_schema  = 'Agentes';
 
-    
-    public function BuscarEscolaridades($idAgente) 
+
+    public function BuscarEscolaridades($idAgente)
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        
+
         $select->from(array('E'=>$this->_name),
         			  array('*','CONVERT(CHAR(10), dtInicioCurso, 103) as dtInicio',
         			  			'CONVERT(CHAR(10), dtFimCurso, 103) as dtFim'),'AGENTES.dbo'
         );
-        
+
         $select->joinInner(
                 array('TE'=>'tbTipoEscolaridade'),'TE.idTipoEscolaridade = E.idTipoEscolaridade',
                 array('nmEscolaridade'),'AGENTES.dbo'
@@ -47,17 +46,17 @@ class TbEscolaridade extends MinC_Db_Table_Abstract {
                 array('TAI'=>'tbArquivoImagem'),'TAI.idArquivo = TA.idArquivo',
                 array('*'),'BDCORPORATIVO.scCorp'
         );
-        
+
         $select->where('E.idAgente = ?', $idAgente);
-        
+
         $select->order('E.idTipoEscolaridade');
-        
+
         return $this->fetchAll($select);
 
     }
-    
-    
-    public function BuscarTipoEscolaridade() 
+
+
+    public function BuscarTipoEscolaridade()
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -72,7 +71,7 @@ class TbEscolaridade extends MinC_Db_Table_Abstract {
 
     }
 
-    public function BuscarPais() 
+    public function BuscarPais()
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -87,7 +86,7 @@ class TbEscolaridade extends MinC_Db_Table_Abstract {
 
     }
 
-    public function BuscarTipoDocumento() 
+    public function BuscarTipoDocumento()
     {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -102,15 +101,14 @@ class TbEscolaridade extends MinC_Db_Table_Abstract {
 
     }
 
-    
-  
+
+
 
     public function inserirEscolaridade($dados) {
         $insert = $this->insert($dados);
         return $insert;
     }
 
-   
+
 
 }
-?>

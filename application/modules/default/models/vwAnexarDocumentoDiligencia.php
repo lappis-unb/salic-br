@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * DAO vwAnexarDocumentoDiligencia
  * @since 06/03/2013
@@ -13,7 +13,7 @@ class vwAnexarDocumentoDiligencia extends MinC_Db_Table_Abstract {
 
     /* dados da tabela */
     protected $_banco  = 'SAC';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_name   = 'vwAnexarDocumentoDiligencia';
     protected $_primary = 'idDiligencia';
 
