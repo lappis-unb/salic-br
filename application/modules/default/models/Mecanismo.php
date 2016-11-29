@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -12,8 +12,8 @@
 class Mecanismo extends MinC_Db_Table_Abstract {
     protected $_banco   = 'SAC';
     protected $_name    = 'Mecanismo';
-    protected $_schema  = 'dbo';
-    
+    protected $_schema  = 'SAC';
+
      public function buscarMecanismo() {
 // criando objeto do tipo select
         $slct = $this->select();
@@ -22,4 +22,3 @@ class Mecanismo extends MinC_Db_Table_Abstract {
         return $this->fetchAll($slct);
      }
 }
-?>

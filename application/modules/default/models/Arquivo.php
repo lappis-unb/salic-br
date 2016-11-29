@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -11,9 +11,9 @@
  */
 class Arquivo extends MinC_Db_Table_Abstract {
     protected $_name = 'tbArquivo';
-    protected $_schema = 'scCorp';
+    protected $_schema = 'BDCORPORATIVO.scCorp';
     protected $_banco = 'BDCORPORATIVO';
-    
+
     /**
      * Insere arquvos de Marca
      * @return TRUE ou FALSE
@@ -82,5 +82,3 @@ class Arquivo extends MinC_Db_Table_Abstract {
     }
 
 }
-
-?>

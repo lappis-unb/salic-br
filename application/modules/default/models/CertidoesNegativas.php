@@ -1,6 +1,6 @@
 <?php
 /**
- * DAO CertidoesNegativas 
+ * DAO CertidoesNegativas
  * @author emanuel.sampaio - Politec
  * @since 07/09/2011
  * @version 1.0
@@ -14,10 +14,8 @@ class CertidoesNegativas extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = 'SAC';
-	protected $_schema  = 'dbo';
+	protected $_schema  = 'SAC';
 	protected $_name    = 'CertidoesNegativas';
-
-
 
 	/**
 	 * M�todo para buscar os dados de uma certid�o espec�fica
@@ -62,4 +60,4 @@ class CertidoesNegativas extends MinC_Db_Table_Abstract
 		return $this->fetchAll($select);
 	} // fecha m�todo buscarDados()
 
-} // fecha class
+}
