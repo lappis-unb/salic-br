@@ -5,6 +5,8 @@ WHERE idPlanilhaEtapa=5;
 
 -- Renomeia o título das etapas
 
+
+
 UPDATE SAC.dbo.tbPlanilhaEtapa
 SET Descricao='Pré-Produção'
 WHERE idPlanilhaEtapa=1;
