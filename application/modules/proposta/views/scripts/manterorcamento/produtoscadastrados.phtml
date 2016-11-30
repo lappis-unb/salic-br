@@ -7,31 +7,31 @@ $(document).ready(function(){
         <?php endif; ?>
 
 	$(".produto").click(function(){
-		var etapa = $(this).parent().parent().parent().parent().parent().find('.etapas');
+		var etapa = $(this).parent().parent().parent().parent().find('.etapas');
 		if(etapa.css('display')== 'none'){
-                    $(this).addClass('btn_remover');
-                    $(this).removeClass('btn_adicionar');
-                    etapa.css('display','');
+            $(this).addClass('btn_remover');
+            $(this).removeClass('btn_adicionar');
+            etapa.css('display','');
 		}
 		else{
-                    $(this).addClass('btn_adicionar');
-                    $(this).removeClass('btn_remover');
-                    etapa.css('display','none');
-		}
-	});
-	$(".item").click(function(){
-		//var item = $(this).parent().parent().parent().parent().parent().find('.tbitem');
-		var item = $(this).next('img');
-		//alert(item.attr("src"));
-		if(item.css('display')== 'none'){
-			item.css('display','');
-		}
-		else{
-			item.css('display','none');
+            $(this).addClass('btn_adicionar');
+            $(this).removeClass('btn_remover');
+            etapa.css('display','none');
 		}
 	});
 });
 
+function abrirDinamico(elemento, obj) {
+    if($(elemento).css('display') == 'none') {
+        $(elemento).fadeIn('fast', function() {
+            $('img', $(obj)).attr('src','<?php echo $this->baseUrl(); ?>/public/img/navigation-baixo.PNG');
+        });
+    } else {
+        $(elemento).fadeOut('fast', function() {
+            $('img', $(obj)).attr('src','<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png');
+        });
+    }
+}
 
 function abrirFrmCadastroItem(url){
     $('html').css('overflow', 'hidden');
@@ -63,6 +63,30 @@ function abrirFrmCadastroItem(url){
 montaGuiaLinks($controller, $links);
 ?>
 
+<style>
+
+    table {
+        width:100%;
+        border: 1px solid #ccc;
+        background: transparent;
+        border-spacing: 0px;
+    }
+    table.tabela td {
+        background: none;
+    }
+
+    table.tbitem td {
+        border: 1px solid #ccc;
+    }
+
+    tr.etapas {
+        padding: 0px;
+        margin: 0px;
+    }
+
+</style>
+
+
 <!-- ========== INCIO TTULO ========== -->
 <div id="titulo">
 <div>Custos por Produtos <?php echo montaBotaoVoltar($controller, $links); ?></div></div>
@@ -72,81 +96,98 @@ montaGuiaLinks($controller, $links);
 <!-- ========== INCIO CONTEDO ========== -->
 <div id="conteudo">
 
-<?php
-if(count($this->Produtos)>0){
+    <?php
+    if(count($this->Produtos)>0) {
 
-foreach ($this->Produtos as $produtos): ?>
+        foreach ($this->Produtos as $produtos): ?>
 
-<div id="produto">
-    <table class='tabela'>
-	<tr>
-        <td class="texto_maiusculo">
-            <input type="button" id="" class="btn_adicionar produto" />
-            <?php
-                echo $produtos->DescricaoProduto;
-            ?>
-        </td>
-	</tr>
-    </table>
+            <div id="produto">
 
-    <?php foreach ($this->Etapa as $etapa):?>
-    <?php $CadastrarProduto = $this->url(array('controller' => 'manterorcamento', 'action' => 'cadastrarprodutos'))."?produto=".$produtos->CodigoProduto."&etapa=".$etapa->idEtapa."&etapaNome=".$etapa->DescricaoEtapa."&idPreProjeto=".$produtos->idProposta;?>
-    <div class="etapas" style="display: none;">
+                <table class='tabela' style="background: transparent">
+                    <tbody>
+                        <tr><td align="left"><input type="button" id="" class="btn_adicionar produto" /><?php echo $produtos->DescricaoProduto;?></td></tr>
 
-            <table width="95%" summary="Produto">
-                <?php if ($produtos->CodigoProduto){ ?>
-                <tr>
-                    <td width="4%" onclick="$('#itens_<?php echo $produtos->CodigoProduto."_".$etapa->idEtapa; ?>').toggle();" align="center" style="cursor: pointer;">
-                        <img style="cursor: pointer; width: 14px; height: 14px; border: 0px" class="btn_adicionar" src="<?php echo $this->baseUrl(); ?>/public/img/buttons/btn_adicionar.gif" alt="Adicionar" /></td>
-                    <td width="88%" style="text-align:left; padding-left:2%;"> <?php echo $etapa->DescricaoEtapa; ?></td>
-                    <td align="center" style="width: 10%"><input type="button" class="btn_novo" onclick="abrirFrmCadastroItem('<?php echo $CadastrarProduto?>');" /></td>
-               </tr>
-               <?php }?>
-            </table>
+                        <?php foreach ($this->Etapa as $etapa) : ?>
+                            <?php $CadastrarProduto = $this->url(array('controller' => 'manterorcamento', 'action' => 'cadastrarprodutos'))."?produto=".$produtos->CodigoProduto."&etapa=".$etapa->idEtapa."&etapaNome=".$etapa->DescricaoEtapa."&idPreProjeto=".$produtos->idProposta;?>
 
-            <table class="tabela tbitem" id="itens_<?php echo $produtos->CodigoProduto."_".$etapa->idEtapa; ?>" style='margin-left: 3em; display: none; width: 94%'>
-            <tr class="titulo_tabela">
-                    <th>&Iacute;tem</th>
-                    <th>Unidade</th>
-                    <th>Qtde</th>
-                    <th>Ocorr&ecirc;ncia</th>
-                    <th>Valor Unit&aacute;rio</th>
-                    <th>Total</th>
-                    <th>Localiza&ccedil;&atilde;o (UF/Munic&iacute;pio)</th>
-                    <!--<th>Mecanismo</th>-->
-                    <th colspan="2" width="10%">A&ccedil;&atilde;o</th>
-            </tr>
-            <?php foreach ($this->Item as $itens): ?>
-                <?php if ($produtos->CodigoProduto == $itens->CodigoProduto) {
-                        if ($etapa->idEtapa == $itens->idEtapa){  ?>
-                        <tr class='fundo'>
-                            <td class='centro'><?php echo $itens->DescricaoItem; ?></td>
-                            <td class='centro'><?php echo $itens->Unidade; ?></td>
-                            <td class='centro'><?php echo number_format($itens->Quantidade,0) ?></td>
-                            <td class='centro'><?php echo number_format($itens->Ocorrencia,0) ?></td>
-                            <td class='centro'><?php echo number_format($itens->ValorUnitario, 2, ",", ".") ?></td>
-                            <td class='centro'><?php echo number_format(($itens->Quantidade * $itens->ValorUnitario) * $itens->Ocorrencia, 2, ",", ".") ?></td>
-                            <td class='centro'><?php echo $itens->Municipio; ?>/<?php echo $itens->SiglaUF; ?></td>
-                            <td class='centro' width="5%">
-                                <input type="button" id="btn_editar" name="editar" style="width: 88px" class="btn_editar" onclick="abrirFrmCadastroItem('<?php echo $this->url(array('controller'=>'manterorcamento', 'action'=>'editarprodutos')); ?>?item=<?php echo $this->escape($itens->idItem); ?>&etapa=<?php echo $this->escape($etapa->idEtapa);?>&produto=<?php echo $this->escape($produtos->CodigoProduto);?>&idPlanilhaProposta=<?php echo $itens->idPlanilhaProposta;?>&idPreProjeto=<?php echo $this->escape($produtos->idProposta);?>');">
-                            </td>
-                            <td class='centro' width="5%">
-                                <input type="button" id="btn_excluir" name="excluir" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $itens->idPlanilhaProposta; ?>);">
-                            </td>
-                        </tr>
-                    <?php } ?>
-                <?php } ?>
-            <?php endforeach; ?>
-            </table>
-    </div><!-- FIM DIV ETAPAS -->
-    <?php endforeach; ?> <!-- FIM FOREACH ETAPAS -->
-</div>
-<?php endforeach; } else { ?> <!-- FIM FOREACH PRODUTOS -->
-<br />
-<div class="center" align="center">Nenhum produto cadastrado</div>
-<br />
-<?php } ?>
-<br />
+                            <?php if ($produtos->CodigoProduto) : ?>
+
+                                <tr class="etapas" style="display: none;">
+                                    <td>
+                                        <table summary="Produto" style="margin: 0px;">
+                                            <tbody>
+                                                <tr onclick="abrirDinamico('#itens_<?php echo $produtos->CodigoProduto."_".$etapa->idEtapa; ?>', $(this));" style="cursor:pointer">
+                                                    <th width="30px">
+                                                        <img style="cursor: pointer; width: 14px; height: 14px;" class="" src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" alt="Adicionar" />
+                                                    </th>
+                                                    <th class="esquerda"><?php echo $etapa->DescricaoEtapa; ?></th>
+                                                    <th class="direita">
+                                                        <input type="button" class="btn_novo" onclick="abrirFrmCadastroItem('<?php echo $CadastrarProduto; ?>');" />
+                                                    </th>
+                                               </tr>
+                                                <tr id="itens_<?php echo $produtos->CodigoProduto."_".$etapa->idEtapa; ?>" style='display: none;'>
+                                                    <td colspan="3" style="margin: 0; padding:10px;">
+                                                        <table class="tbitem" width="100%" style='margin: 0; border: 1px solid #aaa;' >
+                                                            <tr class="destacar" align="center">
+                                                                <td>&Iacute;tem</td>
+                                                                <td>Unidade</td>
+                                                                <td>Qtde</td>
+                                                                <td>Ocorr&ecirc;ncia</td>
+                                                                <td>Valor Unit&aacute;rio</td>
+                                                                <td>Total</td>
+                                                                <td>Localiza&ccedil;&atilde;o (Munic&iacute;pio/UF)</td>
+                                                                <!--<td>Mecanismo</th>-->
+                                                                <td colspan="2" width="10%">A&ccedil;&otilde;es</td>
+                                                            </tr>
+                                                            <?php if(isset($this->Item)) : ?>
+                                                                <?php foreach ($this->Item as $itens) : ?>
+                                                                    <?php if ($produtos->CodigoProduto == $itens->CodigoProduto) :
+                                                                        if ($etapa->idEtapa == $itens->idEtapa) :  ?>
+                                                                            <tr class='fundo' style='background-color: #fff' align="center">
+                                                                                <td><?php echo $itens->DescricaoItem; ?></td>
+                                                                                <td><?php echo $itens->Unidade; ?></td>
+                                                                                <td><?php echo number_format($itens->Quantidade,0) ?></td>
+                                                                                <td><?php echo number_format($itens->Ocorrencia,0) ?></td>
+                                                                                <td><?php echo number_format($itens->ValorUnitario, 2, ",", ".") ?></td>
+                                                                                <td><?php echo number_format(($itens->Quantidade * $itens->ValorUnitario) * $itens->Ocorrencia, 2, ",", ".") ?></td>
+                                                                                <td><?php echo $itens->Municipio; ?>/<?php echo $itens->SiglaUF; ?></td>
+                                                                                <td width="5%">
+                                                                                    <input type="button" id="btn_editar" name="editar" style="width: 88px" class="btn_editar" onclick="abrirFrmCadastroItem('<?php echo $this->url(array('controller'=>'manterorcamento', 'action'=>'editarprodutos')); ?>?item=<?php echo $this->escape($itens->idItem); ?>&etapa=<?php echo $this->escape($etapa->idEtapa);?>&produto=<?php echo $this->escape($produtos->CodigoProduto);?>&idPlanilhaProposta=<?php echo $itens->idPlanilhaProposta;?>&idPreProjeto=<?php echo $this->escape($produtos->idProposta);?>');">
+                                                                                </td>
+                                                                                <td class='centro' width="5%">
+                                                                                    <input type="button" id="btn_excluir" name="excluir" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $itens->idPlanilhaProposta; ?>);">
+                                                                                </td>
+                                                                            </tr>
+                                                                        <?php endif; ?>
+                                                                    <?php endif; ?>
+
+                                                                <?php endforeach; ?>
+                                                            <?php else : ?>
+                                                                <tr  class='fundo'>
+                                                                    <td colspan="10">
+                                                                        <div class="center" align="center">Nenhum item cadastrado</div>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php endif; ?>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+    <!--                            </div>-->
+                                </tr><!-- FIM DIV ETAPAS -->
+                            <?php endif; ?>
+                        <?php endforeach; ?> <!-- FIM FOREACH ETAPAS -->
+                </table>
+            </div>
+        <?php endforeach; ?>
+        <?php } else { ?> <!-- FIM FOREACH PRODUTOS -->
+        <br>
+        <div class="center" align="center">Nenhum produto cadastrado</div>
+        <br>
+    <?php } ?>
+    <br>
 </div>
 <!-- FIM DIV CONTEUDO -->
 <div id="msg"></div>
