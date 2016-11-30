@@ -88,7 +88,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
                 Zend_Db_Table::setDefaultAdapter(Zend_Db::factory($this->_config->db));
 
                 # Setar o campo texto maior que 4096 caracteres aceitaveis por padrao no PHP
-                $db->query(' SET TEXTSIZE 2147483647 ');
+                //$db->query(' SET TEXTSIZE 2147483647 ');
                 ini_set('memory_limit', '-1');
             }
         } else if (is_int(strpos($this->_schema, 'scdne'))) {

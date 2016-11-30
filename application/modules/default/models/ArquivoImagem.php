@@ -1,8 +1,4 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of ArquivoImagem
@@ -11,7 +7,6 @@
  */
 class ArquivoImagem extends MinC_Db_Table_Abstract {
     protected $_name = 'tbArquivoImagem';
-    protected $_schema = 'scCorp';
+    protected $_schema = 'BDCORPORATIVO.scCorp';
     protected $_banco = 'BDCORPORATIVO';
 }
-?>

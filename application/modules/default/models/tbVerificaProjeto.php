@@ -1,24 +1,18 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of tbVerificaProjeto
  *
  * @author tiago
  */
 class tbVerificaProjeto extends MinC_Db_Table_Abstract{
-    
+
     protected $_banco = 'SAC';
     protected $_name = 'tbVerificaProjeto';
-    protected $_schema  = 'dbo';
-    
+    protected $_schema  = 'SAC';
+
     public function salvar($dados)
     {
-        
+
         //INSTANCIANDO UM OBJETO DE ACESSO AOS DADOS DA TABELA
         $tmpTblVerificaProjeto = new tbVerificaProjeto();
 
@@ -35,7 +29,7 @@ class tbVerificaProjeto extends MinC_Db_Table_Abstract{
 
 
         echo "<pre>";
-        
+
 
         //SALVANDO O OBJETO CRIADO
         $id = $tmpRsVerificaProjeto->save();
@@ -46,7 +40,6 @@ class tbVerificaProjeto extends MinC_Db_Table_Abstract{
             return false;
         }
     }
-    
+
 }
 
-?>

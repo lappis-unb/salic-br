@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * DAO vwPainelDeLiberacao
  * @since 21/12/2012
@@ -13,11 +13,11 @@ class vwPainelDeLiberacao extends MinC_Db_Table_Abstract {
 
     /* dados da tabela */
     protected $_banco  = 'SAC';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_name   = 'vwPainelDeLiberacao';
     protected $_primary = 'IdPRONAC';
 
-    
+
     public function listaRelatorios($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -51,4 +51,4 @@ class vwPainelDeLiberacao extends MinC_Db_Table_Abstract {
         return $this->fetchAll($select);
     }
 
-} // fecha class
+}

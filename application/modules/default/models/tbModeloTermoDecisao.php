@@ -1,10 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of tbModeloTermoDecisao
  *
@@ -13,14 +7,14 @@
 class tbModeloTermoDecisao extends MinC_Db_Table_Abstract {
 
     protected $_banco = "SAC";
-    protected $_schema = "dbo";
+    protected $_schema = "SAC";
     protected $_name = "tbModeloTermoDecisao";
 
     public function buscarTermoDecisao($where = null) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array('ttd' => $this->_name), 
+                array('ttd' => $this->_name),
                 array('ttd.idModeloTermoDecisao',
                       'ttd.idOrgao',
                       'ttd.idVerificacao',
@@ -29,7 +23,7 @@ class tbModeloTermoDecisao extends MinC_Db_Table_Abstract {
            )
         );
         $select->joinInner(
-                array('o' => 'Orgaos'), 'ttd.idOrgao = o.Codigo', 
+                array('o' => 'Orgaos'), 'ttd.idOrgao = o.Codigo',
                 array('o.Codigo', 'o.Sigla')
         );
         if ( !empty( $where ) ){
@@ -40,8 +34,7 @@ class tbModeloTermoDecisao extends MinC_Db_Table_Abstract {
         //xd($select->query());
         return $this->fetchAll($select);
     }
-    
+
 
 }
 
-?>

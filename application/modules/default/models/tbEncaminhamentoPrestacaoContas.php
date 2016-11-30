@@ -7,35 +7,9 @@
 class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
 
     protected $_name   = 'tbEncaminhamentoPrestacaoContas';
-    protected $_schema = 'scSAC';
+    protected $_schema = 'BDCORPORATIVO.scSAC';
     protected $_banco  = 'BDCORPORATIVO';
-    //protected $_primary = 'idEncaminhamentoPrestacaoContas';
-    
-        
-    
-    
-    /*
-     * INSERT INTO [BDCORPORATIVO].[scSAC].[tbEncaminhamentoPrestacaoContas]
-					([idPronac],[idAgenteOrigem],[dtInicioEncaminhamento],[dsJustificativa]
-					,[idOrgao],[idAgenteDestino],[idTipoAgente],[dtFimEncaminhamento]
-					,[stAtivo]) 
-		VALUES (0611188,170,'2010-01-17','Modelo de Encaminhamento de Presta��o de Conta para o t�cnico',
-					5,115,9,'2010-04-18',0)
-     **/
-    
 
- /*   public function InsertEncaminhamentoPrestacaoContas($idPronac) {
-        $id = $this->insert(array('idPronac'=>$idPronac,'idAgenteOrigem'=>'idAgenteOrigem',
-                                  'dtInicioEncaminhamento'=>'dtInicioEncaminhamento',
-                                  'dsJustificativa'=>'dsJustificativa','idOrgao'=>'idorgao',
-                                  'idAgenteDestino'=>'idAgenteDestino','idTipoAgente'=>'idTipoAgente',
-                                  'dtFimEncaminhamento'=>'dtFimEncaminhamento','stAtivo'=>'stAtivo' ));
-
-        return $this->fetchRow($id);
-    }
-
-   */ 
-   // $idPronac='115029';
     public function EncaminhamentoPrestacaoContas($idPronac){
     	$select = $this->select();
         $select->setIntegrityCheck(false);
@@ -77,13 +51,11 @@ class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
                             array('o.org_sigla'),
                             'TABELAS.dbo'
                            );
-		$select->where('tbepc.idPronac = ?',$idPronac);  
-	    //xd($select->assemble());
-		
+		$select->where('tbepc.idPronac = ?',$idPronac);
+
 		return $this->fetchAll($select);
     }
 
-    
     public function BuscaEncaminhamentoPrestacaoContas($idOrgao, $situacao, $idAgenteDestino){
     	//xd($idOrgao."-".$idAgenteDestino);
     	$select = $this->select();
@@ -146,23 +118,23 @@ class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
                             'proj.Segmento = s.Codigo',
                             array('s.Descricao as Segmento'),
                             'SAC.dbo'
-                           );                    
+                           );
         $select->joinInner(
                             array('ar'=>'Area'),
                             'proj.Area = ar.Codigo',
                             array('ar.Descricao as Area'),
                             'SAC.dbo'
-                           );                   
+                           );
 
                 $select->where('tbepc.idOrgaoDestino = ?',$idOrgao);
                 $select->where('tbepc.idAgenteDestino = ?',$idAgenteDestino);
 		        $select->where('tbepc.idSituacaoEncPrestContas = ?',$situacao);
-		//$select->where('tbepc.idTipoAgente = ?',11);  
+		//$select->where('tbepc.idTipoAgente = ?',11);
 	    //xd($select->assemble());
-		
+
 		return $this->fetchAll($select);
     }
-    
+
 
    public function HistoricoEncaminhamentoPrestacaoContas($idPronac){
     	$select = $this->select();
@@ -170,14 +142,14 @@ class tbEncaminhamentoPrestacaoContas extends MinC_Db_Table_Abstract {
         $select->from(array('a'=>$this->_name),
                         array(
 			      'b.AnoProjeto+b.Sequencial as PRONAC,b.NomeProjeto,
-                               CONVERT(CHAR(10), 
+                               CONVERT(CHAR(10),
                                a.dtInicioEncaminhamento, 101) AS dtInicioEncaminhamento,
 a.dsJustificativa,
                                c.usu_nome AS NomeOrigem,
                                c.usu_nome AS NomeDestino'
                               ),$this->_banco.'.'.$this->_schema
                       );
-	
+
         $select->joinInner(
                             array('b'=>'Projetos'),
                             'a.idPronac = b.IdPRONAC',
@@ -196,14 +168,13 @@ a.dsJustificativa,
                             array(),
                             'TABELAS.dbo'
                            );
-	
+
         $select->where('a.idPronac = ?',$idPronac);
-	
+
 	return $this->fetchAll($select);
     }
-    
-    
-   
+
+
     public function BuscaEmitirParecerPrestacaoContas($idPronac,$idOrgao){
     	$select = $this->select();
         $select->setIntegrityCheck(false);
@@ -258,21 +229,21 @@ a.dsJustificativa,
                             'proj.Segmento = s.Codigo',
                             array('s.Descricao as Segmento'),
                             'SAC.dbo'
-                           );                    
+                           );
         $select->joinInner(
                             array('ar'=>'Area'),
                             'proj.Area = ar.Codigo',
                             array('ar.Descricao as Area'),
                             'SAC.dbo'
-                           );                   
-                           
-		$select->where('tbepc.idOrgao = ?',$idOrgao);  
-		$select->where('tbepc.idPronac = ?',$idPronac);  
+                           );
+
+		$select->where('tbepc.idOrgao = ?',$idOrgao);
+		$select->where('tbepc.idPronac = ?',$idPronac);
 	   // xd($select->assemble());
-		
+
 		return $this->fetchAll($select);
     }
-    
+
 	/*public function InsertParecerTecnicoPrestacaoContas($dados) {
         try {
             $insert = $this->insert($dados);
@@ -280,7 +251,7 @@ a.dsJustificativa,
             return ' -> tbEncaminhamentoPrestacaoContas. Erro:' . $e->getMessage();
         }
     }*/
-    
+
     /**
      * Retorna registros do banco de dados
      * @param array $where - array com dados where no formato "nome_coluna_1"=>"valor_1","nome_coluna_2"=>"valor_2"
@@ -312,7 +283,6 @@ a.dsJustificativa,
         //xd($slct->__toString());
         return $this->fetchAll($slct);
     }*/
-
 
 
     public function buscarAtoresPrestacaoContas($idPronac, $idusuario=null){
@@ -379,4 +349,3 @@ a.dsJustificativa,
         return $this->fetchAll($select);
     }
 }
-?>
