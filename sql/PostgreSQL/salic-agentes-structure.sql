@@ -8,17 +8,17 @@
 CREATE SCHEMA IF NOT EXISTS agentes AUTHORIZATION postgres;
 
 
-CREATE TABLE agentes.tbTipoAusencia
+CREATE TABLE agentes."tbTipoAusencia"
 (
   "idTipoAusencia" INT PRIMARY KEY NOT NULL ,
   "nmAusencia" VARCHAR(20) NOT NULL
 );
-CREATE TABLE agentes.tbTipoEscolaridade
+CREATE TABLE agentes."tbTipoEscolaridade"
 (
   "idTipoEscolaridade" INT PRIMARY KEY NOT NULL ,
   "nmEscolaridade" VARCHAR(20) NOT NULL
 );
-CREATE TABLE agentes.UF
+CREATE TABLE agentes."UF"
 (
   "idUF" INT PRIMARY KEY NOT NULL,
   "Sigla" CHAR(2) NOT NULL,
@@ -31,7 +31,7 @@ ALTER SEQUENCE agentes.uf_iduf_seq OWNED BY agentes.uf.iduf;
 CREATE INDEX IX_UF ON agentes.UF (Sigla);
 CREATE INDEX IX_UF_1 ON agentes.UF (Descricao);
 CREATE INDEX IX_UF_2 ON agentes.UF (Regiao);
-CREATE TABLE agentes.Tipo
+CREATE TABLE agentes."Tipo"
 (
   "idTipo" INT PRIMARY KEY NOT NULL ,
   "Descricao" VARCHAR(100) NOT NULL
@@ -39,14 +39,14 @@ CREATE TABLE agentes.Tipo
 CREATE SEQUENCE agentes.tipo_idtipo_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE agentes.tipo ALTER COLUMN idtipo SET DEFAULT nextval('agentes.tipo_idtipo_seq');
 ALTER SEQUENCE agentes.tipo_idtipo_seq OWNED BY agentes.tipo.idtipo;
-CREATE TABLE agentes.Pais
+CREATE TABLE agentes."Pais"
 (
   "idPais" INT PRIMARY KEY NOT NULL,
   "Sigla" VARCHAR(10) DEFAULT ' ',
   "Descricao" VARCHAR(100) NOT NULL,
   "Continente" VARCHAR(20) DEFAULT ' '
 );
-CREATE TABLE agentes.Prefeituras
+CREATE TABLE agentes."Prefeituras"
 (
   "CNPJ" VARCHAR(14),
   "Municipio" VARCHAR(255),
@@ -60,13 +60,13 @@ CREATE TABLE agentes.Prefeituras
   "EnderecoSite" VARCHAR(255),
   "Telefone" VARCHAR(20)
 );
-CREATE TABLE agentes.PrefeiturasReceita
+CREATE TABLE agentes."PrefeiturasReceita"
 (
   "Municipio" VARCHAR(255),
   "UF" VARCHAR(255),
   "CNPJ" VARCHAR(14)
 );
-CREATE TABLE agentes.Agentes
+CREATE TABLE agentes."Agentes"
 (
   "idAgente" INT PRIMARY KEY NOT NULL ,
   "CNPJCPF" VARCHAR(14) DEFAULT '00000000000000' NOT NULL,
@@ -83,7 +83,7 @@ ALTER TABLE agentes.agentes ALTER COLUMN idagente SET DEFAULT nextval('agentes.a
 ALTER SEQUENCE agentes.agentes_idagente_seq OWNED BY agentes.agentes.idagente;
 CREATE INDEX _dta_index_Agentes_9_1977058079__K2_K1 ON agentes.Agentes (CNPJCPF, idAgente);
 CREATE INDEX _dta_index_Agentes_9_1977058079__K2_K1_3_4_5_6_7_8_9 ON agentes.Agentes (CNPJCPF, idAgente, CNPJCPFSuperior, TipoPessoa, DtCadastro, DtAtualizacao, DtValidade, Status, Usuario);
-CREATE TABLE agentes.Verificacao
+CREATE TABLE agentes."Verificacao"
 (
   "idVerificacao" INT PRIMARY KEY NOT NULL ,
   "IdTipo" INT NOT NULL,
@@ -96,7 +96,7 @@ ALTER TABLE agentes.verificacao ALTER COLUMN idverificacao SET DEFAULT nextval('
 ALTER SEQUENCE agentes.verificacao_idverificacao_seq OWNED BY agentes.verificacao.idverificacao;
 CREATE INDEX IX_Verificacao ON agentes.Verificacao (IdTipo);
 CREATE INDEX IX_Verificacao_1 ON agentes.Verificacao (Descricao);
-CREATE TABLE agentes.Telefones
+CREATE TABLE agentes."Telefones"
 (
   "idTelefone" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE agentes.Telefones
 CREATE SEQUENCE agentes.telefones_idtelefone_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE agentes.telefones ALTER COLUMN idtelefone SET DEFAULT nextval('agentes.telefones_idtelefone_seq');
 ALTER SEQUENCE agentes.telefones_idtelefone_seq OWNED BY agentes.telefones.idtelefone;
-CREATE TABLE agentes.Sistema
+CREATE TABLE agentes."Sistema"
 (
   "idSistema" INT PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE agentes.bancos
   "Descricao" VARCHAR(255)
 );
 
-CREATE TABLE agentes.CheckListDocumentosSistemas
+CREATE TABLE agentes."CheckListDocumentosSistemas"
 (
   "idCheckListDocumentosSistema" INT PRIMARY KEY NOT NULL ,
   "idCheckListDocumento" INT NOT NULL,
@@ -145,7 +145,7 @@ CREATE TABLE agentes.CheckListDocumentosSistemas
   CONSTRAINT FK_CheckListDocumentosSistemas_CheckListDocumentos FOREIGN KEY (idCheckListDocumento) REFERENCES agentes.Verificacao (idVerificacao),
   CONSTRAINT FK_CheckListDocumentosSistemas_Sistema FOREIGN KEY (idSistema) REFERENCES agentes.Sistema (idSistema)
 );
-CREATE TABLE agentes.ContaCorrente
+CREATE TABLE agentes."ContaCorrente"
 (
   "idContaCorrente" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE agentes.ContaCorrente
 );
 CREATE INDEX IX_ContaCorrente ON agentes.ContaCorrente (idAgente);
 CREATE INDEX IX_ContaCorrente_2 ON agentes.ContaCorrente (Banco, Agencia, ContaCorrente);
-CREATE TABLE agentes.DDD
+CREATE TABLE agentes."DDD"
 (
   "idDDD" INT PRIMARY KEY NOT NULL ,
   "idUF" INT NOT NULL,
@@ -168,7 +168,7 @@ CREATE SEQUENCE agentes.ddd_idddd_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE agentes.ddd ALTER COLUMN idddd SET DEFAULT nextval('agentes.ddd_idddd_seq');
 ALTER SEQUENCE agentes.ddd_idddd_seq OWNED BY agentes.ddd.idddd;
 CREATE INDEX IX_DDD ON agentes.DDD (idUF);
-CREATE TABLE agentes.Documentos
+CREATE TABLE agentes."Documentos"
 (
   "idDocumentos" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
@@ -192,7 +192,7 @@ CREATE TABLE agentes.dtproperties
   "version" INT DEFAULT 0 NOT NULL,
   CONSTRAINT pk_dtproperties PRIMARY KEY (id, property)
 );
-CREATE TABLE agentes.EnderecoInternacional
+CREATE TABLE agentes."EnderecoInternacional"
 (
   "idEnderecoInternacional" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
@@ -206,7 +206,7 @@ CREATE TABLE agentes.EnderecoInternacional
   CONSTRAINT FK_EnderecoInternacional_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
   CONSTRAINT FK_Internacional_Pais FOREIGN KEY (idPais) REFERENCES agentes.Pais (idPais)
 );
-CREATE TABLE agentes.EnderecoNacional
+CREATE TABLE agentes."EnderecoNacional"
 (
   "idEndereco" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
@@ -235,14 +235,14 @@ CREATE INDEX IX_EnderecoNacional ON agentes.EnderecoNacional (idEndereco);
 CREATE INDEX IX_EnderecoNacional_1 ON agentes.EnderecoNacional (Cidade);
 CREATE INDEX IX_EnderecoNacional_2 ON agentes.EnderecoNacional (UF);
 CREATE INDEX IX_EnderecoNacional_idAgente ON agentes.EnderecoNacional (idAgente);
-CREATE TABLE agentes.HistoricoAgente
+CREATE TABLE agentes."HistoricoAgente"
 (
   "idAgente" INT PRIMARY KEY NOT NULL,
   "Historico" VARCHAR(8000) DEFAULT ' ' NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
   CONSTRAINT FK_HistoricoAgente_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
 );
-CREATE TABLE agentes.Internet
+CREATE TABLE agentes."Internet"
 (
   "idInternet" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
@@ -257,17 +257,17 @@ CREATE TABLE agentes.Internet
 CREATE SEQUENCE agentes.internet_idinternet_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE agentes.internet ALTER COLUMN idinternet SET DEFAULT nextval('agentes.internet_idinternet_seq');
 ALTER SEQUENCE agentes.internet_idinternet_seq OWNED BY agentes.internet.idinternet;
-CREATE TABLE agentes.MesoRegiao
+CREATE TABLE agentes."MesoRegiao"
 (
   "idMeso" CHAR(4) PRIMARY KEY NOT NULL,
   "descricao" VARCHAR(100) NOT NULL
 );
-CREATE TABLE agentes.MicroRegiao
+CREATE TABLE agentes."MicroRegiao"
 (
   "idMicro" CHAR(5) PRIMARY KEY NOT NULL,
   "descricao" VARCHAR(100) NOT NULL
 );
-CREATE TABLE agentes.Municipios
+CREATE TABLE agentes."Municipios"
 (
   "idMunicipioIBGE" VARCHAR(6) PRIMARY KEY NOT NULL,
   "idUFIBGE" INT NOT NULL,
@@ -280,7 +280,7 @@ CREATE TABLE agentes.Municipios
 );
 CREATE INDEX IX_Municipios_idUFIBGE ON agentes.Municipios (idUFIBGE);
 CREATE INDEX IX_Municipios_Cidade ON agentes.Municipios (Descricao);
-CREATE TABLE agentes.Natureza
+CREATE TABLE agentes."Natureza"
 (
   "idNatureza" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
@@ -292,7 +292,7 @@ CREATE TABLE agentes.Natureza
   CONSTRAINT FK_Natureza_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
 );
 CREATE INDEX IX_Natureza ON agentes.Natureza (idAgente);
-CREATE TABLE agentes.Nomes
+CREATE TABLE agentes."Nomes"
 (
   "idNome" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
@@ -308,7 +308,7 @@ ALTER TABLE agentes.nomes ALTER COLUMN idnome SET DEFAULT nextval('agentes.nomes
 ALTER SEQUENCE agentes.nomes_idnome_seq OWNED BY agentes.nomes.idnome;
 CREATE INDEX _dta_index_Nomes_9_5575058__K5_K2_K4 ON agentes.Nomes (Status, idAgente, Descricao);
 CREATE INDEX _dta_index_Nomes_9_5575058__K2_K4 ON agentes.Nomes (idAgente, Descricao);
-CREATE TABLE agentes.Ocupacao
+CREATE TABLE agentes."Ocupacao"
 (
   "idOcupacao" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
@@ -320,7 +320,7 @@ CREATE TABLE agentes.Ocupacao
   "Usuario" INT DEFAULT 0 NOT NULL,
   CONSTRAINT FK_Ocupacao_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
 );
-CREATE TABLE agentes.Perfil
+CREATE TABLE agentes."Perfil"
 (
   "idPerfil" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
@@ -332,13 +332,13 @@ CREATE TABLE agentes.Perfil
   CONSTRAINT FK_Perfil_Verificacao1 FOREIGN KEY (Caracteristica) REFERENCES agentes.Verificacao (idVerificacao)
 );
 CREATE INDEX IX_Perfil ON agentes.Perfil (idAgente);
-CREATE TABLE agentes.PopulacaoMunicipio
+CREATE TABLE agentes."PopulacaoMunicipio"
 (
   "IdMunicipio" VARCHAR(6) PRIMARY KEY NOT NULL,
   "idMunicipio7" VARCHAR(7) NOT NULL,
   "Populacao" INT NOT NULL
 );
-CREATE TABLE agentes.Ramais
+CREATE TABLE agentes."Ramais"
 (
   "idRamais" INT PRIMARY KEY NOT NULL ,
   "idTelefone" INT NOT NULL,
@@ -347,7 +347,7 @@ CREATE TABLE agentes.Ramais
   CONSTRAINT FK_Ramais_Telefones FOREIGN KEY (idTelefone) REFERENCES agentes.Telefones (idTelefone)
 );
 
-CREATE TABLE agentes.tbAgenteFisico
+CREATE TABLE agentes."tbAgenteFisico"
 (
   "idAgente" INT PRIMARY KEY NOT NULL,
   "stSexo" CHAR DEFAULT 'M' NOT NULL,
@@ -360,7 +360,7 @@ CREATE TABLE agentes.tbAgenteFisico
   "nrIdentificadorProcessual" CHAR(17),
   CONSTRAINT FK_tbAgenteFisico_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
 );
-CREATE TABLE agentes.tbAgentesxVerificacao
+CREATE TABLE agentes."tbAgentesxVerificacao"
 (
   "idAgentexVerificacao" INT PRIMARY KEY NOT NULL ,
   "idVerificacao" INT NOT NULL,
@@ -375,7 +375,7 @@ CREATE TABLE agentes.tbAgentesxVerificacao
   CONSTRAINT fktbAgentesxVerificacao03 FOREIGN KEY (idDirigente) REFERENCES agentes.Agentes (idAgente),
   CONSTRAINT fktbAgentesxVerificacao02 FOREIGN KEY (idEmpresa) REFERENCES agentes.Agentes (idAgente)
 );
-CREATE TABLE agentes.tbAgenteXPais
+CREATE TABLE agentes."tbAgenteXPais"
 (
   "idAgente" INT NOT NULL,
   "idPais" INT NOT NULL,
@@ -385,7 +385,7 @@ CREATE TABLE agentes.tbAgenteXPais
   CONSTRAINT FK_tbAgenteXPais_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
   CONSTRAINT FK_tbAgenteXPais_Pais FOREIGN KEY (idPais) REFERENCES agentes.Pais (idPais)
 );
-CREATE TABLE agentes.tbAusencia
+CREATE TABLE agentes."tbAusencia"
 (
   "idAusencia" INT PRIMARY KEY NOT NULL ,
   "idTipoAusencia" INT NOT NULL,
@@ -402,14 +402,14 @@ CREATE TABLE agentes.tbAusencia
   CONSTRAINT fk_tbAusencia_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
   CONSTRAINT fk_tbAusencia FOREIGN KEY (idAlteracao) REFERENCES agentes.tbAusencia (idAusencia)
 );
-CREATE TABLE agentes.tbComprovantePagamento
+CREATE TABLE agentes."tbComprovantePagamento"
 (
   "idComprovantePagamento" INT PRIMARY KEY NOT NULL ,
   "idDocumento" INT NOT NULL,
   "nrOrdemPagamento" CHAR(12) NOT NULL,
   "dtPagamento" TIMESTAMP
 );
-CREATE TABLE agentes.tbCredenciamentoParecerista
+CREATE TABLE agentes."tbCredenciamentoParecerista"
 (
   "idCredenciamentoParecerista" INT PRIMARY KEY NOT NULL ,
   "idCodigoArea" INT NOT NULL,
@@ -421,7 +421,7 @@ CREATE TABLE agentes.tbCredenciamentoParecerista
   CONSTRAINT fk_tbCredenciamentoParecerista_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
   CONSTRAINT fk_tbCredenciamentoParecerista_01 FOREIGN KEY (idVerificacao) REFERENCES agentes.Verificacao (idVerificacao)
 );
-CREATE TABLE agentes.tbDistrito
+CREATE TABLE agentes."tbDistrito"
 (
   "idMunicipioIBGE" VARCHAR(6) NOT NULL,
   "idDistrito" SMALLINT NOT NULL,
@@ -429,7 +429,7 @@ CREATE TABLE agentes.tbDistrito
   CONSTRAINT PK_tbDistrito PRIMARY KEY (idMunicipioIBGE, idDistrito),
   CONSTRAINT FK_tbDistrito_Municipios FOREIGN KEY (idMunicipioIBGE) REFERENCES agentes.Municipios (idMunicipioIBGE)
 );
-CREATE TABLE agentes.tbEscolaridade
+CREATE TABLE agentes."tbEscolaridade"
 (
   "idEscolaridade" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
@@ -444,7 +444,7 @@ CREATE TABLE agentes.tbEscolaridade
   CONSTRAINT fk_tbEscolaridade_tbTipoEscolaridade FOREIGN KEY (idTipoEscolaridade) REFERENCES agentes.tbTipoEscolaridade (idTipoEscolaridade),
   CONSTRAINT fk_tbEscolaridade_Pais FOREIGN KEY (idPais) REFERENCES agentes.Pais (idPais)
 );
-CREATE TABLE agentes.tbInformacaoProfissional
+CREATE TABLE agentes."tbInformacaoProfissional"
 (
   "idInformacaoProfissional" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
@@ -457,7 +457,7 @@ CREATE TABLE agentes.tbInformacaoProfissional
   "siInformacao" CHAR NOT NULL,
   CONSTRAINT fk_tbInformacaoProfissional_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
 );
-CREATE TABLE agentes.tbNecessiadeEspecial
+CREATE TABLE agentes."tbNecessiadeEspecial"
 (
   "idAgente" INT NOT NULL,
   "idNecessidadeEspecial" INT NOT NULL ,
@@ -465,7 +465,7 @@ CREATE TABLE agentes.tbNecessiadeEspecial
   CONSTRAINT PK_tbNecessiadeEspecial PRIMARY KEY (idAgente, idNecessidadeEspecial),
   CONSTRAINT FK_tbNecessiadeEspecial_tbAgentesFisico FOREIGN KEY (idAgente) REFERENCES agentes.tbAgenteFisico (idAgente)
 );
-CREATE TABLE agentes.tbPagamentoParecerista
+CREATE TABLE agentes."tbPagamentoParecerista"
 (
   "idPagamentoParecerista" INT PRIMARY KEY NOT NULL ,
   "idProduto" INT NOT NULL,
@@ -476,7 +476,7 @@ CREATE TABLE agentes.tbPagamentoParecerista
   CONSTRAINT fk_tbPagamentoParecerista_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
   CONSTRAINT fk_tbPagamentoParecerista_tbComprovantePagamento FOREIGN KEY (idComprovantePagamento) REFERENCES agentes.tbComprovantePagamento (idComprovantePagamento)
 );
-CREATE TABLE agentes.tbProcuracao
+CREATE TABLE agentes."tbProcuracao"
 (
   "idProcuracao" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
@@ -488,7 +488,7 @@ CREATE TABLE agentes.tbProcuracao
   "idSolicitante" INT NOT NULL,
   CONSTRAINT FK_tbProcuracao_tbProcuracao FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
 );
-CREATE TABLE agentes.tbProcuradorProjeto
+CREATE TABLE agentes."tbProcuradorProjeto"
 (
   "idProcuradorProjeto" INT PRIMARY KEY NOT NULL ,
   "idProcuracao" INT NOT NULL,
@@ -498,7 +498,7 @@ CREATE TABLE agentes.tbProcuradorProjeto
   "siEstado" CHAR NOT NULL,
   CONSTRAINT FK_tbProcuradorProjeto_tbProcuracao FOREIGN KEY (idProcuracao) REFERENCES agentes.tbProcuracao (idProcuracao)
 );
-CREATE TABLE agentes.tbSubdistrito
+CREATE TABLE agentes."tbSubdistrito"
 (
   "idMunicipioIBGE" VARCHAR(6) NOT NULL,
   "idDistrito" SMALLINT NOT NULL,
@@ -507,7 +507,7 @@ CREATE TABLE agentes.tbSubdistrito
   CONSTRAINT PK_tbSubdistrito PRIMARY KEY (idMunicipioIBGE, idDistrito, cdSubdistritoIbge),
   CONSTRAINT FK_tbSubdistrito_tbDistrito FOREIGN KEY (idMunicipioIBGE, idDistrito) REFERENCES agentes.tbDistrito (idMunicipioIBGE, idDistrito)
 );
-CREATE TABLE agentes.tbTitulacaoConselheiro
+CREATE TABLE agentes."tbTitulacaoConselheiro"
 (
   "idAgente" INT PRIMARY KEY NOT NULL,
   "cdArea" CHAR NOT NULL,
@@ -528,7 +528,7 @@ CREATE TABLE agentes.tbvinculo
 CREATE SEQUENCE agentes.tbvinculo_idvinculo_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE agentes.tbvinculo ALTER COLUMN idvinculo SET DEFAULT nextval('agentes.tbvinculo_idvinculo_seq');
 ALTER SEQUENCE agentes.tbvinculo_idvinculo_seq OWNED BY agentes.tbvinculo.idvinculo;
-CREATE TABLE agentes.tbVinculoProposta
+CREATE TABLE agentes."tbVinculoProposta"
 (
   "idVinculoProposta" INT PRIMARY KEY NOT NULL ,
   "idVinculo" INT NOT NULL,
@@ -540,7 +540,7 @@ CREATE SEQUENCE agentes.tbvinculoproposta_idvinculoproposta_seq NO MINVALUE NO M
 ALTER TABLE agentes.tbvinculoproposta ALTER COLUMN idvinculoproposta SET DEFAULT nextval('agentes.tbvinculoproposta_idvinculoproposta_seq');
 ALTER SEQUENCE agentes.tbvinculoproposta_idvinculoproposta_seq OWNED BY agentes.tbvinculoproposta.idvinculoproposta;
 CREATE INDEX IX_tbVinculoProposta ON agentes.tbVinculoProposta (idVinculoProposta);
-CREATE TABLE agentes.TCU
+CREATE TABLE agentes."TCU"
 (
   "UF" VARCHAR(255),
   "Codigo_UF" FLOAT,
@@ -548,7 +548,7 @@ CREATE TABLE agentes.TCU
   "Municipio" VARCHAR(255),
   "Populacao" FLOAT
 );
-CREATE TABLE agentes.Vinculacao
+CREATE TABLE agentes."Vinculacao"
 (
   "idVinculacao" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
@@ -558,7 +558,7 @@ CREATE TABLE agentes.Vinculacao
   CONSTRAINT FK_Vinculacao_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
   CONSTRAINT FK_Vinculacao_Agentes1 FOREIGN KEY (idVinculado) REFERENCES agentes.Agentes (idAgente)
 );
-CREATE TABLE agentes.Visao
+CREATE TABLE agentes."Visao"
 (
   "idVisao" INT PRIMARY KEY NOT NULL ,
   "Visao" INT NOT NULL,
@@ -573,7 +573,7 @@ ALTER TABLE agentes.visao ALTER COLUMN idvisao SET DEFAULT nextval('agentes.visa
 ALTER SEQUENCE agentes.visao_idvisao_seq OWNED BY agentes.visao.idvisao;
 CREATE INDEX IX_Visao ON agentes.Visao (idAgente);
 CREATE INDEX IX_Visao_1 ON agentes.Visao (Visao);
-CREATE TABLE agentes.vAgentes
+CREATE TABLE agentes."vAgentes"
 (
   "idAgente" INT NOT NULL,
   "CNPJCPF" VARCHAR(14) NOT NULL,
@@ -585,7 +585,7 @@ CREATE TABLE agentes.vAgentes
   "Status" SMALLINT NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vCheckListDocumentos
+CREATE TABLE agentes."vCheckListDocumentos"
 (
   "idCheckListDocumentos" INT NOT NULL,
   "idSistema" INT NOT NULL,
@@ -594,14 +594,14 @@ CREATE TABLE agentes.vCheckListDocumentos
   "Apresentou" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vConselhosRegiaoUF
+CREATE TABLE agentes."vConselhosRegiaoUF"
 (
   "Regiao" VARCHAR(20) NOT NULL,
   "UF" VARCHAR(100) NOT NULL,
   "Perfil" VARCHAR(100) NOT NULL,
   "Conselho" VARCHAR(100)
 );
-CREATE TABLE agentes.vContaCorrente
+CREATE TABLE agentes."vContaCorrente"
 (
   "idContaCorrente" INT NOT NULL,
   "idAgente" INT NOT NULL,
@@ -610,13 +610,13 @@ CREATE TABLE agentes.vContaCorrente
   "ContaCorrente" VARCHAR(15) NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vDDD
+CREATE TABLE agentes."vDDD"
 (
   "idDDD" INT NOT NULL,
   "idUF" INT NOT NULL,
   "Codigo" VARCHAR(3) NOT NULL
 );
-CREATE TABLE agentes.vDocumentos
+CREATE TABLE agentes."vDocumentos"
 (
   "idDocumentos" INT NOT NULL,
   "idAgente" INT NOT NULL,
@@ -627,7 +627,7 @@ CREATE TABLE agentes.vDocumentos
   "Complemento" VARCHAR(20) NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vFolhaGrio
+CREATE TABLE agentes."vFolhaGrio"
 (
   "idagente" INT NOT NULL,
   "CPF_Grio" VARCHAR(14) NOT NULL,
@@ -637,13 +637,13 @@ CREATE TABLE agentes.vFolhaGrio
   "ContaCorrente" VARCHAR(13),
   "TipoConta" VARCHAR(13) NOT NULL
 );
-CREATE TABLE agentes.vHistoricoAgente
+CREATE TABLE agentes."vHistoricoAgente"
 (
   "idAgente" INT NOT NULL,
   "Historico" VARCHAR(8000) NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vInternet
+CREATE TABLE agentes."vInternet"
 (
   "idInternet" INT NOT NULL,
   "idAgente" INT NOT NULL,
@@ -653,7 +653,7 @@ CREATE TABLE agentes.vInternet
   "Divulgar" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vMunicipios
+CREATE TABLE agentes."vMunicipios"
 (
   "idMunicipioIBGE" VARCHAR(6) NOT NULL,
   "idUFIBGE" INT NOT NULL,
@@ -661,7 +661,7 @@ CREATE TABLE agentes.vMunicipios
   "idMicro" CHAR(5) NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL
 );
-CREATE TABLE agentes.vNacional
+CREATE TABLE agentes."vNacional"
 (
   "idEndereco" INT NOT NULL,
   "idAgente" INT NOT NULL,
@@ -678,7 +678,7 @@ CREATE TABLE agentes.vNacional
   "Divulgar" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vNatureza
+CREATE TABLE agentes."vNatureza"
 (
   "idNatureza" INT NOT NULL,
   "idAgente" INT NOT NULL,
@@ -688,7 +688,7 @@ CREATE TABLE agentes.vNatureza
   "Administracao" SMALLINT NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vNomes
+CREATE TABLE agentes."vNomes"
 (
   "idNome" INT NOT NULL,
   "idAgente" INT NOT NULL,
@@ -697,7 +697,7 @@ CREATE TABLE agentes.vNomes
   "Status" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vOcupacao
+CREATE TABLE agentes."vOcupacao"
 (
   "idOcupacao" INT NOT NULL,
   "idAgente" INT NOT NULL,
@@ -708,28 +708,28 @@ CREATE TABLE agentes.vOcupacao
   "Status" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vOcupacaoCBO
+CREATE TABLE agentes."vOcupacaoCBO"
 (
   "idOcupacao" INT NOT NULL,
   "Codigo" VARCHAR(6) NOT NULL,
   "Familia" VARCHAR(4) NOT NULL,
   "TItulo" VARCHAR(255) NOT NULL
 );
-CREATE TABLE agentes.vPais
+CREATE TABLE agentes.'vPais'
 (
   "idPais" INT NOT NULL,
   "Sigla" VARCHAR(10),
   "Descricao" VARCHAR(100) NOT NULL,
   "Continente" VARCHAR(20)
 );
-CREATE TABLE agentes.vPerfil
+CREATE TABLE agentes."vPerfil"
 (
   "idAgente" INT NOT NULL,
   "Perfil" INT NOT NULL,
   "Caracteristica" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vPrefeiturasRegiaoUF
+CREATE TABLE agentes."vPrefeiturasRegiaoUF"
 (
   "Regiao" VARCHAR(20) NOT NULL,
   "UF" VARCHAR(100) NOT NULL,
@@ -738,7 +738,7 @@ CREATE TABLE agentes.vPrefeiturasRegiaoUF
   "Prefeitura" VARCHAR(100),
   "Municipio" VARCHAR(100) NOT NULL
 );
-CREATE TABLE agentes.vPropPontoGrio
+CREATE TABLE agentes."vPropPontoGrio"
 (
   "Proponente" VARCHAR(100),
   "CNPJ_Proponenete" VARCHAR(14),
@@ -754,26 +754,26 @@ CREATE TABLE agentes.vPropPontoGrio
   "Agência" VARCHAR(6) NOT NULL,
   "ContaCorrente" VARCHAR(13)
 );
-CREATE TABLE agentes.vRamais
+CREATE TABLE agentes."vRamais"
 (
   "idRamais" INT NOT NULL,
   "idTelefone" INT NOT NULL,
   "Numero" VARCHAR(4) NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vSinonimo
+CREATE TABLE agentes."vSinonimo"
 (
   "idSinonimo" INT NOT NULL,
   "Ocupacao" VARCHAR(6) NOT NULL,
   "Titulo" VARCHAR(255) NOT NULL
 );
-CREATE TABLE agentes.vSistema
+CREATE TABLE agentes."vSistema"
 (
   "idSistema" INT NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vTelefones
+CREATE TABLE agentes."vTelefones"
 (
   "idTelefone" INT NOT NULL,
   "idAgente" INT NOT NULL,
@@ -784,28 +784,28 @@ CREATE TABLE agentes.vTelefones
   "Divulgar" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vUF
+CREATE TABLE agentes."vUF"
 (
   "idUF" INT NOT NULL,
   "Sigla" CHAR(2) NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
   "Regiao" VARCHAR(20) NOT NULL
 );
-CREATE TABLE agentes.vUFMunicipio
+CREATE TABLE agentes."vUFMunicipio"
 (
   "idUF" INT NOT NULL,
   "UF" CHAR(2) NOT NULL,
   "idMunicipio" VARCHAR(6) NOT NULL,
   "Municipio" VARCHAR(100) NOT NULL
 );
-CREATE TABLE agentes.vVerificacao
+CREATE TABLE agentes."vVerificacao"
 (
   "idVerificacao" INT NOT NULL,
   "IdTipo" INT NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
   "Sistema" INT NOT NULL
 );
-CREATE TABLE agentes.vVinculacao
+CREATE TABLE agentes."vVinculacao"
 (
   "idVinculacao" INT NOT NULL,
   "idAgente" INT NOT NULL,
@@ -813,14 +813,14 @@ CREATE TABLE agentes.vVinculacao
   "idVinculoPrincipal" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vVisao
+CREATE TABLE agentes."vVisao"
 (
   "idVisao" INT NOT NULL,
   "idAgente" INT NOT NULL,
   "Visao" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE agentes.vwCadastrarParecerista
+CREATE TABLE agentes."vwCadastrarParecerista"
 (
   "idAgente" INT NOT NULL,
   "CNPJCPF" VARCHAR(14) NOT NULL,
@@ -843,7 +843,7 @@ CREATE TABLE agentes.vwCadastrarParecerista
 );
 
 
-CREATE TABLE agentes.CheckListDocumentos
+CREATE TABLE agentes."CheckListDocumentos"
 (
   "idCheckListDocumentos" INT PRIMARY KEY NOT NULL ,
   "idSistema" INT DEFAULT 0 NOT NULL,
