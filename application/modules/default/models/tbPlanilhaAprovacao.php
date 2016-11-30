@@ -11,7 +11,7 @@
 
 class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
     protected $_banco  = "SAC";
-    protected $_schema = "dbo";
+    protected $_schema = "SAC";
     protected $_name   = "tbPlanilhaAprovacao";
 
     /**
@@ -71,7 +71,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
     } // fecha m�todo alterarDados()
 
     public function copiandoPlanilhaRecurso($idPronac){
-        
+
         $sql = "INSERT INTO SAC.dbo.tbPlanilhaAprovacao
                     (tpPlanilha,dtPlanilha,idPlanilhaProjeto,idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,dsItem,idUnidade,
                     qtItem,nrOcorrencia,vlUnitario,qtDias,tpDespesa,tpPessoa,nrContraPartida,nrFonteRecurso,idUFDespesa,idMunicipioDespesa,
@@ -89,9 +89,9 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
         // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
     }
-    
+
     public function copiandoPlanilhaRemanejamento($idPronac){
-        
+
         $sql = "INSERT INTO SAC.dbo.tbPlanilhaAprovacao
                         (tpPlanilha,dtPlanilha,idPlanilhaProjeto,idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,dsItem,idUnidade,
                         qtItem,nrOcorrencia,vlUnitario,qtDias,tpDespesa,tpPessoa,nrContraPartida,nrFonteRecurso,idUFDespesa,idMunicipioDespesa,
@@ -109,7 +109,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
         // retornando os registros conforme objeto select
         return $db->fetchAll($sql);
     }
-    
+
     public function buscarDadosAvaliacaoDeItemRemanejamento($where = array()){
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -118,7 +118,7 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
                 array(
                     New Zend_Db_Expr('a.idPRONAC, a.idPlanilhaAprovacao, a.idProduto, b.Descricao as descProduto, a.idEtapa,
                         c.Descricao as descEtapa, a.idPlanilhaItem, d.Descricao as descItem,
-                        a.idUnidade, e.Descricao as descUnidade, a.qtItem as Quantidade, a.nrOcorrencia as Ocorrencia, 
+                        a.idUnidade, e.Descricao as descUnidade, a.qtItem as Quantidade, a.nrOcorrencia as Ocorrencia,
                         a.vlUnitario as ValorUnitario, a.qtDias as QtdeDias, CAST(a.dsJustificativa as TEXT) as Justificativa, a.idAgente'
                     )
                 )
@@ -139,15 +139,15 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
             array('e' => 'tbPlanilhaUnidade'), "a.idUnidade = e.idUnidade",
             array(), 'SAC.dbo'
         );
-        
+
         foreach($where as $key=>$valor){
             $select->where($key, $valor);
         }
         //xd($select->assemble());
-        
+
         return $this->fetchAll($select);
     }
-    
+
     public function valorTotalPlanilha($where = array()){
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -157,13 +157,13 @@ class tbPlanilhaAprovacao extends MinC_Db_Table_Abstract {
                     New Zend_Db_Expr('ROUND(SUM(a.qtItem*a.nrOcorrencia*a.vlUnitario), 2) AS Total')
                 )
         );
-        
+
         foreach($where as $key=>$valor){
             $select->where($key, $valor);
         }
         //xd($select->assemble());
-        
+
         return $this->fetchAll($select);
     }
 
-} // fecha class
+}

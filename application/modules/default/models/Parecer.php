@@ -1,10 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Parecer
  *
@@ -13,10 +8,10 @@
 class Parecer extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_name = 'Parecer';
-    
-    
+
+
     public function salvar($dados)
     {
         //x($dados);
@@ -52,7 +47,7 @@ class Parecer extends MinC_Db_Table_Abstract {
         if(isset($dados['idTipoAgente'])){ $tmpRsParecer->idTipoAgente = $dados['idTipoAgente']; }
 //xd($tmpRsParecer);
         echo "<pre>";
-        
+
 
         //SALVANDO O OBJETO CRIADO
         $id = $tmpRsParecer->save();
@@ -63,7 +58,7 @@ class Parecer extends MinC_Db_Table_Abstract {
             return false;
         }
     }
-    
+
 
     public function inserirParecer($dados) {
         try {
@@ -179,7 +174,7 @@ class Parecer extends MinC_Db_Table_Abstract {
     /*===========================================================================*/
     /*====================== ABAIXO - METODOS DA CNIC ===========================*/
     /*===========================================================================*/
-    
+
     public function buscarParecer($tipoAgente = null, $idpronac, $where=array()) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -196,9 +191,9 @@ class Parecer extends MinC_Db_Table_Abstract {
         {
         	$select->where('pa.idTipoAgente in(?)', $tipoAgente);
         }
-        
+
         $select->where('pa.idPRONAC = ?', $idpronac);
-        
+
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
@@ -206,7 +201,7 @@ class Parecer extends MinC_Db_Table_Abstract {
         $result = $this->fetchAll($select);
         return $result;
     }
-    
+
     public function buscarParecerTipo($tipoAgente = null, $idpronac = null, $tipoParecer = null, $usu_codigo = null) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -231,19 +226,19 @@ class Parecer extends MinC_Db_Table_Abstract {
         {
         	$select->where('pa.Logon in(?)', $usu_codigo);
         }
-        
+
         $select->where('pa.idPRONAC = ?', $idpronac);
-        
+
         $result = $this->fetchAll($select);
         return $result;
     }
-    
+
       public function buscaPareceresEmAprovacao($mecanismo,$QntdPorPagina=null, $PaginaAtual=null) {
 
             $TotalReg = $PaginaAtual*$QntdPorPagina;
             $select =  new Zend_Db_Expr("select * from (select top ". $QntdPorPagina ." * from (SELECT TOP ". $TotalReg ."
                 pa.*, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM SAC.dbo.Parecer AS pa
-            INNER JOIN SAC.dbo.Projetos AS pr ON pr.IdPRONAC = pa.idPRONAC WHERE pr.Mecanismo = '".$mecanismo."' 
+            INNER JOIN SAC.dbo.Projetos AS pr ON pr.IdPRONAC = pa.idPRONAC WHERE pr.Mecanismo = '".$mecanismo."'
             order by pa.idParecer) as tabela order by idParecer desc) as tabela order by idParecer");
 
             try {
@@ -255,7 +250,7 @@ class Parecer extends MinC_Db_Table_Abstract {
             //xd($select);
             return $db->fetchAll($select);
         }
-        
+
         public function buscaPareceresTotal($mecanismo) {
 
             $select =  new Zend_Db_Expr("SELECT *, (pr.AnoProjeto+pr.Sequencial) AS pronac, pr.NomeProjeto FROM SAC.dbo.Parecer AS pa
@@ -290,7 +285,7 @@ class Parecer extends MinC_Db_Table_Abstract {
             $select->where('a.AnoProjeto+a.Sequencial = ?',  $pronac);
             return $this->fetchAll($select);
         }
-        
+
         public function statusDeAvaliacao($idPronac) {
 
             $select = $this->select();
@@ -356,7 +351,7 @@ class Parecer extends MinC_Db_Table_Abstract {
             }
             return $db->fetchAll($select);
         }
-        
+
         public function cidadoPareceConsolidado($idPronac) {
 
             $select = $this->select();
@@ -412,6 +407,5 @@ class Parecer extends MinC_Db_Table_Abstract {
             return $this->fetchAll($select);
         }
 
-    
+
 }
-?>

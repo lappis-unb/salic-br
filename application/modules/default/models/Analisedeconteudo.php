@@ -13,6 +13,7 @@
 class Analisedeconteudo extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'sac';
+    protected $_schema = 'sac';
     protected $_name = 'tbAnaliseDeConteudo';
 
     /*public function dadosAnaliseconteudo($idpronac) {
@@ -82,5 +83,3 @@ class Analisedeconteudo extends MinC_Db_Table_Abstract {
     }
 
 }
-
-?>

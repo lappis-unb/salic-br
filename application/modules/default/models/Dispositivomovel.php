@@ -8,19 +8,19 @@
 class Dispositivomovel extends GenericModel{
 
     protected $_name = 'tbDispositivoMovel';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_banco = 'SAC';
-    
+
     /**
      * Salva o dispositivo que está conectado, salva o CPF do usuário e atualiza a última data de acesso.
-     * 
+     *
      * @param string $registrationId
      * @param string $cpf Optional
      * @return array $dispositivo Dados do dispositivo
      */
     public function salvar($registrationId, $cpf = NULL){
         $dispositivo = array();
-        
+
         if(!empty($registrationId)){
             $dispositivoRow = $this->fetchRow("idRegistration = '{$registrationId}'");
             if(!$dispositivoRow){
@@ -28,7 +28,7 @@ class Dispositivomovel extends GenericModel{
                     'idRegistration' => $registrationId
                 ));
             }
-            
+
             if($cpf){
                 $dispositivoRow->nrCPF = $cpf;
             }
@@ -36,13 +36,13 @@ class Dispositivomovel extends GenericModel{
             $dispositivoRow->save();
             $dispositivo = $dispositivoRow->toArray();
         }
-        
+
         return $dispositivo;
     }
 
     /**
      * Lista todos os dispositivos por idPronac.
-     * 
+     *
      * @param integer $idPronac
      * @return array
      */
@@ -69,10 +69,10 @@ class Dispositivomovel extends GenericModel{
         }
         return $listaResultado;
     }
-    
+
     /**
      * Lista dispositivos que receberão a notificação.
-     * 
+     *
      * @param array $listaResultadoDispositivo
      * @return array
      */
@@ -81,13 +81,13 @@ class Dispositivomovel extends GenericModel{
         foreach ($listaResultadoDispositivo as $dispositivo) {
             $listaDispositivos[] = $dispositivo->idRegistration;
         }
-        
+
         return $listaDispositivos;
     }
-    
+
     /**
      * Lista de id dos dispositivos que receberão a notificação.
-     * 
+     *
      * @param array $listaResultadoDispositivo
      * @return array
      */
@@ -96,8 +96,8 @@ class Dispositivomovel extends GenericModel{
         foreach ($listaResultadoDispositivo as $dispositivo) {
             $listaDispositivos[] = $dispositivo->idDispositivoMovel;
         }
-        
+
         return $listaDispositivos;
     }
-    
+
 }

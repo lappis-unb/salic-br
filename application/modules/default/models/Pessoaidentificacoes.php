@@ -1,8 +1,4 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of Pessoa_Identificacoes
@@ -13,7 +9,7 @@ class Pessoaidentificacoes extends MinC_Db_Table_Abstract {
 
     protected $_banco = "TABELAS";
     protected $_name = "Pessoa_Identificacoes";
-    protected $_schema = 'dbo';
+    protected $_schema = 'TABELAS';
 
     public function pesquisarPessoasDados($where=array()){
 
@@ -90,4 +86,3 @@ class Pessoaidentificacoes extends MinC_Db_Table_Abstract {
     }
 
 }
-?>

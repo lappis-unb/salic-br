@@ -8,7 +8,7 @@
 class tbFiscalizacao extends MinC_Db_Table_Abstract {
 
     protected $_name = 'tbFiscalizacao';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_banco = 'SAC';
 
     public function buscarAtoresFiscalizacao($idPronac, $idusuario=null){
@@ -91,17 +91,17 @@ class tbFiscalizacao extends MinC_Db_Table_Abstract {
                             array('Perfil2'=>'gru2.gru_nome','cdPerfil2'=>'gru2.gru_codigo'),
                             'TABELAS.dbo'
                            );*/
-        
+
         //$select->where('gru.gru_codigo = 135');
         //$select->where('gru2.gru_codigo = 134');
         $select->where('gru.gru_codigo = 135 or gru.gru_codigo = 134');
         //$select->where('usu.usu_codigo <> ?', $idusuario);
         $select->where('fisc.IdPRONAC = ?', $idPronac);
-        
-        
-        
+
+
+
 //xd($select->assemble());
         return $this->fetchAll($select);
     }
 
-} // fecha class
+}

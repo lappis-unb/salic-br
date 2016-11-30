@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * DAO vwSolicitarProrrogacaoPrazoCaptacao
  * @since 10/01/2013
@@ -13,9 +13,9 @@ class vwSolicitarProrrogacaoPrazoCaptacao extends MinC_Db_Table_Abstract {
 
     /* dados da tabela */
     protected $_banco  = 'SAC';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_name   = 'vwSolicitarProrrogacaoPrazoCaptacao';
     protected $_primary = 'idPronac';
 
 
-} // fecha class
+}

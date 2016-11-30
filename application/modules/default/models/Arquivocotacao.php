@@ -1,9 +1,4 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Arquivocotacao
  *
@@ -13,7 +8,7 @@ class Arquivocotacao  extends MinC_Db_Table_Abstract{
 
     protected $_banco   = 'BDCORPORATIVO';
     protected $_name    = 'tbArquivoCotacao';
-    protected $_schema  = 'scSAC';
+    protected $_schema  = 'BDCORPORATIVO.scSAC';
 
     public function buscarArquivos($idcotacao){
         $select = $this->select();
@@ -36,4 +31,3 @@ class Arquivocotacao  extends MinC_Db_Table_Abstract{
         return $this->fetchAll($select);
     }
 }
-?>

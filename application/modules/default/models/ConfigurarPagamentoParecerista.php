@@ -3,11 +3,11 @@
  * Description of GerarPagamentoParecerista
  *
  * @author Tarcisio Angelo
- */ 
+ */
 class ConfigurarPagamentoParecerista extends MinC_Db_Table_Abstract {
 
     protected $_name = 'tbConfigurarPagamento';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_banco = 'SAC';
 
     public function buscarConfiguracoes($where = array()) {
@@ -22,16 +22,15 @@ class ConfigurarPagamentoParecerista extends MinC_Db_Table_Abstract {
                                 'c.stEstado',
                                 'c.idUsuario')
         );
-        
+
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
-        
+
 //        xd($select->assemble());
-        
+
         return $this->fetchAll($select);
     }
-    
+
 }
 
-?>

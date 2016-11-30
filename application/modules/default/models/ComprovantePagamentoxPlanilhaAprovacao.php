@@ -1,8 +1,4 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of ItemCustoxComprovantePagamento
@@ -13,7 +9,7 @@ class ComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 {
     protected $_banco   = 'bdcorporativo';
     protected $_name    = 'tbComprovantePagamentoxPlanilhaAprovacao';
-    protected $_schema  = 'scSAC';
+    protected $_schema  = 'bdcorporativo.scSAC';
 
     public function inserirItemCustoxComprovantePagamento($data){
         $insert = $this->insert($data);
@@ -67,14 +63,14 @@ class ComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 
     /**
      * Validacao do valor a ser comprovado, verifica o valor aprovado - total ja aprovado
-     * identificando o valor m�ximo permitido para comprova��o 
+     * identificando o valor m�ximo permitido para comprova��o
      */
     public function validarValorComprovado($idPronac, $idPlanilhaAprovacao, $idPlanilhaItem, $vlComprovado)
     {
     	$planilhaAprovacaoModel = new PlanilhaAprovacao();
     	$planilhaItem = $planilhaAprovacaoModel->buscar(array('idPlanilhaAprovacao = ?' => $idPlanilhaAprovacao))->current();
     	$valorAprovado = $planilhaItem->qtItem * $planilhaItem->nrOcorrencia * $planilhaItem->vlUnitario;
-    	
+
     	$comprovantesPagamento = $planilhaAprovacaoModel->buscarcomprovantepagamento($idPronac, $idPlanilhaItem);
     	$totalComprovado = 0;
     	foreach ($comprovantesPagamento as $comprovante) {

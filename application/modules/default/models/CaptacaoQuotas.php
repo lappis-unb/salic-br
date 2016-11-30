@@ -7,7 +7,7 @@
 
 class CaptacaoQuotas extends MinC_Db_Table_Abstract {
     protected $_banco   = "SAC";
-    protected $_schema  = "dbo";
+    protected $_schema  = "SAC";
     protected $_name    = "CaptacaoQuotas";
 
     public function buscarCaptacaoQuotas() {
@@ -35,7 +35,7 @@ class CaptacaoQuotas extends MinC_Db_Table_Abstract {
                 array()
         );
         $select->where('QuotasCav.InclusCancel = ?',1);
-        
+
         $select->group('CaptacaoQuotas.AnoProjeto');
         $select->group('CaptacaoQuotas.Sequencial');
 

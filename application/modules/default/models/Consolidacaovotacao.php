@@ -1,8 +1,4 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of Consolidacaovotacao
@@ -11,7 +7,7 @@
  */
 class Consolidacaovotacao extends MinC_Db_Table_Abstract{
     protected $_banco  = 'BDCORPORATIVO';
-    protected $_schema = 'scSAC';
+    protected $_schema = 'BDCORPORATIVO.scSAC';
     protected $_name   = 'tbConsolidacaoVotacao';
 
 
@@ -46,6 +42,5 @@ class Consolidacaovotacao extends MinC_Db_Table_Abstract{
         return $this->fetchAll($select);
 
     }
-    
+
 }
-?>

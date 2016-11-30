@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * DAO vwAnexarComprovantes
  * @since 17/12/2012
@@ -13,13 +13,12 @@ class vwAnexarComprovantes extends MinC_Db_Table_Abstract {
 
     /* dados da tabela */
     protected $_banco  = 'SAC';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_name   = 'vwAnexarComprovantes';
-
 
     public function excluirArquivo($idArquivo) {
         $where = "idArquivo = " . $idArquivo;
         return $this->delete($where);
     }
 
-} // fecha class
+}
