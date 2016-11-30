@@ -5,9 +5,9 @@
  * @author Tarcisio Angelo
  */
 class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
- 
+
     protected $_name = 'tbGerarPagamentoParecerista';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_banco = 'SAC';
 
     public function buscarDespachos($where = array()) {
@@ -26,13 +26,13 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
                                 'gpp.vlTotalPagamento',
                                 'gpp.idUsuario')
         );
-        
+
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
-        
+
 //        xd($select->assemble());
-        
+
         return $this->fetchAll($select);
     }
 
@@ -46,7 +46,7 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
     }
 
     public function buscarProjetosFinalizados($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
-        
+
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('pro' => 'Projetos'),
@@ -55,24 +55,24 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
                               'pro.IdPRONAC as idPronac',
                               'pro.NomeProjeto')
         );
-        
-        
+
+
         $select->joinInner(array('pp'=> 'tbPagarParecerista'), "pro.IdPRONAC = pp.idPronac",
                             array('pp.vlPagamento')
         );
-        
+
         $select->joinInner(array('a'=> 'Agentes'), "pp.idParecerista = a.idAgente",
                             array('a.CNPJCPF'),'AGENTES.dbo'
         );
-        
+
         $select->joinInner(array('p'=> 'Produto'), "pp.idProduto = p.Codigo",
                             array('p.Descricao as Produto')
         );
-        
+
         $select->joinInner(array('o'=> 'Orgaos'), "pp.idUnidadeAnalise = o.Codigo",
                             array('o.Sigla as Vinculada')
         );
-        
+
         $select->joinLeft(array('gpp'=> 'tbGerarPagamentoParecerista'), "pp.idGerarPagamentoParecerista = gpp.idGerarPagamentoParecerista",
                             array('CONVERT(VARCHAR(10), gpp.dtGeracaoPagamento ,103) as dtGeracaoPagamento',
                                   'CONVERT(VARCHAR(10), gpp.dtEfetivacaoPagamento ,103) as dtEfetivacaoPagamento',
@@ -104,11 +104,11 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
-        
+
         if ($qtdeTotal) {
             return $this->fetchAll($select)->count();
         }
-        
+
         //adicionando linha order ao select
         $select->order($order);
 
@@ -120,14 +120,11 @@ class GerarPagamentoParecerista extends MinC_Db_Table_Abstract {
             }
             $select->limit($tamanho, $tmpInicio);
         }
-        
-        
+
+
 //        xd($select->assemble());
-        
+
         return $this->fetchAll($select);
     }
-    
-    
-}
 
-?>
+}

@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -11,7 +11,7 @@
  */
 class tbreuniao extends MinC_Db_Table_Abstract{
     protected $_banco = 'SAC';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_name  = 'tbreuniao';
 
    public function listar($where=array(), $order=array(), $tamanho=-1, $inicio=-1){
@@ -65,7 +65,7 @@ class tbreuniao extends MinC_Db_Table_Abstract{
                 $rsReuniao->DtFechamento = ConverteData($dados['DtFechamento'],13);
                 $rsReuniao->Mecanismo = $dados['Mecanismo'];
                 $rsReuniao->idUsuario = $dados['Mecanismo'];
-                                
+
 		if ($rsReuniao->save())
 		{
 			return true;
@@ -109,16 +109,6 @@ class tbreuniao extends MinC_Db_Table_Abstract{
     }
 
 
-
-
-
-
-
-
-
-
-
-
     public static function salvareuniao($dados)
 	{
 
@@ -138,4 +128,3 @@ class tbreuniao extends MinC_Db_Table_Abstract{
 		}
 	} // fecha m�todo salvareuniao()
 }
-?>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * DAO vwProjetoDistribuidoVinculada
  * @since 1/04/2013
@@ -13,7 +13,7 @@ class vwProjetoDistribuidoVinculada extends MinC_Db_Table_Abstract {
 
     /* dados da tabela */
     protected $_banco  = 'SAC';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_name   = 'vwProjetoDistribuidoVinculada';
     protected $_primary = 'Pronac';
 

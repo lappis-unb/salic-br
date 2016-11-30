@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Modelo que representa a tabela SAC.dbo.tbComunicados 
+ * Modelo que representa a tabela SAC.dbo.tbComunicados
  *
  * @author PEDRO GOMES
  */
 class tbAgentesxVerificacao extends MinC_Db_Table_Abstract {
-   
+
     protected  $_banco  = 'AGENTES';
-    protected  $_schema = 'dbo';
+    protected  $_schema = 'AGENTES';
     protected  $_name   = 'tbAgentesxVerificacao';
 
     /**
@@ -33,7 +33,7 @@ class tbAgentesxVerificacao extends MinC_Db_Table_Abstract {
                         "idDirigente",
                         "idEmpresa",
                         "idArquivo")
-                    );                   
+                    );
           $slct->joinInner(
                 array('d' => 'verificacao'), 'c.idVerificacao = d.idVerificacao',
                 array('d.Descricao'),'AGENTES.dbo'
@@ -77,12 +77,12 @@ class tbAgentesxVerificacao extends MinC_Db_Table_Abstract {
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-        
+
         //xd($slct->assemble());
-        
+
         return $this->fetchAll($slct);
     }
-    
+
     public function mandatoRepetido($idAgente, $dtInicio, $dtFim) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -97,16 +97,16 @@ class tbAgentesxVerificacao extends MinC_Db_Table_Abstract {
                         "idDirigente",
                         "idArquivo")
 		);
-                
+
         $slct->where('idDirigente = ?',$idAgente);
         $slct->where("'{$dtInicio}' BETWEEN dtInicioMandato AND dtFimMandato");
         //$slct->orWhere('idAgente = ?',$idAgente);
         $slct->where("'{$dtFim}' BETWEEN dtInicioMandato AND dtFimMandato");
         $slct->where('stMandato = ?','0');
-        
+
 //        xd($slct->assemble());
         $rs = $this->fetchAll($slct)->current();
-        
+
         return $this->fetchAll($slct);
     }
 

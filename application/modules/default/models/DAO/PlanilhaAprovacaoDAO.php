@@ -12,7 +12,7 @@
 class PlanilhaAprovacaoDAO extends Zend_Db_Table
 {
 	/* dados da tabela */
-	protected $_schema  = "SAC.dbo";
+	protected $_schema  = "SAC";
 	protected $_name    = "tbPlanilhaAprovacao";
 	protected $_primary = "idPlanilhaAprovacao";
 
@@ -72,7 +72,7 @@ class PlanilhaAprovacaoDAO extends Zend_Db_Table
 		{
 			$where.= "AND idPlanilhaAprovacao = $idPlanilhaAprovacao ";
 		}
-                
+
 		if (!empty($tpPlanilha))
 		{
 			$where.= "AND tpPlanilha = '$tpPlanilha'";

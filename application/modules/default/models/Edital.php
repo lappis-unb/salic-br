@@ -1,9 +1,4 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Agentes
  *
@@ -12,8 +7,7 @@
 class Edital extends MinC_Db_Table_Abstract{
     protected $_banco = 'SAC';
     protected $_name = 'Edital';
-    protected $_schema  = 'dbo';
-
+    protected $_schema  = 'SAC';
 
     public function salvar($dados)
     {
@@ -42,7 +36,7 @@ class Edital extends MinC_Db_Table_Abstract{
     	if(isset($dados['idAti'])){ $tmpRsEdital->idAti = $dados['idAti']; }
 
         echo "<pre>";
-        
+
 
         //SALVANDO O OBJETO CRIADO
         $id = $tmpRsEdital->save();
@@ -53,7 +47,7 @@ class Edital extends MinC_Db_Table_Abstract{
             return false;
         }
     }
-    
+
      public function listaAvaliadores($where=array()) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
@@ -84,14 +78,14 @@ class Edital extends MinC_Db_Table_Abstract{
         //return $this->fetchAll($slct);
 
     }
-    
-    
+
+
     public function buscaEditalFormDocumento($idusuario, $idEdital=null) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
                 array('edi' => $this->_name),
-                array('CONVERT(CHAR(10), edi.DtEdital, 103) AS DtEdital', 'edi.Objeto', 'edi.CelulaOrcamentaria', 'edi.idOrgao', 
+                array('CONVERT(CHAR(10), edi.DtEdital, 103) AS DtEdital', 'edi.Objeto', 'edi.CelulaOrcamentaria', 'edi.idOrgao',
                 'edi.cdTipoFundo', 'edi.Logon', 'edi.NrEdital', 'edi.qtAvaliador', 'edi.idAti')
         );
         $slct->joinInner(
@@ -125,7 +119,6 @@ class Edital extends MinC_Db_Table_Abstract{
     }
 
 
-
         public function buscar($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
         $slct = $this->select();
 
@@ -149,9 +142,8 @@ class Edital extends MinC_Db_Table_Abstract{
 //        xd($slct->__toString());
         return $this->fetchAll($slct);
     }
-    
-	
-    
+
+
 	public static function saldoPi($idAti){
         $valorGasto = NULL;
         $saldoPi = NULL;
@@ -167,35 +159,35 @@ class Edital extends MinC_Db_Table_Abstract{
 					INNER JOIN SAC.dbo.PreProjeto AS pp ON pp.idEdital=ed.idEdital
 					INNER JOIN SAC.dbo.Projetos AS p ON p.idProjeto=pp.idPreProjeto
 				WHERE
-					ed.idAti=$idAti"; 
-	
+					ed.idAti=$idAti";
+
 //		xd($sql);
-				
+
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		
+
 		$resultado = $db->fetchAll("SET TEXTSIZE 104857600");
 		$resultado = $db->fetchAll($sql);
-		
+
 		return $resultado;
     }
-    
+
 	public static function recuperaValorPi($idAti){
 
-		$sql = "SELECT ati.atiorcamento/100 as valor FROM BDSIMEC.pde.atividade ati WHERE ati.atiid = $idAti"; 
-	
+		$sql = "SELECT ati.atiorcamento/100 as valor FROM BDSIMEC.pde.atividade ati WHERE ati.atiid = $idAti";
+
 //		xd($sql);
-				
+
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		
+
 		$resultado = $db->fetchAll("SET TEXTSIZE 104857600");
 		$resultado = $db->fetchAll($sql);
-		
+
 		return $resultado;
 
     }
-    
+
 	public static function recuperaIdEdital($nrFormDocumento){
         $conexao = new Conexao;
         $idEdital = NULL;
@@ -221,23 +213,20 @@ class Edital extends MinC_Db_Table_Abstract{
         return $idEdital;
 
     }
-    
+
 	public static function buscarIdPi($idEdital){
-        $sql = "SELECT idAti FROM SAC.dbo.Edital where idEdital = $idEdital"; 
-	
+        $sql = "SELECT idAti FROM SAC.dbo.Edital where idEdital = $idEdital";
+
 //		xd($sql);
-				
+
 		$db= Zend_Db_Table::getDefaultAdapter();
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
-		
+
 		$resultado = $db->fetchAll("SET TEXTSIZE 104857600");
 		$resultado = $db->fetchAll($sql);
-		
+
 		return $resultado;
 
     }
 
-
-
 }
-?>
