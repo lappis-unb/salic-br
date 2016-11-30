@@ -7,7 +7,7 @@
 
 CREATE SCHEMA IF NOT EXISTS sac AUTHORIZATION postgres;
 
-CREATE TABLE sac.tbMovimentacaoBancaria
+CREATE TABLE sac."tbMovimentacaoBancaria"
 (
   "idMovimentacaoBancaria" INT PRIMARY KEY NOT NULL,
   "nrBanco" CHAR(3) NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE sac.tbMovimentacaoBancaria
   "dtFimMovimento" timestamp NOT NULL,
   "idUsuario" INT NOT NULL
 );
-CREATE TABLE sac.tbMovimentacaoBancariaItem
+CREATE TABLE sac."tbMovimentacaoBancariaItem"
 (
   "idMovimentacaoBancariaItem" INT PRIMARY KEY NOT NULL,
   "tpRegistro" CHAR,
@@ -38,14 +38,14 @@ CREATE TABLE sac.tbMovimentacaoBancariaItem
   "vlMovimento" DECIMAL(12,2),
   "stMovimento" CHAR,
   "idMovimentacaoBancaria" INT NOT NULL,
-  CONSTRAINT fk_tbMovimentacaoBancariaItem_tbMovimentacaoBancaria FOREIGN KEY (idMovimentacaoBancaria) REFERENCES sac.tbMovimentacaoBancaria (idMovimentacaoBancaria)
+  CONSTRAINT "fk_tbMovimentacaoBancariaItem_tbMovimentacaoBancaria" FOREIGN KEY ("idMovimentacaoBancaria") REFERENCES sac."tbMovimentacaoBancaria" ("idMovimentacaoBancaria")
 );
-CREATE TABLE sac.tbLote
+CREATE TABLE sac."tbLote"
 (
   "idLote" INT PRIMARY KEY NOT NULL,
   "dtLote" timestamp NOT NULL
 );
-CREATE TABLE sac.tbManterPortaria
+CREATE TABLE sac."tbManterPortaria"
 (
   "idManterPortaria" INT PRIMARY KEY NOT NULL,
   "dsAssinante" VARCHAR(255) NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE sac.tbManterPortaria
   "dsCargo" VARCHAR(255) NOT NULL,
   "dsPortaria" VARCHAR(1000) NOT NULL
 );
-CREATE TABLE sac.tbImovel
+CREATE TABLE sac."tbImovel"
 (
   "idImovel" INT PRIMARY KEY NOT NULL,
   "tpImovel" CHAR NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE sac.tbImovel
   "stNumeroFolha" CHAR DEFAULT 0 NOT NULL,
   "dsJustificativaAcompanhamento" TEXT
 );
-CREATE TABLE sac.tbPlanilhaEtapa
+CREATE TABLE sac."tbPlanilhaEtapa"
 (
   "idPlanilhaEtapa" INT PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL,
@@ -83,7 +83,7 @@ CREATE SEQUENCE sac.tbplanilhaetapa_idplanilhaetapa_seq NO MINVALUE NO MAXVALUE 
 ALTER TABLE sac.tbplanilhaetapa ALTER COLUMN idplanilhaetapa SET DEFAULT nextval('sac.tbplanilhaetapa_idplanilhaetapa_seq');
 ALTER SEQUENCE sac.tbplanilhaetapa_idplanilhaetapa_seq OWNED BY sac.tbplanilhaetapa.idplanilhaetapa;
 
-CREATE TABLE sac.tbPlanilhaItens
+CREATE TABLE sac."tbPlanilhaItens"
 (
   "idPlanilhaItens" INT PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(250) NOT NULL,
@@ -93,7 +93,7 @@ CREATE SEQUENCE sac.tbplanilhaitens_idplanilhaitens_seq NO MINVALUE NO MAXVALUE 
 ALTER TABLE sac.tbplanilhaitens ALTER COLUMN idplanilhaitens SET DEFAULT nextval('sac.tbplanilhaitens_idplanilhaitens_seq');
 ALTER SEQUENCE sac.tbplanilhaitens_idplanilhaitens_seq OWNED BY sac.tbplanilhaitens.idplanilhaitens;
 
-CREATE TABLE sac.tbAvaliacaoProposta
+CREATE TABLE sac."tbAvaliacaoProposta"
 (
   "idAvaliacaoProposta" INT PRIMARY KEY NOT NULL,
   "idProjeto" INT NOT NULL,
@@ -110,8 +110,8 @@ CREATE TABLE sac.tbAvaliacaoProposta
   "stEnviado" CHAR,
   "stProrrogacao" NCHAR
 );
-CREATE INDEX IX_tbAvaliacaoProposta ON sac.tbAvaliacaoProposta (idProjeto);
-CREATE TABLE sac.tbConfigurarPagamento
+CREATE INDEX "IX_tbAvaliacaoProposta" ON sac."tbAvaliacaoProposta" ("idProjeto");
+CREATE TABLE sac."tbConfigurarPagamento"
 (
   "idConfigurarPagamento" INT PRIMARY KEY NOT NULL,
   "nrDespachoInicial" INT NOT NULL,
@@ -120,36 +120,36 @@ CREATE TABLE sac.tbConfigurarPagamento
   "stEstado" INTEGER DEFAULT 1 NOT NULL,
   "idUsuario" INT DEFAULT 1 NOT NULL
 );
-CREATE TABLE sac.tbDepositoIdentificadoCaptacao
+CREATE TABLE sac."tbDepositoIdentificadoCaptacao"
 (
   "idDepositoIdentificadoCaptacao" INT PRIMARY KEY NOT NULL,
   "dsInformacao" VARCHAR(150),
   "idUsuario" INT
 );
-CREATE TABLE sac.tbDepositoIdentificadoCaptacaoOLD
+CREATE TABLE sac."tbDepositoIdentificadoCaptacaoOLD"
 (
   "idDepositoIdentificadoCaptacao" INT PRIMARY KEY NOT NULL,
   "dsInformacao" VARCHAR(150),
   "idUsuario" INT
 );
-CREATE TABLE sac.tbDepositoIdentificadoMovimentacao
+CREATE TABLE sac."tbDepositoIdentificadoMovimentacao"
 (
   "idDepositoIdentificadoMovimentacao" INT PRIMARY KEY NOT NULL,
   "dsInformacao" VARCHAR,
   "idUsuario" INT
 );
-CREATE TABLE sac.Area
+CREATE TABLE sac."Area"
 (
   "Codigo" VARCHAR(4) PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL
 );
 CREATE UNIQUE INDEX AK_Area ON sac.Area (Codigo);
-CREATE TABLE sac.AtualizaOrgaoProjetosX
+CREATE TABLE sac."AtualizaOrgaoProjetosX"
 (
   "idPronac" INT PRIMARY KEY NOT NULL,
   "Orgao" INT NOT NULL
 );
-CREATE TABLE sac.Auditoria
+CREATE TABLE sac."Auditoria"
 (
   "database_name" VARCHAR(128),
   "schema_name" VARCHAR(128),
@@ -157,7 +157,7 @@ CREATE TABLE sac.Auditoria
   "object_name" VARCHAR(128),
   "statement" VARCHAR(4000)
 );
-CREATE TABLE sac.Internet
+CREATE TABLE sac."Internet"
 (
   "Tipo" int NOT NULL,
   "ChaveA" VARCHAR(20) DEFAULT '',
@@ -173,8 +173,8 @@ CREATE TABLE sac.Internet
   "ValorD" MONEY DEFAULT 0,
   "ValorE" MONEY DEFAULT 0
 );
-CREATE INDEX IX_Internet ON sac.Internet (Tipo, ChaveA, ChaveB, ChaveC, ChaveD);
-CREATE TABLE sac.Intranet
+CREATE INDEX "IX_Internet" ON sac."Internet" ("Tipo", "ChaveA", "ChaveB", "ChaveC", "ChaveD");
+CREATE TABLE sac."Intranet"
 (
   "Tipo" int NOT NULL,
   "ChaveA" VARCHAR(20) DEFAULT ' ',
@@ -204,7 +204,7 @@ CREATE TABLE sac.Intranet
   "DataE" timestamp
 );
 CREATE INDEX IX_Intranet ON sac.Intranet (Tipo);
-CREATE TABLE sac.KitBanda
+CREATE TABLE sac."KitBanda"
 (
   "Codigo" SMALLINT PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL,
@@ -215,7 +215,7 @@ CREATE TABLE sac.KitBanda
   "Acabamento" VARCHAR(50) NOT NULL,
   "PrecoUnitario" MONEY DEFAULT 0 NOT NULL
 );
-CREATE TABLE sac.tbPlanilhaUnidade
+CREATE TABLE sac."tbPlanilhaUnidade"
 (
   "idUnidade" INT PRIMARY KEY NOT NULL,
   "Sigla" VARCHAR(20) NOT NULL,
@@ -224,7 +224,7 @@ CREATE TABLE sac.tbPlanilhaUnidade
 CREATE SEQUENCE sac.tbplanilhaunidade_idunidade_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE sac.tbplanilhaunidade ALTER COLUMN idunidade SET DEFAULT nextval('sac.tbplanilhaunidade_idunidade_seq');
 ALTER SEQUENCE sac.tbplanilhaunidade_idunidade_seq OWNED BY sac.tbplanilhaunidade.idunidade;
-CREATE TABLE sac.tbReuniao
+CREATE TABLE sac."tbReuniao"
 (
   "idNrReuniao" INT PRIMARY KEY NOT NULL,
   "NrReuniao" INT NOT NULL,
@@ -236,13 +236,13 @@ CREATE TABLE sac.tbReuniao
   "idUsuario" INT NOT NULL,
   "stPlenaria" CHAR DEFAULT 'N' NOT NULL
 );
-CREATE INDEX IX_NrReuniao ON sac.tbReuniao (NrReuniao);
-CREATE TABLE sac.tbTmpInconsistenciaCaptacao19022016
+CREATE INDEX "IX_NrReuniao" ON sac."tbReuniao" ("NrReuniao");
+CREATE TABLE sac."tbTmpInconsistenciaCaptacao19022016"
 (
   "idTipoInconsistencia" INT NOT NULL,
   "idTmpCaptacao" INT NOT NULL
 );
-CREATE TABLE sac.tbTmpRelatorioConsolidado
+CREATE TABLE sac."tbTmpRelatorioConsolidado"
 (
   "idPronac" INT,
   "dsObjetivosMetas" VARCHAR(8000),
@@ -289,7 +289,7 @@ CREATE TABLE sac.tbTmpRelatorioConsolidado
   "idDocumentoAceiteObra" INT,
   "dsCronogramaFisico" TEXT
 );
-CREATE TABLE sac.tbValidarItem
+CREATE TABLE sac."tbValidarItem"
 (
   "idValidarItem" INT PRIMARY KEY NOT NULL,
   "dsJustificativa" VARCHAR(8000) NOT NULL,
@@ -297,22 +297,22 @@ CREATE TABLE sac.tbValidarItem
   "cdItemAvaliado" CHAR NOT NULL,
   "idDeParaPlanilhaAprovacao" INT NOT NULL
 );
-CREATE TABLE sac.Veiculacao
+CREATE TABLE sac."Veiculacao"
 (
   "Codigo" int PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL
 );
-CREATE TABLE sac.ImpactoX
+CREATE TABLE sac."ImpactoX"
 (
   "Codigo" int PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.LinkBBX
+CREATE TABLE sac."LinkBBX"
 (
   "Codigo" INT PRIMARY KEY NOT NULL,
   "CgcCpf" VARCHAR(14) NOT NULL
 );
-CREATE TABLE sac.LocalizacaoFisica
+CREATE TABLE sac."LocalizacaoFisica"
 (
   "Id" INT PRIMARY KEY NOT NULL,
   "IdPronac" INT NOT NULL,
@@ -322,52 +322,52 @@ CREATE TABLE sac.LocalizacaoFisica
   "Localizacao" VARCHAR(255) NOT NULL,
   "DataCriacao" timestamp DEFAULT NOW()
 );
-CREATE TABLE sac.Mecanismo
+CREATE TABLE sac."Mecanismo"
 (
   "Codigo" CHAR PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL,
   "Status" INTEGER DEFAULT 1 NOT NULL
 );
-CREATE UNIQUE INDEX AK_Mecanismo ON sac.Mecanismo (Codigo);
-CREATE TABLE sac.Metragem
+CREATE UNIQUE INDEX "AK_Mecanismo" ON sac."Mecanismo" ("Codigo");
+CREATE TABLE sac."Metragem"
 (
   "Codigo" int PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL
 );
-CREATE TABLE sac.Modalidade
+CREATE TABLE sac."Modalidade"
 (
   "Codigo" VARCHAR(3) PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL
 );
-CREATE UNIQUE INDEX AK_Modalidade ON sac.Modalidade (Codigo);
-CREATE TABLE sac.MotivoX
+CREATE UNIQUE INDEX "AK_Modalidade" ON sac."Modalidade" ("Codigo");
+CREATE TABLE sac."MotivoX"
 (
   "Codigo" int PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL
 );
-CREATE TABLE sac.NaturezaDespesa
+CREATE TABLE sac."NaturezaDespesa"
 (
   "Codigo" CHAR(8) PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL,
   "Logon" INT NOT NULL
 );
-CREATE TABLE sac.Fase
+CREATE TABLE sac."Fase"
 (
   "Codigo" int PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL
 );
-CREATE TABLE sac.Fonte
+CREATE TABLE sac."Fonte"
 (
   "Codigo" CHAR(3) PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL,
   "Logon" INT NOT NULL
 );
-CREATE TABLE sac.Genero
+CREATE TABLE sac."Genero"
 (
   "Codigo" int PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL
 );
-CREATE TABLE sac.TetoRenuncia
+CREATE TABLE sac."TetoRenuncia"
 (
   "Ano" CHAR(2) PRIMARY KEY NOT NULL,
   "Decreto" VARCHAR(15),
@@ -375,7 +375,7 @@ CREATE TABLE sac.TetoRenuncia
   "ValorUfir" MONEY,
   "ValorReal" MONEY
 );
-CREATE TABLE sac.tipo
+CREATE TABLE sac."tipo"
 (
   "idtipo" INT PRIMARY KEY NOT NULL,
   "descricao" VARCHAR(100) NOT NULL,
@@ -385,22 +385,22 @@ CREATE SEQUENCE sac.tipo_idtipo_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE sac.tipo ALTER COLUMN idtipo SET DEFAULT nextval('sac.tipo_idtipo_seq');
 ALTER SEQUENCE sac.tipo_idtipo_seq OWNED BY sac.tipo.idtipo;
 
-CREATE TABLE sac.Verificacao
+CREATE TABLE sac."Verificacao"
 (
   "idVerificacao" INT PRIMARY KEY NOT NULL,
   "idTipo" INT NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
   "stEstado" INTEGER DEFAULT 1 NOT NULL,
-  CONSTRAINT FK_Verificacao_Tipo FOREIGN KEY (idTipo) REFERENCES sac.Tipo (idTipo)
+  CONSTRAINT "FK_Verificacao_Tipo" FOREIGN KEY (idTipo) REFERENCES sac."Tipo" ("idTipo")
 );
-CREATE TABLE sac.tbTextoEmail
+CREATE TABLE sac."tbTextoEmail"
 (
   "idTextoemail" INT PRIMARY KEY NOT NULL,
   "idAssunto" INT NOT NULL,
   "dsTexto" VARCHAR NOT NULL,
-  CONSTRAINT fk_tbTextoEmail_01 FOREIGN KEY (idAssunto) REFERENCES sac.Verificacao (idVerificacao)
+  CONSTRAINT "fk_tbTextoEmail_01" FOREIGN KEY ("idAssunto") REFERENCES sac."Verificacao" ("idVerificacao")
 );
-CREATE TABLE sac.TipoDocumento
+CREATE TABLE sac."TipoDocumento"
 (
   "Codigo" INT PRIMARY KEY NOT NULL,
   "Sigla" VARCHAR(15) NOT NULL,
@@ -408,7 +408,7 @@ CREATE TABLE sac.TipoDocumento
   "Status" INTEGER DEFAULT 0 NOT NULL,
   "QtdeCampos" int DEFAULT 1 NOT NULL
 );
-CREATE TABLE sac.Uf
+CREATE TABLE sac."Uf"
 (
   "Uf" CHAR(2) PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(30) NOT NULL,
@@ -416,32 +416,32 @@ CREATE TABLE sac.Uf
   "Fonte" CHAR NOT NULL,
   "CodUfIbge" INT NOT NULL
 );
-CREATE UNIQUE INDEX AK_Uf ON sac.Uf (Uf);
-CREATE INDEX IX_Uf ON sac.Uf (CodUfIbge);
-CREATE TABLE sac.UgGestao
+CREATE UNIQUE INDEX "AK_Uf" ON sac."Uf" ("Uf");
+CREATE INDEX "IX_Uf" ON sac."Uf" ("CodUfIbge");
+CREATE TABLE sac."UgGestao"
 (
   "Codigo" CHAR(6) PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
   "Logon" INT NOT NULL
 );
-CREATE TABLE sac.UGR
+CREATE TABLE sac."UGR"
 (
   "Codigo" CHAR(6) PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
   "Logon" INT NOT NULL
 );
-CREATE TABLE sac.UnidadeOrcamentaria
+CREATE TABLE sac."UnidadeOrcamentaria"
 (
   "Uo" VARCHAR(5) NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.UnidadeX
+CREATE TABLE sac."UnidadeX"
 (
   "Sigla" VARCHAR(15) PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL
 );
-CREATE UNIQUE INDEX UQ_Unidade_2__16 ON sac.UnidadeX (Sigla);
-CREATE TABLE sac.ParecerVinculadasX
+CREATE UNIQUE INDEX "UQ_Unidade_2__16" ON sac."UnidadeX" ("Sigla");
+CREATE TABLE sac."ParecerVinculadasX"
 (
   "idParecerVinculadas" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -491,7 +491,7 @@ CREATE TABLE sac.ParecerVinculadasX
   "Logon" INT DEFAULT 0 NOT NULL,
   "idPRONAC" INT NOT NULL
 );
-CREATE TABLE sac.Interessado
+CREATE TABLE sac."Interessado"
 (
   "CgcCpf" VARCHAR(14) PRIMARY KEY NOT NULL,
   "Nome" VARCHAR(150) NOT NULL,
@@ -515,11 +515,11 @@ CREATE TABLE sac.Interessado
   "Loc_Codigo" INT,
   "Logon" INT
 );
-CREATE UNIQUE INDEX AK_Interessado ON sac.Interessado (CgcCpf);
-CREATE INDEX IX_Cidade ON sac.Interessado (Cidade);
-CREATE INDEX IX_Nome ON sac.Interessado (Nome);
-CREATE INDEX IX_Interessado_Uf ON sac.Interessado (Uf);
-CREATE TABLE sac.RecibosDeCaptacao
+CREATE UNIQUE INDEX "AK_Interessado" ON sac."Interessado" ("CgcCpf");
+CREATE INDEX "IX_Cidade" ON sac."Interessado" ("Cidade");
+CREATE INDEX "IX_Nome" ON sac."Interessado" ("Nome");
+CREATE INDEX "IX_Interessado_Uf" ON sac."Interessado" ("Uf");
+CREATE TABLE sac."RecibosDeCaptacao"
 (
   "Nome" VARCHAR(100) NOT NULL,
   "CgcCpf" VARCHAR(15) NOT NULL,
@@ -536,7 +536,7 @@ CREATE TABLE sac.RecibosDeCaptacao
   "Cidade" VARCHAR(100) NOT NULL,
   "UF" CHAR(2) NOT NULL
 );
-CREATE TABLE sac.RetornoBBDeAberturaDeContaPFB
+CREATE TABLE sac."RetornoBBDeAberturaDeContaPFB"
 (
   "Contador" CHAR(5),
   "CPFCNPJ" CHAR(14),
@@ -551,7 +551,7 @@ CREATE TABLE sac.RetornoBBDeAberturaDeContaPFB
   "Erros" CHAR(3),
   "Outros" CHAR(23)
 );
-CREATE TABLE sac.RetornoBBDeAberturaDeContaPFL
+CREATE TABLE sac."RetornoBBDeAberturaDeContaPFL"
 (
   "Contador" CHAR(5),
   "CPFCNPJ" CHAR(14),
@@ -566,8 +566,8 @@ CREATE TABLE sac.RetornoBBDeAberturaDeContaPFL
   "Erros" CHAR(3),
   "Outros" CHAR(23)
 );
-CREATE INDEX IX_RetornoBBDeAberturaDeContaPFL ON sac.RetornoBBDeAberturaDeContaPFL (AnoProjeto, Sequencial);
-CREATE TABLE sac.RetornoBBDeAberturaDeContaPJB
+CREATE INDEX "IX_RetornoBBDeAberturaDeContaPFL" ON sac."RetornoBBDeAberturaDeContaPFL" ("AnoProjeto", "Sequencial");
+CREATE TABLE sac."RetornoBBDeAberturaDeContaPJB"
 (
   "Contador" CHAR(5),
   "CPFCNPJ" CHAR(14),
@@ -582,7 +582,7 @@ CREATE TABLE sac.RetornoBBDeAberturaDeContaPJB
   "Erros" CHAR(3),
   "Outros" CHAR(23)
 );
-CREATE TABLE sac.RetornoBBDeAberturaDeContaPJL
+CREATE TABLE sac."RetornoBBDeAberturaDeContaPJL"
 (
   "Contador" CHAR(5),
   "CPFCNPJ" CHAR(14),
@@ -597,16 +597,16 @@ CREATE TABLE sac.RetornoBBDeAberturaDeContaPJL
   "Erros" CHAR(3),
   "Outros" CHAR(23)
 );
-CREATE INDEX IX_RRetornoBBDeAberturaDeContaPJL ON sac.RetornoBBDeAberturaDeContaPJL (AnoProjeto, Sequencial);
-CREATE TABLE sac.Segmento
+CREATE INDEX "IX_RRetornoBBDeAberturaDeContaPJL" ON sac."RetornoBBDeAberturaDeContaPJL" ("AnoProjeto", "Sequencial");
+CREATE TABLE sac."Segmento"
 (
   "Codigo" VARCHAR(4) PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL,
   "idOrgao" INT,
   "stEstado" INTEGER DEFAULT 1 NOT NULL
 );
-CREATE UNIQUE INDEX AK_Segmento ON sac.Segmento (Codigo);
-CREATE TABLE sac.GuiaRecolhimento
+CREATE UNIQUE INDEX "AK_Segmento" ON sac."Segmento" ("Codigo");
+CREATE TABLE sac."GuiaRecolhimento"
 (
   "NumeroGuia" INT PRIMARY KEY NOT NULL,
   "CgcCpf" VARCHAR(14) NOT NULL,
@@ -615,10 +615,10 @@ CREATE TABLE sac.GuiaRecolhimento
   "StatusGuia" int DEFAULT 0 NOT NULL,
   "DtFunarte" timestamp,
   "Logon" INT NOT NULL,
-  CONSTRAINT Fk_GuiaRecolhimentoInteressado FOREIGN KEY (CgcCpf) REFERENCES sac.Interessado (CgcCpf)
+  CONSTRAINT "Fk_GuiaRecolhimentoInteressado" FOREIGN KEY ("CgcCpf") REFERENCES sac."Interessado" ("CgcCpf")
 );
-CREATE INDEX indGuiaRecolhimento ON sac.GuiaRecolhimento (CgcCpf);
-CREATE TABLE sac.HistoricoAspectosFinanceirosX
+CREATE INDEX "indGuiaRecolhimento" ON sac."GuiaRecolhimento" ("CgcCpf");
+CREATE TABLE sac."HistoricoAspectosFinanceirosX"
 (
   "contador" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -635,7 +635,7 @@ CREATE TABLE sac.HistoricoAspectosFinanceirosX
   "DataNF" timestamp NOT NULL,
   "Logon" INT NOT NULL
 );
-CREATE TABLE sac.HistoricoAspectosFisicosX
+CREATE TABLE sac."HistoricoAspectosFisicosX"
 (
   "contador" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -645,29 +645,29 @@ CREATE TABLE sac.HistoricoAspectosFisicosX
   "PrCont" INT NOT NULL,
   "logon" INT NOT NULL
 );
-CREATE TABLE sac.tbTipoDocumento
+CREATE TABLE sac."tbTipoDocumento"
 (
   "idTipoDocumento" INT PRIMARY KEY NOT NULL,
   "dsTipoDocumento" VARCHAR(100) NOT NULL,
   "stUpload" INTEGER DEFAULT 1 NOT NULL,
   "stEstado" INTEGER DEFAULT 1 NOT NULL
 );
-CREATE TABLE sac.tbTipoEncaminhamento
+CREATE TABLE sac."tbTipoEncaminhamento"
 (
   "idTipoEncaminhamento" int PRIMARY KEY NOT NULL,
   "dsEncaminhamento" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.tbTipoInabilitado
+CREATE TABLE sac."tbTipoInabilitado"
 (
   "idTipoInabilitado" INT PRIMARY KEY NOT NULL,
   "dsTipoInabilitado" VARCHAR(250) NOT NULL
 );
-CREATE TABLE sac.tbTipoInconsistencia
+CREATE TABLE sac."tbTipoInconsistencia"
 (
   "idTipoInconsistencia" INT PRIMARY KEY NOT NULL,
   "dsTipoInconsistencia" CHAR(20) NOT NULL
 );
-CREATE TABLE sac.tbTipoReadequacao
+CREATE TABLE sac."tbTipoReadequacao"
 (
   "idTipoReadequacao" INT PRIMARY KEY NOT NULL,
   "dsReadequacao" VARCHAR(50) NOT NULL,
@@ -676,7 +676,7 @@ CREATE TABLE sac.tbTipoReadequacao
   "tpAtributo" CHAR DEFAULT 'T',
   "qtCaracteres" INT DEFAULT 5
 );
-CREATE TABLE sac.tbTmpCaptacao
+CREATE TABLE sac."tbTmpCaptacao"
 (
   "idTmpCaptacao" INT PRIMARY KEY NOT NULL,
   "nrAnoProjeto" CHAR(2),
@@ -691,7 +691,7 @@ CREATE TABLE sac.tbTmpCaptacao
   "nrContaProponente" CHAR(20),
   "tpValidacao" CHAR(2)
 );
-CREATE TABLE sac.tbTmpCaptacaoOLD
+CREATE TABLE sac."tbTmpCaptacaoOLD"
 (
   "idTmpCaptacao" INT PRIMARY KEY NOT NULL,
   "nrAnoProjeto" CHAR(2),
@@ -706,7 +706,7 @@ CREATE TABLE sac.tbTmpCaptacaoOLD
   "nrContaProponente" CHAR(20),
   "tpValidacao" CHAR(2)
 );
-CREATE TABLE sac.tbtmpDepositoIdentificado
+CREATE TABLE sac."tbtmpDepositoIdentificado"
 (
   "idtmpDepositoIdentificado" INT PRIMARY KEY NOT NULL,
   "tpRegistro" CHAR,
@@ -729,7 +729,7 @@ CREATE TABLE sac.tbtmpDepositoIdentificado
   "nrEspacoBrancoTrailer" CHAR(141),
   "dsInformacao" VARCHAR(150)
 );
-CREATE TABLE sac.tbtmpDepositoIdentificadoOLD
+CREATE TABLE sac."tbtmpDepositoIdentificadoOLD"
 (
   "idtmpDepositoIdentificado" INT PRIMARY KEY NOT NULL,
   "tpRegistro" CHAR,
@@ -752,7 +752,7 @@ CREATE TABLE sac.tbtmpDepositoIdentificadoOLD
   "nrEspacoBrancoTrailer" CHAR(141),
   "dsInformacao" VARCHAR(150)
 );
-CREATE TABLE sac.Populacao
+CREATE TABLE sac."Populacao"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "CodUfIbge" INT,
@@ -766,9 +766,9 @@ CREATE TABLE sac.Populacao
   "TxCrescimentoanual" INT,
   "CodCompletoUF" INT
 );
-CREATE INDEX IX_Populacao ON sac.Populacao (Municipio);
-CREATE INDEX IX_Populacao_1 ON sac.Populacao (Contador);
-CREATE TABLE sac.PreProjeto
+CREATE INDEX "IX_Populacao" ON sac."Populacao" ("Municipio");
+CREATE INDEX "IX_Populacao_1" ON sac."Populacao" ("Contador");
+CREATE TABLE sac."PreProjeto"
 (
   "idPreProjeto" INT PRIMARY KEY NOT NULL,
   "idAgente" INT NOT NULL,
@@ -801,10 +801,10 @@ CREATE TABLE sac.PreProjeto
   "stTipoDemanda" CHAR(2) DEFAULT 'NA' NOT NULL,
   "idEdital" INT
 );
-CREATE SEQUENCE sac.preprojeto_idpreprojeto_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE sac.preprojeto ALTER COLUMN idpreprojeto SET DEFAULT nextval('sac.preprojeto_idpreprojeto_seq');
-ALTER SEQUENCE sac.preprojeto_idpreprojeto_seq OWNED BY sac.preprojeto.idpreprojeto;
-CREATE TABLE sac.Orgaos
+CREATE SEQUENCE sac."preprojeto_idpreprojeto_seq" NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac."preprojeto" ALTER COLUMN "idpreprojeto" SET DEFAULT nextval('sac.preprojeto_idpreprojeto_seq');
+ALTER SEQUENCE sac."preprojeto_idpreprojeto_seq" OWNED BY sac.preprojeto."idpreprojeto";
+CREATE TABLE sac."Orgaos"
 (
   "Codigo" INT PRIMARY KEY NOT NULL,
   "Sigla" VARCHAR(20) NOT NULL,
@@ -812,33 +812,33 @@ CREATE TABLE sac.Orgaos
   "Vinculo" INTEGER DEFAULT 0 NOT NULL,
   "Status" INTEGER DEFAULT 0 NOT NULL
 );
-CREATE UNIQUE INDEX AK_Orgaos ON sac.Orgaos (Codigo);
-CREATE TABLE sac.SequencialProjetos
+CREATE UNIQUE INDEX "AK_Orgaos" ON sac."Orgaos" ("Codigo");
+CREATE TABLE sac."SequencialProjetos"
 (
   "Ano" INT PRIMARY KEY NOT NULL,
   "Sequencial" INT NOT NULL
 );
-CREATE TABLE sac.Situacao
+CREATE TABLE sac."Situacao"
 (
   "Codigo" CHAR(3) PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(150) NOT NULL,
   "AreaAtuacao" CHAR,
   "StatusProjeto" int DEFAULT 1 NOT NULL
 );
-CREATE UNIQUE INDEX AK_Situacao ON sac.Situacao (Codigo);
-CREATE TABLE sac.SituacaoCarta
+CREATE UNIQUE INDEX "AK_Situacao" ON sac."Situacao" ("Codigo");
+CREATE TABLE sac."SituacaoCarta"
 (
   "Situacao" CHAR(3) NOT NULL,
   "NumeroCarta" VARCHAR(3) NOT NULL,
   "Sequencia" int NOT NULL,
-  CONSTRAINT PK_SituacaoCarta PRIMARY KEY (Situacao, NumeroCarta, Sequencia)
+  CONSTRAINT "PK_SituacaoCarta" PRIMARY KEY ("Situacao", "NumeroCarta", "Sequencia")
 );
-CREATE TABLE sac.SuporteGravacaoFinalizacao
+CREATE TABLE sac."SuporteGravacaoFinalizacao"
 (
   "Codigo" int PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL
 );
-CREATE TABLE sac.sysdiagrams
+CREATE TABLE sac."sysdiagrams"
 (
   "name" VARCHAR NOT NULL,
   "principal_id" INT NOT NULL,
@@ -846,13 +846,13 @@ CREATE TABLE sac.sysdiagrams
   "version" INT,
   "definition" bit
 );
-CREATE UNIQUE INDEX UK_principal_name ON sac.sysdiagrams (principal_id, name);
-CREATE TABLE sac.Tabela
+CREATE UNIQUE INDEX "UK_principal_name" ON sac."sysdiagrams" ("principal_id", "name");
+CREATE TABLE sac."Tabela"
 (
   "Codigo" int PRIMARY KEY NOT NULL,
   "DadoNr" INT NOT NULL
 );
-CREATE TABLE sac.Projetos
+CREATE TABLE sac."Projetos"
 (
   "IdPRONAC" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -888,26 +888,26 @@ CREATE TABLE sac.Projetos
   "SolicitadoCapitalReal" MONEY DEFAULT 0,
   "Logon" INT DEFAULT NULL,
   "idProjeto" INT,
-  CONSTRAINT FK_Projetos_Segmento FOREIGN KEY (Segmento) REFERENCES sac.Segmento (Codigo),
-  CONSTRAINT FK_Segmento FOREIGN KEY (Segmento) REFERENCES sac.Segmento (Codigo),
-  CONSTRAINT FK_Proponente FOREIGN KEY (CgcCpf) REFERENCES sac.Interessado (CgcCpf),
-  CONSTRAINT FK_Situacao FOREIGN KEY (Situacao) REFERENCES sac.Situacao (Codigo),
-  CONSTRAINT FK_Orgao FOREIGN KEY (Orgao) REFERENCES sac.Orgaos (Codigo),
-  CONSTRAINT FK_Projetos_preProjetos FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto)
+  CONSTRAINT "FK_Projetos_Segmento" FOREIGN KEY ("Segmento") REFERENCES sac."Segmento" ("Codigo"),
+  CONSTRAINT "FK_Segmento" FOREIGN KEY ("Segmento") REFERENCES sac."Segmento" ("Codigo"),
+  CONSTRAINT "FK_Proponente" FOREIGN KEY ("CgcCpf") REFERENCES sac."Interessado" ("CgcCpf"),
+  CONSTRAINT "FK_Situacao" FOREIGN KEY ("Situacao") REFERENCES sac."Situacao" ("Codigo"),
+  CONSTRAINT "FK_Orgao" FOREIGN KEY ("Orgao") REFERENCES sac."Orgaos" ("Codigo"),
+  CONSTRAINT "FK_Projetos_preProjetos" FOREIGN KEY ("idProjeto") REFERENCES sac."PreProjeto" ("idPreProjeto")
 );
-CREATE UNIQUE INDEX AK_Projetos ON sac.Projetos (AnoProjeto, Sequencial);
-CREATE INDEX indArea ON sac.Projetos (Area);
-CREATE INDEX indCgcCpf ON sac.Projetos (CgcCpf);
-CREATE INDEX indNomeProjeto ON sac.Projetos (NomeProjeto);
-CREATE INDEX indOrgao ON sac.Projetos (Orgao);
-CREATE INDEX indProcesso ON sac.Projetos (Processo);
-CREATE INDEX indSegmento ON sac.Projetos (Segmento);
-CREATE INDEX indSituacao ON sac.Projetos (Situacao);
-CREATE INDEX indUF ON sac.Projetos (UfProjeto);
-CREATE INDEX IX_Projetos ON sac.Projetos (idProjeto);
-CREATE INDEX _dta_index_Projetos_6_1181403428__K1_K11_K6_K5_K10_2_3_8_25_26_28 ON sac.Projetos (IdPRONAC, Situacao, Segmento, Area, CgcCpf, AnoProjeto, Sequencial, NomeProjeto, DtInicioExecucao, DtFimExecucao, SolicitadoReal);
+CREATE UNIQUE INDEX "AK_Projetos" ON sac."Projetos" ("AnoProjeto", "Sequencial");
+CREATE INDEX "indArea" ON sac."Projetos" ("Area");
+CREATE INDEX "indCgcCpf" ON sac."Projetos" ("CgcCpf");
+CREATE INDEX "indNomeProjeto" ON sac."Projetos" ("NomeProjeto");
+CREATE INDEX "indOrgao" ON sac."Projetos" ("Orgao");
+CREATE INDEX "indProcesso" ON sac."Projetos" ("Processo");
+CREATE INDEX "indSegmento" ON sac."Projetos" ("Segmento");
+CREATE INDEX "indSituacao" ON sac."Projetos" ("Situacao");
+CREATE INDEX "indUF" ON sac."Projetos" ("UfProjeto");
+CREATE INDEX "IX_Projetos" ON sac."Projetos" ("idProjeto");
+CREATE INDEX _"dta_index_Projetos_6_1181403428__K1_K11_K6_K5_K10_2_3_8_25_26_28" ON sac."Projetos" ("IdPRONAC", "Situacao", "Segmento", "Area", "CgcCpf", "AnoProjeto", "Sequencial", "NomeProjeto", "DtInicioExecucao", "DtFimExecucao", "SolicitadoReal");
 
-CREATE TABLE sac.tbDocumentosPreProjeto20100107X
+CREATE TABLE sac."tbDocumentosPreProjeto20100107X"
 (
   "idDocumentosPreprojetos" INT NOT NULL,
   "CodigoDocumento" INT NOT NULL,
@@ -918,7 +918,7 @@ CREATE TABLE sac.tbDocumentosPreProjeto20100107X
   "NoArquivo" VARCHAR(100) NOT NULL,
   "TaArquivo" INT NOT NULL
 );
-CREATE TABLE sac.tbFiscalizacao
+CREATE TABLE sac."tbFiscalizacao"
 (
   "idFiscalizacao" INT PRIMARY KEY NOT NULL,
   "IdPRONAC" INT NOT NULL,
@@ -931,10 +931,10 @@ CREATE TABLE sac.tbFiscalizacao
   "idAgente" INT,
   "idSolicitante" INT NOT NULL,
   "idUsuarioInterno" SMALLINT,
-  CONSTRAINT fk_tbFiscalizacao_Projetos FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC)
+  CONSTRAINT "fk_tbFiscalizacao_Projetos" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC")
 );
 
-CREATE TABLE sac.tbRelatorioFiscalizacao
+CREATE TABLE sac."tbRelatorioFiscalizacao"
 (
   "idRelatorioFiscalizacao" INT PRIMARY KEY NOT NULL,
   "dsAcoesProgramadas" VARCHAR(8000) NOT NULL,
@@ -984,9 +984,9 @@ CREATE TABLE sac.tbRelatorioFiscalizacao
   "dsJustificativaDevolucao" VARCHAR(8000),
   "stRecursosCaptados" CHAR DEFAULT 3,
   "dsObservacao" VARCHAR(5000) DEFAULT NULL,
-  CONSTRAINT FK_tbRelatorioFiscalizacao_tbFiscalizacao FOREIGN KEY (idFiscalizacao) REFERENCES sac.tbFiscalizacao (idFiscalizacao)
+  CONSTRAINT "FK_tbRelatorioFiscalizacao_tbFiscalizacao" FOREIGN KEY ("idFiscalizacao") REFERENCES sac."tbFiscalizacao" ("idFiscalizacao")
 );
-CREATE TABLE sac.tbAnaliseDeConteudo
+CREATE TABLE sac."tbAnaliseDeConteudo"
 (
   "idAnaliseDeConteudo" INT PRIMARY KEY NOT NULL,
   "idPronac" INT NOT NULL,
@@ -1009,9 +1009,9 @@ CREATE TABLE sac.tbAnaliseDeConteudo
   "ParecerDeConteudo" VARCHAR DEFAULT '',
   "idParecer" INT,
   "idUsuario" INT DEFAULT 0,
-  CONSTRAINT FK_tbAnaliseDeConteudo_Projetos FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC)
+  CONSTRAINT "FK_tbAnaliseDeConteudo_Projetos" FOREIGN KEY ("idPronac") REFERENCES sac."Projetos" ("IdPRONAC")
 );
-CREATE TABLE sac.tbDistribuicaoProduto
+CREATE TABLE sac."tbDistribuicaoProduto"
 (
   "idDistribuicaoProduto" INT PRIMARY KEY NOT NULL,
   "idPlanoDistribuicao" INT NOT NULL,
@@ -1029,7 +1029,7 @@ CREATE TABLE sac.tbDistribuicaoProduto
   "dsJustificativaAcompanhamento" TEXT--,
 --   CONSTRAINT fk_tbDistribuicaoProduto_PlanoDistribuicaoProduto FOREIGN KEY (idPlanoDistribuicao) REFERENCES sac.PlanoDistribuicaoProduto (idPlanoDistribuicao)
 );
-CREATE TABLE sac.tbRelatorio
+CREATE TABLE sac."tbRelatorio"
 (
   "idRelatorio" INT PRIMARY KEY NOT NULL,
   "idPRONAC" INT NOT NULL,
@@ -1037,11 +1037,11 @@ CREATE TABLE sac.tbRelatorio
   "idAgenteAvaliador" INT,
   "idDistribuicaoProduto" INT,
   "tpRelatorio" CHAR,
-  CONSTRAINT fk_tbRelatorio_Projetos FOREIGN KEY (idPRONAC) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_tbRelatorio_tbDistribuicaoProduto FOREIGN KEY (idDistribuicaoProduto) REFERENCES sac.tbDistribuicaoProduto (idDistribuicaoProduto)
+  CONSTRAINT "fk_tbRelatorio_Projetos" FOREIGN KEY ("idPRONAC") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_tbRelatorio_tbDistribuicaoProduto" FOREIGN KEY ("idDistribuicaoProduto") REFERENCES sac."tbDistribuicaoProduto" ("idDistribuicaoProduto")
 );
 
-CREATE TABLE sac.tbRelatorioConsolidado
+CREATE TABLE sac."tbRelatorioConsolidado"
 (
   "idRelatorioConsolidado" INT PRIMARY KEY NOT NULL,
   "idRelatorio" INT NOT NULL,
@@ -1073,10 +1073,10 @@ CREATE TABLE sac.tbRelatorioConsolidado
   "stImpactoCultural" CHAR DEFAULT 0 NOT NULL,
   "stImpactoEconomico" CHAR DEFAULT 0 NOT NULL,
   "stImpactoSocial" CHAR DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_tbRelatorioConsolidado_tbRelatorio FOREIGN KEY (idRelatorio) REFERENCES sac.tbRelatorio (idRelatorio),
-  CONSTRAINT FK_tbRelatorioConsolidado_tbImovel FOREIGN KEY (idImovel) REFERENCES sac.tbImovel (idImovel)
+  CONSTRAINT "FK_tbRelatorioConsolidado_tbRelatorio" FOREIGN KEY ("idRelatorio") REFERENCES sac."tbRelatorio" ("idRelatorio"),
+  CONSTRAINT "FK_tbRelatorioConsolidado_tbImovel" FOREIGN KEY ("idImovel") REFERENCES sac."tbImovel" ("idImovel")
 );
-CREATE TABLE sac.ParecerVinculadasantX
+CREATE TABLE sac."ParecerVinculadasantX"
 (
   "idParecerVinculadas" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -1124,16 +1124,16 @@ CREATE TABLE sac.ParecerVinculadasantX
   "Enviar" int DEFAULT 0 NOT NULL,
   "SinteseProjeto" TEXT NOT NULL,
   "Logon" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_ParecerVinculadas_Projetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "FK_ParecerVinculadas_Projetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE INDEX IX_ParecerVinculadas ON sac.ParecerVinculadasantX (AnoProjeto, Sequencial);
-CREATE TABLE sac.ProcessoMassificado
+CREATE INDEX "IX_ParecerVinculadas" ON sac."ParecerVinculadasantX" ("AnoProjeto", "Sequencial");
+CREATE TABLE sac."ProcessoMassificado"
 (
   "Processo" CHAR(5) PRIMARY KEY NOT NULL,
   "MCI" CHAR(9) NOT NULL,
   "SequencialRemessa" INT NOT NULL
 );
-CREATE TABLE sac.Produto
+CREATE TABLE sac."Produto"
 (
   "Codigo" int PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
@@ -1142,13 +1142,13 @@ CREATE TABLE sac.Produto
   "Idorgao" INT,
   "stEstado" INTEGER
 );
-CREATE TABLE sac.ProgramaTrabalho
+CREATE TABLE sac."ProgramaTrabalho"
 (
   "Codigo" CHAR(17) PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
   "Logon" INT NOT NULL
 );
-CREATE TABLE sac.ProjetoProduto
+CREATE TABLE sac."ProjetoProduto"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -1161,18 +1161,18 @@ CREATE TABLE sac.ProjetoProduto
   "QtdeExistente" INT DEFAULT 0 NOT NULL,
   "Localizacao" int DEFAULT 9 NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT FK_ProjetoProduto_Projetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_ProjetoProduto_Produto FOREIGN KEY (CodigoProduto) REFERENCES sac.Produto (Codigo)
+  CONSTRAINT "FK_ProjetoProduto_Projetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_ProjetoProduto_Produto" FOREIGN KEY ("CodigoProduto") REFERENCES sac."Produto" ("Codigo")
 );
-CREATE INDEX IX_ProjetoProduto ON sac.ProjetoProduto (AnoProjeto, Sequencial);
-CREATE TABLE sac.ProjetosPontosCulturaX
+CREATE INDEX "IX_ProjetoProduto" ON sac."ProjetoProduto" ("AnoProjeto", "Sequencial");
+CREATE TABLE sac."ProjetosPontosCulturaX"
 (
   "Processo" VARCHAR(255),
   "Pronac" VARCHAR(255)
 );
 
 
-CREATE TABLE sac.dtproperties
+CREATE TABLE sac."dtproperties"
 (
   "id" INT NOT NULL,
   "objectid" INT,
@@ -1181,9 +1181,9 @@ CREATE TABLE sac.dtproperties
   "uvalue" VARCHAR(255),
   "lvalue" varchar,
   "version" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT pk_dtproperties PRIMARY KEY (id, property)
+  CONSTRAINT "pk_dtproperties" PRIMARY KEY ("id", "property")
 );
-CREATE TABLE sac.Edital
+CREATE TABLE sac."Edital"
 (
   "idEdital" INT PRIMARY KEY NOT NULL,
   "idOrgao" INT DEFAULT 0 NOT NULL,
@@ -1199,22 +1199,22 @@ CREATE TABLE sac.Edital
   "idAti" INT,
   "idLinguagem" INT,
   "idModalidade" INT,
-  CONSTRAINT FK_Edital_Orgaos FOREIGN KEY (idOrgao) REFERENCES sac.Orgaos (Codigo)
+  CONSTRAINT "FK_Edital_Orgaos" FOREIGN KEY ("idOrgao") REFERENCES sac."Orgaos" ("Codigo")
 );
-CREATE TABLE sac.EditalProjeto
+CREATE TABLE sac."EditalProjeto"
 (
   idEditalProjeto INT PRIMARY KEY NOT NULL,
   AnoProjeto CHAR(2) NOT NULL,
   Sequencial VARCHAR(5) NOT NULL,
   idEdital INT NOT NULL,
   Logon INT NOT NULL,
-  CONSTRAINT FK_EditalProjeto_Projetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_EditalProjeto_Edital FOREIGN KEY (idEdital) REFERENCES sac.Edital (idEdital)
+  CONSTRAINT "FK_EditalProjeto_Projetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_EditalProjeto_Edital" FOREIGN KEY ("idEdital") REFERENCES sac."Edital" ('idEdital')
 );
-CREATE INDEX IX_EditalProjeto ON sac.EditalProjeto (AnoProjeto, Sequencial);
-CREATE INDEX IX_EditalProjeto_1 ON sac.EditalProjeto (idEdital);
+CREATE INDEX "IX_EditalProjeto" ON sac."EditalProjeto" ("AnoProjeto", "Sequencial");
+CREATE INDEX "IX_EditalProjeto_1" ON sac."EditalProjeto" ("idEdital");
 
-CREATE TABLE sac.EditalParcelas
+CREATE TABLE sac."EditalParcelas"
 (
   "idEdital" INT NOT NULL,
   "NrParcela" int NOT NULL,
@@ -1224,11 +1224,11 @@ CREATE TABLE sac.EditalParcelas
   "ExigePC" INTEGER DEFAULT 0 NOT NULL,
   "Parcela" int DEFAULT 0,
   "Logon" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT PK_EditalParcelas PRIMARY KEY (idEdital, NrParcela),
-  CONSTRAINT FK_EditalParcelas_Edital FOREIGN KEY (idEdital) REFERENCES sac.Edital (idEdital)
+  CONSTRAINT "PK_EditalParcelas" PRIMARY KEY ("idEdital", "NrParcela"),
+  CONSTRAINT "FK_EditalParcelas_Edital" FOREIGN KEY ("idEdital") REFERENCES sac."Edital" ("idEdital")
 );
-CREATE INDEX IX_ParcelasDoEdital ON sac.EditalParcelas (idEdital);
-CREATE TABLE sac.EditalRelatorio
+CREATE INDEX "IX_ParcelasDoEdital" ON sac."EditalParcelas" ("idEdital");
+CREATE TABLE sac."EditalRelatorio"
 (
   "idRelatorio" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -1240,14 +1240,14 @@ CREATE TABLE sac.EditalRelatorio
   "Comprovado" INTEGER DEFAULT 0 NOT NULL,
   "Aprovado" INTEGER DEFAULT 0 NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT FK_EditalRelatorio_Projetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_EditalRelatorio_EditalParcelas FOREIGN KEY (idEdital, NrParcela) REFERENCES sac.EditalParcelas (idEdital, NrParcela),
-  CONSTRAINT FK_EditalRelatorio_Edital FOREIGN KEY (idEdital) REFERENCES sac.Edital (idEdital)
+  CONSTRAINT "FK_EditalRelatorio_Projetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_EditalRelatorio_EditalParcelas" FOREIGN KEY ('idEdital', "NrParcela") REFERENCES sac."EditalParcelas" ("idEdital", "NrParcela"),
+  CONSTRAINT "FK_EditalRelatorio_Edital" FOREIGN KEY ("idEdital") REFERENCES sac."Edital" ("idEdital")
 );
-CREATE INDEX IX_EditalRelatorio ON sac.EditalRelatorio (AnoProjeto, Sequencial);
-CREATE INDEX IX_EditalRelatorio_1 ON sac.EditalRelatorio (idEdital);
-CREATE INDEX IX_EditalRelatorio_2 ON sac.EditalRelatorio (idEdital, NrParcela);
-CREATE TABLE sac.Passagem
+CREATE INDEX "IX_EditalRelatorio" ON sac."EditalRelatorio" ("AnoProjeto", "Sequencial");
+CREATE INDEX "IX_EditalRelatorio_1" ON sac.EditalRelatorio ("idEdital");
+CREATE INDEX "IX_EditalRelatorio_2" ON sac."EditalRelatorio" ("idEdital", "NrParcela");
+CREATE TABLE sac."Passagem"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -1287,37 +1287,37 @@ CREATE TABLE sac.Passagem
   "ResumoCurriculo" TEXT NOT NULL,
   "ResumoParecer" TEXT NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_Passagem PRIMARY KEY (AnoProjeto, Sequencial),
-  CONSTRAINT FK_PassagemProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_Passagem" PRIMARY KEY ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_PassagemProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.PedidoProrrogacao
+CREATE TABLE sac."PedidoProrrogacao"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "DtPedido" timestamp NOT NULL,
   "DtInicio" timestamp NOT NULL,
   "DtFinal" timestamp NOT NULL,
-  CONSTRAINT PK_PedidoProrrogacao PRIMARY KEY (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_PedidoProrrogacao" PRIMARY KEY ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.PerfilAgenciaX
+CREATE TABLE sac."PerfilAgenciaX"
 (
   "Agencia" VARCHAR(5),
   "Nome" VARCHAR(30),
   "Exclusiva" VARCHAR(1),
   "Perfil" CHAR
 );
-CREATE TABLE sac.PlanilhaEtapa
+CREATE TABLE sac."PlanilhaEtapa"
 (
   "idPlanilhaEtapa" INT PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL
 );
-CREATE TABLE sac.PlanilhaUnidade
+CREATE TABLE sac."PlanilhaUnidade"
 (
   "idUnidade" INT PRIMARY KEY NOT NULL,
   "Sigla" VARCHAR(20) NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL
 );
-CREATE TABLE sac.Prorrogacao
+CREATE TABLE sac."Prorrogacao"
 (
   "idProrrogacao" INT PRIMARY KEY NOT NULL,
   "idPronac" INT,
@@ -1334,18 +1334,18 @@ CREATE TABLE sac.Prorrogacao
   "idRecurso" INT,
   "Logon" INT NOT NULL,
   "idDocumento" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT fk_Prorrogacao_02 FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT fk_Prorrogacao_01 FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "fk_Prorrogacao_02" FOREIGN KEY ("idPronac") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "fk_Prorrogacao_01" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE UNIQUE INDEX AK_Prorrogacao ON sac.Prorrogacao (AnoProjeto, Sequencial, DtPedido);
-CREATE TABLE sac.PtRes
+CREATE UNIQUE INDEX "AK_Prorrogacao" ON sac."Prorrogacao" ("AnoProjeto", "Sequencial", "DtPedido");
+CREATE TABLE sac."PtRes"
 (
   "Codigo" CHAR(6) PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
   "Logon" INT NOT NULL
 );
 
-CREATE TABLE sac.tbProposta
+CREATE TABLE sac."tbProposta"
 (
   "IdProposta" INT PRIMARY KEY NOT NULL,
   "tpProposta" CHAR(2) NOT NULL,
@@ -1378,7 +1378,7 @@ CREATE TABLE sac.tbProposta
   "stTipoDemanda" CHAR(2),
   "idPedidoAlteracao" INT NOT NULL
 );
-CREATE TABLE sac.tbReadequacao
+CREATE TABLE sac."tbReadequacao"
 (
   "idReadequacao" INT PRIMARY KEY NOT NULL,
   "idPronac" INT NOT NULL,
@@ -1396,11 +1396,11 @@ CREATE TABLE sac.tbReadequacao
   "stAnalise" CHAR(2),
   "idNrReuniao" INT,
   "stEstado" INTEGER DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_tbReadequacao_Projetos FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_tbReadequacao_tbTipoReadequacao FOREIGN KEY (idTipoReadequacao) REFERENCES sac.tbTipoReadequacao (idTipoReadequacao),
-  CONSTRAINT FK_tbReadequacao_tbTipoEncaminhamento FOREIGN KEY (siEncaminhamento) REFERENCES sac.tbTipoEncaminhamento (idTipoEncaminhamento)
+  CONSTRAINT "FK_tbReadequacao_Projetos" FOREIGN KEY ("idPronac") REFERENCES sac.Projetos ("IdPRONAC"),
+  CONSTRAINT "FK_tbReadequacao_tbTipoReadequacao" FOREIGN KEY ("idTipoReadequacao") REFERENCES sac."tbTipoReadequacao" ("idTipoReadequacao"),
+  CONSTRAINT "FK_tbReadequacao_tbTipoEncaminhamento" FOREIGN KEY ("siEncaminhamento") REFERENCES sac."tbTipoEncaminhamento" ("idTipoEncaminhamento")
 );
-CREATE TABLE sac.tbPlanoDistribuicao
+CREATE TABLE sac."tbPlanoDistribuicao"
 (
   "idPlanoDistribuicao" INT PRIMARY KEY NOT NULL,
   "idReadequacao" INT,
@@ -1422,13 +1422,13 @@ CREATE TABLE sac.tbPlanoDistribuicao
   "tpAnaliseComissao" CHAR DEFAULT 'N' NOT NULL,
   "stAtivo" CHAR DEFAULT 'S' NOT NULL,
   "idPronac" INT NOT NULL,
-  CONSTRAINT FK_tbPlanoDistribuicao_tbReadequacao FOREIGN KEY (idReadequacao) REFERENCES sac.tbReadequacao (idReadequacao),
-  CONSTRAINT tbPlanoDistribuicao_Produto_FK1 FOREIGN KEY (idProduto) REFERENCES sac.Produto (Codigo),
-  CONSTRAINT tbPlanoDistribuicao_Area_FK FOREIGN KEY (cdArea) REFERENCES sac.Area (Codigo),
-  CONSTRAINT tbPlanoDistribuicao_Segmento_FK FOREIGN KEY (cdSegmento) REFERENCES sac.Segmento (Codigo),
-  CONSTRAINT tbPlanoDistribuicao_Verificacao_FK FOREIGN KEY (idPosicaoLogo) REFERENCES sac.Verificacao (idVerificacao)
+  CONSTRAINT "FK_tbPlanoDistribuicao_tbReadequacao" FOREIGN KEY ("idReadequacao") REFERENCES sac."tbReadequacao" ("idReadequacao"),
+  CONSTRAINT "tbPlanoDistribuicao_Produto_FK1" FOREIGN KEY ("idProduto") REFERENCES sac."Produto" ("Codigo"),
+  CONSTRAINT "tbPlanoDistribuicao_Area_FK" FOREIGN KEY ("cdArea") REFERENCES sac."Area" ("Codigo"),
+  CONSTRAINT "tbPlanoDistribuicao_Segmento_FK" FOREIGN KEY ("cdSegmento") REFERENCES sac.Segmento ("Codigo"),
+  CONSTRAINT "tbPlanoDistribuicao_Verificacao_FK" FOREIGN KEY ("idPosicaoLogo") REFERENCES sac.Verificacao ("idVerificacao")
 );
-CREATE TABLE sac.tbPlanoDivulgacao
+CREATE TABLE sac."tbPlanoDivulgacao"
 (
   "idPlanoDivulgacao" INT PRIMARY KEY NOT NULL,
   "idReadequacao" INT,
@@ -1439,10 +1439,10 @@ CREATE TABLE sac.tbPlanoDivulgacao
   "tpAnaliseComissao" CHAR DEFAULT 'N' NOT NULL,
   "stAtivo" CHAR DEFAULT 'S' NOT NULL,
   "idPronac" INT NOT NULL,
-  CONSTRAINT FK_tbPlanoDivulgacao_tbReadequacao FOREIGN KEY (idReadequacao) REFERENCES sac.tbReadequacao (idReadequacao)
+  CONSTRAINT "FK_tbPlanoDivulgacao_tbReadequacao" FOREIGN KEY ("idReadequacao") REFERENCES sac."tbReadequacao" ("idReadequacao")
 );
 
-CREATE TABLE sac.tbRecurso
+CREATE TABLE sac."tbRecurso"
 (
   "idRecurso" INT PRIMARY KEY NOT NULL,
   "IdPRONAC" INT NOT NULL,
@@ -1460,10 +1460,10 @@ CREATE TABLE sac.tbRecurso
   "stAnalise" CHAR(2),
   "idNrReuniao" INT,
   "stEstado" INTEGER DEFAULT 0 NOT NULL,
-  CONSTRAINT fktbRecurso_Projetos FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC)
+  CONSTRAINT "fktbRecurso_Projetos" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC")
 );
-CREATE INDEX IX_tbRecurso ON sac.tbRecurso (IdPRONAC);
-CREATE TABLE sac.AberturaDeContaBancaria
+CREATE INDEX "IX_tbRecurso" ON sac."tbRecurso" ("IdPRONAC");
+CREATE TABLE sac."AberturaDeContaBancaria"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -1475,50 +1475,50 @@ CREATE TABLE sac.AberturaDeContaBancaria
   "Orgao" INT DEFAULT 0 NOT NULL,
   "Logon" INT NOT NULL,
   "idAberturaDeConta" INT,
-  CONSTRAINT PK_AberturaDeContaBancaria PRIMARY KEY (AnoProjeto, Sequencial),
-  CONSTRAINT FK_AberturaDeContaBancaria_Projetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_AberturaDeContaBancaria" PRIMARY KEY ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_AberturaDeContaBancaria_Projetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.AberturaDeContaSav39215
+CREATE TABLE sac."AberturaDeContaSav39215"
 (
   "informacao" CHAR(150)
 );
-CREATE INDEX IX_AberturaDeContaSav39215 ON sac.AberturaDeContaSav39215 (informacao);
-CREATE TABLE sac.AberturaDeContaSav39224
+CREATE INDEX "IX_AberturaDeContaSav39215" ON sac."AberturaDeContaSav39215" ("informacao");
+CREATE TABLE sac."AberturaDeContaSav39224"
 (
   "informacao" CHAR(150)
 );
-CREATE INDEX IX_AberturaDeContaSav39224 ON sac.AberturaDeContaSav39224 (informacao);
-CREATE TABLE sac.AberturaDeContaSav39225
+CREATE INDEX "IX_AberturaDeContaSav39224" ON sac."AberturaDeContaSav39224" ("informacao");
+CREATE TABLE sac."AberturaDeContaSav39225"
 (
   "informacao" CHAR(150)
 );
-CREATE INDEX IX_AberturaDeContaSav39225 ON sac.AberturaDeContaSav39225 (informacao);
-CREATE TABLE sac.AberturaDeContaSav39227
+CREATE INDEX "IX_AberturaDeContaSav39225" ON sac."AberturaDeContaSav39225" ("informacao");
+CREATE TABLE sac."AberturaDeContaSav39227"
 (
   "informacao" CHAR(150)
 );
-CREATE INDEX IX_AberturaDeContaSav39227 ON sac.AberturaDeContaSav39227 (informacao);
-CREATE TABLE sac.AberturaDeContaSeficPF40979
+CREATE INDEX "IX_AberturaDeContaSav39227" ON sac."AberturaDeContaSav39227" ("informacao");
+CREATE TABLE sac."AberturaDeContaSeficPF40979"
 (
   "Informacao" CHAR(150)
 );
-CREATE INDEX IX_AberturaDeContaSeficPF40979 ON sac.AberturaDeContaSeficPF40979 (Informacao);
-CREATE TABLE sac.AberturaDeContaSeficPF40980
+CREATE INDEX "IX_AberturaDeContaSeficPF40979" ON sac."AberturaDeContaSeficPF40979" ("Informacao");
+CREATE TABLE sac."AberturaDeContaSeficPF40980"
 (
   "Informacao" CHAR(150)
 );
-CREATE INDEX IX_AberturaDeContaSeficPF40980 ON sac.AberturaDeContaSeficPF40980 (Informacao);
-CREATE TABLE sac.AberturaDeContaSeficPJ40975
+CREATE INDEX "IX_AberturaDeContaSeficPF40980" ON sac."AberturaDeContaSeficPF40980" ("Informacao");
+CREATE TABLE sac."AberturaDeContaSeficPJ40975"
 (
   "Informacao" CHAR(150)
 );
-CREATE INDEX IX_AberturaDeContaSeficPJ40975 ON sac.AberturaDeContaSeficPJ40975 (Informacao);
-CREATE TABLE sac.AberturaDeContaSeficPJ40981
+CREATE INDEX "IX_AberturaDeContaSeficPJ40975" ON sac."AberturaDeContaSeficPJ40975" ("Informacao");
+CREATE TABLE sac."AberturaDeContaSeficPJ40981"
 (
   "Informacao" CHAR(150)
 );
-CREATE INDEX IX_AberturaDeContaSeficPJ40981 ON sac.AberturaDeContaSeficPJ40981 (Informacao);
-CREATE TABLE sac.Abrangencia
+CREATE INDEX "IX_AberturaDeContaSeficPJ40981" ON sac."AberturaDeContaSeficPJ40981" ("Informacao");
+CREATE TABLE sac."Abrangencia"
 (
   "idAbrangencia" INT PRIMARY KEY NOT NULL,
   "idProjeto" INT NOT NULL,
@@ -1531,12 +1531,12 @@ CREATE TABLE sac.Abrangencia
   "dsJustificativa" VARCHAR(500),
   "dtInicioRealizacao" timestamp,
   "dtFimRealizacao" timestamp,
-  CONSTRAINT FK_Abrangencia_PreProjeto FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto)
+  CONSTRAINT "FK_Abrangencia_PreProjeto" FOREIGN KEY ("idProjeto") REFERENCES sac."PreProjeto" ("idPreProjeto")
 );
-CREATE SEQUENCE sac.abrangencia_idabrangencia_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE sac.abrangencia ALTER COLUMN idabrangencia SET DEFAULT nextval('sac.abrangencia_idabrangencia_seq');
-ALTER SEQUENCE sac.abrangencia_idabrangencia_seq OWNED BY sac.abrangencia.idabrangencia;
-CREATE TABLE sac.AcaoProduto
+CREATE SEQUENCE sac."abrangencia_idabrangencia_seq" NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac."abrangencia" ALTER COLUMN "idabrangencia" SET DEFAULT nextval('sac.abrangencia_idabrangencia_seq');
+ALTER SEQUENCE sac."abrangencia_idabrangencia_seq" OWNED BY sac."abrangencia"."idabrangencia";
+CREATE TABLE sac."AcaoProduto"
 (
   "Entidade" int NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -1549,8 +1549,8 @@ CREATE TABLE sac.AcaoProduto
   "QtdeExistente" INT DEFAULT 0 NOT NULL,
   "Localizacao" INT DEFAULT 0 NOT NULL
 );
-CREATE INDEX IX_AcaoProduto ON sac.AcaoProduto (Entidade, AnoProjeto, Sequencial);
-CREATE TABLE sac.AcaoProjeto
+CREATE INDEX "IX_AcaoProduto" ON sac."AcaoProduto" ("Entidade", "AnoProjeto", "Sequencial");
+CREATE TABLE sac."AcaoProjeto"
 (
   "Entidade" int NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -1566,9 +1566,9 @@ CREATE TABLE sac.AcaoProjeto
   "Sumario" TEXT,
   "Mecanismo" CHAR,
   "DescEntidade" VARCHAR(100),
-  CONSTRAINT PK_AcaoProjeto PRIMARY KEY (Entidade, AnoProjeto, Sequencial, Tipo)
+  CONSTRAINT "PK_AcaoProjeto" PRIMARY KEY ("Entidade", "AnoProjeto", "Sequencial", "Tipo")
 );
-CREATE TABLE sac.AgenciasBB
+CREATE TABLE sac."AgenciasBB"
 (
   "AGENCIA" CHAR(5),
   "NOME" VARCHAR(50),
@@ -1578,7 +1578,7 @@ CREATE TABLE sac.AgenciasBB
   "BAIRRO" VARCHAR(50),
   "MUNICIPIO" VARCHAR(50)
 );
-CREATE TABLE sac.Aprovacao
+CREATE TABLE sac."Aprovacao"
 (
   "idAprovacao" INT PRIMARY KEY NOT NULL,
   "IdPRONAC" INT,
@@ -1603,18 +1603,18 @@ CREATE TABLE sac.Aprovacao
   "Logon" INT NOT NULL,
   "idProrrogacao" INT DEFAULT NULL,
   "IDREADEQUACAO" INT,
-  CONSTRAINT fk_Aprovacao_02 FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_AprovacaoProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_Aprovacao_Prorrogacao FOREIGN KEY (idProrrogacao) REFERENCES sac.Prorrogacao (idProrrogacao),
-  CONSTRAINT fk_Aprovacao_01 FOREIGN KEY (idProrrogacao) REFERENCES sac.Prorrogacao (idProrrogacao),
-  CONSTRAINT FK_TBREADEQUACAO_APROVACAO_IDADEQUACAO FOREIGN KEY (IDREADEQUACAO) REFERENCES sac.tbReadequacao (idReadequacao)
+  CONSTRAINT "fk_Aprovacao_02" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_AprovacaoProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_Aprovacao_Prorrogacao" FOREIGN KEY ("idProrrogacao") REFERENCES sac."Prorrogacao" ("idProrrogacao"),
+  CONSTRAINT "fk_Aprovacao_01" FOREIGN KEY ("idProrrogacao") REFERENCES sac."Prorrogacao" ("idProrrogacao"),
+  CONSTRAINT "FK_TBREADEQUACAO_APROVACAO_IDADEQUACAO" FOREIGN KEY ("IDREADEQUACAO") REFERENCES sac."tbReadequacao" ("idReadequacao")
 );
 -- ALTER TABLE sac.Aprovacao ADD CONSTRAINT FK_Aprovacao_Aprovacao FOREIGN KEY (AnoProjeto, Sequencial, TipoAprovacao, DtAprovacao) REFERENCES sac.Aprovacao (AnoProjeto, Sequencial, TipoAprovacao, DtAprovacao);
-CREATE UNIQUE INDEX UQ_Aprovacao_1__14 ON sac.Aprovacao (AnoProjeto, Sequencial, TipoAprovacao, DtAprovacao);
-CREATE INDEX indDtAprovacao ON sac.Aprovacao (DtAprovacao);
-CREATE INDEX IX_Aprovacao_1 ON sac.Aprovacao (PortariaAprovacao);
-CREATE INDEX IX_Aprovacao ON sac.Aprovacao (AnoProjeto, Sequencial);
-CREATE TABLE sac.AvaliacaoPC
+CREATE UNIQUE INDEX "UQ_Aprovacao_1__14" ON sac."Aprovacao" ("AnoProjeto", "Sequencial", 'TipoAprovacao', "DtAprovacao");
+CREATE INDEX "indDtAprovacao" ON sac."Aprovacao" ("DtAprovacao");
+CREATE INDEX "IX_Aprovacao_1" ON sac."Aprovacao" ("PortariaAprovacao");
+CREATE INDEX "IX_Aprovacao" ON sac."Aprovacao" ("AnoProjeto", 'Sequencial');
+CREATE TABLE sac."AvaliacaoPC"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -1654,25 +1654,25 @@ CREATE TABLE sac.AvaliacaoPC
   "Justificativa" TEXT NOT NULL,
   "Providencia" VARCHAR(1000) NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_AvaliacaoPC PRIMARY KEY (AnoProjeto, Sequencial),
-  CONSTRAINT FK_AvaliacaoPC_Projetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_AvaliacaoPC" PRIMARY KEY ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_AvaliacaoPC_Projetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ('AnoProjeto', "Sequencial")
 );
-CREATE TABLE sac.AvaliacaoProjeto
+CREATE TABLE sac."AvaliacaoProjeto"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "CodParametro" int NOT NULL,
   "CodPeso" int NOT NULL,
-  CONSTRAINT PK_AvaliacaoProjeto PRIMARY KEY (AnoProjeto, Sequencial, CodParametro, CodPeso)
+  CONSTRAINT "PK_AvaliacaoProjeto" PRIMARY KEY ("AnoProjeto", "Sequencial", "CodParametro", "CodPeso")
 );
-CREATE TABLE sac.AvaliacaoProponente
+CREATE TABLE sac."AvaliacaoProponente"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "CodParametro" int NOT NULL,
   "CodPeso" int NOT NULL,
-  CONSTRAINT PK_AvaliacaoProponente PRIMARY KEY (CgcCpf, CodParametro, CodPeso)
+  CONSTRAINT "PK_AvaliacaoProponente" PRIMARY KEY ("CgcCpf", "CodParametro", "CodPeso")
 );
-CREATE TABLE sac.BancoAgencia
+CREATE TABLE sac."BancoAgencia"
 (
   "Banco" CHAR(3) NOT NULL,
   "Agencia" VARCHAR(5) NOT NULL,
@@ -1686,7 +1686,7 @@ CREATE TABLE sac.BancoAgencia
   "Fax" VARCHAR(12),
   "Perfil" int NOT NULL
 );
-CREATE TABLE sac.BancoAgencia20100824
+CREATE TABLE sac."BancoAgencia20100824"
 (
   "Banco" CHAR(3) NOT NULL,
   "Agencia" VARCHAR(5) NOT NULL,
@@ -1700,11 +1700,11 @@ CREATE TABLE sac.BancoAgencia20100824
   "Fax" VARCHAR(12),
   "Perfil" int NOT NULL
 );
-CREATE TABLE sac.BancoAgencia_08
+CREATE TABLE sac."BancoAgencia_08"
 (
   "Banco" CHAR(3) NOT NULL
 );
-CREATE TABLE sac.BancoAgencia_BKP_04112009X
+CREATE TABLE sac."BancoAgencia_BKP_04112009X"
 (
   "Banco" CHAR(3) NOT NULL,
   "Agencia" VARCHAR(5) NOT NULL,
@@ -1718,7 +1718,7 @@ CREATE TABLE sac.BancoAgencia_BKP_04112009X
   "Fax" VARCHAR(12),
   "Perfil" int NOT NULL
 );
-CREATE TABLE sac.BancoAgenciaNovo
+CREATE TABLE sac."BancoAgenciaNovo"
 (
   "Banco" CHAR(3) NOT NULL,
   "Agencia" VARCHAR(5) NOT NULL,
@@ -1729,7 +1729,7 @@ CREATE TABLE sac.BancoAgenciaNovo
   "Uf" CHAR(2) NOT NULL,
   "Perfil" int NOT NULL
 );
-CREATE TABLE sac.BancoAgenciaNovo1
+CREATE TABLE sac."BancoAgenciaNovo1"
 (
   "Banco" VARCHAR(255) NOT NULL,
   "Agencia" VARCHAR(255) NOT NULL,
@@ -1740,7 +1740,7 @@ CREATE TABLE sac.BancoAgenciaNovo1
   "Uf" VARCHAR(255) NOT NULL,
   "Perfil" VARCHAR(255) NOT NULL
 );
-CREATE TABLE sac.Bandas
+CREATE TABLE sac."Bandas"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -1756,10 +1756,10 @@ CREATE TABLE sac.Bandas
   "PNacional" INTEGER DEFAULT 0,
   "PInternacional" INTEGER DEFAULT 0,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_Bandas PRIMARY KEY (AnoProjeto, Sequencial),
-  CONSTRAINT FK_BandasProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_Bandas" PRIMARY KEY ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_BandasProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.BcoAgMar2011$
+CREATE TABLE sac."BcoAgMar2011$"
 (
   "BCO" VARCHAR(255),
   "AGENCIA" VARCHAR(255),
@@ -1773,7 +1773,7 @@ CREATE TABLE sac.BcoAgMar2011$
   "FAX" FLOAT,
   "PERFIL" FLOAT
 );
-CREATE TABLE sac.Bolsa
+CREATE TABLE sac."Bolsa"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -1793,10 +1793,10 @@ CREATE TABLE sac.Bolsa
   "DtFimAjuda" timestamp NOT NULL,
   "Portfolio" TEXT,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_Bolsa PRIMARY KEY (AnoProjeto, Sequencial),
-  CONSTRAINT Fk_BolsaProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_Bolsa" PRIMARY KEY ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "Fk_BolsaProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.Captacao
+CREATE TABLE sac."Captacao"
 (
   "Idcaptacao" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -1814,12 +1814,12 @@ CREATE TABLE sac.Captacao
   "siTransferenciaRecurso" CHAR,
   "dtTransferenciaRecurso" timestamp,
   "isBemServico" CHAR DEFAULT '0' NOT NULL,
-  CONSTRAINT FK_CaptacaoProjetos_20160219 FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_Incentivador_20160219 FOREIGN KEY (CgcCpfMecena) REFERENCES sac.Interessado (CgcCpf)
+  CONSTRAINT "FK_CaptacaoProjetos_20160219" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_Incentivador_20160219" FOREIGN KEY ("CgcCpfMecena") REFERENCES sac."Interessado" ("CgcCpf")
 );
-CREATE INDEX IndCgcCpf_20160219 ON sac.Captacao (CgcCpfMecena);
-CREATE INDEX IX_Captacao_20160219 ON sac.Captacao (AnoProjeto, Sequencial);
-CREATE TABLE sac.CaptacaoConversao
+CREATE INDEX "IndCgcCpf_20160219" ON sac."Captacao" ("CgcCpfMecena");
+CREATE INDEX "IX_Captacao_20160219" ON sac."Captacao" ("AnoProjeto", "Sequencial");
+CREATE TABLE sac."CaptacaoConversao"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -1827,10 +1827,10 @@ CREATE TABLE sac.CaptacaoConversao
   "DtConversao" timestamp NOT NULL,
   "Valor" MONEY NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_CaptacaoConversao PRIMARY KEY (AnoProjeto, Sequencial, NumeroRecibo),
-  CONSTRAINT FK_CaptacaoConversao_Projetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_CaptacaoConversao" PRIMARY KEY ("AnoProjeto", "Sequencial", "NumeroRecibo"),
+  CONSTRAINT "FK_CaptacaoConversao_Projetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.CaptacaoGuia
+CREATE TABLE sac."CaptacaoGuia"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -1839,12 +1839,12 @@ CREATE TABLE sac.CaptacaoGuia
   "Observacao" VARCHAR(250) DEFAULT 'NÆo informado' NOT NULL,
   "CaptacaoReal" MONEY NOT NULL,
   "Logon" INT DEFAULT 236 NOT NULL,
-  CONSTRAINT PK_CaptacaoGuia PRIMARY KEY (AnoProjeto, Sequencial, NumeroGuia),
-  CONSTRAINT FK_CaptacaoGuiaProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_CaptacaoGuiaRecolhimento FOREIGN KEY (NumeroGuia) REFERENCES sac.GuiaRecolhimento (NumeroGuia)
+  CONSTRAINT "PK_CaptacaoGuia" PRIMARY KEY ("AnoProjeto", "Sequencial", "NumeroGuia"),
+  CONSTRAINT "FK_CaptacaoGuiaProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_CaptacaoGuiaRecolhimento" FOREIGN KEY ("NumeroGuia") REFERENCES sac."GuiaRecolhimento" ("NumeroGuia")
 );
-CREATE INDEX indNumeroGuia ON sac.CaptacaoGuia (NumeroGuia);
-CREATE TABLE sac.CaptacaoOLD
+CREATE INDEX "indNumeroGuia" ON sac."CaptacaoGuia" ("NumeroGuia");
+CREATE TABLE sac."CaptacaoOLD"
 (
   "Idcaptacao" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -1862,12 +1862,12 @@ CREATE TABLE sac.CaptacaoOLD
   "siTransferenciaRecurso" CHAR,
   "dtTransferenciaRecurso" timestamp,
   "isBemServico" CHAR DEFAULT '0' NOT NULL,
-  CONSTRAINT FK_CaptacaoProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_Incentivador FOREIGN KEY (CgcCpfMecena) REFERENCES sac.Interessado (CgcCpf)
+  CONSTRAINT "FK_CaptacaoProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_Incentivador" FOREIGN KEY ("CgcCpfMecena") REFERENCES sac."Interessado" ("CgcCpf")
 );
-CREATE INDEX IndCaptacaoOLDCgcCpf ON sac.CaptacaoOLD (CgcCpfMecena);
-CREATE INDEX IX_Captacao ON sac.CaptacaoOLD (AnoProjeto, Sequencial);
-CREATE TABLE sac.CaptacaoQuotas
+CREATE INDEX "IndCaptacaoOLDCgcCpf" ON sac."CaptacaoOLD" ("CgcCpfMecena");
+CREATE INDEX "IX_Captacao" ON sac."CaptacaoOLD" ("AnoProjeto", "Sequencial");
+CREATE TABLE sac."CaptacaoQuotas"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -1879,10 +1879,10 @@ CREATE TABLE sac.CaptacaoQuotas
   "QtdQuotasIntegr" INT NOT NULL,
   "Observacao" VARCHAR(255) NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_CaptacaoQuotas PRIMARY KEY (AnoProjeto, Sequencial, AnoCav, SequencialCav, NIntegra),
-  CONSTRAINT FkCaptacaoQuotasProjeto FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_CaptacaoQuotas" PRIMARY KEY ("AnoProjeto", "Sequencial", "AnoCav", "SequencialCav", "NIntegra"),
+  CONSTRAINT "FkCaptacaoQuotasProjeto" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.CarregaReciboCaptacaoDanca
+CREATE TABLE sac."CarregaReciboCaptacaoDanca"
 (
   "pronac" CHAR(6),
   "AnoProjeto" CHAR(2),
@@ -1901,7 +1901,7 @@ CREATE TABLE sac.CarregaReciboCaptacaoDanca
   "telefone" CHAR(12),
   "PFPJ" CHAR
 );
-CREATE TABLE sac.CarregaReciboCaptacaoDanca2010
+CREATE TABLE sac."CarregaReciboCaptacaoDanca2010"
 (
   "pronac" CHAR(6),
   "AnoProjeto" CHAR(2),
@@ -1920,7 +1920,7 @@ CREATE TABLE sac.CarregaReciboCaptacaoDanca2010
   "telefone" CHAR(12),
   "PFPJ" CHAR
 );
-CREATE TABLE sac.CarregaReciboCaptacaoDanca2012
+CREATE TABLE sac."CarregaReciboCaptacaoDanca2012"
 (
   "pronac" CHAR(6),
   "AnoProjeto" CHAR(2),
@@ -1939,7 +1939,7 @@ CREATE TABLE sac.CarregaReciboCaptacaoDanca2012
   "telefone" CHAR(12),
   "PFPJ" CHAR
 );
-CREATE TABLE sac.CarregaReciboCaptacaoDanca2013
+CREATE TABLE sac."CarregaReciboCaptacaoDanca2013"
 (
   "pronac" CHAR(6),
   "AnoProjeto" CHAR(2),
@@ -1958,14 +1958,14 @@ CREATE TABLE sac.CarregaReciboCaptacaoDanca2013
   "telefone" CHAR(12),
   "PFPJ" CHAR
 );
-CREATE TABLE sac.Carta
+CREATE TABLE sac."Carta"
 (
   "Codigo" VARCHAR(3) PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL,
   "Status" INTEGER DEFAULT 0 NOT NULL
 );
-CREATE UNIQUE INDEX AK_Carta ON sac.Carta (Codigo);
-CREATE TABLE sac.CartaEventual
+CREATE UNIQUE INDEX "AK_Carta" ON sac."Carta" ("Codigo");
+CREATE TABLE sac."CartaEventual"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2),
@@ -1974,10 +1974,10 @@ CREATE TABLE sac.CartaEventual
   "Texto" TEXT,
   "Orgao" INT NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT FK_CartaEventualProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "FK_CartaEventualProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE UNIQUE INDEX AK_CartaEventual ON sac.CartaEventual (Contador);
-CREATE TABLE sac.CertidoesNegativas
+CREATE UNIQUE INDEX "AK_CartaEventual" ON sac."CartaEventual" ("Contador");
+CREATE TABLE sac."CertidoesNegativas"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "CodigoCertidao" INT NOT NULL,
@@ -1989,9 +1989,9 @@ CREATE TABLE sac.CertidoesNegativas
   "idCertidoesnegativas" INT PRIMARY KEY NOT NULL,
   "cdProtocoloNegativa" CHAR(15),
   "cdSituacaoCertidao" int,
-  CONSTRAINT FK_CertidoesInteressado FOREIGN KEY (CgcCpf) REFERENCES sac.Interessado (CgcCpf)
+  CONSTRAINT "FK_CertidoesInteressado" FOREIGN KEY ("CgcCpf") REFERENCES sac."Interessado" ("CgcCpf")
 );
-CREATE TABLE sac.CNIC
+CREATE TABLE sac."CNIC"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -2001,10 +2001,10 @@ CREATE TABLE sac.CNIC
   "ResultadoDaAnalise" int NOT NULL,
   "Observacao" TEXT NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_CNIC PRIMARY KEY (AnoProjeto, Sequencial, NrReuniao),
-  CONSTRAINT FK_CNIC_Projetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_CNIC" PRIMARY KEY ("AnoProjeto", "Sequencial", "NrReuniao"),
+  CONSTRAINT "FK_CNIC_Projetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.Complementacao
+CREATE TABLE sac."Complementacao"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -2018,26 +2018,26 @@ CREATE TABLE sac.Complementacao
   "SolicitadoCapitalReal" MONEY DEFAULT 0 NOT NULL,
   "Atendimento" CHAR DEFAULT 'N' NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_Complementacao PRIMARY KEY (AnoProjeto, Sequencial, Pedido, DtComplementacao),
-  CONSTRAINT FK_ComplementacaoProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_Complementacao" PRIMARY KEY ("AnoProjeto", "Sequencial", "Pedido", "DtComplementacao"),
+  CONSTRAINT "FK_ComplementacaoProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE UNIQUE INDEX AK_Complementacao ON sac.Complementacao (AnoProjeto, Sequencial, Pedido, DtComplementacao);
-CREATE TABLE sac.Conselheiro
+CREATE UNIQUE INDEX "AK_Complementacao" ON sac."Complementacao" ("AnoProjeto", "Sequencial", "Pedido", "DtComplementacao");
+CREATE TABLE sac."Conselheiro"
 (
   "Codigo" int PRIMARY KEY NOT NULL,
   "Nome" VARCHAR(50) NOT NULL,
   "Condicao" VARCHAR(50),
   "Status" INTEGER DEFAULT 1 NOT NULL
 );
-CREATE UNIQUE INDEX UQ_Conselheiro ON sac.Conselheiro (Codigo);
-CREATE TABLE sac.Consultor
+CREATE UNIQUE INDEX "UQ_Conselheiro" ON sac."Conselheiro" ("Codigo");
+CREATE TABLE sac."Consultor"
 (
   "Codigo" INT PRIMARY KEY NOT NULL,
   "Nome" VARCHAR(50) NOT NULL,
   "Area" CHAR NOT NULL,
   "Status" INTEGER DEFAULT 0 NOT NULL
 );
-CREATE TABLE sac.ConsultoresPC
+CREATE TABLE sac."ConsultoresPC"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2050,10 +2050,10 @@ CREATE TABLE sac.ConsultoresPC
   "idPRONAC" INT,
   "idAgente" INT,
   "QtdeVolume" INT DEFAULT 1 NOT NULL,
-  CONSTRAINT FK_ConsultoresPCProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "FK_ConsultoresPCProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE INDEX IX_ConsultoresPC ON sac.ConsultoresPC (Consultor);
-CREATE TABLE sac.ContaBancaria
+CREATE INDEX "IX_ConsultoresPC" ON sac."ConsultoresPC" ("Consultor");
+CREATE TABLE sac."ContaBancaria"
 (
   "IdContaBancaria" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2071,11 +2071,11 @@ CREATE TABLE sac.ContaBancaria
   "OcorrenciaCL" CHAR(3) DEFAULT '000',
   "Logon" INT NOT NULL,
   "idPronac" INT,
-  CONSTRAINT Fk_ContaBancariaProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT fk_ContaBancaria_01 FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC)
+  CONSTRAINT "Fk_ContaBancariaProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "fk_ContaBancaria_01" FOREIGN KEY ("idPronac") REFERENCES sac."Projetos" ("IdPRONAC")
 );
-CREATE UNIQUE INDEX IX_ContaBancaria ON sac.ContaBancaria (AnoProjeto, Sequencial, Mecanismo);
-CREATE TABLE sac.Convenio
+CREATE UNIQUE INDEX "IX_ContaBancaria" ON sac."ContaBancaria" ("AnoProjeto", "Sequencial", "Mecanismo");
+CREATE TABLE sac."Convenio"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2092,12 +2092,12 @@ CREATE TABLE sac.Convenio
   "ValorConvenio" MONEY DEFAULT 0,
   "Logon" INT NOT NULL,
   "idProjeto" INT,
-  CONSTRAINT FK_ConvenioProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT fk_Convenio__01 FOREIGN KEY (idProjeto) REFERENCES sac.Projetos (IdPRONAC)
+  CONSTRAINT "FK_ConvenioProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "fk_Convenio__01" FOREIGN KEY ("idProjeto") REFERENCES sac."Projetos" ("IdPRONAC")
 );
-CREATE INDEX indNumeroConvenio ON sac.Convenio (NumeroConvenio);
-CREATE INDEX IX_Convenio ON sac.Convenio (AnoProjeto, Sequencial);
-CREATE TABLE sac.CPBX
+CREATE INDEX "indNumeroConvenio" ON sac."Convenio" ("NumeroConvenio");
+CREATE INDEX "IX_Convenio" ON sac."Convenio" ("AnoProjeto", "Sequencial");
+CREATE TABLE sac."CPBX"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -2105,11 +2105,11 @@ CREATE TABLE sac.CPBX
   "DtCpb" timestamp NOT NULL,
   "Logon" INT NOT NULL,
   "Observacao" VARCHAR(255) NOT NULL,
-  CONSTRAINT PK_CPB PRIMARY KEY (AnoProjeto, Sequencial),
-  CONSTRAINT FK_CpbProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_CPB" PRIMARY KEY ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_CpbProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE INDEX IndCbp ON sac.CPBX (Cpb);
-CREATE TABLE sac.CriteriosX
+CREATE INDEX "IndCbp" ON sac."CPBX" ("Cpb");
+CREATE TABLE sac.'CriteriosX'
 (
   "IdCriterios" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2120,37 +2120,37 @@ CREATE TABLE sac.CriteriosX
   "Justificativa" TEXT NOT NULL,
   "Logon" INT NOT NULL,
   "IdParecerVinculdas" INT,
-  CONSTRAINT FK_Criterios_Projetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_Criterios_ParecerVinculadas FOREIGN KEY (IdParecerVinculdas) REFERENCES sac.ParecerVinculadasX (idParecerVinculadas)
+  CONSTRAINT "FK_Criterios_Projetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_Criterios_ParecerVinculadas" FOREIGN KEY ("IdParecerVinculdas") REFERENCES sac."ParecerVinculadasX" ("idParecerVinculadas")
 );
-CREATE TABLE sac.Curriculo
+CREATE TABLE sac."Curriculo"
 (
   "CgcCpf" VARCHAR(14) PRIMARY KEY NOT NULL,
   "Nivel" int NOT NULL,
   "CadastroSav" INTEGER DEFAULT 0 NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT FK_Curriculo_Interessado FOREIGN KEY (CgcCpf) REFERENCES sac.Interessado (CgcCpf)
+  CONSTRAINT "FK_Curriculo_Interessado" FOREIGN KEY ("CgcCpf") REFERENCES sac."Interessado" ("CgcCpf")
 );
-CREATE TABLE sac.Dbf
+CREATE TABLE sac."Dbf"
 (
   "TipoRegistro" CHAR,
   "Ano" CHAR(2),
   "Sequencial" VARCHAR(5),
   "Informacao" VARCHAR(250)
 );
-CREATE TABLE sac.Dbf_Agosto
+CREATE TABLE sac."Dbf_Agosto"
 (
   "Informacao" VARCHAR(250)
 );
-CREATE TABLE sac.Dbf_Dezembro
+CREATE TABLE sac."Dbf_Dezembro"
 (
   "Informacao" VARCHAR(250)
 );
-CREATE TABLE sac.Dbf_Maio
+CREATE TABLE sac."Dbf_Maio"
 (
   "Informacao" VARCHAR(250)
 );
-CREATE TABLE sac.dbresult
+CREATE TABLE sac."dbresult"
 (
   "Ano" INT,
   "Cap18" MONEY,
@@ -2161,12 +2161,12 @@ CREATE TABLE sac.dbresult
   "B_A" MONEY,
   "C_A" MONEY
 );
-CREATE TABLE sac.DeOrgaoParaOrgao
+CREATE TABLE sac."DeOrgaoParaOrgao"
 (
   "DeOrgao" INT NOT NULL,
   "ParaOrgao" INT NOT NULL
 );
-CREATE TABLE sac.DistribuicaoPassagem
+CREATE TABLE sac."DistribuicaoPassagem"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -2179,13 +2179,13 @@ CREATE TABLE sac.DistribuicaoPassagem
   "DtDevolucaoBilhete" timestamp,
   "DtRelatorio" timestamp,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_DistribuicaoPassagem PRIMARY KEY (AnoProjeto, Sequencial, CgcCpf),
-  CONSTRAINT Fk_DistribuicaoPassagem FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Passagem (AnoProjeto, Sequencial),
-  CONSTRAINT FK_DistribuicaoProjeto FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_DistribuicaoInteressado FOREIGN KEY (CgcCpf) REFERENCES sac.Interessado (CgcCpf)
+  CONSTRAINT "PK_DistribuicaoPassagem" PRIMARY KEY ("AnoProjeto", "Sequencial", "CgcCpf"),
+  CONSTRAINT "Fk_DistribuicaoPassagem" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Passagem" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_DistribuicaoProjeto" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_DistribuicaoInteressado" FOREIGN KEY ("CgcCpf") REFERENCES sac."Interessado" ("CgcCpf")
 );
-CREATE INDEX indDistribuicaoPassagemCgcCpf ON sac.DistribuicaoPassagem (CgcCpf);
-CREATE TABLE sac.DocumentoPessoal
+CREATE INDEX "indDistribuicaoPassagemCgcCpf" ON sac."DistribuicaoPassagem" ("CgcCpf");
+CREATE TABLE sac."DocumentoPessoal"
 (
   "idDocumentoPessoal" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) DEFAULT 0 NOT NULL,
@@ -2199,11 +2199,11 @@ CREATE TABLE sac.DocumentoPessoal
   "Campo5" VARCHAR(20),
   "Status" INTEGER DEFAULT 1,
   "Logon" INT NOT NULL,
-  CONSTRAINT fk_DocumentoPessoal_01 FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_DocumentoPessoal_TipoDocumento FOREIGN KEY (Codigo) REFERENCES sac.TipoDocumento (Codigo)
+  CONSTRAINT "fk_DocumentoPessoal_01" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_DocumentoPessoal_TipoDocumento" FOREIGN KEY ("Codigo") REFERENCES sac."TipoDocumento" ("Codigo")
 );
-CREATE INDEX IX_DocumentoPessoal ON sac.DocumentoPessoal (AnoProjeto, Sequencial, Seq);
-CREATE TABLE sac.DocumentosExigidos
+CREATE INDEX "IX_DocumentoPessoal" ON sac."DocumentoPessoal" ("AnoProjeto", "Sequencial", "Seq");
+CREATE TABLE sac."DocumentosExigidos"
 (
   "Codigo" INT PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
@@ -2212,8 +2212,8 @@ CREATE TABLE sac.DocumentosExigidos
   "stEstado" INTEGER DEFAULT 1 NOT NULL,
   "stUpload" INTEGER DEFAULT 0
 );
-CREATE UNIQUE INDEX AK_DocumentosExigidos ON sac.DocumentosExigidos (Codigo);
-CREATE TABLE sac.DocumentosProjeto
+CREATE UNIQUE INDEX "AK_DocumentosExigidos" ON sac."DocumentosExigidos" ("Codigo");
+CREATE TABLE sac."DocumentosProjeto"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2),
@@ -2221,14 +2221,14 @@ CREATE TABLE sac.DocumentosProjeto
   "CodigoDocumento" INT NOT NULL,
   "idPRONAC" INT,
   "idProjeto" INT,
-  CONSTRAINT FK_DocProjetoProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_DocProjetosDocExigidos FOREIGN KEY (CodigoDocumento) REFERENCES sac.DocumentosExigidos (Codigo),
-  CONSTRAINT FK_DocumentosProjeto_Projetos FOREIGN KEY (idPRONAC) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_DocumentosProjeto_PreProjeto FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto)
+  CONSTRAINT "FK_DocProjetoProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_DocProjetosDocExigidos" FOREIGN KEY ("CodigoDocumento") REFERENCES sac."DocumentosExigidos" ("Codigo"),
+  CONSTRAINT "FK_DocumentosProjeto_Projetos" FOREIGN KEY ("idPRONAC") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_DocumentosProjeto_PreProjeto" FOREIGN KEY ("idProjeto") REFERENCES sac."PreProjeto" ("idPreProjeto")
 );
-CREATE UNIQUE INDEX AK_DocumentosProjeto ON sac.DocumentosProjeto (Contador);
-CREATE INDEX indPronac ON sac.DocumentosProjeto (AnoProjeto, Sequencial);
-CREATE TABLE sac.DocumentosProponente
+CREATE UNIQUE INDEX "AK_DocumentosProjeto" ON sac."DocumentosProjeto" ("Contador");
+CREATE INDEX "indPronac" ON sac."DocumentosProjeto" ("AnoProjeto", "Sequencial");
+CREATE TABLE sac."DocumentosProponente"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "CgcCpf" VARCHAR(14),
@@ -2237,14 +2237,14 @@ CREATE TABLE sac.DocumentosProponente
   "CodigoDocumento" INT NOT NULL,
   "IdPRONAC" INT,
   "IdProjeto" INT,
-  CONSTRAINT fk_DocumentosProponente_03 FOREIGN KEY (CgcCpf) REFERENCES sac.Interessado (CgcCpf),
-  CONSTRAINT fk_DocumentosProponente_04 FOREIGN KEY (CodigoDocumento) REFERENCES sac.DocumentosExigidos (Codigo),
-  CONSTRAINT FK_DocumentosProponente_Projetos FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_DocumentosProponente_PreProjeto FOREIGN KEY (IdProjeto) REFERENCES sac.PreProjeto (idPreProjeto)
+  CONSTRAINT "fk_DocumentosProponente_03" FOREIGN KEY ("CgcCpf") REFERENCES sac."Interessado" ("CgcCpf"),
+  CONSTRAINT "fk_DocumentosProponente_04" FOREIGN KEY ("CodigoDocumento") REFERENCES sac."DocumentosExigidos" ("Codigo"),
+  CONSTRAINT "FK_DocumentosProponente_Projetos" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_DocumentosProponente_PreProjeto" FOREIGN KEY ("IdProjeto") REFERENCES sac."PreProjeto" ("idPreProjeto")
 );
-CREATE UNIQUE INDEX AK_DocumentosProponente ON sac.DocumentosProponente (Contador);
-CREATE INDEX IndDocumentosProponenteCgcCpf ON sac.DocumentosProponente (CgcCpf);
-CREATE TABLE sac.EditalDesembolso
+CREATE UNIQUE INDEX "AK_DocumentosProponente" ON sac."DocumentosProponente" ("Contador");
+CREATE INDEX "IndDocumentosProponenteCgcCpf" ON sac."DocumentosProponente" ("CgcCpf");
+CREATE TABLE sac."EditalDesembolso"
 (
   "idDesembolso" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2260,30 +2260,30 @@ CREATE TABLE sac.EditalDesembolso
   "NrEmpenhoCusteio" VARCHAR(12) DEFAULT '' NOT NULL,
   "NrOrdemBancariaCusteio" VARCHAR(12) DEFAULT '' NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT FK_EditalDesembolso_Projetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_EditalDesembolso_EditalParcelas FOREIGN KEY (idEdital, NrParcela) REFERENCES sac.EditalParcelas (idEdital, NrParcela),
-  CONSTRAINT FK_EditalDesembolso_Edital FOREIGN KEY (idEdital) REFERENCES sac.Edital (idEdital)
+  CONSTRAINT "FK_EditalDesembolso_Projetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_EditalDesembolso_EditalParcelas" FOREIGN KEY ("idEdital", "NrParcela") REFERENCES sac."EditalParcelas" ("idEdital", "NrParcela"),
+  CONSTRAINT "FK_EditalDesembolso_Edital" FOREIGN KEY ("idEdital") REFERENCES sac."Edital" ("idEdital")
 );
-CREATE INDEX IX_EditalDesembolso ON sac.EditalDesembolso (AnoProjeto, Sequencial);
-CREATE INDEX IX_EditalDesembolso_1 ON sac.EditalDesembolso (idEdital);
-CREATE INDEX IX_EditalDesembolso_2 ON sac.EditalDesembolso (idEdital, NrParcela);
-CREATE TABLE sac.EfeitosEconomicos
+CREATE INDEX "IX_EditalDesembolso" ON sac."EditalDesembolso" ("AnoProjeto", "Sequencial");
+CREATE INDEX "IX_EditalDesembolso_1" ON sac."EditalDesembolso" ("idEdital");
+CREATE INDEX "IX_EditalDesembolso_2" ON sac."EditalDesembolso" ("idEdital", "NrParcela");
+CREATE TABLE sac."EfeitosEconomicos"
 (
   "Codigo" int PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.EfeitosResultado
+CREATE TABLE sac."EfeitosResultado"
 (
   "Codigo" INT PRIMARY KEY NOT NULL,
   "Opcao" int NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.EfeitosSociais
+CREATE TABLE sac."EfeitosSociais"
 (
   "Codigo" int PRIMARY KEY NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.Empenho
+CREATE TABLE sac."Empenho"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "UgGestao" CHAR(6) NOT NULL,
@@ -2296,25 +2296,25 @@ CREATE TABLE sac.Empenho
   "DtEmpenho" timestamp NOT NULL,
   "Valor" MONEY NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT FK_Empenho_UgGestao FOREIGN KEY (UgGestao) REFERENCES sac.UgGestao (Codigo),
-  CONSTRAINT FK_Empenho_UGR FOREIGN KEY (UgR) REFERENCES sac.UGR (Codigo),
-  CONSTRAINT FK_Empenho_PtRes FOREIGN KEY (PtRes) REFERENCES sac.PtRes (Codigo),
-  CONSTRAINT FK_Empenho_ProgramaTrabalho FOREIGN KEY (ProgramaTrabalho) REFERENCES sac.ProgramaTrabalho (Codigo),
-  CONSTRAINT FK_Empenho_Fonte FOREIGN KEY (FonteRecurso) REFERENCES sac.Fonte (Codigo),
-  CONSTRAINT FK_Empenho_ElementoDespesa FOREIGN KEY (NaturezaDespesa) REFERENCES sac.NaturezaDespesa (Codigo)
+  CONSTRAINT "FK_Empenho_UgGestao" FOREIGN KEY ("UgGestao") REFERENCES sac."UgGestao" ("Codigo"),
+  CONSTRAINT "FK_Empenho_UGR" FOREIGN KEY ("UgR") REFERENCES sac."UGR" ("Codigo"),
+  CONSTRAINT "FK_Empenho_PtRes" FOREIGN KEY ("PtRes") REFERENCES sac."PtRes" ("Codigo"),
+  CONSTRAINT "FK_Empenho_ProgramaTrabalho" FOREIGN KEY ("ProgramaTrabalho") REFERENCES sac."ProgramaTrabalho" ("Codigo"),
+  CONSTRAINT "FK_Empenho_Fonte" FOREIGN KEY ("FonteRecurso") REFERENCES sac."Fonte" ("Codigo"),
+  CONSTRAINT "FK_Empenho_ElementoDespesa" FOREIGN KEY ("NaturezaDespesa") REFERENCES sac."NaturezaDespesa" ("Codigo")
 );
-CREATE INDEX IX_Empenho ON sac.Empenho (NrEmpenho);
-CREATE TABLE sac.EmpenhoProjeto
+CREATE INDEX "IX_Empenho" ON sac."Empenho" ("NrEmpenho");
+CREATE TABLE sac."EmpenhoProjeto"
 (
   "CodigoEmpenho" INT NOT NULL,
   "CodigoConvenio" INT NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT FK_EmpenhoProjeto_Empenho FOREIGN KEY (CodigoEmpenho) REFERENCES sac.Empenho (Contador),
-  CONSTRAINT FK_EmpenhoProjeto_Convenio FOREIGN KEY (CodigoConvenio) REFERENCES sac.Convenio (Contador)
+  CONSTRAINT "FK_EmpenhoProjeto_Empenho" FOREIGN KEY ("CodigoEmpenho") REFERENCES sac."Empenho" ("Contador"),
+  CONSTRAINT "FK_EmpenhoProjeto_Convenio" FOREIGN KEY ("CodigoConvenio") REFERENCES sac."Convenio" ("Contador")
 );
-CREATE INDEX IX_EmpenhoProjeto ON sac.EmpenhoProjeto (CodigoEmpenho);
-CREATE INDEX IX_EmpenhoProjeto_1 ON sac.EmpenhoProjeto (CodigoConvenio);
-CREATE TABLE sac.Enquadramento
+CREATE INDEX "IX_EmpenhoProjeto" ON sac."EmpenhoProjeto" ("CodigoEmpenho");
+CREATE INDEX "IX_EmpenhoProjeto_1" ON sac."EmpenhoProjeto" ("CodigoConvenio");
+CREATE TABLE sac."Enquadramento"
 (
   "IdEnquadramento" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2324,29 +2324,29 @@ CREATE TABLE sac.Enquadramento
   "Observacao" VARCHAR(255) NOT NULL,
   "Logon" INT NOT NULL,
   "IdPRONAC" INT NOT NULL,
-  CONSTRAINT Fk_EnquadramentoProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_Enquadramento_Projetos FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC)
+  CONSTRAINT "Fk_EnquadramentoProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", 'Sequencial'),
+  CONSTRAINT "FK_Enquadramento_Projetos" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC")
 );
-CREATE UNIQUE INDEX IX_Enquadramento ON sac.Enquadramento (IdPRONAC);
-CREATE TABLE sac.EntregaProduto
+CREATE UNIQUE INDEX "IX_Enquadramento" ON sac."Enquadramento" ("IdPRONAC");
+CREATE TABLE sac."EntregaProduto"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "DtEntrega" timestamp NOT NULL,
   "Observacao" VARCHAR(255) NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_EntregaProduto PRIMARY KEY (AnoProjeto, Sequencial),
-  CONSTRAINT FK_EntregaProdutoProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_EntregaProduto" PRIMARY KEY ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_EntregaProdutoProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.Etiqueta
+CREATE TABLE sac."Etiqueta"
 (
   "Ano" CHAR(4) NOT NULL,
   "Mecanismo" CHAR NOT NULL,
   "Sequencial" INT NOT NULL,
-  CONSTRAINT PK_Etiqueta PRIMARY KEY (Ano, Mecanismo)
+  CONSTRAINT "PK_Etiqueta" PRIMARY KEY ("Ano", "Mecanismo")
 );
-CREATE UNIQUE INDEX AK_Etiqueta ON sac.Etiqueta (Ano, Mecanismo);
-CREATE TABLE sac.Evolucao
+CREATE UNIQUE INDEX "AK_Etiqueta" ON sac."Etiqueta" ("Ano", "Mecanismo");
+CREATE TABLE sac."Evolucao"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -2355,11 +2355,11 @@ CREATE TABLE sac.Evolucao
   "DtTermino" timestamp NOT NULL,
   "InfRelevantes" VARCHAR(250) NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_Evolucao PRIMARY KEY (AnoProjeto, Sequencial, Fase),
-  CONSTRAINT FK_EvolucaoProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_EvolucaoFase FOREIGN KEY (Fase) REFERENCES sac.Fase (Codigo)
+  CONSTRAINT "PK_Evolucao" PRIMARY KEY ("AnoProjeto", "Sequencial", "Fase"),
+  CONSTRAINT "FK_EvolucaoProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_EvolucaoFase" FOREIGN KEY ("Fase") REFERENCES sac."Fase" ("Codigo")
 );
-CREATE TABLE sac.GeralExt
+CREATE TABLE sac."GeralExt"
 (
   "NrReuniao" INT,
   "AreaCultural" VARCHAR(50) NOT NULL,
@@ -2379,7 +2379,7 @@ CREATE TABLE sac.GeralExt
   "Processo" VARCHAR(17),
   "Situacao" VARCHAR(150) NOT NULL
 );
-CREATE TABLE sac.GrupoEmpresarial
+CREATE TABLE sac."GrupoEmpresarial"
 (
   "Codigo" INT PRIMARY KEY NOT NULL,
   "NomeGrupo" VARCHAR(100) NOT NULL,
@@ -2391,7 +2391,7 @@ CREATE TABLE sac.GrupoEmpresarial
   "Pais" VARCHAR(50) DEFAULT 'Brasil' NOT NULL,
   "Presidente" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.HistoricoAspectosResultado
+CREATE TABLE sac."HistoricoAspectosResultado"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2406,12 +2406,12 @@ CREATE TABLE sac.HistoricoAspectosResultado
   "QtdSociais" INT NOT NULL,
   "Logon" INT NOT NULL,
 --   CONSTRAINT FK_HistoricoAspectosResultado_AspectosResultados FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.,
-  CONSTRAINT FK_HistoricoAspectosResultado_Impacto FOREIGN KEY (Impacto) REFERENCES sac.ImpactoX (Codigo),
-  CONSTRAINT FK_HistoricoAspectosResultado_EfeitosEconomicos FOREIGN KEY (EfeitosEconomicos) REFERENCES sac.EfeitosEconomicos (Codigo),
-  CONSTRAINT FK_HistoricoAspectosResultado_EfeitosSociais FOREIGN KEY (EfeitosSociais) REFERENCES sac.EfeitosSociais (Codigo)
+  CONSTRAINT "FK_HistoricoAspectosResultado_Impacto" FOREIGN KEY ("Impacto") REFERENCES sac."ImpactoX" ("Codigo"),
+  CONSTRAINT "FK_HistoricoAspectosResultado_EfeitosEconomicos" FOREIGN KEY ("EfeitosEconomicos") REFERENCES sac."EfeitosEconomicos" ("Codigo"),
+  CONSTRAINT "FK_HistoricoAspectosResultado_EfeitosSociais" FOREIGN KEY ("EfeitosSociais") REFERENCES sac."EfeitosSociais" ("Codigo")
 );
-CREATE INDEX IX_HistoricoAspectosResultado ON sac.HistoricoAspectosResultado (AnoProjeto, Sequencial);
-CREATE TABLE sac.HistoricoAutuacaoX
+CREATE INDEX "IX_HistoricoAspectosResultado" ON sac."HistoricoAspectosResultado" ("AnoProjeto", "Sequencial");
+CREATE TABLE sac."HistoricoAutuacaoX"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2422,7 +2422,7 @@ CREATE TABLE sac.HistoricoAutuacaoX
   "Logon" INT NOT NULL--,
 --   CONSTRAINT FK_HistoricoAutuacao_Autuacao FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES
 );
-CREATE TABLE sac.HistoricoCarta
+CREATE TABLE sac."HistoricoCarta"
 (
   "idHistoricoCarta" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2432,15 +2432,15 @@ CREATE TABLE sac.HistoricoCarta
   "Status" CHAR DEFAULT 'N' NOT NULL,
   "Orgao" INT NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT FK_HistoricoCartaProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT fk_HistoricoCartaCarta_01 FOREIGN KEY (NumeroCarta) REFERENCES sac.Carta (Codigo)
+  CONSTRAINT "FK_HistoricoCartaProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "fk_HistoricoCartaCarta_01" FOREIGN KEY ("NumeroCarta") REFERENCES sac."Carta" ("Codigo")
 );
-CREATE UNIQUE INDEX AK_HistoricoCarta ON sac.HistoricoCarta (AnoProjeto, Sequencial, NumeroCarta, DtCarta);
-CREATE INDEX IX_DtCarta ON sac.HistoricoCarta (DtCarta);
-CREATE INDEX IX_NumeroCarta ON sac.HistoricoCarta (NumeroCarta);
-CREATE INDEX IX_Orgao ON sac.HistoricoCarta (Orgao);
-CREATE INDEX IX_Status ON sac.HistoricoCarta (Status);
-CREATE TABLE sac.HistoricoDelecaoAprovacao
+CREATE UNIQUE INDEX "AK_HistoricoCarta" ON sac."HistoricoCarta" ("AnoProjeto", "Sequencial", "NumeroCarta", "DtCarta");
+CREATE INDEX "IX_DtCarta" ON sac."HistoricoCarta" ("DtCarta");
+CREATE INDEX "IX_NumeroCarta" ON sac."HistoricoCarta" ("NumeroCarta");
+CREATE INDEX "IX_Orgao" ON sac."HistoricoCarta" ("Orgao");
+CREATE INDEX "IX_Status" ON sac."HistoricoCarta" ("Status");
+CREATE TABLE sac."HistoricoDelecaoAprovacao"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2450,8 +2450,8 @@ CREATE TABLE sac.HistoricoDelecaoAprovacao
   "NrPortaria" VARCHAR(10) NOT NULL,
   "Logon" INT NOT NULL
 );
-CREATE INDEX IX_HistoricoDelecaoAprovacao ON sac.HistoricoDelecaoAprovacao (AnoProjeto, Sequencial, TipoAprovacao, DtDelecao);
-CREATE TABLE sac.HistoricoInabilitado
+CREATE INDEX "IX_HistoricoDelecaoAprovacao" ON sac."HistoricoDelecaoAprovacao" ("AnoProjeto", "Sequencial", "TipoAprovacao", "DtDelecao");
+CREATE TABLE sac."HistoricoInabilitado"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "CgcCpf" VARCHAR(14) NOT NULL,
@@ -2462,9 +2462,9 @@ CREATE TABLE sac.HistoricoInabilitado
   "Habilitado" CHAR NOT NULL,
   "Logon" INT NOT NULL
 );
-CREATE INDEX IX_HistoricoInabilitado ON sac.HistoricoInabilitado (CgcCpf, AnoProjeto, Sequencial);
-CREATE INDEX IX_HistoricoInabilitado_1 ON sac.HistoricoInabilitado (AnoProjeto, Sequencial);
-CREATE TABLE sac.HistoricoSituacao
+CREATE INDEX "IX_HistoricoInabilitado" ON sac."HistoricoInabilitado" ("CgcCpf", "AnoProjeto", "Sequencial");
+CREATE INDEX "IX_HistoricoInabilitado_1" ON sac."HistoricoInabilitado" ("AnoProjeto", "Sequencial");
+CREATE TABLE sac."HistoricoSituacao"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2473,12 +2473,12 @@ CREATE TABLE sac.HistoricoSituacao
   "Situacao" CHAR(3) NOT NULL,
   "ProvidenciaTomada" VARCHAR(500) DEFAULT ' ',
   "Logon" INT,
-  CONSTRAINT FK_HistoricoSituacaoProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_HistoricioSituacaoSituacao FOREIGN KEY (Situacao) REFERENCES sac.Situacao (Codigo)
+  CONSTRAINT "FK_HistoricoSituacaoProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_HistoricioSituacaoSituacao" FOREIGN KEY ("Situacao") REFERENCES sac."Situacao" ("Codigo")
 );
-CREATE INDEX indAnoSequencial ON sac.HistoricoSituacao (AnoProjeto, Sequencial);
-CREATE INDEX IndHistoricoSituacaoSituacao ON sac.HistoricoSituacao (Situacao);
-CREATE TABLE sac.HistoricoUnidade
+CREATE INDEX "indAnoSequencial" ON sac."HistoricoSituacao" ("AnoProjeto", "Sequencial");
+CREATE INDEX "IndHistoricoSituacaoSituacao" ON sac."HistoricoSituacao" ("Situacao");
+CREATE TABLE sac."HistoricoUnidade"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2487,10 +2487,10 @@ CREATE TABLE sac.HistoricoUnidade
   "UnidadeAnalise" VARCHAR(15),
   "DtRetorno" timestamp,
   "Logon" INT NOT NULL,
-  CONSTRAINT FK_HistoricoUnidadeProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "FK_HistoricoUnidadeProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE UNIQUE INDEX AK_HistoricoUnidade ON sac.HistoricoUnidade (Contador);
-CREATE TABLE sac.Humanidades
+CREATE UNIQUE INDEX "AK_HistoricoUnidade" ON sac."HistoricoUnidade" ("Contador");
+CREATE TABLE sac."Humanidades"
 (
   "AnoProjeto" CHAR(2) DEFAULT 0 NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -2506,9 +2506,9 @@ CREATE TABLE sac.Humanidades
   "PdComercializacao" int DEFAULT 0 NOT NULL,
   "Logon" INT NOT NULL,
   "idHumanidades" INT PRIMARY KEY NOT NULL,
-  CONSTRAINT FK_Humanidades_Projetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "FK_Humanidades_Projetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.Inabilitado
+CREATE TABLE sac."Inabilitado"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "AnoProjeto" CHAR(2) DEFAULT 'XX' NOT NULL,
@@ -2519,13 +2519,13 @@ CREATE TABLE sac.Inabilitado
   "idProjeto" INT,
   "idTipoInabilitado" INT DEFAULT 8,
   "dtInabilitado" DATE,
-  CONSTRAINT PK_Inabilitado PRIMARY KEY (CgcCpf, AnoProjeto, Sequencial),
-  CONSTRAINT FK_InabilitadoProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_Inabilitado_01 FOREIGN KEY (idProjeto) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_Inabilitado_tbTipoInabilitado FOREIGN KEY (idTipoInabilitado) REFERENCES sac.tbTipoInabilitado (idTipoInabilitado)
+  CONSTRAINT "PK_Inabilitado" PRIMARY KEY ("CgcCpf", "AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_InabilitadoProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_Inabilitado_01" FOREIGN KEY ("idProjeto") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_Inabilitado_tbTipoInabilitado" FOREIGN KEY ("idTipoInabilitado") REFERENCES sac."tbTipoInabilitado" ("idTipoInabilitado")
 );
-CREATE UNIQUE INDEX AK_Inabilitado ON sac.Inabilitado (CgcCpf, AnoProjeto, Sequencial);
-CREATE TABLE sac.InformacaoTrimestralX
+CREATE UNIQUE INDEX "AK_Inabilitado" ON sac."Inabilitado" ("CgcCpf", "AnoProjeto", "Sequencial");
+CREATE TABLE sac."InformacaoTrimestralX"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -2537,21 +2537,21 @@ CREATE TABLE sac.InformacaoTrimestralX
   "Trimestre4" INTEGER DEFAULT 0 NOT NULL,
   "Observacao" VARCHAR(250) DEFAULT ' ',
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_InformacaoTrimestral_6__14 PRIMARY KEY (AnoProjeto, Sequencial, AnoRelatorio, FisicoFinanceiro),
-  CONSTRAINT FK_InformacaoProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_InformacaoTrimestral_6__14" PRIMARY KEY ("AnoProjeto", "Sequencial", "AnoRelatorio", "FisicoFinanceiro"),
+  CONSTRAINT "FK_InformacaoProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.InstrumentoBanda
+CREATE TABLE sac."InstrumentoBanda"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "Opcao" CHAR NOT NULL,
   "Codigo" SMALLINT NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_InstrumentoBanda PRIMARY KEY (AnoProjeto, Sequencial, Opcao, Codigo),
-  CONSTRAINT FK_InstrumentoBandaProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_InstrumentoBandaKitBanda FOREIGN KEY (Codigo) REFERENCES sac.KitBanda (Codigo)
+  CONSTRAINT "PK_InstrumentoBanda" PRIMARY KEY ("AnoProjeto", "Sequencial", "Opcao", "Codigo"),
+  CONSTRAINT "FK_InstrumentoBandaProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_InstrumentoBandaKitBanda" FOREIGN KEY ("Codigo") REFERENCES sac."KitBanda" ("Codigo")
 );
-CREATE TABLE sac.KitEntregue
+CREATE TABLE sac."KitEntregue"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -2560,10 +2560,10 @@ CREATE TABLE sac.KitEntregue
   "DtEntrega" timestamp,
   "ValorKit" MONEY DEFAULT 0 NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_KitEntregue PRIMARY KEY (AnoProjeto, Sequencial),
-  CONSTRAINT FK_KitEntregueProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_KitEntregue" PRIMARY KEY ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_KitEntregueProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.Lembrete
+CREATE TABLE sac."Lembrete"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "Logon" INT NOT NULL,
@@ -2572,10 +2572,10 @@ CREATE TABLE sac.Lembrete
   "DtLembrete" timestamp NOT NULL,
   "Lembrete" VARCHAR(250) NOT NULL
 );
-CREATE INDEX IX_Lembrete ON sac.Lembrete (Logon, DtLembrete);
-CREATE INDEX IX_Logon ON sac.Lembrete (Logon);
-CREATE INDEX IX_NumeroProjeto ON sac.Lembrete (AnoProjeto, Sequencial);
-CREATE TABLE sac.Liberacao
+CREATE INDEX "IX_Lembrete" ON sac."Lembrete" ("Logon", "DtLembrete");
+CREATE INDEX "IX_Logon" ON sac."Lembrete" ("Logon");
+CREATE INDEX "IX_NumeroProjeto" ON sac."Lembrete" ("AnoProjeto", "Sequencial");
+CREATE TABLE sac."Liberacao"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -2589,10 +2589,10 @@ CREATE TABLE sac.Liberacao
   "Permissao" CHAR DEFAULT 'S' NOT NULL,
   "Logon" INT NOT NULL,
   "VlLiberado" MONEY DEFAULT 0 NOT NULL,
-  CONSTRAINT PK_Liberacao PRIMARY KEY (AnoProjeto, Sequencial, Mecanismo),
-  CONSTRAINT FK_LiberacaoProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_Liberacao" PRIMARY KEY ("AnoProjeto", "Sequencial", "Mecanismo"),
+  CONSTRAINT "FK_LiberacaoProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.NomeCampoDoc
+CREATE TABLE sac."NomeCampoDoc"
 (
   "Codigo" INT PRIMARY KEY NOT NULL,
   "Campo1" VARCHAR(15) NOT NULL,
@@ -2605,9 +2605,9 @@ CREATE TABLE sac.NomeCampoDoc
   "TipoAtributo4" int,
   "Campo5" VARCHAR(15) NOT NULL,
   "TipoAtributo5" int,
-  CONSTRAINT FK_NomeCampoDoc_TipoDocumento FOREIGN KEY (Codigo) REFERENCES sac.TipoDocumento (Codigo)
+  CONSTRAINT "FK_NomeCampoDoc_TipoDocumento" FOREIGN KEY ("Codigo") REFERENCES sac."TipoDocumento" ("Codigo")
 );
-CREATE TABLE sac.OrcamentoDetalhado
+CREATE TABLE sac."OrcamentoDetalhado"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2623,8 +2623,8 @@ CREATE TABLE sac.OrcamentoDetalhado
   "AprovadoReal" MONEY DEFAULT 0 NOT NULL,
   "Logon" INT NOT NULL
 );
-CREATE INDEX indOrcamentoDetalhadoPronac ON sac.OrcamentoDetalhado (AnoProjeto, Sequencial, Mecanismo, Opcao, Orcamento);
-CREATE TABLE sac.OrdemBancaria
+CREATE INDEX "indOrcamentoDetalhadoPronac" ON sac."OrcamentoDetalhado" ("AnoProjeto", "Sequencial", "Mecanismo", "Opcao", "Orcamento");
+CREATE TABLE sac."OrdemBancaria"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "NrOrdemBancaria" CHAR(12) NOT NULL,
@@ -2632,25 +2632,25 @@ CREATE TABLE sac.OrdemBancaria
   "Valor" MONEY NOT NULL,
   "Logon" INT NOT NULL
 );
-CREATE INDEX IX_OrdemBancaria ON sac.OrdemBancaria (NrOrdemBancaria);
-CREATE TABLE sac.OrdemBancariaProjeto
+CREATE INDEX "IX_OrdemBancaria" ON sac."OrdemBancaria" ("NrOrdemBancaria");
+CREATE TABLE sac."OrdemBancariaProjeto"
 (
   "CodigoOrdemBancaria" INT NOT NULL,
   "CodigoConvenio" INT NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT FK_OrdemBancariaProjeto_OrdemBancaria FOREIGN KEY (CodigoOrdemBancaria) REFERENCES sac.OrdemBancaria (Contador),
-  CONSTRAINT FK_OrdemBancariaProjeto_Convenio FOREIGN KEY (CodigoConvenio) REFERENCES sac.Convenio (Contador)
+  CONSTRAINT "FK_OrdemBancariaProjeto_OrdemBancaria" FOREIGN KEY ("CodigoOrdemBancaria") REFERENCES sac."OrdemBancaria" ("Contador"),
+  CONSTRAINT "FK_OrdemBancariaProjeto_Convenio" FOREIGN KEY ("CodigoConvenio") REFERENCES sac."Convenio" ("Contador")
 );
-CREATE INDEX IX_OrdemBancariaProjeto ON sac.OrdemBancariaProjeto (CodigoOrdemBancaria);
-CREATE INDEX IX_OrdemBancariaProjeto_1 ON sac.OrdemBancariaProjeto (CodigoConvenio);
-CREATE TABLE sac.OrgaoAntesDaAncineX
+CREATE INDEX "IX_OrdemBancariaProjeto" ON sac."OrdemBancariaProjeto" ("CodigoOrdemBancaria");
+CREATE INDEX "IX_OrdemBancariaProjeto_1" ON sac."OrdemBancariaProjeto" ("CodigoConvenio");
+CREATE TABLE sac."OrgaoAntesDaAncineX"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "Orgao" INT NOT NULL,
-  CONSTRAINT PK_OrgaoAntesDaAncine PRIMARY KEY (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_OrgaoAntesDaAncine" PRIMARY KEY ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.PagamentoBolsista
+CREATE TABLE sac."PagamentoBolsista"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -2662,10 +2662,10 @@ CREATE TABLE sac.PagamentoBolsista
   "Passagens" MONEY NOT NULL,
   "SeguroSaude" MONEY NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_PagamentoBolsista PRIMARY KEY (AnoProjeto, Sequencial, NumeroParcela),
-  CONSTRAINT FK_PagamentoBolsista_Bolsa FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Bolsa (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_PagamentoBolsista" PRIMARY KEY ("AnoProjeto", "Sequencial", "NumeroParcela"),
+  CONSTRAINT "FK_PagamentoBolsista_Bolsa" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Bolsa" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.Parecer
+CREATE TABLE sac."Parecer"
 (
   "IdParecer" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2689,30 +2689,30 @@ CREATE TABLE sac.Parecer
   "idEnquadramento" INT,
   "stAtivo" INTEGER DEFAULT 1 NOT NULL,
   "idTipoAgente" INT DEFAULT 1 NOT NULL,
-  CONSTRAINT FK_ParecerProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT FK_Parecer FOREIGN KEY (Conselheiro) REFERENCES sac.Conselheiro (Codigo),
-  CONSTRAINT FK_Parecer_tbReuniao FOREIGN KEY (NumeroReuniao) REFERENCES sac.tbReuniao (idNrReuniao),
-  CONSTRAINT FK_Parecer_Projetos FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_Parecer_Enquadramento FOREIGN KEY (idEnquadramento) REFERENCES sac.Enquadramento (IdEnquadramento)
+  CONSTRAINT "FK_ParecerProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_Parecer" FOREIGN KEY ("Conselheiro") REFERENCES sac."Conselheiro" ("Codigo"),
+  CONSTRAINT "FK_Parecer_tbReuniao" FOREIGN KEY ("NumeroReuniao") REFERENCES sac."tbReuniao" ("idNrReuniao"),
+  CONSTRAINT "FK_Parecer_Projetos" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_Parecer_Enquadramento" FOREIGN KEY ("idEnquadramento") REFERENCES sac."Enquadramento" ("IdEnquadramento")
 );
-CREATE UNIQUE INDEX AK_Parecer ON sac.Parecer (AnoProjeto, Sequencial, TipoParecer, DtParecer);
-CREATE INDEX IX_NumeroReuniao ON sac.Parecer (NumeroReuniao);
-CREATE INDEX _dta_index_Parecer_6_732737863__K21_K6_K19_K12_5 ON sac.Parecer (stAtivo, DtParecer, IdPRONAC, SugeridoReal, ParecerFavoravel);
-CREATE INDEX _dta_index_Parecer_6_732737863__K19_K6_K21_K12_5 ON sac.Parecer (IdPRONAC, DtParecer, stAtivo, SugeridoReal, ParecerFavoravel);
-CREATE INDEX _dta_index_Parecer_6_732737863__K22_K21_K6_K19_5_12 ON sac.Parecer (idTipoAgente, stAtivo, DtParecer, IdPRONAC, ParecerFavoravel, SugeridoReal);
-CREATE INDEX _dta_index_Parecer_6_732737863__K19_K6_K21_K1_K4_5 ON sac.Parecer (IdPRONAC, DtParecer, stAtivo, IdParecer, TipoParecer, ParecerFavoravel);
-CREATE INDEX _dta_index_Parecer_6_732737863__K21_K19_5 ON sac.Parecer (stAtivo, IdPRONAC, ParecerFavoravel);
-CREATE INDEX IX_IdPronac ON sac.Parecer (IdPRONAC);
-CREATE INDEX IX_AnoSequencial ON sac.Parecer (AnoProjeto, Sequencial, ParecerFavoravel, SugeridoReal);
-CREATE TABLE sac.tbReadequacaoXParecer
+CREATE UNIQUE INDEX "AK_Parecer" ON sac."Parecer" ("AnoProjeto", "Sequencial", "TipoParecer", "DtParecer");
+CREATE INDEX "IX_NumeroReuniao" ON sac."Parecer" ("NumeroReuniao");
+CREATE INDEX "_dta_index_Parecer_6_732737863__K21_K6_K19_K12_5" ON sac."Parecer" ("stAtivo", "DtParecer", "IdPRONAC", "SugeridoReal", "ParecerFavoravel");
+CREATE INDEX "_dta_index_Parecer_6_732737863__K19_K6_K21_K12_5" ON sac."Parecer" ("IdPRONAC", "DtParecer", "stAtivo", "SugeridoReal", "ParecerFavoravel");
+CREATE INDEX "_dta_index_Parecer_6_732737863__K22_K21_K6_K19_5_12" ON sac."Parecer" ("idTipoAgente", "stAtivo", "DtParecer", "IdPRONAC", "ParecerFavoravel", "SugeridoReal");
+CREATE INDEX "_dta_index_Parecer_6_732737863__K19_K6_K21_K1_K4_5" ON sac."Parecer" ("IdPRONAC", "DtParecer", "stAtivo", "IdParecer", "TipoParecer", "ParecerFavoravel");
+CREATE INDEX "_dta_index_Parecer_6_732737863__K21_K19_5" ON sac."Parecer" ("stAtivo", "IdPRONAC", "ParecerFavoravel");
+CREATE INDEX "IX_IdPronac" ON sac."Parecer" ("IdPRONAC");
+CREATE INDEX "IX_AnoSequencial" ON sac."Parecer" ("AnoProjeto", "Sequencial", "ParecerFavoravel", "SugeridoReal");
+CREATE TABLE sac."tbReadequacaoXParecer"
 (
   "idReadequacaoXParecer" INT PRIMARY KEY NOT NULL,
   "idReadequacao" INT NOT NULL,
   "idParecer" INT NOT NULL,
-  CONSTRAINT FK_tbReadequacaoXParecer_tbReadequacao FOREIGN KEY (idReadequacao) REFERENCES sac.tbReadequacao (idReadequacao),
-  CONSTRAINT FK_tbReadequacaoXParecer_Parecer FOREIGN KEY (idParecer) REFERENCES sac.Parecer (IdParecer)
+  CONSTRAINT "FK_tbReadequacaoXParecer_tbReadequacao" FOREIGN KEY ("idReadequacao") REFERENCES sac."tbReadequacao" ("idReadequacao"),
+  CONSTRAINT "FK_tbReadequacaoXParecer_Parecer" FOREIGN KEY ("idParecer") REFERENCES sac."Parecer" ("IdParecer")
 );
-CREATE TABLE sac.ParecerControle
+CREATE TABLE sac."ParecerControle"
 (
   "Contador" INT PRIMARY KEY NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -2728,10 +2728,10 @@ CREATE TABLE sac.ParecerControle
   "DtResposta" timestamp,
   "Resposta" TEXT NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT FK_ParecerControle_Projetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "FK_ParecerControle_Projetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE INDEX IX_ParecerControle ON sac.ParecerControle (AnoProjeto, Sequencial);
-CREATE TABLE sac.ParecerOrcamentoantX
+CREATE INDEX "IX_ParecerControle" ON sac."ParecerControle" ("AnoProjeto", "Sequencial");
+CREATE TABLE sac."ParecerOrcamentoantX"
 (
   "idParecerOrcamento" INT PRIMARY KEY NOT NULL,
   "idParecerVinculadas" INT NOT NULL,
@@ -2740,10 +2740,10 @@ CREATE TABLE sac.ParecerOrcamentoantX
   "Sugerido" MONEY NOT NULL,
   "Aprovado" MONEY DEFAULT 0 NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT FK_ParecerOrcamento_ParecerVinculadas FOREIGN KEY (idParecerVinculadas) REFERENCES sac.ParecerVinculadasantX (idParecerVinculadas)
+  CONSTRAINT "FK_ParecerOrcamento_ParecerVinculadas" FOREIGN KEY ("idParecerVinculadas") REFERENCES sac."ParecerVinculadasantX" ("idParecerVinculadas")
 );
-CREATE INDEX IX_ParecerOrcamento ON sac.ParecerOrcamentoantX (idParecerVinculadas);
-CREATE TABLE sac.ParecerOrcamentoX
+CREATE INDEX "IX_ParecerOrcamento" ON sac."ParecerOrcamentoantX" ("idParecerVinculadas");
+CREATE TABLE sac."ParecerOrcamentoX"
 (
   "idParecerOrcamento" INT PRIMARY KEY NOT NULL,
   "idParecerVinculadas" INT NOT NULL,
@@ -2754,9 +2754,9 @@ CREATE TABLE sac.ParecerOrcamentoX
   "Aprovado" MONEY DEFAULT 0 NOT NULL,
   "JustificativaAprovado" VARCHAR(250) NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT FK1_ParecerOrcamento_ParecerVinculadas FOREIGN KEY (idParecerVinculadas) REFERENCES sac.ParecerVinculadasX (idParecerVinculadas)
+  CONSTRAINT "FK1_ParecerOrcamento_ParecerVinculadas" FOREIGN KEY ("idParecerVinculadas") REFERENCES sac."ParecerVinculadasX" ("idParecerVinculadas")
 );
-CREATE TABLE sac.PlanoDeDivulgacao
+CREATE TABLE sac."PlanoDeDivulgacao"
 (
   "idPlanoDivulgacao" INT PRIMARY KEY NOT NULL,
   "idProjeto" INT NOT NULL,
@@ -2766,14 +2766,14 @@ CREATE TABLE sac.PlanoDeDivulgacao
   "siPlanoDeDivulgacao" CHAR DEFAULT 0 NOT NULL,
   "idDocumento" INT,
   "stPlanoDivulgacao" INTEGER DEFAULT 1 NOT NULL,
-  CONSTRAINT FK_PlanoDeDivulgacao_PreProjeto FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto),
-  CONSTRAINT FK_PlanoDeDivulgacao_Verificacao FOREIGN KEY (idPeca) REFERENCES sac.Verificacao (idVerificacao),
-  CONSTRAINT FK_PlanoDeDivulgacao_Verificacao1 FOREIGN KEY (idVeiculo) REFERENCES sac.Verificacao (idVerificacao)
+  CONSTRAINT "FK_PlanoDeDivulgacao_PreProjeto" FOREIGN KEY ("idProjeto") REFERENCES sac."PreProjeto" ("idPreProjeto"),
+  CONSTRAINT "FK_PlanoDeDivulgacao_Verificacao" FOREIGN KEY ("idPeca") REFERENCES sac."Verificacao" ("idVerificacao"),
+  CONSTRAINT "FK_PlanoDeDivulgacao_Verificacao1" FOREIGN KEY ("idVeiculo") REFERENCES sac."Verificacao" ("idVerificacao")
 );
-CREATE SEQUENCE sac.planodedivulgacao_idplanodivulgacao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE sac.planodedivulgacao ALTER COLUMN idplanodivulgacao SET DEFAULT nextval('sac.planodedivulgacao_idplanodivulgacao_seq');
-ALTER SEQUENCE sac.planodedivulgacao_idplanodivulgacao_seq OWNED BY sac.planodedivulgacao.idplanodivulgacao;
-CREATE TABLE sac.PlanoDistribuicaoProduto
+CREATE SEQUENCE sac."planodedivulgacao_idplanodivulgacao_seq" NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac."planodedivulgacao" ALTER COLUMN "idplanodivulgacao" SET DEFAULT nextval('sac.planodedivulgacao_idplanodivulgacao_seq');
+ALTER SEQUENCE sac."planodedivulgacao_idplanodivulgacao_seq" OWNED BY sac."planodedivulgacao"."idplanodivulgacao";
+CREATE TABLE sac."PlanoDistribuicaoProduto"
 (
   "idPlanoDistribuicao" INT PRIMARY KEY NOT NULL,
   "idProjeto" INT NOT NULL,
@@ -2793,11 +2793,11 @@ CREATE TABLE sac.PlanoDistribuicaoProduto
   "Usuario" INT DEFAULT 0 NOT NULL,
   "dsJustificativaPosicaoLogo" VARCHAR(8000),
   "stPlanoDistribuicaoProduto" INTEGER DEFAULT 1 NOT NULL,
-  CONSTRAINT FK_PlanoDistribuicaoProduto_PreProjeto FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto),
-  CONSTRAINT FK_PlanoDistribuicaoProduto_Produto FOREIGN KEY (idProduto) REFERENCES sac.Produto (Codigo),
-  CONSTRAINT FK_PlanoDistribuicaoProduto_Verificacao FOREIGN KEY (idPosicaoDaLogo) REFERENCES sac.Verificacao (idVerificacao)
+  CONSTRAINT "FK_PlanoDistribuicaoProduto_PreProjeto" FOREIGN KEY ("idProjeto") REFERENCES sac."PreProjeto" ("idPreProjeto"),
+  CONSTRAINT "FK_PlanoDistribuicaoProduto_Produto" FOREIGN KEY ("idProduto") REFERENCES sac."Produto" ("Codigo"),
+  CONSTRAINT "FK_PlanoDistribuicaoProduto_Verificacao" FOREIGN KEY ("idPosicaoDaLogo") REFERENCES sac."Verificacao" ("idVerificacao")
 );
-CREATE TABLE sac.PrestacaoContas
+CREATE TABLE sac."PrestacaoContas"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -2823,10 +2823,10 @@ CREATE TABLE sac.PrestacaoContas
   "OutrasFontes" MONEY DEFAULT 0 NOT NULL,
   "SaldoRecolhido" MONEY DEFAULT 0 NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_PrestacaoContas PRIMARY KEY (AnoProjeto, Sequencial),
-  CONSTRAINT FK_PrestacaoContasProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_PrestacaoContas" PRIMARY KEY ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_PrestacaoContasProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.QuotasCav
+CREATE TABLE sac."QuotasCav"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -2847,10 +2847,10 @@ CREATE TABLE sac.QuotasCav
   "QtdQuotas" INT DEFAULT 0 NOT NULL,
   "VlQuota" MONEY DEFAULT 0 NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_QuotasCav PRIMARY KEY (AnoProjeto, Sequencial, AnoCav, SequencialCav, SequencialIC),
-  CONSTRAINT Fk_QuotasCavProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_QuotasCav" PRIMARY KEY ("AnoProjeto", "Sequencial", "AnoCav", "SequencialCav", "SequencialIC"),
+  CONSTRAINT "Fk_QuotasCavProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.SegmentoAudiovisualMidia
+CREATE TABLE sac."SegmentoAudiovisualMidia"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -2872,15 +2872,15 @@ CREATE TABLE sac.SegmentoAudiovisualMidia
   "FotoArte" INTEGER DEFAULT 0 NOT NULL,
   "VideoFilme" INTEGER DEFAULT 0 NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_SegmentoAudiovisualMid1 PRIMARY KEY (AnoProjeto, Sequencial),
-  CONSTRAINT FK_SegAudioMidiaProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial),
-  CONSTRAINT Fk_SegAudioMidiaMetragem FOREIGN KEY (Metragem) REFERENCES sac.Metragem (Codigo),
-  CONSTRAINT Fk_SegAudioMidiaGenero FOREIGN KEY (Genero) REFERENCES sac.Genero (Codigo),
-  CONSTRAINT Fk_SegAudioMidiaVeiculacao FOREIGN KEY (VeiculacaoPrevista) REFERENCES sac.Veiculacao (Codigo),
-  CONSTRAINT Fk_SegAudioMidiaSuporte FOREIGN KEY (SuporteGravacao) REFERENCES sac.SuporteGravacaoFinalizacao (Codigo),
-  CONSTRAINT Fk_SegAudioMidiaFinalizacao FOREIGN KEY (Finalizacao) REFERENCES sac.SuporteGravacaoFinalizacao (Codigo)
+  CONSTRAINT "PK_SegmentoAudiovisualMid1" PRIMARY KEY ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_SegAudioMidiaProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "Fk_SegAudioMidiaMetragem" FOREIGN KEY ("Metragem") REFERENCES sac."Metragem" ("Codigo"),
+  CONSTRAINT "Fk_SegAudioMidiaGenero" FOREIGN KEY ("Genero") REFERENCES sac."Genero" ("Codigo"),
+  CONSTRAINT "Fk_SegAudioMidiaVeiculacao" FOREIGN KEY ("VeiculacaoPrevista") REFERENCES sac."Veiculacao" ("Codigo"),
+  CONSTRAINT "Fk_SegAudioMidiaSuporte" FOREIGN KEY ("SuporteGravacao") REFERENCES sac."SuporteGravacaoFinalizacao" ("Codigo"),
+  CONSTRAINT "Fk_SegAudioMidiaFinalizacao" FOREIGN KEY ("Finalizacao") REFERENCES sac."SuporteGravacaoFinalizacao" ("Codigo")
 );
-CREATE TABLE sac.SegmentoAudiovisualOutros
+CREATE TABLE sac."SegmentoAudiovisualOutros"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -2892,10 +2892,10 @@ CREATE TABLE sac.SegmentoAudiovisualOutros
   "DtInicioRealizacao" timestamp,
   "DtFimRealizacao" timestamp,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_SegmentoAudivisualOutr1 PRIMARY KEY (AnoProjeto, Sequencial),
-  CONSTRAINT FK_SegAudioOutrosProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_SegmentoAudivisualOutr1" PRIMARY KEY ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_SegAudioOutrosProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.tbAbrangencia
+CREATE TABLE sac."tbAbrangencia"
 (
   "idAbrangencia" INT PRIMARY KEY NOT NULL,
   "idReadequacao" INT,
@@ -2907,9 +2907,9 @@ CREATE TABLE sac.tbAbrangencia
   "tpAnaliseComissao" CHAR DEFAULT 'N' NOT NULL,
   "stAtivo" CHAR DEFAULT 'S' NOT NULL,
   "idPronac" INT NOT NULL,
-  CONSTRAINT FK_tbAbrangencia_tbReadequacao FOREIGN KEY (idReadequacao) REFERENCES sac.tbReadequacao (idReadequacao)
+  CONSTRAINT "FK_tbAbrangencia_tbReadequacao" FOREIGN KEY ("idReadequacao") REFERENCES sac."tbReadequacao" ("idReadequacao")
 );
-CREATE TABLE sac.tbAcertaHistoricoX
+CREATE TABLE sac."tbAcertaHistoricoX"
 (
   "anoprojeto" CHAR(2),
   "sequencial" VARCHAR(5),
@@ -2918,7 +2918,7 @@ CREATE TABLE sac.tbAcertaHistoricoX
   "situacao" CHAR(3),
   "logon" INT
 );
-CREATE TABLE sac.tbAcesso
+CREATE TABLE sac."tbAcesso"
 (
   "idAcesso" INT PRIMARY KEY NOT NULL,
   "idRelatorio" INT,
@@ -2934,9 +2934,9 @@ CREATE TABLE sac.tbAcesso
   "stLocal" CHAR DEFAULT 0,
   "stEstrutura" CHAR,
   "dsJustificativaAcesso" TEXT,
-  CONSTRAINT FK_tbAcesso_tbRelatorio FOREIGN KEY (idRelatorio) REFERENCES sac.tbRelatorio (idRelatorio)
+  CONSTRAINT "FK_tbAcesso_tbRelatorio" FOREIGN KEY ("idRelatorio") REFERENCES sac."tbRelatorio" ("idRelatorio")
 );
-CREATE TABLE sac.tbAnaliseAprovacao
+CREATE TABLE sac."tbAnaliseAprovacao"
 (
   "idAnaliseAprovacao" INT PRIMARY KEY NOT NULL,
   "tpAnalise" CHAR(2) NOT NULL,
@@ -2961,12 +2961,12 @@ CREATE TABLE sac.tbAnaliseAprovacao
   "dsAvaliacao" VARCHAR,
   "idAgente" INT,
   "idAnaliseAprovacaoPai" INT,
-CONSTRAINT FK_tbAnaliseAprovacao_tbAnaliseDeConteudo FOREIGN KEY (idAnaliseConteudo) REFERENCES sac.tbAnaliseDeConteudo (idAnaliseDeConteudo),
-CONSTRAINT fk_tbAnaliseAprovacao_02 FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC),
-CONSTRAINT fk_tbAnaliseAprovacao_01 FOREIGN KEY (idAnaliseAprovacaoPai) REFERENCES sac.tbAnaliseAprovacao (idAnaliseAprovacao)
+CONSTRAINT "FK_tbAnaliseAprovacao_tbAnaliseDeConteudo" FOREIGN KEY ("idAnaliseConteudo") REFERENCES sac."tbAnaliseDeConteudo" ("idAnaliseDeConteudo"),
+CONSTRAINT "fk_tbAnaliseAprovacao_02" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC"),
+CONSTRAINT "fk_tbAnaliseAprovacao_01" FOREIGN KEY ("idAnaliseAprovacaoPai") REFERENCES sac."tbAnaliseAprovacao" ("idAnaliseAprovacao")
 );
-CREATE INDEX IXIDPronac ON sac.tbAnaliseDeConteudo (idPronac DESC);
-CREATE TABLE sac.tbAporteCaptacao
+CREATE INDEX "IXIDPronac" ON sac."tbAnaliseDeConteudo" ("idPronac" DESC);
+CREATE TABLE sac."tbAporteCaptacao"
 (
   "idAporteCaptacao" INT PRIMARY KEY NOT NULL,
   "IdPRONAC" INT NOT NULL,
@@ -2978,12 +2978,12 @@ CREATE TABLE sac.tbAporteCaptacao
   "vlDeposito" MONEY NOT NULL,
   "nrLote" INT NOT NULL,
   "dtLote" timestamp NOT NULL,
-  CONSTRAINT fktbAporteCaptacao01 FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT fkAporteCaptacao02 FOREIGN KEY (idVerificacao) REFERENCES sac.Verificacao (idVerificacao),
-  CONSTRAINT FKtbAporteCaptacao04 FOREIGN KEY (idContaBancaria) REFERENCES sac.ContaBancaria (IdContaBancaria)
+  CONSTRAINT "fktbAporteCaptacao01" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "fkAporteCaptacao02" FOREIGN KEY ("idVerificacao") REFERENCES sac."Verificacao" ("idVerificacao"),
+  CONSTRAINT "FKtbAporteCaptacao04" FOREIGN KEY ("idContaBancaria") REFERENCES sac."ContaBancaria" ("IdContaBancaria")
 );
-CREATE INDEX ixtbAporteCaptacao01 ON sac.tbAporteCaptacao (idAporteCaptacao, IdPRONAC);
-CREATE TABLE sac.tbArquivamento
+CREATE INDEX "ixtbAporteCaptacao01" ON sac."tbAporteCaptacao" ("idAporteCaptacao", "IdPRONAC");
+CREATE TABLE sac."tbArquivamento"
 (
   "idArquivamento" INT PRIMARY KEY NOT NULL,
   "idPronac" INT NOT NULL,
@@ -2999,26 +2999,26 @@ CREATE TABLE sac.tbArquivamento
   "stEstado" INTEGER DEFAULT 1 NOT NULL,
   "idUsuario" INT NOT NULL,
   "dsJustificativa" VARCHAR,
-CONSTRAINT FK_tbArquivamento_Projetos FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC)
+CONSTRAINT "FK_tbArquivamento_Projetos" FOREIGN KEY ("idPronac") REFERENCES sac."Projetos" ("IdPRONAC")
 );
-CREATE INDEX IX_tbArquivamento ON sac.tbArquivamento (idPronac);
-CREATE TABLE sac.tbArquivoFiscalizacao
+CREATE INDEX "IX_tbArquivamento" ON sac."tbArquivamento" ("idPronac");
+CREATE TABLE sac."tbArquivoFiscalizacao"
 (
   "idArquivoFiscalizacao" INT PRIMARY KEY NOT NULL,
   "idFiscalizacao" INT NOT NULL,
   "idArquivo" INT NOT NULL,
-  CONSTRAINT fk_tbArquivoFiscalizacao_tbFiscalizacao FOREIGN KEY (idFiscalizacao) REFERENCES sac.tbFiscalizacao (idFiscalizacao)
+  CONSTRAINT "fk_tbArquivoFiscalizacao_tbFiscalizacao" FOREIGN KEY ("idFiscalizacao") REFERENCES sac."tbFiscalizacao" ("idFiscalizacao")
 );
-CREATE TABLE sac.tbAssinantes
+CREATE TABLE sac."tbAssinantes"
 (
   "idAssinantes" INT PRIMARY KEY NOT NULL,
   "idOrgao" INT NOT NULL,
   "idAgente" INT NOT NULL,
   "idCargo" INT NOT NULL,
   "stEstado" INTEGER DEFAULT 1 NOT NULL,
-  CONSTRAINT FK_tbAssinantes_Orgaos FOREIGN KEY (idOrgao) REFERENCES sac.Orgaos (Codigo)
+  CONSTRAINT "FK_tbAssinantes_Orgaos" FOREIGN KEY ("idOrgao") REFERENCES sac."Orgaos" ("Codigo")
 );
-CREATE TABLE sac.tbAssinantesPrestacao
+CREATE TABLE sac."tbAssinantesPrestacao"
 (
   "idAssinantesPrestacao" INT PRIMARY KEY NOT NULL,
   "nmAssinante" VARCHAR(255) NOT NULL,
@@ -3027,16 +3027,16 @@ CREATE TABLE sac.tbAssinantesPrestacao
   "idUsuario" INT NOT NULL,
   "stAtivo" INT DEFAULT 1 NOT NULL
 );
-CREATE TABLE sac.tbAvaliacaoFiscalizacao
+CREATE TABLE sac."tbAvaliacaoFiscalizacao"
 (
   "idAvaliacaoFiscalizacao" INT PRIMARY KEY NOT NULL,
   "idRelatorioFiscalizacao" INT NOT NULL,
   "idAvaliador" INT NOT NULL,
   "dtAvaliacaoFiscalizacao" timestamp NOT NULL,
   "dsParecer" VARCHAR(8000) NOT NULL,
-  CONSTRAINT FK_tbAvaliacaoFiscalizacao_tbRelatorioFiscalizacao FOREIGN KEY (idRelatorioFiscalizacao) REFERENCES sac.tbRelatorioFiscalizacao (idRelatorioFiscalizacao)
+  CONSTRAINT "FK_tbAvaliacaoFiscalizacao_tbRelatorioFiscalizacao" FOREIGN KEY ("idRelatorioFiscalizacao") REFERENCES sac."tbRelatorioFiscalizacao" ("idRelatorioFiscalizacao")
 );
-CREATE TABLE sac.tbBeneficiario
+CREATE TABLE sac."tbBeneficiario"
 (
   "idBeneficiario" INT PRIMARY KEY NOT NULL,
   "idRelatorio" INT NOT NULL,
@@ -3050,9 +3050,9 @@ CREATE TABLE sac.tbBeneficiario
   "stCPF" CHAR DEFAULT 0 NOT NULL,
   "stPublicoAlvo" CHAR DEFAULT 0 NOT NULL,
   "dsJustificativaAcompanhamento" VARCHAR(600),
-  CONSTRAINT FK_tbBeneficiario_tbRelatorio FOREIGN KEY (idRelatorio) REFERENCES sac.tbRelatorio (idRelatorio)
+  CONSTRAINT "FK_tbBeneficiario_tbRelatorio" FOREIGN KEY ("idRelatorio") REFERENCES sac."tbRelatorio" ("idRelatorio")
 );
-CREATE TABLE sac.tbBeneficiarioProdutoCultural
+CREATE TABLE sac."tbBeneficiarioProdutoCultural"
 (
   "idBeneficiarioProdutoCultural" INT PRIMARY KEY NOT NULL,
   "IdPRONAC" INT NOT NULL,
@@ -3061,11 +3061,11 @@ CREATE TABLE sac.tbBeneficiarioProdutoCultural
   "idDocumento" INT NOT NULL,
   "qtRecebida" INT NOT NULL,
   "idTipoBeneficiario" INT NOT NULL,
-  CONSTRAINT fk_tbBeneficiarioProdutoCultural_02 FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT fk_tbBeneficiarioProdutoCultural_03 FOREIGN KEY (idPlanoDistribuicao) REFERENCES sac.PlanoDistribuicaoProduto (idPlanoDistribuicao),
-  CONSTRAINT fk_tbBeneficiarioProdutoCultural_04 FOREIGN KEY (idTipoBeneficiario) REFERENCES sac.Verificacao (idVerificacao)
+  CONSTRAINT "fk_tbBeneficiarioProdutoCultural_02" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "fk_tbBeneficiarioProdutoCultural_03" FOREIGN KEY ("idPlanoDistribuicao") REFERENCES sac."PlanoDistribuicaoProduto" ("idPlanoDistribuicao"),
+  CONSTRAINT "fk_tbBeneficiarioProdutoCultural_04" FOREIGN KEY ("idTipoBeneficiario") REFERENCES sac."Verificacao" ("idVerificacao")
 );
-CREATE TABLE sac.tbBensDoados
+CREATE TABLE sac."tbBensDoados"
 (
   "idBensDoados" INT PRIMARY KEY NOT NULL,
   "idPronac" INT NOT NULL,
@@ -3078,27 +3078,27 @@ CREATE TABLE sac.tbBensDoados
   "idDocumentoDoacao" INT NOT NULL,
   "idDocumentoAceite" INT NOT NULL,
   "idUsuarioCadastrador" INT NOT NULL,
-  CONSTRAINT FK_tbBensDoados_Projetos FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC)
+  CONSTRAINT "FK_tbBensDoados_Projetos" FOREIGN KEY ("idPronac") REFERENCES sac."Projetos" ("IdPRONAC")
 );
-CREATE TABLE sac.tbComprovanteBeneficiario
+CREATE TABLE sac."tbComprovanteBeneficiario"
 (
   "idComprovanteBeneficiario" INT PRIMARY KEY NOT NULL,
   "idRelatorio" INT NOT NULL,
   "idDocumento" INT,
   "stDocumento" CHAR DEFAULT 0 NOT NULL,
   "dsJustificativaAcompanhamento" TEXT,
-  CONSTRAINT FK_tbComprovanteBeneficiario_tbRelatorio FOREIGN KEY (idRelatorio) REFERENCES sac.tbRelatorio (idRelatorio)
+  CONSTRAINT "FK_tbComprovanteBeneficiario_tbRelatorio" FOREIGN KEY ("idRelatorio") REFERENCES sac."tbRelatorio" ("idRelatorio")
 );
-CREATE TABLE sac.tbComprovanteExecucao
+CREATE TABLE sac."tbComprovanteExecucao"
 (
   "idComprovanteExecucao" INT PRIMARY KEY NOT NULL,
   "idDocumento" INT NOT NULL,
   "idRelatorio" INT,
   "stDocumento" CHAR DEFAULT 0 NOT NULL,
   "dsJustificativaAcompanhamento" TEXT,
-  CONSTRAINT FK_tbComprovanteExecucao_tbRelatorio FOREIGN KEY (idRelatorio) REFERENCES sac.tbRelatorio (idRelatorio)
+  CONSTRAINT "FK_tbComprovanteExecucao_tbRelatorio" FOREIGN KEY ("idRelatorio") REFERENCES sac."tbRelatorio" ("idRelatorio")
 );
-CREATE TABLE sac.tbComprovanteTrimestral
+CREATE TABLE sac."tbComprovanteTrimestral"
 (
   "idComprovanteTrimestral" INT PRIMARY KEY NOT NULL,
   "IdPRONAC" INT NOT NULL,
@@ -3115,10 +3115,10 @@ CREATE TABLE sac.tbComprovanteTrimestral
   "dsParecerTecnico" VARCHAR,
   "dsRecomendacao" VARCHAR,
   "idTecnicoAvaliador" SMALLINT,
-CONSTRAINT fk_tbComprovanteTrimestral_02 FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC)
+CONSTRAINT "fk_tbComprovanteTrimestral_02" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC")
 );
-CREATE INDEX IX_tbComprovanteTrimestral ON sac.tbComprovanteTrimestral (IdPRONAC);
-CREATE TABLE sac.tbComunicados
+CREATE INDEX "IX_tbComprovanteTrimestral" ON sac."tbComprovanteTrimestral" ("IdPRONAC");
+CREATE TABLE sac."tbComunicados"
 (
   "idComunicado" INT PRIMARY KEY NOT NULL,
   "Comunicado" VARCHAR NOT NULL,
@@ -3128,20 +3128,20 @@ CREATE TABLE sac.tbComunicados
   "dtInicioVigencia" timestamp,
   "dtTerminoVigencia" timestamp,
   "idEdital" INT,
-CONSTRAINT FK_tbComunicados_tbComunicados FOREIGN KEY (idComunicado) REFERENCES sac.tbComunicados (idComunicado)
+CONSTRAINT "FK_tbComunicados_tbComunicados" FOREIGN KEY ("idComunicado") REFERENCES sac."tbComunicados" ("idComunicado")
 );
 
-CREATE TABLE sac.tbConfigurarPagamentoXtbAssinantes
+CREATE TABLE sac."tbConfigurarPagamentoXtbAssinantes"
 (
   "idConfigurarPagamento" INT NOT NULL,
   "idAssinantes" INT NOT NULL,
   "nrOrdenacao" int NOT NULL,
-  CONSTRAINT FK_tbConfigurarPagamentoXtbAssinantes_tbConfigurarPagamento FOREIGN KEY (idConfigurarPagamento) REFERENCES sac.tbConfigurarPagamento (idConfigurarPagamento),
-  CONSTRAINT FK_tbConfigurarPagamentoXtbAssinantes_tbAssinantes FOREIGN KEY (idAssinantes) REFERENCES sac.tbAssinantes (idAssinantes)
+  CONSTRAINT "FK_tbConfigurarPagamentoXtbAssinantes_tbConfigurarPagamento" FOREIGN KEY ("idConfigurarPagamento") REFERENCES sac."tbConfigurarPagamento" ("idConfigurarPagamento"),
+  CONSTRAINT "FK_tbConfigurarPagamentoXtbAssinantes_tbAssinantes" FOREIGN KEY ("idAssinantes") REFERENCES sac."tbAssinantes" ("idAssinantes")
 );
-CREATE INDEX IX_tbConfigurarPagamentoXtbAssinantes ON sac.tbConfigurarPagamentoXtbAssinantes (idConfigurarPagamento);
-CREATE INDEX IX_tbConfigurarPagamentoXtbAssinantes_1 ON sac.tbConfigurarPagamentoXtbAssinantes (idAssinantes);
-CREATE TABLE sac.tbCumprimentoObjeto
+CREATE INDEX "IX_tbConfigurarPagamentoXtbAssinantes" ON sac."tbConfigurarPagamentoXtbAssinantes" ("idConfigurarPagamento");
+CREATE INDEX "IX_tbConfigurarPagamentoXtbAssinantes_1" ON sac."tbConfigurarPagamentoXtbAssinantes" ("idAssinantes");
+CREATE TABLE sac."tbCumprimentoObjeto"
 (
   "idCumprimentoObjeto" INT PRIMARY KEY NOT NULL,
   "idPronac" INT NOT NULL,
@@ -3162,10 +3162,10 @@ CREATE TABLE sac.tbCumprimentoObjeto
   "qtEmpregosIndiretos" INT DEFAULT 0,
   "dsGeracaoEmpregos" VARCHAR,
   "DtEnvioDaPrestacaoContas" timestamp,
-CONSTRAINT FK_tbCumprimentoObjeto_Projetos FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC)
+CONSTRAINT "FK_tbCumprimentoObjeto_Projetos" FOREIGN KEY ("idPronac") REFERENCES sac."Projetos" ("IdPRONAC")
 );
 
-CREATE TABLE sac.tbDescricaoRelatorioConsolidado
+CREATE TABLE sac."tbDescricaoRelatorioConsolidado"
 (
   "idDescricaoRelatorioConsolidado" INT PRIMARY KEY NOT NULL,
   "idRelatorioConsolidado" INT,
@@ -3180,9 +3180,9 @@ CREATE TABLE sac.tbDescricaoRelatorioConsolidado
   "dsTermoProjeto" TEXT,
   "dsJustificativaAcompanhamento" TEXT,
   "dsJustificativaImpactoAmbiental" TEXT,
-  CONSTRAINT FK_tbDsRelatorioConsolidado_tbRelatorioConsolidado FOREIGN KEY (idRelatorioConsolidado) REFERENCES sac.tbRelatorioConsolidado (idRelatorioConsolidado)
+  CONSTRAINT "FK_tbDsRelatorioConsolidado_tbRelatorioConsolidado" FOREIGN KEY ("idRelatorioConsolidado") REFERENCES sac."tbRelatorioConsolidado" ("idRelatorioConsolidado")
 );
-CREATE TABLE sac.tbDeslocamento
+CREATE TABLE sac."tbDeslocamento"
 (
   "idDeslocamento" INT PRIMARY KEY NOT NULL,
   "idProjeto" INT NOT NULL,
@@ -3194,12 +3194,12 @@ CREATE TABLE sac.tbDeslocamento
   "idMunicipioDestino" INT,
   "Qtde" INT DEFAULT 0 NOT NULL,
   "idUsuario" INT NOT NULL,
-  CONSTRAINT FK_tbDeslocamento_tbDeslocamento FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto)
+  CONSTRAINT "FK_tbDeslocamento_tbDeslocamento" FOREIGN KEY ("idProjeto") REFERENCES sac."PreProjeto" ("idPreProjeto")
 );
-CREATE SEQUENCE sac.tbdeslocamento_iddeslocamento_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE sac.tbdeslocamento ALTER COLUMN iddeslocamento SET DEFAULT nextval('sac.tbdeslocamento_iddeslocamento_seq');
-ALTER SEQUENCE sac.tbdeslocamento_iddeslocamento_seq OWNED BY sac.tbdeslocamento.iddeslocamento;
-CREATE TABLE sac.tbDespacho
+CREATE SEQUENCE sac."tbdeslocamento_iddeslocamento_seq" NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac."tbdeslocamento" ALTER COLUMN "iddeslocamento" SET DEFAULT nextval('sac.tbdeslocamento_iddeslocamento_seq');
+ALTER SEQUENCE sac."tbdeslocamento_iddeslocamento_seq" OWNED BY sac."tbdeslocamento"."iddeslocamento";
+CREATE TABLE sac."tbDespacho"
 (
   "idDespacho" INT PRIMARY KEY NOT NULL,
   "idPronac" INT,
@@ -3209,13 +3209,13 @@ CREATE TABLE sac.tbDespacho
   "Despacho" VARCHAR NOT NULL,
   "stEstado" INTEGER DEFAULT 0 NOT NULL,
   "idUsuario" INT NOT NULL,
-CONSTRAINT FK_tbDespacho_tbDespacho FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC),
-CONSTRAINT FK_tbDespacho_PreProjeto FOREIGN KEY (idProposta) REFERENCES sac.PreProjeto (idPreProjeto),
-CONSTRAINT FK_tbDespacho_Verificacao FOREIGN KEY (Tipo) REFERENCES sac.Verificacao (idVerificacao)
+CONSTRAINT "FK_tbDespacho_tbDespacho" FOREIGN KEY ("idPronac") REFERENCES sac."Projetos" ("IdPRONAC"),
+CONSTRAINT "FK_tbDespacho_PreProjeto" FOREIGN KEY ("idProposta") REFERENCES sac."PreProjeto" ("idPreProjeto"),
+CONSTRAINT "FK_tbDespacho_Verificacao" FOREIGN KEY ("Tipo") REFERENCES sac."Verificacao" ("idVerificacao")
 );
-CREATE INDEX IX_tbDespacho ON sac.tbDespacho (idPronac);
-CREATE INDEX IX_tbDespacho_1 ON sac.tbDespacho (idProposta);
-CREATE TABLE sac.tbDiligencia
+CREATE INDEX "IX_tbDespacho" ON sac."tbDespacho" ("idPronac");
+CREATE INDEX "IX_tbDespacho_1" ON sac."tbDespacho" ("idProposta");
+CREATE TABLE sac."tbDiligencia"
 (
   "idDiligencia" INT PRIMARY KEY NOT NULL,
   "idPronac" INT NOT NULL,
@@ -3233,20 +3233,20 @@ CREATE TABLE sac.tbDiligencia
   "idProduto" int,
   "stProrrogacao" CHAR,
   "stEnviado" CHAR,
-CONSTRAINT FK_tbDiligencia_tbDiligencia FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC),
-CONSTRAINT FK_tbDiligencia_tbTipoDiligencia FOREIGN KEY (idTipoDiligencia) REFERENCES sac.Verificacao (idVerificacao),
-CONSTRAINT fk_tbDiligencia_03 FOREIGN KEY (idPlanoDistribuicao) REFERENCES sac.PlanoDistribuicaoProduto (idPlanoDistribuicao),
-CONSTRAINT FK_tbDiligencia_DocumentosExigidos FOREIGN KEY (idCodigoDocumentosExigidos) REFERENCES sac.DocumentosExigidos (Codigo),
-CONSTRAINT FK_tbDiligencia_Produto FOREIGN KEY (idProduto) REFERENCES sac.Produto (Codigo)
+CONSTRAINT "FK_tbDiligencia_tbDiligencia" FOREIGN KEY ("idPronac") REFERENCES sac."Projetos" ("IdPRONAC"),
+CONSTRAINT "FK_tbDiligencia_tbTipoDiligencia" FOREIGN KEY ("idTipoDiligencia") REFERENCES sac."Verificacao" ("idVerificacao"),
+CONSTRAINT "fk_tbDiligencia_03" FOREIGN KEY ("idPlanoDistribuicao") REFERENCES sac."PlanoDistribuicaoProduto" ("idPlanoDistribuicao"),
+CONSTRAINT "FK_tbDiligencia_DocumentosExigidos" FOREIGN KEY ("idCodigoDocumentosExigidos") REFERENCES sac."DocumentosExigidos" ("Codigo"),
+CONSTRAINT "FK_tbDiligencia_Produto" FOREIGN KEY ("idProduto") REFERENCES sac."Produto" ("Codigo")
 );
-CREATE INDEX IX_tbDiligencia ON sac.tbDiligencia (idPronac);
-CREATE TABLE sac.tbDiligenciaxArquivo
+CREATE INDEX "IX_tbDiligencia" ON sac."tbDiligencia" ("idPronac");
+CREATE TABLE sac."tbDiligenciaxArquivo"
 (
   "idDiligencia" INT NOT NULL,
   "idArquivo" INT NOT NULL,
-  CONSTRAINT fk_tbDiligenciaxArquivo_02 FOREIGN KEY (idDiligencia) REFERENCES sac.tbDiligencia (idDiligencia)
+  CONSTRAINT "fk_tbDiligenciaxArquivo_02" FOREIGN KEY ("idDiligencia") REFERENCES sac."tbDiligencia" ("idDiligencia")
 );
-CREATE TABLE sac.tbDistribuirParecer
+CREATE TABLE sac."tbDistribuirParecer"
 (
   "idDistribuirParecer" INT PRIMARY KEY NOT NULL,
   "idPRONAC" INT NOT NULL,
@@ -3264,17 +3264,17 @@ CREATE TABLE sac.tbDistribuirParecer
   "DtRetorno" timestamp,
   "idUsuario" INT,
   "stDiligenciado" INTEGER DEFAULT 0,
-CONSTRAINT FK_tbDistribuirParecer_Projetos FOREIGN KEY (idPRONAC) REFERENCES sac.Projetos (IdPRONAC)
+CONSTRAINT "FK_tbDistribuirParecer_Projetos" FOREIGN KEY ("idPRONAC") REFERENCES sac."Projetos" ("IdPRONAC")
 );
-CREATE INDEX IX_tbDistribuirParecer ON sac.tbDistribuirParecer (idPRONAC, stEstado, FecharAnalise);
-CREATE INDEX IX_tbDistribuirParecer_idProduto ON sac.tbDistribuirParecer (idProduto);
-CREATE INDEX IX_tbDistribuirParecer_idPronac ON sac.tbDistribuirParecer (idPRONAC);
-CREATE INDEX IX_tbDistribuirParecer_AgenteParecerista ON sac.tbDistribuirParecer (idAgenteParecerista);
-CREATE INDEX IX_tbDistribuirParecer_FecharAnalise ON sac.tbDistribuirParecer (FecharAnalise);
-CREATE INDEX IX_tbDistribuirParecer_stPrincipal ON sac.tbDistribuirParecer (stPrincipal);
-CREATE INDEX IX_tbDistribuirParecer_stEstado ON sac.tbDistribuirParecer (stEstado);
-CREATE INDEX IX_tbDistribuirParecer_TipoAnalise ON sac.tbDistribuirParecer (TipoAnalise);
-CREATE TABLE sac.tbDistribuirProjeto
+CREATE INDEX "IX_tbDistribuirParecer" ON sac."tbDistribuirParecer" ("idPRONAC", "stEstado", "FecharAnalise");
+CREATE INDEX "IX_tbDistribuirParecer_idProduto" ON sac."tbDistribuirParecer" ("idProduto");
+CREATE INDEX "IX_tbDistribuirParecer_idPronac" ON sac."tbDistribuirParecer" ("idPRONAC");
+CREATE INDEX "IX_tbDistribuirParecer_AgenteParecerista" ON sac."tbDistribuirParecer" ("idAgenteParecerista");
+CREATE INDEX "IX_tbDistribuirParecer_FecharAnalise" ON sac."tbDistribuirParecer" ("FecharAnalise");
+CREATE INDEX "IX_tbDistribuirParecer_stPrincipal" ON sac."tbDistribuirParecer" ("stPrincipal");
+CREATE INDEX "IX_tbDistribuirParecer_stEstado" ON sac."tbDistribuirParecer" ("stEstado");
+CREATE INDEX "IX_tbDistribuirParecer_TipoAnalise" ON sac."tbDistribuirParecer" ("TipoAnalise");
+CREATE TABLE sac."tbDistribuirProjeto"
 (
   "idDistribuirProjeto" INT PRIMARY KEY NOT NULL,
   "tpDistribuicao" CHAR DEFAULT 'A' NOT NULL,
@@ -3288,11 +3288,11 @@ CREATE TABLE sac.tbDistribuirProjeto
   "stFecharAnalise" INTEGER DEFAULT 0,
   "dtFechamento" timestamp,
   "stEstado" INTEGER DEFAULT 0,
-  "idUsuario" INT NOT NULL,
-  CONSTRAINT FK_tbDistribuirProjeto FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_tbDistribuirProjeto_Projetos FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC)
+  "idUsuario" INT NOT NULL","
+  CONSTRAINT "FK_tbDistribuirProjeto" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_tbDistribuirProjeto_Projetos" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC")
 );
-CREATE TABLE sac.tbDistribuirReadequacao
+CREATE TABLE sac."tbDistribuirReadequacao"
 (
   "idDistribuirReadequacao" INT PRIMARY KEY NOT NULL,
   "idReadequacao" INT NOT NULL,
@@ -3305,10 +3305,10 @@ CREATE TABLE sac.tbDistribuirReadequacao
   "stValidacaoCoordenador" INTEGER DEFAULT 0,
   "DtValidacaoCoordenador" timestamp,
   "idCoordenador" INT,
-  CONSTRAINT FK_tbDistribuirReadequacao_tbReadequacao FOREIGN KEY (idReadequacao) REFERENCES sac.tbReadequacao (idReadequacao)
+  CONSTRAINT "FK_tbDistribuirReadequacao_tbReadequacao" FOREIGN KEY ("idReadequacao") REFERENCES sac."tbReadequacao" ("idReadequacao")
 );
-CREATE INDEX IX_tbDistribuirReadequacao ON sac.tbDistribuirReadequacao (idReadequacao);
-CREATE TABLE sac.tbDocumento
+CREATE INDEX "IX_tbDistribuirReadequacao" ON sac."tbDistribuirReadequacao" ("idReadequacao");
+CREATE TABLE sac."tbDocumento"
 (
   "idDocumento" INT PRIMARY KEY NOT NULL,
   "idPronac" INT NOT NULL,
@@ -3324,11 +3324,11 @@ CREATE TABLE sac.tbDocumento
   "CodigoCorreio" VARCHAR(13),
   "biDocumento" varchar,
   "imDocumento" VARCHAR,
-CONSTRAINT FK_tbDocumento_Projetos FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC),
-CONSTRAINT FK_tbDocumento_tbTipoDocumento FOREIGN KEY (idTipoDocumento) REFERENCES sac.tbTipoDocumento (idTipoDocumento)
+CONSTRAINT "FK_tbDocumento_Projetos" FOREIGN KEY ("idPronac") REFERENCES sac."Projetos" ("IdPRONAC"),
+CONSTRAINT "FK_tbDocumento_tbTipoDocumento" FOREIGN KEY ("idTipoDocumento") REFERENCES sac."tbTipoDocumento" ("idTipoDocumento")
 );
-CREATE INDEX IX_tbDocumento ON sac.tbDocumento (idPronac);
-CREATE TABLE sac.tbDocumento20100107X
+CREATE INDEX "IX_tbDocumento" ON sac."tbDocumento" ("idPronac");
+CREATE TABLE sac."tbDocumento20100107X"
 (
   "idDocumento" INT PRIMARY KEY NOT NULL,
   "idPronac" INT NOT NULL,
@@ -3344,16 +3344,16 @@ CREATE TABLE sac.tbDocumento20100107X
   "idUnidadeCadastro" SMALLINT,
   "CodigoCorreio" VARCHAR(13)
 );
-CREATE TABLE sac.tbDocumentoAceitacao
+CREATE TABLE sac."tbDocumentoAceitacao"
 (
   "idDocumentoAceitacao" INT PRIMARY KEY NOT NULL,
   "idDocumento" INT,
   "idRelatorioConsolidado" INT NOT NULL,
   "stDocumento" CHAR DEFAULT 0 NOT NULL,
   "dsJustificativaAcompanhamento" TEXT,
-  CONSTRAINT fk_tbDocumentoAceitacao_tbRelatorioConsolidado FOREIGN KEY (idRelatorioConsolidado) REFERENCES sac.tbRelatorioConsolidado (idRelatorioConsolidado)
+  CONSTRAINT "fk_tbDocumentoAceitacao_tbRelatorioConsolidado" FOREIGN KEY ("idRelatorioConsolidado") REFERENCES sac."tbRelatorioConsolidado" ("idRelatorioConsolidado")
 );
-CREATE TABLE sac.tbDocumentosAgentes
+CREATE TABLE sac."tbDocumentosAgentes"
 (
   "idDocumentosAgentes" INT PRIMARY KEY NOT NULL,
   "CodigoDocumento" INT NOT NULL,
@@ -3362,13 +3362,13 @@ CREATE TABLE sac.tbDocumentosAgentes
   "NoArquivo" VARCHAR(130),
   "TaArquivo" INT NOT NULL,
   "imDocumento" VARCHAR,
-CONSTRAINT FK_tbDocAgentesDocExigidos FOREIGN KEY (CodigoDocumento) REFERENCES sac.DocumentosExigidos (Codigo)
+CONSTRAINT "FK_tbDocAgentesDocExigidos" FOREIGN KEY ("CodigoDocumento") REFERENCES sac."DocumentosExigidos" ("Codigo")
 );
-CREATE INDEX IX_tbDocumentosAgentes ON sac.tbDocumentosAgentes (idAgente);
-CREATE SEQUENCE sac.tbdocumentosagentes_iddocumentosagentes_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE sac.tbdocumentosagentes ALTER COLUMN iddocumentosagentes SET DEFAULT nextval('sac.tbdocumentosagentes_iddocumentosagentes_seq');
-ALTER SEQUENCE sac.tbdocumentosagentes_iddocumentosagentes_seq OWNED BY sac.tbdocumentosagentes.iddocumentosagentes;
-CREATE TABLE sac.tbDocumentosAgentes20100107X
+CREATE INDEX "IX_tbDocumentosAgentes" ON sac."tbDocumentosAgentes" ("idAgente");
+CREATE SEQUENCE sac."tbdocumentosagentes_iddocumentosagentes_seq" NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac."tbdocumentosagentes" ALTER COLUMN "iddocumentosagentes" SET DEFAULT nextval('sac.tbdocumentosagentes_iddocumentosagentes_seq');
+ALTER SEQUENCE sac."tbdocumentosagentes_iddocumentosagentes_seq" OWNED BY sac."tbdocumentosagentes"."iddocumentosagentes";
+CREATE TABLE sac."tbDocumentosAgentes20100107X"
 (
   "idDocumentosAgentes" INT NOT NULL,
   "CodigoDocumento" INT NOT NULL,
@@ -3378,7 +3378,7 @@ CREATE TABLE sac.tbDocumentosAgentes20100107X
   "NoArquivo" VARCHAR(100) NOT NULL,
   "TaArquivo" INT NOT NULL
 );
-CREATE TABLE sac.tbDocumentosPreProjeto
+CREATE TABLE sac."tbDocumentosPreProjeto"
 (
   "idDocumentosPreprojetos" INT PRIMARY KEY NOT NULL,
   "CodigoDocumento" INT NOT NULL,
@@ -3390,15 +3390,15 @@ CREATE TABLE sac.tbDocumentosPreProjeto
   "biDocumento" varchar,
   "dsDocumento" VARCHAR(1000),
   "imDocumento" VARCHAR,
-CONSTRAINT FK_tbDocPreProjetosDocExigidos FOREIGN KEY (CodigoDocumento) REFERENCES sac.DocumentosExigidos (Codigo),
-CONSTRAINT FK_tbDocumentosPreProjeto_PreProjeto FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto),
-CONSTRAINT FK_tbDocumentosPreProjeto_Projetos FOREIGN KEY (idPRONAC) REFERENCES sac.Projetos (IdPRONAC)
+CONSTRAINT "FK_tbDocPreProjetosDocExigidos" FOREIGN KEY ("CodigoDocumento") REFERENCES sac."DocumentosExigidos" ("Codigo"),
+CONSTRAINT "FK_tbDocumentosPreProjeto_PreProjeto" FOREIGN KEY ("idProjeto") REFERENCES sac."PreProjeto" ("idPreProjeto"),
+CONSTRAINT "FK_tbDocumentosPreProjeto_Projetos" FOREIGN KEY ("idPRONAC") REFERENCES sac."Projetos" ("IdPRONAC")
 );
-CREATE INDEX IX_tbDocumentosPreProjeto ON sac.tbDocumentosPreProjeto (idProjeto);
-CREATE SEQUENCE sac.tbdocumentospreprojeto_iddocumentospreprojetos_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE sac.tbdocumentospreprojeto ALTER COLUMN iddocumentospreprojetos SET DEFAULT nextval('sac.tbdocumentospreprojeto_iddocumentospreprojetos_seq');
-ALTER SEQUENCE sac.tbdocumentospreprojeto_iddocumentospreprojetos_seq OWNED BY sac.tbdocumentospreprojeto.iddocumentospreprojetos;
-CREATE TABLE sac.tbGerarPagamentoParecerista
+CREATE INDEX "IX_tbDocumentosPreProjeto" ON sac."tbDocumentosPreProjeto" ("idProjeto");
+CREATE SEQUENCE sac."tbdocumentospreprojeto_iddocumentospreprojetos_seq" NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac."tbdocumentospreprojeto" ALTER COLUMN iddocumentospreprojetos SET DEFAULT nextval('sac.tbdocumentospreprojeto_iddocumentospreprojetos_seq');
+ALTER SEQUENCE sac."tbdocumentospreprojeto_iddocumentospreprojetos_seq" OWNED BY sac."tbdocumentospreprojeto".iddocumentospreprojetos;
+CREATE TABLE sac."tbGerarPagamentoParecerista"
 (
   "idGerarPagamentoParecerista" INT PRIMARY KEY NOT NULL,
   "idConfigurarPagamento" INT NOT NULL,
@@ -3410,17 +3410,17 @@ CREATE TABLE sac.tbGerarPagamentoParecerista
   "siPagamento" CHAR NOT NULL,
   "vlTotalPagamento" DECIMAL(18,2) NOT NULL,
   "idUsuario" INT NOT NULL,
-  CONSTRAINT FK_tbGerarPagamentoParecerista_tbConfigurarPagamento FOREIGN KEY (idConfigurarPagamento) REFERENCES sac.tbConfigurarPagamento (idConfigurarPagamento)
+  CONSTRAINT "FK_tbGerarPagamentoParecerista_tbConfigurarPagamento" FOREIGN KEY ("idConfigurarPagamento") REFERENCES sac."tbConfigurarPagamento" ("idConfigurarPagamento")
 );
-CREATE TABLE sac.tbHistoricoAlteracaoDocumento
+CREATE TABLE sac."tbHistoricoAlteracaoDocumento"
 (
   "idHistoricoAlteracaoDocumento" INT PRIMARY KEY NOT NULL,
   "idDocumento" INT NOT NULL,
   "idHistoricoAlteracaoProjeto" INT NOT NULL,
   "idDocumentosExigidos" INT NOT NULL,
-  CONSTRAINT fk_tbHistoricoAlteracaoProjetoxtbDocumento_DocumentosExigidos FOREIGN KEY (idDocumentosExigidos) REFERENCES sac.DocumentosExigidos (Codigo)
+  CONSTRAINT "fk_tbHistoricoAlteracaoProjetoxtbDocumento_DocumentosExigidos" FOREIGN KEY ("idDocumentosExigidos") REFERENCES sac."DocumentosExigidos" ("Codigo")
 );
-CREATE TABLE sac.tbHistoricoAlteracaoProjeto
+CREATE TABLE sac."tbHistoricoAlteracaoProjeto"
 (
   "idHistoricoAlteracaoProjeto" INT PRIMARY KEY NOT NULL,
   "cdArea" CHAR,
@@ -3438,9 +3438,9 @@ CREATE TABLE sac.tbHistoricoAlteracaoProjeto
   "dsHistoricoAlteracaoProjeto" TEXT NOT NULL,
   "cgccpf" VARCHAR(14),
   "dsProvidenciaTomada" VARCHAR(300),
-  CONSTRAINT FK_tbHistoricoAlteracaoProjeto_Projetos FOREIGN KEY (idPRONAC) REFERENCES sac.Projetos (IdPRONAC)
+  CONSTRAINT "FK_tbHistoricoAlteracaoProjeto_Projetos" FOREIGN KEY ("idPRONAC") REFERENCES sac."Projetos" ("IdPRONAC")
 );
-CREATE TABLE sac.tbHistoricoContaBloqueada
+CREATE TABLE sac."tbHistoricoContaBloqueada"
 (
   "idHistoricoContaBloqueada" INT NOT NULL,
   "idContaBancaria" INT NOT NULL,
@@ -3452,20 +3452,20 @@ CREATE TABLE sac.tbHistoricoContaBloqueada
   "stContaBloqueada" INTEGER NOT NULL,
   "idArquivo" INT NOT NULL,
   "idUsuarioInterno" SMALLINT NOT NULL,
-  CONSTRAINT pktbContaBloqueada PRIMARY KEY (idHistoricoContaBloqueada, idContaBancaria),
-  CONSTRAINT fktbContaBloqueada01 FOREIGN KEY (idContaBancaria) REFERENCES sac.ContaBancaria (IdContaBancaria)
+  CONSTRAINT "pktbContaBloqueada" PRIMARY KEY ("idHistoricoContaBloqueada", "idContaBancaria"),
+  CONSTRAINT "fktbContaBloqueada01" FOREIGN KEY ("idContaBancaria") REFERENCES sac."ContaBancaria" ("IdContaBancaria")
 );
-CREATE INDEX ixtbHistoricoContaBloqueada01 ON sac.tbHistoricoContaBloqueada (idContaBancaria, siContaBloqueada);
-CREATE TABLE sac.tbHistoricoDevolucaoFiscalizacao
+CREATE INDEX "ixtbHistoricoContaBloqueada01" ON sac."tbHistoricoContaBloqueada" ("idContaBancaria", "siContaBloqueada");
+CREATE TABLE sac."tbHistoricoDevolucaoFiscalizacao"
 (
   "idHistoricoDevolucao" INT PRIMARY KEY NOT NULL,
   "idRelatorioFiscalizacao" INT NOT NULL,
   "dsJustificativaDevolucao" VARCHAR(8000) NOT NULL,
   "dtEnvioDevolucao" timestamp NOT NULL,
   "stDevolucao" CHAR DEFAULT '0' NOT NULL,
-  CONSTRAINT FK_tbHistoricoDevolucaoFiscalizacao_tbRelatorioFiscalizacao FOREIGN KEY (idRelatorioFiscalizacao) REFERENCES sac.tbRelatorioFiscalizacao (idRelatorioFiscalizacao)
+  CONSTRAINT "FK_tbHistoricoDevolucaoFiscalizacao_tbRelatorioFiscalizacao" FOREIGN KEY ("idRelatorioFiscalizacao") REFERENCES sac."tbRelatorioFiscalizacao" ("idRelatorioFiscalizacao")
 );
-CREATE TABLE sac.tbHistoricoDocumento
+CREATE TABLE sac."tbHistoricoDocumento"
 (
   "idHistorico" INT PRIMARY KEY NOT NULL,
   "idPronac" INT NOT NULL,
@@ -3481,13 +3481,13 @@ CREATE TABLE sac.tbHistoricoDocumento
   "Acao" int,
   "stEstado" INTEGER NOT NULL,
   "dsJustificativa" VARCHAR,
-CONSTRAINT FK_tbHistorico_Projetos FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC),
-CONSTRAINT FK_tbHistorico_tbDocumento FOREIGN KEY (idDocumento) REFERENCES sac.tbDocumento (idDocumento),
-CONSTRAINT FK_tbHistorico_tbLote FOREIGN KEY (idLote) REFERENCES sac.tbLote (idLote)
+CONSTRAINT "FK_tbHistorico_Projetos" FOREIGN KEY ("idPronac") REFERENCES sac."Projetos" ("IdPRONAC"),
+CONSTRAINT "FK_tbHistorico_tbDocumento" FOREIGN KEY ("idDocumento") REFERENCES sac."tbDocumento" ("idDocumento"),
+CONSTRAINT "FK_tbHistorico_tbLote" FOREIGN KEY ("idLote") REFERENCES sac."tbLote" ("idLote")
 );
-CREATE INDEX IX_tbHistoricoDocumento ON sac.tbHistoricoDocumento (idPronac);
-CREATE INDEX IX_tbHistoricoDocumento_1 ON sac.tbHistoricoDocumento (idPronac, idDocumento);
-CREATE TABLE sac.tbHistoricoEmail
+CREATE INDEX "IX_tbHistoricoDocumento" ON sac."tbHistoricoDocumento" ("idPronac");
+CREATE INDEX "IX_tbHistoricoDocumento_1" ON sac."tbHistoricoDocumento" ("idPronac", "idDocumento");
+CREATE TABLE sac."tbHistoricoEmail"
 (
   "idHistoricoEmail" INT PRIMARY KEY NOT NULL,
   "idProjeto" INT,
@@ -3497,11 +3497,11 @@ CREATE TABLE sac.tbHistoricoEmail
   "DtEmail" timestamp NOT NULL,
   "stEstado" INTEGER DEFAULT 0 NOT NULL,
   "idUsuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_tbHistoricoEmail_Projetos FOREIGN KEY (idPRONAC) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_tbHistoricoEmail_tbAprovacaoProposta FOREIGN KEY (idAvaliacaoProposta) REFERENCES sac.tbAvaliacaoProposta (idAvaliacaoProposta),
-  CONSTRAINT FK_tbHistoricoEmail_tbTextoEmail FOREIGN KEY (idTextoEmail) REFERENCES sac.tbTextoEmail (idTextoemail)
+  CONSTRAINT "FK_tbHistoricoEmail_Projetos" FOREIGN KEY ("idPRONAC") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_tbHistoricoEmail_tbAprovacaoProposta" FOREIGN KEY ("idAvaliacaoProposta") REFERENCES sac."tbAvaliacaoProposta" ("idAvaliacaoProposta"),
+  CONSTRAINT "FK_tbHistoricoEmail_tbTextoEmail" FOREIGN KEY ("idTextoEmail") REFERENCES sac."tbTextoEmail" ("idTextoemail")
 );
-CREATE TABLE sac.tbHistoricoExclusaoConta
+CREATE TABLE sac."tbHistoricoExclusaoConta"
 (
   "idHistoricoExclusaoConta" INT PRIMARY KEY NOT NULL,
   "idContaBancaria" INT NOT NULL,
@@ -3512,21 +3512,21 @@ CREATE TABLE sac.tbHistoricoExclusaoConta
   "DtExclusao" timestamp NOT NULL,
   "Motivo" VARCHAR(500) NOT NULL,
   "idUsuario" INT NOT NULL,
-  CONSTRAINT FK_tbHistoricoExclusaoConta_ContaBancaria FOREIGN KEY (idContaBancaria) REFERENCES sac.ContaBancaria (IdContaBancaria)
+  CONSTRAINT "FK_tbHistoricoExclusaoConta_ContaBancaria" FOREIGN KEY ("idContaBancaria") REFERENCES sac."ContaBancaria" ("IdContaBancaria")
 );
-CREATE INDEX IX_tbHistoricoExclusaoConta ON sac.tbHistoricoExclusaoConta (idContaBancaria);
-CREATE TABLE sac.tINTEGERensPlanilhaProduto
+CREATE INDEX "IX_tbHistoricoExclusaoConta" ON sac."tbHistoricoExclusaoConta" ("idContaBancaria");
+CREATE TABLE sac."tINTEGERensPlanilhaProduto"
 (
   "idItensPlanilhaProduto" INT PRIMARY KEY NOT NULL,
   "idProduto" INT NOT NULL,
   "idPlanilhaEtapa" INT NOT NULL,
   "idPlanilhaItens" INT NOT NULL,
   "idUsuario" INT,
-  CONSTRAINT FK_tINTEGERensPlanilhaProduto_tbPlanilhaEtapa FOREIGN KEY (idPlanilhaEtapa) REFERENCES sac.tbPlanilhaEtapa (idPlanilhaEtapa),
-  CONSTRAINT FK_tINTEGERensPlanilhaProduto_tbPlanilhaItens FOREIGN KEY (idPlanilhaItens) REFERENCES sac.tbPlanilhaItens (idPlanilhaItens)
+  CONSTRAINT "FK_tINTEGERensPlanilhaProduto_tbPlanilhaEtapa" FOREIGN KEY ("idPlanilhaEtapa") REFERENCES sac."tbPlanilhaEtapa" ("idPlanilhaEtapa"),
+  CONSTRAINT "FK_tINTEGERensPlanilhaProduto_tbPlanilhaItens" FOREIGN KEY ("idPlanilhaItens") REFERENCES sac."tbPlanilhaItens" ("idPlanilhaItens")
 );
-CREATE UNIQUE INDEX IX_tINTEGERensPlanilhaProduto ON sac.tINTEGERensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens);
-CREATE TABLE sac.tbLancamentoBancario
+CREATE UNIQUE INDEX "IX_tINTEGERensPlanilhaProduto" ON sac."tINTEGERensPlanilhaProduto" ("idProduto", "idPlanilhaEtapa", "idPlanilhaItens");
+CREATE TABLE sac."tbLancamentoBancario"
 (
   "idLancamentoBancario" INT PRIMARY KEY NOT NULL,
   "idPronac" INT,
@@ -3540,13 +3540,13 @@ CREATE TABLE sac.tbLancamentoBancario
   "dtLancamento" timestamp NOT NULL,
   "vlLancamento" DECIMAL(16,2) NOT NULL,
   "stLancamento" CHAR NOT NULL,
-  CONSTRAINT FK_tbLancamentoBancario_Projetos FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_tbLancamentoBancario_tbMovimentacaoBancaria FOREIGN KEY (idMovimentacaoBancariaItem) REFERENCES sac.tbMovimentacaoBancariaItem (idMovimentacaoBancariaItem)
+  CONSTRAINT "FK_tbLancamentoBancario_Projetos" FOREIGN KEY ("idPronac") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_tbLancamentoBancario_tbMovimentacaoBancaria" FOREIGN KEY ("idMovimentacaoBancariaItem") REFERENCES sac."tbMovimentacaoBancariaItem" ("idMovimentacaoBancariaItem")
 );
-CREATE INDEX IX_tbLancamentoBancario ON sac.tbLancamentoBancario (idPronac);
-CREATE INDEX IX_tbLancamentoBancario_1 ON sac.tbLancamentoBancario (idPronac, nrLancamento);
-CREATE INDEX IX_tbLancamentoBancario_2 ON sac.tbLancamentoBancario (nrLancamento);
-CREATE TABLE sac.tbLaudoFinal
+CREATE INDEX "IX_tbLancamentoBancario" ON sac."tbLancamentoBancario" ("idPronac");
+CREATE INDEX "IX_tbLancamentoBancario_1" ON sac."tbLancamentoBancario" ("idPronac", "nrLancamento");
+CREATE INDEX "IX_tbLancamentoBancario_2" ON sac."tbLancamentoBancario" ("nrLancamento");
+CREATE TABLE sac."tbLaudoFinal"
 (
   "idLaudoFinal" INT PRIMARY KEY NOT NULL,
   "idPronac" INT NOT NULL,
@@ -3556,25 +3556,25 @@ CREATE TABLE sac.tbLaudoFinal
   "nmSecretario" VARCHAR(255) NOT NULL,
   "dtLaudoFinal" timestamp NOT NULL
 );
-CREATE TABLE sac.tbLogomarca
+CREATE TABLE sac."tbLogomarca"
 (
   "idLogomarca" INT PRIMARY KEY NOT NULL,
   "idPlanoDivulgacao" INT NOT NULL,
   "dsPosicao" VARCHAR(8000),
   "idDocumento" INT,
-  CONSTRAINT fk_tbLogomarca_PlanoDeDivulgacao FOREIGN KEY (idPlanoDivulgacao) REFERENCES sac.PlanoDeDivulgacao (idPlanoDivulgacao)
+  CONSTRAINT "fk_tbLogomarca_PlanoDeDivulgacao" FOREIGN KEY ("idPlanoDivulgacao") REFERENCES sac."PlanoDeDivulgacao" ("idPlanoDivulgacao")
 );
-CREATE TABLE sac.tbModeloTermoDecisao
+CREATE TABLE sac."tbModeloTermoDecisao"
 (
   "idModeloTermoDecisao" INT PRIMARY KEY NOT NULL,
   "idOrgao" INT NOT NULL,
   "idVerificacao" INT NOT NULL,
   "stModeloTermoDecisao" INTEGER NOT NULL,
   "meModeloTermoDecisao" VARCHAR NOT NULL,
-CONSTRAINT fktbModeloTermoDecisao01 FOREIGN KEY (idOrgao) REFERENCES sac.Orgaos (Codigo),
-CONSTRAINT fktbModeloTermoDecisao02 FOREIGN KEY (idVerificacao) REFERENCES sac.Verificacao (idVerificacao)
+CONSTRAINT "fktbModeloTermoDecisao01" FOREIGN KEY ("idOrgao") REFERENCES sac."Orgaos" ("Codigo"),
+CONSTRAINT "fktbModeloTermoDecisao02" FOREIGN KEY ("idVerificacao") REFERENCES sac."Verificacao" ("idVerificacao")
 );
-CREATE TABLE sac.tbMovimentacao
+CREATE TABLE sac."tbMovimentacao"
 (
   "idMovimentacao" INT PRIMARY KEY NOT NULL,
   "idProjeto" INT NOT NULL,
@@ -3582,23 +3582,23 @@ CREATE TABLE sac.tbMovimentacao
   "DtMovimentacao" timestamp NOT NULL,
   "stEstado" INTEGER DEFAULT 0 NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_tbMovimentacao_PreProjeto FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto),
-  CONSTRAINT FK_Movimentacao_PreProjeto FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto),
-  CONSTRAINT FK_Movimentacao_Verificacao FOREIGN KEY (Movimentacao) REFERENCES sac.Verificacao (idVerificacao)
+  CONSTRAINT "FK_tbMovimentacao_PreProjeto" FOREIGN KEY ("idProjeto") REFERENCES sac."PreProjeto" ("idPreProjeto"),
+  CONSTRAINT "FK_Movimentacao_PreProjeto" FOREIGN KEY ("idProjeto") REFERENCES sac."PreProjeto" ("idPreProjeto"),
+  CONSTRAINT "FK_Movimentacao_Verificacao" FOREIGN KEY ("Movimentacao") REFERENCES sac."Verificacao" ("idVerificacao")
 );
-CREATE INDEX IX_Movimentacao ON sac.tbMovimentacao (idProjeto);
-CREATE SEQUENCE sac.tbmovimentacao_idmovimentacao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE sac.tbmovimentacao ALTER COLUMN idmovimentacao SET DEFAULT nextval('sac.tbmovimentacao_idmovimentacao_seq');
-ALTER SEQUENCE sac.tbmovimentacao_idmovimentacao_seq OWNED BY sac.tbmovimentacao.idmovimentacao;
-CREATE TABLE sac.tbMovimentacaoBancariaItemxTipoInconsistencia
+CREATE INDEX "IX_Movimentacao" ON sac."tbMovimentacao" ("idProjeto");
+CREATE SEQUENCE sac."tbmovimentacao_idmovimentacao_seq" NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac."tbmovimentacao" ALTER COLUMN "idmovimentacao" SET DEFAULT nextval('sac.tbmovimentacao_idmovimentacao_seq');
+ALTER SEQUENCE sac."tbmovimentacao_idmovimentacao_seq" OWNED BY sac."tbmovimentacao".idmovimentacao;
+CREATE TABLE sac."tbMovimentacaoBancariaItemxTipoInconsistencia"
 (
   "idMovimentacaoBancariaItem" INT NOT NULL,
   "idTipoInconsistencia" INT NOT NULL,
-  CONSTRAINT pk_tbMovimentacaoBancariaItemxTipoInconsistencia PRIMARY KEY (idMovimentacaoBancariaItem, idTipoInconsistencia),
-  CONSTRAINT FK_tbMovimentacaoBancariaItemxTipoInconsistencia_tbMovimentacaoBancariaItem FOREIGN KEY (idMovimentacaoBancariaItem) REFERENCES sac.tbMovimentacaoBancariaItem (idMovimentacaoBancariaItem),
-  CONSTRAINT FK_tbMovimentacaoBancariaItemxTipoInconsistencia_tbTipoInconsistencia FOREIGN KEY (idTipoInconsistencia) REFERENCES sac.tbTipoInconsistencia (idTipoInconsistencia)
+  CONSTRAINT "pk_tbMovimentacaoBancariaItemxTipoInconsistencia" PRIMARY KEY ("idMovimentacaoBancariaItem", "idTipoInconsistencia"),
+  CONSTRAINT "FK_tbMovimentacaoBancariaItemxTipoInconsistencia_tbMovimentacaoBancariaItem" FOREIGN KEY ("idMovimentacaoBancariaItem") REFERENCES sac."tbMovimentacaoBancariaItem" ("idMovimentacaoBancariaItem"),
+  CONSTRAINT "FK_tbMovimentacaoBancariaItemxTipoInconsistencia_tbTipoInconsistencia" FOREIGN KEY ("idTipoInconsistencia") REFERENCES sac."tbTipoInconsistencia" ("idTipoInconsistencia")
 );
-CREATE TABLE sac.tbOpinarProjeto
+CREATE TABLE sac."tbOpinarProjeto"
 (
   "idOpinarProjeto" INT PRIMARY KEY NOT NULL,
   "idPronac" INT NOT NULL,
@@ -3610,10 +3610,10 @@ CREATE TABLE sac.tbOpinarProjeto
   "stQuestionamento_3" CHAR DEFAULT '0',
   "dsComentario" VARCHAR(250),
   "dsEmail" VARCHAR(100),
-  CONSTRAINT FK_tbOpinarProjeto_Projetos FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_tbOpinarProjeto_Verificacao FOREIGN KEY (idVisao) REFERENCES sac.Verificacao (idVerificacao)
+  CONSTRAINT "FK_tbOpinarProjeto_Projetos" FOREIGN KEY (idPronac) REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_tbOpinarProjeto_Verificacao" FOREIGN KEY (idVisao) REFERENCES sac."Verificacao" ("idVerificacao")
 );
-CREATE TABLE sac.tbOrgaoFiscalizador
+CREATE TABLE sac."tbOrgaoFiscalizador"
 (
   "idOrgaoFiscalizador" INT PRIMARY KEY NOT NULL,
   "idOrgao" INT NOT NULL,
@@ -3623,17 +3623,17 @@ CREATE TABLE sac.tbOrgaoFiscalizador
   "dtConfirmacaoFiscalizacao" timestamp,
   "idResponsavelConfirmacao" INT,
   "idParecerista" INT,
-  CONSTRAINT fk_tbOrgaoFiscalizador_Orgaos FOREIGN KEY (idOrgao) REFERENCES sac.Orgaos (Codigo),
-  CONSTRAINT fk_tbOrgaoFiscalizador_tbFiscalizacao FOREIGN KEY (idFiscalizacao) REFERENCES sac.tbFiscalizacao (idFiscalizacao)
+  CONSTRAINT "fk_tbOrgaoFiscalizador_Orgaos" FOREIGN KEY ("idOrgao") REFERENCES sac."Orgaos" ("Codigo"),
+  CONSTRAINT "fk_tbOrgaoFiscalizador_tbFiscalizacao" FOREIGN KEY ("idFiscalizacao") REFERENCES sac."tbFiscalizacao" ("idFiscalizacao")
 );
-CREATE TABLE sac.tbPagamentoPareceristaXArquivo
+CREATE TABLE sac."tbPagamentoPareceristaXArquivo"
 (
   "idGerarPagamentoParecerista" INT NOT NULL,
   "idArquivo" INT NOT NULL,
   "siArquivo" CHAR DEFAULT 1 NOT NULL,
-  CONSTRAINT FK_tbPagamentoPareceristaXArquivo_tbGerarPagamentoParecerista FOREIGN KEY (idGerarPagamentoParecerista) REFERENCES sac.tbGerarPagamentoParecerista (idGerarPagamentoParecerista)
+  CONSTRAINT "FK_tbPagamentoPareceristaXArquivo_tbGerarPagamentoParecerista" FOREIGN KEY ("idGerarPagamentoParecerista") REFERENCES sac."tbGerarPagamentoParecerista" ("idGerarPagamentoParecerista")
 );
-CREATE TABLE sac.tbPagarParecerista
+CREATE TABLE sac."tbPagarParecerista"
 (
   "idPagarParecerista" INT PRIMARY KEY NOT NULL,
   "idNrReuniao" INT,
@@ -3643,13 +3643,13 @@ CREATE TABLE sac.tbPagarParecerista
   "idUnidadeAnalise" INT,
   "idGerarPagamentoParecerista" INT,
   "vlPagamento" DECIMAL(18,2) NOT NULL,
-  CONSTRAINT FK_tbPagarParecerista_Projetos FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_tbPagarParecerista_Produto FOREIGN KEY (idProduto) REFERENCES sac.Produto (Codigo),
-  CONSTRAINT FK_tbPagarParecerista_tbGerarPagamentoParecerista1 FOREIGN KEY (idGerarPagamentoParecerista) REFERENCES sac.tbGerarPagamentoParecerista (idGerarPagamentoParecerista)
+  CONSTRAINT "FK_tbPagarParecerista_Projetos" FOREIGN KEY ("idPronac") REFERENCES sac.Projetos ("IdPRONAC"),
+  CONSTRAINT "FK_tbPagarParecerista_Produto" FOREIGN KEY ("idProduto") REFERENCES sac.Produto ("Codigo"),
+  CONSTRAINT "FK_tbPagarParecerista_tbGerarPagamentoParecerista1" FOREIGN KEY ("idGerarPagamentoParecerista") REFERENCES sac."tbGerarPagamentoParecerista" ("idGerarPagamentoParecerista")
 );
-CREATE INDEX IX_tbPagarParecerista_1 ON sac.tbPagarParecerista (idProduto);
-CREATE INDEX IX_tbPagarParecerista ON sac.tbPagarParecerista (idPronac);
-CREATE TABLE sac.tbParecerConsolidado
+CREATE INDEX "IX_tbPagarParecerista_1" ON sac."tbPagarParecerista" ("idProduto");
+CREATE INDEX "IX_tbPagarParecerista" ON sac."tbPagarParecerista" ("idPronac");
+CREATE TABLE sac."tbParecerConsolidado"
 (
   "idParecerConsolidado" INT PRIMARY KEY NOT NULL,
   "dsParecer" VARCHAR(8000) NOT NULL,
@@ -3659,10 +3659,10 @@ CREATE TABLE sac.tbParecerConsolidado
   "stRelatorioFinal" CHAR NOT NULL,
   "idAvaliador" INT,
   "idPerfilAvaliador" INT NOT NULL,
-  CONSTRAINT fk_tbParecerConsolidado_tbRelatorioConsolidado FOREIGN KEY (idRelatorioConsolidado) REFERENCES sac.tbRelatorioConsolidado (idRelatorioConsolidado)
+  CONSTRAINT "fk_tbParecerConsolidado_tbRelatorioConsolidado" FOREIGN KEY ("idRelatorioConsolidado") REFERENCES sac."tbRelatorioConsolidado" ("idRelatorioConsolidado")
 );
 
-CREATE TABLE sac.tbPlanilhaProposta
+CREATE TABLE sac."tbPlanilhaProposta"
 (
   "idPlanilhaProposta" INT PRIMARY KEY NOT NULL,
   "idProjeto" INT NOT NULL,
@@ -3683,18 +3683,18 @@ CREATE TABLE sac.tbPlanilhaProposta
   "MunicipioDespesa" VARCHAR(6) NOT NULL,
   "idUsuario" INT DEFAULT 0 NOT NULL,
   "dsJustificativa" VARCHAR(500),
-  CONSTRAINT FK_tbPlanilhaProposta_PreProjeto FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto),
-  CONSTRAINT FK_tbPlanilhaProposta_tbPlanilhaProposta FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto),
-  CONSTRAINT FK_tbPlanilhaProposta_tbPlanilhaEtapa FOREIGN KEY (idEtapa) REFERENCES sac.tbPlanilhaEtapa (idPlanilhaEtapa),
-  CONSTRAINT FK_tbPlanilhaProposta_tbPlanilhaItens FOREIGN KEY (idPlanilhaItem) REFERENCES sac.tbPlanilhaItens (idPlanilhaItens),
-  CONSTRAINT FK_tbPlanilhaProposta_tbPlanilhaUnidade FOREIGN KEY (Unidade) REFERENCES sac.tbPlanilhaUnidade (idUnidade)
+  CONSTRAINT "FK_tbPlanilhaProposta_PreProjeto" FOREIGN KEY ("idProjeto") REFERENCES sac."PreProjeto" ("idPreProjeto"),
+  CONSTRAINT "FK_tbPlanilhaProposta_tbPlanilhaProposta" FOREIGN KEY ("idProjeto") REFERENCES sac."PreProjeto" ("idPreProjeto"),
+  CONSTRAINT "FK_tbPlanilhaProposta_tbPlanilhaEtapa" FOREIGN KEY ("idEtapa") REFERENCES sac."tbPlanilhaEtapa" ("idPlanilhaEtapa"),
+  CONSTRAINT "FK_tbPlanilhaProposta_tbPlanilhaItens" FOREIGN KEY ("idPlanilhaItem") REFERENCES sac."tbPlanilhaItens" ("idPlanilhaItens"),
+  CONSTRAINT "FK_tbPlanilhaProposta_tbPlanilhaUnidade" FOREIGN KEY ("Unidade") REFERENCES sac."tbPlanilhaUnidade" ("idUnidade")
 );
-CREATE INDEX IX_tbPlanilhaProposta_idProjeto ON sac.tbPlanilhaProposta (idProjeto);
-CREATE INDEX IX_tbPlanilhaProposta_idProduto ON sac.tbPlanilhaProposta (idProduto);
-CREATE INDEX IX_tbPlanilhaProposta_idEtapa ON sac.tbPlanilhaProposta (idEtapa);
-CREATE INDEX IX_tbPlanilhaProposta_idItem ON sac.tbPlanilhaProposta (idPlanilhaItem);
-CREATE INDEX IX_tbPlanilhaProposta_Unidade ON sac.tbPlanilhaProposta (Unidade);
-CREATE TABLE sac.tbPlanilhaProjeto
+CREATE INDEX "IX_tbPlanilhaProposta_idProjeto" ON sac."tbPlanilhaProposta" ("idProjeto");
+CREATE INDEX "IX_tbPlanilhaProposta_idProduto" ON sac."tbPlanilhaProposta" ("idProduto");
+CREATE INDEX "IX_tbPlanilhaProposta_idEtapa" ON sac."tbPlanilhaProposta" ("idEtapa");
+CREATE INDEX "IX_tbPlanilhaProposta_idItem" ON sac."tbPlanilhaProposta" ("idPlanilhaItem");
+CREATE INDEX "IX_tbPlanilhaProposta_Unidade" ON sac."tbPlanilhaProposta" ("Unidade");
+CREATE TABLE sac."tbPlanilhaProjeto"
 (
   "idPlanilhaProjeto" INT PRIMARY KEY NOT NULL,
   "idPlanilhaProposta" INT,
@@ -3717,22 +3717,22 @@ CREATE TABLE sac.tbPlanilhaProjeto
   "Justificativa" VARCHAR,
   "idParecer" INT,
   "idUsuario" INT DEFAULT 0,
-  CONSTRAINT FK_tbPlanilhaProjeto_tbPlanilhaProposta FOREIGN KEY (idPlanilhaProposta) REFERENCES sac.tbPlanilhaProposta (idPlanilhaProposta),
-  CONSTRAINT FK_tbPlanilhaProjeto_Projetos FOREIGN KEY (idPRONAC) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_tbPlanilhaProjeto_tbPlanilhaEtapa FOREIGN KEY (idEtapa) REFERENCES sac.tbPlanilhaEtapa (idPlanilhaEtapa),
-  CONSTRAINT FK_tbPlanilhaProjeto_tbPlanilhaProjeto FOREIGN KEY (idPlanilhaItem) REFERENCES sac.tbPlanilhaItens (idPlanilhaItens),
-  CONSTRAINT FK_tbPlanilhaUnidade_tbPlanilhaProjeto FOREIGN KEY (idUnidade) REFERENCES sac.tbPlanilhaUnidade (idUnidade)
+  CONSTRAINT "FK_tbPlanilhaProjeto_tbPlanilhaProposta" FOREIGN KEY ("idPlanilhaProposta") REFERENCES sac."tbPlanilhaProposta" ("idPlanilhaProposta"),
+  CONSTRAINT "FK_tbPlanilhaProjeto_Projetos" FOREIGN KEY ("idPRONAC") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_tbPlanilhaProjeto_tbPlanilhaEtapa" FOREIGN KEY ("idEtapa") REFERENCES sac."tbPlanilhaEtapa" ("idPlanilhaEtapa"),
+  CONSTRAINT "FK_tbPlanilhaProjeto_tbPlanilhaProjeto" FOREIGN KEY ("idPlanilhaItem") REFERENCES sac."tbPlanilhaItens" ("idPlanilhaItens"),
+  CONSTRAINT "FK_tbPlanilhaUnidade_tbPlanilhaProjeto" FOREIGN KEY ("idUnidade") REFERENCES sac."tbPlanilhaUnidade" ("idUnidade")
 );
-CREATE INDEX IX_tbPlanilhaProjeto_idPronac ON sac.tbPlanilhaProjeto (idPRONAC);
-CREATE INDEX IX_tbPlanilhaProjeto_idEtapa ON sac.tbPlanilhaProjeto (idEtapa);
-CREATE INDEX IX_tbPlanilhaProjeto_idProduto ON sac.tbPlanilhaProjeto (idProduto);
-CREATE INDEX IX_tbPlanilhaProjeto_idItemPlanilha ON sac.tbPlanilhaProjeto (idPlanilhaItem);
-CREATE INDEX IX_tbPlanilhaProjeto_idUnidade ON sac.tbPlanilhaProjeto (idUnidade);
-CREATE INDEX IX_tbPlanilhaProjeto_idPlanilhaProjeto ON sac.tbPlanilhaProjeto (idPlanilhaProjeto);
-CREATE INDEX IX_tbPlanilhaProjeto_idPlanilhaProposta ON sac.tbPlanilhaProjeto (idPlanilhaProposta);
-CREATE INDEX IX_tbPlanilhaProjeto_FonteRecurso ON sac.tbPlanilhaProjeto (FonteRecurso);
-CREATE INDEX IX_tbPlanilhaProjeto_idPronac_Fonte_Produto ON sac.tbPlanilhaProjeto (idPRONAC, FonteRecurso, idProduto);
-CREATE TABLE sac.tbPlanilhaAprovacao
+CREATE INDEX "IX_tbPlanilhaProjeto_idPronac" ON sac."tbPlanilhaProjeto" ("idPRONAC");
+CREATE INDEX "IX_tbPlanilhaProjeto_idEtapa" ON sac."tbPlanilhaProjeto" ("idEtapa");
+CREATE INDEX "IX_tbPlanilhaProjeto_idProduto" ON sac."tbPlanilhaProjeto" ("idProduto");
+CREATE INDEX "IX_tbPlanilhaProjeto_idItemPlanilha" ON sac."tbPlanilhaProjeto" ("idPlanilhaItem");
+CREATE INDEX "IX_tbPlanilhaProjeto_idUnidade" ON sac."tbPlanilhaProjeto" ("idUnidade");
+CREATE INDEX "IX_tbPlanilhaProjeto_idPlanilhaProjeto" ON sac."tbPlanilhaProjeto" ("idPlanilhaProjeto");
+CREATE INDEX "IX_tbPlanilhaProjeto_idPlanilhaProposta" ON sac."tbPlanilhaProjeto" ("idPlanilhaProposta");
+CREATE INDEX "IX_tbPlanilhaProjeto_FonteRecurso" ON sac."tbPlanilhaProjeto" ("FonteRecurso");
+CREATE INDEX "IX_tbPlanilhaProjeto_idPronac_Fonte_Produto" ON sac."tbPlanilhaProjeto" ("idPRONAC", "FonteRecurso", "idProduto");
+CREATE TABLE sac."tbPlanilhaAprovacao"
 (
   "idPlanilhaAprovacao" INT PRIMARY KEY NOT NULL,
   "tpPlanilha" CHAR(2) NOT NULL,
@@ -3762,55 +3762,55 @@ CREATE TABLE sac.tbPlanilhaAprovacao
   "tpAcao" CHAR,
   "idRecursoDecisao" INT,
   "stAtivo" CHAR DEFAULT 'S' NOT NULL,
-  CONSTRAINT FK_tbPlanilhaAprovacao_tbPlanilhaProjeto FOREIGN KEY (idPlanilhaProjeto) REFERENCES sac.tbPlanilhaProjeto (idPlanilhaProjeto),
-  CONSTRAINT FK_tbPlanilhaAprovacao_tbPlanilhaProposta FOREIGN KEY (idPlanilhaProposta) REFERENCES sac.tbPlanilhaProposta (idPlanilhaProposta),
-  CONSTRAINT fk_tbPlanilhaAprovacao_02 FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_tbPlanilhaAprovacao_tbPlanilhaEtapa FOREIGN KEY (idEtapa) REFERENCES sac.tbPlanilhaEtapa (idPlanilhaEtapa),
-  CONSTRAINT FK_tbPlanilhaAprovacao_tbPlanilhaItens FOREIGN KEY (idPlanilhaItem) REFERENCES sac.tbPlanilhaItens (idPlanilhaItens),
-  CONSTRAINT FK_tbPlanilhaAprovacao_tbPlanilhaUnidade FOREIGN KEY (idUnidade) REFERENCES sac.tbPlanilhaUnidade (idUnidade),
-  CONSTRAINT fk_tbPlanilhaAprovacao_01 FOREIGN KEY (idPlanilhaAprovacaoPai) REFERENCES sac.tbPlanilhaAprovacao (idPlanilhaAprovacao)
+  CONSTRAINT "FK_tbPlanilhaAprovacao_tbPlanilhaProjeto" FOREIGN KEY ("idPlanilhaProjeto") REFERENCES sac."tbPlanilhaProjeto" ("idPlanilhaProjeto"),
+  CONSTRAINT "FK_tbPlanilhaAprovacao_tbPlanilhaProposta" FOREIGN KEY ("idPlanilhaProposta") REFERENCES sac."tbPlanilhaProposta" ("idPlanilhaProposta"),
+  CONSTRAINT "fk_tbPlanilhaAprovacao_02" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_tbPlanilhaAprovacao_tbPlanilhaEtapa" FOREIGN KEY ("idEtapa") REFERENCES sac."tbPlanilhaEtapa" ("idPlanilhaEtapa"),
+  CONSTRAINT "FK_tbPlanilhaAprovacao_tbPlanilhaItens" FOREIGN KEY ("idPlanilhaItem") REFERENCES sac."tbPlanilhaItens" ("idPlanilhaItens"),
+  CONSTRAINT "FK_tbPlanilhaAprovacao_tbPlanilhaUnidade" FOREIGN KEY ("idUnidade") REFERENCES sac."tbPlanilhaUnidade" ("idUnidade"),
+  CONSTRAINT "fk_tbPlanilhaAprovacao_01" FOREIGN KEY ("idPlanilhaAprovacaoPai") REFERENCES sac."tbPlanilhaAprovacao" ("idPlanilhaAprovacao")
 );
-CREATE INDEX ix_tbPlanilhaAprovaAtivo ON sac.tbPlanilhaAprovacao (stAtivo, IdPRONAC, idEtapa, idUnidade, qtItem, nrOcorrencia, vlUnitario);
-CREATE INDEX ix_tbPlanilhaAprovacao_EtapaAtivo ON sac.tbPlanilhaAprovacao (idEtapa, stAtivo, IdPRONAC, idUnidade, qtItem, nrOcorrencia, vlUnitario);
-CREATE INDEX IX_tbPlanilhaAprovacao_idProduto ON sac.tbPlanilhaAprovacao (idProduto);
-CREATE INDEX IX_tbPlanilhaAprovacao_idPlanilhaItem ON sac.tbPlanilhaAprovacao (idPlanilhaItem);
-CREATE INDEX IX_tbPlanilhaAprovacao_idMunicipioDespesa ON sac.tbPlanilhaAprovacao (idMunicipioDespesa);
-CREATE INDEX IX_tbPlanilhaAprovacao_idPronac ON sac.tbPlanilhaAprovacao (IdPRONAC);
-CREATE INDEX IX_tbPlanilhaAprovacao_idPlanilha_Projeto ON sac.tbPlanilhaAprovacao (idPlanilhaProjeto);
-CREATE INDEX IX_tbPlanilhaAprovacao_idPlanilhaProposta ON sac.tbPlanilhaAprovacao (idPlanilhaProposta);
-CREATE INDEX IX_tbPlanilhaAprovacao_idUnidade ON sac.tbPlanilhaAprovacao (idUnidade);
-CREATE INDEX IX_tbPlanilhaAprovacao_FonteRecurso ON sac.tbPlanilhaAprovacao (nrFonteRecurso);
-CREATE INDEX IX_idPronac_Itens ON sac.tbPlanilhaAprovacao (IdPRONAC, idPlanilhaItem);
-CREATE INDEX IX_Itens ON sac.tbPlanilhaAprovacao (idPlanilhaItem);
-CREATE INDEX IX_Etapa ON sac.tbPlanilhaAprovacao (idEtapa);
+CREATE INDEX "ix_tbPlanilhaAprovaAtivo" ON sac."tbPlanilhaAprovacao" ("stAtivo", "IdPRONAC", "idEtapa", "idUnidade", "qtItem", "nrOcorrencia", "vlUnitario");
+CREATE INDEX "ix_tbPlanilhaAprovacao_EtapaAtivo" ON sac."tbPlanilhaAprovacao" ("idEtapa", "stAtivo", "IdPRONAC", "idUnidade", "qtItem", "nrOcorrencia", "vlUnitario");
+CREATE INDEX "IX_tbPlanilhaAprovacao_idProduto" ON sac."tbPlanilhaAprovacao" ("idProduto");
+CREATE INDEX "IX_tbPlanilhaAprovacao_idPlanilhaItem" ON sac."tbPlanilhaAprovacao" ("idPlanilhaItem");
+CREATE INDEX "IX_tbPlanilhaAprovacao_idMunicipioDespesa" ON sac."tbPlanilhaAprovacao" ("idMunicipioDespesa");
+CREATE INDEX "IX_tbPlanilhaAprovacao_idPronac" ON sac."tbPlanilhaAprovacao" ("IdPRONAC");
+CREATE INDEX "IX_tbPlanilhaAprovacao_idPlanilha_Projeto" ON sac."tbPlanilhaAprovacao" ("idPlanilhaProjeto");
+CREATE INDEX "IX_tbPlanilhaAprovacao_idPlanilhaProposta" ON sac."tbPlanilhaAprovacao" ("idPlanilhaProposta");
+CREATE INDEX "IX_tbPlanilhaAprovacao_idUnidade" ON sac."tbPlanilhaAprovacao" ("idUnidade");
+CREATE INDEX "IX_tbPlanilhaAprovacao_FonteRecurso" ON sac."tbPlanilhaAprovacao" ("nrFonteRecurso");
+CREATE INDEX "IX_idPronac_Itens" ON sac."tbPlanilhaAprovacao" ("IdPRONAC", "idPlanilhaItem");
+CREATE INDEX "IX_Itens" ON sac."tbPlanilhaAprovacao" ("idPlanilhaItem");
+CREATE INDEX "IX_Etapa" ON sac."tbPlanilhaAprovacao" ("idEtapa");
 
-CREATE TABLE sac.tbCumprimentoObjetoXArquivo
+CREATE TABLE sac."tbCumprimentoObjetoXArquivo"
 (
   "idCumprimentoObjetoXArquivo" INT PRIMARY KEY NOT NULL,
   "idCumprimentoObjeto" INT NOT NULL,
   "idArquivo" INT NOT NULL,
   "idPosicao" int NOT NULL,
-  CONSTRAINT FK_tbCumprimentoObjetoXArquivo_tbCumprimentoObjeto FOREIGN KEY (idCumprimentoObjeto) REFERENCES sac.tbCumprimentoObjeto (idCumprimentoObjeto)
+  CONSTRAINT "FK_tbCumprimentoObjetoXArquivo_tbCumprimentoObjeto" FOREIGN KEY ("idCumprimentoObjeto") REFERENCES sac."tbCumprimentoObjeto" ("idCumprimentoObjeto")
 );
-CREATE TABLE sac.tbDeParaPlanilhaAprovacao
+CREATE TABLE sac."tbDeParaPlanilhaAprovacao"
 (
   "idDeParaPlanilhaAprovacao" INT PRIMARY KEY NOT NULL,
   "idPlanilhaAprovacaoFilho" INT NOT NULL,
   "idPlanilhaAprovacao" INT NOT NULL,
-  CONSTRAINT FK_tbDeParaPlanilhaAprovacao_tbPlanilhaAprovacao1 FOREIGN KEY (idPlanilhaAprovacaoFilho) REFERENCES sac.tbPlanilhaAprovacao (idPlanilhaAprovacao),
-  CONSTRAINT FK_tbDeParaPlanilhaAprovacao_tbPlanilhaAprovacao FOREIGN KEY (idPlanilhaAprovacao) REFERENCES sac.tbPlanilhaAprovacao (idPlanilhaAprovacao)
+  CONSTRAINT "FK_tbDeParaPlanilhaAprovacao_tbPlanilhaAprovacao1" FOREIGN KEY ("idPlanilhaAprovacaoFilho") REFERENCES sac."tbPlanilhaAprovacao" ("idPlanilhaAprovacao"),
+  CONSTRAINT "FK_tbDeParaPlanilhaAprovacao_tbPlanilhaAprovacao" FOREIGN KEY ("idPlanilhaAprovacao") REFERENCES sac."tbPlanilhaAprovacao" ("idPlanilhaAprovacao")
 );
-CREATE TABLE sac.tbPlanilhaDesembolso
+CREATE TABLE sac."tbPlanilhaDesembolso"
 (
   "idDesembolso" INT PRIMARY KEY NOT NULL,
   "idProjeto" INT NOT NULL,
   "idPlanilhaItem" INT NOT NULL,
   "Data" timestamp NOT NULL,
   "Valor" MONEY NOT NULL,
-  CONSTRAINT FK_PlanilhaDesembolso_Projetos FOREIGN KEY (idProjeto) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_tbPlanilhaDesembolso_PreProjeto FOREIGN KEY (idProjeto) REFERENCES sac.PreProjeto (idPreProjeto)
+  CONSTRAINT "FK_PlanilhaDesembolso_Projetos" FOREIGN KEY ("idProjeto") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_tbPlanilhaDesembolso_PreProjeto" FOREIGN KEY ("idProjeto") REFERENCES sac."PreProjeto" ("idPreProjeto")
 );
-CREATE TABLE sac.tbPlanilhaJustificativa
+CREATE TABLE sac."tbPlanilhaJustificativa"
 (
   "idPlanilhaOrcamento" INT PRIMARY KEY NOT NULL,
   "idPlanilhaProjeto" INT NOT NULL,
@@ -3823,19 +3823,19 @@ CREATE TABLE sac.tbPlanilhaJustificativa
   "JustificativaAprovada" VARCHAR(250) DEFAULT '' NOT NULL,
   "stEstado" INTEGER DEFAULT 0 NOT NULL,
   "idUsuario" INT NOT NULL,
-  CONSTRAINT FK_tbPlanilhaJustificativa_tbPlanilhaProjeto FOREIGN KEY (idPlanilhaProjeto) REFERENCES sac.tbPlanilhaProjeto (idPlanilhaProjeto)
+  CONSTRAINT "FK_tbPlanilhaJustificativa_tbPlanilhaProjeto" FOREIGN KEY ("idPlanilhaProjeto") REFERENCES sac."tbPlanilhaProjeto" ("idPlanilhaProjeto")
 );
-CREATE TABLE sac.tbRecursoXPlanilhaAprovacao
+CREATE TABLE sac."tbRecursoXPlanilhaAprovacao"
 (
   "idRecurso" INT NOT NULL,
   "idPlanilhaAprovacao" INT NOT NULL,
   "stRecursoAprovacao" CHAR,
   "dsJustificativa" VARCHAR(600),
-  CONSTRAINT pk_tbRecursoXPlanilhaAprovacao PRIMARY KEY (idRecurso, idPlanilhaAprovacao),
-  CONSTRAINT fk_tbRecursoXPlanilhaAprovacao_02 FOREIGN KEY (idRecurso) REFERENCES sac.tbRecurso (idRecurso),
-  CONSTRAINT fktbRecursoXPlanilhaAprovacao_tbPlanilhaAprovacao FOREIGN KEY (idPlanilhaAprovacao) REFERENCES sac.tbPlanilhaAprovacao (idPlanilhaAprovacao)
+  CONSTRAINT "pk_tbRecursoXPlanilhaAprovacao" PRIMARY KEY ("idRecurso", "idPlanilhaAprovacao"),
+  CONSTRAINT "fk_tbRecursoXPlanilhaAprovacao_02" FOREIGN KEY ("idRecurso") REFERENCES sac."tbRecurso" ("idRecurso"),
+  CONSTRAINT "fktbRecursoXPlanilhaAprovacao_tbPlanilhaAprovacao" FOREIGN KEY ("idPlanilhaAprovacao") REFERENCES sac."tbPlanilhaAprovacao" ("idPlanilhaAprovacao")
 );
-CREATE TABLE sac.tbRelatorioTecnico
+CREATE TABLE sac."tbRelatorioTecnico"
 (
   "idRelatorioTecnico" INT PRIMARY KEY NOT NULL,
   "meRelatorio" TEXT NOT NULL,
@@ -3844,9 +3844,9 @@ CREATE TABLE sac.tbRelatorioTecnico
   "idAgente" INT NOT NULL,
   "cdGrupo" INT NOT NULL,
   "siManifestacao" INTEGER DEFAULT '1' NOT NULL,
-  CONSTRAINT fk_tbRelatorioTecnico_Projetos FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC)
+  CONSTRAINT "fk_tbRelatorioTecnico_Projetos" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC")
 );
-CREATE TABLE sac.tbRelatorioTrimestral
+CREATE TABLE sac."tbRelatorioTrimestral"
 (
   "idRelatorioTrimestral" INT PRIMARY KEY NOT NULL,
   "idRelatorio" INT NOT NULL,
@@ -3855,9 +3855,9 @@ CREATE TABLE sac.tbRelatorioTrimestral
   "dtCadastro" timestamp,
   "stRelatorioTrimestral" CHAR,
   "nrRelatorioTrimestral" INT NOT NULL,
-  CONSTRAINT fk_tbRelatorioTrimestral_tbRelatorio FOREIGN KEY (idRelatorio) REFERENCES sac.tbRelatorio (idRelatorio)
+  CONSTRAINT "fk_tbRelatorioTrimestral_tbRelatorio" FOREIGN KEY ("idRelatorio") REFERENCES sac."tbRelatorio" ("idRelatorio")
 );
-CREATE TABLE sac.tbSaldoBancario
+CREATE TABLE sac."tbSaldoBancario"
 (
   "idSaldoBancario" INT PRIMARY KEY NOT NULL,
   "idPronac" INT NOT NULL,
@@ -3869,19 +3869,19 @@ CREATE TABLE sac.tbSaldoBancario
   "dtSaldoBancario" timestamp NOT NULL,
   "vlSaldoBancario" DECIMAL(16,2) NOT NULL,
   "stSaldoBancario" CHAR NOT NULL,
-  CONSTRAINT FK_tbSaldoBancario_Projetos FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_tbSaldoBancario_tbMovimentacaoBancaria FOREIGN KEY (idMovimentacaoBancariaItem) REFERENCES sac.tbMovimentacaoBancariaItem (idMovimentacaoBancariaItem)
+  CONSTRAINT "FK_tbSaldoBancario_Projetos" FOREIGN KEY ("idPronac") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_tbSaldoBancario_tbMovimentacaoBancaria" FOREIGN KEY ("idMovimentacaoBancariaItem") REFERENCES sac."tbMovimentacaoBancariaItem" ("idMovimentacaoBancariaItem")
 );
-CREATE INDEX IX_tbSaldoBancario ON sac.tbSaldoBancario (idPronac);
-CREATE TABLE sac.tbSecretario
+CREATE INDEX "IX_tbSaldoBancario" ON sac."tbSaldoBancario" ("idPronac");
+CREATE TABLE sac."tbSecretario"
 (
   "idSecretario" INT PRIMARY KEY NOT NULL,
   "idOrgao" INT NOT NULL,
   "nmSecretario" VARCHAR(100) NOT NULL,
   "dsCargo" VARCHAR(50) NOT NULL,
-  CONSTRAINT fktbSecretario01 FOREIGN KEY (idOrgao) REFERENCES sac.Orgaos (Codigo)
+  CONSTRAINT "fktbSecretario01" FOREIGN KEY ("idOrgao") REFERENCES sac."Orgaos" ("Codigo")
 );
-CREATE TABLE sac.tbSolicitarItem
+CREATE TABLE sac."tbSolicitarItem"
 (
   "idSolicitarItem" INT PRIMARY KEY NOT NULL,
   "idPlanilhaItens" INT,
@@ -3894,10 +3894,10 @@ CREATE TABLE sac.tbSolicitarItem
   "Resposta" VARCHAR,
   "DtResposta" timestamp,
   "stEstado" int DEFAULT 0 NOT NULL,
-CONSTRAINT FK_tbSolicitarItem_Produto FOREIGN KEY (idProduto) REFERENCES sac.Produto (Codigo),
-CONSTRAINT FK_tbSolicitarItem_tbPlanilhaEtapa FOREIGN KEY (idEtapa) REFERENCES sac.tbPlanilhaEtapa (idPlanilhaEtapa)
+CONSTRAINT "FK_tbSolicitarItem_Produto" FOREIGN KEY ("idProduto") REFERENCES sac."Produto" ("Codigo"),
+CONSTRAINT "FK_tbSolicitarItem_tbPlanilhaEtapa" FOREIGN KEY ("idEtapa") REFERENCES sac."tbPlanilhaEtapa" ("idPlanilhaEtapa")
 );
-CREATE TABLE sac.tbTermoAceiteObra
+CREATE TABLE sac."tbTermoAceiteObra"
 (
   "idTermoAceiteObra" INT PRIMARY KEY NOT NULL,
   "idPronac" INT NOT NULL,
@@ -3906,25 +3906,25 @@ CREATE TABLE sac.tbTermoAceiteObra
   "idDocumentoTermo" INT NOT NULL,
   "idUsuarioCadastrador" INT NOT NULL,
   "stConstrucaoCriacaoRestauro" INTEGER DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_tbTermoAceiteObra_Projetos FOREIGN KEY (idPronac) REFERENCES sac.Projetos (IdPRONAC)
+  CONSTRAINT "FK_tbTermoAceiteObra_Projetos" FOREIGN KEY ("idPronac") REFERENCES sac."Projetos" ("IdPRONAC")
 );
-CREATE TABLE sac.tbTmpInconsistenciaCaptacao
+CREATE TABLE sac."tbTmpInconsistenciaCaptacao"
 (
   "idTipoInconsistencia" INT NOT NULL,
   "idTmpCaptacao" INT NOT NULL,
-  CONSTRAINT pk_tbTmpInconsistenciaCaptacao_20160219 PRIMARY KEY (idTipoInconsistencia, idTmpCaptacao),
-  CONSTRAINT fk_tbTmpInconsistenciaCaptacao_tbTipoInconsistencia_20160219 FOREIGN KEY (idTipoInconsistencia) REFERENCES sac.tbTipoInconsistencia (idTipoInconsistencia),
-  CONSTRAINT fk_tbTmpInconsistenciaCaptacao_tbTmpCaptacao_20160219 FOREIGN KEY (idTmpCaptacao) REFERENCES sac.tbTmpCaptacao (idTmpCaptacao)
+  CONSTRAINT "pk_tbTmpInconsistenciaCaptacao_20160219" PRIMARY KEY ("idTipoInconsistencia", "idTmpCaptacao"),
+  CONSTRAINT "fk_tbTmpInconsistenciaCaptacao_tbTipoInconsistencia_20160219" FOREIGN KEY ("idTipoInconsistencia") REFERENCES sac."tbTipoInconsistencia" ("idTipoInconsistencia"),
+  CONSTRAINT "fk_tbTmpInconsistenciaCaptacao_tbTmpCaptacao_20160219" FOREIGN KEY ("idTmpCaptacao") REFERENCES sac."tbTmpCaptacao" ('idTmpCaptacao')
 );
-CREATE TABLE sac.tbTmpInconsistenciaCaptacaoOLD
+CREATE TABLE sac."tbTmpInconsistenciaCaptacaoOLD"
 (
   "idTipoInconsistencia" INT NOT NULL,
   "idTmpCaptacao" INT NOT NULL,
-  CONSTRAINT pk_tbTmpInconsistenciaCaptacao PRIMARY KEY (idTipoInconsistencia, idTmpCaptacao),
-  CONSTRAINT fk_tbTmpInconsistenciaCaptacao_tbTipoInconsistencia FOREIGN KEY (idTipoInconsistencia) REFERENCES sac.tbTipoInconsistencia (idTipoInconsistencia),
-  CONSTRAINT fk_tbTmpInconsistenciaCaptacao_tbTmpCaptacao FOREIGN KEY (idTmpCaptacao) REFERENCES sac.tbTmpCaptacaoOLD (idTmpCaptacao)
+  CONSTRAINT "pk_tbTmpInconsistenciaCaptacao" PRIMARY KEY ("idTipoInconsistencia", "idTmpCaptacao"),
+  CONSTRAINT "fk_tbTmpInconsistenciaCaptacao_tbTipoInconsistencia" FOREIGN KEY ("idTipoInconsistencia") REFERENCES sac."tbTipoInconsistencia" ("idTipoInconsistencia"),
+  CONSTRAINT "fk_tbTmpInconsistenciaCaptacao_tbTmpCaptacao" FOREIGN KEY ("idTmpCaptacao") REFERENCES sac."tbTmpCaptacaoOLD" ("idTmpCaptacao")
 );
-CREATE TABLE sac.tbVerificaProjeto
+CREATE TABLE sac."tbVerificaProjeto"
 (
   "idVerificaProjeto" INT PRIMARY KEY NOT NULL,
   "IdPRONAC" INT NOT NULL,
@@ -3936,11 +3936,11 @@ CREATE TABLE sac.tbVerificaProjeto
   "dtFinalizado" timestamp,
   "dtPortaria" timestamp,
   "stAtivo" CHAR NOT NULL,
-  CONSTRAINT FK_tbVerificaProjeto_Projetos FOREIGN KEY (IdPRONAC) REFERENCES sac.Projetos (IdPRONAC),
-  CONSTRAINT FK_tbVerificaProjeto_Orgaos FOREIGN KEY (idOrgao) REFERENCES sac.Orgaos (Codigo),
-  CONSTRAINT FK_tbVerificaProjeto_Aprovacao FOREIGN KEY (idAprovacao) REFERENCES sac.Aprovacao (idAprovacao)
+  CONSTRAINT "FK_tbVerificaProjeto_Projetos" FOREIGN KEY ("IdPRONAC") REFERENCES sac."Projetos" ("IdPRONAC"),
+  CONSTRAINT "FK_tbVerificaProjeto_Orgaos" FOREIGN KEY ("idOrgao") REFERENCES sac."Orgaos" ("Codigo"),
+  CONSTRAINT "FK_tbVerificaProjeto_Aprovacao" FOREIGN KEY ("idAprovacao") REFERENCES sac."Aprovacao" ("idAprovacao")
 );
-CREATE TABLE sac.Tempestividade
+CREATE TABLE sac."Tempestividade"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -3965,10 +3965,10 @@ CREATE TABLE sac.Tempestividade
   "AnalisePC" timestamp NOT NULL,
   "Manifestacao" timestamp NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_Tempestividade PRIMARY KEY (AnoProjeto, Sequencial),
-  CONSTRAINT FK_Tempestividade_Projetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_Tempestividade" PRIMARY KEY ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_Tempestividade_Projetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.TermoAditivo
+CREATE TABLE sac."TermoAditivo"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -3981,11 +3981,11 @@ CREATE TABLE sac.TermoAditivo
   "DtFinalExecucao" timestamp,
   "Motivo" TEXT,
   "logon" INT,
-  CONSTRAINT PK_TermoAditivo PRIMARY KEY (AnoProjeto, Sequencial, NumeroTermo),
-  CONSTRAINT FK_TermoProjetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_TermoAditivo" PRIMARY KEY ("AnoProjeto", "Sequencial", "NumeroTermo"),
+  CONSTRAINT "FK_TermoProjetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE UNIQUE INDEX AK_TermoAditivo ON sac.TermoAditivo (AnoProjeto, Sequencial, NumeroTermo);
-CREATE TABLE sac.TermoCompromisso
+CREATE UNIQUE INDEX "AK_TermoAditivo" ON sac."TermoAditivo" ("AnoProjeto", "Sequencial", "NumeroTermo");
+CREATE TABLE sac."TermoCompromisso"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -3993,30 +3993,30 @@ CREATE TABLE sac.TermoCompromisso
   "DtChegadaTermo" timestamp NOT NULL,
   "Observacao" VARCHAR(250) NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_TermoCompromisso PRIMARY KEY (AnoProjeto, Sequencial),
-  CONSTRAINT FK_TermoCompromisso_Projetos FOREIGN KEY (AnoProjeto, Sequencial) REFERENCES sac.Projetos (AnoProjeto, Sequencial)
+  CONSTRAINT "PK_TermoCompromisso" PRIMARY KEY ("AnoProjeto", "Sequencial"),
+  CONSTRAINT "FK_TermoCompromisso_Projetos" FOREIGN KEY ("AnoProjeto", "Sequencial") REFERENCES sac."Projetos" ("AnoProjeto", "Sequencial")
 );
-CREATE TABLE sac.ValidadeDocumentos
+CREATE TABLE sac."ValidadeDocumentos"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "CodigoDocumento" INT NOT NULL,
   "DtValidade" timestamp NOT NULL,
   "Logon" INT NOT NULL,
-  CONSTRAINT PK_ValidadeDocumentos PRIMARY KEY (CgcCpf, CodigoDocumento),
-  CONSTRAINT FK_ValidadeDocumentosExigidos FOREIGN KEY (CodigoDocumento) REFERENCES sac.DocumentosExigidos (Codigo)
+  CONSTRAINT "PK_ValidadeDocumentos" PRIMARY KEY ("CgcCpf", "CodigoDocumento"),
+  CONSTRAINT "FK_ValidadeDocumentosExigidos" FOREIGN KEY ("CodigoDocumento") REFERENCES sac."DocumentosExigidos" ("Codigo")
 );
-CREATE TABLE sac.VerificacaoPecaxVeiculo
+CREATE TABLE sac."VerificacaoPecaxVeiculo"
 (
   "idVerificacaoPecaxVeiculo" INT PRIMARY KEY NOT NULL,
   "idVerificacaoPeca" INT NOT NULL,
   "idVerificacaoVeiculo" INT NOT NULL,
-  CONSTRAINT FK_VerificacaoPecaxVeiculo_Verificacao FOREIGN KEY (idVerificacaoPeca) REFERENCES sac.Verificacao (idVerificacao),
-  CONSTRAINT FK_VerificacaoPecaxVeiculo_Verificacao1 FOREIGN KEY (idVerificacaoVeiculo) REFERENCES sac.Verificacao (idVerificacao)
+  CONSTRAINT "FK_VerificacaoPecaxVeiculo_Verificacao" FOREIGN KEY ("idVerificacaoPeca") REFERENCES sac."Verificacao" ("idVerificacao"),
+  CONSTRAINT "FK_VerificacaoPecaxVeiculo_Verificacao1" FOREIGN KEY ("idVerificacaoVeiculo") REFERENCES sac."Verificacao" ("idVerificacao")
 );
-CREATE SEQUENCE sac.verificacaopecaxveiculo_idverificacaopecaxveiculo_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE sac.verificacaopecaxveiculo ALTER COLUMN idverificacaopecaxveiculo SET DEFAULT nextval('sac.verificacaopecaxveiculo_idverificacaopecaxveiculo_seq');
-ALTER SEQUENCE sac.verificacaopecaxveiculo_idverificacaopecaxveiculo_seq OWNED BY sac.verificacaopecaxveiculo.idverificacaopecaxveiculo;
-CREATE TABLE sac.DBA_CaptacaoAnoUfMunicipio
+CREATE SEQUENCE sac."verificacaopecaxveiculo_idverificacaopecaxveiculo_seq" NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac."verificacaopecaxveiculo" ALTER COLUMN "idverificacaopecaxveiculo" SET DEFAULT nextval('sac.verificacaopecaxveiculo_idverificacaopecaxveiculo_seq');
+ALTER SEQUENCE sac."verificacaopecaxveiculo_idverificacaopecaxveiculo_seq" OWNED BY sac."verificacaopecaxveiculo"."idverificacaopecaxveiculo";
+CREATE TABLE sac."DBA_CaptacaoAnoUfMunicipio"
 (
   "ANO_CAPTACAO" INT,
   "REGIAO" VARCHAR(15) NOT NULL,
@@ -4025,7 +4025,7 @@ CREATE TABLE sac.DBA_CaptacaoAnoUfMunicipio
   "PRONAC" VARCHAR(7) NOT NULL,
   "VALOR_CAPTADO" MONEY
 );
-CREATE TABLE sac.DBA_CEP_SALIC
+CREATE TABLE sac."DBA_CEP_SALIC"
 (
   "cep" VARCHAR(8),
   "logradouro" VARCHAR(185),
@@ -4038,7 +4038,7 @@ CREATE TABLE sac.DBA_CEP_SALIC
   "idCidadeUF" VARCHAR(6),
   "dsCidadeUF" VARCHAR(100)
 );
-CREATE TABLE sac.DBA_Geral
+CREATE TABLE sac."DBA_Geral"
 (
   "PROJETO_PRONAC" INT NOT NULL,
   "PROJETO_PROJETO" INT,
@@ -4088,7 +4088,7 @@ CREATE TABLE sac.DBA_Geral
   "UF_MUNICIPIO_ABRANGENCIA" CHAR(2),
   "CONVENIO_VALOR" MONEY
 );
-CREATE TABLE sac.DBA_Geral_2008
+CREATE TABLE sac."DBA_Geral_2008"
 (
   "PRONAC" VARCHAR (7) NOT NULL,
   "OME_DO_PROJETO" VARCHAR(8000),
@@ -4119,7 +4119,7 @@ CREATE TABLE sac.DBA_Geral_2008
   "UF_DO_INVESTIDOR" CHAR(2),
   "VALOR_INVESTIDO" VARCHAR(4000)
 );
-CREATE TABLE sac.DBA_Geral_2009
+CREATE TABLE sac."DBA_Geral_2009"
 (
   "PRONAC" VARCHAR(7) NOT NULL,
   "NOME_DO_PROJETO" VARCHAR(8000),
@@ -4150,7 +4150,7 @@ CREATE TABLE sac.DBA_Geral_2009
   "UF_DO_INVESTIDOR" CHAR(2),
   "VALOR_INVESTIDO" VARCHAR(4000)
 );
-CREATE TABLE sac.DBA_Geral_2010
+CREATE TABLE sac."DBA_Geral_2010"
 (
    "PRONAC" VARCHAR(7) NOT NULL,
    "NOME_DO_PROJETO" VARCHAR(8000),
@@ -4181,7 +4181,7 @@ CREATE TABLE sac.DBA_Geral_2010
    "UF_DO_INVESTIDOR" CHAR(2),
    "VALOR_INVESTIDO" VARCHAR(4000)
 );
-CREATE TABLE sac.DBA_Geral_2011
+CREATE TABLE sac."DBA_Geral_2011"
 (
    "PRONAC" VARCHAR(7) NOT NULL,
    "NOME_DO_PROJETO" VARCHAR(8000),
@@ -4212,7 +4212,7 @@ CREATE TABLE sac.DBA_Geral_2011
    "UF_DO_INVESTIDOR" CHAR(2),
    "VALOR_INVESTIDO" VARCHAR(4000)
 );
-CREATE TABLE sac.DBA_Geral_2012
+CREATE TABLE sac."DBA_Geral_2012"
 (
    "PRONAC" VARCHAR(7) NOT NULL,
    "NOME_DO_PROJETO" VARCHAR(8000),
@@ -4243,7 +4243,7 @@ CREATE TABLE sac.DBA_Geral_2012
    "UF_DO_INVESTIDOR" CHAR(2),
    "VALOR_INVESTIDO" VARCHAR(4000)
 );
-CREATE TABLE sac.DBA_Geral_2013
+CREATE TABLE sac."DBA_Geral_2013"
 (
    "PRONAC" VARCHAR(7) NOT NULL,
    "NOME_DO_PROJETO" VARCHAR(8000),
@@ -4274,7 +4274,7 @@ CREATE TABLE sac.DBA_Geral_2013
    "UF_DO_INVESTIDOR" CHAR(2),
    "VALOR_INVESTIDO" VARCHAR(4000)
 );
-CREATE TABLE sac.DBA_Geral_2014
+CREATE TABLE sac."DBA_Geral_2014"
 (
   "PRONAC" VARCHAR(7) NOT NULL,
   "NOME_DO_PROJETO" VARCHAR(8000),
@@ -4305,7 +4305,7 @@ CREATE TABLE sac.DBA_Geral_2014
   "UF_DO_INVESTIDOR" CHAR(2),
   "VALOR_INVESTIDO" VARCHAR(4000)
 );
-CREATE TABLE sac.DBA_Geral_FRED
+CREATE TABLE sac."DBA_Geral_FRED"
 (
   "PROJETO_PRONAC" INT NOT NULL,
   "PROJETO_PROJETO" INT,
@@ -4356,7 +4356,7 @@ CREATE TABLE sac.DBA_Geral_FRED
   "CONVENIO_VALOR" MONEY,
   "ENQUADRAMENTO" VARCHAR(9)
 );
-CREATE TABLE sac.DBA_Geral_Sem_Abrangencia
+CREATE TABLE sac."DBA_Geral_Sem_Abrangencia"
 (
   "PROJETO_PRONAC" INT NOT NULL,
   "PROJETO_PROJETO" INT,
@@ -4386,7 +4386,7 @@ CREATE TABLE sac.DBA_Geral_Sem_Abrangencia
   "INVESTIDOR_CODIGO" VARCHAR(14),
   "INVESTIDOR_NOME" VARCHAR(150)
 );
-CREATE TABLE sac.DBA_Qtd_Apresentado_Aprovado_Ano_Mes
+CREATE TABLE sac."DBA_Qtd_Apresentado_Aprovado_Ano_Mes"
 (
   ANO INT,
   MES INT,
@@ -4394,7 +4394,7 @@ CREATE TABLE sac.DBA_Qtd_Apresentado_Aprovado_Ano_Mes
   QUANTIDADE_APROVACAO INT,
   QUANTIDADE_CAPTACAO INT
 );
-CREATE TABLE sac.DBA_QTD_APRESENTADO_APROVADO_CAPTADO
+CREATE TABLE sac."DBA_QTD_APRESENTADO_APROVADO_CAPTADO"
 (
   "ANO" INT,
   "REGIAO" VARCHAR(15) NOT NULL,
@@ -4404,16 +4404,16 @@ CREATE TABLE sac.DBA_QTD_APRESENTADO_APROVADO_CAPTADO
   "QTD_APROVACAO" INT,
   "QTD_CAPTACAO" INT
 );
-CREATE TABLE sac.DBA_QTD_PROPONENTES_INABILITADOS
+CREATE TABLE sac."DBA_QTD_PROPONENTES_INABILITADOS"
 (
   "QTD" INT
 );
-CREATE TABLE sac.DBA_QTD_PROPOSTAS_ENVIADAS_SAV
+CREATE TABLE sac."DBA_QTD_PROPOSTAS_ENVIADAS_SAV"
 (
   "ANO" INT,
   "QTDE" INT
 );
-CREATE TABLE sac.DBA_Relacao_Projetos
+CREATE TABLE sac."DBA_Relacao_Projetos"
 (
   "PRONAC" VARCHAR(7) NOT NULL,
   "PROJETO_NOME" VARCHAR,
@@ -4433,7 +4433,7 @@ CREATE TABLE sac.DBA_Relacao_Projetos
   "MES_SITUACAO" INT,
   "CIDADE_EXECUCAO" VARCHAR
 );
-CREATE TABLE sac.DBA_Relacao_Projetos_FRED
+CREATE TABLE sac."DBA_Relacao_Projetos_FRED"
 (
   "PRONAC" VARCHAR(7) NOT NULL,
   "ANO_PROJETO" CHAR(2) NOT NULL,
@@ -4467,7 +4467,7 @@ CREATE TABLE sac.DBA_Relacao_Projetos_FRED
   "MES_SITUACAO" INT,
   "CIDADE_EXECUCAO" VARCHAR
 );
-CREATE TABLE sac.DBA_Relacao_Projetos_FRED_AGENTES
+CREATE TABLE sac."DBA_Relacao_Projetos_FRED_AGENTES"
 (
   "PRONAC" VARCHAR(7) NOT NULL,
   "ANO_PROJETO" CHAR(2) NOT NULL,
@@ -4495,7 +4495,7 @@ CREATE TABLE sac.DBA_Relacao_Projetos_FRED_AGENTES
   "MES_SITUACAO" INT,
   "CIDADE_EXECUCAO" VARCHAR
 );
-CREATE TABLE sac.DBA_Relacao_Projetos_FRED_TCU
+CREATE TABLE sac."DBA_Relacao_Projetos_FRED_TCU"
 (
   "ANO" INT,
   "PRONAC" VARCHAR(7) NOT NULL,
@@ -4516,7 +4516,7 @@ CREATE TABLE sac.DBA_Relacao_Projetos_FRED_TCU
   "ENQUADRAMENTO" VARCHAR(9),
   "SECRETARIA" VARCHAR(5)
 );
-CREATE TABLE sac.DBA_Relacao_Projetos_FRED_TCU_APROVADOS
+CREATE TABLE sac."DBA_Relacao_Projetos_FRED_TCU_APROVADOS"
 (
   "DATA" VARCHAR(4000),
   "PRONAC" VARCHAR(7) NOT NULL,
@@ -4537,7 +4537,7 @@ CREATE TABLE sac.DBA_Relacao_Projetos_FRED_TCU_APROVADOS
   "ENQUADRAMENTO" VARCHAR(9),
   "SECRETARIA" VARCHAR(5)
 );
-CREATE TABLE sac.DBA_Relacao_Projetos_Geral
+CREATE TABLE sac."DBA_Relacao_Projetos_Geral"
 (
   "PRONAC" VARCHAR(7) NOT NULL,
   "PROJETO_NOME" VARCHAR,
@@ -4556,25 +4556,25 @@ CREATE TABLE sac.DBA_Relacao_Projetos_Geral
   "ANO_SITUACAO" INT,
   "MES_SITUACAO" INT
 );
-CREATE TABLE sac.DBA_TCU_CAPTACAO_SAV
+CREATE TABLE sac."DBA_TCU_CAPTACAO_SAV"
 (
   "ANO" INT,
   "QTD" INT,
    "Valor_Captado_SAV" FLOAT
 );
-CREATE TABLE sac.DBA_TCU_CAPTACAO_SEFIC
+CREATE TABLE sac."DBA_TCU_CAPTACAO_SEFIC"
 (
   "ANO" INT,
   "QTD" INT,
    "Valor_Captado_SEFIC" MONEY
 );
-CREATE TABLE sac.DBA_Total_Investido_Investidor_Ano
+CREATE TABLE sac."DBA_Total_Investido_Investidor_Ano"
 (
   "CNPJ_CPF" VARCHAR(14) NOT NULL,
   "ANO_INVESTIMENTO" INT,
   "VALOR_INVESTIDO_TOTAL" FLOAT
 );
-CREATE TABLE sac.DBA_Valor_Solicitado_Captado_Projeto
+CREATE TABLE sac."DBA_Valor_Solicitado_Captado_Projeto"
 (
   "PROJETO_ENQUADRAMENTO" int NOT NULL,
   "PROJETO_ANO" CHAR(2) NOT NULL,
@@ -4585,7 +4585,7 @@ CREATE TABLE sac.DBA_Valor_Solicitado_Captado_Projeto
   "VALOR_CAPTADO" MONEY,
   "ANO_RECIBO" INT
 );
-CREATE TABLE sac.DBA_Valor_Solicitado_Captado_Projeto_SAV
+CREATE TABLE sac."DBA_Valor_Solicitado_Captado_Projeto_SAV"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -4594,24 +4594,24 @@ CREATE TABLE sac.DBA_Valor_Solicitado_Captado_Projeto_SAV
   "VALOR_APROVADO" MONEY,
   "VALOR_CAPTADO" MONEY NOT NULL
 );
-CREATE TABLE sac.Exibicao1
+CREATE TABLE sac."Exibicao1"
 (
   "Uf" CHAR(2),
   "Regiao" VARCHAR(50)
 );
-CREATE TABLE sac.IncentivoPorCgcCpf
+CREATE TABLE sac."IncentivoPorCgcCpf"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vAcaoProjeto
+CREATE TABLE sac."vAcaoProjeto"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "Solicitado" MONEY,
   "Aprovado" MONEY
 );
-CREATE TABLE sac.vAnexoAproCondicional
+CREATE TABLE sac."vAnexoAproCondicional"
 (
   "NumeroReuniao" INT,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -4624,7 +4624,7 @@ CREATE TABLE sac.vAnexoAproCondicional
   "ResumoAprovacao" TEXT,
   "AutorizadoReal" MONEY
 );
-CREATE TABLE sac.vAnexoAproInicialPorReuniao
+CREATE TABLE sac."vAnexoAproInicialPorReuniao"
 (
   "NumeroReuniao" INT,
   "Cidade" VARCHAR(50) NOT NULL,
@@ -4632,7 +4632,7 @@ CREATE TABLE sac.vAnexoAproInicialPorReuniao
   "Sequencial" VARCHAR(5) NOT NULL,
   "ValorAprovado" MONEY
 );
-CREATE TABLE sac.vAnexoComplementacaoPorReuniao
+CREATE TABLE sac."vAnexoComplementacaoPorReuniao"
 (
   "NumeroReuniao" INT,
   "Cidade" VARCHAR(50) NOT NULL,
@@ -4640,7 +4640,7 @@ CREATE TABLE sac.vAnexoComplementacaoPorReuniao
   "Sequencial" VARCHAR(5) NOT NULL,
   "ValorAprovado" MONEY
 );
-CREATE TABLE sac.vAnexoReducaoPorReuniao
+CREATE TABLE sac."vAnexoReducaoPorReuniao"
 (
   "NumeroReuniao" INT,
   "Cidade" VARCHAR(50) NOT NULL,
@@ -4648,14 +4648,14 @@ CREATE TABLE sac.vAnexoReducaoPorReuniao
   "Sequencial" VARCHAR(5) NOT NULL,
   "ValorAprovado" MONEY
 );
-CREATE TABLE sac.vAnexoRetiradosPautaPorReuniao
+CREATE TABLE sac."vAnexoRetiradosPautaPorReuniao"
 (
   "NumeroReuniao" INT,
   "Cidade" VARCHAR(50) NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL
 );
-CREATE TABLE sac.vApoioAnoAreaTPArt1
+CREATE TABLE sac."vApoioAnoAreaTPArt1"
 (
   "Ano" INT,
   "Area" CHAR NOT NULL,
@@ -4663,7 +4663,7 @@ CREATE TABLE sac.vApoioAnoAreaTPArt1
   "Quantidade" INT,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioAnoAreaTPArt3
+CREATE TABLE sac."vApoioAnoAreaTPArt3"
 (
   "Ano" INT,
   "Area" CHAR NOT NULL,
@@ -4671,7 +4671,7 @@ CREATE TABLE sac.vApoioAnoAreaTPArt3
   "Quantidade" INT,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioAnoAreaTrimArt1
+CREATE TABLE sac."vApoioAnoAreaTrimArt1"
 (
   "Ano" INT,
   "Area" CHAR NOT NULL,
@@ -4680,7 +4680,7 @@ CREATE TABLE sac.vApoioAnoAreaTrimArt1
   "Trimestre3" MONEY,
   "Trimestre4" MONEY
 );
-CREATE TABLE sac.vApoioAnoAreaTrimArt3
+CREATE TABLE sac."vApoioAnoAreaTrimArt3"
 (
   "Ano" INT,
   "Area" CHAR NOT NULL,
@@ -4689,7 +4689,7 @@ CREATE TABLE sac.vApoioAnoAreaTrimArt3
   "Trimestre3" MONEY,
   "Trimestre4" MONEY
 );
-CREATE TABLE sac.vApoioAnoUFTrimArt1
+CREATE TABLE sac."vApoioAnoUFTrimArt1"
 (
   "Ano" INT,
   "UF" CHAR(2) NOT NULL,
@@ -4698,7 +4698,7 @@ CREATE TABLE sac.vApoioAnoUFTrimArt1
   "Trimestre3" MONEY NOT NULL,
   "Trimestre4" MONEY NOT NULL
 );
-CREATE TABLE sac.vApoioAnoUFTrimArt3
+CREATE TABLE sac."vApoioAnoUFTrimArt3"
 (
   "Ano" INT,
   "UF" CHAR(2) NOT NULL,
@@ -4707,7 +4707,7 @@ CREATE TABLE sac.vApoioAnoUFTrimArt3
   "Trimestre3" MONEY,
   "Trimestre4" MONEY
 );
-CREATE TABLE sac.vApoioAnoUfTrimMecAudio
+CREATE TABLE sac."vApoioAnoUfTrimMecAudio"
 (
   "Ano" INT,
   "UF" CHAR(2) NOT NULL,
@@ -4716,7 +4716,7 @@ CREATE TABLE sac.vApoioAnoUfTrimMecAudio
   "Trimestre3" MONEY,
   "Trimestre4" MONEY
 );
-CREATE TABLE sac.vApoioGeralAnoAreaTrim
+CREATE TABLE sac."vApoioGeralAnoAreaTrim"
 (
   "Ano" INT,
   "Area" CHAR NOT NULL,
@@ -4726,7 +4726,7 @@ CREATE TABLE sac.vApoioGeralAnoAreaTrim
   "Trimestre3" MONEY,
   "Trimestre4" MONEY
 );
-CREATE TABLE sac.vApoioInvesAnoMesProj
+CREATE TABLE sac."vApoioInvesAnoMesProj"
 (
   "Ano" INT,
   "Mes" INT,
@@ -4735,7 +4735,7 @@ CREATE TABLE sac.vApoioInvesAnoMesProj
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioInvesAnoProj
+CREATE TABLE sac."vApoioInvesAnoProj"
 (
   "Ano" INT,
   "CgcCpf" VARCHAR(14) NOT NULL,
@@ -4743,26 +4743,26 @@ CREATE TABLE sac.vApoioInvesAnoProj
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioInvestidorAno
+CREATE TABLE sac."vApoioInvestidorAno"
 (
   "Ano" INT,
   "CgcCpf" VARCHAR(14) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioInvestidorAnoMes
+CREATE TABLE sac."vApoioInvestidorAnoMes"
 (
   "Ano" INT,
   "Mes" INT,
   "CgcCpf" VARCHAR(14) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioInvestidorGeralAno
+CREATE TABLE sac."vApoioInvestidorGeralAno"
 (
   "Ano" INT,
   "CgcCpf" VARCHAR(14) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioPorAnoAreaMes
+CREATE TABLE sac."vApoioPorAnoAreaMes"
 (
   "Ano" INT,
   "Area" CHAR NOT NULL,
@@ -4779,7 +4779,7 @@ CREATE TABLE sac.vApoioPorAnoAreaMes
   "Mes11" MONEY,
   "Mes12" MONEY
 );
-CREATE TABLE sac.vApoioPorAnoAreaTPMA
+CREATE TABLE sac."vApoioPorAnoAreaTPMA"
 (
   "Ano" INT,
   "Area" CHAR NOT NULL,
@@ -4788,7 +4788,7 @@ CREATE TABLE sac.vApoioPorAnoAreaTPMA
   "Quantidade" INT,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioPorAnoAreaTrimestre
+CREATE TABLE sac."vApoioPorAnoAreaTrimestre"
 (
   "Ano" INT,
   "Area" CHAR NOT NULL,
@@ -4797,7 +4797,7 @@ CREATE TABLE sac.vApoioPorAnoAreaTrimestre
   "Trimestre3" MONEY,
   "Trimestre4" MONEY
 );
-CREATE TABLE sac.vApoioPorAnoUfTrimestre
+CREATE TABLE sac."vApoioPorAnoUfTrimestre"
 (
   "Ano" INT,
   "UF" CHAR(2) NOT NULL,
@@ -4806,7 +4806,7 @@ CREATE TABLE sac.vApoioPorAnoUfTrimestre
   "Trimestre3" MONEY,
   "Trimestre4" MONEY
 );
-CREATE TABLE sac.vApoioPorArea
+CREATE TABLE sac."vApoioPorArea"
 (
   "Ano" INT,
   "Area" CHAR NOT NULL,
@@ -4815,7 +4815,7 @@ CREATE TABLE sac.vApoioPorArea
   "ApoioUfir" MONEY,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioPorMecena
+CREATE TABLE sac."vApoioPorMecena"
 (
   "Ano" INT,
   "Mes" INT,
@@ -4823,14 +4823,14 @@ CREATE TABLE sac.vApoioPorMecena
   "ApoioUfir" MONEY,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioPorMecenaAno
+CREATE TABLE sac."vApoioPorMecenaAno"
 (
   "Ano" INT,
   "CgcCpf" VARCHAR(14) NOT NULL,
   "ApoioUfir" MONEY,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioPorMecenaProjeto
+CREATE TABLE sac."vApoioPorMecenaProjeto"
 (
   "Ano" INT,
   "Mes" INT,
@@ -4842,7 +4842,7 @@ CREATE TABLE sac.vApoioPorMecenaProjeto
   "ApoioUfir" MONEY,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioRenunciaPrivadoAno
+CREATE TABLE sac."vApoioRenunciaPrivadoAno"
 (
   "Ano" VARCHAR(20),
   "Captacao" MONEY,
@@ -4851,7 +4851,7 @@ CREATE TABLE sac.vApoioRenunciaPrivadoAno
   "Privado" MONEY,
   "PercPri" MONEY
 );
-CREATE TABLE sac.vApoioSubsAnoMesProj
+CREATE TABLE sac."vApoioSubsAnoMesProj"
 (
   "Ano" INT,
   "Mes" INT,
@@ -4860,7 +4860,7 @@ CREATE TABLE sac.vApoioSubsAnoMesProj
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioSubsAnoProj
+CREATE TABLE sac."vApoioSubsAnoProj"
 (
   "Ano" INT,
   "CgcCpfSub" VARCHAR(14) NOT NULL,
@@ -4868,20 +4868,20 @@ CREATE TABLE sac.vApoioSubsAnoProj
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioSubscritorAno
+CREATE TABLE sac."vApoioSubscritorAno"
 (
   "Ano" INT,
   "CgcCpfSub" VARCHAR(14) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vApoioSubscritorAnoMes
+CREATE TABLE sac."vApoioSubscritorAnoMes"
 (
   "Ano" INT,
   "Mes" INT,
   "CgcCpfSub" VARCHAR(14) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vAproCap
+CREATE TABLE sac."vAproCap"
 (
   "Mecanismo" CHAR NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -4894,7 +4894,7 @@ CREATE TABLE sac.vAproCap
   "Aprovado" MONEY,
   "Captado" MONEY
 );
-CREATE TABLE sac.vAproCapSaldo
+CREATE TABLE sac."vAproCapSaldo"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -4902,7 +4902,7 @@ CREATE TABLE sac.vAproCapSaldo
   "Captado" MONEY,
   "Saldo" MONEY
 );
-CREATE TABLE sac.vAprovacaoInicial
+CREATE TABLE sac."vAprovacaoInicial"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -4918,14 +4918,14 @@ CREATE TABLE sac.vAprovacaoInicial
   "ConcedidoCusteioReal" MONEY,
   "ConcedidoCapitalReal" MONEY
 );
-CREATE TABLE sac.vAprovadoCaptado
+CREATE TABLE sac."vAprovadoCaptado"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "Aprovado" MONEY,
   "Captado" MONEY
 );
-CREATE TABLE sac.vAprovadoCaptadoRenuncia
+CREATE TABLE sac."vAprovadoCaptadoRenuncia"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -4933,7 +4933,7 @@ CREATE TABLE sac.vAprovadoCaptadoRenuncia
   "Captado" MONEY,
   "Renuncia" MONEY
 );
-CREATE TABLE sac.vAprovadoCaptadoRenunciaAno
+CREATE TABLE sac."vAprovadoCaptadoRenunciaAno"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -4941,7 +4941,7 @@ CREATE TABLE sac.vAprovadoCaptadoRenunciaAno
   "Captado" MONEY,
   "Renuncia" MONEY
 );
-CREATE TABLE sac.vAprovadoLeisPorAno
+CREATE TABLE sac."vAprovadoLeisPorAno"
 (
   "Ano" INT,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -4956,7 +4956,7 @@ CREATE TABLE sac.vAprovadoLeisPorAno
   "ReduArt1" MONEY,
   "ReduArt3" MONEY
 );
-CREATE TABLE sac.vAprovadoMunicipio
+CREATE TABLE sac."vAprovadoMunicipio"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -4966,7 +4966,7 @@ CREATE TABLE sac.vAprovadoMunicipio
   "DtAprovacao" timestamp NOT NULL,
   "AprovadoReal" MONEY
 );
-CREATE TABLE sac.vArt3Joao
+CREATE TABLE sac."vArt3Joao"
 (
   "cgccpf" VARCHAR(14) NOT NULL,
   "Ano" CHAR(2) NOT NULL,
@@ -4977,7 +4977,7 @@ CREATE TABLE sac.vArt3Joao
   "Saldo" MONEY,
   "DtFinal" timestamp
 );
-CREATE TABLE sac.vAvaliacaoAcompBandas
+CREATE TABLE sac."vAvaliacaoAcompBandas"
 (
   "Regiao" VARCHAR(15) NOT NULL,
   "UF" CHAR(2) NOT NULL,
@@ -4989,7 +4989,7 @@ CREATE TABLE sac.vAvaliacaoAcompBandas
   "D" INT,
   "E" VARCHAR(1) NOT NULL
 );
-CREATE TABLE sac.vBoucinhas
+CREATE TABLE sac."vBoucinhas"
 (
   "Proponente" VARCHAR(100) NOT NULL,
   "NomeProjeto" VARCHAR(100) NOT NULL,
@@ -5008,7 +5008,7 @@ CREATE TABLE sac.vBoucinhas
   "Natureza" VARCHAR(13) NOT NULL,
   "Esfera" VARCHAR(13) NOT NULL
 );
-CREATE TABLE sac.vCadastrarDirigente
+CREATE TABLE sac."vCadastrarDirigente"
 (
   "CNPJCPF" VARCHAR(14) NOT NULL,
   "CNPJCPFSuperior" VARCHAR(14),
@@ -5018,7 +5018,7 @@ CREATE TABLE sac.vCadastrarDirigente
   "idVinculoPrincipal" INT,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE sac.vCadastrarInternet
+CREATE TABLE sac."vCadastrarInternet"
 (
   "idInternet" INT NOT NULL,
   "idAgente" INT NOT NULL,
@@ -5028,7 +5028,7 @@ CREATE TABLE sac.vCadastrarInternet
   "Divulgar" INTEGER NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE sac.vCadastrarProponente
+CREATE TABLE sac."vCadastrarProponente"
 (
   "idAgente" INT NOT NULL,
   "CNPJCPF" VARCHAR(14) NOT NULL,
@@ -5049,7 +5049,7 @@ CREATE TABLE sac.vCadastrarProponente
   "Correspondencia" INTEGER,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE sac.vCadastrarTelefones
+CREATE TABLE sac."vCadastrarTelefones"
 (
   "idTelefone" INT NOT NULL,
   "idAgente" INT NOT NULL,
@@ -5060,26 +5060,26 @@ CREATE TABLE sac.vCadastrarTelefones
   "Divulgar" INTEGER NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE sac.vCapAnoProjetoArt1
+CREATE TABLE sac."vCapAnoProjetoArt1"
 (
   "Ano" INT,
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vCapAnoProjetoArt3
+CREATE TABLE sac."vCapAnoProjetoArt3"
 (
   "Ano" INT,
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vCapGeralIncentivador
+CREATE TABLE sac."vCapGeralIncentivador"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vCapGeralIncentProj
+CREATE TABLE sac."vCapGeralIncentProj"
 (
   "Lei" INT NOT NULL,
   "CgcCpf" VARCHAR(14) NOT NULL,
@@ -5087,7 +5087,7 @@ CREATE TABLE sac.vCapGeralIncentProj
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vCapGeralPorAnoProjeto
+CREATE TABLE sac."vCapGeralPorAnoProjeto"
 (
   "Lei" INT NOT NULL,
   "Ano" INT,
@@ -5095,7 +5095,7 @@ CREATE TABLE sac.vCapGeralPorAnoProjeto
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vCapGeralPorArea
+CREATE TABLE sac."vCapGeralPorArea"
 (
   "Ano" INT,
   "Lei" INT NOT NULL,
@@ -5104,7 +5104,7 @@ CREATE TABLE sac.vCapGeralPorArea
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vCapGeralPorAreaSegmento
+CREATE TABLE sac."vCapGeralPorAreaSegmento"
 (
   "Ano" INT,
   "Lei" INT NOT NULL,
@@ -5114,14 +5114,14 @@ CREATE TABLE sac.vCapGeralPorAreaSegmento
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vCapGeralPorProjeto
+CREATE TABLE sac."vCapGeralPorProjeto"
 (
   "Lei" INT NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vCapGeralPorUF
+CREATE TABLE sac."vCapGeralPorUF"
 (
   "Ano" INT,
   "Lei" INT NOT NULL,
@@ -5130,7 +5130,7 @@ CREATE TABLE sac.vCapGeralPorUF
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vCapGeralProjetoIncentivo
+CREATE TABLE sac."vCapGeralProjetoIncentivo"
 (
   "Lei" INT NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -5138,7 +5138,7 @@ CREATE TABLE sac.vCapGeralProjetoIncentivo
   "CgcCpf" VARCHAR(14) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vCapGerPorAnoProjIncent
+CREATE TABLE sac."vCapGerPorAnoProjIncent"
 (
   "Ano" INT,
   "Lei" INT NOT NULL,
@@ -5147,20 +5147,20 @@ CREATE TABLE sac.vCapGerPorAnoProjIncent
   "CgcCpf" VARCHAR(14) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vCapMecAudioAnoProjeto
+CREATE TABLE sac."vCapMecAudioAnoProjeto"
 (
   "Ano" INT,
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vCapMecAudioProjeto
+CREATE TABLE sac."vCapMecAudioProjeto"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vCaptacaoAnoUFAreaSegmentoSemestre
+CREATE TABLE sac."vCaptacaoAnoUFAreaSegmentoSemestre"
 (
   "Ano" INT,
   "UFProjeto" CHAR(2) NOT NULL,
@@ -5170,7 +5170,7 @@ CREATE TABLE sac.vCaptacaoAnoUFAreaSegmentoSemestre
   "Semestre_2" MONEY,
   "Total" MONEY
 );
-CREATE TABLE sac.vCaptacaoPorMPTipoApoioMecena
+CREATE TABLE sac."vCaptacaoPorMPTipoApoioMecena"
 (
   "Ano" INT,
   "Mes" INT,
@@ -5180,14 +5180,14 @@ CREATE TABLE sac.vCaptacaoPorMPTipoApoioMecena
   "ApoioUfir" MONEY,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vCaptado
+CREATE TABLE sac."vCaptado"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "CaptacaoUfir" MONEY,
   "CaptacaoReal" MONEY
 );
-CREATE TABLE sac.vCaptadoAno
+CREATE TABLE sac."vCaptadoAno"
 (
   "AnoRecibo" INT,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -5196,19 +5196,19 @@ CREATE TABLE sac.vCaptadoAno
   "CaptacaoUfir" MONEY,
   "CaptacaoReal" MONEY
 );
-CREATE TABLE sac.vCaptadoAnoProjeto
+CREATE TABLE sac."vCaptadoAnoProjeto"
 (
   "AnoRecibo" INT,
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "CaptacaoReal" MONEY
 );
-CREATE TABLE sac.vCartaAudio
+CREATE TABLE sac."vCartaAudio"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL
 );
-CREATE TABLE sac.vCartaPropAudio
+CREATE TABLE sac."vCartaPropAudio"
 (
   "Nome" VARCHAR(150) NOT NULL,
   "Endereco" VARCHAR(100) NOT NULL,
@@ -5216,7 +5216,7 @@ CREATE TABLE sac.vCartaPropAudio
   "UF" CHAR(2) NOT NULL,
   "CEP" VARCHAR(8) NOT NULL
 );
-CREATE TABLE sac.VCartas
+CREATE TABLE sac."VCartas"
 (
   "Orgao" INT NOT NULL,
   "Logon" INT NOT NULL,
@@ -5238,7 +5238,7 @@ CREATE TABLE sac.VCartas
   "Cidade" VARCHAR(50) NOT NULL,
   "UnidadeAnalise" VARCHAR(15)
 );
-CREATE TABLE sac.vCelulaOrcamentaria
+CREATE TABLE sac."vCelulaOrcamentaria"
 (
   "Codigo" INT NOT NULL,
   "PT" VARCHAR(17) NOT NULL,
@@ -5246,7 +5246,7 @@ CREATE TABLE sac.vCelulaOrcamentaria
   "FT" VARCHAR(3) NOT NULL,
   "ED" VARCHAR(8) NOT NULL
 );
-CREATE TABLE sac.vChecaProponente
+CREATE TABLE sac."vChecaProponente"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "Quant" INT,
@@ -5254,7 +5254,7 @@ CREATE TABLE sac.vChecaProponente
   "Aprovado" MONEY,
   "Captado" MONEY
 );
-CREATE TABLE sac.vChecaQteInabilitacao
+CREATE TABLE sac."vChecaQteInabilitacao"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "Quant" INT
@@ -5267,7 +5267,7 @@ CREATE TABLE sac.vCi
   "OrgaoExpedidor" VARCHAR(20),
   "DtExpedicao" VARCHAR(20)
 );
-CREATE TABLE sac.vCiset
+CREATE TABLE sac."vCiset"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -5294,13 +5294,13 @@ CREATE TABLE sac.vCiset
   "DtInicioCaptacao" timestamp,
   "DtFimCaptacao" timestamp
 );
-CREATE TABLE sac.vCnpjCpf
+CREATE TABLE sac."vCnpjCpf"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "CgcCpf" VARCHAR(20)
 );
-CREATE TABLE sac.vCnpjValido
+CREATE TABLE sac."vCnpjValido"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -5309,7 +5309,7 @@ CREATE TABLE sac.vCnpjValido
   "CnpjValido" INT,
   "Nome" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.vComparativoAno
+CREATE TABLE sac."vComparativoAno"
 (
   "Ano" VARCHAR(20),
   "Q_Apresentado" INT,
@@ -5319,7 +5319,7 @@ CREATE TABLE sac.vComparativoAno
   "Q_Captado" INT,
   "T_Captado" MONEY
 );
-CREATE TABLE sac.vComparativoAnoMec
+CREATE TABLE sac."vComparativoAnoMec"
 (
   "Ano" VARCHAR(20),
   "Q_Apresentado" INT,
@@ -5329,7 +5329,7 @@ CREATE TABLE sac.vComparativoAnoMec
   "Q_Captado" INT,
   "T_Captado" MONEY
 );
-CREATE TABLE sac.vcontabancaria
+CREATE TABLE sac."vcontabancaria"
 (
   "idcontabancaria" INT NOT NULL,
   "anoprojeto" CHAR(2) NOT NULL,
@@ -5346,7 +5346,7 @@ CREATE TABLE sac.vcontabancaria
   "idpronac" INT,
   "tipo" VARCHAR(24) NOT NULL
 );
-CREATE TABLE sac.vContaCorrente
+CREATE TABLE sac."vContaCorrente"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -5355,21 +5355,21 @@ CREATE TABLE sac.vContaCorrente
   "ContaCorrente" VARCHAR(20),
   "Artigo" VARCHAR(20)
 );
-CREATE TABLE sac.vConvenioAnoArea
+CREATE TABLE sac."vConvenioAnoArea"
 (
   "Ano" INT,
   "Area" CHAR NOT NULL,
   "Segmento" VARCHAR(4) NOT NULL,
   "ValorConveniol" MONEY
 );
-CREATE TABLE sac.vConvenioAnoUf
+CREATE TABLE sac."vConvenioAnoUf"
 (
   "Ano" INT,
   "Regiao" VARCHAR(15) NOT NULL,
   "Descricao" VARCHAR(30) NOT NULL,
   "ValorConvenio" MONEY
 );
-CREATE TABLE sac.vConveniosDoc
+CREATE TABLE sac."vConveniosDoc"
 (
   "NumeroConvenio" VARCHAR(15) NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -5405,14 +5405,14 @@ CREATE TABLE sac.vConveniosDoc
   "ValorCapital" MONEY,
   "CpfResponsavel" VARCHAR(20)
 );
-CREATE TABLE sac.vCustoDoProjeto
+CREATE TABLE sac."vCustoDoProjeto"
 (
   "TipoPrestacao" INTEGER NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "CustoProjeto" MONEY
 );
-CREATE TABLE sac.vDadosComplementaresDeCartas
+CREATE TABLE sac."vDadosComplementaresDeCartas"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -5438,7 +5438,7 @@ CREATE TABLE sac.vDadosComplementaresDeCartas
   "DtFimCaptacao" timestamp,
   "SaldoACaptar" MONEY
 );
-CREATE TABLE sac.vDadosConvenio
+CREATE TABLE sac."vDadosConvenio"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -5449,7 +5449,7 @@ CREATE TABLE sac.vDadosConvenio
   "VlConvenio" MONEY,
   "Contador" INT NOT NULL
 );
-CREATE TABLE sac.vDadosPortariaAprovacao
+CREATE TABLE sac."vDadosPortariaAprovacao"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -5457,7 +5457,7 @@ CREATE TABLE sac.vDadosPortariaAprovacao
   "DtPortaria" timestamp,
   "DtPublicacao" timestamp
 );
-CREATE TABLE sac.vDiligencias
+CREATE TABLE sac."vDiligencias"
 (
   "NrProjeto" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -5472,20 +5472,20 @@ CREATE TABLE sac.vDiligencias
   "DtResposta" timestamp,
   "Resposta" TEXT NOT NULL
 );
-CREATE TABLE sac.vDocumentoExigido
+CREATE TABLE sac."vDocumentoExigido"
 (
   "AnoProjeto" CHAR(2),
   "Sequencial" VARCHAR(5),
   "DocumentoExigido" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.vDtPrimeiraUltimaCaptacao
+CREATE TABLE sac."vDtPrimeiraUltimaCaptacao"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "DtPrimeira" timestamp,
   "DtUltima" timestamp
 );
-CREATE TABLE sac.vEmpresasIncentivadorasAno
+CREATE TABLE sac."vEmpresasIncentivadorasAno"
 (
   "Ano" INT,
   "CgcCpf" VARCHAR(14) NOT NULL,
@@ -5494,12 +5494,12 @@ CREATE TABLE sac.vEmpresasIncentivadorasAno
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vEtiquetaEneida
+CREATE TABLE sac."vEtiquetaEneida"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "Nome" VARCHAR(150) NOT NULL
 );
-CREATE TABLE sac.vFnAproCapProj
+CREATE TABLE sac."vFnAproCapProj"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -5514,21 +5514,21 @@ CREATE TABLE sac.vFnAproCapProj
   "AproContra" MONEY,
   "CapContra" MONEY
 );
-CREATE TABLE sac.vFnAproCapProjMec
+CREATE TABLE sac."vFnAproCapProjMec"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "AproMec" MONEY,
   "CapMec" MONEY
 );
-CREATE TABLE sac.vFnIncCapRenuncia
+CREATE TABLE sac."vFnIncCapRenuncia"
 (
   "Ano" INT,
   "CgcCpf" VARCHAR(14) NOT NULL,
   "Captacao" MONEY,
   "Renuncia" MONEY
 );
-CREATE TABLE sac.vFnOrcDetalhado
+CREATE TABLE sac."vFnOrcDetalhado"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -5539,14 +5539,14 @@ CREATE TABLE sac.vFnOrcDetalhado
   "ProArt3" MONEY,
   "ComArt3" MONEY
 );
-CREATE TABLE sac.vFnTotalAproCapProj
+CREATE TABLE sac."vFnTotalAproCapProj"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "Aprovado" MONEY,
   "Captado" MONEY
 );
-CREATE TABLE sac.vForaDaPortaria
+CREATE TABLE sac."vForaDaPortaria"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -5557,7 +5557,7 @@ CREATE TABLE sac.vForaDaPortaria
   "Situacao" CHAR(3) NOT NULL,
   "Orgao" INT NOT NULL
 );
-CREATE TABLE sac.vFsac3485
+CREATE TABLE sac."vFsac3485"
 (
   "Proponente" VARCHAR(150) NOT NULL,
   "Endereco" VARCHAR(100) NOT NULL,
@@ -5566,7 +5566,7 @@ CREATE TABLE sac.vFsac3485
   "Cep" VARCHAR(8) NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL
 );
-CREATE TABLE sac.vFunarte
+CREATE TABLE sac."vFunarte"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -5576,7 +5576,7 @@ CREATE TABLE sac.vFunarte
   "Parecerista" VARCHAR(30),
   "Aprovado" MONEY
 );
-CREATE TABLE sac.vGerentes
+CREATE TABLE sac."vGerentes"
 (
   "org_codigo" SMALLINT NOT NULL,
   "org_sigla" CHAR(12) NOT NULL,
@@ -5595,14 +5595,14 @@ CREATE TABLE sac.vGerentes
   "usu_ramal" SMALLINT,
   "usu_nivel" int
 );
-CREATE TABLE sac.vGuiaNaoVinculada
+CREATE TABLE sac."vGuiaNaoVinculada"
 (
   "NumeroGuia" INT NOT NULL,
   "CgcCpf" VARCHAR(14) NOT NULL,
   "DtRecolhimento" timestamp NOT NULL,
   "Valor" MONEY NOT NULL
 );
-CREATE TABLE sac.vGuiasDeRecolhimento
+CREATE TABLE sac."vGuiasDeRecolhimento"
 (
   "Vinculo" VARCHAR(13) NOT NULL,
   "NumeroGuia" INT NOT NULL,
@@ -5616,14 +5616,14 @@ CREATE TABLE sac.vGuiasDeRecolhimento
   "NomeProjeto" VARCHAR(300) NOT NULL,
   "Valor" MONEY NOT NULL
 );
-CREATE TABLE sac.vIncentivador
+CREATE TABLE sac."vIncentivador"
 (
   "Area" CHAR NOT NULL,
   "CgcCpf" VARCHAR(14) NOT NULL,
   "ApoioUfir" MONEY,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vIncentivadorAno
+CREATE TABLE sac."vIncentivadorAno"
 (
   "Ano" INT,
   "CgcCpf" VARCHAR(14) NOT NULL,
@@ -5634,18 +5634,18 @@ CREATE TABLE sac.vIncentivadorAno
   "ApoioUfir" MONEY,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vIncentivadorAudioAno
+CREATE TABLE sac."vIncentivadorAudioAno"
 (
   "Ano" INT,
   "CgcCpf" VARCHAR(14) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vIncentivadoresMA
+CREATE TABLE sac."vIncentivadoresMA"
 (
   "Ano" INT,
   "CgcCpf" VARCHAR(14) NOT NULL
 );
-CREATE TABLE sac.vIncentivadorPessoaAno
+CREATE TABLE sac."vIncentivadorPessoaAno"
 (
   "Ano" INT,
   "Regiao" VARCHAR(15) NOT NULL,
@@ -5654,14 +5654,14 @@ CREATE TABLE sac.vIncentivadorPessoaAno
   "Nome" VARCHAR(150) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vIncentivadorPorProjeto
+CREATE TABLE sac."vIncentivadorPorProjeto"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vInvestimentoMinc
+CREATE TABLE sac."vInvestimentoMinc"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -5670,14 +5670,14 @@ CREATE TABLE sac.vInvestimentoMinc
   "Passagem" MONEY,
   "Convenio" MONEY
 );
-CREATE TABLE sac.vLiberado
+CREATE TABLE sac."vLiberado"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "DtLiberacao" timestamp,
   "Permissao" CHAR
 );
-CREATE TABLE sac.vMaioresIncentivadoresProjetos
+CREATE TABLE sac."vMaioresIncentivadoresProjetos"
 (
   "Ano" INT,
   "Incentivador" VARCHAR(14) NOT NULL,
@@ -5685,7 +5685,7 @@ CREATE TABLE sac.vMaioresIncentivadoresProjetos
   "Sequencial" VARCHAR(5),
   "Valor" MONEY
 );
-CREATE TABLE sac.vMostraConvenio
+CREATE TABLE sac."vMostraConvenio"
 (
   "Opcao" VARCHAR(11) NOT NULL,
   "NrConvenio" VARCHAR(15) NOT NULL,
@@ -5701,7 +5701,7 @@ CREATE TABLE sac.vMostraConvenio
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL
 );
-CREATE TABLE sac.vMostraEmpenho
+CREATE TABLE sac."vMostraEmpenho"
 (
   "NrEmpenho" CHAR(12) NOT NULL,
   "DtEmpenho" timestamp NOT NULL,
@@ -5716,7 +5716,7 @@ CREATE TABLE sac.vMostraEmpenho
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL
 );
-CREATE TABLE sac.vMostraOrdemBancaria
+CREATE TABLE sac."vMostraOrdemBancaria"
 (
   "NrOrdemBancaria" CHAR(12) NOT NULL,
   "DtOrdemBancaria" timestamp NOT NULL,
@@ -5725,7 +5725,7 @@ CREATE TABLE sac.vMostraOrdemBancaria
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL
 );
-CREATE TABLE sac.vNacional
+CREATE TABLE sac."vNacional"
 (
   "idEndereco" INT NOT NULL,
   "idAgente" INT NOT NULL,
@@ -5742,7 +5742,7 @@ CREATE TABLE sac.vNacional
   "Divulgar" INTEGER NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE sac.vNegativaInabilitado
+CREATE TABLE sac."vNegativaInabilitado"
 (
   "hORGAO" INT NOT NULL,
   "hNUMEROCARTA" VARCHAR(3) NOT NULL,
@@ -5757,7 +5757,7 @@ CREATE TABLE sac.vNegativaInabilitado
   "iORGAO" INT,
   "hLogon" INT NOT NULL
 );
-CREATE TABLE sac.vNegativaInabilitadoEtiqueta
+CREATE TABLE sac."vNegativaInabilitadoEtiqueta"
 (
   "hORGAO" INT NOT NULL,
   "hNUMEROCARTA" VARCHAR(3) NOT NULL,
@@ -5768,13 +5768,13 @@ CREATE TABLE sac.vNegativaInabilitadoEtiqueta
   "pCGCCPF" VARCHAR(14) NOT NULL,
   "hLogon" INT NOT NULL
 );
-CREATE TABLE sac.vNuncaCaptou
+CREATE TABLE sac."vNuncaCaptou"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "TempoSemCaptar" INT
 );
-CREATE TABLE sac.vOutrasInformacoesAudio
+CREATE TABLE sac."vOutrasInformacoesAudio"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -5791,7 +5791,7 @@ CREATE TABLE sac.vOutrasInformacoesAudio
   "DuracaoCada" SMALLINT,
   "DuracaoTotal" SMALLINT
 );
-CREATE TABLE sac.vParecerInicial
+CREATE TABLE sac."vParecerInicial"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -5799,7 +5799,7 @@ CREATE TABLE sac.vParecerInicial
   "DtParecer" timestamp NOT NULL,
   "Parecer" TEXT
 );
-CREATE TABLE sac.vPautaDeReuniaoCNIC
+CREATE TABLE sac."vPautaDeReuniaoCNIC"
 (
   "NrProjeto" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -5820,7 +5820,7 @@ CREATE TABLE sac.vPautaDeReuniaoCNIC
   "UF" CHAR(2) NOT NULL,
   "ParecerFavoravel" CHAR
 );
-CREATE TABLE sac.vPautaDeReuniaoConsolidacaoFNC
+CREATE TABLE sac."vPautaDeReuniaoConsolidacaoFNC"
 (
   "TipoApoio" VARCHAR(17),
   "Prioridade" VARCHAR(5),
@@ -5832,7 +5832,7 @@ CREATE TABLE sac.vPautaDeReuniaoConsolidacaoFNC
   "Solicitado" MONEY,
   "Sugerido" MONEY
 );
-CREATE TABLE sac.vPautaDeReuniaoFNC
+CREATE TABLE sac."vPautaDeReuniaoFNC"
 (
   "NrProjeto" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(200) NOT NULL,
@@ -5853,7 +5853,7 @@ CREATE TABLE sac.vPautaDeReuniaoFNC
   "UnidadeAnalise" VARCHAR(15),
   "Segmento" VARCHAR(50) NOT NULL
 );
-CREATE TABLE sac.vPautaDeReuniaoFNCIntercambio
+CREATE TABLE sac."vPautaDeReuniaoFNCIntercambio"
 (
   "NrProjeto" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(200) NOT NULL,
@@ -5875,48 +5875,48 @@ CREATE TABLE sac.vPautaDeReuniaoFNCIntercambio
   "VlPromocionalTotal" MONEY,
   "DtInicio" timestamp
 );
-CREATE TABLE sac.vPortariaAprovado
+CREATE TABLE sac."vPortariaAprovado"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "DtAprovacao" timestamp
 );
-CREATE TABLE sac.vPortariaComplementacao
-(
-  "AnoProjeto" CHAR(2) NOT NULL,
-  "Sequencial" VARCHAR(5) NOT NULL,
-  "TipoAprovacao" CHAR NOT NULL,
-  "DtAprovacao" timestamp
-);
-CREATE TABLE sac.vPortariaNormal
+CREATE TABLE sac."vPortariaComplementacao"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "TipoAprovacao" CHAR NOT NULL,
   "DtAprovacao" timestamp
 );
-CREATE TABLE sac.vPortariaProrrogacao
+CREATE TABLE sac."vPortariaNormal"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "TipoAprovacao" CHAR NOT NULL,
   "DtAprovacao" timestamp
 );
-CREATE TABLE sac.vPortariaReducao
+CREATE TABLE sac."vPortariaProrrogacao"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "TipoAprovacao" CHAR NOT NULL,
   "DtAprovacao" timestamp
 );
-CREATE TABLE sac.vPrazoCaptacao
+CREATE TABLE sac."vPortariaReducao"
+(
+  "AnoProjeto" CHAR(2) NOT NULL,
+  "Sequencial" VARCHAR(5) NOT NULL,
+  "TipoAprovacao" CHAR NOT NULL,
+  "DtAprovacao" timestamp
+);
+CREATE TABLE sac."vPrazoCaptacao"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "DtInicioCaptacao" timestamp,
   "DtFimCaptacao" timestamp
 );
-CREATE TABLE sac.vPrestacao
+CREATE TABLE sac."vPrestacao"
 (
   "Area" CHAR NOT NULL,
   "Segmento" VARCHAR(4) NOT NULL,
@@ -5930,20 +5930,20 @@ CREATE TABLE sac.vPrestacao
   "OutrasFontes" MONEY NOT NULL,
   "SaldoRecolhido" MONEY NOT NULL
 );
-CREATE TABLE sac.vProjetoAvaliado
+CREATE TABLE sac."vProjetoAvaliado"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "Classificacao" VARCHAR(21) NOT NULL,
   "Peso" INT
 );
-CREATE TABLE sac.vProjetoDiligencia
+CREATE TABLE sac."vProjetoDiligencia"
 (
   "AnoProjeto" CHAR(2),
   "Sequencial" VARCHAR(5),
   "Diligencia" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.vProjetosEmAnalise
+CREATE TABLE sac."vProjetosEmAnalise"
 (
   "Regiao" VARCHAR(15) NOT NULL,
   "UF" VARCHAR(30) NOT NULL,
@@ -5958,7 +5958,7 @@ CREATE TABLE sac.vProjetosEmAnalise
   "UnidadeAnalise" VARCHAR(15),
   "QtdeDias" INT
 );
-CREATE TABLE sac.vProjetosEmExecucao
+CREATE TABLE sac."vProjetosEmExecucao"
 (
   "Regiao" VARCHAR(15) NOT NULL,
   "UF" VARCHAR(30) NOT NULL,
@@ -5973,7 +5973,7 @@ CREATE TABLE sac.vProjetosEmExecucao
   "Municipio" VARCHAR(50) NOT NULL,
   "Enquadramento" int NOT NULL
 );
-CREATE TABLE sac.vProjetosExecutados
+CREATE TABLE sac."vProjetosExecutados"
 (
   "Ano" INT,
   "Regiao" VARCHAR(15) NOT NULL,
@@ -5984,7 +5984,7 @@ CREATE TABLE sac.vProjetosExecutados
   "Segmento" VARCHAR(4) NOT NULL,
   "Captado" MONEY
 );
-CREATE TABLE sac.vProjPrazoDeCaptVencNoExerc
+CREATE TABLE sac."vProjPrazoDeCaptVencNoExerc"
 (
   "NrProjeto" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -5994,7 +5994,7 @@ CREATE TABLE sac.vProjPrazoDeCaptVencNoExerc
   "Captado" MONEY,
   "Saldo" MONEY
 );
-CREATE TABLE sac.vPropApreAproExec
+CREATE TABLE sac."vPropApreAproExec"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -6008,21 +6008,21 @@ CREATE TABLE sac.vPropApreAproExec
   "Mecanismo" CHAR NOT NULL,
   "Situacao" CHAR(3) NOT NULL
 );
-CREATE TABLE sac.vProponenteAnoUF
+CREATE TABLE sac."vProponenteAnoUF"
 (
   "Ano" INT,
   "CgcCpf" VARCHAR(14) NOT NULL,
   "Nome" VARCHAR(150) NOT NULL,
   "UF" CHAR(2) NOT NULL
 );
-CREATE TABLE sac.vProponenteAvaliado
+CREATE TABLE sac."vProponenteAvaliado"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "Proponente" VARCHAR(150) NOT NULL,
   "Classificacao" VARCHAR(21) NOT NULL,
   "Peso" INT
 );
-CREATE TABLE sac.vProponenteCaptacaoAnoUF
+CREATE TABLE sac."vProponenteCaptacaoAnoUF"
 (
   "Ano" INT,
   "CgcCpf" VARCHAR(14) NOT NULL,
@@ -6030,13 +6030,13 @@ CREATE TABLE sac.vProponenteCaptacaoAnoUF
   "UF" CHAR(2) NOT NULL,
   "Captacao" MONEY
 );
-CREATE TABLE sac.vProponenteComMaisDeCincoProj
+CREATE TABLE sac."vProponenteComMaisDeCincoProj"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "Proponente" VARCHAR(150) NOT NULL,
   "Qtde" INT
 );
-CREATE TABLE sac.vProponenteMecenato
+CREATE TABLE sac."vProponenteMecenato"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "Nome" VARCHAR(150) NOT NULL,
@@ -6046,12 +6046,12 @@ CREATE TABLE sac.vProponenteMecenato
   "Uf" CHAR(2) NOT NULL,
   "Cep" VARCHAR(8) NOT NULL
 );
-CREATE TABLE sac.vProponentePorArea
+CREATE TABLE sac."vProponentePorArea"
 (
   "Area" CHAR NOT NULL,
   "CgcCpf" VARCHAR(14) NOT NULL
 );
-CREATE TABLE sac.vProponenteProjetos
+CREATE TABLE sac."vProponenteProjetos"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "Nome" VARCHAR(150) NOT NULL,
@@ -6060,7 +6060,7 @@ CREATE TABLE sac.vProponenteProjetos
   "CaptacaoUfir" MONEY NOT NULL,
   "CaptacaoReal" MONEY NOT NULL
 );
-CREATE TABLE sac.vProponenteProjetosOngs
+CREATE TABLE sac."vProponenteProjetosOngs"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "Nome" VARCHAR(150) NOT NULL,
@@ -6068,7 +6068,7 @@ CREATE TABLE sac.vProponenteProjetosOngs
   "Sequencial" VARCHAR(5) NOT NULL,
   "CaptacaoReal" MONEY NOT NULL
 );
-CREATE TABLE sac.vProponenteTipoPessoa
+CREATE TABLE sac."vProponenteTipoPessoa"
 (
   "CgcCpf" VARCHAR(20),
   "TipoPessoa" VARCHAR(1),
@@ -6079,7 +6079,7 @@ CREATE TABLE sac.vProponenteTipoPessoa
   "Captado" MONEY,
   "Saldo" MONEY
 );
-CREATE TABLE sac.vPropProjInabilitados
+CREATE TABLE sac."vPropProjInabilitados"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "Nome" VARCHAR(150) NOT NULL,
@@ -6089,7 +6089,7 @@ CREATE TABLE sac.vPropProjInabilitados
   "Orgao" VARCHAR(20) NOT NULL,
   "Situacao" VARCHAR(150) NOT NULL
 );
-CREATE TABLE sac.vPropQueReceberBandaDeNovo
+CREATE TABLE sac."vPropQueReceberBandaDeNovo"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "Proponente" VARCHAR(150) NOT NULL,
@@ -6099,20 +6099,20 @@ CREATE TABLE sac.vPropQueReceberBandaDeNovo
   "Situacao" CHAR(3) NOT NULL,
   "DescSituacao" VARCHAR(150) NOT NULL
 );
-CREATE TABLE sac.vPropRecebeuBanda
+CREATE TABLE sac."vPropRecebeuBanda"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL
 );
-CREATE TABLE sac.vPropUFAreaSeg
+CREATE TABLE sac."vPropUFAreaSeg"
 (
   "UF" CHAR(2) NOT NULL,
   "Area" CHAR NOT NULL,
   "Segmento" VARCHAR(4) NOT NULL,
   "CgcCpf" VARCHAR(14) NOT NULL
 );
-CREATE TABLE sac.vProrrogacao
+CREATE TABLE sac."vProrrogacao"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -6124,12 +6124,12 @@ CREATE TABLE sac.vProrrogacao
   "DtPublicacaoAprovacao" timestamp,
   "SaldoACaptar" MONEY
 );
-CREATE TABLE sac.vQtdeProjAproAnoUF
+CREATE TABLE sac."vQtdeProjAproAnoUF"
 (
   "Ano" INT,
   "UF" CHAR(2) NOT NULL
 );
-CREATE TABLE sac.vRankBanda
+CREATE TABLE sac."vRankBanda"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -6149,7 +6149,7 @@ CREATE TABLE sac.vRankBanda
   "Emenda" INTEGER NOT NULL,
   "PontoEmenda" INT NOT NULL
 );
-CREATE TABLE sac.vRenunciaAnoAreaGeral
+CREATE TABLE sac."vRenunciaAnoAreaGeral"
 (
   "Ano" INT,
   "Lei" INT NOT NULL,
@@ -6161,7 +6161,7 @@ CREATE TABLE sac.vRenunciaAnoAreaGeral
   "Area6" NUMERIC(38,5),
   "Area7" NUMERIC(38,5)
 );
-CREATE TABLE sac.vRenunciaAnoAreaUFGeral
+CREATE TABLE sac."vRenunciaAnoAreaUFGeral"
 (
   "Ano" INT,
   "UF" CHAR(2) NOT NULL,
@@ -6174,7 +6174,7 @@ CREATE TABLE sac.vRenunciaAnoAreaUFGeral
   "Area6" NUMERIC(38,5),
   "Area7" NUMERIC(38,5)
 );
-CREATE TABLE sac.vRenunciaFiscal
+CREATE TABLE sac."vRenunciaFiscal"
 (
   "Ano" INT,
   "Trim1" NUMERIC(38,5),
@@ -6182,7 +6182,7 @@ CREATE TABLE sac.vRenunciaFiscal
   "Trim3" NUMERIC(38,5),
   "Trim4" NUMERIC(38,5)
 );
-CREATE TABLE sac.vRenunciaFiscalAnoArea
+CREATE TABLE sac."vRenunciaFiscalAnoArea"
 (
   "Ano" INT,
   "Area1" NUMERIC(38,5),
@@ -6193,7 +6193,7 @@ CREATE TABLE sac.vRenunciaFiscalAnoArea
   "Area6" NUMERIC(38,5),
   "Area7" NUMERIC(38,5)
 );
-CREATE TABLE sac.vRenunciaFiscalGeral
+CREATE TABLE sac."vRenunciaFiscalGeral"
 (
   "Ano" INT,
   "Lei" INT NOT NULL,
@@ -6202,7 +6202,7 @@ CREATE TABLE sac.vRenunciaFiscalGeral
   "Trim3" NUMERIC(38,5),
   "Trim4" NUMERIC(38,5)
 );
-CREATE TABLE sac.vRenunciaGeralPorAnoProjeto
+CREATE TABLE sac."vRenunciaGeralPorAnoProjeto"
 (
   "Ano" INT,
   "Lei" INT NOT NULL,
@@ -6211,7 +6211,7 @@ CREATE TABLE sac.vRenunciaGeralPorAnoProjeto
   "Captado" MONEY,
   "Renuncia" NUMERIC(38,5)
 );
-CREATE TABLE sac.vRenunciaPorAno
+CREATE TABLE sac."vRenunciaPorAno"
 (
   "Ano" INT,
   "CgcCpf" VARCHAR(14) NOT NULL,
@@ -6222,19 +6222,19 @@ CREATE TABLE sac.vRenunciaPorAno
   "ApoioUfir" MONEY,
   "ApoioReal" MONEY
 );
-CREATE TABLE sac.vRenunciaPorIncentivador
+CREATE TABLE sac."vRenunciaPorIncentivador"
 (
   "CgcCpf" VARCHAR(14) NOT NULL,
   "Renuncia" MONEY
 );
-CREATE TABLE sac.vRicardoReis
+CREATE TABLE sac."vRicardoReis"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
   "Processo" VARCHAR(17)
 );
-CREATE TABLE sac.vSaldoAprovado
+CREATE TABLE sac."vSaldoAprovado"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -6255,7 +6255,7 @@ CREATE TABLE sac.vSaldoAprovado
   "ReduArt3" MONEY,
   "ReduConv" MONEY
 );
-CREATE TABLE sac.vSaldoAprovadoPorAno
+CREATE TABLE sac."vSaldoAprovadoPorAno"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -6272,33 +6272,33 @@ CREATE TABLE sac.vSaldoAprovadoPorAno
   "ReduArt1" MONEY,
   "ReduArt3" MONEY
 );
-CREATE TABLE sac.vSaldoQuotasCav
+CREATE TABLE sac."vSaldoQuotasCav"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "Integralizado" MONEY,
   "Cancelado" MONEY
 );
-CREATE TABLE sac.vSegmento
+CREATE TABLE sac."vSegmento"
 (
   "Area" VARCHAR(1),
   "Codigo" VARCHAR(4) NOT NULL,
   "Segmento" VARCHAR(50) NOT NULL,
   "idOrgao" INT
 );
-CREATE TABLE sac.vTempoSemCaptar
+CREATE TABLE sac."vTempoSemCaptar"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "TempoSemCaptar" INT
 );
-CREATE TABLE sac.vTermoAditivo
+CREATE TABLE sac."vTermoAditivo"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "DtFinalVigencia" timestamp
 );
-CREATE TABLE sac.vTermoDeCompromisso
+CREATE TABLE sac."vTermoDeCompromisso"
 (
   "NrProjeto" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -6312,7 +6312,7 @@ CREATE TABLE sac.vTermoDeCompromisso
   "DtInicioCaptacao" timestamp,
   "DtFimCaptacao" timestamp
 );
-CREATE TABLE sac.vTodaAprovacao
+CREATE TABLE sac."vTodaAprovacao"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -6329,7 +6329,7 @@ CREATE TABLE sac.vTodaAprovacao
   "Artigo3" MONEY,
   "Contrapartida" MONEY
 );
-CREATE TABLE sac.vTotalAprovado
+CREATE TABLE sac."vTotalAprovado"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -6342,7 +6342,7 @@ CREATE TABLE sac.vTotalAprovado
   "ConcedidoCapitalReal" MONEY,
   "ContrapartidaReal" MONEY
 );
-CREATE TABLE sac.vTotalCaptado
+CREATE TABLE sac."vTotalCaptado"
 (
   "AnoRecibo" INT,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -6350,7 +6350,7 @@ CREATE TABLE sac.vTotalCaptado
   "CaptacaoUfir" MONEY,
   "CaptacaoReal" MONEY
 );
-CREATE TABLE sac.vUltimaFase
+CREATE TABLE sac."vUltimaFase"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -6358,7 +6358,7 @@ CREATE TABLE sac.vUltimaFase
   "DtInicio" timestamp,
   "DtTermino" timestamp
 );
-CREATE TABLE sac.vUsuarios
+CREATE TABLE sac."vUsuarios"
 (
   "usu_codigo" SMALLINT NOT NULL,
   "usu_identificacao" CHAR(16) NOT NULL,
@@ -6378,7 +6378,7 @@ CREATE TABLE sac.vUsuarios
   "fun_descricao" VARCHAR(100) NOT NULL,
   "fun_funcaoorgao" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.vValoresProjeto
+CREATE TABLE sac."vValoresProjeto"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -6387,13 +6387,13 @@ CREATE TABLE sac.vValoresProjeto
   "Captado" MONEY,
   "Saldo" MONEY
 );
-CREATE TABLE sac.vVerSePodeProrrogar
+CREATE TABLE sac."vVerSePodeProrrogar"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "TempoSemCaptar" INT
 );
-CREATE TABLE sac.VW_IdentificadorLog
+CREATE TABLE sac."VW_IdentificadorLog"
 (
   "IdentificadorLog" INT NOT NULL,
   "NomeBancoDados" VARCHAR(256) NOT NULL,
@@ -6405,7 +6405,7 @@ CREATE TABLE sac.VW_IdentificadorLog
   "UsuarioLogin" VARCHAR(256) NOT NULL,
   "Hostname" VARCHAR(256)
 );
-CREATE TABLE sac.vwAgentesSeusProjetos
+CREATE TABLE sac."vwAgentesSeusProjetos"
 (
   "Ordem" INT NOT NULL,
   "IdPRONAC" INT NOT NULL,
@@ -6422,7 +6422,7 @@ CREATE TABLE sac.vwAgentesSeusProjetos
   "idSolicitante" INT NOT NULL,
   "IdUsuario" INT NOT NULL
 );
-CREATE TABLE sac.vwAlterarAnalistaProposta
+CREATE TABLE sac."vwAlterarAnalistaProposta"
 (
   "idProposta" INT NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -6430,14 +6430,14 @@ CREATE TABLE sac.vwAlterarAnalistaProposta
   "idTecnico" INT NOT NULL,
   "Tecnico" VARCHAR(100)
 );
-CREATE TABLE sac.vwAlterarOrgao
+CREATE TABLE sac."vwAlterarOrgao"
 (
   "PRONAC" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
   "Orgao" INT NOT NULL,
   "Logon" INT
 );
-CREATE TABLE sac.vwAlterarProjeto
+CREATE TABLE sac."vwAlterarProjeto"
 (
   "idPronac" INT NOT NULL,
   "PRONAC" VARCHAR(7) NOT NULL,
@@ -6453,7 +6453,7 @@ CREATE TABLE sac.vwAlterarProjeto
   "DtFimExecucao" timestamp,
   "idUsuario" INT
 );
-CREATE TABLE sac.vwAlterarSituacao
+CREATE TABLE sac."vwAlterarSituacao"
 (
   "PRONAC" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -6462,7 +6462,7 @@ CREATE TABLE sac.vwAlterarSituacao
   "ProvidenciaTomada" VARCHAR(500),
   "Logon" INT
 );
-CREATE TABLE sac.vwAnaliseDeConteudo
+CREATE TABLE sac."vwAnaliseDeConteudo"
 (
   "idAnaliseDeConteudo" INT NOT NULL,
   "idPronac" INT NOT NULL,
@@ -6470,7 +6470,7 @@ CREATE TABLE sac.vwAnaliseDeConteudo
   "idProduto" int NOT NULL,
   "Produto" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.vwAnaliseDeCusto
+CREATE TABLE sac."vwAnaliseDeCusto"
 (
   "idPronac" INT NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -6499,7 +6499,7 @@ CREATE TABLE sac.vwAnaliseDeCusto
   "VlSugerido" REAL,
   "idUsuario" INT
 );
-CREATE TABLE sac.vwAnaliseDocumentalPorTecnico
+CREATE TABLE sac."vwAnaliseDocumentalPorTecnico"
 (
   "idProjeto" INT NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -6511,7 +6511,7 @@ CREATE TABLE sac.vwAnaliseDocumentalPorTecnico
   "idOrgao" INT,
   "ConformidadeOK" int NOT NULL
 );
-CREATE TABLE sac.vwAnaliseVisualPorTecnico
+CREATE TABLE sac."vwAnaliseVisualPorTecnico"
 (
   "idProjeto" INT NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -6522,7 +6522,7 @@ CREATE TABLE sac.vwAnaliseVisualPorTecnico
   "ConformidadeOK" int NOT NULL,
   "QtdeDias" INT
 );
-CREATE TABLE sac.vwAnexarComprovantes
+CREATE TABLE sac."vwAnexarComprovantes"
 (
   "idArquivo" INT NOT NULL,
   "nmArquivo" VARCHAR(255) NOT NULL,
@@ -6536,7 +6536,7 @@ CREATE TABLE sac.vwAnexarComprovantes
   "idPronac" INT NOT NULL,
   "stAtivoDocumentoProjeto" CHAR
 );
-CREATE TABLE sac.vwAnexarDocumentoAgente
+CREATE TABLE sac."vwAnexarDocumentoAgente"
 (
   "idArquivo" INT NOT NULL,
   "nmArquivo" VARCHAR(255) NOT NULL,
@@ -6551,7 +6551,7 @@ CREATE TABLE sac.vwAnexarDocumentoAgente
   "idAgente" INT NOT NULL,
   "stAtivoDocumentoAgente" INTEGER NOT NULL
 );
-CREATE TABLE sac.vwAnexarDocumentoDiligencia
+CREATE TABLE sac."vwAnexarDocumentoDiligencia"
 (
   "idArquivo" INT NOT NULL,
   "nmArquivo" VARCHAR(255) NOT NULL,
@@ -6567,7 +6567,7 @@ CREATE TABLE sac.vwAnexarDocumentoDiligencia
   "stAtivoDocumentoProjeto" CHAR,
   "idDiligencia" INT NOT NULL
 );
-CREATE TABLE sac.vwAnexarDocumentoEdital
+CREATE TABLE sac."vwAnexarDocumentoEdital"
 (
   "idPreProjeto" INT NOT NULL,
   "idEdital" INT,
@@ -6581,7 +6581,7 @@ CREATE TABLE sac.vwAnexarDocumentoEdital
   "nrTamanho" VARCHAR(10),
   "stAtivo" CHAR NOT NULL
 );
-CREATE TABLE sac.vwAnexarMarca
+CREATE TABLE sac."vwAnexarMarca"
 (
   "nmArquivo" VARCHAR(255) NOT NULL,
   "sgExtensao" VARCHAR(5) NOT NULL,
@@ -6593,7 +6593,7 @@ CREATE TABLE sac.vwAnexarMarca
   "idPronac" INT NOT NULL,
   "stAtivoDocumentoProjeto" CHAR
 );
-CREATE TABLE sac.vwApagarDocumento
+CREATE TABLE sac."vwApagarDocumento"
 (
   "idPronac" INT NOT NULL,
   "idDocumento" INT NOT NULL,
@@ -6602,7 +6602,7 @@ CREATE TABLE sac.vwApagarDocumento
   "dtDocumento" timestamp NOT NULL,
   "noArquivo" VARCHAR(130)
 );
-CREATE TABLE sac.vwApoioEstadoMacro
+CREATE TABLE sac."vwApoioEstadoMacro"
 (
   "codigo_estado" INT NOT NULL,
   "sigla_estado" CHAR(2) NOT NULL,
@@ -6610,7 +6610,7 @@ CREATE TABLE sac.vwApoioEstadoMacro
   "nome_macro" VARCHAR(100) NOT NULL,
   "total_cidade_macro" INT
 );
-CREATE TABLE sac.vwApoioProjetosLiberados
+CREATE TABLE sac."vwApoioProjetosLiberados"
 (
   "codigo_projeto" INT,
   "ano_liberacao_projeto" INT,
@@ -6619,19 +6619,19 @@ CREATE TABLE sac.vwApoioProjetosLiberados
   "codigo_cidade" VARCHAR(6),
   "codigo_macro" CHAR(4) NOT NULL
 );
-CREATE TABLE sac.vwArea
+CREATE TABLE sac."vwArea"
 (
   "Codigo" CHAR NOT NULL,
   "Descricao" VARCHAR(50) NOT NULL
 );
-CREATE TABLE sac.vwAssuntoEmail
+CREATE TABLE sac."vwAssuntoEmail"
 (
   "idVerificacao" INT NOT NULL,
   "idTipo" INT NOT NULL,
   "Assunto" VARCHAR(100) NOT NULL,
   "stEstado" INTEGER NOT NULL
 );
-CREATE TABLE sac.vwAtualizarContaBancaria
+CREATE TABLE sac."vwAtualizarContaBancaria"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -6644,7 +6644,7 @@ CREATE TABLE sac.vwAtualizarContaBancaria
   "ContaLivre" CHAR(12),
   "idUsuario" INT NOT NULL
 );
-CREATE TABLE sac.vwAvaliarProposta
+CREATE TABLE sac."vwAvaliarProposta"
 (
   "idProjeto" INT NOT NULL,
   "NomeProposta" VARCHAR(300) NOT NULL,
@@ -6661,7 +6661,7 @@ CREATE TABLE sac.vwAvaliarProposta
   "TipoDemanda" CHAR(2) NOT NULL,
   "idOrgao" INT
 );
-CREATE TABLE sac.vwAvaliarPropostaEdital
+CREATE TABLE sac."vwAvaliarPropostaEdital"
 (
   "idProjeto" INT NOT NULL,
   "NomeProposta" VARCHAR(300) NOT NULL,
@@ -6680,7 +6680,7 @@ CREATE TABLE sac.vwAvaliarPropostaEdital
   "idEdital" INT,
   "Edital" VARCHAR(200) NOT NULL
 );
-CREATE TABLE sac.vwCadastrarParecerista
+CREATE TABLE sac."vwCadastrarParecerista"
 (
   "idAgente" INT NOT NULL,
   "CNPJCPF" VARCHAR(14) NOT NULL,
@@ -6701,7 +6701,7 @@ CREATE TABLE sac.vwCadastrarParecerista
   "Correspondencia" INTEGER,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE sac.vwCancelarContaBancaria
+CREATE TABLE sac."vwCancelarContaBancaria"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -6721,13 +6721,13 @@ CREATE TABLE sac.vwCancelarContaBancaria
   "Motivo" VARCHAR(8000),
   "idUsuario" INT NOT NULL
 );
-CREATE TABLE sac.vwCaptacaoProjetos
+CREATE TABLE sac."vwCaptacaoProjetos"
 (
   "anoprojeto" CHAR(2) NOT NULL,
   "sequencial" VARCHAR(5) NOT NULL,
   "captacao" MONEY
 );
-CREATE TABLE sac.vwCompatilizar_Despesa_DeINTEGERoNaConta
+CREATE TABLE sac."vwCompatilizar_Despesa_DeINTEGERoNaConta"
 (
   "idPronac" INT NOT NULL,
   "Pronac" VARCHAR(7) NOT NULL,
@@ -6744,7 +6744,7 @@ CREATE TABLE sac.vwCompatilizar_Despesa_DeINTEGERoNaConta
   "stLancamento" CHAR,
   "vlDiferenca" DECIMAL(17,2)
 );
-CREATE TABLE sac.vwConciliacaoBancaria
+CREATE TABLE sac."vwConciliacaoBancaria"
 (
   "idPronac" INT,
   "Pronac" VARCHAR(20),
@@ -6762,7 +6762,7 @@ CREATE TABLE sac.vwConciliacaoBancaria
   "vlDeINTEGERado" MONEY,
   "vlDiferenca" MONEY
 );
-CREATE TABLE sac.vwConformidadeDocumentalTecnico
+CREATE TABLE sac."vwConformidadeDocumentalTecnico"
 (
   "idProjeto" INT NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -6770,7 +6770,7 @@ CREATE TABLE sac.vwConformidadeDocumentalTecnico
   "DtMovimentacao" timestamp NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.vwConformidadeVisualTecnico
+CREATE TABLE sac."vwConformidadeVisualTecnico"
 (
   "idProjeto" INT NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -6778,7 +6778,7 @@ CREATE TABLE sac.vwConformidadeVisualTecnico
   "DtMovimentacao" timestamp NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.vwConsultaProjetoSimplificada
+CREATE TABLE sac."vwConsultaProjetoSimplificada"
 (
   "IdPRONAC" INT NOT NULL,
   "Pronac" VARCHAR(7) NOT NULL,
@@ -6803,7 +6803,7 @@ CREATE TABLE sac.vwConsultaProjetoSimplificada
   "VlComprovado" DECIMAL(12,2),
   "PercCaptado" MONEY NOT NULL
 );
-CREATE TABLE sac.vwCortesSugeridos
+CREATE TABLE sac."vwCortesSugeridos"
 (
   "idPronac" INT NOT NULL,
   "idProduto" int NOT NULL,
@@ -6816,7 +6816,7 @@ CREATE TABLE sac.vwCortesSugeridos
   "Situacao" VARCHAR(13) NOT NULL,
   "idUsuario" INT NOT NULL
 );
-CREATE TABLE sac.vwCortesSugeridosAtual
+CREATE TABLE sac."vwCortesSugeridosAtual"
 (
   "idPronac" INT NOT NULL,
   "idProduto" int NOT NULL,
@@ -6828,7 +6828,7 @@ CREATE TABLE sac.vwCortesSugeridosAtual
   "Justificativa" VARCHAR,
   "Situacao" VARCHAR(13) NOT NULL
 );
-CREATE TABLE sac.vwCulturaViva
+CREATE TABLE sac."vwCulturaViva"
 (
   "Regiao" VARCHAR(15) NOT NULL,
   "UF" VARCHAR(30) NOT NULL,
@@ -6848,7 +6848,7 @@ CREATE TABLE sac.vwCulturaViva
   "DtInicioVigencia" timestamp,
   "DtFinalVigencia" timestamp
 );
-CREATE TABLE sac.vwDadosDeProjeto
+CREATE TABLE sac."vwDadosDeProjeto"
 (
   "NrProjeto" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(200) NOT NULL,
@@ -6883,7 +6883,7 @@ CREATE TABLE sac.vwDadosDeProjeto
   "Unidade" VARCHAR(100),
   "ResumoProjeto" TEXT
 );
-CREATE TABLE sac.vwDesconsolidarParecer
+CREATE TABLE sac."vwDesconsolidarParecer"
 (
   "idPronac" INT NOT NULL,
   "PRONAC" VARCHAR(7) NOT NULL,
@@ -6902,7 +6902,7 @@ CREATE TABLE sac.vwDesconsolidarParecer
   "PERC" MONEY,
   "Acima" VARCHAR(12)
 );
-CREATE TABLE sac.vwDespacharLoteDocumento
+CREATE TABLE sac."vwDespacharLoteDocumento"
 (
   "idUnidadeCadastro" SMALLINT,
   "idUnidade" INT NOT NULL,
@@ -6910,7 +6910,7 @@ CREATE TABLE sac.vwDespacharLoteDocumento
   "DespachoLote" VARCHAR(250),
   "Qtde" INT
 );
-CREATE TABLE sac.vwDespacharLoteProjeto
+CREATE TABLE sac."vwDespacharLoteProjeto"
 (
   "Orgao" INT NOT NULL,
   "idUnidade" INT NOT NULL,
@@ -6918,7 +6918,7 @@ CREATE TABLE sac.vwDespacharLoteProjeto
   "DespachoLote" VARCHAR(250),
   "Qtde" INT
 );
-CREATE TABLE sac.vwDespacharProjeto
+CREATE TABLE sac."vwDespacharProjeto"
 (
   "idPronac" INT NOT NULL,
   "NrProjeto" VARCHAR(7) NOT NULL,
@@ -6931,7 +6931,7 @@ CREATE TABLE sac.vwDespacharProjeto
   "idUsuarioEmissor" SMALLINT NOT NULL,
   "meDespacho" VARCHAR(250)
 );
-CREATE TABLE sac.vwDevolverParecer
+CREATE TABLE sac."vwDevolverParecer"
 (
   "idDistribuirParecer" INT NOT NULL,
   "idOrgao" INT,
@@ -6947,7 +6947,7 @@ CREATE TABLE sac.vwDevolverParecer
   "Orgao" VARCHAR(100),
   "DtRetorno" timestamp
 );
-CREATE TABLE sac.vwDiligencia
+CREATE TABLE sac."vwDiligencia"
 (
   "IdPRONAC" INT NOT NULL,
   "PRONAC" VARCHAR(7) NOT NULL,
@@ -6970,7 +6970,7 @@ CREATE TABLE sac.vwDiligencia
   "Descricao" VARCHAR(100) NOT NULL,
   "Expr1" int
 );
-CREATE TABLE sac.vwDistribuirParecer
+CREATE TABLE sac."vwDistribuirParecer"
 (
   "idDistribuirParecer" INT NOT NULL,
   "idPRONAC" INT NOT NULL,
@@ -6989,7 +6989,7 @@ CREATE TABLE sac.vwDistribuirParecer
   "idUsuario" INT,
   "stDiligenciado" INTEGER
 );
-CREATE TABLE sac.vwDocumentos
+CREATE TABLE sac."vwDocumentos"
 (
   "idPronac" INT NOT NULL,
   "Pronac" VARCHAR(7) NOT NULL,
@@ -7015,7 +7015,7 @@ CREATE TABLE sac.vwDocumentos
   "Acao" int,
   "Situacao" VARCHAR(10)
 );
-CREATE TABLE sac.vwDocumentosAEnviar
+CREATE TABLE sac."vwDocumentosAEnviar"
 (
   "NrProjeto" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(200) NOT NULL,
@@ -7031,7 +7031,7 @@ CREATE TABLE sac.vwDocumentosAEnviar
   "idDestino" INT NOT NULL,
   "Destino" VARCHAR(100)
 );
-CREATE TABLE sac.vwDocumentosAReceber
+CREATE TABLE sac."vwDocumentosAReceber"
 (
   "NrProjeto" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(200) NOT NULL,
@@ -7049,7 +7049,7 @@ CREATE TABLE sac.vwDocumentosAReceber
   "idUsuarioEmissor" SMALLINT NOT NULL,
   "Emissor" VARCHAR(100)
 );
-CREATE TABLE sac.vwDocumentosEnviados
+CREATE TABLE sac."vwDocumentosEnviados"
 (
   "NrProjeto" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(200) NOT NULL,
@@ -7065,26 +7065,26 @@ CREATE TABLE sac.vwDocumentosEnviados
   "idUsuarioEmissor" SMALLINT NOT NULL,
   "Emissor" VARCHAR(100)
 );
-CREATE TABLE sac.vwDocumentosExigidos
+CREATE TABLE sac."vwDocumentosExigidos"
 (
   "Codigo" INT NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
   "Opcao" INT NOT NULL
 );
-CREATE TABLE sac.vwDocumentosExigidosApresentacaoProposta
+CREATE TABLE sac."vwDocumentosExigidosApresentacaoProposta"
 (
   "Codigo" INT NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
   "Opcao" INT NOT NULL
 );
-CREATE TABLE sac.vwDocumentosPendentes
+CREATE TABLE sac."vwDocumentosPendentes"
 (
   "Contador" INT NOT NULL,
   "idProjeto" INT,
   "CodigoDocumento" INT NOT NULL,
   "Opcao" INT NOT NULL
 );
-CREATE TABLE sac.vwDocumentosRecebidos
+CREATE TABLE sac."vwDocumentosRecebidos"
 (
   "NrProjeto" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(200) NOT NULL,
@@ -7096,14 +7096,14 @@ CREATE TABLE sac.vwDocumentosRecebidos
   "idUnidade" INT NOT NULL,
   "Unidade" VARCHAR(100)
 );
-CREATE TABLE sac.vwDtNascimentoContas
+CREATE TABLE sac."vwDtNascimentoContas"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
   "DtNascimento" timestamp,
   "CgcCpf" VARCHAR(14) NOT NULL
 );
-CREATE TABLE sac.vwEditalMinC
+CREATE TABLE sac."vwEditalMinC"
 (
   "cdTipoFundo" INT NOT NULL,
   "idClassificaDocumento" INT NOT NULL,
@@ -7126,7 +7126,7 @@ CREATE TABLE sac.vwEditalMinC
   "PRONAC" VARCHAR(7),
   "CNPJCPF" VARCHAR(14)
 );
-CREATE TABLE sac.vwExtratoDaContaMovimentoConsolidado
+CREATE TABLE sac."vwExtratoDaContaMovimentoConsolidado"
 (
   "idPronac" INT NOT NULL,
   "Pronac" VARCHAR(7) NOT NULL,
@@ -7140,7 +7140,7 @@ CREATE TABLE sac.vwExtratoDaContaMovimentoConsolidado
   "vlLancamento" DECIMAL(38,2),
   "stLancamento" CHAR NOT NULL
 );
-CREATE TABLE sac.vwExtratoDaMovimentacaoBancaria
+CREATE TABLE sac."vwExtratoDaMovimentacaoBancaria"
 (
   "idPronac" INT NOT NULL,
   "Pronac" VARCHAR(7) NOT NULL,
@@ -7156,7 +7156,7 @@ CREATE TABLE sac.vwExtratoDaMovimentacaoBancaria
   "vlLancamento" DECIMAL(16,2) NOT NULL,
   "stLancamento" CHAR NOT NULL
 );
-CREATE TABLE sac.vwExtratoDeSaldoDasContasBancarias
+CREATE TABLE sac."vwExtratoDeSaldoDasContasBancarias"
 (
   "idPronac" INT NOT NULL,
   "Pronac" VARCHAR(7) NOT NULL,
@@ -7170,7 +7170,7 @@ CREATE TABLE sac.vwExtratoDeSaldoDasContasBancarias
   "vlSaldoBancario" DECIMAL(16,2) NOT NULL,
   "stSaldoBancario" CHAR NOT NULL
 );
-CREATE TABLE sac.vwFiscalizacao
+CREATE TABLE sac."vwFiscalizacao"
 (
   "IdPRONAC" INT NOT NULL,
   "Pronac" VARCHAR(7) NOT NULL,
@@ -7194,7 +7194,7 @@ CREATE TABLE sac.vwFiscalizacao
   "stAvaliacao" CHAR NOT NULL,
   "StatusAvaliacao" VARCHAR(20)
 );
-CREATE TABLE sac.vwGerenciarProposta
+CREATE TABLE sac."vwGerenciarProposta"
 (
   "idProjeto" INT NOT NULL,
   "NomeProposta" VARCHAR(300) NOT NULL,
@@ -7209,7 +7209,7 @@ CREATE TABLE sac.vwGerenciarProposta
   "stTipoDemanda" CHAR(2) NOT NULL,
   "OrgaoEdital" INT
 );
-CREATE TABLE sac.vwGerenciarPropostaEdital
+CREATE TABLE sac."vwGerenciarPropostaEdital"
 (
   "idProjeto" INT NOT NULL,
   "NomeProposta" VARCHAR(300) NOT NULL,
@@ -7227,7 +7227,7 @@ CREATE TABLE sac.vwGerenciarPropostaEdital
   "Edital" VARCHAR(200) NOT NULL,
   "Situacao" VARCHAR(24)
 );
-CREATE TABLE sac.vwHistoricoAvaliacao
+CREATE TABLE sac."vwHistoricoAvaliacao"
 (
   "idProjeto" INT NOT NULL,
   "idTecnico" INT NOT NULL,
@@ -7235,7 +7235,7 @@ CREATE TABLE sac.vwHistoricoAvaliacao
   "DtAvaliacao" timestamp,
   "Avaliacao" VARCHAR NOT NULL
 );
-CREATE TABLE sac.vwHistoricoDocumentos
+CREATE TABLE sac."vwHistoricoDocumentos"
 (
   "idPronac" INT NOT NULL,
   "Pronac" VARCHAR(7) NOT NULL,
@@ -7262,7 +7262,7 @@ CREATE TABLE sac.vwHistoricoDocumentos
   "Situacao" VARCHAR(10),
   "CodigoCorreio" VARCHAR(13)
 );
-CREATE TABLE sac.vwHistoricoTramitarProjeto
+CREATE TABLE sac."vwHistoricoTramitarProjeto"
 (
   "idPronac" INT NOT NULL,
   "Pronac" VARCHAR(7) NOT NULL,
@@ -7284,14 +7284,14 @@ CREATE TABLE sac.vwHistoricoTramitarProjeto
   "Acao" int,
   "Situacao" VARCHAR(10)
 );
-CREATE TABLE sac.vwIncentivadores_Por_Ano_Projeto
+CREATE TABLE sac."vwIncentivadores_Por_Ano_Projeto"
 (
   "Ano" INT,
   "CNPJCPF" VARCHAR(14) NOT NULL,
   "PRONAC" VARCHAR(7) NOT NULL,
   "vlIncentivado" MONEY
 );
-CREATE TABLE sac.vwIncentivadores_Por_Ano_TipoDePessoa_Enquadramento
+CREATE TABLE sac."vwIncentivadores_Por_Ano_TipoDePessoa_Enquadramento"
 (
   "Ano" INT,
   "CgcCpfMecena" VARCHAR(14) NOT NULL,
@@ -7300,7 +7300,7 @@ CREATE TABLE sac.vwIncentivadores_Por_Ano_TipoDePessoa_Enquadramento
   "Enquadramento" VARCHAR(9) NOT NULL,
   "vlIncentivo" MONEY
 );
-CREATE TABLE sac.vwInconsistenciaNaComprovacao
+CREATE TABLE sac."vwInconsistenciaNaComprovacao"
 (
   "idPronac" INT,
   "Pronac" VARCHAR(20),
@@ -7318,7 +7318,7 @@ CREATE TABLE sac.vwInconsistenciaNaComprovacao
   "vlDeINTEGERado" MONEY,
   "vlDiferenca" MONEY
 );
-CREATE TABLE sac.vwItemDuplicado
+CREATE TABLE sac."vwItemDuplicado"
 (
   "CdAntigo" INT,
   "QtdePropostaCdAntigo" INT,
@@ -7328,7 +7328,7 @@ CREATE TABLE sac.vwItemDuplicado
   "QtdePropostaCdNovo" INT,
   "QtdeProjetoCdANovo" INT
 );
-CREATE TABLE sac.vwItensOrcamentariosComprovados
+CREATE TABLE sac."vwItensOrcamentariosComprovados"
 (
   "idPronac" INT NOT NULL,
   "Item" VARCHAR(250) NOT NULL,
@@ -7341,7 +7341,7 @@ CREATE TABLE sac.vwItensOrcamentariosComprovados
   "PercFinanceiro" FLOAT,
   "SaldoAExecutar" FLOAT
 );
-CREATE TABLE sac.vwJuntarDocumento
+CREATE TABLE sac."vwJuntarDocumento"
 (
   "idunidade" INT NOT NULL,
   "Unidade" VARCHAR(100),
@@ -7360,7 +7360,7 @@ CREATE TABLE sac.vwJuntarDocumento
   "idUsuarioReceptor" SMALLINT,
   "Processo" VARCHAR(21)
 );
-CREATE TABLE sac.vwLiberacao
+CREATE TABLE sac."vwLiberacao"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -7373,14 +7373,14 @@ CREATE TABLE sac.vwLiberacao
   "Certidao" VARCHAR(7) NOT NULL,
   "Cadin" VARCHAR(14) NOT NULL
 );
-CREATE TABLE sac.vwLoteDocumento
+CREATE TABLE sac."vwLoteDocumento"
 (
   "idUnidadeCadastro" SMALLINT,
   "Unidade" VARCHAR(100),
   "idLote" INT,
   "stEstado" int NOT NULL
 );
-CREATE TABLE sac.vwMemoriaDeCalculo
+CREATE TABLE sac."vwMemoriaDeCalculo"
 (
   "idPronac" INT NOT NULL,
   "PRONAC" VARCHAR(7) NOT NULL,
@@ -7391,7 +7391,7 @@ CREATE TABLE sac.vwMemoriaDeCalculo
   "ValorSugerido" MONEY,
   "ValorParecer" MONEY
 );
-CREATE TABLE sac.vwMetasComprovadas
+CREATE TABLE sac."vwMetasComprovadas"
 (
   "IdPRONAC" INT NOT NULL,
   "Etapa" VARCHAR(61),
@@ -7403,7 +7403,7 @@ CREATE TABLE sac.vwMetasComprovadas
   "PercFinanceiro" FLOAT,
   "SaldoAExecutar" FLOAT
 );
-CREATE TABLE sac.vwNatureza
+CREATE TABLE sac."vwNatureza"
 (
   "idAgente" INT NOT NULL,
   "Direito" int NOT NULL,
@@ -7412,7 +7412,7 @@ CREATE TABLE sac.vwNatureza
   "Administracao" int NOT NULL,
   "Usuario" INT NOT NULL
 );
-CREATE TABLE sac.vwOrcamentoSolicitado
+CREATE TABLE sac."vwOrcamentoSolicitado"
 (
   "idPronac" INT NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -7437,7 +7437,7 @@ CREATE TABLE sac.vwOrcamentoSolicitado
   "Municipio" VARCHAR(100) NOT NULL,
   "Justificativa" VARCHAR(500)
 );
-CREATE TABLE sac.vwPainelCoordenadorAvaliacaoTrimestral
+CREATE TABLE sac."vwPainelCoordenadorAvaliacaoTrimestral"
 (
   "IdPRONAC" INT NOT NULL,
   "Pronac" VARCHAR(7) NOT NULL,
@@ -7456,7 +7456,7 @@ CREATE TABLE sac.vwPainelCoordenadorAvaliacaoTrimestral
   "idTecnicoAvaliador" SMALLINT,
   "dsParecerTecnico" VARCHAR(3000)
 );
-CREATE TABLE sac.vwPainelCoordenadorReadequacaoAguardandoAnalise
+CREATE TABLE sac."vwPainelCoordenadorReadequacaoAguardandoAnalise"
 (
   "idPronac" INT NOT NULL,
   "idReadequacao" INT NOT NULL,
@@ -7467,7 +7467,7 @@ CREATE TABLE sac.vwPainelCoordenadorReadequacaoAguardandoAnalise
   "tpReadequacao" VARCHAR(50) NOT NULL,
   "qtAguardandoDistribuicao" INT
 );
-CREATE TABLE sac.vwPainelCoordenadorReadequacaoAnalisados
+CREATE TABLE sac."vwPainelCoordenadorReadequacaoAnalisados"
 (
   "idPronac" INT NOT NULL,
   "idReadequacao" INT NOT NULL,
@@ -7485,7 +7485,7 @@ CREATE TABLE sac.vwPainelCoordenadorReadequacaoAnalisados
   "idOrgao" INT NOT NULL,
   "sgUnidade" VARCHAR(20) NOT NULL
 );
-CREATE TABLE sac.vwPainelCoordenadorReadequacaoEmAnalise
+CREATE TABLE sac."vwPainelCoordenadorReadequacaoEmAnalise"
 (
   "idPronac" INT NOT NULL,
   "idReadequacao" INT NOT NULL,
@@ -7505,7 +7505,7 @@ CREATE TABLE sac.vwPainelCoordenadorReadequacaoEmAnalise
   "idOrgao" INT NOT NULL,
   "sgUnidade" VARCHAR(20) NOT NULL
 );
-CREATE TABLE sac.vwPainelCoordenadorVinculadasAguardandoAnalise
+CREATE TABLE sac."vwPainelCoordenadorVinculadasAguardandoAnalise"
 (
   "IdPRONAC" INT NOT NULL,
   "NrProjeto" VARCHAR(7) NOT NULL,
@@ -7525,7 +7525,7 @@ CREATE TABLE sac.vwPainelCoordenadorVinculadasAguardandoAnalise
   "QtdeSecundarios" INT,
   "Valor" FLOAT
 );
-CREATE TABLE sac.vwPainelCoordenadorVinculadasEmAnalise
+CREATE TABLE sac."vwPainelCoordenadorVinculadasEmAnalise"
 (
   "IdPRONAC" INT NOT NULL,
   "NrProjeto" VARCHAR(7) NOT NULL,
@@ -7556,7 +7556,7 @@ CREATE TABLE sac.vwPainelCoordenadorVinculadasEmAnalise
   "stPrincipal" INTEGER,
   "FecharAnalise" CHAR
 );
-CREATE TABLE sac.vwPainelCoordenadorVinculadasEmValidacao
+CREATE TABLE sac."vwPainelCoordenadorVinculadasEmValidacao"
 (
   "IdPRONAC" INT NOT NULL,
   "NrProjeto" VARCHAR(7) NOT NULL,
@@ -7582,7 +7582,7 @@ CREATE TABLE sac.vwPainelCoordenadorVinculadasEmValidacao
   "stPrincipal" INTEGER,
   "FecharAnalise" CHAR
 );
-CREATE TABLE sac.vwPainelCoordenadorVinculadasReanalisar
+CREATE TABLE sac."vwPainelCoordenadorVinculadasReanalisar"
 (
   "IdPRONAC" INT NOT NULL,
   "NrProjeto" VARCHAR(7) NOT NULL,
@@ -7606,7 +7606,7 @@ CREATE TABLE sac.vwPainelCoordenadorVinculadasReanalisar
   "stPrincipal" INTEGER,
   "FecharAnalise" CHAR
 );
-CREATE TABLE sac.vwPainelCoordenadorVinculadasValidados
+CREATE TABLE sac."vwPainelCoordenadorVinculadasValidados"
 (
   "IdPRONAC" INT NOT NULL,
   "NrProjeto" VARCHAR(7) NOT NULL,
@@ -7634,7 +7634,7 @@ CREATE TABLE sac.vwPainelCoordenadorVinculadasValidados
   "TecnicoValidador" VARCHAR(20) NOT NULL,
   "dtValidacao" timestamp
 );
-CREATE TABLE sac.vwPainelDeLiberacao
+CREATE TABLE sac."vwPainelDeLiberacao"
 (
   "AnoProjeto" CHAR(2) NOT NULL,
   "Sequencial" VARCHAR(5) NOT NULL,
@@ -7653,7 +7653,7 @@ CREATE TABLE sac.vwPainelDeLiberacao
   "Situacao" VARCHAR(156) NOT NULL,
   "ProvidenciaTomada" VARCHAR(500)
 );
-CREATE TABLE sac.vwPainelReadequacaoCoordenadorParecerAguardandoAnalise
+CREATE TABLE sac."vwPainelReadequacaoCoordenadorParecerAguardandoAnalise"
 (
   "idDistribuirReadequacao" INT NOT NULL,
   "idPRONAC" INT NOT NULL,
@@ -7665,7 +7665,7 @@ CREATE TABLE sac.vwPainelReadequacaoCoordenadorParecerAguardandoAnalise
   "idReadequacao" INT NOT NULL,
   "idOrgao" INT NOT NULL
 );
-CREATE TABLE sac.vwPainelReadequacaoCoordenadorParecerAnalisados
+CREATE TABLE sac."vwPainelReadequacaoCoordenadorParecerAnalisados"
 (
   "idDistribuirReadequacao" INT NOT NULL,
   "idPRONAC" INT NOT NULL,
@@ -7683,7 +7683,7 @@ CREATE TABLE sac.vwPainelReadequacaoCoordenadorParecerAnalisados
   "idReadequacao" INT NOT NULL,
   "idOrgao" INT NOT NULL
 );
-CREATE TABLE sac.vwPainelReadequacaoCoordenadorParecerEmAnalise
+CREATE TABLE sac."vwPainelReadequacaoCoordenadorParecerEmAnalise"
 (
   "idPronac" INT NOT NULL,
   "idReadequacao" INT NOT NULL,
@@ -7696,7 +7696,7 @@ CREATE TABLE sac.vwPainelReadequacaoCoordenadorParecerEmAnalise
   "nmParecerista" VARCHAR(20),
   "idOrgao" INT NOT NULL
 );
-CREATE TABLE sac.vwPainelReadequacaoTecnico
+CREATE TABLE sac."vwPainelReadequacaoTecnico"
 (
   "idPronac" INT NOT NULL,
   "idReadequacao" INT NOT NULL,
@@ -7708,7 +7708,7 @@ CREATE TABLE sac.vwPainelReadequacaoTecnico
   "idTecnicoParecerista" INT,
   "idOrgao" INT NOT NULL
 );
-CREATE TABLE sac.vwPainelTecnicoAvaliacaoTrimestral
+CREATE TABLE sac."vwPainelTecnicoAvaliacaoTrimestral"
 (
   "IdPRONAC" INT NOT NULL,
   "Pronac" VARCHAR(7) NOT NULL,
@@ -7726,7 +7726,7 @@ CREATE TABLE sac.vwPainelTecnicoAvaliacaoTrimestral
   "Diligencia" int,
   "idTecnicoAvaliador" SMALLINT
 );
-CREATE TABLE sac.vwParecerAnaliseDeConteudo
+CREATE TABLE sac."vwParecerAnaliseDeConteudo"
 (
   "idPronac" INT NOT NULL,
   "NrProjeto" VARCHAR(7) NOT NULL,
@@ -7752,7 +7752,7 @@ CREATE TABLE sac.vwParecerAnaliseDeConteudo
   "ParecerDeConteudo" VARCHAR(8000),
   "Parecerista" VARCHAR(100)
 );
-CREATE TABLE sac.vwParecerFechadoOrgao
+CREATE TABLE sac."vwParecerFechadoOrgao"
 (
   "idDistribuirParecer" INT NOT NULL,
   "idOrgao" INT,
@@ -7767,20 +7767,20 @@ CREATE TABLE sac.vwParecerFechadoOrgao
   "Area" VARCHAR(50) NOT NULL,
   "Segmento" VARCHAR(50) NOT NULL
 );
-CREATE TABLE sac.vwPareceristasOrgao
+CREATE TABLE sac."vwPareceristasOrgao"
 (
   "idParecerista" INT NOT NULL,
   "Nome" VARCHAR(100) NOT NULL,
   "idOrgao" INT
 );
-CREATE TABLE sac.vwPecaDeDivulgacao
+CREATE TABLE sac."vwPecaDeDivulgacao"
 (
   "idVerificacao" INT NOT NULL,
   "idTipo" INT NOT NULL,
   "PecaDeDivulgacao" VARCHAR(100) NOT NULL,
   "stEstado" INTEGER NOT NULL
 );
-CREATE TABLE sac.vwPedidoDeProrrogacao
+CREATE TABLE sac."vwPedidoDeProrrogacao"
 (
   "idPronac" INT NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -7800,7 +7800,7 @@ CREATE TABLE sac.vwPedidoDeProrrogacao
   "idUsuario" INT NOT NULL,
   "Atendimento" CHAR NOT NULL
 );
-CREATE TABLE sac.vwPessoaJuridica_CNAE
+CREATE TABLE sac."vwPessoaJuridica_CNAE"
 (
   "NR_CNPJ" CHAR(14) NOT NULL,
   "NM_RAZAO_SOCIAL" VARCHAR(150) NOT NULL,
@@ -7809,7 +7809,7 @@ CREATE TABLE sac.vwPessoaJuridica_CNAE
   "DS_CNAE" VARCHAR(500) NOT NULL,
   "ST_CNAE" CHAR
 );
-CREATE TABLE sac.vwPlanilhaAprovada
+CREATE TABLE sac."vwPlanilhaAprovada"
 (
   "idPronac" INT NOT NULL,
   "PRONAC" VARCHAR(7) NOT NULL,
@@ -7838,7 +7838,7 @@ CREATE TABLE sac.vwPlanilhaAprovada
   "Aprovado" FLOAT,
   "JustComponente" VARCHAR(8000)
 );
-CREATE TABLE sac.vwPlanilhaSugerida
+CREATE TABLE sac."vwPlanilhaSugerida"
 (
   "idPronac" INT NOT NULL,
   "PRONAC" VARCHAR(7) NOT NULL,
@@ -7866,7 +7866,7 @@ CREATE TABLE sac.vwPlanilhaSugerida
   "Justificativa" VARCHAR,
   "idUsuario" INT
 );
-CREATE TABLE sac.vwPlanilhaSugeridaCompleta
+CREATE TABLE sac."vwPlanilhaSugeridaCompleta"
 (
   "idPronac" INT NOT NULL,
   "PRONAC" VARCHAR(7) NOT NULL,
@@ -7893,7 +7893,7 @@ CREATE TABLE sac.vwPlanilhaSugeridaCompleta
   "Justificativa" VARCHAR,
   "idUsuario" INT
 );
-CREATE TABLE sac.vwProjetoAEnviar
+CREATE TABLE sac."vwProjetoAEnviar"
 (
   "idPronac" INT NOT NULL,
   "NrProjeto" VARCHAR(7) NOT NULL,
@@ -7906,7 +7906,7 @@ CREATE TABLE sac.vwProjetoAEnviar
   "idDestino" INT NOT NULL,
   "Destino" VARCHAR(100)
 );
-CREATE TABLE sac.vwProjetoAreaSegmentoProduto
+CREATE TABLE sac."vwProjetoAreaSegmentoProduto"
 (
   "idPronac" INT NOT NULL,
   "NrProjeto" VARCHAR(7) NOT NULL,
@@ -7916,7 +7916,7 @@ CREATE TABLE sac.vwProjetoAreaSegmentoProduto
   "Area" VARCHAR(50) NOT NULL,
   "Segmento" VARCHAR(50) NOT NULL
 );
-CREATE TABLE sac.vwProjetoDistribuidoParecerista
+CREATE TABLE sac."vwProjetoDistribuidoParecerista"
 (
   "Diligencia" int,
   "idDistribuirParecer" INT NOT NULL,
@@ -7936,7 +7936,7 @@ CREATE TABLE sac.vwProjetoDistribuidoParecerista
   "Parecerista" VARCHAR(100),
   "stDiligenciado" INTEGER
 );
-CREATE TABLE sac.vwProjetoDistribuidoVinculada
+CREATE TABLE sac."vwProjetoDistribuidoVinculada"
 (
   "idPronac" INT NOT NULL,
   "Pronac" VARCHAR(7) NOT NULL,
@@ -7951,7 +7951,7 @@ CREATE TABLE sac.vwProjetoDistribuidoVinculada
   "NrDias" INT,
   "Situacao" VARCHAR(32)
 );
-CREATE TABLE sac.vwProjetoOrgao
+CREATE TABLE sac."vwProjetoOrgao"
 (
   "idDistribuirParecer" INT NOT NULL,
   "idOrgao" INT,
@@ -7968,7 +7968,7 @@ CREATE TABLE sac.vwProjetoOrgao
   "Segmento" VARCHAR(50) NOT NULL,
   "DtEnvio" timestamp
 );
-CREATE TABLE sac.vwProjetos_Na_Pauta_CNIC
+CREATE TABLE sac."vwProjetos_Na_Pauta_CNIC"
 (
   "Analise" VARCHAR(29),
   "idAgente" INT NOT NULL,
@@ -7993,7 +7993,7 @@ CREATE TABLE sac.vwProjetos_Na_Pauta_CNIC
   "Avaliacao" VARCHAR(12),
   "SolicitadoReal" MONEY
 );
-CREATE TABLE sac.vwProjetosAReceber
+CREATE TABLE sac."vwProjetosAReceber"
 (
   "NrProjeto" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(200) NOT NULL,
@@ -8006,7 +8006,7 @@ CREATE TABLE sac.vwProjetosAReceber
   "idUsuarioEmissor" SMALLINT NOT NULL,
   "Emissor" VARCHAR(100)
 );
-CREATE TABLE sac.vwProjetosConsolidados
+CREATE TABLE sac."vwProjetosConsolidados"
 (
   "PRONAC" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -8019,7 +8019,7 @@ CREATE TABLE sac.vwProjetosConsolidados
   "Perc" MONEY,
   "Acima" VARCHAR(12) NOT NULL
 );
-CREATE TABLE sac.vwProjetosDespachados
+CREATE TABLE sac."vwProjetosDespachados"
 (
   "idPronac" INT NOT NULL,
   "NrProjeto" VARCHAR(7) NOT NULL,
@@ -8029,7 +8029,7 @@ CREATE TABLE sac.vwProjetosDespachados
   "dtTramitacaoEnvio" timestamp,
   "stEstado" INTEGER NOT NULL
 );
-CREATE TABLE sac.vwProjetosEnviados
+CREATE TABLE sac."vwProjetosEnviados"
 (
   "NrProjeto" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(200) NOT NULL,
@@ -8043,7 +8043,7 @@ CREATE TABLE sac.vwProjetosEnviados
   "idUsuarioEmissor" SMALLINT NOT NULL,
   "Emissor" VARCHAR(100)
 );
-CREATE TABLE sac.vwProjetoSeusDocumentos
+CREATE TABLE sac."vwProjetoSeusDocumentos"
 (
   "idPronac" INT NOT NULL,
   "NrProjeto" VARCHAR(7) NOT NULL,
@@ -8057,7 +8057,7 @@ CREATE TABLE sac.vwProjetoSeusDocumentos
   "idLote" INT,
   "Acao" int
 );
-CREATE TABLE sac.vwProjetosRecebidos
+CREATE TABLE sac."vwProjetosRecebidos"
 (
   "NrProjeto" VARCHAR(7) NOT NULL,
   "NomeProjeto" VARCHAR(200) NOT NULL,
@@ -8067,7 +8067,7 @@ CREATE TABLE sac.vwProjetosRecebidos
   "Unidade" VARCHAR(100),
   "idLote" INT
 );
-CREATE TABLE sac.vwProposta
+CREATE TABLE sac."vwProposta"
 (
   "idPreProjeto" INT NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -8079,7 +8079,7 @@ CREATE TABLE sac.vwProposta
   "Situacao" VARCHAR(48),
   "stTipoDemanda" CHAR(2) NOT NULL
 );
-CREATE TABLE sac.vwPropostaEmAndamento
+CREATE TABLE sac."vwPropostaEmAndamento"
 (
   "idPreProjeto" INT NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -8087,7 +8087,7 @@ CREATE TABLE sac.vwPropostaEmAndamento
   "Proponente" VARCHAR(100),
   "UF" VARCHAR(100)
 );
-CREATE TABLE sac.vwPropostaParaProjeto
+CREATE TABLE sac."vwPropostaParaProjeto"
 (
   "idProjeto" INT NOT NULL,
   "NomeProposta" VARCHAR(300) NOT NULL,
@@ -8095,7 +8095,7 @@ CREATE TABLE sac.vwPropostaParaProjeto
   "idOrgao" INT NOT NULL,
   "idUsuario" INT NOT NULL
 );
-CREATE TABLE sac.vwPropostaProjetoSecretaria
+CREATE TABLE sac."vwPropostaProjetoSecretaria"
 (
   "idPreProjeto" INT NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -8108,21 +8108,21 @@ CREATE TABLE sac.vwPropostaProjetoSecretaria
   "ConformidadeOK" int NOT NULL,
   "QtdeDiasAguardandoEnvio" INT
 );
-CREATE TABLE sac.vwReceberLoteDocumento
+CREATE TABLE sac."vwReceberLoteDocumento"
 (
   "idUnidade" INT NOT NULL,
   "idLote" INT,
   "idUsuarioReceptor" INT NOT NULL,
   "Qtde" INT
 );
-CREATE TABLE sac.vwReceberLoteProjeto
+CREATE TABLE sac."vwReceberLoteProjeto"
 (
   "idUnidade" INT NOT NULL,
   "idLote" INT,
   "idUsuarioReceptor" INT NOT NULL,
   "Qtde" INT
 );
-CREATE TABLE sac.vwRedistribuirAnaliseVisual
+CREATE TABLE sac."vwRedistribuirAnaliseVisual"
 (
   "idProjeto" INT NOT NULL,
   "NomeProjeto" VARCHAR(300) NOT NULL,
@@ -8130,7 +8130,7 @@ CREATE TABLE sac.vwRedistribuirAnaliseVisual
   "DtMovimentacao" timestamp NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL
 );
-CREATE TABLE sac.vwSolicitarProrrogacaoPrazoCaptacao
+CREATE TABLE sac."vwSolicitarProrrogacaoPrazoCaptacao"
 (
   "idPronac" INT NOT NULL,
   "AnoProjeto" CHAR(2) NOT NULL,
@@ -8151,7 +8151,7 @@ CREATE TABLE sac.vwSolicitarProrrogacaoPrazoCaptacao
   "Atendimento" CHAR NOT NULL,
   "idDocumento" INT NOT NULL
 );
-CREATE TABLE sac.vwTbCadastrarDocumento
+CREATE TABLE sac."vwTbCadastrarDocumento"
 (
   "idPronac" INT NOT NULL,
   "NrProjeto" VARCHAR(7) NOT NULL,
@@ -8167,7 +8167,7 @@ CREATE TABLE sac.vwTbCadastrarDocumento
   "idunidade" INT NOT NULL,
   "CodigoCorreio" VARCHAR(13)
 );
-CREATE TABLE sac.vwtbDiligencia
+CREATE TABLE sac."vwtbDiligencia"
 (
   "idDiligencia" INT NOT NULL,
   "idPronac" INT NOT NULL,
@@ -8186,7 +8186,7 @@ CREATE TABLE sac.vwtbDiligencia
   "stProrrogacao" CHAR,
   "stEnviado" CHAR
 );
-CREATE TABLE sac.vwTramitarProjeto
+CREATE TABLE sac."vwTramitarProjeto"
 (
   "idPronac" INT NOT NULL,
   "Pronac" VARCHAR(7) NOT NULL,
@@ -8208,38 +8208,38 @@ CREATE TABLE sac.vwTramitarProjeto
   "Acao" int,
   "Situacao" VARCHAR(10)
 );
-CREATE TABLE sac.vwVeiculoDeDivulgacao
+CREATE TABLE sac."vwVeiculoDeDivulgacao"
 (
   "idVerificacao" INT NOT NULL,
   "idTipo" INT NOT NULL,
   "VeiculoDeDivulgacao" VARCHAR(100) NOT NULL,
   "stEstado" INTEGER NOT NULL
 );
-ALTER TABLE sac.tbdeslocamento ALTER COLUMN idmunicipioorigem TYPE VARCHAR(6) USING idmunicipioorigem::VARCHAR(6);
+ALTER TABLE sac."tbdeslocamento" ALTER COLUMN "idmunicipioorigem" TYPE VARCHAR(6) USING "idmunicipioorigem"::VARCHAR(6);
 
-CREATE TABLE sac.tbItensPlanilhaProduto
+CREATE TABLE sac."tbItensPlanilhaProduto"
 (
     "idItensPlanilhaProduto" INT PRIMARY KEY NOT NULL,
     "idProduto" INT NOT NULL,
     "idPlanilhaEtapa" INT NOT NULL,
     "idPlanilhaItens" INT NOT NULL,
     "idUsuario" INT,
-    CONSTRAINT FK_tbItensPlanilhaProduto_tbPlanilhaEtapa FOREIGN KEY (idPlanilhaEtapa) REFERENCES sac.tbPlanilhaEtapa (idPlanilhaEtapa),
-    CONSTRAINT FK_tbItensPlanilhaProduto_tbPlanilhaItens FOREIGN KEY (idPlanilhaItens) REFERENCES sac.tbPlanilhaItens (idPlanilhaItens)
+    CONSTRAINT "FK_tbItensPlanilhaProduto_tbPlanilhaEtapa" FOREIGN KEY ("idPlanilhaEtapa") REFERENCES sac."tbPlanilhaEtapa" ("idPlanilhaEtapa"),
+    CONSTRAINT "FK_tbItensPlanilhaProduto_tbPlanilhaItens" FOREIGN KEY ("idPlanilhaItens") REFERENCES sac."tbPlanilhaItens" ("idPlanilhaItens")
 );
-CREATE UNIQUE INDEX IX_tbItensPlanilhaProduto ON tbItensPlanilhaProduto (idProduto, idPlanilhaEtapa, idPlanilhaItens);
-CREATE SEQUENCE sac.tbitensplanilhaproduto_iditensplanilhaproduto_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE sac.tbitensplanilhaproduto ALTER COLUMN iditensplanilhaproduto SET DEFAULT nextval('sac.tbitensplanilhaproduto_iditensplanilhaproduto_seq');
-ALTER SEQUENCE sac.tbitensplanilhaproduto_iditensplanilhaproduto_seq OWNED BY sac.tbitensplanilhaproduto.iditensplanilhaproduto;
+CREATE UNIQUE INDEX "IX_tbItensPlanilhaProduto" ON "tbItensPlanilhaProduto" ("idProduto", "idPlanilhaEtapa", "idPlanilhaItens");
+CREATE SEQUENCE sac."tbitensplanilhaproduto_iditensplanilhaproduto_seq" NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac."tbitensplanilhaproduto" ALTER COLUMN "iditensplanilhaproduto" SET DEFAULT nextval('sac.tbitensplanilhaproduto_iditensplanilhaproduto_seq');
+ALTER SEQUENCE sac."tbitensplanilhaproduto_iditensplanilhaproduto_seq" OWNED BY sac."tbitensplanilhaproduto"."iditensplanilhaproduto";
 
-CREATE SEQUENCE sac.verificacao_idverificacao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE sac.verificacao ALTER COLUMN idverificacao SET DEFAULT nextval('sac.verificacao_idverificacao_seq');
-ALTER SEQUENCE sac.verificacao_idverificacao_seq OWNED BY sac.verificacao.idverificacao;
+CREATE SEQUENCE sac."verificacao_idverificacao_seq" NO MINVALUE NO MAXVALUE NO CYCLE;
+ALTER TABLE sac."verificacao" ALTER COLUMN "idverificacao" SET DEFAULT nextval('sac.verificacao_idverificacao_seq');
+ALTER SEQUENCE sac."verificacao_idverificacao_seq" OWNED BY sac."verificacao"."idverificacao";
 
 
-drop TABLE sac.vwDocumentosExigidosApresentacaoProposta;
+drop TABLE sac."vwDocumentosExigidosApresentacaoProposta";
 
-CREATE VIEW sac.vwDocumentosExigidosApresentacaoProposta
+CREATE VIEW sac."vwDocumentosExigidosApresentacaoProposta"
 AS
 
   -- =========================================================================================
@@ -8249,7 +8249,7 @@ AS
   -- =========================================================================================
 
   SELECT Codigo, Descricao,Opcao
-  FROM SAC.DocumentosExigidos
+  FROM "sac"."DocumentosExigidos"
   WHERE Codigo not in (238,229,99,194,205) AND stUpload = 1 AND stEstado = 1;
 -- CREATE FUNCTION Aritmetica(@idPlanilhaItem INT) RETURNS INT;
 -- CREATE PROCEDURE DecriptografaObjetosBD(@ObjetoCriptografado SYSNAME, @SegurancaAlteracao INT);
