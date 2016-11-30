@@ -14,6 +14,6 @@ class tbVinculoProposta extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco  = 'Agentes';
-	protected $_schema = 'dbo';
-	protected $_name   = 'tbVinculoProposta';	
-} // fecha class
+	protected $_schema = 'Agentes';
+	protected $_name   = 'tbVinculoProposta';
+}

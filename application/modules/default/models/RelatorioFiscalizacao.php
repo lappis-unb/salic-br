@@ -8,7 +8,7 @@
 class RelatorioFiscalizacao extends MinC_Db_Table_Abstract {
 
     protected $_name = 'tbRelatorioFiscalizacao';
-    protected $_schema = 'dbo';
+    protected $_schema = 'SAC';
     protected $_banco = 'SAC';
 
 
@@ -70,7 +70,7 @@ class RelatorioFiscalizacao extends MinC_Db_Table_Abstract {
                 'af.idRelatorioFiscalizacao = rf.idRelatorioFiscalizacao',
                 array('af.idAvaliacaoFiscalizacao','af.idAvaliador','af.dtAvaliacaoFiscalizacao','CAST(af.dsParecer AS TEXT) as dsParecer')
         );
-        
+
         $select->joinLeft(array('f' => 'tbFiscalizacao'),
                 'f.idFiscalizacao = rf.idFiscalizacao',
                 array('f.dtInicioFiscalizacaoProjeto')
@@ -94,4 +94,4 @@ class RelatorioFiscalizacao extends MinC_Db_Table_Abstract {
         }
     }
 
-} // fecha class
+}
