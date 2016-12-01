@@ -567,17 +567,17 @@ class RecursoController extends GenericControllerNew
     
     public function encaminharRecursoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $vinculada = $this->idOrgao;
         
-        $idAvaliador = $this->_request->getParam('parecerista');
         $idDistProj = $this->_request->getParam('idDistProj');
         $idRecurso = $this->_request->getParam('idRecurso');
 
-        if ($vinculada != 91) { // todos os casos exceto IPHAN
-            //Atualiza a tabela tbDistribuirProjeto
+        $numIphan = 91;
+        //Atualiza a tabela tbDistribuirReadequacao
+        if ($this->idOrgao != $numIphan) { // todos os casos exceto IPHAN
+            $idAvaliador = $this->_request->getParam('parecerista');
+            
             $dados = array();
             $dados['idAvaliador'] = $idAvaliador;
-            $dados['idUsuario'] = $this->idUsuario;
             $dados['dtDistribuicao'] = new Zend_Db_Expr('GETDATE()');
             $where = "idDistribuirProjeto = $idDistProj";
             $tbDistribuirProjeto = new tbDistribuirProjeto();
@@ -586,7 +586,8 @@ class RecursoController extends GenericControllerNew
             //Atualiza a tabela tbRecurso
             $dados = array();
             $dados['siRecurso'] = 4; // Enviado para análise técnica
-            $where = "idRecurso = $idRecurso";
+            $where = array();
+            $where['idRecurso = ?'] = $idRecurso;
             $tbRecurso = new tbRecurso();
             $return2 = $tbRecurso->update($dados, $where);
 
@@ -885,6 +886,14 @@ class RecursoController extends GenericControllerNew
                     $dadosDP = array();
                     $dadosDP['dtDevolucao'] = new Zend_Db_Expr('GETDATE()');
                     $whereDP = "idDistribuirProjeto = ".$dDP[0]->idDistribuirProjeto;
+
+                    $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
+                    // se estiver com uma vinculada do IPHAN, retorna para IPHAN central. Senão, permanece na unidade
+                    $perfilCoordenadorVinculada = 93;
+                    if (!in_array($this->idOrgao, $outrasVinculadas) && $this->idPerfil == $perfilCoordenadorVinculada) {
+                        $dadosDP['idUnidade'] = 91; // retorna para IPHAN (topo)
+                    }
+                    
                     $tbDistribuirProjeto = new tbDistribuirProjeto();
                     $x = $tbDistribuirProjeto->update($dadosDP, $whereDP);
                     
@@ -1061,20 +1070,48 @@ class RecursoController extends GenericControllerNew
     public function coordParecerFinalizarRecursoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         
-        $post = Zend_Registry::get('post');
-        $idRecurso = (int) $post->idRecurso;
+        $idRecurso = $this->_request->getParam("idRecurso");
+        $idDistribuirProjeto = $this->_request->getParam("idDistProj");
+
+        // Se estiver com vinculada do IPHAN, volta para sede IPHAN
+        $outrasVinculadas = array(92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
         
-        //Atualiza a tabela tbRecurso
-        $dados = array();
-        $dados['siRecurso'] = 6; // Devolvido para o coordenador geral de análise
-        $where = "idRecurso = $idRecurso";
-        $tbRecurso = new tbRecurso();
-        $return = $tbRecurso->update($dados, $where);
-        
-        if($return){
-            echo json_encode(array('resposta'=>true));
+        if (in_array($this->idOrgao, $outrasVinculadas)) {
+            // retorna para o iphan e mantem siRecurso = 5          
+            $dadosDP = array();
+            $whereDP = array();
+            $tbDistribuirProjeto = new tbDistribuirProjeto();
+            $whereDP = "idDistribuirProjeto = " . $idDistribuirProjeto;
+            $dadosDP['dtFechamento'] = new Zend_Db_Expr('GETDATE()');
+            $dadosDP['idUnidade'] = 91; // retorna para IPHAN
+            $return = $tbDistribuirProjeto->update($dadosDP, $whereDP);
+            
+            if($return && $return2){
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
+            
         } else {
-            echo json_encode(array('resposta'=>false));
+            $dadosDP = array();
+            $whereDP = array();
+            $tbDistribuirProjeto = new tbDistribuirProjeto();
+            $whereDP = "idDistribuirProjeto = " . $idDistribuirProjeto;
+            $dadosDP['dtFechamento'] = new Zend_Db_Expr('GETDATE()');
+            $return = $tbDistribuirProjeto->update($dadosDP, $whereDP);
+            
+            //Atualiza a tabela tbRecurso
+            $dados = array();
+            $dados['siRecurso'] = 6; // Devolvido para o coordenador geral de análise
+            $where = "idRecurso = $idRecurso";
+            $tbRecurso = new tbRecurso();
+            $return2 = $tbRecurso->update($dados, $where);
+            
+            if($return && $return2){
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
         }
         die();
     }
