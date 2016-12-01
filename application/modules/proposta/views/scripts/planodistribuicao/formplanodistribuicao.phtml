@@ -323,7 +323,7 @@
             </td>
         </tr>
     </table>
-    <!--<table class="tabela">
+    <table class="tabela">
         <tr>
             <th colspan="2" align="center">Posi&ccedil;&atilde;o da Logomarca</th>
         </tr>
@@ -332,15 +332,15 @@
             <td>
                 <select class="input_simples obrigatorio" name="logomarca" id="logomarca" onchange="">
                     <option value=""> - Selecione - </option>
-                    <?php //foreach ($this->combologomarcas as $logomarca): ?>
-                        <option value="<?php // echo $logomarca['idVerificacao']; ?>" <?php //echo ($logomarca['idVerificacao'] == $this->planoDistribuicao['idPosicaoDaLogo']) ? " selected='selected'" : ""; ?>>
-                            <?php //echo $logomarca['Descricao']; ?>
+                    <?php foreach ($this->combologomarcas as $logomarca): ?>
+                        <option value="<?php echo $logomarca['idVerificacao']; ?>" <?php echo ($logomarca['idVerificacao'] == $this->planoDistribuicao['idPosicaoDaLogo']) ? " selected='selected'" : ""; ?>>
+                            <?php echo $logomarca['Descricao']; ?>
                         </option>
-                    <?php //endforeach; ?>
+                    <?php endforeach; ?>
                 </select>
             </td>
         </tr>
-    </table>-->
+    </table>
 
     <table class="tabela">
         <tr>
