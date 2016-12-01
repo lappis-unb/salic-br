@@ -107,7 +107,6 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
-     * @deprecated Custos administrativos foi desativado em Proposta em 23/11/2016
      */
     public function custosadministrativosAction()
     {
@@ -277,7 +276,6 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
-     * @deprecated Custos administrativos foi desativado em Proposta em 23/11/2016
      */
     public function cadastrarcustosAction() {
         $this->_helper->layout->disableLayout();
@@ -491,7 +489,6 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
-     * @deprecated Custos administrativos foi desativado na Proposta em 23/11/2016
      */
     public function editarcustosAction () {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -582,7 +579,6 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
-     * @deprecated Custos administrativos foi desativado na Proposta em 23/11/2016
      */
     public function salvarprodutosAction () {
 
@@ -627,7 +623,6 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
-     * @deprecated Custos administrativos foi desativado na Proposta em 23/11/2016
      */
     public function salvarcustosAction () {
 
