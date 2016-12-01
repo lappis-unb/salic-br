@@ -288,7 +288,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
        $rsPreProjeto->DtArquivamento         = (isset($dados["dtarquivamento"])) ? $dados["dtarquivamento"] : null;
        $rsPreProjeto->stEstado               = $dados["stestado"];
        $rsPreProjeto->stDataFixa             = $dados["stdatafixa"];
-       $rsPreProjeto->stPlanoAnual           = $dados["stplanoanual"];
+       $rsPreProjeto->stProposta             = $dados["stproposta"];
        $rsPreProjeto->idUsuario              = $dados["idusuario"];
        $rsPreProjeto->stTipoDemanda          = $dados["sttipodemanda"];
        $rsPreProjeto->idEdital               = (isset($dados["idedital"])) ? $dados["idedital"] : null;
@@ -2727,23 +2727,24 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         $listaValidacao[] =  clone($validacao);
                     }
 
+//todo novaIn planodedivulgacao
                     //-- VERIFICAR SE O PLANO DE DIVULGACAO ESTA PREENCHIDO
-                    $sql = $db->select()
-                        ->from(array('planodedivulgacao'), '*',  $this->_schema)
-                        ->where('idProjeto = ?', $idPreProjeto)
-                        ->limit(1);
-
-                    $planoDivulgacao = $db->fetchAll($sql);
-
-                    if (empty($planoDivulgacao)){
-                        $validacao->Descricao = 'O Plano B&aacute;sico de Divulga&ccedil;&atilde;o n&atilde;o foi preenchido.';
-                        $validacao->Observacao = 'PENDENTE';
-                        $listaValidacao[] =  clone($validacao);
-                    } else {
-                        $validacao->Descricao = 'Plano B&aacute;sico de Divulga&ccedil;&atilde;o cadastrado.';
-                        $validacao->Observacao = 'OK';
-                        $listaValidacao[] =  clone($validacao);
-                    }
+//                    $sql = $db->select()
+//                        ->from(array('planodedivulgacao'), '*',  $this->_schema)
+//                        ->where('idProjeto = ?', $idPreProjeto)
+//                        ->limit(1);
+//
+//                    $planoDivulgacao = $db->fetchAll($sql);
+//
+//                    if (empty($planoDivulgacao)){
+//                        $validacao->Descricao = 'O Plano B&aacute;sico de Divulga&ccedil;&atilde;o n&atilde;o foi preenchido.';
+//                        $validacao->Observacao = 'PENDENTE';
+//                        $listaValidacao[] =  clone($validacao);
+//                    } else {
+//                        $validacao->Descricao = 'Plano B&aacute;sico de Divulga&ccedil;&atilde;o cadastrado.';
+//                        $validacao->Observacao = 'OK';
+//                        $listaValidacao[] =  clone($validacao);
+//                    }
                     //-- VERIFICAR SE EXISTE NO MINIMO 90 DIAS ENTRE A DATA DE ENVIO E O INICIO DO PERIODO DE EXECUCAO DO PROJETO
                     $sql = $db->select()
                         ->from($this->_name, array('*'),  $this->_schema)
