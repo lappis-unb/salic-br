@@ -4,6 +4,10 @@
             $('#formPesquisa').submit();
         });
 
+        $('.comboFiltro').change(function() {
+            $('#formPesquisa').submit();
+        });
+        
         $('.btn_imprimir').click(function(){
             $('#formImpressao').submit();
         });
@@ -165,7 +169,7 @@
                 </td>
                 <td class="destacar bold" width="60">Situa&ccedil;&atilde;o</td>
                 <td width="200">
-                    <select name="tipoFiltro" style="width: 160px;" class="input_simples">
+                    <select name="tipoFiltro" style="width: 160px;" class="input_simples comboFiltro">
                         <option value="">Aguardando Análise</option>
                         <option value="emanalise" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro']=='emanalise')?'selected="selected"':''; ?>>Em Análise</option>
                         <option value="analisados" <?php echo (isset($_GET['tipoFiltro']) && $_GET['tipoFiltro']=='analisados')?'selected="selected"':''; ?>>Analisados</option>
