@@ -13,11 +13,13 @@ CREATE TABLE agentes."tbTipoAusencia"
   "idTipoAusencia" INT PRIMARY KEY NOT NULL ,
   "nmAusencia" VARCHAR(20) NOT NULL
 );
+
 CREATE TABLE agentes."tbTipoEscolaridade"
 (
   "idTipoEscolaridade" INT PRIMARY KEY NOT NULL ,
   "nmEscolaridade" VARCHAR(20) NOT NULL
 );
+
 CREATE TABLE agentes."UF"
 (
   "idUF" INT PRIMARY KEY NOT NULL,
@@ -25,17 +27,19 @@ CREATE TABLE agentes."UF"
   "Descricao" VARCHAR(100) NOT NULL,
   "Regiao" VARCHAR(20) NOT NULL
 );
+
 CREATE SEQUENCE agentes.uf_iduf_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE agentes.uf ALTER COLUMN iduf SET DEFAULT nextval('agentes.uf_iduf_seq');
 ALTER SEQUENCE agentes.uf_iduf_seq OWNED BY agentes.uf.iduf;
-CREATE INDEX IX_UF ON agentes.UF (Sigla);
-CREATE INDEX IX_UF_1 ON agentes.UF (Descricao);
-CREATE INDEX IX_UF_2 ON agentes.UF (Regiao);
+CREATE INDEX IX_UF ON agentes."UF" ("Sigla");
+CREATE INDEX IX_UF_1 ON agentes."UF" ("Descricao");
+CREATE INDEX IX_UF_2 ON agentes."UF" ("Regiao");
 CREATE TABLE agentes."Tipo"
 (
   "idTipo" INT PRIMARY KEY NOT NULL ,
   "Descricao" VARCHAR(100) NOT NULL
 );
+
 CREATE SEQUENCE agentes.tipo_idtipo_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE agentes.tipo ALTER COLUMN idtipo SET DEFAULT nextval('agentes.tipo_idtipo_seq');
 ALTER SEQUENCE agentes.tipo_idtipo_seq OWNED BY agentes.tipo.idtipo;
@@ -46,6 +50,7 @@ CREATE TABLE agentes."Pais"
   "Descricao" VARCHAR(100) NOT NULL,
   "Continente" VARCHAR(20) DEFAULT ' '
 );
+
 CREATE TABLE agentes."Prefeituras"
 (
   "CNPJ" VARCHAR(14),
@@ -60,12 +65,14 @@ CREATE TABLE agentes."Prefeituras"
   "EnderecoSite" VARCHAR(255),
   "Telefone" VARCHAR(20)
 );
+
 CREATE TABLE agentes."PrefeiturasReceita"
 (
   "Municipio" VARCHAR(255),
   "UF" VARCHAR(255),
   "CNPJ" VARCHAR(14)
 );
+
 CREATE TABLE agentes."Agentes"
 (
   "idAgente" INT PRIMARY KEY NOT NULL ,
@@ -89,13 +96,14 @@ CREATE TABLE agentes."Verificacao"
   "IdTipo" INT NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
   "Sistema" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Verificacao_Tipo FOREIGN KEY (IdTipo) REFERENCES agentes.Tipo (idTipo)
+  CONSTRAINT FK_Verificacao_Tipo FOREIGN KEY ("IdTipo") REFERENCES agentes.Tipo ("idTipo")
 );
 CREATE SEQUENCE agentes.verificacao_idverificacao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE agentes.verificacao ALTER COLUMN idverificacao SET DEFAULT nextval('agentes.verificacao_idverificacao_seq');
 ALTER SEQUENCE agentes.verificacao_idverificacao_seq OWNED BY agentes.verificacao.idverificacao;
-CREATE INDEX IX_Verificacao ON agentes.Verificacao (IdTipo);
-CREATE INDEX IX_Verificacao_1 ON agentes.Verificacao (Descricao);
+CREATE INDEX IX_Verificacao ON agentes."Verificacao" ("IdTipo");
+CREATE INDEX IX_Verificacao_1 ON agentes."Verificacao" ("Descricao");
+
 CREATE TABLE agentes."Telefones"
 (
   "idTelefone" INT PRIMARY KEY NOT NULL ,
@@ -106,12 +114,12 @@ CREATE TABLE agentes."Telefones"
   "Numero" VARCHAR(12) NOT NULL,
   "Divulgar" INT DEFAULT 0 NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Telefones_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT FK_Telefones_Verificacao FOREIGN KEY (TipoTelefone) REFERENCES agentes.Verificacao (idVerificacao),
-  CONSTRAINT FK_Telefones_UF FOREIGN KEY (UF) REFERENCES agentes.UF (idUF)
+  CONSTRAINT FK_Telefones_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes.Agentes ("idAgente"),
+  CONSTRAINT FK_Telefones_Verificacao FOREIGN KEY ("TipoTelefone") REFERENCES agentes.Verificacao ("idVerificacao"),
+  CONSTRAINT FK_Telefones_UF FOREIGN KEY ("UF") REFERENCES agentes.UF ("idUF")
 );
 CREATE SEQUENCE agentes.telefones_idtelefone_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.telefones ALTER COLUMN idtelefone SET DEFAULT nextval('agentes.telefones_idtelefone_seq');
+ALTER TABLE agentes.telefones ALTER COLUMN "idtelefone" SET DEFAULT nextval('agentes.telefones_idtelefone_seq');
 ALTER SEQUENCE agentes.telefones_idtelefone_seq OWNED BY agentes.telefones.idtelefone;
 CREATE TABLE agentes."Sistema"
 (
@@ -128,7 +136,8 @@ CREATE TABLE agentes.sysdiagrams
   "definition" VARBIT
 );
 CREATE UNIQUE INDEX UK_principal_name ON agentes.sysdiagrams (principal_id, name);
-CREATE TABLE agentes.bancos
+
+CREATE TABLE agentes."bancos"
 (
   "Codigo" CHAR(3) PRIMARY KEY NOT NULL,
   "CNPJ" VARCHAR(255),
@@ -142,8 +151,8 @@ CREATE TABLE agentes."CheckListDocumentosSistemas"
   "idCheckListDocumentosSistema" INT PRIMARY KEY NOT NULL ,
   "idCheckListDocumento" INT NOT NULL,
   "idSistema" INT NOT NULL,
-  CONSTRAINT FK_CheckListDocumentosSistemas_CheckListDocumentos FOREIGN KEY (idCheckListDocumento) REFERENCES agentes.Verificacao (idVerificacao),
-  CONSTRAINT FK_CheckListDocumentosSistemas_Sistema FOREIGN KEY (idSistema) REFERENCES agentes.Sistema (idSistema)
+  CONSTRAINT FK_CheckListDocumentosSistemas_CheckListDocumentos FOREIGN KEY ("idCheckListDocumento") REFERENCES agentes.Verificacao ("idVerificacao"),
+  CONSTRAINT FK_CheckListDocumentosSistemas_Sistema FOREIGN KEY ("idSistema") REFERENCES agentes.Sistema ("idSistema")
 );
 CREATE TABLE agentes."ContaCorrente"
 (
@@ -153,21 +162,26 @@ CREATE TABLE agentes."ContaCorrente"
   "Agencia" VARCHAR(6) NOT NULL,
   "ContaCorrente" VARCHAR(15) NOT NULL,
   "Usuario" INT NOT NULL,
-  CONSTRAINT FK_ContaCorrente_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
+  CONSTRAINT FK_ContaCorrente_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente")
 );
-CREATE INDEX IX_ContaCorrente ON agentes.ContaCorrente (idAgente);
-CREATE INDEX IX_ContaCorrente_2 ON agentes.ContaCorrente (Banco, Agencia, ContaCorrente);
+
+CREATE INDEX IX_ContaCorrente ON agentes."ContaCorrente" ("idAgente");
+CREATE INDEX IX_ContaCorrente_2 ON agentes."ContaCorrente" ("Banco", "Agencia", "ContaCorrente");
+
 CREATE TABLE agentes."DDD"
 (
   "idDDD" INT PRIMARY KEY NOT NULL ,
   "idUF" INT NOT NULL,
   "Codigo" INTEGER NOT NULL,
-  CONSTRAINT FK_DDD_UF FOREIGN KEY (idUF) REFERENCES agentes.UF (idUF)
+  CONSTRAINT FK_DDD_UF FOREIGN KEY ("idUF") REFERENCES agentes.UF ("idUF")
 );
+
 CREATE SEQUENCE agentes.ddd_idddd_seq NO MINVALUE NO MAXVALUE NO CYCLE;
+
 ALTER TABLE agentes.ddd ALTER COLUMN idddd SET DEFAULT nextval('agentes.ddd_idddd_seq');
 ALTER SEQUENCE agentes.ddd_idddd_seq OWNED BY agentes.ddd.idddd;
 CREATE INDEX IX_DDD ON agentes.DDD (idUF);
+
 CREATE TABLE agentes."Documentos"
 (
   "idDocumentos" INT PRIMARY KEY NOT NULL ,
@@ -178,10 +192,11 @@ CREATE TABLE agentes."Documentos"
   "OrgaoExpedidor" VARCHAR(20) DEFAULT ' ' NOT NULL,
   "Complemento" VARCHAR(20) DEFAULT ' ' NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Documentos_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT FK_Documentos_Verificacao1 FOREIGN KEY (TipoDocumento) REFERENCES agentes.Verificacao (idVerificacao)
+  CONSTRAINT FK_Documentos_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes.Agentes ("idAgente"),
+  CONSTRAINT FK_Documentos_Verificacao1 FOREIGN KEY ("TipoDocumento") REFERENCES agentes.Verificacao ("idVerificacao")
 );
-CREATE TABLE agentes.dtproperties
+
+CREATE TABLE agentes."dtproperties"
 (
   "id" INT NOT NULL ,
   "objectid" INT,
@@ -190,8 +205,9 @@ CREATE TABLE agentes.dtproperties
   "uvalue" VARCHAR(255),
   "lvalue" BYTEA,
   "version" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT pk_dtproperties PRIMARY KEY (id, property)
+  CONSTRAINT pk_dtproperties PRIMARY KEY ("id", "property")
 );
+
 CREATE TABLE agentes."EnderecoInternacional"
 (
   "idEnderecoInternacional" INT PRIMARY KEY NOT NULL ,
@@ -203,9 +219,10 @@ CREATE TABLE agentes."EnderecoInternacional"
   "Cep" VARCHAR(20) DEFAULT ' ' NOT NULL,
   "Telefones" VARCHAR(50) DEFAULT ' ' NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_EnderecoInternacional_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT FK_Internacional_Pais FOREIGN KEY (idPais) REFERENCES agentes.Pais (idPais)
+  CONSTRAINT FK_EnderecoInternacional_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT FK_Internacional_Pais FOREIGN KEY ("idPais") REFERENCES agentes."Pais" ("idPais")
 );
+
 CREATE TABLE agentes."EnderecoNacional"
 (
   "idEndereco" INT PRIMARY KEY NOT NULL ,
@@ -224,10 +241,11 @@ CREATE TABLE agentes."EnderecoNacional"
   "Status" INT DEFAULT 0 NOT NULL,
   "Divulgar" INT DEFAULT 0 NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_EnderecoNacional_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT FK_EnderecoNacional_Verificacao1 FOREIGN KEY (TipoEndereco) REFERENCES agentes.Verificacao (idVerificacao),
-  CONSTRAINT FK_EnderecoNacional_Verificacao2 FOREIGN KEY (TipoLogradouro) REFERENCES agentes.Verificacao (idVerificacao)
+  CONSTRAINT FK_EnderecoNacional_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT FK_EnderecoNacional_Verificacao1 FOREIGN KEY ("TipoEndereco") REFERENCES agentes."Verificacao" ("idVerificacao"),
+  CONSTRAINT FK_EnderecoNacional_Verificacao2 FOREIGN KEY ("TipoLogradouro") REFERENCES agentes."Verificacao" ("idVerificacao")
 );
+
 CREATE SEQUENCE agentes.endereconacional_idendereco_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE agentes.endereconacional ALTER COLUMN idendereco SET DEFAULT nextval('agentes.endereconacional_idendereco_seq');
 ALTER SEQUENCE agentes.endereconacional_idendereco_seq OWNED BY agentes.endereconacional.idendereco;
@@ -235,13 +253,15 @@ CREATE INDEX IX_EnderecoNacional ON agentes.EnderecoNacional (idEndereco);
 CREATE INDEX IX_EnderecoNacional_1 ON agentes.EnderecoNacional (Cidade);
 CREATE INDEX IX_EnderecoNacional_2 ON agentes.EnderecoNacional (UF);
 CREATE INDEX IX_EnderecoNacional_idAgente ON agentes.EnderecoNacional (idAgente);
+
 CREATE TABLE agentes."HistoricoAgente"
 (
   "idAgente" INT PRIMARY KEY NOT NULL,
   "Historico" VARCHAR(8000) DEFAULT ' ' NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_HistoricoAgente_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
+  CONSTRAINT FK_HistoricoAgente_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes.Agentes ("idAgente")
 );
+
 CREATE TABLE agentes."Internet"
 (
   "idInternet" INT PRIMARY KEY NOT NULL ,
@@ -251,12 +271,14 @@ CREATE TABLE agentes."Internet"
   "Status" INT DEFAULT 1 NOT NULL,
   "Divulgar" INT DEFAULT 0 NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Internet_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT FK_Internet_Verificacao FOREIGN KEY (TipoInternet) REFERENCES agentes.Verificacao (idVerificacao)
+  CONSTRAINT FK_Internet_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT FK_Internet_Verificacao FOREIGN KEY ("TipoInternet") REFERENCES agentes."Verificacao" ("idVerificacao")
 );
+
 CREATE SEQUENCE agentes.internet_idinternet_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.internet ALTER COLUMN idinternet SET DEFAULT nextval('agentes.internet_idinternet_seq');
+ALTER TABLE agentes.internet ALTER COLUMN "idinternet" SET DEFAULT nextval('agentes.internet_idinternet_seq');
 ALTER SEQUENCE agentes.internet_idinternet_seq OWNED BY agentes.internet.idinternet;
+
 CREATE TABLE agentes."MesoRegiao"
 (
   "idMeso" CHAR(4) PRIMARY KEY NOT NULL,
@@ -274,12 +296,14 @@ CREATE TABLE agentes."Municipios"
   "IdMeso" CHAR(4) NOT NULL,
   "idMicro" CHAR(5) NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
-  CONSTRAINT FK_Municipios_UF FOREIGN KEY (idUFIBGE) REFERENCES agentes.UF (idUF),
-  CONSTRAINT FK_Municipios_MesoRegiao FOREIGN KEY (IdMeso) REFERENCES agentes.MesoRegiao (idMeso),
-  CONSTRAINT FK_Municipios_MicroRegiao FOREIGN KEY (idMicro) REFERENCES agentes.MicroRegiao (idMicro)
+  CONSTRAINT FK_Municipios_UF FOREIGN KEY ("idUFIBGE") REFERENCES agentes.UF ("idUF"),
+  CONSTRAINT FK_Municipios_MesoRegiao FOREIGN KEY ("IdMeso") REFERENCES agentes.MesoRegiao ("idMeso"),
+  CONSTRAINT FK_Municipios_MicroRegiao FOREIGN KEY ("idMicro") REFERENCES agentes.MicroRegiao ("idMicro")
 );
-CREATE INDEX IX_Municipios_idUFIBGE ON agentes.Municipios (idUFIBGE);
-CREATE INDEX IX_Municipios_Cidade ON agentes.Municipios (Descricao);
+
+CREATE INDEX IX_Municipios_idUFIBGE ON agentes."Municipios" ("idUFIBGE");
+CREATE INDEX IX_Municipios_Cidade ON agentes."Municipios" ("Descricao");
+
 CREATE TABLE agentes."Natureza"
 (
   "idNatureza" INT PRIMARY KEY NOT NULL ,
@@ -289,9 +313,11 @@ CREATE TABLE agentes."Natureza"
   "Poder" SMALLINT DEFAULT 0 NOT NULL,
   "Administracao" SMALLINT DEFAULT 0 NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Natureza_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
+  CONSTRAINT FK_Natureza_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente")
 );
-CREATE INDEX IX_Natureza ON agentes.Natureza (idAgente);
+
+CREATE INDEX IX_Natureza ON agentes."Natureza" ("idAgente");
+
 CREATE TABLE agentes."Nomes"
 (
   "idNome" INT PRIMARY KEY NOT NULL ,
@@ -300,14 +326,16 @@ CREATE TABLE agentes."Nomes"
   "Descricao" VARCHAR(150) NOT NULL,
   "Status" INT DEFAULT 0 NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Nomes_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT FK_Nomes_Verificacao FOREIGN KEY (TipoNome) REFERENCES agentes.Verificacao (idVerificacao)
+  CONSTRAINT FK_Nomes_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT FK_Nomes_Verificacao FOREIGN KEY ("TipoNome") REFERENCES agentes."Verificacao" ("idVerificacao")
 );
+
 CREATE SEQUENCE agentes.nomes_idnome_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE agentes.nomes ALTER COLUMN idnome SET DEFAULT nextval('agentes.nomes_idnome_seq');
 ALTER SEQUENCE agentes.nomes_idnome_seq OWNED BY agentes.nomes.idnome;
 CREATE INDEX _dta_index_Nomes_9_5575058__K5_K2_K4 ON agentes.Nomes (Status, idAgente, Descricao);
 CREATE INDEX _dta_index_Nomes_9_5575058__K2_K4 ON agentes.Nomes (idAgente, Descricao);
+
 CREATE TABLE agentes."Ocupacao"
 (
   "idOcupacao" INT PRIMARY KEY NOT NULL ,
@@ -318,20 +346,24 @@ CREATE TABLE agentes."Ocupacao"
   "DtFim" TIMESTAMP,
   "Status" INT NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Ocupacao_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
+  CONSTRAINT FK_Ocupacao_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente")
 );
+
 CREATE TABLE agentes."Perfil"
+
 (
   "idPerfil" INT PRIMARY KEY NOT NULL ,
   "idAgente" INT NOT NULL,
   "Perfil" INT NOT NULL,
   "Caracteristica" INT DEFAULT 0 NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Perfil_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT FK_Perfil_Verificacao FOREIGN KEY (Perfil) REFERENCES agentes.Verificacao (idVerificacao),
-  CONSTRAINT FK_Perfil_Verificacao1 FOREIGN KEY (Caracteristica) REFERENCES agentes.Verificacao (idVerificacao)
+  CONSTRAINT FK_Perfil_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT FK_Perfil_Verificacao FOREIGN KEY ("Perfil") REFERENCES agentes."Verificacao" ("idVerificacao"),
+  CONSTRAINT FK_Perfil_Verificacao1 FOREIGN KEY ("Caracteristica") REFERENCES agentes."Verificacao" ("idVerificacao")
 );
-CREATE INDEX IX_Perfil ON agentes.Perfil (idAgente);
+
+CREATE INDEX IX_Perfil ON agentes."Perfil" ("idAgente");
+
 CREATE TABLE agentes."PopulacaoMunicipio"
 (
   "IdMunicipio" VARCHAR(6) PRIMARY KEY NOT NULL,
@@ -344,7 +376,7 @@ CREATE TABLE agentes."Ramais"
   "idTelefone" INT NOT NULL,
   "Numero" VARCHAR(4) NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Ramais_Telefones FOREIGN KEY (idTelefone) REFERENCES agentes.Telefones (idTelefone)
+  CONSTRAINT FK_Ramais_Telefones FOREIGN KEY ("idTelefone") REFERENCES agentes."Telefones" ("idTelefone")
 );
 
 CREATE TABLE agentes."tbAgenteFisico"
@@ -358,8 +390,9 @@ CREATE TABLE agentes."tbAgenteFisico"
   "dtNascimento" TIMESTAMP NOT NULL,
   "stCorRaca" CHAR,
   "nrIdentificadorProcessual" CHAR(17),
-  CONSTRAINT FK_tbAgenteFisico_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
+  CONSTRAINT FK_tbAgenteFisico_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente")
 );
+
 CREATE TABLE agentes."tbAgentesxVerificacao"
 (
   "idAgentexVerificacao" INT PRIMARY KEY NOT NULL ,
@@ -371,20 +404,22 @@ CREATE TABLE agentes."tbAgentesxVerificacao"
   "idDirigente" INT NOT NULL,
   "idEmpresa" INT NOT NULL,
   "idArquivo" INT NOT NULL,
-  CONSTRAINT fktbAgentesxVerificacao01 FOREIGN KEY (idVerificacao) REFERENCES agentes.Verificacao (idVerificacao),
-  CONSTRAINT fktbAgentesxVerificacao03 FOREIGN KEY (idDirigente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT fktbAgentesxVerificacao02 FOREIGN KEY (idEmpresa) REFERENCES agentes.Agentes (idAgente)
+  CONSTRAINT fktbAgentesxVerificacao01 FOREIGN KEY ("idVerificacao") REFERENCES agentes."Verificacao" ("idVerificacao"),
+  CONSTRAINT fktbAgentesxVerificacao03 FOREIGN KEY ("idDirigente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT fktbAgentesxVerificacao02 FOREIGN KEY ("idEmpresa") REFERENCES agentes."Agentes" ("idAgente")
 );
+
 CREATE TABLE agentes."tbAgenteXPais"
 (
   "idAgente" INT NOT NULL,
   "idPais" INT NOT NULL,
   "dtChegada" TIMESTAMP NOT NULL,
   "dtNaturalizacao" TIMESTAMP,
-  CONSTRAINT PK_tbAgenteXPais PRIMARY KEY (idAgente, idPais),
-  CONSTRAINT FK_tbAgenteXPais_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT FK_tbAgenteXPais_Pais FOREIGN KEY (idPais) REFERENCES agentes.Pais (idPais)
+  CONSTRAINT PK_tbAgenteXPais PRIMARY KEY ("idAgente", "idPais"),
+  CONSTRAINT FK_tbAgenteXPais_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT FK_tbAgenteXPais_Pais FOREIGN KEY ("idPais") REFERENCES agentes."Pais" ("idPais")
 );
+
 CREATE TABLE agentes."tbAusencia"
 (
   "idAusencia" INT PRIMARY KEY NOT NULL ,
@@ -398,10 +433,11 @@ CREATE TABLE agentes."tbAusencia"
   "siAusencia" CHAR,
   "idAlteracao" INT,
   "dtCadastroAusencia" TIMESTAMP NOT NULL,
-  CONSTRAINT fk_tbAusencia_tbTipoAusencia FOREIGN KEY (idTipoAusencia) REFERENCES agentes.tbTipoAusencia (idTipoAusencia),
-  CONSTRAINT fk_tbAusencia_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT fk_tbAusencia FOREIGN KEY (idAlteracao) REFERENCES agentes.tbAusencia (idAusencia)
+  CONSTRAINT fk_tbAusencia_tbTipoAusencia FOREIGN KEY ("idTipoAusencia") REFERENCES agentes."tbTipoAusencia" ("idTipoAusencia"),
+  CONSTRAINT fk_tbAusencia_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT fk_tbAusencia FOREIGN KEY ("idAlteracao") REFERENCES agentes."tbAusencia" ("idAusencia")
 );
+
 CREATE TABLE agentes."tbComprovantePagamento"
 (
   "idComprovantePagamento" INT PRIMARY KEY NOT NULL ,
@@ -409,6 +445,7 @@ CREATE TABLE agentes."tbComprovantePagamento"
   "nrOrdemPagamento" CHAR(12) NOT NULL,
   "dtPagamento" TIMESTAMP
 );
+
 CREATE TABLE agentes."tbCredenciamentoParecerista"
 (
   "idCredenciamentoParecerista" INT PRIMARY KEY NOT NULL ,
@@ -418,17 +455,19 @@ CREATE TABLE agentes."tbCredenciamentoParecerista"
   "idAgente" INT NOT NULL,
   "qtPonto" SMALLINT,
   "idVerificacao" INT NOT NULL,
-  CONSTRAINT fk_tbCredenciamentoParecerista_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT fk_tbCredenciamentoParecerista_01 FOREIGN KEY (idVerificacao) REFERENCES agentes.Verificacao (idVerificacao)
+  CONSTRAINT fk_tbCredenciamentoParecerista_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT fk_tbCredenciamentoParecerista_01 FOREIGN KEY ("idVerificacao") REFERENCES agentes."Verificacao" ("idVerificacao")
 );
+
 CREATE TABLE agentes."tbDistrito"
 (
   "idMunicipioIBGE" VARCHAR(6) NOT NULL,
   "idDistrito" SMALLINT NOT NULL,
   "nmDistrito" VARCHAR(100) NOT NULL,
-  CONSTRAINT PK_tbDistrito PRIMARY KEY (idMunicipioIBGE, idDistrito),
-  CONSTRAINT FK_tbDistrito_Municipios FOREIGN KEY (idMunicipioIBGE) REFERENCES agentes.Municipios (idMunicipioIBGE)
+  CONSTRAINT PK_tbDistrito PRIMARY KEY ("idMunicipioIBGE", "idDistrito"),
+  CONSTRAINT FK_tbDistrito_Municipios FOREIGN KEY ("idMunicipioIBGE") REFERENCES agentes."Municipios" ("idMunicipioIBGE")
 );
+
 CREATE TABLE agentes."tbEscolaridade"
 (
   "idEscolaridade" INT PRIMARY KEY NOT NULL ,
@@ -440,10 +479,11 @@ CREATE TABLE agentes."tbEscolaridade"
   "dtInicioCurso" TIMESTAMP NOT NULL,
   "dtFimCurso" TIMESTAMP NOT NULL,
   "idPais" INT NOT NULL,
-  CONSTRAINT fk_tbEscolaridade_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT fk_tbEscolaridade_tbTipoEscolaridade FOREIGN KEY (idTipoEscolaridade) REFERENCES agentes.tbTipoEscolaridade (idTipoEscolaridade),
-  CONSTRAINT fk_tbEscolaridade_Pais FOREIGN KEY (idPais) REFERENCES agentes.Pais (idPais)
+  CONSTRAINT fk_tbEscolaridade_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT fk_tbEscolaridade_tbTipoEscolaridade FOREIGN KEY ("idTipoEscolaridade") REFERENCES agentes."tbTipoEscolaridade" ("idTipoEscolaridade"),
+  CONSTRAINT fk_tbEscolaridade_Pais FOREIGN KEY ("idPais") REFERENCES agentes."Pais" ("idPais")
 );
+
 CREATE TABLE agentes."tbInformacaoProfissional"
 (
   "idInformacaoProfissional" INT PRIMARY KEY NOT NULL ,
@@ -455,16 +495,18 @@ CREATE TABLE agentes."tbInformacaoProfissional"
   "dtFimVinculo" TIMESTAMP,
   "idDocumento" INT,
   "siInformacao" CHAR NOT NULL,
-  CONSTRAINT fk_tbInformacaoProfissional_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
+  CONSTRAINT fk_tbInformacaoProfissional_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente")
 );
+
 CREATE TABLE agentes."tbNecessiadeEspecial"
 (
   "idAgente" INT NOT NULL,
   "idNecessidadeEspecial" INT NOT NULL ,
   "nmNecessidadeEspecial" VARCHAR(100) NOT NULL,
-  CONSTRAINT PK_tbNecessiadeEspecial PRIMARY KEY (idAgente, idNecessidadeEspecial),
-  CONSTRAINT FK_tbNecessiadeEspecial_tbAgentesFisico FOREIGN KEY (idAgente) REFERENCES agentes.tbAgenteFisico (idAgente)
+  CONSTRAINT PK_tbNecessiadeEspecial PRIMARY KEY ("idAgente", "idNecessidadeEspecial"),
+  CONSTRAINT FK_tbNecessiadeEspecial_tbAgentesFisico FOREIGN KEY ("idAgente") REFERENCES agentes."tbAgenteFisico" ("idAgente")
 );
+
 CREATE TABLE agentes."tbPagamentoParecerista"
 (
   "idPagamentoParecerista" INT PRIMARY KEY NOT NULL ,
@@ -473,9 +515,10 @@ CREATE TABLE agentes."tbPagamentoParecerista"
   "siPagamento" CHAR NOT NULL,
   "idAgente" INT NOT NULL,
   "idComprovantePagamento" INT NOT NULL,
-  CONSTRAINT fk_tbPagamentoParecerista_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT fk_tbPagamentoParecerista_tbComprovantePagamento FOREIGN KEY (idComprovantePagamento) REFERENCES agentes.tbComprovantePagamento (idComprovantePagamento)
+  CONSTRAINT fk_tbPagamentoParecerista_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT fk_tbPagamentoParecerista_tbComprovantePagamento FOREIGN KEY ("idComprovantePagamento") REFERENCES agentes."tbComprovantePagamento" ("idComprovantePagamento")
 );
+
 CREATE TABLE agentes."tbProcuracao"
 (
   "idProcuracao" INT PRIMARY KEY NOT NULL ,
@@ -486,8 +529,9 @@ CREATE TABLE agentes."tbProcuracao"
   "dsJustificativa" VARCHAR(300) NOT NULL,
   "dsObservacao" VARCHAR(300),
   "idSolicitante" INT NOT NULL,
-  CONSTRAINT FK_tbProcuracao_tbProcuracao FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
+  CONSTRAINT FK_tbProcuracao_tbProcuracao FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente")
 );
+
 CREATE TABLE agentes."tbProcuradorProjeto"
 (
   "idProcuradorProjeto" INT PRIMARY KEY NOT NULL ,
@@ -496,7 +540,7 @@ CREATE TABLE agentes."tbProcuradorProjeto"
   "dtVinculacao" TIMESTAMP,
   "dtDesvinculacao" TIMESTAMP,
   "siEstado" CHAR NOT NULL,
-  CONSTRAINT FK_tbProcuradorProjeto_tbProcuracao FOREIGN KEY (idProcuracao) REFERENCES agentes.tbProcuracao (idProcuracao)
+  CONSTRAINT FK_tbProcuradorProjeto_tbProcuracao FOREIGN KEY ("idProcuracao") REFERENCES agentes."tbProcuracao" ("idProcuracao")
 );
 CREATE TABLE agentes."tbSubdistrito"
 (
@@ -504,9 +548,10 @@ CREATE TABLE agentes."tbSubdistrito"
   "idDistrito" SMALLINT NOT NULL,
   "cdSubdistritoIbge" SMALLINT NOT NULL,
   "nmSubdistrito" VARCHAR(100) NOT NULL,
-  CONSTRAINT PK_tbSubdistrito PRIMARY KEY (idMunicipioIBGE, idDistrito, cdSubdistritoIbge),
-  CONSTRAINT FK_tbSubdistrito_tbDistrito FOREIGN KEY (idMunicipioIBGE, idDistrito) REFERENCES agentes.tbDistrito (idMunicipioIBGE, idDistrito)
+  CONSTRAINT PK_tbSubdistrito PRIMARY KEY ("idMunicipioIBGE", "idDistrito", "cdSubdistritoIbge"),
+  CONSTRAINT FK_tbSubdistrito_tbDistrito FOREIGN KEY ("idMunicipioIBGE", "idDistrito") REFERENCES agentes."tbDistrito" ("idMunicipioIBGE", "idDistrito")
 );
+
 CREATE TABLE agentes."tbTitulacaoConselheiro"
 (
   "idAgente" INT PRIMARY KEY NOT NULL,
@@ -514,32 +559,37 @@ CREATE TABLE agentes."tbTitulacaoConselheiro"
   "cdSegmento" VARCHAR(4) NOT NULL,
   "stTitular" INT NOT NULL,
   "stConselheiro" CHAR DEFAULT 'A' NOT NULL,
-  CONSTRAINT fk_Agentes_01 FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
+  CONSTRAINT fk_Agentes_01 FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente")
 );
-CREATE TABLE agentes.tbvinculo
+
+CREATE TABLE agentes."tbvinculo"
 (
   "idVinculo" INT PRIMARY KEY NOT NULL ,
   "idAgenteProponente" INT NOT NULL,
   "dtVinculo" TIMESTAMP NOT NULL,
   "siVinculo" SMALLINT DEFAULT 0 NOT NULL,
   "idUsuarioResponsavel" INT NOT NULL,
-  CONSTRAINT tbVinculo_Agentes_02 FOREIGN KEY (idAgenteProponente) REFERENCES agentes.Agentes (idAgente)
+  CONSTRAINT tbVinculo_Agentes_02 FOREIGN KEY ("idAgenteProponente") REFERENCES agentes."Agentes" ("idAgente")
 );
+
 CREATE SEQUENCE agentes.tbvinculo_idvinculo_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE agentes.tbvinculo ALTER COLUMN idvinculo SET DEFAULT nextval('agentes.tbvinculo_idvinculo_seq');
 ALTER SEQUENCE agentes.tbvinculo_idvinculo_seq OWNED BY agentes.tbvinculo.idvinculo;
+
 CREATE TABLE agentes."tbVinculoProposta"
 (
   "idVinculoProposta" INT PRIMARY KEY NOT NULL ,
   "idVinculo" INT NOT NULL,
   "idPreProjeto" INT NOT NULL,
   "siVinculoProposta" CHAR NOT NULL,
-  CONSTRAINT FK_tbVinculoProposta_tbVinculo FOREIGN KEY (idVinculo) REFERENCES agentes.tbVinculo (idVinculo)
+  CONSTRAINT FK_tbVinculoProposta_tbVinculo FOREIGN KEY ("idVinculo") REFERENCES agentes."tbVinculo" ("idVinculo")
 );
+
 CREATE SEQUENCE agentes.tbvinculoproposta_idvinculoproposta_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.tbvinculoproposta ALTER COLUMN idvinculoproposta SET DEFAULT nextval('agentes.tbvinculoproposta_idvinculoproposta_seq');
+ALTER TABLE agentes.tbvinculoproposta ALTER COLUMN "idvinculoproposta" SET DEFAULT nextval('agentes.tbvinculoproposta_idvinculoproposta_seq');
 ALTER SEQUENCE agentes.tbvinculoproposta_idvinculoproposta_seq OWNED BY agentes.tbvinculoproposta.idvinculoproposta;
-CREATE INDEX IX_tbVinculoProposta ON agentes.tbVinculoProposta (idVinculoProposta);
+CREATE INDEX IX_tbVinculoProposta ON agentes."tbVinculoProposta" ("idVinculoProposta");
+
 CREATE TABLE agentes."TCU"
 (
   "UF" VARCHAR(255),
@@ -548,6 +598,7 @@ CREATE TABLE agentes."TCU"
   "Municipio" VARCHAR(255),
   "Populacao" FLOAT
 );
+
 CREATE TABLE agentes."Vinculacao"
 (
   "idVinculacao" INT PRIMARY KEY NOT NULL ,
@@ -555,9 +606,10 @@ CREATE TABLE agentes."Vinculacao"
   "idVinculado" INT NOT NULL,
   "idVinculoPrincipal" INT DEFAULT 0 NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Vinculacao_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT FK_Vinculacao_Agentes1 FOREIGN KEY (idVinculado) REFERENCES agentes.Agentes (idAgente)
+  CONSTRAINT FK_Vinculacao_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes.Agentes ("idAgente"),
+  CONSTRAINT FK_Vinculacao_Agentes1 FOREIGN KEY ("idVinculado") REFERENCES agentes.Agentes ("idAgente")
 );
+
 CREATE TABLE agentes."Visao"
 (
   "idVisao" INT PRIMARY KEY NOT NULL ,
@@ -565,14 +617,15 @@ CREATE TABLE agentes."Visao"
   "Usuario" INT NOT NULL,
   "idAgente" INT NOT NULL,
   "stAtivo" CHAR DEFAULT 'A' NOT NULL,
-  CONSTRAINT FK_Visao_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente),
-  CONSTRAINT FK_Visao_Verificacao FOREIGN KEY (Visao) REFERENCES agentes.Verificacao (idVerificacao)
+  CONSTRAINT FK_Visao_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT FK_Visao_Verificacao FOREIGN KEY ("Visao") REFERENCES agentes."Verificacao" ("idVerificacao")
 );
 CREATE SEQUENCE agentes.visao_idvisao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.visao ALTER COLUMN idvisao SET DEFAULT nextval('agentes.visao_idvisao_seq');
+ALTER TABLE agentes.visao ALTER COLUMN "idvisao" SET DEFAULT nextval('agentes.visao_idvisao_seq');
 ALTER SEQUENCE agentes.visao_idvisao_seq OWNED BY agentes.visao.idvisao;
-CREATE INDEX IX_Visao ON agentes.Visao (idAgente);
-CREATE INDEX IX_Visao_1 ON agentes.Visao (Visao);
+CREATE INDEX IX_Visao ON agentes."Visao" ("idAgente");
+CREATE INDEX IX_Visao_1 ON agentes."Visao" ("Visao");
+
 CREATE TABLE agentes."vAgentes"
 (
   "idAgente" INT NOT NULL,
@@ -585,6 +638,7 @@ CREATE TABLE agentes."vAgentes"
   "Status" SMALLINT NOT NULL,
   "Usuario" INT NOT NULL
 );
+
 CREATE TABLE agentes."vCheckListDocumentos"
 (
   "idCheckListDocumentos" INT NOT NULL,
@@ -594,6 +648,7 @@ CREATE TABLE agentes."vCheckListDocumentos"
   "Apresentou" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
+
 CREATE TABLE agentes."vConselhosRegiaoUF"
 (
   "Regiao" VARCHAR(20) NOT NULL,
@@ -661,6 +716,7 @@ CREATE TABLE agentes."vMunicipios"
   "idMicro" CHAR(5) NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL
 );
+
 CREATE TABLE agentes."vNacional"
 (
   "idEndereco" INT NOT NULL,
@@ -678,6 +734,7 @@ CREATE TABLE agentes."vNacional"
   "Divulgar" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
+
 CREATE TABLE agentes."vNatureza"
 (
   "idNatureza" INT NOT NULL,
@@ -688,6 +745,7 @@ CREATE TABLE agentes."vNatureza"
   "Administracao" SMALLINT NOT NULL,
   "Usuario" INT NOT NULL
 );
+
 CREATE TABLE agentes."vNomes"
 (
   "idNome" INT NOT NULL,
@@ -697,6 +755,7 @@ CREATE TABLE agentes."vNomes"
   "Status" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
+
 CREATE TABLE agentes."vOcupacao"
 (
   "idOcupacao" INT NOT NULL,
@@ -708,6 +767,7 @@ CREATE TABLE agentes."vOcupacao"
   "Status" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
+
 CREATE TABLE agentes."vOcupacaoCBO"
 (
   "idOcupacao" INT NOT NULL,
@@ -715,13 +775,15 @@ CREATE TABLE agentes."vOcupacaoCBO"
   "Familia" VARCHAR(4) NOT NULL,
   "TItulo" VARCHAR(255) NOT NULL
 );
-CREATE TABLE agentes.'vPais'
+
+CREATE TABLE agentes."vPais"
 (
   "idPais" INT NOT NULL,
   "Sigla" VARCHAR(10),
   "Descricao" VARCHAR(100) NOT NULL,
   "Continente" VARCHAR(20)
 );
+
 CREATE TABLE agentes."vPerfil"
 (
   "idAgente" INT NOT NULL,
@@ -729,6 +791,7 @@ CREATE TABLE agentes."vPerfil"
   "Caracteristica" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
+
 CREATE TABLE agentes."vPrefeiturasRegiaoUF"
 (
   "Regiao" VARCHAR(20) NOT NULL,
@@ -738,6 +801,7 @@ CREATE TABLE agentes."vPrefeiturasRegiaoUF"
   "Prefeitura" VARCHAR(100),
   "Municipio" VARCHAR(100) NOT NULL
 );
+
 CREATE TABLE agentes."vPropPontoGrio"
 (
   "Proponente" VARCHAR(100),
@@ -754,6 +818,7 @@ CREATE TABLE agentes."vPropPontoGrio"
   "Agência" VARCHAR(6) NOT NULL,
   "ContaCorrente" VARCHAR(13)
 );
+
 CREATE TABLE agentes."vRamais"
 (
   "idRamais" INT NOT NULL,
@@ -761,18 +826,21 @@ CREATE TABLE agentes."vRamais"
   "Numero" VARCHAR(4) NOT NULL,
   "Usuario" INT NOT NULL
 );
+
 CREATE TABLE agentes."vSinonimo"
 (
   "idSinonimo" INT NOT NULL,
   "Ocupacao" VARCHAR(6) NOT NULL,
   "Titulo" VARCHAR(255) NOT NULL
 );
+
 CREATE TABLE agentes."vSistema"
 (
   "idSistema" INT NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
   "Usuario" INT NOT NULL
 );
+
 CREATE TABLE agentes."vTelefones"
 (
   "idTelefone" INT NOT NULL,
@@ -784,6 +852,7 @@ CREATE TABLE agentes."vTelefones"
   "Divulgar" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
+
 CREATE TABLE agentes."vUF"
 (
   "idUF" INT NOT NULL,
@@ -791,6 +860,7 @@ CREATE TABLE agentes."vUF"
   "Descricao" VARCHAR(100) NOT NULL,
   "Regiao" VARCHAR(20) NOT NULL
 );
+
 CREATE TABLE agentes."vUFMunicipio"
 (
   "idUF" INT NOT NULL,
@@ -798,6 +868,7 @@ CREATE TABLE agentes."vUFMunicipio"
   "idMunicipio" VARCHAR(6) NOT NULL,
   "Municipio" VARCHAR(100) NOT NULL
 );
+
 CREATE TABLE agentes."vVerificacao"
 (
   "idVerificacao" INT NOT NULL,
@@ -805,6 +876,7 @@ CREATE TABLE agentes."vVerificacao"
   "Descricao" VARCHAR(100) NOT NULL,
   "Sistema" INT NOT NULL
 );
+
 CREATE TABLE agentes."vVinculacao"
 (
   "idVinculacao" INT NOT NULL,
@@ -813,6 +885,7 @@ CREATE TABLE agentes."vVinculacao"
   "idVinculoPrincipal" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
+
 CREATE TABLE agentes."vVisao"
 (
   "idVisao" INT NOT NULL,
@@ -820,6 +893,7 @@ CREATE TABLE agentes."vVisao"
   "Visao" INT NOT NULL,
   "Usuario" INT NOT NULL
 );
+
 CREATE TABLE agentes."vwCadastrarParecerista"
 (
   "idAgente" INT NOT NULL,
@@ -842,7 +916,6 @@ CREATE TABLE agentes."vwCadastrarParecerista"
   "Usuario" INT NOT NULL
 );
 
-
 CREATE TABLE agentes."CheckListDocumentos"
 (
   "idCheckListDocumentos" INT PRIMARY KEY NOT NULL ,
@@ -851,11 +924,11 @@ CREATE TABLE agentes."CheckListDocumentos"
   "idAgente" INT NOT NULL,
   "Apresentou" INT DEFAULT 0 NOT NULL,
   "Usuario" INT NOT NULL,
-  CONSTRAINT FK_CheckListDocumentos_Sistema FOREIGN KEY (idSistema) REFERENCES agentes.Sistema (idSistema),
-  CONSTRAINT FK_CheckListDocumentos_Verificacao FOREIGN KEY (idDocumento) REFERENCES agentes.Verificacao (idVerificacao),
-  CONSTRAINT FK_CheckListDocumentos_Agentes FOREIGN KEY (idAgente) REFERENCES agentes.Agentes (idAgente)
+  CONSTRAINT FK_CheckListDocumentos_Sistema FOREIGN KEY ("idSistema") REFERENCES agentes.Sistema ("idSistema"),
+  CONSTRAINT FK_CheckListDocumentos_Verificacao FOREIGN KEY ("idDocumento") REFERENCES agentes.Verificacao ("idVerificacao"),
+  CONSTRAINT FK_CheckListDocumentos_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes.Agentes ("idAgente")
 );
-CREATE INDEX IX_Agente ON agentes.CheckListDocumentos (idAgente);
+CREATE INDEX IX_Agente ON agentes."CheckListDocumentos" ("idAgente");
 
 -- CREATE PROCEDURE dt_addtosourcecontrol(@vchSourceSafeINI VARCHAR, @vchProjectName VARCHAR, @vchComment VARCHAR, @vchLoginName VARCHAR, @vchPassword VARCHAR);
 -- CREATE PROCEDURE dt_addtosourcecontrol_u(@vchSourceSafeINI TEXT, @vchProjectName TEXT, @vchComment TEXT, @vchLoginName TEXT, @vchPassword TEXT);
