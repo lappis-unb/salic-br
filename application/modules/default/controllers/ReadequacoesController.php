@@ -2270,7 +2270,7 @@ class ReadequacoesController extends GenericControllerNew {
         if($this->idPerfil != 93 && $this->idPerfil != 94 && $this->idPerfil != 121){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
         }
-
+        
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
         if($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
@@ -2427,34 +2427,52 @@ class ReadequacoesController extends GenericControllerNew {
     */
     public function encaminharReadequacaoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        //$vinculada = $this->idOrgao;
-
-        $post = Zend_Registry::get('post');
-
-        $idAvaliador = $this->_request->getParam('parecerista');
+        $vinculada = $this->idOrgao;
+        
         $idDistRead = $this->_request->getParam('idDistRead');
         $idReadequacao = $this->_request->getParam('idReadequacao');
-
-        //Atualiza a tabela tbDistribuirReadequacao
-        $dados = array();
-        $dados['idAvaliador'] = $idAvaliador;
-        $dados['DtEnvioAvaliador'] = new Zend_Db_Expr('GETDATE()');
-        $where["idDistribuirReadequacao = ? "] = $idDistRead;
-        $tbDistribuirReadequacao = new tbDistribuirReadequacao();
-        $return = $tbDistribuirReadequacao->update($dados, $where);
         
-        //Atualiza a tabela tbReadequacao
-        $dados = array();
-        $dados['siEncaminhamento'] = 4; // Enviado para análise técnica
-        $where = array();
-        $where['idReadequacao = ?'] = $idReadequacao;
-        $tbReadequacao = new tbReadequacao();
-        $return2 = $tbReadequacao->update($dados, $where);
+        //Atualiza a tabela tbDistribuirReadequacao
+        if ($vinculada != 91) { // todos os casos exceto IPHAN
+            $idAvaliador = $this->_request->getParam('parecerista');
+            
+            $dados = array();
+            $dados['idAvaliador'] = $idAvaliador;
+            $dados['DtEnvioAvaliador'] = new Zend_Db_Expr('GETDATE()');
+            $where["idDistribuirReadequacao = ? "] = $idDistRead;
+            $tbDistribuirReadequacao = new tbDistribuirReadequacao();
+            $return = $tbDistribuirReadequacao->update($dados, $where);
+            
+            //Atualiza a tabela tbReadequacao
+            $dados = array();
+            $dados['siEncaminhamento'] = 4; // Enviado para análise técnica
+            $where = array();
+            $where['idReadequacao = ?'] = $idReadequacao;
+            $tbReadequacao = new tbReadequacao();
+            $return2 = $tbReadequacao->update($dados, $where);
 
-        if($return && $return2){
-            echo json_encode(array('resposta'=>true));
+            if($return && $return2){
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
+
         } else {
-            echo json_encode(array('resposta'=>false));
+            // IPHAN
+            
+            $idVinculada = $this->_request->getParam('parecerista');
+
+            $dados = array();
+            $dados['idUnidade'] = $idVinculada;
+            $where["idDistribuirReadequacao = ? "] = $idDistRead;
+            $tbDistribuirReadequacao = new tbDistribuirReadequacao();
+            $return = $tbDistribuirReadequacao->update($dados, $where);
+
+            if ($return) {
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
         }
         die();
     }
@@ -2511,7 +2529,7 @@ class ReadequacoesController extends GenericControllerNew {
 	{
         if($this->idPerfil != 94 && $this->idPerfil != 121){
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
-        }
+       }
 
         $idPronac = $_POST['idPronac'];
         $idReadequacao = $_POST['idReadequacao'];
@@ -2613,23 +2631,33 @@ class ReadequacoesController extends GenericControllerNew {
                     $tbReadequacaoXParecer->inserir($dadosInclusao);
                 }
             }
-
+            
             if(isset($_POST['finalizarAvaliacao']) && $_POST['finalizarAvaliacao'] == 1){
 
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dDP = $tbDistribuirReadequacao->buscar(array('idReadequacao = ?'=>$idReadequacao));
 
                 if(count($dDP)>0){
+                    
+                    $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
                     //ATUALIZA A TABELA tbDistribuirReadequacao
                     $dadosDP = array();
                     $dadosDP['DtRetornoAvaliador'] = new Zend_Db_Expr('GETDATE()');
                     $whereDP = "idDistribuirReadequacao = ".$dDP[0]->idDistribuirReadequacao;
-                    $x = $tbDistribuirReadequacao->update($dadosDP, $whereDP);
 
+                    // se estiver com uma vinculada do IPHAN, retorna para IPHAN central. Senão, permanece na unidade
+                    $perfilCoordenadorVinculada = 93;
+                    if (!in_array($this->idOrgao, $outrasVinculadas) && $this->idPerfil == $perfilCoordenadorVinculada) {
+                        $dadosDP['idUnidade'] = 91; // retorna para IPHAN (topo)
+                    }
+                    
+                    $x = $tbDistribuirReadequacao->update($dadosDP, $whereDP);
+                    
                     $siEncaminhamento = 5; //Devolvido da análise técnica
                     if($this->idPerfil == 121){
                         $siEncaminhamento = 10; //Devolver para Coordenador do MinC
                     }
+                    
                     //ATUALIZA A TABELA tbReadequacao
                     $dados = array();
                     $dados['siEncaminhamento'] = $siEncaminhamento;
@@ -2649,16 +2677,27 @@ class ReadequacoesController extends GenericControllerNew {
 
     public function coordParecerFinalizarReadequacaoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-
-        $post = Zend_Registry::get('post');
-        $idReadequacao = (int) $post->idReadequacao;
-
-        //Atualiza a tabela tbReadequacao
-        $dados = array();
-        $dados['siEncaminhamento'] = 6; // Devolvido para o coordenador geral de acompanhamento
-        $where = "idReadequacao = $idReadequacao";
-        $tbReadequacao = new tbReadequacao();
-        $return = $tbReadequacao->update($dados, $where);
+        
+        $idReadequacao = $this->_request->getParam("idReadequacao");
+        $idDistribuirReadequacao = $this->_request->getParam("idDistProj");
+        
+        // Se estiver com vinculada do IPHAN, volta para sede IPHAN
+        $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
+        if (!in_array($this->idOrgao, $outrasVinculadas)) {
+            $dadosDR = array();
+            $whereDR = array();
+            $tbDistribuirReadequacao = new tbDistribuirReadequacao();
+            $whereDR = "idDistribuirReadequacao = " . $idDistribuirReadequacao;
+            $dadosDR['idUnidade'] = 91; // retorna para IPHAN
+            $return = $tbDistribuirReadequacao->update($dadosDR, $whereDR);           
+        } else {
+            //Atualiza a tabela tbReadequacao
+            $dados = array();
+            $dados['siEncaminhamento'] = 6; // Devolvido para o coordenador geral de acompanhamento
+            $where = "idReadequacao = $idReadequacao";
+            $tbReadequacao = new tbReadequacao();
+            $return = $tbReadequacao->update($dados, $where);
+        }
 
         if($return){
             echo json_encode(array('resposta'=>true));
@@ -2865,7 +2904,7 @@ class ReadequacoesController extends GenericControllerNew {
         $this->view->dados = $dados;
         $this->view->idPronac = $dados->idPronac;
         $this->view->nmPagina = $dados->dsReadequacao;
-
+        
         //DADOS DO PROJETO
         $Projetos = new Projetos();
         $p = $Projetos->buscarProjetoXProponente(array('idPronac = ?' => $dados->idPronac))->current();

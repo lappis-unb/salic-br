@@ -1,3 +1,23 @@
+Release 1.13.5
+  * Fix: [Readequações] Fluxo completo do IPHAN para superintendências
+
+Release 1.13.4
+  * Fix: [Readequações] Correção nas telas do fluxo de readequação
+
+Release 1.13.3
+  * Fix: [Readequações] Encaminhando projetos corretamente
+
+Release 1.13.2
+  * Fix: [Readequações] corrigindo mensagem de encaminhar projeto
+
+Release 1.13.1
+  * Fix: [Readequações] corrigindo mensagem de encaminhar projeto
+
+Release 1.13.0
+  * Novo: [Readequações] IPHAN pode encaminhar para superintendências
+  * Novo: [Readequações] Devolvendo projeto da superintendência para IPHAN nacional
+  * Novo: [Readequações] Puxando lista de pareceristas das superintendências do IPHAN
+
 Release 1.12.4
   * Fix: [Recurso] correção de variável errada
 

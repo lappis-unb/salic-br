@@ -32,13 +32,14 @@
         }
         
         $('.enviarReadequacao').click(function(){
-            var parecerista = $(this).parent().parent().find('select').val(),
+            var idPronac = $(this).attr('idPronac'),
                 idDistRead = $(this).attr('idDistRead'),
-                idReadequacao = $(this).attr('idReadequacao');
-                
+		parecerista = $('#tecnico-' + idDistRead).val(),
+		idReadequacao = $(this).attr('idReadequacao');
+	    
             if(parecerista==''){
                 $("#alerta").dialog("destroy");
-                $("#alerta").html('Favor selecionar o parecerista!');
+                $("#alerta").html('Favor selecionar o destinatário!');
                 $("#alerta").dialog({
                     resizable: false,
                     title: 'Alerta!',
@@ -54,7 +55,7 @@
             } else {
             
                 $("#alerta").dialog("destroy");
-                $("#alerta").html('Deseja realmente enviar a solicitação para o parecerista?');
+                $("#alerta").html('Deseja realmente enviar a solicitação?');
                 $("#alerta").dialog({
                     resizable: false,
                     title: 'Alerta!',
@@ -120,7 +121,7 @@
                 idReadequacao = $(this).attr('idReadequacao');
                 
             $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente finalizar a análise da readequação?<br /><br />Ao finalizar a readequação será devolvida ao MinC.');
+            $("#alerta").html('Deseja realmente finalizar a análise da readequação?<br /><br />Ao finalizar a readequação será devolvida.');
             $("#alerta").dialog({
                 resizable: false,
                 title: 'Alerta!',

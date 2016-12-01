@@ -132,5 +132,23 @@ class Orgaos extends GenericModel{
         //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
+
+
+    /*
+     * Busca superintendências do IPHAN
+     */
+    public function buscarSuperintendencias() {
+
+        $query = $this->select()
+               ->from($this,
+                      array('Codigo', 'Sigla'));
+
+        $query->where('Vinculo = 1');
+        $query->where('idSecretaria = 91');
+        $query->order('Sigla');
+        
+        return $this->fetchAll($query);
+        
+    }    
 }
 ?>

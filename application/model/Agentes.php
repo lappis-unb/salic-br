@@ -345,6 +345,51 @@ class Agentes extends GenericModel {
         return $this->fetchAll($slct);
     }
 
+    /*
+     * copia de buscarPareceristas() com alteracoes para o IPHAN
+     */
+    public function buscarPareceristasIphan($idOrgao, $idArea, $idSegmento) {
+        $slct = $this->select();
+        $slct->setIntegrityCheck(false);
+        $slct->distinct();
+        $slct->from(
+            array('a' => $this->_name),
+            array(), 'AGENTES.dbo'
+        );
+        $slct->joinInner(
+            array('n' => 'Nomes'), 'a.idAgente = n.idAgente',
+            array('u.usu_codigo AS id', 'n.Descricao AS nome'), 'AGENTES.dbo'
+        );
+        $slct->joinInner(
+            array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_Identificacao AND sis_codigo = 21 AND (gru_codigo = 94 OR gru_codigo = 105)',
+            array(), 'TABELAS.dbo'
+        );
+        $slct->joinInner(
+            array('v' => 'Visao'), 'n.idAgente = v.idAgente',
+            array(), 'AGENTES.dbo'
+        );
+        $slct->joinInner(
+            array('c' => 'tbCredenciamentoParecerista'), 'a.idAgente = c.idAgente',
+            array(), 'AGENTES.dbo'
+        );
+
+        $dadosWhere["v.Visao = ?"] = 209;
+        $dadosWhere["n.TipoNome = ?"] = 18;
+        $dadosWhere["c.idCodigoArea = ?"] = $idArea;
+        $dadosWhere["c.idCodigoSegmento = ?"] = $idSegmento;
+        $dadosWhere["u.org_superior = ?"] = 91;
+        $dadosWhere["u.usu_orgao = ?"] = $idOrgao;  // especificidade do IPHAN - puxa codigo do orgao 
+        $dadosWhere["NOT EXISTS(SELECT TOP 1 * FROM Agentes.dbo.tbAusencia WHERE Getdate() BETWEEN dtInicioAusencia AND dtFimAusencia AND idAgente = a.idAgente)"] = '';
+        
+        foreach ($dadosWhere as $coluna => $valor) {
+            $slct->where($coluna, $valor);
+        }
+
+        $slct->order('n.Descricao');
+        
+        return $this->fetchAll($slct);
+    }    
+
     public function consultaPareceristasPainel($nome, $cpf) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
