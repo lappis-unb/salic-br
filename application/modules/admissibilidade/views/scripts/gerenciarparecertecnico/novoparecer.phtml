@@ -1,4 +1,4 @@
-<?php include_once APPLICATION_PATH . '/modules/admissibilidade/views/scripts/gerenciarparecertecnico/inc/menu.inc.php'; ?>
+<?php echo $this->partial("gerenciarparecertecnico/inc/menu.inc.php"); ?>
 <script>
     function valida_form() {
 
@@ -9,10 +9,7 @@
         } else {
             alert("O parecer deve ser preenchido!");
         }
-
-
     }
-
 </script>
 <div id="breadcrumb">
     <ul>
@@ -22,16 +19,15 @@
         <li class="last">Projetos</li>
     </ul>
 </div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-<!-- ========== INCIO TTULO ========== -->
 <div id="titulo">
-    <div>Novo Parecer T&eacute;cnico <span>ID #23A</span> <span class="voltar">
-			<a href="#" onclick="voltar();">Voltar</a></span></div>
+    <div>
+        Novo Parecer T&eacute;cnico
+        <span>ID #23A</span>
+        <span class="voltar">
+			<a href="#" onclick="voltar();">Voltar</a>
+        </span>
+    </div>
 </div>
-<!-- ========== FIM TTULO ========== -->
-
-<!-- ========== INCIO CONTEDO ========== -->
 <div id="conteudo" style="min-height: 300px;" align="center">
     <form
         action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecertecnico', 'action' => 'incluirparecer')) ?>"
@@ -70,7 +66,6 @@
                 </td>
             </tr>
         </table>
-
         <table width="70%">
             <tr>
                 <th colspan="3">Dados do Projeto</th>
@@ -99,10 +94,9 @@
                 <th colspan="3">Parecer</th>
             </tr>
             <tr>
-                <td align="justify" colspan="3"><!-- ========== EDITOR 1 ========== -->
-                    <script
-                        type="text/javascript"
-                        src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/ckeditor.js"></script>
+                <td align="justify" colspan="3">
+                    <script type="text/javascript"
+                            src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/ckeditor.js"></script>
                     <script type="text/javascript"
                             src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/_samples/sample.js"></script>
 
@@ -134,17 +128,11 @@
             </tr>
             <tr>
                 <td align="center" colspan="3">
-                    <input type="button" onclick="valida_form()" class="btn_salvar" name="salvar" value=""/></td>
+                    <input type="button" onclick="valida_form()" class="btn_salvar" name="salvar" value=""/>
+                </td>
             </tr>
-
         </table>
     </form>
-
 </div>
-
-<!-- ========== FIM CONTEDO ========== -->
-
-<!-- ========== INCIO RODAP DO CONTEDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP DO CONTEDO ========== -->
 <br clear="all"/>

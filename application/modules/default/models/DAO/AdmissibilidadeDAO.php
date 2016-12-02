@@ -1,8 +1,10 @@
 <?php
 
-class AdmissibilidadeDAO extends Zend_Db_Table {
+class AdmissibilidadeDAO extends Zend_Db_Table
+{
 
-    public static function gerenciarAnalistas(stdClass $params) {
+    public static function gerenciarAnalistas(stdClass $params)
+    {
 
         $retorno = false;
         $sql = "SELECT
@@ -31,7 +33,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                 ORDER BY usu_nome";
 
         try {
-            $db= Zend_Db_Table::getDefaultAdapter();
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar projeto: " . $e->getMessage();
@@ -40,7 +42,8 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
         return $retorno;
     }
 
-    public static function gerenciarAnalista(stdClass $params) {
+    public static function gerenciarAnalista(stdClass $params)
+    {
 
         $sql = " select uog.uog_usuario as usu_cod,
                         u.usu_nome + ' - ' + u.usu_identificacao as usu_nome,
@@ -64,7 +67,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                     and gru_codigo      <> 97";
 
         try {
-            $db= Zend_Db_Table::getDefaultAdapter();
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar projeto: " . $e->getMessage();
@@ -76,15 +79,16 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
         return $retorno;
     }
 
-    public static function atualizarAnalista(stdClass $params) {
+    public static function atualizarAnalista(stdClass $params)
+    {
         $sql = "update Tabelas.dbo.UsuariosXOrgaosXGrupos
                    set uog_status  = {$params->uog_status}
                  where uog_usuario = {$params->usu_cod}
                    and uog_grupo   = {$params->gru_codigo}
                    and uog_orgao   = {$params->usu_orgao}";
-       //xd($sql);
+        //xd($sql);
         try {
-            $db= Zend_Db_Table::getDefaultAdapter();
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar projeto: " . $e->getMessage();
@@ -93,7 +97,8 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
         return $db->fetchAll($sql);
     }
 
-    public static function consultarRedistribuirAnalise(stdClass $params) {
+    public static function consultarRedistribuirAnalise(stdClass $params)
+    {
         $retorno = false;
         $sql = "SELECT
                    idProjeto,
@@ -133,7 +138,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                 ORDER BY Fase, Tecnico, DtMovimentacao, idProjeto, NomeProjeto";
 
         try {
-            $db= Zend_Db_Table::getDefaultAdapter();
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar dados: " . $e->getMessage();
@@ -142,7 +147,8 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
         return $retorno;
     }
 
-    public static function consultarRedistribuirAnaliseItem(stdClass $params) {
+    public static function consultarRedistribuirAnaliseItem(stdClass $params)
+    {
         $retorno = false;
         if ($params->fase != 'Documental') {
             $sql = "select idProjeto,
@@ -161,7 +167,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
         }
 
         try {
-            $db= Zend_Db_Table::getDefaultAdapter();
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar dados: " . $e->getMessage();
@@ -174,7 +180,8 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
         return $retorno;
     }
 
-    public static function consultarRedistribuirAnaliseItemSelect(stdClass $params) {
+    public static function consultarRedistribuirAnaliseItemSelect(stdClass $params)
+    {
         $sql = "   SELECT DISTINCT usu_codigo as usu_cod, usu_nome,org_superior
                      FROM TABELAS.dbo.vwUsuariosOrgaosGrupos
                     WHERE sis_codigo = 21 AND
@@ -186,7 +193,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                     ORDER BY usu_nome";
 
         try {
-            $db= Zend_Db_Table::getDefaultAdapter();
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar dados: " . $e->getMessage();
@@ -194,13 +201,14 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
         return $db->fetchAll($sql);
     }
 
-    public static function redistribuirAnalise(stdClass $params) {
+    public static function redistribuirAnalise(stdClass $params)
+    {
         $sql = "UPDATE SAC.dbo.tbAvaliacaoProposta
                    SET idTecnico = {$params->usu_cod}
                  WHERE idProjeto = {$params->idProjeto}
                    AND stEstado  = 0";
         try {
-            $db= Zend_Db_Table::getDefaultAdapter();
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao executar comando sql: " . $e->getMessage();
@@ -208,7 +216,8 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
         return $db->fetchAll($sql);
     }
 
-    public static function gerenciamentodepropostas(stdClass $params) {
+    public static function gerenciamentodepropostas(stdClass $params)
+    {
         $sql = "SELECT
                     idProjeto,
                     NomeProposta,
@@ -227,7 +236,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                 WHERE idSecretaria = {$params->cod_orgao}
                 ORDER BY Tecnico, DtAdmissibilidade";
         try {
-            $db= Zend_Db_Table::getDefaultAdapter();
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar dados: " . $e->getMessage();
@@ -236,25 +245,27 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
     }
 
 
-    public static function consultarGerenciamentoProposta($where=array(), $order=array()) {
+    public static function consultarGerenciamentoProposta($where = array(), $order = array())
+    {
 
         $meuWhere = "";
         // adicionando clausulas where
-        foreach ($where as $coluna=>$valor)
-        {
-            $meuWhere .= $coluna.$valor." AND ";
+        foreach ($where as $coluna => $valor) {
+            $meuWhere .= $coluna . $valor . " AND ";
         }
 
         $meuOrder = "";
         // adicionando clausulas order
-        foreach ($order as $valor)
-        {
-            if($meuOrder != ""){ $meuOrder .= " , "; }else{ $meuOrder = " ORDER BY "; }
+        foreach ($order as $valor) {
+            if ($meuOrder != "") {
+                $meuOrder .= " , ";
+            } else {
+                $meuOrder = " ORDER BY ";
+            }
             $meuOrder .= $valor;
         }
 
-        $sql = "
-                SELECT p.idPreProjeto AS idProjeto,
+        $sql = "SELECT p.idPreProjeto AS idProjeto,
                            p.NomeProjeto AS NomeProposta,
                            p.stPlanoAnual,
                            a.CNPJCPF,
@@ -292,33 +303,35 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                         WHERE      (p.idPreProjeto = idProjeto)
                         )
                 )
-        ".$meuOrder."
-        ";
+        {$meuOrder} ";
 
         try {
-            $db= Zend_Db_Table::getDefaultAdapter();
+            $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
+            return $db->fetchAll($sql);
         } catch (Zend_Exception_Db $e) {
             $this->view->message = "Falha ao buscar dados: " . $e->getMessage();
         }
-        return $db->fetchAll($sql);
     }
 
 
-    public static function buscarAnalistas($where=array(), $order=array()) {
+    public static function buscarAnalistas($where = array(), $order = array())
+    {
 
         $meuWhere = "";
         // adicionando clausulas where
-        foreach ($where as $coluna=>$valor)
-        {
-            $meuWhere .= $coluna.$valor." AND ";
+        foreach ($where as $coluna => $valor) {
+            $meuWhere .= $coluna . $valor . " AND ";
         }
 
         $meuOrder = "";
         // adicionando clausulas order
-        foreach ($order as $valor)
-        {
-            if($meuOrder != ""){ $meuOrder .= " , "; }else{ $meuOrder = " ORDER BY "; }
+        foreach ($order as $valor) {
+            if ($meuOrder != "") {
+                $meuOrder .= " , ";
+            } else {
+                $meuOrder = " ORDER BY ";
+            }
             $meuOrder .= $valor;
         }
 
@@ -345,7 +358,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table {
                 WHERE {$meuWhere} 1=1
                 ORDER BY usu_nome";
 
-        $db= Zend_Db_Table::getDefaultAdapter();
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
 
