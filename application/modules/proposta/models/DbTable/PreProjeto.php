@@ -1925,7 +1925,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             'a.idProjeto',
             "($tecnico) AS Tecnico",
             "($orgao) as idOrgao",
-            new Zend_Db_Expr('CONVERT(CHAR(20), ($diligencia), 120) AS DtUltima')
+            new Zend_Db_Expr("CONVERT(CHAR(20), ({$diligencia}), 120) AS DtUltima")
         );
 
         $sql = $db->select()
