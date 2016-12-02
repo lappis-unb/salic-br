@@ -1,20 +1,17 @@
-<?php include_once APPLICATION_PATH . '/modules/admissibilidade/views/scripts/gerenciarparecertecnico/inc/menu.inc.php'; ?>
-<script>
+<?php echo $this->partial("gerenciarparecertecnico/inc/menu.inc.php"); ?>
+<script type="text/javascript">
     function gerar_pdf(formato) {
         document.getElementById("html").value = "<html><style>table {width:790px; font-size:9pt} table td { background-color:#EEE; padding:3px; text-align:center}table th { background-color:#CCC; padding:3px; text-align:center}</style><center><h2>Parecer T�cnico</h2></center>"
         document.getElementById("html").value = document.getElementById("html").value + document.getElementById("conteudo").innerHTML + "</html>";
         document.getElementById("formato").value = formato;
         document.formulario1.submit();
-
     }
-
 </script>
 <form name="formulario1" class="sumir" method="post"
       action="<?php echo $this->url(array('controller' => 'mantercalendariocnic', 'action' => 'gerarpdf')); ?>">
     <input type="hiddem" id="html" name="html" value="">
     <input type="hiddem" id="formato" name="formato" value="">
 </form>
-<!-- ========== IN�CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>"
@@ -24,19 +21,10 @@
         <li class="last">Consolida&ccedil;&atilde;o por Parecerista</li>
     </ul>
 </div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-<!-- ========== IN�CIO T�TULO ========== -->
 <div id="titulo">
-    <div>Parecer T&eacute;cnico<span>ID #23A</span> <span class="voltar"><a href="#"
-                                                                            onclick="voltar();">Voltar</a></span></div>
+    <div>Parecer T&eacute;cnico<span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM T�TULO ========== -->
-
-
-<!-- ========== IN�CIO CONTE�DO ========== -->
 <div id="conteudo">
-
     <table class="tabela">
         <tr>
             <th width="15%" align="center" style="color: #36963f;">Pronac</th>
@@ -44,13 +32,10 @@
             <th width="15%" align="center" style="color: #36963f;">Tipo de Parecer</th>
             <th width="15%" align="center" style="color: #36963f;">Estado</th>
             <th width="15%" align="center" style="color: #36963f;">A�ao</th>
-
         </tr>
         <?php
         $i = 0;
-        //xd($this->listaparecer);
-        foreach ($this->listaparecer as $e) {
-            ?>
+        foreach ($this->listaparecer as $e) { ?>
             <tr>
                 <td align="center"><a
                         href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')) . '?idPronac=' . $e->idPronac; ?>"><?php echo $e->AnoProjeto . '' . $e->Sequencial ?></a>
@@ -75,7 +60,6 @@
             <?php
             $i++;
         }
-
         ?>
         <tr>
             <td colspan="5" align="right">
@@ -94,14 +78,7 @@
                 </form>
             </td>
         </tr>
-
-
     </table>
 </div>
-<!-- ========== FIM CONTE�DO ========== -->
-
-<!-- ========== IN�CIO RODAP� DO CONTE�DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP� DO CONTE�DO ========== -->
-
 <br clear="all"/>
