@@ -1,15 +1,10 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of tbreuniao
- *
- * @author 01155078179
+ * Class Admissibilidade_Model_DbTable_Gerenciarparecertecnico
+ * @author Vinícius Feitosa da Silva <viniciusfesil@mail.com>
+ * @since 02/12/2016 15:05
  */
-class GerenciarparecertecnicoDAO extends MinC_Db_Table_Abstract{
+class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Table_Abstract{
     protected $_banco   = 'SAC';
     protected $_schema  = 'SAC';
     protected $_name    = 'Projetos';

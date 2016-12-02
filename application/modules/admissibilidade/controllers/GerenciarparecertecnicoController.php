@@ -1,31 +1,20 @@
 <?php
 /**
  * Controller Disvincular Agentes
- * @author Equipe RUP - Politec
  * @since 07/06/2010
  * @version 1.0
  * @package application
  * @subpackage application.controller
  * @link http://www.cultura.gov.br
  * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
+ * @author Equipe RUP - Politec
+ * @author Vinícius Feitosa da Silva <viniciusfesil@gmail.com>
  */
-
-class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract {
+class Admissibilidade_GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract {
 
     private $bln_readequacao = "false";
+
     /**
-     * ====================
-     * AGENTES
-     * ====================
-     */
-    /**
-     * Reescreve o m�todo init()
-     * @access public
-     * @param void
-     * @return void
-     */
-    /**
-     * Reescreve o m�todo init()
      * @access public
      * @param void
      * @return void
@@ -114,14 +103,14 @@ class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract 
                'tbr.anoprojeto =?' => $ano,
                'tbr.sequencial =?' => $sequencial,
            );
-           $parecer = new GerenciarparecertecnicoDAO();
+           $parecer = new Admissibilidade_Model_DbTable_Gerenciarparecertecnico();
            $validapronac = $parecer->VerificaPronac($arrBusca);
            if($validapronac > 0){
                $listaparecer = $parecer->listar_parecer($arrBusca);
                //xd($listaparecer);
                $this->view->parecer = $listaparecer;
            }else{
-                parent::message("PRONAC n�o localizado", "Gerenciarparecertecnico/parecertecnico", "ERROR");
+                parent::message("PRONAC n�o localizado", "/admissibilidade/gerenciarparecertecnico/parecertecnico", "ERROR");
             }
         }
     }
@@ -144,19 +133,19 @@ class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract 
                     $idpronac = $_GET['idPronac'];
                 }*/
 
-    		//$busca = GerenciarparecertecnicoDAO::BuscaProjeto($pronac);
+    		//$busca = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::BuscaProjeto($pronac);
                 $tblProjeto = new Projetos();
                 if(!empty($pronac)){
                     $rsProjeto = $tblProjeto->buscar(array('AnoProjeto + Sequencial=?'=>$pronac))->current();
                     if ( empty ( $rsProjeto ) ){
-                            parent::message("Pronac inexistente na base de dados!", "gerenciarparecertecnico/imprimiretiqueta", "ERROR");
+                            parent::message("Pronac inexistente na base de dados!", "/admissibilidade/gerenciarparecertecnico/imprimiretiqueta", "ERROR");
                     }
                     else 
                     {
-                            $this->_redirect('/gerenciarparecertecnico/dadosetiqueta?pronac='.$pronac.'&etiqueta='.$etiquetaApenas);
+                            $this->_redirect('/admissibilidade/gerenciarparecertecnico/dadosetiqueta?pronac='.$pronac.'&etiqueta='.$etiquetaApenas);
                     }
                 }else{
-                    parent::message("Pronac inexistente na base de dados!", "gerenciarparecertecnico/imprimiretiqueta", "ERROR");
+                    parent::message("Pronac inexistente na base de dados!", "/admissibilidade/gerenciarparecertecnico/imprimiretiqueta", "ERROR");
                 }
 
     	}
@@ -201,7 +190,7 @@ class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract 
                 $this->view->edital = false;
 
             //DADOS DA ETIQUETA
-            $dados = GerenciarparecertecnicoDAO::dadosEtiqueta($pronac);
+            $dados = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::dadosEtiqueta($pronac);
             $this->view->DadosEtiqueta = $dados;
 
             $dao = new Proposta_Model_AnalisarPropostaDAO();
@@ -401,16 +390,16 @@ class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract 
     		
     		$pronac = $_POST['vpronac'];
     		//xd($pronac);
-    		$busca = GerenciarparecertecnicoDAO::BuscaProjeto($pronac);
+    		$busca = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::BuscaProjeto($pronac);
     		//xd($busca);
     		if ( empty ( $busca ) )
     		{
-    			parent::message("Pronac Inexistente na Base de Dados!", "gerenciarparecertecnico/imprimirparecertecnico", "ALERT");
+    			parent::message("Pronac Inexistente na Base de Dados!", "/admissibilidade/gerenciarparecertecnico/imprimirparecertecnico", "ALERT");
     			
     		}
     		else 
     		{
-    			$this->_redirect('/gerenciarparecertecnico/dadoshtml?pronac='.$pronac);
+    			$this->_redirect('/admissibilidade/gerenciarparecertecnico/dadoshtml?pronac='.$pronac);
     		}
 
     	}
@@ -427,33 +416,30 @@ class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract 
     		$pronac = $_GET['pronac'];
     		//xd($pronac);
 
-    		$parecer = GerenciarparecertecnicoDAO::ParecerTecnico($pronac);
+    		$parecer = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::ParecerTecnico($pronac);
     		$this->view->ParecerTecnico = $parecer;
     		
-    		$analise = GerenciarparecertecnicoDAO::AnaliseConteudo($pronac);
+    		$analise = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::AnaliseConteudo($pronac);
     		$this->view->AnaliseConteudo = $analise; 
     		//xd($analise);
     		
-	    	$fonte = GerenciarparecertecnicoDAO::FonteRecurso($pronac);
+	    	$fonte = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::FonteRecurso($pronac);
 	        $this->view->FonteRecurso = $fonte; 
 	        //xd($fonte);
-	        $produto = GerenciarparecertecnicoDAO::Produto($pronac);
+	        $produto = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::Produto($pronac);
 	        $this->view->Produto = $produto;
 	        
-	        $etapa = GerenciarparecertecnicoDAO::Etapa($pronac);
+	        $etapa = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::Etapa($pronac);
 	        $this->view->Etapa = $etapa;
 	        
-	        $uf = GerenciarparecertecnicoDAO::Uf($pronac);
+	        $uf = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::Uf($pronac);
 	        $this->view->Uf = $uf;
 	        
-	        $item = GerenciarparecertecnicoDAO::Item($pronac);
+	        $item = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::Item($pronac);
 	        $this->view->Item = $item;
 	        
-	        $unidade = GerenciarparecertecnicoDAO::Unidade($pronac);
+	        $unidade = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::Unidade($pronac);
 	        $this->view->Unidade = $unidade; 
-	    	
-	        //xd($unidade);
-	        
     	}
     	
     if (isset( $_POST['html'] )){
@@ -492,7 +478,7 @@ class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract 
                'tbr.sequencial =?' => $sequencial,
             );
 
-            $parecer = new GerenciarparecertecnicoDAO();
+            $parecer = new Admissibilidade_Model_DbTable_Gerenciarparecertecnico();
             $validapronac = $parecer->VerificaPronac($arrBusca);
                 if($validapronac = 1){
                     $arrBusca = array( //busca para pegar os dados do projeto
@@ -520,18 +506,18 @@ class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract 
                         "idTipoAgente"          => 1
                     );
                     //xd($dados_inserir);
-                    $inserirparecer = GerenciarparecertecnicoDAO::inserirparecer($dados_inserir);
+                    $inserirparecer = Admissibilidade_Model_DbTable_Gerenciarparecertecnico::inserirparecer($dados_inserir);
                     if($inserirparecer){
-                    parent::message("Parecer inserido com sucesso!", "Gerenciarparecertecnico/listaparecer?pronac=".$dados[0]->AnoProjeto."".$dados[0]->Sequencial."", "CONFIRM");
+                    parent::message("Parecer inserido com sucesso!", "/admissibilidade/gerenciarparecertecnico/listaparecer?pronac=".$dados[0]->AnoProjeto."".$dados[0]->Sequencial."", "CONFIRM");
                     }else{
-                     parent::message("Ocorreu error em salvar Parecer", "Gerenciarparecertecnico/parecertecnico", "ERROR");
+                     parent::message("Ocorreu error em salvar Parecer", "/admissibilidade/gerenciarparecertecnico/parecertecnico", "ERROR");
                     }
                 }else{
-                    parent::message("PRONAC n�o localizado", "Gerenciarparecertecnico/parecertecnico", "ERROR");
+                    parent::message("PRONAC n�o localizado", "/admissibilidade/gerenciarparecertecnico/parecertecnico", "ERROR");
                 }
 
         }else{
-           parent::message("PRONAC n�o localizado", "Gerenciarparecertecnico/parecertecnico", "ERROR");
+           parent::message("PRONAC n�o localizado", "/admissibilidade/gerenciarparecertecnico/parecertecnico", "ERROR");
         }
 
     }
@@ -546,7 +532,7 @@ class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract 
             if(!empty($_POST['pronac'])){
                 $pronac = addslashes($_POST['pronac']);
             }else{
-                parent::message("Informe o PRONAC", "Gerenciarparecertecnico/parecertecnico", "ALERT");
+                parent::message("Informe o PRONAC", "/admissibilidade/gerenciarparecertecnico/parecertecnico", "ALERT");
             }
         }
         
@@ -558,13 +544,13 @@ class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract 
                'tbr.anoprojeto =?' => $ano,
                'tbr.sequencial =?' => $sequencial,
            );
-           $parecer = new GerenciarparecertecnicoDAO();
+           $parecer = new Admissibilidade_Model_DbTable_Gerenciarparecertecnico();
            $validapronac = $parecer->VerificaPronac($arrBusca);
            if($validapronac > 0){
                $listaparecer = $parecer->listar_parecer($arrBusca);
                $this->view->listaparecer = $listaparecer;
            }else{
-                parent::message("PRONAC n�o localizado", "Gerenciarparecertecnico/parecertecnico", "ERROR");
+                parent::message("PRONAC n�o localizado", "/admissibilidade/gerenciarparecertecnico/parecertecnico", "ERROR");
             }
 
     }
@@ -577,7 +563,7 @@ class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract 
         $arrBusca = array(
                'idParecer =?' => $parecer
            );
-        $parecer = new GerenciarparecertecnicoDAO();
+        $parecer = new Admissibilidade_Model_DbTable_Gerenciarparecertecnico();
         $validaparecer = $parecer->VerificaParecer($arrBusca);
 
         if($validaparecer > 0){
@@ -585,7 +571,7 @@ class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract 
             $this->view->dados = $exibeparecer;
             //xd($exibeparecer);
         }else{
-            parent::message("Parecer n�o localizado", "Gerenciarparecertecnico/parecertecnico", "ERROR");
+            parent::message("Parecer n�o localizado", "/admissibilidade/gerenciarparecertecnico/parecertecnico", "ERROR");
         }
     }
 
@@ -600,7 +586,7 @@ class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract 
                'tbr.anoprojeto =?' => $ano,
                'tbr.sequencial =?' => $sequencial,
            );
-           $parecer = new GerenciarparecertecnicoDAO();
+           $parecer = new Admissibilidade_Model_DbTable_Gerenciarparecertecnico();
            $validapronac = $parecer->VerificaPronac($arrBusca);
            if($validapronac > 0){
                $listaparecer = $parecer->listar_parecer($arrBusca);
@@ -686,7 +672,7 @@ class GerenciarparecertecnicoController extends MinC_Controller_Action_Abstract 
                xd($pdf->gerarRelatorio());
 
            }else{
-                parent::message("PRONAC n�o localizado", "Gerenciarparecertecnico/parecertecnico", "ERROR");
+                parent::message("PRONAC n�o localizado", "/admissibilidade/gerenciarparecertecnico/parecertecnico", "ERROR");
             }
 
     }

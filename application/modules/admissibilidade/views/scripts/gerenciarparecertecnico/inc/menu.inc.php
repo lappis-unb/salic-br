@@ -1,4 +1,4 @@
-<!-- ========== INÍCIO MENU ========== -->
+<!-- ========== INï¿½CIO MENU ========== -->
 <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/quickmenu.js"></script>
 <div id="menu">
 
@@ -14,10 +14,10 @@
         });
     </script>
 
-    <!-- início: conteúdo principal #container -->
+    <!-- inï¿½cio: conteï¿½do principal #container -->
     <div id="container">
 
-        <!-- início: navegação local #qm0 -->
+        <!-- inï¿½cio: navegaï¿½ï¿½o local #qm0 -->
         <script type="text/javascript">
             function layout_fluido()
             {
@@ -41,9 +41,9 @@
         <div id="menuContexto">
             <div class="top"></div>
             <div id="qm0" class="qmmc sanfona">
-                <a class="no_seta" href='<?php echo $this->url(array('controller' => 'Gerenciarparecertecnico', 'action' => 'imprimiretiqueta')); ?>'>Imprimir Etiqueta</a>
-				<a class="no_seta" href='<?php echo $this->url(array('controller' => 'Gerenciarparecertecnico', 'action' => 'imprimirparecertecnico')); ?>'>Imprimir Parecer T&eacute;cnico</a>
-				<a class="no_seta" href='<?php echo $this->url(array('controller' => 'Gerenciarparecertecnico', 'action' => 'parecertecnico')); ?>'>Parecer T&eacute;cnico</a>
+                <a class="no_seta" href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecertecnico', 'action' => 'imprimiretiqueta')); ?>'>Imprimir Etiqueta</a>
+				<a class="no_seta" href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecertecnico', 'action' => 'imprimirparecertecnico')); ?>'>Imprimir Parecer T&eacute;cnico</a>
+				<a class="no_seta" href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecertecnico', 'action' => 'parecertecnico')); ?>'>Parecer T&eacute;cnico</a>
             </div>
             <div class="bottom">
             </div>
@@ -52,7 +52,7 @@
         </div>
 
         <div id="alertar"></div>
-        <!-- final: navegação local #qm0 -->
+        <!-- final: navegaï¿½ï¿½o local #qm0 -->
     </div>
 </div>
 <!-- ========== FIM MENU ========== -->
