@@ -1380,10 +1380,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         if(!empty($view)){
             $arrBusca = array("Tecnico "=>"IS NOT NULL");
         }else{
-            $arrBusca = array("idOrgao = "=>$orgSuperior);
+            $arrBusca = array("idOrgao "=>$orgSuperior);
         }
-        if(is_numeric($post->avaliacao)){ $arrBusca["ConformidadeOK = "] = "'$post->avaliacao'"; }
-        if(!empty($post->tecnico)){ $arrBusca["Tecnico = "] = "'$post->tecnico'"; }
+        if(is_numeric($post->avaliacao)){ $arrBusca["ConformidadeOK "] = "'$post->avaliacao'"; }
+        if(!empty($post->tecnico)){ $arrBusca["Tecnico "] = "'$post->tecnico'"; }
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico($arrBusca, array("Tecnico ASC"));
