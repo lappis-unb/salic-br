@@ -22,44 +22,22 @@ WHERE idPlanilhaEtapa=3;
 -- Remove Not Null na coluna idPolicaoDaLogo
 ALTER TABLE sac.dbo.PlanoDistribuicaoProduto ALTER COLUMN idPosicaoDaLogo INT;
 
--- cria coluna para lista de Execucao Imediata na Proposta
-CREATE TABLE sac.dbo.ExecucaoImediata
-(
-  idExecucaoImediata INT PRIMARY KEY NOT NULL,
-  Descricao VARCHAR(200)
-);
+-- cria mais duas etapas
+INSERT INTO SAC.dbo.tbPlanilhaEtapa (Descricao, tpCusto, stEstado, tpGrupo) VALUES ('Pós-Produção', 'P', 1, 'A');
+INSERT INTO SAC.dbo.tbPlanilhaEtapa (Descricao, tpCusto, stEstado, tpGrupo) VALUES ('Custos Vinculados', 'A', 1, 'D');
 
--- Popula a tabela ExecucaoImediata
+-- cria itens para a lista de execução imediata
+INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Proposta normal', 1);
+INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Proteção do patrimônio material', 1);
+INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Proteção do patrimônio imaterial', 1);
+INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Proteção  de acervos', 1);
+INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Planos anuais', 1);
+INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Proposta museológica', 1);
+INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Proposta de manutenção de corpos estáveis', 1);
+INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Proposta de construção de equipamentos culturais', 1);
+INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Proposta aprovado em editais', 1);
+INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Proposta  com contratos de patrocínios', 1);
 
-INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
-VALUES (0,'Proposta normal');
-
-INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
-VALUES (1,'Proteção do patrimônio material');
-
-INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
-VALUES (2,'Proteção do patrimônio imaterial');
-
-INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
-VALUES (3,'Proteção de acervos');
-
-INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
-VALUES (4,'Planos anuais');
-
-INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
-VALUES (5,'Proposta museológica');
-
-INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
-VALUES (6,'Proposta de manutenção de corpos estáveis');
-
-INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
-VALUES (7,'Proposta de construção de equipamentos culturais');
-
-INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
-VALUES (8,'Proposta aprovado em editais');
-
-INSERT INTO sac.dbo.ExecucaoImediata (idExecucaoImediata,Descricao)
-VALUES (9,'Proposta  com contratos de patrocínios');
 
 -- Remove Not Null na coluna stPlanoAnual
 ALTER TABLE sac.dbo.PreProjeto ALTER COLUMN stPlanoAnual BIT;

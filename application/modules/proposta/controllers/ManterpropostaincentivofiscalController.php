@@ -77,8 +77,9 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         }
 
         // Busca na tabela apoio ExecucaoImediata
-        $tblExecucaoImediata = new Proposta_Model_DbTable_ExecucaoImediata();
-        $this->view->listaExecucaoImediata = $tblExecucaoImediata->buscar();
+        $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
+        $this->view->listaExecucaoImediata = $tableVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 23), array('descricao'));
+
 
         $this->cpfLogado = $cpf;
         $this->idAgenteProponente = $this->idAgente;
