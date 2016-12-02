@@ -1427,7 +1427,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseDocumentalTecnico(array("sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) "=>$usuario, "ConformidadeOK "=>1), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseDocumentalTecnico(array("sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) ="=>$usuario, "ConformidadeOK = "=>1), array("Tecnico ASC"));
 
         $arrTecnicosPropostas = array();
         $idDoc = 0;

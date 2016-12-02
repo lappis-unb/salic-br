@@ -1917,7 +1917,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->group('org_superior');
 
         //Replace da funcao: sac.dbo.fnDtUltimaDiligenciaDocumental(a.idProjeto)
-        $diligencia = $db->select()->from(array('tbMovimentacao'), "max(DtMovimentacao)")->where('Movimentacao = 97')
+        $diligencia = $db->select()->from(array('tbMovimentacao'), "max(DtMovimentacao)", $this->_schema)->where('Movimentacao = 97')
             ->where('idProjeto = a.idProjeto')
             ;
 
