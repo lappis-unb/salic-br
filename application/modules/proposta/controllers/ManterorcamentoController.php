@@ -93,9 +93,19 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $this->view->Produtos = $tbPreprojeto->listarProdutos($this->idPreProjeto);
 
         $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-        $this->view->Etapa = $manterOrcamento->listarEtapasProdutos($this->idPreProjeto);
+
+        $listaEtapa = $manterOrcamento->buscarEtapas($this->idPreProjeto, 'P');
+
+        //altera ordem de apresenção das etapas no orçcamento
+        $newListaEtapa = $listaEtapa;
+        $newListaEtapa[3] = $listaEtapa[2];
+        $newListaEtapa[2] = $listaEtapa[3];
+        $this->view->Etapa = $newListaEtapa;
 
         $this->view->Item = $tbPreprojeto->listarItensProdutos($this->idPreProjeto);
+
+        $this->view->EtapaCusto = $manterOrcamento->buscarEtapas($this->idPreProjeto, "A");
+        $this->view->ItensEtapaCusto = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
 
         $this->view->idPreProjeto = $this->idPreProjeto;
 
