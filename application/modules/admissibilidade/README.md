@@ -1,7 +1,7 @@
-Módulo de Agentes
+Módulo de Admissibilidade
 =========================
 
-Modulo responsavel por manter agentes e os cadastros de contato. 
+Módulo responsável por realizar a admissibilidade da proposta.
 
 ```
 @todo : Complementar esse arquivo com mais informações do módulo.
