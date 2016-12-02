@@ -1135,7 +1135,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $arrBusca = array();
             //NUM. PROPOSTA
             if(!empty($numeroProposta)){
-                $arrBusca[" idPreProjeto = "]="'".$numeroProposta."'";
+                $arrBusca[" idPreProjeto "]="'".$numeroProposta."'";
             }
             //NOME DA PROPOSTA
             if(!empty($nomeProposta)){
@@ -1150,7 +1150,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                  if($tipoCpf=="contendo") {
                     $arrBusca[" CNPJCPF LIKE "]="'%".$cpfCnpj."%'";
                 }elseif($tipoCpf=="igual") {
-                    $arrBusca[" CNPJCPF = "]="'".$cpfCnpj."'";;
+                    $arrBusca[" CNPJCPF "]="'".$cpfCnpj."'";;
                 }elseif($tipoCpf=="inicioIgual") {
                     $arrBusca[" CNPJCPF LIKE "]="'".$cpfCnpj."%'";;
                 }elseif($tipoCpf=="diferente") {
@@ -1159,7 +1159,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             }
             //ANALISTA
             if(!empty($analista)){
-                $arrBusca[" idTecnico = "]="'".$analista."'";
+                $arrBusca[" idTecnico "]="'".$analista."'";
             }elseif($analista == "0"){
                 $arrBusca[" idTecnico <> "]="''";
             }
@@ -1204,9 +1204,9 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
             }
             //ORGAO USUARIO SUPERIOR LOGADO
-            //$arrBusca[" SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) = "] = $_SESSION['GrupoAtivo']['codOrgao'];
-            $arrBusca[" SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) = "] = $this->codOrgaoSuperior;
-            //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(u.usu_orgao, 1) = "] = $this->codOrgaoSuperior;
+            //$arrBusca[" SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) "] = $_SESSION['GrupoAtivo']['codOrgao'];
+            $arrBusca[" SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) "] = $this->codOrgaoSuperior;
+            //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(u.usu_orgao, 1) "] = $this->codOrgaoSuperior;
 
 
             $this->view->analistas = AdmissibilidadeDAO::consultarGerenciamentoProposta($arrBusca,array("Tecnico ASC"));
@@ -1427,7 +1427,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseDocumentalTecnico(array("sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) = "=>$usuario, "ConformidadeOK = "=>1), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseDocumentalTecnico(array("sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) "=>$usuario, "ConformidadeOK "=>1), array("Tecnico ASC"));
 
         $arrTecnicosPropostas = array();
         $idDoc = 0;
@@ -1454,7 +1454,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao "=>$usuario), array("Tecnico ASC"));
 
         $arrTecnicosPropostas = array();
         foreach($rsProposta as $proposta){
@@ -1479,7 +1479,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao "=>$usuario), array("Tecnico ASC"));
 
         $html = "<table>
                 <tr>
@@ -1509,7 +1509,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao "=>$usuario), array("Tecnico ASC"));
 
         $html = "<table>
                 <tr>
@@ -1536,7 +1536,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao "=>$usuario), array("Tecnico ASC"));
 
         $arrTecnicos = array();
         foreach($rsProposta as $proposta) {
@@ -1605,7 +1605,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao = "=>$usuario), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao "=>$usuario), array("Tecnico ASC"));
 
         $arrTecnicos = array();
         foreach($rsProposta as $proposta) {
