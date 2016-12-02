@@ -83,11 +83,11 @@
                         </div>
                     </div>-->
                     <div style="float:left; padding: 0px; margin: 0px;" >
-                        <a class="no_seta" href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'Gerenciarparecertecnico', 'action' => 'imprimiretiqueta')); ?>' title="Imprimir Etiqueta e Projeto">Imprimir Etiqueta e Projeto</a>
+                        <a class="no_seta" href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecertecnico', 'action' => 'imprimiretiqueta')); ?>' title="Imprimir Etiqueta e Projeto">Imprimir Etiqueta e Projeto</a>
                     </div>
                     <!--
                     <div style="float:left; padding: 0px; margin: 0px;">
-                        <a class="no_seta" href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'Gerenciarparecertecnico', 'action' => 'imprimirparecertecnico')); ?>'>Imprimir Parecer T�cnico</a>
+                        <a class="no_seta" href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecertecnico', 'action' => 'imprimirparecertecnico')); ?>'>Imprimir Parecer T�cnico</a>
                     </div>
                     -->
                     <div style="float:left; padding: 0px; margin: 0px;">
