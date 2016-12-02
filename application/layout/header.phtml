@@ -503,11 +503,11 @@
                             <div id="menu-admissibilidade" class="hidden">
                                 <ul>
                                     <?php if(in_array($this->grupoAtivo, array(92,97,131))){ ?>
-                                    <li><a href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'admissibilidade', 'action' => 'listar-propostas'), '', true); ?>" title="Avalia&ccedil;&atilde;o">Avalia&ccedil;&atilde;o</a></li>
+                                    <li><a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'listar-propostas'), '', true); ?>" title="Avalia&ccedil;&atilde;o">Avalia&ccedil;&atilde;o</a></li>
                                     <?php } ?>
 
                                     <!--<?php //if ($this->grupoAtivo == 92 || $this->grupoAtivo == 97 || $this->grupoAtivo == 131) : ?>
-                                    <li><a href="<?php //echo $this->url(array('module' => 'proposta', 'controller' => 'admissibilidade', 'action' => 'listar-propostas-nao-enviadas'), '', true); ?>" title="Propostas ainda n&atilde;o enviadas ao MinC ">Propostas n&atilde;o enviadas ao MinC </a></li>
+                                    <li><a href="<?php //echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'listar-propostas-nao-enviadas'), '', true); ?>" title="Propostas ainda n&atilde;o enviadas ao MinC ">Propostas n&atilde;o enviadas ao MinC </a></li>
                                     <?php //endif; ?> -->
 
                                       <!--=======  TEC. DE ACOMPANHAMENTO / COORD. ADMISSIBLIDADE / TECNICO ADMISSBILIDADE ============-->
@@ -520,13 +520,13 @@
                                     <?php } ?>
 
                                     <?php if(in_array($this->grupoAtivo, array(97,131))){ ?>
-                                    <li><a href='<?php echo $this->url(array('module' => 'proposta', 'controller' => 'admissibilidade', 'action' => 'gerenciaranalistas')); ?>'>Gerenciar Analistas</a></li>
-                                    <li><a href='<?php echo $this->url(array('module' => 'proposta', 'controller' => 'admissibilidade', 'action' => 'redistribuiranalise')); ?>'>Redistribuir An&aacute;lise</a></li>
-                                    <li><a href='<?php echo $this->url(array('module' => 'proposta', 'controller' => 'admissibilidade', 'action' => 'gerenciamentodepropostas')); ?>'>Gerenciar Proposta</a></li>
+                                    <li><a href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerenciaranalistas')); ?>'>Gerenciar Analistas</a></li>
+                                    <li><a href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'redistribuiranalise')); ?>'>Redistribuir An&aacute;lise</a></li>
+                                    <li><a href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerenciamentodepropostas')); ?>'>Gerenciar Proposta</a></li>
                                     <?php } ?>
 
                                     <?php if(in_array($this->grupoAtivo, array(92,131))){ ?>
-                                    <li><a href='<?php echo $this->url(array('module' => 'proposta', 'module' => 'proposta', 'controller' => 'admissibilidade', 'action' => 'desarquivarpropostas')); ?>'>Desarquivar Proposta</a></li>
+                                    <li><a href='<?php echo $this->url(array('module' => 'proposta', 'module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'desarquivarpropostas')); ?>'>Desarquivar Proposta</a></li>
                                     <?php } ?>
                                 </ul>
                             </div>
