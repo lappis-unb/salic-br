@@ -1117,11 +1117,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         //cod_grupo = 131 se perfil do tipo coordenador.
         //if($_SESSION['GrupoAtivo']['codOrgao'] != 160 && $_SESSION['GrupoAtivo']['codOrgao'] != 251) {
         if($_SESSION['GrupoAtivo']['codGrupo'] != 131) {
-
             $this->view->mensagem = "Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa funcionalidade.";
-
         } else {
-
             $post   = Zend_Registry::get('post');
             $numeroProposta      = $post->numeroProposta;
             $tipoNome            = $post->tiponome;
@@ -1205,7 +1202,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             }
             //ORGAO USUARIO SUPERIOR LOGADO
             //$arrBusca[" SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) "] = $_SESSION['GrupoAtivo']['codOrgao'];
-            $arrBusca[" SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) "] = $this->codOrgaoSuperior;
+            $arrBusca[" SAC.dbo.fnIdOrgaoSuperiorAnalista(x.idTecnico) = "] = $this->codOrgaoSuperior;
             //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(u.usu_orgao, 1) "] = $this->codOrgaoSuperior;
 
 
