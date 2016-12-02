@@ -1,5 +1,5 @@
 <?php
-    include_once APPLICATION_PATH . '/modules/admissibilidade/views/scripts/admissibilidade/inc/menu.inc.php';
+    echo $this->partial("admissibilidade/inc/menu.inc.php");
     $SalvarAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'salvardespacho'));
 ?>
 <style type="text/css">

@@ -1,24 +1,3 @@
-<?php
-    error_reporting(E_ERROR);
-?>
-<style type="text/css">
-<!--
-body { overflow: hidden }
--->
-</style>
-<script type="text/javascript">
-<!--
-/*
- * Fun&ccedil;&atilde;o respons�vel pela exibi&ccedil;&atilde;o ou ocultamento de conte�do,
- * mudando a imagem.
- **/
-$(document).ready(function() {
-    $('#conteudoImprimir').val($('.conteudoImprimir').html());
-$("#formGerarPdf").submit();
-//window.location.href = "imprimiretiqueta";
-});
-//-->
-</script>
 <div id="conteudo">
     <form method="POST" id="formGerarPdf" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerarpdf')); ?>" style="display:none">
         <textarea name="html" id="conteudoImprimir"></textarea>

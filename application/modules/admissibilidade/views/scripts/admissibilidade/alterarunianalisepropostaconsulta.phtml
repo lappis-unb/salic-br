@@ -1,31 +1,5 @@
-<?php include_once APPLICATION_PATH . '/modules/admissibilidade/views/scripts/admissibilidade/inc/menu.inc.php'; ?>
-<style type="text/css">
-<!--
-label.error{
-    color:red;
-}
--->
-</style>
-<script type="text/javascript">
-<!--
-$(document).ready(function(){
-   $("#frmCon").validate({
-        rules: {
-            nrProposta: { required: true }
-        },
-        messages: {
-            nrProposta: { required: "Obrigatorio" }
-        },
-        submitHandler: function(form) {
-            $("#retorno").html("");
-            jqAjaxForm(form, "retorno");
-        }
-    });
+<?php echo $this->partial("admissibilidade/inc/menu.inc.php") ?>
 
-    $("#nrProposta").numeric();
-});
-//-->
-</script>
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -59,8 +33,7 @@ $(document).ready(function(){
     </form>
     <div id="retorno" align="center"></div>
 </div>
-<!-- ========== FIM CONTEUDO ========== -->
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
+
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
+
 <br clear="all" />

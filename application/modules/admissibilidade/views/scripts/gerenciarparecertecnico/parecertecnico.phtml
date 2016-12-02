@@ -1,4 +1,4 @@
-<?php include_once APPLICATION_PATH . '/modules/admissibilidade/views/scripts/gerenciarparecertecnico/inc/menu.inc.php'; ?>
+<?php echo $this->partial("gerenciarparecertecnico/inc/menu.inc.php"); ?>
 <div id="breadcrumb">
     <ul>
         <li class="first"><a
@@ -7,12 +7,10 @@
         <li class="last">Projetos</li>
     </ul>
 </div>
-
 <div id="titulo" style="height: 10%">
     <div>Parecer T&eacute;cnico<span>Teste</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span>
     </div>
 </div>
-
 <div id="conteudo" style="min-height: 300px;" align="center">
     <form method="get" id="form"
           action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecertecnico', 'action' => 'listaparecer')); ?>">
@@ -20,12 +18,10 @@
             <tr>
                 <th colspan="1">Digite o n&uacute;mero do Projeto</th>
             </tr>
-
             <tr>
                 <td width="50%" align="center"><b>PRONAC: </b>&nbsp;&nbsp;&nbsp;<input type="text" name="pronac"
                                                                                        id="pronac" class="input_simples"
                                                                                        size="10px"/></td>
-
             </tr>
             <tr>
                 <td colspan="1" align="center">
