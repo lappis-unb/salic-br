@@ -515,6 +515,10 @@
                                     <li><a href="#" title="Ir para Certid&otilde;es Negativas" onclick="javascript:window.open('<?php echo $this->url(array('controller' => 'manterregularidadeproponente', 'action' => 'index')); ?>')" >Certid&otilde;es Negativas</a></li>
                                     <?php } ?>
 
+                                    <?php if(in_array($this->grupoAtivo, array(92,131))){ ?>
+                                        <li><a href="#" title="Ir para Enquadramento" onclick="javascript:window.open('<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'listar')); ?>')" >Enquadramento</a></li>
+                                    <?php } ?>
+
                                     <?php if(in_array($this->grupoAtivo, array(97,131))){ ?>
                                     <li><a href='<?php echo $this->url(array('module' => 'proposta', 'controller' => 'admissibilidade', 'action' => 'gerenciaranalistas')); ?>'>Gerenciar Analistas</a></li>
                                     <li><a href='<?php echo $this->url(array('module' => 'proposta', 'controller' => 'admissibilidade', 'action' => 'redistribuiranalise')); ?>'>Redistribuir An&aacute;lise</a></li>
