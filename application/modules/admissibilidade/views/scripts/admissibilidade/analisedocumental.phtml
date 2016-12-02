@@ -1,5 +1,5 @@
 <?php
-include_once APPLICATION_PATH . '/modules/admissibilidade/views/scripts/admissibilidade/inc/menu.inc.php';
+echo $this->partial("admissibilidade/inc/menu.inc.php");
 $buscarDocumento  = $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'buscardocumento'));
 $novo             = $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'analisedocumental'))."?idPreProjeto=".$this->idPreProjeto;
 $inserirDocumento = $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'inserirdocumento'));

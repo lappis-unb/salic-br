@@ -1,27 +1,3 @@
-<?php
-header("Content-Type: text/html; charset=ISO-8859-1");
-?>
-<script type="text/javascript">
-<!--
-$(document).ready(function(){
-   $("#frmTrocaSecretaria").validate({
-        rules: {
-            secretaria: { required: true }
-        },
-        messages: {
-            secretaria: { required: "Obrigatorio" }
-        },
-        submitHandler: function(form) {
-            $("#retorno").html("");
-            jqAjaxForm(form, "retorno");
-        }
-    });
-    $(".btn_cancelar").click(function(){
-        $("#retorno").html("");
-    });
-});
-//-->
-</script>
 <form action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'alterarunianaliseproposta')); ?>" method="post" name="frmTrocaSecretaria" id="frmTrocaSecretaria">
 <input type="hidden" name="idAvaliacaoProposta" value="<?php echo $this->proposta->idAvaliacaoProposta; ?>">
 <table class="tabela">
