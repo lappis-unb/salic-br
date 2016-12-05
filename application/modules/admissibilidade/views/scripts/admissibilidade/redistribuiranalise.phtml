@@ -133,12 +133,12 @@ function toogleAjax(id, url){
                 foreach ($faseItems as $faseItem) {
                     $html.= '<tr>
                                 <td align="center">
-                                    <a href="' . $this->baseUrl() . '/admissibilidade/redistribuiranaliseitem?idProjeto=' . $faseItem['nrProposta'] . '&fase=' . $faseNome . '">
+                                    <a href="' . $this->baseUrl() . '/admissibilidade/admissibilidade/redistribuiranaliseitem?idProjeto=' . $faseItem['nrProposta'] . '&fase=' . $faseNome . '">
                                         <img src="' . $this->baseUrl() . '/public/img/user_gray.png" />
                                     </a>
                                 </td>
                                 <td align="center">
-                                    <a href="' . $this->baseUrl() . '/admissibilidade/exibirpropostacultural?idPreProjeto=' . $faseItem['nrProposta'] . '&fase=' . $faseNome . '">
+                                    <a href="' . $this->baseUrl() . '/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=' . $faseItem['nrProposta'] . '&fase=' . $faseNome . '">
                                     ' . $faseItem['nrProposta'] . '
                                     </a>
                                 </td>
