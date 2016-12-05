@@ -4,7 +4,6 @@
 -- COMMIT;
 -- ROLLBACK;
 -- BEGIN;
-
 CREATE SCHEMA IF NOT EXISTS agentes AUTHORIZATION postgres;
 
 
@@ -29,8 +28,8 @@ CREATE TABLE agentes."UF"
 );
 
 CREATE SEQUENCE agentes.uf_iduf_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.uf ALTER COLUMN iduf SET DEFAULT nextval('agentes.uf_iduf_seq');
-ALTER SEQUENCE agentes.uf_iduf_seq OWNED BY agentes.uf.iduf;
+ALTER TABLE agentes."UF" ALTER COLUMN "idUF" SET DEFAULT nextval('agentes.uf_iduf_seq');
+ALTER SEQUENCE agentes.uf_iduf_seq OWNED BY agentes."UF"."idUF";
 CREATE INDEX IX_UF ON agentes."UF" ("Sigla");
 CREATE INDEX IX_UF_1 ON agentes."UF" ("Descricao");
 CREATE INDEX IX_UF_2 ON agentes."UF" ("Regiao");
@@ -41,8 +40,8 @@ CREATE TABLE agentes."Tipo"
 );
 
 CREATE SEQUENCE agentes.tipo_idtipo_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.tipo ALTER COLUMN idtipo SET DEFAULT nextval('agentes.tipo_idtipo_seq');
-ALTER SEQUENCE agentes.tipo_idtipo_seq OWNED BY agentes.tipo.idtipo;
+ALTER TABLE agentes."Tipo" ALTER COLUMN "idTipo" SET DEFAULT nextval('agentes.tipo_idtipo_seq');
+ALTER SEQUENCE agentes.tipo_idtipo_seq OWNED BY agentes."Tipo"."idTipo";
 CREATE TABLE agentes."Pais"
 (
   "idPais" INT PRIMARY KEY NOT NULL,
@@ -86,21 +85,21 @@ CREATE TABLE agentes."Agentes"
   "Usuario" INT DEFAULT 0 NOT NULL
 );
 CREATE SEQUENCE agentes.agentes_idagente_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.agentes ALTER COLUMN idagente SET DEFAULT nextval('agentes.agentes_idagente_seq');
-ALTER SEQUENCE agentes.agentes_idagente_seq OWNED BY agentes.agentes.idagente;
-CREATE INDEX _dta_index_Agentes_9_1977058079__K2_K1 ON agentes.Agentes (CNPJCPF, idAgente);
-CREATE INDEX _dta_index_Agentes_9_1977058079__K2_K1_3_4_5_6_7_8_9 ON agentes.Agentes (CNPJCPF, idAgente, CNPJCPFSuperior, TipoPessoa, DtCadastro, DtAtualizacao, DtValidade, Status, Usuario);
+ALTER TABLE agentes."Agentes" ALTER COLUMN "idAgente" SET DEFAULT nextval('agentes.agentes_idagente_seq');
+ALTER SEQUENCE agentes.agentes_idagente_seq OWNED BY agentes."Agentes"."idAgente";
+CREATE INDEX _dta_index_Agentes_9_1977058079__K2_K1 ON agentes."Agentes" ("CNPJCPF", "idAgente");
+CREATE INDEX _dta_index_Agentes_9_1977058079__K2_K1_3_4_5_6_7_8_9 ON agentes."Agentes" ("CNPJCPF", "idAgente", "CNPJCPFSuperior", "TipoPessoa", "DtCadastro", "DtAtualizacao", "DtValidade", "Status", "Usuario");
 CREATE TABLE agentes."Verificacao"
 (
   "idVerificacao" INT PRIMARY KEY NOT NULL ,
   "IdTipo" INT NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
   "Sistema" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Verificacao_Tipo FOREIGN KEY ("IdTipo") REFERENCES agentes.Tipo ("idTipo")
+  CONSTRAINT "FK_Verificacao_Tipo" FOREIGN KEY ("IdTipo") REFERENCES agentes."Tipo" ("idTipo")
 );
 CREATE SEQUENCE agentes.verificacao_idverificacao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.verificacao ALTER COLUMN idverificacao SET DEFAULT nextval('agentes.verificacao_idverificacao_seq');
-ALTER SEQUENCE agentes.verificacao_idverificacao_seq OWNED BY agentes.verificacao.idverificacao;
+ALTER TABLE agentes."Verificacao" ALTER COLUMN "idVerificacao" SET DEFAULT nextval('agentes.verificacao_idverificacao_seq');
+ALTER SEQUENCE agentes.verificacao_idverificacao_seq OWNED BY agentes."Verificacao"."idVerificacao";
 CREATE INDEX IX_Verificacao ON agentes."Verificacao" ("IdTipo");
 CREATE INDEX IX_Verificacao_1 ON agentes."Verificacao" ("Descricao");
 
@@ -114,13 +113,13 @@ CREATE TABLE agentes."Telefones"
   "Numero" VARCHAR(12) NOT NULL,
   "Divulgar" INT DEFAULT 0 NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Telefones_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes.Agentes ("idAgente"),
-  CONSTRAINT FK_Telefones_Verificacao FOREIGN KEY ("TipoTelefone") REFERENCES agentes.Verificacao ("idVerificacao"),
-  CONSTRAINT FK_Telefones_UF FOREIGN KEY ("UF") REFERENCES agentes.UF ("idUF")
+  CONSTRAINT "FK_Telefones_Agentes" FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT "FK_Telefones_Verificacao" FOREIGN KEY ("TipoTelefone") REFERENCES agentes."Verificacao" ("idVerificacao"),
+  CONSTRAINT "FK_Telefones_UF" FOREIGN KEY ("UF") REFERENCES agentes."UF" ("idUF")
 );
 CREATE SEQUENCE agentes.telefones_idtelefone_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.telefones ALTER COLUMN "idtelefone" SET DEFAULT nextval('agentes.telefones_idtelefone_seq');
-ALTER SEQUENCE agentes.telefones_idtelefone_seq OWNED BY agentes.telefones.idtelefone;
+ALTER TABLE agentes."Telefones" ALTER COLUMN "idTelefone" SET DEFAULT nextval('agentes.telefones_idtelefone_seq');
+ALTER SEQUENCE agentes.telefones_idtelefone_seq OWNED BY agentes."Telefones"."idTelefone";
 CREATE TABLE agentes."Sistema"
 (
   "idSistema" INT PRIMARY KEY NOT NULL,
@@ -151,8 +150,8 @@ CREATE TABLE agentes."CheckListDocumentosSistemas"
   "idCheckListDocumentosSistema" INT PRIMARY KEY NOT NULL ,
   "idCheckListDocumento" INT NOT NULL,
   "idSistema" INT NOT NULL,
-  CONSTRAINT FK_CheckListDocumentosSistemas_CheckListDocumentos FOREIGN KEY ("idCheckListDocumento") REFERENCES agentes.Verificacao ("idVerificacao"),
-  CONSTRAINT FK_CheckListDocumentosSistemas_Sistema FOREIGN KEY ("idSistema") REFERENCES agentes.Sistema ("idSistema")
+  CONSTRAINT FK_CheckListDocumentosSistemas_CheckListDocumentos FOREIGN KEY ("idCheckListDocumento") REFERENCES agentes."Verificacao" ("idVerificacao"),
+  CONSTRAINT FK_CheckListDocumentosSistemas_Sistema FOREIGN KEY ("idSistema") REFERENCES agentes."Sistema" ("idSistema")
 );
 CREATE TABLE agentes."ContaCorrente"
 (
@@ -173,14 +172,14 @@ CREATE TABLE agentes."DDD"
   "idDDD" INT PRIMARY KEY NOT NULL ,
   "idUF" INT NOT NULL,
   "Codigo" INTEGER NOT NULL,
-  CONSTRAINT FK_DDD_UF FOREIGN KEY ("idUF") REFERENCES agentes.UF ("idUF")
+  CONSTRAINT FK_DDD_UF FOREIGN KEY ("idUF") REFERENCES agentes."UF" ("idUF")
 );
 
 CREATE SEQUENCE agentes.ddd_idddd_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 
-ALTER TABLE agentes.ddd ALTER COLUMN idddd SET DEFAULT nextval('agentes.ddd_idddd_seq');
-ALTER SEQUENCE agentes.ddd_idddd_seq OWNED BY agentes.ddd.idddd;
-CREATE INDEX IX_DDD ON agentes.DDD (idUF);
+ALTER TABLE agentes."DDD" ALTER COLUMN "idDDD" SET DEFAULT nextval('agentes.ddd_idddd_seq');
+ALTER SEQUENCE agentes.ddd_idddd_seq OWNED BY agentes."DDD"."idDDD";
+CREATE INDEX IX_DDD ON agentes."DDD" ("idUF");
 
 CREATE TABLE agentes."Documentos"
 (
@@ -192,8 +191,8 @@ CREATE TABLE agentes."Documentos"
   "OrgaoExpedidor" VARCHAR(20) DEFAULT ' ' NOT NULL,
   "Complemento" VARCHAR(20) DEFAULT ' ' NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Documentos_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes.Agentes ("idAgente"),
-  CONSTRAINT FK_Documentos_Verificacao1 FOREIGN KEY ("TipoDocumento") REFERENCES agentes.Verificacao ("idVerificacao")
+  CONSTRAINT FK_Documentos_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT FK_Documentos_Verificacao1 FOREIGN KEY ("TipoDocumento") REFERENCES agentes."Verificacao" ("idVerificacao")
 );
 
 CREATE TABLE agentes."dtproperties"
@@ -247,19 +246,19 @@ CREATE TABLE agentes."EnderecoNacional"
 );
 
 CREATE SEQUENCE agentes.endereconacional_idendereco_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.endereconacional ALTER COLUMN idendereco SET DEFAULT nextval('agentes.endereconacional_idendereco_seq');
-ALTER SEQUENCE agentes.endereconacional_idendereco_seq OWNED BY agentes.endereconacional.idendereco;
-CREATE INDEX IX_EnderecoNacional ON agentes.EnderecoNacional (idEndereco);
-CREATE INDEX IX_EnderecoNacional_1 ON agentes.EnderecoNacional (Cidade);
-CREATE INDEX IX_EnderecoNacional_2 ON agentes.EnderecoNacional (UF);
-CREATE INDEX IX_EnderecoNacional_idAgente ON agentes.EnderecoNacional (idAgente);
+ALTER TABLE agentes."EnderecoNacional" ALTER COLUMN "idEndereco" SET DEFAULT nextval('agentes.endereconacional_idendereco_seq');
+ALTER SEQUENCE agentes.endereconacional_idendereco_seq OWNED BY agentes."EnderecoNacional"."idEndereco";
+CREATE INDEX IX_EnderecoNacional ON agentes."EnderecoNacional" ("idEndereco");
+CREATE INDEX IX_EnderecoNacional_1 ON agentes."EnderecoNacional" ("Cidade");
+CREATE INDEX IX_EnderecoNacional_2 ON agentes."EnderecoNacional" ("UF");
+CREATE INDEX IX_EnderecoNacional_idAgente ON agentes."EnderecoNacional" ("idAgente");
 
 CREATE TABLE agentes."HistoricoAgente"
 (
   "idAgente" INT PRIMARY KEY NOT NULL,
   "Historico" VARCHAR(8000) DEFAULT ' ' NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_HistoricoAgente_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes.Agentes ("idAgente")
+  CONSTRAINT FK_HistoricoAgente_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente")
 );
 
 CREATE TABLE agentes."Internet"
@@ -276,8 +275,8 @@ CREATE TABLE agentes."Internet"
 );
 
 CREATE SEQUENCE agentes.internet_idinternet_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.internet ALTER COLUMN "idinternet" SET DEFAULT nextval('agentes.internet_idinternet_seq');
-ALTER SEQUENCE agentes.internet_idinternet_seq OWNED BY agentes.internet.idinternet;
+ALTER TABLE agentes."Internet" ALTER COLUMN "idInternet" SET DEFAULT nextval('agentes.internet_idinternet_seq');
+ALTER SEQUENCE agentes.internet_idinternet_seq OWNED BY agentes."Internet"."idInternet";
 
 CREATE TABLE agentes."MesoRegiao"
 (
@@ -296,9 +295,9 @@ CREATE TABLE agentes."Municipios"
   "IdMeso" CHAR(4) NOT NULL,
   "idMicro" CHAR(5) NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
-  CONSTRAINT FK_Municipios_UF FOREIGN KEY ("idUFIBGE") REFERENCES agentes.UF ("idUF"),
-  CONSTRAINT FK_Municipios_MesoRegiao FOREIGN KEY ("IdMeso") REFERENCES agentes.MesoRegiao ("idMeso"),
-  CONSTRAINT FK_Municipios_MicroRegiao FOREIGN KEY ("idMicro") REFERENCES agentes.MicroRegiao ("idMicro")
+  CONSTRAINT FK_Municipios_UF FOREIGN KEY ("idUFIBGE") REFERENCES agentes."UF" ("idUF"),
+  CONSTRAINT FK_Municipios_MesoRegiao FOREIGN KEY ("IdMeso") REFERENCES agentes."MesoRegiao" ("idMeso"),
+  CONSTRAINT FK_Municipios_MicroRegiao FOREIGN KEY ("idMicro") REFERENCES agentes."MicroRegiao" ("idMicro")
 );
 
 CREATE INDEX IX_Municipios_idUFIBGE ON agentes."Municipios" ("idUFIBGE");
@@ -331,10 +330,10 @@ CREATE TABLE agentes."Nomes"
 );
 
 CREATE SEQUENCE agentes.nomes_idnome_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.nomes ALTER COLUMN idnome SET DEFAULT nextval('agentes.nomes_idnome_seq');
-ALTER SEQUENCE agentes.nomes_idnome_seq OWNED BY agentes.nomes.idnome;
-CREATE INDEX _dta_index_Nomes_9_5575058__K5_K2_K4 ON agentes.Nomes (Status, idAgente, Descricao);
-CREATE INDEX _dta_index_Nomes_9_5575058__K2_K4 ON agentes.Nomes (idAgente, Descricao);
+ALTER TABLE agentes."Nomes" ALTER COLUMN "idNome" SET DEFAULT nextval('agentes.nomes_idnome_seq');
+ALTER SEQUENCE agentes.nomes_idnome_seq OWNED BY agentes."Nomes"."idNome";
+CREATE INDEX _dta_index_Nomes_9_5575058__K5_K2_K4 ON agentes."Nomes" ("Status", "idAgente", "Descricao");
+CREATE INDEX _dta_index_Nomes_9_5575058__K2_K4 ON agentes."Nomes" ("idAgente", "Descricao");
 
 CREATE TABLE agentes."Ocupacao"
 (
@@ -562,7 +561,7 @@ CREATE TABLE agentes."tbTitulacaoConselheiro"
   CONSTRAINT fk_Agentes_01 FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente")
 );
 
-CREATE TABLE agentes."tbvinculo"
+CREATE TABLE agentes."tbVinculo"
 (
   "idVinculo" INT PRIMARY KEY NOT NULL ,
   "idAgenteProponente" INT NOT NULL,
@@ -573,8 +572,8 @@ CREATE TABLE agentes."tbvinculo"
 );
 
 CREATE SEQUENCE agentes.tbvinculo_idvinculo_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.tbvinculo ALTER COLUMN idvinculo SET DEFAULT nextval('agentes.tbvinculo_idvinculo_seq');
-ALTER SEQUENCE agentes.tbvinculo_idvinculo_seq OWNED BY agentes.tbvinculo.idvinculo;
+ALTER TABLE agentes."tbVinculo" ALTER COLUMN "idVinculo" SET DEFAULT nextval('agentes.tbvinculo_idvinculo_seq');
+ALTER SEQUENCE agentes.tbvinculo_idvinculo_seq OWNED BY agentes."tbVinculo"."idVinculo";
 
 CREATE TABLE agentes."tbVinculoProposta"
 (
@@ -586,8 +585,8 @@ CREATE TABLE agentes."tbVinculoProposta"
 );
 
 CREATE SEQUENCE agentes.tbvinculoproposta_idvinculoproposta_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.tbvinculoproposta ALTER COLUMN "idvinculoproposta" SET DEFAULT nextval('agentes.tbvinculoproposta_idvinculoproposta_seq');
-ALTER SEQUENCE agentes.tbvinculoproposta_idvinculoproposta_seq OWNED BY agentes.tbvinculoproposta.idvinculoproposta;
+ALTER TABLE agentes."tbVinculoProposta" ALTER COLUMN "idVinculoProposta" SET DEFAULT nextval('agentes.tbvinculoproposta_idvinculoproposta_seq');
+ALTER SEQUENCE agentes.tbvinculoproposta_idvinculoproposta_seq OWNED BY agentes."tbVinculoProposta"."idVinculoProposta";
 CREATE INDEX IX_tbVinculoProposta ON agentes."tbVinculoProposta" ("idVinculoProposta");
 
 CREATE TABLE agentes."TCU"
@@ -606,8 +605,8 @@ CREATE TABLE agentes."Vinculacao"
   "idVinculado" INT NOT NULL,
   "idVinculoPrincipal" INT DEFAULT 0 NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Vinculacao_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes.Agentes ("idAgente"),
-  CONSTRAINT FK_Vinculacao_Agentes1 FOREIGN KEY ("idVinculado") REFERENCES agentes.Agentes ("idAgente")
+  CONSTRAINT FK_Vinculacao_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT FK_Vinculacao_Agentes1 FOREIGN KEY ("idVinculado") REFERENCES agentes."Agentes" ("idAgente")
 );
 
 CREATE TABLE agentes."Visao"
@@ -621,8 +620,8 @@ CREATE TABLE agentes."Visao"
   CONSTRAINT FK_Visao_Verificacao FOREIGN KEY ("Visao") REFERENCES agentes."Verificacao" ("idVerificacao")
 );
 CREATE SEQUENCE agentes.visao_idvisao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
-ALTER TABLE agentes.visao ALTER COLUMN "idvisao" SET DEFAULT nextval('agentes.visao_idvisao_seq');
-ALTER SEQUENCE agentes.visao_idvisao_seq OWNED BY agentes.visao.idvisao;
+ALTER TABLE agentes."Visao" ALTER COLUMN "idVisao" SET DEFAULT nextval('agentes.visao_idvisao_seq');
+ALTER SEQUENCE agentes.visao_idvisao_seq OWNED BY agentes."Visao"."idVisao";
 CREATE INDEX IX_Visao ON agentes."Visao" ("idAgente");
 CREATE INDEX IX_Visao_1 ON agentes."Visao" ("Visao");
 
@@ -924,9 +923,9 @@ CREATE TABLE agentes."CheckListDocumentos"
   "idAgente" INT NOT NULL,
   "Apresentou" INT DEFAULT 0 NOT NULL,
   "Usuario" INT NOT NULL,
-  CONSTRAINT FK_CheckListDocumentos_Sistema FOREIGN KEY ("idSistema") REFERENCES agentes.Sistema ("idSistema"),
-  CONSTRAINT FK_CheckListDocumentos_Verificacao FOREIGN KEY ("idDocumento") REFERENCES agentes.Verificacao ("idVerificacao"),
-  CONSTRAINT FK_CheckListDocumentos_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes.Agentes ("idAgente")
+  CONSTRAINT FK_CheckListDocumentos_Sistema FOREIGN KEY ("idSistema") REFERENCES agentes."Sistema" ("idSistema"),
+  CONSTRAINT FK_CheckListDocumentos_Verificacao FOREIGN KEY ("idDocumento") REFERENCES agentes."Verificacao" ("idVerificacao"),
+  CONSTRAINT FK_CheckListDocumentos_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente")
 );
 CREATE INDEX IX_Agente ON agentes."CheckListDocumentos" ("idAgente");
 
