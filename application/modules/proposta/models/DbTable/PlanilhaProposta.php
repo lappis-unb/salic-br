@@ -265,9 +265,8 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
         }
 
         if ($idMunicipio) {
+            $sql->where('tpp.MunicipioDespesa = ?', $idMunicipio);
         }
-        $sql->where('tpp.MunicipioDespesa = ?', $idMunicipio);
-
 
         if ($fonte) {
             $sql->where('veri.idVerificacao = ?', $fonte);
@@ -323,6 +322,26 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 
         return $db->fetchRow($select);
 
+    }
+
+    public function buscarItensUfRegionalizacao( $idProposta ) {
+
+            $select = $this->select();
+            $select->setIntegrityCheck(false);
+            $select->from(
+                array('tpp'=>$this->_name),
+                array(
+                    'idproposta'=>'tpp.idprojeto',
+                ),
+                $this->_schema
+            );
+            $select->joinInner(array('uf' => 'uf'), 'uf.CodUfIbge = tpp.UfDespesa', null, $this->getSchema('sac'));
+            $select->where('tpp.idprojeto = ?',$idProposta);
+            $select->where("uf.Regiao = 'Sul' OR uf.Regiao = 'Sudeste'");
+
+            $db= Zend_Db_Table::getDefaultAdapter();
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+            return $db->fetchRow($select);
     }
 
 }

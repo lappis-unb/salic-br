@@ -171,7 +171,7 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
 //                   INNER JOIN SAC..tbPlanilhaItens b on (a.idPlanilhaItens = b.idPlanilhaItens)
 //                   WHERE idPlanilhaEtapa = " . $idEtapa . " ";
 
-        $select = $this->select();
+        $select = $this->select()->distinct();
         $select->setIntegrityCheck(false);
         $select->from(
             array('a' => $this->_name),

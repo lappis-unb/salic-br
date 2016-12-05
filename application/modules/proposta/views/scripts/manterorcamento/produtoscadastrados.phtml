@@ -115,7 +115,7 @@ montaGuiaLinks($controller, $links);
                                     <td>
                                         <table summary="Produto" style="margin: 0px;">
                                             <tbody>
-                                                <tr onclick="abrirDinamico('#itens_<?php echo $produtos->CodigoProduto."_".$etapa->idEtapa; ?>', $(this));" style="cursor:pointer">
+                                                <tr onclick="abrirDinamico('.itens_<?php echo $produtos->CodigoProduto."_".$etapa->idEtapa; ?>', $(this));" style="cursor:pointer">
                                                     <th width="30px">
                                                         <img style="cursor: pointer; width: 14px; height: 14px;" class="" src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" alt="Adicionar" />
                                                     </th>
@@ -177,62 +177,57 @@ montaGuiaLinks($controller, $links);
                                 </tr><!-- FIM DIV ETAPAS -->
                             <?php endif; ?>
                         <?php endforeach; ?> <!-- FIM FOREACH ETAPAS -->
-                </table>
 
-                <?php if ($this->EtapaCusto) : ?>
-                    <div class="custosadministrativos">
+                        <tr class="etapas" style="display: none;">
+                            <td>
+                                <?php if ($this->EtapaCusto) : ?>
+                                    <div class="custosadministrativos">
 
-                        <table class='tabela' style="background: transparent">
-                            <?php foreach ($this->EtapaCusto as $etapaCusto) : ?>
-                                <tr class="etapas">
-                                    <td>
-                                        <table summary="Produto" style="margin: 0px;">
-                                            <tr>
-                                                <th class="centro"><?php echo $etapaCusto->DescricaoEtapa; ?> - Produto: <?php echo $produtos->DescricaoProduto; ?></th>
-                                            </tr>
-                                            <tr id="itens_<?php echo $produtos->CodigoProduto."_".$etapaCusto->idEtapa; ?>" width="100%">
-                                                <td colspan="2" style="margin: 0; padding:10px;">
+                                        <table class='tabela' style="background: transparent">
 
-                                                    <?php if($this->ItensEtapaCusto) : ?>
-                                                        <table class="tbitem" width="100%" style='margin: 0; border: 1px solid #aaa;' >
-                                                            <tr class="destacar" align="center">
-                                                                <td>&Iacute;tem</td>
-                                                                <td>Unidade</td>
-                                                                <td>Qtde</td>
-                                                                <td>Ocorr&ecirc;ncia</td>
-                                                                <td>Valor Unit&aacute;rio</td>
-                                                                <td>Total</td>
+                                            <?php foreach ($this->EtapaCusto as $etapaCusto) : ?>
+                                                <tr class="etapas">
+                                                    <td>
+                                                        <table summary="Produto" style="margin: 0px;">
+                                                            <tr>
+                                                                <th class="centro"><?php echo $etapaCusto->DescricaoEtapa; ?> - Produto: <?php echo $produtos->DescricaoProduto; ?></th>
                                                             </tr>
+                                                            <tr id="itens_<?php echo $produtos->CodigoProduto."_".$etapaCusto->idEtapa; ?>" width="100%">
+                                                                <td colspan="2" style="margin: 0; padding:10px;">
 
-                                                            <?php foreach ($this->ItensEtapaCusto as $itemEtapaCusto) : ?>
-                                                                <?php if ($produtos->CodigoProduto == $itemEtapaCusto->CodigoProduto) :
-                                                                    if ($etapaCusto->idEtapa == $itemEtapaCusto->idEtapa) :  ?>
-                                                                        <tr class='fundo' style='background-color: #fff' align="center">
-                                                                            <td><?php echo $itemEtapaCusto->DescricaoItem; ?></td>
-                                                                            <td><?php echo $itemEtapaCusto->Unidade; ?></td>
-                                                                            <td><?php echo number_format($itemEtapaCusto->Quantidade,0) ?></td>
-                                                                            <td><?php echo number_format($itemEtapaCusto->Ocorrencia,0) ?></td>
-                                                                            <td><?php echo number_format($itemEtapaCusto->ValorUnitario, 2, ",", ".") ?></td>
-                                                                            <td><?php echo number_format(($itemEtapaCusto->Quantidade * $itemEtapaCusto->ValorUnitario) * $itemEtapaCusto->Ocorrencia, 2, ",", ".") ?></td>
-                                                                            <td><?php echo $itemEtapaCusto->Municipio; ?>/<?php echo $itemEtapaCusto->SiglaUF; ?></td>
+                                                                    <?php if($this->ItensEtapaCusto) : ?>
+                                                                        <table class="tbitem" width="100%" style='margin: 0; border: 1px solid #aaa;' >
+                                                                            <tr class="destacar" align="center">
+                                                                                <td>&Iacute;tem</td>
+                                                                                <td>Munic&iacute;pio/UF</td>
+                                                                                <td>Total</td>
+                                                                            </tr>
+                                                                            <?php foreach ($this->ItensEtapaCusto as $itemEtapaCusto) : ?>
+                                                                                   <?php if ($etapaCusto->idEtapa == $itemEtapaCusto->idEtapa) :  ?>
+                                                                                        <tr class='fundo' style='background-color: #fff' align="center">
+                                                                                            <td><?php echo $itemEtapaCusto->DescricaoItem; ?></td>
+                                                                                            <td><?php echo $itemEtapaCusto->Municipio; ?>/<?php echo $itemEtapaCusto->SiglaUF; ?></td>
+                                                                                            <td><?php echo number_format($itemEtapaCusto->valorunitario, 2, ",", ".") ?></td>
+                                                                                        </tr>
+                                                                                    <?php endif; ?>
 
-                                                                        </tr>
+                                                                            <?php endforeach; ?>
+                                                                        </table>
+                                                                    <?php else: ?>
+                                                                        <div class="center" align="center">Nenhum item cadastrado</div>
                                                                     <?php endif; ?>
-                                                                <?php endif; ?>
-                                                            <?php endforeach; ?>
+                                                                </td>
+                                                            </tr>
                                                         </table>
-                                                    <?php else: ?>
-                                                        <div class="center" align="center">Nenhum item cadastrado</div>
-                                                    <?php endif; ?>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?> <!-- FIM FOREACH ETAPAS -->
                                         </table>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?> <!-- FIM FOREACH ETAPAS -->
-                        </table>
-                    </div>
-                <?php endif; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                </table>
             </div>
 
 
@@ -279,51 +274,3 @@ function excluir(idPlanilhaProposta)
 <div id="rodapeConteudo"><span></span></div>
 <!-- ========== FIM RODAP DO CONTEDO ========== -->
 <br clear="all" />
-
-<?php
-/**
-* @todo mover para um local correto
-*/
-function calcularValorTotalProjeto($totalSolicitado) {
-$custoAdministrativo = $totalSolicitado * 0.15;
-$divulgacao = $totalSolicitado * 0.2;
-$remuneracaoCaptacaoRecurso = $totalSolicitado * 0.1;
-$controleAuditoria = $totalSolicitado * 0.1;
-$totalProjeto = $totalSolicitado + $custoAdministrativo + $divulgacao + $remuneracaoCaptacaoRecurso + $controleAuditoria;
-?>
-<tr>
-    <td>
-        <table class="tabela" style="font-size: 12pt;">
-            <tr>
-                <th colspan="2" align="center" style="font-size: 12pt;">Custos Fixos</th>
-            </tr>
-            <tr>
-                <td style="width: 50%"> Custo Administrativo </td>
-                <td class="blue" style="width: 1px;" align="center"><?php echo @number_format($custoAdministrativo, 2, ",", "."); ?></td>
-            </tr>
-            <tr>
-                <td style="width: 50%"> Divulga&ccedil;&atilde;o</td>
-                <td class="blue" style="width: 1px;" align="center"><?php echo @number_format($divulgacao, 2, ",", "."); ?></td>
-            </tr>
-            <tr>
-                <td style="width: 50%"> Remunera&ccedil;&atilde;o p/ Captar Recursos</td>
-                <td class="blue" style="width: 1px;" align="center"><?php echo @number_format($remuneracaoCaptacaoRecurso, 2, ",", "."); ?></td>
-            </tr>
-            <tr>
-                <td style="width: 50%"> Controle e Auditoria</td>
-                <td class="blue" style="width: 1px;" align="center"><?php echo @number_format($controleAuditoria, 2, ",", "."); ?></td>
-            </tr>
-        </table>
-    </td>
-</tr>
-<tr>
-    <td>
-        <table class="tabela">
-            <tr>
-                <th colspan="2" style="font-size: 14pt;" align="center">Valor Total do Projeto</th>
-                <td class="blue" style="width: 50%; font-size: 12pt; font-weight: 800;" align="center"><?php echo @number_format($totalProjeto, 2, ",", "."); ?></td>
-            </tr>
-        </table>
-    </td>
-</tr>
-<?php } ?>
