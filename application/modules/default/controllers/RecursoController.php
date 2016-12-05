@@ -142,6 +142,10 @@ class RecursoController extends GenericControllerNew
                 $where['b.Area = ?'] = 0;
             }
         }
+
+        $where['c.tpDistribuicao = ?'] = 'A';
+        $where['c.stFecharAnalise = ?'] = '0';
+        $where['c.stEstado = ?'] = '0';
         
         $tbRecurso = New tbRecurso();
         $total = $tbRecurso->painelRecursos($where, $order, null, null, true);
@@ -482,24 +486,29 @@ class RecursoController extends GenericControllerNew
             $where['a.idUnidade = ?'] = $this->idOrgao;
         }
         $where['d.stEstado = ?'] = 0;
-
-        if(isset($_POST['tipoFiltro']) || isset($_GET['tipoFiltro'])){
-            $filtro = isset($_POST['tipoFiltro']) ? $_POST['tipoFiltro'] : $_GET['tipoFiltro'];
+        
+        if(($this->_request->getParam('tipoFiltro') !== null) || ($this->_request->getParam('tipoFiltro') !== null)){
+            $filtro = ($this->_request->getParam('tipoFiltro') !== null) ? $this->_request->getParam('tipoFiltro') : $this->_request->getParam('tipoFiltro');
             $this->view->filtro = $filtro;
             switch ($filtro) {
-                case '':
-                    if($this->idPerfil == 93){ //Coord. de Parecer
-                        $where['d.siRecurso = ?'] = 3;
-                        $where['a.idAvaliador IS NULL'] = '';
-                    } else if($this->idPerfil == 94){
-                        $where['d.siRecurso = ?'] = 4;
-                        $where['a.idAvaliador = ?'] = count($dadosAgente)>0 ? $dadosAgente->idAgente : 0;
-                    }
-                    break;
-                case 'analisados':
-                    $where['d.siRecurso = ?'] = 5;
-                    $this->view->nmPagina = 'Analisados';
-                    break;
+            case '':
+                if($this->idPerfil == 93){ //Coord. de Parecer
+                    $where['d.siRecurso = ?'] = 3;
+                    $where['a.idAvaliador IS NULL'] = '';
+                } else if($this->idPerfil == 94){
+                    $where['d.siRecurso = ?'] = 4;
+                    $where['a.idAvaliador = ?'] = count($dadosAgente)>0 ? $dadosAgente->idAgente : 0;
+                }
+                break;
+            case 'emanalise':
+                $where['d.siRecurso = ?'] = 4;
+                $where['a.idAvaliador IS NOT NULL'] = '';
+                $this->view->nmPagina = 'Em análise';
+                break;
+            case 'analisados':
+                $where['d.siRecurso = ?'] = 5;
+                $this->view->nmPagina = 'Analisados';
+                break;
             }
         } else {
             $this->view->nmPagina = 'Aguardando Análise';
@@ -508,8 +517,11 @@ class RecursoController extends GenericControllerNew
                 $where['a.idAvaliador IS NULL'] = '';
             } else if($this->idPerfil == 94 || $this->idPerfil == 110){
                 $where['d.siRecurso = ?'] = 4;
-                
-                if($this->idPerfil == 110){
+
+                // se for iphan
+                $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto IPHAN
+                $pareceristaDoIphan = in_array($this->idOrgao, $outrasVinculadas) ? false : true;
+                if($this->idPerfil == 110 || ($this->idPerfil == 94 && $pareceristaDoIphan)){
                     $where['a.idAvaliador = ?'] = $this->idUsuario;
                 } else {
                     $where['a.idAvaliador = ?'] = count($dadosAgente)>0 ? $dadosAgente->idAgente : 0;
@@ -555,33 +567,50 @@ class RecursoController extends GenericControllerNew
     
     public function encaminharRecursoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-        $vinculada = $this->idOrgao;
         
-        $post = Zend_Registry::get('post');
-        $idAvaliador = (int) $post->parecerista;
-        $idDistProj = (int) $post->idDistProj;
-        $idRecurso = (int) $post->idRecurso;
-        
-        //Atualiza a tabela tbDistribuirProjeto
-        $dados = array();
-        $dados['idAvaliador'] = $idAvaliador;
-        $dados['idUsuario'] = $this->idUsuario;
-        $dados['dtDistribuicao'] = new Zend_Db_Expr('GETDATE()');
-        $where = "idDistribuirProjeto = $idDistProj";
-        $tbDistribuirProjeto = new tbDistribuirProjeto();
-        $return = $tbDistribuirProjeto->update($dados, $where);
-        
-        //Atualiza a tabela tbRecurso
-        $dados = array();
-        $dados['siRecurso'] = 4; // Enviado para análise técnica
-        $where = "idRecurso = $idRecurso";
-        $tbRecurso = new tbRecurso();
-        $return2 = $tbRecurso->update($dados, $where);
-        
-        if($return && $return2){
-            echo json_encode(array('resposta'=>true));
+        $idDistProj = $this->_request->getParam('idDistProj');
+        $idRecurso = $this->_request->getParam('idRecurso');
+
+        $numIphan = 91;
+        //Atualiza a tabela tbDistribuirReadequacao
+        if ($this->idOrgao != $numIphan) { // todos os casos exceto IPHAN
+            $idAvaliador = $this->_request->getParam('parecerista');
+            
+            $dados = array();
+            $dados['idAvaliador'] = $idAvaliador;
+            $dados['dtDistribuicao'] = new Zend_Db_Expr('GETDATE()');
+            $where = "idDistribuirProjeto = $idDistProj";
+            $tbDistribuirProjeto = new tbDistribuirProjeto();
+            $return = $tbDistribuirProjeto->update($dados, $where);
+            
+            //Atualiza a tabela tbRecurso
+            $dados = array();
+            $dados['siRecurso'] = 4; // Enviado para análise técnica
+            $where = array();
+            $where['idRecurso = ?'] = $idRecurso;
+            $tbRecurso = new tbRecurso();
+            $return2 = $tbRecurso->update($dados, $where);
+
+            if($return && $return2){
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
         } else {
-            echo json_encode(array('resposta'=>false));
+            // IPHAN
+            $idVinculada = $this->_request->getParam('parecerista');
+
+            $dados = array();
+            $dados['idUnidade'] = $idVinculada;
+            $where["idDistribuirProjeto = ? "] = $idDistProj;
+            $tbDistribuirProjeto = new tbDistribuirProjeto();
+            $return = $tbDistribuirProjeto->update($dados, $where);
+            
+            if ($return) {
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
         }
         die();
     }
@@ -857,6 +886,14 @@ class RecursoController extends GenericControllerNew
                     $dadosDP = array();
                     $dadosDP['dtDevolucao'] = new Zend_Db_Expr('GETDATE()');
                     $whereDP = "idDistribuirProjeto = ".$dDP[0]->idDistribuirProjeto;
+
+                    $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
+                    // se estiver com uma vinculada do IPHAN, retorna para IPHAN central. Senão, permanece na unidade
+                    $perfilCoordenadorVinculada = 93;
+                    if (!in_array($this->idOrgao, $outrasVinculadas) && $this->idPerfil == $perfilCoordenadorVinculada) {
+                        $dadosDP['idUnidade'] = 91; // retorna para IPHAN (topo)
+                    }
+                    
                     $tbDistribuirProjeto = new tbDistribuirProjeto();
                     $x = $tbDistribuirProjeto->update($dadosDP, $whereDP);
                     
@@ -1032,20 +1069,48 @@ class RecursoController extends GenericControllerNew
     public function coordParecerFinalizarRecursoAction() {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         
-        $post = Zend_Registry::get('post');
-        $idRecurso = (int) $post->idRecurso;
+        $idRecurso = $this->_request->getParam("idRecurso");
+        $idDistribuirProjeto = $this->_request->getParam("idDistProj");
+
+        // Se estiver com vinculada do IPHAN, volta para sede IPHAN
+        $outrasVinculadas = array(92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
         
-        //Atualiza a tabela tbRecurso
-        $dados = array();
-        $dados['siRecurso'] = 6; // Devolvido para o coordenador geral de análise
-        $where = "idRecurso = $idRecurso";
-        $tbRecurso = new tbRecurso();
-        $return = $tbRecurso->update($dados, $where);
-        
-        if($return){
-            echo json_encode(array('resposta'=>true));
+        if (in_array($this->idOrgao, $outrasVinculadas)) {
+            // retorna para o iphan e mantem siRecurso = 5          
+            $dadosDP = array();
+            $whereDP = array();
+            $tbDistribuirProjeto = new tbDistribuirProjeto();
+            $whereDP = "idDistribuirProjeto = " . $idDistribuirProjeto;
+            $dadosDP['dtFechamento'] = new Zend_Db_Expr('GETDATE()');
+            $dadosDP['idUnidade'] = 91; // retorna para IPHAN
+            $return = $tbDistribuirProjeto->update($dadosDP, $whereDP);
+            
+            if($return && $return2){
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
+            
         } else {
-            echo json_encode(array('resposta'=>false));
+            $dadosDP = array();
+            $whereDP = array();
+            $tbDistribuirProjeto = new tbDistribuirProjeto();
+            $whereDP = "idDistribuirProjeto = " . $idDistribuirProjeto;
+            $dadosDP['dtFechamento'] = new Zend_Db_Expr('GETDATE()');
+            $return = $tbDistribuirProjeto->update($dadosDP, $whereDP);
+            
+            //Atualiza a tabela tbRecurso
+            $dados = array();
+            $dados['siRecurso'] = 6; // Devolvido para o coordenador geral de análise
+            $where = "idRecurso = $idRecurso";
+            $tbRecurso = new tbRecurso();
+            $return2 = $tbRecurso->update($dados, $where);
+            
+            if($return && $return2){
+                echo json_encode(array('resposta'=>true));
+            } else {
+                echo json_encode(array('resposta'=>false));
+            }
         }
         die();
     }

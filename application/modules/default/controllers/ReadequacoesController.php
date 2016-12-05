@@ -2682,8 +2682,8 @@ class ReadequacoesController extends GenericControllerNew {
         $idDistribuirReadequacao = $this->_request->getParam("idDistProj");
         
         // Se estiver com vinculada do IPHAN, volta para sede IPHAN
-        $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
-        if (!in_array($this->idOrgao, $outrasVinculadas)) {
+        $outrasVinculadas = array(92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
+        if (in_array($this->idOrgao, $outrasVinculadas)) {
             $dadosDR = array();
             $whereDR = array();
             $tbDistribuirReadequacao = new tbDistribuirReadequacao();

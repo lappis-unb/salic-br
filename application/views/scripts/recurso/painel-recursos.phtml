@@ -4,6 +4,10 @@
             $('#formPesquisa').submit();
         });
 
+	$('#situacao_projetos').change(function() {
+	    $('#formPesquisa').submit();
+	});
+
         $('.btn_imprimir').click(function(){
             $('#formImpressao').submit();
         });
@@ -154,8 +158,9 @@
                 </td>
                 <td class="destacar bold" width="60">Situa&ccedil;&atilde;o</td>
                 <td width="200">
-                    <select name="tipoFiltro" style="width: 160px;" class="input_simples">
+                    <select name="tipoFiltro" style="width: 160px;" class="input_simples" id="situacao_projetos">
                         <option value="">Aguardando Análise</option>
+			<option value="emanalise" <?php echo filter_input(INPUT_GET, 'tipoFiltro') == 'emanalise' ? 'selected="selected"' : 'emanalise'; ?>>Em Análise</option>
                         <option value="analisados" <?php echo filter_input(INPUT_GET, 'tipoFiltro') == 'analisados' ? 'selected="selected"' : ''; ?>>Analisados</option>
                     </select>
                 </td>
@@ -237,7 +242,11 @@
                 <?php } ?>
                 
                 <?php if($this->idPerfil == 93){ //FUNÇÃO CRIADA APENAS PARA O COORDENADOR DE PARECER ?>
-                    <th style="width: 130px;">Parecerista</th>
+		<?php if ($this->idOrgao == 91) { ?>
+		<th style="width: 130px;">Superintend&ecirc;ncias do IPHAN</th>      
+		<?php } else { ?>
+		<th style="width: 130px;">Parecerista</th>
+		<?php } ?>
                 <?php } ?>
                 <th <?php echo ($this->filtro == 'analisados') ? 'style="width: 200px"' : 'style="width: 130px"'; ?>>A&ccedil;&atilde;o</th>
             </tr>
@@ -278,24 +287,35 @@
                 <?php if($this->idPerfil == 93){ //FUNÇÃO CRIADA APENAS PARA O COORDENADOR DE PARECER ?>
                 <td align="center">
                     <?php 
-                        $p = new Projetos();
-                        $dadosProjetos = $p->buscar(array('IdPRONAC = ?'=>$d->IdPRONAC))->current();
-
+                $p = new Projetos();
+                $dadosProjetos = $p->buscar(array('IdPRONAC = ?'=>$d->IdPRONAC))->current();
+                if(count($dadosProjetos)>0){
+                    $outrasVinculadas = array(92, 93, 94, 95, 335); // Vinculadas exceto IPHAN
+                    if ($this->idOrgao == 91) { // especificidade do IPHAN
+                        $o = new Orgaos();
+                        $superindendencias = $o->buscarSuperintendencias();
+                    } else if (!in_array($this->idOrgao, $outrasVinculadas)) {
+                        $a = new Agentes();
                         $Pareceristas = array();
-                        if(count($dadosProjetos)>0){
-//                            $a = new Agentes();
-//                            $Pareceristas = $a->buscarPareceristas($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
-                            
-                            $spSelecionarParecerista = new spSelecionarParecerista();
-                            $Pareceristas = $spSelecionarParecerista->exec($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento, $dadosProjetos->SolicitadoReal);
-                        }
-                    ?>
+                    $Pareceristas = $a->buscarPareceristasIphan($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento);
+                    } else {
+                        $Pareceristas = array();
+                        $spSelecionarParecerista = new spSelecionarParecerista();
+                        $Pareceristas = $spSelecionarParecerista->exec($this->idOrgao, $dadosProjetos->Area, $dadosProjetos->Segmento, $dadosProjetos->SolicitadoReal);
+                    }
+                }
+                ?>
                     <select name="tecnico" class="select_simples comboTecnico" style="width: 100%;">
                         <option value=""> - Selecione - </option>
-                        <?php foreach ($Pareceristas as $Parecerista) { ?>
-                        <!--<option value="<?php echo $Parecerista->id; ?>" <?php echo ($d->idAgente == $Parecerista->id) ? 'selected="selected"' : ''; ?>><?php echo $Parecerista->nome; ?></option>-->
-                        <option value="<?php echo $Parecerista->idParecerista; ?>" <?php echo ($d->idAgente == $Parecerista->idParecerista) ? 'selected="selected"' : ''; ?>><?php echo $Parecerista->Nome; ?></option>
-                        <?php } ?>
+                	<?php if ($this->idOrgao == 91): ?>
+			<?php foreach ($superindendencias as $superindendencia): ?>
+			<option value="<?php echo $superindendencia->Codigo; ?>"><?php echo $superindendencia->Sigla; ?></option>
+			<?php endforeach; ?>
+			<?php else: ?>
+			<?php foreach ($Pareceristas as $Parecerista): ?>
+			<option value="<?php echo $Parecerista->id; ?>" <?php echo ($d->idAgente == $Parecerista->id) ? 'selected="selected"' : ''; ?>><?php echo $Parecerista->nome; ?></option>
+			<?php endforeach; ?>
+			<?php endif; ?>
                     </select>
                 </td>
                 <?php } ?>

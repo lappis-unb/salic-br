@@ -487,6 +487,11 @@ class tbRecurso extends GenericModel
                                     WHEN tpRecurso = 2 THEN 'Recurso'
                                  END AS tpRecurso, a.siRecurso
                 "),
+                new Zend_Db_Expr("c.idUnidade"),
+                new Zend_Db_Expr("CASE 
+                                    WHEN c.idUnidade IN(262,272,166,171,179) THEN 'SECRETARIA'
+                                    ELSE d.Sigla + '- '+ ISNULL(e.Descricao,'Aguardando distribuição')
+                                 END as Vinculada")
             )
         );
 
@@ -495,7 +500,25 @@ class tbRecurso extends GenericModel
             array(''), 'SAC.dbo'
         );
 
-       //adiciona quantos filtros foram enviados
+        $select->joinLeft(
+            array('c' => 'tbDistribuirProjeto'),
+            'b.IdPRONAC = c.IdPRONAC',
+            array(''), 'SAC.dbo'
+        );
+
+        $select->joinLeft(
+            array('d' => 'Orgaos'),
+            'c.idUnidade = d.Codigo',
+            array(''), 'SAC.dbo'
+        );
+
+        $select->joinLeft(
+            array('e' => 'Nomes'),
+            'c.idAvaliador = e.idAgente',
+            array(''), 'AGENTES.dbo'
+        );
+        
+        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
         }
@@ -516,7 +539,7 @@ class tbRecurso extends GenericModel
             $select->limit($tamanho, $tmpInicio);
         }
 
-//        xd($select->assemble());
+        // xd($select->assemble());
         return $this->fetchAll($select);
     }
     
