@@ -1,0 +1,79 @@
+<div id="breadcrumb">
+    <ul>
+        <li class="first"><a
+                href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecer', 'action' => 'index'), '', true); ?>"
+                title="Ir para In&iacute;cio">In&iacute;cio</a></li>
+        <li>
+            <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecer', 'action' => 'listaprojetos'), '', true); ?>"
+               title="Localizar Parecer">Gerenciar Pareceres</a></li>
+    </ul>
+</div>
+<div id="titulo">
+    <div>
+        Enquadrar Projeto
+        <span class="voltar">
+            <a href="#" onclick="voltar();">
+                Voltar
+            </a>
+        </span>
+    </div>
+</div>
+<div id="conteudo">
+    <table class="tabela gerenciar_pareceres">
+        <tr>
+            <td align="left" class="destacar bold">&Aacute;rea / Segmento do Projeto</td>
+            <td valign="top" width="300px">
+                <label for="areaCultural">&Aacute;rea Cultural</label>
+                <select name="areaCultural" id="areaCultural" class="input_simples obrigatorio" style="width: 160px;">
+
+                    <option value=""> - Selecione - </option>
+                    <?php foreach ($this->comboareasculturais as $key => $value){ ?>
+                        <option value="<?php echo $key; ?>" <?php if ($this->projeto->Area == $key) echo "selected=\"selected\""; ?>><?php echo $value ; ?></option>
+                    <?php } ?>
+
+                </select>
+                &nbsp; <span id="erroAreaCultural" class="spanError"></span>
+
+            </td>
+            <td>
+                <label for="segmentoCultural">Segmento Cultural</label>
+                <select name="segmentoCultural" id="segmentoCultural" class="input_simples obrigatorio">
+
+                    <?php if (!isset($this->projeto->Area) || empty($this->projeto->Area)) { ?>
+                        <option value=""> - Selecione uma &Aacute;rea Cultural - </option>
+                    <?php } else { ?>
+
+                        <?php if (!isset($this->projeto->Segmento) || empty($this->projeto->Segmento)) { ?>
+                            <option value=""> - Selecione - </option>
+                        <?php } ?>
+
+                        <?php foreach ($this->combosegmentosculturais as $combosegmentocultural){ ?>
+                            <option value="<?php echo $combosegmentocultural->id; ?>" <?php if ($this->projeto->Segmento == $combosegmentocultural->id) echo "selected=\"selected\""; ?>>
+                                <?php echo $combosegmentocultural->descricao; ?>
+                            </option>
+                        <?php } ?>
+
+                    <?php } ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" class="destacar bold">Enquadramento</td>
+            <td width="250" colspan="2">
+                <input type="hidden" name="enquadramentoProjeto" id="enquadramentoProjeto" value="" class="obrigatorio" />
+                <span id="enquadramentoText" class="bold"></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <textarea cols="80" id="dsConsolidacao" name="dsConsolidacao" rows="10" class="textarea_simples" style="width: 99%"><?php echo isset($this->consolidacao[0]->ResumoParecer) ? $this->consolidacao[0]->ResumoParecer : ''; ?></textarea>
+            </td>
+        </tr>
+        <td colspan="3" align="center">
+            <input type="button" id="btSalvarConsolidacao" value=" " class="btn_salvar"/>
+        </td>
+    </table>
+    <br clear="all"/>
+</div>
+<div id="rodapeConteudo"><span></span></div>
+<br clear="all"/>

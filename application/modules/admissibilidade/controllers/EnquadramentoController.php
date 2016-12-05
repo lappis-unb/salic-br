@@ -5,7 +5,8 @@
  * @author  Wouerner <wouerner@gmail.com>
  * @author  Vinícius Feitosa da Silva <viniciusfesil@gmail.com>
  */
-class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abstract  {
+class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abstract
+{
 
     public function init()
     {
@@ -109,11 +110,47 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             "tamanho" => $tamanho
         );
 
-
-
         $this->view->paginacao = $paginacao;
         $this->view->qtdDocumentos = $total;
         $this->view->dados = $busca;
         $this->view->intTamPag = $this->intTamPag;
+    }
+
+    public function enquadrarprojetoAction()
+    {
+        try {
+
+            $get = Zend_Registry::get('get');
+            if (!isset($get->pronac) || empty($get->pronac)) {
+                throw new Exception("Número de PRONAC não informado.");
+            }
+            $idPronac = $get->pronac;
+
+            $objProjeto = new Projetos();
+            $whereProjeto['IdPRONAC '] = $idPronac;
+
+            $projeto = $objProjeto->findBy($whereProjeto);
+            if (!$projeto) {
+                throw new Exception("PRONAC não encontrado.");
+            }
+
+            $mapperArea = new Agente_Model_AreaMapper();
+            $this->view->comboareasculturais = $mapperArea->fetchPairs('Codigo', 'Descricao');
+            $this->view->projeto = $projeto;
+
+            if(count($this->view->comboareasculturais) < 1) {
+                throw new Exception("Não foram encontradas Áreas Culturais para o PRONAC informado.");
+            }
+
+            $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($projeto['Area']);
+
+            if(count($this->view->combosegmentosculturais) < 1) {
+                throw new Exception("Não foram encontradas Segmentos Culturais para o PRONAC informado.");
+            }
+
+            //$this->consolidacao[0]->ResumoParecer
+        } catch (Exception $objException) {
+            parent::message($objException->getMessage(), "/admissibilidade/enquadramento/listar");
+        }
     }
 }
