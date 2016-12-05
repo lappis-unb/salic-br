@@ -88,7 +88,6 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $buscarEstado = new Agente_Model_DbTable_UF();
         $this->view->Estados = $buscarEstado->buscar();
 
-
         $tbPreprojeto = new Proposta_Model_DbTable_PreProjeto();
         $this->view->Produtos = $tbPreprojeto->listarProdutos($this->idPreProjeto);
 
@@ -623,6 +622,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 $this->view->SalvarNovo = $tbPlanilhaProposta->salvarNovoProduto($idProposta, $idProduto, $idEtapa, $idItem,
                     $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $fonte, $idUf, $idMunicipio, $justificativa, $this->idUsuario);
 
+                $this->salvarcustosvinculados($_POST);
 	            $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 	            echo "Item cadastrado com sucesso. Deseja cadastrar um novo item?";
 	            die;
@@ -630,6 +630,116 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         }
 
         $this->view->idPreProjeto = $this->idPreProjeto;
+    }
+
+    /** @todo sugestao: chamar esse item apenas no envio ou quando for transformar a proposta
+     *  // Uma ideia eh fazer o calculo varrendo a planilha da proposta para calcular corretamente os custos
+     * salvarcustosvinculadosAction
+     *
+     * @access public
+     * @return void
+     */
+    public function salvarcustosvinculados( $produto ) {
+
+        if  ( isset($produto) && $produto['fonterecurso']=='109' ) {
+
+            $idEtapa      = '8'; // Custos Vinculados
+            $tipoCusto    = 'A';
+            $idProjeto    = $produto['idPreProjeto'];
+            $idUf         = $produto['uf'];
+            $idMunicipio  = $produto['municipio'];
+            $fonteRecurso = '109'; // incentivo fiscal
+            $vlunitario   = str_replace(",", ".", str_replace(".", "",  $produto['vlunitario']));
+            $quantidade   = (int) $_POST['quantidade'];
+            $ocorrencia   = (int) $_POST['ocorrencia'];
+            $vlTotal      =   $quantidade * $ocorrencia * $vlunitario ;
+
+            // verifica se a propposta possui algum item das regioes sudeste e sul já cadastrado na planilha orcamentaria
+            $TPP= new Proposta_Model_DbTable_PlanilhaProposta();
+            $ufRegionalizacaoPlanilha =  $TPP->buscarItensUfRegionalizacao($produto['idPreProjeto']);
+
+            $tblUf = new Uf();
+            $uf = $tblUf->findBy($idUf);
+
+            $itensPlanilhaProduto = new tbItensPlanilhaProduto();
+            $itensCustoAdministrativo = $itensPlanilhaProduto->buscarItens(5); //@todo corrigir id correto, Romulo vai criar a planilha
+
+            // definindo os criterios de regionalizacao
+            if( $ufRegionalizacaoPlanilha OR ($uf['Regiao'] == 'Sul' OR $uf['Regiao'] == 'Sudeste')) {
+                $calcDivugacao =  0.2;
+                $calcCaptacao = 0.1;
+                $limitCaptacao = 100000;
+            }else {
+                $calcDivugacao =  0.3;
+                $calcCaptacao = 0.2;
+                $limitCaptacao = 200000;
+            }
+
+            foreach ($itensCustoAdministrativo as $item ) {
+                $custosVinculados = null;
+                $valorCustoItem = null;
+                $save = true;
+
+                //fazer uma nova busca com o essencial para este caso
+                $custosVinculados = $TPP->buscarCustos($idProjeto, $tipoCusto, $idEtapa, $item->idPlanilhaItens);
+                switch($item->idPlanilhaItens) {
+                    case 40: // Custo Administrativo @todo corrigir id correto, Romulo vai criar a planilha
+                        $valorCustoItem = ( $vlTotal * 0.15) + $custosVinculados->valorunitario;
+                        break;
+                    case 2590: // Divulgacao
+                        $valorCustoItem = ( $vlTotal * $calcDivugacao ) + $custosVinculados->valorunitario;
+                        if( $valorCustoItem > 100000 )
+                            $valorCustoItem = 100000;
+                         break;
+                    case 200: // Remuneracao p/ Captar Recursos
+                        $valorCustoItem = ( $vlTotal * $calcCaptacao ) + $custosVinculados->valorunitario;
+                        if( $valorCustoItem > $limitCaptacao )
+                            $valorCustoItem = $limitCaptacao;
+                        break;
+                    case 199: // Controle e Auditoria
+                        $valorCustoItem = ( $vlTotal * 0.1 ) + $custosVinculados->valorunitario;
+                        if( $valorCustoItem > 100000 )
+                            $valorCustoItem = 100000;
+                        break;
+                    default:
+                        $save = false;
+                }
+
+                $dados = array(
+                    'idprojeto' => $produto['idPreProjeto'],
+                    'idetapa' => $idEtapa,
+                    'idplanilhaitem' => $item->idPlanilhaItens, // item rômulo vai mandar
+                    'descricao' => '',
+                    'unidade' => '1', // nao informado
+                    'quantidade' => '1',
+                    'ocorrencia' => '1',
+                    'valorunitario' => $valorCustoItem,
+                    'qtdedias' => '1',
+                    'tipodespesa' => '0',
+                    'tipopessoa' => '0',
+                    'contrapartida' => '0',
+                    'fonterecurso' => $fonteRecurso,
+                    'ufdespesa' => $idUf,
+                    'municipiodespesa' => $idMunicipio,
+                    'idusuario' => 462,
+                    'dsjustificativa' => ''
+                );
+
+                if($save) {
+
+                    if( isset($custosVinculados->idPlanilhaProposta)) {
+
+                        $where = 'idPlanilhaProposta = ' . $custosVinculados->idPlanilhaProposta;
+
+                        $TPP->update($dados, $where);
+                    }
+                    else {
+                        $TPP->insert($dados);
+                    }
+                }
+            }
+        }
+
     }
 
     /**
@@ -716,6 +826,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
+
+
 
     /**
      * salvarmesmoprodutoAction
