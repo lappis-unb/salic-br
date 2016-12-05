@@ -39,8 +39,12 @@ img {
 strong {
 	font-weight:bold;
 }
-a:link, a:active, a:visited {
+.conteudo a:link, .conteudo a:active, .conteudo a:visited {
 	text-decoration:underline;
+}
+.row {
+	 /*margin-right: auto !important;*/
+	 /*margin-left: auto !important;*/
 }
 a:hover {
 	text-decoration:none;
@@ -456,7 +460,7 @@ table tr.destacar td, table td.destacar {
 	background:#dfefc2;
 }
 table td a {
-	color:#333 !important;
+	/*color:#333 !important;*/
 }
 table th {
 	background:#abda5d;
@@ -1022,7 +1026,7 @@ div.plan span {
 	cursor:help;
 	background:url(../img/btn_ajuda.gif) center center no-repeat;
 }
-.btn {
+.conteudo .btn {
 	cursor:pointer;
 	width:auto;
 	padding:2px;
@@ -1031,7 +1035,7 @@ div.plan span {
 	background:#ccc url(../img/bg-celulas2.gif) repeat-x;
 	border:1px solid #ccc;
 }
-.btn:hover {
+.conteudo .btn:hover {
 	border:1px solid #777;
 	color:#fff;
 }

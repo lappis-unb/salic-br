@@ -11,11 +11,18 @@
  * @since 18/04/2016
  * @version 1.0
  */
-class ServicosReceitaFederal {
+class ServicosReceitaFederal
+{
 
     const urlPessoaFisica = "pessoa_fisica/consultar/";
     const urlPessoaJuridica = "pessoa_juridica/consultar/";
     const urlForcar = "?forcarBuscaNaReceita=true";
+
+    # Constante usada na classe para conexao com o WS
+    const urlServico = "/minc-pessoa/servicos/"; #Homologa��o
+
+    # Atributos da classe
+    #private static $objSoapCliente;
 
     /**
      * Endere�o do Webservice.
@@ -38,29 +45,35 @@ class ServicosReceitaFederal {
      */
     protected $password;
 
-    public function getBaseUrl() {
+    public function getBaseUrl()
+    {
         return $this->baseUrl;
     }
 
-    public function getUser() {
+    public function getUser()
+    {
         return $this->user;
     }
 
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
-    public function setBaseUrl(type $baseUrl) {
+    public function setBaseUrl(type $baseUrl)
+    {
         $this->baseUrl = $baseUrl;
         return $this;
     }
 
-    public function setUser($user) {
+    public function setUser($user)
+    {
         $this->user = $user;
         return $this;
     }
 
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->password = $password;
         return $this;
     }
@@ -73,7 +86,8 @@ class ServicosReceitaFederal {
      * @param bool $forcarBuscaReceita - Define se deve ir na Base da receita federal, mesmo j� existindo o CPF na base do MINC
      * @return ArrayObject|mixed - Resultado da consulta em Json ou ArrayObject
      */
-    public function consultarPessoaJuridicaReceitaFederal($cnpj, $forcarBuscaReceita = false, $returnJSON = false) {
+    public function consultarPessoaJuridicaReceitaFederal($cnpj, $forcarBuscaReceita = false, $returnJSON = false)
+    {
         $chars = array(".", "/", "-");
         $cnpj = str_replace($chars, "", $cnpj);
 
@@ -81,7 +95,7 @@ class ServicosReceitaFederal {
             throw new InvalidArgumentException("CPF/CNPJ inv�lido");
         }
 
-        $url = $this->baseUrl . self::urlPessoaJuridica . $cnpj;
+        $url = $this->baseUrl . self::urlServico . self::urlPessoaJuridica . $cnpj;
         if ($forcarBuscaReceita) {
             $url .= self::urlForcar;
         }
@@ -100,7 +114,7 @@ class ServicosReceitaFederal {
         } else {
             $retornoResultado = $result; #Retorno no Formato ArrayObject
         }
-#xd($retornoResultado);
+        #xd($retornoResultado);
 
         return $retornoResultado;
     }
@@ -113,12 +127,13 @@ class ServicosReceitaFederal {
      * @param bool $forcarBuscaReceita - Define se deve ir na Base da receita federal, mesmo j� existindo o CPF na base do MINC
      * @return ArrayObject|mixed - Resultado da consulta em Json ou ArrayObject
      */
-    public function consultarPessoaFisicaReceitaFederal($cpf, $forcarBuscaReceita = false, $returnJSON = false) {
+    public function consultarPessoaFisicaReceitaFederal($cpf, $forcarBuscaReceita = false, $returnJSON = false)
+    {
         if (11 == strlen($cpf) && !validaCPF($cpf)) {
-            throw new InvalidArgumentException("CPF/CNPJ inv�lido");
+            throw new InvalidArgumentException("CPF/CNPJ inválido");
         }
 
-        $url = $this->baseUrl . self::urlPessoaFisica . $cpf;
+        $url = $this->baseUrl . self::urlServico . self::urlPessoaFisica . $cpf;
         if ($forcarBuscaReceita) {
             $url .= self::urlForcar;
         }
@@ -147,12 +162,13 @@ class ServicosReceitaFederal {
      *
      * @return VOID
      */
-    public function __construct() {
-        # Carrega configura��es do Webservice
-        $config = new Zend_Config_Ini("./application/configs/config.ini");
-        $this->baseUrl = $config->get('default')->resources->view->service->wsReceita->baseUrl;
-        $this->user = $config->get('default')->resources->view->service->wsReceita->user;
-        $this->password = $config->get('default')->resources->view->service->wsReceita->password;
+    public function __construct()
+    {
+        # Carrega configuracoes do Webservice
+        $config = Zend_Registry::get('config');
+        $this->baseUrl = $config->service->receita->url;
+        $this->user = $config->service->receita->user;
+        $this->password = $config->service->receita->password;
     }
 
     /**
@@ -160,7 +176,8 @@ class ServicosReceitaFederal {
      *
      * @return VOID
      */
-    public function __sleep() {
+    public function __sleep()
+    {
         return;
     }
 
@@ -169,7 +186,8 @@ class ServicosReceitaFederal {
      *
      * @return VOID
      */
-    public function __wakeup() {
+    public function __wakeup()
+    {
         return;
     }
 
@@ -180,7 +198,8 @@ class ServicosReceitaFederal {
      * @param ARRAY $arrParameters
      * @return VOID
      */
-    public function __call($strMethod, $arrParameters) {
+    public function __call($strMethod, $arrParameters)
+    {
         debug("O metodo " . $strMethod . " nao foi encontrado na classe " . get_class($this) . ".<br />" . __FILE__ . "(linha " . __LINE__ . ")", 1);
     }
 
