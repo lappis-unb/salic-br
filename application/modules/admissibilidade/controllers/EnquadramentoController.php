@@ -46,19 +46,19 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
     public function enquadrarprojetoAction()
     {
         try {
-            $post = $this->getRequest()->getPost();
             $get = $this->getRequest()->getParams();
             if (!isset($get['pronac']) || empty($get['pronac'])) {
                 throw new Exception("Número de PRONAC não informado.");
             }
             $this->view->pronac = $get['pronac'];
             $objProjeto = new Projetos();
-            $whereProjeto['IdPRONAC'] = $this->view->idPronac;
+            $whereProjeto['IdPRONAC'] = $this->view->pronac;
             $projeto = $objProjeto->findBy($whereProjeto);
             if (!$projeto) {
                 throw new Exception("PRONAC não encontrado.");
             }
 
+            $post = $this->getRequest()->getPost();
             if (!$post) {
                 $this->carregardadosEnquadramentoProjeto($projeto);
             } else {
@@ -73,6 +73,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
     {
         $auth = Zend_Auth::getInstance();
         $post = $this->getRequest()->getPost();
+        $get = $this->getRequest()->getParams();
         $authIdentity = array_change_key_case((array) $auth->getIdentity());
         $objEnquadramento = new Enquadramento();
         $arrayInclusao = array(
@@ -81,7 +82,8 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             'Enquadramento' => $post['enquadramento_projeto'],
             'DtEnquadramento' => $objEnquadramento->getExpressionDate(),
             'Observacao' => $post['observacao'],
-            'Logon' => $authIdentity['usu_codigo']
+            'Logon' => $authIdentity['usu_codigo'],
+            'IdPRONAC' => $get['pronac'],
         );
 
         $objEnquadramento->inserir($arrayInclusao);
@@ -111,6 +113,6 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             'Sequencial' => $projeto["Sequencial"]
         );
         $arrayEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
-        $this->observacao = $arrayEnquadramento['Observacao'];
+        $this->view->observacao = $arrayEnquadramento['Observacao'];
     }
 }
