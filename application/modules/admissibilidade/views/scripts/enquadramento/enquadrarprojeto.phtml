@@ -20,7 +20,7 @@
 </div>
 <div id="conteudo">
     <form method="post"
-          action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto'), '', true); ?>">
+          action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto'), '', true) . "?pronac={$this->pronac}"; ?>">
         <table class="tabela gerenciar_pareceres">
             <tr>
                 <td align="left" class="destacar bold">&Aacute;rea / Segmento do Projeto</td>
@@ -28,7 +28,6 @@
                     <label for="areaCultural">&Aacute;rea Cultural</label>
                     <select name="areaCultural" id="areaCultural" class="input_simples obrigatorio"
                             style="width: 160px;">
-
                         <option value=""> - Selecione -</option>
                         <?php foreach ($this->comboareasculturais as $key => $value) { ?>
                             <option
@@ -42,7 +41,6 @@
                 <td>
                     <label for="segmentoCultural">Segmento Cultural</label>
                     <select name="segmentoCultural" id="segmentoCultural" class="input_simples obrigatorio">
-
                         <?php if (!isset($this->projeto['Area']) || empty($this->projeto['Area'])) { ?>
                             <option value=""> - Selecione uma &Aacute;rea Cultural -</option>
                         <?php } else { ?>
@@ -57,7 +55,6 @@
                                     <?php echo $combosegmentocultural->descricao; ?>
                                 </option>
                             <?php } ?>
-
                         <?php } ?>
                     </select>
                 </td>
@@ -72,8 +69,7 @@
             </tr>
             <tr>
                 <td colspan="3">
-                <textarea cols="80" id="observacao" name="observacao" rows="10" class="textarea_simples"
-                          style="width: 99%"><?php echo isset($this->consolidacao[0]->ResumoParecer) ? $this->consolidacao[0]->ResumoParecer : ''; ?></textarea>
+                <textarea cols="80" id="observacao" name="observacao" rows="10" class="textarea_simples" style="width: 99%"></textarea>
                 </td>
             </tr>
             <td colspan="3" align="center">

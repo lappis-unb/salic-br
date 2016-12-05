@@ -28,7 +28,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
      * @access public
      * @return void
      * @todo Falta o Romulo criar a situação adequada, usando uma generica para
-     * testes.
+     *       testes.
      */
     public function listarAction()
     {
@@ -47,60 +47,70 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
     {
         try {
             $post = $this->getRequest()->getPost();
+            $get = $this->getRequest()->getParams();
+            if (!isset($get['pronac']) || empty($get['pronac'])) {
+                throw new Exception("Número de PRONAC não informado.");
+            }
+            $this->view->pronac = $get['pronac'];
+            $objProjeto = new Projetos();
+            $whereProjeto['IdPRONAC'] = $this->view->idPronac;
+            $projeto = $objProjeto->findBy($whereProjeto);
+            if (!$projeto) {
+                throw new Exception("PRONAC não encontrado.");
+            }
 
             if (!$post) {
-                $get = $this->getRequest()->getParams();
-                if (!isset($get['pronac']) || empty($get['pronac'])) {
-                    throw new Exception("Número de PRONAC não informado.");
-                }
-                $this->view->idPronac = $get['pronac'];
-                $objProjeto = new Projetos();
-                $whereProjeto['IdPRONAC'] = $this->view->idPronac;
-                $projeto = $objProjeto->findBy($whereProjeto);
-                if (!$projeto) {
-                    throw new Exception("PRONAC não encontrado.");
-                }
-
-                $mapperArea = new Agente_Model_AreaMapper();
-                $this->view->comboareasculturais = $mapperArea->fetchPairs('Codigo', 'Descricao');
-                $this->view->projeto = $projeto;
-
-                if(count($this->view->comboareasculturais) < 1) {
-                    throw new Exception("Não foram encontradas Áreas Culturais para o PRONAC informado.");
-                }
-
-                $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($projeto['Area']);
-
-                if(count($this->view->combosegmentosculturais) < 1) {
-                    throw new Exception("Não foram encontradas Segmentos Culturais para o PRONAC informado.");
-                }
-
-                $parecerDAO 			= new Parecer();
-                $whereParecer['idPRONAC = ?'] = $this->view->idPronac;
-                $buscaParecer 			= $parecerDAO->buscar($whereParecer);
-                //$this->consolidacao->ResumoParecer
-                // $buscaParecer == descrição
+                $this->carregardadosEnquadramentoProjeto($projeto);
             } else {
-
-                $auth = Zend_Auth::getInstance(); // pega a autenticacao
-                $authIdentity = array_change_key_case((array) $auth->getIdentity());
-
-xd($authIdentity);
-                $objEnquadramento = new Enquadramento();
-                $objEnquadramento->
-                    /*
-                     * Enquadramento
-                     *  > AnoProjeto = $projeto['AnoProjeto']
-                     *  > Sequencial = $projeto['Sequencial']
-                     *  > Enquadramento = $post['enquadramento_projeto']
-                     *  > DtEnquadramento = 'getDate()'
-                     *  > Observacao = $post['observacao']
-                     *  > Logon = $authIdentity['usu_codigo']
-                     */
-                xd(123);
+                $this->salvarEnquadramentoProjeto($projeto);
             }
         } catch (Exception $objException) {
             parent::message($objException->getMessage(), "/admissibilidade/enquadramento/listar");
         }
+    }
+
+    private function salvarEnquadramentoProjeto($projeto)
+    {
+        $auth = Zend_Auth::getInstance();
+        $post = $this->getRequest()->getPost();
+        $authIdentity = array_change_key_case((array) $auth->getIdentity());
+        $objEnquadramento = new Enquadramento();
+        $arrayInclusao = array(
+            'AnoProjeto' => $projeto['AnoProjeto'],
+            'Sequencial' => $projeto['Sequencial'],
+            'Enquadramento' => $post['enquadramento_projeto'],
+            'DtEnquadramento' => $objEnquadramento->getExpressionDate(),
+            'Observacao' => $post['observacao'],
+            'Logon' => $authIdentity['usu_codigo']
+        );
+
+        $objEnquadramento->inserir($arrayInclusao);
+
+        parent::message("Enquadramento cadastrado com sucesso.", "/admissibilidade/enquadramento/listar");
+    }
+
+    private function carregardadosEnquadramentoProjeto($projeto)
+    {
+        $mapperArea = new Agente_Model_AreaMapper();
+        $this->view->comboareasculturais = $mapperArea->fetchPairs('Codigo', 'Descricao');
+        $this->view->projeto = $projeto;
+
+        if(count($this->view->comboareasculturais) < 1) {
+            throw new Exception("Não foram encontradas Áreas Culturais para o PRONAC informado.");
+        }
+
+        $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($projeto['Area']);
+
+        if(count($this->view->combosegmentosculturais) < 1) {
+            throw new Exception("Não foram encontradas Segmentos Culturais para o PRONAC informado.");
+        }
+
+        $objEnquadramento = new Enquadramento();
+        $arrayPesquisa = array(
+            'AnoProjeto' => $projeto["AnoProjeto"],
+            'Sequencial' => $projeto["Sequencial"]
+        );
+        $arrayEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
+        $this->observacao = $arrayEnquadramento['Observacao'];
     }
 }
