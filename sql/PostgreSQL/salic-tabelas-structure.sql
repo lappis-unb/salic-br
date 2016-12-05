@@ -127,10 +127,10 @@ CREATE TABLE tabelas."Usuarios"
   CONSTRAINT FK_Usuarios_Pessoas FOREIGN KEY ("usu_pessoa") REFERENCES tabelas."Pessoas" ("pes_codigo")
 );
 
-CREATE INDEX _dta_index_Usuarios_c_11_1645248916__K2 ON tabelas."Usuarios" (usu_identificacao);
+CREATE INDEX _dta_index_Usuarios_c_11_1645248916__K2 ON tabelas."Usuarios" ("usu_identificacao");
 CREATE UNIQUE INDEX usu_IDX_identificacao ON tabelas."Usuarios" (usu_identificacao);
-CREATE INDEX _dta_index_Usuarios_11_1645248916__K1_4_5 ON tabelas."Usuarios" (usu_codigo, usu_pessoa, usu_orgao);
-CREATE INDEX _dta_index_Usuarios_11_1645248916__K1_5 ON tabelas."Usuarios" (usu_codigo, usu_orgao);
+CREATE INDEX _dta_index_Usuarios_11_1645248916__K1_4_5 ON tabelas."Usuarios" ("usu_codigo", "usu_pessoa", "usu_orgao");
+CREATE INDEX _dta_index_Usuarios_11_1645248916__K1_5 ON tabelas."Usuarios" ("usu_codigo", "usu_orgao");
 
 CREATE TABLE tabelas."cdpe"
 (
@@ -161,7 +161,7 @@ CREATE TABLE tabelas."ECT_Bairros"
   "ectb_cod_bairro" INT PRIMARY KEY NOT NULL
 );
 
-CREATE INDEX ectb_IDX_esthas ON tabelas.ECT_Bairros (ectb_estruturado, ectb_hash);
+CREATE INDEX ectb_IDX_esthas ON tabelas."ECT_Bairros" ("ectb_estruturado", "ectb_hash");
 
 CREATE TABLE tabelas."ECT_Localidades"
 (
@@ -172,7 +172,7 @@ CREATE TABLE tabelas."ECT_Localidades"
   "ectl_estruturado" CHAR(12) PRIMARY KEY NOT NULL
 );
 
-CREATE INDEX ectl_IDX_ufhash ON tabelas.ECT_Localidades (ectl_UF, ectl_hash);
+CREATE INDEX ectl_IDX_ufhash ON tabelas."ECT_Localidades" ("ectl_UF", "ectl_hash");
 
 CREATE TABLE tabelas."ECT_Recusados"
 (
@@ -202,9 +202,9 @@ CREATE TABLE tabelas."Emails"
   "eml_status" SMALLINT NOT NULL
 );
 
-CREATE UNIQUE INDEX eml_IDX_conta ON tabelas."Emails" (eml_conta);
-CREATE UNIQUE INDEX eml_IDX_emadom ON tabelas."Emails" (eml_email, eml_dominio);
-CREATE INDEX eml_IDX_cpf ON tabelas.Emails (eml_CPF);
+CREATE UNIQUE INDEX eml_IDX_conta ON tabelas."Emails" ("eml_conta");
+CREATE UNIQUE INDEX eml_IDX_emadom ON tabelas."Emails" ("eml_email", "eml_dominio");
+CREATE INDEX eml_IDX_cpf ON tabelas."Emails" ("eml_CPF");
 
 CREATE TABLE tabelas."Estacoes"
 (
@@ -285,9 +285,9 @@ CREATE TABLE tabelas."Indice_Palavras"
   "ipl_codigo" INT NOT NULL,
   CONSTRAINT ipl_PK_palpostipcod PRIMARY KEY ("ipl_palavra", "ipl_posicao", "ipl_tipo", "ipl_codigo")
 );
-CREATE INDEX ipl_IDX_paltip ON tabelas.Indice_Palavras (ipl_palavra, ipl_tipo);
-CREATE INDEX ipl_IDX_tipcod ON tabelas.Indice_Palavras (ipl_tipo, ipl_codigo);
-CREATE INDEX ipl_IDX_tippal ON tabelas.Indice_Palavras (ipl_tipo, ipl_palavra);
+CREATE INDEX ipl_IDX_paltip ON tabelas."Indice_Palavras" ("ipl_palavra", "ipl_tipo");
+CREATE INDEX ipl_IDX_tipcod ON tabelas."Indice_Palavras" ("ipl_tipo", "ipl_codigo");
+CREATE INDEX ipl_IDX_tippal ON tabelas."Indice_Palavras" ("ipl_tipo", "ipl_palavra");
 
 CREATE TABLE tabelas."Localidades"
 (
@@ -299,7 +299,7 @@ CREATE TABLE tabelas."Localidades"
   "loc_CEP" VARCHAR(8),
   "loc_status" SMALLINT NOT NULL
 );
-CREATE INDEX loc_IDX_cep ON tabelas."Localidades" (loc_CEP);
+CREATE INDEX loc_IDX_cep ON tabelas."Localidades" ("loc_CEP");
 CREATE UNIQUE INDEX loc_IDX_estruturado ON tabelas."Localidades" ("loc_estruturado");
 CREATE UNIQUE INDEX loc_IDX_tipest ON tabelas."Localidades" ("loc_tipo", "loc_estruturado");
 
@@ -421,8 +421,8 @@ CREATE TABLE tabelas."MenusXGrupos"
   CONSTRAINT FK_MenusXGrupos_Grupos FOREIGN KEY ("mxg_grupo") REFERENCES tabelas."Grupos" ("gru_codigo")
 );
 
-CREATE INDEX mxg_IDX_grupo ON tabelas.MenusXGrupos (mxg_grupo);
-CREATE INDEX mxg_IDX_menu ON tabelas.MenusXGrupos (mxg_menu);
+CREATE INDEX mxg_IDX_grupo ON tabelas."MenusXGrupos" ("mxg_grupo");
+CREATE INDEX mxg_IDX_menu ON tabelas."MenusXGrupos" ("mxg_menu");
 
 CREATE TABLE tabelas."MenusXGrupos_ARES"
 (
@@ -464,7 +464,7 @@ CREATE TABLE tabelas."Orgaos"
   "org_controle" TIMESTAMP NOT NULL,
   CONSTRAINT FK_Orgaos_Pessoas FOREIGN KEY ("org_pessoa") REFERENCES tabelas."Pessoas" ("pes_codigo")
 );
-CREATE INDEX org_IDX_CEI ON tabelas.Orgaos ("org_CEI");
+CREATE INDEX org_IDX_CEI ON tabelas."Orgaos" ("org_CEI");
 
 CREATE INDEX idx_orgaos_org_pessoa ON tabelas."Orgaos" ("org_pessoa");
 
@@ -489,16 +489,16 @@ CREATE TABLE tabelas."Orgaos_Subordinados"
   "sub_nivel" SMALLINT NOT NULL,
   CONSTRAINT sub_PK_orgsup PRIMARY KEY ("sub_orgao", "sub_superior")
 );
-CREATE INDEX sub_IDX_superior ON tabelas."Orgaos_Subordinados" (sub_superior);
+CREATE INDEX sub_IDX_superior ON tabelas."Orgaos_Subordinados" ("sub_superior");
 
 CREATE TABLE tabelas."OrgaosXUsuarios"
 (
   "oxu_orgao" SMALLINT NOT NULL,
   "oxu_usuario" SMALLINT NOT NULL,
   "oxu_acesso" SMALLINT NOT NULL,
-  CONSTRAINT oxu_PK_orgusu PRIMARY KEY (oxu_orgao, oxu_usuario),
-  CONSTRAINT FK_OrgaosXUsuarios_Orgaos FOREIGN KEY (oxu_orgao) REFERENCES tabelas.Orgaos (org_codigo),
-  CONSTRAINT FK_OrgaosXUsuarios_Usuarios FOREIGN KEY (oxu_usuario) REFERENCES tabelas.Usuarios (usu_codigo)
+  CONSTRAINT oxu_PK_orgusu PRIMARY KEY ("oxu_orgao", "oxu_usuario"),
+  CONSTRAINT FK_OrgaosXUsuarios_Orgaos FOREIGN KEY ("oxu_orgao") REFERENCES tabelas."Orgaos" (org_codigo),
+  CONSTRAINT FK_OrgaosXUsuarios_Usuarios FOREIGN KEY ("oxu_usuario") REFERENCES tabelas."Usuarios" (usu_codigo)
 );
 CREATE INDEX oxu_IDX_orgao ON tabelas."OrgaosXUsuarios" (oxu_orgao);
 CREATE INDEX oxu_IDX_usuario ON tabelas."OrgaosXUsuarios" (oxu_usuario);
@@ -517,8 +517,8 @@ CREATE TABLE tabelas."Palavras2"
   "pal_texto" VARCHAR(20) NOT NULL,
   "pal_status" SMALLINT NOT NULL
 );
-CREATE UNIQUE INDEX idx_codigo ON tabelas.Palavras2 (pal_codigo);
-CREATE INDEX idx_palavra ON tabelas.Palavras2 (pal_texto);
+CREATE UNIQUE INDEX idx_codigo ON tabelas."Palavras2" ("pal_codigo");
+CREATE INDEX idx_palavra ON tabelas."Palavras2" ("pal_texto");
 
 CREATE TABLE tabelas."Pessoa_Dados"
 (
@@ -527,10 +527,10 @@ CREATE TABLE tabelas."Pessoa_Dados"
   "pdd_sequencia" SMALLINT NOT NULL,
   "pdd_dado" VARCHAR(80) NOT NULL,
   CONSTRAINT pdd_PK_pesmetseq PRIMARY KEY ("pdd_pessoa", "pdd_meta_dado", "pdd_sequencia"),
-  CONSTRAINT FK_Pessoa_Dados_Pessoas FOREIGN KEY ("pdd_pessoa") REFERENCES tabelas.Pessoas ("pes_codigo")
+  CONSTRAINT FK_Pessoa_Dados_Pessoas FOREIGN KEY ("pdd_pessoa") REFERENCES tabelas."Pessoas" ("pes_codigo")
 );
 
-CREATE INDEX pdd_IDX_dadmet ON tabelas.Pessoa_Dados (pdd_dado, pdd_meta_dado);
+CREATE INDEX pdd_IDX_dadmet ON tabelas."Pessoa_Dados" ("pdd_dado", "pdd_meta_dado");
 
 CREATE TABLE tabelas."Pessoa_Enderecos"
 (
@@ -540,8 +540,8 @@ CREATE TABLE tabelas."Pessoa_Enderecos"
   "pen_bairro" VARCHAR(60),
   "pen_CEP" CHAR(8),
   "pen_localidade" CHAR(12) NOT NULL,
-  CONSTRAINT pen_PK_pestip PRIMARY KEY (pen_pessoa, pen_tipo),
-  CONSTRAINT FK_Pessoa_Enderecos_Pessoas FOREIGN KEY (pen_pessoa) REFERENCES tabelas.Pessoas (pes_codigo)
+  CONSTRAINT pen_PK_pestip PRIMARY KEY ("pen_pessoa", "pen_tipo"),
+  CONSTRAINT FK_Pessoa_Enderecos_Pessoas FOREIGN KEY ("pen_pessoa") REFERENCES tabelas."Pessoas" ("pes_codigo")
 ----   ,
 ----   CONSTRAINT FK_Pessoa_Enderecos_Localidades FOREIGN KEY (pen_localidade) REFERENCES
 );
@@ -553,11 +553,11 @@ CREATE TABLE tabelas."Pessoa_Identificacoes"
   "pid_sequencia" SMALLINT NOT NULL,
   "pid_identificacao" VARCHAR(80) NOT NULL,
   CONSTRAINT pid_PK_pesmetseq PRIMARY KEY ("pid_pessoa", "pid_meta_dado", "pid_sequencia"),
-  CONSTRAINT FK_Pessoa_Identificacoes_Pessoas FOREIGN KEY ("pid_pessoa") REFERENCES tabelas.Pessoas ("pes_codigo")
+  CONSTRAINT FK_Pessoa_Identificacoes_Pessoas FOREIGN KEY ("pid_pessoa") REFERENCES tabelas."Pessoas" ("pes_codigo")
 );
 
-CREATE INDEX pid_IDX_idemet ON tabelas.Pessoa_Identificacoes (pid_identificacao, pid_meta_dado);
-CREATE INDEX _dta_index_Pessoa_Identificacoes_11_263671987__K3_K1_K2_4 ON tabelas.Pessoa_Identificacoes (pid_sequencia, pid_pessoa, pid_meta_dado, pid_identificacao);
+CREATE INDEX pid_IDX_idemet ON tabelas."Pessoa_Identificacoes" ("pid_identificacao", "pid_meta_dado");
+CREATE INDEX _dta_index_Pessoa_Identificacoes_11_263671987__K3_K1_K2_4 ON tabelas."Pessoa_Identificacoes" ("pid_sequencia", "pid_pessoa", "pid_meta_dado", "pid_identificacao");
 
 CREATE TABLE tabelas."pessoa_identificacoes_alteradas"
 (
@@ -574,8 +574,8 @@ CREATE TABLE tabelas."PessoasXFuncoes"
   "pxf_entidade" INT NOT NULL,
   "pxf_status" SMALLINT NOT NULL,
   CONSTRAINT pxf_PK_pesfunent PRIMARY KEY ("pxf_pessoa", "pxf_funcao", "pxf_entidade"),
-  CONSTRAINT FK_PessoasXFuncoes_Pessoas FOREIGN KEY ("pxf_pessoa") REFERENCES tabelas.Pessoas ("pes_codigo"),
-  CONSTRAINT FK_PessoasXFuncoes_Funcoes FOREIGN KEY ("pxf_funcao") REFERENCES tabelas.Funcoes ("fun_codigo")
+  CONSTRAINT FK_PessoasXFuncoes_Pessoas FOREIGN KEY ("pxf_pessoa") REFERENCES tabelas."Pessoas" ("pes_codigo"),
+  CONSTRAINT FK_PessoasXFuncoes_Funcoes FOREIGN KEY ("pxf_funcao") REFERENCES tabelas."Funcoes" ("fun_codigo")
 );
 CREATE INDEX pxf_IDX_entidade ON tabelas."PessoasXFuncoes" (pxf_entidade);
 CREATE INDEX pxf_IDX_funcao ON tabelas."PessoasXFuncoes" (pxf_funcao);
@@ -591,7 +591,7 @@ CREATE TABLE tabelas."Servicos_Intranet"
   "srv_seguranca" CHAR(10) NOT NULL
 );
 
-CREATE UNIQUE INDEX srv_PK_codigo ON tabelas.Servicos_Intranet (srv_codigo);
+CREATE UNIQUE INDEX srv_PK_codigo ON tabelas."Servicos_Intranet" ("srv_codigo");
 
 CREATE TABLE tabelas."Sistemas_ARES"
 (
@@ -630,7 +630,7 @@ CREATE TABLE tabelas."Tipos_Logradouro"
   "tlg_descricao" VARCHAR(30) NOT NULL
 );
 
-CREATE UNIQUE INDEX tlg_IDX_sigla ON tabelas.Tipos_Logradouro (tlg_sigla);
+CREATE UNIQUE INDEX tlg_IDX_sigla ON tabelas."Tipos_Logradouro" ("tlg_sigla");
 
 CREATE TABLE tabelas."UnidadesOrcamentarias"
 (
@@ -993,24 +993,24 @@ CREATE TABLE tabelas."UsuariosXOrgaosXGrupos"
   "uog_orgao" SMALLINT NOT NULL,
   "uog_grupo" SMALLINT NOT NULL,
   "uog_status" INTEGER DEFAULT 1 NOT NULL,
-  CONSTRAINT uog_PK_usuorggru PRIMARY KEY (uog_usuario, uog_orgao, uog_grupo),
-  CONSTRAINT FK_UsuariosXOrgaosXGrupos_Usuarios FOREIGN KEY (uog_usuario) REFERENCES tabelas.Usuarios (usu_codigo),
-  CONSTRAINT FK_UsuariosXOrgaosXGrupos_Orgaos FOREIGN KEY (uog_orgao) REFERENCES tabelas.Orgaos (org_codigo),
-  CONSTRAINT FK_UsuariosXOrgaosXGrupos_Grupos FOREIGN KEY (uog_grupo) REFERENCES tabelas.Grupos (gru_codigo)
+  CONSTRAINT uog_PK_usuorggru PRIMARY KEY ("uog_usuario", "uog_orgao", "uog_grupo"),
+  CONSTRAINT FK_UsuariosXOrgaosXGrupos_Usuarios FOREIGN KEY ("uog_usuario") REFERENCES tabelas."Usuarios" ("usu_codigo"),
+  CONSTRAINT FK_UsuariosXOrgaosXGrupos_Orgaos FOREIGN KEY ("uog_orgao") REFERENCES tabelas."Orgaos" ("org_codigo"),
+  CONSTRAINT FK_UsuariosXOrgaosXGrupos_Grupos FOREIGN KEY ("uog_grupo") REFERENCES tabelas."Grupos" ("gru_codigo")
 );
 
 CREATE TABLE tabelas."UsuariosXGrupos_Intranet"
 (
   "uxg_usuario" SMALLINT NOT NULL,
   "uxg_grupo" SMALLINT NOT NULL,
-  CONSTRAINT FK_UsuariosXGrupos_Intranet_Usuarios FOREIGN KEY (uxg_usuario) REFERENCES tabelas."Usuarios" (usu_codigo)
+  CONSTRAINT FK_UsuariosXGrupos_Intranet_Usuarios FOREIGN KEY ("uxg_usuario") REFERENCES tabelas."Usuarios" ("usu_codigo")
 );
-CREATE UNIQUE INDEX uxg_PK_usuagrup ON tabelas.UsuariosXGrupos_Intranet (uxg_usuario, uxg_grupo);
-CREATE INDEX uog_IDX_usuario ON tabelas.UsuariosXOrgaosXGrupos (uog_usuario);
-CREATE INDEX uxg_IDX_grupo ON tabelas.UsuariosXOrgaosXGrupos (uog_grupo);
-CREATE INDEX _dta_index_UsuariosXOrgaosXGrupos_11_1606296782__K1_K4_2_3 ON tabelas.UsuariosXOrgaosXGrupos (uog_usuario, uog_status, uog_orgao, uog_grupo);
-CREATE INDEX _dta_index_UsuariosXOrgaosXGrupos_11_1606296782__K4_K1_K3_K2 ON tabelas.UsuariosXOrgaosXGrupos (uog_status, uog_usuario, uog_grupo, uog_orgao);
-CREATE INDEX idx_uog_uog_orgao ON tabelas.UsuariosXOrgaosXGrupos (uog_orgao);
+CREATE UNIQUE INDEX uxg_PK_usuagrup ON tabelas."UsuariosXGrupos_Intranet" ("uxg_usuario", "uxg_grupo");
+CREATE INDEX uog_IDX_usuario ON tabelas."UsuariosXOrgaosXGrupos" ("uog_usuario");
+CREATE INDEX uxg_IDX_grupo ON tabelas."UsuariosXOrgaosXGrupos" ("uog_grupo");
+CREATE INDEX _dta_index_UsuariosXOrgaosXGrupos_11_1606296782__K1_K4_2_3 ON tabelas."UsuariosXOrgaosXGrupos" ("uog_usuario", "uog_status", "uog_orgao", "uog_grupo");
+CREATE INDEX _dta_index_UsuariosXOrgaosXGrupos_11_1606296782__K4_K1_K3_K2 ON tabelas."UsuariosXOrgaosXGrupos" ("uog_status", "uog_usuario", "uog_grupo", "uog_orgao");
+CREATE INDEX idx_uog_uog_orgao ON tabelas."UsuariosXOrgaosXGrupos" ("uog_orgao");
 
 CREATE TABLE tabelas."UsuariosXOrgaosXGrupos_ARES"
 (

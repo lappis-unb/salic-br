@@ -57,7 +57,7 @@ CREATE TABLE controledeacesso."sysdiagrams"
   "definition" BIT
 );
 
-CREATE UNIQUE INDEX UK_principal_name ON controledeacesso.sysdiagrams (principal_id, name);
+CREATE UNIQUE INDEX UK_principal_name ON controledeacesso."sysdiagrams" ("principal_id", "name");
 -- CREATE PROCEDURE dt_addtosourcecontrol(@vchSourceSafeINI VARCHAR, @vchProjectName VARCHAR, @vchComment VARCHAR, @vchLoginName VARCHAR, @vchPassword VARCHAR);
 -- CREATE PROCEDURE dt_addtosourcecontrol_u(@vchSourceSafeINI SYSNAME, @vchProjectName SYSNAME, @vchComment SYSNAME, @vchLoginName SYSNAME, @vchPassword SYSNAME);
 -- CREATE PROCEDURE dt_adduserobject();
