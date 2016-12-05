@@ -1,3 +1,15 @@
+Release 1.14.0
+  * Novo: [Gerenciar pareceres] adicionado ordenação todas as colunas de gerenciar parecer
+  * Novo: [Pagamento de Pareceristas] Adicionado paginação e ordenação em Registrar ordem bancária
+  * Novo: [Pagamento de Pareceristas] Implementado ordenação nas colunas
+  * Novo: [Pagamento de Pareceristas] Adicionado paginação e ordenação em finalizar Pagamento de parecerista
+  * Novo: [[Recursos] Fluxo de recursos com órgãos/superindendências (iphan) funcional
+  * Fix: [Readequações] Vinculada finaliza readequação e envia para MinC corretamente
+  * Fix: [Nova Cotação] Aumento do valor máximo de Cotação
+  * Fix: [Comprovar pagamento] Alteração de query para esquema zend_db
+  * Fix: [Relação de pagamentos] Correção do tipo de documento em relação de pagamentos
+  * Fix: [Relatório de pareceres] Data de distribuição quando vazia mostrava data de hoje (incorreta)
+
 Release 1.13.5
   * Fix: [Readequações] Fluxo completo do IPHAN para superintendências
 
