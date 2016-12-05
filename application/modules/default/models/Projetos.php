@@ -1,10 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Projetos
  *
@@ -40,10 +35,10 @@ class Projetos extends MinC_Db_Table_Abstract
         if($objParam->nomeProponente) {
             $consulta->where("p.NomeProponente LIKE '%$objParam->nomeProponente%'");
         }
-        
+
         return $consulta;
     }
-    
+
     public function listarProjetosDeUsuario(stdClass $objParam){
         $consulta = $this->select();
         $consulta->setIntegrityCheck(false);
@@ -71,7 +66,7 @@ class Projetos extends MinC_Db_Table_Abstract
 //xd($consulta->__toString());
         return $this->fetchAll($consulta);
     }
-    
+
     public function buscarTotalListarProjetosDeUsuario(stdClass $objParam){
         $total = 0;
         $consulta = $this->select();
@@ -88,10 +83,10 @@ class Projetos extends MinC_Db_Table_Abstract
         if($rs){
             $total = (int)$rs->total;
         }
-        
+
         return $total;
     }
-    
+
     public function buscarAnoExtratoDeProjeto($idPronac) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -104,7 +99,7 @@ class Projetos extends MinC_Db_Table_Abstract
 
         return $this->fetchAll($select);
     }
-    
+
     public function buscarMesExtratoDeProjeto($idPronac, $ano) {
         $this->getAdapter()->query('SET Language Brazilian');
         $select = $this->select();
@@ -124,28 +119,28 @@ class Projetos extends MinC_Db_Table_Abstract
 //xd($select->__toString());
         return $this->fetchAll($select);
     }
-    
+
     public function buscarTotalExtrato(stdClass $objParam) {
         $total = 0;
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(array('l' => 'vwExtratoDaMovimentacaoBancaria'), array('total' => new Zend_Db_Expr('COUNT(l.idPronac)')), 'dbo')
         ->where('l.idPronac = ?', (int)$objParam->idPronac);
-        
+
         # Filtros
         # Filtros
         $select = $this->montarFiltrosExtrato($select, $objParam);
-        
+
         # Busca o total de registros do banco.
 //xd($select->__toString());
         $rs = $this->fetchRow($select);
         if($rs){
             $total = (int)$rs->total;
         }
-        
+
         return $total;
     }
-    
+
     public function montarFiltrosExtrato($select, stdClass $objParam) {
         # Filtros
         if($objParam->ano){
@@ -154,10 +149,10 @@ class Projetos extends MinC_Db_Table_Abstract
         if($objParam->mes){
             $select->where("CONVERT(CHAR(2), l.dtLancamento, 101) = ?", $objParam->mes);
         }
-        
+
         return $select;
     }
-    
+
     public function buscarExtrato(stdClass $objParam) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -171,18 +166,18 @@ class Projetos extends MinC_Db_Table_Abstract
         ->where('l.idPronac = ?', (int)$objParam->idPronac)
         ->order(array('dtLancamento ASC', 'nrLancamento ASC'))
         ;
-        
+
         # Filtros
         $this->montarFiltrosExtrato($select, $objParam);
-        
+
         # Paginacao
         if($objParam->next) {
             $select->limit($objParam->next, (int)$objParam->offset);
         }
-        
+
         return $this->fetchAll($select);
     }
-    
+
     public function buscarPorPronac($pronac)
     {
         $consulta = $this->select();
@@ -219,7 +214,7 @@ class Projetos extends MinC_Db_Table_Abstract
 //xd($consulta->assemble());
         return $this->fetchRow($consulta);
     }
-    
+
     /**
      * M?todo para buscar os dados b?sicos de projetos e proponentes com projetos
      * @access public
@@ -2656,7 +2651,7 @@ class Projetos extends MinC_Db_Table_Abstract
         // pega logon para gravar alteracao da situacao
         $auth               = Zend_Auth::getInstance();
 	$Logon           = $auth->getIdentity()->usu_codigo;
-	
+
 	// grava no hist?rico a situa??o atual do projeto caso a trigger HISTORICO_INSERT esteja desabilitada
         $HistoricoInsert = new HistoricoInsert();
         if ($HistoricoInsert->statusHISTORICO_INSERT() == 1) { // desabilitada
@@ -3128,13 +3123,13 @@ class Projetos extends MinC_Db_Table_Abstract
     {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
-	
+
         $slct->from(array("a" => "vwUsuariosOrgaosGrupos"), array("usu_codigo", "usu_nome"), "TABELAS.dbo");
 	$slct->where("gru_codigo = ? ", $idGrupo);
 	$slct->where("uog_orgao = ? ", $idOrgaoDestino);
-	$slct->where("uog_status = ? ", 1);		
+	$slct->where("uog_status = ? ", 1);
 	$slct->order("2 ASC");
-	
+
         return $this->fetchAll($slct);
     }
 
@@ -6799,7 +6794,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 )
             );
 	}
-	
+
         $select->joinInner(
             array('i' => 'Interessado'), 'p.CgcCPf = i.CgcCPf',
             array(''), 'SAC.dbo'
@@ -6852,7 +6847,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 array('d' => 'tbDiligencia'), 'p.IdPRONAC = d.IdPRONAC',
                 array(''), 'SAC.dbo'
             );
-	}	
+	}
 
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
@@ -6900,7 +6895,7 @@ class Projetos extends MinC_Db_Table_Abstract
                     p.UfProjeto,
                     p.DtSituacao,
                     p.Situacao,
-                    CASE 
+                    CASE
                         WHEN r.idRelatorioTecnico is null
                         THEN 'False'
                         ELSE 'True'
@@ -6941,7 +6936,7 @@ class Projetos extends MinC_Db_Table_Abstract
 			  array('r' => 'tbRelatorioTecnico'), 'r.idPRONAC = p.IdPRONAC AND cdGrupo = 124',
 			  array(''), 'SAC.DBO'
         );
-	
+
         if($filtro == 'diligenciados'){
             $select->joinInner(
                 array('d' => 'tbDiligencia'), 'p.IdPRONAC = d.IdPRONAC and d.DtSolicitacao = (
@@ -6986,7 +6981,7 @@ class Projetos extends MinC_Db_Table_Abstract
 
         $select = $this->select();
         $select->setIntegrityCheck(false);
-	
+
 	// em aguardando an�lise, nao puxa t�cnico nem relat�rio
 	if ($filtro == '') {
             $select->from(
@@ -6999,7 +6994,7 @@ class Projetos extends MinC_Db_Table_Abstract
                         p.Situacao
                     ")
                 )
-            );  
+            );
 
 	} else {
             $select->from(
@@ -7013,9 +7008,9 @@ class Projetos extends MinC_Db_Table_Abstract
                         ISNULL(usu_Nome, ' ') as Tecnico
                     ")
                 )
-            );  
+            );
 	}
-	
+
         $select->joinInner(
             array('i' => 'Interessado'), 'p.CgcCPf = i.CgcCPf',
             array(''), 'SAC.dbo'
@@ -7048,7 +7043,7 @@ class Projetos extends MinC_Db_Table_Abstract
 			  array(''), 'TABELAS.DBO'
             );
 	}
-	
+
         if($filtro == 'diligenciados'){
             $select->joinInner(
                 array('d' => 'tbDiligencia'), 'p.IdPRONAC = d.IdPRONAC and d.DtSolicitacao = (
@@ -7079,12 +7074,12 @@ class Projetos extends MinC_Db_Table_Abstract
             }
             $select->limit($tamanho, $tmpInicio);
         }
-	
+
 	//xd($select->assemble());
         return $this->fetchAll($select);
     }
-    
-    
+
+
     /*
      * Criada em 26/02/2015
      * @author: Jefferson Alessandro
@@ -7165,151 +7160,193 @@ class Projetos extends MinC_Db_Table_Abstract
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-  
-     public function painelDadosBancariosExtrato($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){     
-         $select = $this->select();
-         $select->setIntegrityCheck(false);
-         $select->from('vwExtratoDaMovimentacaoBancaria');                                                     
-        
-        //adiciona quantos filtros foram enviados                                                              
-         foreach ($where as $coluna => $valor) {                                                               
-             $select->where($coluna, $valor);                                                                  
-         }                                                                                                     
-         
-         if ($qtdeTotal) {
-             
-             return $this->fetchAll($select)->count();
-         }   
-         
-         //adicionando linha order ao select
-         $select->order($order);
-         
-         // paginacao
-         if ($tamanho > -1) {
-             $tmpInicio = 0;
-             if ($inicio > -1) {
-                 $tmpInicio = $inicio;
-             }   
-             $select->limit($tamanho, $tmpInicio);
-         }   
-         return $this->fetchAll($select);
-     }
-        
-     public function painelDadosConciliacaoBancaria($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){     
-         $select = $this->select();
-         $select->setIntegrityCheck(false);
-         $select->from('vwConciliacaoBancaria');                                                     
-        
-        //adiciona quantos filtros foram enviados                                                              
-         foreach ($where as $coluna => $valor) {                                                               
-             $select->where($coluna, $valor);                                                                  
-         }                                                                                                     
-         
-         if ($qtdeTotal) {
-             
-             return $this->fetchAll($select)->count();
-         }   
-         
-         //adicionando linha order ao select
-         $select->order($order);
-         
-         // paginacao
-         if ($tamanho > -1) {
-             $tmpInicio = 0;
-             if ($inicio > -1) {
-                 $tmpInicio = $inicio;
-             }   
-             $select->limit($tamanho, $tmpInicio);
-         }   
-         return $this->fetchAll($select);
-     }
 
-     public function inconsistenciasComprovacao($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){     
+     public function painelDadosBancariosExtrato($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){
          $select = $this->select();
          $select->setIntegrityCheck(false);
-         $select->from('vwInconsistenciaNaComprovacao');                                                     
-        
-        //adiciona quantos filtros foram enviados                                                              
-         foreach ($where as $coluna => $valor) {                                                               
-             $select->where($coluna, $valor);                                                                  
-         }                                                                                                     
-         
-         if ($qtdeTotal) {
-             
-             return $this->fetchAll($select)->count();
-         }   
-         
-         //adicionando linha order ao select
-         $select->order($order);
-         
-         // paginacao
-         if ($tamanho > -1) {
-             $tmpInicio = 0;
-             if ($inicio > -1) {
-                 $tmpInicio = $inicio;
-             }   
-             $select->limit($tamanho, $tmpInicio);
-         }   
-         return $this->fetchAll($select);
-     }
-  
-     public function extratoDeSaldoBancario($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){     
-         $select = $this->select();
-         $select->setIntegrityCheck(false);
-         $select->from('vwExtratoDeSaldoDasContasBancarias');                                                     
-        
-        //adiciona quantos filtros foram enviados                                                              
-         foreach ($where as $coluna => $valor) {                                                               
-             $select->where($coluna, $valor);                                                                  
-         }                                                                                                     
-         
-         if ($qtdeTotal) {
-             return $this->fetchAll($select)->count();
-         }   
-         
-         //adicionando linha order ao select
-         $select->order($order);
-         
-         // paginacao
-         if ($tamanho > -1) {
-             $tmpInicio = 0;
-             if ($inicio > -1) {
-                 $tmpInicio = $inicio;
-             }   
-             $select->limit($tamanho, $tmpInicio);
+         $select->from('vwExtratoDaMovimentacaoBancaria');
+
+        //adiciona quantos filtros foram enviados
+         foreach ($where as $coluna => $valor) {
+             $select->where($coluna, $valor);
          }
-         return $this->fetchAll($select);
-     }
-      
-     public function extratoContaMovimentoConsolidado($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){     
-         $select = $this->select();
-         $select->setIntegrityCheck(false);
-         $select->from('vwExtratoDaContaMovimentoConsolidado');                                                     
-        
-        //adiciona quantos filtros foram enviados                                                              
-         foreach ($where as $coluna => $valor) {                                                               
-             $select->where($coluna, $valor);                                                                  
-         }                                                                                                     
-         
+
          if ($qtdeTotal) {
-             
+
              return $this->fetchAll($select)->count();
-         }   
-         
+         }
+
          //adicionando linha order ao select
          $select->order($order);
-         
+
          // paginacao
          if ($tamanho > -1) {
              $tmpInicio = 0;
              if ($inicio > -1) {
                  $tmpInicio = $inicio;
-             }   
+             }
              $select->limit($tamanho, $tmpInicio);
          }
          return $this->fetchAll($select);
      }
 
+     public function painelDadosConciliacaoBancaria($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){
+         $select = $this->select();
+         $select->setIntegrityCheck(false);
+         $select->from('vwConciliacaoBancaria');
 
-        
+        //adiciona quantos filtros foram enviados
+         foreach ($where as $coluna => $valor) {
+             $select->where($coluna, $valor);
+         }
+
+         if ($qtdeTotal) {
+
+             return $this->fetchAll($select)->count();
+         }
+
+         //adicionando linha order ao select
+         $select->order($order);
+
+         // paginacao
+         if ($tamanho > -1) {
+             $tmpInicio = 0;
+             if ($inicio > -1) {
+                 $tmpInicio = $inicio;
+             }
+             $select->limit($tamanho, $tmpInicio);
+         }
+         return $this->fetchAll($select);
+     }
+
+     public function inconsistenciasComprovacao($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){
+         $select = $this->select();
+         $select->setIntegrityCheck(false);
+         $select->from('vwInconsistenciaNaComprovacao');
+
+        //adiciona quantos filtros foram enviados
+         foreach ($where as $coluna => $valor) {
+             $select->where($coluna, $valor);
+         }
+
+         if ($qtdeTotal) {
+
+             return $this->fetchAll($select)->count();
+         }
+
+         //adicionando linha order ao select
+         $select->order($order);
+
+         // paginacao
+         if ($tamanho > -1) {
+             $tmpInicio = 0;
+             if ($inicio > -1) {
+                 $tmpInicio = $inicio;
+             }
+             $select->limit($tamanho, $tmpInicio);
+         }
+         return $this->fetchAll($select);
+     }
+
+     public function extratoDeSaldoBancario($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){
+         $select = $this->select();
+         $select->setIntegrityCheck(false);
+         $select->from('vwExtratoDeSaldoDasContasBancarias');
+
+        //adiciona quantos filtros foram enviados
+         foreach ($where as $coluna => $valor) {
+             $select->where($coluna, $valor);
+         }
+
+         if ($qtdeTotal) {
+             return $this->fetchAll($select)->count();
+         }
+
+         //adicionando linha order ao select
+         $select->order($order);
+
+         // paginacao
+         if ($tamanho > -1) {
+             $tmpInicio = 0;
+             if ($inicio > -1) {
+                 $tmpInicio = $inicio;
+             }
+             $select->limit($tamanho, $tmpInicio);
+         }
+         return $this->fetchAll($select);
+     }
+
+     public function extratoContaMovimentoConsolidado($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false){
+         $select = $this->select();
+         $select->setIntegrityCheck(false);
+         $select->from('vwExtratoDaContaMovimentoConsolidado');
+
+        //adiciona quantos filtros foram enviados
+         foreach ($where as $coluna => $valor) {
+             $select->where($coluna, $valor);
+         }
+
+         if ($qtdeTotal) {
+
+             return $this->fetchAll($select)->count();
+         }
+
+         //adicionando linha order ao select
+         $select->order($order);
+
+         // paginacao
+         if ($tamanho > -1) {
+             $tmpInicio = 0;
+             if ($inicio > -1) {
+                 $tmpInicio = $inicio;
+             }
+             $select->limit($tamanho, $tmpInicio);
+         }
+         return $this->fetchAll($select);
+     }
+
+
+
+    /**
+     * listarPorSituacao
+     *
+     * @param mixed $situacao
+     * @access public
+     * @return void
+     * @todo verificar campos da grid.
+     */
+    public function listarPorSituacao($situacao, $order= null, $limit = null)
+    {
+        $sql = $this->select();
+
+        $sql->from(
+            array("p" => $this->_name),
+            array('pronac' => New Zend_Db_Expr('p.AnoProjeto + p.Sequencial'),
+            'p.nomeProjeto',
+            'p.IdPRONAC',
+            'p.CgcCpf',
+            'p.idpronac',
+            'p.Area as cdarea',
+            'p.ResumoProjeto',
+            'p.UfProjeto',
+            'p.DtInicioExecucao',
+            'p.DtFimExecucao',
+            //'DtInicioCaptacao' => New Zend_Db_Expr("dateadd(day,1,getdate())"),
+            //'DtFimCaptacao' => New Zend_Db_Expr("case when CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year(getdate())) + '/12/31' then pr.DtFimExecucao else CONVERT(char(4),year(getdate())) + '/12/31' end"),
+            //'DtSolicitacao' => new Zend_Db_Expr('(select top 1 DtSolicitacao from SAC.dbo.tbDiligencia dili1 where dili1.idPronac = pr.idPronac order by dili1.DtSolicitacao desc)'),
+            //'DtResposta' => new Zend_Db_Expr('(select top 1 DtResposta from SAC.dbo.tbDiligencia dili2 where dili2.idPronac = pr.idPronac order by dili2.DtSolicitacao desc)'),
+            //'stEnviado' => new Zend_Db_Expr('(select top 1 stEnviado from SAC.dbo.tbDiligencia dili3 where dili3.idPronac = pr.idPronac order by dili3.DtSolicitacao desc)')
+            ),
+            $this->_schema
+        );
+
+        $sql->where('p.situacao = ?', $situacao);
+
+        !empty($order) ? $sql->order($order) : null;
+        !empty($limit) ? $sql->limit($limit) : null;
+
+        $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        return $this->_db->fetchAll($sql);
+    }
 }
