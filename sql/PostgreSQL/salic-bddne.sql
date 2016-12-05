@@ -68,6 +68,7 @@ CREATE TABLE bddne."tbFaixaCepUf"
   "cdFimCep" CHAR(8) NOT NULL,
   CONSTRAINT PK_tbFaixaCepUf PRIMARY KEY ("cdUf", "cdInicioCep")
 );
+
 CREATE TABLE bddne."tbFaixaPostalUnidOperacional"
 (
   "nrUnidadeOperacional" INT NOT NULL,
@@ -182,25 +183,25 @@ CREATE TABLE bddne."tbUnidadeOperacional"
   "cdUnidadeOcupacao" CHAR(36)
 );
 
-ALTER TABLE bddne.tbBairro ADD FOREIGN KEY ("nrLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
-ALTER TABLE bddne.tbBairroVariacao ADD FOREIGN KEY ("nrBairro") REFERENCES bddne."tbBairro" ("nrBairro");
-ALTER TABLE bddne.tbCaixaPostalComunitaria ADD FOREIGN KEY ("nrLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
+ALTER TABLE bddne."tbBairro" ADD FOREIGN KEY ("nrLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
+ALTER TABLE bddne."tbBairroVariacao" ADD FOREIGN KEY ("nrBairro") REFERENCES bddne."tbBairro" ("nrBairro");
+ALTER TABLE bddne."tbCaixaPostalComunitaria" ADD FOREIGN KEY ("nrLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
 CREATE UNIQUE INDEX IX_tbCaixaPostalComunitaria ON bddne."tbCaixaPostalComunitaria" ("cdCep");
-ALTER TABLE bddne.tbFaixaCaixaPostalComunitaria ADD FOREIGN KEY (nrCaixaPostal) REFERENCES bddne."tbCaixaPostalComunitaria" ("nrCaixaPostal");
-ALTER TABLE bddne.tbFaixaCepBairro ADD FOREIGN KEY ("nrBairro") REFERENCES bddne."tbBairro" ("nrBairro") ON UPDATE CASCADE;
-ALTER TABLE bddne.tbFaixaCepLocalidade ADD FOREIGN KEY ("nrLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
-ALTER TABLE bddne.tbFaixaPostalUnidOperacional ADD FOREIGN KEY ("nrUnidadeOperacional") REFERENCES bddne."tbUnidadeOperacional" ("nrUnidadeOperacional");
-ALTER TABLE bddne.tbGrandeUsuario ADD FOREIGN KEY ("nrLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
+ALTER TABLE bddne."tbFaixaCaixaPostalComunitaria" ADD FOREIGN KEY ("nrCaixaPostal") REFERENCES bddne."tbCaixaPostalComunitaria" ("nrCaixaPostal");
+ALTER TABLE bddne."tbFaixaCepBairro" ADD FOREIGN KEY ("nrBairro") REFERENCES bddne."tbBairro" ("nrBairro") ON UPDATE CASCADE;
+ALTER TABLE bddne."tbFaixaCepLocalidade" ADD FOREIGN KEY ("nrLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
+ALTER TABLE bddne."tbFaixaPostalUnidOperacional" ADD FOREIGN KEY ("nrUnidadeOperacional") REFERENCES bddne."tbUnidadeOperacional" ("nrUnidadeOperacional");
+ALTER TABLE bddne."tbGrandeUsuario" ADD FOREIGN KEY ("nrLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
 CREATE UNIQUE INDEX IX_tbGrandeUsuario ON bddne."tbGrandeUsuario" ("cdCep");
 CREATE UNIQUE INDEX IX_tbGrandeUsuario1 ON bddne."tbGrandeUsuario" ("nrBairro");
-ALTER TABLE bddne.tbLocalidade ADD FOREIGN KEY ("nrSubLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
+ALTER TABLE bddne."tbLocalidade" ADD FOREIGN KEY ("nrSubLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
 CREATE UNIQUE INDEX IX_tbLocalidade ON bddne."tbLocalidade" ("cdCep");
 CREATE UNIQUE INDEX IX_tbLocalidade1 ON bddne."tbLocalidade" ("cdUf", "nmLocalidade");
-ALTER TABLE bddne.tbLocalidadeVariacao ADD FOREIGN KEY ("nrLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
+ALTER TABLE bddne."tbLocalidadeVariacao" ADD FOREIGN KEY ("nrLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
 -- ALTER TABLE bddne.tbLogradouroSeccionamento ADD FOREIGN KEY (cdCep) REFERENCES bddne.;
-ALTER TABLE bddne.tbLogradouroUf ADD FOREIGN KEY ("nrLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
+ALTER TABLE bddne."tbLogradouroUf" ADD FOREIGN KEY ("nrLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
 CREATE UNIQUE INDEX IX_tbLogradouroUf1 ON bddne."tbLogradouroUf" ("cdCep");
 -- ALTER TABLE bddne.tbLogradouroVariacao ADD FOREIGN KEY (cdCep) REFERENCES ;
-ALTER TABLE bddne.tbUnidadeOperacional ADD FOREIGN KEY ("nrLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
+ALTER TABLE bddne."tbUnidadeOperacional" ADD FOREIGN KEY ("nrLocalidade") REFERENCES bddne."tbLocalidade" ("nrLocalidade");
 CREATE UNIQUE INDEX IX_tbUnidadeOperacional ON bddne."tbUnidadeOperacional" ("cdUf");
 CREATE UNIQUE INDEX IX_tbUnidadeOperacional1 ON bddne."tbUnidadeOperacional" ("nrInicioBairro");
