@@ -157,8 +157,8 @@ CREATE TABLE bdcorporativo."tbLogradouroVariacao"
   CONSTRAINT pk_tbLogradouroVariacao PRIMARY KEY ("nrLogradouroUf", "nrLogradouroVariacao", "cdCep")
 );
 
-"CREATE TABLE bdcorporativo.tbUnidadeOperacional
-"(
+CREATE TABLE bdcorporativo."tbUnidadeOperacional"
+(
   "nrUnidadeOperacional" INT PRIMARY KEY NOT NULL,
   "cdUf" CHAR(2) NOT NULL,
   "nrLocalidade" INT NOT NULL,
@@ -185,15 +185,15 @@ ALTER TABLE bdcorporativo."tbBairroVariacao" ADD FOREIGN KEY ("nrBairro") REFERE
 ALTER TABLE bdcorporativo."tbCaixaPostalComunitaria" ADD FOREIGN KEY ("nrLocalidade") REFERENCES bdcorporativo."tbLocalidade" ("nrLocalidade");
 ALTER TABLE bdcorporativo."tbFaixaCaixaPostalComunitaria" ADD FOREIGN KEY ("nrCaixaPostal") REFERENCES bdcorporativo."tbCaixaPostalComunitaria" ("nrCaixaPostal");
 -- ALTER TABLE bdcorporativo.tbFaixaCepBairro ADD FOREIGN KEY (nrBairro) REFERENCES bdcorporativo.tbBairro (nrBairro) ON bdcorporativo.UPDATE CASCADE;
-ALTER TABLE bdcorporativo."tbFaixaCepLocalidade" ADD FOREIGN KEY ("nrLocalidade") REFERENCES bdcorporativo.tbLocalidade ("nrLocalidade");
+ALTER TABLE bdcorporativo."tbFaixaCepLocalidade" ADD FOREIGN KEY ("nrLocalidade") REFERENCES bdcorporativo."tbLocalidade" ("nrLocalidade");
 ALTER TABLE bdcorporativo."tbFaixaPostalUnidOperacional" ADD FOREIGN KEY ("nrUnidadeOperacional") REFERENCES bdcorporativo."tbUnidadeOperacional" ("nrUnidadeOperacional");
-ALTER TABLE bdcorporativo."tbGrandeUsuario" ADD FOREIGN KEY ("nrLocalidade") REFERENCES bdcorporativo.tbLocalidade (nrLocalidade);
+ALTER TABLE bdcorporativo."tbGrandeUsuario" ADD FOREIGN KEY ("nrLocalidade") REFERENCES bdcorporativo."tbLocalidade" ("nrLocalidade");
 CREATE UNIQUE INDEX IX_tbGrandeUsuario_cdCep  ON bdcorporativo."tbGrandeUsuario" ("cdCep");
 ALTER TABLE bdcorporativo."tbLocalidade" ADD FOREIGN KEY ("nrSubLocalidade") REFERENCES bdcorporativo."tbLocalidade" ("nrLocalidade");
 ALTER TABLE bdcorporativo."tbLocalidadeVariacao" ADD FOREIGN KEY ("nrLocalidade") REFERENCES bdcorporativo."tbLocalidade" ("nrLocalidade");
 -- ALTER TABLE bdcorporativo.tbLogradouroSeccionamento ADD FOREIGN KEY (cdCep) REFERENCES bdcorporativo.;
 -- ALTER TABLE bdcorporativo.tbLogradouroVariacao ADD FOREIGN KEY (cdCep) REFERENCES bdcorporativo.;
-ALTER TABLE bdcorporativo.tbUnidadeOperacional ADD FOREIGN KEY ("nrLocalidade") REFERENCES bdcorporativo."tbLocalidade" ("nrLocalidade");
+ALTER TABLE bdcorporativo."tbUnidadeOperacional" ADD FOREIGN KEY ("nrLocalidade") REFERENCES bdcorporativo."tbLocalidade" ("nrLocalidade");
 
 
 
