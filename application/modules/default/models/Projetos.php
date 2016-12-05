@@ -10,7 +10,7 @@ class Projetos extends MinC_Db_Table_Abstract
 
     protected $_name = 'projetos';
     protected $_schema = 'sac';
-    protected $_banco = 'sac';
+
     public $_total = 0;
     public $_totalRegistros;
     private $codOrgao = null;
@@ -7304,8 +7304,6 @@ class Projetos extends MinC_Db_Table_Abstract
          }
          return $this->fetchAll($select);
      }
-
-
 
     /**
      * listarPorSituacao
