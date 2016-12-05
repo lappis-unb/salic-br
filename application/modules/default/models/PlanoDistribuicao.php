@@ -73,9 +73,9 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
                             "a.idproduto = b.codigo",
                             array("Produto"=>"b.descricao"),
                             $this->_schema);
-            $slct->joinLeft(array("c"=>"verificacao"),
-                            "a.idposicaodalogo = c.idverificacao",
-                            array("PosicaoLogomarca"=>"c.descricao"),  $this->_schema);
+//            $slct->joinLeft(array("c"=>"verificacao"),
+//                            "a.idposicaodalogo = c.idverificacao",
+//                            array("PosicaoLogomarca"=>"c.descricao"),  $this->_schema);
             $slct->joinInner(array("ar"=>"area"),
                             "a.area = ar.codigo",
                             array("DescricaoArea"=>"ar.descricao"),  $this->_schema);
