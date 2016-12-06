@@ -71,7 +71,10 @@ montaGuiaLinks($controller, $links);
         background: transparent;
         border-spacing: 0px;
     }
-
+    table tr.principal {
+        text-transform: uppercase;
+        font-weight: bold;
+    }
     table th {
         background: #f1f1f1;
         color: #212121;
@@ -110,7 +113,7 @@ montaGuiaLinks($controller, $links);
 
                 <table class='tabela' style="background: transparent">
                     <tbody>
-                        <tr><td align="left"><input type="button" id="" class="btn_adicionar produto" /><?php echo $produtos->DescricaoProduto;?></td></tr>
+                        <tr class="principal"><td align="left"><input type="button" id="" class="btn_adicionar produto" /><?php echo $produtos->DescricaoProduto;?></td></tr>
 
                         <?php foreach ($this->Etapa as $etapa) : ?>
                             <?php $CadastrarProduto = $this->url(array('controller' => 'manterorcamento', 'action' => 'cadastrarprodutos'))."?produto=".$produtos->CodigoProduto."&etapa=".$etapa->idEtapa."&etapaNome=".$etapa->DescricaoEtapa."&idPreProjeto=".$produtos->idProposta;?>
@@ -192,51 +195,45 @@ montaGuiaLinks($controller, $links);
         <?php endforeach; ?>
             <?php if(!empty($valorProjeto) ) : ?>
                 <?php if ($this->EtapaCusto) : ?>
-                    <div class="custosadministrativos">
+                    <div class="custosvinculados">
 
                         <table class='tabela' style="background: transparent">
 
                             <?php foreach ($this->EtapaCusto as $etapaCusto) : ?>
-                                <tr>
-                                    <td>
-                                        <table summary="Produto" style="margin: 0px;">
-                                            <tr  onclick="abrirDinamico('.itens_<?php echo $produtos->CodigoProduto."_".$etapaCusto->idEtapa; ?>', $(this));" style="cursor:pointer">
-                                                <th width="30px">
-                                                    <img style="cursor: pointer; width: 14px; height: 14px;" class="" src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" alt="Adicionar" />
-                                                </th>
-                                                <th class="esquerda"><?php echo $etapaCusto->DescricaoEtapa; ?></th>
-                                            </tr>
-                                            <tr class="itens_<?php echo $produtos->CodigoProduto."_".$etapaCusto->idEtapa; ?>" width="100%" style="display:none">
-                                                <td colspan="2" style="margin: 0; padding:10px;">
 
-                                                    <?php if($this->ItensEtapaCusto) : ?>
-                                                        <table class="tbitem" width="100%" style='margin: 0; border: 1px solid #aaa;' >
-                                                            <tr class="destacar" align="center">
-                                                                <td>Item</td>
-                                                                <td>Munic&iacute;pio/UF</td>
-                                                                <td>Total</td>
-                                                            </tr>
-                                                            <?php $valorTotalCustosVinculados = null; ?>
-                                                            <?php foreach ($this->ItensEtapaCusto as $itemEtapaCusto) : ?>
-                                                                <?php if ($etapaCusto->idEtapa == $itemEtapaCusto->idEtapa) :  ?>
-                                                                    <tr class='fundo' style='background-color: #fff' align="center">
-                                                                        <td><?php echo $itemEtapaCusto->DescricaoItem; ?></td>
-                                                                        <td><?php echo $itemEtapaCusto->Municipio; ?>/<?php echo $itemEtapaCusto->SiglaUF; ?></td>
-                                                                        <td><?php echo number_format($itemEtapaCusto->valorunitario, 2, ",", ".") ?></td>
-                                                                        <?php $valorTotalCustosVinculados = $itemEtapaCusto->valorunitario + $valorTotalCustosVinculados; ?>
-                                                                    </tr>
-                                                                <?php endif; ?>
+                                <tr class="principal">
+                                    <td align="left"><input type="button" id="" class="btn_adicionar produto" /><?php echo $etapaCusto->DescricaoEtapa; ?></td>
+                                </tr>
 
-                                                            <?php endforeach; ?>
-                                                        </table>
-                                                    <?php else: ?>
-                                                        <div class="center" align="center">Nenhum item cadastrado</div>
+                                <tr class="etapas" width="100%" style="display:none">
+                                    <td colspan="2" style="margin: 0; padding:10px;">
+
+                                        <?php if($this->ItensEtapaCusto) : ?>
+                                            <table class="tbitem" width="100%" style='margin: 0; border: 1px solid #aaa;' >
+                                                <tr class="destacar" align="center">
+                                                    <td>Item</td>
+                                                    <td>Munic&iacute;pio/UF</td>
+                                                    <td>Total</td>
+                                                </tr>
+                                                <?php $valorTotalCustosVinculados = null; ?>
+                                                <?php foreach ($this->ItensEtapaCusto as $itemEtapaCusto) : ?>
+                                                    <?php if ($etapaCusto->idEtapa == $itemEtapaCusto->idEtapa) :  ?>
+                                                        <tr class='fundo' style='background-color: #fff' align="center">
+                                                            <td><?php echo $itemEtapaCusto->DescricaoItem; ?></td>
+                                                            <td><?php echo $itemEtapaCusto->Municipio; ?>/<?php echo $itemEtapaCusto->SiglaUF; ?></td>
+                                                            <td><?php echo number_format($itemEtapaCusto->valorunitario, 2, ",", ".") ?></td>
+                                                            <?php $valorTotalCustosVinculados = $itemEtapaCusto->valorunitario + $valorTotalCustosVinculados; ?>
+                                                        </tr>
                                                     <?php endif; ?>
-                                                </td>
-                                            </tr>
-                                        </table>
+
+                                                <?php endforeach; ?>
+                                            </table>
+                                        <?php else: ?>
+                                            <div class="center" align="center">Nenhum item cadastrado</div>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
+
                             <?php endforeach; ?>
                         </table>
 
