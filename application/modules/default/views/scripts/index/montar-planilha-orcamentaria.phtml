@@ -294,7 +294,7 @@ if($this->tipoPlanilha == 0){ ?>
             <td>
                 <table class="tabela">
                     <tr>
-                        <td colspan="6" class="blue" style="font-size: 14pt;">Valor do Projeto</td>
+                        <td colspan="6" class="blue" style="font-size: 14pt;">Valor Total do Projeto</td>
                         <td class="blue" style="width: 1px; font-size: 12pt; font-weight: 800;" align="right"><?php echo @number_format($TotalSolicitado, 2, ",", "."); ?></td>
                         <td style="width: 20%">&nbsp;</td>
                     </tr>
@@ -302,7 +302,7 @@ if($this->tipoPlanilha == 0){ ?>
             </td>
         </tr>
         <?php
-        calcularValorTotalProjeto($TotalSolicitado);
+        //calcularValorTotalProjeto($TotalSolicitado);
         ?>
     <?php else: ?>
         <tr>
