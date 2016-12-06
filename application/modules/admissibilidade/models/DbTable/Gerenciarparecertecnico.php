@@ -370,7 +370,14 @@ class Admissibilidade_Model_DbTable_Gerenciarparecertecnico extends MinC_Db_Tabl
     return $db->fetchAll($sql);
     }
 
-
+    /**
+     * @name Uf
+     * @param $pronac
+     * @return array
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  ${DATE}
+     */
     public static function Uf($pronac)
     {
     	$sql = "SELECT distinct
