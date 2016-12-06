@@ -11,7 +11,6 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     protected $_schema= "sac";
     protected $_name = "preprojeto";
     protected $_primary = "idPreProjeto";
-    protected $_banco = "sac";
 
     public $_totalRegistros = null;
 
@@ -1611,8 +1610,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
             ->from(array('Usuarios'), 'usu_nome', 'tabelas.dbo')
-            ->where('usu_codigo = x.idTecnico')
-            ;
+            ->where('usu_codigo = x.idTecnico');
 
         $x = array(
             new Zend_Db_Expr('CONVERT(CHAR(20),x.DtAvaliacao, 120) AS DtAdmissibilidade'),

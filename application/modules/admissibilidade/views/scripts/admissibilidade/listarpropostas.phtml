@@ -37,7 +37,7 @@ function abrirDinamico(elemento, obj) {
 
 function transformarProposta(idPreProjeto, unidade) {
     $("#modalTransformarProposta").html('<Center><br>Aguarde...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif"></center>');
-    jqAjaxLinkSemLoading('<?php echo $this->baseUrl(); ?>/admissibilidade/transformar-proposta-em-projeto?idPreProjeto='+idPreProjeto+'&recuperarUnidade=sim', '', 'modalTransformarProposta');
+    jqAjaxLinkSemLoading('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/transformar-proposta-em-projeto?idPreProjeto='+idPreProjeto+'&recuperarUnidade=sim', '', 'modalTransformarProposta');
     // modal com os ddos do dirigente
     $("#modalTransformarProposta").dialog("destroy");
     $("#modalTransformarProposta").dialog({
@@ -51,7 +51,7 @@ function transformarProposta(idPreProjeto, unidade) {
             },
             'Sim':function(){
                 $("#modalTransformarProposta").html('<Center><br>Gerando PRONAC...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif"></center>');
-                jqAjaxLinkSemLoading('<?php echo $this->baseUrl(); ?>/admissibilidade/transformar-proposta-em-projeto?idPreProjeto='+idPreProjeto, '', 'modalTransformarProposta');
+                jqAjaxLinkSemLoading('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/transformar-proposta-em-projeto?idPreProjeto='+idPreProjeto, '', 'modalTransformarProposta');
                 $("#modalTransformarProposta").dialog({
                     buttons: {
                         "OK":function(){
@@ -94,7 +94,7 @@ function transformarProposta(idPreProjeto, unidade) {
         <tr onclick="abrirDinamico('#analiseInicial', $(this))" style="cursor:pointer">
             <th align="left">
                 <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica"/>
-                An�lise Inicial: Conformidade Visual
+                Análise Inicial: Conformidade Visual
             </th>
         </tr>
         <!-- ============ ANALISE INICIAL  ============== -->
@@ -117,7 +117,8 @@ function transformarProposta(idPreProjeto, unidade) {
                         <th>Arquivar</th>
                         <th>Imprimir</th>
                     </tr>
-                    </thead><tbody>
+                    </thead>
+                    <tbody>
 
                     <?php
                         $auxIdPreProjetoInicial = 0;
@@ -142,19 +143,19 @@ function transformarProposta(idPreProjeto, unidade) {
                         } ?>
                             
                     <tr>
-                        <td><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaInicial->idProjeto; ?>"><?php echo $propostaInicial->idProjeto; ?></a></td>
+                        <td><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaInicial->idProjeto; ?>"><?php echo $propostaInicial->idProjeto; ?></a></td>
                         <td><?php echo $propostaInicial->NomeProposta; ?></td>
                         <td><?php echo str_replace(" ", " as ", data::dataBrasileira($propostaInicial->DtMovimentacao)); ?></td>
                         <td align="center" <?php echo $cor ?> > <?php echo $propostaInicial->diasDesdeMovimentacao; ?></td>
                         
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaInicial->idAgente; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaInicial->idAgente; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/kdict.png" title="Vizualizar outras Propostas deste Proponente" alt="Vizualizar outras Propostas deste Proponente"/>
                             </a>
                         </td>
                          <td><?php echo $propostaInicial->Tecnico; ?></td>
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaInicial->idProjeto; ?>&realizar_analise=sim">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaInicial->idProjeto; ?>&realizar_analise=sim">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/eye.png" title="Fazer An�lise Visual da Proposta" alt="Fazer An�lise Visual da Proposta"/>
                             </a>
                         </td>
@@ -164,7 +165,7 @@ function transformarProposta(idPreProjeto, unidade) {
                         <td align="center"></td>
                         <td align="center"></td>
                         <td align="center">
-                        	<input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" " onclick="window.open('<?php echo $this->baseUrl();?>/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaInicial->idProjeto; ?>');" />
+                        	<input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" " onclick="window.open('<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaInicial->idProjeto; ?>');" />
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -206,15 +207,13 @@ function transformarProposta(idPreProjeto, unidade) {
                     </thead><tbody>
                     <?php
                         $auxIdPreProjetoDocumental = 0;
-                    ?>
-                    <?php foreach($this->propostasVisual as $propostaVisual): $ctPropostasGeral++; ?>
-                    <?php
+
+                        foreach($this->propostasVisual as $propostaVisual): $ctPropostasGeral++;
+
                         if($auxIdPreProjetoDocumental == $propostaVisual->idProjeto){
                             continue;
                         }
                         $auxIdPreProjetoDocumental = $propostaVisual->idProjeto;
-                    ?>
-                           <?php
                         if($propostaVisual->diasDesdeMovimentacao < 11){
                         	$cor = 'style = "color: #228B22"';
                         }                       
@@ -223,35 +222,36 @@ function transformarProposta(idPreProjeto, unidade) {
                         }
                         else{
                         	$cor = 'style = "color: #FF0000"';
-                        } ?>
+                        }
+                    ?>
                     <tr>
-                        <td><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaVisual->idProjeto; ?>"><?php echo $propostaVisual->idProjeto; ?></a></td>
+                        <td><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaVisual->idProjeto; ?>"><?php echo $propostaVisual->idProjeto; ?></a></td>
                         <td><?php echo $propostaVisual->NomeProposta; ?></td>
                         <td><?php echo str_replace(" ", " as ", data::dataBrasileira($propostaVisual->DtMovimentacao)); ?></td>
                         <td align="center" <?php echo $cor ?> > <?php echo $propostaVisual->diasCorridos; ?></td>
                         
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaVisual->idAgente; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaVisual->idAgente; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/kdict.png" title="Vizualizar outras Propostas deste Proponente" alt="Vizualizar outras Propostas deste Proponente"/>
                             </a>
                         </td>
                          <td><?php echo $propostaVisual->Tecnico; ?></td>
                         <td align="center"></td>
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/analisedocumental?idPreProjeto=<?php echo $propostaVisual->idProjeto; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/analisedocumental?idPreProjeto=<?php echo $propostaVisual->idProjeto; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/documents.png" title="Fazer An�lise Documental da Proposta" alt="Fazer An�lise Documental da Proposta"/>
                             </a>
                         </td>
                         <td align="center"></td>
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/encaminharproposta?idPreProjeto=<?php echo $propostaVisual->idProjeto; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/encaminharproposta?idPreProjeto=<?php echo $propostaVisual->idProjeto; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/enviar.png" title="Encaminhar Proposta" alt="Encaminhar Proposta"/>
                             </a>
                         </td>
                         <td align="center"></td>
                         <td align="center"></td>
                         <td align="center">
-                        	<input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" " onclick="window.open('<?php echo $this->baseUrl();?>/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaVisual->idProjeto; ?>');" />
+                        	<input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" " onclick="window.open('<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaVisual->idProjeto; ?>');" />
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -304,45 +304,45 @@ function transformarProposta(idPreProjeto, unidade) {
                         ?>
 
                     <tr>
-                        <td><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>"><?php echo $propostaDocumental->idProjeto; ?></a></td>
+                        <td><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>"><?php echo $propostaDocumental->idProjeto; ?></a></td>
                         <td><?php echo $propostaDocumental->NomeProposta; ?></td>
                         <td><?php echo str_replace(" ", " as ", data::dataBrasileira($propostaDocumental->DtAdmissibilidade)); ?></td>
                         <td align="center" <?php echo $cor ?> > <?php echo $propostaDocumental->diasCorridos; ?></td>
                         
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaDocumental->idAgente; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaDocumental->idAgente; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/kdict.png" title="Vizualizar outras Propostas deste Proponente" alt="Vizualizar outras Propostas deste Proponente"/>
                             </a>
                         </td>
                          <td><?php echo $propostaDocumental->Tecnico; ?></td>
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/eye.png" title="Fazer An�lise Visual da Proposta" alt="Fazer An�lise Visual da Proposta" />
                             </a>
                         </td>
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/analisedocumental?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/analisedocumental?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/documents.png" title="Fazer An�lise Documental da Proposta" alt="Fazer An�lise Documental da Proposta" />
                             </a>
                         </td>
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/despacharproposta?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/despacharproposta?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/despacho.png" title="Vizualizar despachos da Proposta" alt="Vizualizar despachos da Proposta" />
                             </a>
                         </td>
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/encaminharproposta?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/encaminharproposta?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/enviar.png" title="Encaminhar Proposta" alt="Encaminhar Proposta"/>
                             </a>
                         </td>
                         <td align="center"></td>
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/arquivarproposta?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/arquivarproposta?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/archive.png" title="Arquivar Proposta" alt="Arquivar Proposta"/>
                             </a>
                         </td>
                         <td align="center">
-                        	<input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" " onclick="window.open('<?php echo $this->baseUrl();?>/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>');" />
+                        	<input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" " onclick="window.open('<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>');" />
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -352,6 +352,7 @@ function transformarProposta(idPreProjeto, unidade) {
         </tr>
     </table>
     <?php endif; ?>
+
     <!-- ============ ANALISE FINAL  ============== -->
     <?php if(!empty($this->propostasFinal)): ?>
     <table class="tabela">
@@ -398,7 +399,7 @@ function transformarProposta(idPreProjeto, unidade) {
                         ?>
 
                     <tr>
-                        <td><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>"><?php echo $propostaFinal->idProjeto; ?></a></td>
+                        <td><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>"><?php echo $propostaFinal->idProjeto; ?></a></td>
                         <td><?php echo $propostaFinal->NomeProposta; ?></td>
                         <td><?php echo str_replace(" ", " as ", data::dataBrasileira($propostaFinal->DtAdmissibilidade)); ?></td>
                         <td align="center" <?php echo $cor ?> > <?php echo $propostaFinal->diasCorridos; ?></td>
@@ -407,24 +408,24 @@ function transformarProposta(idPreProjeto, unidade) {
                         
                         <td align="center">
 
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaFinal->idAgente; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaFinal->idAgente; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/kdict.png" title="Vizualizar outras Propostas deste Proponente" alt="Vizualizar outras Propostas deste Proponente" />
                             </a>
                         </td>
                         <td><?php echo $propostaFinal->Tecnico; ?></td>
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>&realizar_analise=sim">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>&realizar_analise=sim">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/eye.png" title="Fazer An�lise Visual da Proposta" alt="Fazer An�lise Visual da Proposta" />
                             </a>
                         </td>
                         <td align="center"></td>
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/despacharproposta?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/despacharproposta?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/despacho.png" title="Vizualizar despachos da Proposta" alt="Vizualizar despachos da Proposta"/>
                             </a>
                         </td>
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/encaminharproposta?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/encaminharproposta?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/enviar.png" title="Encaminhar Proposta" alt="Encaminhar Proposta"/>
                             </a>
                         </td>
@@ -432,12 +433,12 @@ function transformarProposta(idPreProjeto, unidade) {
                             <img src="<?php echo $this->baseUrl();?>/public/img/ico/transformar.png" title="Transformar Proposta em Projeto" alt="Transformar Proposta em Projeto" style="cursor: pointer" onclick="transformarProposta(<?php echo $propostaFinal->idProjeto; ?>, 'IBRAN')"/>
                         </td>
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/confirmararquivarproposta?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/confirmararquivarproposta?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/archive.png" title="Arquivar Proposta" alt="Arquivar Proposta"/>
                             </a>
                         </td>
                         <td align="center">
-                        	<input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" " onclick="window.open('<?php echo $this->baseUrl();?>/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>');" />
+                        	<input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" " onclick="window.open('<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>');" />
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -469,15 +470,15 @@ function transformarProposta(idPreProjeto, unidade) {
                     </thead><tbody>
                     <?php foreach($this->propostasNaoEnviadas as $propostaNaoEnviada): ?>
                     <tr>
-                        <td><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaNaoEnviada->idProjeto; ?>"><?php echo $propostaNaoEnviada->idProjeto; ?></a></td>
+                        <td><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaNaoEnviada->idProjeto; ?>"><?php echo $propostaNaoEnviada->idProjeto; ?></a></td>
                         <td><?php echo $propostaNaoEnviada->NomeProposta; ?></td>
                         <td align="center">
-                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaNaoEnviada->idAgente; ?>">
+                            <a href="<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaNaoEnviada->idAgente; ?>">
                                 <img src="<?php echo $this->baseUrl();?>/public/img/ico/kdict.png" title="Vizualizar proposta por Proponente" alt="Vizualizar proposta por Proponente"/>
                             </a>
                         </td>
                         <td align="center">
-                        	<input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" " onclick="window.open('<?php echo $this->baseUrl();?>/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaNaoEnviada->idProjeto; ?>');" />
+                        	<input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" " onclick="window.open('<?php echo $this->baseUrl();?>/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaNaoEnviada->idProjeto; ?>');" />
                         </td>
                     </tr>
                 <?php endforeach; ?>

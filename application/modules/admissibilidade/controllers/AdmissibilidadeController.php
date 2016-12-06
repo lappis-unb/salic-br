@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class Proposta_AdmissibilidadeController
  *
@@ -14,7 +15,8 @@
  * @copyright © 2010 - Ministerio da Cultura - Todos os direitos reservados.
  * @link http://salic.cultura.gov.br
  */
-class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_Abstract {
+class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_Abstract
+{
 
     private $idPreProjeto = null;
     private $idUsuario = null;
@@ -30,7 +32,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
      * @param void
      * @return void
      */
-    public function init() {
+    public function init()
+    {
         $auth = Zend_Auth::getInstance(); // instancia da autenticacao
 
         // verifica as permissoes
@@ -74,19 +77,19 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         parent::init();
 
         //recupera ID do pre projeto (proposta)
-        if(!empty ($_REQUEST['idPreProjeto'])){
+        if (!empty ($_REQUEST['idPreProjeto'])) {
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
         }
 
         isset($auth->getIdentity()->usu_codigo) ? $this->idUsuario = $auth->getIdentity()->usu_codigo : $this->idUsuario = $auth->getIdentity()->IdUsuario;
         //$this->idUsuario = $auth->getIdentity()->usu_codigo;
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
-        if(isset($auth->getIdentity()->usu_codigo)){
+        if (isset($auth->getIdentity()->usu_codigo)) {
 
             $this->codGrupo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu�rio para a vis�o
             $this->codOrgao = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
 
-            $this->codOrgaoSuperior = (!empty($auth->getIdentity()->usu_org_max_superior))?$auth->getIdentity()->usu_org_max_superior:$auth->getIdentity()->usu_orgao;
+            $this->codOrgaoSuperior = (!empty($auth->getIdentity()->usu_org_max_superior)) ? $auth->getIdentity()->usu_org_max_superior : $auth->getIdentity()->usu_orgao;
         }
 
     }
@@ -98,16 +101,20 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
      * @return void
      */
 
-    public function indexAction(){
+    public function indexAction()
+    {
         $this->_redirect("/admissibilidade/admissibilidade/listar-propostas");
     }
 
-    public function validarAcessoAdmissibilidade(){
-        if(empty($this->idPreProjeto)){
+    public function validarAcessoAdmissibilidade()
+    {
+        if (empty($this->idPreProjeto)) {
             parent::message("Necessário informar o n�mero da proposta.", "/admissibilidade/admissibilidade/listar-propostas", "ALERT");
         }
     }
-    public function listarpropostasproponenteAction() {
+
+    public function listarpropostasproponenteAction()
+    {
 
     }
 
@@ -130,44 +137,44 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $dadosProjeto = $Projetos->buscar(array('idProjeto = ?' => $this->idPreProjeto))->current();
 
         $Pronac = null;
-        if(count($dadosProjeto)>0){
-            $Pronac = $dadosProjeto->AnoProjeto.$dadosProjeto->Sequencial;
+        if (count($dadosProjeto) > 0) {
+            $Pronac = $dadosProjeto->AnoProjeto . $dadosProjeto->Sequencial;
         }
         $this->view->Pronac = $Pronac;
 
-        if(isset($dados[0]->CNPJCPFdigirente) && $dados[0]->CNPJCPFdigirente != "") {
+        if (isset($dados[0]->CNPJCPFdigirente) && $dados[0]->CNPJCPFdigirente != "") {
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $tblNomes = new Nomes();
             foreach ($dados as $v) {
-                $rsAgente = $tblAgente->buscarAgenteNome(array('CNPJCPF=?'=>$v->CNPJCPFdigirente))->current();
+                $rsAgente = $tblAgente->buscarAgenteNome(array('CNPJCPF=?' => $v->CNPJCPFdigirente))->current();
                 $rsDirigentes[$rsAgente->idAgente]['CNPJCPFDirigente'] = $rsAgente->CNPJCPF;
                 $rsDirigentes[$rsAgente->idAgente]['idAgente'] = $rsAgente->idAgente;
                 $rsDirigentes[$rsAgente->idAgente]['NomeDirigente'] = $rsAgente->Descricao;
             }
 
             $tbDirigenteMandato = new tbAgentesxVerificacao();
-            foreach($rsDirigentes as $dirigente) {
-                $rsMandato = $tbDirigenteMandato->listarMandato(array('idEmpresa = ?' => $idEmpresa, 'idDirigente = ?' => $dirigente['idAgente'],'stMandato = ?' => 0));
+            foreach ($rsDirigentes as $dirigente) {
+                $rsMandato = $tbDirigenteMandato->listarMandato(array('idEmpresa = ?' => $idEmpresa, 'idDirigente = ?' => $dirigente['idAgente'], 'stMandato = ?' => 0));
                 $NomeDirigente = $dirigente['NomeDirigente'];
                 $arrMandatos[$NomeDirigente] = $rsMandato;
             }
         }
 
         $this->view->dirigentes = $rsDirigentes;
-        $this->view->mandatos   = $arrMandatos;
+        $this->view->mandatos = $arrMandatos;
         //============== fim codigo dirigente ================
 
         $propostaPorEdital = false;
-        if($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0){
+        if ($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0) {
             $propostaPorEdital = true;
         }
-        $this->view->isEdital   = $propostaPorEdital;
-        $this->view->itensTelefone              = Proposta_Model_AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
-        $this->view->itensPlanosDistribuicao    = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
-        $this->view->itensFonteRecurso          = Proposta_Model_AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
-        $this->view->itensLocalRealiazacao      = Proposta_Model_AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
-        $this->view->itensDeslocamento          = Proposta_Model_AnalisarPropostaDAO::buscarDeslocamento($idPreProjeto);
-        $this->view->itensPlanoDivulgacao       = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDivulgacao($idPreProjeto);
+        $this->view->isEdital = $propostaPorEdital;
+        $this->view->itensTelefone = Proposta_Model_AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
+        $this->view->itensPlanosDistribuicao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
+        $this->view->itensFonteRecurso = Proposta_Model_AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
+        $this->view->itensLocalRealiazacao = Proposta_Model_AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
+        $this->view->itensDeslocamento = Proposta_Model_AnalisarPropostaDAO::buscarDeslocamento($idPreProjeto);
+        $this->view->itensPlanoDivulgacao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDivulgacao($idPreProjeto);
 
         //DOCUMENTOS ANEXADOS PROPOSTA
         $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
@@ -181,24 +188,24 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         //DOCUMENTOS ANEXADOS NA DILIGENCIA
         $tblAvaliacaoProposta = new AvaliacaoProposta();
-        $rsAvaliacaoProposta = $tblAvaliacaoProposta->buscar(array("idProjeto = ?"=>$idPreProjeto, "idArquivo ?"=>new Zend_Db_Expr("IS NOT NULL")));
+        $rsAvaliacaoProposta = $tblAvaliacaoProposta->buscar(array("idProjeto = ?" => $idPreProjeto, "idArquivo ?" => new Zend_Db_Expr("IS NOT NULL")));
         $tbArquivo = new tbArquivo();
         $arrDadosArquivo = array();
         $arrRelacionamentoAvaliacaoDocumentosExigidos = array();
-        if(count($rsAvaliacaoProposta) > 0){
-            foreach($rsAvaliacaoProposta as $avaliacao){
-                $arrDadosArquivo[$avaliacao->idArquivo] = $tbArquivo->buscar(array("idArquivo = ?"=>$avaliacao->idArquivo));
+        if (count($rsAvaliacaoProposta) > 0) {
+            foreach ($rsAvaliacaoProposta as $avaliacao) {
+                $arrDadosArquivo[$avaliacao->idArquivo] = $tbArquivo->buscar(array("idArquivo = ?" => $avaliacao->idArquivo));
                 $arrRelacionamentoAvaliacaoDocumentosExigidos[$avaliacao->idArquivo] = $avaliacao->idCodigoDocumentosExigidos;
             }
         }
         $this->view->relacionamentoAvaliacaoDocumentosExigidos = $arrRelacionamentoAvaliacaoDocumentosExigidos;
-        $this->view->itensDocumentoPreProjeto   = $arrDadosArquivo;
+        $this->view->itensDocumentoPreProjeto = $arrDadosArquivo;
 
         //PEGANDO RELACAO DE DOCUMENTOS EXIGIDOS(GERAL, OU SEJA, TODO MUNDO)
         $tblDocumentosExigidos = new DocumentosExigidos();
         $rsDocumentosExigidos = $tblDocumentosExigidos->buscar()->toArray();
         $arrDocumentosExigidos = array();
-        foreach($rsDocumentosExigidos as $documentoExigido){
+        foreach ($rsDocumentosExigidos as $documentoExigido) {
             $arrDocumentosExigidos[$documentoExigido["Codigo"]] = $documentoExigido;
         }
         $this->view->documentosExigidos = $arrDocumentosExigidos;
@@ -220,17 +227,17 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $this->view->idPreProjeto = $this->idPreProjeto;
         $pesquisaView = $this->_getParam('pesquisa');
-        if($pesquisaView == 'proposta') {
+        if ($pesquisaView == 'proposta') {
             $this->view->menu = 'inativo';
             $this->view->tituloTopo = 'Consultar dados da proposta';
         }
 
-        if($propostaPorEdital){
+        if ($propostaPorEdital) {
             $tbFormDocumentoDAO = new tbFormDocumento();
-            $edital = $tbFormDocumentoDAO->buscar(array('idEdital = ?'=>$this->view->itensGeral[0]->idEdital,'idClassificaDocumento = ?'=>$this->COD_CLASSIFICACAO_DOCUMENTO));
+            $edital = $tbFormDocumentoDAO->buscar(array('idEdital = ?' => $this->view->itensGeral[0]->idEdital, 'idClassificaDocumento = ?' => $this->COD_CLASSIFICACAO_DOCUMENTO));
 
             //busca o nome do EDITAL
-            $edital = $tbFormDocumentoDAO->buscar(array('idEdital = ?'=>$this->view->itensGeral[0]->idEdital));
+            $edital = $tbFormDocumentoDAO->buscar(array('idEdital = ?' => $this->view->itensGeral[0]->idEdital));
             $nmEdital = $edital[0]->nmFormDocumento;
             $this->view->nmEdital = $nmEdital;
 
@@ -239,17 +246,17 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $tbPerguntaDAO = new tbPergunta();
             $tbRespostaDAO = new tbResposta();
 
-            foreach($edital as $registro){
-                $questoes = $tbPerguntaDAO->montarQuestionario($registro["nrFormDocumento"],$registro["nrVersaoDocumento"]);
+            foreach ($edital as $registro) {
+                $questoes = $tbPerguntaDAO->montarQuestionario($registro["nrFormDocumento"], $registro["nrVersaoDocumento"]);
                 $questionario = '';
-                if(is_object($questoes) and count($questoes) > 0){
+                if (is_object($questoes) and count($questoes) > 0) {
                     foreach ($questoes as $questao) {
                         $resposta = '';
                         $where = array(
-                                'nrFormDocumento = ?'       =>$registro["nrFormDocumento"]
-                                ,'nrVersaoDocumento = ?'    =>$registro["nrVersaoDocumento"]
-                                ,'nrPergunta = ?'           =>$questao->nrPergunta
-                                ,'idProjeto = ?'            =>$this->idPreProjeto
+                            'nrFormDocumento = ?' => $registro["nrFormDocumento"]
+                        , 'nrVersaoDocumento = ?' => $registro["nrVersaoDocumento"]
+                        , 'nrPergunta = ?' => $questao->nrPergunta
+                        , 'idProjeto = ?' => $this->idPreProjeto
                         );
                         $resposta = $tbRespostaDAO->buscar($where);
                         $arrPerguntas[$registro["nrFormDocumento"]]["titulo"] = $registro["nmFormDocumento"];
@@ -267,7 +274,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         }
     }
 
-    public function abrirDocumentosAnexadosAction() {
+    public function abrirDocumentosAnexadosAction()
+    {
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
 
         $idProjeto = $this->_request->getParam("idProjeto");
@@ -276,32 +284,32 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $tipoDoc = null;
         $bln = "false";
 
-        if($tipo == '1') {
+        if ($tipo == '1') {
             $tipoDoc = "tbDocumentosAgentes"; //SAC.dbo.tbDocumentosAgentes
-        } else if($tipo == '2') {
+        } else if ($tipo == '2') {
             $tipoDoc = "tbDocumentosPreProjeto"; //SAC.dbo.tbDocumentosPreProjeto
-        } else if($tipo == '3') {
+        } else if ($tipo == '3') {
             $tipoDoc = "tbDocumento"; //SAC.dbo.tbDocumento
         }
 
         // Configura��o o php.ini para 10MB
-        @ini_set("mssql.textsize",      10485760);
-        @ini_set("mssql.textlimit",     10485760);
+        @ini_set("mssql.textsize", 10485760);
+        @ini_set("mssql.textlimit", 10485760);
         @ini_set("upload_max_filesize", "10M");
 
         // busca o arquivo
         $resultado = UploadDAO::abrirdocumentosanexados($id, $tipoDoc);
-        if(count($resultado) > 0) {
-            if($tipo == 1){
-                $this->_forward("abrirdocumentosanexadosbinario", "upload", "", array('id'=>$id,'busca'=>$tipoDoc));
+        if (count($resultado) > 0) {
+            if ($tipo == 1) {
+                $this->_forward("abrirdocumentosanexadosbinario", "upload", "", array('id' => $id, 'busca' => $tipoDoc));
             } else {
-                $this->_forward("abrirdocumentosanexados", "upload", "", array('id'=>$id,'busca'=>$tipoDoc));
+                $this->_forward("abrirdocumentosanexados", "upload", "", array('id' => $id, 'busca' => $tipoDoc));
             }
             $bln = "true";
         }
 
-        if($bln == "false") {
-            $url = Zend_Controller_Front::getInstance()->getBaseUrl()."/consultardadosprojeto/?idPronac={$idPronac}";
+        if ($bln == "false") {
+            $url = Zend_Controller_Front::getInstance()->getBaseUrl() . "/consultardadosprojeto/?idPronac={$idPronac}";
             $this->_helper->viewRenderer->setNoRender(true);
             $this->_helper->flashMessenger->addMessage("N&atilde;o foi poss&iacute;vel abrir o arquivo especificado. Tente anex&aacute;-lo novamente.");
             $this->_helper->flashMessengerType->addMessage("ERROR");
@@ -310,7 +318,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         }
     }
 
-    public function abrirDocumentosAnexadosAdmissibilidadeAction() {
+    public function abrirDocumentosAnexadosAdmissibilidadeAction()
+    {
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
 
         $idProjeto = $this->_request->getParam("idProjeto");
@@ -319,28 +328,28 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $tipoDoc = null;
         $bln = "false";
 
-        if($tipo == '1') {
+        if ($tipo == '1') {
             $tipoDoc = "tbDocumentosAgentes"; //SAC.dbo.tbDocumentosAgentes
-        } else if($tipo == '2') {
+        } else if ($tipo == '2') {
             $tipoDoc = "tbDocumentosPreProjeto"; //SAC.dbo.tbDocumentosPreProjeto
-        } else if($tipo == '3') {
+        } else if ($tipo == '3') {
             $tipoDoc = "tbDocumento"; //SAC.dbo.tbDocumento
         }
 
         // Configura��o o php.ini para 10MB
-        @ini_set("mssql.textsize",      10485760);
-        @ini_set("mssql.textlimit",     10485760);
+        @ini_set("mssql.textsize", 10485760);
+        @ini_set("mssql.textlimit", 10485760);
         @ini_set("upload_max_filesize", "10M");
 
         // busca o arquivo
         $resultado = UploadDAO::abrirdocumentosanexados($id, $tipoDoc);
-        if(count($resultado) > 0) {
-            $this->_forward("abrirdocumentosanexados", "upload", "", array('id'=>$id,'busca'=>$tipoDoc));
+        if (count($resultado) > 0) {
+            $this->_forward("abrirdocumentosanexados", "upload", "", array('id' => $id, 'busca' => $tipoDoc));
             $bln = "true";
         }
 
-        if($bln == "false") {
-            $url = Zend_Controller_Front::getInstance()->getBaseUrl()."/consultardadosprojeto/?idPronac={$idPronac}";
+        if ($bln == "false") {
+            $url = Zend_Controller_Front::getInstance()->getBaseUrl() . "/consultardadosprojeto/?idPronac={$idPronac}";
             $this->_helper->viewRenderer->setNoRender(true);
             $this->_helper->flashMessenger->addMessage("N&atilde;o foi poss&iacute;vel abrir o arquivo especificado. Tente anex&aacute;-lo novamente.");
             $this->_helper->flashMessengerType->addMessage("ERROR");
@@ -350,90 +359,97 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     }
 
 
-    public function incluiravaliacaoAction() {
+    public function incluiravaliacaoAction()
+    {
 
         //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
+        $rsProposta = $tblProposta->buscar(array("idPreProjeto=?" => $this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
-        $this->view->nomeProjeto  = strip_tags($rsProposta->NomeProjeto);
-        $this->view->dataAtual  = date("d/m/Y");
-        $this->view->dataAtualBd  = date("Y/m/d H:i:s");
+        $this->view->nomeProjeto = strip_tags($rsProposta->NomeProjeto);
+        $this->view->dataAtual = date("d/m/Y");
+        $this->view->dataAtualBd = date("Y/m/d H:i:s");
     }
 
-    public function salvaravaliacaoAction(){
+    public function salvaravaliacaoAction()
+    {
 
-         $dao                   = new Proposta_Model_AnalisarPropostaDAO();
-         $post                  = Zend_Registry::get('post');
-         $dado                  = array();
-         $dados['idProjeto']  = $post->idPreProjeto;
-         $dados['idTecnico']     = $this->idUsuario;
-         $dados['dtEnvio']       = $post->dataAtual;
-         $dados['dtAvaliacao']   = $post->dataAtual;
-         $dados['avaliacao']     = $_POST['despacho'];
-         $dados['ConformidadeOK']= $post->conformidade;
-         $dados['stEstado']      = 0;
-         $dados['stEnviado']     = 'N';
+        $post = Zend_Registry::get('post');
+        $dados = array();
+        $dados['idProjeto'] = $post->idPreProjeto;
+        $dados['idTecnico'] = $this->idUsuario;
+        $dados['dtEnvio'] = $post->dataAtual;
+        $dados['dtAvaliacao'] = $post->dataAtual;
+        $dados['avaliacao'] = $_POST['despacho'];
+        $dados['ConformidadeOK'] = $post->conformidade;
+        $dados['stEstado'] = 0;
+        $dados['stEnviado'] = 'N';
 
-         $projetoExiste = Proposta_Model_AnalisarPropostaDAO::verificarAvaliacao($post->idPreProjeto);
+        $projetoExiste = Proposta_Model_AnalisarPropostaDAO::verificarAvaliacao($post->idPreProjeto);
 
-         //Esse if so existe por que nao existe objeto de negocio.
-         if(count($projetoExiste)>0){
-             $dados['dtEnvio'] = null;
-         }
+        //Esse if so existe por que nao existe objeto de negocio.
+        if (count($projetoExiste) > 0) {
+            $dados['dtEnvio'] = null;
+        }
 
-         $avaliacaoProposta = new tbAvaliacaoProposta();
-         $insert = $avaliacaoProposta->inserir($dados);
-         parent::message("Despacho encaminhado com sucesso!", "/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=".$post->idPreProjeto."&gravado=sim", "CONFIRM");
+        $avaliacaoProposta = new tbAvaliacaoProposta();
+        $avaliacaoProposta->inserir($dados);
+
+        $objTbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
+        $objTbMovimentacao->alterarConformidadeProposta($post->idPreProjeto, $this->idUsuario, Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL);
+
+        parent::message("Despacho encaminhado com sucesso!", "/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=" . $post->idPreProjeto . "&gravado=sim", "CONFIRM");
     }
 
-    private function eviarEmail($idProjeto,$Mensagem,$pronac = null){
+    private function eviarEmail($idProjeto, $Mensagem, $pronac = null)
+    {
         $auth = Zend_Auth::getInstance();
-        $tbTextoEmailDAO    =   new tbTextoEmail();
-        $preProjetosDAO     =   new Proposta_Model_DbTable_PreProjeto();
+        $tbTextoEmailDAO = new tbTextoEmail();
+        $preProjetosDAO = new Proposta_Model_DbTable_PreProjeto();
 
-        $dadosProjeto   =   $preProjetosDAO->dadosProjetoDiligencia($idProjeto);
+        $dadosProjeto = $preProjetosDAO->dadosProjetoDiligencia($idProjeto);
 
-		$tbHistoricoEmailDAO = new tbHistoricoEmail();
+        $tbHistoricoEmailDAO = new tbHistoricoEmail();
 
-		foreach ($dadosProjeto as $d) :
-			//para Produ�?o comentar linha abaixo e para teste descomente ela
-			//$email  =   'jailton.landim@cultura.gov.br';
-			//para Produ�?o descomentar linha abaixo e para teste comente ela
-			$email   = trim(strtolower($d->Email));
-                        if($pronac){
-                            $mens    = '<b>Proposta: ' .$d->idProjeto. ' - ' .$d->NomeProjeto. '<br> Pronac: '.$pronac.'<br> </b>' . $Mensagem;
-                            $assunto = 'Proposta transformada em Projeto Cultural';
-                        } else {
-                            $mens    = '<b>Proposta: ' .$d->idProjeto. ' - ' .$d->NomeProjeto. '<br> Proponente: '.$d->Destinatario.'<br> </b>' . $Mensagem;
-                            $assunto = 'Avaliacao da proposta';
-                        }
-			$perfil  = "PerfilGrupoPRONAC";
+        foreach ($dadosProjeto as $d) :
+            //para Produ�?o comentar linha abaixo e para teste descomente ela
+            //$email  =   'jailton.landim@cultura.gov.br';
+            //para Produ�?o descomentar linha abaixo e para teste comente ela
+            $email = trim(strtolower($d->Email));
+            if ($pronac) {
+                $mens = '<b>Proposta: ' . $d->idProjeto . ' - ' . $d->NomeProjeto . '<br> Pronac: ' . $pronac . '<br> </b>' . $Mensagem;
+                $assunto = 'Proposta transformada em Projeto Cultural';
+            } else {
+                $mens = '<b>Proposta: ' . $d->idProjeto . ' - ' . $d->NomeProjeto . '<br> Proponente: ' . $d->Destinatario . '<br> </b>' . $Mensagem;
+                $assunto = 'Avaliacao da proposta';
+            }
+            $perfil = "PerfilGrupoPRONAC";
 
-			$enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
+            $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
 
-			$dados = array(
-				'idProjeto'           => $idProjeto,
-				'idTextoemail'        => new Zend_Db_Expr('NULL'),
-				'iDAvaliacaoProposta' => new Zend_Db_Expr('NULL'),
-				'DtEmail'             => new Zend_Db_Expr('getdate()'),
-				'stEstado'            => 1,
-				'idUsuario'           => $auth->getIdentity()->usu_codigo,
-			);
+            $dados = array(
+                'idProjeto' => $idProjeto,
+                'idTextoemail' => new Zend_Db_Expr('NULL'),
+                'iDAvaliacaoProposta' => new Zend_Db_Expr('NULL'),
+                'DtEmail' => new Zend_Db_Expr('getdate()'),
+                'stEstado' => 1,
+                'idUsuario' => $auth->getIdentity()->usu_codigo,
+            );
 
-			$tbHistoricoEmailDAO->inserir($dados);
-		endforeach;
+            $tbHistoricoEmailDAO->inserir($dados);
+        endforeach;
     }
 
-    public function analisedocumentalAction() {
+    public function analisedocumentalAction()
+    {
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscar(array("idPreProjeto = ?"=>$this->idPreProjeto))->current();
+        $rsProposta = $tblProposta->buscar(array("idPreProjeto = ?" => $this->idPreProjeto))->current();
         $this->view->proposta = $rsProposta;
 
         $tblAgente = new Agente_Model_DbTable_Agentes();
-        $rsAgente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsProposta->idAgente))->current();
+        $rsAgente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsProposta->idAgente))->current();
         $this->view->agente = $rsAgente;
 
         $idPreProjeto = $this->idPreProjeto;
@@ -444,38 +460,42 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
-    public function buscardocumentoAction() {
+    public function buscardocumentoAction()
+    {
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
 
-        $get                  = Zend_Registry::get('get');
-        $idOpcao              = $get->idOpcao;
-        $idDocumento              = $get->idDocumento;
+        $get = Zend_Registry::get('get');
+        $idOpcao = $get->idOpcao;
+        $idDocumento = $get->idDocumento;
         $tbl = new Proposta_Model_DbTable_DocumentosExigidos();
         $options = $tbl->buscarDocumentoOpcao($idOpcao);
 
         $selected = "";
         $htmlOptions = "<option value=''> - Selecione - </option>";
-        foreach ($options as $option){
+        foreach ($options as $option) {
             $selected = "";
-            if($option['codigo'] == $idDocumento) { $selected = "selected='selected' "; }
-            $htmlOptions .= "<option value='{$option['codigo']}' {$selected}>".ucfirst(((($option['descricao']))))." </option>";
+            if ($option['codigo'] == $idDocumento) {
+                $selected = "selected='selected' ";
+            }
+            $htmlOptions .= "<option value='{$option['codigo']}' {$selected}>" . ucfirst(((($option['descricao'])))) . " </option>";
         }
         echo $htmlOptions;
     }
 
-    public function inserirdocumentoAction(){
+    public function inserirdocumentoAction()
+    {
 
-        $dao                    = new Proposta_Model_AnalisarPropostaDAO();
-        $post                   = Zend_Registry::get('post');
-        $dados                   = array();
-        $dados['idPreProjeto']   = $this->idPreProjeto;
-        $dados['CodigoDocumento']= $post->documento;
+        $dao = new Proposta_Model_AnalisarPropostaDAO();
+        $post = Zend_Registry::get('post');
+        $dados = array();
+        $dados['idPreProjeto'] = $this->idPreProjeto;
+        $dados['CodigoDocumento'] = $post->documento;
         //xd($dados);
-        try{
-            if($post->tipoDocumento == 1){
+        try {
+            if ($post->tipoDocumento == 1) {
                 Proposta_Model_AnalisarPropostaDAO::inserirDocumentoProponente($dados);
-            }else{
+            } else {
                 Proposta_Model_AnalisarPropostaDAO::inserirDocumentoProjeto($dados);
             }
 
@@ -492,23 +512,22 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
             $tblAvaliacao->inserir($dadosAvaliacao);
             $where = array(
-                            'CONVERT(VARCHAR,DtEnvio,103) = ?'  => new Zend_Db_Expr('CONVERT(VARCHAR,GETDATE(),103)'),
-                            'idProjeto = ?'                     => $this->idPreProjeto,
-                            'idCodigoDocumentosExigidos is not null'    => ''
-                );
+                'CONVERT(VARCHAR,DtEnvio,103) = ?' => new Zend_Db_Expr('CONVERT(VARCHAR,GETDATE(),103)'),
+                'idProjeto = ?' => $this->idPreProjeto,
+                'idCodigoDocumentosExigidos is not null' => ''
+            );
             $docs = $tblAvaliacao->buscar($where);
 
-            if(count($docs) == 1){ //So poder enviar um email
+            if (count($docs) == 1) { //So poder enviar um email
 
-                $msg = new Zend_Config_Ini(getcwd().'/public/admissibilidade/mensagens_email_proponente.ini', 'pendencia_documental');
+                $msg = new Zend_Config_Ini(getcwd() . '/public/admissibilidade/mensagens_email_proponente.ini', 'pendencia_documental');
 
-                $this->eviarEmail($this->idPreProjeto,$msg->msg);
+                $this->eviarEmail($this->idPreProjeto, $msg->msg);
 
             }
 
 
-
-            parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/admissibilidade/admissibilidade/analisedocumental?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
+            parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/admissibilidade/admissibilidade/analisedocumental?idPreProjeto=" . $this->idPreProjeto, "CONFIRM");
 
 //            // Retornando proposta para movimentacao 95
 //            $dadosMovimentacao['idProjeto'] = $this->idPreProjeto;
@@ -530,61 +549,64 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 //                // Salvando movimentacao
 //                $rsMovimentacao = $tblMovimentacao->salvar($dadosMovimentacao);
 //            }
-        }catch (Exception $e){
+        } catch (Exception $e) {
             //xd($e->getMessage());
-            parent::message("Erro ao realizar opera&ccedil;&atilde;o", "/admissibilidade/admissibilidade/analisedocumental?idPreProjeto=".$this->idPreProjeto, "ERROR");
+            parent::message("Erro ao realizar opera&ccedil;&atilde;o", "/admissibilidade/admissibilidade/analisedocumental?idPreProjeto=" . $this->idPreProjeto, "ERROR");
         }
-
 
 
     }
 
-    public function updatedocumentoAction(){
-        $dao                    = new Proposta_Model_AnalisarPropostaDAO();
-        $post                   = Zend_Registry::get('post');
-        $dado                   = array();
-        $dado['idPreProjeto']   = $post->idprojeto;
-        $dado['CodigoDocumento']= $post->documento;
-        $dado['iddocantigo']    = $post->iddocantigo;
+    public function updatedocumentoAction()
+    {
+        $dao = new Proposta_Model_AnalisarPropostaDAO();
+        $post = Zend_Registry::get('post');
+        $dado = array();
+        $dado['idPreProjeto'] = $post->idprojeto;
+        $dado['CodigoDocumento'] = $post->documento;
+        $dado['iddocantigo'] = $post->iddocantigo;
 
-        if($post->tipoDocumento == 1){
+        if ($post->tipoDocumento == 1) {
             Proposta_Model_AnalisarPropostaDAO::updateDocumentoProponente($dado);
-        }else{
+        } else {
             Proposta_Model_AnalisarPropostaDAO::updateDocumentoProjeto($dado);
         }
 
         //Enviar e-mail
         //historico do e-mail
-        parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/admissibilidade/admissibilidade/analisedocumental?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
+        parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/admissibilidade/admissibilidade/analisedocumental?idPreProjeto=" . $this->idPreProjeto, "CONFIRM");
 
     }
 
-    public function deletedocumentoAction(){
-        $dao                    = new Proposta_Model_AnalisarPropostaDAO();
-        $get                   = Zend_Registry::get('get');
+    public function deletedocumentoAction()
+    {
+        $dao = new Proposta_Model_AnalisarPropostaDAO();
+        $get = Zend_Registry::get('get');
 
 
-        if($get->tipoDocumento == 1){
-           Proposta_Model_AnalisarPropostaDAO::deleteDocumentoProponente($get->idDocumento);
-        }else{
+        if ($get->tipoDocumento == 1) {
+            Proposta_Model_AnalisarPropostaDAO::deleteDocumentoProponente($get->idDocumento);
+        } else {
             Proposta_Model_AnalisarPropostaDAO::deleteDocumentoProjeto($get->idDocumento);
         }
 
         //Enviar e-mail
         //historico do e-mail
-        parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/admissibilidade/admissibilidade/analisedocumental?idPreProjeto=".$this->idPreProjeto, "CONFIRM");
+        parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/admissibilidade/admissibilidade/analisedocumental?idPreProjeto=" . $this->idPreProjeto, "CONFIRM");
 
     }
 
-    public function despacharpropostaAction() {
+    public function despacharpropostaAction()
+    {
         //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
 
         $dao = new Proposta_Model_AnalisarPropostaDAO();
-        $this->view->itensDespacho  = Proposta_Model_AnalisarPropostaDAO::buscarDespacho($this->idPreProjeto);
+        $this->view->itensDespacho = Proposta_Model_AnalisarPropostaDAO::buscarDespacho($this->idPreProjeto);
     }
 
-    public function transformarPropostaEmProjetoAction() {
+    public function transformarPropostaEmProjetoAction()
+    {
         //verifica se id preprojeto foi enviado
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -596,25 +618,25 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $idOrgao = $auth->getIdentity()->usu_orgao;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscar(array("idPreProjeto = ?"=>$this->idPreProjeto))->current();
+        $rsProposta = $tblProposta->buscar(array("idPreProjeto = ?" => $this->idPreProjeto))->current();
 
         //O codigo deste IF serve apenas para mostrar a mensagem ao usuario
-        if($get->recuperarUnidade != ""){
+        if ($get->recuperarUnidade != "") {
             //Buscando produto principal
             $tblPlanoDistribuicao = new PlanoDistribuicao();
-            $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscar(array("idProjeto = ?"=>$this->idPreProjeto, "stPrincipal = ?"=>1))->current();
+            $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscar(array("idProjeto = ?" => $this->idPreProjeto, "stPrincipal = ?" => 1))->current();
 
             $tblOrgaos = new Orgaos();
-            if($rsProposta->idEdital == 0 && empty($rsProposta->idEdital)){
+            if ($rsProposta->idEdital == 0 && empty($rsProposta->idEdital)) {
                 //Se existe plano de distribuicao, entao pega-se o orgao baseado no produto principal
                 $rsOrgaos = $tblOrgaos->buscarOrgaoPorSegmento($rsPlanoDistribuicao->Segmento)->current();
-            }else{
+            } else {
                 //Se nao existe plano de distribuicao, entao esta e uma proposta por edital,
                 //entao pega-se o orgao do edital
                 $tblEdital = new Edital();
-                $rsEdital =  $tblEdital->buscar(array("idEdital = ?"=>$rsProposta->idEdital))->current();
+                $rsEdital = $tblEdital->buscar(array("idEdital = ?" => $rsProposta->idEdital))->current();
 
-                $rsOrgaos = $tblOrgaos->buscar(array("Codigo = ?"=>$rsEdital->idOrgao))->current();
+                $rsOrgaos = $tblOrgaos->buscar(array("Codigo = ?" => $rsEdital->idOrgao))->current();
             }
             //xd($rsOrgaos);
             $msg = "Deseja Transformar a proposta Nr. {$this->idPreProjeto}, em Projeto? <br>A mesma ser&aacute; enviada para a Unidade: {$rsOrgaos->Sigla}, para An&aacute;lise T&eacute;cnica.<br> Confirma a opera&ccedil;&atilde;o?";
@@ -623,38 +645,38 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         //Buscando produto principal
         $tblPlanoDistribuicao = new PlanoDistribuicao();
-        $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscar(array("idProjeto = ?"=>$this->idPreProjeto, "stPrincipal = ?"=>1))->current();
+        $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscar(array("idProjeto = ?" => $this->idPreProjeto, "stPrincipal = ?" => 1))->current();
 
         $tblOrgaos = new Orgaos();
-        if($rsProposta->idEdital == 0 || empty($rsProposta->idEdital)){
+        if ($rsProposta->idEdital == 0 || empty($rsProposta->idEdital)) {
             //Se existe plano de distribuicao, entao pega-se o orgao baseado no produto principal
             $rsOrgaos = $tblOrgaos->buscarOrgaoPorSegmento($rsPlanoDistribuicao->Segmento)->current();
             //$idOrgao = $rsOrgaos->Codigo;
             $idOrgao = $this->codOrgao;
-        }else{
+        } else {
             //Se nao existe plano de distribuicao, entao esta e uma proposta por edital,
             //entao pega-se o orgao do edital
             $tblEdital = new Edital();
-            $rsEdital =  $tblEdital->buscar(array("idEdital = ?"=>$rsProposta->idEdital))->current();
+            $rsEdital = $tblEdital->buscar(array("idEdital = ?" => $rsProposta->idEdital))->current();
 
-            $rsOrgaos = $tblOrgaos->buscar(array("Codigo = ?"=>$rsEdital->idOrgao))->current();
+            $rsOrgaos = $tblOrgaos->buscar(array("Codigo = ?" => $rsEdital->idOrgao))->current();
             //$idOrgao = $rsOrgaos->Codigo;
             $idOrgao = $this->codOrgao;
         }
 
         $tblAgente = new Agente_Model_DbTable_Agentes();
-        $rsAgente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?"=>$rsProposta->idAgente))->current();
+        $rsAgente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsProposta->idAgente))->current();
 
         $cnpjcpf = $rsAgente->CNPJCPF;
 
         $wsWebServiceSEI = new ServicosSEI();
         $arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento();
 
-        $chars = array(".","/","-");
-        $nrProcessoSemFormatacao = str_replace($chars,"",$arrRetornoGerarProcedimento->ProcedimentoFormatado);
+        $chars = array(".", "/", "-");
+        $nrProcessoSemFormatacao = str_replace($chars, "", $arrRetornoGerarProcedimento->ProcedimentoFormatado);
         $nrProcesso = $nrProcessoSemFormatacao;
         #xd( $nrProcesso );
-        try{
+        try {
             $aux = new paTransformarPropostaEmProjeto();
             #$aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario);
             $aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
@@ -662,42 +684,45 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $tblProjeto = new Projetos();
 
             $rsProjeto = $tblProjeto->buscar(array("idProjeto = ?" => $this->idPreProjeto), "IdPRONAC DESC")->current();
-            if(!empty($rsProjeto )){
+            if (!empty($rsProjeto)) {
 
-                $nrPronac = $rsProjeto->AnoProjeto.$rsProjeto->Sequencial;
+                $nrPronac = $rsProjeto->AnoProjeto . $rsProjeto->Sequencial;
 
-                echo "A Proposta ".$this->idPreProjeto." foi transformada no Projeto No. ".$nrPronac ;
-                echo '<br><br><a href="../gerenciarparecertecnico/dadosetiqueta?pronac='.$nrPronac.'&etiqueta=nao" target="_blank">Imprimir etiqueta</a>';
+                echo "A Proposta " . $this->idPreProjeto . " foi transformada no Projeto No. " . $nrPronac;
+                echo '<br><br><a href="../gerenciarparecertecnico/dadosetiqueta?pronac=' . $nrPronac . '&etiqueta=nao" target="_blank">Imprimir etiqueta</a>';
             }
 
-        } catch (Exception $e){
+        } catch (Exception $e) {
             echo "Erro ao tentar transformar proposta em projeto!";
         }
 
     }
 
-    public function encaminharpropostaAction() {
+    public function encaminharpropostaAction()
+    {
         //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
+        $rsProposta = $tblProposta->buscar(array("idPreProjeto=?" => $this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
-        $this->view->nomeProjeto  = isset($rsProposta->NomeProjeto) ? strip_tags($rsProposta->NomeProjeto) : '';
+        $this->view->nomeProjeto = isset($rsProposta->NomeProjeto) ? strip_tags($rsProposta->NomeProjeto) : '';
     }
 
-    public function salvardespachoAction(){
-        $post   = Zend_Registry::get('post');
+    public function salvardespachoAction()
+    {
+        $post = Zend_Registry::get('post');
 
-        $dados                  = array();
-        $dados['idPreProjeto']  = $post->idPreProjeto;
-        $dados['idTecnico']     = $this->idUsuario;
-        $dados['despacho']      = trim($post->despacho);
+        $dados = array();
+        $dados['idPreProjeto'] = $post->idPreProjeto;
+        $dados['idTecnico'] = $this->idUsuario;
+        $dados['despacho'] = trim($post->despacho);
 
 //        $despachoExiste = Proposta_Model_AnalisarPropostaDAO::verificarDespacho($post->idPreProjeto);
 
 //        if(count($despachoExiste)>0){
 //            Proposta_Model_AnalisarPropostaDAO::updateEstadoDespacho($post->idPreProjeto);
 //        }
+
         Proposta_Model_AnalisarPropostaDAO::inserirDespacho($dados);
 
         //if($despachoExiste[0]->Tipo == 129 ){
@@ -705,7 +730,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
 //        if(count($movimentacaoExiste)>0 && $movimentacaoExiste[0]->Movimentacao == 127)
 //        {
-//            $dados['movimentacao'] = 128;
+//            $dados['movimentacao'] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL;
 //
 //            //APAGA DOCUMENTOS PENDENTES CONFORME REGRA DA TRIGGER
 //            Proposta_Model_AnalisarPropostaDAO::deleteDocumentoProponentePeloProjeto($post->idPreProjeto);
@@ -721,72 +746,68 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         //Envia Email
 //        $msg = new Zend_Config_Ini(getcwd().'/public/admissibilidade/mensagens_email_proponente.ini', 'sem_pendencia_documental');
-
 //        $this->eviarEmail($this->idPreProjeto,$msg->msg);
 
-        if(isset($post->devolver) && $post->devolver == 1){
-
+        if (isset($post->devolver) && $post->devolver == 1) {
             parent::message("Mensagem enviada com sucesso!", "/admissibilidade/admissibilidade/gerenciamentodepropostas", "CONFIRM");
             return true;
             $this->_helper->viewRenderer->setNoRender(TRUE);
-        }else{
-
+        } else {
             parent::message("Despacho encaminhado com sucesso!", "/admissibilidade/admissibilidade/listar-propostas", "CONFIRM");
             return;
         }
-
     }
 
-
-    public function arquivarpropostaAction() {
+    public function arquivarpropostaAction()
+    {
         $dao = new Proposta_Model_AnalisarPropostaDAO();
-        try{
+        try {
             //Enviar e-mail informando arquivamento e a justificativa
             //$dao->deletePreProjeto($this->idPreProjeto);
             $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
             $rsPreProjeto = $tblPreProjeto->find($this->idPreProjeto)->current();
-            $rsPreProjeto->DtArquivamento=date("Y/m/d H:i:s");
+            $rsPreProjeto->DtArquivamento = date("Y/m/d H:i:s");
             $rsPreProjeto->stEstado = 0;
             $rsPreProjeto->save();
 
             //Enviar e-mail informando arquivamento e a justificativa
             $tipo = ($rsPreProjeto->idEdital) ? 'arquivamento_proposta_Edital' : 'arquivamento_proposta_IF';
-            $msg = new Zend_Config_Ini(getcwd().'/public/admissibilidade/mensagens_email_proponente.ini', $tipo);
+            $msg = new Zend_Config_Ini(getcwd() . '/public/admissibilidade/mensagens_email_proponente.ini', $tipo);
 
-            $this->eviarEmail($this->idPreProjeto,$msg->msg);
+            $this->eviarEmail($this->idPreProjeto, $msg->msg);
 
             parent::message("Opera&ccedil;&atilde;o realizada com sucesso!", "/admissibilidade/admissibilidade/listar-propostas", "CONFIRM");
             return;
             $this->_helper->viewRenderer->setNoRender(TRUE);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             parent::message("Erro ao realizar opera&ccedil;&atilde;o!", "/admissibilidade/admissibilidade/listar-propostas", "ERROR");
         }
     }
 
 
-    public function confirmararquivarpropostaAction() {
+    public function confirmararquivarpropostaAction()
+    {
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
+        $rsProposta = $tblProposta->buscar(array("idPreProjeto=?" => $this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
-        $this->view->nomeProjeto  = strip_tags($rsProposta->NomeProjeto);
+        $this->view->nomeProjeto = strip_tags($rsProposta->NomeProjeto);
 
     }
 
-    public function arquivarAction(){
-        $dao    = new Proposta_Model_AnalisarPropostaDAO();
-        $post   = Zend_Registry::get('post');
+    public function arquivarAction()
+    {
+        $dao = new Proposta_Model_AnalisarPropostaDAO();
+        $post = Zend_Registry::get('post');
         //xd($post);
         Proposta_Model_AnalisarPropostaDAO::deletePreProjeto($post->idprojeto);
         ///Enviar e-mail informando arquivamento e a justificativa
 
 
-
-
-
     }
 
-    public function imprimirpropostaculturalAction() {
+    public function imprimirpropostaculturalAction()
+    {
 
         $this->_helper->layout->disableLayout();
 
@@ -794,65 +815,65 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $dao = new Proposta_Model_AnalisarPropostaDAO();
         $this->view->itensGeral = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
         $propostaPorEdital = false;
-        if($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0){
+        if ($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0) {
             $propostaPorEdital = true;
         }
-        $this->view->itensTelefone              = Proposta_Model_AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
-        $this->view->itensPlanosDistribuicao    = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
+        $this->view->itensTelefone = Proposta_Model_AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
+        $this->view->itensPlanosDistribuicao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
 
-        $this->view->itensFonteRecurso          = Proposta_Model_AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
-        $this->view->itensLocalRealiazacao      = Proposta_Model_AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
-        $this->view->itensDeslocamento          = Proposta_Model_AnalisarPropostaDAO::buscarDeslocamento($idPreProjeto);
-        $this->view->itensPlanoDivulgacao       = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDivulgacao($idPreProjeto);
+        $this->view->itensFonteRecurso = Proposta_Model_AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
+        $this->view->itensLocalRealiazacao = Proposta_Model_AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
+        $this->view->itensDeslocamento = Proposta_Model_AnalisarPropostaDAO::buscarDeslocamento($idPreProjeto);
+        $this->view->itensPlanoDivulgacao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDivulgacao($idPreProjeto);
 
         $tblAvaliacaoProposta = new AvaliacaoProposta();
-        $rsAvaliacaoProposta = $tblAvaliacaoProposta->buscar(array("idProjeto = ?"=>$idPreProjeto, "idArquivo ?"=>new Zend_Db_Expr("IS NOT NULL")));
+        $rsAvaliacaoProposta = $tblAvaliacaoProposta->buscar(array("idProjeto = ?" => $idPreProjeto, "idArquivo ?" => new Zend_Db_Expr("IS NOT NULL")));
         $tbArquivo = new tbArquivo();
         $arrDadosArquivo = array();
         $arrRelacionamentoAvaliacaoDocumentosExigidos = array();
-        if(count($rsAvaliacaoProposta) > 0){
-            foreach($rsAvaliacaoProposta as $avaliacao){
-                $arrDadosArquivo[$avaliacao->idArquivo] = $tbArquivo->buscar(array("idArquivo = ?"=>$avaliacao->idArquivo));
+        if (count($rsAvaliacaoProposta) > 0) {
+            foreach ($rsAvaliacaoProposta as $avaliacao) {
+                $arrDadosArquivo[$avaliacao->idArquivo] = $tbArquivo->buscar(array("idArquivo = ?" => $avaliacao->idArquivo));
                 $arrRelacionamentoAvaliacaoDocumentosExigidos[$avaliacao->idArquivo] = $avaliacao->idCodigoDocumentosExigidos;
             }
         }
         $this->view->relacionamentoAvaliacaoDocumentosExigidos = $arrRelacionamentoAvaliacaoDocumentosExigidos;
-        $this->view->itensDocumentoPreProjeto   = $arrDadosArquivo;
+        $this->view->itensDocumentoPreProjeto = $arrDadosArquivo;
 
         //PEGANDO RELACAO DE DOCUMENTOS EXIGIDOS(GERAL, OU SEJA, TODO MUNDO)
         $tblDocumentosExigidos = new DocumentosExigidos();
         $rsDocumentosExigidos = $tblDocumentosExigidos->buscar()->toArray();
         $arrDocumentosExigidos = array();
-        foreach($rsDocumentosExigidos as $documentoExigido){
+        foreach ($rsDocumentosExigidos as $documentoExigido) {
             $arrDocumentosExigidos[$documentoExigido["Codigo"]] = $documentoExigido;
         }
         $this->view->documentosExigidos = $arrDocumentosExigidos;
 
-        $this->view->itensHistorico             = Proposta_Model_AnalisarPropostaDAO::buscarHistorico($idPreProjeto);
+        $this->view->itensHistorico = Proposta_Model_AnalisarPropostaDAO::buscarHistorico($idPreProjeto);
 
         /*
          * PEGANDO DOCUMENTOS ANEXADOS
          */
         $tblAvaliacaoProposta = new AvaliacaoProposta();
-        $rsAvaliacaoProposta = $tblAvaliacaoProposta->buscar(array("idProjeto = ?"=>$idPreProjeto, "idArquivo ?"=>new Zend_Db_Expr("IS NOT NULL")));
+        $rsAvaliacaoProposta = $tblAvaliacaoProposta->buscar(array("idProjeto = ?" => $idPreProjeto, "idArquivo ?" => new Zend_Db_Expr("IS NOT NULL")));
         $tbArquivo = new tbArquivo();
         $arrDadosArquivo = array();
         $arrRelacionamentoAvaliacaoDocumentosExigidos = array();
-        if(count($rsAvaliacaoProposta) > 0){
-            foreach($rsAvaliacaoProposta as $avaliacao){
-                $arrDadosArquivo[$avaliacao->idArquivo] = $tbArquivo->buscar(array("idArquivo = ?"=>$avaliacao->idArquivo));
+        if (count($rsAvaliacaoProposta) > 0) {
+            foreach ($rsAvaliacaoProposta as $avaliacao) {
+                $arrDadosArquivo[$avaliacao->idArquivo] = $tbArquivo->buscar(array("idArquivo = ?" => $avaliacao->idArquivo));
                 $arrRelacionamentoAvaliacaoDocumentosExigidos[$avaliacao->idArquivo] = $avaliacao->idCodigoDocumentosExigidos;
             }
         }
         //x($arrRelacionamentoAvaliacaoDocumentosExigidos);
         $this->view->relacionamentoAvaliacaoDocumentosExigidos = $arrRelacionamentoAvaliacaoDocumentosExigidos;
-        $this->view->itensDocumentoPreProjeto   = $arrDadosArquivo;
+        $this->view->itensDocumentoPreProjeto = $arrDadosArquivo;
 
         //PEGANDO RELACAO DE DOCUMENTOS EXIGIDOS(GERAL, OU SEJA, TODO MUNDO)
         $tblDocumentosExigidos = new DocumentosExigidos();
         $rsDocumentosExigidos = $tblDocumentosExigidos->buscar()->toArray();
         $arrDocumentosExigidos = array();
-        foreach($rsDocumentosExigidos as $documentoExigido){
+        foreach ($rsDocumentosExigidos as $documentoExigido) {
             $arrDocumentosExigidos[$documentoExigido["Codigo"]] = $documentoExigido;
         }
         //xd($arrDocumentosExigidos);
@@ -862,18 +883,21 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
          * FINAL - PEGANDO DOCUMENTOS ANEXADOS
          */
 
-        $this->view->itensPlanilhaOrcamentaria  = $dao->buscarPlanilhaOrcamentaria($idPreProjeto);
+        $this->view->itensPlanilhaOrcamentaria = $dao->buscarPlanilhaOrcamentaria($idPreProjeto);
 
         $buscarProduto = ManterorcamentoDAO::buscarProdutos($this->idPreProjeto);
         $this->view->Produtos = $buscarProduto;
 
-        $buscarEtapa = ManterorcamentoDAO::buscarEtapasProdutos($this->idPreProjeto);
+        $objPlanilhaEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+        $buscarEtapa = $objPlanilhaEtapa->listarEtapasProdutos($this->idPreProjeto);
         $this->view->Etapa = $buscarEtapa;
 
-        $buscarItem = ManterorcamentoDAO::buscarItensProdutos($this->idPreProjeto);
+
+        $objPreprojeto = new Proposta_Model_DbTable_PreProjeto();
+        $buscarItem = $objPreprojeto->listarItensProdutos($this->idPreProjeto);
         $this->view->Item = $buscarItem;
 
-        $this->view->AnaliseCustos = PreProjeto::analiseDeCustos($this->idPreProjeto);
+        $this->view->AnaliseCustos = $objPreprojeto->analiseDeCustos($this->idPreProjeto);
         $this->view->idPreProjeto = $this->idPreProjeto;
 
         //========== inicio codigo dirigente ================
@@ -886,19 +910,19 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
         $idEmpresa = $Empresa->idAgente;
 
-        if(isset($this->view->itensGeral[0]->CNPJCPFdigirente) && $this->view->itensGeral[0]->CNPJCPFdigirente != "") {
+        if (isset($this->view->itensGeral[0]->CNPJCPFdigirente) && $this->view->itensGeral[0]->CNPJCPFdigirente != "") {
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $tblNomes = new Nomes();
             foreach ($this->view->itensGeral as $v) {
-                $rsAgente = $tblAgente->buscarAgenteNome(array('CNPJCPF=?'=>$v->CNPJCPFdigirente))->current();
+                $rsAgente = $tblAgente->buscarAgenteNome(array('CNPJCPF=?' => $v->CNPJCPFdigirente))->current();
                 $rsDirigentes[$rsAgente->idAgente]['CNPJCPFDirigente'] = $rsAgente->CNPJCPF;
                 $rsDirigentes[$rsAgente->idAgente]['idAgente'] = $rsAgente->idAgente;
                 $rsDirigentes[$rsAgente->idAgente]['NomeDirigente'] = $rsAgente->Descricao;
             }
 
             $tbDirigenteMandato = new tbAgentesxVerificacao();
-            foreach($rsDirigentes as $dirigente) {
-                $rsMandato = $tbDirigenteMandato->listarMandato(array('idEmpresa = ?' => $idEmpresa, 'idDirigente = ?' => $dirigente['idAgente'],'stMandato = ?' => 0));
+            foreach ($rsDirigentes as $dirigente) {
+                $rsMandato = $tbDirigenteMandato->listarMandato(array('idEmpresa = ?' => $idEmpresa, 'idDirigente = ?' => $dirigente['idAgente'], 'stMandato = ?' => 0));
                 $NomeDirigente = $dirigente['NomeDirigente'];
                 $arrMandatos[$NomeDirigente] = $rsMandato;
             }
@@ -906,30 +930,30 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         //$tbDirigentes = $geral->buscarDirigentes($idPronac);
         $this->view->dirigentes = $rsDirigentes;
-        $this->view->mandatos   = $arrMandatos;
+        $this->view->mandatos = $arrMandatos;
         //============== fim codigo dirigente ================
         /*==================================================*/
 
 
-        if($propostaPorEdital){
-            $tbFormDocumentoDAO =   new tbFormDocumento();
-            $edital             =   $tbFormDocumentoDAO->buscar(array('idEdital = ?'=>$this->view->itensGeral[0]->idEdital,'idClassificaDocumento = ?'=>$this->COD_CLASSIFICACAO_DOCUMENTO));
+        if ($propostaPorEdital) {
+            $tbFormDocumentoDAO = new tbFormDocumento();
+            $edital = $tbFormDocumentoDAO->buscar(array('idEdital = ?' => $this->view->itensGeral[0]->idEdital, 'idClassificaDocumento = ?' => $this->COD_CLASSIFICACAO_DOCUMENTO));
             $arrPerguntas = array();
             $arrRespostas = array();
-            $tbPerguntaDAO  =   new tbPergunta();
-            $tbRespostaDAO  =   new tbResposta();
-            foreach($edital as $registro){
+            $tbPerguntaDAO = new tbPergunta();
+            $tbRespostaDAO = new tbResposta();
+            foreach ($edital as $registro) {
 
-                $questoes       =   $tbPerguntaDAO->montarQuestionario($registro["nrFormDocumento"],$registro["nrVersaoDocumento"]);
-                $questionario   =   '';
-                if(is_object($questoes) and count($questoes) > 0){
-                    foreach ($questoes as $questao){
+                $questoes = $tbPerguntaDAO->montarQuestionario($registro["nrFormDocumento"], $registro["nrVersaoDocumento"]);
+                $questionario = '';
+                if (is_object($questoes) and count($questoes) > 0) {
+                    foreach ($questoes as $questao) {
                         $resposta = '';
                         $where = array(
-                            'nrFormDocumento = ?'       =>$registro["nrFormDocumento"]
-                            ,'nrVersaoDocumento = ?'    =>$registro["nrVersaoDocumento"]
-                            ,'nrPergunta = ?'           =>$questao->nrPergunta
-                            ,'idProjeto = ?'            =>$this->idPreProjeto
+                            'nrFormDocumento = ?' => $registro["nrFormDocumento"]
+                        , 'nrVersaoDocumento = ?' => $registro["nrVersaoDocumento"]
+                        , 'nrPergunta = ?' => $questao->nrPergunta
+                        , 'idProjeto = ?' => $this->idPreProjeto
                         );
                         $resposta = $tbRespostaDAO->buscar($where);
 
@@ -945,7 +969,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $this->view->respostas = $arrRespostas;
 
             $this->montaTela("admissibilidade/imprimir-proposta-por-edital.phtml");
-        }else{
+        } else {
             $this->montaTela("admissibilidade/imprimir-proposta-por-incentivo-fiscal.phtml");
         }
 
@@ -953,7 +977,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     }
 
 
-    public function gerarpdfAction() {
+    public function gerarpdfAction()
+    {
 
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -962,41 +987,47 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $pdf = new PDFCreator($_POST['html']);
         if (isset($_GET['quebra_linha'])) {
-        	$pdf->gerarPdf($_GET['quebra_linha']);
+            $pdf->gerarPdf($_GET['quebra_linha']);
         } else {
-        	$pdf->gerarPdf();
+            $pdf->gerarPdf();
         }
 
     }
 
-    public function listaranalisevisualtecnicoAction() {
+    public function listaranalisevisualtecnicoAction()
+    {
 
     }
 
-    public function consultarhistoricoanalisevisualAction() {
+    public function consultarhistoricoanalisevisualAction()
+    {
 
     }
 
-    public function imprimiretiquetaprojetoAction() {
+    public function imprimiretiquetaprojetoAction()
+    {
 
     }
 
-    public function imprimiretiquetaprojetoconsultaAction() {
+    public function imprimiretiquetaprojetoconsultaAction()
+    {
 
     }
 
-    public function alterarunianalisepropostaconsultaAction() {
+    public function alterarunianalisepropostaconsultaAction()
+    {
 
     }
 
-    public function frmalterarunianalisepropostaAction() {
+    public function frmalterarunianalisepropostaAction()
+    {
         $this->_helper->layout->disableLayout();
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->unidadeAnaliseProposta($_POST["nrProposta"])->current();
         //xd($rsProposta->toArray());
-        if($rsProposta){
+        if ($rsProposta) {
             $rsOrgaoSecretaria = $tblProposta->orgaoSecretaria($rsProposta->idTecnico);
-        }else{
+        } else {
             echo "<font color='black' size='2'><b>Nenhum registro encontrado</b></font>";
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
@@ -1007,74 +1038,78 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $this->view->orgaoSecretaria = $rsOrgaoSecretaria;
     }
 
-    public function alterarunianalisepropostaAction() {
+    public function alterarunianalisepropostaAction()
+    {
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
-        try{
+        try {
             $tblTbAvaliacaoProposta = new AvaliacaoProposta();
             $rsAvaliacaoProposta = $tblTbAvaliacaoProposta->find($_POST["idAvaliacaoProposta"])->current();
 
-            $params            = new stdClass();
-            $params->usu_cod   = $rsAvaliacaoProposta->idTecnico;
+            $params = new stdClass();
+            $params->usu_cod = $rsAvaliacaoProposta->idTecnico;
             $params->idProjeto = $rsAvaliacaoProposta->idProjeto;
             AdmissibilidadeDAO::redistribuirAnalise($params);
 
             //parent::message("Localiza&ccedil;&atilde;o alterada com sucesso", "/admissibilidade/admissibilidade/alterarunianalisepropostaconsulta", "CONFIRM");
             echo "<font color='green' size='2'><b>Localiza&ccedil;&atilde;o alterada com sucesso</b></font>";
             $this->_helper->viewRenderer->setNoRender(TRUE);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             //parent::message("Falha ao realizar opera&ccedil;&atilde;o", "/admissibilidade/admissibilidade/alterarunianalisepropostaconsulta", "CONFIRM");
             echo "<font color='red' size='2'><b>Falha ao realizar opera&ccedil;&atilde;o</b></font>";
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
     }
 
-    public function redistribuiranaliseAction() {
+    public function redistribuiranaliseAction()
+    {
         if ($this->codOrgaoSuperior) {
-            $params                = new stdClass();
-            $params->usu_orgao     = $this->codOrgaoSuperior;
-            $analistas             = AdmissibilidadeDAO::consultarRedistribuirAnalise($params);
+            $params = new stdClass();
+            $params->usu_orgao = $this->codOrgaoSuperior;
+            $analistas = AdmissibilidadeDAO::consultarRedistribuirAnalise($params);
             $this->view->analistas = array();
-            $this->view->urlResumo = $this->_urlPadrao."/admissibilidade/admissibilidade/resumo-distribuicao-propostas";
+            $this->view->urlResumo = $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-distribuicao-propostas";
             $i = 0;
-            foreach($analistas as $analista) {
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['nrProposta']     = $analista->idProjeto;
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['NomeProjeto']    = $analista->NomeProjeto;
+            foreach ($analistas as $analista) {
+                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['nrProposta'] = $analista->idProjeto;
+                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['NomeProjeto'] = $analista->NomeProjeto;
                 $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['DtMovimentacao'] = ConverteData($analista->DtMovimentacao, 5);;
-                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['fase']           = $analista->Fase;
+                $this->view->analistas[$analista->Tecnico][$analista->Fase][$i]['fase'] = $analista->Fase;
                 $i++;
             }
         }
     }
 
-    public function redistribuiranaliseitemAction() {
-        if($_REQUEST['idProjeto'] && isset($_REQUEST['usu_cod'])) {
+    public function redistribuiranaliseitemAction()
+    {
 
-            $params            = new stdClass();
-            $params->usu_cod   = $_REQUEST['usu_cod'];
+        if ($_REQUEST['idProjeto'] && isset($_REQUEST['usu_cod'])) {
+            $params = new stdClass();
+            $params->usu_cod = $_REQUEST['usu_cod'];
             $params->idProjeto = $_REQUEST['idProjeto'];
             AdmissibilidadeDAO::redistribuirAnalise($params);
             //$this->view->mensagem = 'Altera��o realizada com sucesso.';
             parent::message("An&aacute;lise redistribu&iacute;da com sucesso.", "/admissibilidade/admissibilidade/redistribuiranalise", "CONFIRM");
         }
 
-        if($_REQUEST['idProjeto'] && $_REQUEST['fase']) {
+        if ($_REQUEST['idProjeto'] && $_REQUEST['fase']) {
             $params = new stdClass();
-            $params->idProjeto    = $_REQUEST['idProjeto'];
-            $params->fase         = $_REQUEST['fase'];
+            $params->idProjeto = $_REQUEST['idProjeto'];
+            $params->fase = $_REQUEST['fase'];
             $this->view->analista = AdmissibilidadeDAO::consultarRedistribuirAnaliseItem($params);
-            if($this->view->analista) {
+            if ($this->view->analista) {
                 $params = new stdClass();
-                $params->usu_nome   = $this->view->analista->Tecnico;
+                $params->usu_nome = $this->view->analista->Tecnico;
                 $params->gru_codigo = $_SESSION['GrupoAtivo']['codOrgao'];
                 //$params->usu_orgao  = $this->codOrgaoSuperior;
-                $params->usu_orgao  = $this->codOrgao;
+                $params->usu_orgao = $this->codOrgao;
                 $this->view->novosAnalistas = AdmissibilidadeDAO::consultarRedistribuirAnaliseItemSelect($params);
             }
         }
     }
 
-    public function gerenciaranalistasAction() {
+    public function gerenciaranalistasAction()
+    {
 
         if ($this->codOrgao) {
             $params = new stdClass();
@@ -1084,122 +1119,124 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         }
     }
 
-    public function gerenciaranalistaAction() {
-        if($_REQUEST['usu_cod'] && $_REQUEST['usu_orgao'] && $_REQUEST['gru_codigo'] && isset($_REQUEST['status'])) {
+    public function gerenciaranalistaAction()
+    {
+        if ($_REQUEST['usu_cod'] && $_REQUEST['usu_orgao'] && $_REQUEST['gru_codigo'] && isset($_REQUEST['status'])) {
             $params = new stdClass();
-            $params->uog_status   = $_REQUEST['status'];
-            $params->usu_cod      = $_REQUEST['usu_cod'];
-            $params->gru_codigo   = $_REQUEST['gru_codigo'];
-            $params->usu_orgao    = $_REQUEST['usu_orgao'];
+            $params->uog_status = $_REQUEST['status'];
+            $params->usu_cod = $_REQUEST['usu_cod'];
+            $params->gru_codigo = $_REQUEST['gru_codigo'];
+            $params->usu_orgao = $_REQUEST['usu_orgao'];
 
             $msgComplementar = "Altera&ccedil;&atilde;o realizada com sucesso!";
 
-            if((int)$params->uog_status === 0){
+            if ((int)$params->uog_status === 0) {
                 $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
                 $tecnicoTemProposta = $tblPreProjeto->tecnicoTemProposta($params->usu_cod);
 
-                if($tecnicoTemProposta){
+                if ($tecnicoTemProposta) {
                     $msgComplementar = "O Analista foi desabilitado, por&eacute;m existem Propostas distribu&iacute;das para o mesmo!";
                 }
             }
 
             $atualizar = AdmissibilidadeDAO::atualizarAnalista($params);
-			parent::message($msgComplementar, "/admissibilidade/admissibilidade/gerenciaranalistas", "CONFIRM");
+            parent::message($msgComplementar, "/admissibilidade/admissibilidade/gerenciaranalistas", "CONFIRM");
         }
 
-        if($_REQUEST['usu_cod'] && $_REQUEST['usu_orgao'] && $_REQUEST['gru_codigo']) {
-            $params               = new stdClass();
-            $params->usu_cod      = $_REQUEST['usu_cod'];
-            $params->usu_orgao    = $_REQUEST['usu_orgao'];
-            $params->gru_codigo   = $_REQUEST['gru_codigo'];
+        if ($_REQUEST['usu_cod'] && $_REQUEST['usu_orgao'] && $_REQUEST['gru_codigo']) {
+            $params = new stdClass();
+            $params->usu_cod = $_REQUEST['usu_cod'];
+            $params->usu_orgao = $_REQUEST['usu_orgao'];
+            $params->gru_codigo = $_REQUEST['gru_codigo'];
             $this->view->analista = AdmissibilidadeDAO::gerenciarAnalista($params);
         }
     }
 
-    public function gerenciamentodepropostasAction() {
+    public function gerenciamentodepropostasAction()
+    {
 
         //cod_grupo = 131 se perfil do tipo coordenador.
         //if($_SESSION['GrupoAtivo']['codOrgao'] != 160 && $_SESSION['GrupoAtivo']['codOrgao'] != 251) {
-        if($_SESSION['GrupoAtivo']['codGrupo'] != 131) {
+        if ($_SESSION['GrupoAtivo']['codGrupo'] != 131) {
             $this->view->mensagem = "Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa funcionalidade.";
         } else {
-            $post   = Zend_Registry::get('post');
-            $numeroProposta      = $post->numeroProposta;
-            $tipoNome            = $post->tiponome;
-            $nomeProposta        = $post->nomeProposta;
-            $tipoCpf             = $post->tipocpf;
-            $cpfCnpj             = retiraMascara($post->cpfCnpj);
-            $analista            = $post->analista;
-            $tipodata            = $post->tipodata;
+            $post = Zend_Registry::get('post');
+            $numeroProposta = $post->numeroProposta;
+            $tipoNome = $post->tiponome;
+            $nomeProposta = $post->nomeProposta;
+            $tipoCpf = $post->tipocpf;
+            $cpfCnpj = retiraMascara($post->cpfCnpj);
+            $analista = $post->analista;
+            $tipodata = $post->tipodata;
             $dataPropostaInicial = $post->dataPropostaInicial;
 
             $arrBusca = array();
             //NUM. PROPOSTA
-            if(!empty($numeroProposta)){
-                $arrBusca[" idPreProjeto "]="'".$numeroProposta."'";
+            if (!empty($numeroProposta)) {
+                $arrBusca[" idPreProjeto "] = "'" . $numeroProposta . "'";
             }
             //NOME DA PROPOSTA
-            if(!empty($nomeProposta)){
-                if($tipoNome=="contendo") {
-                    $arrBusca[" NomeProjeto LIKE "]="'%".$nomeProposta."%'";
-                }elseif($tipoNome=="inicioIgual") {
-                    $arrBusca[" NomeProjeto LIKE "]="'".$nomeProposta."%'";
+            if (!empty($nomeProposta)) {
+                if ($tipoNome == "contendo") {
+                    $arrBusca[" NomeProjeto LIKE "] = "'%" . $nomeProposta . "%'";
+                } elseif ($tipoNome == "inicioIgual") {
+                    $arrBusca[" NomeProjeto LIKE "] = "'" . $nomeProposta . "%'";
                 }
             }
             //CPF / CNPJ PROPONENTE
-            if(!empty($cpfCnpj)){
-                 if($tipoCpf=="contendo") {
-                    $arrBusca[" CNPJCPF LIKE "]="'%".$cpfCnpj."%'";
-                }elseif($tipoCpf=="igual") {
-                    $arrBusca[" CNPJCPF "]="'".$cpfCnpj."'";;
-                }elseif($tipoCpf=="inicioIgual") {
-                    $arrBusca[" CNPJCPF LIKE "]="'".$cpfCnpj."%'";;
-                }elseif($tipoCpf=="diferente") {
-                    $arrBusca[" CNPJCPF <> "]="'".$cpfCnpj."'";;
+            if (!empty($cpfCnpj)) {
+                if ($tipoCpf == "contendo") {
+                    $arrBusca[" CNPJCPF LIKE "] = "'%" . $cpfCnpj . "%'";
+                } elseif ($tipoCpf == "igual") {
+                    $arrBusca[" CNPJCPF "] = "'" . $cpfCnpj . "'";;
+                } elseif ($tipoCpf == "inicioIgual") {
+                    $arrBusca[" CNPJCPF LIKE "] = "'" . $cpfCnpj . "%'";;
+                } elseif ($tipoCpf == "diferente") {
+                    $arrBusca[" CNPJCPF <> "] = "'" . $cpfCnpj . "'";;
                 }
             }
             //ANALISTA
-            if(!empty($analista)){
-                $arrBusca[" idTecnico "]="'".$analista."'";
-            }elseif($analista == "0"){
-                $arrBusca[" idTecnico <> "]="''";
+            if (!empty($analista)) {
+                $arrBusca[" idTecnico "] = "'" . $analista . "'";
+            } elseif ($analista == "0") {
+                $arrBusca[" idTecnico <> "] = "''";
             }
 
-            if(!empty ($dataPropostaInicial) || $tipodata != ''){
-                if($tipodata == "igual"){
-                    $arrBusca['x.DtAvaliacao > '] = "'".ConverteData($post->dataPropostaInicial, 13)." 00:00:00'";
-                    $arrBusca['x.DtAvaliacao < '] = "'".ConverteData($post->dataPropostaInicial, 13)." 23:59:59'";
+            if (!empty ($dataPropostaInicial) || $tipodata != '') {
+                if ($tipodata == "igual") {
+                    $arrBusca['x.DtAvaliacao > '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 00:00:00'";
+                    $arrBusca['x.DtAvaliacao < '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 23:59:59'";
 
-                }elseif($tipodata == "maior"){
-                    $arrBusca['x.DtAvaliacao >= '] = "'".ConverteData($post->dataPropostaInicial, 13)." 00:00:00'";
+                } elseif ($tipodata == "maior") {
+                    $arrBusca['x.DtAvaliacao >= '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 00:00:00'";
 
-                }elseif($tipodata == "menor"){
-                    $arrBusca['x.DtAvaliacao <= '] = "'".ConverteData($post->dataPropostaInicial, 13)." 00:00:00'";
+                } elseif ($tipodata == "menor") {
+                    $arrBusca['x.DtAvaliacao <= '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 00:00:00'";
 
-                }elseif($tipodata == "OT"){
-                    $arrBusca['x.DtAvaliacao = '] = "'".date("Y-m-").(date("d")-1)." 00:00:00'";
+                } elseif ($tipodata == "OT") {
+                    $arrBusca['x.DtAvaliacao = '] = "'" . date("Y-m-") . (date("d") - 1) . " 00:00:00'";
 
-                }elseif($tipodata == "U7"){
-                    $arrBusca['x.DtAvaliacao > '] = "'".date("Y-m-").(date("d")-7)." 00:00:00'";
-                    $arrBusca['x.DtAvaliacao < '] = "'".date("Y-m-d")." 23:59:59'";
+                } elseif ($tipodata == "U7") {
+                    $arrBusca['x.DtAvaliacao > '] = "'" . date("Y-m-") . (date("d") - 7) . " 00:00:00'";
+                    $arrBusca['x.DtAvaliacao < '] = "'" . date("Y-m-d") . " 23:59:59'";
 
-                }elseif($tipodata == "SP"){
-                    $arrBusca['x.DtAvaliacao > '] = "'".date("Y-m-").(date("d")-7)." 00:00:00'";
-                    $arrBusca['x.DtAvaliacao < '] = "'".date("Y-m-d")." 23:59:59'";
+                } elseif ($tipodata == "SP") {
+                    $arrBusca['x.DtAvaliacao > '] = "'" . date("Y-m-") . (date("d") - 7) . " 00:00:00'";
+                    $arrBusca['x.DtAvaliacao < '] = "'" . date("Y-m-d") . " 23:59:59'";
 
-                }elseif($tipodata == "MM"){
-                    $arrBusca['x.DtAvaliacao > '] = "'".date("Y-m-01")." 00:00:00'";
-                    $arrBusca['x.DtAvaliacao < '] = "'".date("Y-m-d")." 23:59:59'";
+                } elseif ($tipodata == "MM") {
+                    $arrBusca['x.DtAvaliacao > '] = "'" . date("Y-m-01") . " 00:00:00'";
+                    $arrBusca['x.DtAvaliacao < '] = "'" . date("Y-m-d") . " 23:59:59'";
 
-                }elseif($tipodata == "UM"){
-                    $arrBusca['x.DtAvaliacao > '] = "'".date("Y-").(date("m")-1)."-01 00:00:00'";
-                    $arrBusca['x.DtAvaliacao < '] = "'".date("Y-").(date("m")-1)."-31 23:59:59'";
+                } elseif ($tipodata == "UM") {
+                    $arrBusca['x.DtAvaliacao > '] = "'" . date("Y-") . (date("m") - 1) . "-01 00:00:00'";
+                    $arrBusca['x.DtAvaliacao < '] = "'" . date("Y-") . (date("m") - 1) . "-31 23:59:59'";
 
-                }else{
-                    $arrBusca['x.DtAvaliacao > '] = "'".ConverteData($post->dataPropostaInicial, 13)." 00:00:00'";
+                } else {
+                    $arrBusca['x.DtAvaliacao > '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 00:00:00'";
 
-                    if($post->dataPropostaFinal != ""){
-                        $arrBusca['x.DtAvaliacao < '] = "'".ConverteData($post->dataPropostaFinal, 13)." 23:59:59'";
+                    if ($post->dataPropostaFinal != "") {
+                        $arrBusca['x.DtAvaliacao < '] = "'" . ConverteData($post->dataPropostaFinal, 13) . " 23:59:59'";
                     }
                 }
 
@@ -1210,60 +1247,62 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             //$arrBusca[" TABELAS.dbo.fnCodigoOrgaoEstrutura(u.usu_orgao, 1) "] = $this->codOrgaoSuperior;
 
 
-            $this->view->analistas = AdmissibilidadeDAO::consultarGerenciamentoProposta($arrBusca,array("Tecnico ASC"));
+            $this->view->analistas = AdmissibilidadeDAO::consultarGerenciamentoProposta($arrBusca, array("Tecnico ASC"));
 
-            if(!$this->view->analistas) {
+            if (!$this->view->analistas) {
                 $this->view->mensagem = 'Nenhum registro encontrado';
             } else {
                 $array = array();
-                foreach($this->view->analistas as $analistas) {
+                foreach ($this->view->analistas as $analistas) {
 
-                    $array[$analistas->Tecnico][$analistas->idProjeto]['NomeProposta']        = $analistas->NomeProposta;
-                    $array[$analistas->Tecnico][$analistas->idProjeto]['idAgente']            = $analistas->idAgente;
-                    $array[$analistas->Tecnico][$analistas->idProjeto]['CNPJCPF']             = $analistas->CNPJCPF;
-                    $array[$analistas->Tecnico][$analistas->idProjeto]['idUsuario']           = $analistas->idUsuario;
-                    $array[$analistas->Tecnico][$analistas->idProjeto]['Tecnico']             = $analistas->Tecnico;
-                    $array[$analistas->Tecnico][$analistas->idProjeto]['idSecretaria']        = $analistas->idSecretaria;
-                    $array[$analistas->Tecnico][$analistas->idProjeto]['DtAdmissibilidade']   = ConverteData($analistas->DtAdmissibilidade, 5);
-                    $array[$analistas->Tecnico][$analistas->idProjeto]['dias']                = $analistas->dias;
+                    $array[$analistas->Tecnico][$analistas->idProjeto]['NomeProposta'] = $analistas->NomeProposta;
+                    $array[$analistas->Tecnico][$analistas->idProjeto]['idAgente'] = $analistas->idAgente;
+                    $array[$analistas->Tecnico][$analistas->idProjeto]['CNPJCPF'] = $analistas->CNPJCPF;
+                    $array[$analistas->Tecnico][$analistas->idProjeto]['idUsuario'] = $analistas->idUsuario;
+                    $array[$analistas->Tecnico][$analistas->idProjeto]['Tecnico'] = $analistas->Tecnico;
+                    $array[$analistas->Tecnico][$analistas->idProjeto]['idSecretaria'] = $analistas->idSecretaria;
+                    $array[$analistas->Tecnico][$analistas->idProjeto]['DtAdmissibilidade'] = ConverteData($analistas->DtAdmissibilidade, 5);
+                    $array[$analistas->Tecnico][$analistas->idProjeto]['dias'] = $analistas->dias;
                     $array[$analistas->Tecnico][$analistas->idProjeto]['idAvaliacaoProposta'] = $analistas->idAvaliacaoProposta;
-                    $array[$analistas->Tecnico][$analistas->idProjeto]['idMovimentacao']      = $analistas->idMovimentacao;
-                    $array[$analistas->Tecnico][$analistas->idProjeto]['stTipoDemanda']       = $analistas->stTipoDemanda;
-                    $array[$analistas->Tecnico][$analistas->idProjeto]['stPlanoAnual']        = $analistas->stPlanoAnual;
+                    $array[$analistas->Tecnico][$analistas->idProjeto]['idMovimentacao'] = $analistas->idMovimentacao;
+                    $array[$analistas->Tecnico][$analistas->idProjeto]['stTipoDemanda'] = $analistas->stTipoDemanda;
+                    $array[$analistas->Tecnico][$analistas->idProjeto]['stPlanoAnual'] = $analistas->stPlanoAnual;
                 }
                 $this->view->analistas = $array;
 
             }
 
-            $this->view->urlResumo = $this->_urlPadrao."/admissibilidade/admissibilidade/resumo-gerenciamento-proposta";
+            $this->view->urlResumo = $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-gerenciamento-proposta";
         }
     }
 
-    public function devolverpropostaAction() {
+    public function devolverpropostaAction()
+    {
 
         //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscar(array("idPreProjeto=?"=>$this->idPreProjeto))->current();
+        $rsProposta = $tblProposta->buscar(array("idPreProjeto=?" => $this->idPreProjeto))->current();
         $this->view->idPreProjeto = $this->idPreProjeto;
-        $this->view->nomeProjeto  = strip_tags($rsProposta->NomeProjeto);
+        $this->view->nomeProjeto = strip_tags($rsProposta->NomeProjeto);
 
     }
 
-    public function propostaPorProponenteAction(){
+    public function propostaPorProponenteAction()
+    {
         $get = Zend_Registry::get("get");
         $idAgente = $get->agente;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsPropostas = $tblProposta->buscar(array("idagente = ?"=>$idAgente), array("nomeprojeto ASC"));
+        $rsPropostas = $tblProposta->buscar(array("idagente = ?" => $idAgente), array("nomeprojeto ASC"));
 
 
         //Descobrindo os dados do Agente/Proponente
         $tblAgente = new Nomes();
-        $rsAgente = $tblAgente->buscar(array("idAgente = ? "=>$idAgente))->current();
+        $rsAgente = $tblAgente->buscar(array("idAgente = ? " => $idAgente))->current();
 
         //Descobrindo a movimenta��o corrente de cada proposta
-        if(count($rsPropostas)>0){
+        if (count($rsPropostas) > 0) {
             //Conectando com movimentacao
             $tblMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
             //Conectando com projetos
@@ -1272,33 +1311,31 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $tblUsuario = new Autenticacao_Model_Usuario();
 
             $movimentacoes = array();
-            foreach ($rsPropostas as $proposta){
+            foreach ($rsPropostas as $proposta) {
                 //Buscando movimenta��o desta proposta
-                $rsMovimentacao = $tblMovimentacao->buscar(array("idprojeto = ?"=>$proposta->idPreProjeto, "stestado = ?"=>0))->current();
+                $rsMovimentacao = $tblMovimentacao->buscar(array("idprojeto = ?" => $proposta->idPreProjeto, "stestado = ?" => 0))->current();
                 $movimentacoes[$proposta->idPreProjeto]["tecnico"] = "";
 
-                if(count($rsMovimentacao)){
+                if (count($rsMovimentacao)) {
                     //Descobrindo se esta proposta ja existe em projetos
-                    $rsProjeto = $tblProjetos->buscar(array("idprojeto = ?"=>$proposta->idPreProjeto));
+                    $rsProjeto = $tblProjetos->buscar(array("idprojeto = ?" => $proposta->idPreProjeto));
 
                     //Descobrindo tecnico
                     $tecnico = $tblProposta->buscarConformidadeVisualTecnico($proposta->idPreProjeto);
 
                     $movimentacoes[$proposta->idPreProjeto]["codMovimentacao"] = $rsMovimentacao->Movimentacao;
 
-                    if ($rsMovimentacao->Movimentacao == 95)
-                    {
+                    if ($rsMovimentacao->Movimentacao == 95) {
                         $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#0000FF>Proposta com Proponente</font>";
-                    }elseif ($rsMovimentacao->Movimentacao == 96)
-                    {
+                    } elseif ($rsMovimentacao->Movimentacao == 96) {
                         $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta em An�lise' . "</font>";
 
-                        $rsAvaliacao = $tbAvaliacao->buscar(array("idProjeto = ?"=>$proposta->idPreProjeto, "ConformidadeOK =?"=> 9, "stEstado =?"=>0))->current();
+                        $rsAvaliacao = $tbAvaliacao->buscar(array("idProjeto = ?" => $proposta->idPreProjeto, "ConformidadeOK =?" => 9, "stEstado =?" => 0))->current();
 
-                        if(count($rsAvaliacao)>0){
+                        if (count($rsAvaliacao) > 0) {
                             $rsUsuario = $tblUsuario->find($rsAvaliacao->idTecnico)->current();
 
-                            if(count($rsUsuario)>0){
+                            if (count($rsUsuario) > 0) {
                                 $usuarioNome = $rsUsuario->usu_nome;
                                 $movimentacoes[$proposta->idPreProjeto]["tecnico"] = $usuarioNome;
                             }
@@ -1308,23 +1345,17 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                         {
                             $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta em An�lise' . "</font>";
                         }*/
-                    }
-                    elseif ($rsMovimentacao->Movimentacao == 97 and (!count($rsProjeto)>0))
-                    {
+                    } elseif ($rsMovimentacao->Movimentacao == 97 and (!count($rsProjeto) > 0)) {
                         $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta aguardando documentos' . "</font>";
-                    }
-                    elseif (count($rsProjeto)>0)
-                    {
-                        $rsAvaliacao = $tbAvaliacao->buscar(array("idProjeto = ?"=>$proposta->idPreProjeto, "ConformidadeOK =?"=> 1, "stEstado =?"=>0))->current();
+                    } elseif (count($rsProjeto) > 0) {
+                        $rsAvaliacao = $tbAvaliacao->buscar(array("idProjeto = ?" => $proposta->idPreProjeto, "ConformidadeOK =?" => 1, "stEstado =?" => 0))->current();
                         $rsUsuario = $tblUsuario->find($rsAvaliacao->idTecnico)->current();
 
                         $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "<font color=#FF0000>" . 'Proposta transformada em projeto' . "</font>";
-                        if(count($rsUsuario)>0){
+                        if (count($rsUsuario) > 0) {
                             $movimentacoes[$proposta->idPreProjeto]["tecnico"] = $rsUsuario->usu_nome;
                         }
-                    }
-                    else
-                    {
+                    } else {
                         $usuarioNome = "";
                         $tipoUsuario = "";
                         $rsUsuario = null;
@@ -1340,51 +1371,56 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                             $usuarioNome = $rsUsuario->usu_nome;
                         }*/
 
-                        $rsAvaliacao = $tbAvaliacao->buscar(array("idProjeto = ?"=>$proposta->idPreProjeto, "ConformidadeOK =?"=> 1, "stEstado =?"=>0))->current();
-                        if($rsAvaliacao){
+                        $rsAvaliacao = $tbAvaliacao->buscar(array("idProjeto = ?" => $proposta->idPreProjeto, "ConformidadeOK =?" => 1, "stEstado =?" => 0))->current();
+                        if ($rsAvaliacao) {
                             $rsUsuario = $tblUsuario->find($rsAvaliacao->idTecnico)->current();
                         }
 
-                        if($rsMovimentacao->Movimentacao == 127){
+                        if ($rsMovimentacao->Movimentacao == 127) {
                             $tipoUsuario = "Coordenador";
-                        }else{
+                        } else {
                             $tipoUsuario = "Analista";
                         }
 
-                        if(count($rsUsuario)>0){
+                        if (count($rsUsuario) > 0) {
                             $usuarioNome = $rsUsuario->usu_nome;
                         }
 
                         $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "Proposta com o {$tipoUsuario}";
                         $movimentacoes[$proposta->idPreProjeto]["tecnico"] = $usuarioNome;
                     }
-                }else{
+                } else {
                     $movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"] = "";
                 }
             }
         }
 
         $arrDados = array(
-                        "propostas"=>$rsPropostas,
-                        "agente"=>$rsAgente,
-                        "movimentacoes"=>$movimentacoes
-                    );
+            "propostas" => $rsPropostas,
+            "agente" => $rsAgente,
+            "movimentacoes" => $movimentacoes
+        );
 
         $this->montaTela("admissibilidade/listarpropostasproponente.phtml", $arrDados);
     }
 
-    public function listarPropostasAnaliseVisualTecnicoAction(){
-        $post   = Zend_Registry::get('post');
+    public function listarPropostasAnaliseVisualTecnicoAction()
+    {
+        $post = Zend_Registry::get('post');
         $orgSuperior = $this->codOrgaoSuperior;
         $view = $this->getRequest()->getParam("view");
 
-        if(!empty($view)){
-            $arrBusca = array("Tecnico "=>"IS NOT NULL");
-        }else{
-            $arrBusca = array("idOrgao "=>$orgSuperior);
+        if (!empty($view)) {
+            $arrBusca = array("Tecnico " => "IS NOT NULL");
+        } else {
+            $arrBusca = array("idOrgao " => $orgSuperior);
         }
-        if(is_numeric($post->avaliacao)){ $arrBusca["ConformidadeOK "] = "'$post->avaliacao'"; }
-        if(!empty($post->tecnico)){ $arrBusca["Tecnico "] = "'$post->tecnico'"; }
+        if (is_numeric($post->avaliacao)) {
+            $arrBusca["ConformidadeOK "] = "'$post->avaliacao'";
+        }
+        if (!empty($post->tecnico)) {
+            $arrBusca["Tecnico "] = "'$post->tecnico'";
+        }
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico($arrBusca, array("Tecnico ASC"));
@@ -1393,47 +1429,48 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $arrTecnicosPropostasInicial = array();
 
         $arrTecnicos = array();
-        foreach($rsProposta as $proposta){
+        foreach ($rsProposta as $proposta) {
 
-            if($proposta->ConformidadeOK == "0"){
+            if ($proposta->ConformidadeOK == "0") {
                 $arrTecnicosPropostasReavaliacao[$proposta->Tecnico][] = $proposta;
             }
-            if($proposta->ConformidadeOK == "9"){
+            if ($proposta->ConformidadeOK == "9") {
                 $arrTecnicosPropostasInicial[$proposta->Tecnico][] = $proposta;
             }
             //$arrTecnicosPropostas[$proposta->Tecnico][] = $proposta;
         }
 
         $arrDados = array(
-                        "propostas"=>$rsProposta,
-                        "tecnicosPropostasReavaliacao"=>$arrTecnicosPropostasReavaliacao,
-                        "tecnicosPropostasInicial"=>$arrTecnicosPropostasInicial,
-                        "urlXLS"=>$this->view->baseUrl()."/admissibilidade/admissibilidade/xls-propostas-analise-visual-tecnico",
-                        "urlPDF"=>$this->view->baseUrl()."/admissibilidade/admissibilidade/pdf-propostas-analise-visual-tecnico",
-                        "urlResumo"=>$this->view->baseUrl()."/admissibilidade/admissibilidade/resumo-propostas-analise-visual-tecnico"
-                    );
+            "propostas" => $rsProposta,
+            "tecnicosPropostasReavaliacao" => $arrTecnicosPropostasReavaliacao,
+            "tecnicosPropostasInicial" => $arrTecnicosPropostasInicial,
+            "urlXLS" => $this->view->baseUrl() . "/admissibilidade/admissibilidade/xls-propostas-analise-visual-tecnico",
+            "urlPDF" => $this->view->baseUrl() . "/admissibilidade/admissibilidade/pdf-propostas-analise-visual-tecnico",
+            "urlResumo" => $this->view->baseUrl() . "/admissibilidade/admissibilidade/resumo-propostas-analise-visual-tecnico"
+        );
 
-        if(!empty($view)){
+        if (!empty($view)) {
             header("Content-Type: text/html; charset=ISO-8859-1");
             $this->_helper->layout->disableLayout();
 
             $this->montaTela($this->getRequest()->getParam("view"), $arrDados);
-        }else{
+        } else {
             $this->montaTela("admissibilidade/listarpropostasanalisevisualtecnico.phtml", $arrDados);
         }
     }
 
-    public function listarPropostasAnaliseDocumentalTecnicoAction(){
+    public function listarPropostasAnaliseDocumentalTecnicoAction()
+    {
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseDocumentalTecnico(array("sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) ="=>$usuario, "ConformidadeOK = "=>1), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseDocumentalTecnico(array("sac.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico) =" => $usuario, "ConformidadeOK = " => 1), array("Tecnico ASC"));
 
         $arrTecnicosPropostas = array();
         $idDoc = 0;
         $nomeTec = "";
-        foreach($rsProposta as $proposta){
-            if($proposta->CodigoDocumento != $idDoc || $proposta->Tecnico != $nomeTec){
+        foreach ($rsProposta as $proposta) {
+            if ($proposta->CodigoDocumento != $idDoc || $proposta->Tecnico != $nomeTec) {
                 $arrTecnicosPropostas[$proposta->Tecnico][$proposta->NomeProjeto][] = $proposta;
                 $idDoc = $proposta->CodigoDocumento;
                 $nomeTec = $proposta->Tecnico;
@@ -1441,45 +1478,47 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         }
 
         $arrDados = array(
-                        "propostas"=>$rsProposta,
-                        "tecnicosPropostas"=>$arrTecnicosPropostas,
-                        "urlXLS"=>$this->view->baseUrl()."/admissibilidade/admissibilidade/xls-propostas-analise-visual-tecnico",
-                        "urlPDF"=>$this->view->baseUrl()."/admissibilidade/admissibilidade/pdf-propostas-analise-visual-tecnico"
-                    );
+            "propostas" => $rsProposta,
+            "tecnicosPropostas" => $arrTecnicosPropostas,
+            "urlXLS" => $this->view->baseUrl() . "/admissibilidade/admissibilidade/xls-propostas-analise-visual-tecnico",
+            "urlPDF" => $this->view->baseUrl() . "/admissibilidade/admissibilidade/pdf-propostas-analise-visual-tecnico"
+        );
 
         $this->montaTela("admissibilidade/listarpropostasanalisedocumentaltecnico.phtml", $arrDados);
     }
 
-    public function listarPropostasAnaliseFinalAction(){
+    public function listarPropostasAnaliseFinalAction()
+    {
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao "=>$usuario), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao " => $usuario), array("Tecnico ASC"));
 
         $arrTecnicosPropostas = array();
-        foreach($rsProposta as $proposta){
+        foreach ($rsProposta as $proposta) {
             $arrTecnicosPropostas[$proposta->Tecnico][] = $proposta;
         }
 
         $arrDados = array(
-                        "propostas"=>$rsProposta,
-                        "tecnicosPropostas"=>$arrTecnicosPropostas,
-                        "urlXLS"=>$this->view->baseUrl()."/admissibilidade/admissibilidade/xls-propostas-analise-final",
-                        "urlPDF"=>$this->view->baseUrl()."/admissibilidade/admissibilidade/pdf-propostas-analise-final",
-                        "urlResumo"=>$this->_urlPadrao."/admissibilidade/admissibilidade/resumo-proposta-analise-final"
-                    );
+            "propostas" => $rsProposta,
+            "tecnicosPropostas" => $arrTecnicosPropostas,
+            "urlXLS" => $this->view->baseUrl() . "/admissibilidade/admissibilidade/xls-propostas-analise-final",
+            "urlPDF" => $this->view->baseUrl() . "/admissibilidade/admissibilidade/pdf-propostas-analise-final",
+            "urlResumo" => $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-proposta-analise-final"
+        );
 
         $this->montaTela("admissibilidade/listarpropostasanalisefinal.phtml", $arrDados);
     }
 
-    public function xlsPropostasAnaliseFinalAction(){
+    public function xlsPropostasAnaliseFinalAction()
+    {
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
 
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao "=>$usuario), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao " => $usuario), array("Tecnico ASC"));
 
         $html = "<table>
                 <tr>
@@ -1488,19 +1527,20 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                     <td>Dt.Movimenta��o</td>
                 </tr>
                 ";
-        foreach($rsProposta as $proposta){
-           $html .= "<tr><td>{$proposta->idPreProjeto}</td>" ;
-           $html .= "<td>{$proposta->NomeProjeto}</td>" ;
-           $html .= "<td>{$proposta->DtMovimentacao}</td></tr>" ;
+        foreach ($rsProposta as $proposta) {
+            $html .= "<tr><td>{$proposta->idPreProjeto}</td>";
+            $html .= "<td>{$proposta->NomeProjeto}</td>";
+            $html .= "<td>{$proposta->DtMovimentacao}</td></tr>";
         }
-        $html .= "</table>" ;
+        $html .= "</table>";
 
         header("Content-Type: application/vnd.ms-excel");
         header("Content-Disposition: inline; filename=file.xls;");
         echo $html;
     }
 
-    public function xlsPropostasAnaliseVisualTecnicoAction(){
+    public function xlsPropostasAnaliseVisualTecnicoAction()
+    {
         set_time_limit(320);
 
         $this->_helper->viewRenderer->setNoRender(true);
@@ -1509,7 +1549,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao "=>$usuario), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao " => $usuario), array("Tecnico ASC"));
 
         $html = "<table>
                 <tr>
@@ -1518,28 +1558,29 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                     <td>Dt.Movimenta��o</td>
                 </tr>
                 ";
-        foreach($rsProposta as $proposta){
-           $html .= "<tr><td>{$proposta->idProjeto}</td>" ;
-           $html .= "<td>{$proposta->NomeProjeto}</td>" ;
-           $html .= "<td>{$proposta->DtMovimentacao}</td></tr>" ;
+        foreach ($rsProposta as $proposta) {
+            $html .= "<tr><td>{$proposta->idProjeto}</td>";
+            $html .= "<td>{$proposta->NomeProjeto}</td>";
+            $html .= "<td>{$proposta->DtMovimentacao}</td></tr>";
         }
-        $html .= "</table>" ;
+        $html .= "</table>";
 
         header("Content-Type: application/vnd.ms-excel");
         header("Content-Disposition: inline; filename=file.xls;");
         echo $html;
     }
 
-    public function pdfPropostasAnaliseFinalAction() {
+    public function pdfPropostasAnaliseFinalAction()
+    {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao "=>$usuario), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseFinal(array("idOrgao " => $usuario), array("Tecnico ASC"));
 
         $arrTecnicos = array();
-        foreach($rsProposta as $proposta) {
+        foreach ($rsProposta as $proposta) {
             $arrTecnicosPropostas[$proposta->Tecnico][] = $proposta;
         }
 
@@ -1553,12 +1594,12 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 ';
         $ultimoRegistro = null;
         $ct = 1;
-        if(!empty($arrTecnicosPropostas)) {
-            foreach($arrTecnicosPropostas as $tecnico=>$propostas) {
+        if (!empty($arrTecnicosPropostas)) {
+            foreach ($arrTecnicosPropostas as $tecnico => $propostas) {
                 $html .= '
                     <tr>
                         <td align="left" style="border:1px #000000 solid; font-size:14px; font-weight:bold;">
-                            Analista : '.$tecnico.'
+                            Analista : ' . $tecnico . '
                         </td>
                     </tr>
                     <tr>
@@ -1570,15 +1611,15 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                     <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimenta��o</th>
                                 </tr>
                 ';
-                                foreach($propostas as $proposta){
-                $html .= '
+                foreach ($propostas as $proposta) {
+                    $html .= '
                                 <tr>
-                                    <td align="center" style="font-size:12px;">'.$proposta->idPreProjeto.'</td>
-                                    <td align="center" style="font-size:12px;">'.$proposta->NomeProjeto.'</td>
-                                    <td align="center" style="font-size:12px;">'.ConverteData($proposta->DtMovimentacao,5).'</td>
+                                    <td align="center" style="font-size:12px;">' . $proposta->idPreProjeto . '</td>
+                                    <td align="center" style="font-size:12px;">' . $proposta->NomeProjeto . '</td>
+                                    <td align="center" style="font-size:12px;">' . ConverteData($proposta->DtMovimentacao, 5) . '</td>
                                 </tr>
                 ';
-                                }
+                }
                 $html .= '
                             </table>
                         </td>
@@ -1597,7 +1638,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     }
 
-    public function pdfPropostasAnaliseVisualTecnicoAction() {
+    public function pdfPropostasAnaliseVisualTecnicoAction()
+    {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         set_time_limit(320);
@@ -1605,10 +1647,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $usuario = $this->codOrgaoSuperior;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-        $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao "=>$usuario), array("Tecnico ASC"));
+        $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico(array("idOrgao " => $usuario), array("Tecnico ASC"));
 
         $arrTecnicos = array();
-        foreach($rsProposta as $proposta) {
+        foreach ($rsProposta as $proposta) {
             $arrTecnicosPropostas[$proposta->Tecnico][] = $proposta;
         }
 
@@ -1622,12 +1664,12 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 ';
         $ultimoRegistro = null;
         $ct = 1;
-        if(!empty($arrTecnicosPropostas)) {
-            foreach($arrTecnicosPropostas as $tecnico=>$propostas) {
+        if (!empty($arrTecnicosPropostas)) {
+            foreach ($arrTecnicosPropostas as $tecnico => $propostas) {
                 $html .= '
                     <tr>
                         <td align="left" style="border:1px #000000 solid; font-size:14px; font-weight:bold;">
-                            Analista : '.$tecnico.'
+                            Analista : ' . $tecnico . '
                         </td>
                     </tr>
                     <tr>
@@ -1639,17 +1681,17 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                     <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimenta��o</th>
                                 </tr>
                 ';
-                                foreach($propostas as $proposta){
-                                if($proposta->ConformidadeOK == 0){
-                $html .= '
+                foreach ($propostas as $proposta) {
+                    if ($proposta->ConformidadeOK == 0) {
+                        $html .= '
                                 <tr>
-                                    <td align="center" style="font-size:12px;">'.$proposta->idProjeto.'</td>
-                                    <td align="center" style="font-size:12px;">'.$proposta->NomeProjeto.'</td>
-                                    <td align="center" style="font-size:12px;">'.ConverteData($proposta->DtMovimentacao,5).'</td>
+                                    <td align="center" style="font-size:12px;">' . $proposta->idProjeto . '</td>
+                                    <td align="center" style="font-size:12px;">' . $proposta->NomeProjeto . '</td>
+                                    <td align="center" style="font-size:12px;">' . ConverteData($proposta->DtMovimentacao, 5) . '</td>
                                 </tr>
                 ';
-                                }
-                                }
+                    }
+                }
                 $html .= '
                             </table>
                         </td>
@@ -1673,12 +1715,12 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 ';
         $ultimoRegistro = null;
         $ct = 1;
-        if(!empty($arrTecnicosPropostas)) {
-            foreach($arrTecnicosPropostas as $tecnico=>$propostas) {
+        if (!empty($arrTecnicosPropostas)) {
+            foreach ($arrTecnicosPropostas as $tecnico => $propostas) {
                 $html .= '
                     <tr>
                         <td align="left" style="border:1px #000000 solid; font-size:14px; font-weight:bold;">
-                            Analista : '.$tecnico.'
+                            Analista : ' . $tecnico . '
                         </td>
                     </tr>
                     <tr>
@@ -1690,17 +1732,17 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                     <th width="20%" style="border-bottom:1px #000000 solid;">Dt. Movimenta��o</th>
                                 </tr>
                 ';
-                                foreach($propostas as $proposta){
-                                if($proposta->ConformidadeOK == 9){
-                $html .= '
+                foreach ($propostas as $proposta) {
+                    if ($proposta->ConformidadeOK == 9) {
+                        $html .= '
                                 <tr>
-                                    <td align="center" style="font-size:12px;">'.$proposta->idProjeto.'</td>
-                                    <td align="center" style="font-size:12px;">'.$proposta->NomeProjeto.'</td>
-                                    <td align="center" style="font-size:12px;">'.ConverteData($proposta->DtMovimentacao,5).'</td>
+                                    <td align="center" style="font-size:12px;">' . $proposta->idProjeto . '</td>
+                                    <td align="center" style="font-size:12px;">' . $proposta->NomeProjeto . '</td>
+                                    <td align="center" style="font-size:12px;">' . ConverteData($proposta->DtMovimentacao, 5) . '</td>
                                 </tr>
                 ';
-                                }
-                                }
+                    }
+                }
                 $html .= '
                             </table>
                         </td>
@@ -1719,55 +1761,58 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     }
 
-    public function historicoAnaliseVisualAction(){
+    public function historicoAnaliseVisualAction()
+    {
         $post = Zend_Registry::get("get");
         $usuario = $this->codOrgaoSuperior;
 
-        if(empty($post->busca)){
+        if (empty($post->busca)) {
             $tblProposta = new Proposta_Model_DbTable_PreProjeto();
             $rsTecnicos = $tblProposta->buscarTecnicosHistoricoAnaliseVisual($usuario);
 
             $arrDados = array(
-                            "tecnicos"=>$rsTecnicos,
-                            "urlForm"=>$this->view->baseUrl()."/admissibilidade/admissibilidade/historico-analise-visual"
-                        );
+                "tecnicos" => $rsTecnicos,
+                "urlForm" => $this->view->baseUrl() . "/admissibilidade/admissibilidade/historico-analise-visual"
+            );
 
             $this->montaTela("admissibilidade/consultarhistoricoanalisevisual.phtml", $arrDados);
-        }else{
-            $tecnico = ($post->tecnico != "")?$post->tecnico:null;
-            $dtInicio = ($post->dataPropostaInicial != "")?ConverteData($post->dataPropostaInicial,13):null;
-            $dtFim = ($post->dataPropostaFinal != "")?ConverteData($post->dataPropostaFinal,13):null;
+        } else {
+            $tecnico = ($post->tecnico != "") ? $post->tecnico : null;
+            $dtInicio = ($post->dataPropostaInicial != "") ? ConverteData($post->dataPropostaInicial, 13) : null;
+            $dtFim = ($post->dataPropostaFinal != "") ? ConverteData($post->dataPropostaFinal, 13) : null;
 
-            $situacao = (!empty($post->situacao))?$post->situacao:null;
+            $situacao = (!empty($post->situacao)) ? $post->situacao : null;
 
             $tblProposta = new Proposta_Model_DbTable_PreProjeto();
-            $rsProposta = $tblProposta->buscarHistoricoAnaliseVisual($usuario,$tecnico,$situacao,$dtInicio,$dtFim);
+            $rsProposta = $tblProposta->buscarHistoricoAnaliseVisual($usuario, $tecnico, $situacao, $dtInicio, $dtFim);
 
             $arrTecnicosPropostas = array();
-            foreach($rsProposta as $proposta){
+            foreach ($rsProposta as $proposta) {
                 $arrTecnicosPropostas[$proposta->Tecnico][] = $proposta;
             }
 
             $arrDados = array(
-                            "propostas"=>$rsProposta,
-                            "tecnicosPropostas"=>$arrTecnicosPropostas,
-                            "urlResumo"=>$this->_urlPadrao."/admissibilidade/admissibilidade/resumo-historico-analise-visual"
-                        );
+                "propostas" => $rsProposta,
+                "tecnicosPropostas" => $arrTecnicosPropostas,
+                "urlResumo" => $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-historico-analise-visual"
+            );
 
             $this->montaTela("admissibilidade/listarhistoricoanalisevisual.phtml", $arrDados);
         }
     }
 
-    public function resumoHistoricoAnaliseVisualAction(){
+    public function resumoHistoricoAnaliseVisualAction()
+    {
 
         $arrDados = array(
-                        "resumo"=>$_POST,
-                        "urlGerarGrafico"=>$this->_urlPadrao."/admissibilidade/admissibilidade/grafico-historico-analise-visual"
-                    );
+            "resumo" => $_POST,
+            "urlGerarGrafico" => $this->_urlPadrao . "/admissibilidade/admissibilidade/grafico-historico-analise-visual"
+        );
         $this->montaTela("admissibilidade/resumohistoricoanalisevisual.phtml", $arrDados);
     }
 
-    public function graficoHistoricoAnaliseVisualAction(){
+    public function graficoHistoricoAnaliseVisualAction()
+    {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
@@ -1778,23 +1823,24 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $aux = array();
         $valores = array();
-        foreach($_POST as $chave=>$valor){
+        foreach ($_POST as $chave => $valor) {
             $aux = explode("gVal_", $chave);
-            if(isset($aux[1])){
+            if (isset($aux[1])) {
                 $titulos[] = str_replace("_", " ", $aux[1]);
                 $valores[] = $valor;
             }
         }
-        if(count($valores)>0){
+        if (count($valores) > 0) {
             $grafico->addDados($valores);
             $grafico->setTituloItens($titulos);
             $grafico->gerar();
-        }else{
+        } else {
             echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Gr�fico.";
         }
     }
 
-    public function avaliacaoHistoricoAnaliseVisualAction(){
+    public function avaliacaoHistoricoAnaliseVisualAction()
+    {
         $get = Zend_Registry::get("get");
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -1803,14 +1849,15 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $rsAvaliacao = $tblProposta->buscarAvaliacaoHistoricoAnaliseVisual($get->idAvaliacao);
 
         $avaliacao = trim($rsAvaliacao[0]->Avaliacao);
-        if(!empty ($avaliacao)){
+        if (!empty ($avaliacao)) {
             echo $rsAvaliacao[0]->Avaliacao;
-        }else{
+        } else {
             echo "<br><br><p align='center'><font color='red'><b>Nenhuma avalia&ccedil;&atilde;o encontrada.</b></font></p>";
         }
     }
 
-    public function listarPropostasAction(){
+    public function listarPropostasAction()
+    {
         $usuario = $_SESSION['Zend_Auth']['storage']->usu_codigo;
         $post = Zend_Registry::get("post");
 
@@ -1825,37 +1872,37 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
 
-        if($post->numeroProposta != ""){
+        if ($post->numeroProposta != "") {
             $arrBusca['p.idPreProjeto = '] = $post->numeroProposta;
         }
-        if($post->nomeProposta != ""){
-            if($post->tiponome == "igual"){
+        if ($post->nomeProposta != "") {
+            if ($post->tiponome == "igual") {
                 $arrBusca['p.NomeProjeto = '] = $post->nomeProposta;
-            }elseif($post->tiponome == "contendo"){
-                $arrBusca['p.NomeProjeto LIKE '] = "('%".$post->nomeProposta."%')";
+            } elseif ($post->tiponome == "contendo") {
+                $arrBusca['p.NomeProjeto LIKE '] = "('%" . $post->nomeProposta . "%')";
             }
         }
-        if($post->dataPropostaInicial != ""){
-            if($post->tipodata == "igual"){
-                $arrBusca['x.DtAvaliacao > '] = "'".ConverteData($post->dataPropostaInicial, 13)." 00:00:00'";
-                $arrBusca['x.DtAvaliacao < '] = "'".ConverteData($post->dataPropostaInicial, 13)." 23:59:59'";
-            }else{
-                $arrBusca['x.DtAvaliacao > '] = "'".ConverteData($post->dataPropostaInicial, 13)." 00:00:00'";
-                if($post->dataPropostaFinal != ""){
-                    $arrBusca['x.DtAvaliacao < '] = "'".ConverteData($post->dataPropostaFinal, 13)." 23:59:59'";
+        if ($post->dataPropostaInicial != "") {
+            if ($post->tipodata == "igual") {
+                $arrBusca['x.DtAvaliacao > '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 00:00:00'";
+                $arrBusca['x.DtAvaliacao < '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 23:59:59'";
+            } else {
+                $arrBusca['x.DtAvaliacao > '] = "'" . ConverteData($post->dataPropostaInicial, 13) . " 00:00:00'";
+                if ($post->dataPropostaFinal != "") {
+                    $arrBusca['x.DtAvaliacao < '] = "'" . ConverteData($post->dataPropostaFinal, 13) . " 23:59:59'";
                 }
             }
         }
 
-        if($post->situacao != ""){
-            if($post->situacao == "inicial"){
-                if($post->tipobuscasituacao == "igual"){
+        if ($post->situacao != "") {
+            if ($post->situacao == "inicial") {
+                if ($post->tipobuscasituacao == "igual") {
                     $arrBusca['m.Movimentacao = '] = 96;
                     $rsPropostaInicial = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
                 }
             }
-            if($post->situacao == "visual"){
-                if($post->tipobuscasituacao == "igual"){
+            if ($post->situacao == "visual") {
+                if ($post->tipobuscasituacao == "igual") {
                     $arrBusca['m.Movimentacao = '] = 97;
                     $rsPropostaVisual = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
                 }
@@ -1866,23 +1913,23 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                     $rsPropostaVisual = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
                 }
             }*/
-            if($post->situacao == "final"){
-                if($post->tipobuscasituacao == "igual"){
-                    $arrBusca['m.Movimentacao = '] = 128;
+            if ($post->situacao == "final") {
+                if ($post->tipobuscasituacao == "igual") {
+                    $arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL;
                     $rsPropostaFinal = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
                 }
             }
-        }else{
-            $arrBusca['m.Movimentacao = '] = 96;
+        } else {
+            $arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_PARA_ANALISE_INICIAL;
             $rsPropostaInicial = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 96 >> INICIAL
 
-            $arrBusca['m.Movimentacao = '] = 97;
+            $arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_CONFORMIDADE_VISUAL_OU_ANÁLISE_DOCUMENTAL;
             $rsPropostaVisual = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 97 >> VISUAL
 
             //$arrBusca['m.Movimentacao = '] = ?;
             //$rsPropostaDocumental = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = ? >> DOCUMENTAL
 
-            $arrBusca['m.Movimentacao = '] = 128;
+            $arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL;
             $rsPropostaFinal = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 128 >> FINAL
         }
 
@@ -1890,28 +1937,29 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $auth = Zend_Auth::getInstance(); // instancia da autentica��o
         $idOrgao = $auth->getIdentity()->usu_orgao;
         $tblOrgao = new Orgaos();
-        $rsOrgao = $tblOrgao->buscar(array("Codigo = ?"=>$idOrgao))->current();
+        $rsOrgao = $tblOrgao->buscar(array("Codigo = ?" => $idOrgao))->current();
         //xd($rsOrgao);
 
         $arrDados = array(
-                        "propostasInicial"=>$rsPropostaInicial,
-                        "propostasVisual"=>$rsPropostaVisual,
-                        "propostasDocumental"=>$rsPropostaDocumental,
-                        "propostasFinal"=>$rsPropostaFinal,
-                        "orgao"=>$rsOrgao,
-                        "formularioLocalizar"=>$this->_urlPadrao."/admissibilidade/admissibilidade/localizar",
-                        "urlResumo"=>$this->_urlPadrao."/admissibilidade/admissibilidade/resumo-propostas"
-                    );
+            "propostasInicial" => $rsPropostaInicial,
+            "propostasVisual" => $rsPropostaVisual,
+            "propostasDocumental" => $rsPropostaDocumental,
+            "propostasFinal" => $rsPropostaFinal,
+            "orgao" => $rsOrgao,
+            "formularioLocalizar" => $this->_urlPadrao . "/admissibilidade/admissibilidade/localizar",
+            "urlResumo" => $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-propostas"
+        );
 
         $this->montaTela("admissibilidade/listarpropostas.phtml", $arrDados);
     }
 
-    public function listarPropostasNaoEnviadasAction(){
+    public function listarPropostasNaoEnviadasAction()
+    {
         $pag = 1;
         $get = Zend_Registry::get('get');
         if (isset($get->pag)) $pag = $get->pag;
         if (isset($get->tamPag)) $this->intTamPag = $get->tamPag;
-        $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+        $inicio = ($pag > 1) ? ($pag - 1) * $this->intTamPag : 0;
         $fim = $inicio + $this->intTamPag;
 
         $rsPropostasNaoEnviadas = array();
@@ -1924,121 +1972,126 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $total = $tblProposta->_totalRegistros;
 
-        if ($fim>$total) $fim = $total;
-        $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+        if ($fim > $total) $fim = $total;
+        $totalPag = (int)(($total % $this->intTamPag == 0) ? ($total / $this->intTamPag) : (($total / $this->intTamPag) + 1));
 
         $arrDados = array(
-                        "pag"=>$pag,
-                        "total"=>$total,
-                        "inicio"=>($inicio+1),
-                        "fim"=>$fim,
-                        "totalPag"=>$totalPag,
-                        "propostasNaoEnviadas"=>$rsPropostasNaoEnviadas,
-                        "formularioLocalizar"=>$this->_urlPadrao."/admissibilidade/admissibilidade/localizar",
-                        "urlResumo"=>$this->_urlPadrao."/admissibilidade/admissibilidade/resumo-propostas",
-                        "urlPaginacao"=>$this->_urlPadrao."/admissibilidade/admissibilidade/listar-propostas-nao-enviadas?"
-                    );
+            "pag" => $pag,
+            "total" => $total,
+            "inicio" => ($inicio + 1),
+            "fim" => $fim,
+            "totalPag" => $totalPag,
+            "propostasNaoEnviadas" => $rsPropostasNaoEnviadas,
+            "formularioLocalizar" => $this->_urlPadrao . "/admissibilidade/admissibilidade/localizar",
+            "urlResumo" => $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-propostas",
+            "urlPaginacao" => $this->_urlPadrao . "/admissibilidade/admissibilidade/listar-propostas-nao-enviadas?"
+        );
 
         $this->montaTela("admissibilidade/listarpropostasnaoenviadas.phtml", $arrDados);
     }
 
-    public function resumoPropostasAction(){
+    public function resumoPropostasAction()
+    {
         $arrDados = array(
-                        "resumo"=>$_POST,
-                        "urlGerarGrafico"=>$this->_urlPadrao."/admissibilidade/admissibilidade/grafico-admissibilidade-propostas"
-                    );
+            "resumo" => $_POST,
+            "urlGerarGrafico" => $this->_urlPadrao . "/admissibilidade/admissibilidade/grafico-admissibilidade-propostas"
+        );
         $this->montaTela("admissibilidade/resumopropostas.phtml", $arrDados);
     }
 
-    public function resumoDistribuicaoPropostasAction(){
+    public function resumoDistribuicaoPropostasAction()
+    {
         if ($this->codOrgao) {
-            $params                = new stdClass();
-            $params->usu_orgao     = $this->codOrgao;
-            $analistas             = AdmissibilidadeDAO::consultarRedistribuirAnalise($params);
+            $params = new stdClass();
+            $params->usu_orgao = $this->codOrgao;
+            $analistas = AdmissibilidadeDAO::consultarRedistribuirAnalise($params);
             $this->view->analistas = array();
-            $this->view->urlResumo = $this->_urlPadrao."/admissibilidade/admissibilidade/resumo-distribuicao-propostas";
+            $this->view->urlResumo = $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-distribuicao-propostas";
             $i = 0;
-            foreach($analistas as $analista) {
-                $dados[$analista->Tecnico][$analista->Fase][$i]['nrProposta']     = $analista->idProjeto;
-                $dados[$analista->Tecnico][$analista->Fase][$i]['NomeProjeto']    = $analista->NomeProjeto;
+            foreach ($analistas as $analista) {
+                $dados[$analista->Tecnico][$analista->Fase][$i]['nrProposta'] = $analista->idProjeto;
+                $dados[$analista->Tecnico][$analista->Fase][$i]['NomeProjeto'] = $analista->NomeProjeto;
                 $dados[$analista->Tecnico][$analista->Fase][$i]['DtMovimentacao'] = $analista->DtMovimentacao;
-                $dados[$analista->Tecnico][$analista->Fase][$i]['fase']           = $analista->Fase;
+                $dados[$analista->Tecnico][$analista->Fase][$i]['fase'] = $analista->Fase;
                 $i++;
             }
         }
 
         $arrDados = array(
-                        "resumo"=>$_POST,
-                        "analistas"=>$dados,
-                        "urlGerarGrafico"=>$this->_urlPadrao."/admissibilidade/admissibilidade/grafico-distribuicao-propostas"
-                    );
+            "resumo" => $_POST,
+            "analistas" => $dados,
+            "urlGerarGrafico" => $this->_urlPadrao . "/admissibilidade/admissibilidade/grafico-distribuicao-propostas"
+        );
         $this->montaTela("admissibilidade/resumodistribuicaopropostas.phtml", $arrDados);
     }
 
-    public function resumoGerenciamentoPropostaAction(){
+    public function resumoGerenciamentoPropostaAction()
+    {
 
         $arrDados = array(
-                        "resumo"=>$_POST,
-                        "urlGerarGrafico"=>$this->_urlPadrao."/admissibilidade/admissibilidade/grafico-gerenciamento-propostas"
-                    );
+            "resumo" => $_POST,
+            "urlGerarGrafico" => $this->_urlPadrao . "/admissibilidade/admissibilidade/grafico-gerenciamento-propostas"
+        );
         $this->montaTela("admissibilidade/resumogerenciamentopropostas.phtml", $arrDados);
     }
 
-    public function resumoPropostaAnaliseFinalAction(){
+    public function resumoPropostaAnaliseFinalAction()
+    {
 
         $arrDados = array(
-                        "resumo"=>$_POST,
-                        "urlGerarGrafico"=>$this->_urlPadrao."/admissibilidade/admissibilidade/grafico-propostas-analise-final"
-                    );
+            "resumo" => $_POST,
+            "urlGerarGrafico" => $this->_urlPadrao . "/admissibilidade/admissibilidade/grafico-propostas-analise-final"
+        );
         $this->montaTela("admissibilidade/resumopropostasanalisefinal.phtml", $arrDados);
     }
 
-    public function resumoPropostasAnaliseVisualTecnicoAction(){
+    public function resumoPropostasAnaliseVisualTecnicoAction()
+    {
 
-        if(!$_POST){
+        if (!$_POST) {
             $this->_redirect("/admissibilidade/admissibilidade/listar-propostas-analise-visual-tecnico");
         }
         //x($_POST);
         $arrReavaliacao = array();
         $arrInicial = array();
         //prepara dados para gerar grafico
-        foreach ($_POST as $analista=>$qtde)
-        {
+        foreach ($_POST as $analista => $qtde) {
             $arrTempReavaliacao = explode("reavaliacao_", $analista);
-            if(isset($arrTempReavaliacao[1])){
-                $arrReavaliacao[str_replace("_", " ", $arrTempReavaliacao[1])]=$qtde;
+            if (isset($arrTempReavaliacao[1])) {
+                $arrReavaliacao[str_replace("_", " ", $arrTempReavaliacao[1])] = $qtde;
             }
 
             $arrTempInicial = explode("inicial_", $analista);
-            if(isset($arrTempInicial[1])){
-                $arrInicial[str_replace("_", " ", $arrTempInicial[1])]=$qtde;
+            if (isset($arrTempInicial[1])) {
+                $arrInicial[str_replace("_", " ", $arrTempInicial[1])] = $qtde;
             }
         }
         $arrDados = array(
-                        "resumoReavaliacao"=>$arrReavaliacao,
-                        "resumoInicial"=>$arrInicial,
-                        "urlGerarGrafico"=>$this->_urlPadrao."/admissibilidade/admissibilidade/grafico-proposta-analise-visual-tecnico"
-                    );
+            "resumoReavaliacao" => $arrReavaliacao,
+            "resumoInicial" => $arrInicial,
+            "urlGerarGrafico" => $this->_urlPadrao . "/admissibilidade/admissibilidade/grafico-proposta-analise-visual-tecnico"
+        );
         $this->montaTela("admissibilidade/resumopropostaanalisevisualtecnico.phtml", $arrDados);
     }
 
-    public function graficoDistribuicaoPropostasAction(){
+    public function graficoDistribuicaoPropostasAction()
+    {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         error_reporting(E_ERROR);
 
         if ($this->codOrgao) {
-            $params                = new stdClass();
-            $params->usu_orgao     = $this->codOrgao;
-            $analistas             = AdmissibilidadeDAO::consultarRedistribuirAnalise($params);
+            $params = new stdClass();
+            $params->usu_orgao = $this->codOrgao;
+            $analistas = AdmissibilidadeDAO::consultarRedistribuirAnalise($params);
             $this->view->analistas = array();
-            $this->view->urlResumo = $this->_urlPadrao."/admissibilidade/admissibilidade/resumo-distribuicao-propostas";
+            $this->view->urlResumo = $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-distribuicao-propostas";
             $i = 0;
-            foreach($analistas as $analista) {
-                $dados[$analista->Tecnico][$analista->Fase][$i]['nrProposta']     = $analista->idProjeto;
-                $dados[$analista->Tecnico][$analista->Fase][$i]['NomeProjeto']    = $analista->NomeProjeto;
+            foreach ($analistas as $analista) {
+                $dados[$analista->Tecnico][$analista->Fase][$i]['nrProposta'] = $analista->idProjeto;
+                $dados[$analista->Tecnico][$analista->Fase][$i]['NomeProjeto'] = $analista->NomeProjeto;
                 $dados[$analista->Tecnico][$analista->Fase][$i]['DtMovimentacao'] = $analista->DtMovimentacao;
-                $dados[$analista->Tecnico][$analista->Fase][$i]['fase']           = $analista->Fase;
+                $dados[$analista->Tecnico][$analista->Fase][$i]['fase'] = $analista->Fase;
                 $i++;
             }
         }
@@ -2050,7 +2103,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $grafico->configurar($_POST);
         //PREPARA NOME DAS FASES
         foreach ($dados as $nomeAnalista => $fases) {
-            if(isset($_POST["todos"]) || isset($_POST[str_replace(".","_", str_replace(" ", "_", $nomeAnalista))])){
+            if (isset($_POST["todos"]) || isset($_POST[str_replace(".", "_", str_replace(" ", "_", $nomeAnalista))])) {
                 foreach ($fases as $faseNome => $faseItems) {
                     $arrSeries[] = $faseNome;
                 }
@@ -2061,12 +2114,12 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $aux = array();
         foreach ($dados as $nomeAnalista => $fases) {
-            if(isset($_POST["todos"]) || isset($_POST[str_replace(".","_", str_replace(" ", "_", $nomeAnalista))])){
+            if (isset($_POST["todos"]) || isset($_POST[str_replace(".", "_", str_replace(" ", "_", $nomeAnalista))])) {
                 foreach ($fases as $faseNome => $faseItems) {
                     $valores[] = count($faseItems);
                     $titulos[] = $faseNome;
                 }
-                if(count($arrSeries) != count($valores)){
+                if (count($arrSeries) != count($valores)) {
                     $valores[] = 0;
                 }
 
@@ -2084,7 +2137,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $grafico->gerar();
     }
 
-    public function graficoAdmissibilidadePropostasAction(){
+    public function graficoAdmissibilidadePropostasAction()
+    {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
@@ -2095,24 +2149,25 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $aux = array();
         $valores = array();
-        foreach($_POST as $chave=>$valor){
+        foreach ($_POST as $chave => $valor) {
             $aux = explode("gVal_", $chave);
-            if(isset($aux[1])){
+            if (isset($aux[1])) {
                 $titulos[] = $aux[1];
                 $valores[] = $valor;
             }
         }
 
-        if(count($valores)>0){
+        if (count($valores) > 0) {
             $grafico->addDados($valores);
             $grafico->setTituloItens($titulos);
             $grafico->gerar();
-        }else{
+        } else {
             echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Gr�fico.";
         }
     }
 
-    public function graficoGerenciamentoPropostasAction(){
+    public function graficoGerenciamentoPropostasAction()
+    {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
@@ -2123,27 +2178,28 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $aux = array();
         $valores = array();
-        foreach($_POST as $chave=>$valor){
+        foreach ($_POST as $chave => $valor) {
             $aux = explode("gVal_", $chave);
-            if(isset($aux[1])){
+            if (isset($aux[1])) {
                 $titulos[] = str_replace("_", " ", $aux[1]);
                 $valores[] = $valor;
             }
         }
-        if(count($valores)>0){
+        if (count($valores) > 0) {
             $grafico->addDados($valores);
             $grafico->setTituloItens($titulos);
             $grafico->gerar();
-        }else{
+        } else {
             echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Gr�fico.";
         }
     }
 
-    public function graficoPropostaAnaliseVisualTecnicoAction(){
+    public function graficoPropostaAnaliseVisualTecnicoAction()
+    {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         error_reporting(E_ERROR);
-        if(!$_POST){
+        if (!$_POST) {
             $this->_redirect("/admissibilidade/admissibilidade/resumo-propostas-analise-visual-tecnico");
         }
 
@@ -2154,26 +2210,26 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $analista = array();
         $aux = array();
-        foreach($_POST as $nomeAnalista=>$qtde){
+        foreach ($_POST as $nomeAnalista => $qtde) {
 
-            if(isset($_POST["todos"])){
+            if (isset($_POST["todos"])) {
                 $nomeReavaliacao = explode("gValReavaliacao_", $nomeAnalista);
                 $nomeInicial = explode("gValInicial_", $nomeAnalista);
 
-                if(isset($nomeReavaliacao[1])){
+                if (isset($nomeReavaliacao[1])) {
                     $analista[] = $nomeReavaliacao[1];
-                }elseif(isset($nomeInicial[1])){
+                } elseif (isset($nomeInicial[1])) {
                     $analista[] = $nomeInicial[1];
                 }
-            }elseif(isset($_POST["reavaliacao"])){
+            } elseif (isset($_POST["reavaliacao"])) {
                 $nomeReavaliacao = explode("gValReavaliacao_", $nomeAnalista);
-                if(isset($nomeReavaliacao[1])){
+                if (isset($nomeReavaliacao[1])) {
                     $analista[] = $nomeReavaliacao[1];
                 }
-            }elseif(isset($_POST["inicial"])){
+            } elseif (isset($_POST["inicial"])) {
                 $nomeInicial = explode("gValInicial_", $nomeAnalista);
-                if(isset($nomeInicial[1])){
-                   $analista[] = $nomeInicial[1];
+                if (isset($nomeInicial[1])) {
+                    $analista[] = $nomeInicial[1];
                 }
             }/*elseif(isset($_POST[$nomeAnalista])){
                 $chaves = array_keys($_POST);
@@ -2191,33 +2247,33 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         }
 
         $analista = array_unique($analista);
-        foreach($analista as $nome){
-            if(isset($_POST["todos"])){
+        foreach ($analista as $nome) {
+            if (isset($_POST["todos"])) {
 
-                if(array_key_exists("gValReavaliacao_".$nome,$_POST) && array_key_exists("gValInicial_".$nome,$_POST)){
+                if (array_key_exists("gValReavaliacao_" . $nome, $_POST) && array_key_exists("gValInicial_" . $nome, $_POST)) {
 
-                    $valores[] = $_POST["gValReavaliacao_".$nome];
-                    $valores[] = $_POST["gValInicial_".$nome];
+                    $valores[] = $_POST["gValReavaliacao_" . $nome];
+                    $valores[] = $_POST["gValInicial_" . $nome];
 
-                }elseif(array_key_exists("gValReavaliacao_".$nome,$_POST) && !array_key_exists("gValInicial_".$nome,$_POST)){
-                    $valores[] = $_POST["gValReavaliacao_".$nome];
+                } elseif (array_key_exists("gValReavaliacao_" . $nome, $_POST) && !array_key_exists("gValInicial_" . $nome, $_POST)) {
+                    $valores[] = $_POST["gValReavaliacao_" . $nome];
                     $valores[] = 0;
 
-                }elseif(!array_key_exists("gValReavaliacao_".$nome,$_POST) && array_key_exists("gValInicial_".$nome,$_POST)){
+                } elseif (!array_key_exists("gValReavaliacao_" . $nome, $_POST) && array_key_exists("gValInicial_" . $nome, $_POST)) {
                     $valores[] = 0;
-                    $valores[] = $_POST["gValInicial_".$nome];
+                    $valores[] = $_POST["gValInicial_" . $nome];
 
-                }else{
+                } else {
                     $valores[] = 0;
                     $valores[] = 0;
                 }
-            }elseif(isset($_POST["reavaliacao"])){
+            } elseif (isset($_POST["reavaliacao"])) {
 
-               $valores[] = $_POST["gValReavaliacao_".$nome];
+                $valores[] = $_POST["gValReavaliacao_" . $nome];
 
-            }elseif(isset($_POST["inicial"])){
+            } elseif (isset($_POST["inicial"])) {
 
-                $valores[] = $_POST["gValInicial_".$nome];
+                $valores[] = $_POST["gValInicial_" . $nome];
             }
 
             $grafico->addDados($valores, str_replace("_", " ", $nome));
@@ -2225,20 +2281,21 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         }
 
         $arrTitulo = array();
-        if(isset($_POST["reavaliacao"])){
-            $arrTitulo[]="Reavalia��o";
-        }elseif(isset($_POST["inicial"])){
-            $arrTitulo[]="Inicial";
-        }else{
-            $arrTitulo[]="Reavalia��o";
-            $arrTitulo[]="Inicial";
+        if (isset($_POST["reavaliacao"])) {
+            $arrTitulo[] = "Reavalia��o";
+        } elseif (isset($_POST["inicial"])) {
+            $arrTitulo[] = "Inicial";
+        } else {
+            $arrTitulo[] = "Reavalia��o";
+            $arrTitulo[] = "Inicial";
         }
 
         $grafico->setTituloItens($arrTitulo);
         $grafico->gerar();
     }
 
-    public function graficoPropostasAnaliseFinalAction(){
+    public function graficoPropostasAnaliseFinalAction()
+    {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
@@ -2249,55 +2306,59 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $aux = array();
         $valores = array();
-        foreach($_POST as $chave=>$valor){
+        foreach ($_POST as $chave => $valor) {
             $aux = explode("gVal_", $chave);
-            if(isset($aux[1])){
+            if (isset($aux[1])) {
                 $titulos[] = str_replace("_", " ", $aux[1]);
                 $valores[] = $valor;
             }
         }
-        if(count($valores)>0){
+        if (count($valores) > 0) {
             $grafico->addDados($valores);
             $grafico->setTituloItens($titulos);
             $grafico->gerar();
-        }else{
+        } else {
             echo "Nenhum dado encontrado gera&ccedil;&atilde;o de Gr�fico.";
         }
     }
 
-    public function localizarAction(){
+    public function localizarAction()
+    {
         $arrDados = array(
-                        "urlAcao"=>$this->_urlPadrao."/admissibilidade/admissibilidade/listar-propostas"
-                    );
+            "urlAcao" => $this->_urlPadrao . "/admissibilidade/admissibilidade/listar-propostas"
+        );
 
         $this->montaTela("admissibilidade/localizarpropostas.phtml", $arrDados);
     }
 
 
-    public function localizarGerenciamentoPropostaAction(){
+    public function localizarGerenciamentoPropostaAction()
+    {
         $params = new stdClass();
-        $params->usu_nome   = "";
+        $params->usu_nome = "";
         $params->gru_codigo = $_SESSION['GrupoAtivo']['codOrgao'];
-        $params->usu_orgao  = $this->codOrgaoSuperior;
+        $params->usu_orgao = $this->codOrgaoSuperior;
         $this->view->novosAnalistas = AdmissibilidadeDAO::consultarRedistribuirAnaliseItemSelect($params);
         $arrDados = array(
-                        "urlAcao"=>$this->_urlPadrao."/admissibilidade/admissibilidade/gerenciamentodepropostas",
-                        "urlResumo"=>$this->_urlPadrao."/admissibilidade/admissibilidade/resumo-gerenciamento-proposta"
-                    );
+            "urlAcao" => $this->_urlPadrao . "/admissibilidade/admissibilidade/gerenciamentodepropostas",
+            "urlResumo" => $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-gerenciamento-proposta"
+        );
 
         $this->montaTela("admissibilidade/localizarpropostasgerenciamento.phtml", $arrDados);
     }
 
-    public function desarquivarpropostasAction(){
+    public function desarquivarpropostasAction()
+    {
 
     }
 
-    public function buscarPropostaAction() {
+    public function buscarPropostaAction()
+    {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
         $nrProposta = $_POST['nrProposta'];
 
         $dados = array();
-        if(!empty($nrProposta)){
+        if (!empty($nrProposta)) {
             $dados['idPreProjeto = ?'] = $nrProposta;
             $dados['stEstado = ?'] = 0;
             $dados['dtArquivamento is not null'] = '';
@@ -2305,29 +2366,30 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $result = $PreProjeto->buscar($dados);
 
             $a = 0;
-            if(count($result) > 0){
+            if (count($result) > 0) {
                 foreach ($result as $registro) {
                     $dadosProposta[$a]['idPreProjeto'] = $registro['idPreProjeto'];
                     $dadosProposta[$a]['NomeProjeto'] = utf8_encode($registro['NomeProjeto']);
                     $a++;
                 }
                 $jsonEncode = json_encode($dadosProposta);
-                echo json_encode(array('resposta'=>true,'conteudo'=>$dadosProposta));
+                echo json_encode(array('resposta' => true, 'conteudo' => $dadosProposta));
 
             } else {
-                echo json_encode(array('resposta'=>false));
+                echo json_encode(array('resposta' => false));
             }
 
         } else {
-            echo json_encode(array('resposta'=>false));
+            echo json_encode(array('resposta' => false));
         }
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
-    public function desarquivamentoPropostaAction(){
+    public function desarquivamentoPropostaAction()
+    {
         $post = Zend_Registry::get('post');
 
-        if($post->desarquivamento){
+        if ($post->desarquivamento) {
 
             $dados = array(
 //                'DtArquivamento' => new Zend_Db_Expr('GETDATE()'),
@@ -2346,7 +2408,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         }
     }
 
-    public function painelProjetosDistribuidosAction(){
+    public function painelProjetosDistribuidosAction()
+    {
         //select codigo,sigla from orgaos WHERE Status = 0 and vinculo = 1 order by sigla
         $where = array(
             'Status = ?' => 0,
@@ -2358,36 +2421,37 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $this->view->orgaos = $dados;
     }
 
-    public function listaProjetosDistribuidosAction(){
+    public function listaProjetosDistribuidosAction()
+    {
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
-        if($this->_request->getParam("qtde")) {
+        if ($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
         }
         $order = array();
 
         //==== parametro de ordenacao  ======//
-        if($this->_request->getParam("ordem")) {
+        if ($this->_request->getParam("ordem")) {
             $ordem = $this->_request->getParam("ordem");
-            if($ordem == "ASC") {
+            if ($ordem == "ASC") {
                 $novaOrdem = "DESC";
-            }else {
+            } else {
                 $novaOrdem = "ASC";
             }
-        }else {
+        } else {
             $ordem = "ASC";
             $novaOrdem = "ASC";
         }
 
         //==== campo de ordenacao  ======//
-        if($this->_request->getParam("campo")) {
+        if ($this->_request->getParam("campo")) {
             $campo = $this->_request->getParam("campo");
-            $order = array($campo." ".$ordem);
-            $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+            $order = array($campo . " " . $ordem);
+            $ordenacao = "&campo=" . $campo . "&ordem=" . $ordem;
 
         } else {
             $campo = null;
-            $order = array(2,5,6); //Pronac,Produto,DescricaoAnalise
+            $order = array(2, 5, 6); //Pronac,Produto,DescricaoAnalise
             $ordenacao = null;
         }
 
@@ -2395,18 +2459,18 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $get = Zend_Registry::get('get');
 
         if (isset($get->pag)) $pag = $get->pag;
-        $inicio = ($pag>1) ? ($pag-1)*$this->intTamPag : 0;
+        $inicio = ($pag > 1) ? ($pag - 1) * $this->intTamPag : 0;
 
         /* ================== PAGINACAO ======================*/
         $where = array();
 
-        if(isset($get->pronac) && !empty($get->pronac)){
+        if (isset($get->pronac) && !empty($get->pronac)) {
             $where['Pronac = ?'] = $get->pronac;
             $this->view->pronac = $get->pronac;
         }
 
-        if(isset($get->estado) && !empty($get->estado)){
-            if($get->estado == 1){
+        if (isset($get->estado) && !empty($get->estado)) {
+            if ($get->estado == 1) {
                 $situacao = 'Em an�lise';
             } else {
                 $situacao = '<font color=red>Concluida</font>';
@@ -2415,7 +2479,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $this->view->estado = $get->estado;
         }
 
-        if(isset($get->orgao) && !empty($get->orgao)){
+        if (isset($get->orgao) && !empty($get->orgao)) {
             $where['idOrgao = ?'] = $get->orgao;
             $this->view->orgao = $get->orgao;
         }
@@ -2424,77 +2488,78 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $total = $vwProjetoDistribuidoVinculada->buscarUnidades($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
 
-        $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
+        $totalPag = (int)(($total % $this->intTamPag == 0) ? ($total / $this->intTamPag) : (($total / $this->intTamPag) + 1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
         $busca = $vwProjetoDistribuidoVinculada->buscarUnidades($where, $order, $tamanho, $inicio);
 
         $paginacao = array(
-            "pag"=>$pag,
-            "qtde"=>$this->intTamPag,
-            "campo"=>$campo,
-            "ordem"=>$ordem,
-            "ordenacao"=>$ordenacao,
-            "novaOrdem"=>$novaOrdem,
-            "total"=>$total,
-            "inicio"=>($inicio+1),
-            "fim"=>$fim,
-            "totalPag"=>$totalPag,
-            "Itenspag"=>$this->intTamPag,
-            "tamanho"=>$tamanho
-         );
+            "pag" => $pag,
+            "qtde" => $this->intTamPag,
+            "campo" => $campo,
+            "ordem" => $ordem,
+            "ordenacao" => $ordenacao,
+            "novaOrdem" => $novaOrdem,
+            "total" => $total,
+            "inicio" => ($inicio + 1),
+            "fim" => $fim,
+            "totalPag" => $totalPag,
+            "Itenspag" => $this->intTamPag,
+            "tamanho" => $tamanho
+        );
 
-        $this->view->paginacao     = $paginacao;
+        $this->view->paginacao = $paginacao;
         $this->view->qtdDocumentos = $total;
-        $this->view->dados         = $busca;
-        $this->view->intTamPag     = $this->intTamPag;
+        $this->view->dados = $busca;
+        $this->view->intTamPag = $this->intTamPag;
     }
 
-    public function imprimirProjetosDistribuidosAction() {
+    public function imprimirProjetosDistribuidosAction()
+    {
 
         $this->_helper->layout->disableLayout(); // Desabilita o Zend Layout
         $post = Zend_Registry::get('post');
 
         //DEFINE PARAMETROS DE ORDENACAO / QTDE. REG POR PAG. / PAGINACAO
-        if($this->_request->getParam("qtde")) {
+        if ($this->_request->getParam("qtde")) {
             $this->intTamPag = $this->_request->getParam("qtde");
         }
         $order = array();
 
         //==== parametro de ordenacao  ======//
-        if($this->_request->getParam("ordem")) {
+        if ($this->_request->getParam("ordem")) {
             $ordem = $this->_request->getParam("ordem");
-            if($ordem == "ASC") {
+            if ($ordem == "ASC") {
                 $novaOrdem = "DESC";
-            }else {
+            } else {
                 $novaOrdem = "ASC";
             }
-        }else {
+        } else {
             $ordem = "ASC";
             $novaOrdem = "ASC";
         }
 
         //==== campo de ordenacao  ======//
-        if($this->_request->getParam("campo")) {
+        if ($this->_request->getParam("campo")) {
             $campo = $this->_request->getParam("campo");
-            $order = array($campo." ".$ordem);
-            $ordenacao = "&campo=".$campo."&ordem=".$ordem;
+            $order = array($campo . " " . $ordem);
+            $ordenacao = "&campo=" . $campo . "&ordem=" . $ordem;
         } else {
             $campo = null;
-            $order = array(2,5,6); //Pronac,Produto,DescricaoAnalise
+            $order = array(2, 5, 6); //Pronac,Produto,DescricaoAnalise
             $ordenacao = null;
         }
 
         /* ================== PAGINACAO ======================*/
         $where = array();
 
-        if(isset($post->pronac) && !empty($post->pronac)){
+        if (isset($post->pronac) && !empty($post->pronac)) {
             $where['Pronac = ?'] = $post->pronac;
             $this->view->pronac = $post->pronac;
         }
 
-        if(isset($post->estado) && !empty($post->estado)){
-            if($post->estado == 1){
+        if (isset($post->estado) && !empty($post->estado)) {
+            if ($post->estado == 1) {
                 $situacao = 'Em an�lise';
             } else {
                 $situacao = '<font color=red>Concluida</font>';
@@ -2503,7 +2568,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $this->view->estado = $post->estado;
         }
 
-        if(isset($post->orgao) && !empty($post->orgao)){
+        if (isset($post->orgao) && !empty($post->orgao)) {
             $where['idOrgao = ?'] = $post->orgao;
             $this->view->orgao = $post->orgao;
         }
