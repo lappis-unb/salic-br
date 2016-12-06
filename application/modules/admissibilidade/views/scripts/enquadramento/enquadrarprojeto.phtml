@@ -12,7 +12,7 @@
     <div>
         Enquadrar Projeto
         <span class="voltar">
-            <a href="#" onclick="voltar();">
+            <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'listar'), '', true) ?>">
                 Voltar
             </a>
         </span>
@@ -26,7 +26,7 @@
                 <td align="left" class="destacar bold">&Aacute;rea / Segmento do Projeto</td>
                 <td valign="top" width="300px">
                     <label for="areaCultural">&Aacute;rea Cultural</label>
-                    <select name="areaCultural" id="areaCultural" class="input_simples obrigatorio"
+                    <select name="areaCultural" id="areaCultural" class="input_simples obrigatorio" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?>
                             style="width: 160px;">
                         <option value=""> - Selecione -</option>
                         <?php foreach ($this->comboareasculturais as $key => $value) { ?>
@@ -40,7 +40,7 @@
                 </td>
                 <td>
                     <label for="segmentoCultural">Segmento Cultural</label>
-                    <select name="segmentoCultural" id="segmentoCultural" class="input_simples obrigatorio">
+                    <select name="segmentoCultural" id="segmentoCultural" class="input_simples obrigatorio" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?>>
                         <?php if (!isset($this->projeto['Area']) || empty($this->projeto['Area'])) { ?>
                             <option value=""> - Selecione uma &Aacute;rea Cultural -</option>
                         <?php } else { ?>
@@ -69,11 +69,13 @@
             </tr>
             <tr>
                 <td colspan="3">
-                <textarea cols="80" id="observacao" name="observacao" rows="10" class="textarea_simples" style="width: 99%"></textarea>
+                <textarea cols="80" id="observacao" name="observacao" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?> rows="10" class="textarea_simples" style="width: 99%"><?php echo $this->observacao ?></textarea>
                 </td>
             </tr>
             <td colspan="3" align="center">
+                <?php if(empty($this->observacao)) : ?>
                 <input type="submit" id="btSalvarConsolidacao" value="" class="btn_salvar"/>
+                <?php endif; ?>
             </td>
         </table>
     </form>
