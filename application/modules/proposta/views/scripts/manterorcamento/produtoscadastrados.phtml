@@ -71,8 +71,14 @@ montaGuiaLinks($controller, $links);
         background: transparent;
         border-spacing: 0px;
     }
+
+    table th {
+        background: #f1f1f1;
+        color: #212121;
+    }
     table.tabela td {
         background: none;
+        color: #2f2f2f;
     }
 
     table.tbitem td {
@@ -90,9 +96,9 @@ montaGuiaLinks($controller, $links);
 <div id="titulo">
 <div>Custos por Produtos <?php echo montaBotaoVoltar($controller, $links); ?></div></div>
 </div>
-<!-- ========== FIM TTULO ========== -->
+<!-- ========== FIM TITULO ========== -->
 
-<!-- ========== INCIO CONTEDO ========== -->
+<!-- ========== INCIO CONTEUDO ========== -->
 <div id="conteudo">
 
     <?php
@@ -128,14 +134,13 @@ montaGuiaLinks($controller, $links);
                                                     <td colspan="3" style="margin: 0; padding:10px;">
                                                         <table class="tbitem" width="100%" style='margin: 0; border: 1px solid #aaa;' >
                                                             <tr class="destacar" align="center">
-                                                                <td>&Iacute;tem</td>
+                                                                <td>Item</td>
                                                                 <td>Unidade</td>
                                                                 <td>Qtde</td>
                                                                 <td>Ocorr&ecirc;ncia</td>
                                                                 <td>Valor Unit&aacute;rio</td>
                                                                 <td>Total</td>
                                                                 <td>Localiza&ccedil;&atilde;o (Munic&iacute;pio/UF)</td>
-                                                                <!--<td>Mecanismo</th>-->
                                                                 <td colspan="2" width="10%">A&ccedil;&otilde;es</td>
                                                             </tr>
                                                             <?php if(isset($this->Item)) : ?>
@@ -178,16 +183,14 @@ montaGuiaLinks($controller, $links);
                                             </tbody>
                                         </table>
                                     </td>
-    <!--                            </div>-->
-                                </tr><!-- FIM DIV ETAPAS -->
+                                </tr>
                             <?php endif; ?>
-                        <?php endforeach; ?> <!-- FIM FOREACH ETAPAS -->
+                        <?php endforeach; ?>
                 </table>
             </div>
 
         <?php endforeach; ?>
-<!--        <tr class="etapas" style="display: none;">-->
-<!--            <td>-->
+            <?php if(!empty($valorProjeto) ) : ?>
                 <?php if ($this->EtapaCusto) : ?>
                     <div class="custosadministrativos">
 
@@ -195,7 +198,6 @@ montaGuiaLinks($controller, $links);
 
                             <?php foreach ($this->EtapaCusto as $etapaCusto) : ?>
                                 <tr>
-<!--                                <tr class="etapas" >-->
                                     <td>
                                         <table summary="Produto" style="margin: 0px;">
                                             <tr  onclick="abrirDinamico('.itens_<?php echo $produtos->CodigoProduto."_".$etapaCusto->idEtapa; ?>', $(this));" style="cursor:pointer">
@@ -210,7 +212,7 @@ montaGuiaLinks($controller, $links);
                                                     <?php if($this->ItensEtapaCusto) : ?>
                                                         <table class="tbitem" width="100%" style='margin: 0; border: 1px solid #aaa;' >
                                                             <tr class="destacar" align="center">
-                                                                <td>&Iacute;tem</td>
+                                                                <td>Item</td>
                                                                 <td>Munic&iacute;pio/UF</td>
                                                                 <td>Total</td>
                                                             </tr>
@@ -235,13 +237,12 @@ montaGuiaLinks($controller, $links);
                                         </table>
                                     </td>
                                 </tr>
-                            <?php endforeach; ?> <!-- FIM FOREACH ETAPAS -->
+                            <?php endforeach; ?>
                         </table>
 
                         <table class='tabela' style="background: transparent">
 
                             <tr>
-                                <!--                                <tr class="etapas" >-->
                                 <td>
                                     <table summary="Produto" style="margin: 0px;">
                                         <tr>
@@ -265,10 +266,8 @@ montaGuiaLinks($controller, $links);
                         </table>
                     </div>
                 <?php endif; ?>
-<!--            </td>-->
-<!--        </tr>-->
-
-        <?php } else { ?> <!-- FIM FOREACH PRODUTOS -->
+            <?php endif; ?>
+        <?php } else { ?>
         <br>
         <div class="center" align="center">Nenhum produto cadastrado</div>
         <br>
@@ -305,7 +304,7 @@ function excluir(idPlanilhaProposta)
 }
 
 </script>
-<!-- ========== INCIO RODAP DO CONTEDO ========== -->
+<!-- ========== INCIO RODAPE DO CONTEDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAP DO CONTEDO ========== -->
+<!-- ========== FIM RODAPE DO CONTEDO ========== -->
 <br clear="all" />
