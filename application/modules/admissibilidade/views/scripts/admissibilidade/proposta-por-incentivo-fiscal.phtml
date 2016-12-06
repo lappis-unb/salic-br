@@ -1,5 +1,4 @@
 <?php
-error_reporting(0);
 if(!$this->menu) {
     echo $this->partial("admissibilidade/inc/menu.inc.php");
 }
@@ -99,14 +98,10 @@ function AbrirFecharPlanilha(elemento) {
     <textarea name="html" id="html"></textarea>
     <input type="hidden" name="idPreProjeto" id="idPreProjeto" value="<?php echo $this->idPreProjeto; ?>" />
 </form>
-    
-    
-<!--<form method="POST" id="formGerarPdf" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerarpdf')); ?>" style="display:none">
-    <textarea name="html" id="html"></textarea>
-</form> -->
+
+
     <form id="preProjeto" method="post">
         <input type="hidden" name="idPreProjeto" id="idPreProjeto" value="<?php echo $this->idPreProjeto; ?>" />
-        <!--<input type="hidden" name="nomeProjeto" id="nomeProjeto" value="<?php echo $this->itensGeral[0]->NomeProjeto ?>" />-->
     </form>
     <br />
     <div align="center">
@@ -114,14 +109,9 @@ function AbrirFecharPlanilha(elemento) {
         <input type="button" id="novo" class="btn_novo" />
         <?php endif; ?>
         <iframe name="esconde" id="esconde" class="sumir"> </iframe>
-        <!--<a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'imprimirpropostacultural'))."?idPreProjeto=".$this->idPreProjeto; ?>" target="esconde">
-        <input type="button" class="btn_imprimir"/>
-        </a>-->
 
         <input type="button" class="btn_imprimir" />
 
-        <!--<input type="button" class="btn_sair" onclick="voltar();"/>
-        <input  type="button" name="imprimir" class="btn_imprimir" onclick='$("#conteudoImprimir").val($(".conteudoPdf").html()); $("#formGerarPdf").submit();'>-->
     </div>
 
     <div class="conteudoImprimir">
@@ -540,7 +530,7 @@ function AbrirFecharPlanilha(elemento) {
                                         </tr>
                                         <!-- ========== FIM TITULO �TENS ========== -->
                                         <?php endif; ?>
- 
+
                                         <!-- ========== IN�CIO �TENS ========== -->
                                         <?php
                                         $totalItens = 0;
@@ -562,10 +552,7 @@ function AbrirFecharPlanilha(elemento) {
                                                 <td class="direita"><?php echo $this->escape($resposta->Ocorrencia); ?></td>
                                                 <td class="direita"><?php echo $this->formatarReal($this->escape($resposta->ValorUnitario)); ?></td>
                                                 <td class="direita blue"><?php echo $this->formatarReal($this->escape($resposta->VlSolicitado)); ?></td>
-                                                <!--<td class="direita green"><?php //echo $this->formatarReal($this->escape($resposta->Sugerido)); ?></td>-->
                                                 <td class="direita"><?php echo $this->escape(strip_tags($resposta->JustificativaProponente)); ?></td>
-                                                <!--<td><?php //echo $this->escape($resposta->Justificativa); ?></td> -->
-                                                <!--<td class="direita"><?php //if($resposta->VlSugeridoConselheiro) echo $this->formatarReal($this->escape($resposta->VlSugeridoConselheiro)); ?></td>
                                                 <td><?php //echo $this->escape($this->LimitadorCaracteres($resposta->dsJustificativaConselheiro)); ?></td>-->
                                         </tr>
                                         <!-- ========== FIM �TENS ========== -->
@@ -586,8 +573,6 @@ function AbrirFecharPlanilha(elemento) {
                                         <tr class="IFF<?php echo $comparadorIncentivo; ?> IFF_PRODUTO<?php echo $comparadorProdutos; ?> IFF_ETAPA<?php echo $comparadorEtapas; ?> IFF_UF<?php echo $comparadorUFs; ?>">
                                                 <td colspan="8"><strong>Total de UF</strong></td>
                                                 <td class="direita"><strong><?php echo $this->formatarReal($totalVal_01_UF); ?></strong></td>
-                                                <!--<td>&nbsp;</td>-->
-                                                <!--<td>&nbsp;</td>-->
                                         </tr>
                                         <?php
                                                 // ===== ZERA TOTAL UFS =====
@@ -640,8 +625,6 @@ function AbrirFecharPlanilha(elemento) {
                                         <tr class="IFF<?php echo $comparadorIncentivo; ?> IFF_PRODUTO<?php echo $comparadorProdutos; ?>">
                                                 <td colspan="8" class="green"><strong>Total dos Custos Administrativos ou do Produto</strong></td>
                                                 <td class="direita green"><strong><?php echo $this->formatarReal($totalVal_01_Produto); ?></strong></td>
-                                                <!--<td>&nbsp;</td>-->
-                                                <!--<td>&nbsp;</td>-->
                                         </tr>
                                         <?php
                                                 // ===== ZERA TOTAL PRODUTOS =====
@@ -650,10 +633,6 @@ function AbrirFecharPlanilha(elemento) {
                                         endif;
                                         ?>
                                         <!-- ========== FIM TOTAL PRODUTOS ========== -->
-
-
-
-
 
                                 <!-- ========== INICIO TOTAL GERAL ========== -->
                                 <?php
@@ -699,13 +678,10 @@ function AbrirFecharPlanilha(elemento) {
                                 ?>
                                 <!-- ========== FIM BUSCA POR PRODUTO ========== -->
 
-
-
                                 <!-- ========== INICIO TOTAL GERAL ========== -->
                                 <tr class="destacar">
                                         <td class="left" colspan="8" style="font-size: 12pt;"><strong>Total Geral</strong></td>
                                         <td class="direita red" style="font-size: 12pt;"><strong><?php echo $this->formatarReal($totalVal_01_Geral); ?></strong></td>
-                                        <!--<th colspan="4">&nbsp;</th>-->
                                 </tr>
                             </table>
                         </td>
@@ -754,8 +730,6 @@ function AbrirFecharPlanilha(elemento) {
                                     <td align="left"><b>Pais</b></td>
                                     <td align="left"><b>UF</b></td>
                                     <td align="left"><b>Cidade</b></td>
-                                    <!--<td align="center"><b>Dt. In�cio Execu&ccedil;&atilde;o</b></td>
-                                    <td align="center"><b>Dt. Final Execu&ccedil;&atilde;o</b></td>-->
                                 </tr>
                                     <?php
                                        if(is_array($this->itensLocalRealiazacao) and count($this->itensLocalRealiazacao)>0){
@@ -765,8 +739,6 @@ function AbrirFecharPlanilha(elemento) {
                                             <td><?php echo $itensLocalRealizacao->Pais ?></td>
                                             <td><?php echo $itensLocalRealizacao->UF ?></td>
                                             <td><?php echo $itensLocalRealizacao->Cidade ?></td>
-                                            <!--<td align="center"><?php //echo $itensLocalRealizacao->DtInicioDeExecucao ?></td>
-                                            <td align="center"><?php //echo $itensLocalRealizacao->DtFinalDeExecucao ?></td>-->
                                         </tr>
                                     <?php }
                                        }else{ ?>
@@ -885,8 +857,6 @@ function AbrirFecharPlanilha(elemento) {
                                         <td><?php echo $arquivosProponente->Descricao; ?></td>
                                         <td align="center"><?php echo Data::tratarDataZend($arquivosProponente->Data, 'Brasileira'); ?></td>
                                         <td>
-                                            <?php //echo $arquivosProponente->NoArquivo; ?>
-
                                             <?php $arrayTipos = array(1,2,3); if(in_array($arquivosProponente->tpDoc,$arrayTipos)) { ?>
                                             <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'abrir-documentos-anexados-admissibilidade')); ?>?id=<?php echo $arquivosProponente->idDocumentosAgentes; ?>&tipo=<?php echo $arquivosProponente->tpDoc; ?>" title="Abrir arquivo"><?php echo $arquivosProponente->NoArquivo;?></a>
                                             <?php } else { ?>
@@ -1076,7 +1046,7 @@ function AbrirFecharPlanilha(elemento) {
                                         <?php
                                         $cpfCnpjDirigente = $tbdirigentes['CNPJCPFDirigente'];
                                         $nomeDirigente = $tbdirigentes['NomeDirigente'];
-                                        
+
                                         if($cpfCnpjDirigente != '00000000000000'): ?>
                                             <tr>
                                                 <td align="center"><?php echo empty($cpfCnpjDirigente) ? '<em>Dados n&atilde;o informados!</em>' : aplicaMascara($cpfCnpjDirigente, "999.999.999-99"); ?>
@@ -1157,8 +1127,5 @@ function AbrirFecharPlanilha(elemento) {
     </tr>
     </table>
 </div>
-<!-- ========== FIM CONTEUDO ========== -->
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 <br clear="all" />

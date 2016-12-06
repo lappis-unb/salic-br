@@ -2,13 +2,6 @@
 echo $this->partial("admissibilidade/inc/menu.inc.php");
 $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'incluiravaliacao'));
 ?>
-<!--<div id="breadcrumb">
-    <ul>
-        <li class="first"> <a href="<?php //echo $this->url(array('controller' => 'prototipos', 'action' => 'index'));  ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-        <li class="second"><a href="<?php //echo $this->url(array('controller' => 'prototipos', 'action' => 'projetos'));  ?>" title="Ir para Projetos">Projetos</a></li>
-        <li class="last">Listar Propostas</li>
-    </ul>
-</div>-->
 <div id="titulo">
     <div>Admissibilidade de propostas - Proposta cultural
         <span class="voltar">
@@ -42,7 +35,6 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
             $('#preProjeto').submit();
         });
         $('.btn_imprimir').click(function(){
-            //$('#esconde').attr('src','<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'imprimirpropostacultural')) . "?idPreProjeto=" . $this->idPreProjeto; ?>');
             $("#html").html($(".conteudoImprimir").html());
             $("#formGerarPdf").submit();
         });
@@ -104,7 +96,6 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
     </form>
     <form id="preProjeto" method="post">
         <input type="hidden" name="idPreProjeto" id="idPreProjeto" value="<?php echo $this->idPreProjeto; ?>" />
-        <!--<input type="hidden" name="nomeProjeto" id="nomeProjeto" value="<?php echo $this->itensGeral[0]->NomeProjeto ?>" />-->
     </form>
     <br />
     <div align="center">
@@ -112,14 +103,9 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
             <input type="button" id="novo" class="btn_novo"/>
         <?php endif; ?>
         <iframe name="esconde" id="esconde" class="sumir"> </iframe>
-        <!--<a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'imprimirpropostacultural')) . "?idPreProjeto=" . $this->idPreProjeto; ?>" target="esconde">
-        <input type="button" class="btn_imprimir"/>
-        </a>-->
 
         <input type="button" class="btn_imprimir" title="Imprimir" />
 
-        <!--<input type="button" class="btn_sair" onclick="voltar();"/>
-        <input  type="button" name="imprimir" class="btn_imprimir" onclick='$("#conteudoImprimir").val($(".conteudoPdf").html()); $("#formGerarPdf").submit();'>-->
     </div>
 
     <div class="conteudoImprimir">
@@ -251,7 +237,7 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                                     <?php } ?>
                                 </tr>
                             </table>
-                        </fieldset>                        
+                        </fieldset>
                         <fieldset>
                             <legend>Dirigente</legend>
                                 <table class="tabela">
@@ -269,12 +255,12 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                                                         <tr>
                                                             <td></td>
                                                             <td>
-                                                                <table class='tabela'>           
+                                                                <table class='tabela'>
                                                                     <tr class="destacar">
                                                                         <td class="centro" colspan="4">Mandatos</td>
                                                                     </tr>
                                                                     <?php if(count($this->mandatos[$tbdirigentes->NomeDirigente]) > 0)
-:                                                                            foreach ($this->mandatos[$tbdirigentes->NomeDirigente] as $mandato): ?>  
+:                                                                            foreach ($this->mandatos[$tbdirigentes->NomeDirigente] as $mandato): ?>
                                                                         <tr>
                                                                         <td>
                                                                            <b>Tipo de documento</b><br>
@@ -310,7 +296,7 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                                     </tr>
                             <?php } ?>
                         </table>
-                    </fieldset>                                      
+                    </fieldset>
                     <fieldset>
                         <legend>Usu&aacute;rio SalicWEB</legend>
                         <table class="tabela">
@@ -757,17 +743,9 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                             <td class="direita"><?php echo $this->escape($resposta->Ocorrencia); ?></td>
                             <td class="direita"><?php echo $this->formatarReal($this->escape($resposta->ValorUnitario)); ?></td>
                             <td class="direita blue"><?php echo $this->formatarReal($this->escape($resposta->VlSolicitado)); ?></td>
-                            <!--<td class="direita green"><?php //echo $this->formatarReal($this->escape($resposta->Sugerido)); ?></td>-->
                             <td class="direita"><?php echo strip_tags($this->escape($resposta->JustificativaProponente)); ?></td>
-                            <!--<td><?php //echo $this->escape($resposta->Justificativa); ?></td> -->
-                            <!--<td class="direita"><?php //if($resposta->VlSugeridoConselheiro) echo $this->formatarReal($this->escape($resposta->VlSugeridoConselheiro)); ?></td>
                             <td><?php //echo $this->escape($this->LimitadorCaracteres($resposta->dsJustificativaConselheiro));  ?></td>-->
                         </tr>
-                        <!-- ========== FIM �TENS ========== -->
-
-
-
-                        <!-- ========== IN�CIO TOTAL UF ========== -->
                         <?php
                         // ===== CALCULA TOTAL UFS =====
                         $totalVal_01_UF += (float) $resposta->VlSolicitado;
@@ -781,8 +759,6 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                             <tr class="IFF<?php echo $comparadorIncentivo; ?> IFF_PRODUTO<?php echo $comparadorProdutos; ?> IFF_ETAPA<?php echo $comparadorEtapas; ?> IFF_UF<?php echo $comparadorUFs; ?>">
                                 <td colspan="8"><strong>Total de UF</strong></td>
                                 <td class="direita"><strong><?php echo $this->formatarReal($totalVal_01_UF); ?></strong></td>
-                                <!--<td>&nbsp;</td>-->
-                                <!--<td>&nbsp;</td>-->
                             </tr>
                             <?php
                             // ===== ZERA TOTAL UFS =====
@@ -808,8 +784,6 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                             <tr class="IFF<?php echo $comparadorIncentivo; ?> IFF_PRODUTO<?php echo $comparadorProdutos; ?> IFF_ETAPA<?php echo $comparadorEtapas; ?>">
                                 <td colspan="8" class="orange"><strong>Total da Etapa</strong></td>
                                 <td class="direita orange"><strong><?php echo $this->formatarReal($totalVal_01_Etapa); ?></strong></td>
-                                <!--<td>&nbsp;</td>-->
-                                <!--<td>&nbsp;</td>-->
                             </tr>
                             <?php
                             // ===== ZERA TOTAL ETAPAS =====
@@ -818,8 +792,6 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                         endif;
                         ?>
                         <!-- ========== FIM TOTAL ETAPAS ========== -->
-
-
 
                         <!-- ========== IN�CIO TOTAL PRODUTOS ========== -->
                         <?php
@@ -846,10 +818,6 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
                         ?>
                         <!-- ========== FIM TOTAL PRODUTOS ========== -->
 
-
-
-
-
                         <!-- ========== INICIO TOTAL GERAL ========== -->
                         <?php
                         // ===== CALCULA TOTAL UFS =====
@@ -860,7 +828,7 @@ $IncluirAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller'
 
                         // compara a etapa atual com a pr�xima etapa para poder exibir o valor total
                         if ($resposta->idFonte != $ultimaFonte) :
-                            ?> 
+                            ?>
                             <tr class="IFF<?php echo $comparadorIncentivo; ?>">
                                 <td colspan="8" class="red" style="font-size: 12pt;"><strong>Total da Fonte de Recurso</strong></td>
                                 <td class="direita red" style="font-size: 12pt;"><strong><?php echo $this->formatarReal($totalVal_01_Fonte); ?></strong></td>
@@ -893,8 +861,6 @@ endforeach;
  */
 ?>
                     <!-- ========== FIM BUSCA POR PRODUTO ========== -->
-
-
 
                     <!-- ========== INICIO TOTAL GERAL ========== -->
                     <tr class="destacar">
@@ -944,8 +910,6 @@ endforeach;
                             <td align="left"><b>Pais</b></td>
                             <td align="left"><b>UF</b></td>
                             <td align="left"><b>Cidade</b></td>
-                            <!--<td align="center"><b>Dt. In�cio Execu&ccedil;&atilde;o</b></td>
-                            <td align="center"><b>Dt. Final Execu&ccedil;&atilde;o</b></td>-->
                         </tr>
 <?php
 if (is_array($this->itensLocalRealiazacao) and count($this->itensLocalRealiazacao) > 0) {
@@ -1055,7 +1019,6 @@ if (is_array($this->itensLocalRealiazacao) and count($this->itensLocalRealiazaca
 
                 <fieldset id="documentosProposta">
                     <legend>Documentos Proposta</legend>
-<?php //if(is_array($this->itensDocumentoPreProjeto) and count($this->itensDocumentoPreProjeto)>0){  ?>
                     <table class="tabela" id="documentosAnexados">
                         <tr class="destacar">
                             <td><b>Tipo de Documento</b></td>
@@ -1072,7 +1035,6 @@ if (is_array($this->itensLocalRealiazacao) and count($this->itensLocalRealiazaca
                             </tr>
 <?php } ?>
                     </table>
-<?php //}  ?><br>
                 </fieldset>
             </td>
         </tr>
@@ -1110,14 +1072,9 @@ if (is_array($this->itensLocalRealiazacao) and count($this->itensLocalRealiazaca
                 <input type="button" id="novo1" class="btn_novo" title="Novo" />
 <?php endif; ?>
             <input type="button" class="btn_imprimir" title="Imprimir" />
-            <!--<input type="button" class="btn_sair" onclick="voltar();"/>
-            <input  type="button" name="imprimir" class="btn_imprimir" onclick='$("#conteudoImprimir").val($(".conteudoPdf").html()); $("#formGerarPdf").submit();'>-->
         </td>
     </tr>
 </table>
 </div>
-<!-- ========== FIM CONTEUDO ========== -->
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 <br clear="all" />
