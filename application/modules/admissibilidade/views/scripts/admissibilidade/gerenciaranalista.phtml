@@ -30,7 +30,7 @@ $(document).ready(function() {
             echo "<div class='miolo'><div class='msgALERT'><div>{$this->mensagem}</div></div></div>";
         }
     ?>
-        <form id="frmGerAnalista" method="post" action="<?php echo $this->baseUrl(); ?>/admissibilidade/gerenciaranalista">
+        <form id="frmGerAnalista" method="post" action="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/gerenciaranalista">
             <table class="tabela">
                 <tr>
                     <th>
@@ -44,7 +44,7 @@ $(document).ready(function() {
                 </tr>
                 <tr>
                     <td>
-                        <b>Usu�rio *</b>
+                        <b>Usuário *</b>
                         <br />
                         <?php echo $this->analista->usu_nome; ?>
                         <input type="hidden" name="usu_cod" value="<?php echo $this->analista->usu_cod; ?>" />

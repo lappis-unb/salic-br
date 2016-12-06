@@ -1049,6 +1049,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     public function redistribuiranaliseitemAction() {
         if($_REQUEST['idProjeto'] && isset($_REQUEST['usu_cod'])) {
+
             $params            = new stdClass();
             $params->usu_cod   = $_REQUEST['usu_cod'];
             $params->idProjeto = $_REQUEST['idProjeto'];
@@ -1056,6 +1057,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             //$this->view->mensagem = 'Altera��o realizada com sucesso.';
             parent::message("An&aacute;lise redistribu&iacute;da com sucesso.", "/admissibilidade/admissibilidade/redistribuiranalise", "CONFIRM");
         }
+
         if($_REQUEST['idProjeto'] && $_REQUEST['fase']) {
             $params = new stdClass();
             $params->idProjeto    = $_REQUEST['idProjeto'];
