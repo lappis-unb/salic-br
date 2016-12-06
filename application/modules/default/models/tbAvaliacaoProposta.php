@@ -11,8 +11,7 @@
 
 class tbAvaliacaoProposta extends MinC_Db_Table_Abstract
 {
-	protected $_banco  = "SAC";
-	protected $_schema = "dbo";
+	protected $_schema = "sac";
 	protected $_name   = "tbAvaliacaoProposta";
-
-} // fecha class
+    protected $_primary = "idAvaliacaoProposta";
+}

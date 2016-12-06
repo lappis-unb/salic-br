@@ -27,14 +27,12 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
      *
      * @access public
      * @return void
-     * @todo Falta o Romulo criar a situação adequada, usando uma generica para
-     *       testes.
      */
     public function listarAction()
     {
         $idusuario = $this->auth->getIdentity()->usu_codigo;
         $projeto = new  Projetos();
-        $projetos = $projeto->listarPorSituacao('E63');
+        $projetos = $projeto->listarPorSituacao('E63');//E63 B01
 
         $codOrgao = $this->grupoAtivo->codOrgao;
         $this->view->codOrgao = $codOrgao;
@@ -54,8 +52,13 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             $objProjeto = new Projetos();
             $whereProjeto['IdPRONAC'] = $this->view->pronac;
             $projeto = $objProjeto->findBy($whereProjeto);
+
             if (!$projeto) {
                 throw new Exception("PRONAC não encontrado.");
+            }
+
+            if($projeto['Situacao'] != "B01") {
+                throw new Exception("Situação do projeto não é válida.");
             }
 
             $post = $this->getRequest()->getPost();
@@ -110,9 +113,11 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $objEnquadramento = new Enquadramento();
         $arrayPesquisa = array(
             'AnoProjeto' => $projeto["AnoProjeto"],
-            'Sequencial' => $projeto["Sequencial"]
+            'Sequencial' => $projeto["Sequencial"],
+            'IdPRONAC' => $projeto["IdPRONAC"]
         );
         $arrayEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
+
         $this->view->observacao = $arrayEnquadramento['Observacao'];
     }
 }

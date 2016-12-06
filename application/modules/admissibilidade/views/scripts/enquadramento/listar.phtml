@@ -32,7 +32,14 @@
                 <tr>
                     <td><?php echo $dado->pronac; ?></td>
                     <td><?php echo $dado->nomeProjeto; ?></td>
-                    <td></td>
+                    <td>
+                        <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index')) . "?id={$dado->pronac}" ?>">
+                            D&uacute;vida
+                        </a>
+                        <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto')) . "?pronac={$dado->pronac}" ?>">
+                            Enquadrar
+                        </a>
+                    </td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
