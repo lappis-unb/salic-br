@@ -697,9 +697,9 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
     public static function buscarProdutos($idPreProjeto)
     {
-        $table = Zend_Db_Table::getDefaultAdapter();
+        $db = Zend_Db_Table::getDefaultAdapter();
 
-        $select = $table->select()
+        $select = $db->select()
             ->from(array('pre' => 'PreProjeto'),
                 array(
                     new Zend_Db_Expr('p.Codigo AS CodigoProduto'),
@@ -720,7 +720,6 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
             ->group('idPreProjeto')
             ->group('p.Descricao');
 
-        $db = Zend_Registry::get('db');
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($select);
@@ -842,8 +841,8 @@ class ManterorcamentoDAO extends MinC_Db_Table_Abstract {
 
         $sql.= " ORDER BY tpe.Descricao ";
 
-        throw new Exception('Método transferido para tbplanilhaproposta')
-        $db= Zend_Db_Table::getDefaultAdapter();
+        throw new Exception('Método transferido para tbplanilhaproposta');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         return $db->fetchAll($sql);
