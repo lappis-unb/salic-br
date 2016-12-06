@@ -414,6 +414,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
 
             $tblanilhaProposta->editarPlanilhaProdutos($dados, $where);
+
+            $this->salvarcustosvinculados($_POST);
+
             $this->_helper->layout->disableLayout();
             echo "Altera&ccedil;&atilde;o realizada com sucesso!";
             die;
@@ -622,7 +625,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 $this->view->SalvarNovo = $tbPlanilhaProposta->salvarNovoProduto($idProposta, $idProduto, $idEtapa, $idItem,
                     $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $fonte, $idUf, $idMunicipio, $justificativa, $this->idUsuario);
 
-                $this->salvarcustosvinculados($_POST);
+                if( $this->view->SalvarNovo )
+                    $this->salvarcustosvinculados($_POST);
+
 	            $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 	            echo "Item cadastrado com sucesso. Deseja cadastrar um novo item?";
 	            die;
@@ -632,8 +637,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
-    /** @todo sugestao: chamar esse item apenas no envio ou quando for transformar a proposta
-     *  // Uma ideia eh fazer o calculo varrendo a planilha da proposta para calcular corretamente os custos
+    /**
      * salvarcustosvinculadosAction
      *
      * @access public
@@ -643,29 +647,33 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
         if  ( isset($produto) && $produto['fonterecurso']=='109' ) {
 
+            $idProjeto    = $produto['idPreProjeto'];
             $idEtapa      = '8'; // Custos Vinculados
             $tipoCusto    = 'A';
-            $idProjeto    = $produto['idPreProjeto'];
             $idUf         = $produto['uf'];
             $idMunicipio  = $produto['municipio'];
             $fonteRecurso = '109'; // incentivo fiscal
-            $vlunitario   = str_replace(",", ".", str_replace(".", "",  $produto['vlunitario']));
-            $quantidade   = (int) $_POST['quantidade'];
-            $ocorrencia   = (int) $_POST['ocorrencia'];
-            $vlTotal      =   $quantidade * $ocorrencia * $vlunitario ;
 
-            // verifica se a propposta possui algum item das regioes sudeste e sul já cadastrado na planilha orcamentaria
-            $TPP= new Proposta_Model_DbTable_PlanilhaProposta();
+            // fazer uma busca geral
+            $TPP = new Proposta_Model_DbTable_PlanilhaProposta();
+
+            // @todo fazer uma busca mais leve, nao precisa dos joins
+            $todosItensPlanilha = $TPP->buscarCustos($idProjeto, 'P', '', '', '', '', 109);
+
+            $valorTotalProjeto = null;
+
+            foreach ($todosItensPlanilha as $item) {
+
+                $valorTotalItem = null;
+                $valorTotalItem = ($item->quantidade * $item->ocorrencia * $item->valorunitario);
+
+                $valorTotalProjeto = $valorTotalItem + $valorTotalProjeto;
+            }
+
             $ufRegionalizacaoPlanilha =  $TPP->buscarItensUfRegionalizacao($produto['idPreProjeto']);
 
-            $tblUf = new Uf();
-            $uf = $tblUf->findBy($idUf);
-
-            $itensPlanilhaProduto = new tbItensPlanilhaProduto();
-            $itensCustoAdministrativo = $itensPlanilhaProduto->buscarItens(5); //@todo corrigir id correto, Romulo vai criar a planilha
-
             // definindo os criterios de regionalizacao
-            if( $ufRegionalizacaoPlanilha OR ($uf['Regiao'] == 'Sul' OR $uf['Regiao'] == 'Sudeste')) {
+            if( $ufRegionalizacaoPlanilha ) {
                 $calcDivugacao =  0.2;
                 $calcCaptacao = 0.1;
                 $limitCaptacao = 100000;
@@ -675,6 +683,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 $limitCaptacao = 200000;
             }
 
+            $itensPlanilhaProduto = new tbItensPlanilhaProduto();
+            $itensCustoAdministrativo = $itensPlanilhaProduto->buscarItens(5); //@todo corrigir id correto, Romulo vai criar a planilha
+
             foreach ($itensCustoAdministrativo as $item ) {
                 $custosVinculados = null;
                 $valorCustoItem = null;
@@ -682,22 +693,23 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
                 //fazer uma nova busca com o essencial para este caso
                 $custosVinculados = $TPP->buscarCustos($idProjeto, $tipoCusto, $idEtapa, $item->idPlanilhaItens);
+
                 switch($item->idPlanilhaItens) {
                     case 40: // Custo Administrativo @todo corrigir id correto, Romulo vai criar a planilha
-                        $valorCustoItem = ( $vlTotal * 0.15) + $custosVinculados->valorunitario;
+                        $valorCustoItem = ( $valorTotalProjeto * 0.15);
                         break;
                     case 2590: // Divulgacao
-                        $valorCustoItem = ( $vlTotal * $calcDivugacao ) + $custosVinculados->valorunitario;
+                        $valorCustoItem = ( $valorTotalProjeto * $calcDivugacao );
                         if( $valorCustoItem > 100000 )
                             $valorCustoItem = 100000;
-                         break;
+                        break;
                     case 200: // Remuneracao p/ Captar Recursos
-                        $valorCustoItem = ( $vlTotal * $calcCaptacao ) + $custosVinculados->valorunitario;
+                        $valorCustoItem = ( $valorTotalProjeto * $calcCaptacao );
                         if( $valorCustoItem > $limitCaptacao )
                             $valorCustoItem = $limitCaptacao;
                         break;
                     case 199: // Controle e Auditoria
-                        $valorCustoItem = ( $vlTotal * 0.1 ) + $custosVinculados->valorunitario;
+                        $valorCustoItem = ( $valorTotalProjeto * 0.1 );
                         if( $valorCustoItem > 100000 )
                             $valorCustoItem = 100000;
                         break;
@@ -726,10 +738,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 );
 
                 if($save) {
+                    if( isset($custosVinculados[0]->idItem)) {
 
-                    if( isset($custosVinculados->idPlanilhaProposta)) {
-
-                        $where = 'idPlanilhaProposta = ' . $custosVinculados->idPlanilhaProposta;
+                        $where = 'idPlanilhaProposta = ' . $custosVinculados[0]->idPlanilhaProposta;
 
                         $TPP->update($dados, $where);
                     }
@@ -739,7 +750,6 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 }
             }
         }
-
     }
 
     /**

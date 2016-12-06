@@ -207,6 +207,7 @@ class AdmissibilidadeDAO extends Zend_Db_Table
                    SET idTecnico = {$params->usu_cod}
                  WHERE idProjeto = {$params->idProjeto}
                    AND stEstado  = 0";
+
         try {
             $db = Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);

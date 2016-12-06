@@ -105,7 +105,7 @@ function toogleAjax(id, url){
                 $html .= "<td align='center'>".aplicaMascara($analista->usu_identificacao, "999.999.999-99")."</td>";
                 $html .= "";
                 $html .= "<td align='center'>
-                              <a href={$this->baseUrl()}/admissibilidade/gerenciaranalista?usu_cod={$analista->usu_cod}&usu_orgao={$analista->uog_orgao}&gru_codigo={$analista->gru_codigo}>
+                              <a href={$this->baseUrl()}/admissibilidade/admissibilidade/gerenciaranalista?usu_cod={$analista->usu_cod}&usu_orgao={$analista->uog_orgao}&gru_codigo={$analista->gru_codigo}>
                                   {$analista->usu_nome}
                               </a>
                           </td>";
