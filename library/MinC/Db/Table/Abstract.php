@@ -198,7 +198,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
             }
         }
 
-        return $schema . '.' . $tableName;
+        return $schema .  $tableName;
     }
 
 

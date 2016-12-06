@@ -111,13 +111,13 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     }
 
-    public function exibirpropostaculturalAction() {
+    public function exibirpropostaculturalAction()
+    {
         $idPreProjeto = $this->idPreProjeto;
         $dados = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
         $this->view->itensGeral = $dados;
 
         //========== inicio codigo dirigente ================
-        /*==================================================*/
         $arrMandatos = array();
         $this->view->mandatos = $arrMandatos;
         $preProjeto = new Proposta_Model_DbTable_PreProjeto();
@@ -156,7 +156,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $this->view->dirigentes = $rsDirigentes;
         $this->view->mandatos   = $arrMandatos;
         //============== fim codigo dirigente ================
-        /*==================================================*/
 
         $propostaPorEdital = false;
         if($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0){
@@ -209,12 +208,15 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $buscarProduto = ManterorcamentoDAO::buscarProdutos($this->idPreProjeto);
         $this->view->Produtos = $buscarProduto;
 
-        $buscarEtapa = ManterorcamentoDAO::buscarEtapasProdutos($this->idPreProjeto);
+        $tbPlanilhaEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+        $buscarEtapa = $tbPlanilhaEtapa->listarEtapasProdutos($this->idPreProjeto);
+
         $this->view->Etapa = $buscarEtapa;
 
-        $buscarItem = ManterorcamentoDAO::buscarItensProdutos($this->idPreProjeto);
-        $this->view->Item = $buscarItem;
-        $this->view->AnaliseCustos = PreProjeto::analiseDeCustos($this->idPreProjeto);
+        $preProjeto = new Proposta_Model_DbTable_PreProjeto();
+
+        $buscarItem = $preProjeto->listarItensProdutos($this->idPreProjeto);
+        $this->view->AnaliseCustos = Proposta_Model_DbTable_PreProjeto::analiseDeCustos($this->idPreProjeto);
 
         $this->view->idPreProjeto = $this->idPreProjeto;
         $pesquisaView = $this->_getParam('pesquisa');
@@ -1402,7 +1404,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $arrDados = array(
                         "propostas"=>$rsProposta,
-                        //"tecnicosPropostas"=>$arrTecnicosPropostas,
                         "tecnicosPropostasReavaliacao"=>$arrTecnicosPropostasReavaliacao,
                         "tecnicosPropostasInicial"=>$arrTecnicosPropostasInicial,
                         "urlXLS"=>$this->view->baseUrl()."/admissibilidade/admissibilidade/xls-propostas-analise-visual-tecnico",
