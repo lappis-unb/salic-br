@@ -422,7 +422,7 @@
                         <tr>
                             <td nowrap align="left">
                                 <label for="uf">VALOR UNIT&Aacute;RIO*</label> <br />
-                                <input type="text" maxlength="13" class="input_simples valida soma numero" size="10" id="vlunitario" name="vlunitario" value="<?php echo $dados->ValorUnitario?>">
+                                <input type="text" maxlength="13" class="input_simples valida soma numero" size="10" id="vlunitario" name="vlunitario" value="<?php echo number_format($dados->ValorUnitario, 2, ",", ".");  ?>">
                             </td>
                             <td nowrap align="left">
                                 <label for="uf">&nbsp;&nbsp;&nbsp;&nbsp;TOTAL*</label> <br />
