@@ -889,7 +889,7 @@
 
 
         <?php if(in_array($this->grupoAtivo, array(92,93,94,103,110,118,121,122,123,124,125,126,129,131,132,136))){ ?>
-		<script type="text/javascript">
+		<!--script type="text/javascript">
 		/* Funcao abaixo esta causando conflito em alguns navegadores Firefox e IE. */
             verificar_mensagens();
             var verificarmensagens = window.setInterval(function(){
@@ -935,7 +935,7 @@
 				, dataType : 'json'
 			});
 		} // fecha funcao verificar_mensagens()
-		</script>
+		</script-->
         <?php } ?>
 
         <?php echo $this->partial('partials/environment.phtml'); ?>
