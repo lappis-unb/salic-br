@@ -97,7 +97,7 @@ function toogleAjax(id, url){
                     </tr>
                     <?php foreach($propostas as $proposta): ?>
                     <tr>
-                        <td class="centro"><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idPreProjeto; ?>" title="Abrir proposta"><?php echo $proposta->idPreProjeto; ?></a></td>
+                        <td class="centro"><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idPreProjeto; ?>" title="Abrir proposta"><?php echo $proposta->idPreProjeto; ?></a></td>
                         <td><?php echo $proposta->NomeProjeto; ?></td>
                         <td class="centro"><?php echo str_replace(" ", " �s ", data::dataBrasileira($proposta->DtMovimentacao)); ?></td>
                     </tr>
