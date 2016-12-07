@@ -10,21 +10,20 @@
  */
 
 class tbArquivamento extends MinC_Db_Table_Abstract {
-    protected $_banco  = "SAC";
-    protected $_schema = "dbo";
+    protected $_schema  = "SAC";
     protected $_name   = "tbArquivamento";
 
 
-    public function confirirArquivamentoProjeto($pronac) {
+    public function conferirArquivamentoProjeto($pronac) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
                 array("a" => $this->_name),
-                array('a.Data', 'a.CaixaInicio', 'a.CaixaFinal'), 'SAC.dbo'
+                array('a.Data', 'a.CaixaInicio', 'a.CaixaFinal'), $this->_schema
         );
         $select->joinInner(
                 array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
-                array(''), 'SAC.dbo'
+                array(''), $this->_schema
         );
 
         $select->where('a.stEstado = ?', 1);
