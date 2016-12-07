@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col s12">
+        <table class="bordered striped highlight">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th data-field="id">Data</th>
+                <th data-field="teste">Remetente</th>
+                <th data-field="teste2">Destinatario</th>
+                <th data-field="teste3">Mensagem</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($this->arrResult as $int => $arrValue): ?>
+                <tr>
+                    <td><?php echo $int; ?></td>
+                    <td><?php echo $arrValue['dtMensagem']; ?></td>
+<!--                    <td>--><?php //echo $arrValue['idRemetente']; ?><!--</td>-->
+<!--                    <td>--><?php //echo $arrValue['idDestinatario']; ?><!--</td>-->
+                    <td><?php echo $arrValue['usu_nome_remetente']; ?></td>
+                    <td><?php echo $arrValue['usu_nome_destinatario']; ?></td>
+                    <td><?php echo $arrValue['dsMensagem']; ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

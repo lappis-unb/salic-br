@@ -95,19 +95,104 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
      */
     public function indexAction()
     {
+
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $arrAuth = array_change_key_case((array) $auth->getIdentity());
         $intIdPronac = $this->getRequest()->getParam('id');
         if ($intIdPronac) {
             $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
-            $this->view->arrResult = $dbTable->findAll();
+            $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac));
+
+            $this->view->id = $intIdPronac;
+            $vw = new vwUsuariosOrgaosGrupos();
+            $this->view->arrUsuarios = $vw->carregarPorAdmissibilidadeGrupo();
         } else {
             parent::message("Pronac inv&aacute;lido.", "/admissibilidade/enquadramento/listar", "ALERT");
         }
-//        $this->render('index-boots');
         $this->render('index-material');
     }
 
+    public function indexBootAction()
+    {
+
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $arrAuth = array_change_key_case((array) $auth->getIdentity());
+        $intIdPronac = $this->getRequest()->getParam('id');
+        if ($intIdPronac) {
+            $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
+            $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac));
+            $this->view->id = $intIdPronac;
+            $vw = new vwUsuariosOrgaosGrupos();
+            $this->view->arrUsuarios = $vw->carregarPorAdmissibilidadeGrupo();
+        } else {
+            parent::message("Pronac inv&aacute;lido.", "/admissibilidade/enquadramento/listar", "ALERT");
+        }
+        $this->render('index-boots');
+    }
+
+    public function indexDefaultAction()
+    {
+
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $arrAuth = array_change_key_case((array) $auth->getIdentity());
+        $intIdPronac = $this->getRequest()->getParam('id');
+        if ($intIdPronac) {
+            $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
+            $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac));
+
+            $this->view->id = $intIdPronac;
+            $vw = new vwUsuariosOrgaosGrupos();
+            $this->view->arrUsuarios = $vw->carregarPorAdmissibilidadeGrupo();
+        } else {
+            parent::message("Pronac inv&aacute;lido.", "/admissibilidade/enquadramento/listar", "ALERT");
+        }
+        $this->render('index');
+    }
+
+    public function listarAction()
+    {
+        $this->_helper->layout->disableLayout();
+        $intIdPronac = $this->getRequest()->getParam('id');
+        if ($intIdPronac) {
+            $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
+            $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac));
+        } else {
+            $this->view->arrResult = array();
+        }
+    }
+
+    /**
+     *
+     * @name salvarAction
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  06/12/2016
+     *
+     * @todo verificar qual o tipo da mensagem.
+     */
     public function salvarAction()
     {
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
         $arrPost = $this->getRequest()->getPost();
+        $arrResult = array(
+            'status' => 0,
+            'msg' => 'Nao foi possivel enviar mensagem!',
+        );
+        if ($this->getRequest()->isPost()) {
+            $auth = Zend_Auth::getInstance(); // pega a autenticacao
+            $arrAuth = array_change_key_case((array) $auth->getIdentity());
+            $arrPost['dtMensagem'] = date('Y-m-d');
+            $arrPost['idRemetente'] = $arrAuth['usu_codigo'];
+            $arrPost['cdTipoMensagem'] = 1;
+            $arrPost['stAtivo'] = 1;
+            $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
+            $intId = $mapper->save(new Admissibilidade_Model_TbMensagemProjeto($arrPost));
+            if ($intId) {
+                $arrResult['status'] = 1;
+                $arrResult['msg'] = 'Mensagem enviada com sucesso!';
+            }
+        }
+        echo json_encode($arrResult);
     }
 }
