@@ -17,7 +17,7 @@ Nome                      |  E-mail                    | Data de Entrada | Data 
 ------------------------- | -------------------------- | --------------- | -------------- |
 Guilherme Adler           | guiadler@hotmail.com       | 18/07/2016      | Atuando        |
 Paulo Henrique            | paulo.mendes00@hotmail.com | 01/11/2016      | Atuando        |
-Pedro ?                   |           ?                | ?               | Atuando        |
+Pedro Philipe             | pedrophilipe.ti@gmail.com  | 20/10/2015      | Atuando        |
 Fernão ?                  |           ?                | ?               | Atuando        |
 Rafael ?                  |           ?                | ?               | Atuando        |
 Cleber Costa dos Santos   | oclebersantos@gmail.com    | 03/10/2016      | Atuando        |
