@@ -677,7 +677,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $nrProcesso = $nrProcessoSemFormatacao;
         #xd( $nrProcesso );
         try {
-            $aux = new paTransformarPropostaEmProjeto();
+            $aux = new paTransformarPropostaEmProjetoNovaIN();
             #$aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario);
             $aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
 
