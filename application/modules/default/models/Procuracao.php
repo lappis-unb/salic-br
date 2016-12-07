@@ -2,8 +2,8 @@
 
 class Procuracao extends MinC_Db_Table_Abstract {
 
-    protected $_banco = 'Agentes';
-    protected $_name = 'dbo.tbProcuracao';
+    protected $_schema = 'Agentes';
+    protected $_name = 'tbProcuracao';
 
     public function buscarProcuracaoProjeto($where = array()) {
         $s = $this->select();
@@ -31,12 +31,12 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 array('pr' => 'Projetos'), "pr.idProjeto = vprp.idPreProjeto", 
                 array(	'(pr.AnoProjeto+pr.Sequencial) as pronac',
                 		'pr.OrgaoOrigem',
-                		'NomeProjeto'), 'SAC.dbo'
+                		'NomeProjeto'), $this->_schema
                 
         );
         $s->joinLeft(
                 array('org' => 'Orgaos'), "pr.OrgaoOrigem = org.Codigo", 
-                array('org.idSecretaria as OrgaoSuperior'), 'SAC.dbo'
+                array('org.idSecretaria as OrgaoSuperior'), $this->_schema
                 
         );
         $s->joinInner(
@@ -80,6 +80,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
         $s->order('p.siProcuracao desc');
         
 //        xd($s->assemble());
+        var_dump($s);
         return $this->fetchAll($s);
     }
     
