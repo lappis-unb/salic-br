@@ -1,0 +1,72 @@
+<div id="breadcrumb">
+    <ul>
+        <li class="first"><a
+                href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecer', 'action' => 'index'), '', true); ?>"
+                title="Ir para In&iacute;cio">In&iacute;cio</a></li>
+        <li>
+            <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecer', 'action' => 'listaprojetos'), '', true); ?>"
+               title="Localizar Parecer">Gerenciar Pareceres</a></li>
+    </ul>
+</div>
+<div id="titulo">
+    <div>
+        Gerenciar Enquadramentos
+        <span class="voltar">
+            <a href="#" onclick="voltar();">
+                Voltar
+            </a>
+        </span>
+    </div>
+</div>
+<div id="conteudo">
+        <table class="tabela" id="enquadramento">
+            <thead>
+            <tr class="titulo_tabela">
+                <th width="40">PRONAC</th>
+                <th>Nome do Projeto</th>
+                <th>A&ccedil;&otilde;es</th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->dados as $dado): ?>
+                <tr>
+                    <td><?php echo $dado->pronac; ?></td>
+                    <td><?php echo $dado->nomeProjeto; ?></td>
+                    <td>
+                        <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index')) . "?id={$dado->pronac}" ?>">
+                            D&uacute;vida
+                        </a>
+                        <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto')) . "?pronac={$dado->pronac}" ?>">
+                            Enquadrar
+                        </a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+</div>
+<div id="rodapeConteudo"><span></span></div>
+<br clear="all"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju/dt-1.10.12/datatables.min.css"/>
+<script
+    src="https://code.jquery.com/jquery-1.12.4.js"
+    integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+    crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script></script>
+
+<script type="text/javascript">
+(function($){
+
+  $(document).ready (function(){
+    $('#enquadramento').DataTable(
+    {
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
+            }
+        , "searching": false
+        , "lengthChange": false
+    });
+  });
+}($.noConflict(true)));
+</script>

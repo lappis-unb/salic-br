@@ -140,4 +140,15 @@ class Proposta_Model_DbTable_TbMovimentacao extends MinC_Db_Table_Abstract
 //xd($slct->assemble());
         return $this->fetchAll($slct);
     }
+
+    public function alterarConformidadeProposta($idPreProjeto, $idUsuario, $idVerificacao) {
+        $arrayInclusao = array(
+            'idProjeto' => $idPreProjeto,
+            'Movimentacao' => $idVerificacao,
+            'DtMovimentacao' => $this->getExpressionDate(),
+            'stEstado' => 0,
+            'Usuario' => $idUsuario,
+        );
+        $this->inserir($arrayInclusao);
+    }
 }

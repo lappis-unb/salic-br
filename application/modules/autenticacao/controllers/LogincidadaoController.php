@@ -14,7 +14,7 @@ class Autenticacao_LogincidadaoController extends MinC_Auth_Controller_AOAuth
      */
     public function successAction()
     {
-        $sgcAcesso = (new Autenticacao_Model_Sgcacesso());
+        $sgcAcesso = new Autenticacao_Model_Sgcacesso();
         $sgcAcesso->loginSemCript(1,1);
 
 

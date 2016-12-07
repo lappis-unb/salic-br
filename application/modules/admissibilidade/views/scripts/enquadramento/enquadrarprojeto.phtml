@@ -1,0 +1,127 @@
+<div id="breadcrumb">
+    <ul>
+        <li class="first"><a
+                href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecer', 'action' => 'index'), '', true); ?>"
+                title="Ir para In&iacute;cio">In&iacute;cio</a></li>
+        <li>
+            <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecer', 'action' => 'listaprojetos'), '', true); ?>"
+               title="Localizar Parecer">Gerenciar Pareceres</a></li>
+    </ul>
+</div>
+<div id="titulo">
+    <div>
+        Enquadrar Projeto
+        <span class="voltar">
+            <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'listar'), '', true) ?>">
+                Voltar
+            </a>
+        </span>
+    </div>
+</div>
+<div id="conteudo">
+    <form method="post"
+          action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto'), '', true) . "?pronac={$this->pronac}"; ?>">
+        <table class="tabela gerenciar_pareceres">
+            <tr>
+                <td align="left" class="destacar bold">&Aacute;rea / Segmento do Projeto</td>
+                <td valign="top" width="300px">
+                    <label for="areaCultural">&Aacute;rea Cultural</label>
+                    <select name="areaCultural" id="areaCultural" class="input_simples obrigatorio" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?>
+                            style="width: 160px;">
+                        <option value=""> - Selecione -</option>
+                        <?php foreach ($this->comboareasculturais as $key => $value) { ?>
+                            <option
+                                value="<?php echo $key; ?>" <?php if ($this->projeto['Area'] == $key) echo "selected=\"selected\""; ?>><?php echo $value; ?></option>
+                        <?php } ?>
+
+                    </select>
+                    &nbsp; <span id="erroAreaCultural" class="spanError"></span>
+
+                </td>
+                <td>
+                    <label for="segmentoCultural">Segmento Cultural</label>
+                    <select name="segmentoCultural" id="segmentoCultural" class="input_simples obrigatorio" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?>>
+                        <?php if (!isset($this->projeto['Area']) || empty($this->projeto['Area'])) { ?>
+                            <option value=""> - Selecione uma &Aacute;rea Cultural -</option>
+                        <?php } else { ?>
+
+                            <?php if (!isset($this->projeto['Segmento']) || empty($this->projeto['Segmento'])) { ?>
+                                <option value=""> - Selecione -</option>
+                            <?php } ?>
+
+                            <?php foreach ($this->combosegmentosculturais as $combosegmentocultural) { ?>
+                                <option
+                                    value="<?php echo $combosegmentocultural->id; ?>" <?php if ($this->projeto['Segmento'] == $combosegmentocultural->id) echo "selected=\"selected\""; ?>>
+                                    <?php echo $combosegmentocultural->descricao; ?>
+                                </option>
+                            <?php } ?>
+                        <?php } ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" class="destacar bold">Enquadramento</td>
+                <td width="250" colspan="2">
+                    <input type="hidden" name="enquadramento_projeto" id="enquadramentoProjeto" value=""
+                           class="obrigatorio"/>
+                    <span id="enquadramentoText" class="bold"></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                <textarea cols="80" id="observacao" name="observacao" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?> rows="10" class="textarea_simples" style="width: 99%"><?php echo $this->observacao ?></textarea>
+                </td>
+            </tr>
+            <td colspan="3" align="center">
+                <?php if(empty($this->observacao)) : ?>
+                <input type="submit" id="btSalvarConsolidacao" value="" class="btn_salvar"/>
+                <?php endif; ?>
+            </td>
+        </table>
+    </form>
+    <br clear="all"/>
+</div>
+<div id="rodapeConteudo"><span></span></div>
+<br clear="all"/>
+
+
+<script type="text/javascript">
+
+    function carregarSegmento() {
+        $('#segmentoCultural').html('<option value=""> - Carregando - </option>');
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo $this->url(array('module' => 'default', 'controller' => 'segmento', 'action' => 'combo')); ?>',
+            data: {
+                id: $('#areaCultural').val()
+            },
+            success: function (dados) {
+                $('#segmentoCultural').find('option').remove();
+                $('#segmentoCultural').append(dados);
+            }
+        });
+    }
+
+    function carregarEnquadramento() {
+        var listaCodSegmento = ['11', '12', '13', '14', '15', '17', '23', '26', '28', '2A', '2B', '2E', '2F', '2G', '2H', '2I', '2J', '2K', '2L', '32', '33', '36', '4B', '4D', '5A', '5D', '5E', '5F', '5G', '5H', '5I', '5J', '5K', '5L', '5M', '5N', '5O', '5P', '62', '65', '68', '6C', '6D', '6E', '6G', '6H'];
+        $('#enquadramentoProjeto').val('1');
+        $('#enquadramentoText').html('Artigo 26');
+        if (in_array($('#segmentoCultural').val(), listaCodSegmento)) {
+            $('#enquadramentoProjeto').val('2');
+            $('#enquadramentoText').html('Artigo 18');
+        }
+    }
+
+    $(document).ready(function () {
+
+        $('#areaCultural').change(function () {
+            carregarSegmento();
+        });
+
+        $('#segmentoCultural').change(function () {
+            carregarEnquadramento();
+        });
+
+        carregarEnquadramento();
+    });
+</script>
