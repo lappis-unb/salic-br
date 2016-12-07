@@ -1,5 +1,5 @@
-<?php 
-/* 
+<?php
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -11,7 +11,7 @@
  */
 class tbPergunta extends MinC_Db_Table_Abstract {
     protected $_banco   = "BDCORPORATIVO";
-    protected $_schema  = "scQuiz";
+    protected $_schema  = "BDCORPORATIVO.scQuiz";
     protected $_name = 'tbPergunta';
 
 
@@ -47,7 +47,7 @@ class tbPergunta extends MinC_Db_Table_Abstract {
         if(isset($dados['dsPergunta'])){ $tmpRsTbPergunta->dsPergunta = $dados['dsPergunta']; }
         if(isset($dados['dtCadastramento'])){ $tmpRsTbPergunta->dtCadastramento = $dados['dtCadastramento']; }
         if(isset($dados['idPessoaCadastro'])){ $tmpRsTbPergunta->idPessoaCadastro = $dados['idPessoaCadastro']; }
-       
+
         //SALVANDO O OBJETO CRIADO
         $id = $tmpRsTbPergunta->save();
 
@@ -87,7 +87,7 @@ class tbPergunta extends MinC_Db_Table_Abstract {
                 $select->where($coluna, $valor);
             }
 
-            $select->order($order); 
+            $select->order($order);
         //xd($select->__toString());
         return $this->fetchAll($select);
     } // fecha m�todo buscarDados
@@ -97,8 +97,9 @@ class tbPergunta extends MinC_Db_Table_Abstract {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
-                array("p" => $this->_schema .".". $this->_name)
-                ,array('dsPergunta'=>new Zend_Db_Expr("CONVERT(TEXT,p.dsPergunta)"), "p.nrPergunta")
+                array("p" =>  $this->_name)
+                ,array('dsPergunta'=>new Zend_Db_Expr("CONVERT(TEXT,p.dsPergunta)"), "p.nrPergunta"),
+                $this->_schema
         );
         $select->joinInner(
                 array("pfd" => "tbPerguntaFormDocto")
@@ -111,7 +112,7 @@ class tbPergunta extends MinC_Db_Table_Abstract {
 
         if($nrPergunta != '')
             $select->where('pfd.nrPergunta = ?',$nrPergunta);
-        
+
         $select->order(array('pfd.nrOrdemPergunta'));
         return $this->fetchAll($select);
     }
@@ -216,4 +217,3 @@ class tbPergunta extends MinC_Db_Table_Abstract {
         }
 
 }
-?>
