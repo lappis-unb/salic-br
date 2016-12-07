@@ -318,6 +318,25 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from($this->_name, $this->_getCols(), $this->_schema);
+        self::setWhere($select, $where);
+        $result = $this->fetchRow($select);
+        return ($result)? $result->toArray() : array();
+    }
+
+    /**
+     * Metodo responsavel por adicionar o where dinamicamente no objeto select.
+     * Altera o proprio select, usando o select como referencia e nao retornando nada.
+     *
+     * @name setWhere
+     * @param $select - Objeto select da query montada para no final por os parametros do where.
+     * @param $where - Array ou string onde a string e considerado uma pk.
+     * @return void
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  06/12/2016
+     */
+    public function setWhere(&$select, $where)
+    {
         if (is_array($where)) {
             foreach ($where as $columnName => $columnValue) {
                 $select->where($columnName . ' = ?', trim($columnValue));
@@ -325,8 +344,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         } else {
             $select->where(reset($this->getPrimary()) . ' = ?', trim($where));
         }
-        $result = $this->fetchRow($select);
-        return ($result)? $result->toArray() : array();
     }
 
     /**
