@@ -59,7 +59,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 
                 $db = Zend_Db_Table::getDefaultAdapter();
                 $arrConfig = $db->getConfig();
-                $strDb = str_replace(array('.dbo', '.scdne', '.scsac'), '', $this->_schema);
+                $strDb = str_replace(array('.dbo', '.scdne', '.scsac', '.scQuiz'), '', $this->_schema);
                 $strDb = str_replace('.sccorp', '', strtolower($strDb));
 
                 $arrConfig['dbname'] = strtoupper($strDb);
