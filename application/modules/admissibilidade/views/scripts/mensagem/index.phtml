@@ -1,0 +1,109 @@
+<div id="breadcrumb">
+    <ul>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index')); ?>"
+                             title="Ir para In&iacute;cio">In&iacute;cio</a></li>
+        <li>Admissibilidade</li>
+        <li>
+            <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'listar')); ?>"
+               title="Enquadramento">Enquadramento</a>
+        </li>
+        <li class="last">Mensagem</li>
+    </ul>
+</div>
+<!--<div id="titulo">-->
+<!--    <div>Mensagem<span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span></div>-->
+<!--</div>-->
+<!--<br clear="all"/>-->
+<br/>
+<br/>
+<div style="margin: 0 15px 0 15px;">
+    <!--<div class="container">-->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h1 id="forms">Mensagem</h1>
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+    <div id="container-clear">
+        <table class="tabela">
+            <tr>
+                <td colspan="3" align="center">
+                    <a href="#" class="btn btn-success" id="btn-show">Enviar mensagem</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#btn-show').click(function () {
+                $('#container-clear').hide();
+                $('#container-form').fadeIn('slow');
+            });
+            $('#btn-hide').click(function () {
+                $('#container-form').hide();
+                $('#container-clear').fadeIn('slow');
+            });
+        });
+    </script>
+    <!--<div id="container-form" class="container" style="display: none;">-->
+</div>
+<div id="container-form" style="display: none;">
+    <table class="tabela gerenciar_pareceres">
+        <tr>
+            <td align="left" class="destacar bold">Pronac</td>
+            <td valign="top">
+                654654156456
+            </td>
+        </tr>
+        <tr>
+            <td align="left" class="destacar bold">Nome do projeto</td>
+            <td width="250" colspan="2">
+                as das das das das sd
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <textarea cols="80" id="dsConsolidacao" name="dsConsolidacao" rows="10" class="textarea_simples"
+                          style="width: 99%"><?php echo isset($this->consolidacao[0]->ResumoParecer) ? $this->consolidacao[0]->ResumoParecer : ''; ?></textarea>
+            </td>
+        </tr>
+        <td colspan="3" align="center">
+            <input type="button" id="btSalvarConsolidacao" value=" " class="btn_salvar"/>
+        </td>
+    </table>
+    <br clear="all"/>
+</div>
+<div id="conteudo">
+    <table class="tabela" id="tabelaAnalistas">
+        <thead>
+        <tr>
+            <th>
+                Data
+            </th>
+            <th>
+                Remetente
+            </th>
+            <th>
+                Destinatario
+            </th>
+            <th>
+                Mensagem
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->arrResult as $arrValue): ?>
+            <tr>
+                <td><?php echo $arrValue['dtMensagem']; ?></td>
+                <td><?php echo $arrValue['idDestinatario']; ?></td>
+                <td><?php echo $arrValue['idRemetente']; ?></td>
+                <td><?php echo $arrValue['dsMensagem']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+<div id="rodapeConteudo"><span></span></div>
+<br clear="all"/>

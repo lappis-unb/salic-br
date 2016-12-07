@@ -221,6 +221,12 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
         $uf = array(
             'uf.descricao as Uf',
             'uf.sigla as SiglaUF',
+            'uf.idUF as idUF',
+        );
+
+        $mun = array(
+            'municipio.descricao as Municipio',
+            'municipio.idMunicipioIBGE as idMunicipio'
         );
 
         $mec = array(
@@ -244,7 +250,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
             ->join(array('tpe' => 'tbplanilhaetapa'), 'tpe.idplanilhaetapa = tpp.idetapa', $tpe, $this->getSchema('sac'))
             ->join(array('tpi' => 'tbplanilhaitens'), 'tpi.idplanilhaitens = tpp.idplanilhaitem', $tpi, $this->getSchema('sac'))
             ->join(array('uf' => 'uf'), 'uf.iduf = tpp.ufdespesa', $uf, $this->getSchema('agentes'))
-            ->join(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = tpp.municipiodespesa', 'municipio.descricao as Municipio', $this->getSchema('agentes'))
+            ->join(array('municipio' => 'municipios'), 'municipio.idmunicipioibge = tpp.municipiodespesa', $mun, $this->getSchema('agentes'))
             ->join(array('prep' => 'preprojeto'), 'prep.idpreprojeto = tpp.idprojeto', null, $this->getSchema('sac'))
             ->join(array('mec' => 'mecanismo'), 'mec.codigo = prep.mecanismo', 'mec.descricao as mecanismo', $this->getSchema('sac'))
             ->join(array('un' => 'tbplanilhaunidade'), 'un.idunidade = tpp.unidade', 'un.descricao as Unidade', $this->getSchema('sac'))
@@ -265,9 +271,8 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
         }
 
         if ($idMunicipio) {
+            $sql->where('tpp.MunicipioDespesa = ?', $idMunicipio);
         }
-        $sql->where('tpp.MunicipioDespesa = ?', $idMunicipio);
-
 
         if ($fonte) {
             $sql->where('veri.idVerificacao = ?', $fonte);
@@ -323,6 +328,30 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
 
         return $db->fetchRow($select);
 
+    }
+
+    public function buscarItensUfRegionalizacao( $idProposta ) {
+
+            $select = $this->select();
+            $select->setIntegrityCheck(false);
+            $select->from(
+                array('tpp'=>$this->_name),
+                array(
+                    'idproposta'=>'tpp.idprojeto',
+                ),
+                $this->_schema
+            );
+            $select->joinInner(array('uf' => 'UF'), 'uf.idUF = tpp.UfDespesa', array('idUF'=>'uf.idUF', 'UF'=>'uf.Sigla'), $this->getSchema('agentes'));
+            $select->joinInner(array('mun' => 'Municipios'), 'mun.idMunicipioIBGE = tpp.MunicipioDespesa', array('idMunicipio'=>'mun.idMunicipioIBGE', 'Municipio'=>'mun.Descricao'), $this->getSchema('agentes'));
+            $select->where('tpp.idprojeto = ?',$idProposta);
+            $select->where('tpp.idEtapa <> ?', '8');
+            $select->where("uf.Regiao = 'Sul' OR uf.Regiao = 'Sudeste'");
+            $select->order('tpp.idprojeto DESC');
+            $select->limit(1);
+
+            $db= Zend_Db_Table::getDefaultAdapter();
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+            return $db->fetchRow($select);
     }
 
 }

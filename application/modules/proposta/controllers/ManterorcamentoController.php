@@ -88,14 +88,23 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $buscarEstado = new Agente_Model_DbTable_UF();
         $this->view->Estados = $buscarEstado->buscar();
 
-
         $tbPreprojeto = new Proposta_Model_DbTable_PreProjeto();
         $this->view->Produtos = $tbPreprojeto->listarProdutos($this->idPreProjeto);
 
         $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-        $this->view->Etapa = $manterOrcamento->listarEtapasProdutos($this->idPreProjeto);
+
+        $listaEtapa = $manterOrcamento->buscarEtapas($this->idPreProjeto, 'P');
+
+        //altera ordem de apresenção das etapas no orçcamento
+        $newListaEtapa = $listaEtapa;
+        $newListaEtapa[3] = $listaEtapa[2];
+        $newListaEtapa[2] = $listaEtapa[3];
+        $this->view->Etapa = $newListaEtapa;
 
         $this->view->Item = $tbPreprojeto->listarItensProdutos($this->idPreProjeto);
+
+        $this->view->EtapaCusto = $manterOrcamento->buscarEtapas($this->idPreProjeto, "A");
+        $this->view->ItensEtapaCusto = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
 
         $this->view->idPreProjeto = $this->idPreProjeto;
 
@@ -405,6 +414,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
 
             $tblanilhaProposta->editarPlanilhaProdutos($dados, $where);
+
+            $this->salvarcustosvinculados($_POST['idPreProjeto']);
+
             $this->_helper->layout->disableLayout();
             echo "Altera&ccedil;&atilde;o realizada com sucesso!";
             die;
@@ -613,6 +625,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 $this->view->SalvarNovo = $tbPlanilhaProposta->salvarNovoProduto($idProposta, $idProduto, $idEtapa, $idItem,
                     $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $fonte, $idUf, $idMunicipio, $justificativa, $this->idUsuario);
 
+                if( $this->view->SalvarNovo )
+                    $this->salvarcustosvinculados($idProposta);
+
 	            $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 	            echo "Item cadastrado com sucesso. Deseja cadastrar um novo item?";
 	            die;
@@ -621,6 +636,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
+
 
     /**
      * salvarcustosAction
@@ -647,65 +663,55 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $dsJustificativa = substr(trim(strip_tags($_POST['editor1'])),0,500);
             $tipoCusto = 'A';
 
-//            try {
+            $db= Zend_Db_Table::getDefaultAdapter();
+            $dados = array(	'idprojeto'=>$idProposta,
+                            'idetapa'=>$idEtapa,
+                            'idplanilhaitem'=>$idItem,
+                            'descricao'=>'',
+                            'unidade'=>$unidade,
+                            'quantidade'=>$quantidade,
+                            'ocorrencia'=>$ocorrencia,
+                            'valorunitario'=>$vlunitario,
+                            'qtdedias'=>$qtdDias,
+                            'tipodespesa'=>'0',
+                            'tipopessoa'=>'0',
+                            'contrapartida'=>'0',
+                            'fonterecurso'=>$fonte,
+                            'ufdespesa'=>$idUf,
+                            'municipiodespesa'=>$idMunicipio,
+                            'idusuario'=>462,
+                            'dsjustificativa'=>$dsJustificativa
+                            );
 
-                $db= Zend_Db_Table::getDefaultAdapter();
-                $dados = array(	'idprojeto'=>$idProposta,
-                                'idetapa'=>$idEtapa,
-                                'idplanilhaitem'=>$idItem,
-                                'descricao'=>'',
-                                'unidade'=>$unidade,
-                                'quantidade'=>$quantidade,
-                                'ocorrencia'=>$ocorrencia,
-                                'valorunitario'=>$vlunitario,
-                                'qtdedias'=>$qtdDias,
-                                'tipodespesa'=>'0',
-                                'tipopessoa'=>'0',
-                                'contrapartida'=>'0',
-                                'fonterecurso'=>$fonte,
-                                'ufdespesa'=>$idUf,
-                                'municipiodespesa'=>$idMunicipio,
-                                'idusuario'=>462,
-                                'dsjustificativa'=>$dsJustificativa
-                                );
+            if($_POST['acao']== 'alterar') {
 
-                if($_POST['acao']== 'alterar') {
+                $buscarCustos =  new Proposta_Model_DbTable_PlanilhaProposta();
+                $where = 'idPlanilhaProposta = ' . $_POST['idPlanilhaProposta'];
 
-                    $buscarCustos =  new Proposta_Model_DbTable_PlanilhaProposta();
-//                   $buscarCustos->buscarCustos($idProposta, $tipoCusto, $idEtapa, $idItem, $idUf, $idMunicipio,
-//                								$fonte, $unidade, $quantidade, $ocorrencia, $vlunitario, $qtdDias, $dsJustificativa);
-                    $where = 'idPlanilhaProposta = ' . $_POST['idPlanilhaProposta'];
-
-                    $buscarCustos->update($dados, $where);
+                $buscarCustos->update($dados, $where);
+                $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+                echo "Altera&ccedil;&atilde;o realizada com sucesso!";
+                die;
+            }
+            else {
+                $TPP = new Proposta_Model_DbTable_PlanilhaProposta();
+                $buscarCustos = $TPP->buscarCustos($idProposta, $tipoCusto, $idEtapa, $idItem, $idUf, $idMunicipio);
+                if($buscarCustos){
                     $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-                    echo "Altera&ccedil;&atilde;o realizada com sucesso!";
+                    echo "Cadastro duplicado de Custo na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada! Deseja cadastrar um novo item?";
+                    die;
+                }else{
+                    $TPP->insert($dados);
+                    $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
+                    echo "Item cadastrado com sucesso. Deseja cadastrar um novo item?";
                     die;
                 }
-                else {
-                	$TPP = new Proposta_Model_DbTable_PlanilhaProposta();
-                    $buscarCustos = $TPP->buscarCustos($idProposta, $tipoCusto, $idEtapa, $idItem, $idUf, $idMunicipio);
-                	if($buscarCustos){
-                		$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-			            echo "Cadastro duplicado de Custo na mesma etapa envolvendo o mesmo Item, transa&ccedil;&atilde;o cancelada! Deseja cadastrar um novo item?";
-			            die;
-                	}else{
-                        $TPP->insert($dados);
-	                    $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-	                    echo "Item cadastrado com sucesso. Deseja cadastrar um novo item?";
-	                    die;
-                	}
-                }
             }
-//            catch (Zend_Exception $e) {
-//
-//                $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
-//                echo "Erro ao cadastrar dados";
-//                die;
-//            }
-//        }
+        }
 
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
+
 
     /**
      * salvarmesmoprodutoAction
@@ -749,6 +755,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
     public function excluiritensprodutosAction()
     {
         $idPlanilhaProposta = $_GET['idPlanilhaProposta'];
+        $idPreProjeto = $_GET['idPreProjeto'];
+
         $retorno = $_GET['retorno'];
 
         $tbPlaninhaProposta = new Proposta_Model_DbTable_PlanilhaProposta();
@@ -758,10 +766,130 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $resposta = $tbPlaninhaProposta->delete($where);
 
         if($resposta) {
+            $this->salvarcustosvinculados($idPreProjeto);
             parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/manterorcamento/".$retorno."?idPreProjeto=".$this->idPreProjeto ,"CONFIRM");
         } else {
             parent::message("Erro ao excluir os dados", "/proposta/manterorcamento/".$retorno."?idPreProjeto=".$this->idPreProjeto ,"ERROR");
         }
         $this->view->idPreProjeto = $this->idPreProjeto;
+    }
+
+    /**
+     * salvarcustosvinculadosAction
+     *
+     * @access public
+     * @return void
+     */
+    public function salvarcustosvinculados( $idPreProjeto ) {
+
+        if ( !empty($idPreProjeto) ) {
+
+            $idEtapa      = '8'; // Custos Vinculados
+            $tipoCusto    = 'A';
+            $fonteRecurso = '109'; // incentivo fiscal
+
+            // fazer uma busca geral
+            $TPP = new Proposta_Model_DbTable_PlanilhaProposta();
+
+            // @todo fazer uma busca mais leve, nao precisa dos joins
+            $todosItensPlanilha = $TPP->buscarCustos($idPreProjeto, 'P', '', '', '', '', 109);
+
+            $valorTotalProjeto = null;
+
+            foreach ($todosItensPlanilha as $item) {
+
+                $valorTotalItem = null;
+                $valorTotalItem = ($item->quantidade * $item->ocorrencia * $item->valorunitario);
+
+                $valorTotalProjeto = $valorTotalItem + $valorTotalProjeto;
+
+                $idUf = $item->idUF;
+                $idMunicipio = $item->idMunicipio;
+            }
+
+            $ufRegionalizacaoPlanilha =  $TPP->buscarItensUfRegionalizacao($idPreProjeto);
+
+            // definindo os criterios de regionalizacao
+            if( !empty($ufRegionalizacaoPlanilha) ) {
+                $calcDivugacao =  0.2;
+                $calcCaptacao = 0.1;
+                $limitCaptacao = 100000;
+
+                $idUf         = $ufRegionalizacaoPlanilha->idUF;
+                $idMunicipio  = $ufRegionalizacaoPlanilha->idMunicipio;
+
+            }else {
+                $calcDivugacao =  0.3;
+                $calcCaptacao = 0.2;
+                $limitCaptacao = 200000;
+            }
+
+            $itensPlanilhaProduto = new tbItensPlanilhaProduto();
+            $itensCustoAdministrativo = $itensPlanilhaProduto->buscarItens(5); //@todo corrigir id correto, Romulo vai criar a planilha
+
+            foreach ($itensCustoAdministrativo as $item ) {
+                $custosVinculados = null;
+                $valorCustoItem = null;
+                $save = true;
+
+                //fazer uma nova busca com o essencial para este caso
+                $custosVinculados = $TPP->buscarCustos($idPreProjeto, $tipoCusto, $idEtapa, $item->idPlanilhaItens);
+
+                switch($item->idPlanilhaItens) {
+                    case 40: // Custo Administrativo @todo corrigir id correto, Romulo vai criar a planilha
+                        $valorCustoItem = ( $valorTotalProjeto * 0.15);
+                        break;
+                    case 2590: // Divulgacao
+                        $valorCustoItem = ( $valorTotalProjeto * $calcDivugacao );
+                        if( $valorCustoItem > 100000 )
+                            $valorCustoItem = 100000;
+                        break;
+                    case 200: // Remuneracao p/ Captar Recursos
+                        $valorCustoItem = ( $valorTotalProjeto * $calcCaptacao );
+                        if( $valorCustoItem > $limitCaptacao )
+                            $valorCustoItem = $limitCaptacao;
+                        break;
+                    case 199: // Controle e Auditoria
+                        $valorCustoItem = ( $valorTotalProjeto * 0.1 );
+                        if( $valorCustoItem > 100000 )
+                            $valorCustoItem = 100000;
+                        break;
+                    default:
+                        $save = false;
+                }
+
+                $dados = array(
+                    'idprojeto' => $idPreProjeto,
+                    'idetapa' => $idEtapa,
+                    'idplanilhaitem' => $item->idPlanilhaItens, // item rômulo vai mandar
+                    'descricao' => '',
+                    'unidade' => '1', // nao informado
+                    'quantidade' => '1',
+                    'ocorrencia' => '1',
+                    'valorunitario' => $valorCustoItem,
+                    'qtdedias' => '1',
+                    'tipodespesa' => '0',
+                    'tipopessoa' => '0',
+                    'contrapartida' => '0',
+                    'fonterecurso' => $fonteRecurso,
+                    'ufdespesa' => $idUf,
+                    'municipiodespesa' => $idMunicipio,
+                    'idusuario' => 462,
+                    'dsjustificativa' => ''
+                );
+
+                if($save) {
+                    if( isset($custosVinculados[0]->idItem)) {
+
+                        $where = 'idPlanilhaProposta = ' . $custosVinculados[0]->idPlanilhaProposta;
+
+                        $TPP->update($dados, $where);
+                    }
+                    else {
+                        $TPP->insert($dados);
+                    }
+                }
+            }
+        }
     }
 }

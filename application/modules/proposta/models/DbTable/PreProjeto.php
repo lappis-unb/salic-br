@@ -11,7 +11,6 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
     protected $_schema= "sac";
     protected $_name = "preprojeto";
     protected $_primary = "idPreProjeto";
-    protected $_banco = "sac";
 
     public $_totalRegistros = null;
 
@@ -898,14 +897,15 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             'f.idMunicipio',
         );
 
-        $sql = $db->select()->from(array('a' => 'PreProjeto'), $a,  $this->_schema)
-            ->join(array('z' => 'tbPlanilhaProposta'),'z.idProjeto = a.idPreProjeto', $z,  $this->_schema)
-            ->joinLeft(array('c' => 'Produto'),'c.Codigo = z.idProduto', array(), $this->_schema)
-            ->join(array('d' => 'tbPlanilhaEtapa'),'d.idPlanilhaEtapa = z.idEtapa', $d, $this->_schema)
-            ->join(array('e' => 'tbPlanilhaUnidade'),'e.idUnidade = z.Unidade', array('e.Descricao AS Unidade'), $this->_schema)
-            ->join(array('i' => 'tbPlanilhaItens'),'i.idPlanilhaItens = z.idPlanilhaItem', array('i.Descricao AS Item'), $this->_schema)
-            ->join(array('x' => 'Verificacao'), 'x.idVerificacao = z.FonteRecurso', array('x.Descricao AS FonteRecurso'), $this->_schema)
-            ->join(array('f' => 'vUFMunicipio'), 'f.idUF = z.UfDespesa AND f.idMunicipio = z.MunicipioDespesa', $f, $this->getSchema('agentes'))
+        $schema = parent::getStaticTableName('sac');
+        $sql = $db->select()->from(array('a' => 'PreProjeto'), $a,  $schema)
+            ->join(array('z' => 'tbPlanilhaProposta'),'z.idProjeto = a.idPreProjeto', $z,  $schema)
+            ->joinLeft(array('c' => 'Produto'),'c.Codigo = z.idProduto', array(), $schema)
+            ->join(array('d' => 'tbPlanilhaEtapa'),'d.idPlanilhaEtapa = z.idEtapa', $d, $schema)
+            ->join(array('e' => 'tbPlanilhaUnidade'),'e.idUnidade = z.Unidade', array('e.Descricao AS Unidade'), $schema)
+            ->join(array('i' => 'tbPlanilhaItens'),'i.idPlanilhaItens = z.idPlanilhaItem', array('i.Descricao AS Item'), $schema)
+            ->join(array('x' => 'Verificacao'), 'x.idVerificacao = z.FonteRecurso', array('x.Descricao AS FonteRecurso'), $schema)
+            ->join(array('f' => 'vUFMunicipio'), 'f.idUF = z.UfDespesa AND f.idMunicipio = z.MunicipioDespesa', $f, parent::getStaticTableName('agentes'))
             ->where('a.idPreProjeto = ?', $idPreProjeto)
             ->order(array('x.Descricao', 'Produto', 'Etapa', 'UF', 'Item'));
 
@@ -1610,8 +1610,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
             ->from(array('Usuarios'), 'usu_nome', 'tabelas.dbo')
-            ->where('usu_codigo = x.idTecnico')
-            ;
+            ->where('usu_codigo = x.idTecnico');
 
         $x = array(
             new Zend_Db_Expr('CONVERT(CHAR(20),x.DtAvaliacao, 120) AS DtAdmissibilidade'),
@@ -1917,7 +1916,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             ->group('org_superior');
 
         //Replace da funcao: sac.dbo.fnDtUltimaDiligenciaDocumental(a.idProjeto)
-        $diligencia = $db->select()->from(array('tbMovimentacao'), "max(DtMovimentacao)")->where('Movimentacao = 97')
+        $diligencia = $db->select()->from(array('tbMovimentacao'), "max(DtMovimentacao)", $this->_schema)->where('Movimentacao = 97')
             ->where('idProjeto = a.idProjeto')
             ;
 
@@ -1925,7 +1924,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             'a.idProjeto',
             "($tecnico) AS Tecnico",
             "($orgao) as idOrgao",
-            new Zend_Db_Expr('CONVERT(CHAR(20), ($diligencia), 120) AS DtUltima')
+            new Zend_Db_Expr("CONVERT(CHAR(20), ({$diligencia}), 120) AS DtUltima")
         );
 
         $sql = $db->select()
@@ -3090,6 +3089,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         return $db->fetchAll($sql);
     }
+
     //@todo lugar certo é tbPlanilhaProposta, remover do ManterOrcamentoDAO tbm
     public function listarItensProdutos($idPreProjeto, $idItem = null)
     {
@@ -3187,7 +3187,8 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $sql.= " ORDER BY te.DescricaoEtapa ";
 
-        $sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
+        $sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa
+            WHERE tpCusto = 'P' ";
 
         $select = $this->select();
         $select->setIntegrityCheck(false);

@@ -5,6 +5,7 @@ class Natureza extends MinC_Db_Table_Abstract
     //protected $_name = 'AGENTE.dbo.Natureza';
     protected $_banco = 'AGENTES';
     protected $_name  = 'Natureza';
+    protected  $_schema = 'AGENTES';
 
     /**
      * Retorna registros do banco de dados referente a Agentes(Proponente)
