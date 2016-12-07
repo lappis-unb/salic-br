@@ -139,7 +139,7 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                     }
 
                     //VALORES DO PROJETO
-                    $planilhaproposta = new PlanilhaProposta();
+                    $planilhaproposta = new Proposta_Model_DbTable_PlanilhaProposta();
                     $planilhaprojeto = new PlanilhaProjeto();
                     $planilhaAprovacao = new PlanilhaAprovacao();
 
