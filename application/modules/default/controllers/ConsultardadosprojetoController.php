@@ -286,7 +286,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     }
 
                     //VALORES DO PROJETO
-                    $planilhaproposta = new PlanilhaProposta();
+                    $planilhaproposta = new Proposta_Model_DbTable_PlanilhaProposta();
                     $planilhaprojeto = new PlanilhaProjeto();
                     $planilhaAprovacao = new PlanilhaAprovacao();
 
@@ -618,9 +618,8 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
         $rs = $Projetos->buscar(array('IdPRONAC = ?' => $idPronac))->current();
         $this->view->projeto = $rs;
 
-        $sv = new sVerificaValidadeCertidaoNegativa();
-        //$resultado = $sv->buscarDados($rs->CgcCpf);
-        $resultado = $sv->buscarDadosSemSP($rs->CgcCpf);
+        $sv = new certidaoNegativa();
+        $resultado = $sv->buscarCertidaoNegativa($rs->CgcCpf);
         $this->view->dados = $resultado;
     }
 
@@ -4195,10 +4194,9 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     {
                         $Projetos = new Projetos();
                         $rs = $Projetos->buscar(array('IdPRONAC = ?' => $idPronac))->current();
-
-                        $sv = new sVerificaValidadeCertidaoNegativa();
-                        //$resultado = $sv->buscarDados($rs->CgcCpf);
-                        $resultado = $sv->buscarDadosSemSP($rs->CgcCpf);
+                        
+                        $sv = new certidaoNegativa();
+                        $resultado = $sv->buscarCertidaoNegativa($rs->CgcCpf);
                         $this->view->certidoes = $resultado;
                     }
 
