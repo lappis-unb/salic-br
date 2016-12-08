@@ -2,8 +2,9 @@
 
 class Procuracao extends MinC_Db_Table_Abstract {
 
-    protected $_banco = 'Agentes';
-    protected $_name = 'dbo.tbProcuracao';
+    protected $_schema = 'Agentes';
+    protected $_name = 'tbProcuracao';
+    protected $_primary = 'idProcuracao';
 
     public function buscarProcuracaoProjeto($where = array()) {
         $s = $this->select();

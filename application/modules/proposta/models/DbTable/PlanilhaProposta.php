@@ -29,7 +29,7 @@ class Proposta_Model_DbTable_PlanilhaProposta extends MinC_Db_Table_Abstract
      * @var bool
      * @access protected
      */
-    protected $_name = 'tbplanilhaproposta';
+    protected $_name = 'tbPlanilhaProposta';
 
     /**
      * _primary

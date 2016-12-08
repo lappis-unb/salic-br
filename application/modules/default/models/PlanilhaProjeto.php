@@ -12,7 +12,7 @@
  */
 class PlanilhaProjeto extends MinC_Db_Table_Abstract {
 
-    protected $_banco = 'SAC';
+    protected $_schema = 'SAC';
     protected $_name = 'tbPlanilhaProjeto';
     
     public function alterar($dados, $where, $dbg=false) {
@@ -77,7 +77,7 @@ class PlanilhaProjeto extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $somar->where($coluna, $valor);
         }
-        
+
         return $this->fetchRow($somar);
     }
     
