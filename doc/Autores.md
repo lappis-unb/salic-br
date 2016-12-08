@@ -13,15 +13,16 @@ O intuito desse arquivo é centralizar as informaçõs dos autores do projeto, r
 
 Abaixo temos uma lista de pessoas que já participaram deste projeto.
 
-Nome                      |  E-mail                    | Data de Entrada | Data de Saída  |
-------------------------- | -------------------------- | --------------- | -------------- |
-Guilherme Adler           | guiadler@hotmail.com       | 18/07/2016      | Atuando        |
-Paulo Henrique            | paulo.mendes00@hotmail.com | 01/11/2016      | Atuando        |
-Pedro Philipe             | pedrophilipe.ti@gmail.com  | 20/10/2015      | Atuando        |
-Fernão ?                  |           ?                | ?               | Atuando        |
-Rafael ?                  |           ?                | ?               | Atuando        |
-Cleber Costa dos Santos   | oclebersantos@gmail.com    | 03/10/2016      | Atuando        |
-Jorge Luiz Jr.            | juninhoecb@gmail.com       | 15/06/2016      | Atuando        |
-Ruy Junior Ferreira Silva | ruyjfs@gmail.com           | 01/08/2016      | Atuando        |
-Vinícius Feitosa da Silva | viniciusfesil@gmail.com    | 01/08/2016      | Atuando        |
-Wouerner Brandão          | wouerner@protonmail.com    | 19/05/2016      | Atuando        |
+Nome                      |  E-mail                    |  Cargo                       | Data de Entrada | Data de Saída  | Empresa 
+------------------------- | -------------------------- | ---------------------------- | --------------- | -------------- | --------------------
+Equipe Rup                |           ?                |            ?                 |      ?          | ~2010          | Equipe Politec
+Guilherme Adler           | guiadler@hotmail.com       | Estagiário - Desenvolvimento | 18/07/2016      | Atuando        | Estagiário do MINC
+Paulo Henrique            | paulo.mendes00@hotmail.com | Estagiário - Desenvolvimento | 01/11/2016      | Atuando        | Estagiário do MINC
+Pedro Philipe             | pedrophilipe.ti@gmail.com  | Estagiário - Desenvolvimento | 20/10/2015      | Atuando        | Estagiário do MINC
+Fernão ?                  |           ?                | Desenvolvedor Sênior         | ?               | Atuando        | HEPTA - Sustentação
+Rafael ?                  |           ?                | Desenvolvedor Sênior         | ?               | Atuando        | HEPTA - Sustentação
+Cleber Costa dos Santos   | oclebersantos@gmail.com    | Desenvolvedor Pleno          | 03/10/2016      | Atuando        | UFABC - LABLIVRE
+Jorge Luiz Jr.            | juninhoecb@gmail.com       | SubCoordenador de Projetos   | 15/06/2016      | Atuando        | UFABC - LABLIVRE
+Ruy Junior Ferreira Silva | ruyjfs@gmail.com           | Desenvolvedor Sênior         | 01/08/2016      | Atuando        | UFABC - LABLIVRE
+Vinícius Feitosa da Silva | viniciusfesil@gmail.com    | Desenvolvedor Sênior         | 01/08/2016      | Atuando        | UFABC - LABLIVRE
+Wouerner ?                | wouerner@protonmail.com    | Desenvolvedor Pleno          | 19/05/2016      | Atuando        | UFABC - LABLIVRE
