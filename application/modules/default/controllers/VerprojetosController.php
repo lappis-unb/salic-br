@@ -799,11 +799,9 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
         $projeto = $Projetos->buscar(array('IdPRONAC = ?' => $idPronac))->current();
         $this->view->projeto = $projeto;
 
-//        if(!empty($idPronac)) {
             $tbDoc = new paDocumentos();
             $rs = $tbDoc->marcasAnexadas($idPronac);
             $this->view->registros = $rs;
-//        }
     }
 
 	public function readequacaoAction()
