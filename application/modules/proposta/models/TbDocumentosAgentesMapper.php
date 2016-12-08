@@ -77,10 +77,13 @@ class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
                 if ($arrPost['tipoDocumento'] == 1) {
                     $table = $this;
                     $model = new Proposta_Model_TbDocumentosAgentes();
+
                 } else {
                     $table = new Proposta_Model_TbDocumentosPreProjetoMapper();
                     $model = new Proposta_Model_TbDocumentosPreProjeto();
                 }
+//                xd($table->findBy($where));
+                $docCadastrado = $table->findBy($where);
 
                 if($table->findBy($where)){
                     $this->setMessage('Tipo de documento j&aacute; cadastrado!');
@@ -88,10 +91,12 @@ class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
                 }
 
                 if ($this->getDbTable()->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
-                    $dadosArquivo['imdocumento'] = new Zend_Db_Expr("CONVERT(varbinary(MAX), {$arquivoBinario})");
+                    $dadosArquivo['imDocumento'] = new Zend_Db_Expr("CONVERT(varbinary(MAX), {$arquivoBinario})");
                     try {
-                        $model->setOptions($dadosArquivo);
-                        $table->save($model);
+                        if($booResult) {
+                            $model->setOptions($dadosArquivo);
+                            $table->save($model);
+                        }
                     } catch (Exception $e) {
                         $this->setMessage($e->getMessage());
                         $booResult = false;
@@ -101,10 +106,12 @@ class Proposta_Model_TbDocumentosAgentesMapper extends MinC_Db_Mapper
                     $fileName = $strId . '.' . array_pop(explode('.', $file->getFileName()));
                     $dadosArquivo['imdocumento'] = $strPath . $fileName;
                     try {
-                        $model->setOptions($dadosArquivo);
-                        $table->save($model);
-                        $file->receive();
-                        copy($file->getFileName(), $strPathFull . $fileName);
+                        if($booResult) {
+                            $model->setOptions($dadosArquivo);
+                            $table->save($model);
+                            $file->receive();
+                            copy($file->getFileName(), $strPathFull . $fileName);
+                        }
                     } catch (Exception $e) {
                         $this->setMessage($e->getMessage());
                         $booResult = false;
