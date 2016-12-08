@@ -56,7 +56,7 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
     {
         // busca todas as visoes existentes no banco
         if ($todasVisoes) {
-            $sql = "select distinct idverificacao, descricao from  " . GenericModel::getStaticTableName('agentes', 'verificacao') . "  where idtipo = 16 and sistema = 21 ";
+            $sql = "select distinct idVerificacao, Descricao from  " . GenericModel::getStaticTableName('agentes', 'verificacao') . "  where idtipo = 16 and sistema = 21 ";
         } // busca todas as visoes do usuario
         else {
             $sql = "select
@@ -68,10 +68,10 @@ class Agente_Model_DbTable_Visao extends MinC_Db_Table_Abstract
                                 vis.usuario ,
                                 vis.stativo ,
                                 ar.descricao as area
-                                from " . parent::getStaticTableName('agentes', 'visao') . " vis
-                                inner join " . parent::getStaticTableName('agentes', 'verificacao') . " ver on ver.idverificacao = vis.visao
-                                left join " . parent::getStaticTableName('agentes', 'tbtitulacaoconselheiro') . " ttc on ttc.idagente =  vis.idagente
-                                left join " . parent::getStaticTableName('sac', 'area') . " ar on ttc.cdArea = ar.Codigo ";
+                                from " . $this->_schema . '.' . $this->_name. " vis
+                                inner join " . $this->_schema . '.' . 'verificacao' . " ver on ver.idverificacao = vis.visao
+                                left join " . $this->_schema . '.' . 'tbtitulacaoconselheiro' . " ttc on ttc.idagente =  vis.idagente
+                                left join " . $this->getSchema('sac') . '.' . 'area' . " ar on ttc.cdArea = ar.Codigo ";
 
             $sql .= " where ver.idverificacao = vis.visao
 				and ver.idtipo = 16 and sistema = 21";
