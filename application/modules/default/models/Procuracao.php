@@ -32,13 +32,14 @@ class Procuracao extends MinC_Db_Table_Abstract {
                 array('pr' => 'Projetos'), "pr.idProjeto = vprp.idPreProjeto", 
                 array(	'(pr.AnoProjeto+pr.Sequencial) as pronac',
                 		'pr.OrgaoOrigem',
-                		'NomeProjeto'), 'SAC.dbo'
+                		'NomeProjeto'),
+                'SAC'
                 
         );
         $s->joinLeft(
                 array('org' => 'Orgaos'), "pr.OrgaoOrigem = org.Codigo", 
-                array('org.idSecretaria as OrgaoSuperior'), 'SAC.dbo'
-                
+                array('org.idSecretaria as OrgaoSuperior'),
+                'SAC' 
         );
         $s->joinInner(
                 array('v' => 'tbVinculo'), "v.idVinculo = vprp.idVinculo", 
@@ -80,7 +81,6 @@ class Procuracao extends MinC_Db_Table_Abstract {
         
         $s->order('p.siProcuracao desc');
         
-//        xd($s->assemble());
         return $this->fetchAll($s);
     }
     
@@ -109,7 +109,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
         foreach($where as $key=>$valor){
             $s->where($key, $valor);
         }
-//       xd($s->assemble());
+
         return $this->fetchAll($s);
     }
 
@@ -186,7 +186,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
             $s->where($key, $valor);
         }
         $s->order('p.siProcuracao desc');
-//        xd($s->assemble());
+
         return $this->fetchAll($s);
     }
 

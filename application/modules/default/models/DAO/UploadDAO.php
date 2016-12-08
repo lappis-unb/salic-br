@@ -10,11 +10,9 @@
  * @link http://www.cultura.gov.br
  */
 
-class UploadDAO extends Zend_Db_Table {
-    /* dados das tabelas */
-    protected $_schema          = "";
-    protected $_tbArquivo       = "tbArquivo";
-    protected $_tbArquivoImagem = "tbArquivoImagem";
+class UploadDAO extends MinC_Db_Table_Abstract {
+    
+    protected $_schema          = "SAC";
 
     /**
      * M�todo para abrir o arquivo
@@ -41,7 +39,7 @@ class UploadDAO extends Zend_Db_Table {
 
         $resultado = $db->fetchAll('SET TEXTSIZE 2147483647');
         return $db->fetchAll($select);
-    } // fecha m�todo abrir()
+    } 
 
 
     /**
@@ -52,14 +50,13 @@ class UploadDAO extends Zend_Db_Table {
      * @return object || bool
      */
     public static function abrirdocumentosanexados($id, $busca) {
-        $table = Zend_Db_Table::getDefaultAdapter();
-        $db = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         if ($busca == "tbDocumentosAgentes") { //acrescentado-jass
            // busca o arquivo
 
-            $select = $table->select()
+            $select = $db->select()
                 ->from('tbDocumentosAgentes',
                     array('NoArquivo AS nmArquivo','imDocumento AS biArquivo',new Zend_db_Expr('1 AS biArquivo2')),
                     'SAC.dbo')
@@ -73,7 +70,7 @@ class UploadDAO extends Zend_Db_Table {
         else if ($busca == "tbDocumentosPreProjeto") { //acrescentado-jass
             // busca o arquivo
 
-            $select = $table->select()
+            $select = $db->select()
                 ->from('tbDocumentosPreprojeto',
                     array('NoArquivo AS nmArquivo','imDocumento AS biArquivo',new Zend_db_Expr('1 AS biArquivo2')),
                     'SAC.dbo')
@@ -87,7 +84,7 @@ class UploadDAO extends Zend_Db_Table {
         else if ($busca == "tbDocumento") { //acrescentado-jass
             // busca o arquivo
 
-            $select = $table->select()
+            $select = $db->select()
                 ->from('tbDocumento',
                     array('NoArquivo AS nmArquivo', 'imDocumento AS biArquivo', 'biDocumento AS biArquivo2'),
                         'SAC.dbo')
@@ -103,6 +100,6 @@ class UploadDAO extends Zend_Db_Table {
         $resultado = $db->fetchAll("SET TEXTSIZE 104857600");
         $resultado = $db->fetchAll($select);
         return $resultado;
-    } // fecha m�todo abrir()
+    }
 
-} // fecha class
+} 

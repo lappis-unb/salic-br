@@ -368,6 +368,19 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 }
                 /* **************************************************************************************** */
             }
+
+            // salvar arquivo plano de execucao
+            $arrayFile = array(
+                'idPreProjeto' => $idPreProjeto,
+                'documento' => 248,
+                'tipoDocumento' => 2,
+                'observacao' => ''
+            );
+
+            $mapperTbDocumentoAgentes = new Proposta_Model_TbDocumentosAgentesMapper();
+            $file = new Zend_File_Transfer();
+            $mapperTbDocumentoAgentes->saveCustom($arrayFile, $file);
+
             if ($acao != 'atualizacao_automatica') {
                 parent::message($mesagem, "/proposta/manterpropostaincentivofiscal/editar?idPreProjeto=" . $idPreProjeto, "CONFIRM");
             }
@@ -467,6 +480,11 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $arrBuscaN['vi.idusuarioresponsavel = ?'] = $this->idResponsavel;
             $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
+
+            $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
+            $arquivoExecucaoImediata = $tbl->buscarDocumentos(array("idprojeto = ?" => $idPreProjeto, "CodigoDocumento = ?" => 248));
+//            xd($arquivoExecucaoImediata );
+
             $this->montaTela(
                 "manterpropostaincentivofiscal/formproposta.phtml",
                 array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar",
@@ -476,6 +494,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                     "dadosVinculo" => $rsVinculoP,
                     "listaProponentes" => $rsVinculoN,
                     "idPreProjeto" => $idPreProjeto,
+                    "arquivoExecucaoImediata" => $arquivoExecucaoImediata,
                     "proponente" => $rsProponente)
                 );
         } else {

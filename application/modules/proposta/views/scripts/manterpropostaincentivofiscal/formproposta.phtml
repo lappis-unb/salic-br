@@ -1,10 +1,13 @@
 <?php $buscarAgencia = $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'validaagencia')); ?>
+
 <script type="text/javascript">
     $(document).ready(function(){
-<?php if (isset($this->movimentacaoAtual) && !empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
+
+        <?php if (isset($this->movimentacaoAtual) && !empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
             //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
             JSBloquearAlteracaoFormulario();
-<?php endif; ?>
+        <?php endif; ?>
+
         $("#nrAtoTombamento").numeric();
         $("#frmProposta").validate({
             rules: {
@@ -86,7 +89,23 @@
 
     });
 
-    //VALIDA CAMPO RESUMO DA PROPOSTA
+    $("#stProposta").change(function() {
+
+        if($(this).val() == 618 || $(this).val() == 619 ){
+            $("#comprovanteplanodeexecucao").show();
+            $("#comprovanteplanodeexecucao #arquivo").removeAttr('disabled');
+        }else {
+            $("#comprovanteplanodeexecucao").hide();
+            $("#comprovanteplanodeexecucao #arquivo").attr('disabled','disabled');
+        }
+    });
+
+    if( $("#stProposta").val() == 618 ||  $("#stProposta").val() == 619 ) {
+        $("#comprovanteplanodeexecucao").show();
+        $("#comprovanteplanodeexecucao #arquivo").removeAttr('disabled');
+    }
+
+        //VALIDA CAMPO RESUMO DA PROPOSTA
     jQuery.validator.addMethod("validarResumoDoProjeto", function(value, element)
     {
         var texto = CKEDITOR.instances['resumoDoProjeto'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
@@ -202,9 +221,9 @@
         validaAgencia()
     });
 
-<?php if (!empty($this->proposta->agenciabancaria)): ?>
-        validaAgencia();
-<?php endif; ?>
+    <?php if (!empty($this->proposta->agenciabancaria)): ?>
+            validaAgencia();
+    <?php endif; ?>
 
     $("#nomeProjeto").keyup(function()
     {
@@ -349,6 +368,8 @@ $(document).ready(function()
     if (isset($this->proposta['idPreProjeto'])) {
         echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); // menu
     }
+
+    $currentUrl = Zend_Controller_Front::getInstance()->getRequest()->getRequestUri();
 ?>
 
 <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
@@ -360,6 +381,8 @@ $(document).ready(function()
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
+
+<div id="msgExclusaoArq" class="sumir">Deseja realmente efetuar a exclus&atilde;o do arquivo?</div>
 
 <!-- ========== INICIO TITULO ========== -->
 <div id="titulo">
@@ -377,7 +400,7 @@ $(document).ready(function()
 <div id="conteudo" align="center">
     <div id="confirmacao"></div>
     <div id="confirm"></div>
-    <form action="<?php echo $this->acao; ?>" method="post" id="frmProposta" name="frmProposta">
+    <form action="<?php echo $this->acao; ?>" method="post" id="frmProposta" name="frmProposta" enctype="multipart/form-data">
 
         <input type="hidden" name="idPreProjeto" id="idPreProjeto" value="<?php
         if (isset($this->proposta['idPreProjeto']))
@@ -461,6 +484,7 @@ $(document).ready(function()
                         </select>
                     </td>
                     <td class="centro">Plano Execu&ccedil;&atilde;o Imediata
+
                         <select class="select_simples" name="stProposta" id="stProposta">
                             <?php foreach ($this->listaExecucaoImediata as $key => $execucao) : ?>
                                 <option value="<?php echo $key; ?>"
@@ -474,6 +498,19 @@ $(document).ready(function()
                             <?php endforeach; ?>
                         </select>
                         <div id="ValidaStProposta" name="ValidaStProposta" style="color:#FF0000" > </div>
+                        <br>
+                        <div id="comprovanteplanodeexecucao" style="display: none">
+                            <label for="arquivo" style="width: 50px; font-weight: normal">Comprovante Plano de Execu&ccedil;&atilde;o Imediata</label>
+                                <?php if( !empty( $this->arquivoExecucaoImediata[0]) ) : ?>
+                                    <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir-documentos-pre-projeto')); ?>?id=<?php echo $this->arquivoExecucaoImediata[0]['iddocumentospreprojetos']; ?>">
+                                        <?php echo $this->arquivoExecucaoImediata[0]['noarquivo']; ?>
+                                    </a>
+                                    <input type="button" class="btn_excluir" onclick="excluirAnexos(<?php echo $this->arquivoExecucaoImediata[0]['iddocumentospreprojetos']; ?>, <?php echo trim($this->proposta['idPreProjeto']); ?>, 'proposta', '<?php echo $currentUrl; ?>');" />
+                                <?php else : ?>
+                                    <input type="file" name="arquivo" id="arquivo" class="input_simples">
+                                    <div id="arquivoinvalido" style="color:#FF0000" ></div>
+                            <?php endif; ?>
+                        </div>
                     </td>
                     <td class="centro">Ag&ecirc;ncia Banc&aacute;ria *
                         <input type="text" class="input_simples" name="agenciaBancaria" id="agenciaBancaria" maxlength="12"  style="width:50px;" value="<?php
@@ -847,3 +884,13 @@ Elenca as diversas a&ccedil;&otilde;es que concorrem para a efetiva&ccedil;&atil
 <div id="rodapeConteudo"><span></span></div>
 <!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 <br clear="all" />
+
+<script>
+
+    // funcao para excluir os anexos
+    function excluirAnexos(idArquivo, idPreProjeto, tipoDocumento, request)
+    {
+        url = '<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaedital', 'action' => 'excluiranexo')) ?>?idArquivo=' + idArquivo + '&idPreProjeto=' + idPreProjeto + '&tipoDocumento=' + tipoDocumento + '&request=' + request;
+        confirmModal('CONFIRMA&Ccedil;&Atilde;O', 'msgExclusaoArq', 320, 200, null, url);
+    }
+</script>
