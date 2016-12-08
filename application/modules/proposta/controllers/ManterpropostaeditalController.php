@@ -432,25 +432,25 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
         $rsA = $tbA->buscarDadosDocumentos(array("idagente = ?" => $dadosProjeto['idAgente']));
         $this->view->arquivosProponente = $rsA;
 
-        $tblDocumentos = new DocumentosExigidos();
-
-        $where = array(
-            'stUpload = ?' => true,
-            'Area = ?' => '4'
-        );
-
-        $listaDeArquivos = $tblDocumentos->buscar($where, 'Descricao desc');
-
-        foreach ($listaDeArquivos  as $item) {
-            $novoItem = $item->toArray();
-
-            if(in_array($item->Codigo, array_column($rs, 'codigodocumento')))
-                $novoItem['Anexado'] = true;
-            else
-                $novoItem['Anexado'] = false;
-            $novaLista[] = $novoItem;
-        }
-        $this->view->documentosObrigatorios = $novaLista;
+//        $tblDocumentos = new DocumentosExigidos();
+//
+//        $where = array(
+//            'stUpload = ?' => true,
+//            'Area = ?' => '4'
+//        );
+//
+//        $listaDeArquivos = $tblDocumentos->buscar($where, 'Descricao desc');
+//
+//        foreach ($listaDeArquivos  as $item) {
+//            $novoItem = $item->toArray();
+//
+//            if(in_array($item->Codigo, array_column($rs, 'codigodocumento')))
+//                $novoItem['Anexado'] = true;
+//            else
+//                $novoItem['Anexado'] = false;
+//            $novaLista[] = $novoItem;
+//        }
+//        $this->view->documentosObrigatorios = $novaLista;
 
     }
 
@@ -1323,7 +1323,13 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
                 unlink($filePath);
             }
 
-            parent::message('Exclus&atilde;o efetuada com sucesso!', 'proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=' . $_GET['idPreProjeto'], 'CONFIRM');
+            if( isset($_GET['request'] ) ) {
+                $request = $_GET['request'];
+            }else {
+                $request = 'proposta/manterpropostaedital/enviararquivoedital?idPreProjeto=' . $_GET['idPreProjeto'];
+            }
+
+            parent::message('Exclus&atilde;o efetuada com sucesso!', $request, 'CONFIRM');
         endif;
     }
 }

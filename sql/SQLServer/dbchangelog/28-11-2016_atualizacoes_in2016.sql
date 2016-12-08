@@ -41,3 +41,7 @@ INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Propo
 
 -- Remove Not Null na coluna stPlanoAnual
 ALTER TABLE sac.dbo.PreProjeto ALTER COLUMN stPlanoAnual BIT;
+
+-- Cria novo documento
+INSERT INTO SAC.dbo.DocumentosExigidos (Descricao,Area,Opcao,stEstado,stUpload)
+VALUES ('Comprovante Execução Imediata','0',2,1,1);

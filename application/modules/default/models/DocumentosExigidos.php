@@ -35,6 +35,16 @@ class DocumentosExigidos extends MinC_Db_Table_Abstract {
 
         return $this->fetchAll($select);
     }
+
+    function listaDocumentosObrigatoriosPF() {
+
+    }
+
+    function listaDocumentosObrigatoriosPJ() {
+
+    }
+
+
     
 }
 ?>
