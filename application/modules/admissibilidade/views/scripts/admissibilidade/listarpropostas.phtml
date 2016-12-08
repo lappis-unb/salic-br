@@ -24,10 +24,6 @@
         $("#tabelaAnaliseFinal").tablesorter();
     });
 
-    /*
-     * Fun��o respons�vel pela exibi��o ou ocultamento de conte�do,
-     * mudando a imagem.
-     **/
     function abrirDinamico(elemento, obj) {
         if ($(elemento).css('display') == 'none') {
             $(elemento).fadeIn('fast', function () {
@@ -104,7 +100,7 @@
                 <tr onclick="abrirDinamico('#analiseInicial', $(this))" style="cursor:pointer">
                     <th align="left">
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"/>
-                        Análise Inicial: Conformidade Visual
+                        An&aacute;lise Inicial: Conformidade Visual
                     </th>
                 </tr>
                 <!-- ============ ANALISE INICIAL  ============== -->
@@ -113,12 +109,12 @@
                         <table class="tabela" id="tabelaAnaliseInicial">
                             <thead>
                             <tr>
-                                <th style="cursor:pointer" title="Clique aqui para ordenar">N�mero</th>
+                                <th style="cursor:pointer" title="Clique aqui para ordenar">N&uacute;mero</th>
                                 <th style="cursor:pointer" title="Clique aqui para ordenar">Nome</th>
                                 <th>Data/Hora</th>
                                 <th>Dias</th>
                                 <th>Outras</th>
-                                <th>T�cnico</th>
+                                <th>T&eacute;cnico</th>
                                 <th>Visual</th>
                                 <th>Documental</th>
                                 <th>Despachos</th>
@@ -129,7 +125,6 @@
                             </tr>
                             </thead>
                             <tbody>
-
                             <?php
                             $auxIdPreProjetoInicial = 0;
                             ?>
@@ -393,7 +388,7 @@
             <tr onclick="abrirDinamico('#analiseFinal', $(this))" style="cursor:pointer">
                 <th align="left">
                     <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"/>
-                    An�lise Final
+                    An&aacute;lise Final
                 </th>
             </tr>
             <tr id="analiseFinal">
@@ -401,14 +396,14 @@
                     <table class="tabela" id="tabelaAnaliseFinal">
                         <thead>
                         <tr>
-                            <th style="cursor:pointer" title="Clique aqui para ordenar">N�mero</th>
+                            <th style="cursor:pointer" title="Clique aqui para ordenar">N&uacute;mero</th>
                             <th style="cursor:pointer" title="Clique aqui para ordenar">Nome</th>
                             <th>Data/Hora</th>
                             <th>Dias</th>
                             <th>Dias de Dilig&ecirc;ncia</th>
                             <th>Dias de Resposta de Dilig&ecirc;ncia</th>
                             <th>Outras</th>
-                            <th>T�cnico</th>
+                            <th>T&eacute;cnico</th>
                             <th>Visual</th>
                             <th>Documental</th>
                             <th>Despachos</th>
@@ -495,13 +490,13 @@
             </tr>
             <?php endif; ?>
         </table>
-        <!-- ============ ANALISE FINAL  ============== -->
+
         <?php if (!empty($this->propostasNaoEnviadas)): ?>
             <table class="tabela">
                 <tr onclick="abrirDinamico('#propostasNaoEnviadas', $(this))" style="cursor:pointer">
                     <th align="left">
                         <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"/>
-                        Situacao : Propostas ainda n?o enviadas ao MinC
+                        Situa&ccedil;&atilde;o : Propostas ainda n&atilde;o enviadas ao MinC
                     </th>
                 </tr>
                 <tr id="propostasNaoEnviadas">
@@ -509,7 +504,7 @@
                         <table class="tabela" id="tabelaAnaliseFinal">
                             <thead>
                             <tr>
-                                <th style="cursor:pointer" title="Clique aqui para ordenar">N�mero</th>
+                                <th style="cursor:pointer" title="Clique aqui para ordenar">N&uacute;mero</th>
                                 <th style="cursor:pointer" title="Clique aqui para ordenar">Nome</th>
                                 <th>Outras</th>
                                 <th>Imprimir</th>
@@ -550,7 +545,7 @@
             </table>
         <?php endif; ?>
 
-    </div><!-- fecha conteudo imprimivel -->
+    </div>
     <table class="tabela">
         <tr>
             <td align="center">
@@ -564,11 +559,11 @@
         </tr>
     </table>
 </div>
-<!-- ========== FIM CONTEUDO ========== -->
+
 
 <div id="modalTransformarProposta" style="display:none;"></div>
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
+
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
+
 <br clear="all"/>
 <iframe name="gerarPDF" style="display: none;"></iframe>

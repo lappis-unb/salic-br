@@ -1,20 +1,5 @@
 <?php
 
-/**
- * Class Proposta_AdmissibilidadeController
- *
- * @name Proposta_AdmissibilidadeController
- * @package Modules/Agente
- * @subpackage Controller
- *
- * @author Equipe RUP - Politec
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @author Vinícius Feitosa da Silva <viniciusfesil@gmail.com>
- * @since 07/06/2010
- *
- * @copyright © 2010 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_Abstract
 {
 
@@ -26,12 +11,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     private $codOrgao = null;
     private $COD_CLASSIFICACAO_DOCUMENTO = 23;
 
-    /**
-     * Reescreve o metodo init()
-     * @access public
-     * @param void
-     * @return void
-     */
     public function init()
     {
         $auth = Zend_Auth::getInstance(); // instancia da autenticacao
@@ -72,11 +51,9 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $PermissoesGrupo[] = 139; // Tecnico de Avaliacao
         $PermissoesGrupo[] = 140; // Tecnico de Admissibilidade Edital
         //parent::perfil(1, $PermissoesGrupo);
-        //parent::init();
         isset($auth->getIdentity()->usu_codigo) ? parent::perfil(1, $PermissoesGrupo) : parent::perfil(4, $PermissoesGrupo);
         parent::init();
 
-        //recupera ID do pre projeto (proposta)
         if (!empty ($_REQUEST['idPreProjeto'])) {
             $this->idPreProjeto = $_REQUEST['idPreProjeto'];
         }
@@ -88,18 +65,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
             $this->codGrupo = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu�rio para a vis�o
             $this->codOrgao = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
-
             $this->codOrgaoSuperior = (!empty($auth->getIdentity()->usu_org_max_superior)) ? $auth->getIdentity()->usu_org_max_superior : $auth->getIdentity()->usu_orgao;
         }
 
     }
-
-    /**
-     * Redireciona para o fluxo inicial do sistema
-     * @access public
-     * @param void
-     * @return void
-     */
 
     public function indexAction()
     {
@@ -292,12 +261,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $tipoDoc = "tbDocumento"; //SAC.dbo.tbDocumento
         }
 
-        // Configura��o o php.ini para 10MB
         @ini_set("mssql.textsize", 10485760);
         @ini_set("mssql.textlimit", 10485760);
         @ini_set("upload_max_filesize", "10M");
 
-        // busca o arquivo
         $resultado = UploadDAO::abrirdocumentosanexados($id, $tipoDoc);
         if (count($resultado) > 0) {
             if ($tipo == 1) {
@@ -336,12 +303,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $tipoDoc = "tbDocumento"; //SAC.dbo.tbDocumento
         }
 
-        // Configura��o o php.ini para 10MB
         @ini_set("mssql.textsize", 10485760);
         @ini_set("mssql.textlimit", 10485760);
         @ini_set("upload_max_filesize", "10M");
 
-        // busca o arquivo
         $resultado = UploadDAO::abrirdocumentosanexados($id, $tipoDoc);
         if (count($resultado) > 0) {
             $this->_forward("abrirdocumentosanexados", "upload", "", array('id' => $id, 'busca' => $tipoDoc));
@@ -361,8 +326,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     public function incluiravaliacaoAction()
     {
-
-        //verifica se id preprojeto foi enviado
         $this->validarAcessoAdmissibilidade();
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto=?" => $this->idPreProjeto))->current();
@@ -374,7 +337,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     public function salvaravaliacaoAction()
     {
-
         $post = Zend_Registry::get('post');
         $dados = array();
         $dados['idProjeto'] = $post->idPreProjeto;
@@ -407,9 +369,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $auth = Zend_Auth::getInstance();
         $tbTextoEmailDAO = new tbTextoEmail();
         $preProjetosDAO = new Proposta_Model_DbTable_PreProjeto();
-
         $dadosProjeto = $preProjetosDAO->dadosProjetoDiligencia($idProjeto);
-
         $tbHistoricoEmailDAO = new tbHistoricoEmail();
 
         foreach ($dadosProjeto as $d) :
@@ -417,12 +377,11 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             //$email  =   'jailton.landim@cultura.gov.br';
             //para Produ�?o descomentar linha abaixo e para teste comente ela
             $email = trim(strtolower($d->Email));
+            $mens = '<b>Proposta: ' . $d->idProjeto . ' - ' . $d->NomeProjeto . '<br> Proponente: ' . $d->Destinatario . '<br> </b>' . $Mensagem;
+            $assunto = 'Avaliacao da proposta';
             if ($pronac) {
                 $mens = '<b>Proposta: ' . $d->idProjeto . ' - ' . $d->NomeProjeto . '<br> Pronac: ' . $pronac . '<br> </b>' . $Mensagem;
                 $assunto = 'Proposta transformada em Projeto Cultural';
-            } else {
-                $mens = '<b>Proposta: ' . $d->idProjeto . ' - ' . $d->NomeProjeto . '<br> Proponente: ' . $d->Destinatario . '<br> </b>' . $Mensagem;
-                $assunto = 'Avaliacao da proposta';
             }
             $perfil = "PerfilGrupoPRONAC";
 

@@ -1,5 +1,5 @@
 <?php
-$buscarDocumento = $this->url(array('module' => 'proposta', 'controller' => 'admissibilidade', 'action' => 'buscardocumento'));
+$buscarDocumento = $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'buscardocumento'));
 $edital='';
 
 if(isset($_GET['edital']) && $_GET['edital']=="s"){
@@ -19,25 +19,6 @@ if(isset($_GET['edital']) && $_GET['edital']=="s"){
     <form method="post" action="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaedital', 'action' => 'incluir-anexo')) ?>" id="formulario"  enctype="multipart/form-data">
     <input type="hidden" name="idPreProjeto" value="<?php echo $_GET['idPreProjeto'] ?>" >
     <input type="hidden" name="edital" value="<?php echo $edital ?>" />
-
-        <table class="tabela" >
-            <tr>
-                <th>Documentos obrigat&oacute;rios</th>
-                <th>Anexado</th>
-            </tr>
-            <?php if(!empty($this->documentosObrigatorios)) : ?>
-                <?php foreach ($this->documentosObrigatorios as $documento) { ?>
-                    <tr class="fundo">
-                        <td width="90%" ><?php echo $documento['Descricao']; ?></td>
-                        <td class="centro" width="10%" nowrap>
-                            <?php $img_url = $documento['Anexado'] ? '/public/img/ok_16x16.png' : '/public/img/btn_excluir.gif'; ?>
-
-                            <img alt="" src="<?php echo $this->baseUrl() . $img_url; ?>" />
-                        </td>
-                    </tr>
-                <?php } ?>
-            <?php endif; ?>
-        </table>
 
      <table class="tabela">
         <tr>

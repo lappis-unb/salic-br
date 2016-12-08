@@ -2715,6 +2715,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $visoes = $visaoTable->buscarVisao(null, null, true);
         $a = 0;
         $select = null;
+
         foreach ($visoes as $visaoGrupo) {
             if ($GrupoAtivo == 93 and ($visaoGrupo->idVerificacao == 209 or $visaoGrupo->idVerificacao == 216)) {
                 $select[$a]['idVerificacao'] = $visaoGrupo->idVerificacao;

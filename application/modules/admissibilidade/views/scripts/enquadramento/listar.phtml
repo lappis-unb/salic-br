@@ -1,3 +1,6 @@
+<!--link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju/dt-1.10.12/datatables.min.css"/-->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.material.min.css"/>
 <div id="breadcrumb">
     <ul>
         <li class="first"><a
@@ -19,7 +22,7 @@
     </div>
 </div>
 <div id="conteudo">
-        <table class="tabela" id="enquadramento">
+        <table class="tabela " id="enquadramento">
             <thead>
             <tr class="titulo_tabela">
                 <th width="40">PRONAC</th>
@@ -44,16 +47,18 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+
 </div>
 <div id="rodapeConteudo"><span></span></div>
 <br clear="all"/>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju/dt-1.10.12/datatables.min.css"/>
+
 <script
     src="https://code.jquery.com/jquery-1.12.4.js"
     integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
     crossorigin="anonymous"></script>
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.material.min.js"></script></script>
 
 <script type="text/javascript">
 (function($){
@@ -61,11 +66,22 @@
   $(document).ready (function(){
     $('#enquadramento').DataTable(
     {
-            "language": {
-                "url": "https://cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
+        }
+        , "order": [0,1]
+        , "searching": true
+        , "lengthChange": true
+        ,  columnDefs: [
+            {
+                targets: [ 0, 1 ],
+                className: 'mdl-data-table__cell--non-numeric'
             }
-        , "searching": false
-        , "lengthChange": false
+        ]
+        ,
+        "aoColumnDefs": [
+          { 'bSortable': false, 'aTargets': [ 2 ] }
+       ]
     });
   });
 }($.noConflict(true)));
