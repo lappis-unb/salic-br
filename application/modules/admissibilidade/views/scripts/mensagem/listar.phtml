@@ -8,6 +8,7 @@
                 <th data-field="teste">Remetente</th>
                 <th data-field="teste2">Destinatario</th>
                 <th data-field="teste3">Mensagem</th>
+                <th data-field="teste3">Acao</th>
             </tr>
             </thead>
             <tbody>
@@ -20,9 +21,25 @@
                     <td><?php echo $arrValue['usu_nome_remetente']; ?></td>
                     <td><?php echo $arrValue['usu_nome_destinatario']; ?></td>
                     <td><?php echo $arrValue['dsMensagem']; ?></td>
+                    <td>
+                        <a href="#modal1" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Encaminhar">
+                            <i class="material-icons">subdirectory_arrow_right</i>
+                        </a>
+                        <a href="#modal1" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Responder">
+                            <i class="material-icons">mode_comment</i>
+                        </a>
+                        <a href="#modal1" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Respondido">
+                            <i class="material-icons">insert_comment</i>
+                        </a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
     </div>
 </div>
+<script>
+    $jq3(document).ready(function(){
+        $jq3('.tooltipped').tooltip({delay: 50});
+    });
+</script>

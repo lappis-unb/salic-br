@@ -1,4 +1,4 @@
-<!-- 
+<!--
 /**
  * Folha de estilo principal do sistema
  * @author IVIA / POLITEC
@@ -444,23 +444,23 @@ table caption {
     font-size: 11px;
 }
 
-table {
+#conteudo table {
 	margin:0 auto;
 	background:#ccc;
 }
-table td {
+#conteudo table td {
 	background:url(../img/bg-celulas.gif) repeat-x #fff;
 	padding:8px;
 	color:auto;
 }
-table tr.linha:hover td {
+#conteudo table tr.linha:hover td {
 	background:#eef8de;
 }
-table tr.destacar td, table td.destacar {
+#conteudo table tr.destacar td, table td.destacar {
 	background:#dfefc2;
 }
-table td a {
-	/*color:#333 !important;*/
+#conteudo table td a {
+	color:#333 !important;
 }
 table th {
 	background:#abda5d;
@@ -593,8 +593,8 @@ div.simpleTabsContent.currentTab {
 .select_simples {
 	background:#f8f8f8;
 }
-.input_simples:hover, .input_simples:active, 
-.textarea_simples:hover, .textarea_simples:active, 
+.input_simples:hover, .input_simples:active,
+.textarea_simples:hover, .textarea_simples:active,
 .select_simples:hover, .select_simples:active {
 	background:#fff url(../img/bg-celulas.gif) repeat-x;
 	border:1px solid #777;
@@ -1152,7 +1152,7 @@ div.plan span {
 .btn_redistribuir_projetos-off,
 .btn_pesquisar_projeto-off,
 .btn_analise_projeto,
-.btn_move_down, 
+.btn_move_down,
 .btn_move_left,
 .btn_move_left_all,
 .btn_move_right,
@@ -1287,7 +1287,7 @@ div.plan span {
 .btn_redistribuir_projetos-off:hover,
 .btn_pesquisar_projeto-off:hover,
 .btn_analise_projeto:hover,
-.btn_move_down:hover, 
+.btn_move_down:hover,
 .btn_move_left:hover,
 .btn_move_left_all:hover,
 .btn_move_right:hover,
@@ -1313,7 +1313,7 @@ div.plan span {
 	border-right:1px solid #efefef;
 	border-bottom:1px solid #efefef;
 }
-.btn_move_down, 
+.btn_move_down,
 .btn_move_left,
 .btn_move_left_all,
 .btn_move_right,
@@ -1335,7 +1335,7 @@ div.plan span {
 .btn_reintegrar,
 .btn_reintegrar-off,
 .btn_imprimir,
-.btn_imprimir_guia,	
+.btn_imprimir_guia,
 .btn_enviar,
 .btn_p_anterior,
 .btn_p_proximo,
@@ -1408,7 +1408,7 @@ div.plan span {
 }
 .btn_retirar_pauta {
 	width:106px;
-        
+
 }
 .btn_excluir_tudo,
 .btn_marcar,
@@ -1668,9 +1668,26 @@ div.plan span {
 .gerenciar_pareceres .tooltip:hover:after{
     left: -300%;
     font-size: 12px;
-    line-height: 1.3em;   
+    line-height: 1.3em;
 }
 
 .texto_maiusculo {
 	text-transform: uppercase
+}
+
+header {
+    /*min-height: 255px;*/
+    /*background-color: blue;*/
+}
+article {
+    padding-bottom: 60px;
+    width: 900px;
+    margin: 0 auto;
+}
+footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    /*height: 60px;*/
+    /*background-color: green;*/
 }

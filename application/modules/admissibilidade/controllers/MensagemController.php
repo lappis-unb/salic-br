@@ -95,7 +95,6 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
      */
     public function indexAction()
     {
-
         $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $arrAuth = array_change_key_case((array) $auth->getIdentity());
         $intIdPronac = $this->getRequest()->getParam('id');
