@@ -361,7 +361,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $objTbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
         $objTbMovimentacao->alterarConformidadeProposta($post->idPreProjeto, $this->idUsuario, Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL);
 
-        parent::message("Despacho encaminhado com sucesso!", "/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=" . $post->idPreProjeto . "&gravado=sim", "CONFIRM");
+        parent::message("Conformidade visual finalizada com sucesso!", "/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=" . $post->idPreProjeto . "&gravado=sim", "CONFIRM");
     }
 
     private function eviarEmail($idProjeto, $Mensagem, $pronac = null)
