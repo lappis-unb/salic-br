@@ -2008,6 +2008,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $this->view->analistas = array();
             $this->view->urlResumo = $this->_urlPadrao . "/admissibilidade/admissibilidade/resumo-distribuicao-propostas";
             $i = 0;
+
             foreach ($analistas as $analista) {
                 $dados[$analista->Tecnico][$analista->Fase][$i]['nrProposta'] = $analista->idProjeto;
                 $dados[$analista->Tecnico][$analista->Fase][$i]['NomeProjeto'] = $analista->NomeProjeto;
