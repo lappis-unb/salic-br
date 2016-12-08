@@ -39,6 +39,15 @@ class Proposta_Model_DbTable_TbDocumentosAgentes extends MinC_Db_Table_Abstract
      */
     protected $_schema = 'sac';
 
+    /**
+     * _primary
+     *
+     * @var int
+     * @access protected
+     */
+    protected $_primary   = 'idDocumentosAgentes';
+
+
     public function buscarDocumentos($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
