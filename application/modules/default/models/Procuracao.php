@@ -4,6 +4,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
 
     protected $_schema = 'Agentes';
     protected $_name = 'tbProcuracao';
+    protected $_primary = 'idProcuracao';
 
     public function buscarProcuracaoProjeto($where = array()) {
         $s = $this->select();
@@ -79,7 +80,6 @@ class Procuracao extends MinC_Db_Table_Abstract {
         
         $s->order('p.siProcuracao desc');
         
-//        xd($s->assemble());
         var_dump($s);
         return $this->fetchAll($s);
     }
@@ -109,7 +109,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
         foreach($where as $key=>$valor){
             $s->where($key, $valor);
         }
-//       xd($s->assemble());
+
         return $this->fetchAll($s);
     }
 
@@ -186,7 +186,7 @@ class Procuracao extends MinC_Db_Table_Abstract {
             $s->where($key, $valor);
         }
         $s->order('p.siProcuracao desc');
-//        xd($s->assemble());
+
         return $this->fetchAll($s);
     }
 

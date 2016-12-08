@@ -22,29 +22,32 @@
     <table class="tabela" style="width: 40%;">
         <tr>
             <th width="70%">Resumo</th>
-            <th width="20%">Registros</th>
+            <th width="20%">Registro</th>
             <th width="10%" class="naoImprimivel"><input type="submit" name="todos" class="btn_gerar_grafico" value="" /></th>
         </tr>
         <?php $totalGeral=0;?>
-        <?php foreach($this->analistas as $nomeAnalista => $fases): ?>
-        <tr>
-            <td align="left">
-                <?php echo $nomeAnalista; ?>
-                <?php
-                    $qtdeFase=0;
-                    foreach ($fases as $faseNome => $faseItems) {
-                        $qtdeFase += count($faseItems);
-                ?>
-                <br><span style="padding-left: 10px;"><?php echo $faseNome; ?>:&nbsp;<?php echo count($faseItems); ?></span>
-                <?php
-                    }
-                ?>
-            </td>
-            <td align="right"><?php echo $qtdeFase; ?></td>
-            <td width="10%" class="naoImprimivel"><input type="submit" name="<?php echo $nomeAnalista; ?>" class="btn_gerar_grafico" value=""/></td>
-        </tr>
-        <?php $totalGeral+=$qtdeFase; ?>
-        <?php endforeach; ?>
+
+        <?php if($this->analistas): ?>
+            <?php foreach($this->analistas as $nomeAnalista => $fases): ?>
+            <tr>
+                <td align="left">
+                    <?php echo $nomeAnalista; ?>
+                    <?php
+                        $qtdeFase=0;
+                        foreach ($fases as $faseNome => $faseItems) {
+                            $qtdeFase += count($faseItems);
+                    ?>
+                    <br><span style="padding-left: 10px;"><?php echo $faseNome; ?>:&nbsp;<?php echo count($faseItems); ?></span>
+                    <?php
+                        }
+                    ?>
+                </td>
+                <td align="right"><?php echo $qtdeFase; ?></td>
+                <td width="10%" class="naoImprimivel"><input type="submit" name="<?php echo $nomeAnalista; ?>" class="btn_gerar_grafico" value=""/></td>
+            </tr>
+            <?php $totalGeral+=$qtdeFase; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
         <tr>
             <th align="left">Total Geral</th>
             <th align="right"><?php echo $totalGeral; ?></th>
