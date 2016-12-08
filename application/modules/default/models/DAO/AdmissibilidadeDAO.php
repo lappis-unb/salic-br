@@ -108,7 +108,6 @@ class AdmissibilidadeDAO extends Zend_Db_Table
                    1 idFase,
                    'Visual' Fase
                 FROM SAC.dbo.vwRedistribuirAnaliseVisual
-                --WHERE SAC.dbo.fnIdOrgaoSuperiorAnalista(Tecnico) = {$params->usu_orgao}
                                 WHERE EXISTS
                                         (SELECT org_superior
                                         FROM TABELAS.dbo.vwUsuariosOrgaosGrupos
@@ -126,7 +125,6 @@ class AdmissibilidadeDAO extends Zend_Db_Table
                    2 idFase,
                    'Documental' Fase
                 FROM SAC.dbo.vwConformidadeDocumentalTecnico
-                --WHERE SAC.dbo.fnIdOrgaoSuperiorAnalista(idTecnico) = {$params->usu_orgao}
                                 WHERE EXISTS
                                         (SELECT org_superior
                                         FROM TABELAS.dbo.vwUsuariosOrgaosGrupos
