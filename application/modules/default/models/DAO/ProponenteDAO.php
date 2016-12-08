@@ -3,7 +3,9 @@
 Class ProponenteDAO extends Zend_Db_Table
 {
 
-    protected $_name = 'SAC.dbo.Projetos';
+    protected $_name = 'Projetos';
+    protected $_schema = 'SAC';
+    protected $_primary = 'IdPRONAC';
 
     public function execPaProponente($idPronac)
     {
@@ -62,11 +64,11 @@ Class ProponenteDAO extends Zend_Db_Table
 
     public function buscarEmail($idpronac)
     {
-        $table = Zend_Db_Table::getDefaultAdapter();
-        $db = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
+
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $select = $table->select()
+        $select = $db->select()
             ->from('Internet',
                 array(new Zend_db_Expr('*'),new Zend_db_Expr("
                     CASE
@@ -95,11 +97,10 @@ Class ProponenteDAO extends Zend_Db_Table
 
     public function buscarTelefone($idpronac)
     {
-        $table = Zend_Db_Table::getDefaultAdapter();
-        $db = Zend_Registry::get('db');
+        $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $select = $table->select()
+        $select = $db->select()
             ->from('Telefones',
                 array(new Zend_db_Expr("
                     CASE
