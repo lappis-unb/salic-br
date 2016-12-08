@@ -25,4 +25,4 @@ Cleber Costa dos Santos   | oclebersantos@gmail.com    | Desenvolvedor Pleno    
 Jorge Luiz Jr.            | juninhoecb@gmail.com       | SubCoordenador de Projetos   | 15/06/2016      | Atuando        | UFABC - LABLIVRE
 Ruy Junior Ferreira Silva | ruyjfs@gmail.com           | Desenvolvedor Sênior         | 01/08/2016      | Atuando        | UFABC - LABLIVRE
 Vinícius Feitosa da Silva | viniciusfesil@gmail.com    | Desenvolvedor Sênior         | 01/08/2016      | Atuando        | UFABC - LABLIVRE
-Wouerner ?                | wouerner@protonmail.com    | Desenvolvedor Pleno          | 19/05/2016      | Atuando        | UFABC - LABLIVRE
+Wouerner Brandão          | wouerner@protonmail.com    | Desenvolvedor Pleno          | 19/05/2016      | Atuando        | UFABC - LABLIVRE

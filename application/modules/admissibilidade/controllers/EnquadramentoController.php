@@ -32,7 +32,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
     {
         $idusuario = $this->auth->getIdentity()->usu_codigo;
         $projeto = new  Projetos();
-        $projetos = $projeto->listarPorSituacao('E63');//E63 B01
+        $projetos = $projeto->listarPorSituacao('B01');//E63
 
         $codOrgao = $this->grupoAtivo->codOrgao;
         $this->view->codOrgao = $codOrgao;
