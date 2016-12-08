@@ -80,7 +80,6 @@ class Procuracao extends MinC_Db_Table_Abstract {
         
         $s->order('p.siProcuracao desc');
         
-        var_dump($s);
         return $this->fetchAll($s);
     }
     
