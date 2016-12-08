@@ -1,7 +1,7 @@
 use sac;
-DROP PROCEDURE paTransformarPropostaEmProjeto;
+DROP PROCEDURE paTransformarPropostaEmProjetoNovoIN;
 
-CREATE PROCEDURE [dbo].[paTransformarPropostaEmProjeto]
+CREATE PROCEDURE [dbo].[paTransformarPropostaEmProjetoNovoIN]
                 @idProposta int,
                 @CNPJCPF    varchar(14),
                 @idOrgao    int,
