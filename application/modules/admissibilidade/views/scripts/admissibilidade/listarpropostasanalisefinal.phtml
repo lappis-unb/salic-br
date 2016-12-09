@@ -21,11 +21,11 @@
 <script type="text/javascript">
 <!--
 $(document).ready(function(){
-    
+
 });
 
 /*
- * Funï¿½ï¿½o responsï¿½vel pela exibiï¿½ï¿½o ou ocultamento de conteï¿½do,
+ * Fun¿¿o respons¿vel pela exibi¿¿o ou ocultamento de conte¿do,
  * mudando a imagem.
  **/
 function abrirDinamico(elemento, obj) {
@@ -73,7 +73,7 @@ function toogleAjax(id, url){
     <table class="tabela">
         <tr>
             <th>
-                Proposta em anï¿½lise final
+                Proposta em análise final
             </th>
         </tr>
         <?php $ultimoRegistro = null; $ct = 1; ?>
@@ -93,13 +93,13 @@ function toogleAjax(id, url){
                     <tr>
                         <th width="10%">Nr. Proposta</th>
                         <th width="75%">Nome da Proposta</th>
-                        <th width="15%">Dt. Movimentaï¿½ï¿½o</th>
+                        <th width="15%">Dt. Movimentação</th>
                     </tr>
                     <?php foreach($propostas as $proposta): ?>
                     <tr>
                         <td class="centro"><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idPreProjeto; ?>" title="Abrir proposta"><?php echo $proposta->idPreProjeto; ?></a></td>
                         <td><?php echo $proposta->NomeProjeto; ?></td>
-                        <td class="centro"><?php echo str_replace(" ", " ï¿½s ", data::dataBrasileira($proposta->DtMovimentacao)); ?></td>
+                        <td class="centro"><?php echo str_replace(" ", " às ", data::dataBrasileira($proposta->DtMovimentacao)); ?></td>
                     </tr>
                     <?php endforeach; ?>
                 </table>

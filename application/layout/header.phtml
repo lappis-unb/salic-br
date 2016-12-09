@@ -204,6 +204,7 @@
             <ul>
                 <li class="noOverHere"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" class="home" title="INICIO"><span>INICIO</span></a></li>
 
+                <?php echo $this->render('partials/notificacaoMensagem.phtml')?>
                     <!-- ========== INICIO MENU ANALISE ========== -->
                     <?php if(in_array($this->grupoAtivo, array(93,94,97,103,110,118,119,120,127,128,132,133,137,141,142,143))){ ?>
                     <li>
@@ -806,7 +807,6 @@
 						<div id="divrigth"></div>
 					</div>
 				</li>
-				<?php //} ?>
 				<!-- ========== FIM MENU SEGURANCA ========== -->
 
 

@@ -1,0 +1,40 @@
+<?php
+$dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
+$intQtd = count($dbTable->getAllBy());
+$intQtd = ($intQtd > 99)? $intQtd . '+' : $intQtd;
+?>
+<style>
+    .btn-floating {
+        background-color: rgb(76, 175, 80);
+        border-radius: 50%;
+        bottom: 7px;
+        color: #fff;
+        cursor: pointer;
+        display: block;
+        height: 18px !important;
+        left: 23px;
+        line-height: 4px;
+        overflow: hidden;
+        padding: 0;
+        position: relative;
+        text-align: left !important;
+        transition: all 0.3s ease 0s;
+        vertical-align: middle;
+        width: 19px;
+        z-index: 1;
+    }
+
+    .btn-floating p {
+        display: block;
+        left: 3px;
+        line-height: 2pt;
+        padding: 0 0 10px;
+        position: absolute;
+    }
+</style>
+<li class="noOverhere">
+    <a href=""><i class="material-icons left">mail</i></a>
+    <a class="btn-floating waves-effect waves-light orange darken-4"><p><?php echo $intQtd ?></p></a>
+</li>
+
+
