@@ -303,9 +303,8 @@ $SalvarProduto = $this->url(array('module'=>'proposta', 'controller' => 'mantero
                         <tr>
                             <td align="left"><label for="uf">FONTE DE RECURSO*:</label> <br />
                                 <select class="select_simples valida" style="width: 90%" id="fonterecurso" name="fonterecurso">
-                                    <option value="<?php echo "" ?>"> - Selecione - </option>
                                     <?php foreach($this->Recurso as $recurso) {?>
-                                        <option value="<?php echo $recurso->idverificacao ?>"><?php echo $recurso->verificacaodescricao ?></option>
+                                        <option <?php echo ($recurso->idverificacao == 109) ? 'selected' : ''; ?>  value="<?php echo $recurso->idverificacao ?>"><?php echo $recurso->verificacaodescricao ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
