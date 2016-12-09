@@ -49,8 +49,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             }
             $this->view->pronac = $get['pronac'];
             $objProjeto = new Projetos();
-            $whereProjeto['IdPRONAC'] = $this->view->pronac;
-            $projeto = $objProjeto->findBy($whereProjeto);
+            $projeto = $objProjeto->findBy(array('IdPRONAC' => $this->view->pronac));
 
             if (!$projeto) {
                 throw new Exception("PRONAC não encontrado.");
