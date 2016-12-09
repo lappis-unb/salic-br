@@ -15,7 +15,7 @@
 * {
 	margin:0;
 	padding:0;
-	/*border:none;*/
+	border:none;
 }
 html { overflow-y:auto; }
 body {
@@ -1691,3 +1691,9 @@ footer {
     /*height: 60px;*/
     /*background-color: green;*/
 }
+
+/*table, th, tr, td, thead {*/
+	/*margin:0;*/
+	/*padding:0;*/
+	/*border:none;*/
+/*}*/
