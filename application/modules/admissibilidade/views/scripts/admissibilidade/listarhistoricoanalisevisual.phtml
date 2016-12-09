@@ -90,7 +90,7 @@ function abreDivAvaliacao(caminho){
     });
 
     //jqAjaxLink(caminho, '', 'resultadoAvaliacao');
-    
+
 }
 //-->
 </script>
@@ -101,17 +101,16 @@ function abreDivAvaliacao(caminho){
 <div id="conteudo">
     <div id="conteudoImprimivel" class="conteudoImprimivel">
     <form action="<?php echo $this->urlResumo; ?>" method="post" name="frmResumo" id="frmResumo">
-    
+
     <table class="tabela">
         <tr>
             <th>
-                Hist�rico da An�lise Visual
+                Historico da Analise Visual
             </th>
         </tr>
         <?php $ultimoRegistro = null; $ct = 1; ?>
         <?php if(!empty($this->tecnicosPropostas)): ?>
-        <?php //foreach($this->tecnicos as $idOrgaoGeral=>$tecnico): ?>
-        
+
         <?php foreach($this->tecnicosPropostas as $tecnico=>$propostas): ?>
         <tr onclick="abrirDinamico('#analista_<?php echo $ct; ?>', $(this))" style="cursor:pointer">
             <td align="center">
@@ -135,14 +134,14 @@ function abreDivAvaliacao(caminho){
                     <tr>
                         <td align="center" nowrap>
                             <?php if($proposta->idPreProjeto != $auxIdPreProjeto ): ?>
-                            <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idPreProjeto; ?>"><?php echo $proposta->idPreProjeto; ?></a>
+                            <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idPreProjeto; ?>"><?php echo $proposta->idPreProjeto; ?></a>
                             <?php else: ?>
                             --
                             <?php endif; ?>
                         </td>
                         <td align="center"><?php echo $proposta->NomeProjeto; ?></td>
                         <td><?php echo str_replace(" ", " as ", data::dataBrasileira($proposta->DtAvaliacao)); ?></td>
-                        <td align="center" onclick="abreDivAvaliacao('<?php echo $this->baseUrl(); ?>/admissibilidade/avaliacao-historico-analise-visual?idAvaliacao=<?php echo $proposta->idAvaliacaoProposta; ?>');" style="cursor: pointer;"><img src="<?php echo $this->baseUrl();?>/public/img/btn_busca.gif" /></td>
+                        <td align="center" onclick="abreDivAvaliacao('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/avaliacao-historico-analise-visual?idAvaliacao=<?php echo $proposta->idAvaliacaoProposta; ?>');" style="cursor: pointer;"><img src="<?php echo $this->baseUrl();?>/public/img/btn_busca.gif" /></td>
                     </tr>
                     <?php $auxIdPreProjeto = $proposta->idPreProjeto; endforeach; ?>
                     </tbody>
@@ -151,7 +150,7 @@ function abreDivAvaliacao(caminho){
         </tr>
         <?php $ct++; ?>
         <?php endforeach; ?>
-        
+
         <?php //endforeach; ?>
         <?php endif; ?>
     </table>

@@ -1,3 +1,11 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery/plugins/editorRico.js"></script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#observacao").editorRico({ altura: 200 });
+    });
+</script>
+
 <div id="breadcrumb">
     <ul>
         <li class="first"><a
@@ -23,10 +31,11 @@
           action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto'), '', true) . "?pronac={$this->pronac}"; ?>">
         <table class="tabela gerenciar_pareceres">
             <tr>
-                <td align="left" class="destacar bold">&Aacute;rea / Segmento do Projeto</td>
+                <th align="left" class="destacar bold">&Aacute;rea / Segmento do Projeto</th>
                 <td valign="top" width="300px">
                     <label for="areaCultural">&Aacute;rea Cultural</label>
-                    <select name="areaCultural" id="areaCultural" class="input_simples obrigatorio" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?>
+                    <select name="areaCultural" id="areaCultural"
+                            class="input_simples obrigatorio" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?>
                             style="width: 160px;">
                         <option value=""> - Selecione -</option>
                         <?php foreach ($this->comboareasculturais as $key => $value) { ?>
@@ -40,7 +49,8 @@
                 </td>
                 <td>
                     <label for="segmentoCultural">Segmento Cultural</label>
-                    <select name="segmentoCultural" id="segmentoCultural" class="input_simples obrigatorio" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?>>
+                    <select name="segmentoCultural" id="segmentoCultural"
+                            class="input_simples obrigatorio" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?>>
                         <?php if (!isset($this->projeto['Area']) || empty($this->projeto['Area'])) { ?>
                             <option value=""> - Selecione uma &Aacute;rea Cultural -</option>
                         <?php } else { ?>
@@ -60,7 +70,7 @@
                 </td>
             </tr>
             <tr>
-                <td align="left" class="destacar bold">Enquadramento</td>
+                <th align="left" class="destacar bold">Enquadramento</th>
                 <td width="250" colspan="2">
                     <input type="hidden" name="enquadramento_projeto" id="enquadramentoProjeto" value=""
                            class="obrigatorio"/>
@@ -68,13 +78,21 @@
                 </td>
             </tr>
             <tr>
+                <th colspan="3">
+                    Justificativa
+                </th>
+            </tr>
+            <tr>
                 <td colspan="3">
-                <textarea cols="80" id="observacao" name="observacao" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?> rows="10" class="textarea_simples" style="width: 99%"><?php echo $this->observacao ?></textarea>
+                    <textarea cols="80" id="observacao"
+                              name="observacao" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?>
+                              rows="10" class="textarea_simples"
+                              style="width: 99%"><?php echo $this->observacao ?></textarea>
                 </td>
             </tr>
             <td colspan="3" align="center">
-                <?php if(empty($this->observacao)) : ?>
-                <input type="submit" id="btSalvarConsolidacao" value="" class="btn_salvar"/>
+                <?php if (empty($this->observacao)) : ?>
+                    <input type="submit" id="btSalvarConsolidacao" value="" class="btn_salvar"/>
                 <?php endif; ?>
             </td>
         </table>
@@ -112,8 +130,7 @@
         }
     }
 
-    $(document).ready(function () {
-
+    jQuery(function ($) {
         $('#areaCultural').change(function () {
             carregarSegmento();
         });

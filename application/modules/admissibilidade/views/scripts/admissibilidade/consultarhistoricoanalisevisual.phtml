@@ -5,11 +5,11 @@
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
         <li class="second">Admissibilidade</li>
-        <li class="last">Admissibilidade de Propostas - Consultar Histï¿½rico de Anï¿½lise Visual</li>
+        <li class="last">Admissibilidade de Propostas - Consultar Historico de Analise Visual</li>
     </ul>
 </div>
 <div id="titulo">
-    <div>Admissibilidade de propostas - Consultar histï¿½rico de anï¿½lise visual <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span></div>
+    <div>Admissibilidade de propostas - Consultar historico de analise visual <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span></div>
 </div>
 
 <script type="text/javascript">
@@ -60,15 +60,15 @@ function verificaPreenchimento(){
 }
 
 function JsTrataDatas(){
-        
+
         var tipodata = $("#tipodata").val();
-        
+
         if(tipodata == 'entre')
         {
             if($("#dataPropostaInicial").length > 0)
             {
                 var dtInicio = $("#dataPropostaInicial").val();
-                var arrInicio = dtInicio.split("/");    
+                var arrInicio = dtInicio.split("/");
                 dtInicio = arrInicio[2]+arrInicio[1]+arrInicio[0];
             }else{
                 var dtInicio = 0;
@@ -82,7 +82,7 @@ function JsTrataDatas(){
             }else{
                 var dtFim = 0;
             }
-            
+
             if(dtFim < dtInicio){
                 $("#DtERROR").html("<font color='red'><b>A Data Final deve ser maior ou igual a Data de In&iacute;cio<b></font>");
                 return false;
@@ -101,11 +101,11 @@ function JsTrataDatas(){
         <input type="hidden" name="busca" value="1"/>
     <table class="tabela">
         <tr>
-            <th colspan="2">Histï¿½rico de Anï¿½lise Visual</th>
+            <th colspan="2">Historico de Analise Visual</th>
         </tr>
         <tr>
             <td>
-                Tï¿½cnico:
+                Técnico:
             </td>
             <td>
                 <select class="select_simples required_group" name="tecnico" id="tecnico">
@@ -132,13 +132,13 @@ function JsTrataDatas(){
         </tr>
         <tr>
             <td>
-                Situaï¿½ï¿½o:
+                Situação:
             </td>
             <td>
                 <input type="hidden" name="situacaoAUX" id="situacaoAUX" value="" style="display: none;" />
                 Enviado ao MinC
                 <input type="radio" name="situacao" id="situacao" value="9" />
-                Em Diligï¿½ncia
+                Em Diligencia
                 <input type="radio" name="situacao" id="situacao" value="0" />
             </td>
         </tr>
@@ -154,8 +154,5 @@ function JsTrataDatas(){
     </form>
 <div id="lblMsg" align="center"></div>
 </div>
-<!-- ========== FIM CONTEUDO ========== -->
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 <br clear="all" />
