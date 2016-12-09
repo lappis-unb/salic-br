@@ -194,4 +194,5 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         }
         echo json_encode($arrResult);
     }
+
 }
