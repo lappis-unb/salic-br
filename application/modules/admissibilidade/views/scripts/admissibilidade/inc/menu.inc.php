@@ -63,9 +63,6 @@
                     </div>-->
                     <div id="qm0" class="qmmc" style="float:left; padding: 0px; margin: 0px;">
                         <a href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'listar-propostas-analise-visual-tecnico')); ?>' title="Ir para Visual por T&eacute;cnico">Visual por T&eacute;cnico</a>
-                        <?php //if ($this->grupoAtivo == 97) : ?>
-                        <a href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'listar-propostas-analise-documental-tecnico')); ?>' title="Ir para Documental por T&eacute;cnico">Documental por T&eacute;cnico</a>
-                        <?php //endif; ?>
                         <a href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'historico-analise-visual')); ?>' title="Ir para Hist&oacute;rico da An&aacute;lise Visual">Hist&oacute;rico da An&aacute;lise Visual</a>
                         <a href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'listar-propostas-analise-final')); ?>' title="Ir para Proposta em An&aacute;lise Final">Proposta em An&aacute;lise Final</a>
                         <a href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'painel-projetos-distribuidos')); ?>' title="Ir para Projetos Distribu&iacute;dos por &Oacute;rg&atilde;os">Projetos Distribu&iacute;dos por &Oacute;rg&atilde;os</a>

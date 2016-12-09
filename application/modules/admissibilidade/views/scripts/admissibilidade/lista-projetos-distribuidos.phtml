@@ -15,12 +15,12 @@
                title="Ir para In&iacute;cio">Avalia&ccedil;&atilde;o</a></li>
         <li>
             <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'painel-projetos-distribuidos')); ?>"
-               title="Projetos Distribuï¿½dos por ï¿½rgï¿½os">Projetos Distribuï¿½dos por ï¿½rgï¿½os</a></li>
+               title="Projetos Distribuidos por Orgaos">Projetos Distribuídos por Órgãos</a></li>
         <li class="last">Lista</li>
     </ul>
 </div>
 <div id="titulo">
-    <div>Projeto Distribuï¿½do por &Oacute;rg&atilde;o - Lista <span class="voltar"><a href="javascript:voltar();"
+    <div>Projeto Distribuído por &Oacute;rg&atilde;o - Lista <span class="voltar"><a href="javascript:voltar();"
                                                                                      title="Ir para p&aacute;gina anterior">Voltar</a></span>
     </div>
 </div>
@@ -52,7 +52,7 @@
                             <input class="btn_ultimo" id="btn_ultimo" type="button"
                                    onclick="location.href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'lista-projetos-distribuidos')) . '?pag=' . ($this->paginacao['totalPag']) . "&qtde=" . $this->paginacao['qtde'] . $this->paginacao['ordenacao'] . '&pronac=' . $this->pronac . '&orgao=' . $this->orgao . '&estado=' . $this->estado; ?>'">
                         <?php } ?>
-                        Pï¿½g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples"
+                        P¿g.:<select name="pag" id="pag" onchange="$('#form1').submit()" class="input_simples"
                                      style="vertical-align: top;">
                             <?php for ($i = 1; $i <= $this->paginacao['totalPag']; $i++): ?>
                                 <option
@@ -60,7 +60,7 @@
                                     &nbsp;</option>
                             <?php endfor; ?>
                         </select>
-                        &nbsp;Registros por pï¿½gina:<input type="text" size="1" name="qtde" id="qtde"
+                        &nbsp;Registros por p¿gina:<input type="text" size="1" name="qtde" id="qtde"
                                                           class="input_simples" value="<?php echo $this->intTamPag; ?>"
                                                           style="vertical-align: top;"><input type="submit"
                                                                                               class="btn_recarregar"
@@ -86,7 +86,7 @@
             echo " de " . $this->paginacao['total'] . " Projetos listados";
             ?>
         </center>
-        <!-- ========== FIM PAGINAï¿½ï¿½O ========== -->
+        <!-- ========== FIM PAGINA¿¿O ========== -->
     <?php } ?>
 
 
@@ -101,14 +101,14 @@
                         href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'lista-projetos-distribuidos')) . '?pag=1&qtde=' . $this->paginacao['qtde'] . '&campo=3&ordem=' . $this->paginacao['novaOrdem'] . '&pronac=' . $this->pronac . '&orgao=' . $this->orgao . '&estado=' . $this->estado; ?>">Nome
                         do Projeto</a></th>
                 <th>
-                    <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'lista-projetos-distribuidos')) . '?pag=1&qtde=' . $this->paginacao['qtde'] . '&campo=8&ordem=' . $this->paginacao['novaOrdem'] . '&pronac=' . $this->pronac . '&orgao=' . $this->orgao . '&estado=' . $this->estado; ?>">ï¿½rgï¿½o</a>
+                    <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'lista-projetos-distribuidos')) . '?pag=1&qtde=' . $this->paginacao['qtde'] . '&campo=8&ordem=' . $this->paginacao['novaOrdem'] . '&pronac=' . $this->pronac . '&orgao=' . $this->orgao . '&estado=' . $this->estado; ?>">¿rg¿o</a>
                 </th>
                 <th>
                     <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'lista-projetos-distribuidos')) . '?pag=1&qtde=' . $this->paginacao['qtde'] . '&campo=5&ordem=' . $this->paginacao['novaOrdem'] . '&pronac=' . $this->pronac . '&orgao=' . $this->orgao . '&estado=' . $this->estado; ?>">Produto</a>
                 </th>
                 <th nowrap><a
                         href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'lista-projetos-distribuidos')) . '?pag=1&qtde=' . $this->paginacao['qtde'] . '&campo=6&ordem=' . $this->paginacao['novaOrdem'] . '&pronac=' . $this->pronac . '&orgao=' . $this->orgao . '&estado=' . $this->estado; ?>">Tipo
-                        de Anï¿½lise</a></th>
+                        de An¿lise</a></th>
                 <th nowrap><a
                         href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'lista-projetos-distribuidos')) . '?pag=1&qtde=' . $this->paginacao['qtde'] . '&campo=11&ordem=' . $this->paginacao['novaOrdem'] . '&pronac=' . $this->pronac . '&orgao=' . $this->orgao . '&estado=' . $this->estado; ?>">N&ordm;
                         Dias</a></th>
@@ -138,7 +138,7 @@
 
         <?php if (count($this->dados) > 0) { ?>
 
-            <!-- ============ PAGINAï¿½ï¿½O ============ -->
+            <!-- ============ PAGINA¿¿O ============ -->
             <?php if ($this->qtdDocumentos > 10) { //echo $this->dados; ?>
                 <center>
                     <?php
@@ -173,7 +173,7 @@
                                     <input class="btn_ultimo" id="btn_ultimo" type="button"
                                            onclick="location.href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'lista-projetos-distribuidos')) . '?pag=' . ($this->paginacao['totalPag']) . "&qtde=" . $this->paginacao['qtde'] . $this->paginacao['ordenacao'] . '&pronac=' . $this->pronac . '&orgao=' . $this->orgao . '&estado=' . $this->estado; ?>'">
                                 <?php } ?>
-                                Pï¿½g.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples"
+                                P¿g.:<select name="pag" id="pag" onchange="$('#form2').submit()" class="input_simples"
                                              style="vertical-align: top;">
                                     <?php for ($i = 1; $i <= $this->paginacao['totalPag']; $i++): ?>
                                         <option
@@ -181,7 +181,7 @@
                                             &nbsp;</option>
                                     <?php endfor; ?>
                                 </select>
-                                &nbsp;Registros por pï¿½gina:<input type="text" size="1" name="qtde" id="qtde"
+                                &nbsp;Registros por p¿gina:<input type="text" size="1" name="qtde" id="qtde"
                                                                   class="input_simples"
                                                                   value="<?php echo $this->intTamPag; ?>"
                                                                   style="vertical-align: top;"><input type="submit"
@@ -201,7 +201,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <!-- ========== FIM PAGINAï¿½ï¿½O ========== -->
+                <!-- ========== FIM PAGINA¿¿O ========== -->
 
             <?php }
         } ?>
@@ -227,7 +227,7 @@
     </form>
 
 </div>
-<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
+<!-- ========== IN¿CIO RODAP¿ DO CONTE¿DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
+<!-- ========== FIM RODAP¿ DO CONTE¿DO ========== -->
 <br clear="all"/>
