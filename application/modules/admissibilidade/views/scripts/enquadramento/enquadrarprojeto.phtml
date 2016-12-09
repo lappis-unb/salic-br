@@ -23,7 +23,7 @@
           action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto'), '', true) . "?pronac={$this->pronac}"; ?>">
         <table class="tabela gerenciar_pareceres">
             <tr>
-                <td align="left" class="destacar bold">&Aacute;rea / Segmento do Projeto</td>
+                <th align="left" class="destacar bold">&Aacute;rea / Segmento do Projeto</th>
                 <td valign="top" width="300px">
                     <label for="areaCultural">&Aacute;rea Cultural</label>
                     <select name="areaCultural" id="areaCultural" class="input_simples obrigatorio" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?>
@@ -60,12 +60,17 @@
                 </td>
             </tr>
             <tr>
-                <td align="left" class="destacar bold">Enquadramento</td>
+                <th align="left" class="destacar bold">Enquadramento</th>
                 <td width="250" colspan="2">
                     <input type="hidden" name="enquadramento_projeto" id="enquadramentoProjeto" value=""
                            class="obrigatorio"/>
                     <span id="enquadramentoText" class="bold"></span>
                 </td>
+            </tr>
+            <tr>
+                <th colspan="3">
+                    Justificativa
+                </th>
             </tr>
             <tr>
                 <td colspan="3">
