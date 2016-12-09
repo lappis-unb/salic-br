@@ -66,3 +66,20 @@ textarea.materialize-textarea:focus:not([readonly]) + label{
     margin: 0 auto;
     width: 90%;
 }
+
+    footer {
+        color: #FFFFFF;
+        background-color: rgb(93,64,55);
+    }
+
+    main {
+        flex: 1 0 auto;
+    }
+
+    body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+        background: transparent;
+        width: 100%;
+    }
