@@ -80,6 +80,7 @@
 </form>
 
 <div id="conteudo">
+
     <table class="tabela">
         <tr>
             <td align="center">
@@ -93,306 +94,8 @@
         </tr>
     </table>
 
-    <?php $ctPropostasGeral = 0 ?>
-    <div class="conteudoImprimivel" id="conteudoImprimivel">
-        <?php if (!empty($this->propostasInicial)): ?>
-            <table class="tabela">
-                <tr onclick="abrirDinamico('#analiseInicial', $(this))" style="cursor:pointer">
-                    <th align="left">
-                        <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"/>
-                        An&aacute;lise Inicial: Conformidade Visual
-                    </th>
-                </tr>
-                <!-- ============ ANALISE INICIAL  ============== -->
-                <tr id="analiseInicial">
-                    <td>
-                        <table class="tabela" id="tabelaAnaliseInicial">
-                            <thead>
-                            <tr>
-                                <th style="cursor:pointer" title="Clique aqui para ordenar">N&uacute;mero</th>
-                                <th style="cursor:pointer" title="Clique aqui para ordenar">Nome</th>
-                                <th>Data/Hora</th>
-                                <th>Dias</th>
-                                <th>Outras</th>
-                                <th>T&eacute;cnico</th>
-                                <th>Visual</th>
-                                <th>Documental</th>
-                                <th>Despachos</th>
-                                <th>Encaminhar</th>
-                                <th>Projeto</th>
-                                <th>Arquivar</th>
-                                <th>Imprimir</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                            $auxIdPreProjetoInicial = 0;
-                            ?>
-                            <?php foreach ($this->propostasInicial as $propostaInicial): $ctPropostasGeral++; ?>
-                                <?php
-                                if ($auxIdPreProjetoInicial == $propostaInicial->idProjeto) {
-                                    continue;
-                                }
-                                $auxIdPreProjetoInicial = $propostaInicial->idProjeto;
-                                ?>
-
-                                <?php
-                                if ($propostaInicial->diasDesdeMovimentacao < 11) {
-                                    $cor = 'style = "color: #228B22"';
-                                } else if ($propostaInicial->diasDesdeMovimentacao > 10 && $propostaInicial->diasDesdeMovimentacao < 21) {
-                                    $cor = 'style = "color: #FFD700"';
-                                } else {
-                                    $cor = 'style = "color: #FF0000"';
-                                } ?>
-
-                                <tr>
-                                    <td>
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaInicial->idProjeto; ?>"><?php echo $propostaInicial->idProjeto; ?></a>
-                                    </td>
-                                    <td><?php echo $propostaInicial->NomeProposta; ?></td>
-                                    <td><?php echo str_replace(" ", " as ", data::dataBrasileira($propostaInicial->DtMovimentacao)); ?></td>
-                                    <td align="center" <?php echo $cor ?> > <?php echo $propostaInicial->diasDesdeMovimentacao; ?></td>
-
-                                    <td align="center">
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaInicial->idAgente; ?>">
-                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png"
-                                                 title="Vizualizar outras Propostas deste Proponente"
-                                                 alt="Vizualizar outras Propostas deste Proponente"/>
-                                        </a>
-                                    </td>
-                                    <td><?php echo $propostaInicial->Tecnico; ?></td>
-                                    <td align="center">
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaInicial->idProjeto; ?>&realizar_analise=sim">
-                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/eye.png"
-                                                 title="Fazer An�lise Visual da Proposta"
-                                                 alt="Fazer An�lise Visual da Proposta"/>
-                                        </a>
-                                    </td>
-                                    <td align="center"></td>
-                                    <td align="center"></td>
-                                    <td align="center"></td>
-                                    <td align="center"></td>
-                                    <td align="center"></td>
-                                    <td align="center">
-                                        <input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" "
-                                               onclick="window.open('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaInicial->idProjeto; ?>');"/>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        <?php endif; ?>
-        <!-- ============ ANALISE VISUAL  ============== -->
-        <?php if (!empty($this->propostasVisual)): ?>
-            <table class="tabela">
-                <tr onclick="abrirDinamico('#conformidadeVisual', $(this))" style="cursor:pointer">
-                    <th align="left">
-                        <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"/>
-                        An�lise Inicial: Conformidade Documental
-                    </th>
-                </tr>
-                <tr id="conformidadeVisual">
-                    <td>
-                        <table class="tabela" id="tabelaAnaliseVisual">
-                            <thead>
-                            <tr>
-                                <th style="cursor:pointer" title="Clique aqui para ordenar">N�mero</th>
-                                <th style="cursor:pointer" title="Clique aqui para ordenar">Nome</th>
-                                <th>Data/Hora</th>
-                                <th>Dias</th>
-                                <th>Outras</th>
-                                <th>T�cnico</th>
-                                <th>Visual</th>
-                                <th>Documental</th>
-                                <th>Despachos</th>
-                                <th>Encaminhar</th>
-                                <th>Projeto</th>
-                                <th>Arquivar</th>
-                                <th>Imprimir</th>
-                            </tr>
-
-                            </thead>
-                            <tbody>
-                            <?php
-                            $auxIdPreProjetoDocumental = 0;
-
-                            foreach ($this->propostasVisual as $propostaVisual): $ctPropostasGeral++;
-
-                                if ($auxIdPreProjetoDocumental == $propostaVisual->idProjeto) {
-                                    continue;
-                                }
-                                $auxIdPreProjetoDocumental = $propostaVisual->idProjeto;
-                                if ($propostaVisual->diasDesdeMovimentacao < 11) {
-                                    $cor = 'style = "color: #228B22"';
-                                } else if ($propostaVisual->diasDesdeMovimentacao > 10 && $propostaVisual->diasDesdeMovimentacao < 21) {
-                                    $cor = 'style = "color: #FFD700"';
-                                } else {
-                                    $cor = 'style = "color: #FF0000"';
-                                }
-                                ?>
-                                <tr>
-                                    <td>
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaVisual->idProjeto; ?>"><?php echo $propostaVisual->idProjeto; ?></a>
-                                    </td>
-                                    <td><?php echo $propostaVisual->NomeProposta; ?></td>
-                                    <td><?php echo str_replace(" ", " as ", data::dataBrasileira($propostaVisual->DtMovimentacao)); ?></td>
-                                    <td align="center" <?php echo $cor ?> > <?php echo $propostaVisual->diasCorridos; ?></td>
-
-                                    <td align="center">
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaVisual->idAgente; ?>">
-                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png"
-                                                 title="Vizualizar outras Propostas deste Proponente"
-                                                 alt="Vizualizar outras Propostas deste Proponente"/>
-                                        </a>
-                                    </td>
-                                    <td><?php echo $propostaVisual->Tecnico; ?></td>
-                                    <td align="center"></td>
-                                    <td align="center">
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/analisedocumental?idPreProjeto=<?php echo $propostaVisual->idProjeto; ?>">
-                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/documents.png"
-                                                 title="Fazer An�lise Documental da Proposta"
-                                                 alt="Fazer An�lise Documental da Proposta"/>
-                                        </a>
-                                    </td>
-                                    <td align="center"></td>
-                                    <td align="center">
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/encaminharproposta?idPreProjeto=<?php echo $propostaVisual->idProjeto; ?>">
-                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/enviar.png"
-                                                 title="Encaminhar Proposta" alt="Encaminhar Proposta"/>
-                                        </a>
-                                    </td>
-                                    <td align="center"></td>
-                                    <td align="center"></td>
-                                    <td align="center">
-                                        <input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" "
-                                               onclick="window.open('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaVisual->idProjeto; ?>');"/>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        <?php endif; ?>
-        <!-- ============ ANALISE DOCUMENTAL  ============== -->
-        <?php if (!empty($this->propostasDocumental)): ?>
-            <table class="tabela">
-                <tr onclick="abrirDinamico('#conformidadeAnaliseDocumental', $(this))" style="cursor:pointer">
-                    <th align="left">
-                        <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"/>
-                        An�lise Inicial: Conformidade Documental
-                    </th>
-                </tr>
-                <tr id="conformidadeAnaliseDocumental">
-                    <td>
-                        <table class="tabela" id="tabelaAnaliseDocumental">
-                            <thead>
-                            <tr>
-                                <th style="cursor:pointer" title="Clique aqui para ordenar">N�mero</th>
-                                <th style="cursor:pointer" title="Clique aqui para ordenar">Nome</th>
-                                <th>Data/Hora</th>
-                                <th>Dias</th>
-                                <th>Outras</th>
-                                <th>T�cnico</th>
-                                <th>Visual</th>
-                                <th>Documental</th>
-                                <th>Despachos</th>
-                                <th>Encaminhar</th>
-                                <th>Projeto</th>
-                                <th>Arquivar</th>
-                                <th>Imprimir</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php foreach ($this->diasCorridos as $propostaDocumental): $ctPropostasGeral++; ?>
-                                <?php
-                                if ($propostaDocumental->diasCorridos < 11) {
-                                    $cor = 'style = "color: #228B22"';
-                                } else if ($propostaDocumental->diasCorridos > 10 && $propostaDocumental->diasCorridos < 21) {
-                                    $cor = 'style = "color: #FFD700"';
-                                } else {
-                                    $cor = 'style = "color: #FF0000"';
-                                }
-                                ?>
-
-                                <tr>
-                                    <td>
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>"><?php echo $propostaDocumental->idProjeto; ?></a>
-                                    </td>
-                                    <td><?php echo $propostaDocumental->NomeProposta; ?></td>
-                                    <td><?php echo str_replace(" ", " as ", data::dataBrasileira($propostaDocumental->DtAdmissibilidade)); ?></td>
-                                    <td align="center" <?php echo $cor ?> > <?php echo $propostaDocumental->diasCorridos; ?></td>
-
-                                    <td align="center">
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaDocumental->idAgente; ?>">
-                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png"
-                                                 title="Vizualizar outras Propostas deste Proponente"
-                                                 alt="Vizualizar outras Propostas deste Proponente"/>
-                                        </a>
-                                    </td>
-                                    <td><?php echo $propostaDocumental->Tecnico; ?></td>
-                                    <td align="center">
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
-                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/eye.png"
-                                                 title="Fazer An�lise Visual da Proposta"
-                                                 alt="Fazer An�lise Visual da Proposta"/>
-                                        </a>
-                                    </td>
-                                    <td align="center">
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/analisedocumental?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
-                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/documents.png"
-                                                 title="Fazer An�lise Documental da Proposta"
-                                                 alt="Fazer An�lise Documental da Proposta"/>
-                                        </a>
-                                    </td>
-                                    <td align="center">
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/despacharproposta?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
-                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/despacho.png"
-                                                 title="Vizualizar despachos da Proposta"
-                                                 alt="Vizualizar despachos da Proposta"/>
-                                        </a>
-                                    </td>
-                                    <td align="center">
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/encaminharproposta?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
-                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/enviar.png"
-                                                 title="Encaminhar Proposta" alt="Encaminhar Proposta"/>
-                                        </a>
-                                    </td>
-                                    <td align="center"></td>
-                                    <td align="center">
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/arquivarproposta?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>">
-                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/archive.png"
-                                                 title="Arquivar Proposta" alt="Arquivar Proposta"/>
-                                        </a>
-                                    </td>
-                                    <td align="center">
-                                        <input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" "
-                                               onclick="window.open('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaDocumental->idProjeto; ?>');"/>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        <?php endif; ?>
-
-        <!-- ============ ANALISE FINAL  ============== -->
-        <?php if (!empty($this->propostasFinal)): ?>
-        <table class="tabela">
-            <tr onclick="abrirDinamico('#analiseFinal', $(this))" style="cursor:pointer">
-                <th align="left">
-                    <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"/>
-                    An&aacute;lise Final
-                </th>
-            </tr>
-            <tr id="analiseFinal">
-                <td>
+        <!-- ============ ANALISE Unificada  ============== -->
+        <?php if (!empty($this->propostas)): ?>
                     <table class="tabela" id="tabelaAnaliseFinal">
                         <thead>
                         <tr>
@@ -405,7 +108,6 @@
                             <th>Outras</th>
                             <th>T&eacute;cnico</th>
                             <th>Visual</th>
-                            <th>Documental</th>
                             <th>Despachos</th>
                             <th>Encaminhar</th>
                             <th>Projeto</th>
@@ -414,7 +116,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($this->propostasFinal as $propostaFinal): $ctPropostasGeral++; ?>
+                        <?php foreach ($this->propostas as $propostaFinal): $ctPropostasGeral++; ?>
 
                             <?php
                             if ($propostaFinal->diasCorridos < 11) {
@@ -452,7 +154,6 @@
                                              alt="Fazer An�lise Visual da Proposta"/>
                                     </a>
                                 </td>
-                                <td align="center"></td>
                                 <td align="center">
                                     <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/despacharproposta?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
                                         <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/despacho.png"
@@ -486,57 +187,7 @@
                         <?php endforeach; ?>
                         </tbody>
                     </table>
-                </td>
-            </tr>
             <?php endif; ?>
-        </table>
-
-        <?php if (!empty($this->propostasNaoEnviadas)): ?>
-            <table class="tabela">
-                <tr onclick="abrirDinamico('#propostasNaoEnviadas', $(this))" style="cursor:pointer">
-                    <th align="left">
-                        <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica"/>
-                        Situa&ccedil;&atilde;o : Propostas ainda n&atilde;o enviadas ao MinC
-                    </th>
-                </tr>
-                <tr id="propostasNaoEnviadas">
-                    <td>
-                        <table class="tabela" id="tabelaAnaliseFinal">
-                            <thead>
-                            <tr>
-                                <th style="cursor:pointer" title="Clique aqui para ordenar">N&uacute;mero</th>
-                                <th style="cursor:pointer" title="Clique aqui para ordenar">Nome</th>
-                                <th>Outras</th>
-                                <th>Imprimir</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php foreach ($this->propostasNaoEnviadas as $propostaNaoEnviada): ?>
-                                <tr>
-                                    <td>
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaNaoEnviada->idProjeto; ?>"><?php echo $propostaNaoEnviada->idProjeto; ?></a>
-                                    </td>
-                                    <td><?php echo $propostaNaoEnviada->NomeProposta; ?></td>
-                                    <td align="center">
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaNaoEnviada->idAgente; ?>">
-                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png"
-                                                 title="Vizualizar proposta por Proponente"
-                                                 alt="Vizualizar proposta por Proponente"/>
-                                        </a>
-                                    </td>
-                                    <td align="center">
-                                        <input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" "
-                                               onclick="window.open('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaNaoEnviada->idProjeto; ?>');"/>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        <?php endif; ?>
-
         <?php if ($ctPropostasGeral == 0): ?>
             <table class="tabela">
                 <tr class="destacar">
@@ -544,26 +195,10 @@
                 </tr>
             </table>
         <?php endif; ?>
-
     </div>
-    <table class="tabela">
-        <tr>
-            <td align="center">
-                <input type="button" style="width: 88px" class="btn_localizar" id="btn_localizar"
-                       onclick="window.location.href='<?php echo $this->formularioLocalizar; ?>';"/>
-                <input type="button" name="imprimir" class="btn_imprimir"
-                       onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'>
-                <input type="button" style="width: 88px" class="btn_resumo" id="btn_resumo"
-                       onclick="$('#frmResumo').submit();"/>
-            </td>
-        </tr>
-    </table>
 </div>
 
-
 <div id="modalTransformarProposta" style="display:none;"></div>
-
 <div id="rodapeConteudo"><span></span></div>
-
 <br clear="all"/>
 <iframe name="gerarPDF" style="display: none;"></iframe>
