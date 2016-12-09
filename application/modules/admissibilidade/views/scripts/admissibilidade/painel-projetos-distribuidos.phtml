@@ -3,7 +3,7 @@
     $(document).ready(function(){
 
         $('#pronac').focus();
-        
+
         $('.btn_localizar').click(function(){
             $('#formulario').submit();
         });
@@ -26,12 +26,12 @@
         <li class="first"> <a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
         <li>Admissibilidade</li>
         <li><a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'listar-propostas')); ?>" title="Ir para In&iacute;cio">Avalia&ccedil;&atilde;o</a></li>
-        <li class="last">Projetos Distribuï¿½dos por ï¿½rgï¿½os</li>
+        <li class="last">Projetos Distribuidos por Orgaos</li>
     </ul>
 </div>
 
 <div id="titulo">
-    <div>Projetos Distribuidos por orgÃ£os <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span></div>
+    <div>Projetos Distribuidos por orgãos <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span></div>
 </div>
 
 <div id="conteudo">
@@ -44,13 +44,13 @@
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold w100" align="right">ï¿½rgï¿½o</td>
+                <td class="destacar bold w100" align="right">Orgão</td>
                 <td>
                     <select class="select_simples" id="orgao" name="orgao">
                         <option value=""> - Selecione - </option>
-                        <?php foreach ($this->orgaos as $orgao) { ?>
-                        <option value="<?php echo $orgao->Codigo; ?>"><?php echo $orgao->Sigla; ?></option>
-                        <?php } ?>
+                        <?php foreach ($this->orgaos as $orgao) : ?>
+                            <option value="<?php echo $orgao->Codigo; ?>"><?php echo $orgao->Sigla; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </td>
             </tr>
@@ -59,8 +59,8 @@
                 <td>
                     <select class="select_simples" id="estado" name="estado">
                         <option value=""> - Selecione - </option>
-                        <option value="1">Em anï¿½lise</option>
-                        <option value="2">Concluï¿½da</option>
+                        <option value="1">Em analise</option>
+                        <option value="2">Concluida</option>
                     </select>
                 </td>
             </tr>
@@ -69,8 +69,5 @@
     <p align="center"><input type="button" class="btn_localizar" /></p>
     <br clear="all">
 </div>
-
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
 <br clear="all" />
