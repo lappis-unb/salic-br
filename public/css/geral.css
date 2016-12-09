@@ -18,14 +18,15 @@
 	border:none;
 }
 html { overflow-y:auto; }
-/*body {*/
-	/*margin:0;*/
-	/*background:#f8f8f8;*/
+body {
+	margin:0;
+	background:#f8f8f8;
 	/*font:12px "Trebuchet MS", Georgia, "Times New Roman", Times, serif;*/
+	/*font:12px  serif;*/
 	/*color:#666;*/
-	/*color:#000;*/
-	/*line-height:14pt;*/
-/*}*/
+	color:#000;
+	line-height:14pt;
+}
 p {
 	line-height:14pt;
 	padding:0 0 10px;
