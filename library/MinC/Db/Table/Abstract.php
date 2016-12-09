@@ -1,9 +1,4 @@
 <?php
-/**
- * Description of GenericModel
- *
- * @author augusto
- */
 require_once 'Zend/Db/Table/Abstract.php';
 
 abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
@@ -16,7 +11,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 
     public function init()
     {
-        # Tratando o nome da tabela conforme o tipo de banco.
         $this->_name = self::getName($this->_name);
         $this->_banco = self::getBanco($this->_banco);
         $this->_schema = self::getSchema($this->_schema);
@@ -33,8 +27,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     }
 
     /**
-     * GenericModel constructor.
-     *
      * @todo verificar um tipo de SET TEXTSIZE 2147483647 para usar com o Postgres tambem.
      */
     public function __construct()
@@ -44,7 +36,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     }
 
     private function createConnection () {
-        # FECHANDO A CONEXAO EXISTENTE JA QUE UMA NOVA SERA ABERTA
         $dbAdapter = Zend_Db_Table::getDefaultAdapter();
 
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -103,30 +94,21 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      * @param string $strName
      * @return string
      *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since 11/08/2016
      * @todo melhorar e amadurecer codigo
      */
-
     public function getBanco($strName = '')
     {
         $db = Zend_Db_Table::getDefaultAdapter();
         $strName = 'dbo';
 
         if (!($db instanceof Zend_Db_Adapter_Pdo_Mssql)) {
-            $strName = $db->getConfig()['dbname'];
+            $arrayConfiguracaoes = $db->getConfig();
+            $strName = $arrayConfiguracaoes['dbname'];
         }
 
         return $strName;
     }
 
-    /**
-     * @param $strName
-     * @param null $strSchema
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since 11/08/2016
-     */
     public function getSchema($strSchema = null, $isReturnDb = true, $strNameDb = null)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -156,24 +138,14 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      * @param string $strName
      * @param string $strSchema
      * @return string
-     *
-     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
-     * @since 11/08/2016
-     *
      * @todo melhorar e amadurecer codigo
      */
     public function getName($strName = '', $strSchema = '')
     {
-
         $strName = strtolower($strName);
-
         return $strName;
     }
 
-    /**
-     * @return string
-     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
-     */
     public function getTableName($schema = null, $tableName = null, $isReturnDb = true)
     {
         if ($schema === null) $schema = $this->getSchema($schema, $isReturnDb);
@@ -183,8 +155,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     }
 
     /**
-     * @return string
-     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
      * @todo Implementar Inversao de controle + Singleton cascateado por Classes.
      */
     public static function getStaticTableName($schema = null, $tableName = null)
