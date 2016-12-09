@@ -106,6 +106,12 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $this->view->EtapaCusto = $manterOrcamento->buscarEtapas($this->idPreProjeto, "A");
         $this->view->ItensEtapaCusto = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
 
+        $arrBusca = array();
+        $arrBusca['idprojeto'] = $this->idPreProjeto;
+        $arrBusca['stabrangencia'] = 1;
+        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
+        $this->view->localRealizacao = $tblAbrangencia->buscar($arrBusca);
+
         $this->view->idPreProjeto = $this->idPreProjeto;
 
         $this->view->charset = Zend_Registry::get('config')->db->params->charset;
