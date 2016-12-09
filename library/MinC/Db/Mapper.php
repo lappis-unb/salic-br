@@ -153,7 +153,7 @@ class MinC_Db_Mapper
 
             $table = $this->getDbTable();
             $pk = is_array($table->getPrimary())? reset($table->getPrimary()) : $table->getPrimary();
-            $pk = strtolower($pk);
+//            $pk = strtolower($pk);
             $method = 'get' . ucfirst($pk);
             $pkValue = $model->$method();
 //            $data = array_filter($model->toArray(), 'strlen');
