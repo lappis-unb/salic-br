@@ -160,6 +160,23 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         }
     }
 
+    public function formAction()
+    {
+        $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
+        $this->_helper->layout->disableLayout();
+        $intId = $this->getRequest()->getParam('id', null);
+        $intIdPronac = $this->getRequest()->getParam('idPronac');
+        $this->view->idPronac = $intIdPronac;
+        $this->view->id = $intId;
+        if ($intId) {
+            $this->view->dataForm = $dbTable->findBy($intId);
+        } else {
+            $this->view->dataForm = array();
+        }
+        $vw = new vwUsuariosOrgaosGrupos();
+        $this->view->arrUsuarios = $vw->carregarPorAdmissibilidadeGrupo();
+    }
+
     /**
      *
      * @name salvarAction
@@ -181,15 +198,22 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         if ($this->getRequest()->isPost()) {
             $auth = Zend_Auth::getInstance(); // pega a autenticacao
             $arrAuth = array_change_key_case((array) $auth->getIdentity());
-            $arrPost['dtMensagem'] = date('Y-m-d');
-            $arrPost['idRemetente'] = $arrAuth['usu_codigo'];
-            $arrPost['cdTipoMensagem'] = 1;
-            $arrPost['stAtivo'] = 1;
+            if ($arrPost['idMensagemProjeto']) {
+                unset($arrPost['dsMensagem']);
+                unset($arrPost['IdPRONAC']);
+                $strMsg = 'Mensagem encaminhada com sucesso!';
+            } else {
+                $arrPost['dtMensagem'] = date('Y-m-d');
+                $arrPost['idRemetente'] = $arrAuth['usu_codigo'];
+                $arrPost['cdTipoMensagem'] = 1;
+                $arrPost['stAtivo'] = 1;
+                $strMsg = 'Mensagem enviada com sucesso!';
+            }
             $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
             $intId = $mapper->save(new Admissibilidade_Model_TbMensagemProjeto($arrPost));
             if ($intId) {
                 $arrResult['status'] = 1;
-                $arrResult['msg'] = 'Mensagem enviada com sucesso!';
+                $arrResult['msg'] = $strMsg;
             }
         }
         echo json_encode($arrResult);

@@ -1,0 +1,39 @@
+<div class="modal-content">
+    <!--        <h4>Enviar mensagem</h4>-->
+    <form id="form-mensagem">
+        <input name="idMensagemProjeto" type="hidden" value="<?php echo $this->id; ?>"/>
+        <input name="IdPRONAC" type="hidden" value="<?php echo $this->idPronac; ?>"/>
+        <div class="row">
+            <div class="input-field col s12">
+                <select name="idDestinatario">
+                    <option value="" disabled selected>Selecione...</option>
+                    <?php foreach ($this->arrUsuarios as $key => $arrGrupo): ?>
+                        <optgroup label="<?php echo $key ?>">
+                            <?php foreach ($arrGrupo as $values): ?>
+                                <option <?php if (isset($this->dataForm['idDestinatario']) && $this->dataForm['idDestinatario'] == $values['usu_codigo']) echo 'selected="selected"' ?> value="<?php echo $values['usu_codigo'] ?>"><?php echo $values['usu_nome'] ?></option>
+                            <?php endforeach; ?>
+                        </optgroup>
+                    <?php endforeach; ?>
+                </select>
+                <label>Unidade</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <textarea name="dsMensagem" class="materialize-textarea" <?php if ($this->id) echo 'disabled="disabled"' ?>><?php if (isset($this->dataForm['dsMensagem'])) echo $this->dataForm['dsMensagem']; ?></textarea>
+                <label for="textarea1"  <?php if ($this->id) echo 'class="active"' ?>>Descricao</label>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <a id="btn-enviar" style="margin-left: 15px;"
+       class="modal-action waves-effect waves-green btn-flat light-green">Enviar</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+</div>
+<script>
+    $jq3(document).ready(function () {
+        $jq3('.modal').find('select').material_select();
+    });
+
+</script>

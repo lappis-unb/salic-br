@@ -26,6 +26,10 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
 
     public function save( $model)
     {
-        return parent::save($model);
+        try {
+            return parent::save($model);
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }

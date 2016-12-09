@@ -1,45 +1,12 @@
 <nav>
     <div class="nav-wrapper" style="padding: 0 15px 0 15px">
         <div class="col s12">
-            <a href="#!" class="breadcrumb">Pronac: <?php echo $this->id ?></a>
-            <a href="#!" class="breadcrumb">Projeto tal</a>
+<!--            <a href="#!" class="breadcrumb">Admissibilidade</a>-->
+            <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'listar')); ?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para a tela de enquadramento">Enquadramento</a>
+            <a href="#!" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Nome e Numero do Pronac">Perguntas do Pronac: Projeto TAL (<?php echo $this->id ?></a>)
         </div>
     </div>
 </nav>
-<div id="modal1" class="modal modal-fixed-footer">
-    <div class="modal-content">
-<!--        <h4>Enviar mensagem</h4>-->
-        <form id="form-mensagem">
-            <input name="IdPRONAC" type="hidden" value="<?php echo $this->id; ?>"/>
-            <div class="row">
-                <div class="input-field col s12">
-                    <select name="idDestinatario">
-                        <option value="" disabled selected>Selecione...</option>
-                        <?php foreach ($this->arrUsuarios as $key => $arrGrupo): ?>
-                            <optgroup label="<?php echo $key ?>">
-                                <?php foreach ($arrGrupo as $values): ?>
-                                    <option value="<?php echo $values['usu_codigo'] ?>"><?php echo $values['usu_nome'] ?></option>
-                                <?php endforeach; ?>
-                            </optgroup>
-                        <?php endforeach; ?>
-                    </select>
-                    <label>Optgroups</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <textarea name="dsMensagem" class="materialize-textarea"></textarea>
-                    <label for="textarea1">Descricao</label>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <a id="btn-enviar" style="margin-left: 15px;"
-           class="modal-action waves-effect waves-green btn-flat light-green">Enviar</a>
-        <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
-    </div>
-</div>
 <!--<div class="row">-->
 <!--    <div class="col s12">-->
 <!--        <h3 class="header">Mensagem</h3>-->
@@ -51,7 +18,7 @@
 <!--<div class="container-fluid">-->
 <div id="container-list"></div>
 <div class="fixed-action-btn">
-    <a href="#modal1" class="btn-floating btn-large tooltipped waves-effect waves-light" data-position="left" data-delay="50" data-tooltip="Escrever pergunta">
+    <a data-modal="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'form')); ?>" href="javascript:void(0);" class="btn-floating btn-large tooltipped waves-effect waves-light" data-position="left" data-delay="50" data-tooltip="Escrever pergunta">
         <i class="large material-icons">create</i>
     </a>
 </div>
@@ -75,12 +42,13 @@
         $jq3('.modal').modal();
         $jq3('.modal').find('select').material_select();
         $jq3('.tooltipped').tooltip({delay: 50});
+
         $jq3('body').on('click', '#btn-enviar', function () {
-            console.info($jq3('#form-mensagem').serialize());
             $jq3.post('/admissibilidade/mensagem/salvar', $jq3('#form-mensagem').serialize(), function (result) {
                 result = $jq3.parseJSON(result);
+                console.info(result)
                 if (result.status == '1') {
-                    $jq3('#modal1').modal('close');
+                    $jq3('#modal').modal('close');
                     $jq3('#form-mensagem')[0].reset();
                     list();
                     Materialize.toast(result.msg, 4000);
@@ -89,9 +57,43 @@
                 }
             });
         });
+        $jq3('body').on('click', '[data-modal]', function() {
+            var objClick = $jq3(this),
+                strUrl = objClick.attr('data-modal'),
+                objModal = $jq3('#modal');
+
+//            if ( typeof objModal == 'undefined' || typeof objModal == 'object') {
+                $jq3('#modal').remove();
+                $jq3('body').append('<div id="modal" class="modal modal-fixed-footer"></div>');
+                $jq3('#modal').modal();
+//            }
+
+            $jq3.ajax({
+                method: "GET",
+                url: strUrl,
+                data: {idPronac: "<?php echo $this->id; ?>"}
+            }).done(function (result) {
+                $jq3('#modal').html(result);
+                $jq3('#modal').modal('open');
+            });
+            console.info(objModal);
+            console.info(objClick);
+            console.info(strUrl)
+        });
 
         list();
     });
+
+    function modal(id)
+    {
+        $jq3.ajax({
+            method: "GET",
+            url: "/admissibilidade/mensagem/listar",
+            data: {id: "<?php echo $this->id; ?>"}
+        }).done(function (result) {
+            $jq3('#container-list').hide().html(result).fadeIn();
+        });
+    }
 
     function list() {
         $jq3.ajax({

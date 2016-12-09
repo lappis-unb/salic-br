@@ -4,7 +4,7 @@ $intQtd = count($dbTable->getAllBy());
 $intQtd = ($intQtd > 99)? $intQtd . '+' : $intQtd;
 ?>
 <style>
-    .btn-floating {
+    .notificacao .btn-floating {
         background-color: rgb(76, 175, 80);
         border-radius: 50%;
         bottom: 7px;
@@ -24,15 +24,15 @@ $intQtd = ($intQtd > 99)? $intQtd . '+' : $intQtd;
         z-index: 1;
     }
 
-    .btn-floating p {
+    .notificacao .btn-floating p {
         display: block;
         left: 3px;
-        line-height: 2pt;
+        line-height: 4pt;
         padding: 0 0 10px;
         position: absolute;
     }
 </style>
-<li class="noOverhere">
+<li class="noOverhere notificacao">
     <a href=""><i class="material-icons left">mail</i></a>
     <a class="btn-floating waves-effect waves-light orange darken-4"><p><?php echo $intQtd ?></p></a>
 </li>
