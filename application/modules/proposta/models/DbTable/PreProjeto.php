@@ -3234,4 +3234,85 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
         return $db->fetchAll($sql);
     }
+
+    /**
+     * propostaAdmissibilidade
+     *
+     * @param mixed $in Id das Situações da Proposta
+     * @access public
+     * @todo Verificar otimização do Select.
+     */
+    public function propostaAdmissibilidade($where=array(), $order=array() , $in)
+    {
+        $db = $this->getAdapter();
+        $db->setFetchMode(Zend_DB :: FETCH_OBJ);
+
+        $p = array(
+            'p.idPreProjeto AS idProjeto',
+            'p.NomeProjeto AS NomeProposta',
+            'p.idAgente'
+        );
+
+        $m = array(
+            new Zend_Db_Expr('CONVERT(CHAR(20),m.DtMovimentacao, 120) AS DtMovimentacao'),
+            new Zend_Db_Expr('DATEDIFF(d, m.DtMovimentacao, GETDATE()) AS diasDesdeMovimentacao'),
+            'm.idMovimentacao',
+            'm.Movimentacao AS CodSituacao',
+        );
+
+        // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
+        $orgao = $db->select()
+            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas.dbo')
+            ->where('usu_codigo = x.idTecnico')
+            ->where('sis_codigo = 21')
+            ->where('gru_codigo = 92')
+            ->group('org_superior');
+
+        //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
+        $tecnico = $db->select()
+            ->from(array('Usuarios'), 'usu_nome', 'tabelas.dbo')
+            ->where('usu_codigo = x.idTecnico');
+
+        $x = array(
+            new Zend_Db_Expr('CONVERT(CHAR(20),x.DtAvaliacao, 120) AS DtAdmissibilidade'),
+            new Zend_Db_Expr('DATEDIFF(d, x.DtAvaliacao, GETDATE()) AS diasCorridos'),
+            'x.idTecnico AS idUsuario',
+            'x.DtAvaliacao',
+            'x.idAvaliacaoProposta',
+            "($tecnico) AS Tecnico",
+            "($orgao) AS idSecretaria",
+        );
+
+        $sql = $db->select()
+            ->from(array("p" => $this->_name), $p, "SAC.dbo")
+            ->join(array("m" => "tbMovimentacao"),
+            'p.idPreProjeto = m.idProjeto AND m.stEstado = 0' ,
+            $m,
+            "SAC.dbo")
+            ->joinInner(array("x" => "tbAvaliacaoProposta"), "p.idPreProjeto = x.idProjeto AND x.stEstado = 0", $x, "SAC.dbo")
+            ->joinInner(array("a" => "Agentes"), 'p.idAgente = a.idAgente', array('a.CNPJCPF'), $this->getSchema('agentes'))
+            ->joinInner(array("y" => "Verificacao"), 'm.Movimentacao = y.idVerificacao', null,  $this->_schema)
+            ->joinLeft(array("ap1" => 'tbAvaliacaoProposta'), "p.idPreProjeto = ap1.idProjeto AND ap1.stEnviado = 'S'", array(new Zend_Db_Expr('DATEDIFF(d, ap1.DtEnvio, GETDATE()) AS diasDiligencia')),  $this->_schema)
+            ->joinLeft(array("ap2" => 'tbAvaliacaoProposta'), "p.idPreProjeto = ap2.idProjeto AND ap2.stEnviado = 'S'", array(new Zend_Db_Expr('DATEDIFF(d, ap2.dtResposta, GETDATE()) AS diasRespostaDiligencia')),  $this->_schema)
+            ->where('m.Movimentacao IN (?)', $in)
+            ->where(
+                'NOT EXISTS
+                    (
+                    SELECT TOP (1) IdPRONAC, AnoProjeto, Sequencial, UfProjeto, Area, Segmento, Mecanismo, NomeProjeto, Processo, CgcCpf, Situacao, DtProtocolo, DtAnalise, Modalidade, Orgao, OrgaoOrigem, DtSaida, DtRetorno, UnidadeAnalise, Analista, DtSituacao, ResumoProjeto, ProvidenciaTomada, Localizacao, DtInicioExecucao, DtFimExecucao, SolicitadoUfir, SolicitadoReal, SolicitadoCusteioUfir, SolicitadoCusteioReal, SolicitadoCapitalUfir, SolicitadoCapitalReal, Logon, idProjeto
+                    FROM SAC.dbo.Projetos AS u
+                    WHERE (p.idPreProjeto = idProjeto)
+                    )'
+                )
+            ;
+
+        // adicionando clausulas where
+        foreach ($where as $coluna=>$valor)
+        {
+            $sql->where($coluna.'?', $valor);
+        }
+
+        $sql->order($order);
+
+        return $db->fetchAll($sql);
+    }
 }

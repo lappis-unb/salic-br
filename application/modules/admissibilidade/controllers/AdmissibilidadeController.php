@@ -1885,19 +1885,22 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_CONFORMIDADE_VISUAL_OU_ANÁLISE_DOCUMENTAL;
             $rsPropostaVisual = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 97 >> VISUAL
 
-            //$arrBusca['m.Movimentacao = '] = ?;
-            //$rsPropostaDocumental = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = ? >> DOCUMENTAL
-
             $arrBusca['m.Movimentacao = '] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL;
             $rsPropostaFinal = $tblProposta->buscarPropostaAdmissibilidade($arrBusca, array("x.DtAvaliacao DESC")); //m.Movimentacao = 128 >> FINAL
+
+            $in[] = Agente_Model_DbTable_Verificacao::PROPOSTA_PARA_ANALISE_INICIAL;
+            $in[] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_CONFORMIDADE_VISUAL_OU_ANÁLISE_DOCUMENTAL;
+            $in[] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL;
+
+            $tec['x.idTecnico = '] = $usuario;
+            $this->view->propostas = $tblProposta->propostaAdmissibilidade($tec, array("x.DtAvaliacao DESC"), $in);
         }
 
         //recuperando a unidade do usuario logado
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
+        $auth = Zend_Auth::getInstance();
         $idOrgao = $auth->getIdentity()->usu_orgao;
         $tblOrgao = new Orgaos();
         $rsOrgao = $tblOrgao->buscar(array("Codigo = ?" => $idOrgao))->current();
-        //xd($rsOrgao);
 
         $arrDados = array(
             "propostasInicial" => $rsPropostaInicial,
