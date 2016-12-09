@@ -78,8 +78,8 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
         // Busca na tabela apoio ExecucaoImediata
         $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
-        $this->view->listaExecucaoImediata = $tableVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 23), array('descricao'));
-
+        $listaExecucaoImediata = $tableVerificacao->fetchPairs('idVerificacao', 'Descricao', array('idTipo' => 23), array('idVerificacao'));
+        $this->view->listaExecucaoImediata = $listaExecucaoImediata;
 
         $this->cpfLogado = $cpf;
         $this->idAgenteProponente = $this->idAgente;
@@ -483,7 +483,6 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
             $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
             $arquivoExecucaoImediata = $tbl->buscarDocumentos(array("idprojeto = ?" => $idPreProjeto, "CodigoDocumento = ?" => 248));
-//            xd($arquivoExecucaoImediata );
 
             $this->montaTela(
                 "manterpropostaincentivofiscal/formproposta.phtml",
