@@ -18,14 +18,14 @@
 	border:none;
 }
 html { overflow-y:auto; }
-body {
-	margin:0;
-	background:#f8f8f8;
-	font:12px "Trebuchet MS", Georgia, "Times New Roman", Times, serif;
+/*body {*/
+	/*margin:0;*/
+	/*background:#f8f8f8;*/
+	/*font:12px "Trebuchet MS", Georgia, "Times New Roman", Times, serif;*/
 	/*color:#666;*/
-	color:#000;
-	line-height:14pt;
-}
+	/*color:#000;*/
+	/*line-height:14pt;*/
+/*}*/
 p {
 	line-height:14pt;
 	padding:0 0 10px;
@@ -53,7 +53,7 @@ a:hover {
 	width:100%;
 	height:126px;
 	background:url(../img/bg-topo.png) no-repeat 0 31px #acda5d;
-	margin-bottom:10px;
+	/*margin-bottom:10px;*/
 }
 .barra_governo, .barra_governo div.fl {
 	width:100%;
@@ -126,7 +126,11 @@ a:hover {
 #navglobal {
 	float:right;
 	background:url(../img/navglobal-corner.gif) no-repeat #36963f;
-	margin:-46px 0 0 20px;
+	/*margin:-46px 0 0 20px;*/
+	position: absolute;
+	display: block;
+	right: 0;
+	top: 125px;
 }
 #navglobal ul li {
 	list-style-type:none;
@@ -603,13 +607,13 @@ label {
 	font-weight:bold;
 	cursor:pointer;
 }
-.form .input, .form .select {
-	padding:3px;
-	color:#333;
-	border-top:1px solid #ccc;
-	border-bottom:1px solid #ccc;
-	font:12px "Trebuchet MS", Georgia, "Times New Roman", Times, serif;
-}
+/*.form .input, .form .select {*/
+	/*padding:3px;*/
+	/*color:#333;*/
+	/*border-top:1px solid #ccc;*/
+	/*border-bottom:1px solid #ccc;*/
+	/*font:12px "Trebuchet MS", Georgia, "Times New Roman", Times, serif;*/
+/*}*/
 .form .input {
 	background:url(../img/input-bg.gif) repeat-x #fff;
 	float:left;
@@ -637,13 +641,13 @@ label {
 	width:30px;
 	height:26px;
 }
-.form-textarea .textarea {
-	padding:3px;
-	color:#333;
-	border:1px solid #ccc;
-	border-left:none;
-	font:12px "Trebuchet MS", Georgia, "Times New Roman", Times, serif;
-}
+/*.form-textarea .textarea {*/
+	/*padding:3px;*/
+	/*color:#333;*/
+	/*border:1px solid #ccc;*/
+	/*border-left:none;*/
+	/*font:12px "Trebuchet MS", Georgia, "Times New Roman", Times, serif;*/
+/*}*/
 .form .textarea {
 	background:url(../img/textarea-bg.gif) repeat-x #fff;
 	width:500px;

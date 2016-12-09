@@ -25,12 +25,15 @@
                         <a href="#modal1" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Encaminhar">
                             <i class="material-icons">subdirectory_arrow_right</i>
                         </a>
-                        <a href="#modal1" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Responder">
-                            <i class="material-icons">mode_comment</i>
-                        </a>
-                        <a href="#modal1" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Respondido">
-                            <i class="material-icons">insert_comment</i>
-                        </a>
+                        <?php if ($arrValue['qtdResposta'] === '0') : ?>
+                            <a href="#modal1" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Responder">
+                                <i class="material-icons">mode_comment</i>
+                            </a>
+                        <?php else: ?>
+                            <a href="#modal1" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Respondido">
+                                <i class="material-icons">insert_comment</i>
+                            </a>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

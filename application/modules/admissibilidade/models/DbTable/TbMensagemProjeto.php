@@ -16,6 +16,10 @@ class Admissibilidade_Model_DbTable_TbMensagemProjeto extends MinC_Db_Table_Abst
     protected $_primary   = 'idMensagemProjeto';
     public function getAllBy($where = array())
     {
+//        $selectSub = $this->select()
+//            ->setIntegrityCheck(false)->from(array('tmp2' => $this->_name),
+//                array('count(tmp2.idMensagemOrigem)'),
+//                $this->_schema)->where("tmp2.idMensagemOrigem = {$this->_name}.idMensagemProjeto");
         $select = $this->select()
                     ->setIntegrityCheck(false)
                     ->from($this->_name,
@@ -27,6 +31,7 @@ class Admissibilidade_Model_DbTable_TbMensagemProjeto extends MinC_Db_Table_Abst
                               'idDestinatario',
                               'idRemetente',
                               'IdPRONAC',
+                              'qtdResposta' => "(SELECT count(tmp2.idMensagemOrigem) FROM {$this->_schema}.{$this->_name} tmp2 WHERE tmp2.idMensagemOrigem = {$this->_name}.idMensagemProjeto)",
                               'idMensagemOrigem'),
                         $this->_schema)
                     ->joinLeft(
