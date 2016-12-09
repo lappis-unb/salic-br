@@ -60,3 +60,9 @@ textarea.materialize-textarea:focus:not([readonly]) + label{
     line-height: 22px;
     padding: 14px 16px;
 }
+
+.container-fluid
+{
+    margin: 0 auto;
+    width: 90%;
+}
