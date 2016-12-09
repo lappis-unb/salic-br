@@ -27,16 +27,21 @@
             <tr class="titulo_tabela">
                 <th width="40">PRONAC</th>
                 <th>Nome do Projeto</th>
+                <th>Área</th>
+                <th>Segmento</th>
                 <th>A&ccedil;&otilde;es</th>
             </tr>
             </thead>
             <tbody>
+            <?php echo $this->dados->idPRONAC[0];?>
                 <?php foreach ($this->dados as $dado): ?>
                 <tr>
-                    <td><?php echo $dado->pronac; ?></td>
+                    <td><a href="<?php echo $this->url(array('module' => 'default', 'controller'=>'consultardadosprojeto', 'action' => 'index')) ."?idPronac={$dado->IdPRONAC}";?>"><?php echo $dado->pronac; ?></a></td>
                     <td><?php echo $dado->nomeProjeto; ?></td>
+                    <td><?php echo $dado->area; ?></td>
+                    <td><?php echo $dado->segmento; ?></td>
                     <td>
-                        <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index')) . "?id={$dado->pronac}" ?>">
+                        <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index')) . "?id={$dado->pronac}"; ?>">
                             D&uacute;vida
                         </a>
                         <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto')) . "?pronac={$dado->pronac}" ?>">
@@ -80,7 +85,7 @@
         ]
         ,
         "aoColumnDefs": [
-          { 'bSortable': false, 'aTargets': [ 2 ] }
+          { 'bSortable': false, 'aTargets': [ 4 ] }
        ]
     });
   });
