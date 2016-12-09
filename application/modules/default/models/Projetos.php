@@ -7316,7 +7316,7 @@ class Projetos extends MinC_Db_Table_Abstract
     public function listarPorSituacao($situacao, $order= null, $limit = null)
     {
         $sql = $this->select();
-
+        $sql->setIntegrityCheck(false);
         $sql->from(
             array("p" => $this->_name),
             array('pronac' => New Zend_Db_Expr('p.AnoProjeto + p.Sequencial'),
@@ -7338,13 +7338,21 @@ class Projetos extends MinC_Db_Table_Abstract
             $this->_schema
         );
 
+        $sql->joinInner(
+            array('ar' => 'Area'), 'ar.Codigo = p.Area', array('ar.Descricao AS area')
+        );
+        $sql->joinLeft(
+            array('sg' => 'Segmento'), 'sg.Codigo = p.Segmento', array('sg.Descricao AS segmento')
+        );
+        
+
         $sql->where('p.situacao = ?', $situacao);
 
         !empty($order) ? $sql->order($order) : null;
         !empty($limit) ? $sql->limit($limit) : null;
 
         $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
-
+        
         return $this->_db->fetchAll($sql);
     }
 }
