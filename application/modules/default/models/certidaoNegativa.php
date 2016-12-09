@@ -1,7 +1,7 @@
 <?php
 
 class certidaoNegativa extends MinC_Db_Table_Abstract {
-        
+
     protected $_schema = 'SAC';
     protected $_name  = 'CertidoesNegativas';
 
@@ -11,7 +11,7 @@ class certidaoNegativa extends MinC_Db_Table_Abstract {
             array(new Zend_Db_Expr("
                 CASE
                         WHEN c.CodigoCertidao = '49'
-                        THEN 'Quitação de Tributos Federais'
+                        THEN 'Quitaï¿½ï¿½o de Tributos Federais'
                         WHEN c.CodigoCertidao = '51'
                         THEN 'FGTS'
                         WHEN c.CodigoCertidao = '52'
@@ -26,7 +26,7 @@ class certidaoNegativa extends MinC_Db_Table_Abstract {
                         CASE
                             WHEN c.cdSituacaoCertidao = 0
                             THEN 'Pendente'
-                            ELSE 'Não Pendente'
+                            ELSE 'Nï¿½o Pendente'
                         END
                 END AS Situacao,
                 CASE
@@ -36,9 +36,8 @@ class certidaoNegativa extends MinC_Db_Table_Abstract {
                 END AS qtDias
             ")),
             $this->_schema)
-        ->where('c.CgcCpf = ?', $cpfcnpj)
+        ->where('c.CgcCpf = ?', trim($cpfcnpj))
         ->order(2);
-       
         return $this->fetchAll($select);
     }
 }
