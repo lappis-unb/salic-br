@@ -108,44 +108,6 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         } else {
             parent::message("Pronac inv&aacute;lido.", "/admissibilidade/enquadramento/listar", "ALERT");
         }
-        $this->render('index-material');
-    }
-
-    public function indexBootAction()
-    {
-
-        $auth = Zend_Auth::getInstance(); // pega a autenticacao
-        $arrAuth = array_change_key_case((array) $auth->getIdentity());
-        $intIdPronac = $this->getRequest()->getParam('id');
-        if ($intIdPronac) {
-            $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
-            $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac));
-            $this->view->id = $intIdPronac;
-            $vw = new vwUsuariosOrgaosGrupos();
-            $this->view->arrUsuarios = $vw->carregarPorAdmissibilidadeGrupo();
-        } else {
-            parent::message("Pronac inv&aacute;lido.", "/admissibilidade/enquadramento/listar", "ALERT");
-        }
-        $this->render('index-boots');
-    }
-
-    public function indexDefaultAction()
-    {
-
-        $auth = Zend_Auth::getInstance(); // pega a autenticacao
-        $arrAuth = array_change_key_case((array) $auth->getIdentity());
-        $intIdPronac = $this->getRequest()->getParam('id');
-        if ($intIdPronac) {
-            $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
-            $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac));
-
-            $this->view->id = $intIdPronac;
-            $vw = new vwUsuariosOrgaosGrupos();
-            $this->view->arrUsuarios = $vw->carregarPorAdmissibilidadeGrupo();
-        } else {
-            parent::message("Pronac inv&aacute;lido.", "/admissibilidade/enquadramento/listar", "ALERT");
-        }
-        $this->render('index');
     }
 
     public function listarAction()
@@ -154,69 +116,127 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         $intIdPronac = $this->getRequest()->getParam('id');
         if ($intIdPronac) {
             $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
-            $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac));
+            $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac, 'idMensagemOrigem IS NULL' => ''));
         } else {
             $this->view->arrResult = array();
         }
     }
 
-    public function formAction()
-    {
-        $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
-        $this->_helper->layout->disableLayout();
-        $intId = $this->getRequest()->getParam('id', null);
-        $intIdPronac = $this->getRequest()->getParam('idPronac');
-        $this->view->idPronac = $intIdPronac;
-        $this->view->id = $intId;
-        if ($intId) {
-            $this->view->dataForm = $dbTable->findBy($intId);
-        } else {
-            $this->view->dataForm = array();
-        }
-        $vw = new vwUsuariosOrgaosGrupos();
-        $this->view->arrUsuarios = $vw->carregarPorAdmissibilidadeGrupo();
-    }
-
     /**
+     * Acao responsavel por inserir ou editar uma mensagem.
      *
      * @name salvarAction
      *
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  06/12/2016
-     *
-     * @todo verificar qual o tipo da mensagem.
      */
     public function salvarAction()
     {
-        $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout();
-        $arrPost = $this->getRequest()->getPost();
-        $arrResult = array(
-            'status' => 0,
-            'msg' => 'Nao foi possivel enviar mensagem!',
-        );
         if ($this->getRequest()->isPost()) {
-            $auth = Zend_Auth::getInstance(); // pega a autenticacao
-            $arrAuth = array_change_key_case((array) $auth->getIdentity());
-            if ($arrPost['idMensagemProjeto']) {
-                unset($arrPost['dsMensagem']);
-                unset($arrPost['IdPRONAC']);
-                $strMsg = 'Mensagem encaminhada com sucesso!';
-            } else {
-                $arrPost['dtMensagem'] = date('Y-m-d');
-                $arrPost['idRemetente'] = $arrAuth['usu_codigo'];
-                $arrPost['cdTipoMensagem'] = 1;
-                $arrPost['stAtivo'] = 1;
-                $strMsg = 'Mensagem enviada com sucesso!';
-            }
+            $this->_helper->viewRenderer->setNoRender(true);
             $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
-            $intId = $mapper->save(new Admissibilidade_Model_TbMensagemProjeto($arrPost));
-            if ($intId) {
-                $arrResult['status'] = 1;
-                $arrResult['msg'] = $strMsg;
-            }
+            echo json_encode(array('status' => $mapper->save($this->getRequest()->getPost()), 'msg' => $mapper->getMessage()));
+        } else {
+            $this->view->title = 'Enviar pergunta';
+            $this->view->action = 'salvar';
+            $this->prepareForm(array('dsResposta' => array('show' => false)));
         }
-        echo json_encode($arrResult);
     }
 
+    /**
+     * Acao responsavel por inserir ou editar uma mensagem.
+     *
+     * @name salvarAction
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  06/12/2016
+     */
+    public function visualizarAction()
+    {
+        $this->_helper->layout->disableLayout();
+        $this->view->title = 'Visualizar pergunta';
+        $this->view->action = 'visualizar';
+        $this->prepareForm(array(
+            'idDestinatario' => array('disabled' => true),
+            'dsMensagem' => array('disabled' => true),
+            'dsResposta' => array('disabled' => true)
+        ));
+    }
+
+    /**
+     * Acao responsavel por encaminhar uma mensagem para outro agente.
+     *
+     * @name responderAction
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  12/12/2016
+     */
+    public function encaminharAction()
+    {
+        $this->_helper->layout->disableLayout();
+        if ($this->getRequest()->isPost()) {
+            $this->_helper->viewRenderer->setNoRender(true);
+            $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
+            echo json_encode(array('status' => $mapper->encaminhar($this->getRequest()->getPost()), 'msg' => $mapper->getMessage()));
+        } else {
+            $this->view->title = 'Encaminhar pergunta';
+            $this->view->action = 'encaminhar';
+            $this->prepareForm(array(
+                'dsMensagem' => array('disabled' => true),
+                'dsResposta' => array('show' => false)
+            ));
+        }
+    }
+
+    /**
+     * Acao responsavel por responder uma mensagem, no caso cadastrar uma mensagem referenciando outra.
+     *
+     * @name responderAction
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  12/12/2016
+     */
+    public function responderAction()
+    {
+        $this->_helper->layout->disableLayout();
+        if ($this->getRequest()->isPost()) {
+            $this->_helper->viewRenderer->setNoRender(true);
+            $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
+            echo json_encode(array('status' => $mapper->responder($this->getRequest()->getPost()), 'msg' => $mapper->getMessage()));
+        } else {
+            $this->view->title = 'Responder pergunta';
+            $this->view->action = 'responder';
+            $this->prepareForm(array(
+                'idDestinatario' => array('disabled' => true),
+                'dsMensagem' => array('disabled' => true),
+            ));
+        }
+    }
+
+    /**
+     * Metodo responsavel por preparar o formulario conforme cada acao.
+     *
+     * @name prepareForm
+     * @param array $arrConfig
+     *
+     * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
+     * @since  12/12/2016
+     */
+    public function prepareForm($arrConfig = array())
+    {
+        $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
+        $vw = new vwUsuariosOrgaosGrupos();
+        $intId = $this->getRequest()->getParam('id', null);
+        $this->view->idPronac = $this->getRequest()->getParam('idPronac');
+        $this->view->id = $intId;
+        $this->view->dataForm = array();
+        if ($intId) {
+            $this->view->dataForm = $dbTable->findBy($intId);
+            $this->view->dataForm['dsResposta'] = ($arrMensagemResposta = $dbTable->findBy(array('idMensagemOrigem' => $intId)))? $arrMensagemResposta['dsMensagem'] : '';
+        }
+        $this->view->arrUsuarios = $vw->carregarPorAdmissibilidadeGrupo();
+        $this->view->arrConfig = $arrConfig;
+        $this->render('form');
+    }
 }

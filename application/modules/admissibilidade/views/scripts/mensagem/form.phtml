@@ -1,16 +1,18 @@
 <div class="modal-content">
-    <!--        <h4>Enviar mensagem</h4>-->
-    <form id="form-mensagem">
+    <h4><?php echo $this->title; ?></h4>
+    <form id="form-mensagem" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => $this->action)); ?> ?>">
         <input name="idMensagemProjeto" type="hidden" value="<?php echo $this->id; ?>"/>
         <input name="IdPRONAC" type="hidden" value="<?php echo $this->idPronac; ?>"/>
         <div class="row">
             <div class="input-field col s12">
-                <select name="idDestinatario">
+                <select
+                    name="idDestinatario" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
                     <option value="" disabled selected>Selecione...</option>
                     <?php foreach ($this->arrUsuarios as $key => $arrGrupo): ?>
                         <optgroup label="<?php echo $key ?>">
                             <?php foreach ($arrGrupo as $values): ?>
-                                <option <?php if (isset($this->dataForm['idDestinatario']) && $this->dataForm['idDestinatario'] == $values['usu_codigo']) echo 'selected="selected"' ?> value="<?php echo $values['usu_codigo'] ?>"><?php echo $values['usu_nome'] ?></option>
+                                <option <?php if (isset($this->dataForm['idDestinatario']) && $this->dataForm['idDestinatario'] == $values['usu_codigo']) echo 'selected="selected"' ?>
+                                    value="<?php echo $values['usu_codigo'] ?>"><?php echo $values['usu_nome'] ?></option>
                             <?php endforeach; ?>
                         </optgroup>
                     <?php endforeach; ?>
@@ -20,10 +22,20 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <textarea name="dsMensagem" class="materialize-textarea" <?php if ($this->id) echo 'disabled="disabled"' ?>><?php if (isset($this->dataForm['dsMensagem'])) echo $this->dataForm['dsMensagem']; ?></textarea>
-                <label for="textarea1"  <?php if ($this->id) echo 'class="active"' ?>>Descricao</label>
+                <textarea name="dsMensagem"
+                          class="materialize-textarea" <?php if (isset($this->arrConfig['dsMensagem']) && $this->arrConfig['dsMensagem']['disabled']) echo 'disabled="disabled"' ?>><?php if (isset($this->dataForm['dsMensagem'])) echo $this->dataForm['dsMensagem']; ?></textarea>
+                <label for="textarea1" <?php if (isset($this->dataForm['dsMensagem'])) echo 'class="active"' ?>>Descricao</label>
             </div>
         </div>
+        <?php if ((!isset($this->arrConfig['dsResposta']) || $this->arrConfig['dsResposta']['show'] !== false)): ?>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea name="dsResposta"
+                              class="materialize-textarea" <?php if (isset($this->arrConfig['dsResposta']) && $this->arrConfig['dsResposta']['disabled']) echo 'disabled="disabled"' ?>><?php if (isset($this->dataForm['dsResposta'])) echo $this->dataForm['dsResposta']; ?></textarea>
+                    <label for="textarea1" <?php if (isset($this->dataForm['dsResposta'])) echo 'class="active"' ?>>Resposta</label>
+                </div>
+            </div>
+        <?php endif; ?>
     </form>
 </div>
 <div class="modal-footer">
