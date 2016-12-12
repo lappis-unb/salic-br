@@ -586,47 +586,47 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                      );
 
         $select->joinInner(
-                array('aval' => 'tbavaliacaoproposta'),
-                'aval.idprojeto = pre.idpreprojeto',
+                array('aval' => 'tbAvaliacaoProposta'),
+                'aval.idProjeto = pre.idPreProjeto',
                 array(
-                        'aval.stprorrogacao',
-                        'iddiligencia'=>'aval.idavaliacaoproposta',
-                        'datasolicitacao'=>'aval.dtavaliacao',
-                        'dataresposta'=>'aval.dtresposta',
-                        'solicitacao'=>'aval.avaliacao',
-                        'resposta'=>'aval.dsresposta',
-                        'aval.idcodigodocumentosexigidos',
-                        'aval.stenviado'
-                    ),
+                    'aval.stProrrogacao',
+                    'idDiligencia'=>'aval.idAvaliacaoProposta',
+                    'dataSolicitacao'=>'CONVERT(VARCHAR,aval.DtAvaliacao,120)',
+                    'dataResposta'=>'CONVERT(VARCHAR,aval.dtResposta,120)',
+                    'Solicitacao'=>'aval.Avaliacao',
+                    'Resposta'=>'aval.dsResposta',
+                    'aval.idCodigoDocumentosExigidos',
+                    'aval.stEnviado'
+                ),
                 $this->_schema
             );
 
         $select->joinLeft(
-                array('arq' => 'tbarquivo'),
-                'arq.idarquivo = aval.idarquivo',
+                array('arq' => 'tbArquivo'),
+                'arq.idArquivo = aval.idArquivo',
                 array(
-                        'arq.nmarquivo',
-                        'arq.idarquivo'
-                    ),
+                    'arq.nmArquivo',
+                    'arq.idArquivo'
+                ),
                 $this->getSchema('bdcorporativo', true, 'sccorp')
         );
 
         $select->joinLeft(
-                array('a' => 'agentes'),
-                'pre.idagente = a.idagente',
+                array('a' => 'AGENTES'),
+                'pre.idAgente = a.idAgente',
                 array(
-                        'a.idagente'
-                    ),
+                    'a.idAgente'
+                ),
                 $this->getSchema('agentes')
         );
 
         $select->joinLeft(
-                array('n' => 'nomes'),
-                'a.idagente = n.idagente',
+                array('n' => 'NOMES'),
+                'a.idAgente = n.idAgente',
                 array(
-                        'n.descricao'
-                    ),
-                $this->getschema('agentes')
+                    'n.Descricao'
+                ),
+                $this->getSchema('agentes')
         );
 
         foreach ($consulta as $coluna=>$valor)
