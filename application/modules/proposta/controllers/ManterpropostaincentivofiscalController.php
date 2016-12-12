@@ -89,8 +89,11 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         parent::init();
 
         //recupera ID do pre projeto (proposta)
-        if (!empty($_REQUEST['idPreProjeto'])) {
-            $this->idPreProjeto = $_REQUEST['idPreProjeto'];
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
+
+        if (!empty($idPreProjeto)) {
+            $this->idPreProjeto = $idPreProjeto;
+            $this->view->idPreProjeto = $idPreProjeto;
 
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
             $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
@@ -554,7 +557,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar", "resultado" => $arrResultado)
             );
         } else {
-            parent::message("Necessário informar o número da proposta.", "/proposta/manterpropostaincentivofiscal/index", "ERROR");
+            parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
         }
     }
 
