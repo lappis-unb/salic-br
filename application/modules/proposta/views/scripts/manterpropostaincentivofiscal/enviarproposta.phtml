@@ -47,10 +47,17 @@
         </tr>
         <?php foreach ($this->resultado as $valor) { ?>
             <tr class="fundo">
-                <td width="90%" <?php if($valor->Observacao != 'PENDENTE' && $valor->Observacao != 'OK'){ echo 'colspan="2" class="centro"'; } ?>><?php echo $valor->Descricao; ?></td>
+                <td width="90%" <?php if($valor->Observacao != 'PENDENTE' && $valor->Observacao != 'OK'){ echo 'colspan="2" class="centro"'; } ?>>
+                    <?php if(is_array($valor->Url)) : ?>
+                        <a href="<?php echo $this->url($valor->Url,null,true); ?>">
+                            <?php echo $valor->Descricao; ?>
+                        </a>
+                    <?php else: ?>
+                        <?php echo $valor->Descricao; ?>
+                    <?php endif; ?>
+                </td>
                 <?php if($valor->Observacao == 'PENDENTE' || $valor->Observacao == 'OK'){ ?>
                 <td class="centro" width="10%" nowrap>
-                    <?php //echo $valor->Observacao; ?>
                     <?php if($valor->Observacao == 'PENDENTE'){ ?>
                         <img alt="" src="<?php echo $this->baseUrl(); ?>/public/img/btn_excluir.gif" />
                     <?php } else if($valor->Observacao == 'OK'){ ?>

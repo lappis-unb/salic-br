@@ -28,7 +28,7 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         $arrAuth = array_change_key_case((array) $auth->getIdentity());
         $PermissoesGrupo = array();
 
-        $idPreProjeto = $_GET['idPreProjeto'];
+        $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
@@ -46,17 +46,16 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         parent::init();
 
         //recupera ID do pre projeto (proposta)
-        if(!empty ($_REQUEST['idPreProjeto'])) {
-            $this->idPreProjeto = $_REQUEST['idPreProjeto'];
+        if(!empty ($idPreProjeto)) {
+            $this->idPreProjeto = $idPreProjeto;
+            $this->view->idPreProjeto = $idPreProjeto;
 
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
             $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);
             $this->view->movimentacaoAtual = isset($rsStatusAtual['Movimentacao']) ? $rsStatusAtual['Movimentacao'] : '';
         }else {
-            if($_REQUEST['idPreProjeto'] != '0'){
-                parent::message("Necessário informar o número da proposta.", "/manterpropostaincentivofiscal/index", "ERROR");
-            }
+            parent::message("Necess&aacute;rio informar o n&uacute;mero da proposta.", "/proposta/manterpropostaincentivofiscal/listarproposta", "ERROR");
         }
 
         $this->idUsuario = isset($arrAuth['usu_codigo']) ? $arrAuth['usu_codigo'] : $arrAuth['idusuario'];
@@ -64,7 +63,6 @@ class Proposta_LocalderealizacaoController extends MinC_Controller_Action_Abstra
         //*******************************************
         //VALIDA ITENS DO MENU (Documento pendentes)
         //*******************************************
-        $get = Zend_Registry::get("get");
         $model = new Proposta_Model_DbTable_DocumentosExigidos();
         //$this->view->documentosPendentes = $model->buscarDocumentoPendente($get->idPreProjeto);
         $this->view->documentosPendentes = $model->buscarDocumentoPendente($idPreProjeto);

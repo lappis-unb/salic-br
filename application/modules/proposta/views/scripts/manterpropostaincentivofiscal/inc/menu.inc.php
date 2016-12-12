@@ -66,6 +66,33 @@
         return false;
     }
 
+    function JSEnviarProposta(idPreProjeto) {
+          var text = 'Deseja realmente enviar sua proposta?';
+
+        $('<div id="modalEnviarProposta"></div>').appendTo( $( "#menu" ) ).html(text)
+
+        $("#modalEnviarProposta").dialog("destroy");
+        $("#modalEnviarProposta").dialog
+        ({
+            width: 450,
+            height: 200,
+            position: 'center',
+            EscClose: false,
+            modal: true,
+            buttons: {
+                'Cancelar': function () {
+                    $(this).dialog('close');
+                },
+                'OK': function () {
+                    window.location = "<?php echo $this->baseUrl(); ?>/proposta/manterpropostaincentivofiscal/enviar-proposta-ao-minc/idPreProjeto/" + idPreProjeto;
+                    $(this).dialog('close');
+                }
+            }
+        });
+
+        return false;
+    }
+
     function trocarproponente() {
 
         $("#trocarproponente").dialog("destroy");
@@ -103,7 +130,10 @@
         $get = Zend_Registry::get("get");
         //define id do PreProjeto que sera passado as outras implementacoes
         $codProjeto = "?idPreProjeto=";
-        if (isset($this->proposta->idPreProjeto)) {
+        if( isset($this->idPreProjeto)) {
+            $codProjeto .= $this->idPreProjeto;
+            $idPreProjeto = $this->idPreProjeto;
+        } elseif (isset($this->proposta->idPreProjeto)) {
             $codProjeto .= $this->proposta->idPreProjeto;
             $idPreProjeto = $this->proposta->idPreProjeto;
         } elseif (isset($get->idPreProjeto)) {
@@ -172,8 +202,7 @@
                 <?php if (isset($this->movimentacaoAtual) && $this->movimentacaoAtual == '95'): ?>
                     <a class="no_seta" href="#" onclick="javascript:JSExcluirProposta('<?php echo $codProjeto; ?>');">Excluir
                         Proposta</a>
-                    <a class="no_seta"
-                       href="<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'enviar-proposta-ao-minc')) . $codProjeto; ?>"
+                    <a class="no_seta" href="#" onclick="javascript:JSEnviarProposta('<?php echo $idPreProjeto; ?>');"
                        title="Enviar Proposta ao MinC">Enviar Proposta ao MinC</a>
                 <?php endif; ?>
 
