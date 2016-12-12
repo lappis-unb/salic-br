@@ -1,7 +1,14 @@
 <?php
 $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
 $intQtd = count($dbTable->getAllBy());
-$intQtd = ($intQtd > 99)? $intQtd . '+' : $intQtd;
+if ($intQtd > 99) {
+    $cssPadding = '1';
+    $intQtd =  '99+';
+} elseif ($intQtd > 9) {
+    $cssPadding = '4';
+} else {
+    $cssPadding = '6';
+}
 ?>
 <style>
     .notificacao .btn-floating {
@@ -22,19 +29,21 @@ $intQtd = ($intQtd > 99)? $intQtd . '+' : $intQtd;
         vertical-align: middle;
         width: 19px;
         z-index: 1;
+        font-size: 9px !important;
     }
 
     .notificacao .btn-floating p {
         display: block;
-        left: 3px;
-        line-height: 4pt;
+        /*text-align: center;*/
+        left: <?php echo $cssPadding ?>px;
+        line-height: 5pt;
         padding: 0 0 10px;
         position: absolute;
     }
 </style>
 <li class="noOverhere notificacao">
-    <a href=""><i class="material-icons left">mail</i></a>
-    <a class="btn-floating waves-effect waves-light orange darken-4"><p><?php echo $intQtd ?></p></a>
+    <a href="/admissibilidade/mensagem"><i class="material-icons left">mail</i></a>
+    <a href="/admissibilidade/mensagem" class="btn-floating waves-effect waves-light orange darken-4"><p><?php echo $intQtd ?></p></a>
 </li>
 
 
