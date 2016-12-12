@@ -11,14 +11,14 @@ jQuery.fn.editorRico = function (options) {
     var idElemento = $(this).attr('id');
     var altura = (options.altura) ? options.altura : 500;
 
-    function ContarCharacteres() {
+    function contarCharacteres() {
         var body = tinymce.get(idElemento).getBody();
         var content = tinymce.trim(body.innerText || body.textContent);
         return content.length;
     }
 
-    function ExecucaoDaFuncaoLimiterPag() {
-        var countChars = ContarCharacteres(idElemento);
+    function execucaoDaFuncaoLimiterPag() {
+        var countChars = contarCharacteres(idElemento);
         $("#contadorRico" + idElemento).html("Caracteres: " + countChars + "/" + maxchar);
         $("#contadorRico" + idElemento).css('color', 'black');
         if ((countChars > maxchar) || (countChars <= minchar)) {
@@ -39,9 +39,9 @@ jQuery.fn.editorRico = function (options) {
             if (isLimitarCarateres) {
                 ed.on('init', function (e) {
                     $("#" + idElemento).after("<div id='contadorRico" + idElemento + "'></div>");
-                    ExecucaoDaFuncaoLimiterPag('observacao');
+                    execucaoDaFuncaoLimiterPag('observacao');
                 }).on('keyup', function (e) {
-                    ExecucaoDaFuncaoLimiterPag('observacao');
+                    execucaoDaFuncaoLimiterPag('observacao');
                 });
             }
         }
