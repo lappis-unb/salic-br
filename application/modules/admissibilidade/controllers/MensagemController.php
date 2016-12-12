@@ -95,18 +95,14 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
      */
     public function indexAction()
     {
-        $auth = Zend_Auth::getInstance(); // pega a autenticacao
-        $arrAuth = array_change_key_case((array) $auth->getIdentity());
         $intIdPronac = $this->getRequest()->getParam('id');
         if ($intIdPronac) {
-            $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
-            $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac));
-
-            $this->view->id = $intIdPronac;
-            $vw = new vwUsuariosOrgaosGrupos();
-            $this->view->arrUsuarios = $vw->carregarPorAdmissibilidadeGrupo();
+//            $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
+//            $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac));
+            $this->view->title = "Perguntas do Pronac: Projeto TAL ({$intIdPronac})";
         } else {
-            parent::message("Pronac inv&aacute;lido.", "/admissibilidade/enquadramento/listar", "ALERT");
+            $this->view->title = "Perguntas";
+//            parent::message("Pronac inv&aacute;lido.", "/admissibilidade/enquadramento/listar", "ALERT");
         }
     }
 
@@ -118,6 +114,10 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
             $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
             $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac, 'idMensagemOrigem IS NULL' => ''));
         } else {
+            $auth = Zend_Auth::getInstance(); // pega a autenticacao
+            $arrAuth = array_change_key_case((array) $auth->getIdentity());
+            $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
+            $this->view->arrResult = $dbTable->getAllBy(array('idDestinatario' => $arrAuth['usu_codigo'], 'idMensagemOrigem IS NULL' => ''));
             $this->view->arrResult = array();
         }
     }
@@ -136,7 +136,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         if ($this->getRequest()->isPost()) {
             $this->_helper->viewRenderer->setNoRender(true);
             $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
-            echo json_encode(array('status' => $mapper->save($this->getRequest()->getPost()), 'msg' => $mapper->getMessage()));
+            echo json_encode(array('status' => $mapper->salvar($this->getRequest()->getPost()), 'msg' => $mapper->getMessage()));
         } else {
             $this->view->title = 'Enviar pergunta';
             $this->view->action = 'salvar';
@@ -232,11 +232,24 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         $this->view->id = $intId;
         $this->view->dataForm = array();
         if ($intId) {
-            $this->view->dataForm = $dbTable->findBy($intId);
+            $arrDataForm = $dbTable->findBy($intId);
+            $unidade = $vw->findBy(array('usu_codigo' => $arrDataForm['idDestinatario']));
+            $arrDataForm['idUnidade'] = $unidade['org_superior'];
+            $this->view->dataForm = $arrDataForm;
             $this->view->dataForm['dsResposta'] = ($arrMensagemResposta = $dbTable->findBy(array('idMensagemOrigem' => $intId)))? $arrMensagemResposta['dsMensagem'] : '';
         }
-        $this->view->arrUsuarios = $vw->carregarPorAdmissibilidadeGrupo();
+        $this->view->arrUnidades = $vw->carregarUnidade();
         $this->view->arrConfig = $arrConfig;
         $this->render('form');
+    }
+
+    public function usuariosAction()
+    {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $vw = new vwUsuariosOrgaosGrupos();
+        $intId = $this->getRequest()->getParam('id', null);
+        $arrUsuarios = $vw->carregarPorPareceristaGrupoFetchPairs($intId);
+        echo json_encode($arrUsuarios);
     }
 }

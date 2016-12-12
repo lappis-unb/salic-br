@@ -3,7 +3,7 @@
         <div class="col s12">
 <!--            <a href="#!" class="breadcrumb">Admissibilidade</a>-->
             <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'listar')); ?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para a tela de enquadramento">Enquadramento</a>
-            <a href="#!" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Nome e Numero do Pronac">Perguntas do Pronac: Projeto TAL (<?php echo $this->id ?></a>)
+            <a href="#!" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Nome e Numero do Pronac"><?php echo $this->title ?></a>
         </div>
     </div>
 </nav>
@@ -48,6 +48,32 @@
     //    }($.noConflict(true)));
 </script>
 <script>
+
+    function ajaxRender(strUrl, objTarget, strVal, strValChecked) {
+        var strHtml = '';
+        $jq3.ajax({
+            method: "POST",
+            url: strUrl,
+            data: {id: strVal}
+        }).done(function (result) {
+            json = $jq3.parseJSON(result);
+            strHtml = '<option value="" disabled selected>Selecione...</option>';
+            $jq3.each(json, function(key, value){
+                strHtml += '<optgroup label="' + key + '">';
+                $jq3.each(value, function(key2, value2){
+                    if (strValChecked && strValChecked == key2) {
+                        strHtml += '<option value="' + key2 + '" selected="selected">' + value2 + '</option>';
+                    } else {
+                        strHtml += '<option value="' + key2 + '">' + value2 + '</option>';
+                    }
+                });
+                strHtml += '</optgroup>';
+            });
+            objTarget.html(strHtml);
+            objTarget.material_select();
+        });
+    }
+
     $jq3(document).ready(function () {
         // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
         $jq3('.modal').modal();
@@ -57,7 +83,6 @@
         $jq3('body').on('click', '#btn-enviar', function () {
             $jq3.post($jq3('#form-mensagem').attr('action'), $jq3('#form-mensagem').serialize(), function (result) {
                 result = $jq3.parseJSON(result);
-                console.info(result)
                 if (result.status == '1') {
                     $jq3('#modal').modal('close');
                     $jq3('#form-mensagem')[0].reset();
@@ -68,6 +93,14 @@
                 }
             });
         });
+
+        $jq3('body').on('change', 'select[data-target]', function () {
+            var select = $jq3(this),
+                strUrl = select.attr('data-url'),
+                objTarget = $jq3(select.attr('data-target'));
+            ajaxRender(strUrl, objTarget, select.val(), '');
+        });
+
         $jq3('body').on('click', '[data-modal]', function() {
             var objClick = $jq3(this),
                 strUrl = objClick.attr('data-modal'),
