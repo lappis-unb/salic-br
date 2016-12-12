@@ -576,6 +576,9 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      */
     public function listarDiligenciasPreProjeto($consulta = array(),$retornaSelect = false)
     {
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -633,6 +636,8 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         {
             $select->where($coluna, $valor);
         }
+
+
         if($retornaSelect)
         {
 
@@ -640,7 +645,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
         else
         {
-        	return $this->fetchAll($select);
+        	return $db->fetchAll($select);
         }
     }
 
