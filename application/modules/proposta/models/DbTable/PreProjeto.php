@@ -2723,6 +2723,35 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         }
                     }
 
+                    // Verifica se o proponente Proposta aprovado em editais (618) ou Proposta  com contratos de patrocínios (619)
+                    $sql = $db->select()
+                        ->from($this->_name, $this->_getCols(), $this->_schema)
+                        ->where('idPreProjeto = ?', $idPreProjeto);
+                    $stProposta = $db->fetchRow($sql)->stProposta;
+
+                    if( $stProposta == '618' || $stProposta == '619' ) {
+
+                        $sql = $db->select()
+                            ->from(array('tbDocumentosPreProjeto'), '*',  $this->_schema)
+                            ->where('idProjeto = ?', $idPreProjeto)
+                            ->where('CodigoDocumento = 248')
+                            ->limit(1);
+                        $documento = $db->fetchRow($sql);
+
+                        if (empty($documento)) {
+
+                            if( $stProposta == '618' )
+                                $msg = 'proposta aprovada em editais';
+                            else
+                                $msg = 'proposta com contratos de patroc&iacute;nios';
+
+                            $validacao->Descricao = 'No caso de ' .$msg. ' &eacute; obrigat&oacute;rio anexar o comprovante de execu&ccedil;&atilde;o imediata';
+                            $validacao->Observacao = 'PENDENTE';
+                            $validacao->Url = array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $idPreProjeto);
+                            $listaValidacao[] =  clone($validacao);
+                        }
+                    }
+
                     //-- VERIFICAR SE O LOCAL DE REALIZACAO ESTA CADASTRADO
      //IF NOT EXISTS(SELECT TOP 1 * FROM Abrangencia WHERE idProjeto = @idProjeto)
 
