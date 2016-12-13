@@ -450,7 +450,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $dados = array();
         $dados['idPreProjeto'] = $this->idPreProjeto;
         $dados['CodigoDocumento'] = $post->documento;
-        //xd($dados);
+
         try {
             if ($post->tipoDocumento == 1) {
                 Proposta_Model_AnalisarPropostaDAO::inserirDocumentoProponente($dados);
@@ -509,7 +509,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 //                $rsMovimentacao = $tblMovimentacao->salvar($dadosMovimentacao);
 //            }
         } catch (Exception $e) {
-            //xd($e->getMessage());
             parent::message("Erro ao realizar opera&ccedil;&atilde;o", "/admissibilidade/admissibilidade/analisedocumental?idPreProjeto=" . $this->idPreProjeto, "ERROR");
         }
 
@@ -597,7 +596,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
                 $rsOrgaos = $tblOrgaos->buscar(array("Codigo = ?" => $rsEdital->idOrgao))->current();
             }
-            //xd($rsOrgaos);
+
             echo "Deseja Transformar a proposta Nr. {$this->idPreProjeto}, em Projeto? <br>A mesma ser&aacute; enviada para a Unidade: {$rsOrgaos->Sigla}, para An&aacute;lise T&eacute;cnica.<br> Confirma a opera&ccedil;&atilde;o?";
             $this->_helper->viewRenderer->setNoRender(TRUE);
         } else {
@@ -635,7 +634,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $chars = array(".", "/", "-");
             $nrProcessoSemFormatacao = str_replace($chars, "", $arrRetornoGerarProcedimento->ProcedimentoFormatado);
             $nrProcesso = $nrProcessoSemFormatacao;
-            #xd( $nrProcesso );
+
             try {
                 //$aux = new paTransformarPropostaEmProjetoNovaIN();
                 #$aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario);
@@ -647,10 +646,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 if (!empty($rsProjeto)) {
 
                     $arrayDados = array(
-                        'Situacao' => 'B10',
+                        'Situacao' => 'B01',
                         'DtSituacao' => $tblProjeto->getExpressionDate(),
                     );
-                    $arrayWhere = array('IdPRONAC  = ?' => $rsProjeto['IdPRONAC']);
+                    $arrayWhere = array('IdPRONAC  = ?' => $rsProjeto->IdPRONAC);
 
                     $tblProjeto->update($arrayDados, $arrayWhere);
 
@@ -659,7 +658,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                     echo "A Proposta " . $this->idPreProjeto . " foi transformada no Projeto No. " . $nrPronac;
                     echo '<br><br><a href="../gerenciarparecertecnico/dadosetiqueta?pronac=' . $nrPronac . '&etiqueta=nao" target="_blank">Imprimir etiqueta</a>';
                 }
-
             } catch (Exception $e) {
                 xd($e->getMessage());
                 echo "Erro ao tentar transformar proposta em projeto!";
@@ -708,7 +706,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 //        }else{
 //            $dados['movimentacao'] = 127;
 //        }
-        //xd($dados);
+
 //        Proposta_Model_AnalisarPropostaDAO::updateEstadoMovimentacao($post->idPreProjeto);
 //        Proposta_Model_AnalisarPropostaDAO::inserirMovimentacao($dados);
         //}
@@ -768,7 +766,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     {
         $dao = new Proposta_Model_AnalisarPropostaDAO();
         $post = Zend_Registry::get('post');
-        //xd($post);
         Proposta_Model_AnalisarPropostaDAO::deletePreProjeto($post->idprojeto);
         ///Enviar e-mail informando arquivamento e a justificativa
 
@@ -845,9 +842,9 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         foreach ($rsDocumentosExigidos as $documentoExigido) {
             $arrDocumentosExigidos[$documentoExigido["Codigo"]] = $documentoExigido;
         }
-        //xd($arrDocumentosExigidos);
+
         $this->view->documentosExigidos = $arrDocumentosExigidos;
-        //xd($rsDocumentosExigidos);
+
         /*
          * FINAL - PEGANDO DOCUMENTOS ANEXADOS
          */
@@ -993,14 +990,14 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $this->_helper->layout->disableLayout();
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->unidadeAnaliseProposta($_POST["nrProposta"])->current();
-        //xd($rsProposta->toArray());
+
         if ($rsProposta) {
             $rsOrgaoSecretaria = $tblProposta->orgaoSecretaria($rsProposta->idTecnico);
         } else {
             echo "<font color='black' size='2'><b>Nenhum registro encontrado</b></font>";
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
-        //xd($rsOrgaoSecretaria);
+
 
         $this->view->orgaoUsuarioLogado = $this->codOrgaoSuperior;
         $this->view->proposta = $rsProposta;
@@ -1393,7 +1390,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico($arrBusca, array("Tecnico ASC"));
-        //xd($rsProposta);
+
         $arrTecnicosPropostasReavaliacao = array();
         $arrTecnicosPropostasInicial = array();
 
@@ -2557,6 +2554,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
      */
     private function incluirProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso) {
 
+
+
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         try {
@@ -2747,24 +2746,26 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                       INNER JOIN SAC.dbo.Interessado i on (p.CgcCpf = i.CgcCpf)
                                       WHERE idPronac = {$idPronac}";
                 $arrayMensagem = $db->fetchRow($sqlDadosProposta);
-
                 $nomeProposta = $arrayMensagem->NomeProjeto;
                 $destinatario = $arrayMensagem->Nome;
                 $mensagemEmail = "<b>Projeto: {$AnoProjeto}{$NrProjeto} - {$nomeProposta} <br> Proponente: {$destinatario}<br> </b>{$mensagem}";
+
                 $sqlEmail = "SELECT Descricao FROM agentes.dbo.Internet i
                               INNER JOIN SAC.dbo.PreProjeto p on i.idAgente = p.idAgente
                               WHERE p.idPreProjeto = {$idPreProjeto} and i.idAgente = p.idAgente and Status = 1";
-
                 $arrayEmails = $db->fetchAll($sqlEmail);
+
+
                 foreach($arrayEmails as $email) {
-                    //EmailDAO::enviarEmail($email, "Projeto Cultural", $mensagemEmail);
+//x($email->Descricao, "Projeto Cultural", $mensagemEmail);
+                    EmailDAO::enviarEmail($email->Descricao, "Projeto Cultural", $mensagemEmail);
                 }
             }
             $db->commit();
         } catch (Exception $objException) {
             $db->rollBack();
-//xd($objException->getMessage());
             throw new Exception ($objException->getMessage(), 0, $objException);
         }
+
     }
 }
