@@ -629,6 +629,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $cnpjcpf = $rsAgente->CNPJCPF;
 
         $wsWebServiceSEI = new ServicosSEI();
+
         $arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento();
 
         $chars = array(".", "/", "-");
@@ -636,14 +637,25 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $nrProcesso = $nrProcessoSemFormatacao;
         #xd( $nrProcesso );
         try {
-            $aux = new paTransformarPropostaEmProjetoNovaIN();
+            //$aux = new paTransformarPropostaEmProjetoNovaIN();
             #$aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario);
-            $aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
+            //$aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
+
+            $this->incluirProjeto($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
+
 
             $tblProjeto = new Projetos();
 
             $rsProjeto = $tblProjeto->buscar(array("idProjeto = ?" => $this->idPreProjeto), "IdPRONAC DESC")->current();
             if (!empty($rsProjeto)) {
+
+                $arrayDados = array(
+                    'Situacao' => 'B10',
+                    'DtSituacao' => $tblProjeto->getExpressionDate(),
+                );
+                $arrayWhere = array('IdPRONAC  = ?' => $rsProjeto['IdPRONAC']);
+
+                $tblProjeto->update($arrayDados, $arrayWhere);
 
                 $nrPronac = $rsProjeto->AnoProjeto . $rsProjeto->Sequencial;
 
@@ -2542,4 +2554,214 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $this->view->dados = $busca;
     }
 
+    /**
+     * @todo: Testar e refatorar esse metodo.
+     */
+    private function incluirProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso) {
+
+        try {
+            $objInteressado = new Interessado();
+            $arrayInteressados = $objInteressado->findAll(array('CgcCpf' => $cnpjcpf));
+
+            if(!$arrayInteressados) {
+                $sqlInteressado = "INSERT INTO Interessado (CgcCpf,TipoPessoa,Nome,Responsavel,Endereco,Cidade,UF,CEP,Natureza,Esfera,Administracao,Utilidade)
+                                  SELECT TOP 1 p.CNPJCPF,
+                                     case
+                                       when len(p.CNPJCPF)=11
+                                         then  '1'
+                                         else  '2'
+                                     end as TipoPessoa,
+                                     Nome,dbo.fnNomeResponsavel(p.Usuario),p.Logradouro + ' - ' + p.Bairro,u.Municipio,u.UF,p.CEP,
+                                     case
+                                       when Direito = 1
+                                         then '1'
+                                       when Direito = 2 or Direito = 35
+                                         then '2'
+                                      end as Direito,
+                                     case
+                                       when Esfera = 3
+                                         then '1'
+                                       when Esfera = 4
+                                         then '2'
+                                       when Esfera = 5
+                                         then '3'
+                                      end as Esfera,
+                                     case
+                                       when Administracao = 11
+                                         then '1'
+                                       when Administracao = 12
+                                         then '2'
+                                      end as Administracao,
+                                     case
+                                       when Direito = 2
+                                         then '1'
+                                       when Direito = 35
+                                         then '2'
+                                      end as Utilidade
+                                FROM vCadastrarProponente p
+                               INNER JOIN Agentes.dbo.Agentes a on (p.idAgente = a.idAgente)
+                               INNER JOIN Agentes.dbo.EnderecoNacional e on (p.idAgente = e.idAgente and e.Status = 1)
+                               INNER JOIN Agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio )
+                                LEFT JOIN  vwNatureza n on (p.idAgente =n.idAgente)
+                               WHERE p.CNPJCPF={$cnpjcpf} 
+                                 AND Correspondencia = 1";
+            } else {
+                $sqlInteressado = "  UPDATE Interessado
+                                        SET Endereco = e.Logradouro + ' - ' + e.Bairro,
+                                            Cidade   = u.Municipio,
+                                            UF       = u.UF,
+                                            CEP      = e.CEP,
+                                            Natureza  = case
+                                                        when n.Direito = 1
+                                                          then '1'
+                                                        when n.Direito = 2 or n.Direito = 35
+                                                          then '2'
+                                                       end,
+                                            Esfera   = case
+                                                        when n.Esfera = 3
+                                                          then '1'
+                                                        when n.Esfera = 4
+                                                          then '2'
+                                                        when n.Esfera = 5
+                                                         then '3'
+                                                       end,
+                                            Administracao = case
+                                                             when n.Administracao = 11
+                                                              then '1'
+                                                             when n.Administracao = 12
+                                                              then '2'
+                                                            end,
+                                            Utilidade = case
+                                                         when n.Direito = 2
+                                                           then '1'
+                                                         when n.Direito = 35
+                                                           then '2'
+                                                        end
+                                            FROM Interessado i
+                                                 INNER JOIN Agentes.dbo.Agentes a on (i.CgcCpf = a.CNPJCPF)
+                                                 INNER JOIN Agentes.dbo.EnderecoNacional e on (a.idAgente = e.idAgente and e.Status = 1)
+                                                 INNER JOIN Agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio )
+                                                 LEFT JOIN  vwNatureza n on (a.idAgente =n.idAgente)
+                                                 WHERE i.CGCCPF={$cnpjcpf} and e.Status = 1";
+            }
+
+            $db = Zend_Registry::get('db');
+            $db->setFetchMode(Zend_DB::FETCH_OBJ);
+            $resultado = $db->query($sqlInteressado);
+
+            if(!$resultado) {
+                throw new Exception ("Erro ao tentar incluir ou alterar %d registros na tabela Interessado.");
+            }
+
+            $sqlSequencialProjetos = "UPDATE SequencialProjetos
+                                         SET Sequencial = Sequencial + 1
+                                       WHERE Ano = YEAR(GETDATE())";
+
+            $resultado = $db->query($sqlSequencialProjetos);
+            if(!$resultado) {
+                $ano = date('Y');
+                $sqlSequencialProjetos = " INSERT INTO SequencialProjetos (Ano,Sequencial) VALUES ({$ano} ,1)";
+                $resultado = $db->query($sqlSequencialProjetos);
+                if(!$resultado) {
+                    throw new Exception ("Não é possível incluir ou alterar mais de um registro na tabela SequencialProjetos.");
+                }
+            }
+
+            $sqlSequencial = "select Sequencial from sac.dbo.SequencialProjetos where ano = '{$ano}'";
+            $arraySequencial = $db->fetchRow($sqlSequencial);
+            $sequencial = $arraySequencial['Sequencial'];
+
+            $AnoProjeto = date("y");
+            $NrProjeto = str_pad($sequencial, 4, "0", STR_PAD_LEFT);
+
+            $sqlProjetos = "INSERT INTO Projetos
+                                  (AnoProjeto,Sequencial,UFProjeto,Area,Segmento,Mecanismo,NomeProjeto,CgcCpf,Situacao,DtProtocolo,DtAnalise,
+                                   OrgaoOrigem,Orgao,DtSituacao,ProvidenciaTomada,ResumoProjeto,DtInicioExecucao,DtFimExecucao,SolicitadoReal,
+                                   idProjeto,Processo,Logon)
+                                SELECT TOP 1 {$AnoProjeto}, {$NrProjeto}, u.Sigla, dbo.fnSelecionarArea(idPreProjeto),dbo.fnSelecionarSegmento(idPreProjeto),
+                                   Mecanismo, NomeProjeto, a.CNPJCPF, 'B11', getdate(), getdate(), {$idOrgao}, {$idOrgao}, getdate(),
+                                   'Proposta transformada em projeto cultural', ResumoDoProjeto, DtInicioDeExecucao, DtFinalDeExecucao,
+                                   dbo.fnSolicitadoNaProposta(idPreProjeto), idPreProjeto, {$nrProcesso}, {$idUsuario}
+                                   FROM PreProjeto p
+                                   INNER JOIN Agentes.dbo.Agentes a on (p.idAgente = a.idAgente)
+                                   INNER JOIN Agentes.dbo.EnderecoNacional e on (a.idAgente = e.idAgente and e.Status = 1)
+                                   INNER JOIN Agentes.dbo.UF u on (e.UF = u.idUF)
+                                   WHERE idPreProjeto  = {$idPreProjeto} and NOT EXISTS(SELECT TOP 1 * FROM Projetos x WHERE p.idPreProjeto = x.idProjeto)";
+
+            $resultado = $db->query($sqlProjetos);
+            if(!$resultado) {
+                throw new Exception ("Não há registro para incluir / alterar registro na tabela Interessado");
+            }
+
+            $idPronac = $db->lastInsertId();
+
+            $arrayDados = array(
+                'Situacao' => 'B01'
+            );
+            $arrayWhere = array('IdPRONAC  = ?' => $idPronac);
+            $objProjeto = new Projetos();
+            $objProjeto->update($arrayDados, $arrayWhere);
+
+            $sqlParecerista = "INSERT INTO tbPlanilhaProjeto
+                                 (idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,Quantidade,Ocorrencia,ValorUnitario,QtdeDias,
+                                 TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,    MunicipioDespesa,idUsuario)
+                               SELECT idPlanilhaProposta,@idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,Unidade,
+                                    Quantidade,Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
+                                    MunicipioDespesa,0
+                                    FROM tbPlanilhaProposta
+                                    WHERE idProjeto = {$idPreProjeto}";
+            $resultado = $db->query($sqlParecerista);
+
+            $sqlAnaliseDeConteudo = "INSERT INTO tbAnaliseDeConteudo (idPronac,idProduto)
+                                     SELECT {$idPronac},idProduto FROM tbPlanilhaProposta
+                                      WHERE idProjeto = {$idPreProjeto} AND idProduto <> 0
+                                      GROUP BY idProduto";
+            $resultado = $db->query($sqlAnaliseDeConteudo);
+
+            $sqlContaBancaria = "INSERT INTO ContaBancaria (AnoProjeto,Sequencial,Mecanismo,Banco,Agencia,Logon)
+                                 SELECT {$AnoProjeto}, {$NrProjeto}, Mecanismo,'001',AgenciaBancaria,{$idUsuario} 
+                                   FROM PreProjeto 
+                                  WHERE idPreProjeto = {$idPreProjeto}";
+            $resultado = $db->query($sqlContaBancaria);
+            if(!$resultado) {
+                throw new Exception ("Não é possível incluir mais de %d registros na ContaBancari");
+            }
+
+            $sqlHistoricoEmail = "SELECT TOP 1 * FROM tbHistoricoEmail WHERE idPronac = {$idPronac} and 
+                                  idTextoEmail = 12 and (CONVERT(char(10),(DtEmail),111) = CONVERT(char(10),getdate(),111))";
+            $arrayHistoricoEmail = $db->fetchRow($sqlHistoricoEmail);
+            if(!$arrayHistoricoEmail) {
+                $idTextoEmail = 12;
+                $sqlInsertHistoricoEmail = "INSERT INTO tbHistoricoEmail (idPronac,idTextoemail,DtEmail,stEstado,idUsuario)
+                                            VALUES ({$idPronac}, {$idTextoEmail}, getdate(), 1, {$idUsuario})";
+                $resultado = $db->query($sqlInsertHistoricoEmail);
+                if(!$resultado) {
+                    throw new Exception ("Não é permitido inserir %d registros ao mesmo tempo na tabela tbHistoricoEmail");
+                }
+
+                $sqlTextoEmail = "SELECT dsTexto FROM tbTextoEmail WHERE idTextoEmail = {$idTextoEmail}";
+                $arrayMensagem = $db->fetchRow($sqlTextoEmail);
+                $mensagem = $arrayMensagem['dsTexto'];
+
+                $sqlDadosProposta = "SELECT NomeProjeto, Nome
+                                       FROM Projetos p
+                                      INNER JOIN Interessado i on (p.CgcCpf = i.CgcCpf)
+                                      WHERE idPronac = {$idPronac}";
+                $arrayMensagem = $db->fetchRow($sqlDadosProposta);
+                $nomeProposta = $arrayMensagem['NomeProjeto'];
+                $destinatario = $arrayMensagem['Nome'];
+                $mensagemEmail = "<b>Projeto: {$AnoProjeto}{$NrProjeto} - {$nomeProposta} <br> Proponente: {$destinatario}<br> </b>{$mensagem}";
+                $sqlEmail = "SELECT Descricao FROM agentes.dbo.Internet i
+                              INNER JOIN PreProjeto p on (i.idAgente = p.idAgente)
+                              WHERE p.idPreProjeto = {$idPreProjeto} and i.idAgente = p.idAgente and Status = 1";
+                $arrayEmails = $db->fetchAll($sqlEmail);
+                foreach($arrayEmails as $email) {
+                    EmailDAO::enviarEmail($email, "Projeto Cultural", $mensagemEmail, $perfil = 'PerfilGrupoPRONAC');
+                }
+            }
+
+        } catch (Exception $objException) {
+            throw new Exception ($objException->getMessage(), 0, $objException);
+        }
+    }
 }
