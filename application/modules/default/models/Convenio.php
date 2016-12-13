@@ -4,19 +4,15 @@
  * @author jefferson.silva - XTI
  * @since 15/01/2014
  * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class Convenio extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
-	protected $_schema = "dbo";
+	protected $_schema = "SAC";
 	protected $_name   = "Convenio";
-    
-    
+
     public function buscarDadosConvenios($where=array(), $order=array()) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -34,7 +30,7 @@ class Convenio extends MinC_Db_Table_Abstract
             )
         );
 
-        
+
        //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
@@ -45,4 +41,4 @@ class Convenio extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-} // fecha class
+}

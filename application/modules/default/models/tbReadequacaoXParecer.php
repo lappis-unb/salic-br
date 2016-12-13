@@ -4,19 +4,16 @@
  * @author jeffersonassilva@gmail.com - XTI
  * @since 13/03/2014
  * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class tbReadequacaoXParecer extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
-	protected $_schema = "dbo";
+	protected $_schema = "SAC";
 	protected $_name   = "tbReadequacaoXParecer";
-    
-    /* 
+
+    /*
      * Criada em 13/03/2014
      * @author: Jefferson Alessandro - jeffersonassilva@gmail.com
      */
@@ -31,7 +28,7 @@ class tbReadequacaoXParecer extends MinC_Db_Table_Abstract
                     CASE WHEN b.idTipoAgente = 1
                         THEN 'T�cnico / Parecerista'
                     WHEN b.idTipoAgente = 6
-                        THEN 'Componente da Comiss�o'                          
+                        THEN 'Componente da Comiss�o'
                     END AS tpAvaliador
                 ")
             )
@@ -56,4 +53,4 @@ class tbReadequacaoXParecer extends MinC_Db_Table_Abstract
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
-} // fecha class
+}

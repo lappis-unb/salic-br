@@ -12,7 +12,7 @@
 class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
-	protected $_schema = "dbo";
+	protected $_schema = "SAC";
 	protected $_name   = "tbRelatorioConsolidado";
 
         /**
@@ -65,7 +65,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
 //            xd($select->query());
             return $this->fetchAll($select);
         }
-        
+
 
         /**
 	 * M�todo para consultar dados
@@ -96,7 +96,7 @@ class tbRelatorioConsolidado extends MinC_Db_Table_Abstract
 //        xd($select->assemble());
         //xd($this->fetchAll($select));
         return $this->fetchAll($select);
-        
+
         }
 
 

@@ -3,19 +3,16 @@
  * DAO tbAssinantesPrestacao
  * @since 10/02/2015
  * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class tbAssinantesPrestacao extends MinC_Db_Table_Abstract
 {
 	protected $_banco  = "SAC";
-	protected $_schema = "dbo";
+	protected $_schema = "SAC";
 	protected $_name   = "tbAssinantesPrestacao";
 
-    /* 
+    /*
      * Criada em 10/02/2015
      * @author: Jefferson Alessandro
      * Essa consulta retorna os dados dos assinantes de presta��o de contas - Perfil: Coordenador de Presta��o de Contas
@@ -25,7 +22,7 @@ class tbAssinantesPrestacao extends MinC_Db_Table_Abstract
         $cargoTable = new CargoAssinantePrestacaoDeContasTable();
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             array(
                 new Zend_Db_Expr("
@@ -65,4 +62,4 @@ class tbAssinantesPrestacao extends MinC_Db_Table_Abstract
     }
 
 
-} // fecha class
+}
