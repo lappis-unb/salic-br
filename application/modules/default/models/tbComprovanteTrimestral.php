@@ -11,7 +11,7 @@
 
 class tbComprovanteTrimestral extends MinC_Db_Table_Abstract {
     protected $_banco  = "SAC";
-    protected $_schema = "dbo";
+    protected $_schema = "SAC";
     protected $_name   = "tbComprovanteTrimestral";
 
     /**
@@ -42,7 +42,7 @@ class tbComprovanteTrimestral extends MinC_Db_Table_Abstract {
         // criando objeto do tipo select
         $slct = $this->select();
         $slct->from( $this->_name,
-                array('idComprovanteTrimestral', 'IdPRONAC', 'dtComprovante','dtInicioPeriodo', 'dtFimPeriodo', 
+                array('idComprovanteTrimestral', 'IdPRONAC', 'dtComprovante','dtInicioPeriodo', 'dtFimPeriodo',
                     'CAST(dsEtapasExecutadas AS TEXT) AS dsEtapasExecutadas',
                     'CAST(dsAcessibilidade AS TEXT) AS dsAcessibilidade',
                     'CAST(dsDemocratizacaoAcesso AS TEXT) AS dsDemocratizacaoAcesso',
@@ -69,4 +69,4 @@ class tbComprovanteTrimestral extends MinC_Db_Table_Abstract {
     } // fecha m�todo alterarDados()
 
 
-} // fecha class
+}

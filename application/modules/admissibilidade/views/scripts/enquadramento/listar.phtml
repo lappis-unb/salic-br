@@ -26,7 +26,7 @@
             <tr class="titulo_tabela">
                 <th width="40">PRONAC</th>
                 <th>Nome do Projeto</th>
-                <th>Área</th>
+                <th>&Aacute;rea</th>
                 <th>Segmento</th>
                 <th>A&ccedil;&otilde;es</th>
             </tr>
@@ -43,7 +43,7 @@
                         <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index')) . "?id={$dado->pronac}"; ?>">
                             D&uacute;vida
                         </a>
-                        <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto')) . "?pronac={$dado->pronac}" ?>">
+                        <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto')) . "?pronac={$dado->idpronac}" ?>">
                             Enquadrar
                         </a>
                     </td>
@@ -51,7 +51,6 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
-
 </div>
 <div id="rodapeConteudo"><span></span></div>
 <br clear="all"/>

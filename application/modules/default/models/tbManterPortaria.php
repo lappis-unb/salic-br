@@ -3,16 +3,13 @@
  * DAO tbManterPortaria
  * @since 08/10/2014
  * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class tbManterPortaria extends MinC_Db_Table_Abstract {
-    
+
     protected $_banco = "SAC";
-    protected $_schema = "dbo";
+    protected $_schema = "SAC";
     protected $_name = "tbManterPortaria";
 
     /**
@@ -25,7 +22,6 @@ class tbManterPortaria extends MinC_Db_Table_Abstract {
         return $this->insert($dados);
     }
 
-// fecha m�todo cadastrarDados()
 
     /**
      * M�todo para alterar
@@ -38,11 +34,11 @@ class tbManterPortaria extends MinC_Db_Table_Abstract {
         $where = "idManterPortaria = " . $where;
         return $this->update($dados, $where);
     }
-    
+
     public function listaSecretarios($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        $select->from( 
+        $select->from(
             array('a' => $this->_name),
             array(
                 new Zend_Db_Expr("a.*")
@@ -74,6 +70,4 @@ class tbManterPortaria extends MinC_Db_Table_Abstract {
         return $this->fetchAll($select);
     }
 
-// fecha m�todo alterarDados()
-
-} // fecha class
+}
