@@ -95,7 +95,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $objProjeto = new Projetos();
 
         $arrayDados = array(
-            'Situacao' => 'L10',
+            'Situacao' => 'B02',
             'DtSituacao' => $objProjeto->getExpressionDate(),
             'ProvidenciaTomada' => $post['observacao'],
             'logon' => $authIdentity['usu_codigo']

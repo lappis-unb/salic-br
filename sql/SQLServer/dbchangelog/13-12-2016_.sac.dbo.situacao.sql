@@ -1,0 +1,2 @@
+/* INCLUSÃO DA SITUAÇÃO PARA TRABALHAR COM O ENQUADRAMENTO */
+INSERT INTO SAC.dbo.Situacao VALUES('B02','Projeto enquadrado','C','1')
