@@ -53,7 +53,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             }
 
             if($projeto['Situacao'] != "B01") {
-                throw new Exception("Situação do projeto não é válida.");
+                throw new Exception("Situa&ccedil;&atilde;o do projeto n&atilde;o &eacute; v&aacute;lida.");
             }
 
             $post = $this->getRequest()->getPost();
@@ -86,11 +86,9 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             'Logon' => $authIdentity['usu_codigo'],
             'IdPRONAC' => $get['pronac'],
         );
-
         $objEnquadramento->inserir($arrayInclusao);
 
         $objProjeto = new Projetos();
-
         $arrayDados = array(
             'Situacao' => 'B02',
             'DtSituacao' => $objProjeto->getExpressionDate(),
@@ -99,6 +97,11 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         );
         $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
         $objProjeto->update($arrayDados, $arrayWhere);
+
+        /**
+         * @todo Verificar com Rômulo para quem deve enviar o e-mail e qual a mensagem.
+         */
+        //EmailDAO::enviarEmail($email, "Projeto Cultural", $mensagemEmail);
 
         parent::message("Enquadramento cadastrado com sucesso.", "/admissibilidade/enquadramento/listar", "CONFIRM");
     }
@@ -110,13 +113,13 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $this->view->projeto = $projeto;
 
         if(count($this->view->comboareasculturais) < 1) {
-            throw new Exception("Não foram encontradas Áreas Culturais para o PRONAC informado.");
+            throw new Exception("N&atilde;o foram encontradas &Aacute;reas Culturais para o PRONAC informado.");
         }
 
         $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($projeto['Area']);
 
         if(count($this->view->combosegmentosculturais) < 1) {
-            throw new Exception("Não foram encontradas Segmentos Culturais para o PRONAC informado.");
+            throw new Exception("N&atilde;o foram encontradas Segmentos Culturais para o PRONAC informado.");
         }
 
         $objEnquadramento = new Enquadramento();

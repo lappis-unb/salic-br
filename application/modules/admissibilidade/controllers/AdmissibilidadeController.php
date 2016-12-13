@@ -2558,11 +2558,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     private function incluirProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso) {
 
         $db= Zend_Db_Table::getDefaultAdapter();
-
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
-
-
-
         try {
             $db->beginTransaction();
             $objInteressado = new Interessado();
@@ -2608,7 +2604,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                INNER JOIN Agentes.dbo.EnderecoNacional e on (p.idAgente = e.idAgente and e.Status = 1)
                                INNER JOIN Agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio )
                                 LEFT JOIN  SAC.dbo.vwNatureza n on (p.idAgente =n.idAgente)
-                               WHERE p.CNPJCPF={$cnpjcpf} 
+                               WHERE p.CNPJCPF='{$cnpjcpf}' 
                                  AND Correspondencia = 1";
             } else {
                 $sqlInteressado = "  UPDATE SAC.dbo.Interessado
@@ -2649,11 +2645,9 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                                   LEFT JOIN SAC.dbo.vwNatureza n on (a.idAgente =n.idAgente)
                                                  WHERE i.CGCCPF='{$cnpjcpf}' and e.Status = 1";
             }
-//xd($sqlInteressado);
 
             $resultado = $db->query($sqlInteressado);
-
-            if(!$resultado) {
+            if($resultado->rowCount() < 1) {
                 throw new Exception ("Erro ao tentar incluir ou alterar %d registros na tabela Interessado.");
             }
 
@@ -2662,19 +2656,18 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                        WHERE Ano = YEAR(GETDATE())";
 
             $resultado = $db->query($sqlSequencialProjetos);
-            if(!$resultado) {
-                $ano = date('Y');
-                $sqlSequencialProjetos = " INSERT INTO SAC.dbo.SequencialProjetos (Ano,Sequencial) VALUES ({$ano} ,1)";
+            $ano = date('Y');
+            if($resultado->rowCount() < 1) {
+                $sqlSequencialProjetos = " INSERT INTO SAC.dbo.SequencialProjetos (Ano,Sequencial) VALUES ('{$ano}' ,1)";
                 $resultado = $db->query($sqlSequencialProjetos);
-                if(!$resultado) {
+                if($resultado->rowCount() < 1) {
                     throw new Exception ("Não é possível incluir ou alterar mais de um registro na tabela SequencialProjetos.");
                 }
             }
 
-            $sqlSequencial = "select SAC.dbo.Sequencial from sac.dbo.SequencialProjetos where ano = '{$ano}'";
+            $sqlSequencial = "select Sequencial from sac.dbo.SequencialProjetos where ano = '{$ano}'";
             $objSequencial = $db->fetchRow($sqlSequencial);
             $sequencial = $objSequencial->Sequencial;
-
             $AnoProjeto = date("y");
             $NrProjeto = str_pad($sequencial, 4, "0", STR_PAD_LEFT);
 
@@ -2682,18 +2675,19 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                   (AnoProjeto,Sequencial,UFProjeto,Area,Segmento,Mecanismo,NomeProjeto,CgcCpf,Situacao,DtProtocolo,DtAnalise,
                                    OrgaoOrigem,Orgao,DtSituacao,ProvidenciaTomada,ResumoProjeto,DtInicioExecucao,DtFimExecucao,SolicitadoReal,
                                    idProjeto,Processo,Logon)
-                                SELECT TOP 1 {$AnoProjeto}, {$NrProjeto}, u.Sigla, SAC.dbo.fnSelecionarArea(idPreProjeto),SAC.dbo.fnSelecionarSegmento(idPreProjeto),
+                                SELECT TOP 1 '{$AnoProjeto}', '{$NrProjeto}', u.Sigla, SAC.dbo.fnSelecionarArea(idPreProjeto),SAC.dbo.fnSelecionarSegmento(idPreProjeto),
                                    Mecanismo, NomeProjeto, a.CNPJCPF, 'B11', getdate(), getdate(), {$idOrgao}, {$idOrgao}, getdate(),
                                    'Proposta transformada em projeto cultural', ResumoDoProjeto, DtInicioDeExecucao, DtFinalDeExecucao,
-                                   SAC.dbo.fnSolicitadoNaProposta(idPreProjeto), idPreProjeto, {$nrProcesso}, {$idUsuario}
+                                   SAC.dbo.fnSolicitadoNaProposta(idPreProjeto), idPreProjeto, '{$nrProcesso}', {$idUsuario}
                                    FROM SAC.dbo.PreProjeto p
                                    INNER JOIN Agentes.dbo.Agentes a on (p.idAgente = a.idAgente)
                                    INNER JOIN Agentes.dbo.EnderecoNacional e on (a.idAgente = e.idAgente and e.Status = 1)
                                    INNER JOIN Agentes.dbo.UF u on (e.UF = u.idUF)
-                                   WHERE idPreProjeto  = {$idPreProjeto} and NOT EXISTS(SELECT TOP 1 * FROM Projetos x WHERE p.idPreProjeto = x.idProjeto)";
+                                   WHERE idPreProjeto  = {$idPreProjeto} 
+                                     AND NOT EXISTS(SELECT TOP 1 * FROM SAC.dbo.Projetos x WHERE p.idPreProjeto = x.idProjeto)";
 
             $resultado = $db->query($sqlProjetos);
-            if(!$resultado) {
+            if($resultado->rowCount() < 1) {
                 throw new Exception ("Não há registro para incluir / alterar registro na tabela Interessado");
             }
 
@@ -2709,9 +2703,9 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $sqlParecerista = "INSERT INTO SAC.dbo.tbPlanilhaProjeto
                                  (idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,Quantidade,Ocorrencia,ValorUnitario,QtdeDias,
                                  TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,    MunicipioDespesa,idUsuario)
-                               SELECT idPlanilhaProposta,@idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,Unidade,
-                                    Quantidade,Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
-                                    MunicipioDespesa,0
+                               SELECT idPlanilhaProposta, {$idPronac},idProduto,idEtapa,idPlanilhaItem,Descricao,Unidade,
+                                    Quantidade, Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
+                                    MunicipioDespesa, 0
                                     FROM SAC.dbo.tbPlanilhaProposta
                                     WHERE idProjeto = {$idPreProjeto}";
             $resultado = $db->query($sqlParecerista);
@@ -2723,11 +2717,12 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $resultado = $db->query($sqlAnaliseDeConteudo);
 
             $sqlContaBancaria = "INSERT INTO SAC.dbo.ContaBancaria (AnoProjeto,Sequencial,Mecanismo,Banco,Agencia,Logon)
-                                 SELECT {$AnoProjeto}, {$NrProjeto}, Mecanismo,'001',AgenciaBancaria,{$idUsuario} 
+                                 SELECT '{$AnoProjeto}', '{$NrProjeto}', Mecanismo,'001',AgenciaBancaria,{$idUsuario} 
                                    FROM SAC.dbo.PreProjeto 
                                   WHERE idPreProjeto = {$idPreProjeto}";
             $resultado = $db->query($sqlContaBancaria);
-            if(!$resultado) {
+
+            if($resultado->rowCount() < 1) {
                 throw new Exception ("Não é possível incluir mais de %d registros na ContaBancari");
             }
 
@@ -2739,7 +2734,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 $sqlInsertHistoricoEmail = "INSERT INTO SAC.dbo.tbHistoricoEmail (idPronac,idTextoemail,DtEmail,stEstado,idUsuario)
                                             VALUES ({$idPronac}, {$idTextoEmail}, getdate(), 1, {$idUsuario})";
                 $resultado = $db->query($sqlInsertHistoricoEmail);
-                if(!$resultado) {
+                if($resultado->rowCount() < 1) {
                     throw new Exception ("Não é permitido inserir %d registros ao mesmo tempo na tabela tbHistoricoEmail");
                 }
 
@@ -2752,15 +2747,17 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                       INNER JOIN SAC.dbo.Interessado i on (p.CgcCpf = i.CgcCpf)
                                       WHERE idPronac = {$idPronac}";
                 $arrayMensagem = $db->fetchRow($sqlDadosProposta);
+
                 $nomeProposta = $arrayMensagem->NomeProjeto;
                 $destinatario = $arrayMensagem->Nome;
                 $mensagemEmail = "<b>Projeto: {$AnoProjeto}{$NrProjeto} - {$nomeProposta} <br> Proponente: {$destinatario}<br> </b>{$mensagem}";
                 $sqlEmail = "SELECT Descricao FROM agentes.dbo.Internet i
-                              INNER JOIN SAC.dbo.PreProjeto p on ->(i.idAgente = p.idAgente)
+                              INNER JOIN SAC.dbo.PreProjeto p on i.idAgente = p.idAgente
                               WHERE p.idPreProjeto = {$idPreProjeto} and i.idAgente = p.idAgente and Status = 1";
+
                 $arrayEmails = $db->fetchAll($sqlEmail);
                 foreach($arrayEmails as $email) {
-                    EmailDAO::enviarEmail($email, "Projeto Cultural", $mensagemEmail, $perfil = 'PerfilGrupoPRONAC');
+                    //EmailDAO::enviarEmail($email, "Projeto Cultural", $mensagemEmail);
                 }
             }
             $db->commit();
