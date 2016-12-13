@@ -18,6 +18,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
     public function init()
     {
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
+
         $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // t?tulo da p?gina
         $auth = Zend_Auth::getInstance(); // pega a autentica??o
         $PermissoesGrupo = array();
@@ -42,6 +43,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         //recupera ID do pre projeto (proposta)
         if(!empty ($idPreProjeto)) {
             $this->idPreProjeto = $idPreProjeto;
+            $this->view->idPreProjeto = $idPreProjeto;
+
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
             $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);

@@ -10,7 +10,7 @@
 class paTransformarPropostaEmProjetoNovaIN extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
-    protected $_name  = 'paTransformarPropostaEmProjetoNovaIN';
+    protected $_name  = 'paTransformarPropostaEmProjetoNovoIN';
 
     #public function execSP($idProposta, $CNPJCPF, $idOrgao, $idUsuario){
     /**

@@ -65,6 +65,7 @@ class Proposta_ManterpropostaeditalController extends MinC_Controller_Action_Abs
 
         //VALIDA ITENS DO MENU (Documento pendentes)
         if (!empty($idPreProjeto)) {
+            $this->view->idPreProjeto = $idPreProjeto;
 
             $tableDocumentosExigidos = new Proposta_Model_DbTable_DocumentosExigidos();
             $this->view->documentosPendentes = $tableDocumentosExigidos->buscarDocumentoPendente($idPreProjeto);
