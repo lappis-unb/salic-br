@@ -850,8 +850,6 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                         break;
                     case 2590: // Divulgacao
                         $valorCustoItem = ( $valorTotalProjeto * $calcDivugacao );
-                        if( $valorCustoItem > 100000 )
-                            $valorCustoItem = 100000;
                         break;
                     case 200: // Remuneracao p/ Captar Recursos
                         $valorCustoItem = ( $valorTotalProjeto * $calcCaptacao );
