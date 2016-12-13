@@ -15,9 +15,9 @@ class tbCumprimentoObjeto extends MinC_Db_Table_Abstract
     const SITUACAO_PROPONENTE = 1;
 
     protected $_banco = "SAC";
-    protected $_schema = "dbo";
+    protected $_schema = "SAC";
     protected $_name = "tbCumprimentoObjeto";
-    
+
     private $idCumprimentoObjeto;
     private $idPronac;
     private $idUsuario;
@@ -35,7 +35,7 @@ class tbCumprimentoObjeto extends MinC_Db_Table_Abstract
     private $dataCadastro;
 
     /**
-     * 
+     *
      * @param int $idPronac
      * @param int $idUsuario
      * @param type $etapasConcluidas
@@ -295,7 +295,7 @@ class tbCumprimentoObjeto extends MinC_Db_Table_Abstract
     }
 
     /**
-     * 
+     *
      */
     public function saveOrUpdate()
     {
