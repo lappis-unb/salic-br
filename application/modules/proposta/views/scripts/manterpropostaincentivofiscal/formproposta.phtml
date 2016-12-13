@@ -20,33 +20,34 @@
                 stProposta: { required: true}
             },
             messages: {
-                nomeProjeto: { required: function(){ JSMostraOcultaObj('identificacaodiv'); return "<br>Dado obrigat&oacute;rio n&atilde;o informado" } },
+                nomeProjeto: { required: function(){ return "<br>Dado obrigat&oacute;rio n&atilde;o informado" } },
                 resumoDoProjeto: {
-                    required: function(){ JSMostraOcultaObj('identificacaodiv'); return "<br>Dado obrigat&oacute;rio n&atilde;o informado" },
-                    validarResumoDoProjeto: function(){ JSMostraOcultaObj('identificacaodiv'); return "Dado obrigat&oacute;rio n&atilde;o informado" }
+                    required: function(){ return "<br>Dado obrigat&oacute;rio n&atilde;o informado" },
+                    validarResumoDoProjeto: function(){ return "Dado obrigat&oacute;rio n&atilde;o informado" }
                 },
-                agenciaBancaria: { required: function(){ JSMostraOcultaObj('identificacaodiv'); return "<br>Dado obrigat&oacute;rio n&atilde;o informado" } },
+                agenciaBancaria: { required: function(){ return "<br>Dado obrigat&oacute;rio n&atilde;o informado" } },
                 dtInicioDeExecucao: {
-                    required: function(){ JSMostraOcultaObj('identificacaodiv'); return "<br>Dado obrigat&oacute;rio n&atilde;o informado" },
-                    minlength: function(){ JSMostraOcultaObj('identificacaodiv'); return "<br>Data in&iacute;cio inv&aacute;lida" }
+                    required: function(){ return "<br>Dado obrigat&oacute;rio n&atilde;o informado" },
+                    minlength: function(){ return "<br>Data in&iacute;cio inv&aacute;lida" }
                 },
                 dtFinalDeExecucao: {
-                    required: function(){ JSMostraOcultaObj('identificacaodiv'); return "<br>Dado obrigat&oacute;rio n&atilde;o informado" },
-                    minlength: function(){ JSMostraOcultaObj('identificacaodiv'); return "<br>Data final inv&aacute;lida" }
+                    required: function(){ return "<br>Dado obrigat&oacute;rio n&atilde;o informado" },
+                    minlength: function(){ return "<br>Data final inv&aacute;lida" }
                 },
-                stProposta: { required: function() { JSMostraOcultaObj('identificacaodiv'); return "<br>A data da criacão da proposta não pode ultrapassar 30/09 do ano anterior a execução do projeto." }} //@todo novaIn
+                stProposta: { required: function() { return "<br>A data da criacão da proposta não pode ultrapassar 30/09 do ano anterior a execução do projeto." }} //@todo novaIn
             },
             submitHandler: function(form) {
+                validaAgencia();
+//                AgenciaValida = document.getElementById("ValidaAgencia").innerHTML;
+//                if(AgenciaValida != ''){
+//                    $('#tabs').tabs('select', 'identificacao');
+//                    $("#agenciaBancaria").focus();
+//                    document.getElementById("ValidaAgencia").innerHTML = "<Br>Ag&ecirc;ncia inv&aacute;lida";
+////                    JSMostraOcultaObj('identificacao');
+//                }else{
+//                    document.getElementById("ValidaAgencia").innerHTML = "";
+//                }
 
-                AgenciaValida = document.getElementById("ValidaAgencia").innerHTML;
-                if(AgenciaValida != ''){
-                    $('#tabs').tabs('select', 'identificacao');
-                    $("#agenciaBancaria").focus();
-                    document.getElementById("ValidaAgencia").innerHTML = "<Br>Ag&ecirc;ncia inv&aacute;lida";
-//                    JSMostraOcultaObj('identificacao');
-                }else{
-                    document.getElementById("ValidaAgencia").innerHTML = "";
-                }
 
                 //se datas nao atendem as regras de negocio, nao submete o form
                 if($("#blnDatasValidas").val() == "false"){
@@ -95,7 +96,7 @@
 
             form.submit();
 
-        }, invalidHandler: function(event, validator) {
+        },invalidHandler: function(event, validator) {
 
             var errors = validator.numberOfInvalids();
             if (errors) {
@@ -104,6 +105,8 @@
                     : 'Voc&ecirc; possui ' + errors + ' campos com erros. Eles foram destacados abaixo';
                 $("div.error span").html(message);
                 $("div.error").show();
+                JSMostraOcultaObj('identificacaodiv', null, true);
+
             } else {
                 $("div.error").hide();
             }
@@ -194,7 +197,6 @@
 
     $("#dtInicioDeExecucao").change(function()
     {
-
         if($(this).val().length == 10){
             var url = '<?php echo $this->url(array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'valida-datas')); ?>';
             url = url +'?dtInicio='+$("#dtInicioDeExecucao").val()+'&dtFim='+$("#dtFinalDeExecucao").val();
@@ -311,47 +313,15 @@
         jqAjaxLinkSemLoading('<?php echo $buscarAgencia; ?>?agencia='+$('#agenciaBancaria').val(), "", "ValidaAgencia");
     }
 
-});
-
-/* -----
-        FUNcao QUE FAZ A TROCA (VISUAL) DE UM OBJETO NA TELA
-        CASO ID_STATUS SEJA UM, O OBJETO ANTERIOR NAO SERIA RETIRADO DA TELA
-        DENTRO DA FUNCAO ABAIXO ELE TAMBEM ALTERA OS DADOS CONFORME A MUDANCA NO DISPLAY
-        --------- */
-//function JSMostraOcultaObj(id_tbl,id_status){
-function JSMostraOcultaObj(idObjConteudo,obj){
-    aparece = $('#'+idObjConteudo).css('display');
-    $('#conteudo').find('.divChave').each(function(){
-        $(this).hide();
-        $(this).fadeOut('fast', function() {
-            $('img.imgDinamica').attr('src','<?php echo $this->baseUrl(); ?>/public/img/btn_adicionar.gif');
-        });
-    });
-    if(aparece != 'block'){
-        $("#"+idObjConteudo).fadeIn('fast', function() {
-            $('img', $(obj)).attr('src','<?php echo $this->baseUrl(); ?>/public/img/btn_menos.gif');
-            if(obj){
-                $('html, body').animate({
-                    scrollTop: $(obj).offset().top
-                }, 1000);
-            }
-        });
-    }
-}
-/**
- * Funcoes que sao chamadas apos a pagina ser carregada
- */
-$(document).ready(function()
-{
     // mascaras dos campos
     $("#dtInicioDeExecucao, #dtFinalDeExecucao, #dtAtoTombamento").keyup(function()
     {
         mascara(this, format_data); // data
     });
 
-    // calendï¿½rio
+    // calendario
     $.datepicker.regional['pt-BR'] =
-        {
+    {
         closeText: 'Fechar',
         prevText: '&#x3c;Anterior',
         nextText: 'Pr&oacute;ximo&#x3e;',
@@ -372,7 +342,39 @@ $(document).ready(function()
 
     // id dos campos que utilizarï¿½o o calendï¿½rio
     $("#dtInicioDeExecucao, #dtFinalDeExecucao, #dtAtoTombamento").datepicker($.datepicker.regional['pt-BR']);
-}); // fim $(document).ready()
+
+
+});
+
+    /* -----
+            FUNcao QUE FAZ A TROCA (VISUAL) DE UM OBJETO NA TELA
+            CASO ID_STATUS SEJA UM, O OBJETO ANTERIOR NAO SERIA RETIRADO DA TELA
+            DENTRO DA FUNCAO ABAIXO ELE TAMBEM ALTERA OS DADOS CONFORME A MUDANCA NO DISPLAY
+            --------- */
+    //function JSMostraOcultaObj(id_tbl,id_status){
+    function JSMostraOcultaObj(idObjConteudo,obj, show){
+
+        aparece = $('#'+idObjConteudo).css('display');
+
+        if(show) aparece = 'none';
+
+        $('#conteudo').find('.divChave').each(function(){
+            $(this).hide();
+            $(this).fadeOut('fast', function() {
+                $('img.imgDinamica').attr('src','<?php echo $this->baseUrl(); ?>/public/img/btn_adicionar.gif');
+            });
+        });
+        if(aparece != 'block'){
+            $("#"+idObjConteudo).fadeIn('fast', function() {
+                $('img', $(obj)).attr('src','<?php echo $this->baseUrl(); ?>/public/img/btn_menos.gif');
+                if(obj){
+                    $('html, body').animate({
+                        scrollTop: $(obj).offset().top
+                    }, 1000);
+                }
+            });
+        }
+    }
 
 </script>
 
@@ -388,7 +390,7 @@ $(document).ready(function()
 
     #conteudo table,
     table.tabela {
-        width: 100%;
+        width: 99%;
         margin: 10px auto;
     }
 
