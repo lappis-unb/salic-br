@@ -5,7 +5,7 @@
         <input name="IdPRONAC" type="hidden" value="<?php echo $this->idPronac; ?>"/>
         <div class="row">
             <div class="input-field col s12">
-                <select data-url="/admissibilidade/mensagem/usuarios" data-target="select[name=idDestinatario]" name="idUnidade" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
+                <select class="invalid"  data-url="/admissibilidade/mensagem/usuarios" data-target="select[name=idDestinatario]" name="idUnidade" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
                     <option value="" disabled selected>Selecione...</option>
 <!--                        <optgroup label="--><?php //echo $key ?><!--">-->
                             <?php foreach ($this->arrUnidades as $values): ?>
@@ -20,8 +20,7 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <select
-                    name="idDestinatario" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
+                <select class="invalid" required="required" name="idDestinatario" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
                     <option value="" disabled selected>Selecione...</option>
                 </select>
                 <label>Agente</label>
@@ -29,7 +28,7 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <textarea name="dsMensagem"
+                <textarea required="required" name="dsMensagem"
                           class="materialize-textarea" <?php if (isset($this->arrConfig['dsMensagem']) && $this->arrConfig['dsMensagem']['disabled']) echo 'disabled="disabled"' ?>><?php if (isset($this->dataForm['dsMensagem'])) echo $this->dataForm['dsMensagem']; ?></textarea>
                 <label for="textarea1" <?php if (isset($this->dataForm['dsMensagem'])) echo 'class="active"' ?>>Descricao</label>
             </div>
@@ -37,8 +36,7 @@
         <?php if ((!isset($this->arrConfig['dsResposta']) || $this->arrConfig['dsResposta']['show'] !== false)): ?>
             <div class="row">
                 <div class="input-field col s12">
-                    <textarea name="dsResposta"
-                              class="materialize-textarea" <?php if (isset($this->arrConfig['dsResposta']) && $this->arrConfig['dsResposta']['disabled']) echo 'disabled="disabled"' ?>><?php if (isset($this->dataForm['dsResposta'])) echo $this->dataForm['dsResposta']; ?></textarea>
+                    <textarea required="required" name="dsResposta" class="materialize-textarea" <?php if (isset($this->arrConfig['dsResposta']) && $this->arrConfig['dsResposta']['disabled']) echo 'disabled="disabled"' ?>><?php if (isset($this->dataForm['dsResposta'])) echo $this->dataForm['dsResposta']; ?></textarea>
                     <label for="textarea1" <?php if (isset($this->dataForm['dsResposta'])) echo 'class="active"' ?>>Resposta</label>
                 </div>
             </div>
@@ -53,6 +51,10 @@
 <script>
     $jq3(document).ready(function () {
         $jq3('.modal').find('select').material_select();
+        setTimeout(function(){
+            $jq3('.modal').find('[required=required]').closest('.input-field').find('input.select-dropdown').addClass('invalid');
+            $jq3('.modal').find('[required=required]').addClass('invalid');
+        }, 300);
             var select = $jq3('select[data-target]'),
                 strUrl = select.attr('data-url'),
                 objTarget = $jq3(select.attr('data-target'));

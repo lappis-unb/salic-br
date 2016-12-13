@@ -33,7 +33,7 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
             $model = new Admissibilidade_Model_TbMensagemProjeto($arrData);
             try {
                 $auth = Zend_Auth::getInstance(); // pega a autenticacao
-                $arrAuth = array_change_key_case((array) $auth->getIdentity());
+                $arrAuth = array_change_key_case((array)$auth->getIdentity());
                 $model->setStAtivo(1);
                 if ($intId = parent::save($model)) {
                     $booStatus = 1;
@@ -58,7 +58,7 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
             $model = new Admissibilidade_Model_TbMensagemProjeto($arrData);
             try {
                 $auth = Zend_Auth::getInstance(); // pega a autenticacao
-                $arrAuth = array_change_key_case((array) $auth->getIdentity());
+                $arrAuth = array_change_key_case((array)$auth->getIdentity());
                 $model->setStAtivo(1);
                 $model->setDtMensagem(date('Y-m-d h:i:s'));
                 $model->setIdRemetente($arrAuth['usu_codigo']);
@@ -78,6 +78,24 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
         return $booStatus;
     }
 
+    public function isValid($model)
+    {
+        $booStatus = true;
+        $arrData = $model->toArray();
+        $arrRequired = array(
+            'dsMensagem',
+            'idDestinatario',
+            'IdPRONAC',
+        );
+        foreach ($arrRequired as $strValue) {
+            if (!isset($arrData[$strValue]) || empty($arrData[$strValue])) {
+                $this->setMessage('Campo obrigat&oacute;rio!', $strValue);
+                $booStatus = false;
+            }
+        }
+        return $booStatus;
+    }
+
     public function salvar($arrData)
     {
         $booStatus = false;
@@ -85,7 +103,7 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
             $model = new Admissibilidade_Model_TbMensagemProjeto($arrData);
             try {
                 $auth = Zend_Auth::getInstance(); // pega a autenticacao
-                $arrAuth = array_change_key_case((array) $auth->getIdentity());
+                $arrAuth = array_change_key_case((array)$auth->getIdentity());
                 $model->setDtMensagem(date('Y-m-d h:i:s'));
                 $model->setIdRemetente($arrAuth['usu_codigo']);
 //                $model->setIdDestinatario($arrAuth['usu_codigo']);
