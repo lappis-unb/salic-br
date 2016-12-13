@@ -100,6 +100,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
 //            $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
 //            $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac));
             $this->view->title = "Perguntas do Pronac: Projeto TAL ({$intIdPronac})";
+            $this->view->idPronac = $intIdPronac;
         } else {
             $this->view->title = "Perguntas";
 //            parent::message("Pronac inv&aacute;lido.", "/admissibilidade/enquadramento/listar", "ALERT");
@@ -136,7 +137,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         if ($this->getRequest()->isPost()) {
             $this->_helper->viewRenderer->setNoRender(true);
             $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
-            echo json_encode(array('status' => $mapper->salvar($this->getRequest()->getPost()), 'msg' => $mapper->getMessage()));
+            echo json_encode(array('status' => $mapper->salvar($this->getRequest()->getPost()), 'msg' => $mapper->getMessages()));
         } else {
             $this->view->title = 'Enviar pergunta';
             $this->view->action = 'salvar';
