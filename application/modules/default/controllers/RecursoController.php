@@ -108,7 +108,10 @@ class RecursoController extends GenericControllerNew
                     $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
                     $where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
                     break;
-                case 'emanalise':
+                case 'emanalise':                    
+                    $where['c.tpDistribuicao = ?'] = 'A';
+                    $where['c.stFecharAnalise = ?'] = '0';
+                    $where['c.stEstado = ?'] = '0';                 
                     $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
                     $where['a.siRecurso in (?)'] = array(3,4,7); // // 3=Encaminhado do MinC para a  Unidade de Análise; 4=Encaminhado para Parecerista /  Técnico; 7=Encaminhado para o Componente da Comissão
                     $this->view->nmPagina = 'Em Análise';
@@ -143,10 +146,6 @@ class RecursoController extends GenericControllerNew
             }
         }
 
-        $where['c.tpDistribuicao = ?'] = 'A';
-        $where['c.stFecharAnalise = ?'] = '0';
-        $where['c.stEstado = ?'] = '0';
-        
         $tbRecurso = New tbRecurso();
         $total = $tbRecurso->painelRecursos($where, $order, null, null, true);
         $fim = $inicio + $this->intTamPag;
