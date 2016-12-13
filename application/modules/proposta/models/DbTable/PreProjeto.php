@@ -291,7 +291,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
        $rsPreProjeto->idUsuario              = $dados["idusuario"];
        $rsPreProjeto->stTipoDemanda          = $dados["sttipodemanda"];
        $rsPreProjeto->idEdital               = (isset($dados["idedital"])) ? $dados["idedital"] : null;
-       $rsPreProjeto->prorrogacaoAutomatica  = $dados["prorrogacaoAutomatica"];
+       $rsPreProjeto->tpProrrogacao          = $dados["tpprorrogacao"];
 
        //SALVANDO O OBJETO
        $id = $rsPreProjeto->save();
