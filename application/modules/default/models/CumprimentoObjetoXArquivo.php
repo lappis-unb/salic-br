@@ -13,16 +13,16 @@ class CumprimentoObjetoXArquivo extends MinC_Db_Table_Abstract
     const IMPACTOS_AMBIENTAIS = 2;
 
     protected $_banco = "SAC";
-    protected $_schema = "dbo";
+    protected $_schema = "SAC";
     protected $_name = "tbCumprimentoObjetoXArquivo";
-    
+
     private $idCumprimentoObjetoXArquivo;
     private $idCumprimentoObjeto;
     private $arquivo;
     private $posicao;
 
     /**
-     * 
+     *
      * @param int $idCumprimentoObjetoXArquivo
      * @param int $idCumprimentoObjeto
      * @param int $arquivo
@@ -109,7 +109,7 @@ class CumprimentoObjetoXArquivo extends MinC_Db_Table_Abstract
     }
 
     /**
-     * 
+     *
      * @param string $filename nome do arquivo que est� sendo passado no atributo
      * 'name' do formulario que est� postando os arquivos
      * @return int O numero inteiro que representa a natureza a qual se destina

@@ -3,15 +3,12 @@
  * DAO tbAnaliseDeConteudo
  * @since 01/08/2013
  * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class tbAnaliseDeConteudo extends MinC_Db_Table_Abstract {
     protected $_banco  = "SAC";
-    protected $_schema = "dbo";
+    protected $_schema = "SAC";
     protected $_name   = "tbAnaliseDeConteudo";
 
     /**
@@ -38,9 +35,8 @@ class tbAnaliseDeConteudo extends MinC_Db_Table_Abstract {
     } // fecha m�todo alterarDados()
 
 
-
-    public function buscarOutrasInformacoes($idPronac) {
-
+    public function buscarOutrasInformacoes($idPronac)
+    {
         $select =  new Zend_Db_Expr("
                 SELECT idPRONAC,p.Descricao AS Produto,
                   CASE
@@ -79,7 +75,7 @@ class tbAnaliseDeConteudo extends MinC_Db_Table_Abstract {
         }
         return $db->fetchAll($select);
     }
-    
+
     public function cidadoBuscarOutrasInformacoes($idPronac) {
 
             $select = $this->select();
@@ -128,4 +124,4 @@ class tbAnaliseDeConteudo extends MinC_Db_Table_Abstract {
             return $this->fetchAll($select);
         }
 
-} // fecha class
+}

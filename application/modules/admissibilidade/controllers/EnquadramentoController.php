@@ -2,8 +2,6 @@
 
 /**
  * @package Controller
- * @author  Vinícius Feitosa da Silva <viniciusfesil@gmail.com>
- * @author  Wouerner <wouerner@gmail.com>
  * @since 02/12/2016 16:06
  */
 class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abstract
@@ -26,7 +24,6 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
      * ListarAction - Lista com Projetos em situção de Enuquadramento.
      *
      * @access public
-     * @return void
      */
     public function listarAction()
     {
