@@ -1,3 +1,7 @@
+Release 1.14.1
+  * Fix: [Recursos] Combos de pareceristas exibindo corretamente
+  * Fix: [Recursos] movendo restrições de busca apenas para caso "em análise"
+
 Release 1.14.0
   * Novo: [Gerenciar pareceres] adicionado ordenação todas as colunas de gerenciar parecer
   * Novo: [Pagamento de Pareceristas] Adicionado paginação e ordenação em Registrar ordem bancária
