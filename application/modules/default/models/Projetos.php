@@ -7317,6 +7317,8 @@ class Projetos extends MinC_Db_Table_Abstract
     public function listarPorSituacao($situacao, $order= null, $limit = null)
     {
         $sql = $this->select();
+        $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
+
         $sql->setIntegrityCheck(false);
         $sql->from(
             array("p" => $this->_name),
@@ -7330,30 +7332,19 @@ class Projetos extends MinC_Db_Table_Abstract
             'p.UfProjeto',
             'p.DtInicioExecucao',
             'p.DtFimExecucao',
-            //'DtInicioCaptacao' => New Zend_Db_Expr("dateadd(day,1,getdate())"),
-            //'DtFimCaptacao' => New Zend_Db_Expr("case when CONVERT(char(10),pr.DtFimExecucao,111) <= CONVERT(char(4),year(getdate())) + '/12/31' then pr.DtFimExecucao else CONVERT(char(4),year(getdate())) + '/12/31' end"),
-            //'DtSolicitacao' => new Zend_Db_Expr('(select top 1 DtSolicitacao from SAC.dbo.tbDiligencia dili1 where dili1.idPronac = pr.idPronac order by dili1.DtSolicitacao desc)'),
-            //'DtResposta' => new Zend_Db_Expr('(select top 1 DtResposta from SAC.dbo.tbDiligencia dili2 where dili2.idPronac = pr.idPronac order by dili2.DtSolicitacao desc)'),
-            //'stEnviado' => new Zend_Db_Expr('(select top 1 stEnviado from SAC.dbo.tbDiligencia dili3 where dili3.idPronac = pr.idPronac order by dili3.DtSolicitacao desc)')
             ),
             $this->_schema
         );
 
-        $sql->joinInner(
-            array('ar' => 'Area'), 'ar.Codigo = p.Area', array('ar.Descricao AS area')
-        );
-        $sql->joinLeft(
-            array('sg' => 'Segmento'), 'sg.Codigo = p.Segmento', array('sg.Descricao AS segmento')
-        );
-        
+        $sql->joinInner(array('ar' => 'Area'), 'ar.Codigo = p.Area', array('ar.Descricao AS area'));
+
+        $sql->joinLeft(array('sg' => 'Segmento'), 'sg.Codigo = p.Segmento', array('sg.Descricao AS segmento'));
 
         $sql->where('p.situacao = ?', $situacao);
 
         !empty($order) ? $sql->order($order) : null;
         !empty($limit) ? $sql->limit($limit) : null;
 
-        $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
-        
         return $this->_db->fetchAll($sql);
     }
 }
