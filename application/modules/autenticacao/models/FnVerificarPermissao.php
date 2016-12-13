@@ -122,7 +122,7 @@ class Autenticacao_Model_FnVerificarPermissao extends MinC_Db_Table_Abstract {
 
                     if (!empty($dirigenteCpf)) {
                        //IF @CPF_Logado = @CPF_Dirigente or @idUsuario_Responsavel = @idUsuario_Logado
-                        if ($cpfLogado['cpf'] == $dirigenteCpf['b.cnpjcpf'] || $agente['a.idusuario'] == $idUsuarioLogado) {
+                        if ($cpfLogado['cpf'] == $dirigenteCpf['b.cnpjcpf'] || $agente['idusuario'] == $idUsuarioLogado) {
                             $permissao = 1;
                         } else {
                             $permissao = 0;
