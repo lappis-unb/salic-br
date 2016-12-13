@@ -158,6 +158,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         $this->_helper->layout->disableLayout();
         $this->view->title = 'Visualizar pergunta';
         $this->view->action = 'visualizar';
+        $this->view->isVisualizar = true;
         $this->prepareForm(array(
             'idDestinatario' => array('disabled' => true),
             'dsMensagem' => array('disabled' => true),
