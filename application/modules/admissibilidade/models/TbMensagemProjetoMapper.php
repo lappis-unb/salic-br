@@ -82,11 +82,18 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
     {
         $booStatus = true;
         $arrData = $model->toArray();
-        $arrRequired = array(
-            'dsMensagem',
-            'idDestinatario',
-            'IdPRONAC',
-        );
+
+        if (empty($arrData['idMensagemProjeto'])){
+            $arrRequired = array(
+                'dsMensagem',
+                'idDestinatario',
+                'IdPRONAC',
+            );
+        } else {
+            $arrRequired = array(
+                'idDestinatario',
+            );
+        }
         foreach ($arrRequired as $strValue) {
             if (!isset($arrData[$strValue]) || empty($arrData[$strValue])) {
                 $this->setMessage('Campo obrigat&oacute;rio!', $strValue);
