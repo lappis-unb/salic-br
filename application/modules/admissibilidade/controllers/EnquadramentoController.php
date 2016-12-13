@@ -70,6 +70,9 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         }
     }
 
+    /**
+     * @todo Verificar com Rômulo qual informaçõa deve ser armazenada para a coluna "ProvidenciaTomada" da tabela "Projetos"
+     */
     private function salvarEnquadramentoProjeto($projeto)
     {
         $auth = Zend_Auth::getInstance();
@@ -89,7 +92,18 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
         $objEnquadramento->inserir($arrayInclusao);
 
-        parent::message("Enquadramento cadastrado com sucesso.", "/admissibilidade/enquadramento/listar");
+        $objProjeto = new Projetos();
+
+        $arrayDados = array(
+            'Situacao' => 'L10',
+            'DtSituacao' => $objProjeto->getExpressionDate(),
+            'ProvidenciaTomada' => $post['observacao'],
+            'logon' => $authIdentity['usu_codigo']
+        );
+        $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
+        $objProjeto->update($arrayDados, $arrayWhere);
+
+        parent::message("Enquadramento cadastrado com sucesso.", "/admissibilidade/enquadramento/listar", "CONFIRM");
     }
 
     private function carregardadosEnquadramentoProjeto($projeto)

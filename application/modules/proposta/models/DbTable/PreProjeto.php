@@ -2566,6 +2566,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         if (!empty( $movimentacao )) {
             $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL ENCONTRA-SE NO MINIST&Eacute;RIO DA CULTURA.</b></font>';
             $validacao->Observacao = '';
+            $validacao->Url = '';
             $listaValidacao[] =  clone($validacao);
         } else {
 
@@ -2575,9 +2576,10 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 ;
 
             $avaliacaoProposta = $db->fetchAll($sql);
-            if(( date('m') == 12 || date('m') == 1 ) && empty($avaliacaoProposta)) {
-                $validacao->Descricao = 'Conforme Art 9º da Instrução Normativa nº 1, de 24 de junho de 2013, nenhuma proposta poder&aacute; ser enviada ao MinC nos meses de DEZEMBRO e JANEIRO!';
-                $validacao->Observacao = '<font color=red><b>IMPEDIMENTO</b></font>';
+            if(( date('m') == 13 || date('m') == 1 ) && empty($avaliacaoProposta)) {
+                $validacao->Descricao = 'Conforme Art 9&#176; da Instru&ccedil;&atilde;o Normativa n&#176; 1, de 24 de junho de 2013, nenhuma proposta poder&aacute; ser enviada ao MinC nos meses de DEZEMBRO e JANEIRO!';
+                $validacao->Observacao = 'PENDENTE';
+                $validacao->Url = '';
                 $listaValidacao[] =  clone($validacao);
             } else {
                 $sql = $db->select()
@@ -2593,10 +2595,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 if (empty($vCadastrarProponente)) {
                     $validacao->Descricao = 'Dados cadastrais do proponente inexistente ou não h&aacute; endereço para correspondência selecionado.';
                     $validacao->Observacao = 'PENDENTE';
+                    $validacao->Url = array('module' => 'agente', 'controller' => 'agentes', 'action' => 'agentes', 'id' => $idAgente);
                     $listaValidacao[] =  clone($validacao);
                 } else {
                     $validacao->Descricao = 'Dados cadastrais do proponente lan&ccedil;ado.';
                     $validacao->Observacao = 'OK';
+                    $validacao->Url =  array('module' => 'agente', 'controller' => 'agentes', 'action' => 'agentes', 'id' => $idAgente);
                     $listaValidacao[] =  clone($validacao);
                 }
 
@@ -2615,10 +2619,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     if (!empty($regularidadeProponente)) {
                         $validacao->Descricao ='Proponente em situa&ccedil;&atilde;o IRREGULAR no Minist&eacute;rio da Cultura.';
                         $validacao->Observacao =  'PENDENTE';
+                        $validacao->Url = '';
                         $listaValidacao[] =  clone($validacao);
                     } else {
                         $validacao->Descricao ='Proponente em situa&ccedil;&atilde;o REGULAR no Minist&eacute;rio da Cultura.';
                         $validacao->Observacao =  'OK';
+                        $validacao->Url = '';
                         $listaValidacao[] =  clone($validacao);
                     }
 
@@ -2634,10 +2640,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     if (empty($verificarEmail)){
                         $validacao->Descricao ='E-mail do proponente inexistente';
                         $validacao->Observacao =  'PENDENTE';
+                        $validacao->Url = array('module' => 'agente', 'controller' => 'agentes', 'action' => 'agentes', 'id' => $idAgente);
                         $listaValidacao[] =  clone($validacao);
                     } else {
                         $validacao->Descricao ='E-mail do proponente cadastrado.';
                         $validacao->Observacao =  'OK';
+                        $validacao->Url = array('module' => 'agente', 'controller' => 'agentes', 'action' => 'agentes', 'id' => $idAgente);
                         $listaValidacao[] =  clone($validacao);
                     }
 
@@ -2662,10 +2670,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         if (empty($dataNasc)) {
                             $validacao->Descricao ='Data de Nascimento inexistente.';
                             $validacao->Observacao =  'PENDENTE';
+                            $validacao->Url = array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'alterardados');
                             $listaValidacao[] = clone($validacao);
                         } else {
                             $validacao->Descricao ='Data de Nascimento cadastrada.';
                             $validacao->Observacao =  'OK';
+                            $validacao->Url = array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'alterardados');
                             $listaValidacao[] =  clone($validacao);
                         }
                     }
@@ -2683,10 +2693,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         if(empty($natureza)) {
                             $validacao->Descricao = 'Natureza do proponente.';
                             $validacao->Observacao =  'PENDENTE';
+                            $validacao->Url = '';
                             $listaValidacao[] =  clone($validacao);
                         } else {
                             $validacao->Descricao = 'Natureza do proponente cadastrada.';
                             $validacao->Observacao =  'OK';
+                            $validacao->Url = '';
                             $listaValidacao[] =  clone($validacao);
                         }
 
@@ -2701,10 +2713,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                         if (empty($dirigenteCadastrado)) {
                             $validacao->Descricao = 'Cadastro de Dirigente.';
                             $validacao->Observacao = 'PENDENTE';
+                            $validacao->Url = '';
                             $listaValidacao[] =  clone($validacao);
                         } else {
                             $validacao->Descricao ='Cadastro de Dirigente lançado.'  ;
                             $validacao->Observacao =  'OK';
+                            $validacao->Url = '';
                             $listaValidacao[] =  clone($validacao);
                         }
                     }
@@ -2722,10 +2736,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     if (empty($local)) {
                         $validacao->Descricao = 'O Local de realiza&ccedil;&atilde;o da proposta n&atilde;o foi preenchido.';
                         $validacao->Observacao = 'PENDENTE';
+                        $validacao->Url = array('module' => 'proposta', 'controller' => 'localderealizacao', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
                     } else {
-                        $validacao->Descricao = 'Local de realizaç&atilde;o da proposta cadastrada.';
+                        $validacao->Descricao = 'Local de realiza&ccedil;&atilde;o da proposta cadastrada.';
                         $validacao->Observacao = 'OK';
+                        $validacao->Url = array('module' => 'proposta', 'controller' => 'localderealizacao', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
                     }
 
@@ -2741,10 +2757,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 //                    if (empty($planoDivulgacao)){
 //                        $validacao->Descricao = 'O Plano B&aacute;sico de Divulga&ccedil;&atilde;o n&atilde;o foi preenchido.';
 //                        $validacao->Observacao = 'PENDENTE';
+//$validacao->Url = '';
 //                        $listaValidacao[] =  clone($validacao);
 //                    } else {
 //                        $validacao->Descricao = 'Plano B&aacute;sico de Divulga&ccedil;&atilde;o cadastrado.';
 //                        $validacao->Observacao = 'OK';
+//$validacao->Url = '';
 //                        $listaValidacao[] =  clone($validacao);
 //                    }
                     //-- VERIFICAR SE EXISTE NO MINIMO 90 DIAS ENTRE A DATA DE ENVIO E O INICIO DO PERIODO DE EXECUCAO DO PROJETO
@@ -2764,10 +2782,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     if (!empty($minimo90)) {
                         $validacao->Descricao = 'A diferen&ccedil;a em dias entre a data de envio do projeto ao MinC e a data de início de execu&ccedil;&atilde;o do projeto est&aacute; menor do que 90 dias.';
                         $validacao->Observacao = 'PENDENTE';
+                        $validacao->Url =  array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'enviar-proposta-ao-minc', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
                     } else {
                         $validacao->Descricao = 'Prazo de in&iacute;cio de execu&ccedil;&atilde;o maior do que 90 dias.';
                         $validacao->Observacao = 'OK';
+                        $validacao->Url = array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
                     }
 
@@ -2781,10 +2801,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     if (empty($planoDistribuicao)){
                         $validacao->Descricao = 'O Plano Distribui&ccedil;&atilde;o de Produto n&atilde;o foi preenchido.';
                         $validacao->Observacao = 'PENDENTE';
+                        $validacao->Url = array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
                     } else {
                         $validacao->Descricao = 'O Plano Distribui&ccedil;&atilde;o de Produto cadastrado.';
                         $validacao->Observacao = 'OK';
+                        $validacao->Url = array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
                     }
 
@@ -2801,10 +2823,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     if ($quantidade = 0){
                         $validacao->Descricao = 'N&atilde;o h&aacute; produto principal selecionado na proposta.';
                         $validacao->Observacao = 'PENDENTE';
+                        $validacao->Url = array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
                     } else if($quantidade > 1) {
                         $validacao->Descricao = 'Só poder&aacute; haver um produto principal em cada proposta, a sua est&aacute; com mais de um produto.';
                         $validacao->Observacao = 'PENDENTE';
+                        $validacao->Url = array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
                     }
 
@@ -2821,10 +2845,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     if (empty($planilhaOrcamentaria)) {
                         $validacao->Descricao = 'N&atilde;o existe item or&ccedil;ament&aacute;rio referente a fonte de recurso - Incentivo Fiscal Federal.';
                         $validacao->Observacao = 'PENDENTE';
+                        $validacao->Url = array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
                     } else {
                         $validacao->Descricao = 'Itens Or&ccedil;ament&aacute;rios com fontes de recurso - incentivo fiscal federal cadastrados.';
                         $validacao->Observacao = 'OK';
+                        $validacao->Url = array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
                     }
 
@@ -2849,10 +2875,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     if (!empty($planilhaProduto)) {
                         $validacao->Descricao = 'Existe produto cadastrado sem a respectiva planilha orcament&aacute;ria cadastrada.';
                         $validacao->Observacao = 'PENDENTE';
+                        $validacao->Url = array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
                     } else {
                         $validacao->Descricao = 'Todos os produtos com as respectivas planilhas or&ccedil;ament&aacute;rias cadastradas.';
                         $validacao->Observacao = 'OK';
+                        $validacao->Url = array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'produtoscadastrados', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
                     }
 
@@ -2877,10 +2905,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 //                    if (!empty($custoAdministrativos)){
 //                        $validacao->Descricao = 'A planilha de custos administrativos do projeto n&atilde;o est&aacute; cadastrada.';
 //                        $validacao->Observacao = 'PENDENTE';
+//$validacao->Url = '';
 //                        $listaValidacao[] =  clone($validacao);
 //                    } else {
 //                        $validacao->Descricao = 'Planilha de custos administrativos cadastrada.';
 //                        $validacao->Observacao = 'OK';
+//$validacao->Url = '';
 //                        $listaValidacao[] =  clone($validacao);
 //                    }
 
@@ -2913,10 +2943,12 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 //                        if($resultadoPercentual > 15){
 //                            $validacao->Descricao = 'Custo administrativo superior a 15% do valor total do projeto.';
 //                            $validacao->Observacao = 'PENDENTE';
+//$validacao->Url = '';
 //                            $listaValidacao[] =  clone($validacao);
 //                        } else {
 //                            $validacao->Descricao = 'Custo administrativo inferior a 15% do valor total do projeto.';
 //                            $validacao->Observacao = 'OK';
+//$validacao->Url = '';
 //                            $listaValidacao[] =  clone($validacao);
 //                        }
 //                    }
@@ -2942,53 +2974,58 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     $custoAdm = $db->fetchAll($sql);
                     $custoAdm = empty($custoAdm[0]->total) ? 0 : $custoAdm[0]->total;
 
-                    $resultadoPercentual = ($total == 0) ? 0 : ($custoAdm/$total *100);
-                    if ($resultadoPercentual > 10 || $custoAdm >100000){
-                        $validacao->Descricao = 'Remunera&ccedil;&atilde;o para capta&ccedil;&atilde;o de recursos superior a 10% do valor total do projeto, ou superior a  R$ 100.000,00.';
-                        $validacao->Observacao = 'PENDENTE';
-                        $listaValidacao[] =  clone($validacao);
-                    } else {
-                        $validacao->Descricao = 'Remunera&ccedil;&atilde;o para capta&ccedil;&atilde;o de recursos est&aacute; dentro dos par&atilde;metros permitidos.';
-                        $validacao->Observacao = 'OK';
-                        $listaValidacao[] =  clone($validacao);
-                    }
+                    //@todo novaIn validar os novos custos administrativos aqui. Não apagar!
+//                    $resultadoPercentual = ($total == 0) ? 0 : ($custoAdm/$total *100);
+//                    if ($resultadoPercentual > 10 || $custoAdm >100000){
+//                        $validacao->Descricao = 'Remunera&ccedil;&atilde;o para capta&ccedil;&atilde;o de recursos superior a 10% do valor total do projeto, ou superior a  R$ 100.000,00.';
+//                        $validacao->Observacao = 'PENDENTE';
+//                        $validacao->Url = '';
+//                        $listaValidacao[] =  clone($validacao);
+//                    } else {
+//                        $validacao->Descricao = 'Remunera&ccedil;&atilde;o para capta&ccedil;&atilde;o de recursos est&aacute; dentro dos par&atilde;metros permitidos.';
+//                        $validacao->Observacao = 'OK';
+//                        $validacao->Url = '';
+//                        $listaValidacao[] =  clone($validacao);
+//                    }
 
                     //-- VERIFICAR O PERCENTUAL DA DIVULGACAO E COMERCIALIZACAO
-                    $sql = $db->select()
-                        ->from(array('tbplanilhaproposta'), 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total',  $this->_schema)
-                        ->where('idProjeto =  ?', $idPreProjeto)
-                        ->where('FonteRecurso = 109')
-                        ->where('idEtapa <> 3')
-                        ;
-
-                    $total = $db->fetchAll($sql);
-                    $total = empty($total[0]->total) ? 0 : $total[0]->total;
-
-                    //--pega o valor de remuneracao para captacao
-                    $sql = $db->select()
-                        ->from(array('tbplanilhaproposta'), 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total',  $this->_schema)
-                        ->where('idProjeto =  ?', $idPreProjeto)
-                        ->where('FonteRecurso = 109')
-                        ->where('idEtapa = 3')
-                        ;
-
-                    $custoAdm = $db->fetchAll($sql);
-                    $custoAdm = empty($custoAdm[0]->total) ? 0 : $custoAdm[0]->total;
-
-                    //--calcula o percentual
-                    if($total != 0 && $custoAdm != 0){
-                         $resultadoPercentual = $custoAdm/$total*100;
-                         //IF @resultadoPercentual > 20
-                         if ($resultadoPercentual > 20) {
-                            $validacao->Descricao = 'Divulgação / Comercialização superior a 20% do valor total do projeto.';
-                            $validacao->Observacao = 'PENDENTE';
-                            $listaValidacao[] =  clone($validacao);
-                         } else {
-                            $validacao->Descricao = 'Divulgação / Comercialização est&aacute; dentro dos parâmetros permitidos.';
-                            $validacao->Observacao = 'OK';
-                            $listaValidacao[] =  clone($validacao);
-                         }
-                    }
+//                    $sql = $db->select()
+//                        ->from(array('tbplanilhaproposta'), 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total',  $this->_schema)
+//                        ->where('idProjeto =  ?', $idPreProjeto)
+//                        ->where('FonteRecurso = 109')
+//                        ->where('idEtapa <> 3')
+//                        ;
+//
+//                    $total = $db->fetchAll($sql);
+//                    $total = empty($total[0]->total) ? 0 : $total[0]->total;
+//
+//                    //--pega o valor de remuneracao para captacao
+//                    $sql = $db->select()
+//                        ->from(array('tbplanilhaproposta'), 'SUM(Quantidade * Ocorrencia * ValorUnitario) as total',  $this->_schema)
+//                        ->where('idProjeto =  ?', $idPreProjeto)
+//                        ->where('FonteRecurso = 109')
+//                        ->where('idEtapa = 3')
+//                        ;
+//
+//                    $custoAdm = $db->fetchAll($sql);
+//                    $custoAdm = empty($custoAdm[0]->total) ? 0 : $custoAdm[0]->total;
+//
+//                    //--calcula o percentual
+//                    if($total != 0 && $custoAdm != 0){
+//                         $resultadoPercentual = $custoAdm/$total*100;
+//                         //IF @resultadoPercentual > 20
+//                         if ($resultadoPercentual > 20) {
+//                            $validacao->Descricao = 'Divulgação / Comercialização superior a 20% do valor total do projeto.';
+//                            $validacao->Observacao = 'PENDENTE';
+//                            $validacao->Url = '';
+//                             $listaValidacao[] =  clone($validacao);
+//                         } else {
+//                            $validacao->Descricao = 'Divulgação / Comercialização est&aacute; dentro dos parâmetros permitidos.';
+//                            $validacao->Observacao = 'OK';
+//                            $validacao->Url = '';
+//                             $listaValidacao[] =  clone($validacao);
+//                         }
+//                    }
             }
         }
 
@@ -3021,15 +3058,17 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 'usuario' => $usuario
             );
 
-            $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-            $insert = $tbMovimentacao->insert($dados);
+//            $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
+//            $insert = $tbMovimentacao->insert($dados);
 
             $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL FOI ENCAMINHADA COM SUCESSO AO MINIST&Eacute;RIO DA CULTURA.</b></font>';
             $validacao->Observacao = 'OK';
+            $validacao->Url = '';
             $listaValidacao[] =  clone($validacao);
         } else {
             $validacao->Descricao = '<font color=red><b> A PROPOSTA CULTURAL N&Atilde;O FOI ENVIADA AO MINIST&Eacute;RIO DA CULTURA DEVIDO &Agrave;S PEND&Ecirc;NCIAS ASSINALADAS ACIMA.</b></font>';
             $validacao->Observacao = '';
+            $validacao->Url = '';
             $listaValidacao[] =  clone($validacao);
         }
 
