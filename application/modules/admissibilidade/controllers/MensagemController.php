@@ -158,6 +158,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         $this->_helper->layout->disableLayout();
         $this->view->title = 'Visualizar pergunta';
         $this->view->action = 'visualizar';
+        $this->view->isVisualizar = true;
         $this->prepareForm(array(
             'idDestinatario' => array('disabled' => true),
             'dsMensagem' => array('disabled' => true),
@@ -179,7 +180,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         if ($this->getRequest()->isPost()) {
             $this->_helper->viewRenderer->setNoRender(true);
             $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
-            echo json_encode(array('status' => $mapper->encaminhar($this->getRequest()->getPost()), 'msg' => $mapper->getMessage()));
+            echo json_encode(array('status' => $mapper->encaminhar($this->getRequest()->getPost()), 'msg' => $mapper->getMessages()));
         } else {
             $this->view->title = 'Encaminhar pergunta';
             $this->view->action = 'encaminhar';
@@ -204,7 +205,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         if ($this->getRequest()->isPost()) {
             $this->_helper->viewRenderer->setNoRender(true);
             $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
-            echo json_encode(array('status' => $mapper->responder($this->getRequest()->getPost()), 'msg' => $mapper->getMessage()));
+            echo json_encode(array('status' => $mapper->responder($this->getRequest()->getPost()), 'msg' => $mapper->getMessages()));
         } else {
             $this->view->title = 'Responder pergunta';
             $this->view->action = 'responder';
