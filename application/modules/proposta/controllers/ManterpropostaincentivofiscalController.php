@@ -292,7 +292,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
         $especificacaoTecnica = $_POST['especificacaoTecnica'];
         $informacoes = $_POST['informacoes'];
         $stProposta = $_POST['stProposta']; //Execucao Imediata
-        $prorrogacaoAutomatica = $_POST['prorrogacaoAutomatica']; //Execucao Imediata
+        $tpProrrogacao = $_POST['tpProrrogacao'];
 
         $dados = array(
             "idagente" => $idAgente,
@@ -322,7 +322,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             "stproposta" => $stProposta,
             "idusuario" => $this->idResponsavel,
             "sttipodemanda" => "NA", //seguindo sistema legado
-            "prorrogacaoAutomatica" => $prorrogacaoAutomatica
+            "tpprorrogacao" => $tpProrrogacao
         );
         $dados['idpreprojeto'] = $idPreProjeto;
 
@@ -334,7 +334,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
         //instancia classe modelo
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
-        $db = Zend_Db_Table::getDefaultAdapter();
+//        $db = Zend_Db_Table::getDefaultAdapter();
         try {
             //persiste os dados do Pre Projeto
             $idPreProjeto = $tblPreProjeto->salvar($dados);
