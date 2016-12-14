@@ -3,17 +3,13 @@
  * DAO tbBeneficiarioProdutoCultural
  * @since 16/03/2011
  * @version 1.0
- * @package application
- * @subpackage application.model
- * @copyright � 2011 - Minist�rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class tbBeneficiarioProdutoCultural extends MinC_Db_Table_Abstract {
     protected $_banco  = "SAC";
-    protected $_schema = "dbo";
+    protected $_schema = "SAC";
     protected $_name   = "tbBeneficiarioProdutoCultural";
-
 
     /**
      * M�todo para cadastrar
@@ -38,7 +34,7 @@ class tbBeneficiarioProdutoCultural extends MinC_Db_Table_Abstract {
         return $this->update($dados, $where);
     } // fecha m�todo alterarDados()
 
-    
+
     public function buscarPlanosCadastrados($idPronac) {
         $a = $this->select();
         $a->setIntegrityCheck(false);
@@ -74,5 +70,4 @@ class tbBeneficiarioProdutoCultural extends MinC_Db_Table_Abstract {
         $a->order('c.Descricao');
         return $this->fetchAll($a);
     }
-
-} // fecha class
+}

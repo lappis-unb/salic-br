@@ -22,16 +22,14 @@
                     <td><?php echo $arrValue['usu_nome_destinatario']; ?></td>
                     <td><?php echo $arrValue['dsMensagem']; ?></td>
                     <td>
-<!--                        <a data-modal="--><?php //echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'form?id=' .$arrValue['idMensagemProjeto']), null, true); ?><!--" href="javascript:void(0);" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Encaminhar">-->
-                        <a data-modal="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'form', 'id' => $arrValue['idMensagemProjeto'])); ?>" href="javascript:void(0);" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Encaminhar">
-                            <i class="material-icons">subdirectory_arrow_right</i>
+                        <a data-modal="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'visualizar', 'id' => $arrValue['idMensagemProjeto'])); ?>" href="javascript:void(0);" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Visualizar">
+                            <i class="material-icons">zoom_in</i>
                         </a>
                         <?php if ($arrValue['qtdResposta'] === '0') : ?>
-                            <a data-modal="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'form', 'id' => $arrValue['idMensagemProjeto'])); ?>" href="javascript:void(0);" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Responder">
-                                <i class="material-icons">mode_comment</i>
+                            <a data-modal="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'encaminhar', 'id' => $arrValue['idMensagemProjeto'])); ?>" href="javascript:void(0);" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Encaminhar">
+                                <i class="material-icons">subdirectory_arrow_right</i>
                             </a>
-                        <?php else: ?>
-                            <a data-modal="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'form', 'id' => $arrValue['idMensagemProjeto'])); ?>" href="javascript:void(0);" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Respondido">
+                            <a data-modal="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'responder', 'id' => $arrValue['idMensagemProjeto'])); ?>" href="javascript:void(0);" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Responder">
                                 <i class="material-icons">insert_comment</i>
                             </a>
                         <?php endif; ?>

@@ -24,7 +24,7 @@ class Admissibilidade_Model_DbTable_TbMensagemProjeto extends MinC_Db_Table_Abst
                     ->setIntegrityCheck(false)
                     ->from($this->_name,
                         array('idMensagemProjeto',
-                              'dtMensagem' => $this->getExpressionToChar('dtMensagem'),
+                              'dtMensagem' => $this->getExpressionToChar('dtMensagem') . $this->getExpressionConcat() . " ' ' " . $this->getExpressionConcat()  .  $this->getExpressionToChar('dtMensagem', 108),
                               'dsMensagem',
                               'stAtivo',
                               'cdTipoMensagem',
@@ -43,8 +43,7 @@ class Admissibilidade_Model_DbTable_TbMensagemProjeto extends MinC_Db_Table_Abst
                         array('usuariosRemetente' => 'usuarios'),
                         'tbMensagemProjeto.idRemetente = usuariosRemetente.usu_codigo',
                         'usu_nome as usu_nome_remetente',
-                        $this->getSchema('tabelas'))
-        ;
+                        $this->getSchema('tabelas'));
         parent::setWhere($select, $where);
         $select->order('dtMensagem DESC');
         return $this->fetchAll($select);
