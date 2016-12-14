@@ -309,7 +309,13 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     {
         if (is_array($where)) {
             foreach ($where as $columnName => $columnValue) {
-                $select->where($columnName . ' = ?', trim($columnValue));
+                if (is_int(strpos($columnName, '?'))) {
+                    $select->where($columnName, trim($columnValue));
+                } elseif (!$columnValue) {
+                    $select->where($columnName);
+                } else {
+                    $select->where($columnName . ' = ?', trim($columnValue));
+                }
             }
         } else {
             $select->where(reset($this->getPrimary()) . ' = ?', trim($where));
@@ -389,10 +395,23 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         }
     }
 
-    public function getExpressionToChar($strColumn, $strFormat = 'DD/MM/YYYY')
+    public function getExpressionConcat()
     {
         if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
-            return new Zend_Db_Expr('CONVERT(CHAR(10), ' . $strColumn . ' , 103)');
+            return ' + ';
+        } else {
+            return ' || ';
+        }
+    }
+
+    public function getExpressionToChar($strColumn, $strFormat = 'DD/MM/YYYY ')
+    {
+        if ($this->getAdapter() instanceof Zend_Db_Adapter_Pdo_Mssql) {
+            if (is_int($strFormat)) {
+                return new Zend_Db_Expr('CONVERT(CHAR(30), ' . $strColumn . ' , '. $strFormat . ')');
+            } else {
+                return new Zend_Db_Expr('CONVERT(CHAR(10), ' . $strColumn . ' , 103)');
+            }
         } else {
             return new Zend_Db_Expr('TO_CHAR(' . $strColumn . ', \'' . $strFormat . '\')');
         }

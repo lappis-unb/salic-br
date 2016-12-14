@@ -31,12 +31,16 @@ class MinC_Db_Mapper
         return $this->arrMessages;
     }
 
-    public function setMessage($mixMessage)
+    public function setMessage($mixMessage, $strIndice = null)
     {
         if (is_array($mixMessage)) {
             $this->arrMessages = array_merge($this->arrMessages, $mixMessage);
         } else {
-            $this->arrMessages[] = $mixMessage;
+            if ($strIndice) {
+                $this->arrMessages[$strIndice] = $mixMessage;
+            } else {
+                $this->arrMessages[] = $mixMessage;
+            }
         }
         return $this;
     }
@@ -132,7 +136,7 @@ class MinC_Db_Mapper
         }
     }
 
-    public function isValid()
+    public function isValid($model)
     {
         return true;
     }
@@ -149,7 +153,7 @@ class MinC_Db_Mapper
      */
     public function save($model)
     {
-        if ($this->isValid()) {
+        if ($this->isValid($model)) {
 
             $table = $this->getDbTable();
             $pk = is_array($table->getPrimary())? reset($table->getPrimary()) : $table->getPrimary();

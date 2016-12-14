@@ -1,18 +1,8 @@
-<?php 
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of PlanilhaEtapa
- *
- * @author 01610881125
- */
+<?php
 class PlanilhaEtapa  extends MinC_Db_Table_Abstract
 {
     protected $_banco = "SAC";
-    protected $_schema = "dbo";
+    protected $_schema = "SAC";
     protected $_name = "tbPlanilhaEtapa";
 
     public function buscarEtapaContrato($idpronac,$idproduto){
@@ -44,15 +34,15 @@ class PlanilhaEtapa  extends MinC_Db_Table_Abstract
                            );
 
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
-        
+
         if($idproduto == '0'){
             $select->where('prod.Codigo is null');
         } else if(!empty($idproduto)) {
             $select->where('prod.Codigo = ?', $idproduto);
         }
-        
+
         //$select->where('pEtapa.tpCusto = ?','P');
-        
+
         $select->where('pAprovacao.stAtivo = ?','S');
         $select->where('cxpa.idContrato is null');
 
@@ -90,7 +80,7 @@ class PlanilhaEtapa  extends MinC_Db_Table_Abstract
                            );
 
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
-        
+
         if($idproduto > 0){
             $select->where('prod.Codigo = ?', $idproduto);
         } else {
@@ -110,7 +100,7 @@ class PlanilhaEtapa  extends MinC_Db_Table_Abstract
 
     }
     public function buscarEtapa($idpronac,$idproduto){
-        
+
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -151,13 +141,13 @@ class PlanilhaEtapa  extends MinC_Db_Table_Abstract
                            );
 
         $select->where('pAprovacao.IdPRONAC = ?', $idpronac);
-        
+
         if($idproduto == '0'){
             $select->where('prod.Codigo is null');
         } else if(!empty($idproduto)) {
             $select->where('prod.Codigo = ?', $idproduto);
         }
-        
+
         $select->where('pAprovacao.stAtivo = ?','S');
         //$select->where('cxpa.idCotacao is null');
         //$select->where('dlxpa.idDispensaLicitacao is null');
@@ -225,7 +215,7 @@ class PlanilhaEtapa  extends MinC_Db_Table_Abstract
 
 
         $select->where('pAprovacao.IdPRONAC = ?',$idpronac);
-        
+
         if($idproduto == '0'){
             $select->where('prod.Codigo is null');
         } else if(!empty($idproduto)) {
@@ -248,6 +238,5 @@ class PlanilhaEtapa  extends MinC_Db_Table_Abstract
         //$select->assemble();
         return $this->fetchAll($select);
     }
-    
+
 }
-?>
