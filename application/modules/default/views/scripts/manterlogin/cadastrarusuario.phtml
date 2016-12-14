@@ -5,23 +5,23 @@
 		// Define as regras
 		rules:{
                         cpf:{
-				// campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
+				// campoNome serï¿½ obrigatï¿½rio (required) e terï¿½ tamanho mï¿½nimo (minLength)
 				required: true, minlength: 2
 			},
 			nome:{
-				// campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
+				// campoNome serï¿½ obrigatï¿½rio (required) e terï¿½ tamanho mï¿½nimo (minLength)
 				required: true, minlength: 2
 			},
 			email:{
-				// campoEmail será obrigatório (required) e precisará ser um e-mail válido (email)
+				// campoEmail serï¿½ obrigatï¿½rio (required) e precisarï¿½ ser um e-mail vï¿½lido (email)
 				required: true, email: true
 			},
                         emailConf:{
-				// campoEmail será obrigatório (required) e precisará ser um e-mail válido (email)
+				// campoEmail serï¿½ obrigatï¿½rio (required) e precisarï¿½ ser um e-mail vï¿½lido (email)
 				required: true, email: true
 			},
 			dataNasc:{
-				// campoMensagem será obrigatório (required) e terá tamanho mínimo (minLength)
+				// campoMensagem serï¿½ obrigatï¿½rio (required) e terï¿½ tamanho mï¿½nimo (minLength)
 				required: true, minlength: 2
 			}
 
@@ -30,23 +30,23 @@
 		messages:{
                         cpf:{
 				required: "Digite o seu cpf",
-				minLength: "O seu nome deve conter, no mínimo, 11 caracteres"
+				minLength: "O seu nome deve conter, no mï¿½nimo, 11 caracteres"
 			},
 			nome:{
 				required: "Digite o seu nome",
-				minLength: "O seu nome deve conter, no mínimo, 2 caracteres"
+				minLength: "O seu nome deve conter, no mï¿½nimo, 2 caracteres"
 			},
 			email:{
 				required: "Digite o seu e-mail",
-				email: "Digite um e-mail válido"
+				email: "Digite um e-mail vï¿½lido"
 			},
 			emailConf:{
 				required: "Confirme seu email",
-				minLength: "A sua mensagem deve conter, no mínimo, 2 caracteres"
+				minLength: "A sua mensagem deve conter, no mï¿½nimo, 2 caracteres"
 			},
                         dataNasc:{
 				required: "Digite a data do seu Nascimento",
-				minLength: "A sua mensagem deve conter, no mínimo, 2 caracteres"
+				minLength: "A sua mensagem deve conter, no mï¿½nimo, 2 caracteres"
 			}
 		}
 	});
@@ -55,7 +55,7 @@
 
 
 
-function valida_email(email) // validação de e-mail
+function valida_email(email) // validaï¿½ï¿½o de e-mail
 {
     if (email == "" || email == "undefined")
     {
@@ -102,7 +102,7 @@ function valida_email(email) // validação de e-mail
 
 <ul>
 <li class="first"><a href="/exemplo/cadastrarusuario/index">In&iacute;cio</a></li>
-<li class="last">Cadastrar Usuário</li>
+<li class="last">Cadastrar Usuï¿½rio</li>
 </ul>
 
 </div>
@@ -112,7 +112,7 @@ function valida_email(email) // validação de e-mail
 <!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 
 <div id="titulo">
-<div>Cadastrar Usuário<span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+<div>Cadastrar Usuï¿½rio<span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 
 </div>
 <!-- ========== FIM Tï¿½TULO ========== -->
@@ -122,14 +122,14 @@ function valida_email(email) // validação de e-mail
 <!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 
 	<div id="conteudo">
-<fieldset><legend>Informações</legend>
+<fieldset><legend>Informaï¿½ï¿½es</legend>
 
-            <form method="POST" action="/NovoSalic/manterlogin/cadastrarusuario" name="cadastraUsuario" id="cadastraUsuario">
+            <form method="POST" action=<?php echo $this->url(array('module'=> 'default' , 'controller'=>'manterlogin', 'action' => 'cadastrarusuario')); ?> name="cadastraUsuario" id="cadastraUsuario">
 
                 <table border="1">
                     <thead>
                         <tr>
-                            <th colspan="2">Cadastro de Usuário</th>
+                            <th colspan="2">Cadastro de Usuï¿½rio</th>
                         </tr>
                     </thead>
                     <tbody>

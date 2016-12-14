@@ -5,15 +5,15 @@
 		// Define as regras
 		rules:{
                         senhaAtual:{
-				// campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
+				// campoNome serï¿½ obrigatï¿½rio (required) e terï¿½ tamanho mï¿½nimo (minLength)
 				required: true, minlength: 2
 			},
 			senhaNova:{
-				// campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
+				// campoNome serï¿½ obrigatï¿½rio (required) e terï¿½ tamanho mï¿½nimo (minLength)
 				required: true, minlength: 2
 			},
 			repeteSenha:{
-				// campoEmail será obrigatório (required) e precisará ser um e-mail válido (email)
+				// campoEmail serï¿½ obrigatï¿½rio (required) e precisarï¿½ ser um e-mail vï¿½lido (email)
 				required: true, minlength: 2
 			}
 
@@ -22,15 +22,15 @@
 		messages:{
                         senhaAtual:{
 				required: "Digite a senha atual",
-				minLength: "O seu nome deve conter, no mínimo, 11 caracteres"
+				minLength: "O seu nome deve conter, no mï¿½nimo, 11 caracteres"
 			},
 			senhaNova:{
 				required: "Digite senha nova",
-				minLength: "O seu nome deve conter, no mínimo, 2 caracteres"
+				minLength: "O seu nome deve conter, no mï¿½nimo, 2 caracteres"
 			},
 			repeteSenha:{
 				required: "Repetir senha nova",
-                                minLength: "O seu nome deve conter, no mínimo, 2 caracteres"
+                                minLength: "O seu nome deve conter, no mï¿½nimo, 2 caracteres"
 				
 			}
 		}
@@ -46,7 +46,7 @@
 
 <ul>
 <li class="first"><a href="/exemplo/cadastrarusuario/index">In&iacute;cio</a></li>
-<li class="last">Cadastrar Usuário</li>
+<li class="last">Cadastrar Usuï¿½rio</li>
 </ul>
 
 </div>
@@ -56,7 +56,7 @@
 <!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 
 <div id="titulo">
-<div>Alterar Usuário<span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+<div>Alterar Usuï¿½rio<span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 
 </div>
 <!-- ========== FIM Tï¿½TULO ========== -->
@@ -68,14 +68,14 @@
 	<div id="conteudo">
 
 
-            <fieldset><legend>Informações</legend>
+            <fieldset><legend>Informaï¿½ï¿½es</legend>
 
-            <form method="POST" action="/NovoSalic/manterlogin/alterarsenha" name="alterarSenha" id="alterarSenha">
+            <form method="POST" action=<?php echo $this->url(array('module'=> 'default' , 'controller'=>'manterlogin', 'action' => 'alterarsenha')); ?> name="alterarSenha" id="alterarSenha">
 
                 <table border="1">
                     <thead>
                         <tr>
-                            <th colspan="2">Cadastro de Usuário</th>
+                            <th colspan="2">Cadastro de Usuï¿½rio</th>
                         </tr>
                     </thead>
                     <tbody>

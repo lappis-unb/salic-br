@@ -1,24 +1,24 @@
 <?php require_once "inc/menu.inc.php"; // menu ?>
-<!-- início: navegação local #qm0 -->
+<!-- inï¿½cio: navegaï¿½ï¿½o local #qm0 -->
 
-<!-- início: #breadcrumb -->
+<!-- inï¿½cio: #breadcrumb -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="#" title="Início">Início</a></li>
+        <li class="first"><a href="#" title="Inï¿½cio">Inï¿½cio</a></li>
         <li class="last">Comprovar Execu&ccedil;&atilde;o F&iacute;sica</li>
     </ul>
 </div> <!-- final: #breadcrumb -->
 
-<!-- início: #titulo -->
+<!-- inï¿½cio: #titulo -->
 <div id="titulo">
     <div>Comprova&ccedil;&atilde;o de Execu&ccedil;&atilde;o F&iacute;sica do Projeto<span>ID #23A</span> <span class="voltar"><a style="cursor: pointer;" onclick="history.back();">Voltar</a></span></div>
 </div>
 <!-- final: #titulo -->
 
-<!-- início: área principal #conteudo -->
+<!-- inï¿½cio: ï¿½rea principal #conteudo -->
 <div id="conteudo">
 
-    <form action="/NovoSalic/execucaofisicadoprojeto/buscarpronac" method="post" id="formBuscar" name="formBuscar" class="form">
+    <form action=<?php echo $this->url(array('module'=> 'default' , 'controller'=>'execucaofisicadoprojeto', 'action' => 'buscarpronac')); ?> method="post" id="formBuscar" name="formBuscar" class="form">
         <table class="tabela" style="font-size: 12px; margin-top: 50px; margin-bottom: 50px; width: 80%;">
             <tbody>
                 <tr>
@@ -38,9 +38,9 @@
         </table>
     </form>
 
-</div><!-- final: conteúdo principal #conteudo -->
+</div><!-- final: conteï¿½do principal #conteudo -->
 
-<!-- início: detalhe final da div conteudo #rodapeConteudo -->
+<!-- inï¿½cio: detalhe final da div conteudo #rodapeConteudo -->
 <div id="rodapeConteudo"><span></span></div>
 <!-- final: detalhe final da div conteudo #rodapeConteudo -->
 
