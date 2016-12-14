@@ -1,4 +1,4 @@
-<form action= <?php echo $this->url(array('module'=> 'default','controller' => 'Analisarprojetoparecer', 'action'=>'projetosprodutos')); ?> method="post" name="frmPaginacao" id="frmPaginacao<?php echo $this->nrRelatorio;?>">
+<form action="<?php echo $this->url(array('module'=> 'default','controller' => 'Analisarprojetoparecer', 'action'=>'projetosprodutos')); ?>" method="post" name="frmPaginacao" id="frmPaginacao<?php echo $this->nrRelatorio;?>">
     <?php foreach($this->parametrosBusca as $name=>$value):?>
         <?php if(!is_array($value)): ?>
     <input type="hidden" name="<?php echo $name?>" id="<?php echo $name?>" value="<?php echo $value?>"/>
