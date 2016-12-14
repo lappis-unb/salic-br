@@ -791,7 +791,7 @@
 									<li><a href="<?php echo $this->url(array('controller' => 'manterusuario', 'action' => 'regerarsenha')) ?>" title="Ir para Regerar Senha">Regerar Senha Usu&aacute;rio</a></li>
 									<li><a href="<?php echo $this->url(array('controller' => 'manterusuario', 'action' => 'cadastrarusuarioexterno')) ?>" title="Ir para Cadastrar Usu&aacute;rio Externo">Cadastrar Usu&aacute;rio Externo</a></li>
 									<li><a href="<?php echo $this->url(array('controller' => 'manterusuario', 'action' => 'permissoessalic')) ?>?session=x&pag=1" title="Ir para Permiss?es do SalicWeb">Permiss&otilde;es do SalicWeb</a></li>
-									<li><a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'alterarsenhausuario'), '', true); ?>" title="Ir para Alterar Senha">Alterar Senha</a></li>
+									<li><a href="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'alterarsenhausuario'), '', true); ?>" title="Ir para Alterar Senha">Alterar Senha</a></li>
 									<?php
 									$auth = Zend_Auth::getInstance();
 									if ( $auth->getIdentity()->usu_identificacao == 23969156149) :
@@ -799,7 +799,7 @@
 									<!-- <li><a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'logarcomo')) ?>" title="Ir para Logar Como">Logar Como</a></li> -->
 									<?php endif; ?>
 									<?php } elseif($this->grupoAtivo) { ?>
-										<li><a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'alterarsenhausuario'), '', true); ?>" title="Ir para Alterar Senha">Alterar Senha</a></li>
+										<li><a href="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'alterarsenhausuario'), '', true); ?>" title="Ir para Alterar Senha">Alterar Senha</a></li>
 									<?php }  ?>
 								</ul>
 							</div>
