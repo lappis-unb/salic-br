@@ -2735,10 +2735,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 $destinatario = $arrayMensagem->Nome;
                 $mensagemEmail = "<b>Projeto: {$AnoProjeto}{$NrProjeto} - {$nomeProposta} <br> Proponente: {$destinatario}<br> </b>{$mensagem}";
 
-                $sqlEmail = "SELECT Descricao FROM agentes.dbo.Internet i
-                              INNER JOIN SAC.dbo.PreProjeto p on i.idAgente = p.idAgente
-                              WHERE p.idPreProjeto = {$idPreProjeto} and i.idAgente = p.idAgente and Status = 1";
-                $arrayEmails = $db->fetchAll($sqlEmail);
+                $objInternet = new Agente_Model_DbTable_Internet();
+                $arrayEmails = $objInternet->obterEmailProponentesPorPreProjeto($idPreProjeto);
 
                 foreach($arrayEmails as $email) {
                     EmailDAO::enviarEmail($email->Descricao, "Projeto Cultural", $mensagemEmail);
