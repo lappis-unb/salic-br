@@ -159,4 +159,11 @@ class vwUsuariosOrgaosGrupos extends MinC_Db_Table_Abstract {
         return $arrResult;
     }
 
+    public function buscarUsuarios($codPerfil, $codOrgao){
+        $sql = "exec SAC.dbo.paUsuariosDoPerfil $codPerfil, $codOrgao ";
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        return $db->fetchAll($sql);
+    }
 }
+
