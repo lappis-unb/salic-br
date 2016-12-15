@@ -640,7 +640,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 $tblProjeto = new Projetos();
                 $rsProjeto = $tblProjeto->buscar(array("idProjeto = ?" => $this->idPreProjeto), "IdPRONAC DESC")->current();
                 if (!empty($rsProjeto)) {
-
                     $nrPronac = $rsProjeto->AnoProjeto . $rsProjeto->Sequencial;
 
                     echo "A Proposta " . $this->idPreProjeto . " foi transformada no Projeto No. " . $nrPronac;
