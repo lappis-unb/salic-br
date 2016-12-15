@@ -51,7 +51,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
                 throw new Exception("PRONAC não encontrado.");
             }
 
-            if($projeto['Situacao'] != "B01") {
+            if ($projeto['Situacao'] != "B01") {
                 throw new Exception("Situa&ccedil;&atilde;o do projeto n&atilde;o &eacute; v&aacute;lida.");
             }
 
@@ -74,7 +74,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $auth = Zend_Auth::getInstance();
         $post = $this->getRequest()->getPost();
         $get = $this->getRequest()->getParams();
-        $authIdentity = array_change_key_case((array) $auth->getIdentity());
+        $authIdentity = array_change_key_case((array)$auth->getIdentity());
         $objEnquadramento = new Enquadramento();
         $arrayInclusao = array(
             'AnoProjeto' => $projeto['AnoProjeto'],
@@ -98,11 +98,20 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $objProjeto->update($arrayDados, $arrayWhere);
 
         /**
-         * @todo Verificar com Rômulo para quem deve enviar o e-mail e qual a mensagem.
-         *
-         * Resposta : Enviar para Pareceristas e pegar mensagem da tabela
+         * @todo Alterar esse identificador.
          */
-        // EmailDAO::enviarEmail($email, "Projeto Cultural", $mensagemEmail);
+        $where = array(
+            'idTextoEmail = ?' => 12
+        );
+        $tbTextoEmailDAO = new tbTextoEmail();
+        $textoEmail = $tbTextoEmailDAO->buscar($where)->current();
+        $mensagemEmail = $textoEmail->dsTexto;
+
+        $objInternet = new Agente_Model_DbTable_Internet();
+        $arrayEmails = $objInternet->obterEmailProponentesPorPreProjeto($projeto['idProjeto']);
+        foreach ($arrayEmails as $email) {
+            EmailDAO::enviarEmail($email->Descricao, "Projeto Cultural", $mensagemEmail);
+        }
 
         parent::message("Enquadramento cadastrado com sucesso.", "/admissibilidade/enquadramento/listar", "CONFIRM");
     }
@@ -113,13 +122,13 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $this->view->comboareasculturais = $mapperArea->fetchPairs('Codigo', 'Descricao');
         $this->view->projeto = $projeto;
 
-        if(count($this->view->comboareasculturais) < 1) {
+        if (count($this->view->comboareasculturais) < 1) {
             throw new Exception("N&atilde;o foram encontradas &Aacute;reas Culturais para o PRONAC informado.");
         }
 
         $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($projeto['Area']);
 
-        if(count($this->view->combosegmentosculturais) < 1) {
+        if (count($this->view->combosegmentosculturais) < 1) {
             throw new Exception("N&atilde;o foram encontradas Segmentos Culturais para o PRONAC informado.");
         }
 
