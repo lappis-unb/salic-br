@@ -3,19 +3,19 @@
 /**
  * Classe do componente de SEI que gerencia a
  * comunicacao via webservice entre o NovoSalic e o sistema SEI
- * Este Serviço é do tipo SOAP
+ * Este Serviï¿½o ï¿½ do tipo SOAP
  *
- * @copyright Ministério da Cultura
- * @author Hepta/Minc - Alysson Vicuña de Oliveira
+ * @copyright Ministï¿½rio da Cultura
+ * @author Hepta/Minc - Alysson Vicuï¿½a de Oliveira
  * @since 18/04/2016
  * @version 1.0
  */
 class ServicosSEI {
 
     # Constante usada na classe para conexao com o WS
-    const CAMINHO_WSDL_SEI 		= "http://sei.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Produção
-    #const CAMINHO_WSDL_SEI 		= "http://seihomolog.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Homologação
-
+//    const CAMINHO_WSDL_SEI 		= "http://sei.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Produï¿½ï¿½o
+    const CAMINHO_WSDL_SEI 		= "http://seihomolog.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Homologaï¿½ï¿½o
+//APPLICATION_ENV
     # Atributos da classe
     private static $objSoapCliente;
 
@@ -28,7 +28,7 @@ class ServicosSEI {
     private function getSoapClient( )
     {
         if(!@file_get_contents(self::CAMINHO_WSDL_SEI)){
-            throw new Exception("Arquivo WSDL não encontrado! Verifique: " . self::CAMINHO_WSDL_SEI);
+            throw new Exception("Arquivo WSDL nï¿½o encontrado! Verifique: " . self::CAMINHO_WSDL_SEI);
         }
 
         if ( is_null( self::$objSoapCliente ) )
@@ -49,7 +49,7 @@ class ServicosSEI {
     }
 
     /**
-     * @author Alysson Vicuña de Oliveira
+     * @author Alysson Vicuï¿½a de Oliveira
      * Carrega o dados das Unidades Cadastradas no SEI
      * @param $txSiglaSistema
      * @param $txIdentificacaoServico
@@ -60,13 +60,13 @@ class ServicosSEI {
     public function wsListarUnidades( $txSiglaSistema, $txIdentificacaoServico, $nrIdTipoProcedimento = NULL, $nrIdSerie = NULL )
     {
         $objSoapCliente = self::getSoapClient();
-        //Nome do Método Remoto a ser Chamado
+        //Nome do Mï¿½todo Remoto a ser Chamado
         $mixResult = $objSoapCliente->listarUnidades( $txSiglaSistema, $txIdentificacaoServico, $nrIdTipoProcedimento, $nrIdSerie );
         return $mixResult;
     }
 
     /**
-     * @author Alysson Vicuña de Oliveira
+     * @author Alysson Vicuï¿½a de Oliveira
      * Procedimento para criar um processo dentro do SEI.
      * @param $txSiglaSistema
      * @param $txIdentificacaoServico
@@ -80,7 +80,7 @@ class ServicosSEI {
         //Sigla do Sistema
         #$txSiglaSistema = "INTRANET";
 
-        //Identificação do Procedimento
+        //Identificaï¿½ï¿½o do Procedimento
         #$txIdentificacaoServico = "SALIC";
 
         //Numero da Unidade
@@ -90,10 +90,10 @@ class ServicosSEI {
         //Procedimento
         $Procedimento = array();
         #$Procedimento['IdTipoProcedimento'] = '100000316';
-        #$Procedimento['Especificacao'] = utf8_encode('Gestão de Contrato: Acompanhamento da Execução'); //Verificar se tem que usar UTF-8 Em Produção
-        #$Procedimento['IdTipoProcedimento'] = '1'; #Alysson - Código do Tipo de Processo "Projetos Culturais em Homologação";
-        $Procedimento['IdTipoProcedimento'] = '100000520'; #Alysson - Código do Tipo de Processo "Apoio Cultural: Projeto Cultural" em Produção;
-        $Procedimento['Especificacao'] = utf8_encode('Apoio Cultural: Projeto Cultural'); //Verificar se tem que usar UTF-8 Em Produção
+        #$Procedimento['Especificacao'] = utf8_encode('Gestï¿½o de Contrato: Acompanhamento da Execuï¿½ï¿½o'); //Verificar se tem que usar UTF-8 Em Produï¿½ï¿½o
+        #$Procedimento['IdTipoProcedimento'] = '1'; #Alysson - Cï¿½digo do Tipo de Processo "Projetos Culturais em Homologaï¿½ï¿½o";
+        $Procedimento['IdTipoProcedimento'] = '100000520'; #Alysson - Cï¿½digo do Tipo de Processo "Apoio Cultural: Projeto Cultural" em Produï¿½ï¿½o;
+        $Procedimento['Especificacao'] = utf8_encode('Apoio Cultural: Projeto Cultural'); //Verificar se tem que usar UTF-8 Em Produï¿½ï¿½o
 
         //Assuntos
         $arrAssuntos = array();
@@ -108,8 +108,8 @@ class ServicosSEI {
         #$arrInteressados[] = array('Sigla'=>'utv', 'Nome'=>'Maria');
         $Procedimento['Interessados'] = $arrInteressados;
 
-        //Observações
-        #$Procedimento['Observacao'] = 'Observações para Teste de Inserção de Dados';
+        //Observaï¿½ï¿½es
+        #$Procedimento['Observacao'] = 'Observaï¿½ï¿½es para Teste de Inserï¿½ï¿½o de Dados';
         $Procedimento['Observacao'] = null;
 
         //Nivel de Acesso [0-Publico, 1-Restrito, 2-Sigiloso, NULL-Nivel de acesso do tipo de projeto cadastrado no SEI]
@@ -130,13 +130,13 @@ class ServicosSEI {
         #$DocumentoGerado['Tipo'] = 'G';
 
         //Se incluindo em um processo existente, informar o ID neste campo
-        //Se incluindo o documento no momento da geração do processo, passar NULL
+        //Se incluindo o documento no momento da geraï¿½ï¿½o do processo, passar NULL
         #$DocumentoGerado['IdProcedimento'] = null;
 
         #$DocumentoGerado['IdSerie'] = '3'; //Portaria
         #$DocumentoGerado['Numero'] = null;
         #$DocumentoGerado['Data'] = null;
-        #$DocumentoGerado['Descricao'] = 'Descrição de Teste do Documento';
+        #$DocumentoGerado['Descricao'] = 'Descriï¿½ï¿½o de Teste do Documento';
         #$DocumentoGerado['Remetente'] = null;
 
         //Interessados no Documento Gerado
@@ -145,13 +145,13 @@ class ServicosSEI {
         #$arrInteressadosDocumentoGerado[] = array('Sigla'=>'utv', 'Nome'=>'Maria');
         #$DocumentoGerado['Interessados'] = $arrInteressadosDocumentoGerado;
 
-        //Destinatários para Documento Gerado
+        //Destinatï¿½rios para Documento Gerado
         #$arrDestinatarios = array();
         #$arrDestinatarios[] = array('Sigla'=>'dgx', 'Nome'=>'Alberto');
         #$arrDestinatarios[] = array('Sigla'=>'dgx', 'Nome'=>'Alberto');
         #$DocumentoGerado['Destinatarios'] = $arrDestinatarios;
 
-        #$DocumentoGerado['Observacao'] = 'Observação de Teste';
+        #$DocumentoGerado['Observacao'] = 'Observaï¿½ï¿½o de Teste';
         #$DocumentoGerado['NomeArquivo'] = 'null';
         #$DocumentoGerado['Conteudo'] = base64_encode('Conteudo do Documento. xxxxx');
         #$DocumentoGerado['NivelAcesso'] = 'null';
@@ -163,13 +163,13 @@ class ServicosSEI {
         #$DocumentoRecebido['Tipo'] = 'R';
 
         //Se incluindo em um processo existente, informar o ID neste campo
-        //Se incluindo o documento no momento da geração do processo, passar NULL
+        //Se incluindo o documento no momento da geraï¿½ï¿½o do processo, passar NULL
         #$DocumentoRecebido['IdProcedimento'] = null;
 
         #$DocumentoRecebido['IdSerie'] = '301'; //Oficio
         #$DocumentoRecebido['Numero'] = '1000';
         #$DocumentoRecebido['Data'] = '10/09/2011';
-        #$DocumentoRecebido['Descricao'] = 'Descrição de Teste do Documento';
+        #$DocumentoRecebido['Descricao'] = 'Descriï¿½ï¿½o de Teste do Documento';
         #$DocumentoRecebido['Remetente'] = array('Sigla'=>'dgx', 'Nome'=>'Alberto');
 
         //Interessados no Documento Recebido
@@ -178,7 +178,7 @@ class ServicosSEI {
         #$arrInteressadosDocumentoRecebido[] = array('Sigla'=>'utv', 'Nome'=>'Maria');
         #$DocumentoRecebido['Interessados'] = $arrInteressadosDocumentoRecebido;
 
-        //Destinatários para Documento Rebido
+        //Destinatï¿½rios para Documento Rebido
         #$arrDestinatarios = array();
         #$arrDestinatarios[] = array('Sigla'=>'dgx', 'Nome'=>'Alberto');
         #$arrDestinatarios[] = array('Sigla'=>'dgx', 'Nome'=>'Alberto');
@@ -197,24 +197,24 @@ class ServicosSEI {
 
         ###################################################################################################################################################################
         //1 - gera processo
-        //$ret = $objWS->gerarProcedimento('Corregedoria','Suspeição/Impedimento', $numIdUnidade, $Procedimento, array(),$ProcedimentosRelacionados,  $UnidadesEnvio);
+        //$ret = $objWS->gerarProcedimento('Corregedoria','Suspeiï¿½ï¿½o/Impedimento', $numIdUnidade, $Procedimento, array(),$ProcedimentosRelacionados,  $UnidadesEnvio);
 
         //2 - gera processo + documento gerado
-        //$ret = $objWS->gerarProcedimento('Corregedoria','Suspeição/Impedimento', $numIdUnidade, $Procedimento, array($DocumentoGerado),  array(),$UnidadesEnvio);
+        //$ret = $objWS->gerarProcedimento('Corregedoria','Suspeiï¿½ï¿½o/Impedimento', $numIdUnidade, $Procedimento, array($DocumentoGerado),  array(),$UnidadesEnvio);
 
         //3 - gera processo + documento gerado + documento externo
-        //$ret = $objWS->gerarProcedimento('Corregedoria','Suspeição/Impedimento', $numIdUnidade, $Procedimento, array($DocumentoGerado,  $DocumentoRecebido));
+        //$ret = $objWS->gerarProcedimento('Corregedoria','Suspeiï¿½ï¿½o/Impedimento', $numIdUnidade, $Procedimento, array($DocumentoGerado,  $DocumentoRecebido));
 
         //4 - inclui documento gerado em processo existente
         //$DocumentoGerado['IdProcedimento'] deve estar com o id preenchido
-        //$ret = $objWS->incluirDocumento('Corregedoria','Suspeição/Impedimento', $numIdUnidade, $DocumentoGerado);
+        //$ret = $objWS->incluirDocumento('Corregedoria','Suspeiï¿½ï¿½o/Impedimento', $numIdUnidade, $DocumentoGerado);
 
         //5 -inclui documento externo em processo existente
         //$DocumentoRecebido['IdProcedimento'] deve estar com o id preenchido
-        //$ret = $objWS->incluirDocumento('Corregedoria','Suspeição/Impedimento', $numIdUnidade, $DocumentoRecebido);
+        //$ret = $objWS->incluirDocumento('Corregedoria','Suspeiï¿½ï¿½o/Impedimento', $numIdUnidade, $DocumentoRecebido);
         ###################################################################################################################################################################
 
-        //Nome do Método Remoto a ser Chamado
+        //Nome do Mï¿½todo Remoto a ser Chamado
         $mixResult = $objSoapCliente->gerarProcedimento($txSiglaSistema,$txIdentificacaoServico, $nrIdUnidade, $Procedimento, array(),$ProcedimentosRelacionados,  $UnidadesEnvio);
 
         return $mixResult;
@@ -227,7 +227,11 @@ class ServicosSEI {
      */
     public function __construct()
     {
-        return;
+        if(APPLICATION_ENV == "production") {
+            define("CAMINHO_WSDL_SEI", "http://sei.cultura.gov.br/sei/controlador_ws.php?servico=sei");
+        } else {
+            define("CAMINHO_WSDL_SEI", "http://seihomolog.cultura.gov.br/sei/controlador_ws.php?servico=sei");
+        }
     }
 
     /**
@@ -237,7 +241,6 @@ class ServicosSEI {
      */
     public function __sleep()
     {
-        return;
     }
 
     /**
@@ -247,7 +250,6 @@ class ServicosSEI {
      */
     public function __wakeup()
     {
-        return;
     }
 
     /**

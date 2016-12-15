@@ -608,7 +608,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             //Verifica Permissao de Projeto
 
             if ($projeto) {
-                $msgERRO = 'Você não tem permissão para acessar esse Projeto!';
+                $msgERRO = 'Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessaresse Projeto!';
                 $idUsuarioLogado = $arrAuth['idusuario'];
                 $idPronac = $this->_request->getParam('idpronac') ? $this->_request->getParam('idpronac') : $this->_request->getParam('idPronac');
                 if (strlen($idPronac) > 7) {
@@ -620,10 +620,9 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             }
             //Verifica Permissao de Proposta
             if ($proposta) {
-                $msgERRO = 'Voce nao tem permissao para acessar essa Proposta!';
+                $msgERRO = 'Voc&ecirc; n&atilde;o tem permiss&atilde;o para acessar essa Proposta!';
                 $idUsuarioLogado = $arrAuth['idusuario'];
                 $idPreProjeto = $this->_request->getParam('idPreProjeto');
-
                 $fnVerificarPermissao = new Autenticacao_Model_FnVerificarPermissao();
                 $consulta = $fnVerificarPermissao->verificarPermissaoProposta($idPreProjeto, $idUsuarioLogado);
                 $permissao = $consulta->Permissao;

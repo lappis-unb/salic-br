@@ -1,28 +1,28 @@
 <?php require_once "inc/menu.inc.php"; // menu ?>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
 	<ul>
-		<li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">Início</a></li>
-		<li><a href="<?php echo $this->url(array('controller' => 'areadetrabalho', 'action' => 'index')); ?>" title="Ir para Visualizar Área de Trabalho">Visualizar Área de Trabalho</a></li>
-		<li class="last">Análise de Cortes Sugeridos</li>
+		<li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Inï¿½cio">Inï¿½cio</a></li>
+		<li><a href="<?php echo $this->url(array('controller' => 'areadetrabalho', 'action' => 'index')); ?>" title="Ir para Visualizar ï¿½rea de Trabalho">Visualizar ï¿½rea de Trabalho</a></li>
+		<li class="last">Anï¿½lise de Cortes Sugeridos</li>
 	</ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
-	<div>Análise de Cortes Sugeridos <span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
+	<div>Anï¿½lise de Cortes Sugeridos <span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 
 
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 <div id="conteudo">
-	<form name="form" action="/Salic/lembretes/alterar" method="post">
+	<form name="form" action="<?php echo $this->url(array('module'=> 'default' , 'controller'=>'lembretes', 'action' => 'alterar'));?> "method="post">
 		<table class="tabela" style="margin:10px auto; ">
 			<tr>
 			    <th><div align="center" class="titulo_tabela">Data</div></th>
@@ -35,7 +35,7 @@
 	       				<div id="analisarProjeto<?php echo $tblembretes->Contador; ?>" style="display:none; height:auto;">
 								<table class="tabela" style="width:600px; margin:0 auto;">
 									<tr class="titulo_tabela">
-										<th colspan="6"><div id="titleDesativar">Alteração de Lembrete</div></th>
+										<th colspan="6"><div id="titleDesativar">Alteraï¿½ï¿½o de Lembrete</div></th>
 									</tr>
 								</table>
 						</div>
@@ -58,12 +58,12 @@
 		</div>
 	</form>
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEï¿½DO ========== -->
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 
 <br clear="all" />

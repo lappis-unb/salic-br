@@ -1,8 +1,4 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of PlanilhaItens
@@ -12,7 +8,7 @@
 class PlanilhaItens   extends MinC_Db_Table_Abstract
 {
     protected $_banco = "SAC";
-    protected $_schema = "dbo";
+    protected $_schema = "SAC";
     protected $_name = "tbPlanilhaItens";
 
     public function buscarItemContrato($idpronac,$idproduto,$idetapa){
@@ -31,7 +27,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
                             array(),
                             'SAC.dbo'
                            );
-         * 
+         *
          *
          */
         $select->from(
@@ -140,7 +136,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
 
         /*erro 26
         $select->group('pItens.idPlanilhaItens');
-         
+
         $select->group('pItens.Descricao');
         */
         //xd($select->query());
@@ -164,7 +160,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
                            );
 
         /* erro UC26
-         
+
         $select->from(
                         array('pItens'=>$this->_name),
                         array('id'=>'pItens.idPlanilhaItens','nome'=>'pItens.Descricao')
@@ -227,7 +223,7 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
         $select->group('pItens.Descricao');//*/
 
 //        xd($select->assemble());
-        
+
         return $this->fetchAll($select);
 
     }
@@ -367,13 +363,12 @@ class PlanilhaItens   extends MinC_Db_Table_Abstract
                 //xd($select->assemble());
 		return $this->fetchAll($select);
 	} // fecha m�todo combo()
-        
+
         public function buscarItens(){
             $select = $this->select();
             $select->setIntegrityCheck(false);
             //$select->assemble();
         return $this->fetchAll($select);
     }
-        
+
 }
-?>

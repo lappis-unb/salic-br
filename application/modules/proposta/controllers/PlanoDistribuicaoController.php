@@ -38,10 +38,10 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
             // inicializando variaveis com valor padrao
             $this->intTamPag = 10;
 
-            //carregando variaveis vindas de GET
-            $get = Zend_Registry::get('get');
             if(!empty ($idPreProjeto)){
                 $this->_idPreProjeto = $idPreProjeto;
+                $this->view->idPreProjeto = $idPreProjeto;
+
                 //VERIFICA SE A PROPOSTA ESTA COM O MINC
                 $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
                 $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);

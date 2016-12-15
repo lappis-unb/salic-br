@@ -1,10 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of Diligencia
  *
@@ -14,7 +8,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'SAC';
     protected $_name = 'tbDiligencia';
-    protected $_schema = "dbo";
+    protected $_schema = "SAC";
 
 
     /**
@@ -37,7 +31,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
         foreach ($where as $coluna => $valor) {
             $slct->where($coluna, $valor);
         }
-        
+
         if($idProduto){
             $slct->where('idProduto = ?', $idProduto);
         }
@@ -92,7 +86,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
 //        xd($slct->assemble());
         return $this->fetchAll($slct);
     }
-    
+
     /**
      * Retorna registros do banco de dados
      * @param int $idagente - id do agente
@@ -144,7 +138,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
         if ($idpronac) {
             $select->where('Pr.IdPRONAC = ?',$idpronac );
         }
-        
+
         if ($resposta) {
             $select->where('D.DtResposta is not null');
         }
@@ -186,7 +180,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
         else
             return $this->fetchAll($select);
     }
-    
+
     public function buscarProjetosDiligenciadosCNIC($where=array(), $order=array(), $tamanho=-1, $inicio=-1) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
@@ -227,7 +221,7 @@ class Diligencia extends MinC_Db_Table_Abstract {
                 array(),
                 'BDCORPORATIVO.scSAC'
         );
-        
+
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $select->where($coluna, $valor);
@@ -244,11 +238,10 @@ class Diligencia extends MinC_Db_Table_Abstract {
             }
             $select->limit($tamanho, $tmpInicio);
         }
-        
+
         //xd($select->assemble());
         return $this->fetchAll($select);
     }
 
 }
 
-?>

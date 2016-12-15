@@ -450,7 +450,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $dados = array();
         $dados['idPreProjeto'] = $this->idPreProjeto;
         $dados['CodigoDocumento'] = $post->documento;
-        //xd($dados);
+
         try {
             if ($post->tipoDocumento == 1) {
                 Proposta_Model_AnalisarPropostaDAO::inserirDocumentoProponente($dados);
@@ -509,7 +509,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 //                $rsMovimentacao = $tblMovimentacao->salvar($dadosMovimentacao);
 //            }
         } catch (Exception $e) {
-            //xd($e->getMessage());
             parent::message("Erro ao realizar opera&ccedil;&atilde;o", "/admissibilidade/admissibilidade/analisedocumental?idPreProjeto=" . $this->idPreProjeto, "ERROR");
         }
 
@@ -597,64 +596,73 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
                 $rsOrgaos = $tblOrgaos->buscar(array("Codigo = ?" => $rsEdital->idOrgao))->current();
             }
-            //xd($rsOrgaos);
-            $msg = "Deseja Transformar a proposta Nr. {$this->idPreProjeto}, em Projeto? <br>A mesma ser&aacute; enviada para a Unidade: {$rsOrgaos->Sigla}, para An&aacute;lise T&eacute;cnica.<br> Confirma a opera&ccedil;&atilde;o?";
+
+            echo "Deseja Transformar a proposta Nr. {$this->idPreProjeto}, em Projeto? <br>A mesma ser&aacute; enviada para a Unidade: {$rsOrgaos->Sigla}, para An&aacute;lise T&eacute;cnica.<br> Confirma a opera&ccedil;&atilde;o?";
             $this->_helper->viewRenderer->setNoRender(TRUE);
-        }
-
-        //Buscando produto principal
-        $tblPlanoDistribuicao = new PlanoDistribuicao();
-        $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscar(array("idProjeto = ?" => $this->idPreProjeto, "stPrincipal = ?" => 1))->current();
-
-        $tblOrgaos = new Orgaos();
-        if ($rsProposta->idEdital == 0 || empty($rsProposta->idEdital)) {
-            //Se existe plano de distribuicao, entao pega-se o orgao baseado no produto principal
-            $rsOrgaos = $tblOrgaos->buscarOrgaoPorSegmento($rsPlanoDistribuicao->Segmento)->current();
-            //$idOrgao = $rsOrgaos->Codigo;
-            $idOrgao = $this->codOrgao;
         } else {
-            //Se nao existe plano de distribuicao, entao esta e uma proposta por edital,
-            //entao pega-se o orgao do edital
-            $tblEdital = new Edital();
-            $rsEdital = $tblEdital->buscar(array("idEdital = ?" => $rsProposta->idEdital))->current();
 
-            $rsOrgaos = $tblOrgaos->buscar(array("Codigo = ?" => $rsEdital->idOrgao))->current();
-            //$idOrgao = $rsOrgaos->Codigo;
-            $idOrgao = $this->codOrgao;
-        }
+            //Buscando produto principal
+            $tblPlanoDistribuicao = new PlanoDistribuicao();
+            $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscar(array("idProjeto = ?" => $this->idPreProjeto, "stPrincipal = ?" => 1))->current();
 
-        $tblAgente = new Agente_Model_DbTable_Agentes();
-        $rsAgente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsProposta->idAgente))->current();
+            $tblOrgaos = new Orgaos();
+            if ($rsProposta->idEdital == 0 || empty($rsProposta->idEdital)) {
+                //Se existe plano de distribuicao, entao pega-se o orgao baseado no produto principal
+                $rsOrgaos = $tblOrgaos->buscarOrgaoPorSegmento($rsPlanoDistribuicao->Segmento)->current();
+                //$idOrgao = $rsOrgaos->Codigo;
+                $idOrgao = $this->codOrgao;
+            } else {
+                //Se nao existe plano de distribuicao, entao esta e uma proposta por edital,
+                //entao pega-se o orgao do edital
+                $tblEdital = new Edital();
+                $rsEdital = $tblEdital->buscar(array("idEdital = ?" => $rsProposta->idEdital))->current();
 
-        $cnpjcpf = $rsAgente->CNPJCPF;
-
-        $wsWebServiceSEI = new ServicosSEI();
-        $arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento();
-
-        $chars = array(".", "/", "-");
-        $nrProcessoSemFormatacao = str_replace($chars, "", $arrRetornoGerarProcedimento->ProcedimentoFormatado);
-        $nrProcesso = $nrProcessoSemFormatacao;
-        #xd( $nrProcesso );
-        try {
-            $aux = new paTransformarPropostaEmProjetoNovaIN();
-            #$aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario);
-            $aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
-
-            $tblProjeto = new Projetos();
-
-            $rsProjeto = $tblProjeto->buscar(array("idProjeto = ?" => $this->idPreProjeto), "IdPRONAC DESC")->current();
-            if (!empty($rsProjeto)) {
-
-                $nrPronac = $rsProjeto->AnoProjeto . $rsProjeto->Sequencial;
-
-                echo "A Proposta " . $this->idPreProjeto . " foi transformada no Projeto No. " . $nrPronac;
-                echo '<br><br><a href="../gerenciarparecertecnico/dadosetiqueta?pronac=' . $nrPronac . '&etiqueta=nao" target="_blank">Imprimir etiqueta</a>';
+                $rsOrgaos = $tblOrgaos->buscar(array("Codigo = ?" => $rsEdital->idOrgao))->current();
+                //$idOrgao = $rsOrgaos->Codigo;
+                $idOrgao = $this->codOrgao;
             }
 
-        } catch (Exception $e) {
-            echo "Erro ao tentar transformar proposta em projeto!";
-        }
+            $tblAgente = new Agente_Model_DbTable_Agentes();
+            $rsAgente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsProposta->idAgente))->current();
 
+            $cnpjcpf = $rsAgente->CNPJCPF;
+
+            $wsWebServiceSEI = new ServicosSEI();
+
+            $arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento();
+
+            $chars = array(".", "/", "-");
+            $nrProcessoSemFormatacao = str_replace($chars, "", $arrRetornoGerarProcedimento->ProcedimentoFormatado);
+            $nrProcesso = $nrProcessoSemFormatacao;
+
+            try {
+                //$aux = new paTransformarPropostaEmProjetoNovaIN();
+                #$aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario);
+                //$aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
+
+                $this->incluirProjeto($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
+                $tblProjeto = new Projetos();
+                $rsProjeto = $tblProjeto->buscar(array("idProjeto = ?" => $this->idPreProjeto), "IdPRONAC DESC")->current();
+                if (!empty($rsProjeto)) {
+
+                    $arrayDados = array(
+                        'Situacao' => 'B01',
+                        'DtSituacao' => $tblProjeto->getExpressionDate(),
+                    );
+                    $arrayWhere = array('IdPRONAC  = ?' => $rsProjeto->IdPRONAC);
+
+                    $tblProjeto->update($arrayDados, $arrayWhere);
+
+                    $nrPronac = $rsProjeto->AnoProjeto . $rsProjeto->Sequencial;
+
+                    echo "A Proposta " . $this->idPreProjeto . " foi transformada no Projeto No. " . $nrPronac;
+                    echo '<br><br><a href="../gerenciarparecertecnico/dadosetiqueta?pronac=' . $nrPronac . '&etiqueta=nao" target="_blank">Imprimir etiqueta</a>';
+                }
+            } catch (Exception $e) {
+                xd($e->getMessage());
+                echo "Erro ao tentar transformar proposta em projeto!";
+            }
+        }
     }
 
     public function encaminharpropostaAction()
@@ -698,7 +706,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 //        }else{
 //            $dados['movimentacao'] = 127;
 //        }
-        //xd($dados);
+
 //        Proposta_Model_AnalisarPropostaDAO::updateEstadoMovimentacao($post->idPreProjeto);
 //        Proposta_Model_AnalisarPropostaDAO::inserirMovimentacao($dados);
         //}
@@ -758,7 +766,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
     {
         $dao = new Proposta_Model_AnalisarPropostaDAO();
         $post = Zend_Registry::get('post');
-        //xd($post);
         Proposta_Model_AnalisarPropostaDAO::deletePreProjeto($post->idprojeto);
         ///Enviar e-mail informando arquivamento e a justificativa
 
@@ -835,9 +842,9 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         foreach ($rsDocumentosExigidos as $documentoExigido) {
             $arrDocumentosExigidos[$documentoExigido["Codigo"]] = $documentoExigido;
         }
-        //xd($arrDocumentosExigidos);
+
         $this->view->documentosExigidos = $arrDocumentosExigidos;
-        //xd($rsDocumentosExigidos);
+
         /*
          * FINAL - PEGANDO DOCUMENTOS ANEXADOS
          */
@@ -983,14 +990,14 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $this->_helper->layout->disableLayout();
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->unidadeAnaliseProposta($_POST["nrProposta"])->current();
-        //xd($rsProposta->toArray());
+
         if ($rsProposta) {
             $rsOrgaoSecretaria = $tblProposta->orgaoSecretaria($rsProposta->idTecnico);
         } else {
             echo "<font color='black' size='2'><b>Nenhum registro encontrado</b></font>";
             $this->_helper->viewRenderer->setNoRender(TRUE);
         }
-        //xd($rsOrgaoSecretaria);
+
 
         $this->view->orgaoUsuarioLogado = $this->codOrgaoSuperior;
         $this->view->proposta = $rsProposta;
@@ -1383,7 +1390,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscarPropostaAnaliseVisualTecnico($arrBusca, array("Tecnico ASC"));
-        //xd($rsProposta);
+
         $arrTecnicosPropostasReavaliacao = array();
         $arrTecnicosPropostasInicial = array();
 
@@ -2542,4 +2549,223 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $this->view->dados = $busca;
     }
 
+    /**
+     * @todo: Testar e refatorar esse metodo.
+     */
+    private function incluirProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso) {
+
+
+
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        try {
+            $db->beginTransaction();
+            $objInteressado = new Interessado();
+            $arrayInteressados = $objInteressado->findAll(array('CgcCpf' => $cnpjcpf));
+
+            if(!$arrayInteressados) {
+                $sqlInteressado = "INSERT INTO SAC.dbo.Interessado (CgcCpf,TipoPessoa,Nome,Responsavel,Endereco,Cidade,UF,CEP,Natureza,Esfera,Administracao,Utilidade)
+                                  SELECT TOP 1 p.CNPJCPF,
+                                     case
+                                       when len(p.CNPJCPF)=11
+                                         then  '1'
+                                         else  '2'
+                                     end as TipoPessoa,
+                                     Nome, SAC.dbo.fnNomeResponsavel(p.Usuario),p.Logradouro + ' - ' + p.Bairro,u.Municipio,u.UF,p.CEP,
+                                     case
+                                       when Direito = 1
+                                         then '1'
+                                       when Direito = 2 or Direito = 35
+                                         then '2'
+                                      end as Direito,
+                                     case
+                                       when Esfera = 3
+                                         then '1'
+                                       when Esfera = 4
+                                         then '2'
+                                       when Esfera = 5
+                                         then '3'
+                                      end as Esfera,
+                                     case
+                                       when Administracao = 11
+                                         then '1'
+                                       when Administracao = 12
+                                         then '2'
+                                      end as Administracao,
+                                     case
+                                       when Direito = 2
+                                         then '1'
+                                       when Direito = 35
+                                         then '2'
+                                      end as Utilidade
+                                FROM SAC.dbo.vCadastrarProponente p
+                               INNER JOIN Agentes.dbo.Agentes a on (p.idAgente = a.idAgente)
+                               INNER JOIN Agentes.dbo.EnderecoNacional e on (p.idAgente = e.idAgente and e.Status = 1)
+                               INNER JOIN Agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio )
+                                LEFT JOIN  SAC.dbo.vwNatureza n on (p.idAgente =n.idAgente)
+                               WHERE p.CNPJCPF='{$cnpjcpf}' 
+                                 AND Correspondencia = 1";
+            } else {
+                $sqlInteressado = "  UPDATE SAC.dbo.Interessado
+                                        SET Endereco = e.Logradouro + ' - ' + e.Bairro,
+                                            Cidade   = u.Municipio,
+                                            UF       = u.UF,
+                                            CEP      = e.CEP,
+                                            Natureza  = case
+                                                        when n.Direito = 1
+                                                          then '1'
+                                                        when n.Direito = 2 or n.Direito = 35
+                                                          then '2'
+                                                       end,
+                                            Esfera   = case
+                                                        when n.Esfera = 3
+                                                          then '1'
+                                                        when n.Esfera = 4
+                                                          then '2'
+                                                        when n.Esfera = 5
+                                                         then '3'
+                                                       end,
+                                            Administracao = case
+                                                             when n.Administracao = 11
+                                                              then '1'
+                                                             when n.Administracao = 12
+                                                              then '2'
+                                                            end,
+                                            Utilidade = case
+                                                         when n.Direito = 2
+                                                           then '1'
+                                                         when n.Direito = 35
+                                                           then '2'
+                                                        end
+                                            FROM SAC.dbo.Interessado i
+                                                 INNER JOIN Agentes.dbo.Agentes a on (i.CgcCpf = a.CNPJCPF)
+                                                 INNER JOIN Agentes.dbo.EnderecoNacional e on (a.idAgente = e.idAgente and e.Status = 1)
+                                                 INNER JOIN Agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio )
+                                                  LEFT JOIN SAC.dbo.vwNatureza n on (a.idAgente =n.idAgente)
+                                                 WHERE i.CGCCPF='{$cnpjcpf}' and e.Status = 1";
+            }
+
+            $resultado = $db->query($sqlInteressado);
+            if($resultado->rowCount() < 1) {
+                throw new Exception ("Erro ao tentar incluir ou alterar %d registros na tabela Interessado.");
+            }
+
+            $sqlSequencialProjetos = "UPDATE SAC.dbo.SequencialProjetos
+                                         SET Sequencial = Sequencial + 1
+                                       WHERE Ano = YEAR(GETDATE())";
+
+            $resultado = $db->query($sqlSequencialProjetos);
+            $ano = date('Y');
+            if($resultado->rowCount() < 1) {
+                $sqlSequencialProjetos = " INSERT INTO SAC.dbo.SequencialProjetos (Ano,Sequencial) VALUES ('{$ano}' ,1)";
+                $resultado = $db->query($sqlSequencialProjetos);
+                if($resultado->rowCount() < 1) {
+                    throw new Exception ("Não é possível incluir ou alterar mais de um registro na tabela SequencialProjetos.");
+                }
+            }
+
+            $sqlSequencial = "select Sequencial from sac.dbo.SequencialProjetos where ano = '{$ano}'";
+            $objSequencial = $db->fetchRow($sqlSequencial);
+            $sequencial = $objSequencial->Sequencial;
+            $AnoProjeto = date("y");
+            $NrProjeto = str_pad($sequencial, 4, "0", STR_PAD_LEFT);
+
+            $sqlProjetos = "INSERT INTO SAC.dbo.Projetos
+                                  (AnoProjeto,Sequencial,UFProjeto,Area,Segmento,Mecanismo,NomeProjeto,CgcCpf,Situacao,DtProtocolo,DtAnalise,
+                                   OrgaoOrigem,Orgao,DtSituacao,ProvidenciaTomada,ResumoProjeto,DtInicioExecucao,DtFimExecucao,SolicitadoReal,
+                                   idProjeto,Processo,Logon)
+                                SELECT TOP 1 '{$AnoProjeto}', '{$NrProjeto}', u.Sigla, SAC.dbo.fnSelecionarArea(idPreProjeto),SAC.dbo.fnSelecionarSegmento(idPreProjeto),
+                                   Mecanismo, NomeProjeto, a.CNPJCPF, 'B11', getdate(), getdate(), {$idOrgao}, {$idOrgao}, getdate(),
+                                   'Proposta transformada em projeto cultural', ResumoDoProjeto, DtInicioDeExecucao, DtFinalDeExecucao,
+                                   SAC.dbo.fnSolicitadoNaProposta(idPreProjeto), idPreProjeto, '{$nrProcesso}', {$idUsuario}
+                                   FROM SAC.dbo.PreProjeto p
+                                   INNER JOIN Agentes.dbo.Agentes a on (p.idAgente = a.idAgente)
+                                   INNER JOIN Agentes.dbo.EnderecoNacional e on (a.idAgente = e.idAgente and e.Status = 1)
+                                   INNER JOIN Agentes.dbo.UF u on (e.UF = u.idUF)
+                                   WHERE idPreProjeto  = {$idPreProjeto} 
+                                     AND NOT EXISTS(SELECT TOP 1 * FROM SAC.dbo.Projetos x WHERE p.idPreProjeto = x.idProjeto)";
+
+            $resultado = $db->query($sqlProjetos);
+            if($resultado->rowCount() < 1) {
+                throw new Exception ("Não há registro para incluir / alterar registro na tabela Interessado");
+            }
+
+            $idPronac = $db->lastInsertId();
+
+            $arrayDados = array(
+                'Situacao' => 'B01'
+            );
+            $arrayWhere = array('IdPRONAC  = ?' => $idPronac);
+            $objProjeto = new Projetos();
+            $objProjeto->update($arrayDados, $arrayWhere);
+
+            $sqlParecerista = "INSERT INTO SAC.dbo.tbPlanilhaProjeto
+                                 (idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,Quantidade,Ocorrencia,ValorUnitario,QtdeDias,
+                                 TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,    MunicipioDespesa,idUsuario)
+                               SELECT idPlanilhaProposta, {$idPronac},idProduto,idEtapa,idPlanilhaItem,Descricao,Unidade,
+                                    Quantidade, Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
+                                    MunicipioDespesa, 0
+                                    FROM SAC.dbo.tbPlanilhaProposta
+                                    WHERE idProjeto = {$idPreProjeto}";
+            $resultado = $db->query($sqlParecerista);
+
+            $sqlAnaliseDeConteudo = "INSERT INTO SAC.dbo.tbAnaliseDeConteudo (idPronac,idProduto)
+                                     SELECT {$idPronac},idProduto FROM SAC.dbo.tbPlanilhaProposta
+                                      WHERE idProjeto = {$idPreProjeto} AND idProduto <> 0
+                                      GROUP BY idProduto";
+            $resultado = $db->query($sqlAnaliseDeConteudo);
+
+            $sqlContaBancaria = "INSERT INTO SAC.dbo.ContaBancaria (AnoProjeto,Sequencial,Mecanismo,Banco,Agencia,Logon)
+                                 SELECT '{$AnoProjeto}', '{$NrProjeto}', Mecanismo,'001',AgenciaBancaria,{$idUsuario} 
+                                   FROM SAC.dbo.PreProjeto 
+                                  WHERE idPreProjeto = {$idPreProjeto}";
+            $resultado = $db->query($sqlContaBancaria);
+
+            if($resultado->rowCount() < 1) {
+                throw new Exception ("Não é possível incluir mais de %d registros na ContaBancari");
+            }
+
+            $sqlHistoricoEmail = "SELECT TOP 1 * FROM SAC.dbo.tbHistoricoEmail WHERE idPronac = {$idPronac} and 
+                                  idTextoEmail = 12 and (CONVERT(char(10),(DtEmail),111) = CONVERT(char(10),getdate(),111))";
+            $arrayHistoricoEmail = $db->fetchRow($sqlHistoricoEmail);
+            if(!$arrayHistoricoEmail) {
+                $idTextoEmail = 12;
+                $sqlInsertHistoricoEmail = "INSERT INTO SAC.dbo.tbHistoricoEmail (idPronac,idTextoemail,DtEmail,stEstado,idUsuario)
+                                            VALUES ({$idPronac}, {$idTextoEmail}, getdate(), 1, {$idUsuario})";
+                $resultado = $db->query($sqlInsertHistoricoEmail);
+                if($resultado->rowCount() < 1) {
+                    throw new Exception ("Não é permitido inserir %d registros ao mesmo tempo na tabela tbHistoricoEmail");
+                }
+
+                $sqlTextoEmail = "SELECT dsTexto FROM SAC.dbo.tbTextoEmail WHERE idTextoEmail = {$idTextoEmail}";
+                $arrayMensagem = $db->fetchRow($sqlTextoEmail);
+                $mensagem = $arrayMensagem->dsTexto;
+
+                $sqlDadosProposta = "SELECT NomeProjeto, Nome
+                                       FROM SAC.dbo.Projetos p
+                                      INNER JOIN SAC.dbo.Interessado i on (p.CgcCpf = i.CgcCpf)
+                                      WHERE idPronac = {$idPronac}";
+                $arrayMensagem = $db->fetchRow($sqlDadosProposta);
+                $nomeProposta = $arrayMensagem->NomeProjeto;
+                $destinatario = $arrayMensagem->Nome;
+                $mensagemEmail = "<b>Projeto: {$AnoProjeto}{$NrProjeto} - {$nomeProposta} <br> Proponente: {$destinatario}<br> </b>{$mensagem}";
+
+                $sqlEmail = "SELECT Descricao FROM agentes.dbo.Internet i
+                              INNER JOIN SAC.dbo.PreProjeto p on i.idAgente = p.idAgente
+                              WHERE p.idPreProjeto = {$idPreProjeto} and i.idAgente = p.idAgente and Status = 1";
+                $arrayEmails = $db->fetchAll($sqlEmail);
+
+
+                foreach($arrayEmails as $email) {
+//x($email->Descricao, "Projeto Cultural", $mensagemEmail);
+                    EmailDAO::enviarEmail($email->Descricao, "Projeto Cultural", $mensagemEmail);
+                }
+            }
+            $db->commit();
+        } catch (Exception $objException) {
+            $db->rollBack();
+            throw new Exception ($objException->getMessage(), 0, $objException);
+        }
+
+    }
 }

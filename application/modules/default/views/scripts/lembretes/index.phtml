@@ -1,10 +1,10 @@
 <?php require_once "inc/menu.inc.php"; // menu ?>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">Início</a></li>
-        <li><a href="<?php echo $this->url(array('controller' => 'areadetrabalho', 'action' => 'index')); ?>" title="Ir para Visualizar Área de Trabalho">Visualizar Área de Trabalho</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Inï¿½cio">Inï¿½cio</a></li>
+        <li><a href="<?php echo $this->url(array('controller' => 'areadetrabalho', 'action' => 'index')); ?>" title="Ir para Visualizar ï¿½rea de Trabalho">Visualizar ï¿½rea de Trabalho</a></li>
         <li class="last">Lembretes</li>
     </ul>
 </div>
@@ -12,15 +12,15 @@
 
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
     <div>Lembretes <span>ID #23A</span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
 </div>
-<!-- ========== FIM TÍTULO ========== -->
+<!-- ========== FIM Tï¿½TULO ========== -->
 
 
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 <div id="conteudo">
 
 
@@ -64,13 +64,13 @@
     <?php foreach($this->lembretes as $tblembretes): ?>
     <tr>
         <td>
-            <!-- ========== INÍCIO MODAL ========== -->
-            <div id="analisarProjeto<?php echo $tblembretes->Contador; ?>" style="display:none; height:auto;" title="Alteração de Lembrete" class="analisarProjeto">
-                <form name="form" action="/NovoSalic/lembretes/index" method="post">
+            <!-- ========== INï¿½CIO MODAL ========== -->
+            <div id="analisarProjeto<?php echo $tblembretes->Contador; ?>" style="display:none; height:auto;" title="Alteraï¿½ï¿½o de Lembrete" class="analisarProjeto">
+                <form name="form" action="<?php echo $this->url(array('module'=> 'default' , 'controller'=>'lembretes', 'action' => 'index')); ?>" method="post">
 
                     <table class="tabela">
                     
-                    <div class="titulo_tabela">Alteração de Lembrete</div>
+                    <div class="titulo_tabela">Alteraï¿½ï¿½o de Lembrete</div>
                         <tr>
 
                             <td colspan="6">
@@ -112,12 +112,12 @@
 
 
 </div>
-<!-- ========== FIM CONTEÚDO ========== -->
+<!-- ========== FIM CONTEï¿½DO ========== -->
 
 
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 
 <br clear="all" />
