@@ -167,8 +167,9 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
         $this->view->filtro         = $filtro;
         $this->view->tipoFiltro     = $tipoFiltro;
 
-        $pa = new paUsuariosDoPerfil();
-        $usuarios = $pa->buscarUsuarios($codPerfil, $codOrgao);
+//        $pa = new paUsuariosDoPerfil();
+        $vw = new vwUsuariosOrgaosGrupos();
+        $usuarios = $vw->buscarUsuarios($codPerfil, $codOrgao);
         $this->view->Usuarios = $usuarios;
     }
     
@@ -289,8 +290,9 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
             }
             $html .= '</tr>';
 
-            $pa = new paUsuariosDoPerfil();
-            $usuarios = $pa->buscarUsuarios($codPerfil, $codOrgao);
+//            $pa = new paUsuariosDoPerfil();
+            $vw = new vwUsuariosOrgaosGrupos();
+            $usuarios = $vw->buscarUsuarios($codPerfil, $codOrgao);
             
             $i=1;
             foreach ($busca as $dp){
@@ -336,8 +338,9 @@ class AvaliaracompanhamentoprojetoController extends MinC_Controller_Action_Abst
             $this->view->filtro = $filtro;
             $this->view->tipoFiltro = $tipoFiltro;
             
-            $pa = new paUsuariosDoPerfil();
-            $usuarios = $pa->buscarUsuarios($codPerfil, $codOrgao);
+//            $pa = new paUsuariosDoPerfil();
+            $vw = new vwUsuariosOrgaosGrupos();
+            $usuarios = $vw->buscarUsuarios($codPerfil, $codOrgao);
             $this->view->Usuarios = $usuarios;
         }
     }
