@@ -3,22 +3,6 @@ UPDATE SAC.dbo.tbPlanilhaEtapa
 SET tpCusto='P'
 WHERE idPlanilhaEtapa=5;
 
--- Renomeia o título das etapas
-
-
-
-UPDATE SAC.dbo.tbPlanilhaEtapa
-SET Descricao='Pré-Produção'
-WHERE idPlanilhaEtapa=1;
-
-UPDATE SAC.dbo.tbPlanilhaEtapa
-SET Descricao='Produção'
-WHERE idPlanilhaEtapa=2;
-
-UPDATE SAC.dbo.tbPlanilhaEtapa
-SET Descricao='Pós-Produção'
-WHERE idPlanilhaEtapa=3;
-
 -- Remove Not Null na coluna idPolicaoDaLogo
 ALTER TABLE sac.dbo.PlanoDistribuicaoProduto ALTER COLUMN idPosicaoDaLogo INT;
 
@@ -38,7 +22,6 @@ INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Propo
 INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Proposta aprovado em editais', 1);
 INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Proposta  com contratos de patrocínios', 1);
 
-
 -- Remove Not Null na coluna stPlanoAnual
 ALTER TABLE sac.dbo.PreProjeto ALTER COLUMN stPlanoAnual BIT;
 
@@ -46,5 +29,5 @@ ALTER TABLE sac.dbo.PreProjeto ALTER COLUMN stPlanoAnual BIT;
 INSERT INTO SAC.dbo.DocumentosExigidos (Descricao,Area,Opcao,stEstado,stUpload)
 VALUES ('Comprovante Execução Imediata','0',2,1,1);
 
-// novo campo em preprojeto aprovar com o ROMULO
-ALTER TABLE sac.dbo.PreProjeto ADD prorrogacaoAutomatica BIT DEFAULT 0 NULL;
+-- Cria novo campo para prorrogacao automática
+ALTER TABLE sac.dbo.PreProjeto ADD tpProrrogacao BIT DEFAULT 1 NULL;

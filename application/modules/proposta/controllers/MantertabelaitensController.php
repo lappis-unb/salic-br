@@ -40,6 +40,8 @@ class Proposta_MantertabelaitensController extends MinC_Controller_Action_Abstra
         //recupera ID do pre projeto (proposta)
         if(!empty ($idPreProjeto)) {
             $this->idPreProjeto = $idPreProjeto;
+            $this->view->idPreProjeto = $idPreProjeto;
+
             //VERIFICA SE A PROPOSTA ESTA COM O MINC
             $Movimentacao = new Proposta_Model_DbTable_TbMovimentacao();
             $rsStatusAtual = $Movimentacao->buscarStatusAtualProposta($idPreProjeto);

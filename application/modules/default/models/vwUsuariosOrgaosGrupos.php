@@ -74,13 +74,13 @@ class vwUsuariosOrgaosGrupos extends MinC_Db_Table_Abstract {
     /**
      * Metodo para buscar as unidades autorizadas do usuario do sistema
      * @access public
-     * @param @usu_codigo (c?digo do usu?rio)
-     * @param @sis_codigo (c?digo sistema)
-     * @param @gru_codigo (c?digo do grupo)
-     * @param @uog_orgao  (c?digo do ?rg?o)
+     * @param @usu_codigo (codigo do usuario)
+     * @param @sis_codigo (codigo sistema)
+     * @param @gru_codigo (codigo do grupo)
+     * @param @uog_orgao  (codigo do orgao)
      * @return object
      */
-    public function carregarPorAdmissibilidadeGrupo()
+    public function carregarPorPareceristaGrupo($intIdUnidade)
     {
         $sql = $this->select();
         $sql->setIntegrityCheck(false);
@@ -104,15 +104,59 @@ class vwUsuariosOrgaosGrupos extends MinC_Db_Table_Abstract {
             $this->_schema
         );
         $sql->where("gru_nome LIKE '%Parecerista%'");
+        $sql->where("org_superior = ?", $intIdUnidade);
         $sql->order('org_siglaautorizado ASC');
         $sql->order('gru_nome ASC');
         $sql->order('usu_nome ASC');
         $arrResult = $this->fetchAll($sql);
         $arrNew = array();
         foreach ($arrResult as $arrValue) {
-            $arrNew[$arrValue['org_siglaautorizado'] . ' - ' . $arrValue['org_nomeautorizado'] . '(' . $arrValue['gru_nome']. ')'][] = $arrValue;
+            $arrNew[$arrValue['gru_nome']][] = $arrValue->toArray();
         }
         return $arrNew;
+    }
+
+    public function carregarPorPareceristaGrupoFetchPairs($intIdUnidade)
+    {
+        $arrResult = self::carregarPorPareceristaGrupo($intIdUnidade);
+        $arrNew = array();
+        foreach ($arrResult as $strKey => $arrGrupo) {
+            foreach($arrGrupo as $arrValue) {
+                $arrNew[$strKey][$arrValue['usu_codigo']] = utf8_encode($arrValue['usu_nome']);
+            }
+        }
+        return $arrNew;
+    }
+
+
+    /**
+     * Metodo para buscar as unidades autorizadas do usuario do sistema
+     * @access public
+     * @param @usu_codigo (codigo do usuario)
+     * @param @sis_codigo (codigo sistema)
+     * @param @gru_codigo (codigo do grupo)
+     * @param @uog_orgao  (codigo do orgao)
+     * @return object
+     */
+    public function carregarUnidade()
+    {
+        $sql = $this->select();
+        $sql->setIntegrityCheck(false);
+        $sql->from(
+            'vwusuariosorgaosgrupos',
+            array
+            (
+                'org_siglaautorizado',
+                'org_nomeautorizado',
+                'org_superior',
+            ),
+            $this->_schema
+        );
+        $sql->where("gru_nome LIKE '%Parecerista%'");
+        $sql->order('org_siglaautorizado ASC');
+        $sql->distinct();
+        $arrResult = $this->fetchAll($sql);
+        return $arrResult;
     }
 
 }

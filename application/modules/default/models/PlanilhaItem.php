@@ -1,11 +1,8 @@
 <?php
-/**
- *
- */
 class PlanilhaItem   extends MinC_Db_Table_Abstract
 {
     protected $_banco = "SAC";
-    protected $_schema = "dbo";
+    protected $_schema = "SAC";
     protected $_name = "tbPlanilhaItens";
 
     /**
@@ -30,7 +27,7 @@ class PlanilhaItem   extends MinC_Db_Table_Abstract
                     INNER JOIN SAC.dbo.tbPlanilhaItens as pit ON pit.idPlanilhaItens = pa.idPlanilhaItem
                     INNER JOIN SAC.dbo.tbPlanilhaEtapa AS pEtapa ON pEtapa.idPlanilhaEtapa = pa.idEtapa
                     LEFT JOIN SAC.dbo.Produto AS prod ON prod.Codigo = pa.idProduto
-                WHERE 
+                WHERE
                     pa.idPlanilhaAprovacao = ?
                     AND pa.stAtivo = 'S'
                 ORDER BY prod.Descricao ASC";*/
