@@ -160,8 +160,9 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
         $this->view->dados         = $busca;
         $this->view->intTamPag     = $this->intTamPag;
 
-        $pa = new paUsuariosDoPerfil();
-        $usuarios = $pa->buscarUsuarios(134, $this->codOrgao);
+//        $pa = new paUsuariosDoPerfil();
+        $vw = new vwUsuariosOrgaosGrupos();
+        $usuarios = $vw->buscarUsuarios(134, $this->codOrgao);
         $this->view->Usuarios = $usuarios;
     }
 
@@ -608,8 +609,9 @@ class PesquisarprojetofiscalizacaoController extends MinC_Controller_Action_Abst
         if ($this->view->infoProjeto[0]->idFiscalizacao)
             $this->view->arquivos = $ArquivoFiscalizacaoDao->buscarArquivo(array('arqfis.idFiscalizacao = ?' => $this->view->infoProjeto[0]->idFiscalizacao));
 
-        $pa = new paUsuariosDoPerfil();
-        $usuarios = $pa->buscarUsuarios(134, $this->view->orgaoAtivo);
+//        $pa = new paUsuariosDoPerfil();
+        $vw = new vwUsuariosOrgaosGrupos();
+        $usuarios = $vw->buscarUsuarios(134, $this->view->orgaoAtivo);
         $this->view->Usuarios = $usuarios;
     }
 
