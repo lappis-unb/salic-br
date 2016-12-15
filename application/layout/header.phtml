@@ -42,6 +42,9 @@
         <!--[if IE 7]>
         <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/ie7.css"/>
         <![endif]-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>var $jq3 = jQuery.noConflict();</script>
+        <script src="<?php echo $this->baseUrl(); ?>/public/js/materialize.js"></script>
         <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery-1.4.2.min.js"></script>
         <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/script_sem_menu.js"></script>
         <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery.tablesorter.min.js"></script>
@@ -57,6 +60,7 @@
         <noscript>
             <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/noscript.css" />
         </noscript>
+
         <!-- Jquery -->
         <link type="text/css" href="<?php echo $this->baseUrl(); ?>/public/css/custom-theme/jquery-ui-1.8.2.custom.css" rel="stylesheet" />
         <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery-ui-1.8.2.custom.min.js"></script>
@@ -122,13 +126,11 @@
         </script>
 
         <!--    NOVO    -->
+
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/materialize.css">
 <!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">-->
         <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/materialize-custom.css">
-        <script>var $jq3 = jQuery.noConflict();</script>
-        <script src="<?php echo $this->baseUrl(); ?>/public/js/materialize.js"></script>
     </head>
     <body>
         <header>
@@ -136,7 +138,7 @@
         <!-- ========== INICIO TOPO ========== -->
         <div id="topo">
             <div class="barra_governo">
-                <div >
+                <div>
                     <div id="combousuario">
                         <label for="perfilXgrupo"> </label>
                         <select name="perfilXgrupo" id="perfilXgrupo" class="perfilXgrupo" onchange="alterarPerfil(this.value);">
