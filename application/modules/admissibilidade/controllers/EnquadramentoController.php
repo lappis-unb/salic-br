@@ -6,7 +6,6 @@
  */
 class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abstract
 {
-
     public function init()
     {
         parent::perfil();
@@ -92,7 +91,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $arrayDados = array(
             'Situacao' => 'B02',
             'DtSituacao' => $objProjeto->getExpressionDate(),
-            'ProvidenciaTomada' => $post['observacao'],
+            'ProvidenciaTomada' => "Projeto enquadrado após avaliação técnica.",
             'logon' => $authIdentity['usu_codigo']
         );
         $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
@@ -100,8 +99,10 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
         /**
          * @todo Verificar com Rômulo para quem deve enviar o e-mail e qual a mensagem.
+         *
+         * Resposta : Enviar para Pareceristas e pegar mensagem da tabela
          */
-        //EmailDAO::enviarEmail($email, "Projeto Cultural", $mensagemEmail);
+        // EmailDAO::enviarEmail($email, "Projeto Cultural", $mensagemEmail);
 
         parent::message("Enquadramento cadastrado com sucesso.", "/admissibilidade/enquadramento/listar", "CONFIRM");
     }
