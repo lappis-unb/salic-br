@@ -1074,7 +1074,7 @@ class RecursoController extends GenericControllerNew
         // Se estiver com vinculada do IPHAN, volta para sede IPHAN
         $outrasVinculadas = array(92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
         
-        if (in_array($this->idOrgao, $outrasVinculadas)) {
+        if (!in_array($this->idOrgao, $outrasVinculadas)) {
             // retorna para o iphan e mantem siRecurso = 5          
             $dadosDP = array();
             $whereDP = array();
