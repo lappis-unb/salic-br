@@ -7334,6 +7334,7 @@ class Projetos extends MinC_Db_Table_Abstract
                 'p.UfProjeto',
                 'p.DtInicioExecucao',
                 'p.DtFimExecucao',
+                'p.Situacao',
             ),
             $this->_schema
         );
