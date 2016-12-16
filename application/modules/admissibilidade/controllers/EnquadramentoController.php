@@ -28,8 +28,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
     {
         $idusuario = $this->auth->getIdentity()->usu_codigo;
         $projeto = new  Projetos();
-        $projetos = $projeto->listarPorSituacao(array('B01', 'B03'));
-        $this->view->dados = $projetos;
+        $this->view->dados = $projeto->listarPorSituacao(array('B01', 'B03'));
         $codOrgao = $this->grupoAtivo->codOrgao;
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
