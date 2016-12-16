@@ -28,12 +28,11 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
     {
         $idusuario = $this->auth->getIdentity()->usu_codigo;
         $projeto = new  Projetos();
-        $projetos = $projeto->listarPorSituacao('B01');//E63
-
+        $projetos = $projeto->listarPorSituacao(array('B01', 'B03'));
+        $this->view->dados = $projetos;
         $codOrgao = $this->grupoAtivo->codOrgao;
         $this->view->codOrgao = $codOrgao;
         $this->view->idUsuarioLogado = $idusuario;
-        $this->view->dados = $projetos;
     }
 
     public function enquadrarprojetoAction()
@@ -51,7 +50,8 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
                 throw new Exception("PRONAC não encontrado.");
             }
 
-            if ($projeto['Situacao'] != "B01") {
+            $arraySituacoesValidas = array("B01", "B03");
+            if (!in_array($arraySituacoesValidas, $projeto['Situacao'])) {
                 throw new Exception("Situa&ccedil;&atilde;o do projeto n&atilde;o &eacute; v&aacute;lida.");
             }
 
@@ -66,9 +66,6 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         }
     }
 
-    /**
-     * @todo Verificar com Rômulo qual informaçõa deve ser armazenada para a coluna "ProvidenciaTomada" da tabela "Projetos"
-     */
     private function salvarEnquadramentoProjeto($projeto)
     {
         $auth = Zend_Auth::getInstance();
