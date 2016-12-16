@@ -3087,8 +3087,8 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                 'usuario' => $usuario
             );
 
-//            $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-//            $insert = $tbMovimentacao->insert($dados);
+            $tbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
+            $insert = $tbMovimentacao->insert($dados);
 
             $validacao->Descricao = '<font color=blue><b>A PROPOSTA CULTURAL FOI ENCAMINHADA COM SUCESSO AO MINIST&Eacute;RIO DA CULTURA.</b></font>';
             $validacao->Observacao = 'OK';
