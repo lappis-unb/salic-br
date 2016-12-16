@@ -63,7 +63,9 @@
             } else {
 
 		// se for planilha orçamentária
-		if ($('#idTipoReadequacao').val() == 2) {
+                var parecerProjeto = ($("input[name='parecerProjeto']:checked").val() == '2') ? true : false;
+                
+		if ($('#idTipoReadequacao').val() == 2 && parecerProjeto) {
 		    // verifica limites orcamentrios
                     $.ajax({
 			type: 'POST',
