@@ -1,56 +1,23 @@
 <?php
 
-/**
- * Class Agente_Model_DbTable_Internet
- *
- * @name Agente_Model_DbTable_Internet
- * @package Modules/Agente
- * @subpackage Models/DbTable
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 06/09/2016
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- *
- * idInternet,
- * idAgente,
- * TipoInternet,
- * Descricao,
- * Status,
- * Divulgar,
- * Usuario
- */
 class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
 {
     /**
-     * _schema
-     *
      * @var string
-     * @access protected
      */
     protected $_schema = 'agentes';
 
     /**
-     * _name
-     *
      * @var bool
-     * @access protected
      */
     protected $_name = 'internet';
 
     /**
-     * _primary
-     *
      * @var bool
-     * @access protected
      */
     protected $_primary = 'idInternet';
 
     /**
-     * M�todo para envio de e-mail
-     * @access public
      * @param string $email
      * @param string $assunto
      * @param string $texto
@@ -201,4 +168,13 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
         return $this->delete($where);
     }
 
+    public function obterEmailProponentesPorPreProjeto($idPreProjeto) {
+        $sqlEmail = "SELECT Descricao FROM agentes.dbo.Internet i
+                      INNER JOIN SAC.dbo.PreProjeto p on i.idAgente = p.idAgente
+                      WHERE p.idPreProjeto = {$idPreProjeto} 
+                        and i.idAgente = p.idAgente 
+                        and Status = 1";
+
+        return $this->fetchAll($sqlEmail);
+    }
 }

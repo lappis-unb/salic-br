@@ -7,7 +7,6 @@
  */
 class tbRelatorioTrimestral extends MinC_Db_Table_Abstract{
 
-    protected $_banco = 'SAC';
     protected $_schema = 'SAC';
     protected $_name = 'tbRelatorioTrimestral';
 
@@ -63,13 +62,15 @@ class tbRelatorioTrimestral extends MinC_Db_Table_Abstract{
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name)
+                    array('a' => $this->_name),
+                    NULL,
+                    $this->_schema 
             );
             $select->joinInner(
                     array('b' => 'tbRelatorio'),
                     'b.idRelatorio = a.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    $this->_schema
                     );
             $select->where('b.idPRONAC = ?', $idpronac);
             $select->where('b.tpRelatorio = ?', 'T');
@@ -89,18 +90,20 @@ class tbRelatorioTrimestral extends MinC_Db_Table_Abstract{
             $select = $this->select();
             $select->setIntegrityCheck(false);
             $select->from(
-                    array('a' => $this->_schema . '.' . $this->_name)
+                    array('a' => $this->_name),
+                    NULL,
+                    $this->_schema
             );
             $select->joinInner(
                     array('b' => 'tbRelatorio'),
                     'b.idRelatorio = a.idRelatorio',
                     array('*'),
-                    'SAC.dbo'
+                    $this->_schema 
                     );
             $select->where('b.idPRONAC = ?', $idpronac);
             $select->where('a.stRelatorioTrimestral = ?', $status);
             $select->where('b.tpRelatorio = ?', 'T');
-//            xd($select->assemble());
+            
             return $this->fetchAll($select);
         }
 

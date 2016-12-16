@@ -636,23 +636,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $nrProcesso = $nrProcessoSemFormatacao;
 
             try {
-                //$aux = new paTransformarPropostaEmProjetoNovaIN();
-                #$aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario);
-                //$aux = $aux->execSP($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
-
                 $this->incluirProjeto($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
                 $tblProjeto = new Projetos();
                 $rsProjeto = $tblProjeto->buscar(array("idProjeto = ?" => $this->idPreProjeto), "IdPRONAC DESC")->current();
                 if (!empty($rsProjeto)) {
-
-                    $arrayDados = array(
-                        'Situacao' => 'B01',
-                        'DtSituacao' => $tblProjeto->getExpressionDate(),
-                    );
-                    $arrayWhere = array('IdPRONAC  = ?' => $rsProjeto->IdPRONAC);
-
-                    $tblProjeto->update($arrayDados, $arrayWhere);
-
                     $nrPronac = $rsProjeto->AnoProjeto . $rsProjeto->Sequencial;
 
                     echo "A Proposta " . $this->idPreProjeto . " foi transformada no Projeto No. " . $nrPronac;
@@ -2554,8 +2541,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
      */
     private function incluirProjeto($idPreProjeto, $cnpjcpf, $idOrgao, $idUsuario, $nrProcesso) {
 
-
-
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         try {
@@ -2675,7 +2660,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                    OrgaoOrigem,Orgao,DtSituacao,ProvidenciaTomada,ResumoProjeto,DtInicioExecucao,DtFimExecucao,SolicitadoReal,
                                    idProjeto,Processo,Logon)
                                 SELECT TOP 1 '{$AnoProjeto}', '{$NrProjeto}', u.Sigla, SAC.dbo.fnSelecionarArea(idPreProjeto),SAC.dbo.fnSelecionarSegmento(idPreProjeto),
-                                   Mecanismo, NomeProjeto, a.CNPJCPF, 'B11', getdate(), getdate(), {$idOrgao}, {$idOrgao}, getdate(),
+                                   Mecanismo, NomeProjeto, a.CNPJCPF, 'B01', getdate(), getdate(), {$idOrgao}, {$idOrgao}, getdate(),
                                    'Proposta transformada em projeto cultural', ResumoDoProjeto, DtInicioDeExecucao, DtFinalDeExecucao,
                                    SAC.dbo.fnSolicitadoNaProposta(idPreProjeto), idPreProjeto, '{$nrProcesso}', {$idUsuario}
                                    FROM SAC.dbo.PreProjeto p
@@ -2699,21 +2684,21 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $objProjeto = new Projetos();
             $objProjeto->update($arrayDados, $arrayWhere);
 
-            $sqlParecerista = "INSERT INTO SAC.dbo.tbPlanilhaProjeto
-                                 (idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,Quantidade,Ocorrencia,ValorUnitario,QtdeDias,
-                                 TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,    MunicipioDespesa,idUsuario)
-                               SELECT idPlanilhaProposta, {$idPronac},idProduto,idEtapa,idPlanilhaItem,Descricao,Unidade,
-                                    Quantidade, Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
-                                    MunicipioDespesa, 0
-                                    FROM SAC.dbo.tbPlanilhaProposta
-                                    WHERE idProjeto = {$idPreProjeto}";
-            $resultado = $db->query($sqlParecerista);
+//            $sqlParecerista = "INSERT INTO SAC.dbo.tbPlanilhaProjeto
+//                                 (idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,Quantidade,Ocorrencia,ValorUnitario,QtdeDias,
+//                                 TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,    MunicipioDespesa,idUsuario)
+//                               SELECT idPlanilhaProposta, {$idPronac},idProduto,idEtapa,idPlanilhaItem,Descricao,Unidade,
+//                                    Quantidade, Ocorrencia,ValorUnitario,QtdeDias,TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,
+//                                    MunicipioDespesa, 0
+//                                    FROM SAC.dbo.tbPlanilhaProposta
+//                                    WHERE idProjeto = {$idPreProjeto}";
+//            $resultado = $db->query($sqlParecerista);
 
-            $sqlAnaliseDeConteudo = "INSERT INTO SAC.dbo.tbAnaliseDeConteudo (idPronac,idProduto)
-                                     SELECT {$idPronac},idProduto FROM SAC.dbo.tbPlanilhaProposta
-                                      WHERE idProjeto = {$idPreProjeto} AND idProduto <> 0
-                                      GROUP BY idProduto";
-            $resultado = $db->query($sqlAnaliseDeConteudo);
+//            $sqlAnaliseDeConteudo = "INSERT INTO SAC.dbo.tbAnaliseDeConteudo (idPronac,idProduto)
+//                                     SELECT {$idPronac},idProduto FROM SAC.dbo.tbPlanilhaProposta
+//                                      WHERE idProjeto = {$idPreProjeto} AND idProduto <> 0
+//                                      GROUP BY idProduto";
+//            $resultado = $db->query($sqlAnaliseDeConteudo);
 
             $sqlContaBancaria = "INSERT INTO SAC.dbo.ContaBancaria (AnoProjeto,Sequencial,Mecanismo,Banco,Agencia,Logon)
                                  SELECT '{$AnoProjeto}', '{$NrProjeto}', Mecanismo,'001',AgenciaBancaria,{$idUsuario} 
@@ -2750,14 +2735,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 $destinatario = $arrayMensagem->Nome;
                 $mensagemEmail = "<b>Projeto: {$AnoProjeto}{$NrProjeto} - {$nomeProposta} <br> Proponente: {$destinatario}<br> </b>{$mensagem}";
 
-                $sqlEmail = "SELECT Descricao FROM agentes.dbo.Internet i
-                              INNER JOIN SAC.dbo.PreProjeto p on i.idAgente = p.idAgente
-                              WHERE p.idPreProjeto = {$idPreProjeto} and i.idAgente = p.idAgente and Status = 1";
-                $arrayEmails = $db->fetchAll($sqlEmail);
-
+                $objInternet = new Agente_Model_DbTable_Internet();
+                $arrayEmails = $objInternet->obterEmailProponentesPorPreProjeto($idPreProjeto);
 
                 foreach($arrayEmails as $email) {
-//x($email->Descricao, "Projeto Cultural", $mensagemEmail);
                     EmailDAO::enviarEmail($email->Descricao, "Projeto Cultural", $mensagemEmail);
                 }
             }
