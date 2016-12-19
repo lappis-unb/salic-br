@@ -792,8 +792,8 @@ class RecursoController extends GenericControllerNew
         $idusuario = $auth->getIdentity()->usu_codigo;
         $idPronac = $this->_request->getParam('idPronac');
         $idRecurso = $this->_request->getParam('idRecurso');
-        $areaCultural = isset($this->_request->getParam('areaCultural')) ? $this->_request->getParam('areaCultural') : null;
-        $segmentoCultural = isset($this->_request->getParam('segmentoCultural']) ?  $this->_request->getParam('segmentoCultural'] : null;
+        $areaCultural = (null !== $this->_request->getParam('areaCultural')) ? $this->_request->getParam('areaCultural') : null;
+        $segmentoCultural = (null !== $this->_request->getParam('segmentoCultural')) ?  $this->_request->getParam('segmentoCultural') : null;
         $enquadramentoProjeto = $this->_request->getParam('enquadramentoProjeto');
         $parecerProjeto = $this->_request->getParam('parecerProjeto');
         $dsParecer = $this->_request->getParam('dsParecer');
@@ -801,10 +801,10 @@ class RecursoController extends GenericControllerNew
         try {
             //ATUALIAZA A ÁREA E SEGMENTO DO PROJETO
             $d = array();
-            if(isset($this->_request->getParam('areaCultural'))){
+            if(null !== $this->_request->getParam('areaCultural')){
                 $d['Area'] = $areaCultural;
             }
-            if(isset($this->_request->getParam('segmentoCultural'))){
+            if(null !== $this->_request->getParam('segmentoCultural')){
                 $d['Segmento'] = $segmentoCultural;
             }
             $where = "IdPRONAC = $idPronac";
