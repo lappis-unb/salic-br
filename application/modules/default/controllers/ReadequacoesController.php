@@ -2531,16 +2531,16 @@ class ReadequacoesController extends GenericControllerNew {
             parent::message("Você não tem permissão para acessar essa área do sistema!", "principal", "ALERT");
        }
 
-        $idPronac = $_POST['idPronac'];
-        $idReadequacao = $_POST['idReadequacao'];
-        $dsParecer = $_POST['dsParecer'];
-        $parecerProjeto = $_POST['parecerProjeto'];
+        $idPronac = $this->_request->getParam('idPronac');
+        $idReadequacao = $this->_request->getParam('idReadequacao');
+        $dsParecer = $this->_request->getParam('dsParecer');
+        $parecerProjeto = $this->_request->getParam('parecerProjeto');
         $campoTipoParecer = 8;
         $vlPlanilha = 0;
 
         $tbReadequacao = new tbReadequacao();
         $dadosRead = $tbReadequacao->buscar(array('idReadequacao=?'=>$idReadequacao))->current();
-
+        
         //SE FOR READEQUAÇÃO DE PLANILHA ORÇAMENTÁRIA, O CAMPO TipoParecer DA TABELA SAC.dbo.Parecer MUDARÁ.
         if($dadosRead->idTipoReadequacao == 2){
             $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
@@ -2632,11 +2632,11 @@ class ReadequacoesController extends GenericControllerNew {
                 }
             }
             
-            if(isset($_POST['finalizarAvaliacao']) && $_POST['finalizarAvaliacao'] == 1){
+            if((null !== $this->_request->getParam('finalizarAvaliacao')) && $this->_request->getParam('finalizarAvaliacao') == 1){
 
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
                 $dDP = $tbDistribuirReadequacao->buscar(array('idReadequacao = ?'=>$idReadequacao));
-
+                
                 if(count($dDP)>0){
                     
                     $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
@@ -2661,6 +2661,7 @@ class ReadequacoesController extends GenericControllerNew {
                     //ATUALIZA A TABELA tbReadequacao
                     $dados = array();
                     $dados['siEncaminhamento'] = $siEncaminhamento;
+                    $dados['dtFechamento'] = new Zend_Db_Expr('GETDATE()');
                     $where = "idReadequacao = $idReadequacao";
                     $tbReadequacao->update($dados, $where);
                 }

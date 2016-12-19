@@ -790,21 +790,21 @@ class RecursoController extends GenericControllerNew
         
         $auth = Zend_Auth::getInstance();
         $idusuario = $auth->getIdentity()->usu_codigo;
-        $idPronac = $_POST['idPronac'];
-        $idRecurso = $_POST['idRecurso'];
-        $areaCultural = isset($_POST['areaCultural']) ? $_POST['areaCultural'] : null;
-        $segmentoCultural = isset($_POST['segmentoCultural']) ?  $_POST['segmentoCultural'] : null;
-        $enquadramentoProjeto = $_POST['enquadramentoProjeto'];
-        $parecerProjeto = $_POST['parecerProjeto'];
-        $dsParecer = $_POST['dsParecer'];
+        $idPronac = $this->_request->getParam('idPronac');
+        $idRecurso = $this->_request->getParam('idRecurso');
+        $areaCultural = isset($this->_request->getParam('areaCultural')) ? $this->_request->getParam('areaCultural') : null;
+        $segmentoCultural = isset($this->_request->getParam('segmentoCultural']) ?  $this->_request->getParam('segmentoCultural'] : null;
+        $enquadramentoProjeto = $this->_request->getParam('enquadramentoProjeto');
+        $parecerProjeto = $this->_request->getParam('parecerProjeto');
+        $dsParecer = $this->_request->getParam('dsParecer');
         
         try {
             //ATUALIAZA A ÁREA E SEGMENTO DO PROJETO
             $d = array();
-            if(isset($_POST['areaCultural'])){
+            if(isset($this->_request->getParam('areaCultural'))){
                 $d['Area'] = $areaCultural;
             }
-            if(isset($_POST['segmentoCultural'])){
+            if(isset($this->_request->getParam('segmentoCultural'))){
                 $d['Segmento'] = $segmentoCultural;
             }
             $where = "IdPRONAC = $idPronac";
@@ -883,7 +883,7 @@ class RecursoController extends GenericControllerNew
                 if(count($dDP)>0){
                     //ATUALIZA A TABELA tbDistribuirProjeto
                     $dadosDP = array();
-                    $dadosDP['dtDevolucao'] = new Zend_Db_Expr('GETDATE()');
+                    $dadosDP['dtFechamento'] = new Zend_Db_Expr('GETDATE()');
                     $whereDP = "idDistribuirProjeto = ".$dDP[0]->idDistribuirProjeto;
 
                     $outrasVinculadas = array(91, 92, 93, 94, 95, 335); // Vinculadas exceto superintendências IPHAN
