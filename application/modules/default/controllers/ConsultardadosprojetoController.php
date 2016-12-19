@@ -132,7 +132,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
             $links = new fnLiberarLinks();
             // @TODO REMOVER FUTURAMENTE ESSA FUNÇÃO
            // $linksXpermissao = $links->liberarLinks(2, $cpf, $idUsuarioLogado, $idPronac);
-            $linksXpermissao = $links->liberar(2, $cpf, $idUsuarioLogado, $idPronac);
+            $linksXpermissao = $links->links(2, $cpf, $idUsuarioLogado, $idPronac);
             
             $linksGeral = str_replace(' ', '', explode('-', $linksXpermissao->links));
 
