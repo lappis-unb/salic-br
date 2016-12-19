@@ -834,7 +834,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             }
 
             $itensPlanilhaProduto = new tbItensPlanilhaProduto();
-            $itensCustoAdministrativo = $itensPlanilhaProduto->buscarItens(5); //@todo corrigir id correto, Romulo vai criar a planilha
+            $itensCustoAdministrativo = $itensPlanilhaProduto->buscarItens(8); //@todo corrigir id correto, Romulo vai criar a planilha
 
             foreach ($itensCustoAdministrativo as $item ) {
                 $custosVinculados = null;
@@ -845,18 +845,18 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 $custosVinculados = $TPP->buscarCustos($idPreProjeto, $tipoCusto, $idEtapa, $item->idPlanilhaItens);
 
                 switch($item->idPlanilhaItens) {
-                    case 40: // Custo Administrativo @todo corrigir id correto, Romulo vai criar a planilha
+                    case 8197: // Custo Administrativo @todo corrigir id correto, Romulo vai criar a planilha
                         $valorCustoItem = ( $valorTotalProjeto * 0.15);
                         break;
-                    case 2590: // Divulgacao
+                    case 8198: // Divulgacao
                         $valorCustoItem = ( $valorTotalProjeto * $calcDivugacao );
                         break;
-                    case 200: // Remuneracao p/ Captar Recursos
+                    case 5249: // Remuneracao p/ Captar Recursos
                         $valorCustoItem = ( $valorTotalProjeto * $calcCaptacao );
                         if( $valorCustoItem > $limitCaptacao )
                             $valorCustoItem = $limitCaptacao;
                         break;
-                    case 199: // Controle e Auditoria
+                    case 8199: // Controle e Auditoria
                         $valorCustoItem = ( $valorTotalProjeto * 0.1 );
                         if( $valorCustoItem > 100000 )
                             $valorCustoItem = 100000;

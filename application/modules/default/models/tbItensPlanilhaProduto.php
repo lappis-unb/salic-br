@@ -192,9 +192,6 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
         }
         $select->order('b.Descricao');
 
-//        echo /'<pre>';
-//        var_dump ($select->assemble());
-//        exit;
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($select);
