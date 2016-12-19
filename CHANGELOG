@@ -1,3 +1,6 @@
+Release 1.14.3
+  * Fix: [Recursos] Normalizando nomes das querys na montagem de combo de pareceristas
+
 Release 1.14.2
   * Fix: [Recursos] Enviando para órgão correto quando coordenador finaliza
   * Fix: [Readequações] Enviando para órgão correto quando coordenador finaliza
