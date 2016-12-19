@@ -1,3 +1,8 @@
+Release 1.14.2
+  * Fix: [Recursos] Enviando para órgão correto quando coordenador finaliza
+  * Fix: [Readequações] Enviando para órgão correto quando coordenador finaliza
+  * Fix: [Readequações] Verifica limites orçamentários apenas se readequação for aprovada / #590
+
 Release 1.14.1
   * Fix: [Recursos] Combos de pareceristas exibindo corretamente
   * Fix: [Recursos] movendo restrições de busca apenas para caso "em análise"
