@@ -2699,23 +2699,26 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
                     ->where('idPreProjeto = ?', $idPreProjeto);
                 $stProposta = $db->fetchRow($sql)->stProposta;
 
-                if( $stProposta == '618' || $stProposta == '619' ) {
+                $idDocumento = '';
+                if( $stProposta == '618' ) {
+                    $msg = 'No caso de proposta aprovada em editais &eacute; obrigat&oacute;rio anexar o documento Resultado da Sele&ccedil;&atilde;o p&uacute;blica';
+                    $idDocumento = 248;
+                } elseif( $stProposta == '619') {
+                    $msg = 'No caso de proposta com contratos de patroc&iacute;nios &eacute; obrigat&oacute;rio anexar o Contrato firmado com o Incentivador';
+                    $idDocumento = 162;
+                }
+
+                if( !empty($idDocumento) ) {
 
                     $sql = $db->select()
                         ->from(array('tbDocumentosPreProjeto'), '*',  $this->_schema)
                         ->where('idProjeto = ?', $idPreProjeto)
-                        ->where('CodigoDocumento = 248')
+                        ->where('CodigoDocumento = ?', $idDocumento)
                         ->limit(1);
                     $documento = $db->fetchRow($sql);
 
                     if (empty($documento)) {
-
-                        if( $stProposta == '618' )
-                            $msg = 'proposta aprovada em editais';
-                        else
-                            $msg = 'proposta com contratos de patroc&iacute;nios';
-
-                        $validacao->Descricao = 'No caso de ' .$msg. ' &eacute; obrigat&oacute;rio anexar o comprovante de execu&ccedil;&atilde;o imediata';
+                        $validacao->Descricao = $msg;
                         $validacao->Observacao = 'PENDENTE';
                         $validacao->Url = array('module' => 'proposta', 'controller' => 'manterpropostaincentivofiscal', 'action' => 'editar', 'idPreProjeto' => $idPreProjeto);
                         $listaValidacao[] =  clone($validacao);
