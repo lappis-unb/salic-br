@@ -27,7 +27,7 @@ ALTER TABLE sac.dbo.PreProjeto ALTER COLUMN stPlanoAnual BIT;
 
 -- Cria novo documento
 INSERT INTO SAC.dbo.DocumentosExigidos (Descricao,Area,Opcao,stEstado,stUpload)
-VALUES ('Comprovante Execução Imediata','0',2,1,1);
+VALUES ('RESULTADO DA SELEÇÃO PÚBLICA','0',2,1,1);
 
 -- Cria novo campo para prorrogacao automática
 ALTER TABLE sac.dbo.PreProjeto ADD tpProrrogacao BIT DEFAULT 1 NULL;

@@ -556,7 +556,7 @@
                     <tr>
                         <td colspan="3" class="left">
                             <label for="stProposta">Plano Execu&ccedil;&atilde;o Imediata</label>
-                            <select class="select_simples" name="stProposta" id="stProposta">
+                            <select name="stProposta" id="stProposta" class="select_simples" <?php echo (!empty( $this->arquivoExecucaoImediata[0])) ? 'readonly': ''; ?>>
                                 <?php foreach ($this->listaExecucaoImediata as $key => $execucao) : ?>
                                     <option value="<?php echo $key; ?>"
                                         <?php
@@ -568,20 +568,24 @@
                                     </option>
                                 <?php endforeach; ?>
                             </select>
+                            <div id="ValidaStProposta" name="ValidaStProposta" style="color:#FF0000" > </div>
                         </td>
                         <td colspan="2">
-                            <div id="ValidaStProposta" name="ValidaStProposta" style="color:#FF0000" > </div>
-                            <br>
                             <div id="comprovanteplanodeexecucao" style="display: none">
-                                <label for="arquivo" style="width: 50px; ">Comprovante do Plano de Execu&ccedil;&atilde;o Imediata </label>
                                 <?php if( !empty( $this->arquivoExecucaoImediata[0]) ) : ?>
-                                    <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir-documentos-pre-projeto')); ?>?id=<?php echo $this->arquivoExecucaoImediata[0]['iddocumentospreprojetos']; ?>">
-                                        <?php echo $this->arquivoExecucaoImediata[0]['noarquivo']; ?>
-                                    </a>
-                                    <input type="button" class="btn_excluir" onclick="excluirAnexos(<?php echo $this->arquivoExecucaoImediata[0]['iddocumentospreprojetos']; ?>, <?php echo trim($this->proposta['idPreProjeto']); ?>, 'proposta', '<?php echo $currentUrl; ?>');" />
+                                    <div id="comprovanteDocumentoAnexado" class="doc<?php echo $this->arquivoExecucaoImediata[0]['codigodocumento']; ?>">
+                                        <label for="arquivo" style="width: 50px; "><?php echo $this->arquivoExecucaoImediata[0]['descricao']; ?> </label>
+                                        <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'upload', 'action' => 'abrir-documentos-pre-projeto')); ?>?id=<?php echo $this->arquivoExecucaoImediata[0]['iddocumentospreprojetos']; ?>">
+                                            <?php echo $this->arquivoExecucaoImediata[0]['noarquivo']; ?>
+                                        </a>
+                                        <input type="button" class="btn_excluir" onclick="excluirAnexos(<?php echo $this->arquivoExecucaoImediata[0]['iddocumentospreprojetos']; ?>, <?php echo trim($this->proposta['idPreProjeto']); ?>, 'proposta', '<?php echo $currentUrl; ?>');" />
+                                    </div>
                                 <?php else : ?>
-                                    <input type="file" name="arquivo" id="arquivo" class="input_simples">
-                                    <div id="arquivoinvalido" style="color:#FF0000" ></div>
+                                    <div id="anexarDocumento">
+                                        <label for="arquivo" style="width: 50px; ">Comprovante do Plano de Execu&ccedil;&atilde;o Imediata </label>
+                                        <input type="file" name="arquivo" id="arquivo" class="input_simples">
+                                        <div id="arquivoinvalido" style="color:#FF0000" ></div>
+                                    </div>
                                 <?php endif; ?>
                             </div>
                         </td>
