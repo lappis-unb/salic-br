@@ -31,7 +31,7 @@
                 $("#rodape").css("width",fluidRodape);
                 $("div#rodapeConteudo").attr("id", "rodapeConteudo_com_menu");
             }
-            
+
             function carregaDados(url,divRetorno){
                 //$("#titulo").html('');
                 $("#conteudo").html('<br><br><center>Aguarde, carregando dados...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif" /></center><br><br>');
@@ -125,7 +125,7 @@
         <div id="menuContexto">
             <div class="top"></div>
             <div id="qm0" class="qmmc sanfona">
-            
+
                 <a href='<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index')); ?>?idPronac=<?php echo Seguranca::encrypt($id); ?>' class="no_seta" title="Ir para Projeto Atual">Projeto Atual</a>
                 <a href='#' class="no_seta" onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'dados-proponente')); ?><?php echo $codPronac;?>','conteudo'); return false" title="Ir para Dados do Proponente">Proponente</a>
 
@@ -142,7 +142,7 @@
                     <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'plano-de-divulgacao')); ?><?php echo $codPronac;?>','conteudo'); return false" title="Ir para Plano de divulga&ccedil;&atilde;o">Plano de divulga&ccedil;&atilde;o</a>
                     <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'providencia-tomada')); ?><?php echo $codPronac;?>" title="Ir para Provid&ecirc;ncia tomada">Provid&ecirc;ncia tomada</a>
                     <a href='#' onclick="carregaDados('<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'tramitacao')); ?><?php echo $codPronac;?>','conteudo'); return false" title="Ir para Tramita&ccedil;&atilde;o">Tramita&ccedil;&atilde;o</a>
-                    
+
                     <?php if($this->usuarioInterno){ ?>
                     <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'historico-encaminhamento')); ?><?php echo $codPronac;?>" title="Ir para Hist&oacute;rico encaminhamento">Hist&oacute;rico encaminhamento</a>
                     <?php } ?>
@@ -178,8 +178,8 @@
                 </div>
                 <?php } ?>
                 <!-- ==================== FIM - Execução  =======================   -->
-                
-                
+
+
                 <?php if($this->fnLiberarLinks['PrestacaoContas'] || $this->usuarioInterno){ ?>
                 <!-- ======================= Prestação de Contas  =======================   -->
                 <div class="sanfonaDiv" style="display:none;"></div>
@@ -206,9 +206,9 @@
                 </div>
                 <!-- ==================== FIM - Prestação de Contas  =======================   -->
                 <?php } ?>
-                
-                
-                
+
+
+
                 <!-- ======================= Readequação  =======================   -->
                 <?php if( $this->blnProponente && ($this->fnLiberarLinks['Readequacao'] || $this->fnLiberarLinks['Readequacao_20']) ) { ?>
                 <div class="sanfonaDiv" style="display:none;"></div>
@@ -217,7 +217,7 @@
                     <?php if($this->fnLiberarLinks['Readequacao_20']) { ?>
                     <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'remanejamento-menor'), '', true); ?>?idPronac=<?php echo Seguranca::encrypt($this->idPronac);?>" title="Ir para Remanejamento &le; 20%">Remanejamento &le; 20%</a>
                     <?php } ?>
-                    
+
                     <?php if($this->fnLiberarLinks['ReadequacaoPlanilha']) { ?>
                     <a href="<?php echo $this->url(array('controller' => 'readequacoes', 'action' => 'planilha-orcamentaria'), '', true); ?>?idPronac=<?php echo Seguranca::encrypt($this->idPronac);?>" title="Ir para Solicita&ccedil;&otilde;es Gerais">Planilha orçament&aacute;ria</a>
 		    <?php } ?>
@@ -229,7 +229,7 @@
                 <!-- ==================== FIM - Readequação  =======================   -->
 
 
-                
+
 
                 <!-- ======================= SOLICITAR PRAZO CAPTAÇÃO  =======================   -->
                 <?php if($this->blnProponente) { ?>
@@ -331,8 +331,8 @@
                         <a class="no_seta" href="<?php echo $this->url(array('controller' => 'mantermensagens', 'action' => 'consultarmensagem', 'idpronac' => $this->idPronac), '', true); ?>">Mensagens</a>
                 <?php } ?>
                 <!--  ==================== FIM - MANTER MENSAGENS =======================  -->
-                    
-                    
+
+
             </div>
             <div class="bottom"></div>
             <div id="space_menu"></div>

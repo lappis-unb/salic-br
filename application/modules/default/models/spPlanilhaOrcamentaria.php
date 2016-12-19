@@ -268,9 +268,10 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             'sum(b1.vlComprovacao) AS vlPagamento',
         );
 
-        $subSQLA = $db->select()->from(array('a1' => 'tbComprovantePagamentoxPlanilhaAprovacao'), $subA, 'BDCORPORATIVO.scSAC')
+        $subSQLA = $db->select()
+            ->from(array('a1' => 'tbComprovantePagamentoxPlanilhaAprovacao'), $subA, 'BDCORPORATIVO.scSAC')
             ->join(array('b1' => 'tbComprovantePagamento'), '(a1.idComprovantePagamento = b1.idComprovantePagamento)', null, 'BDCORPORATIVO.scSAC')
-            ->join(array('c1' => 'tbPlanilhaAprovacao'), '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)', null, $this->schema)
+            ->join(array('c1' => 'tbPlanilhaAprovacao'), '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)', null, $this->_schema)
             ->where("c1.stAtivo = 'S'")
             ->where("c1.idPlanilhaAprovacao = k.idPlanilhaAprovacao")
             ->where("(c1.idPronac = k.idPronac)")
@@ -281,15 +282,17 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             'sum(b1.vlComprovacao) AS vlPagamento',
         );
 
-        $subSQLB = $db->select()->from(array('a1' =>'tbComprovantePagamentoxPlanilhaAprovacao', $subB, 'BDCORPORATIVO.scSAC'))
+        $subSQLB = $db->select()
+            ->from(array('a1' =>'tbComprovantePagamentoxPlanilhaAprovacao'), $subB, 'BDCORPORATIVO.scSAC')
             ->join(array('b1' => 'tbComprovantePagamento'), '(a1.idComprovantePagamento = b1.idComprovantePagamento)', null, 'BDCORPORATIVO.scSAC')
-            ->join(array('c1' => 'tbPlanilhaAprovacao'), '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacaoPai)', null, $this->schema)
+            ->join(array('c1' => 'tbPlanilhaAprovacao'), '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacaoPai)', null, $this->_schema)
             ->where("c1.stAtivo = 'S'")
             ->where("c1.idPlanilhaAprovacaoPai = k.idPlanilhaAprovacaoPai")
             ->where("(c1.idPronac = k.idPronac)")
             ->group("a1.idPlanilhaAprovacao")
         ;
 
+//echo $subSQLB;die;
 
         $a = array(
             new Zend_Db_Expr("
@@ -332,15 +335,16 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
         'x.Descricao as FonteRecurso',
         );
 
-        $sql = $db->select()->from(array('a' => 'Projetos'), $a, $this->_schema)
-            ->join(array('b' => 'tbPlanilhaProjeto'), '(a.idPronac = b.idPronac)', null, $this->schema)
-            ->join(array('z' => 'tbPlanilhaProposta'), '(b.idPlanilhaProposta=z.idPlanilhaProposta)', null, $this->schema)
-            ->join(array('k' => 'tbPlanilhaAprovacao'), '(b.idPlanilhaProposta=k.idPlanilhaProposta)', null, $this->schema)
-            ->joinLeft(array('c' => 'Produto'), '(b.idProduto = c.Codigo)', null, $this->schema)
-            ->join(array('d' => 'tbPlanilhaEtapa'), '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->schema)
-            ->join(array('e' => 'tbPlanilhaUnidade'), '(b.idUnidade = e.idUnidade)', null, $this->schema)
-            ->join(array('i' => 'tbPlanilhaItens'), '(b.idPlanilhaItem=i.idPlanilhaItens)', null, $this->schema)
-            ->join(array('x' => 'Verificacao'), '(b.FonteRecurso = x.idVerificacao)', null, $this->schema)
+        $sql = $db->select()
+            ->from(array('a' => 'Projetos'), $a, $this->_schema)
+            ->join(array('b' => 'tbPlanilhaProjeto'), '(a.idPronac = b.idPronac)', null, $this->_schema)
+            ->join(array('z' => 'tbPlanilhaProposta'), '(b.idPlanilhaProposta=z.idPlanilhaProposta)', null, $this->_schema)
+            ->join(array('k' => 'tbPlanilhaAprovacao'), '(b.idPlanilhaProposta=k.idPlanilhaProposta)', null, $this->_schema)
+            ->joinLeft(array('c' => 'Produto'), '(b.idProduto = c.Codigo)', null, $this->_schema)
+            ->join(array('d' => 'tbPlanilhaEtapa'), '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->_schema)
+            ->join(array('e' => 'tbPlanilhaUnidade'), '(b.idUnidade = e.idUnidade)', null, $this->_schema)
+            ->join(array('i' => 'tbPlanilhaItens'), '(b.idPlanilhaItem=i.idPlanilhaItens)', null, $this->_schema)
+            ->join(array('x' => 'Verificacao'), '(b.FonteRecurso = x.idVerificacao)', null, $this->_schema)
             ->join(array('f' => 'vUfMunicipio'), '(b.UfDespesa = f.idUF and b.MunicipioDespesa = f.idMunicipio)', null, 'agentes.dbo')
             ->where("k.stAtivo = 'S'")
             ->where("a.idPronac = ?", $idPronac)
@@ -398,14 +402,14 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
         );
 
         $sql = $db->select()->from(array('a' => 'Projetos'), $a, $this->_schema)
-            ->join(array('b' => 'tbPlanilhaProjeto'), '(a.idPronac = b.idPronac)', null, $this->schema)
-            ->join(array('z' => 'tbPlanilhaProposta'), '(b.idPlanilhaProposta=z.idPlanilhaProposta)', null, $this->schema)
-            ->join(array('k' => 'tbPlanilhaAprovacao'), '(b.idPlanilhaProposta=k.idPlanilhaProposta)', null, $this->schema)
-            ->joinLeft(array('c' => 'Produto'), '(b.idProduto = c.Codigo)', null, $this->schema)
-            ->join(array('d' => 'tbPlanilhaEtapa'), '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->schema)
-            ->join(array('e' => 'tbPlanilhaUnidade'), '(b.idUnidade = e.idUnidade)', null, $this->schema)
-            ->join(array('i' => 'tbPlanilhaItens'), '(b.idPlanilhaItem=i.idPlanilhaItens)', null, $this->schema)
-            ->join(array('x' => 'Verificacao'), '(b.FonteRecurso = x.idVerificacao)', null, $this->schema)
+            ->join(array('b' => 'tbPlanilhaProjeto'), '(a.idPronac = b.idPronac)', null, $this->_schema)
+            ->join(array('z' => 'tbPlanilhaProposta'), '(b.idPlanilhaProposta=z.idPlanilhaProposta)', null, $this->_schema)
+            ->join(array('k' => 'tbPlanilhaAprovacao'), '(b.idPlanilhaProposta=k.idPlanilhaProposta)', null, $this->_schema)
+            ->joinLeft(array('c' => 'Produto'), '(b.idProduto = c.Codigo)', null, $this->_schema)
+            ->join(array('d' => 'tbPlanilhaEtapa'), '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->_schema)
+            ->join(array('e' => 'tbPlanilhaUnidade'), '(b.idUnidade = e.idUnidade)', null, $this->_schema)
+            ->join(array('i' => 'tbPlanilhaItens'), '(b.idPlanilhaItem=i.idPlanilhaItens)', null, $this->_schema)
+            ->join(array('x' => 'Verificacao'), '(b.FonteRecurso = x.idVerificacao)', null, $this->_schema)
             ->join(array('f' => 'vUfMunicipio'), '(b.UfDespesa = f.idUF and b.MunicipioDespesa = f.idMunicipio)', null, 'agentes.dbo')
             ->where("a.idPronac = ?", $idPronac)
             ->where("k.stAtivo = 'S'")
@@ -449,7 +453,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
 
             $subSql = $db->select()->from(array('a1' => 'tbComprovantePagamentoxPlanilhaAprovacao'), $subA, 'BDCORPORATIVO.scSAC')
                 ->join(array('b1' => 'tbComprovantePagamento'), '(a1.idComprovantePagamento = b1.idComprovantePagamento)', null, 'BDCORPORATIVO.scSAC')
-                ->join(array('c1' => 'tbPlanilhaAprovacao'), '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)', null, $this->schema)
+                ->join(array('c1' => 'tbPlanilhaAprovacao'), '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)', null, $this->_schema)
                 ->where("c1.idPlanilhaItem = k.idPlanilhaItem")
                 ->where("c1.idPronac = k.idPronac")
                 ->group("c1.idPlanilhaItem")
@@ -483,13 +487,13 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             );
 
             $sql = $db->select()->from(array('a' => 'Projetos'), $a, $this->_schema)
-                ->join(array('k' => 'tbPlanilhaAprovacao'), '(a.idPronac = k.idPronac)', null, $this->schema)
-                ->join(array('z' => 'tbPlanilhaProposta'), '(k.idPlanilhaProposta=z.idPlanilhaProposta)', null, $this->schema)
-                ->join(array('c' => 'Produto'), '(k.idProduto = c.Codigo)', null, $this->schema)
-                ->join(array('d' => 'tbPlanilhaEtapa'), '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->schema)
-                ->join(array('e' => 'tbPlanilhaUnidade'), '(k.idUnidade = e.idUnidade)', null, $this->schema)
-                ->join(array('i' => 'tbPlanilhaItens'), '(k.idPlanilhaItem=i.idPlanilhaItens)', null, $this->schema)
-                ->join(array('x' => 'Verificacao'), '(k.nrFonteRecurso = x.idVerificacao)', null, $this->schema)
+                ->join(array('k' => 'tbPlanilhaAprovacao'), '(a.idPronac = k.idPronac)', null, $this->_schema)
+                ->join(array('z' => 'tbPlanilhaProposta'), '(k.idPlanilhaProposta=z.idPlanilhaProposta)', null, $this->_schema)
+                ->join(array('c' => 'Produto'), '(k.idProduto = c.Codigo)', null, $this->_schema)
+                ->join(array('d' => 'tbPlanilhaEtapa'), '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->_schema)
+                ->join(array('e' => 'tbPlanilhaUnidade'), '(k.idUnidade = e.idUnidade)', null, $this->_schema)
+                ->join(array('i' => 'tbPlanilhaItens'), '(k.idPlanilhaItem=i.idPlanilhaItens)', null, $this->_schema)
+                ->join(array('x' => 'Verificacao'), '(k.nrFonteRecurso = x.idVerificacao)', null, $this->_schema)
                 ->join(array('f' => 'vUfMunicipio'), '(k.idUfDespesa = f.idUF and k.idMunicipioDespesa = f.idMunicipio)', null, 'agentes.dbo')
                 ->where("k.stAtivo = 'N'")
                 ->where("k.tpPlanilha = 'RP'")
@@ -510,7 +514,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
 
             $subSql = $db->select()->from(array('a1' => 'tbComprovantePagamentoxPlanilhaAprovacao'), $subA, 'BDCORPORATIVO.scSAC')
                 ->join(array('b1' => 'tbComprovantePagamento'), '(a1.idComprovantePagamento = b1.idComprovantePagamento)', null, 'BDCORPORATIVO.scSAC')
-                ->join(array('c1' => 'tbPlanilhaAprovacao'), '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)', null, $this->schema)
+                ->join(array('c1' => 'tbPlanilhaAprovacao'), '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)', null, $this->_schema)
                 ->where("c1.idPlanilhaItem = k.idPlanilhaItem")
                 ->where("c1.idPronac = k.idPronac")
                 ->group("c1.idPlanilhaItem")
@@ -544,13 +548,13 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             );
 
             $sql = $db->select()->from(array('a' => 'Projetos'), $c, $this->_schema)
-                ->join(array('k' => 'tbPlanilhaAprovacao'), '(a.idPronac = k.idPronac)', null, $this->schema)
-                ->join(array('z' => 'tbPlanilhaProposta'), '(k.idPlanilhaProposta=z.idPlanilhaProposta)', null, $this->schema)
-                ->join(array('c' => 'Produto'), '(k.idProduto = c.Codigo)', null, $this->schema)
-                ->join(array('d' => 'tbPlanilhaEtapa'), '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->schema)
-                ->join(array('e' => 'tbPlanilhaUnidade'), '(k.idUnidade = e.idUnidade)', null, $this->schema)
-                ->join(array('i' => 'tbPlanilhaItens'), '(k.idPlanilhaItem=i.idPlanilhaItens)', null, $this->schema)
-                ->join(array('x' => 'Verificacao'), '(k.nrFonteRecurso = x.idVerificacao)', null, $this->schema)
+                ->join(array('k' => 'tbPlanilhaAprovacao'), '(a.idPronac = k.idPronac)', null, $this->_schema)
+                ->join(array('z' => 'tbPlanilhaProposta'), '(k.idPlanilhaProposta=z.idPlanilhaProposta)', null, $this->_schema)
+                ->join(array('c' => 'Produto'), '(k.idProduto = c.Codigo)', null, $this->_schema)
+                ->join(array('d' => 'tbPlanilhaEtapa'), '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->_schema)
+                ->join(array('e' => 'tbPlanilhaUnidade'), '(k.idUnidade = e.idUnidade)', null, $this->_schema)
+                ->join(array('i' => 'tbPlanilhaItens'), '(k.idPlanilhaItem=i.idPlanilhaItens)', null, $this->_schema)
+                ->join(array('x' => 'Verificacao'), '(k.nrFonteRecurso = x.idVerificacao)', null, $this->_schema)
                 ->join(array('f' => 'vUfMunicipio'), '(k.idUfDespesa = f.idUF and k.idMunicipioDespesa = f.idMunicipio)', null, 'agentes.dbo')
                 ->where("k.stAtivo = 'S'")
                 ->where("k.tpPlanilha = 'RP'")
@@ -575,7 +579,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
         $a = array("*",);
 
         $sql = $db->select()->from(array('a' => 'tbplanilhaaprovacao'), $a, $this->_schema)
-            ->join(array('b' => 'tbReadequacao'), '(a.idPronac = b.idPronac)', null, $this->schema)
+            ->join(array('b' => 'tbReadequacao'), '(a.idPronac = b.idPronac)', null, $this->_schema)
             ->where("a.idPronac = ?", $idPronac)
             ->where("a.stAtivo = 'N'")
             ->where("a.tpPlanilha = 'SR'")
@@ -594,7 +598,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
 
             $subSQL = $db->select()->from(array('a1' => 'tbComprovantePagamentoxPlanilhaAprovacao'), $subA, 'BDCORPORATIVO.scSAC')
                 ->join(array('b1' => 'tbComprovantePagamento'), '(a1.idComprovantePagamento = b1.idComprovantePagamento)', null, 'BDCORPORATIVO.scSAC')
-                ->join(array('c1' => 'tbPlanilhaAprovacao'), '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)', null, $this->schema)
+                ->join(array('c1' => 'tbPlanilhaAprovacao'), '(a1.idPlanilhaAprovacao = c1.idPlanilhaAprovacao)', null, $this->_schema)
                 ->where("c1.idPlanilhaItem = k.idPlanilhaItem")
                 ->where("c1.idPronac = k.idPronac")
                 ->group("c1.idPlanilhaItem")
@@ -628,12 +632,12 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
                 "x.Descricao as FonteRecurso",
             );
             $sql = $db->select()->from(array('a' => 'Projetos'), $a, $this->_schema)
-                ->join(array('k' => 'tbPlanilhaAprovacao'), '(a.idPronac = k.idPronac)', null, $this->schema)
-                ->join(array('c' => 'Produto'), '(k.idProduto = c.Codigo)', null, $this->schema)
-                ->join(array('d' => 'tbPlanilhaEtapa'), '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->schema)
-                ->join(array('e' => 'tbPlanilhaUnidade'), '(k.idUnidade = e.idUnidade)', null, $this->schema)
-                ->join(array('i' => 'tbPlanilhaItens'), '(k.idPlanilhaItem=i.idPlanilhaItens)', null, $this->schema)
-                ->join(array('x' => 'Verificacao'), '(k.nrFonteRecurso = x.idVerificacao)', null, $this->schema)
+                ->join(array('k' => 'tbPlanilhaAprovacao'), '(a.idPronac = k.idPronac)', null, $this->_schema)
+                ->join(array('c' => 'Produto'), '(k.idProduto = c.Codigo)', null, $this->_schema)
+                ->join(array('d' => 'tbPlanilhaEtapa'), '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->_schema)
+                ->join(array('e' => 'tbPlanilhaUnidade'), '(k.idUnidade = e.idUnidade)', null, $this->_schema)
+                ->join(array('i' => 'tbPlanilhaItens'), '(k.idPlanilhaItem=i.idPlanilhaItens)', null, $this->_schema)
+                ->join(array('x' => 'Verificacao'), '(k.nrFonteRecurso = x.idVerificacao)', null, $this->_schema)
                 ->join(array('f' => 'vUfMunicipio'), '(k.idUfDespesa = f.idUF and k.idMunicipioDespesa = f.idMunicipio)', null, 'agentes.dbo')
                 ->where("k.stAtivo = 'N'")
                 ->where("k.tpPlanilha = 'SR'")
@@ -688,12 +692,12 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             );
 
             $sql = $db->select()->from(array('a' => 'Projetos'), $a, $this->_schema)
-                ->join(array('k' => 'tbPlanilhaAprovacao'), '(a.idPronac = k.idPronac)', null, $this->schema)
-                ->join(array('c' => 'Produto'), '(k.idProduto = c.Codigo)', null, $this->schema)
-                ->join(array('d' => 'tbPlanilhaEtapa'), '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->schema)
-                ->join(array('e' => 'tbPlanilhaUnidade'), '(k.idUnidade = e.idUnidade)', null, $this->schema)
-                ->join(array('i' => 'tbPlanilhaItens'), '(k.idPlanilhaItem=i.idPlanilhaItens)', null, $this->schema)
-                ->join(array('x' => 'Verificacao'), '(k.nrFonteRecurso = x.idVerificacao)', null, $this->schema)
+                ->join(array('k' => 'tbPlanilhaAprovacao'), '(a.idPronac = k.idPronac)', null, $this->_schema)
+                ->join(array('c' => 'Produto'), '(k.idProduto = c.Codigo)', null, $this->_schema)
+                ->join(array('d' => 'tbPlanilhaEtapa'), '(k.idEtapa = d.idPlanilhaEtapa)', null, $this->_schema)
+                ->join(array('e' => 'tbPlanilhaUnidade'), '(k.idUnidade = e.idUnidade)', null, $this->_schema)
+                ->join(array('i' => 'tbPlanilhaItens'), '(k.idPlanilhaItem=i.idPlanilhaItens)', null, $this->_schema)
+                ->join(array('x' => 'Verificacao'), '(k.nrFonteRecurso = x.idVerificacao)', null, $this->_schema)
                 ->join(array('f' => 'vUfMunicipio'), '(k.idUfDespesa = f.idUF and k.idMunicipioDespesa = f.idMunicipio)', null, 'agentes.dbo')
                 ->where("k.stAtivo = 'S'")
                 ->where("k.tpPlanilha = 'SR'")

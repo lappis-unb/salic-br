@@ -31,30 +31,28 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
      */
     public function links($Acao, $CNPJCPF_Proponente, $idUsuario_Logado, $idPronac)
     {
-        $Diligencia            = 0;
-        $Recursos              = 0;
-        $Readequacao           = 0;
-        $PercentualCaptado     = 0;
+        $Diligencia = 0;
+        $Recursos  = 0;
+        $Readequacao = 0;
+        $PercentualCaptado = 0;
         $ComprovacaoFinanceira = 0;
-        $RelatorioTrimestral   = 0;
-        $RelatorioFinal        = 0;
-        $Analise               = 0;
-        $Execucao              = 0;
-        $PrestacaoDeContas     = 0;
-        $Readequacao_20        = 0;
-        $SolicitarProrrogacao  = 0;
-        $Marcas                = 0;
-
-
+        $RelatorioTrimestral = 0;
+        $RelatorioFinal = 0;
+        $Analise = 0;
+        $Execucao = 0;
+        $PrestacaoDeContas = 0;
+        $Readequacao_20 = 0;
+        $SolicitarProrrogacao = 0;
+        $Marcas = 0;
 
         //Verificar permissão
         $db = Zend_Db_Table::getDefaultAdapter();
-
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
 
         $permissao = new Zend_Db_Expr("SELECT SAC.dbo.fnVerificarPermissao ($Acao,$CNPJCPF_Proponente,$idUsuario_Logado,$idPronac) AS dado");
         $permissao = $db->fetchRow($permissao);
         $Permissao = $permissao->dado;
-        
+
         //Pegar o Pronac
         $dadosProjeto = $db->select()
             ->from(
@@ -65,7 +63,6 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
         $dadosProjeto = $db->fetchRow($dadosProjeto);
 
         //Verifica o numero da reunião da CNIC do projeto
-        
         $dadosCnic = $db->select()
             ->from(array('tbp' => 'tbPauta'),
                 NULL,
@@ -79,7 +76,6 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
             ->where('idPronac = ? ', $idPronac);
         $dadosCnic = $db->fetchRow($dadosCnic);
 
-
         //Veririca se a conta foi liberada
        $contaLiberada = $db->select()
            ->from('liberacao',
@@ -90,13 +86,12 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
        $contaLiberada = $db->fetchRow($contaLiberada);
 
        $contaLiberada = ($contaLiberada)? 'S': 'N';
-        
 
        //Verifica envio de relatório trimestral
        $relatorioTrimestral = new Zend_Db_Expr("SELECT SAC.dbo.fnQtdeRelatorioTrimestral ($idPronac) AS dado");
        $qtAEnviar = $db->fetchRow($relatorioTrimestral);
        $qtAEnviar = ($qtAEnviar->dado) ? $qtAEnviar->dado : 0;
-        
+
        $relatorioTrimestral = $db->select()
             ->from('tbComprovanteTrimestral',
                    array(
@@ -107,7 +102,6 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
        $qtEnviados = $db->fetchRow($relatorioTrimestral);
 
        //Verificar existência de portaria
-
        $NrPortaria = $db->select()
            ->from('Aprovacao',
                array('PortariaAprovacao AS NrPortaria'),
@@ -117,16 +111,15 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
            ->where('Sequencial = ?', $dadosProjeto->Sequencial)
            ->where('TipoAprovacao = ?', 1);
        $dadoPortaria = $db->fetchRow($NrPortaria);
-        
+
        //Verificar Percentual de captação
        $PercentualCaptado = new Zend_Db_Expr("SELECT SAC.dbo.fnPercentualCaptado ($dadosProjeto->AnoProjeto,$dadosProjeto->Sequencial) AS dado");
        $PercentualCaptado = $db->fetchRow($PercentualCaptado);
 
        $PercentualCaptado = ($PercentualCaptado->dado) ? $PercentualCaptado->dado : 0;
-        
+
 
        //Verificar se há diligência para responder
-
         $vDiligencia = $db->select()
            ->from('tbDiligencia',
                array('idDiligencia'),
@@ -138,14 +131,14 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
        // @TODO VERIFICAR ESSE CARA
         $vDiligencia = ($vDiligencia->idDiligencia) ? TRUE : FALSE;
 
-        
+
         //Verificar se há recurso @TODO FAZER ESSA PARTE E DEIXAR PRO FIM
         $data = new Zend_Db_Expr("SELECT DATEDIFF(DAY, '$dadosCnic->DtReuniao', GETDATE()) AS dado");
         $data = $db->fetchRow($data);
         $data = $data->dado;
 
         $situacoesRecurso = array('A14', 'A16', 'A17', 'A20', 'A23', 'A24', 'A41', 'D02', 'D03','D14');
-        
+
         $recurso1 = $db->select()
            ->from('tbRecurso',
                array(new Zend_Db_Expr('TOP 1 idRecurso')),
@@ -155,7 +148,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
            ->where('siRecurso = ?', 0)
            ->where('idPronac = ?', $idPronac);
         $recurso1 = $db->fetchRow($recurso1);
-        
+
         $recurso2 = $db->select()
            ->from('tbRecurso',
                array(new Zend_Db_Expr('TOP 1 idRecurso')),
@@ -164,7 +157,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
            ->where('siRecurso <> ?', 0)
            ->where('idPronac = ?',$idPronac);
         $recurso2 = $db->fetchRow($recurso2);
-        
+
         $recurso3 = $db->select()
             ->from(array('a' => 'tbRecurso'),
                 array('idRecurso'),
@@ -178,28 +171,26 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
             ->where('a.stEstado = ?', 1)
             ->where('a.idPronac = ?', $idPronac);
         $recurso3 = $db->fetchRow($recurso3);
-        
+
         $Recurso4 = new Zend_Db_Expr("SELECT (DATEDIFF(DAY,(
-       				                    	SELECT dtFinal FROM sac.dbo.TBRecurso a
+                                            SELECT dtFinal FROM sac.dbo.TBRecurso a
                                             INNER JOIN tbReuniao b on (a.idNrReuniao = b.idNrReuniao)
                                             WHERE a.tpRecurso = 1 AND a.siRecurso <> 0 AND a.stEstado = 1 AND a.idPronac = $idPronac),GETDATE())
                                 ) AS dado");
         $Recurso4 = $db->fetchRow($Recurso4);
-        
+
         if(empty($Recurso4->dado)){
             $Recurso4->dado = 90;
         }
-        
+
         if(($data <= 11 AND in_array($dadosProjeto->Situacao, $situacoesRecurso) AND !$recurso1->idRecurso AND !$recurso2->idRecurso) OR
         !$recurso3->idRecurso AND !in_array($dadosProjeto->Situacao, $situacoesRecurso) AND $Recurso4->dado <=10) {
             $Recursos = 1;
         }
 
-              
         /* ===== IDENTIFICAR FRASES DO PROJETO =====  */
-        
+
         //FASE 2 - DA TRANSFORMAÇÃO DA PROPSOTA EM PROJETO ATÉ O ENCERRAMENTO DA CNIC
-        
         $validacaoFase2 = $db->select()
             ->from(array('a' => 'tbPauta'),
                 array('idPRONAC'),
@@ -212,7 +203,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
             ->where('a.idPronac = ?', $idPronac);
         $validacaoFase2 = $db->fetchRow($validacaoFase2);
         $situacoesFase2 = array('B11', 'B14', 'C10', 'C20', 'C30', 'D20');
-        
+
         if(!$dadoPortaria->NrPortaria OR $dadoPortaria->NrPortaria == '' AND !in_array($dadosProjeto->Situacao, $situacoesFase2) AND !$validacaoFase2->idPRONAC) {
             $Fase = 2;
             $Analise = 1;
@@ -222,7 +213,6 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
         }
 
         //FASE 3 - DA LIBERAÇÃO DA PUBLICAÇÃO DA PORTARIA DE APROVAÇÃO ATÉ A LIBERAÇÃO DA CONTA
-
          if($dadoPortaria->NrPortaria OR $dadoPortaria->NrPortaria != '' AND $contaLiberada == 'N') {
             $Fase = 3;
             $Analise = 1;
@@ -232,11 +222,10 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
             $Marcas = 0;
          }
 
-        
-        //FASE 4 - DA LIBERAÇÃO DA CONTA ATÉ A DATA FINAL DO PERÍODO DE EXECUCAO
 
+        //FASE 4 - DA LIBERAÇÃO DA CONTA ATÉ A DATA FINAL DO PERÍODO DE EXECUCAO
         $dataAtualBanco = new Zend_Db_Expr('SELECT CONVERT( CHAR(8), GETDATE(), 112)');
-        
+
         if($contaLiberada == 'S' AND $dadosProjeto->DtFinalExecucao >= $dataAtualBanco) {
             $Analise = 1;
             $Execucao = 1;
@@ -248,7 +237,6 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
             $Marcas = 1;
 
             /* ===== CHECAR SE EXISTE READEQUAÇÃO DE 20% ===== */
-
             $vReadequacao = $db->select()
                 ->from(array('a' => 'tbReadequacao'),
                     array(new Zend_Db_Expr('TOP 1 idPronac')),
@@ -267,7 +255,6 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
             }
 
             /* ===== CHECAR SE EXISTE RELATÓRIO DE CUMPRIMENTO DO OBJETO PARA SER ENVIADO ===== */
-
             $relatorioCumprimentoEnvio = $db->select()
                 ->from('tbCumprimentoObjeto',
                     array(new Zend_Db_Expr('TOP 1 idCumprimentoObjeto')),
@@ -283,9 +270,8 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
                 $RelatorioTrimestral = 0;
                 $RelatorioFinal = 0;
             } else {
-                
+
                 /* ===== CHECAR SE EXISTE RELATÓRIO TRIMESTRAL PARA SER ENVIADO =====*/
-                
                 if(($qtAEnviar - $qtEnviados) == 0){
                     $RelatorioTrimestral = 0;
                     $RelatorioFinal = 1;
@@ -294,12 +280,11 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
                     $RelatorioFinal = 0;
                 }
             }
-            
+
             $Fase = 4;
         }
-        
-        //FASE 5 - PRESTAÇÃO DE CONTAS DO PROPONENTE - RELATÓRIO DE CUMPRIMENTO DO OBJETO
 
+        //FASE 5 - PRESTAÇÃO DE CONTAS DO PROPONENTE - RELATÓRIO DE CUMPRIMENTO DO OBJETO
         if($contaLiberada == 'S' AND $dataAtualBanco > $dadosProjeto->DtFinalExecucao) {
             $Analise = 1;
             $Execucao = 1;
@@ -313,7 +298,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
             $RelatorioFinal = 1;
 
             /* ===== EXCESSÃO PARA AJUSTAR PLANILHA PARA PRESTAR CONTAS ===== */
-            
+
             $situacoesPlanilha = array('E13', 'E15', 'E23', 'E74', 'E75');
             if(in_array($dadosProjeto->Situacao,$situacoesPlanilha)){
                $Readequacao_20 = 1;
@@ -321,7 +306,6 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
             }
 
             /* ===== CHECAR SE EXISTE RELATORIO DE CUMPRIMENTO DO OBJETO PARA SER ENVIADO ===== */
-
             $relatorioDeCumprimento = $db->select()
                 ->from('tbCumprimento',
                     array(new Zend_Db_Expr('TOP 1 idCumprimentoObjeto')),
@@ -340,7 +324,6 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
             }
 
             /* ===== CHECAR SE EXISTE READEQUAÇAO DE 20% ===== */
-
             $readequacaoFase5 = $db->select()
                 ->from(array('a' => 'tbReadequacao'),
                     array(new Zend_Db_Expr('TOP 1 idTipoReadequacao')),
