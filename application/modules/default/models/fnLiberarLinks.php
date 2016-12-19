@@ -10,7 +10,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
      * @Deprecated
      */
     public function liberarLinks($tipo, $cpfProponente, $idUsuarioLogado, $idPronac) {
-        $select = new Zend_Db_Expr("SELECT SAC.dbo.fnLiberarLinks($tipo,'$cpfProponente',$idUsuarioLogado,$idPronac) as links");
+        $select = new Zend_Db_Expr("SELECT SAC.dbo.fnLiberarLinksIN($tipo,'$cpfProponente',$idUsuarioLogado,$idPronac) as links");
         try {
             $db= Zend_Db_Table::getDefaultAdapter();
             $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -183,8 +183,14 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
             $Recurso4->dado = 90;
         }
 
-        if(($data <= 11 AND in_array($dadosProjeto->Situacao, $situacoesRecurso) AND !$recurso1->idRecurso AND !$recurso2->idRecurso) OR
-        !$recurso3->idRecurso AND !in_array($dadosProjeto->Situacao, $situacoesRecurso) AND $Recurso4->dado <=10) {
+        $diasProjeto = new Zend_Db_Expr("SELECT DATEDIFF(DAY,'$dadosProjeto->DtSituacao',GETDATE()) as dias");
+        $diasProjeto = $db->fetchRow($diasProjeto);
+
+        if((($data <= 11 AND in_array($dadosProjeto->Situacao, $situacoesRecurso) AND !$recurso1->idRecurso AND !$recurso2->idRecurso)
+            OR
+            !$recurso3->idRecurso AND !in_array($dadosProjeto->Situacao, $situacoesRecurso) AND $Recurso4->dado <=10 )
+            OR ($diasProjeto->dias <= 11 && $dadosProjeto->Situacao = 'B02')
+        ) {
             $Recursos = 1;
         }
 
