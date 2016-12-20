@@ -153,7 +153,6 @@ class ControlarmovimentacaobancariaController extends MinC_Controller_Action_Abs
 			$post            = Zend_Registry::get('post');
                         
                         if($post->relPaginacao){
-                            header("Content-Type: text/html; charset=ISO-8859-1");
                             $this->_helper->layout->disableLayout(); // desabilita o layout
                         }
                         

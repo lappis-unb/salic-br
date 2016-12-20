@@ -142,7 +142,6 @@ class ManterRegularidadeProponenteController extends MinC_Controller_Action_Abst
         }
 
         if ($this->_request->getParam("modal") == "s") {
-            header("Content-Type: text/html; charset=ISO-8859-1");
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $this->view->modal = "n";
         } else {
