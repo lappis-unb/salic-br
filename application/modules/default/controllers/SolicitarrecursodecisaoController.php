@@ -234,4 +234,79 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
         $this->view->projetonaoaprovado = $buscaprojetonaoaprovado;
     } // fecha método proponenteprojetoAction()
 
+    public function recursoEnquadramentoAction()
+    {
+        // caso o formulário seja enviado via post
+        $idPronac = $this->_request->getParam("idPronac"); // pega o id do pronac via get
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+        $this->view->idPronac = $idPronac;
+
+        // recebe os dados via get
+        $cpf_cnpj = isset($_GET['cpf_cnpj']) ? $_GET['cpf_cnpj'] : '';
+
+        if (!isset($idPronac) || empty($idPronac)) {
+            parent::message('É necessário o número do PRONAC para acessar essa página!', "consultardadosprojeto?idPronac=".$idPronac, "ERROR");
+        }
+        else {
+            // busca os projetos
+            $buscarProjetos = SolicitarRecursoDecisaoDAO::buscarProjetos($idPronac, $cpf_cnpj);
+            $this->view->projeto = $buscarProjetos[0];
+        }
+    }
+
+    public function recursoEnquadramentoSalvarAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $post = Zend_Registry::get('post');
+            $idPronac = $post->idPronac;
+            $tpSolicitacao = $post->tpSolicitacao;
+            $StatusProjeto = $post->StatusProjeto;
+            $auth = Zend_Auth::getInstance();
+
+            try {
+                if(isset($_POST['checkEnquadramento']) && !empty($_POST['checkEnquadramento']) && isset($_POST['checkOrcamento']) && !empty($_POST['checkOrcamento'])){
+                    $tpSolicitacao = 'EO';
+                } else if(isset($_POST['checkEnquadramento']) && !empty($_POST['checkEnquadramento']) && !isset($_POST['checkOrcamento'])) {
+                    $tpSolicitacao = 'EN';
+                } else if(isset($_POST['checkOrcamento']) && !empty($_POST['checkOrcamento']) && !isset($_POST['checkEnquadramento'])) {
+                    $tpSolicitacao = 'OR';
+                } else {
+                    $tpSolicitacao = 'PI';
+                }
+
+                $dados = array(
+                    'IdPRONAC'              => $_POST['idPronac'],
+                    'dtSolicitacaoRecurso'  => new Zend_Db_Expr('GETDATE()'),
+                    'dsSolicitacaoRecurso'  => $_POST['dsRecurso'],
+                    'idAgenteSolicitante'   => $auth->getIdentity()->IdUsuario,
+                    'stAtendimento'         => 'N',
+                    'tpSolicitacao'         => $tpSolicitacao
+                );
+
+                $tbRecurso = new tbRecurso();
+                $resultadoPesquisa = $tbRecurso->buscar(array('IdPRONAC = ?'=>$_POST['idPronac']));
+
+                $dados['tpRecurso'] = 1;
+                if(count($resultadoPesquisa)>0){
+                   $dados['tpRecurso'] = 2;
+                }
+
+                $cadastrar = $tbRecurso->inserir($dados);
+
+                if ($cadastrar) {
+                    // altera a situação do projeto
+                    $alterarSituacao = ProjetoDAO::alterarSituacao($idPronac, 'D20');
+                    parent::message('Solicitação enviada com sucesso!', "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+                } // fecha if
+                else {
+                    throw new Exception("Erro ao cadastrar recurso!");
+                }
+            }
+            catch(Exception $e) {
+                parent::message($e->getMessage(), "solicitarrecursodecisao/recurso?idPronac=".$idPronac, "ERROR");
+            }
+        }
+    }
 }
