@@ -4,10 +4,7 @@
  * @author Equipe RUP - Politec
  * @since 20/07/2010 - Alterado em 17/09/2013 (Jefferson Alessandro)
  * @version 1.0
- * @package application
- * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  */
 
 class RecursoController extends MinC_Controller_Action_Abstract
@@ -17,34 +14,34 @@ class RecursoController extends MinC_Controller_Action_Abstract
     private $idPerfil = 0;
     private $intTamPag = 10;
 
-	/**
-	 * Reescreve o m�todo init()
-	 * @access public
-	 * @param void
-	 * @return void
-	 */
-	public function init()
-	{
-	    $auth = Zend_Auth::getInstance(); // pega a autentica��o
+    /**
+     * @access public
+     * @param void
+     * @return void
+     */
+    public function init()
+    {
+        $auth = Zend_Auth::getInstance(); // pega a autentica��o
         $this->idUsuario = $auth->getIdentity()->usu_codigo; // usu�rio logado
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
         $this->idOrgao = $GrupoAtivo->codOrgao;
         $this->idPerfil = $GrupoAtivo->codGrupo;
 
-		// autentica��o e permiss�es zend (AMBIENTE MINC)
-		$PermissoesGrupo = array();
-		$PermissoesGrupo[] = 93; // Coordenador de Parecer
-		$PermissoesGrupo[] = 94; // Parecerista
-		$PermissoesGrupo[] = 103; // Coordenador de An�lise
-		$PermissoesGrupo[] = 110; // T�cnico de An�lise
-		$PermissoesGrupo[] = 118; // Componente da Comiss�o
-		$PermissoesGrupo[] = 127; // Coordenador - Geral de An�lise (Ministro)
-		parent::perfil(1, $PermissoesGrupo);
+        // autentica��o e permiss�es zend (AMBIENTE MINC)
+        $PermissoesGrupo = array();
+        $PermissoesGrupo[] = 93; // Coordenador de Parecer
+        $PermissoesGrupo[] = 94; // Parecerista
+        $PermissoesGrupo[] = 103; // Coordenador de An�lise
+        $PermissoesGrupo[] = 110; // Tecnico de Analise
+        $PermissoesGrupo[] = 118; // Componente da Comiss�o
+        $PermissoesGrupo[] = 127; // Coordenador - Geral de An�lise (Ministro)
 
-		parent::init();
-	} // fecha m�todo init()
+        $PermissoesGrupo[] = 131; // Coordenador - Geral de Admissibilidade.
+        parent::perfil(1, $PermissoesGrupo);
 
+        parent::init();
+    }
 
 	/**
 	 * Fluxo inicial
@@ -54,8 +51,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
 	 */
 	public function indexAction()
 	{
-        //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE AN�LISE E COORD. DE AN�LISE.
-        if($this->idPerfil != 103 && $this->idPerfil != 127){
+        //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE AN�LISE E COORD. DE AN�LISE.Coordenado Admissibilidade
+        if($this->idPerfil != 103 && $this->idPerfil != 127 && $this->idPerfil != 131){
             parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
         }
 

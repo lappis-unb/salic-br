@@ -542,6 +542,8 @@
                                     <?php if(in_array($this->grupoAtivo, array(92,131))){ ?>
                                     <li><a href='<?php echo $this->url(array('module' => 'proposta', 'module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'desarquivarpropostas')); ?>'>Desarquivar Proposta</a></li>
                                     <?php } ?>
+
+                                    <li><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index'), '', true); ?>" title="Ir para Recurso">Recurso</a></li>
                                 </ul>
                             </div>
                         </div>

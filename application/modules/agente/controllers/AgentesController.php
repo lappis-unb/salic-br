@@ -470,9 +470,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->autenticacao();
 
         $modal  = $this->_request->getParam("modal");
-
         $this->_helper->layout->disableLayout();
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->view->modal = "s";
         $this->view->cpf = $this->_request->getParam("cpfCnpj");
         $this->view->caminho = $this->_request->getParam("caminho");
@@ -492,7 +490,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $modal  = $this->_request->getParam("modal");
 
         $this->_helper->layout->disableLayout();
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->view->modal = "s";
         $this->view->cpf = $this->_request->getParam("cpfCnpj");
         $this->view->caminho = $this->_request->getParam("caminho");
@@ -512,7 +509,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $modal  = $this->_request->getParam("modal");
 
         $this->_helper->layout->disableLayout();
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->view->modal = "s";
         $this->view->cpf = $this->_request->getParam("cpfCnpj");
         $this->view->caminho = $this->_request->getParam("caminho");

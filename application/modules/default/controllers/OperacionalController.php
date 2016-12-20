@@ -773,7 +773,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
 	public function resultadoPedidoProrrogacaoAction(){
-		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
 		$post   = Zend_Registry::get('post');
 
@@ -935,7 +934,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
 	public function resultadoAgenciaBancariaAction(){
-		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
 
 		$post     = Zend_Registry::get('post');
@@ -1114,7 +1112,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
 	public function resultadoExtratoPautaReuniaoCnicAction(){
-		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
 
 		$post     = Zend_Registry::get('post');
@@ -1205,7 +1202,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
 	public function resultadoTramitacaoDocumentosAction(){
-		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
 
 		$post = Zend_Registry::get('post');
@@ -1277,7 +1273,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
 	public function resultadoTramitacaoProjetosAction(){
-		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
 
 		$post = Zend_Registry::get('post');
@@ -1375,7 +1370,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
 	public function resultadoEditaisMincAction(){
-		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
 		$post   = Zend_Registry::get('post');
 
@@ -1470,7 +1464,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 
 
 	public function resultadoDiagnosticoAction(){
-		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
 
 		$tbl = new Projetos();
@@ -1568,7 +1561,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
 	public function resultadoExtratoPautaIntercambioAction(){
-		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
 
                 $tbl   = new Projetos();
@@ -1654,7 +1646,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
 	public function resultadoProjetosPorSituacaoAction(){
-		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
 
 		$get = Zend_Registry::get('get');
@@ -1743,7 +1734,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
 	public function resultadoProjetosEmPautaReuniaoCnicAction(){
-		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
 
 		$post = Zend_Registry::get('post');
@@ -2093,7 +2083,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
 	public function resultadoProjetosAvaliadosCnicAction(){
-		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
 
 		$post = Zend_Registry::get('post');
@@ -2332,7 +2321,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
 	public function resultadoProjetosVotoAlteradoAction(){
-		header("Content-Type: text/html; charset=ISO-8859-1");
 		$this->_helper->layout->disableLayout();
 
 		$post = Zend_Registry::get('post');
@@ -2548,7 +2536,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
 	public function resultadoProjetosEmPautaReuniaoCnicSemQuebraAction() {
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $post = Zend_Registry::get('post');
 
@@ -2719,7 +2706,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
     }
 
 	public function gerarXlsHtmlProjetosEmPautaReuniaoCnicSemQuebraAction() {
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $post = Zend_Registry::get('post');
 
@@ -3001,7 +2987,6 @@ class OperacionalController extends MinC_Controller_Action_Abstract {
 	}
 
 	public function resultadoDemonstrativoCaptacaoRecursoAction(){
-		header("Content-Type: text/html; charset=ISO-8859-1");
 
 		$this->_helper->layout->disableLayout();
 
