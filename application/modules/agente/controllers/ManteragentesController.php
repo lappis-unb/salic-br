@@ -607,8 +607,6 @@ class Agente_ManterAgentesController extends MinC_Controller_Action_Abstract
         header("Last-Modified: {$gmtDate} GMT");
         header("Cache-Control: no-cache, must-revalidate");
         header("Pragma: no-cache");
-        header("Content-Type: text/html; charset=ISO-8859-1", true);
-
         $this->_helper->layout->disableLayout(); // desabilita o layout
 
         $post = Zend_Registry::get('post');

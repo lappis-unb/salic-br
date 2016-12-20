@@ -778,7 +778,6 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
         public function formAlterarAnaliseDeConteudoAction()
 	{
             $this->_helper->layout->disableLayout(); // desabilita o layout
-            header("Content-Type: text/html; charset=ISO-8859-1");
 
             $post = Zend_Registry::get('post');
             $idPronac = $this->_request->getParam("idpronac");
@@ -2406,7 +2405,6 @@ class RealizarAnaliseProjetoController extends MinC_Controller_Action_Abstract
         public function formReintegrarEtapaAction()
 	{
             $this->_helper->layout->disableLayout(); // desabilita o layout
-            header("Content-Type: text/html; charset=ISO-8859-1");
 
             $post = Zend_Registry::get('post');
             $idPronac = $this->_request->getParam("idPronac");

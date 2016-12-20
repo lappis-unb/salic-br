@@ -232,7 +232,6 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
 
                    $endereco = "cadastro@cultura.gov.br";
                    $headers  = "MIME-Version: 1.0\r\n";
-                   $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
                    $headers .= "From: cadastro@cultura.gov.br\r\n";
 
                    $mens = "<font face='Verdana' size='2'>";

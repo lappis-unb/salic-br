@@ -15,7 +15,6 @@ header("Expires: {$gmtDate} GMT");
 header("Last-Modified: {$gmtDate} GMT");
 header("Cache-Control: no-cache, must-revalidate");
 header("Pragma: no-cache");
-header("Content-Type: text/html; charset=ISO-8859-1", true);
 
 $xml = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n";
 $xml.= "<ddds>\n";
@@ -29,7 +28,5 @@ foreach ($this->ddds as $ddd)
 }
 
 $xml.= "</ddds>\n";
-Header("Content-type: application/xml; charset=iso-8859-1");
-
 echo $xml;
 ?>
