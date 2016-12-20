@@ -1,4 +1,4 @@
-// Função para ajustar o tamanho do layout
+// Funï¿½ï¿½o para ajustar o tamanho do layout
 function layout_fluido() {
 	
 	var janela = $(window).width();	
@@ -8,12 +8,12 @@ function layout_fluido() {
 	var fluidTitulo = janela - 39;
 	var fluidRodape = janela - 19;	
 	
-	$("#navglobal").css("width",fluidNavGlobal);	
+	// $("#navglobal").css("width",fluidNavGlobal);
 	$("#conteudo").css("width",fluidConteudo);
 	$("#titulo").css("width",fluidTitulo);
 	$("#rodapeConteudo").css("width",fluidConteudo);
 	$("#rodape").css("width",fluidRodape);
-	
+
 }
 
 $(document).ready(function(){ 
