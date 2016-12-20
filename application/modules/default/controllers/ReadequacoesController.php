@@ -2661,7 +2661,7 @@ class ReadequacoesController extends GenericControllerNew {
                     //ATUALIZA A TABELA tbReadequacao
                     $dados = array();
                     $dados['siEncaminhamento'] = $siEncaminhamento;
-                    $dados['dtFechamento'] = new Zend_Db_Expr('GETDATE()');
+                    $dados['dtAvaliador'] = new Zend_Db_Expr('GETDATE()');
                     $where = "idReadequacao = $idReadequacao";
                     $tbReadequacao->update($dados, $where);
                 }
