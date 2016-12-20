@@ -168,7 +168,20 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
             $dadosProj = $Projetos->buscar(array('IdPRONAC = ?' => $idPronac))->current();
             $this->view->projetos = $dadosProj;
     }
+    
+    public function recursoDesistirEnquadramentoAction() {
+        $idPronac = $this->_request->getParam("idPronac"); 
+        
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
 
+        $Projetos = new Projetos();
+        $dadosProj = $Projetos->buscar(array('IdPRONAC = ?' => $idPronac))->current();
+        $this->view->projetos = $dadosProj;
+    }
+    
+    
     /**
      * Método para aplicar no banco de dados a desistência do recurso
      * @author Jefferson Alessandro <jefferson.silva@cultura.gov.br>
@@ -212,6 +225,43 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
         }
     }
 
+    public function recursoDesistenciaEnquadramentoAction() {
+        $post = Zend_Registry::get('post');
+        $idPronac = $this->_request->getParam("idPronac"); // pega o id do pronac via get
+        $auth = Zend_Auth::getInstance();
+
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+
+        if($post->deacordo){
+            $dados = array(
+                'IdPRONAC'              => $post->idPronac,
+                'dtSolicitacaoRecurso'  => new Zend_Db_Expr('GETDATE()'),
+                'dsSolicitacaoRecurso'  => 'Desistência do prazo recursal',
+                'idAgenteSolicitante'   => $auth->getIdentity()->IdUsuario,
+                'stAtendimento'         => 'N',
+                'siFaseProjeto'         => 2,
+                'siRecurso'             => 0,
+                'tpSolicitacao'         => 'DR',
+                'tpRecurso'             => 1,
+                'stAnalise'             => null,
+                'stEstado'              => 1
+            );
+
+            $tbRecurso = new tbRecurso();
+            $resultadoPesquisa = $tbRecurso->buscar(array('IdPRONAC = ?'=>$_POST['idPronac']));
+
+            if(count($resultadoPesquisa)>0){
+               $dados['tpRecurso'] = 2;
+            }
+
+            RecursoDAO::cadastrar($dados);
+            parent::message('A desistência do prazo recursal foi cadastrada com sucesso!', "consultardadosprojeto?idPronac=". Seguranca::encrypt($idPronac), "CONFIRM");
+        } else {
+            parent::message('É necessário estar de acordo com os termos para registrar a sua desistência do prazo recursal!', "solicitarrecursodecisao/recurso-desistir-enquadramento?idPronac=". Seguranca::encrypt($idPronac), "ERROR");
+        }
+    }
 
     /**
      * Método para buscar os projetos aprovados e não aprovados
