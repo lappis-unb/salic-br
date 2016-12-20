@@ -119,7 +119,6 @@ class ProponenteController extends MinC_Controller_Action_Abstract
 
     public function listarProjetosProponenteAction(){
         
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $post   = Zend_Registry::get('post');
         $this->intTamPag = 30;

@@ -1,18 +1,4 @@
-<?php
-/**
- * Menu
- * @author Equipe RUP - Politec
- * @since 07/06/2010
- * @version 1.0
- * @package application
- * @subpackage application.controller.realizaranaliseprojeto.inc
- * @link http://www.cultura.gov.br
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
- */
-header('Content-Type: text/plain; charset=ISO-8859-1');
-
-$pronac = (isset($_GET['idPronac']) ? $_GET['idPronac'] : '');
-?>
+<?php $pronac = (isset($_GET['idPronac']) ? $_GET['idPronac'] : ''); ?>
 <!-- ========== MENU ========== -->
 <table id="tabelaLink" class="tabela">
     <tr>

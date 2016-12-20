@@ -1403,7 +1403,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         );
 
         if (!empty($view)) {
-            header("Content-Type: text/html; charset=ISO-8859-1");
             $this->_helper->layout->disableLayout();
 
             $this->montaTela($this->getRequest()->getParam("view"), $arrDados);
