@@ -1451,6 +1451,7 @@ class ReadequacoesController extends GenericControllerNew {
         $readequacaoPDDist = $tbPlanoDistribuicao->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S'));
         $planosAtivos = $tbPlanoDistribuicao->buscarPlanosDistribuicaoReadequacao($idPronac);
 
+        // COPIA UM PLANO POR PRODUTO
         if(count($readequacaoPDDist)==0){
             $planosCopiados = array();
             foreach ($planosAtivos as $value){
@@ -1475,42 +1476,44 @@ class ReadequacoesController extends GenericControllerNew {
             }
         }
 
+        // atualiza produto em cima do plano copiado
+        $QtdeProduzida = $this->_request->getParam('newQntdNormal')+$this->_request->getParam('newQntdPromocional')+$this->_request->getParam('newQntdPatrocinador')+$this->_request->getParam('newQntdPopulacaoBaixaRenda')+$this->_request->getParam('newQntdDivulgacao');
+        $preconormal = str_replace(",", ".", str_replace(".", "", $this->_request->getParam('newVlNormal')));
+        $precopromocional = str_replace(",", ".", str_replace(".", "", $this->_request->getParam('newVlPromocional')));
+        
+        /* DADOS DO PLANO PARA INCLUSÃO DA READEQUAÇÃO */
+        $dadosInclusao = array();
+        $dadosInclusao['idReadequacao'] = NULL;
+        $dadosInclusao['idProduto'] = $this->_request->getParam('newPlanoDistribuicao');
+        $dadosInclusao['cdArea'] = $this->_request->getParam('newArea');
+        $dadosInclusao['cdSegmento'] = $this->_request->getParam('newSegmento');
+        $dadosInclusao['idPosicaoLogo'] = $this->_request->getParam('newPosicaoLogomarca');
+        $dadosInclusao['qtProduzida'] = $QtdeProduzida;
+        $dadosInclusao['qtPatrocinador'] = $this->_request->getParam('newQntdPatrocinador');
+        $dadosInclusao['qtProponente'] = $this->_request->getParam('newQntdDivulgacao');
+        $dadosInclusao['qtOutros'] = $this->_request->getParam('newQntdPopulacaoBaixaRenda');
+        $dadosInclusao['qtVendaNormal'] = $this->_request->getParam('newQntdNormal');
+        $dadosInclusao['qtVendaPromocional'] = $this->_request->getParam('newQntdPromocional');
+        $dadosInclusao['vlUnitarioNormal'] = $preconormal;
+        $dadosInclusao['vlUnitarioPromocional'] = $precopromocional;
+        $dadosInclusao['stPrincipal'] = 0;
+        $dadosInclusao['tpSolicitacao'] = 'I';
+        $dadosInclusao['stAtivo'] = 'S';
+        $dadosInclusao['idPronac'] = $idPronac;
+
         $verificaPlanoRepetido = $tbPlanoDistribuicao->buscar(array('idPronac=?'=>$idPronac, 'stAtivo=?'=>'S', 'idProduto=?'=>$_POST['newPlanoDistribuicao']));
-        if(count($verificaPlanoRepetido)==0){
-            $QtdeProduzida = $_POST['newQntdNormal']+$_POST['newQntdPromocional']+$_POST['newQntdPatrocinador']+$_POST['newQntdPopulacaoBaixaRenda']+$_POST['newQntdDivulgacao'];
-            $preconormal = str_replace(",", ".", str_replace(".", "", $_POST['newVlNormal']));
-            $precopromocional = str_replace(",", ".", str_replace(".", "", $_POST['newVlPromocional']));
-
-            /* DADOS DO PLANO PARA INCLUSÃO DA READEQUAÇÃO */
-            $dadosInclusao = array();
-            $dadosInclusao['idReadequacao'] = NULL;
-            $dadosInclusao['idProduto'] = $_POST['newPlanoDistribuicao'];
-            $dadosInclusao['cdArea'] = $_POST['newArea'];
-            $dadosInclusao['cdSegmento'] = $_POST['newSegmento'];
-            $dadosInclusao['idPosicaoLogo'] = $_POST['newPosicaoLogomarca'];
-            $dadosInclusao['qtProduzida'] = $QtdeProduzida;
-            $dadosInclusao['qtPatrocinador'] = $_POST['newQntdPatrocinador'];
-            $dadosInclusao['qtProponente'] = $_POST['newQntdDivulgacao'];
-            $dadosInclusao['qtOutros'] = $_POST['newQntdPopulacaoBaixaRenda'];
-            $dadosInclusao['qtVendaNormal'] = $_POST['newQntdNormal'];
-            $dadosInclusao['qtVendaPromocional'] = $_POST['newQntdPromocional'];
-            $dadosInclusao['vlUnitarioNormal'] = $preconormal;
-            $dadosInclusao['vlUnitarioPromocional'] = $precopromocional;
-            $dadosInclusao['stPrincipal'] = 0;
-            $dadosInclusao['tpSolicitacao'] = 'I';
-            $dadosInclusao['stAtivo'] = 'S';
-            $dadosInclusao['idPronac'] = $idPronac;
-            $insert = $tbPlanoDistribuicao->inserir($dadosInclusao);
-
-            if($insert){
-                //$jsonEncode = json_encode($dadosPlanilha);
-                echo json_encode(array('resposta'=>true));
-            } else {
-                echo json_encode(array('resposta'=>false));
-            }
+        if (count($verificaPlanoRepetido) > 0) {
+            $where = " idPronac=" . $idPronac . " AND stAtivo='S' AND idProduto=" . $this->_request->getParam('newPlanoDistribuicao');
+            $return = $tbPlanoDistribuicao->update($dadosInclusao, $where);
         } else {
-            $msg = utf8_encode('Esse plano de distribuição já foi cadastrado!');
-            echo json_encode(array('resposta'=>false, 'msg'=>$msg));
+            // insere
+            $return = $tbPlanoDistribuicao->insert($dadosInclusao);
+        }
+        
+        if($return){
+            echo json_encode(array('resposta'=>true));
+        } else {
+            echo json_encode(array('resposta'=>false));
         }
         die();
     }
