@@ -316,7 +316,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
 
                 # ====== NICIO AUTENTICACAO MIGRACAO ==========
                 # configuracoes do layout padrao para o proponente
-                Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+//                Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
                 $UsuarioAtivo->codUsuario = $codUsuario;
 
                 # tenta fazer a autenticacao do usuario logado no scriptcase para o zend
