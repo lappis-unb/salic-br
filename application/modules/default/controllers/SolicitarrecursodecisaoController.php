@@ -168,10 +168,10 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
             $dadosProj = $Projetos->buscar(array('IdPRONAC = ?' => $idPronac))->current();
             $this->view->projetos = $dadosProj;
     }
-    
+
     public function recursoDesistirEnquadramentoAction() {
-        $idPronac = $this->_request->getParam("idPronac"); 
-        
+        $idPronac = $this->_request->getParam("idPronac");
+
         if (strlen($idPronac) > 7) {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
@@ -180,8 +180,8 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
         $dadosProj = $Projetos->buscar(array('IdPRONAC = ?' => $idPronac))->current();
         $this->view->projetos = $dadosProj;
     }
-    
-    
+
+
     /**
      * Método para aplicar no banco de dados a desistência do recurso
      * @author Jefferson Alessandro <jefferson.silva@cultura.gov.br>
@@ -306,6 +306,13 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
         }
     }
 
+    /**
+     * recursoEnquadramentoSalvarAction
+     *
+     * @access public
+     * @return void
+     * @todo metodo em construção
+     */
     public function recursoEnquadramentoSalvarAction()
     {
         if ($this->getRequest()->isPost()) {
@@ -316,15 +323,15 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
             $auth = Zend_Auth::getInstance();
 
             try {
-                if(isset($_POST['checkEnquadramento']) && !empty($_POST['checkEnquadramento']) && isset($_POST['checkOrcamento']) && !empty($_POST['checkOrcamento'])){
-                    $tpSolicitacao = 'EO';
-                } else if(isset($_POST['checkEnquadramento']) && !empty($_POST['checkEnquadramento']) && !isset($_POST['checkOrcamento'])) {
-                    $tpSolicitacao = 'EN';
-                } else if(isset($_POST['checkOrcamento']) && !empty($_POST['checkOrcamento']) && !isset($_POST['checkEnquadramento'])) {
-                    $tpSolicitacao = 'OR';
-                } else {
-                    $tpSolicitacao = 'PI';
-                }
+                //if(isset($_POST['checkEnquadramento']) && !empty($_POST['checkEnquadramento']) && isset($_POST['checkOrcamento']) && !empty($_POST['checkOrcamento'])){
+                    //$tpSolicitacao = 'EO';
+                //} else if(isset($_POST['checkEnquadramento']) && !empty($_POST['checkEnquadramento']) && !isset($_POST['checkOrcamento'])) {
+                    //$tpSolicitacao = 'EN';
+                //} else if(isset($_POST['checkOrcamento']) && !empty($_POST['checkOrcamento']) && !isset($_POST['checkEnquadramento'])) {
+                    //$tpSolicitacao = 'OR';
+                //} else {
+                    //$tpSolicitacao = 'PI';
+                //}
 
                 $dados = array(
                     'IdPRONAC'              => $_POST['idPronac'],
@@ -332,7 +339,7 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
                     'dsSolicitacaoRecurso'  => $_POST['dsRecurso'],
                     'idAgenteSolicitante'   => $auth->getIdentity()->IdUsuario,
                     'stAtendimento'         => 'N',
-                    'tpSolicitacao'         => $tpSolicitacao
+                    'tpSolicitacao'         => 'ER'
                 );
 
                 $tbRecurso = new tbRecurso();
@@ -343,14 +350,13 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
                    $dados['tpRecurso'] = 2;
                 }
 
-                $cadastrar = $tbRecurso->inserir($dados);
+                $cadastrar = $tbRecurso->insert($dados);
 
                 if ($cadastrar) {
                     // altera a situação do projeto
-                    $alterarSituacao = ProjetoDAO::alterarSituacao($idPronac, 'D20');
+                    $alterarSituacao = ProjetoDAO::alterarSituacao($idPronac, 'B03');
                     parent::message('Solicitação enviada com sucesso!', "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
-                } // fecha if
-                else {
+                } else {
                     throw new Exception("Erro ao cadastrar recurso!");
                 }
             }
