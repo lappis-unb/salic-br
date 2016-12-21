@@ -156,15 +156,15 @@
             <?php endif; ?>
             <!-- ========== FIM MENSAGENS (ERROS, CONFIRMACOES E ADVERTENCIAS) ========== -->
 
+            <!-- ========== INICIO MENSAGENS DO PROJETO PARA O USUARIO ========== -->
+            <div class="msgALERT sumir" id="mensagensabertasprojeto">
+                <div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msgALERT" onclick="$('.msgALERT').hide();" onkeypress="$('.msgALERT').hide();"/></div>
+                <div>
+                    Existe(m) mensagem(ns) para o(s) PRONAC(s) abaixo: <br />
+                    <span id="mensagensabertas"></span>
+                </div>
+            </div>
+            <div id="novas_mensagens"></div>
+            <!-- ========== FIM MENSAGENS DO PROJETO PARA O USUARIO ========== -->
         </header>
 
-        <!-- ========== INICIO MENSAGENS DO PROJETO PARA O USUARIO ========== -->
-        <div class="msgALERT sumir" id="mensagensabertasprojeto">
-            <div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msgALERT" onclick="$('.msgALERT').hide();" onkeypress="$('.msgALERT').hide();"/></div>
-            <div>
-                Existe(m) mensagem(ns) para o(s) PRONAC(s) abaixo: <br />
-                <span id="mensagensabertas"></span>
-            </div>
-        </div>
-        <div id="novas_mensagens"></div>
-        <!-- ========== FIM MENSAGENS DO PROJETO PARA O USUARIO ========== -->
