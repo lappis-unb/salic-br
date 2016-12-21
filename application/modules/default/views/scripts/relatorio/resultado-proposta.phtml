@@ -116,7 +116,7 @@
             <tr>
                 <td align="center"><?php echo $i; ?></td>
                 <td align="center">
-                    <a href="<?php echo $this->url(array('controller' => 'admissibilidade', 'action' => 'exibirpropostacultural')); ?>?idPreProjeto=<?php echo $d->idProjeto; ?>&pesquisa=proposta" target="_blank"><?php echo $d->idProjeto; ?></a>
+                    <a href="<?php echo $this->url(array('module' => 'admissibilidade' ,'controller' => 'admissibilidade', 'action' => 'exibirpropostacultural')); ?>?idPreProjeto=<?php echo $d->idProjeto; ?>&pesquisa=proposta" target="_blank"><?php echo $d->idProjeto; ?></a>
                 </td>
                 <td><?php echo $d->NomeProposta; ?></td>
                 <td nowrap><?php echo strlen($d->CNPJCPF) == 11 ? Mascara::addMaskCPF($d->CNPJCPF) : Mascara::addMaskCNPJ($d->CNPJCPF); ?></td>
