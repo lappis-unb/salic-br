@@ -146,16 +146,16 @@ class MantercontabancariaController extends GenericControllerNew {
         $idagente = $Usuario->getIdUsuario($auth->getIdentity()->usu_codigo);
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
         $orgao = $GrupoAtivo->codOrgao;
-        $pronac = $_POST['Pronac'];
+        $pronac = $this->_request->getParam('Pronac');
         $he = new tbHistoricoExclusaoConta();
         $cb = new ContaBancaria();
         $resp = $cb->consultarDadosPorPronac($pronac, $orgao)->current();
 //            x($idagente->usu_codigo);
 //            xd($idagente->idAgente);
         $caminho = $this->_request->getParam("caminho"); //caminho de retorno caso a funcionalidade seja aberta em modal
-
-        if(isset($_POST['excluir'])){
-
+        
+        if($this->_request->getParam('excluir') !== null){
+            
             //INSERE OS DADOS NA TABELA DE HISTÓRICO - SAC.dbo.tbHistoricoExclusaoConta
             $dadosInsert = array(
                 'idContaBancaria' => $resp->IdContaBancaria,
@@ -164,10 +164,8 @@ class MantercontabancariaController extends GenericControllerNew {
                 'ContaBloqueada' => $resp->ContaBloqueada,
                 'ContaLivre' => $resp->ContaLivre,
                 'DtExclusao' => new Zend_Db_Expr('GETDATE()'),
-                'Motivo' => $_POST['justificativa'],
-                'idUsuario' => $idagente->usu_codigo,
-                'idPronac' => $resp->idPronac,
-                'tpAcao' => 2
+                'Motivo' => $this->_request->getParam('justificativa'),
+                'idUsuario' => $idagente->usu_codigo
             );
             $id = $he->inserir($dadosInsert);
 
@@ -185,12 +183,12 @@ class MantercontabancariaController extends GenericControllerNew {
             }
 
         } else {
-
+            
             $ba = new BancoAgencia();
-            $AgenciaDados = $ba->buscar(array('Agencia = ?' => $_POST['Agencia']));
-
+            $AgenciaDados = $ba->buscar(array('Agencia = ?' => $this->_request->getParam('Agencia')));
+            
             if(count($AgenciaDados) > 0){
-
+                
                 //INSERE OS DADOS NA TABELA DE HISTÓRICO - SAC.dbo.tbHistoricoExclusaoConta
                 $dadosInsert = array(
                     'idContaBancaria' => $resp->IdContaBancaria,
@@ -199,18 +197,17 @@ class MantercontabancariaController extends GenericControllerNew {
                     'ContaBloqueada' => $resp->ContaBloqueada,
                     'ContaLivre' => $resp->ContaLivre,
                     'DtExclusao' => new Zend_Db_Expr('GETDATE()'),
-                    'Motivo' => $_POST['justificativa'],
-                    'idUsuario' => $idagente->usu_codigo,
-                    'idPronac' => $resp->idPronac,
-                    'tpAcao' => 1
+                    'Motivo' => $this->_request->getParam('justificativa'),
+                    'idUsuario' => $idagente->usu_codigo
                 );
+                
                 $id = $he->inserir($dadosInsert);
-
+                
                 $dados = array(
                     'Banco' => '001',
-                    'Agencia' => $_POST['Agencia'],
-                    'ContaBloqueada' => $_POST['ContaBloqueada'],
-                    'ContaLivre' => $_POST['ContaLivre'],
+                    'Agencia' => $this->_request->getParam('Agencia'),
+                    'ContaBloqueada' => $this->_request->getParam('ContaBloqueada'),
+                    'ContaLivre' => $this->_request->getParam('ContaLivre'),
                 );
                 $id = $cb->alterar($dados, array('idContaBancaria = ?' => $resp->IdContaBancaria));
 
