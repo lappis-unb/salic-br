@@ -57,7 +57,7 @@ a:hover {
 .container-salic {
 	position: relative;
 	margin: 0 auto;
-	max-width: 1485px;
+	max-width: 1250px;
 }
 
 .container {
@@ -75,7 +75,7 @@ a:hover {
 #topo {
 	/*width:100%;*/
 	margin-top: -4px;
-	height:100px;
+	height:104px;
 	background:url(../img/bg-topo.png) no-repeat 0 0 #acda5d;
 	/*margin-bottom:10px;*/
 	/*margin-top: 30px;*/
@@ -101,7 +101,7 @@ a:hover {
 	width: 425px;
 	position: absolute;
 	right: 20px;
-	top: 60px;
+	top: 87px;
 	z-index: 1;
 	height: 30px;
 }
@@ -126,12 +126,16 @@ a:hover {
 	height: 25px;
 	float: right;
 }
+
+#logo {
+	height:95px;
+	width: 224px;
+}
 #logo h1 {
+	width: 100%;
 	margin:0;
 	text-indent:-1000px;
 	background:url(../img/novo_logo.png) center no-repeat;
-	height:95px;
-	width:224px;
 	cursor:pointer;
 }
 #logo h1 a {
@@ -180,36 +184,43 @@ a:hover {
 
 #navglobal {
 	background: #36963f;
-	border-top-left-radius: 10px;
-	position: absolute;
-	left: 15%;
-	width: 85%;
-	top: 66px;
+	/*background: #1B5E20;*/
 	display: block;
-	max-height: 33px;
+	height: 34px;
+	float: left;
+	width:100%;
+	clear: both;
+    margin-bottom: 10px;
 }
 
 #navglobal ul li {
 	list-style-type:none;
-	display:inline;
-	margin:0 1px 0 2px;
-	padding:7px 0 6px;
 	text-align:center;
+	float: left;
 }
+
 #navglobal ul li a {
 	font-size:11px;
-	padding:0 9px;
+	padding: 11px 20px;
+	color:#fff;
+	text-decoration:none;
+	font-weight:bold;
+	line-height: 34px;
 }
-#navglobal ul li.ativo {
-	background:url(../img/navglobal-ativo-right.gif) right no-repeat;
+
+#navglobal ul li a:hover,
+#navglobal ul li.ativo a {
+	color:#fff !important;
+    background: #36963f;
+	background: #4CAF50;
+	/*border-radius: 0;*/
 }
+
 #navglobal ul li.ativo span {
 	/*background:url(../img/navglobal-ativo-left.gif) left no-repeat;*/
-	padding:7px 0 6px;
+	/*padding:7px 0 6px;*/
 }
-#navglobal ul li.ativo a {
-	color:#666;
-}
+
 #navglobal ul li a.home {
 	background:url(../img/home.png) center no-repeat;
 	padding:2px;
@@ -217,11 +228,26 @@ a:hover {
 #navglobal ul li a.home span {
 	visibility:hidden;
 }
-#navglobal ul li a {
-	color:#fff;
-	text-decoration:none;
-	font-weight:bold;
+/* submenu */
+#menuContainer {
+    background: #1B5E20;
 }
+#menuContainer ul li,
+#menuContainer ul li a,
+#menuContainer {
+    margin: 0px;
+    padding: 0px;
+    border-radius: 0;
+    color: #fff;
+    font-size:12px;
+    font-weight: bold;
+}
+
+#menuContainer ul li a {
+    padding: 8px 14px;
+    width: 100%;
+}
+
 #container {
 	position:relative;
 	top:10px;
@@ -418,46 +444,46 @@ fieldset {
 	margin-right:8px;
 }
 #div {
-	width:auto;
-	height:31px;
-	font-size:11px;
+	/*width:auto;*/
+	/*height:31px;*/
+	/*font-size:11px;*/
 }
 #divmenuprincipalcenter {
-	height:31px;
-	float:left;
-	width:auto;
-	text-align:center;
+	/*height:31px;*/
+	/*float:left;*/
+	/*width:auto;*/
+	/*text-align:center;*/
 }
 #divrigth {
-	width:11px;
-	height:31px;
-	float:left;
-	display:block;
+	/*width:11px;*/
+	/*height:31px;*/
+	/*float:left;*/
+	/*display:block;*/
 }
 #divleft {
-	width:9px;
-	height:31px;
-	float:left;
-	display:block;
+	/*width:9px;*/
+	/*height:31px;*/
+	/*float:left;*/
+	/*display:block;*/
 }
 #div:hover #divrigth, #div:hover #divleft {
-	height:31px;
-	float:left;
-	display:block;
+	/*height:31px;*/
+	/*float:left;*/
+	/*display:block;*/
 }
 #div:hover #divrigth {
-	width:11px;
-	background:url(../img/menu_rigth.gif) no-repeat;
+	/*width:11px;*/
+	/*background:url(../img/menu_rigth.gif) no-repeat;*/
 }
 #div:hover #divleft {
-	width:9px;
-	background:url(../img/menu_left.gif);
+	/*width:9px;*/
+	/*background:url(../img/menu_left.gif);*/
 }
 #div:hover #divmenuprincipalcenter {
-	background:url(../img/menu_center.gif) repeat;
-	float:left;
-	width:auto;
-	height:31px;
+	/*background:url(../img/menu_center.gif) repeat;*/
+	/*float:left;*/
+	/*width:auto;*/
+	/*height:31px;*/
 }
 #rodape {
 	background:url(../img/rodape-corner-left.gif) top left no-repeat #36963f;
@@ -720,7 +746,6 @@ label {
 	background:none;
 	border:0;
 	float:none;
-	clear:auto;
 	display:inline;
 	color:#777;
 	font-weight:bold;
@@ -1494,7 +1519,7 @@ div.plan span {
 	width:127px;
 }
 .btn_redistribuir_projetos,
-.btn_redistribuir_projetos,-off
+.btn_redistribuir_projetos,
 {
 	width:127px;
 }
@@ -1568,10 +1593,10 @@ div.plan span {
 .btn_excluir                                    { background:url(../img/buttons/excluir.gif) center center no-repeat; }
 .btn_exclusao                                   { background:url(../img/buttons/excluir.gif) center center no-repeat; }
 .btn_exclusao-off                               { background:url(../img/buttons/excluir-off.gif) center center no-repeat; }
-.btn_off                                        { background:url(../img/btn_off.gif) center center no-repeat; }
-.btn_on                                         { background:url(../img/btn_on.gif) center center no-repeat; }
-.btn_senha                                      { background:url(../img/btn_senha.gif) center center no-repeat; }
-.btn_visualizar                                 { background:url(../img/btn_visualizar.gif) center center no-repeat; }
+/*.btn_off                                        { background:url(../img/btn_off.gif) center center no-repeat; }*/
+/*.btn_on                                         { background:url(../img/btn_on.gif) center center no-repeat; }*/
+/*.btn_senha                                      { background:url(../img/btn_senha.gif) center center no-repeat; }*/
+/*.btn_visualizar                                 { background:url(../img/btn_visualizar.gif) center center no-repeat; }*/
 .btn_busca                                      { background:url(../img/btn_busca.gif) center center no-repeat; }
 .btn_npublicar                                  { background:url(../img/btn_npublicar.gif) center center no-repeat; }
 .btn_gerarpublicacao                            { background:url(../img/btn_gerarpublicacao.gif) center center no-repeat; }
@@ -1579,7 +1604,7 @@ div.plan span {
 .btn_add                                        { background:url(../img/btn_add.gif) center center no-repeat; }
 .btn_adicionar                                  { background:url(../img/btn_adicionar.gif) center center no-repeat; }
 .btn_remover                                    { background:url(../img/buttons/btn_remover.gif) center center no-repeat; }
-.btn_cadastrar                                  { background:url(../img/btn_cadastrar.gif) center center no-repeat; }
+/*.btn_cadastrar                                  { background:url(../img/btn_cadastrar.gif) center center no-repeat; }*/
 .btn_alterar                                    { background:url(../img/buttons/alterar.gif) center center no-repeat; }
 .btn_incluir                                    { background:url(../img/buttons/incluir.gif) center center no-repeat; }
 .btn_reintegrar                                 { background:url(../img/buttons/reintegrar.gif) center center no-repeat; }
@@ -1589,26 +1614,26 @@ div.plan span {
 .btn_imprimir_guia                              { background:url(../img/buttons/imprimir_guia.gif) center center no-repeat; }
 .btn_pdf                                        { background:url(../img/btn_pdf.gif) center center no-repeat; }
 .btn_xls                                        { background:url(../img/buttons/xls.gif) center center no-repeat; }
-.btn_excluir_tudo                               { background:url(../img/btn_excluir_tudo.gif) center center no-repeat; }
+/*.btn_excluir_tudo                               { background:url(../img/btn_excluir_tudo.gif) center center no-repeat; }*/
 .btn_enviar                                     { background:url(../img/buttons/enviar.gif) center center no-repeat; }
 .btn_p_anterior                                 { background:url(../img/buttons/anterior.gif) center center no-repeat; }
 .btn_p_proximo                                  { background:url(../img/buttons/proximo.gif) center center no-repeat; }
 .btn_p_anterior-off                             { background:url(../img/buttons/anterior-off.gif) center center no-repeat; }
 .btn_p_proximo-off                              { background:url(../img/buttons/proximo-off.gif) center center no-repeat; }
-.btn_p_pri_pag                                  { background:url(../img/btn_p_pri_pag.gif) center center no-repeat; }
-.btn_p_ult_pag                                  { background:url(../img/btn_p_ult_pag.gif) center center no-repeat; }
-#btn_down                                       { background:url(../img/btn_down.gif) center center no-repeat; }
-#btn_up                                         { background:url(../img/btn_up.gif) center center no-repeat; }
+/*.btn_p_pri_pag                                  { background:url(../img/btn_p_pri_pag.gif) center center no-repeat; }*/
+/*.btn_p_ult_pag                                  { background:url(../img/btn_p_ult_pag.gif) center center no-repeat; }*/
+/*#btn_down                                       { background:url(../img/btn_down.gif) center center no-repeat; }*/
+/*#btn_up                                         { background:url(../img/btn_up.gif) center center no-repeat; }*/
 .btn_localizar                                  { background:url(../img/buttons/localizar.gif) center center no-repeat; }
-.btn_buscar                                     { background:url(../img/btn_buscar.gif) center center no-repeat; }
+/*.btn_buscar                                     { background:url(../img/btn_buscar.gif) center center no-repeat; }*/
 .btn_limpar                                     { background:url(../img/buttons/limpar.gif) center center no-repeat; }
-.btn_ok                                         { background:url(../img/btn_ok.gif) center center no-repeat; }
-.btn_sim                                        { background:url(../img/btn_sim.gif) center center no-repeat; }
-.btn_nao                                        { background:url(../img/btn_nao.gif) center center no-repeat; }
-.btn_marcar                                     { background:url(../img/btn_marcar.gif) center center no-repeat; }
-.btn_desmarcar                                  { background:url(../img/btn_desmarcar.gif) center center no-repeat; }
-.btn_ord_up                                     { background:url(../img/seta_preta_up.gif) center center no-repeat; }
-.btn_ord_down                                   { background:url(../img/seta_preta_down.gif) center center no-repeat; }
+/*.btn_ok                                         { background:url(../img/btn_ok.gif) center center no-repeat; }*/
+/*.btn_sim                                        { background:url(../img/btn_sim.gif) center center no-repeat; }*/
+/*.btn_nao                                        { background:url(../img/btn_nao.gif) center center no-repeat; }*/
+/*.btn_marcar                                     { background:url(../img/btn_marcar.gif) center center no-repeat; }*/
+/*.btn_desmarcar                                  { background:url(../img/btn_desmarcar.gif) center center no-repeat; }*/
+/*.btn_ord_up                                     { background:url(../img/seta_preta_up.gif) center center no-repeat; }*/
+/*.btn_ord_down                                   { background:url(../img/seta_preta_down.gif) center center no-repeat; }*/
 .btn_sair                                       { background:url(../img/buttons/sair.gif) center center no-repeat; }
 .btn_reprovar                                   { background:url(../img/buttons/reprovar.png) left center no-repeat; }
 .btn_salvar                                     { background:url(../img/buttons/salvar.gif) center center no-repeat; }
@@ -1739,6 +1764,13 @@ div.plan span {
 header {
     margin-bottom: 10px;
 	position: relative;
+	display: block;
+	clear: both;
+}
+
+main {
+	display: block;
+	clear: both;
 }
 
 article {

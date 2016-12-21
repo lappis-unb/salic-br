@@ -11,39 +11,52 @@ if ($intQtd > 99) {
 }
 ?>
 <style>
+    .notificacao {
+        margin-left: 15px;
+        margin-top: 5px;
+
+        /*display: inline;*/
+    }
+    .notificacao a {
+        position: relative;
+        padding: 0px !important;
+        padding-top: 5px;
+    }
     .notificacao .btn-floating {
-        background-color: rgb(76, 175, 80);
+        /*background-color: rgb(76, 175, 80);*/
         border-radius: 50%;
-        bottom: 7px;
         color: #fff;
         cursor: pointer;
-        display: block;
-        height: 18px !important;
-        left: 23px;
-        line-height: 4px;
-        overflow: hidden;
-        padding: 0;
+        height: 20px !important;
+        width: 25px;
+        line-height: 23px;
+        /*overflow: hidden;*/
+        /*padding: 0;*/
         position: relative;
-        text-align: left !important;
-        transition: all 0.3s ease 0s;
+        left: 7px;
+        top: -10px;
+        display: block;
+        text-align: center;
+        /*transition: all 0.3s ease 0s;*/
         vertical-align: middle;
-        width: 19px;
         z-index: 1;
         font-size: 9px !important;
     }
 
     .notificacao .btn-floating p {
-        display: block;
-        /*text-align: center;*/
-        left: <?php echo $cssPadding ?>px;
-        line-height: 5pt;
-        padding: 0 0 10px;
-        position: absolute;
+/*        display: block;*/
+/*        text-align: center;*/
+/*        left: */<?php //echo $cssPadding ?>/*px;*/
+/*        line-height: 5pt;*/
+/*        padding: 0 0 10px;*/
+/*        position: absolute;*/
     }
 </style>
 <li class="noOverhere notificacao">
-    <a href="/admissibilidade/mensagem"><i class="material-icons left">mail</i></a>
-    <a href="/admissibilidade/mensagem" class="btn-floating waves-effect waves-light orange darken-4"><p><?php echo $intQtd ?></p></a>
+    <a href="/admissibilidade/mensagem">
+        <i class="material-icons left">mail</i>
+        <span class="btn-floating waves-effect waves-light orange darken-4"><?php echo $intQtd ?></span>
+    </a>
 </li>
 
 
