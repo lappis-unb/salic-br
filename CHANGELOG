@@ -1,5 +1,6 @@
 Release 1.14.7
   * Fix: [Movimentação bancária] corrigida funcionalidade de alterar agência bancária de um projeto
+  * Fix: [Movimentação bancária] suprimindo regra que impede alteração de agência quando já há captação'
 
 Release 1.14.6
   * Fix: [Readequações] Correção no envio de plano de distribuição pelo proponente
