@@ -211,7 +211,6 @@ a:hover {
 #navglobal ul li a:hover,
 #navglobal ul li.ativo a {
 	color:#fff !important;
-    background: #36963f;
 	background: #4CAF50;
 	/*border-radius: 0;*/
 }
@@ -230,7 +229,7 @@ a:hover {
 }
 /* submenu */
 #menuContainer {
-    background: #1B5E20;
+    background: #36963f;
 }
 #menuContainer ul li,
 #menuContainer ul li a,
@@ -1010,6 +1009,8 @@ div.plan span {
 	border:1px solid #fc0;
 	color:#000;
 	background:#ffc url(../img/msgALERT.png) 3px 3px no-repeat;
+    float: left;
+    width: 100%;
 }
 .msgCONFIRM {
 	border:1px solid #096;
