@@ -189,7 +189,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
         if((($data <= 11 AND in_array($dadosProjeto->Situacao, $situacoesRecurso) AND !$recurso1->idRecurso AND !$recurso2->idRecurso)
             OR
             !$recurso3->idRecurso AND !in_array($dadosProjeto->Situacao, $situacoesRecurso) AND $Recurso4->dado <=10 )
-            OR ($diasProjeto->dias <= 11 && $dadosProjeto->Situacao = 'B02')
+            OR ($diasProjeto->dias <= 11 && $dadosProjeto->Situacao == 'B02')
         ) {
             $Recursos = 1;
         }

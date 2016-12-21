@@ -133,15 +133,16 @@
         <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/materialize-custom.css">
     </head>
     <body>
-        <header>
         <?php echo $this->render('partials/barraBrasil.phtml')?>
+        <header>
         <!-- ========== INICIO TOPO ========== -->
         <div id="topo">
             <div class="barra_governo">
                 <div>
-                    <div id="combousuario">
-                        <label for="perfilXgrupo"> </label>
-                        <select name="perfilXgrupo" id="perfilXgrupo" class="perfilXgrupo" onchange="alterarPerfil(this.value);">
+                    <div id="combousuario" class="input-field">
+
+                        <label for="perfilXgrupo">Perfil </label>
+                        <select name="perfilXgrupo" id="perfilXgrupo" class="perfilXgrupo browser-default" onchange="alterarPerfil(this.value);">
 
                             <?php if ($this->arrayGrupos): ?>
                             <?php foreach ($this->arrayGrupos as $g){ ?>
@@ -163,7 +164,7 @@
                 <ul>
                     <?php if (!empty($this->usuario->usu_identificacao) && !empty($this->usuario->usu_nome)){ ?>
 <!--                    <li class="black">Usu&aacute;rio conectado: <strong>[--><?php //echo Validacao::mascaraCPFCNPJ($this->usuario->usu_identificacao); ?><!--] - --><?php //echo $this->usuario->usu_nome; ?><!--</strong></li>-->
-                    <li >Usu&aacute;rio conectado: <strong>[<?php echo Validacao::mascaraCPFCNPJ($this->usuario->usu_identificacao); ?>] - <?php echo $this->usuario->usu_nome; ?></strong></li>
+                    <li >Usu&aacute;rio <strong><?php echo $this->usuario->usu_nome; ?> [<?php echo Validacao::mascaraCPFCNPJ($this->usuario->usu_identificacao); ?>]</strong></li>
                     <?php } ?>
                     <li class="sair"><a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), '', true); ?>" id="sairSistema" title="Sair do Sistema" onclick="logout(); return false;">Sair</a></li>
                 </ul>
@@ -206,7 +207,7 @@
             <ul>
                 <li class="noOverHere"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => ''), '', true); ?>" class="home" title="INICIO"><span>INICIO</span></a></li>
 
-                <?php echo $this->render('partials/notificacaoMensagem.phtml')?>
+                    <?php echo $this->render('partials/notificacaoMensagem.phtml')?>
                     <!-- ========== INICIO MENU ANALISE ========== -->
                     <?php if(in_array($this->grupoAtivo, array(93,94,97,103,110,118,119,120,127,128,132,133,137,141,142,143))){ ?>
                     <li>
@@ -814,61 +815,61 @@
 				<!-- ========== FIM MENU SEGURANCA ========== -->
 
 
-                                <!-- ========== INICIO MENU MANUAIS ========== -->
-                                <?php if ($this->grupoAtivo == 137 || $this->grupoAtivo == 94 ) { ?>
-                                <li>
-                                    <div id="div">
-                                        <div id="divleft"></div>
-                                        <div id="divmenuprincipalcenter">
-                                            <a href="#menu-manuais" title="Ir para Manuais" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Manuais</a>
-                                            <div id="menu-manuais" class="hidden">
-                                                <ul>
-                                                    <?php if ($this->grupoAtivo == 137 ) { ?>
-                                                    <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Manual_Coordenador_Pronac-Pagamento-Parecerista.pdf', '_blank');" title="Ir para Pagamento Parecerista">Pagamento Parecerista</a></li>
-                                                    <?php } ?>
+                    <!-- ========== INICIO MENU MANUAIS ========== -->
+                    <?php if ($this->grupoAtivo == 137 || $this->grupoAtivo == 94 ) { ?>
+                    <li>
+                        <div id="div">
+                            <div id="divleft"></div>
+                            <div id="divmenuprincipalcenter">
+                                <a href="#menu-manuais" title="Ir para Manuais" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Manuais</a>
+                                <div id="menu-manuais" class="hidden">
+                                    <ul>
+                                        <?php if ($this->grupoAtivo == 137 ) { ?>
+                                        <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Manual_Coordenador_Pronac-Pagamento-Parecerista.pdf', '_blank');" title="Ir para Pagamento Parecerista">Pagamento Parecerista</a></li>
+                                        <?php } ?>
 
-                                                    <?php if ($this->grupoAtivo == 94 ) { ?>
-                                                    <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Parecerista.pdf', '_blank');" title="Ir para Parecerista">Parecerista</a></li>
-                                                    <?php } ?>
+                                        <?php if ($this->grupoAtivo == 94 ) { ?>
+                                        <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Parecerista.pdf', '_blank');" title="Ir para Parecerista">Parecerista</a></li>
+                                        <?php } ?>
 
-                                                    <?php if ($this->grupoAtivo == 94 ) { ?>
-                                                    <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Manual_do_Parecerista-Confirmar-Pagamento.pdf', '_blank');" title="Ir para Parecerista - An&aacute;lise">Confirmar Pagamento Parecerista</a></li>
-                                                    <?php } ?>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div id="divrigth"></div>
-                                    </div>
-                                </li>
-                                <!-- ========== FIM MENU MANUAIS ========== -->
-                                <?php } ?>
+                                        <?php if ($this->grupoAtivo == 94 ) { ?>
+                                        <li><a href="#" target="_blank" onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'manuais'), '', true); ?>/Manual_do_Parecerista-Confirmar-Pagamento.pdf', '_blank');" title="Ir para Parecerista - An&aacute;lise">Confirmar Pagamento Parecerista</a></li>
+                                        <?php } ?>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="divrigth"></div>
+                        </div>
+                    </li>
+                    <!-- ========== FIM MENU MANUAIS ========== -->
+                    <?php } ?>
 
 
-                                 <!-- ========== INICIO VIDEO AULAS ========== -->
-                                <?php if($this->grupoAtivo == 94 || $this->grupoAtivo == 137 ) { ?>
-                                <li>
-                                    <div id="div">
-                                        <div id="divleft"></div>
-                                        <div id="divmenuprincipalcenter">
-                                            <a href="#menu-aulas" title="Ir para Aulas" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Introdu&ccedil;&atilde;o a an&aacute;lise de projetos</a>
-                                            <div id="menu-aulas" class="hidden">
-                                                <ul>
-                                                    <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula1.m4v', '_blank');" title="Ir para Aula 1">1. Introdu&ccedil;&atilde;o</a></li>
-                                                    <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula2.m4v', '_blank');" title="Ir para Aula 2">2. Normativos</a></li>
-					            <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula3.m4v', '_blank');" title="Ir para Aula 3">3. D&uacute;vidas</a></li>
-						    <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula4.m4v', '_blank');" title="Ir para Aula 4">4. Abordagem do Projeto</a></li>
- 						    <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula5.m4v', '_blank');" title="Ir para Aula 5">5. Itens Or&ccedil;ament&aacute;rios</a></li>
-						    <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula6.m4v', '_blank');" title="Ir para Aula 6">6. Intera&ccedil;&otilde;es</a></li>
-						    <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula7.m4v', '_blank');" title="Ir para Aula 7">7. Como Elaborar Parecer</a></li>
-						    <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula8.m4v', '_blank');" title="Ir para Aula 8">8. Considera&ccedil;&otilde;es</a></li>
-					        </ul>
-                                            </div>
-                                        </div>
-                                        <div id="divrigth"></div>
-                                    </div>
-                                </li>
-                                <!-- ========== FIM MEN ========== -->
-                                <?php } ?>
+                     <!-- ========== INICIO VIDEO AULAS ========== -->
+                    <?php if($this->grupoAtivo == 94 || $this->grupoAtivo == 137 ) { ?>
+                    <li>
+                        <div id="div">
+                            <div id="divleft"></div>
+                            <div id="divmenuprincipalcenter">
+                                <a href="#menu-aulas" title="Ir para Aulas" class="menuHorizontal fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all hierarchybreadcrumb">Introdu&ccedil;&atilde;o a an&aacute;lise de projetos</a>
+                                <div id="menu-aulas" class="hidden">
+                                    <ul>
+                                        <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula1.m4v', '_blank');" title="Ir para Aula 1">1. Introdu&ccedil;&atilde;o</a></li>
+                                        <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula2.m4v', '_blank');" title="Ir para Aula 2">2. Normativos</a></li>
+                                        <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula3.m4v', '_blank');" title="Ir para Aula 3">3. D&uacute;vidas</a></li>
+                                        <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula4.m4v', '_blank');" title="Ir para Aula 4">4. Abordagem do Projeto</a></li>
+                                        <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula5.m4v', '_blank');" title="Ir para Aula 5">5. Itens Or&ccedil;ament&aacute;rios</a></li>
+                                        <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula6.m4v', '_blank');" title="Ir para Aula 6">6. Intera&ccedil;&otilde;es</a></li>
+                                        <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula7.m4v', '_blank');" title="Ir para Aula 7">7. Como Elaborar Parecer</a></li>
+                                        <li><a href="#" target="_blank"  onclick="window.open('<?php echo $this->url(array('controller' => 'public', 'action' => 'videos'), '', true); ?>/introducao-a-analise-de-projetos/aula8.m4v', '_blank');" title="Ir para Aula 8">8. Considera&ccedil;&otilde;es</a></li>
+                                   </ul>
+                                </div>
+                            </div>
+                            <div id="divrigth"></div>
+                        </div>
+                    </li>
+                    <!-- ========== FIM MEN ========== -->
+                    <?php } ?>
 
 			</ul>
 		</div>
@@ -878,16 +879,6 @@
 
 
 
-		<!-- ========== INICIO MENSAGENS DO PROJETO PARA O USUARIO ========== -->
-		<div class="msgALERT sumir" id="mensagensabertasprojeto">
-			<div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msgALERT" onclick="$('.msgALERT').hide();" onkeypress="$('.msgALERT').hide();"/></div>
-			<div>
-				Existe(m) mensagem(ns) para o(s) PRONAC(s) abaixo: <br />
-				<span id="mensagensabertas"></span>
-			</div>
-		</div>
-		<div id="novas_mensagens"></div>
-		<!-- ========== FIM MENSAGENS DO PROJETO PARA O USUARIO ========== -->
 
 
 
@@ -951,4 +942,16 @@
 		} // fecha funcao verificar_mensagens()
 		</script-->
         <?php } ?>
+
     </header>
+
+        <!-- ========== INICIO MENSAGENS DO PROJETO PARA O USUARIO ========== -->
+        <div class="msgALERT sumir" id="mensagensabertasprojeto">
+            <div class="float_right"><input type="button" class="btn_close" title="Fechar mensagem" id="msgALERT" onclick="$('.msgALERT').hide();" onkeypress="$('.msgALERT').hide();"/></div>
+            <div>
+                Existe(m) mensagem(ns) para o(s) PRONAC(s) abaixo: <br />
+                <span id="mensagensabertas"></span>
+            </div>
+        </div>
+        <div id="novas_mensagens"></div>
+        <!-- ========== FIM MENSAGENS DO PROJETO PARA O USUARIO ========== -->
