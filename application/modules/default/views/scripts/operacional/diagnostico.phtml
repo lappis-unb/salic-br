@@ -34,7 +34,7 @@
     }
 </script>
 
-<?php include("scripts/operacional/inc/menu.inc.php"); ?>
+<?php echo $this->partial("operacional/inc/menu.inc.php",$this); ?>
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'operacional', 'action' => 'diagnostico')); ?>">In&iacute;cio</a></li>
