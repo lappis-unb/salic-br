@@ -1,9 +1,9 @@
 <?php
 class Situacao extends MinC_Db_Table_Abstract {
 
-    protected $_banco = 'SAC';
-    protected $_name = 'dbo.Situacao';
-
+    protected $_schema = 'SAC';
+    protected $_name = 'Situacao';
+    
     public function listasituacao($codigosituacao=array())
 	{
             $select = $this->select();
