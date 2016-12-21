@@ -581,8 +581,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     public function logarcomoAction()
     {
 
-        $this->_helper->layout->disableLayout();
-        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+//        $this->_helper->layout->disableLayout();
+//        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
         $buscaUsuario = new Usuariosorgaosgrupos();
         $buscaUsuarioRs = $buscaUsuario->buscarUsuariosOrgaosGrupos(
@@ -673,8 +673,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $this->view->email = $buscarDados['email'];
         }
 
-        $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
-        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+//        $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
+//        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
         if ($_POST) {
             $post = Zend_Registry::get('post');
