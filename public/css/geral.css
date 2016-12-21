@@ -1747,11 +1747,23 @@ article {
     margin: 0 auto;
 }
 footer {
+	background-color: #1B5E20;
+	color: #fff;
     position: inherit;
     bottom: 0;
     width: 100%;
+
+	display: block;
+	text-align: center;
     /*height: 60px;*/
     /*background-color: green;*/
+
+	/*height: 50px;*/
+	margin-top: 30px;
+}
+footer.green,
+footer.green a {
+	color: #fff;
 }
 
 /*table, th, tr, td, thead {*/

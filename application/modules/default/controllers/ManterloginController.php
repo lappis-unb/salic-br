@@ -260,10 +260,10 @@ class ManterloginController extends MinC_Controller_Action_Abstract {
         public function alterarsenhaAction()
         {
 
-            $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
+//            $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
 
 
-            Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+//            Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
 
 
