@@ -101,17 +101,17 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             # Busca na Agentes
             $tblAgentes = new Agente_Model_DbTable_Agentes();
             $agente = $tblAgentes->findBy(array('cnpjcpf' => $cpf));
-
+            
             if ($acessos) {
-                $this->idResponsavel = $acessos['idusuario'];
+                $this->idResponsavel = $acessos['idUsuario'];
             }
             if ($agente) {
-                $this->idAgente = $agente['idagente'];
+                $this->idAgente = $agente['idAgente'];
             }
             if ($usuario) {
                 $this->idUsuario = $usuario['usu_codigo'];
             }
-
+            
             $this->view->idAgenteKeyLog = $this->idAgente;
             $this->view->idResponsavelKeyLog = $this->idResponsavel;
             $this->view->idUsuarioKeyLog = $this->idUsuario;
