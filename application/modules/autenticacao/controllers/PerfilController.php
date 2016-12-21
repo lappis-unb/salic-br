@@ -1,6 +1,6 @@
 <?php
 /**
- * Login e autenticação
+ * Login e autenticaÃ§Ã£o
  * @author Equipe RUP - Politec
  * @author wouerner <wouerner@gmail.com>
  * @since 20/07/2010
@@ -13,20 +13,20 @@
 class Autenticacao_PerfilController extends MinC_Controller_Action_Abstract
 {
     /**
-     * Altera o pefil do usuário
+     * Altera o pefil do usuÃ¡rio
      * @access public
      * @param void
      * @return void
      */
     public function alterarperfilAction()
     {
-        $codGrupo = $this->getRequest()->getParam('codGrupo'); // grupo do usuário logado
-        $codOrgao = $this->getRequest()->getParam('codOrgao'); // órgão do usuário logado
+        $codGrupo = $this->getRequest()->getParam('codGrupo'); // grupo do usuÃ¡rio logado
+        $codOrgao = $this->getRequest()->getParam('codOrgao'); // Ã³rgÃ£o do usuÃ¡rio logado
 
         $auth   = Zend_Auth::getInstance();
-        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessão com o grupo ativo
-        $GrupoAtivo->codGrupo = $codGrupo; // armazena o grupo ativo na sessão
-        $GrupoAtivo->codOrgao = $codOrgao; // armazena o órgão ativo na sessão
+        $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sessÃ£o com o grupo ativo
+        $GrupoAtivo->codGrupo = $codGrupo; // armazena o grupo ativo na sessÃ£o
+        $GrupoAtivo->codOrgao = $codOrgao; // armazena o Ã³rgÃ£o ativo na sessÃ£o
 
 
         if($GrupoAtivo->codGrupo == "1111" && $GrupoAtivo->codOrgao == "2222"){
@@ -44,7 +44,7 @@ class Autenticacao_PerfilController extends MinC_Controller_Action_Abstract
             $codOrgaoMaxSuperior = $tblUsuario->recuperarOrgaoMaxSuperior($codOrgao);
             $_SESSION['Zend_Auth']['storage']->usu_org_max_superior = $codOrgaoMaxSuperior;
 
-            // redireciona para a página inicial do sistema
+            // redireciona para a pÃ¡gina inicial do sistema
             parent::message("Seu perfil foi alterado no sistema. Voc&ecirc; ter&aacute; acesso a outras funcionalidades!", "principal", "ALERT");
         }
     }
