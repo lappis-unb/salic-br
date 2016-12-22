@@ -2230,22 +2230,42 @@ class ReadequacoesController extends GenericControllerNew {
                 } else {
                     $r->siEncaminhamento = 3; //3=Enviado para o coordenador de parecer
                 }
-            }
+            }            
             $r->save();
-
+            
             if($this->_request->getParam('stAtendimento') == 'D'){
+
+                // busca readequacao para ver se existe. Se não existe, cria, senão atualiza               
                 $tbDistribuirReadequacao = new tbDistribuirReadequacao();
-                $dados = array(
-                    'idReadequacao' => $r->idReadequacao,
-                    'idUnidade' => $this->_request->getParam('vinculada'),
-                    'DtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
-                    'idAvaliador' => (null !== $this->_request->getParam('destinatario')) ? $this->_request->getParam('destinatario') : null,
-                    'dtEnvioAvaliador' => !empty($dataEnvio) ? $dataEnvio : null,
-                    'stValidacaoCoordenador' => $stValidacaoCoordenador,
-                    'dsOrientacao' => $r->dsAvaliacao
-                );
+                $jaDistribuiu = $tbDistribuirReadequacao->buscar(array('idReadequacao = ?'=>$r->idReadequacao))->current();
                 
-                $tbDistribuirReadequacao->inserir($dados);
+                if (empty($jaDistribuiu)) {
+                    $dados = array(
+                        'idReadequacao' => $r->idReadequacao,
+                        'idUnidade' => $this->_request->getParam('vinculada'),
+                        'DtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
+                        'idAvaliador' => (null !== $this->_request->getParam('destinatario')) ? $this->_request->getParam('destinatario') : null,
+                        'dtEnvioAvaliador' => !empty($dqataEnvio) ? $dataEnvio : null,
+                        'stValidacaoCoordenador' => $stValidacaoCoordenador,
+                        'dsOrientacao' => $r->dsAvaliacao
+                    );
+                    
+                    $tbDistribuirReadequacao->inserir($dados);
+                } else {
+                    $dados = array(
+                        'idUnidade' => $this->_request->getParam('vinculada'),
+                        'DtEncaminhamento' => new Zend_Db_Expr('GETDATE()'),
+                        'idAvaliador' => (null !== $this->_request->getParam('destinatario')) ? $this->_request->getParam('destinatario') : null,
+                        'dtEnvioAvaliador' => !empty($dqataEnvio) ? $dataEnvio : null,
+                        'stValidacaoCoordenador' => $stValidacaoCoordenador,
+                        'dsOrientacao' => $r->dsAvaliacao
+                    );
+                    $where = "idReadequacao = " . $r->idReadequacao;
+                    
+                    $tbDistribuirReadequacao->update($dados, $where);
+                    
+
+                }                    
             }
             if ($this->idPerfil == 121) {
                 parent::message('Dados salvos com sucesso!', "readequacoes/painel-readequacoes?tipoFiltro=$filtro", "CONFIRM");
