@@ -53,9 +53,9 @@
           ?>
 	  <select name="tecnico" id="tecnico-<?php echo $d->idDistribuirReadequacao ?>" class="select_simples comboTecnico">			
             <option value=""> - Selecione - </option>
-            <?php foreach ($Pareceristas as $Parecerista) : ?>
-            <option value='<?php echo $Parecerista->id; ?>' <?php echo ($d->nmParecerista == $Parecerista->nome) ? 'selected="selected"' : ''; ?> >
-	    <?php echo $Parecerista->nome; ?></option>
+<?php foreach ($Pareceristas as $Parecerista) : ?>
+            <option value='<?php echo $Parecerista->idParecerista; ?>' <?php echo ($d->nmParecerista == $Parecerista->Nome) ? 'selected="selected"' : ''; ?> >
+	    <?php echo $Parecerista->Nome; ?></option>
 <?php endforeach; ?>
 </select>
 		</td>
