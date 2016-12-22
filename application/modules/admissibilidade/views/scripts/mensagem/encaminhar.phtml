@@ -1,0 +1,52 @@
+
+<div class="modal-content">
+    <h4><?php echo $this->title; ?></h4>
+    <form id="form-mensagem" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => $this->action)); ?>">
+        <input name="idMensagemProjeto" type="hidden" value="<?php echo $this->id; ?>"/>
+        <input name="IdPRONAC" type="hidden" value="<?php echo $this->idPronac; ?>"/>
+        <div class="row">
+            <div class="input-field col s12">
+                <select class="invalid" data-url="/admissibilidade/mensagem/usuarios"
+                        data-target="select[name=idDestinatario]"
+                        name="idUnidade" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
+                    <option value="" disabled selected>Selecione...</option>
+                    <!--                        <optgroup label="--><?php //echo $key ?><!--">-->
+                    <?php foreach ($this->arrUnidades as $values): ?>
+                        <option <?php if (isset($this->dataForm['idUnidade']) && $this->dataForm['idUnidade'] == $values['Codigo']) echo 'selected="selected"' ?>
+                            value="<?php echo $values['Codigo'] ?>"><?php echo $values['Sigla'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                    <!--                        </optgroup>-->
+                </select>
+                <label>Unidade</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <select class="invalid" required="required" name="idDestinatario" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
+                    <option value="" disabled selected>Selecione...</option>
+                </select>
+                <label>Agente</label>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <a id="btn-enviar" style="margin-left: 15px;"
+       class="modal-action waves-effect waves-green btn-flat light-green">Encaminhar</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+</div>
+<script>
+    $jq3(document).ready(function () {
+        $jq3('.modal').find('select').material_select();
+        setTimeout(function(){
+            $jq3('.modal').find('[required=required]').closest('.input-field').find('input.select-dropdown').addClass('invalid');
+            $jq3('.modal').find('[required=required]').addClass('invalid');
+        }, 300);
+            var select = $jq3('select[data-target]'),
+                strUrl = select.attr('data-url'),
+                objTarget = $jq3(select.attr('data-target'));
+        ajaxRender(strUrl, objTarget, select.val(), '<?php echo (isset($this->dataForm['idDestinatario']))? $this->dataForm['idDestinatario'] :'' ?>');
+    });
+
+</script>

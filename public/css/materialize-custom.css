@@ -87,3 +87,14 @@ label{
         background: transparent;
         width: 100%;
     }
+
+    .mdl-button--raised.mdl-button--colored {
+        background: #4caf50 !important;
+        color: #fff;
+    }
+
+
+nav.breadcrumb {
+    bottom: 20px;
+    position: relative;
+}
