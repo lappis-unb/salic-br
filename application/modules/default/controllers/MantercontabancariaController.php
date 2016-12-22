@@ -168,11 +168,14 @@ class MantercontabancariaController extends GenericControllerNew {
                 'idUsuario' => $idagente->usu_codigo
             );
             $id = $he->inserir($dadosInsert);
-
+            
             //ALETAR OS DADOS NA TABELA DE CONTA BANCÁRIA - SAC.dbo.ContaBancaria
             $dadosUpdate = array(
                 'ContaBloqueada' => '000000000000',
-                'ContaLivre' => '000000000000'
+                'ContaLivre' => '000000000000',
+                'Logon' => $idagente->usu_codigo,
+                'DtLoteRemessaCL' => new Zend_Db_Expr('GETDATE()'),
+                'DtLoteRemessaCB' => new Zend_Db_Expr('GETDATE()')
             );
             $reg = $cb->alterar($dadosUpdate);
             
@@ -208,7 +211,11 @@ class MantercontabancariaController extends GenericControllerNew {
                     'Agencia' => $this->_request->getParam('Agencia'),
                     'ContaBloqueada' => $this->_request->getParam('ContaBloqueada'),
                     'ContaLivre' => $this->_request->getParam('ContaLivre'),
+                    'Logon' => $idagente->usu_codigo,
+                    'DtLoteRemessaCL' => new Zend_Db_Expr('GETDATE()'),
+                    'DtLoteRemessaCB' => new Zend_Db_Expr('GETDATE()')
                 );
+                
                 $id = $cb->alterar($dados, array('idContaBancaria = ?' => $resp->IdContaBancaria));
 
                 //parent::message("Cadastro realizado com sucesso!", "mantercontabancaria/alterar?pronac=$pronac", "CONFIRM");
