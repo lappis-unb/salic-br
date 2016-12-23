@@ -57,10 +57,6 @@ class Proposta_Model_DbTable_TbDocumentosPreProjeto  extends MinC_Db_Table_Abstr
             }
             $slct->limit($tamanho, $tmpInicio);
         }
-//die('w');
-        //xd($slct->__toString());
-        //echo $slct;die;
-
 
         $result = $this->fetchAll($slct);
         return $result ? $result->toArray() : array();
