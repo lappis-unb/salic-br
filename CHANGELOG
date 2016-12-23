@@ -1,4 +1,10 @@
 Release 1.14.7
+  * Fix: [Readequações] Quando técnico fazia avaliação, inseria erroneamente uma entrada a mais em tbDistribuirReadequacao
+  * Fix: [Readequações] Corrigido erro na lista de pareceristas
+  * Fix: [Movimentação bancária] gravando dados corretos na tabela ContaBancaria
+  * Fix: [Movimentação bancária] Removendo botão excluir da tela "manter conta bancária"
+  * Fix: [Movimentação bancária] suprimindo regra que impede alteração de agência quando já há captação
+  * Fix: [Gerenciar Componente da Comissão] Conserto no encaminhamento de projeto de um componente para outro -> criando uma entrada para cada encaminhamento e desativando encaminhamentos anteriores
   * Fix: [Movimentação bancária] corrigida funcionalidade de alterar agência bancária de um projeto
   * Fix: [Movimentação bancária] suprimindo regra que impede alteração de agência quando já há captação'
 
