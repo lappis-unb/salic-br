@@ -59,71 +59,6 @@
             }
         });
 
-        $('.btn_exclusao').click(function(){
-
-            var justificativa = true;
-            if($("#justificativa").val().length > 19){
-                justificativa = false;
-            }
-
-            if($("#justificativa").val() == ''){
-                $("#erro").dialog("destroy");
-                $("#erro").html("Dados obrigátorios não informados.");
-                $("#erro").dialog({
-                        resizable: false,
-                        title: 'Alerta!',
-                        width:300,
-                        height:150,
-                        modal: true,
-                        buttons : {
-                      'Ok' : function(){
-                            $(this).dialog('close');
-                        }
-                    }
-                });
-                $('.ui-dialog-titlebar-close').remove();
-            } else {
-                
-                    if(justificativa){
-                        $("#erro").dialog("destroy");
-                        $("#erro").html("O campo Justificativa deve ter o mínimo de 20 caracteres.");
-                        $("#erro").dialog({
-                          resizable: false,
-                                title: 'Alerta!',
-                                width:300,
-                                height:180,
-                                modal: true,
-                                buttons : {
-                              'Ok' : function(){
-                                    $(this).dialog('close');
-                                }
-                            }
-                        });
-                        $('.ui-dialog-titlebar-close').remove();
-                    } else {
-                        $("#erro").dialog("destroy");
-                        $("#erro").html("Deseja realmente excluir os dados banc&aacute;rios?");
-                        $("#erro").dialog({
-                          resizable: false,
-                                title: 'Alerta!',
-                                width:360,
-                                height:160,
-                                modal: true,
-                                buttons : {
-                              'Não' : function(){
-                                    $(this).dialog('close');
-                                },
-                                    'Sim' : function(){
-                                    $('#exclusao').append('<input type="hidden" name="excluir" value="true">');
-                                    $("#formBuscar").submit();
-                                }
-                            }
-                        });
-                        $('.ui-dialog-titlebar-close').remove();
-                    }
-            }
-        });
-
         $(".btn_salvar").click(function(){
 
             if($('#campofalso').val() == ''){
@@ -308,7 +243,6 @@
 
             <p align="center" style="margin-top: 10px;">
                 <input type="button" class="btn_salvar" />
-                <input type="button" class="btn_exclusao" />
                 <input type="button" class="btn_imprimir" />
             </p>
             <br />
