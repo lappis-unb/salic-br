@@ -251,20 +251,25 @@
                 <?php } ?>
                 <!-- FIM - DILIGENCIA -->
 
-
                 <!-- ======================= SOLICITAR RECURSO  =======================   -->
-                <?php if($this->fnLiberarLinks['Recursos']){ ?>
-                <div class="sanfonaDiv" style="display:none;"></div>
-                <a href="#" title="Recurso" class="ancoraRecurso" onclick="return false;">Recurso</a>
-                <div class="sanfonaDiv" style="width: 90%; margin-left: 20px;">
-                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso')); ?>?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>">Solicitar Recurso</a>
-                    <a class="no_seta" href="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso-desistir')); ?>?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>">Desistir do Recurso</a>
-                </div>
-                <?php } ?>
+                <?php if($this->fnLiberarLinks['Recursos']): ?>
+                    <?php if($this->codSituacao == 'B02'): ?>
+                        <div class="sanfonaDiv" style="display:none;"></div>
+                        <a href="#" title="Recurso" class="ancoraRecurso" onclick="return false;">Recurso</a>
+                        <div class="sanfonaDiv" style="width: 90%; margin-left: 20px;">
+                            <a class="no_seta" href="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso-enquadramento')); ?>?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>">Solicitar Recurso</a>
+                            <a class="no_seta" href="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso-desistir-enquadramento')); ?>?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>">Desistir do Recurso</a>
+                        </div>
+                    <?php else: ?>
+                        <div class="sanfonaDiv" style="display:none;"></div>
+                        <a href="#" title="Recurso" class="ancoraRecurso" onclick="return false;">Recurso</a>
+                        <div class="sanfonaDiv" style="width: 90%; margin-left: 20px;">
+                            <a class="no_seta" href="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso')); ?>?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>">Solicitar Recurso</a>
+                            <a class="no_seta" href="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso-desistir')); ?>?idPronac=<?php echo Seguranca::encrypt($this->idPronac); ?>">Desistir do Recurso</a>
+                        </div>
+                    <?php endif ?>
+                <?php endif ?>
                 <!-- FIM - SOLICITAR RECURSO -->
-
-
-
 
                 <!-- ======================= COMPRAVACAO FINANCEIRA  ======================= -->
                 <?php if($this->fnLiberarLinks['ComprovacaoFinanceira']){ ?>
