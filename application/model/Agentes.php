@@ -358,7 +358,7 @@ class Agentes extends GenericModel {
         );
         $slct->joinInner(
             array('n' => 'Nomes'), 'a.idAgente = n.idAgente',
-            array('u.usu_codigo AS idParecerista', 'n.Descricao AS Nome'), 'AGENTES.dbo'
+            array('u.usu_codigo AS id', 'n.Descricao AS nome'), 'AGENTES.dbo'
         );
         $slct->joinInner(
             array('u' => 'vwUsuariosOrgaosGrupos'), 'a.CNPJCPF = u.usu_Identificacao AND sis_codigo = 21 AND (gru_codigo = 94 OR gru_codigo = 105)',
