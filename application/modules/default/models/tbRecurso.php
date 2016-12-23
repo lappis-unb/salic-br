@@ -461,15 +461,16 @@ class tbRecurso extends MinC_Db_Table_Abstract
         $select->from(
             array('a' => $this->_name),
             array(
-                new Zend_Db_Expr("b.idPronac, a.idRecurso, b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto, a.dtSolicitacaoRecurso"),
+                new Zend_Db_Expr("b.idPronac, a.idRecurso, b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto, a.dtSolicitacaoRecurso,a.tpSolicitacao as tipo"),
                 new Zend_Db_Expr("CASE
                                     WHEN tpSolicitacao = 'EN' THEN 'Enquadramento'
                                     WHEN tpSolicitacao = 'OR' THEN 'Or�amento'
                                     WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
                                     WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or�amento'
+                                    WHEN tpSolicitacao = 'ER' THEN 'Enquadramento Recurso'
                                  END AS tpSolicitacao,
                                  CASE
-                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsidera��o'
+                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsideração'
                                     WHEN tpRecurso = 2 THEN 'Recurso'
                                  END AS tpRecurso, a.siRecurso
                 "),
@@ -506,7 +507,8 @@ class tbRecurso extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-    public function buscarDadosRecursos($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
+    public function buscarDadosRecursos($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false)
+    {
         $select = $this->select();
         $select->setIntegrityCheck(false);
         $select->from(
@@ -521,15 +523,16 @@ class tbRecurso extends MinC_Db_Table_Abstract
                 CAST(a.dsAvaliacao AS TEXT) AS dsAvaliacao,
                 a.tpRecurso,
                 CASE
-                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsidera��o'
+                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsideração'
                     WHEN tpRecurso = 2 THEN 'Recurso'
                 END AS tpRecursoDesc,
                 a.tpSolicitacao,
                 CASE
                     WHEN tpSolicitacao = 'EN' THEN 'Enquadramento'
-                    WHEN tpSolicitacao = 'OR' THEN 'Or�amento'
+                    WHEN tpSolicitacao = 'OR' THEN 'Orçamento'
                     WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
-                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or�amento'
+                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Orçamento'
+                    WHEN tpSolicitacao = 'ER' THEN 'Recurso Enquadramento'
                 END AS tpSolicitacaoDesc,
                 a.idAgenteAvaliador,
                 a.stAtendimento,

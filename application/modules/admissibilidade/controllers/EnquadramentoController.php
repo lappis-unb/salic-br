@@ -49,10 +49,10 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
                 throw new Exception("PRONAC não encontrado.");
             }
 
-            $arraySituacoesValidas = array("B01", "B03");
-            if (!in_array($arraySituacoesValidas, $projeto['Situacao'])) {
-                throw new Exception("Situa&ccedil;&atilde;o do projeto n&atilde;o &eacute; v&aacute;lida.");
-            }
+            //$arraySituacoesValidas = array("B01", "B03");
+            //if (!in_array($arraySituacoesValidas, $projeto['Situacao'])) {
+                //throw new Exception("Situa&ccedil;&atilde;o do projeto n&atilde;o &eacute; v&aacute;lida.");
+            //}
 
             $post = $this->getRequest()->getPost();
             if (!$post) {
