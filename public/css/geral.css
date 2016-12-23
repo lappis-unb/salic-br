@@ -75,7 +75,7 @@ a:hover {
 #topo {
 	/*width:100%;*/
 	margin-top: -4px;
-	height:104px;
+    height: 130px;
 	background:url(../img/bg-topo.png) no-repeat 0 0 #acda5d;
 	/*margin-bottom:10px;*/
 	/*margin-top: 30px;*/
@@ -98,27 +98,30 @@ a:hover {
 	margin-top:5px;
 }
 #combousuario {
-	width: 425px;
+	width: 415px;
 	position: absolute;
-	right: 20px;
-	top: 87px;
+    right: 32px;
+    top: 43px;
 	z-index: 1;
 	height: 30px;
 }
 
 #combousuario label {
-	text-transform: uppercase;
-	color: #fff;
+	/*text-transform: uppercase;*/
+	color: #000;
 	/*float: right;*/
 	/*position: absolute;*/
 	top: 0;
-	font-size:12px;
+	font-size:13px;
+    font-weight: 500;
 	width: 40px;
 }
 .perfilXgrupo {
 	/*display: inline;*/
 	background:#fc0;
-	/*background: #fff;*/
+    background: #36963f;
+    color: #fff;
+    font-weight: bold;
 	font-size:12px;
 	/*padding:0;*/
 	/*margin:0;*/
@@ -188,7 +191,7 @@ a:hover {
 	display: block;
 	height: 34px;
 	float: left;
-	width:100%;
+	width:100% !important;
 	clear: both;
     margin-bottom: 10px;
 }
@@ -211,7 +214,6 @@ a:hover {
 #navglobal ul li a:hover,
 #navglobal ul li.ativo a {
 	color:#fff !important;
-    background: #36963f;
 	background: #4CAF50;
 	/*border-radius: 0;*/
 }
@@ -230,7 +232,7 @@ a:hover {
 }
 /* submenu */
 #menuContainer {
-    background: #1B5E20;
+    background: #36963f;
 }
 #menuContainer ul li,
 #menuContainer ul li a,
@@ -1010,6 +1012,8 @@ div.plan span {
 	border:1px solid #fc0;
 	color:#000;
 	background:#ffc url(../img/msgALERT.png) 3px 3px no-repeat;
+    float: left;
+    width: 100%;
 }
 .msgCONFIRM {
 	border:1px solid #096;

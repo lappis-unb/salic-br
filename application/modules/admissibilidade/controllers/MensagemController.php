@@ -95,7 +95,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
      */
     public function indexAction()
     {
-        $intIdPronac = $this->getRequest()->getParam('id');
+        $intIdPronac = $this->getRequest()->getParam('idPronac');
         if ($intIdPronac) {
 //            $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
 //            $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac));
@@ -110,17 +110,21 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
     public function listarAction()
     {
         $this->_helper->layout->disableLayout();
-        $intIdPronac = $this->getRequest()->getParam('id');
-        if ($intIdPronac) {
-            $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
-            $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac, 'idMensagemOrigem IS NULL' => ''));
+        $intIdPronac = $this->getRequest()->getParam('id', null);
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $arrAuth = array_change_key_case((array) $auth->getIdentity());
+        $intUsuCodigo = $arrAuth['usu_codigo'];
+        $intUsuOrgao = $arrAuth['usu_orgao'];
+        $arrWhere = array('tbMensagemProjeto.idMensagemOrigem IS NULL' => '');
+        $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
+        if (empty($intIdPronac)) {
+            $arrWhere['tbMensagemProjeto.idDestinatario'] = $intUsuCodigo;
         } else {
-            $auth = Zend_Auth::getInstance(); // pega a autenticacao
-            $arrAuth = array_change_key_case((array) $auth->getIdentity());
-            $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
-            $this->view->arrResult = $dbTable->getAllBy(array('idDestinatario' => $arrAuth['usu_codigo'], 'idMensagemOrigem IS NULL' => ''));
-            $this->view->arrResult = array();
+            $arrWhere['tbMensagemProjeto.IdPRONAC'] = $intIdPronac;
         }
+        $this->view->arrResult = $dbTable->getAllBy($arrWhere);
+        $this->view->usuCodigo = $intUsuCodigo;
+        $this->view->usuOrgao = $intUsuOrgao;
     }
 
     /**
@@ -133,8 +137,8 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
      */
     public function salvarAction()
     {
-        $this->_helper->layout->disableLayout();
         if ($this->getRequest()->isPost()) {
+            $this->_helper->layout->disableLayout();
             $this->_helper->viewRenderer->setNoRender(true);
             $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
             echo json_encode(array('status' => $mapper->salvar($this->getRequest()->getPost()), 'msg' => $mapper->getMessages()));
@@ -201,8 +205,8 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
      */
     public function responderAction()
     {
-        $this->_helper->layout->disableLayout();
         if ($this->getRequest()->isPost()) {
+            $this->_helper->layout->disableLayout();
             $this->_helper->viewRenderer->setNoRender(true);
             $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
             echo json_encode(array('status' => $mapper->responder($this->getRequest()->getPost()), 'msg' => $mapper->getMessages()));
@@ -236,13 +240,12 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         if ($intId) {
             $arrDataForm = $dbTable->findBy($intId);
             $unidade = $vw->findBy(array('usu_codigo' => $arrDataForm['idDestinatario']));
-            $arrDataForm['idUnidade'] = $unidade['org_superior'];
+            $arrDataForm['idUnidade'] = $unidade['uog_orgao'];
             $this->view->dataForm = $arrDataForm;
             $this->view->dataForm['dsResposta'] = ($arrMensagemResposta = $dbTable->findBy(array('idMensagemOrigem' => $intId)))? $arrMensagemResposta['dsMensagem'] : '';
         }
         $this->view->arrUnidades = $vw->carregarUnidade();
         $this->view->arrConfig = $arrConfig;
-        $this->render('form');
     }
 
     public function usuariosAction()
@@ -251,7 +254,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         $this->_helper->viewRenderer->setNoRender(true);
         $vw = new vwUsuariosOrgaosGrupos();
         $intId = $this->getRequest()->getParam('id', null);
-        $arrUsuarios = $vw->carregarPorPareceristaGrupoFetchPairs($intId);
+        $arrUsuarios = $vw->carregarUsuariosPorUnidade($intId);
         echo json_encode($arrUsuarios);
     }
 }

@@ -1,4 +1,4 @@
-<nav>
+<nav class="breadcrumb">
     <div class="nav-wrapper" style="padding: 0 15px 0 15px">
         <div class="col s12">
 <!--            <a href="#!" class="breadcrumb">Admissibilidade</a>-->
@@ -29,8 +29,8 @@
 <!--</div>-->
 <div id="container-list"></div>
 <?php if (isset($this->idPronac)): ?>
-<div class="fixed-action-btn">
-    <a data-modal="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'salvar')); ?>" href="javascript:void(0);" class="btn-floating btn-large tooltipped waves-effect waves-light" data-position="left" data-delay="50" data-tooltip="Escrever pergunta">
+<div class="fixed-action-btn animated bounceInUp">
+    <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'salvar', 'idPronac' => $this->idPronac)); ?>" class="btn-floating btn-large tooltipped waves-effect waves-light" data-position="left" data-delay="50" data-tooltip="Escrever pergunta">
         <i class="large material-icons">create</i>
     </a>
 </div>
