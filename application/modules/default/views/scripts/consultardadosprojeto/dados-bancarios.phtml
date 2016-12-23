@@ -1,6 +1,6 @@
 <?php require_once "inc/menu.dados.bancarios.php"; // menu de consultar dados do projeto - dados bancarios ?>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
     <ul>
         <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
@@ -12,13 +12,13 @@
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
     <div>Contas Banc&aacute;rias</div>
 </div>
 
 
-<!-- ========== INÍCIO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
 <div id="conteudo">
     <table class="tabela">
         <tr class="destacar">
@@ -32,7 +32,7 @@
     </table>
 
     <?php if(count($this->dadosContaBancaria)>0): ?>
-    <?php $contaBancaria = $this->dadosContaBancaria[0]; ?>
+    <?php $contaBancaria = $this->dadosContaBancaria; ?>
         <table class="tabela">
             <tr class="destacar">
                 <td align="center" colspan="3"><b>Dados da Conta</b></td>
@@ -40,11 +40,11 @@
             <tr>
                 <td valign="top">
                     <b>Banco</b><br>
-                    <?php echo $contaBancaria['Banco'];?>
+                    <?php echo $contaBancaria->Banco;?>
                 </td>
                 <td valign="top" colspan="2">
                     <b>Ag&ecirc;ncia</b><br>
-                    <?php echo $contaBancaria['Agencia'];?>
+                    <?php echo $contaBancaria->Agencia;?>
                 </td>
             </tr>
             <tr class="destacar">
@@ -53,15 +53,15 @@
             <tr>
                  <td valign="top">
                     <b>N&uacute;mero</b><br>
-                    <?php echo ($contaBancaria['ContaBloqueada'] == '000000000000') ? " - " : $contaBancaria['ContaBloqueada'];?>
+                    <?php echo ($contaBancaria->ContaBloqueada == '000000000000') ? " - " : $contaBancaria->ContaBloqueada;?>
                 </td>
                 <td valign="top">
                     <b>Dt. Abertura</b><br>
-                    <?php echo (isset($contaBancaria['DtLoteRemessaCB']) && !empty($contaBancaria['DtLoteRemessaCB'])) ? date("d/m/Y",strtotime($contaBancaria['DtLoteRemessaCB'])) : '-'; ?>
+                    <?php echo (isset($contaBancaria->DtLoteRemessaCB) && !empty($contaBancaria->DtLoteRemessaCB)) ? date("d/m/Y",strtotime($contaBancaria->DtLoteRemessaCB)) : '-'; ?>
                 </td>
                 <td valign="top">
                     <b>Ocorr&ecirc;ncia</b><br>
-                    <?php echo ($contaBancaria['OcorrenciaCB'] == NULL) ? " - " : $contaBancaria['OcorrenciaCB'];?>
+                    <?php echo ($contaBancaria->OcorrenciaCB == NULL) ? " - " : $contaBancaria->OcorrenciaCB;?>
                 </td>
             </tr>
             <tr class="destacar">
@@ -70,15 +70,15 @@
             <tr>
                  <td valign="top">
                     <b>N&uacute;mero</b><br>
-                    <?php echo ($contaBancaria['ContaLivre'] == '000000000000') ? " - " : $contaBancaria['ContaLivre'];?>
+                    <?php echo ($contaBancaria->ContaLivre == '000000000000') ? " - " : $contaBancaria->ContaLivre;?>
                 </td>
                 <td valign="top">
                     <b>Dt. Abertura</b><br>
-                    <?php echo (isset($contaBancaria['DtLoteRemessaCL']) && !empty($contaBancaria['DtLoteRemessaCL'])) ? date("d/m/Y",strtotime($contaBancaria['DtLoteRemessaCL'])) : '-';?>
+                    <?php echo (isset($contaBancaria->DtLoteRemessaCL) && !empty($contaBancaria->DtLoteRemessaCL)) ? date("d/m/Y",strtotime($contaBancaria->DtLoteRemessaCL)) : '-';?>
                 </td>
                 <td valign="top">
                     <b>Ocorr&ecirc;ncia</b><br>
-                    <?php echo ($contaBancaria['OcorrenciaCL'] == NULL) ? " - " : $contaBancaria['OcorrenciaCL'];?>
+                    <?php echo ($contaBancaria->OcorrenciaCL == NULL) ? " - " : $contaBancaria->OcorrenciaCL;?>
                 </td>
             </tr>
         </table>
@@ -92,7 +92,7 @@
 
 </div>
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
 <div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
 <br clear="all" />
