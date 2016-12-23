@@ -16,7 +16,7 @@ class HistoricoSituacao extends MinC_Db_Table_Abstract
 	 * @param string $pronac
 	 * @return array
 	 */
-        
+
         public function inserirHistoricoSituacao($dados) {
         try {
             $inserir = $this->insert($dados);
@@ -25,7 +25,7 @@ class HistoricoSituacao extends MinC_Db_Table_Abstract
             return 'Class:Aprovacao Method: inserirAprovacao -> Erro: ' . $e->__toString();
         }
     }
-        
+
 	public function buscarSituacaoAnterior($pronac = null)
 	{
 		$select = $this->select();
@@ -74,7 +74,7 @@ class HistoricoSituacao extends MinC_Db_Table_Abstract
                 array('u' => 'Usuarios'), 'u.usu_codigo = h.Logon',
                 array(), 'TABELAS.dbo'
             );
-            
+
             //adiciona quantos filtros foram enviados
             foreach ($where as $coluna => $valor) {
                 $select->where($coluna, $valor);
@@ -100,8 +100,8 @@ class HistoricoSituacao extends MinC_Db_Table_Abstract
             //xd($select->assemble());
             return $this->fetchAll($select);
         }
-        
-        
+
+
         public function buscarHistoricosEncaminhamentoIdPronac($where = array(), $order = array(), $tamanho = -1, $inicio = -1, $qtdeTotal = false)
         {
             $select = $this->select();
@@ -120,12 +120,12 @@ class HistoricoSituacao extends MinC_Db_Table_Abstract
                 array('u' => 'Usuarios'), 'u.usu_codigo = h.Logon',
                 array(), 'TABELAS.dbo'
             );
-            
+
             $select->joinInner(
                 array('p' => 'Projetos'), 'h.AnoProjeto = p.AnoProjeto AND h.Sequencial = p.Sequencial',
                 array(), 'SAC.dbo'
             );
-            
+
             //adiciona quantos filtros foram enviados
             foreach ($where as $coluna => $valor) {
                 $select->where($coluna, $valor);
@@ -151,4 +151,4 @@ class HistoricoSituacao extends MinC_Db_Table_Abstract
 //             xd($select->assemble());
             return $this->fetchAll($select);
         }
-} // fecha class
+}

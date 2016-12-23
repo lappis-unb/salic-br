@@ -238,6 +238,7 @@ class ConsultarDadosProjetoController extends MinC_Controller_Action_Abstract {
                     $this->view->projeto = $rst[0];
                     $this->view->idpronac = $idPronac;
                     $this->view->idprojeto = $rst[0]->idProjeto;
+                    $this->view->codSituacao = $rst[0]->codSituacao;
                     if ($rst[0]->codSituacao == 'E12' || $rst[0]->codSituacao == 'E13' || $rst[0]->codSituacao == 'E15' || $rst[0]->codSituacao == 'E50' || $rst[0]->codSituacao == 'E59' || $rst[0]->codSituacao == 'E61' || $rst[0]->codSituacao == 'E62') {
                         $this->view->menuCompExec = 'true';
                     }

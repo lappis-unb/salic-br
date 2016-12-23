@@ -1,0 +1,124 @@
+
+<style type="text/css">
+    .asterisco, .asterisco_dinamico {
+        font-weight: bold;
+        color: red;
+    }
+</style>
+
+<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<div id="alerta"></div>
+
+<div id="breadcrumb">
+    <ul>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Inï¿½cio">Início</a></li>
+        <li><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index'), '', true); ?>" title="Recurso">Recurso</a></li>
+        <li>Aguardando Análise</li>
+        <li class="last">Avalia&ccedil;&atilde;o de Recurso</li>
+    </ul>
+</div>
+<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
+
+<div class="container">
+    <h4>Avalia&ccedil;&atilde;o de Recurso</h4>
+    <div class="row">
+        <form name="formAvaliacao" id="formAvaliacao" action="<?php echo $this->baseUrl(); ?>/recurso/salvar-avaliacao-enquadramento" method="post">
+            <table class="tabela">
+                <tr>
+                    <th >PRONAC</th>
+                    <th >NOME DO PROJETO</th>
+                </tr>
+                <tr>
+                    <td align="center"><?php echo $this->projeto->pronac; ?></td>
+                    <td align="center"><?php echo $this->projeto->NomeProjeto; ?></td>
+                </tr>
+            </table>
+
+            <table class="tabela">
+                <tr>
+                    <th colspan="4">SOLICITA&Ccedil;&Atilde;O</th>
+                </tr>
+                <tr>
+                    <td colspan="4" class="destacar bold" align="center">Descrição do Recurso</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><?php echo $this->recurso->dsSolicitacaoRecurso; ?></td>
+                </tr>
+                <tr>
+                    <td class="destacar bold w150" align="center">Tipo do Recurso</td>
+                    <td><?php echo $this->recurso->tpRecursoDesc; ?></td>
+                    <td class="destacar bold w150" align="center">Tipo do Solicitação</td>
+                    <td><?php echo $this->recurso->tpSolicitacaoDesc; ?></td>
+                </tr>
+            </table>
+
+            <?php if(count($this->statusDeAvaliacao)>0){ ?>
+            <table class="tabela">
+                <tr>
+                    <th colspan="4">RESULTADO DA AVALIA&Ccedil;&Atilde;O DO PROJETO POR INST&Acirc;NCIA</th>
+                </tr>
+                <tr>
+                    <td class="destacar bold w150" align="center">Entidade Vinculada</td>
+                    <td><?php echo ($this->statusDeAvaliacao[0]) ? $this->statusDeAvaliacao[0]->ParecerFavoravel : 'Não avaliado'; ?></td>
+                    <td class="destacar bold w100" align="center">CNIC</td>
+                    <td><?php echo ($this->statusDeAvaliacao[1]) ? $this->statusDeAvaliacao[1]->ParecerFavoravel : 'Não avaliado'; ?></td>
+                </tr>
+            </table>
+            <?php } ?>
+
+            RESPOSTA <span class="asterisco">*</span>
+            <p>
+                <input id="stAtendimento1" type="radio" class="" value="D" name="stAtendimento" checked="checked">
+                <label for="stAtendimento1"> Deferir</label>
+            </p>
+            <p>
+                <input id="stAtendimento2" type="radio" class="" value="I" name="stAtendimento">
+                <label for="stAtendimento2">Indeferir</label>
+            </p>
+
+            <label for="dsAvaliacao">Avalição:</label>
+            <textarea class="materialize-textarea" name="dsAvaliacao" id="dsAvaliacao"></textarea>
+            <span style="font-size: 11px; color: #c33;">Quantidade m&aacute;xima de 255 caracteres.</span>
+
+            <table class="tabela">
+                <tr>
+                    <td class="destacar bold" width="130px;">Encaminhar para: <span class="asterisco">*</span></td>
+                    <td>
+                        <select name="vinculada" id="vinculada" class="select_simples obrigatorio" style="width: 120px;">
+                            <option value=""> - Selecione - </option>
+                            <option value="400">CNIC</option>
+                            <option value="93">FBN</option>
+                            <option value="94">FCP</option>
+                            <option value="95">FCRB</option>
+                            <option value="92">FUNARTE</option>
+                            <option value="335">IBRAM</option>
+                            <option value="91">IPHAN</option>
+                            <option value="171">SAV</option>
+                            <option value="262">SEFIC</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="destacar bold" width="130px;">Destinatário: <span class="asterisco_dinamico sumir">*</span></td>
+                    <td>
+                        <select name="destinatario" id="destinatario" class="select_simples" disabled="disabled">
+                            <option value=""> - Selecione - </option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" name="idRecurso" value="<?php echo $this->recurso->idRecurso; ?>">
+            <button name="btn_salvar" id="btn_salvar" class="btn waves-effect waves-light" type="submit" name="action">Enviar
+                <i class="material-icons right">send</i>
+            </button>
+            <button name="btn_voltar" id="btn_voltar" class="btn waves-effect waves-light red" type="reset" name="action">Cancelar
+            </button>
+        </form>
+        <br clear="all" />
+    </div>
+</div>
+
+<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<div id="rodapeConteudo"><span></span></div>
+<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+<br clear="all" />
