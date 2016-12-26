@@ -123,26 +123,26 @@ class Enquadramento extends MinC_Db_Table_Abstract
 
         $select->setIntegrityCheck(false);
         $select->from(
-            array("p" => "projetos"),
-            array('pronac' => New Zend_Db_Expr('p.AnoProjeto + p.Sequencial'),
-                'p.nomeProjeto',
-                'p.IdPRONAC',
-                'p.CgcCpf',
-                'p.idpronac',
-                'p.Area as cdarea',
-                'p.ResumoProjeto',
-                'p.UfProjeto',
-                'p.DtInicioExecucao',
-                'p.DtFimExecucao',
-                'p.Situacao',
-                'p.DtSituacao',
+            array("projetos"),
+            array('pronac' => New Zend_Db_Expr('projetos.AnoProjeto + projetos.Sequencial'),
+                'projetos.nomeProjeto',
+                'projetos.IdPRONAC',
+                'projetos.CgcCpf',
+                'projetos.idpronac',
+                'projetos.Area as cdarea',
+                'projetos.ResumoProjeto',
+                'projetos.UfProjeto',
+                'projetos.DtInicioExecucao',
+                'projetos.DtFimExecucao',
+                'projetos.Situacao',
+                'projetos.DtSituacao',
             ),
             $this->_schema
         );
 
-        $select->joinInner(array('ar' => 'Area'), 'ar.Codigo = p.Area', array('ar.Descricao AS area'));
-        $select->joinLeft(array('sg' => 'Segmento'), 'sg.Codigo = p.Segmento', array('sg.Descricao AS segmento'));
-        $select->where("p.situacao in ( ? )", array('B01', 'B03'));
+        $select->joinInner(array('Area' => 'Area'), 'Area.Codigo = projetos.Area', array('Area.Descricao AS area'));
+        $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = projetos.Segmento', array('Segmento.Descricao AS segmento'));
+        $select->where("projetos.situacao in ( ? )", array('B01', 'B03'));
 
         !empty($order) ? $select->order($order) : null;
         !empty($limit) ? $select->limit($limit) : null;
