@@ -315,23 +315,15 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
      */
     public function recursoEnquadramentoSalvarAction()
     {
+        
         if ($this->getRequest()->isPost()) {
             $post = Zend_Registry::get('post');
             $idPronac = $post->idPronac;
             $tpSolicitacao = $post->tpSolicitacao;
             $StatusProjeto = $post->StatusProjeto;
             $auth = Zend_Auth::getInstance();
-
+            
             try {
-                //if(isset($_POST['checkEnquadramento']) && !empty($_POST['checkEnquadramento']) && isset($_POST['checkOrcamento']) && !empty($_POST['checkOrcamento'])){
-                    //$tpSolicitacao = 'EO';
-                //} else if(isset($_POST['checkEnquadramento']) && !empty($_POST['checkEnquadramento']) && !isset($_POST['checkOrcamento'])) {
-                    //$tpSolicitacao = 'EN';
-                //} else if(isset($_POST['checkOrcamento']) && !empty($_POST['checkOrcamento']) && !isset($_POST['checkEnquadramento'])) {
-                    //$tpSolicitacao = 'OR';
-                //} else {
-                    //$tpSolicitacao = 'PI';
-                //}
 
                 $dados = array(
                     'IdPRONAC'              => $_POST['idPronac'],
@@ -339,7 +331,10 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
                     'dsSolicitacaoRecurso'  => $_POST['dsRecurso'],
                     'idAgenteSolicitante'   => $auth->getIdentity()->IdUsuario,
                     'stAtendimento'         => 'N',
-                    'tpSolicitacao'         => 'ER'
+                    'tpSolicitacao'         => 'EN',
+                    'siFaseProjeto'         =>  1,
+                    'siRecurso'             =>  1,
+                    'stEstado'              =>  0
                 );
 
                 $tbRecurso = new tbRecurso();
