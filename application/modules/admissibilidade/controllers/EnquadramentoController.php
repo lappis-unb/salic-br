@@ -16,24 +16,20 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
     public function indexAction()
     {
-        $this->redirect("/admissibilidade/enquadramento/listar");
+        $this->redirect("/admissibilidade/enquadramento/gerenciar-enquadramento");
     }
 
-    /**
-     * ListarAction - Lista com Projetos em situção de Enuquadramento.
-     *
-     * @access public
-     */
-    public function listarAction()
+    public function gerenciarEnquadramentoAction()
     {
         $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
         $enquadramento = new Enquadramento();
 
         $this->view->dados = array();
+        $ordenacao = array("projetos.DtSituacao asc");
         if($this->grupoAtivo->codGrupo == Usuariosorgaosgrupos::GRUPO_COORDENADOR_ADMISSIBILIDADE) {
-            $this->view->dados = $enquadramento->obterProjetosParaEnquadramento();
+            $this->view->dados = $enquadramento->obterProjetosParaEnquadramento($ordenacao);
         } elseif ($this->grupoAtivo->codGrupo == Usuariosorgaosgrupos::GRUPO_TECNICO_ADMISSIBILIDADE) {
-            $this->view->dados = $enquadramento->obterProjetosParaEnquadramentoVinculados($this->view->idUsuarioLogado);
+            $this->view->dados = $enquadramento->obterProjetosParaEnquadramentoVinculados($this->view->idUsuarioLogado, $ordenacao);
         }
         $codOrgao = $this->grupoAtivo->codOrgao;
         $this->view->codOrgao = $codOrgao;
