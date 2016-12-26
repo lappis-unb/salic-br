@@ -1216,8 +1216,9 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
         $codPerfil  = $GrupoAtivo->codGrupo; // manda o grupo ativo do usu�rio para a vis�o
         $codOrgao  = $GrupoAtivo->codOrgao; // manda o �rg�o ativo do usu�rio para a vis�o
 
-        $tbl = new paUsuariosDoPerfil();
-        $rs = $tbl->buscarUsuarios($codPerfil, $codOrgao);
+//        $tbl = new paUsuariosDoPerfil();
+        $vw = new vwUsuariosOrgaosGrupos();
+        $rs = $vw->buscarUsuarios($codPerfil, $codOrgao);
         $this->view->tecnicos = $rs;
     }
 

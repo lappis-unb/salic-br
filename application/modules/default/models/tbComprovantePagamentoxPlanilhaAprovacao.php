@@ -13,7 +13,7 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 {
 	/* dados da tabela */
 	protected $_banco   = "BDCORPORATIVO";
-	protected $_schema  = "scSAC";
+	protected $_schema  = "bdcorporativo.scsac";
 	protected $_name    = "tbComprovantePagamentoxPlanilhaAprovacao";
 
 
@@ -282,19 +282,14 @@ class tbComprovantePagamentoxPlanilhaAprovacao extends MinC_Db_Table_Abstract
 			,array()
             ,"Agentes.dbo"
 		);
+		$select->where("c.idPronac = ?", $idPronac);
 
-        //Altera��o realizada no dia 25/02/2016 a pedido da area demandante.
-        #$select->where("c.stAtivo = ?", 'S');
-        $select->where("c.idPronac = ?", $idPronac);
-		
 		$select->order("Agentes.dbo.fnUFAgente(idFornecedor)");
 		$select->order("Agentes.dbo.fnMunicipioAgente(idFornecedor)");
 		$select->group("Agentes.dbo.fnUFAgente(idFornecedor), Agentes.dbo.fnMunicipioAgente(idFornecedor)");
-        
-        #xd($select->assemble());
-
-		return $this->fetchAll($select);
-	} // fecha m�todo buscarDados()
+		
+        return $this->fetchAll($select);
+	}
     
     
 	public function buscarRelatorioBensDeCapital($idPronac)

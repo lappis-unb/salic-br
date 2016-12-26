@@ -26,3 +26,4 @@ Jorge Luiz Jr.            | juninhoecb@gmail.com       | SubCoordenador de Proje
 Ruy Junior Ferreira Silva | ruyjfs@gmail.com           | Desenvolvedor Sênior         | 01/08/2016      | Atuando        | UFABC - LABLIVRE
 Vinícius Feitosa da Silva | viniciusfesil@gmail.com    | Desenvolvedor Sênior         | 01/08/2016      | Atuando        | UFABC - LABLIVRE
 Wouerner Brandão          | wouerner@protonmail.com    | Desenvolvedor Pleno          | 19/05/2016      | Atuando        | UFABC - LABLIVRE
+Hygor Fellipe Moreira     | hygorfellipe95@gmail.com   | Estagiário - Desenvolvimento | 28/11/2016      | Atuando        | Estagiário do MINC                             
