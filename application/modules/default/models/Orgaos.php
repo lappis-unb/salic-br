@@ -1,10 +1,4 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- * Description of Orgaos
- * @author augusto
- */
 class Orgaos extends MinC_Db_Table_Abstract{
 
     protected $_banco = 'SAC';
@@ -35,7 +29,7 @@ class Orgaos extends MinC_Db_Table_Abstract{
 
         return $this->fetchAll($select);
     }
-    
+
     public function pesquisarNomeOrgao($codOrgao){
     	$select = $this->select();
         $select->setIntegrityCheck(false);
@@ -59,7 +53,7 @@ class Orgaos extends MinC_Db_Table_Abstract{
                             'o.Sigla',
                             'o.idSecretaria as Superior')
 		);
-        
+
 		$select->where("o.Codigo = ?", $codOrgao);
 
        return $this->fetchAll($select);
@@ -133,4 +127,3 @@ class Orgaos extends MinC_Db_Table_Abstract{
         return $this->fetchAll($slct);
     }
 }
-?>
