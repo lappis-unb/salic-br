@@ -103,7 +103,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             switch ($filtro) {
                 case '':
                     $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    //$where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
+                    $where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
                     break;
                 case 'emanalise':
                     $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
@@ -119,7 +119,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         } else {
             $this->view->nmPagina = 'Aguardando An�lise';
             $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-            //$where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
+            $where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
         }
 
         if((isset($_GET['pronac']) && !empty($_GET['pronac']))){
@@ -147,7 +147,6 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
-        var_dump($where);
         $busca = $tbRecurso->painelRecursos($where, $order, $tamanho, $inicio);
         $paginacao = array(
             "pag"=>$pag,
@@ -2233,12 +2232,18 @@ class RecursoController extends MinC_Controller_Action_Abstract
     {
         $idRecurso = $this->getRequest()->getParam('idRecurso');
         $stAtendimento = $this->getRequest()->getParam('stAtendimento');
-
+        $dsAvaliação = $this->getRequest()->getParam('dsAvaliacao');
+        
+        if(empty($dsAvaliação)){
+            parent::message('Avaliação não preenchida!', "recurso", "ERROR");
+        }
+        if(empty($idRecurso)){
+            parent::message('Recurso não encontrado!', "recurso", "ERROR");
+        }
+        
         $tbRecurso = new tbRecurso();
         $recurso = $tbRecurso->find(array('idRecurso = ?' => $idRecurso))->current();
 
-        //$stEstado = 0;
-        //$stFecharAnalise = 0;
 
         if($recurso){
             //$Projetos = new Projetos();
@@ -2249,85 +2254,33 @@ class RecursoController extends MinC_Controller_Action_Abstract
             $recurso->dsAvaliacao = $this->getRequest()->getParam('dsAvaliacao');
             $recurso->dtAvaliacao = new Zend_Db_Expr('GETDATE()');
             $recurso->idAgenteAvaliador = $this->idUsuario;
-            //var_dump($recurso);
-            //die;
 
-            if($_POST['stAtendimento'] == 'I'){
-                $recurso->siRecurso = 2; // 2=Solicitação Indeferida
-                //$recurso->stEstado = 1;
+            
+            
+            if($stAtendimento == 'I'){
+                $recurso->siRecurso = 10; // 10= Devolvido pelo técnico para o coordenador
+                $recurso->stAtendimento = 'I';
 
-                //BUSCA A SITUA��O ANTERIOR DO PROJETO ANTES DA SOLICITA��O RECURSO
-                $historicoSituacao = new HistoricoSituacao();
-                $dadosHist = $historicoSituacao->buscarSituacaoAnterior($pronac);
+            }
 
-                //ATUALIZA A SITUA��O DO PROJETO
-                //$w = array();
-                //$w['situacao'] = $dadosHist->Situacao;
-                //$w['ProvidenciaTomada'] = 'Recurso indeferido.';
-                //$w['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
-                //$w['Logon'] = $this->idUsuario;
-                //$where = "IdPRONAC = $dp->IdPRONAC";
-                //$Projetos->update($w, $where);
-
-            } else {
-                if($_POST['vinculada'] == 262){
-                    $r->siRecurso = 4; //4=Enviado para An�lise T�cnica (SEFIC)
-
-                } else if($_POST['vinculada'] == 400) {
-                    $stEstado = 1;
-                    $stFecharAnalise = 1;
-                    $r->siRecurso = 7; //7=CNIC
-                    $r->idAgenteAvaliador = $_POST['destinatario'];
-
-                } else {
-                    $r->siRecurso = 3; //3=Enviado para o coordenador de parecer
-
-                    //ATUALIZA A SITUAÇÃO DO PROJETO
-                    $w = array();
-                    $w['situacao'] = 'B11';
-                    $w['ProvidenciaTomada'] = 'Recurso encaminhado para avalia��o da unidade vinculada.';
-                    $w['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
-                    $w['Logon'] = $this->idUsuario;
-                    $where = "IdPRONAC = $dp->IdPRONAC";
-                    $Projetos->update($w, $where);
-
-                    //SE O RECURSO SE TRATAR DE PROJETO INDEFERIDO, OS DADOS DAS PLANILHAS ABAIXO DEVEM SER DELETADAS.
-                    if($r->tpSolicitacao == 'PI'){
-                        //DELETAR DADOS
-                        $tbAnaliseAprovacao = new tbAnaliseAprovacao();
-                        $tbAnaliseAprovacao->delete(array('IdPRONAC = ?' => $r->IdPRONAC, 'tpAnalise = ?' => 'CO'));
-
-                        $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
-                        $tbPlanilhaAprovacao->delete(array('IdPRONAC = ?' => $r->IdPRONAC, 'tpPlanilha = ?' => 'CO', 'stAtivo = ?' => 'S'));
-
-                        $Parecer = new Parecer();
-                        $Parecer->delete(array('IdPRONAC = ?' => $r->IdPRONAC, 'stAtivo = ?' => 1, 'idTipoAgente = ?' => 6));
-
-                        $Enquadramento = new Enquadramento();
-                        $Enquadramento->delete(array('IdPRONAC = ?' => $r->IdPRONAC));
-                    }
-                }
+            if($stAtendimento == 'D'){
+                $tblProjetos = new Projetos();
+                $recurso->siRecurso = 15; //Solicitação finalizada
+                $recurso->stAtendimento = 'D';
+                $recurso->stEstado = 1;
+                
+                
+                $projeto = array();
+                $projeto['situacao'] = 'B03';
+                $projeto['ProvidenciaTomada'] = 'Projeto enquadrado com recurso';
+                $projeto['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
+                $projeto['Logon'] = $this->idUsuario;
+                $where = "IdPRONAC = $recurso->IdPRONAC";
+                $tblProjetos->update($projeto, $where);
             }
             $recurso->save();
-            die;
-
-            if($_POST['stAtendimento'] == 'D'){
-                $tbDistribuirProjeto = new tbDistribuirProjeto();
-                $dados = array(
-                    'IdPRONAC' => $r->IdPRONAC,
-                    'idUnidade' => $_POST['vinculada'],
-                    'dtEnvio' => new Zend_Db_Expr('GETDATE()'),
-                    'idAvaliador' => isset($_POST['destinatario']) ? $_POST['destinatario'] : null,
-                    'stEstado' => $stEstado,
-                    'stFecharAnalise' => $stFecharAnalise,
-                    'idUsuario' => $this->idUsuario
-                );
-                $tb = $tbDistribuirProjeto->inserir($dados);
-            }
             parent::message('Dados salvos com sucesso!', "recurso", "CONFIRM");
 
-        } else {
-            parent::message('Nenhum registro encontrado.', "recurso", "ERROR");
         }
     }
 }
