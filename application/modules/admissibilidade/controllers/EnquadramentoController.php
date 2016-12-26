@@ -26,9 +26,9 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
         $this->view->dados = array();
         $ordenacao = array("projetos.DtSituacao asc");
-        if($this->grupoAtivo->codGrupo == Usuariosorgaosgrupos::GRUPO_COORDENADOR_ADMISSIBILIDADE) {
+        if($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE) {
             $this->view->dados = $enquadramento->obterProjetosParaEnquadramento($ordenacao);
-        } elseif ($this->grupoAtivo->codGrupo == Usuariosorgaosgrupos::GRUPO_TECNICO_ADMISSIBILIDADE) {
+        } elseif ($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE) {
             $this->view->dados = $enquadramento->obterProjetosParaEnquadramentoVinculados($this->view->idUsuarioLogado, $ordenacao);
         }
         $codOrgao = $this->grupoAtivo->codOrgao;
@@ -51,10 +51,10 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
                 throw new Exception("PRONAC não encontrado.");
             }
 
-            //$arraySituacoesValidas = array("B01", "B03");
-            //if (!in_array($arraySituacoesValidas, $projeto['Situacao'])) {
-                //throw new Exception("Situa&ccedil;&atilde;o do projeto n&atilde;o &eacute; v&aacute;lida.");
-            //}
+            $arraySituacoesValidas = array("B01", "B03");
+            if (!in_array($projeto['Situacao'], $arraySituacoesValidas)) {
+                throw new Exception("Situa&ccedil;&atilde;o do projeto n&atilde;o &eacute; v&aacute;lida.");
+            }
 
             $post = $this->getRequest()->getPost();
             if (!$post) {
@@ -63,7 +63,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
                 $this->salvarEnquadramentoProjeto($projeto);
             }
         } catch (Exception $objException) {
-            parent::message($objException->getMessage(), "/admissibilidade/enquadramento/listar");
+            parent::message($objException->getMessage(), "/admissibilidade/enquadramento/gerenciar-enquadramento");
         }
     }
 
@@ -83,16 +83,20 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             'Logon' => $authIdentity['usu_codigo'],
             'IdPRONAC' => $get['pronac'],
         );
-        $objEnquadramento->inserir($arrayInclusao);
+        //$objEnquadramento->inserir($arrayInclusao);
 
         $objProjeto = new Projetos();
         $arrayDados = array(
             'Situacao' => 'B02',
             'DtSituacao' => $objProjeto->getExpressionDate(),
             'ProvidenciaTomada' => "Projeto enquadrado após avaliação técnica.",
+            'Area' => $post->areaCultural,
+            'Segmento' => $post->segmentoCultural,
+            'ProvidenciaTomada' => "Projeto enquadrado após avaliação técnica.",
             'logon' => $authIdentity['usu_codigo']
         );
         $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
+xd($arrayDados, $arrayWhere, $post);
         $objProjeto->update($arrayDados, $arrayWhere);
 
         /**
