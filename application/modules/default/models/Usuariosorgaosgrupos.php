@@ -2,8 +2,6 @@
 
 class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
 
-
-
     protected $_banco = 'Tabelas';
     protected $_schema = 'Tabelas';
     protected $_name = 'UsuariosXOrgaosXGrupos';
