@@ -494,9 +494,12 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
 
-            $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
+
+            $idDocumento = "";
 
             if( !empty($stProposta) ) {
+
+                $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
 
                 // Plano de execução imediata #novain
                 if( $stProposta == '618') { // proposta execucao imediata edital
@@ -504,9 +507,10 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 }elseif ($stProposta == '619') { // proposta execucao imediata contrato de patrocínio
                     $idDocumento = 162;
                 }
-
-                $arquivoExecucaoImediata = $tbl->buscarDocumentos(array("idprojeto = ?" => $idPreProjeto, "CodigoDocumento = ?" => $idDocumento));
+                if( !empty($idDocumento))
+                    $arquivoExecucaoImediata = $tbl->buscarDocumentos(array("idprojeto = ?" => $idPreProjeto, "CodigoDocumento = ?" => $idDocumento));
             }
+
             $this->montaTela(
                 "manterpropostaincentivofiscal/formproposta.phtml",
                 array("acao" => $this->_urlPadrao . "/proposta/manterpropostaincentivofiscal/salvar",
