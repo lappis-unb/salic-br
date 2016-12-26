@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Description of Projetos
- *
- * @author augusto
- */
 class Enquadramento extends MinC_Db_Table_Abstract
 {
     protected $_name = "Enquadramento";
@@ -119,6 +114,75 @@ class Enquadramento extends MinC_Db_Table_Abstract
         }
 
         return $this->delete($where);
-    } // fecha m�todo excluirDados()
+    }
 
-} // fecha class
+    public function obterProjetosParaEnquadramento($order = null, $limit = null)
+    {
+        $select = $this->select();
+        $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array("p" => "projetos"),
+            array('pronac' => New Zend_Db_Expr('p.AnoProjeto + p.Sequencial'),
+                'p.nomeProjeto',
+                'p.IdPRONAC',
+                'p.CgcCpf',
+                'p.idpronac',
+                'p.Area as cdarea',
+                'p.ResumoProjeto',
+                'p.UfProjeto',
+                'p.DtInicioExecucao',
+                'p.DtFimExecucao',
+                'p.Situacao',
+            ),
+            $this->_schema
+        );
+
+        $select->joinInner(array('ar' => 'Area'), 'ar.Codigo = p.Area', array('ar.Descricao AS area'));
+        $select->joinLeft(array('sg' => 'Segmento'), 'sg.Codigo = p.Segmento', array('sg.Descricao AS segmento'));
+        $select->where("p.situacao in ( ? )", array('B01', 'B03'));
+
+        !empty($order) ? $select->order($order) : null;
+        !empty($limit) ? $select->limit($limit) : null;
+        return $this->_db->fetchAll($select);
+    }
+
+    public function obterProjetosParaEnquadramentoVinculados($id_usuario, $order = null, $limit = null)
+    {
+        $select = $this->select();
+        $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array("projetos"),
+            array('pronac' => New Zend_Db_Expr('projetos.AnoProjeto + projetos.Sequencial'),
+                'projetos.nomeProjeto',
+                'projetos.IdPRONAC',
+                'projetos.CgcCpf',
+                'projetos.idpronac',
+                'projetos.Area as cdarea',
+                'projetos.ResumoProjeto',
+                'projetos.UfProjeto',
+                'projetos.DtInicioExecucao',
+                'projetos.DtFimExecucao',
+                'projetos.Situacao',
+            ),
+            $this->_schema
+        );
+
+        $select->joinInner(array('tbAvaliacaoProposta' => 'tbAvaliacaoProposta'), 'tbAvaliacaoProposta.idProjeto = projetos.idProjeto', array(), $this->_schema);
+        $select->joinInner(array('Area' => 'Area'), 'Area.Codigo = projetos.Area', array('Area.Descricao AS area'), $this->_schema);
+        $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = projetos.Segmento', array('Segmento.Descricao AS segmento'), $this->_schema);
+
+        $select->where("projetos.situacao in ( ? )", array('B01', 'B03'));
+        $select->where("tbAvaliacaoProposta.stEstado = ?", array('0'));
+        $select->where("tbAvaliacaoProposta.idTecnico = ?", array($id_usuario));
+
+        !empty($order) ? $select->order($order) : null;
+        !empty($limit) ? $select->limit($limit) : null;
+
+        return $this->_db->fetchAll($select);
+    }
+
+}

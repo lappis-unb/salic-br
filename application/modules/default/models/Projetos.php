@@ -7308,43 +7308,5 @@ class Projetos extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
-    /**
-     * listarPorSituacao
-     *
-     * @param mixed $situacao
-     * @access public
-     * @return void
-     * @todo verificar campos da grid.
-     */
-    public function listarPorSituacao($situacao, $order = null, $limit = null)
-    {
-        $select = $this->select();
-        $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
 
-        $select->setIntegrityCheck(false);
-        $select->from(
-            array("p" => $this->_name),
-            array('pronac' => New Zend_Db_Expr('p.AnoProjeto + p.Sequencial'),
-                'p.nomeProjeto',
-                'p.IdPRONAC',
-                'p.CgcCpf',
-                'p.idpronac',
-                'p.Area as cdarea',
-                'p.ResumoProjeto',
-                'p.UfProjeto',
-                'p.DtInicioExecucao',
-                'p.DtFimExecucao',
-                'p.Situacao',
-            ),
-            $this->_schema
-        );
-
-        $select->joinInner(array('ar' => 'Area'), 'ar.Codigo = p.Area', array('ar.Descricao AS area'));
-        $select->joinLeft(array('sg' => 'Segmento'), 'sg.Codigo = p.Segmento', array('sg.Descricao AS segmento'));
-        $select->where("p.situacao in ( ? )", $situacao);
-
-        !empty($order) ? $select->order($order) : null;
-        !empty($limit) ? $select->limit($limit) : null;
-        return $this->_db->fetchAll($select);
-    }
 }
