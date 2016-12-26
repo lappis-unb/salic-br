@@ -35,7 +35,7 @@
                 <td valign="top" width="300px">
                     <label for="areaCultural">&Aacute;rea Cultural</label>
                     <select name="areaCultural" id="areaCultural"
-                            class="input_simples obrigatorio" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?>
+                            class="input_simples obrigatorio"
                             style="width: 160px;">
                         <option value=""> - Selecione -</option>
                         <?php foreach ($this->comboareasculturais as $key => $value) { ?>
@@ -50,7 +50,7 @@
                 <td>
                     <label for="segmentoCultural">Segmento Cultural</label>
                     <select name="segmentoCultural" id="segmentoCultural"
-                            class="input_simples obrigatorio" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?>>
+                            class="input_simples obrigatorio">
                         <?php if (!isset($this->projeto['Area']) || empty($this->projeto['Area'])) { ?>
                             <option value=""> - Selecione uma &Aacute;rea Cultural -</option>
                         <?php } else { ?>
@@ -85,15 +85,13 @@
             <tr>
                 <td colspan="3">
                     <textarea cols="80" id="observacao"
-                              name="observacao" <?php echo (!empty($this->observacao)) ? "disabled='disabled'" : '' ?>
+                              name="observacao"
                               rows="10" class="textarea_simples"
                               style="width: 99%"><?php echo $this->observacao ?></textarea>
                 </td>
             </tr>
             <td colspan="3" align="center">
-                <?php if (empty($this->observacao)) : ?>
-                    <input type="submit" id="btSalvarConsolidacao" value="" class="btn_salvar"/>
-                <?php endif; ?>
+                <input type="submit" id="btSalvarConsolidacao" value="" class="btn_salvar"/>
             </td>
         </table>
     </form>
@@ -102,9 +100,7 @@
 <div id="rodapeConteudo"><span></span></div>
 <br clear="all"/>
 
-
 <script type="text/javascript">
-
     function carregarSegmento() {
         $('#segmentoCultural').html('<option value=""> - Carregando - </option>');
         $.ajax({

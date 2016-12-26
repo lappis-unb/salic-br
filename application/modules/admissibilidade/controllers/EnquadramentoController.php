@@ -77,7 +77,8 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $get = $this->getRequest()->getParams();
         $authIdentity = array_change_key_case((array)$auth->getIdentity());
         $objEnquadramento = new Enquadramento();
-        $arrayInclusao = array(
+        $arrayDadosEnquadramento = $objEnquadramento->findBy(array('IdPRONAC = ?'=>$projeto['IdPRONAC']));
+        $arrayArmazenamentoEnquadramento = array(
             'AnoProjeto' => $projeto['AnoProjeto'],
             'Sequencial' => $projeto['Sequencial'],
             'Enquadramento' => $post['enquadramento_projeto'],
@@ -86,11 +87,27 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             'Logon' => $authIdentity['usu_codigo'],
             'IdPRONAC' => $get['pronac'],
         );
-        $objEnquadramento->inserir($arrayInclusao);
+
+        $objEnquadramento = new Enquadramento();
+        if(!$arrayDadosEnquadramento) {
+            $objEnquadramento->inserir($arrayArmazenamentoEnquadramento);
+        } else {
+            $objEnquadramento->update($arrayArmazenamentoEnquadramento, array('IdEnquadramento = ?' => $arrayDadosEnquadramento['IdEnquadramento']));
+        }
+
+        $situacaoFinalProjeto = 'B02';
+        $orgaoDestino = null;
+        if($projeto['Situacao'] == 'B03') {
+            $situacaoFinalProjeto = 'D27';
+            $orgaoDestino = 272;
+            if($projeto['Area'] == 2) {
+                $orgaoDestino = 166;
+            }
+        }
 
         $objProjeto = new Projetos();
-        $arrayDados = array(
-            'Situacao' => 'B02',
+        $arrayDadosProjeto = array(
+            'Situacao' => $situacaoFinalProjeto,
             'DtSituacao' => $objProjeto->getExpressionDate(),
             'ProvidenciaTomada' => "Projeto enquadrado após avaliação técnica.",
             'Area' => $post['areaCultural'],
@@ -98,9 +115,13 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             'ProvidenciaTomada' => "Projeto enquadrado após avaliação técnica.",
             'logon' => $authIdentity['usu_codigo']
         );
-        $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
 
-        $objProjeto->update($arrayDados, $arrayWhere);
+        if($orgaoDestino) {
+            $arrayDadosProjeto['Orgao'] = $orgaoDestino;
+        }
+
+        $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
+        $objProjeto->update($arrayDadosProjeto, $arrayWhere);
 
         $whereTextoEmail = array(
             'idTextoEmail = ?' => 12
