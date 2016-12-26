@@ -258,7 +258,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
                 $buscarAgente = $Agentes->buscar(array('CNPJCPF = ?' => $cpf));
 
-                $idAgenteProp = count($buscarAgente) > 0 ? $buscarAgente[0]->idagente : 0;
+                $idAgenteProp = count($buscarAgente) > 0 ? $buscarAgente[0]->idAgente : 0;
                 $buscarVisao = $Visao->buscar(array('Visao = ?' => 144, 'stAtivo = ?' => 'A', 'idAgente = ?' => $idAgenteProp));
 
                 /* ========== VINCULA O RESPONSAVEL A SEU PROPRIO PERFIL DE PROPONENTE ========== */
@@ -581,8 +581,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     public function logarcomoAction()
     {
 
-        $this->_helper->layout->disableLayout();
-        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+//        $this->_helper->layout->disableLayout();
+//        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
         $buscaUsuario = new Usuariosorgaosgrupos();
         $buscaUsuarioRs = $buscaUsuario->buscarUsuariosOrgaosGrupos(
@@ -673,8 +673,8 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $this->view->email = $buscarDados['email'];
         }
 
-        $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
-        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+//        $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
+//        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
         if ($_POST) {
             $post = Zend_Registry::get('post');

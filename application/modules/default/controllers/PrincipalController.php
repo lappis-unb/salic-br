@@ -132,14 +132,11 @@ class PrincipalController extends MinC_Controller_Action_Abstract
 	 * @param void
 	 * @return void
 	 */
-	public function buscarprojetoAction()
-	{
+	public function buscarprojetoAction() {
 		$Pronac = $this->_request->getParam("Pronac");
-
 		if(!empty($Pronac)){
 			$proj = new Projetos();
             $resp = $proj->buscarIdPronac($Pronac);
-
             if(!empty($resp)){
             	$this->_redirect('consultardadosprojeto/index?idPronac='.$resp->idpronac);
             }else{

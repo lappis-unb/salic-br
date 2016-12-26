@@ -1,0 +1,123 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+            
+        $('.btn_enviar').click(function(){
+            var countChecks = 0;
+            $('.checkObrigatorio').each(function(){
+                if($(this).attr('checked')){
+                    countChecks++;
+                }
+            });
+
+            if (countChecks == 0) {
+                $("#msgAlerta").dialog("destroy");
+                $("#msgAlerta").html("Favor preencher os dados obrigatórios!");
+                $("#msgAlerta").dialog({
+                    resizable: false,
+                    title: 'Alerta!',
+                    width: 300,
+                    height: 160,
+                    modal: true,
+                    buttons: {
+                        'OK': function() {
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+                $('.ui-dialog-titlebar-close').remove();
+            } else {
+                $('#form').submit();
+            }
+        });
+
+        $('.btn_cancelar').click(function(){
+            voltar();
+        });
+    });
+</script>
+    
+<style type="text/css">
+    label{
+        font-weight: normal;
+        margin-right: 15px;
+    }
+    .checkObrigatorio{
+        margin-right: 5px; 
+    }
+</style>
+
+<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<div id="msgAlerta"></div>
+<div id="breadcrumb">
+    <ul>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">Início</a></li>
+        <li><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'), '', true); ?>?idPronac=<?php echo Seguranca::encrypt($this->escape($this->projetos->IdPRONAC)); ?>" title="Consultar dados projeto">Consultar dados projeto</a></li>
+        <li class="last">Desist&ecirc;ncia do Prazo Recursal</li>
+    </ul>
+</div>
+<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
+<?php //xd($this->projetos); ?>
+
+
+<!-- ========== INÍCIO TÍTULO ========== -->
+<div id="titulo">
+    <div>
+        Desist&ecirc;ncia do Prazo Recursal <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span>
+    </div>
+</div>
+<!-- ========== FIM TÍTULO ========== -->
+
+
+<!-- ========== INÍCIO CONTEÚDO ========== -->
+<div id="conteudo">
+    
+    <!-- ========== INÍCIO FORMULÁRIO ========== -->
+    <form name="form" id="form" action="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso-desistencia-endraquamento')); ?>?idPronac=<?php echo $this->projetos->IdPRONAC; ?>" method="post">
+        <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projetos->IdPRONAC; ?>" />
+        <table class="tabela">
+            <tr>
+                <td class="destacar bold centro" style="width: 30%">Pronac</td>
+                <td class="destacar bold centro">Nome do Projeto</td>
+            </tr>
+            <tr>
+                <td align="center"><?php echo $this->projetos->AnoProjeto.$this->projetos->Sequencial; ?></td>
+                <td align="center"><?php echo $this->projetos->NomeProjeto; ?></td>
+            </tr>
+        </table>
+
+        <table class="tabela">
+            <tr>
+                <th>Texto referente &agrave; Concord&acirc;ncia</th>
+            </tr>
+            <tr>
+                <td>
+                    <p><?php //@TODO ESPERAR TEXTO PARA INSERIR AQUI ?>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus erat ac auctor facilisis. Nam augue nibh, mollis at malesuada ut, sodales vel massa. Fusce gravida feugiat erat, sit amet pretium leo pretium molestie</p>
+                    <br clear="all" />
+                    <p>
+                        <label>
+                            <input id="deacordo" type="checkbox" value="1" name="deacordo" class="checkObrigatorio">
+                            <span style="color: red; font-weight: bold; font-size: 13px; margin-left: 0.7em;">De acordo</span>
+                        </label>
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+        <div style="width: 100%; text-align: center;">
+            <input type="button" title="Enviar" class="btn_enviar" value=" " />
+            <input type="button" title="Cancelar" class="btn_cancelar" value=" " />
+        </div>
+    </form>
+    
+    <br clear="all" />
+    
+<!-- ========== FIM FORMULÁRIO ========== -->
+
+</div>	
+<!-- ========== FIM CONTEÚDO ========== -->
+
+<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
+<div id="rodapeConteudo"><span></span></div>
+<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+
+<br clear="all" />

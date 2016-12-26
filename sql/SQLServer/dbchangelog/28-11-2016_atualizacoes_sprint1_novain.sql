@@ -6,9 +6,7 @@ WHERE idPlanilhaEtapa=5;
 -- Remove Not Null na coluna idPolicaoDaLogo
 ALTER TABLE sac.dbo.PlanoDistribuicaoProduto ALTER COLUMN idPosicaoDaLogo INT;
 
--- cria mais duas etapas
-INSERT INTO SAC.dbo.tbPlanilhaEtapa (Descricao, tpCusto, stEstado, tpGrupo) VALUES ('Pós-Produção', 'P', 1, 'A');
-INSERT INTO SAC.dbo.tbPlanilhaEtapa (Descricao, tpCusto, stEstado, tpGrupo) VALUES ('Custos Vinculados', 'A', 1, 'D');
+
 
 -- cria itens para a lista de execução imediata
 INSERT INTO SAC.dbo.Verificacao (idTipo, Descricao, stEstado) VALUES (23, 'Proposta normal', 1);
@@ -27,7 +25,40 @@ ALTER TABLE sac.dbo.PreProjeto ALTER COLUMN stPlanoAnual BIT;
 
 -- Cria novo documento
 INSERT INTO SAC.dbo.DocumentosExigidos (Descricao,Area,Opcao,stEstado,stUpload)
-VALUES ('Comprovante Execução Imediata','0',2,1,1);
+VALUES ('RESULTADO DA SELEÇÃO PÚBLICA','0',2,1,1);
 
 -- Cria novo campo para prorrogacao automática
 ALTER TABLE sac.dbo.PreProjeto ADD tpProrrogacao BIT DEFAULT 1 NULL;
+
+-- cria mais duas etapas para planilha orcamentaria
+INSERT INTO SAC.dbo.tbPlanilhaEtapa (Descricao, tpCusto, stEstado, tpGrupo) VALUES ('Pós-Produção', 'P', 1, 'A');
+INSERT INTO SAC.dbo.tbPlanilhaEtapa (Descricao, tpCusto, stEstado, tpGrupo) VALUES ('Custos Vinculados', 'A', 1, 'D');
+
+-- cria novos itens
+INSERT INTO SAC.dbo.tbPlanilhaItens
+(idPlanilhaItens, Descricao, idUsuario)
+VALUES(8197, 'Custos de Administração', 236);
+INSERT INTO SAC.dbo.tbPlanilhaItens
+(idPlanilhaItens, Descricao, idUsuario)
+VALUES(8198, 'Custos de Divulgação', 236);
+INSERT INTO SAC.dbo.tbPlanilhaItens
+(idPlanilhaItens, Descricao, idUsuario)
+VALUES(8199, 'Controle e Auditoria', 236);
+
+-- ajusta o cárdapio da etapa de custos vinculados
+insert into tbItensPlanilhaProduto
+(idProduto,idPlanilhaEtapa,idPlanilhaItens,idUsuario)
+select 0,8,8197,236
+
+insert into tbItensPlanilhaProduto
+(idProduto,idPlanilhaEtapa,idPlanilhaItens,idUsuario)
+select 0,8,8198,236
+
+insert into tbItensPlanilhaProduto
+(idProduto,idPlanilhaEtapa,idPlanilhaItens,idUsuario)
+select 0,8,8199,236
+
+insert into tbItensPlanilhaProduto
+(idProduto,idPlanilhaEtapa,idPlanilhaItens,idUsuario)
+select 0,8,5249,236
+

@@ -1000,7 +1000,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
     }
 
     public function resultadoExtratorAction(){
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $post   = Zend_Registry::get('post');
 
@@ -1074,7 +1073,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
     }
 
     public function resultadoDesembolsoAction(){
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $post   = Zend_Registry::get('post');
 
@@ -1146,7 +1144,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
     }
 
     public function resultadoPcRegiaoUfCidadeAction(){
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $post   = Zend_Registry::get('post');
 
@@ -1226,7 +1223,6 @@ class RelatorioController extends MinC_Controller_Action_Abstract {
     }
 
     public function resultadoVisualTecnicoAction(){
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $post   = Zend_Registry::get('post');
 

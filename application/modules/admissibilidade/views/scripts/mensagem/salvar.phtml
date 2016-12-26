@@ -1,0 +1,161 @@
+<nav class="breadcrumb">
+    <div class="nav-wrapper" style="padding: 0 15px 0 15px">
+        <div class="col s12">
+            <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'listar'), null, true); ?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para a tela de enquadramento">Enquadramento</a>
+            <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index', 'idPronac' => $this->idPronac), null, true); ?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Nome e Numero do Pronac">Perguntas do Pronac: Projeto TAL (<?php echo $this->idPronac; ?>)</a>
+            <a href="#!" class="breadcrumb tooltipped" data-position="top" data-delay="50"><?php echo $this->title ?></a>
+        </div>
+    </div>
+</nav>
+<div class="container" style="display: none;">
+    <h4><?php echo $this->title; ?></h4>
+    <form id="form-mensagem"
+          action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => $this->action), null, true); ?>">
+        <input name="idMensagemProjeto" type="hidden" value="<?php echo $this->id; ?>"/>
+        <input name="IdPRONAC" type="hidden" value="<?php echo $this->idPronac; ?>"/>
+        <div class="row">
+            <div class="input-field col s12">
+                <select class="invalid" data-url="/admissibilidade/mensagem/usuarios"
+                        data-target="select[name=idDestinatario]"
+                        name="idUnidade" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
+                    <option value="" disabled selected>Selecione...</option>
+                    <!--                        <optgroup label="--><?php //echo $key ?><!--">-->
+                    <?php foreach ($this->arrUnidades as $values): ?>
+                        <option <?php if (isset($this->dataForm['idUnidade']) && $this->dataForm['idUnidade'] == $values['Codigo']) echo 'selected="selected"' ?>
+                            value="<?php echo $values['Codigo'] ?>"><?php echo $values['Sigla'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                    <!--                        </optgroup>-->
+                </select>
+                <label>Unidade</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <select class="invalid" required="required" name="idDestinatario" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
+                    <option value="" disabled selected>Selecione...</option>
+                </select>
+                <label>Agente</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <br />
+                <textarea id="dsMensagem" class="materialize-textarea editor" required="required" name="dsMensagem" <?php if (isset($this->arrConfig['dsMensagem']) && $this->arrConfig['dsMensagem']['disabled']) echo 'disabled="disabled"' ?>><?php if (isset($this->dataForm['dsMensagem'])) echo $this->dataForm['dsMensagem']; ?> </textarea>
+                <label for="dsMensagem" class="active">Descricao</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 center-align">
+                <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index', 'idPronac' => $this->idPronac), null, true); ?>" class="modal-action modal-close waves-effect waves-red btn-flat">Voltar</a>
+                <a id="btn-enviar" style="margin-left: 15px;"
+                   class="modal-action waves-effect waves-green btn-flat light-green">Enviar</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("textarea.editor").editorRico({altura: 200});
+    });
+    $jq3(document).ready(function () {
+        $jq3('.container').fadeIn(1500);
+        $jq3('#form-mensagem').find('select').material_select();
+        setTimeout(function () {
+            $jq3('#form-mensagem').find('[required=required]').closest('.input-field').find('input.select-dropdown').addClass('invalid');
+            $jq3('#form-mensagem').find('[required=required]').addClass('invalid');
+        }, 300);
+        var select = $jq3('select[data-target]'),
+            strUrl = select.attr('data-url'),
+            objTarget = $jq3(select.attr('data-target'));
+//        ajaxRender(strUrl, objTarget, select.val(), '<?php //echo (isset($this->dataForm['idDestinatario'])) ? $this->dataForm['idDestinatario'] : '' ?>//');
+    });
+
+    function ajaxRender(strUrl, objTarget, strVal, strValChecked) {
+        var strHtml = '';
+        $jq3.ajax({
+            method: "POST",
+            url: strUrl,
+            data: {id: strVal}
+        }).done(function (result) {
+            json = $jq3.parseJSON(result);
+            strHtml = '<option value="" disabled selected>Selecione...</option>';
+            $jq3.each(json, function(key, value){
+                strHtml += '<optgroup label="' + key + '">';
+                $jq3.each(value, function(key2, value2){
+                    if (strValChecked && strValChecked == key2) {
+                        strHtml += '<option value="' + key2 + '" selected="selected">' + value2 + '</option>';
+                    } else {
+                        strHtml += '<option value="' + key2 + '">' + value2 + '</option>';
+                    }
+                });
+                strHtml += '</optgroup>';
+            });
+            objTarget.html(strHtml);
+            objTarget.material_select();
+            objTarget.closest('.input-field').find('input.select-dropdown').addClass('invalid');
+        });
+    }
+
+    //    function isValid(strElement)
+    //    {
+    //        arrElemento = $jq3(strElement).find('[required]').filter(function() {
+    //            return !this.value;
+    //        });
+    //
+    //        $jq3.each(arrElemento, function(key, value){
+    //            console.info(value);
+    //        });
+    //
+    //        if (arrElemento) {
+    //            return false;
+    //        }
+    //
+    //        console.info(arrElemento);
+    //    }
+
+    $jq3(document).ready(function () {
+        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        $jq3('.tooltipped').tooltip({delay: 50});
+        $jq3('body').on('click', '#btn-enviar', function () {
+//            if (isValid('#form-mensagem')) {
+//            strSerialize = $jq3('#form-mensagem:not(:textarea)').serialize() + '&dsMensagem=' + $jq3('dsMensagem');
+            $('#dsMensagem').val(tinyMCE.get('dsMensagem').getContent());
+            strSerialize = $jq3('#form-mensagem').serialize();
+            $jq3.post($jq3('#form-mensagem').attr('action'), strSerialize, function (result) {
+                result = $jq3.parseJSON(result);
+                if (result.status == '1') {
+//                    $jq3('#form-mensagem')[0].reset();
+                    Materialize.toast(result.msg, 4000);
+                    setTimeout(function(){
+                        window.location.href = '<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index', 'idPronac' => $this->idPronac)); ?>';
+                    }, 500);
+                } else {
+                    if (Object.keys(result.msg).length > 1) {
+                        $jq3.each(result.msg, function(strNameElement, strMsg){
+                            var elm = $jq3('[name=' + strNameElement + ']'),
+                                elmLabel = elm.closest('div.input-field').find('label'),
+                                strLabel = elm.closest('div.input-field').find('label').html();
+                            if (elm.length > 0) {
+//                                    elmLabel.attr('data-error', 'Este campo e obrigatorio!');
+//                                    elm.addClass('invalid');
+                                elm.focus();
+                                Materialize.toast('Campo ' + strLabel + ' &eacute; obrigat&oacute;rio!', 8000);
+                            }
+                        });
+                    } else {
+                        Materialize.toast(result.msg, 4000);
+                    }
+                }
+            });
+//            }
+        });
+        $jq3('body').on('change', 'select[data-target]', function () {
+            var select = $jq3(this),
+                strUrl = select.attr('data-url'),
+                objTarget = $jq3(select.attr('data-target'));
+            ajaxRender(strUrl, objTarget, select.val(), '');
+        });
+    });
+</script>
