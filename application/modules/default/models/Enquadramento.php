@@ -135,6 +135,7 @@ class Enquadramento extends MinC_Db_Table_Abstract
                 'p.DtInicioExecucao',
                 'p.DtFimExecucao',
                 'p.Situacao',
+                'p.DtSituacao',
             ),
             $this->_schema
         );
@@ -166,6 +167,7 @@ class Enquadramento extends MinC_Db_Table_Abstract
                 'projetos.UfProjeto',
                 'projetos.DtInicioExecucao',
                 'projetos.DtFimExecucao',
+                'projetos.DtSituacao',
                 'projetos.Situacao',
             ),
             $this->_schema
