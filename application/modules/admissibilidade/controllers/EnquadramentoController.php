@@ -1,7 +1,6 @@
 <?php
 
 /**
- * @package Controller
  * @since 02/12/2016 16:06
  */
 class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abstract
@@ -67,6 +66,10 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         }
     }
 
+    /**
+     * @todo Alterar o valor da variável '$whereTextoEmail' pois até o momento não nos foi enviado qual o valor correto.
+     *       O valor atual é temporário.
+     */
     private function salvarEnquadramentoProjeto($projeto)
     {
         $auth = Zend_Auth::getInstance();
@@ -83,39 +86,35 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             'Logon' => $authIdentity['usu_codigo'],
             'IdPRONAC' => $get['pronac'],
         );
-        //$objEnquadramento->inserir($arrayInclusao);
+        $objEnquadramento->inserir($arrayInclusao);
 
         $objProjeto = new Projetos();
         $arrayDados = array(
             'Situacao' => 'B02',
             'DtSituacao' => $objProjeto->getExpressionDate(),
             'ProvidenciaTomada' => "Projeto enquadrado após avaliação técnica.",
-            'Area' => $post->areaCultural,
-            'Segmento' => $post->segmentoCultural,
+            'Area' => $post['areaCultural'],
+            'Segmento' => $post['segmentoCultural'],
             'ProvidenciaTomada' => "Projeto enquadrado após avaliação técnica.",
             'logon' => $authIdentity['usu_codigo']
         );
         $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
-xd($arrayDados, $arrayWhere, $post);
+
         $objProjeto->update($arrayDados, $arrayWhere);
 
-        /**
-         * @todo Alterar esse identificador.
-         */
-        $where = array(
+        $whereTextoEmail = array(
             'idTextoEmail = ?' => 12
         );
         $tbTextoEmailDAO = new tbTextoEmail();
-        $textoEmail = $tbTextoEmailDAO->buscar($where)->current();
-        $mensagemEmail = $textoEmail->dsTexto;
+        $textoEmail = $tbTextoEmailDAO->findBy($whereTextoEmail);
 
         $objInternet = new Agente_Model_DbTable_Internet();
         $arrayEmails = $objInternet->obterEmailProponentesPorPreProjeto($projeto['idProjeto']);
         foreach ($arrayEmails as $email) {
-            EmailDAO::enviarEmail($email->Descricao, "Projeto Cultural", $mensagemEmail);
+            EmailDAO::enviarEmail($email->Descricao, "Projeto Cultural", $textoEmail['dsTexto']);
         }
 
-        parent::message("Enquadramento cadastrado com sucesso.", "/admissibilidade/enquadramento/listar", "CONFIRM");
+        parent::message("Enquadramento cadastrado com sucesso.", "/admissibilidade/enquadramento/gerenciar-enquadramento", "CONFIRM");
     }
 
     private function carregardadosEnquadramentoProjeto($projeto)

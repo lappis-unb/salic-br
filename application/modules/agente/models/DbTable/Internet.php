@@ -169,12 +169,21 @@ class Agente_Model_DbTable_Internet extends MinC_Db_Table_Abstract
     }
 
     public function obterEmailProponentesPorPreProjeto($idPreProjeto) {
-        $sqlEmail = "SELECT Descricao FROM agentes.dbo.Internet i
-                      INNER JOIN SAC.dbo.PreProjeto p on i.idAgente = p.idAgente
-                      WHERE p.idPreProjeto = {$idPreProjeto} 
-                        and i.idAgente = p.idAgente 
-                        and Status = 1";
 
-        return $this->fetchAll($sqlEmail);
+        $select = $this->select();
+        $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array("Internet"),
+            array('Internet.Descricao'),
+            $this->_schema
+        );
+
+        $select->joinInner(array("PreProjeto" => "PreProjeto"), 'PreProjeto.idAgente = Internet.idAgente', array(), $this->getSchema("sac"));
+        $select->where("PreProjeto.idPreProjeto = ?", array($idPreProjeto));
+        $select->where("Internet.Status = ?", array(1));
+
+        return $this->_db->fetchAll($select);
     }
 }
