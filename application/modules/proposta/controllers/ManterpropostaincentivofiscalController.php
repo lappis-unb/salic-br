@@ -372,18 +372,26 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
                 }
                 /* **************************************************************************************** */
             }
+            // Plano de execução imediata #novain
+            if( $stProposta == '618') { // proposta execucao imediata edital
+                $idDocumento = 248;
+            }elseif ($stProposta == '619') { // proposta execucao imediata contrato de patrocínio
+                $idDocumento = 162;
+            }
 
-            // salvar arquivo plano de execucao
-            $arrayFile = array(
-                'idPreProjeto' => $idPreProjeto,
-                'documento' => 248,
-                'tipoDocumento' => 2,
-                'observacao' => ''
-            );
+            if( !empty($idDocumento) ) {
 
-            $mapperTbDocumentoAgentes = new Proposta_Model_TbDocumentosAgentesMapper();
-            $file = new Zend_File_Transfer();
-            $mapperTbDocumentoAgentes->saveCustom($arrayFile, $file);
+                $arrayFile = array(
+                    'idPreProjeto' => $idPreProjeto,
+                    'documento' => $idDocumento,
+                    'tipoDocumento' => 2,
+                    'observacao' => ''
+                );
+
+                $mapperTbDocumentoAgentes = new Proposta_Model_TbDocumentosAgentesMapper();
+                $file = new Zend_File_Transfer();
+                $mapperTbDocumentoAgentes->saveCustom($arrayFile, $file);
+            }
 
             if ($acao != 'atualizacao_automatica') {
                 parent::message($mesagem, "/proposta/manterpropostaincentivofiscal/editar?idPreProjeto=" . $idPreProjeto, "CONFIRM");
@@ -445,6 +453,7 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
 
             if ($rsPreProjeto) {
                 $rsPreProjeto = $rsPreProjeto->toArray();
+                $stProposta = $rsPreProjeto["stProposta"];
             }
 
             $arrBuscaProponete['a.idagente = ?'] = $rsPreProjeto['idAgente'];
@@ -485,8 +494,22 @@ class Proposta_ManterpropostaincentivofiscalController extends MinC_Controller_A
             $rsVinculoN = $tblVinculo->buscarVinculoProponenteResponsavel($arrBuscaN);
             //METODO QUE MONTA TELA DO USUARIO ENVIANDO TODOS OS PARAMENTROS NECESSARIO DENTRO DO ARRAY
 
-            $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
-            $arquivoExecucaoImediata = $tbl->buscarDocumentos(array("idprojeto = ?" => $idPreProjeto, "CodigoDocumento = ?" => 248));
+
+            $idDocumento = "";
+
+            if( !empty($stProposta) ) {
+
+                $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
+
+                // Plano de execução imediata #novain
+                if( $stProposta == '618') { // proposta execucao imediata edital
+                    $idDocumento = 248;
+                }elseif ($stProposta == '619') { // proposta execucao imediata contrato de patrocínio
+                    $idDocumento = 162;
+                }
+                if( !empty($idDocumento))
+                    $arquivoExecucaoImediata = $tbl->buscarDocumentos(array("idprojeto = ?" => $idPreProjeto, "CodigoDocumento = ?" => $idDocumento));
+            }
 
             $this->montaTela(
                 "manterpropostaincentivofiscal/formproposta.phtml",

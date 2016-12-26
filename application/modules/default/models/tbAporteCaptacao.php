@@ -18,8 +18,7 @@ class tbAporteCaptacao extends MinC_Db_Table_Abstract
 	/**
 	 * 
 	 */
-    protected $_banco   = "SAC";
-    protected $_schema  = "dbo";
+    protected $_schema   = "SAC";
     protected $_name    = "tbAporteCaptacao";
 
     /**
@@ -35,6 +34,7 @@ class tbAporteCaptacao extends MinC_Db_Table_Abstract
     	foreach ($where as $key => $value) {
     		$select->where($key, $value);
     	}
+		
     	return $this->fetchAll($select);
     }
     

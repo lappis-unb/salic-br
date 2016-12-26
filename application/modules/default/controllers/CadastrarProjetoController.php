@@ -151,7 +151,6 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
         $ProcessoMascara = $post->nrprocesso;
         preg_match_all('#\d+#', $post->nrprocesso, $processo);
         $Processo = implode('',$processo[0]);
-        header("Content-Type: text/html; charset=ISO-8859-1", true);
         if(Validacao::validarNrProcesso($Processo)){
             $projeto = new Projetos();
             $where = array('Processo =  ?'=>$Processo);
@@ -179,7 +178,6 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
     }
 
     public function validaragenteAction(){
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         $post = Zend_Registry::get('post');

@@ -311,7 +311,7 @@ class LoginController extends MinC_Controller_Action_Abstract {
             parent::perfil(4);
         }
 
-        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+//        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
         $this->view->cpf = "";
         $this->view->nome = "";
@@ -514,8 +514,8 @@ class LoginController extends MinC_Controller_Action_Abstract {
 
     public function logarcomoAction() {
 
-        $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
-        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+//        $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
+//        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
         $buscaUsuario = new Usuariosorgaosgrupos();
         $buscaUsuarioRs = $buscaUsuario->buscarUsuariosOrgaosGrupos(
@@ -605,8 +605,8 @@ class LoginController extends MinC_Controller_Action_Abstract {
             $this->view->email = $buscarDados['Email'];
         }
 
-        $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
-        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
+//        $this->_helper->layout->disableLayout(); // desabilita Zend_Layout
+//        Zend_Layout::startMvc(array('layout' => 'layout_proponente'));
 
         if ( $_POST ) {
             $post     = Zend_Registry::get('post');

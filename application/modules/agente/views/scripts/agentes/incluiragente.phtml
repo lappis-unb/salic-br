@@ -1,4 +1,4 @@
-    <?php if ($this->modulo != "movimentacaobancaria") : ?>
+<?php if ($this->modulo != "movimentacaobancaria") : ?>
         <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
         <div id="breadcrumb">
             <ul>
@@ -580,9 +580,9 @@ if (empty($_GET['acao'])) {
 
                 success: function (data)
                 {
-                    console.log(data);
                     if (data[0].msgCPF == 'cadastrado')
                     {
+                        console.log(data);
                         $('#novocadastro').hide();
                         $('#carregando').show();
                         var event = new CustomEvent("agenteJaCadastrado", {"detail": data[0].agente});

@@ -2,7 +2,7 @@
 class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
 {
     protected $_banco = "BDCORPORATIVO";
-    protected $_schema = "scSAC";
+    protected $_schema = "BDCORPORATIVO.scSAC";
     protected $_name = "tbDistribuicaoProjetoComissao";
 
     public function buscarProjetoEmPauta_ORIGINAL($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false){
@@ -48,7 +48,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                             array('Componente'=>'Descricao'),
                             'Agentes.dbo'
                           );
-        
+
         $slct->where("pr.Situacao IN (?)", array("C10", "C30"));
         $slct->where("dpc.stDistribuicao = ?", "A");
         $slct->where("pa.stAtivo = ?", 1);
@@ -234,19 +234,19 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
             $slctAnalisados->where("r.stEstado = ?", 0);
         }
         $slctAnalisados->where("nm2.Status = ?", 0);
-        
+
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $slctAnalisados->where($coluna, $valor);
         }
 
         //xd($slctAnalisados->assemble());
-        
+
         //RETORNA RESULTADO DA PRIMEIRA QUERY - PROJETO ANALISADOS
         if($retornaResultadoIndividual == "1"){
             return $this->fetchAll($slctAnalisados);
         }
-        
+
         /*========================================================*/
         /*================ PROJETO NAO ANALISADOS ================*/
         /*========================================================*/
@@ -308,7 +308,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctNaoAnalisados->where("dpc.stDistribuicao = ?", "A");
         $slctNaoAnalisados->where("par.stAtivo = ?", 1);
         $slctNaoAnalisados->where("nm2.Status = ?", 0);
-        
+
         /*=== INICIO EXCLUI PROJETOS CADASTRADOS NA PAUTA ====*/
         $slctInterno = $this->select();
         $slctInterno->setIntegrityCheck(false);
@@ -327,7 +327,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         foreach ($where as $coluna => $valor) {
             $slctNaoAnalisados->where($coluna, $valor);
         }
-        
+
         //RETORNA RESULTADO DA PRIMEIRA QUERY - PROJETO NAO ANALISADOS
         if($retornaResultadoIndividual == "2"){
             return $this->fetchAll($slctNaoAnalisados);
@@ -339,20 +339,20 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctUnion = $this->select();
         $slctUnion->union(array($slctAnalisados, $slctNaoAnalisados));//->order($order);
         //xd($slctUnion->assemble());
-        
+
         $slctMaster = $this->select();
         $slctMaster->setIntegrityCheck(false);
         $slctMaster->from(
                         array('Master'=>$slctUnion),
                         array('*')
                      );
-        
+
 
         //BUSCA PELO STATUS DO PROJETO
         if($analise != null){
             $slctMaster->where("Analise = ?", $analise);
         }
-        
+
         //BUSCA PELOS DADOS DA REUNIAO INFORMADA
         if(count($arrReuniao)>0){
             foreach ($arrReuniao as $coluna => $valor) {
@@ -379,7 +379,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         //xd($slctMaster->assemble());
         return $this->fetchAll($slctMaster);
     }
-    
+
     public function buscaProjetosEmPauta($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $count=false, $analise=null){
 
         /*========================================================*/
@@ -470,12 +470,12 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         $slctNaoAnalisados->where("z.Status = ?", 0);
         $slctNaoAnalisados->where("p.Situacao in (?)", array('C10','C30'));
         $slctNaoAnalisados->where("NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbPauta o WHERE o.IdPRONAC = p.IdPronac)", '');
-        
+
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $slctNaoAnalisados->where($coluna, $valor);
         }
-        
+
         //RETORNA RESULTADO DA PRIMEIRA QUERY - PROJETO NAO ANALISADOS
         if($analise == "1"){
 //            xd($slctNaoAnalisados->assemble());
@@ -484,8 +484,8 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
             }
             return $this->fetchAll($slctNaoAnalisados);
         }
-        
-        
+
+
         /*========================================================*/
         /*================== PROJETOS ANALISADOS =================*/
         /*========================================================*/
@@ -575,18 +575,18 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
             array('r'=>'tbReuniao'), 't.idNrReuniao = r.idNrReuniao',
             array(), 'SAC.dbo'
         );
-        
+
         $slctAnalisados->where("z.stDistribuicao = ?", 'A');
         $slctAnalisados->where("pr.idTipoAgente = ?", 6);
         $slctAnalisados->where("pr.stAtivo = ?", 1);
         $slctAnalisados->where("r.stEstado = ?", 0);
         $slctAnalisados->where("y.Status = ?", 0);
-        
+
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $slctAnalisados->where($coluna, $valor);
         }
-        
+
         //RETORNA RESULTADO DA SEGUNDA QUERY - PROJETO ANALISADOS
         if($analise == "2"){
             if($count){
@@ -594,8 +594,8 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
             }
             return $this->fetchAll($slctAnalisados);
         }
-        
-        
+
+
         /*========================================================*/
         /*================== PROJETOS READEQUADOS ================*/
         /*========================================================*/
@@ -666,24 +666,24 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
             array('w1'=>'tbReuniao'), 'pr.NumeroReuniao = w1.NrReuniao',
             array(), 'SAC.dbo'
         );
-        
+
         $slctReadequados->where("pr.TipoParecer = ?", 1);
         $slctReadequados->where("pr.idTipoAgente = ?", 1);
         $slctReadequados->where("w1.stEstado = ?", 0);
         $slctReadequados->where("p.Situacao in (?)", array('C13','C21','C22'));
-        
+
         //adiciona quantos filtros foram enviados
         foreach ($where as $coluna => $valor) {
             $slctReadequados->where($coluna, $valor);
         }
-        
+
         /*========================================================*/
         /*========================  UNION  =======================*/
         /*========================================================*/
 
         $slctUnion = $this->select()
                             ->union(array('('.$slctNaoAnalisados.')', '('.$slctAnalisados.')', '('.$slctReadequados.')'));
-        
+
         $slctMaster = $this->select();
         $slctMaster->setIntegrityCheck(false);
         $slctMaster->from(
@@ -708,9 +708,9 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         }
         return $this->fetchAll($slctMaster);
     }
-    
+
     public function buscaProjetosEmPautaXLS($dados){
-        
+
         $whereAdd = '';
         $whereReadequacao = '';
         if(isset($dados['pronac']) && !empty($dados['pronac'])){
@@ -730,10 +730,10 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         }
 
         $sql = '';
-            
+
         if($dados['status'] == 0 || $dados['status'] == 1){
             $sql .= "(
-                SELECT 
+                SELECT
                     'N�o analisado' AS Analise
                     ,t.idAgente
                     ,n.Descricao AS Componente
@@ -766,7 +766,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     END AS Avaliacao
                     ,p.SolicitadoReal
                     ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' and pa.nrFonteRecurso=109) AS SugeridoReal
-                    ,e.Enquadramento as Enquadramento 
+                    ,e.Enquadramento as Enquadramento
                 FROM BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao AS t
                     INNER JOIN SAC.dbo.Projetos AS p ON t.idPronac = p.idPronac
                     INNER JOIN SAC.dbo.Parecer AS pr ON pr.idPronac = p.idPronac
@@ -776,18 +776,18 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     INNER JOIN SAC.dbo.Segmento AS se ON p.Segmento = se.Codigo
                     INNER JOIN AGENTES.dbo.Nomes AS n ON t.idAgente = n.idAgente
                     INNER JOIN AGENTES.dbo.Agentes AS x ON p.CgcCpf = x.CNPJCPF
-                    INNER JOIN AGENTES.dbo.Nomes AS z ON x.idAgente = z.idAgente 
-                WHERE (t.stDistribuicao = 'A') 
-                AND (pr.stAtivo = 1) 
-                AND (z.Status = 0) 
-                AND (p.Situacao in ('C10', 'C30')) 
+                    INNER JOIN AGENTES.dbo.Nomes AS z ON x.idAgente = z.idAgente
+                WHERE (t.stDistribuicao = 'A')
+                AND (pr.stAtivo = 1)
+                AND (z.Status = 0)
+                AND (p.Situacao in ('C10', 'C30'))
                 AND (NOT EXISTS(SELECT TOP 1 * FROM BDCORPORATIVO.scSAC.tbPauta o WHERE o.IdPRONAC = p.IdPronac))
                 $whereAdd
-            ) 
+            )
 
             UNION ALL";
         }
-            
+
         if($dados['status'] == 0 || $dados['status'] == 2){
             $sql .= "(
                 SELECT
@@ -823,7 +823,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     END AS Avaliacao
                     ,p.SolicitadoReal
                     ,(SELECT SUM(qtItem*nrOcorrencia*vlUnitario) FROM SAC.dbo.tbPlanilhaAprovacao pa WHERE pa.IdPRONAC = p.IdPRONAC AND stAtivo = 'S' AND pa.nrFonteRecurso=109) AS SugeridoReal
-                    ,e.Enquadramento as Enquadramento 
+                    ,e.Enquadramento as Enquadramento
                 FROM BDCORPORATIVO.scSAC.tbPauta AS t
                     INNER JOIN BDCORPORATIVO.scSAC.tbDistribuicaoProjetoComissao AS z ON t.IdPRONAC = z.idPRONAC
                     INNER JOIN SAC.dbo.Projetos AS p ON t.idPronac = p.idPronac
@@ -835,11 +835,11 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                     INNER JOIN AGENTES.dbo.Nomes AS n ON z.idAgente = n.idAgente
                     INNER JOIN AGENTES.dbo.Agentes AS x ON p.CgcCpf = x.CNPJCPF
                     INNER JOIN AGENTES.dbo.Nomes AS y ON x.idAgente = y.idAgente
-                    INNER JOIN SAC.dbo.tbReuniao AS r ON t.idNrReuniao = r.idNrReuniao 
-                WHERE (z.stDistribuicao = 'A') 
+                    INNER JOIN SAC.dbo.tbReuniao AS r ON t.idNrReuniao = r.idNrReuniao
+                WHERE (z.stDistribuicao = 'A')
                 AND (pr.idTipoAgente = 6)
-                AND (pr.stAtivo = 1) 
-                AND (r.stEstado = 0) 
+                AND (pr.stAtivo = 1)
+                AND (r.stEstado = 0)
                 AND (y.Status = 0)
                 $whereAdd
             )
@@ -848,7 +848,7 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
         }
 
         $sql .= "(
-            SELECT 
+            SELECT
                 'Readequa��o' AS Analise
                 ,''
                 ,'' AS Componente
@@ -885,21 +885,21 @@ class tbDistribuicaoProjetoComissao extends MinC_Db_Table_Abstract
                 INNER JOIN SAC.dbo.Area AS a ON p.Area = a.Codigo
                 INNER JOIN SAC.dbo.Segmento AS se ON p.Segmento = se.Codigo
                 INNER JOIN SAC.dbo.Interessado AS i ON p.cgccpf = i.cgccpf
-                INNER JOIN SAC.dbo.tbReuniao AS w1 ON pr.NumeroReuniao = w1.NrReuniao 
-            WHERE (pr.TipoParecer = 1) 
+                INNER JOIN SAC.dbo.tbReuniao AS w1 ON pr.NumeroReuniao = w1.NrReuniao
+            WHERE (pr.TipoParecer = 1)
             AND (pr.idTipoAgente = 1)
-            AND (w1.stEstado = 0) 
+            AND (w1.stEstado = 0)
             AND (p.Situacao in ('C13', 'C21', 'C22'))
             $whereAdd
-        )    
+        )
         ORDER BY 6 ASC ";
-            
+
 //        xd($sql);
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($sql);
     }
-    
+
     public function buscarComponente($idPronac){
         $select = $this->select();
         $select->setIntegrityCheck(false);

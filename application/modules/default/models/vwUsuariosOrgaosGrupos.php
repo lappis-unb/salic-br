@@ -143,20 +143,87 @@ class vwUsuariosOrgaosGrupos extends MinC_Db_Table_Abstract {
         $sql = $this->select();
         $sql->setIntegrityCheck(false);
         $sql->from(
+            'Orgaos',
+            array
+            (
+                'Codigo',
+                'Sigla',
+            ),
+            $this->getSchema('sac')
+        );
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
+        $arrAuth = array_change_key_case((array) $auth->getIdentity());
+        $intUsuOrgao = $arrAuth['usu_orgao'];
+        if ($intUsuOrgao == 91) {
+            $sql->where('idSecretaria = 91');
+            $sql->where('Codigo <> 91');
+        } else {
+            $sql->where('vinculo = 1');
+        }
+        $sql->where('status = 0');
+        $sql->order('Sigla ASC');
+        $arrResult = $this->fetchAll($sql);
+        return $arrResult;
+    }
+
+    public function carregarUsuariosPorUnidade($intIdUnidade)
+    {
+
+        $sql = $this->select();
+        $sql->setIntegrityCheck(false);
+        $sql->from(
             'vwusuariosorgaosgrupos',
             array
             (
-                'org_siglaautorizado',
-                'org_nomeautorizado',
-                'org_superior',
+                'usu_codigo',
+                'usu_nome',
+                'usu_orgao',
+                'usu_orgaolotacao',
             ),
             $this->_schema
         );
-        $sql->where("gru_nome LIKE '%Parecerista%'");
-        $sql->order('org_siglaautorizado ASC');
-        $sql->distinct();
+        $sql->where("sis_codigo = ?", 21);
+        $sql->where("gru_codigo = ?", 94);
+        $sql->where("uog_status = ?", 1);
+        $sql->where("uog_orgao = ?", $intIdUnidade);
+        $sql->order('usu_orgao ASC');
+        $sql->order('usu_nome ASC');
         $arrResult = $this->fetchAll($sql);
-        return $arrResult;
+        $arrNew = array();
+        foreach ($arrResult->toArray() as $arrValue) {
+            $arrNew[utf8_encode($arrValue['usu_orgaolotacao'])][$arrValue['usu_codigo']] = utf8_encode($arrValue['usu_nome']);
+        }
+        return $arrNew;
+    }
+
+    public function carregarUsuariosPorUnidadeIphan($intIdUnidade)
+    {
+
+        $sql = $this->select();
+        $sql->setIntegrityCheck(false);
+        $sql->from(
+            'vwusuariosorgaosgrupos',
+            array
+            (
+                'usu_codigo',
+                'usu_nome',
+                'usu_orgao',
+                'usu_orgaolotacao',
+            ),
+            $this->_schema
+        );
+        $sql->where("sis_codigo = ?", 21);
+        $sql->where("gru_codigo = ?", 94);
+        $sql->where("uog_status = ?", 1);
+        $sql->where("uog_orgao = ?", $intIdUnidade);
+        $sql->order('usu_orgao ASC');
+        $sql->order('usu_nome ASC');
+        $arrResult = $this->fetchAll($sql);
+        $arrNew = array();
+        foreach ($arrResult->toArray() as $arrValue) {
+            $arrNew[utf8_encode($arrValue['usu_orgaolotacao'])][$arrValue['usu_codigo']] = utf8_encode($arrValue['usu_nome']);
+        }
+        return $arrNew;
     }
 
     public function buscarUsuarios($codPerfil, $codOrgao){

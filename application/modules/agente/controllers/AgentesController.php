@@ -432,6 +432,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         }
 
         echo json_encode($retorno);
+        die;
     }
 
     /**
@@ -469,9 +470,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->autenticacao();
 
         $modal  = $this->_request->getParam("modal");
-
         $this->_helper->layout->disableLayout();
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->view->modal = "s";
         $this->view->cpf = $this->_request->getParam("cpfCnpj");
         $this->view->caminho = $this->_request->getParam("caminho");
@@ -491,7 +490,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $modal  = $this->_request->getParam("modal");
 
         $this->_helper->layout->disableLayout();
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->view->modal = "s";
         $this->view->cpf = $this->_request->getParam("cpfCnpj");
         $this->view->caminho = $this->_request->getParam("caminho");
@@ -511,7 +509,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $modal  = $this->_request->getParam("modal");
 
         $this->_helper->layout->disableLayout();
-        header("Content-Type: text/html; charset=ISO-8859-1");
         $this->view->modal = "s";
         $this->view->cpf = $this->_request->getParam("cpfCnpj");
         $this->view->caminho = $this->_request->getParam("caminho");
@@ -1824,7 +1821,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         } else {
             if (count($dados) != 0) {
                 foreach ($dados as $dado) {
-                    $dado = array_change_key_case((array) $dado);
+                    $dado = ((array) $dado);
                     array_walk($dado, function($value, $key) use (&$dado){
                         $dado[$key] = utf8_encode($value);
                     });
@@ -1858,6 +1855,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         }
 
         echo json_encode($novos_valores);
+        die;
     }
 
     /**
@@ -1873,16 +1871,17 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     {
         $arrAuth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
         $usuario = isset($arrAuth['IdUsuario']) ? $arrAuth['IdUsuario'] : $arrAuth['usu_codigo'];
-        $arrayAgente = array('cnpjcpf' => $this->_request->getParam("cpf"),
+        $arrayAgente = array(
+            'cnpjcpf' => $this->_request->getParam("cpf"),
             'tipopessoa' => $this->_request->getParam("Tipo"),
             'status' => 0,
             'usuario' => $usuario
         );
         $mprAgentes = new Agente_Model_AgentesMapper();
-//        $tblAgentes = new Agente_Model_DbTable_Agentes();
         $mprNomes = new Agente_Model_NomesMapper();
         $mdlAgente = new Agente_Model_Agentes($arrayAgente);
         $mprAgentes->save($mdlAgente);
+
         $agente = $mprAgentes->findBy(array('cnpjcpf' => $mdlAgente->getCnpjcpf()));
         $cpf = preg_replace('/\.|-|\//','',$_REQUEST['cpf']);
         $idAgente = $agente['idagente'];
@@ -2121,6 +2120,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     public function salvaagentegeralAction() {
+
         $this->autenticacao();
         $this->salvaragente();
     }

@@ -24,7 +24,8 @@ class Admissibilidade_Model_DbTable_TbMensagemProjeto extends MinC_Db_Table_Abst
                     ->setIntegrityCheck(false)
                     ->from($this->_name,
                         array('idMensagemProjeto',
-                              'dtMensagem' => $this->getExpressionToChar('dtMensagem') . $this->getExpressionConcat() . " ' ' " . $this->getExpressionConcat()  .  $this->getExpressionToChar('dtMensagem', 108),
+                              'dtMensagem',
+                              'dtMensagemTreated' => $this->getExpressionToChar($this->_name . '.dtMensagem') . $this->getExpressionConcat() . " ' ' " . $this->getExpressionConcat()  .  $this->getExpressionToChar($this->_name . '.dtMensagem', 108),
                               'dsMensagem',
                               'stAtivo',
                               'cdTipoMensagem',
@@ -43,9 +44,31 @@ class Admissibilidade_Model_DbTable_TbMensagemProjeto extends MinC_Db_Table_Abst
                         array('usuariosRemetente' => 'usuarios'),
                         'tbMensagemProjeto.idRemetente = usuariosRemetente.usu_codigo',
                         'usu_nome as usu_nome_remetente',
-                        $this->getSchema('tabelas'));
+                        $this->getSchema('tabelas'))
+                    ->joinLeft(
+                        array('tbMensagemProjetoResposta' => $this->_name),
+                        'tbMensagemProjeto.idMensagemProjeto = tbMensagemProjetoResposta.idMensagemOrigem',
+                        'tbMensagemProjetoResposta.dtMensagem as dtResposta',
+                        $this->_schema);
         parent::setWhere($select, $where);
         $select->order('dtMensagem DESC');
-        return $this->fetchAll($select);
+
+        $arrResult = ($arrResult = $this->fetchAll($select))? $arrResult->toArray() : array();
+        foreach ($arrResult as &$arrValue) {
+            $arrValue['dsMensagem'] = strip_tags($arrValue['dsMensagem']);
+            if (strlen($arrValue['dsMensagem']) > 50)
+                $arrValue['dsMensagem'] = substr($arrValue['dsMensagem'], 0, 50) . '...';
+            $date = new DateTime( $arrValue['dtMensagem'] );
+            if ($arrValue['dtResposta']){
+                $date2 = new DateTime( $arrValue['dtResposta'] );
+            } else {
+                $date2 = new DateTime();
+            }
+            $arrValue['tempoResposta'] = $date->diff( $date2 )->days;
+//            $arrValue['dtResposta'] = strip_tags($arrValue['dsMensagem']);
+
+        }
+
+        return $arrResult;
     }
 }

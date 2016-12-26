@@ -48,16 +48,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      * @access public
      * @return void
      */
-//    public function _initLocal()
-//    {
+    public function _initLocal()
+    {
         /* formato, idioma e localizacao */
-//        setlocale(LC_ALL, 'pt_BR');
+        setlocale(LC_ALL, 'pt_BR');
 //        setlocale(LC_CTYPE, 'de_DE.iso-8859-1');
-//        date_default_timezone_set('America/Sao_Paulo');
+        date_default_timezone_set('America/Sao_Paulo');
 
         // Registra currency que sera usado automaticamente pelo zend
-//        Zend_Registry::set('Zend_Currency', new Zend_Currency('pt_BR'));
-//    }
+        Zend_Registry::set('Zend_Currency', new Zend_Currency('pt_BR'));
+    }
 
     /**
      * _initSession

@@ -9,7 +9,6 @@
  * @link http://www.cultura.gov.br
  * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
  */
-header('Content-Type: text/plain; charset=ISO-8859-1');
 
 $pronac = (isset($_GET['idPronac']) ? $_GET['idPronac'] : '');
 ?>

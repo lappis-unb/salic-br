@@ -4,10 +4,7 @@
  * @author Equipe RUP - Politec
  * @since 20/07/2010 - Alterado em 17/09/2013 (Jefferson Alessandro)
  * @version 1.0
- * @package application
- * @subpackage application.controller
  * @link http://www.cultura.gov.br
- * @copyright � 2010 - Minist�rio da Cultura - Todos os direitos reservados.
  */
 
 class RecursoController extends MinC_Controller_Action_Abstract
@@ -17,34 +14,36 @@ class RecursoController extends MinC_Controller_Action_Abstract
     private $idPerfil = 0;
     private $intTamPag = 10;
 
-	/**
-	 * Reescreve o m�todo init()
-	 * @access public
-	 * @param void
-	 * @return void
-	 */
-	public function init()
-	{
-	    $auth = Zend_Auth::getInstance(); // pega a autentica��o
+    /**
+     * @access public
+     * @param void
+     * @return void
+     */
+    public function init()
+    {
+        $auth = Zend_Auth::getInstance(); // pega a autentica��o
         $this->idUsuario = $auth->getIdentity()->usu_codigo; // usu�rio logado
 
         $GrupoAtivo = new Zend_Session_Namespace('GrupoAtivo'); // cria a sess�o com o grupo ativo
         $this->idOrgao = $GrupoAtivo->codOrgao;
         $this->idPerfil = $GrupoAtivo->codGrupo;
 
-		// autentica��o e permiss�es zend (AMBIENTE MINC)
-		$PermissoesGrupo = array();
-		$PermissoesGrupo[] = 93; // Coordenador de Parecer
-		$PermissoesGrupo[] = 94; // Parecerista
-		$PermissoesGrupo[] = 103; // Coordenador de An�lise
-		$PermissoesGrupo[] = 110; // T�cnico de An�lise
-		$PermissoesGrupo[] = 118; // Componente da Comiss�o
-		$PermissoesGrupo[] = 127; // Coordenador - Geral de An�lise (Ministro)
-		parent::perfil(1, $PermissoesGrupo);
+        // autentica��o e permiss�es zend (AMBIENTE MINC)
+        $PermissoesGrupo = array();
+        $PermissoesGrupo[] = 93; // Coordenador de Parecer
+        $PermissoesGrupo[] = 94; // Parecerista
+        $PermissoesGrupo[] = 103; // Coordenador de An�lise
+        $PermissoesGrupo[] = 110; // Tecnico de Analise
+        $PermissoesGrupo[] = 118; // Componente da Comiss�o
+        $PermissoesGrupo[] = 127; // Coordenador - Geral de An�lise (Ministro)
 
-		parent::init();
-	} // fecha m�todo init()
+        $PermissoesGrupo[] = 131; // Coordenador - Geral de Admissibilidade.
+        $PermissoesGrupo[] = 92; // Coordenador - Tecnico de  Admissibilidade.
 
+        parent::perfil(1, $PermissoesGrupo);
+
+        parent::init();
+    }
 
 	/**
 	 * Fluxo inicial
@@ -54,8 +53,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
 	 */
 	public function indexAction()
 	{
-        //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE AN�LISE E COORD. DE AN�LISE.
-        if($this->idPerfil != 103 && $this->idPerfil != 127){
+        //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE AN�LISE E COORD. DE AN�LISE.Coordenado Admissibilidade
+        if($this->idPerfil != 103 && $this->idPerfil != 127 && $this->idPerfil != 131 && $this->idPerfil != 92){
             parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
         }
 
@@ -104,7 +103,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
             switch ($filtro) {
                 case '':
                     $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-                    $where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
+                    //$where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
                     break;
                 case 'emanalise':
                     $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
@@ -120,7 +119,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         } else {
             $this->view->nmPagina = 'Aguardando An�lise';
             $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
-            $where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
+            //$where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
         }
 
         if((isset($_GET['pronac']) && !empty($_GET['pronac']))){
@@ -148,6 +147,7 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $totalPag = (int)(($total % $this->intTamPag == 0)?($total/$this->intTamPag):(($total/$this->intTamPag)+1));
         $tamanho = ($fim > $total) ? $total - $inicio : $this->intTamPag;
 
+        var_dump($where);
         $busca = $tbRecurso->painelRecursos($where, $order, $tamanho, $inicio);
         $paginacao = array(
             "pag"=>$pag,
@@ -2200,4 +2200,134 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $this->view->dadosRecurso = $dadosRecurso;
     }
 
-} // fecha class
+
+    public function avaliarRecursoEnquadramentoAction() {
+        $idRecurso = $_GET['recurso'];
+
+        $tbRecurso = new tbRecurso();
+        $r = $tbRecurso->buscarDadosRecursos(array('idRecurso = ?'=>$idRecurso))->current();
+        if($r->tpSolicitacao == 'PI'){
+            $Parecer = new Parecer();
+            $dadosParecer = $Parecer->statusDeAvaliacao($r->IdPRONAC);
+            $this->view->statusDeAvaliacao = $dadosParecer;
+       }
+
+        if($r){
+            $Projetos = new Projetos();
+            $p = $Projetos->buscarProjetoXProponente(array('idPronac = ?' => $r->IdPRONAC))->current();
+
+            $this->view->recurso = $r;
+            $this->view->projeto = $p;
+        } else {
+            parent::message('Nenhum registro encontrado.', "recurso", "ERROR");
+        }
+    }
+
+    /**
+     * salvarAvaliacaoEnquadramentoAction
+     *
+     * @access public
+     * @return void
+     */
+    public function salvarAvaliacaoEnquadramentoAction()
+    {
+        $idRecurso = $this->getRequest()->getParam('idRecurso');
+        $stAtendimento = $this->getRequest()->getParam('stAtendimento');
+
+        $tbRecurso = new tbRecurso();
+        $recurso = $tbRecurso->find(array('idRecurso = ?' => $idRecurso))->current();
+
+        //$stEstado = 0;
+        //$stFecharAnalise = 0;
+
+        if($recurso){
+            //$Projetos = new Projetos();
+            //$dp = $Projetos->buscar(array('IdPRONAC = ?'=>$r->IdPRONAC))->current();
+            //$pronac = $dp->AnoProjeto.$dp->Sequencial;
+
+            $recurso->stAtendimento = $stAtendimento;
+            $recurso->dsAvaliacao = $this->getRequest()->getParam('dsAvaliacao');
+            $recurso->dtAvaliacao = new Zend_Db_Expr('GETDATE()');
+            $recurso->idAgenteAvaliador = $this->idUsuario;
+            //var_dump($recurso);
+            //die;
+
+            if($_POST['stAtendimento'] == 'I'){
+                $recurso->siRecurso = 2; // 2=Solicitação Indeferida
+                //$recurso->stEstado = 1;
+
+                //BUSCA A SITUA��O ANTERIOR DO PROJETO ANTES DA SOLICITA��O RECURSO
+                $historicoSituacao = new HistoricoSituacao();
+                $dadosHist = $historicoSituacao->buscarSituacaoAnterior($pronac);
+
+                //ATUALIZA A SITUA��O DO PROJETO
+                //$w = array();
+                //$w['situacao'] = $dadosHist->Situacao;
+                //$w['ProvidenciaTomada'] = 'Recurso indeferido.';
+                //$w['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
+                //$w['Logon'] = $this->idUsuario;
+                //$where = "IdPRONAC = $dp->IdPRONAC";
+                //$Projetos->update($w, $where);
+
+            } else {
+                if($_POST['vinculada'] == 262){
+                    $r->siRecurso = 4; //4=Enviado para An�lise T�cnica (SEFIC)
+
+                } else if($_POST['vinculada'] == 400) {
+                    $stEstado = 1;
+                    $stFecharAnalise = 1;
+                    $r->siRecurso = 7; //7=CNIC
+                    $r->idAgenteAvaliador = $_POST['destinatario'];
+
+                } else {
+                    $r->siRecurso = 3; //3=Enviado para o coordenador de parecer
+
+                    //ATUALIZA A SITUAÇÃO DO PROJETO
+                    $w = array();
+                    $w['situacao'] = 'B11';
+                    $w['ProvidenciaTomada'] = 'Recurso encaminhado para avalia��o da unidade vinculada.';
+                    $w['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
+                    $w['Logon'] = $this->idUsuario;
+                    $where = "IdPRONAC = $dp->IdPRONAC";
+                    $Projetos->update($w, $where);
+
+                    //SE O RECURSO SE TRATAR DE PROJETO INDEFERIDO, OS DADOS DAS PLANILHAS ABAIXO DEVEM SER DELETADAS.
+                    if($r->tpSolicitacao == 'PI'){
+                        //DELETAR DADOS
+                        $tbAnaliseAprovacao = new tbAnaliseAprovacao();
+                        $tbAnaliseAprovacao->delete(array('IdPRONAC = ?' => $r->IdPRONAC, 'tpAnalise = ?' => 'CO'));
+
+                        $tbPlanilhaAprovacao = new tbPlanilhaAprovacao();
+                        $tbPlanilhaAprovacao->delete(array('IdPRONAC = ?' => $r->IdPRONAC, 'tpPlanilha = ?' => 'CO', 'stAtivo = ?' => 'S'));
+
+                        $Parecer = new Parecer();
+                        $Parecer->delete(array('IdPRONAC = ?' => $r->IdPRONAC, 'stAtivo = ?' => 1, 'idTipoAgente = ?' => 6));
+
+                        $Enquadramento = new Enquadramento();
+                        $Enquadramento->delete(array('IdPRONAC = ?' => $r->IdPRONAC));
+                    }
+                }
+            }
+            $recurso->save();
+            die;
+
+            if($_POST['stAtendimento'] == 'D'){
+                $tbDistribuirProjeto = new tbDistribuirProjeto();
+                $dados = array(
+                    'IdPRONAC' => $r->IdPRONAC,
+                    'idUnidade' => $_POST['vinculada'],
+                    'dtEnvio' => new Zend_Db_Expr('GETDATE()'),
+                    'idAvaliador' => isset($_POST['destinatario']) ? $_POST['destinatario'] : null,
+                    'stEstado' => $stEstado,
+                    'stFecharAnalise' => $stFecharAnalise,
+                    'idUsuario' => $this->idUsuario
+                );
+                $tb = $tbDistribuirProjeto->inserir($dados);
+            }
+            parent::message('Dados salvos com sucesso!', "recurso", "CONFIRM");
+
+        } else {
+            parent::message('Nenhum registro encontrado.', "recurso", "ERROR");
+        }
+    }
+}

@@ -7,12 +7,12 @@
         $('.btn_imprimir').click(function(){
             $('#formImpressao').submit();
         });
-        
+
         $('.btn_ver').click(function(){
             var id = $(this).attr('idRecurso');
             window.location = "<?php echo $this->url(array('controller' => 'recurso', 'action' => 'visualizar-recurso')); ?>?id="+id;
         });
-        
+
         $('.encaminharRecursoCheckList').click(function(){
             var id = $(this).attr('idRecurso');
             $("#alerta").dialog("destroy");
@@ -34,7 +34,7 @@
             });
             $('.ui-dialog-titlebar-close').remove();
         });
-        
+
         $('.devolverRecurso').click(function(){
             var id = $(this).attr('idRecurso');
             $("#alerta").dialog("destroy");
@@ -56,12 +56,22 @@
             });
             $('.ui-dialog-titlebar-close').remove();
         });
-        
+
         $('.btn_avaliar').click(function(){
+            var id = $(this).attr('recurso');
+            tipo = $(this).attr('tipo');
+            if (tipo == 'ER'){
+                window.location = "<?php echo $this->url(array('controller' => 'recurso', 'action' => 'avaliar-recurso-enquadramento')); ?>?recurso="+id;
+            } else {
+                window.location = "<?php echo $this->url(array('controller' => 'recurso', 'action' => 'avaliar-recurso')); ?>?recurso="+id;
+            }
+        });
+
+        $('.btn_avaliar_enquadramento').click(function(){
             var id = $(this).attr('recurso');
             window.location = "<?php echo $this->url(array('controller' => 'recurso', 'action' => 'avaliar-recurso')); ?>?recurso="+id;
         });
-        
+
         $('.finalizarRecurso').click(function(){
             var componente = $(this).parent().parent().find('select.comboComponente').val(),
                 idRecurso = $(this).attr('idRecurso');
@@ -81,7 +91,7 @@
                     }
                 });
                 $('.ui-dialog-titlebar-close').remove();
-                
+
             } else {
                 $("#alerta").dialog("destroy");
                 $("#alerta").html('Deseja realmente enviar o recurso para a análise da CNIC?<br /><br />Ao enviar o recurso será removido do seu painel.');
@@ -149,7 +159,7 @@
 
 
 <!-- ========== INÍCIO CONTEÚDO ========== -->
-<div id="conteudo">           
+<div id="conteudo">
     <form name="formPesquisa" id="formPesquisa" action="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index'));?>" method="get">
         <table class="tabela">
             <tr>
@@ -177,7 +187,7 @@
             </tr>
         </table>
     </form>
-    
+
     <?php if(count($this->dados)>0){ ?>
     <!-- ============ PAGINAÇÃO ============ -->
     <table class="tabela" style="width: 97%;" border="0" cellpadding="0" cellspacing="0">
@@ -243,12 +253,12 @@
                 <?php if($this->filtro == 'emanalise'){ ?>
                 <th><a href="<?php echo $this->url(array('controller' => 'recurso', 'action' => 'index')).'?pag=1&qtde='.$this->paginacao['qtde'].'&tipoFiltro='.$this->filtro.'&pronac='.$this->pronac.'&campo=8&ordem='.$this->paginacao['novaOrdem'];?>">Situação</a></th>
                 <?php } ?>
-                
+
                 <?php if($this->filtro == 'analisados'){ ?>
                 <th style="width: 130px;">Visualizar</th>
                 <th>Componente da Comissão</th>
                 <?php } ?>
-                
+
                 <?php if($this->filtro != 'emanalise'){ ?>
                     <?php if($this->filtro == 'analisados'){ ?>
                     <th>Ação</th>
@@ -256,7 +266,7 @@
                     <th>Avaliar</th>
                     <?php } ?>
                 <?php } ?>
-                
+
                 <?php if($this->filtro == 'analisados'){ ?>
                 <th>Devolver</th>
                 <?php } ?>
@@ -291,7 +301,7 @@
                     ?>
                 </td>
                 <?php } ?>
-                
+
                 <?php if($this->filtro == 'analisados'){ ?>
                 <td align="center">
                     <input type="button" class="btn_ver" idRecurso="<?php echo $d->idRecurso; ?>" />
@@ -308,7 +318,7 @@
                     <?php } else { echo '-'; } ?>
                 </td>
                 <?php } ?>
-                
+
                 <?php if($this->filtro != 'emanalise'){ ?>
                 <td align="center">
                     <?php if($this->filtro == 'analisados'){ ?>
@@ -318,11 +328,13 @@
                         <input type="button" name="btn_encaminhar" class="btn_gerarpublicacao encaminharRecursoCheckList" idRecurso="<?php echo $d->idRecurso; ?>" title="Encaminhar Checklist Publicação">
                         <?php } ?>
                     <?php } else { ?>
-                        <input type="button" name="btn_avaliar" id="btn_avaliar" class="btn_avaliar" recurso="<?php echo $d->idRecurso; ?>" pronac="<?php echo $d->PRONAC; ?>" nomeprojeto="<?php echo $d->NomeProjeto; ?>" title="Avaliar">
+                            <input type="button" name="btn_avaliar"
+                                    tipo="<?php echo ($d->tipo == 'ER') ? 'ER' : ''; ?>"
+                                    id="btn_avaliar" class="btn_avaliar" recurso="<?php echo $d->idRecurso; ?>" pronac="<?php echo $d->PRONAC; ?>" nomeprojeto="<?php echo $d->NomeProjeto; ?>" title="Avaliar">
                     <?php } ?>
                 </td>
                 <?php } ?>
-                
+
                 <?php if($this->filtro == 'analisados'){ ?>
                 <td align="center">
                     <img src="<?php echo $this->baseUrl().'/public/img/desarquivar.gif'; ?>" style="cursor: pointer;" class="devolverRecurso" idRecurso="<?php echo $d->idRecurso; ?>" title="Devolver">
@@ -427,7 +439,7 @@
                 <td colspan="2" id="xRecurso"></td>
             </tr>
         </table>
-        
+
         <table class="tabela">
             <tr>
                 <td class="destacar bold" colspan="2">Resposta</td>
