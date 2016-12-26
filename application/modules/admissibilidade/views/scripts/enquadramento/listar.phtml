@@ -28,6 +28,7 @@
                 <th>Nome do Projeto</th>
                 <th>&Aacute;rea</th>
                 <th>Segmento</th>
+                <th>Data</th>
                 <th align="center">A&ccedil;&otilde;es</th>
             </tr>
             </thead>
@@ -39,6 +40,7 @@
                     <td><?php echo $dado->nomeProjeto; ?></td>
                     <td><?php echo $dado->area; ?></td>
                     <td><?php echo $dado->segmento; ?></td>
+                    <td><?php echo Data::tratarDataZend($dado->DtSituacao, 'Brasileira'); ?></td>
                     <td>
                         <?php if($dado->segmento == "B03") { ?>
                         <a class="btn-floating waves-effect waves-light red tooltipped" data-position="top" data-delay="50" data-tooltip="Projeto Enquadrado Com Recusso">
