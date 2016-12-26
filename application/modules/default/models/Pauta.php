@@ -12,8 +12,7 @@
  */
 class Pauta extends MinC_Db_Table_Abstract {
 
-    protected $_banco = 'bdcorporativo';
-    protected $_schema = 'scSAC';
+    protected $_schema = 'BDCORPORATIVO.scsac';
     protected $_name = 'tbPauta';
 
     public function PautaAprovada($idNrReuniao, $idpronac=null) {
@@ -86,7 +85,7 @@ class Pauta extends MinC_Db_Table_Abstract {
         $slct = $this->select();
         $slct->setIntegrityCheck(false);
         $slct->from(
-                array('tp' => $this->_schema . '.' . $this->_name),
+                array('tp' => $this->_name),
                 array(
                     'tp.dtEnvioPauta',
                     'tp.stEnvioPlenario',
@@ -124,19 +123,19 @@ class Pauta extends MinC_Db_Table_Abstract {
         $slct->joinInner(
                 array('dpc' => 'tbDistribuicaoProjetoComissao'),
                 "pr.IdPRONAC = dpc.idPRONAC",
-                array(),
-                'scSAC'
+                array()
         );
         $slct->joinInner(
                 array('nm' => 'Nomes'),
                 "nm.idAgente = dpc.idAgente",
                 array('Descricao as nomeComponente'),
-                'Agentes.dbo'
+                'AGENTES'
         );
         $slct->where('tp.idNrReuniao = ?', $idNrReuniao);
         $slct->where('par.stAtivo = ?', 1);
         $slct->where('dpc.stDistribuicao = ?', 'A');
         $slct->where("tp.stAnalise not in ('AS', 'IS', 'AR')");
+        
         return $this->fetchAll($slct);
     }
 

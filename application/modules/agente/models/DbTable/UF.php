@@ -16,9 +16,9 @@
  */
 class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
 {
-    protected $_banco = "agentes";
+    protected $_banco = 'AGENTES';
     protected $_name = 'uf';
-    protected $_schema = 'agentes';
+    protected $_schema = 'AGENTES';
 
     /**
      * Metodo para buscar os estados
@@ -39,9 +39,7 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
         );
         $select->order('sigla');
         try {
-            $db = Zend_Db_Table::getDefaultAdapter();
-            $db->setFetchMode(Zend_DB::FETCH_OBJ);
-            return $db->fetchAll($select);
+            return $this->fetchAll($select);
         } catch (Zend_Exception_Db $objException) {
             throw new Exception("Erro ao buscar Estados: " . $objException->getMessage(), 0, $objException);
         }

@@ -4,7 +4,6 @@
 -- COMMIT;
 -- ROLLBACK;
 -- BEGIN;
-
 CREATE SCHEMA IF NOT EXISTS agentes AUTHORIZATION postgres;
 
 
@@ -96,7 +95,7 @@ CREATE TABLE agentes."Verificacao"
   "IdTipo" INT NOT NULL,
   "Descricao" VARCHAR(100) NOT NULL,
   "Sistema" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Verificacao_Tipo FOREIGN KEY ("IdTipo") REFERENCES agentes."Tipo" ("idTipo")
+  CONSTRAINT "FK_Verificacao_Tipo" FOREIGN KEY ("IdTipo") REFERENCES agentes."Tipo" ("idTipo")
 );
 CREATE SEQUENCE agentes.verificacao_idverificacao_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE agentes."Verificacao" ALTER COLUMN "idVerificacao" SET DEFAULT nextval('agentes.verificacao_idverificacao_seq');
@@ -114,9 +113,9 @@ CREATE TABLE agentes."Telefones"
   "Numero" VARCHAR(12) NOT NULL,
   "Divulgar" INT DEFAULT 0 NOT NULL,
   "Usuario" INT DEFAULT 0 NOT NULL,
-  CONSTRAINT FK_Telefones_Agentes FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
-  CONSTRAINT FK_Telefones_Verificacao FOREIGN KEY ("TipoTelefone") REFERENCES agentes."Verificacao" ("idVerificacao"),
-  CONSTRAINT FK_Telefones_UF FOREIGN KEY ("UF") REFERENCES agentes."UF" ("idUF")
+  CONSTRAINT "FK_Telefones_Agentes" FOREIGN KEY ("idAgente") REFERENCES agentes."Agentes" ("idAgente"),
+  CONSTRAINT "FK_Telefones_Verificacao" FOREIGN KEY ("TipoTelefone") REFERENCES agentes."Verificacao" ("idVerificacao"),
+  CONSTRAINT "FK_Telefones_UF" FOREIGN KEY ("UF") REFERENCES agentes."UF" ("idUF")
 );
 CREATE SEQUENCE agentes.telefones_idtelefone_seq NO MINVALUE NO MAXVALUE NO CYCLE;
 ALTER TABLE agentes."Telefones" ALTER COLUMN "idTelefone" SET DEFAULT nextval('agentes.telefones_idtelefone_seq');

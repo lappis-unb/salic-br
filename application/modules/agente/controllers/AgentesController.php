@@ -2642,21 +2642,11 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $nome = $this->_request->getParam('nome');
         $cpf = Mascara::delMaskCPF($this->_request->getParam('cpf'));
 
-        // ========== INICIO PAGINACAO ==========
-        // criando a paginacao
         $buscar = $agentes->consultaPareceristasPainel($nome, $cpf);
-
-        Zend_Paginator::setDefaultScrollingStyle('Sliding');
-        Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacao.phtml');
-        $paginator = Zend_Paginator::factory($buscar); // dados a serem paginados
-        // pagina atual e quantidade de itens por pagina
-        $currentPage = $this->_getParam('page', 1);
-        $paginator->setCurrentPageNumber($currentPage)->setItemCountPerPage(15);
-        // ========== FIM PAGINACAO ==========
-
-        $this->view->qtdpareceristas = count($buscar);
-        $this->view->pareceristas = $paginator;
-
+        
+        $this->view->dados = $buscar;
+        $this->view->qtpareceristas = count($buscar);
+            
         $orgaos = new Orgaos();
         $this->view->orgaos = $orgaos->pesquisarTodosOrgaos();
     }

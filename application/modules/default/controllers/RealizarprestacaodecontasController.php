@@ -90,12 +90,14 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             $this->codOrgao       = $_SESSION['GrupoAtivo']['codOrgao'];
             $this->view->codOrgao = $_SESSION['GrupoAtivo']['codOrgao'];
 
-            $this->view->comboestados = Estado::buscar();
+            $buscaEstados = new Agente_Model_DbTable_UF();
+
+            $this->view->comboestados = $buscaEstados->buscar();
 
             $idpronac = $this->_request->getParam("idPronac");
             if(!empty($idpronac)){
                 $tblEncaminhamentoPrestacaoContas = new tbEncaminhamentoPrestacaoContas();
-                $rsEPC = $tblEncaminhamentoPrestacaoContas->buscar(array("idPronac = ?"=>$idpronac, 'stAtivo=?'=>1))->current();
+                $rsEPC = $tblEncaminhamentoPrestacaoContas->buscar(array("idPronac = ? " => $idpronac, 'stAtivo= ? ' => 1))->current();
                 if(!empty($rsEPC)){
                     $this->situcaoEncaminhamentoAtual = $rsEPC->idSituacaoEncPrestContas;
                     $this->cdGruposDestinoAtual       = $rsEPC->cdGruposDestino;
@@ -3329,8 +3331,8 @@ class RealizarPrestacaoDeContasController extends MinC_Controller_Action_Abstrac
             }
 
             $tblSituacao = new Situacao();
-            $rsSitucao = $tblSituacao->buscar(array("Codigo IN (?)"=>array('C08', 'E16', 'E17', 'E18', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54')));
-	    
+            $rsSitucao = $tblSituacao->listasituacao(array("Codigo IN (?)"=>array('C08', 'E16', 'E17', 'E18', 'E20', 'E24', 'E25', 'E62', 'E66', 'E68', 'E72', 'E77', 'G15', 'G17', 'G18', 'G20', 'G24', 'G43', 'G54')));
+            
             $this->view->situacoes = $rsSitucao;
             $this->intTamPag = 10;
 
