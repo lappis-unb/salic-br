@@ -2,8 +2,7 @@
 
 class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
 
-    const GRUPO_TECNICO_ADMISSIBILIDADE = 92;
-    const GRUPO_COORDENADOR_ADMISSIBILIDADE = 131;
+
 
     protected $_banco = 'Tabelas';
     protected $_schema = 'Tabelas';
