@@ -664,4 +664,47 @@ class tbRecurso extends MinC_Db_Table_Abstract
         return $resultado;
     } // fecha m�todo buscarPlanilhaDeCustos()
 
+    public function painelRecursosEnquadramento($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false)
+    {
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('a' => $this->_name),
+            array(
+                new Zend_Db_Expr("b.idPronac, a.idRecurso, b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto, a.dtSolicitacaoRecurso,a.tpSolicitacao as tipo"),
+                new Zend_Db_Expr("CASE
+                                    WHEN tpSolicitacao = 'EN' THEN 'Enquadramento'
+                                    WHEN tpSolicitacao = 'OR' THEN 'Or�amento'
+                                    WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
+                                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or�amento'
+                                    WHEN tpSolicitacao = 'ER' THEN 'Enquadramento Recurso'
+                                 END AS tpSolicitacao,
+                                 CASE
+                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsideração'
+                                    WHEN tpRecurso = 2 THEN 'Recurso'
+                                 END AS tpRecurso, a.siRecurso
+                "),
+            )
+        );
+
+        $select->joinInner(
+            array('b' => 'Projetos'), 'a.idPronac = b.idPronac',
+            array(''), 'SAC.dbo'
+        );
+
+       //adiciona quantos filtros foram enviados
+        foreach ($where as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
+
+        if ($qtdeTotal) {
+            return $this->fetchAll($select)->count();
+        }
+
+        //adicionando linha order ao select
+        $select->order($order);
+
+        return $this->fetchAll($select);
+    }
+
 }

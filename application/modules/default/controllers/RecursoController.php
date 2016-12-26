@@ -1761,10 +1761,6 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $this->_helper->viewRenderer->setNoRender(TRUE);
     }
 
-
-
-
-
 	/**
 	 * M�todo com a Solicita��o de Recurso
 	 * @access public
@@ -1785,8 +1781,6 @@ class RecursoController extends MinC_Controller_Action_Abstract
 		$tbreenquadramento = RecursoDAO::buscarRecursoReenquadramento();
 		$this->view->recursoreenquadramento = $tbreenquadramento;
 	} // fecha m�todo recursoAction()
-
-
 
 	/**
 	 * M�todo com os Projetos Indeferidos
@@ -1869,8 +1863,6 @@ class RecursoController extends MinC_Controller_Action_Abstract
 		} // fecha if
 
 	} // fecha m�todo indeferidosAction()
-
-
 
 	/**
 	 * M�todo com os Projetos Deferidos - Reenquadramento
@@ -1978,19 +1970,12 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
 	}// fecha m�todo reenquadramentoAction()
 
-
-
-
-
-
 	/**
 	 * M�todo com os Projetos Deferidos - Or�amento
 	 * @access public
 	 * @param void
 	 * @return void
 	 */
-
-
 
 	/**
 	 * M�todo com os Projetos Deferidos - Or�amento (Parecer Consolidado)
@@ -2003,8 +1988,6 @@ class RecursoController extends MinC_Controller_Action_Abstract
 		$tborcamento = RecursoDAO::buscarRecursoProjetosDeferidos();
 		$this->view->deferido = $tbdeferido;
 	} // fecha m�todo deferidosAction()
-
-
 
 	/**
 	 * M�todo com os Projetos Deferidos com Solicita��o de Reenquadramento - Or�amento (Parecer Consolidado)
@@ -2044,11 +2027,6 @@ class RecursoController extends MinC_Controller_Action_Abstract
 		} // feche else
 
 	} // fecha m�todo parecerAction()
-
-
-
-
-
 
 	public function orcamentoAction()
 	{
@@ -2190,7 +2168,6 @@ class RecursoController extends MinC_Controller_Action_Abstract
 		} // fecha else
 	} // fecha m�todo planilhaorcamentoaprovadaAction()
 
-
     public function detalharRecursoAction() {
         $idPronac = $this->_request->getParam("idPronac");
 
@@ -2198,7 +2175,6 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $dadosRecurso = $tbRecurso->buscarRecursoProjeto($idPronac);
         $this->view->dadosRecurso = $dadosRecurso;
     }
-
 
     public function avaliarRecursoEnquadramentoAction() {
         $idRecurso = $_GET['recurso'];
@@ -2232,44 +2208,37 @@ class RecursoController extends MinC_Controller_Action_Abstract
     {
         $idRecurso = $this->getRequest()->getParam('idRecurso');
         $stAtendimento = $this->getRequest()->getParam('stAtendimento');
-        $dsAvaliação = $this->getRequest()->getParam('dsAvaliacao');
-        
-        if(empty($dsAvaliação)){
-            parent::message('Avaliação não preenchida!', "recurso", "ERROR");
+        $dsAvaliacao = $this->getRequest()->getParam('dsAvaliacao');
+
+        if(empty($dsAvaliacao)){
+            parent::message('Avaliação não preenchida!', "recurso-enquadramento", "ERROR");
         }
         if(empty($idRecurso)){
-            parent::message('Recurso não encontrado!', "recurso", "ERROR");
+            parent::message('Recurso não encontrado!', "recurso-enquadramento", "ERROR");
         }
-        
+
         $tbRecurso = new tbRecurso();
         $recurso = $tbRecurso->find(array('idRecurso = ?' => $idRecurso))->current();
 
-
         if($recurso){
-            //$Projetos = new Projetos();
-            //$dp = $Projetos->buscar(array('IdPRONAC = ?'=>$r->IdPRONAC))->current();
-            //$pronac = $dp->AnoProjeto.$dp->Sequencial;
 
             $recurso->stAtendimento = $stAtendimento;
             $recurso->dsAvaliacao = $this->getRequest()->getParam('dsAvaliacao');
             $recurso->dtAvaliacao = new Zend_Db_Expr('GETDATE()');
             $recurso->idAgenteAvaliador = $this->idUsuario;
 
-            
-            
             if($stAtendimento == 'I'){
                 $recurso->siRecurso = 10; // 10= Devolvido pelo técnico para o coordenador
                 $recurso->stAtendimento = 'I';
-
+                $recurso->stEstado = 0;
             }
 
-            if($stAtendimento == 'D'){
+            if ($stAtendimento == 'D') {
                 $tblProjetos = new Projetos();
                 $recurso->siRecurso = 15; //Solicitação finalizada
                 $recurso->stAtendimento = 'D';
                 $recurso->stEstado = 1;
-                
-                
+
                 $projeto = array();
                 $projeto['situacao'] = 'B03';
                 $projeto['ProvidenciaTomada'] = 'Projeto enquadrado com recurso';
@@ -2278,9 +2247,117 @@ class RecursoController extends MinC_Controller_Action_Abstract
                 $where = "IdPRONAC = $recurso->IdPRONAC";
                 $tblProjetos->update($projeto, $where);
             }
-            $recurso->save();
-            parent::message('Dados salvos com sucesso!', "recurso", "CONFIRM");
 
+            $recurso->save();
+            parent::message('Dados salvos com sucesso!', "recurso/recurso-enquadramento", "CONFIRM");
+        }
+    }
+
+    public function recursoEnquadramentoAction()
+    {
+        //FUN��O ACESSADA SOMENTE PELOS PERFIS DE COORD. GERAL DE AN�LISE E COORD. DE AN�LISE.Coordenado Admissibilidade
+        if($this->idPerfil != 103 && $this->idPerfil != 127 && $this->idPerfil != 131 && $this->idPerfil != 92){
+            parent::message("Voc� n�o tem permiss�o para acessar essa �rea do sistema!", "principal", "ALERT");
+        }
+
+        $where = array();
+
+        $Orgaos = new Orgaos();
+        $idSecretaria = $Orgaos->buscar(array('codigo = ?'=>$this->idOrgao))->current();
+
+        if(!empty($idSecretaria)){
+            if($idSecretaria->idSecretaria == 251){
+                $where['b.Area <> ?'] = 2;
+            } else if($idSecretaria->idSecretaria == 160){
+                $where['b.Area = ?'] = 2;
+            }
+        }
+
+        $where['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
+        $where['a.siFaseProjeto = ?'] = 1; // 1=Apenas 1º fase do projeto
+        $where['a.tpSolicitacao = ?'] = 'EN'; /// Enquadramento Recurso
+
+        // Coordenador de Adimissibilidade
+        if($this->idPerfil == 131){
+            $where['a.siRecurso = ?'] = 10; // 1=Solicitado pelo proponente
+            $where['a.stAtendimento = ?'] = 'I'; // Não atendimento
+        } else {
+            $where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
+            $where['a.stAtendimento = ?'] = 'N'; // Não atendimento
+        }
+
+        $tbRecurso = New tbRecurso();
+
+        $dados = $tbRecurso->painelRecursosEnquadramento($where, $order, $tamanho, $inicio);
+
+        $this->view->idPerfil = $this->idPerfil;
+        $this->view->dados = $dados;
+    }
+
+    public function avaliarRecursoEnquadramentoEditarAction()
+    {
+        $idRecurso = $_GET['recurso'];
+
+        $tbRecurso = new tbRecurso();
+        $r = $tbRecurso->buscarDadosRecursos(array('idRecurso = ?'=>$idRecurso))->current();
+
+        if($r){
+            $Projetos = new Projetos();
+            $p = $Projetos->buscarProjetoXProponente(array('idPronac = ?' => $r->IdPRONAC))->current();
+
+            $this->view->recurso = $r;
+            $this->view->projeto = $p;
+        } else {
+            parent::message('Nenhum registro encontrado.', "recurso", "ERROR");
+        }
+    }
+
+    public function atualizarAvaliacaoEnquadramentoAction()
+    {
+        $idRecurso = $this->getRequest()->getParam('idRecurso');
+        $stAtendimento = $this->getRequest()->getParam('stAtendimento');
+        $dsAvaliacao = $this->getRequest()->getParam('dsAvaliacao');
+
+        if(empty($dsAvaliacao)){
+            parent::message('Avaliação não preenchida!', "recurso", "ERROR");
+        }
+        if(empty($idRecurso)){
+            parent::message('Recurso não encontrado!', "recurso", "ERROR");
+        }
+
+        $tbRecurso = new tbRecurso();
+        $recurso = $tbRecurso->find(array('idRecurso = ?' => $idRecurso))->current();
+
+        if($recurso){
+
+            $recurso->stAtendimento = $stAtendimento;
+            $recurso->dsAvaliacao = $this->getRequest()->getParam('dsAvaliacao');
+            $recurso->dtAvaliacao = new Zend_Db_Expr('GETDATE()');
+            $recurso->idAgenteAvaliador = $this->idUsuario;
+
+            if($stAtendimento == 'I'){
+                $recurso->siRecurso = 15; //Solicitação finalizada
+                $recurso->stAtendimento = 'I';
+                $recurso->stEstado = 1;
+            }
+
+            if($stAtendimento == 'D'){
+                $tblProjetos = new Projetos();
+                $recurso->siRecurso = 15; //Solicitação finalizada
+                $recurso->stAtendimento = 'D';
+                $recurso->stEstado = 1;
+
+                $projeto = array();
+                $projeto['situacao'] = 'B03';
+                $projeto['ProvidenciaTomada'] = 'Projeto enquadrado com recurso';
+                $projeto['dtSituacao'] = new Zend_Db_Expr('GETDATE()');
+                $projeto['Logon'] = $this->idUsuario;
+                $where = "IdPRONAC = $recurso->IdPRONAC";
+                $tblProjetos->update($projeto, $where);
+            }
+
+            $recurso->save();
+            parent::message('Dados salvos com sucesso!', "recurso/recurso-enquadramento", "CONFIRM");
         }
     }
 }
