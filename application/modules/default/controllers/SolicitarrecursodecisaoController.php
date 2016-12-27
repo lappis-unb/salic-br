@@ -359,4 +359,12 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
             }
         }
     }
+    
+    public function recursoDesistenciaEnquadramentoSalvarAction(){
+         $idPronac = $this->getRequest()->getParam('idPronac');
+        
+        
+         parent::message('Enviada com sucesso!', "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+    }
+
 }
