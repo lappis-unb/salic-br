@@ -286,8 +286,8 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
 
     public function recursoEnquadramentoAction()
     {
-        // caso o formulário seja enviado via post
-        $idPronac = $this->_request->getParam("idPronac"); // pega o id do pronac via get
+        $recurso = new tbRecurso();
+        $idPronac = $this->_request->getParam("idPronac");
         if (strlen($idPronac) > 7) {
             $idPronac = Seguranca::dencrypt($idPronac);
         }
@@ -299,11 +299,10 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
         if (!isset($idPronac) || empty($idPronac)) {
             parent::message('É necessário o número do PRONAC para acessar essa página!', "consultardadosprojeto?idPronac=".$idPronac, "ERROR");
         }
-        else {
-            // busca os projetos
-            $buscarProjetos = SolicitarRecursoDecisaoDAO::buscarProjetos($idPronac, $cpf_cnpj);
-            $this->view->projeto = $buscarProjetos[0];
-        }
+        // busca os projetos
+        $buscarProjetos = SolicitarRecursoDecisaoDAO::buscarProjetos($idPronac, $cpf_cnpj);
+        $this->view->projeto = $buscarProjetos[0];
+        $this->view->recurso = $recurso->existeRecursoIndeferido($idPronac);
     }
 
     /**
@@ -315,14 +314,14 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
      */
     public function recursoEnquadramentoSalvarAction()
     {
-        
+
         if ($this->getRequest()->isPost()) {
             $post = Zend_Registry::get('post');
             $idPronac = $post->idPronac;
             $tpSolicitacao = $post->tpSolicitacao;
             $StatusProjeto = $post->StatusProjeto;
             $auth = Zend_Auth::getInstance();
-            
+
             try {
 
                 $dados = array(
@@ -338,7 +337,7 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
                 );
 
                 $tbRecurso = new tbRecurso();
-                $resultadoPesquisa = $tbRecurso->buscar(array('IdPRONAC = ?'=>$_POST['idPronac']));
+                $resultadoPesquisa = $tbRecurso->existeRecursoIndeferido($_POST['idPronac']);
 
                 $dados['tpRecurso'] = 1;
                 if(count($resultadoPesquisa)>0){
