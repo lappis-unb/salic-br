@@ -58,7 +58,7 @@
                         if ($dado->mensagens_nao_respondidas == '0' && $dado->mensagens_respondidas == '0') {
                             $corMensagem = 'blue';
                         } elseif ($dado->mensagens_nao_respondidas <> $dado->mensagens_respondidas) {
-                            $corMensagem = 'yellow';
+                            $corMensagem = ' amber darken-1 ';
                         } else {
                             $corMensagem = 'green';
                         }
@@ -68,7 +68,7 @@
                     <a class="btn-floating waves-effect waves-light blue tooltipped"
                        href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto')) . "?pronac={$dado->idpronac}" ?>"
                        data-position="top" data-delay="50" data-tooltip="Enquadramento">
-                        <i class="material-icons">&#xE869;</i>
+                        <i class="material-icons cyan darken-4">&#xE869;</i>
                     </a>
                 </td>
             </tr>
