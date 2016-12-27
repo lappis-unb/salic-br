@@ -46,17 +46,35 @@
                         <?php echo $this->projeto->situacao ?>
                     </td>
                     <td >
-                        Recurso Enquadramento
+                        <?php if($this->recurso):  ?>
+                            Recurso
+                        <?php else :  ?>
+                            Pedido de Reconsideração
+                        <?php endif ?>
                     </td>
                 </tr>
+                <?php if($this->recurso): ?>
+                    <tr>
+                        <th colspan="2">Recurso anterior:</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                                <?php echo $this->recurso->dsSolicitacaoRecurso  ?>
+                        </td>
+                    </tr>
+                <?php endif ?>
             </tbody>
         </table>
         <form name="form" id="form"
                 action="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso-enquadramento-salvar')); ?>?idPronac=<?php echo $this->projeto->IdPRONAC; ?>"
                 method="post">
             <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projeto->IdPRONAC;?>" />
-            <input type="checkbox" name="checkProjetoIndeferido" value="1" class="checkObrigatorio sumir" checked="checked" />
             <input type="hidden" name="tpSolicitacao" id="ER" value="ER" />
+            <?php if($this->recurso):  ?>
+                <input type="hidden" name="tpRecurso" value="2" />
+            <?php else :  ?>
+                <input type="hidden" name="tpRecurso" value="1" />
+            <?php endif ?>
             <div class="input-field col s12">
                 <label for="dsRecurso1">Recurso:</label>
             </div>

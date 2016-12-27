@@ -707,4 +707,18 @@ class tbRecurso extends MinC_Db_Table_Abstract
         return $this->fetchAll($select);
     }
 
+    public function existeRecursoIndeferido($idPronac)
+    {
+        $select = $this->select();
+        $select->from(array('a' => $this->_name), '*', $this->_schema);
+
+        $select->where('a.idPronac = ?', $idPronac);
+        $select->where('a.stEstado = ?', 1);
+        $select->where('a.siRecurso = ?', 15);
+        $select->where('a.siFaseProjeto = ?', 1);
+        $select->limit(1);
+
+        return $this->fetchRow($select);
+    }
+
 }

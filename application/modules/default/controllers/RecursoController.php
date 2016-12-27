@@ -2277,16 +2277,26 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $where['a.siFaseProjeto = ?'] = 1; // 1=Apenas 1º fase do projeto
         $where['a.tpSolicitacao = ?'] = 'EN'; /// Enquadramento Recurso
 
+        $tbRecurso = New tbRecurso();
+
         // Coordenador de Adimissibilidade
         if($this->idPerfil == 131){
             $where['a.siRecurso = ?'] = 10; // 1=Solicitado pelo proponente
             $where['a.stAtendimento = ?'] = 'I'; // Não atendimento
+
+            $where2['a.stEstado = ?'] = 0; // 0=Atual; 1=Historico
+            $where2['a.tpSolicitacao = ?'] = 'EN'; /// Enquadramento Recurso
+            $where2['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
+            $where2['a.tpRecurso = ?'] = 2; // 1=Solicitado pelo proponente
+            $where2['a.stAtendimento = ?'] = 'N'; // Não atendimento
+
+            $this->view->recurso2fase = $tbRecurso->painelRecursosEnquadramento($where2);
         } else {
             $where['a.siRecurso = ?'] = 1; // 1=Solicitado pelo proponente
             $where['a.stAtendimento = ?'] = 'N'; // Não atendimento
+            $where['a.tpRecurso = ?'] = 1; // 1=Solicitado pelo proponente
         }
 
-        $tbRecurso = New tbRecurso();
 
         $dados = $tbRecurso->painelRecursosEnquadramento($where, $order, $tamanho, $inicio);
 
