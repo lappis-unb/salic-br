@@ -38,7 +38,7 @@
         <?php foreach ($this->dados as $dado): ?>
             <tr>
                 <td>
-                    <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index')) . "?idPronac={$dado->IdPRONAC}"; ?>"><?php echo $dado->pronac; ?></a>
+                    <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index')) . "?idPronac={$dado->IdPRONAC}"; ?>"><u><?php echo $dado->pronac; ?></u></a>
                 </td>
                 <td><?php echo $dado->nomeProjeto; ?></td>
                 <td><?php echo $dado->area; ?></td>
