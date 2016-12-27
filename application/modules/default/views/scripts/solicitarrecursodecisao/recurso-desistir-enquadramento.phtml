@@ -1,123 +1,110 @@
-<script type="text/javascript">
-    $(document).ready(function(){
-            
-        $('.btn_enviar').click(function(){
-            var countChecks = 0;
-            $('.checkObrigatorio').each(function(){
-                if($(this).attr('checked')){
-                    countChecks++;
-                }
-            });
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>var $jq3 = jQuery.noConflict();</script>
+<script src="<?php echo $this->baseUrl(); ?>/public/js/materialize.js"></script>
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/materialize.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/materialize-custom.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/animate.css">
+<nav class="breadcrumb">
+    <div class="nav-wrapper" style="padding: 0 15px 0 15px">
+        <div class="col s12">
+            <a href="<?php echo $this->Url(array('module' => 'default', 'controller' => 'principalproponente', 'action' => 'index'))?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para o início">Início</a>
+            <a href="<?php echo $this->Url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'))?>?idPronac=<?php echo $this->projetos->IdPRONAC?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para consultar dados projeto">Consultar dados projeto</a>
+            <a href="#" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Página Atual">Desistência do Prazo Recursal</a>
+        </div>
+    </div>
+</nav>
 
-            if (countChecks == 0) {
-                $("#msgAlerta").dialog("destroy");
-                $("#msgAlerta").html("Favor preencher os dados obrigatórios!");
-                $("#msgAlerta").dialog({
-                    resizable: false,
-                    title: 'Alerta!',
-                    width: 300,
-                    height: 160,
-                    modal: true,
-                    buttons: {
-                        'OK': function() {
-                            $(this).dialog('close');
-                        }
-                    }
-                });
-                $('.ui-dialog-titlebar-close').remove();
-            } else {
-                $('#form').submit();
-            }
-        });
-
-        $('.btn_cancelar').click(function(){
-            voltar();
-        });
-    });
-</script>
-    
 <style type="text/css">
     label{
         font-weight: normal;
         margin-right: 15px;
     }
-    .checkObrigatorio{
-        margin-right: 5px; 
+
+    nav .nav-wrapper {
+    background-color: #1b5e20;
+    bottom: 19px;
+    color: #fefefe;
+    height: 56px;
+    line-height: 56px;
+    width: 100%;
+
     }
+    
+    div .termo {
+        margin: 0 auto;
+    }
+    
+    
+    div .botoes {
+        margin-top: 22px;
+        text-align: center;
+        text-align: center;
+        margin-bottom:: 20px;
+    }
+
 </style>
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
-<div id="msgAlerta"></div>
-<div id="breadcrumb">
-    <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Início">Início</a></li>
-        <li><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'), '', true); ?>?idPronac=<?php echo Seguranca::encrypt($this->escape($this->projetos->IdPRONAC)); ?>" title="Consultar dados projeto">Consultar dados projeto</a></li>
-        <li class="last">Desist&ecirc;ncia do Prazo Recursal</li>
-    </ul>
-</div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-<?php //xd($this->projetos); ?>
-
-
-<!-- ========== INÍCIO TÍTULO ========== -->
-<div id="titulo">
-    <div>
-        Desist&ecirc;ncia do Prazo Recursal <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span>
-    </div>
-</div>
-<!-- ========== FIM TÍTULO ========== -->
-
-
-<!-- ========== INÍCIO CONTEÚDO ========== -->
-<div id="conteudo">
+<div class="container">
     
-    <!-- ========== INÍCIO FORMULÁRIO ========== -->
-    <form name="form" id="form" action="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso-desistencia-endraquamento')); ?>?idPronac=<?php echo $this->projetos->IdPRONAC; ?>" method="post">
-        <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projetos->IdPRONAC; ?>" />
-        <table class="tabela">
-            <tr>
-                <td class="destacar bold centro" style="width: 30%">Pronac</td>
-                <td class="destacar bold centro">Nome do Projeto</td>
-            </tr>
-            <tr>
-                <td align="center"><?php echo $this->projetos->AnoProjeto.$this->projetos->Sequencial; ?></td>
-                <td align="center"><?php echo $this->projetos->NomeProjeto; ?></td>
-            </tr>
-        </table>
-
-        <table class="tabela">
-            <tr>
-                <th>Texto referente &agrave; Concord&acirc;ncia</th>
-            </tr>
-            <tr>
-                <td>
-                    <p><?php //@TODO ESPERAR TEXTO PARA INSERIR AQUI ?>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus erat ac auctor facilisis. Nam augue nibh, mollis at malesuada ut, sodales vel massa. Fusce gravida feugiat erat, sit amet pretium leo pretium molestie</p>
-                    <br clear="all" />
-                    <p>
-                        <label>
-                            <input id="deacordo" type="checkbox" value="1" name="deacordo" class="checkObrigatorio">
-                            <span style="color: red; font-weight: bold; font-size: 13px; margin-left: 0.7em;">De acordo</span>
-                        </label>
-                    </p>
-                </td>
-            </tr>
-        </table>
-
-        <div style="width: 100%; text-align: center;">
-            <input type="button" title="Enviar" class="btn_enviar" value=" " />
-            <input type="button" title="Cancelar" class="btn_cancelar" value=" " />
+        <h3>Desistência do Prazo Recursal</h3>
+        <form0 name="form" id="form" action="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso-desistencia-endraquamento')); ?>?idPronac=<?php echo $this->projetos->IdPRONAC; ?>" method="post">
+            <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projetos->IdPRONAC; ?>" />
+            <table class="tabela">
+                <tr>
+                    <td class="destacar bold centro">Pronac</td>
+                    <td class="destacar bold centro">Nome do Projeto</td>
+                </tr>
+                <tr>
+                    <td><?php echo $this->projetos->AnoProjeto.$this->projetos->Sequencial; ?></td>
+                    <td><?php echo $this->projetos->NomeProjeto; ?></td>
+                </tr>
+            </table>
+    <div class="card-panel indigo lighten-5 z-depth-4 termo">
+        This iLorem Ipsum tem sido o padrão desde a Idade Média. Um pintor teria peças mistas de texto em um livro exemplar e é este texto que nós usamos hoje. Outra versão diz que este é um trecho do livro de Cícero: "" De Finibus Bonorum e malorum "" seções 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascença, é um tratado sobre a teoria da ética.
+        This iLorem Ipsum tem sido o padrão desde a Idade Média. Um pintor teria peças mistas de texto em um livro exemplar e é este texto que nós usamos hoje. Outra versão diz que este é um trecho do livro de Cícero: "" De Finibus Bonorum e malorum "" seções 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascença, é um tratado sobre a teoria da ética.
+        This iLorem Ipsum tem sido o padrão desde a Idade Média. Um pintor teria peças mistas de texto em um livro exemplar e é este texto que nós usamos hoje. Outra versão diz que este é um trecho do livro de Cícero: "" De Finibus Bonorum e malorum "" seções 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascença, é um tratado sobre a teoria da ética.
+        This iLorem Ipsum tem sido o padrão desde a Idade Média. Um pintor teria peças mistas de texto em um livro exemplar e é este texto que nós usamos hoje. Outra versão diz que este é um trecho do livro de Cícero: "" De Finibus Bonorum e malorum "" seções 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascença, é um tratado sobre a teoria da ética.
+        This iLorem Ipsum tem sido o padrão desde a Idade Média. Um pintor teria peças mistas de texto em um livro exemplar e é este texto que nós usamos hoje. Outra versão diz que este é um trecho do livro de Cícero: "" De Finibus Bonorum e malorum "" seções 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascença, é um tratado sobre a teoria da ética.
+        This iLorem Ipsum tem sido o padrão desde a Idade Média. Um pintor teria peças mistas de texto em um livro exemplar e é este texto que nós usamos hoje. Outra versão diz que este é um trecho do livro de Cícero: "" De Finibus Bonorum e malorum "" seções 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascença, é um tratado sobre a teoria da ética.
+        This iLorem Ipsum tem sido o padrão desde a Idade Média. Um pintor teria peças mistas de texto em um livro exemplar e é este texto que nós usamos hoje. Outra versão diz que este é um trecho do livro de Cícero: "" De Finibus Bonorum e malorum "" seções 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascença, é um tratado sobre a teoria da ética.
+        This iLorem Ipsum tem sido o padrão desde a Idade Média. Um pintor teria peças mistas de texto em um livro exemplar e é este texto que nós usamos hoje. Outra versão diz que este é um trecho do livro de Cícero: "" De Finibus Bonorum e malorum "" seções 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascença, é um tratado sobre a teoria da ética.
+        This iLorem Ipsum tem sido o padrão desde a Idade Média. Um pintor teria peças mistas de texto em um livro exemplar e é este texto que nós usamos hoje. Outra versão diz que este é um trecho do livro de Cícero: "" De Finibus Bonorum e malorum "" seções 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascença, é um tratado sobre a teoria da ética.
+        This iLorem Ipsum tem sido o padrão desde a Idade Média. Um pintor teria peças mistas de texto em um livro exemplar e é este texto que nós usamos hoje. Outra versão diz que este é um trecho do livro de Cícero: "" De Finibus Bonorum e malorum "" seções 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascença, é um tratado sobre a teoria da ética.
+        Parece que apenas alguns trechos do texto original aparecem no Lipsum comumente usado, e que uma série de cartas tenham sido removido ou adicionado em diversos pontos do texto ao longo do tempo. É por isso que existem hoje em dia um número de texto Lorem Ipsum mais ou menos diferentes uns dos outros. Devido à sua data de produção, uso Lorem ipsum não está mais sujeito a direitos de autor e evita quaisquer questões de direitos autorais. s a card panel with a teal lighten-2 class
+    </div>
+        
+            
+        <div class="botoes">
+            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">
+                Concordo
+                <i class="material-icons right modal-trigger">send</i>
+            </a>
+            <button class="btn waves-effect waves-light red" id="btn_cancelar">
+                Cancelar
+            </button>
         </div>
     </form>
-    
-    <br clear="all" />
-    
-<!-- ========== FIM FORMULÁRIO ========== -->
 
-</div>	
-<!-- ========== FIM CONTEÚDO ========== -->
+</div>
 
-<!-- ========== INÍCIO RODAPÉ DO CONTEÚDO ========== -->
-<div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPÉ DO CONTEÚDO ========== -->
+ <div id="modal1" class="modal">
+    <div class="modal-content">
+      <p>Tem certeza? Essa decisão não pode ser revertida.</p>
+    </div>
+    <div class="modal-footer">
+      <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->projetos->IdPRONAC;?>" class=" modal-action modal-close waves-effect waves-red btn-flat">Discordo</a>
+        <a href="<?php echo $this->url(array('module' => 'default', 'controller'=> 'solicitarrecursodecisao', 'action' => 'recurso-desistencia-enquadramento-salvar'));?>?idPronac=<?php echo $this->projetos->IdPRONAC;?>" class=" modal-action modal-close waves-effect waves-green btn-flat">Concordo</a>
+    </div>
+  </div>
 
-<br clear="all" />
+ <script>
+        $jq3(document).ready(function () {
+            $jq3('.modal').modal();
+            
+            $jq3('#btn_cancelar').click(function (){
+                window.location.replace('<?php echo $this->Url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->projetos->IdPRONAC; ?>');
+            });
+        });
+
+</script>
