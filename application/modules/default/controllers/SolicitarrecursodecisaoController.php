@@ -348,7 +348,6 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
 
                 if ($cadastrar) {
                     // altera a situação do projeto
-                    $alterarSituacao = ProjetoDAO::alterarSituacao($idPronac, 'B03');
                     parent::message('Solicitação enviada com sucesso!', "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
                 } else {
                     throw new Exception("Erro ao cadastrar recurso!");
@@ -359,11 +358,11 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
             }
         }
     }
-    
+
     public function recursoDesistenciaEnquadramentoSalvarAction(){
          $idPronac = $this->getRequest()->getParam('idPronac');
-        
-        
+
+
          parent::message('Enviada com sucesso!', "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
     }
 
