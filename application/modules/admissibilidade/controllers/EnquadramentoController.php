@@ -32,7 +32,6 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         }
         $codOrgao = $this->grupoAtivo->codOrgao;
         $this->view->codOrgao = $codOrgao;
-
     }
 
     public function enquadrarprojetoAction()
