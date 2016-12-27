@@ -1,4 +1,5 @@
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"/>
+<link rel="stylesheet" type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.material.min.css"/>
 <div id="breadcrumb">
     <ul>
@@ -21,47 +22,59 @@
     </div>
 </div>
 <div id="conteudo">
-        <table class="tabela " id="enquadramento">
-            <thead>
-            <tr class="titulo_tabela">
-                <th width="40">PRONAC</th>
-                <th>Nome do Projeto</th>
-                <th>&Aacute;rea</th>
-                <th>Segmento</th>
-                <th>Data</th>
-                <th align="center">A&ccedil;&otilde;es</th>
-            </tr>
-            </thead>
-            <tbody>
+    <table class="tabela " id="enquadramento">
+        <thead>
+        <tr class="titulo_tabela">
+            <th width="40">PRONAC</th>
+            <th>Nome do Projeto</th>
+            <th>&Aacute;rea</th>
+            <th>Segmento</th>
+            <th>Data</th>
+            <th align="center">A&ccedil;&otilde;es</th>
+        </tr>
+        </thead>
+        <tbody>
 
-                <?php foreach ($this->dados as $dado): ?>
-                <tr>
-                    <td><a href="<?php echo $this->url(array('module' => 'default', 'controller'=>'consultardadosprojeto', 'action' => 'index')) ."?idPronac={$dado->IdPRONAC}";?>"><?php echo $dado->pronac; ?></a></td>
-                    <td><?php echo $dado->nomeProjeto; ?></td>
-                    <td><?php echo $dado->area; ?></td>
-                    <td><?php echo $dado->segmento; ?></td>
-                    <td><?php echo Data::tratarDataZend($dado->DtSituacao, 'Brasileira'); ?></td>
-                    <td>
-                        <?php if($dado->segmento == "B03") { ?>
-                        <a class="btn-floating waves-effect waves-light red tooltipped" data-position="top" data-delay="50" data-tooltip="Projeto Enquadrado Com Recusso">
+        <?php foreach ($this->dados as $dado): ?>
+            <tr>
+                <td>
+                    <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index')) . "?idPronac={$dado->IdPRONAC}"; ?>"><?php echo $dado->pronac; ?></a>
+                </td>
+                <td><?php echo $dado->nomeProjeto; ?></td>
+                <td><?php echo $dado->area; ?></td>
+                <td><?php echo $dado->segmento; ?></td>
+                <td><?php echo Data::tratarDataZend($dado->DtSituacao, 'Brasileira'); ?></td>
+                <td>
+                    <?php if ($dado->Situacao == "B03") { ?>
+                        <a class="btn-floating waves-effect waves-light red tooltipped" data-position="top"
+                           data-delay="50" data-tooltip="Projeto Enquadrado Com Recusso">
                             <i class="material-icons">&#xE86D;</i>
                         </a>
-                        <?php } ?>
-                        <a class="btn-floating waves-effect waves-light tooltipped"
-                           href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index')) . "?idPronac={$dado->pronac}"; ?>"
-                           data-position="top" data-delay="50" data-tooltip="D&uacute;vida">
-                            <i class="material-icons">&#xE0BF;</i>
-                        </a>
-                        <a class="btn-floating waves-effect waves-light blue tooltipped"
-                           href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto')) . "?pronac={$dado->idpronac}" ?>"
-                           data-position="top" data-delay="50" data-tooltip="Enquadramento">
-                            <i class="material-icons">&#xE869;</i>
-                        </a>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                    <?php } ?>
+                    <a class="btn-floating waves-effect waves-light tooltipped"
+                       href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index')) . "?idPronac={$dado->pronac}"; ?>"
+                       data-position="top" data-delay="50" data-tooltip="D&uacute;vida">
+                        <?php
+                        if ($dado->mensagens_nao_respondidas == '0' && $dado->mensagens_respondidas == '0') {
+                            $corMensagem = 'blue';
+                        } elseif ($dado->mensagens_nao_respondidas <> $dado->mensagens_respondidas) {
+                            $corMensagem = 'yellow';
+                        } else {
+                            $corMensagem = 'green';
+                        }
+                        ?>
+                        <i class="material-icons <?php echo $corMensagem; ?> ">&#xE0BF;</i>
+                    </a>
+                    <a class="btn-floating waves-effect waves-light blue tooltipped"
+                       href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto')) . "?pronac={$dado->idpronac}" ?>"
+                       data-position="top" data-delay="50" data-tooltip="Enquadramento">
+                        <i class="material-icons">&#xE869;</i>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
 <div id="rodapeConteudo"><span></span></div>
 <br clear="all"/>
@@ -72,31 +85,34 @@
     crossorigin="anonymous"></script>
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.material.min.js"></script></script>
+<script
+type = "text/javascript"
+src = "https://cdn.datatables.net/1.10.13/js/dataTables.material.min.js" ></script></script>
 
-<script type="text/javascript">
-(function($){
+<script
+type = "text/javascript" >
+    (function ($) {
 
-  $(document).ready (function(){
-    $('#enquadramento').DataTable(
-    {
-        "language": {
-            "url": "https://cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
-        }
-        , "order": [0,1]
-        , "searching": true
-        , "lengthChange": true
-        ,  columnDefs: [
-            {
-                targets: [ 0, 1 ],
-                className: 'mdl-data-table__cell--non-numeric'
-            }
-        ]
-        ,
-        "aoColumnDefs": [
-          { 'bSortable': false, 'aTargets': [ 4 ] }
-       ]
-    });
-  });
-}($.noConflict(true)));
+        $(document).ready(function () {
+            $('#enquadramento').DataTable(
+                {
+                    "language": {
+                        "url": "https://cdn.datatables.net/plug-ins/1.10.12/i18n/Portuguese-Brasil.json"
+                    }
+                    , "order": [0, 1]
+                    , "searching": true
+                    , "lengthChange": true
+                    , columnDefs: [
+                    {
+                        targets: [0, 1],
+                        className: 'mdl-data-table__cell--non-numeric'
+                    }
+                ]
+                    ,
+                    "aoColumnDefs": [
+                        {'bSortable': false, 'aTargets': [4]}
+                    ]
+                });
+        });
+    }($.noConflict(true)));
 </script>
