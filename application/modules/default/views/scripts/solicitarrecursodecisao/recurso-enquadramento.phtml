@@ -2,18 +2,18 @@
 <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/materialize.css">
 <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/materialize-custom.css">
 
-<!-- ========== INÍCIO BREADCRUMB (LINKS TOPO) ========== -->
+<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="msgAlerta"></div>
 <div id="breadcrumb">
     <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Inï¿½cio">Início</a></li>
+        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Inï¿½cio">Inï¿½cio</a></li>
         <li><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'), '', true); ?>?idPronac=<?php echo Seguranca::encrypt($this->escape($this->idPronac)); ?>" title="Consultar dados projeto">Consultar dados projeto</a></li>
         <li class="last">Solicitar Recurso da Decis&atilde;o</li>
     </ul>
 </div>
 <!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
-<!-- ========== INÍCIO TÍTULO ========== -->
+<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
 <div id="titulo">
     <div>
         Solicitar Recurso <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span>
@@ -38,7 +38,7 @@
         <table>
             <thead>
                 <th>Estado do Projeto</th>
-                <th>Tipo da Solicitação</th>
+                <th>Tipo da Solicitaï¿½ï¿½o</th>
             </thead>
             <tbody>
                 <tr>
@@ -51,24 +51,30 @@
                 </tr>
             </tbody>
         </table>
-        <form name="form" id="form"
-                action="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso-enquadramento-salvar')); ?>?idPronac=<?php echo $this->projeto->IdPRONAC; ?>"
-                method="post">
+        <div class="row">
+            <form class="col s12" name="form" id="form"
+
+                  method="post">
             <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projeto->IdPRONAC;?>" />
             <input type="checkbox" name="checkProjetoIndeferido" value="1" class="checkObrigatorio sumir" checked="checked" />
             <input type="hidden" name="tpSolicitacao" id="ER" value="ER" />
-            <div class="input-field col s12">
-                <label for="dsRecurso1">Recurso:</label>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea name="dsRecurso" id="dsRecurso" class="materialize-textarea"></textarea>
+                    <label for="dsRecurso">Recurso</label>
+                </div>
             </div>
-            <div class="input-field col s12">
-                <textarea placeholder="Escreva o seu recurso..." class="materialize-textarea"  id="dsRecurso" name="dsRecurso" rows="10"></textarea>
+                <div class="row">
+                    <div class="input-field col s12 center-align">
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
+                            <i class="material-icons right">send</i>
+                        </button>
+                        <button class="btn waves-effect waves-light red" type="reset" name="action">Cancelar
+                        </button>
+                </div>
             </div>
-            <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
-                <i class="material-icons right">send</i>
-            </button>
-            <button class="btn waves-effect waves-light red" type="reset" name="action">Cancelar
-            </button>
         </form>
+    </div>
         <br clear="all" />
     <?php else: ?>
         <table class="tabela">
@@ -81,3 +87,25 @@
 </div>
 </div>
 <div id="rodapeConteudo"><span></span></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#form').validate({
+            rules : {
+                dsRecurso:{
+                    required:true
+                }
+            },
+            messages:{
+                dsRecurso:{
+                    required:""
+                }
+            },
+            invalidHandler: function(event, validator) {
+                Materialize.toast('Campo "Recurso" &eacute; obrigat&oacute;rio!', 4000);
+            }
+
+        });
+    });
+</script>
+
