@@ -360,10 +360,50 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
     }
 
     public function recursoDesistenciaEnquadramentoSalvarAction(){
-         $idPronac = $this->getRequest()->getParam('idPronac');
+        
+        $post = Zend_Registry::get('post');
+        $idPronac = $this->_request->getParam("idPronac"); // pega o id do pronac via get
+        $auth = Zend_Auth::getInstance();
+
+        if (strlen($idPronac) > 7) {
+            $idPronac = Seguranca::dencrypt($idPronac);
+        }
+
+        if($idPronac){
+            $dados = array(
+                'IdPRONAC'              => $idPronac,
+                'dtSolicitacaoRecurso'  => new Zend_Db_Expr('GETDATE()'),
+                'dsSolicitacaoRecurso'  => 'Desistência do prazo recursal',
+                'idAgenteSolicitante'   => $auth->getIdentity()->IdUsuario,
+                'stAtendimento'         => 'N',
+                'siFaseProjeto'         => 1,
+                'siRecurso'             => 0,
+                'tpSolicitacao'         => 'DR',
+                'tpRecurso'             => 1,
+                'stAnalise'             => null,
+                'stEstado'              => 1
+            );
 
 
-         parent::message('Enviada com sucesso!', "consultardadosprojeto/index?idPronac=".Seguranca::encrypt($idPronac), "CONFIRM");
+            $objProjetos = new Projetos();
+
+            $dadosProjetos = array(
+                'DtSituacao'        => $objProjetos->getExpressionDate(),
+                'Situacao'          => 'D27',
+                'logon'             => $auth->getIdentity()->IdUsuario,
+                'ProvidenciaTomada' => 'Desistência do prazo recursal'
+            );
+
+            $tbRecurso = new tbRecurso();
+            $resultadoPesquisa = $tbRecurso->buscar(array('IdPRONAC = ?'=> $idPronac));
+
+            $objProjetos->update($dadosProjetos, array('IdPRONAC = ?' => $idPronac));
+            
+            RecursoDAO::cadastrar($dados);
+            parent::message('A desistência do prazo recursal foi cadastrada com sucesso!', "consultardadosprojeto?idPronac=". Seguranca::encrypt($idPronac), "CONFIRM");
+        } else {
+            parent::message('Não foi possível cadastrar a desistência do prazo recursal!', "consultardadosprojeto?idPronac=". Seguranca::encrypt($idPronac), "ERROR");
+        }
     }
 
 }
