@@ -6,19 +6,19 @@
 <div class="container">
     <h4>Solicitar Recurso</h4>
     <div class="row">
-        <div class="col s12">
-        <?php if ($this->projeto): ?>
-            <table class="bordered">
-                <thead>
-                    <th class="">Pronac</th>
-                    <th class="">Nome do Projeto</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><?php echo $this->projeto->pronac;?></td>
-                        <td><?php echo $this->projeto->NomeProjeto;?></td>
-                    </tr>
-                </tbody>
+    <div class="col s12">
+    <?php if ($this->projeto): ?>
+        <table class="bordered">
+            <thead>
+                <th class="">Pronac</th>
+                <th class="">Nome do Projeto</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><?php echo $this->projeto->pronac;?></td>
+                    <td><?php echo $this->projeto->NomeProjeto;?></td>
+                </tr>
+            </tbody>
                 <thead>
                     <th>Estado do Projeto</th>
                     <th>Tipo da Solicita��o</th>
@@ -47,7 +47,7 @@
                         </tr>
                     <?php endif ?>
                 </tbody>
-            </table>
+        </table>
             <div class="row">
                 <form class="col s12" name="form" id="form" method="post">
                     <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projeto->IdPRONAC;?>" />
