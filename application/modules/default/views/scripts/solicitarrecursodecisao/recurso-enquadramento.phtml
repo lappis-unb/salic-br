@@ -2,109 +2,82 @@
 <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/materialize.css">
 <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/materialize-custom.css">
 
-<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="msgAlerta"></div>
-<div id="breadcrumb">
-    <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para Inï¿½cio">Inï¿½cio</a></li>
-        <li><a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'), '', true); ?>?idPronac=<?php echo Seguranca::encrypt($this->escape($this->idPronac)); ?>" title="Consultar dados projeto">Consultar dados projeto</a></li>
-        <li class="last">Solicitar Recurso da Decis&atilde;o</li>
-    </ul>
-</div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
-<div id="titulo">
-    <div>
-        Solicitar Recurso <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span>
-    </div>
-</div>
-<div id="conteudo">
+<div class="container">
+    <h4>Solicitar Recurso</h4>
     <div class="row">
-    <div class="col s12">
-    <?php if ($this->projeto): ?>
-        <table class="bordered">
-            <thead>
-                <th class="">Pronac</th>
-                <th class="">Nome do Projeto</th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><?php echo $this->projeto->pronac;?></td>
-                    <td><?php echo $this->projeto->NomeProjeto;?></td>
-                </tr>
-            </tbody>
-        </table>
-        <table>
-            <thead>
-                <th>Estado do Projeto</th>
-                <th>Tipo da Solicitaï¿½ï¿½o</th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <?php echo $this->projeto->situacao ?>
-                    </td>
-                    <td >
-                        <?php if($this->recurso):  ?>
-                            Recurso
-                        <?php else :  ?>
-                            Pedido de Reconsideração
-                        <?php endif ?>
-                    </td>
-                </tr>
-                <?php if($this->recurso): ?>
+        <div class="col s12">
+        <?php if ($this->projeto): ?>
+            <table class="bordered">
+                <thead>
+                    <th class="">Pronac</th>
+                    <th class="">Nome do Projeto</th>
+                </thead>
+                <tbody>
                     <tr>
-                        <th colspan="2">Recurso anterior:</th>
+                        <td><?php echo $this->projeto->pronac;?></td>
+                        <td><?php echo $this->projeto->NomeProjeto;?></td>
                     </tr>
+                </tbody>
+                <thead>
+                    <th>Estado do Projeto</th>
+                    <th>Tipo da Solicitaï¿½ï¿½o</th>
+                </thead>
+                <tbody>
                     <tr>
-                        <td colspan="2">
-                                <?php echo $this->recurso->dsSolicitacaoRecurso  ?>
+                        <td>
+                            <?php echo $this->projeto->situacao ?>
+                        </td>
+                        <td >
+                            <?php if($this->recurso):  ?>
+                                Recurso
+                            <?php else :  ?>
+                                Pedido de Reconsideração
+                            <?php endif ?>
                         </td>
                     </tr>
-                <?php endif ?>
-            </tbody>
-        </table>
-        <div class="row">
-            <form class="col s12" name="form" id="form"
-
-                  method="post">
-            <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projeto->IdPRONAC;?>" />
-            <input type="hidden" name="tpSolicitacao" id="ER" value="ER" />
-            <?php if($this->recurso):  ?>
-                <input type="hidden" name="tpRecurso" value="2" />
-            <?php else :  ?>
-                <input type="hidden" name="tpRecurso" value="1" />
-            <?php endif ?>
+                    <?php if($this->recurso): ?>
+                        <tr>
+                            <th colspan="2">Recurso anterior:</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                    <?php echo $this->recurso->dsSolicitacaoRecurso  ?>
+                            </td>
+                        </tr>
+                    <?php endif ?>
+                </tbody>
+            </table>
             <div class="row">
-                <div class="input-field col s12">
-                    <textarea name="dsRecurso" id="dsRecurso" class="materialize-textarea"></textarea>
-                    <label for="dsRecurso">Recurso</label>
-                </div>
+                <form class="col s12" name="form" id="form" method="post">
+                    <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projeto->IdPRONAC;?>" />
+                    <input type="hidden" name="tpSolicitacao" id="ER" value="ER" />
+                    <?php if($this->recurso):  ?>
+                        <input type="hidden" name="tpRecurso" value="2" />
+                    <?php else :  ?>
+                        <input type="hidden" name="tpRecurso" value="1" />
+                    <?php endif ?>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea name="dsRecurso" id="dsRecurso" class="materialize-textarea"></textarea>
+                            <label for="dsRecurso">Recurso</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                         <div class="input-field col s12 center-align">
+                             <button class="btn waves-effect waves-light " type="submit" name="action">Solicitar
+                                 <i class="material-icons right">send</i>
+                             </button>
+                             <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->idPronac?>" class="red-text btn waves-effect waves-light white" id="btn_cancelar" name="action">Cancelar
+                             </a>
+                         </div>
+                    </div>
+                </form>
             </div>
-                <div class="row">
-                    <div class="input-field col s12 center-align">
-                        <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
-                            <i class="material-icons right">send</i>
-                        </button>
-                        <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->idPronac?>" class="btn waves-effect waves-light red" id="btn_cancelar" name="action">Cancelar
-                        </a>
-                </div>
-            </div>
-        </form>
+        <?php endif ?>
+        </div>
     </div>
-        <br clear="all" />
-    <?php else: ?>
-        <table class="tabela">
-            <tr>
-                <td class="centro">Nenhum registro encontrado.</td>
-            </tr>
-        </table>
-    <?php endif ?>
 </div>
-</div>
-</div>
-<div id="rodapeConteudo"><span></span></div>
 
 <script type="text/javascript">
     $(document).ready(function () {
