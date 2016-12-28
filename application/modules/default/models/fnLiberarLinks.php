@@ -179,6 +179,37 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
                                 ) AS dado");
         $Recurso4 = $db->fetchRow($Recurso4);
 
+        //recurso finalizado
+        $recursoAdmissibilidade = $db->select()
+           ->from('tbRecurso',
+               array(new Zend_Db_Expr('idRecurso')),
+               $this->_schema)
+           ->where('siFaseProjeto = ?', 1)
+           ->where('idPronac = ?', $idPronac)->limit(1);
+
+        $recursoAdmissibilidade = $db->fetchRow($recursoAdmissibilidade);
+
+        $recursoIndeferido = $db->select()
+           ->from('tbRecurso',
+               array(new Zend_Db_Expr('idRecurso')),
+               $this->_schema)
+           ->where('siFaseProjeto = ?', 1)
+           ->where('tpRecurso IN (?)', array(2))
+           ->where('idPronac = ?', $idPronac);
+        $recursoIndeferido = $db->fetchAll($recursoIndeferido);
+
+        $recursoFinalizado = $db->select()
+           ->from('tbRecurso',
+               array(new Zend_Db_Expr('idRecurso')),
+               $this->_schema)
+           ->where('siFaseProjeto = ?', 1)
+           ->where('siRecurso = ?', 15)
+           ->where('stEstado = ?', 1)
+           //->where('stAtendimento = ?', 'I')
+           ->where('idPronac = ?', $idPronac)->limit(1);
+
+        $recursoFinalizado = $db->fetchRow($recursoFinalizado);
+
         if(empty($Recurso4->dado)){
             $Recurso4->dado = 90;
         }
@@ -189,10 +220,17 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
         if((($data <= 11 AND in_array($dadosProjeto->Situacao, $situacoesRecurso) AND !$recurso1->idRecurso AND !$recurso2->idRecurso)
             OR
             !$recurso3->idRecurso AND !in_array($dadosProjeto->Situacao, $situacoesRecurso) AND $Recurso4->dado <=10 )
-            OR ($diasProjeto->dias <= 11 && $dadosProjeto->Situacao == 'B02')
+            OR
+            (
+                $dadosProjeto->Situacao != 'B03' AND
+                empty($recursoAdmissibilidade) AND
+                ($diasProjeto->dias <= 11 && $dadosProjeto->Situacao == 'B02')
+                OR ($dadosProjeto->Situacao != 'B03' AND $recursoFinalizado AND empty($recursoIndeferido))
+            )
         ) {
             $Recursos = 1;
         }
+        //var_dump($Recursos, empty($recursoAdmissibilidade), $recursoFinalizado);die;
 
         /* ===== IDENTIFICAR FRASES DO PROJETO =====  */
 

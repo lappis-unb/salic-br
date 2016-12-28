@@ -1,7 +1,6 @@
 <?php
 
 /**
- * @package Controller
  * @since 02/12/2016 16:06
  */
 class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abstract
@@ -16,22 +15,23 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
     public function indexAction()
     {
-        $this->redirect("/admissibilidade/enquadramento/listar");
+        $this->redirect("/admissibilidade/enquadramento/gerenciar-enquadramento");
     }
 
-    /**
-     * ListarAction - Lista com Projetos em situção de Enuquadramento.
-     *
-     * @access public
-     */
-    public function listarAction()
+    public function gerenciarEnquadramentoAction()
     {
-        $idusuario = $this->auth->getIdentity()->usu_codigo;
-        $projeto = new  Projetos();
-        $this->view->dados = $projeto->listarPorSituacao(array('B01', 'B03'));
+        $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
+        $enquadramento = new Enquadramento();
+
+        $this->view->dados = array();
+        $ordenacao = array("projetos.DtSituacao asc");
+        if($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE) {
+            $this->view->dados = $enquadramento->obterProjetosParaEnquadramento($ordenacao);
+        } elseif ($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE) {
+            $this->view->dados = $enquadramento->obterProjetosParaEnquadramentoVinculados($this->view->idUsuarioLogado, $ordenacao);
+        }
         $codOrgao = $this->grupoAtivo->codOrgao;
         $this->view->codOrgao = $codOrgao;
-        $this->view->idUsuarioLogado = $idusuario;
     }
 
     public function enquadrarprojetoAction()
@@ -49,10 +49,10 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
                 throw new Exception("PRONAC não encontrado.");
             }
 
-            //$arraySituacoesValidas = array("B01", "B03");
-            //if (!in_array($arraySituacoesValidas, $projeto['Situacao'])) {
-                //throw new Exception("Situa&ccedil;&atilde;o do projeto n&atilde;o &eacute; v&aacute;lida.");
-            //}
+            $arraySituacoesValidas = array("B01", "B03");
+            if (!in_array($projeto['Situacao'], $arraySituacoesValidas)) {
+                throw new Exception("Situa&ccedil;&atilde;o do projeto n&atilde;o &eacute; v&aacute;lida.");
+            }
 
             $post = $this->getRequest()->getPost();
             if (!$post) {
@@ -61,10 +61,14 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
                 $this->salvarEnquadramentoProjeto($projeto);
             }
         } catch (Exception $objException) {
-            parent::message($objException->getMessage(), "/admissibilidade/enquadramento/listar");
+            parent::message($objException->getMessage(), "/admissibilidade/enquadramento/gerenciar-enquadramento");
         }
     }
 
+    /**
+     * @todo Alterar o valor da variável '$whereTextoEmail' pois até o momento não nos foi enviado qual o valor correto.
+     *       O valor atual é temporário.
+     */
     private function salvarEnquadramentoProjeto($projeto)
     {
         $auth = Zend_Auth::getInstance();
@@ -72,7 +76,8 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $get = $this->getRequest()->getParams();
         $authIdentity = array_change_key_case((array)$auth->getIdentity());
         $objEnquadramento = new Enquadramento();
-        $arrayInclusao = array(
+        $arrayDadosEnquadramento = $objEnquadramento->findBy(array('IdPRONAC = ?'=>$projeto['IdPRONAC']));
+        $arrayArmazenamentoEnquadramento = array(
             'AnoProjeto' => $projeto['AnoProjeto'],
             'Sequencial' => $projeto['Sequencial'],
             'Enquadramento' => $post['enquadramento_projeto'],
@@ -81,35 +86,55 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             'Logon' => $authIdentity['usu_codigo'],
             'IdPRONAC' => $get['pronac'],
         );
-        $objEnquadramento->inserir($arrayInclusao);
+
+        $objEnquadramento = new Enquadramento();
+        if(!$arrayDadosEnquadramento) {
+            $objEnquadramento->inserir($arrayArmazenamentoEnquadramento);
+        } else {
+            $objEnquadramento->update($arrayArmazenamentoEnquadramento, array('IdEnquadramento = ?' => $arrayDadosEnquadramento['IdEnquadramento']));
+        }
+
+        $situacaoFinalProjeto = 'B02';
+        $orgaoDestino = null;
+        if($projeto['Situacao'] == 'B03') {
+            $situacaoFinalProjeto = 'D27';
+            $orgaoDestino = 272;
+            if($projeto['Area'] == 2) {
+                $orgaoDestino = 166;
+            }
+        }
 
         $objProjeto = new Projetos();
-        $arrayDados = array(
-            'Situacao' => 'B02',
+        $arrayDadosProjeto = array(
+            'Situacao' => $situacaoFinalProjeto,
             'DtSituacao' => $objProjeto->getExpressionDate(),
+            'ProvidenciaTomada' => "Projeto enquadrado após avaliação técnica.",
+            'Area' => $post['areaCultural'],
+            'Segmento' => $post['segmentoCultural'],
             'ProvidenciaTomada' => "Projeto enquadrado após avaliação técnica.",
             'logon' => $authIdentity['usu_codigo']
         );
-        $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
-        $objProjeto->update($arrayDados, $arrayWhere);
 
-        /**
-         * @todo Alterar esse identificador.
-         */
-        $where = array(
+        if($orgaoDestino) {
+            $arrayDadosProjeto['Orgao'] = $orgaoDestino;
+        }
+
+        $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
+        $objProjeto->update($arrayDadosProjeto, $arrayWhere);
+
+        $whereTextoEmail = array(
             'idTextoEmail = ?' => 12
         );
         $tbTextoEmailDAO = new tbTextoEmail();
-        $textoEmail = $tbTextoEmailDAO->buscar($where)->current();
-        $mensagemEmail = $textoEmail->dsTexto;
+        $textoEmail = $tbTextoEmailDAO->findBy($whereTextoEmail);
 
         $objInternet = new Agente_Model_DbTable_Internet();
         $arrayEmails = $objInternet->obterEmailProponentesPorPreProjeto($projeto['idProjeto']);
         foreach ($arrayEmails as $email) {
-            EmailDAO::enviarEmail($email->Descricao, "Projeto Cultural", $mensagemEmail);
+            EmailDAO::enviarEmail($email->Descricao, "Projeto Cultural", $textoEmail['dsTexto']);
         }
 
-        parent::message("Enquadramento cadastrado com sucesso.", "/admissibilidade/enquadramento/listar", "CONFIRM");
+        parent::message("Enquadramento cadastrado com sucesso.", "/admissibilidade/enquadramento/gerenciar-enquadramento", "CONFIRM");
     }
 
     private function carregardadosEnquadramentoProjeto($projeto)

@@ -6,6 +6,7 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
 
     private $_config;
     protected $_rowClass = "MinC_Db_Table_Row";
+    protected $debugMode = false;
 
     private static $databaseInstance;
 
@@ -14,6 +15,10 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         $this->_name = self::getName($this->_name);
         $this->_banco = self::getBanco($this->_banco);
         $this->_schema = self::getSchema($this->_schema);
+    }
+
+    public function setDebugMode($boolean) {
+        $this->debugMode = $boolean;
     }
 
     public function getPrimary()
@@ -208,12 +213,16 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
             $select->limit($tamanho, $tmpInicio);
         }
 
+        if($this->debugMode === true) {
+            xd($select->assemble());
+        }
+
         return $this->fetchAll($select);
     }
 
-    public function alterar($dados, $where, $dbg = false)
+    public function alterar($dados, $where)
     {
-        if ($dbg) {
+        if($this->debugMode === true) {
             xd($this->dbg($dados, $where));
         }
         $update = $this->update($dados, $where);
