@@ -49,7 +49,7 @@
                 </tbody>
         </table>
             <div class="row">
-                <form class="col s12" name="form" id="form" method="post">
+                <form class="col s12" name="form" id="form" method="post" action="<?php echo $this->url(array('module' => 'default', 'controller' => 'solicitarrecursodecisao', 'action' => 'recurso-enquadramento-salvar'))?>">
                     <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projeto->IdPRONAC;?>" />
                     <input type="hidden" name="tpSolicitacao" id="ER" value="ER" />
                     <?php if($this->recurso):  ?>
