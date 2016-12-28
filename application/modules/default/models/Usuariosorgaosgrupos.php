@@ -1,15 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Usuariosorgaosgrupos
- *
- * @author augusto
- */
 class Usuariosorgaosgrupos extends MinC_Db_Table_Abstract {
 
     protected $_banco = 'Tabelas';
