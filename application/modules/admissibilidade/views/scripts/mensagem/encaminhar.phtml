@@ -1,6 +1,8 @@
 <div class="modal-content">
-    <h4><?php echo $this->title; ?></h4>
-    <form id="form-mensagem" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => $this->action)); ?>">
+    <h4>Encaminhar pergunta</h4>
+    <form
+        class="materialize"
+        id="form-mensagem" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => $this->action)); ?>">
         <input name="idMensagemProjeto" type="hidden" value="<?php echo $this->id; ?>"/>
         <input name="IdPRONAC" type="hidden" value="<?php echo $this->idPronac; ?>"/>
         <div class="row">
@@ -35,11 +37,11 @@
 <div class="modal-footer">
     <a id="btn-enviar" style="margin-left: 15px;"
        class="modal-action waves-effect waves-green btn-flat light-green">Encaminhar</a>
-    <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-orange btn-flat">Cancelar</a>
 </div>
 <script>
-//    $3(document).ready(function () {
-//        $3('.modal').find('select').material_select();
+    $3(document).ready(function ($) {
+        $('.modal').find('select').material_select();
 //        setTimeout(function(){
 //            $3('.modal').find('[required=required]').closest('.input-field').find('input.select-dropdown').addClass('invalid');
 //            $3('.modal').find('[required=required]').addClass('invalid');
@@ -48,5 +50,5 @@
 //                strUrl = select.attr('data-url'),
 //                objTarget = $3(select.attr('data-target'));
 //        ajaxRender(strUrl, objTarget, select.val(), '<?php //echo (isset($this->dataForm['idDestinatario']))? $this->dataForm['idDestinatario'] :'' ?>//');
-//    });
+    });
 </script>

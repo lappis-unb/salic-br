@@ -97,11 +97,15 @@ body {
     color: #fff;
 }
 
-.container {
+.container.fade {
     display: none;
 }
 
 nav.breadcrumb {
     bottom: 20px;
     position: relative;
+}
+
+.btn.small{
+    padding: 0 1rem;
 }
