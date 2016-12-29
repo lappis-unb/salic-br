@@ -52,16 +52,21 @@
         });
 
         $('form[data-ajax-form]').on('click', 'button[type=submit]', function(){
+            var elmForm = $(this).closest('form[data-ajax-form]'),
+                strRedirect = elmForm.attr('data-ajax-form-redirect');
 
-            var strRedirect = $(this).closest('form[data-ajax-form]').attr('data-ajax-form-redirect');
+            // elmForm
+
+
             if ($('#dsMensagem').length > 0) {
                 $('#dsMensagem').val(tinyMCE.get('dsMensagem').getContent());
             }
             if ($('#dsResposta').length > 0) {
                 $('#dsResposta').val(tinyMCE.get('dsResposta').getContent());
             }
-            strSerialize = $3('#form-mensagem').serialize();
-            $3.post($3('#form-mensagem').attr('action'), strSerialize, function (result) {
+            console.info(elmForm.attr('action'))
+            strSerialize = elmForm.serialize();
+            $3.post(elmForm.attr('action'), strSerialize, function (result) {
                 result = $3.parseJSON(result);
                 if (result.status == '1') {
 //                    $3('#form-mensagem')[0].reset();
@@ -70,7 +75,7 @@
                         window.location.href = strRedirect;
                     }, 500);
                 } else {
-                    if (Object.keys(result.msg).length > 1) {
+                    if (typeof result.msg != 'string') {
                         $3.each(result.msg, function(strNameElement, strMsg){
                             var elm = $3('[name=' + strNameElement + ']'),
                                 elmLabel = elm.closest('div.input-field').find('label'),
@@ -83,7 +88,20 @@
                             }
                         });
                     } else {
+                        console.info('asdad')
                         Materialize.toast(result.msg, 4000);
+
+                        $('.card').removeClass('fadeInUp');
+                        $('.card').removeClass('animated');
+                        strAnimate = 'jello';
+//            strAnimate = 'wobble';
+//            strAnimate = 'pulse';
+                        $('.card').addClass(strAnimate);
+                        $('.card').addClass('animated');
+                        setTimeout(function(){
+                            $('.card').removeClass(strAnimate);
+                            $('.card').removeClass('animated');
+                        }, 1000);
                     }
                 }
             });
