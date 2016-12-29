@@ -46,3 +46,8 @@
 	/*background: url(../img/navglobal-ativo-left.gif) left 0 no-repeat;*/
 	/*color:#666;*/
 }
+
+.collapsible-body p.valign {
+	width: 100%;
+
+}
