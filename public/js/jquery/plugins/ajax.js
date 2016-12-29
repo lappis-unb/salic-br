@@ -5,7 +5,12 @@
     $(document).ready(function ($) {
         var elmBody = $('body');
         elmBody.on('click', '[data-ajax-modal]', function () {
-            $.ajaxModal({strUrl: $(this).attr('data-ajax-modal')});
+            if ($(this).attr('data-ajax-modal-type') !== '') {
+                $.ajaxModal({strUrl: $(this).attr('data-ajax-modal'), strType: $(this).attr('data-ajax-modal-type')});
+            } else {
+                $.ajaxModal({strUrl: $(this).attr('data-ajax-modal')});
+            }
+
         });
         // $('body').on('change', '[data-ajax-render]:not(select)', function() {
         //     console.info('aaa');
@@ -102,6 +107,7 @@
         $('#container-progress').fadeIn('slow');
     });
     $(document).ajaxComplete(function () {
+        $('.container').fadeIn(1500);
         // setTimeout(function(){
             $('#container-progress').fadeOut('slow');
         // }, 2000);
@@ -179,13 +185,13 @@
      * @since 28/12/2016
      */
     $.ajaxModal = function (objOption, callback) {
-        var objDefaults = {strUrl: '', strIdModal: 'modal'},
+        var objDefaults = {strUrl: '', strIdModal: 'modal', strType: 'modal-fixed-footer'},
             objSettings = $.extend({}, objDefaults, objOption),
             strIdModal = '#' + objSettings.strIdModal;
 
         // Removendo e criando elemento div para o modal.
         $(strIdModal).remove();
-        $('body').append('<div id="' + objSettings.strIdModal + '" class="modal modal-fixed-footer"></div>');
+        $('body').append('<div id="' + objSettings.strIdModal + '" class="modal ' + objSettings.strType + '"></div>');
         $(strIdModal).modal();
 
         // Renderizando ajax e abrindo a modal por callback.
