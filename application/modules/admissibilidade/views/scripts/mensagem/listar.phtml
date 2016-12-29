@@ -17,27 +17,27 @@
                 <tr>
                     <td><?php echo $int; ?></td>
                     <td><?php echo $arrValue['dtMensagemTreated']; ?></td>
-                    <td><?php echo $arrValue['tempoResposta']; ?></td>
+                    <td <?php if ($arrValue['tempoResposta'] > 9) echo 'style="color: red;"'; ?>><?php echo $arrValue['tempoResposta']; ?></td>
 <!--                    <td>--><?php //echo $arrValue['idRemetente']; ?><!--</td>-->
 <!--                    <td>--><?php //echo $arrValue['idDestinatario']; ?><!--</td>-->
-                    <td><?php echo $arrValue['usu_nome_remetente']; ?></td>
-                    <td><?php echo $arrValue['usu_nome_destinatario']; ?></td>
+                    <td><?php echo $arrValue['remetenteUnidadeNome'] . ' / ' . $arrValue['usu_nome_remetente']; ?></td>
+                    <td><?php echo ($arrValue['usu_nome_destinatario'])? $arrValue['destinatarioUnidadeNome'] . ' / ' . $arrValue['usu_nome_destinatario'] : $arrValue['destinatarioUnidadeNome']; ?></td>
                     <td><?php echo $arrValue['dsMensagem']; ?></td>
                     <td>
-                        <a data-modal="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'visualizar', 'id' => $arrValue['idMensagemProjeto'])); ?>" href="javascript:void(0);" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Visualizar">
+                        <a data-ajax-modal="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'visualizar', 'id' => $arrValue['idMensagemProjeto'], 'idPronac' => $arrValue['IdPRONAC']), null, true); ?>" href="javascript:void(0);" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Visualizar">
                             <i class="material-icons">zoom_in</i>
                         </a>
                         <?php if ($arrValue['qtdResposta'] === '0') : ?>
-<!--                            --><?php //if ($this->usuOrgao == 91) : ?>
-                                <a data-modal="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'encaminhar', 'id' => $arrValue['idMensagemProjeto'])); ?>" href="javascript:void(0);" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Encaminhar">
+                            <?php if ($this->usuOrgao !== 91) : ?>
+                                <a data-ajax-modal="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'encaminhar', 'id' => $arrValue['idMensagemProjeto'], 'idPronac' => $arrValue['IdPRONAC']), null, true); ?>" href="javascript:void(0);" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Encaminhar">
                                     <i class="material-icons">subdirectory_arrow_right</i>
                                 </a>
-<!--                            --><?php //endif; ?>
-<!--                            --><?php //if ($this->usuCodigo == $arrValue['idDestinatario']): ?>
-                                <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'responder', 'id' => $arrValue['idMensagemProjeto'], 'idPronac' => $arrValue['IdPRONAC'])); ?>" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Responder">
+                            <?php endif; ?>
+                            <?php if ($this->usuCodigo == $arrValue['idDestinatario'] || (is_null($arrValue['idDestinatario']) && $this->usuOrgao == $arrValue['idDestinatario'])): ?>
+                                <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'responder', 'id' => $arrValue['idMensagemProjeto'], 'idPronac' => $arrValue['IdPRONAC']), null, true); ?>" class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Responder">
                                     <i class="material-icons">insert_comment</i>
                                 </a>
-<!--                            --><?php //endif; ?>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -46,8 +46,3 @@
         </table>
     </div>
 </div>
-<script>
-    $jq3(document).ready(function(){
-        $jq3('.tooltipped').tooltip({delay: 50});
-    });
-</script>

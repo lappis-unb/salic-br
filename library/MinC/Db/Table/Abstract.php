@@ -319,7 +319,11 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         if (is_array($where)) {
             foreach ($where as $columnName => $columnValue) {
                 if (is_int(strpos($columnName, '?'))) {
-                    $select->where($columnName, trim($columnValue));
+                    if (is_array($columnValue)) {
+                        $select->where($columnName, $columnValue);
+                    } else {
+                        $select->where($columnName, trim($columnValue));
+                    }
                 } elseif (!$columnValue) {
                     $select->where($columnName);
                 } else {
@@ -364,13 +368,8 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     public function findAll(array $where = array(), array $order = array()) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        foreach ($where as $columnName => $columnValue) {
-            if (is_int(strpos($columnName, '?'))) {
-                $select->where($columnName, trim($columnValue));
-            } else {
-                $select->where($columnName . ' = ?', trim($columnValue));
-            }
-        }
+
+        self::setWhere($select, $where);
         if ($order) {
             $select->order($order);
         }

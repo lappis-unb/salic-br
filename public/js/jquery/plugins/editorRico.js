@@ -3,9 +3,8 @@ jQuery.fn.editorRico = function (options) {
     if (!options) {
         options = {};
     }
-
     var minchar = (options.minchar) ? options.minchar : -1;
-    var maxchar = (options.maxchar) ? options.maxchar : 1000;
+    var maxchar = (options.maxchar) ? options.maxchar : false;
     var isLimitarCarateres = (typeof  options.isLimitarCarateres !== 'undefined') ? options.isLimitarCarateres : true;
     var isDesabilitarEdicao = (typeof  options.isDesabilitarEdicao !== 'undefined') ? options.isDesabilitarEdicao : false;
     var idElemento = $(this).attr('id');
@@ -17,8 +16,11 @@ jQuery.fn.editorRico = function (options) {
             var body = metodos.elemento.getBody();
             var content = tinymce.trim(body.innerText || body.textContent);
             return content.length;
-        },
-        execucaoDaFuncaoLimiterPag: function (idElemento, minchar, maxchar) {
+        }
+    };
+
+    if (maxchar) {
+        metodos.execucaoDaFuncaoLimiterPag = function (idElemento, minchar) {
             var countChars = metodos.contarCharacteres(idElemento);
             $("#contadorRico" + idElemento).html("Caracteres: " + countChars + "/" + maxchar);
             $("#contadorRico" + idElemento).css('color', 'black');
@@ -26,8 +28,13 @@ jQuery.fn.editorRico = function (options) {
                 $("#contadorRico" + idElemento).css('color', 'red');
             }
         }
-    };
-
+    } else {
+        metodos.execucaoDaFuncaoLimiterPag = function (idElemento, minchar) {
+            var countChars = metodos.contarCharacteres(idElemento);
+            $("#contadorRico" + idElemento).html("Caracteres: " + countChars);
+            $("#contadorRico" + idElemento).css('color', 'black');
+        }
+    }
     tinymce.init({
         plugins: "paste,textcolor",
         language: "pt_BR",
