@@ -1024,7 +1024,8 @@ class ChecklistPublicacaoController extends MinC_Controller_Action_Abstract
         //$cdarea = $post->area;
         $dadosSegmento = array();
         $vSegmento = array();
-        $dadosSegmento = Segmentocultural::buscarSegmento($cdarea);
+        $objSegmentocultural = new Segmentocultural();
+        $dadosSegmento = $objSegmentocultural->buscarSegmento($cdarea);
         $i = 0;
         if(count($dadosSegmento)>0){
             foreach ($dadosSegmento as $segmento)

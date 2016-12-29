@@ -84,7 +84,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             'DtEnquadramento' => $objEnquadramento->getExpressionDate(),
             'Observacao' => $post['observacao'],
             'Logon' => $authIdentity['usu_codigo'],
-            'IdPRONAC' => $get['pronac'],
+            'IdPRONAC' => $get['pronac']
         );
 
         $objEnquadramento = new Enquadramento();
@@ -108,10 +108,9 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $arrayDadosProjeto = array(
             'Situacao' => $situacaoFinalProjeto,
             'DtSituacao' => $objProjeto->getExpressionDate(),
-            'ProvidenciaTomada' => "Projeto enquadrado após avaliação técnica.",
+            'ProvidenciaTomada' => 'Projeto enquadrado após avaliação técnica.',
             'Area' => $post['areaCultural'],
             'Segmento' => $post['segmentoCultural'],
-            'ProvidenciaTomada' => "Projeto enquadrado após avaliação técnica.",
             'logon' => $authIdentity['usu_codigo']
         );
 
@@ -146,8 +145,8 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         if (count($this->view->comboareasculturais) < 1) {
             throw new Exception("N&atilde;o foram encontradas &Aacute;reas Culturais para o PRONAC informado.");
         }
-
-        $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($projeto['Area']);
+        $objSegmentocultural = new Segmentocultural();
+        $this->view->combosegmentosculturais = $objSegmentocultural->buscarSegmento($projeto['Area']);
 
         if (count($this->view->combosegmentosculturais) < 1) {
             throw new Exception("N&atilde;o foram encontradas Segmentos Culturais para o PRONAC informado.");
