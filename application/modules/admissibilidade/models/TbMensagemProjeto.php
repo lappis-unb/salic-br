@@ -18,9 +18,47 @@ class Admissibilidade_Model_TbMensagemProjeto extends MinC_Db_Model
     protected $_stAtivo;
     protected $_cdTipoMensagem;
     protected $_idDestinatario;
+    protected $_idDestinatarioUnidade;
     protected $_idRemetente;
+    protected $_idRemetenteUnidade;
     protected $_IdPRONAC;
     protected $_idMensagemOrigem;
+
+    /**
+     * @return mixed
+     */
+    public function getIdDestinatarioUnidade()
+    {
+        return $this->_idDestinatarioUnidade;
+    }
+
+    /**
+     * @param mixed $idDestinatarioUnidade
+     * @return Admissibilidade_Model_TbMensagemProjeto
+     */
+    public function setIdDestinatarioUnidade($idDestinatarioUnidade)
+    {
+        $this->_idDestinatarioUnidade = $idDestinatarioUnidade;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdRemetenteUnidade()
+    {
+        return $this->_idRemetenteUnidade;
+    }
+
+    /**
+     * @param mixed $idRemetenteUnidade
+     * @return Admissibilidade_Model_TbMensagemProjeto
+     */
+    public function setIdRemetenteUnidade($idRemetenteUnidade)
+    {
+        $this->_idRemetenteUnidade = $idRemetenteUnidade;
+        return $this;
+    }
 
     /**
      * @return mixed

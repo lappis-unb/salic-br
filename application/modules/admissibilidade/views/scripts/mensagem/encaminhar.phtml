@@ -1,4 +1,3 @@
-
 <div class="modal-content">
     <h4><?php echo $this->title; ?></h4>
     <form id="form-mensagem" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => $this->action)); ?>">
@@ -8,11 +7,11 @@
             <div class="input-field col s12">
                 <select class="invalid" data-url="/admissibilidade/mensagem/usuarios"
                         data-target="select[name=idDestinatario]"
-                        name="idUnidade" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
+                        name="idDestinatarioUnidade" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
                     <option value="" disabled selected>Selecione...</option>
                     <!--                        <optgroup label="--><?php //echo $key ?><!--">-->
                     <?php foreach ($this->arrUnidades as $values): ?>
-                        <option <?php if (isset($this->dataForm['idUnidade']) && $this->dataForm['idUnidade'] == $values['Codigo']) echo 'selected="selected"' ?>
+                        <option <?php if (isset($this->dataForm['idDestinatarioUnidade']) && $this->dataForm['idDestinatarioUnidade'] == $values['Codigo']) echo 'selected="selected"' ?>
                             value="<?php echo $values['Codigo'] ?>"><?php echo $values['Sigla'] ?>
                         </option>
                     <?php endforeach; ?>
@@ -21,14 +20,16 @@
                 <label>Unidade</label>
             </div>
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <select class="invalid" required="required" name="idDestinatario" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
-                    <option value="" disabled selected>Selecione...</option>
-                </select>
-                <label>Agente</label>
+        <?php if (!isset($this->arrConfig['idDestinatario']) || (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['show'] !== false)): ?>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select class="invalid" required="required" name="idDestinatario" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
+                        <option value="" selected>Selecione...</option>
+                    </select>
+                    <label>Agente</label>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
     </form>
 </div>
 <div class="modal-footer">
@@ -37,16 +38,15 @@
     <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
 </div>
 <script>
-    $jq3(document).ready(function () {
-        $jq3('.modal').find('select').material_select();
-        setTimeout(function(){
-            $jq3('.modal').find('[required=required]').closest('.input-field').find('input.select-dropdown').addClass('invalid');
-            $jq3('.modal').find('[required=required]').addClass('invalid');
-        }, 300);
-            var select = $jq3('select[data-target]'),
-                strUrl = select.attr('data-url'),
-                objTarget = $jq3(select.attr('data-target'));
-        ajaxRender(strUrl, objTarget, select.val(), '<?php echo (isset($this->dataForm['idDestinatario']))? $this->dataForm['idDestinatario'] :'' ?>');
-    });
-
+//    $3(document).ready(function () {
+//        $3('.modal').find('select').material_select();
+//        setTimeout(function(){
+//            $3('.modal').find('[required=required]').closest('.input-field').find('input.select-dropdown').addClass('invalid');
+//            $3('.modal').find('[required=required]').addClass('invalid');
+//        }, 300);
+//            var select = $3('select[data-target]'),
+//                strUrl = select.attr('data-url'),
+//                objTarget = $3(select.attr('data-target'));
+//        ajaxRender(strUrl, objTarget, select.val(), '<?php //echo (isset($this->dataForm['idDestinatario']))? $this->dataForm['idDestinatario'] :'' ?>//');
+//    });
 </script>

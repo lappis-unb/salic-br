@@ -45,8 +45,10 @@
         <link type="text/css" rel="stylesheet" media="all" href="<?php echo $this->baseUrl(); ?>/public/css/ie7.css"/>
         <![endif]-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script>var $jq3 = jQuery.noConflict();</script>
-        <script src="<?php echo $this->baseUrl(); ?>/public/js/materialize.js"></script>
+        <script>var $3 = jQuery.noConflict();</script>
+        <script src="<?php echo $this->baseUrl(); ?>/public/materialize/js/materialize.js"></script>
+        <script src="<?php echo $this->baseUrl(); ?>/public/materialize/js/materialize-ready.js"></script>
+        <script src="<?php echo $this->baseUrl(); ?>/public/js/jquery/plugins/ajax.js"></script>
         <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery-1.4.2.min.js"></script>
         <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/script_sem_menu.js"></script>
         <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery.tablesorter.min.js"></script>
@@ -106,9 +108,9 @@
         <!--    NOVO    -->
         <?php if( isset($auth['usu_codigo']) ) : ?>
             <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-            <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/materialize.css">
+            <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/materialize/css/materialize.css">
     <!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">-->
-            <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/materialize-custom.css">
+            <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/materialize/css/materialize-custom.css">
             <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/animate.css">
         <?php endif; ?>
 

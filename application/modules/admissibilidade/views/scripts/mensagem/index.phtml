@@ -1,33 +1,12 @@
 <nav class="breadcrumb">
     <div class="nav-wrapper" style="padding: 0 15px 0 15px">
         <div class="col s12">
-<!--            <a href="#!" class="breadcrumb">Admissibilidade</a>-->
-            <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'listar')); ?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para a tela de enquadramento">Enquadramento</a>
+            <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'listar'), null, true); ?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para a tela de enquadramento">Enquadramento</a>
             <a href="#!" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Nome e Numero do Pronac"><?php echo $this->title ?></a>
         </div>
     </div>
 </nav>
-<!--<div class="row">-->
-<!--    <div class="col s12">-->
-<!--        <h3 class="header">Mensagem</h3>-->
-<!--        <div class="center-align">-->
-<!--            <a class="green darken-3 waves-effect waves-light btn" href="#modal1">Enviar mensagem</a>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--<div class="container-fluid">-->
-<!--<div class="row">-->
-<!--    <div class="col s12">-->
-<!--        <ul class="tabs">-->
-<!--            <li class="tab col s3"><a class="active" href="#test1">A responder</a></li>-->
-<!--            <li class="tab col s3"><a  href="#test2">Respondidas</a></li>-->
-<!--            <li class="tab col s3 disabled"><a href="#test3">Disabled Tab</a></li>-->
-<!--        </ul>-->
-<!--    </div>-->
-<!--    <div id="test1" class="col s12">Test 1</div>-->
-<!--    <div id="test2" class="col s12">Test 2</div>-->
-<!--</div>-->
-<div id="container-list"></div>
+<div id="container-list" data-ajax-render='/admissibilidade/mensagem/listar?id=<?php echo (isset($this->idPronac))? $this->idPronac : ''; ?>'></div>
 <?php if (isset($this->idPronac)): ?>
 <div class="fixed-action-btn animated bounceInUp">
     <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'salvar', 'idPronac' => $this->idPronac)); ?>" class="btn-floating btn-large tooltipped waves-effect waves-light" data-position="left" data-delay="50" data-tooltip="Escrever pergunta">
@@ -51,135 +30,69 @@
 </script>
 <script>
 
-    function ajaxRender(strUrl, objTarget, strVal, strValChecked) {
-        var strHtml = '';
-        $jq3.ajax({
-            method: "POST",
-            url: strUrl,
-            data: {id: strVal}
-        }).done(function (result) {
-            json = $jq3.parseJSON(result);
-            strHtml = '<option value="" disabled selected>Selecione...</option>';
-            $jq3.each(json, function(key, value){
-                strHtml += '<optgroup label="' + key + '">';
-                $jq3.each(value, function(key2, value2){
-                    if (strValChecked && strValChecked == key2) {
-                        strHtml += '<option value="' + key2 + '" selected="selected">' + value2 + '</option>';
-                    } else {
-                        strHtml += '<option value="' + key2 + '">' + value2 + '</option>';
-                    }
-                });
-                strHtml += '</optgroup>';
-            });
-            objTarget.html(strHtml);
-            objTarget.material_select();
-            objTarget.closest('.input-field').find('input.select-dropdown').addClass('invalid');
-        });
-    }
-
-//    function isValid(strElement)
-//    {
-//        arrElemento = $jq3(strElement).find('[required]').filter(function() {
-//            return !this.value;
+//    function ajaxRender(strUrl, objTarget, strVal, strValChecked) {
+//        var strHtml = '';
+//        $3.ajax({
+//            method: "POST",
+//            url: strUrl,
+//            data: {id: strVal}
+//        }).done(function (result) {
+//            json = $3.parseJSON(result);
+//            strHtml = '<option value="" disabled selected>Selecione...</option>';
+//            $3.each(json, function(key, value){
+//                strHtml += '<optgroup label="' + key + '">';
+//                $3.each(value, function(key2, value2){
+//                    if (strValChecked && strValChecked == key2) {
+//                        strHtml += '<option value="' + key2 + '" selected="selected">' + value2 + '</option>';
+//                    } else {
+//                        strHtml += '<option value="' + key2 + '">' + value2 + '</option>';
+//                    }
+//                });
+//                strHtml += '</optgroup>';
+//            });
+//            objTarget.html(strHtml);
+//            objTarget.material_select();
+//            objTarget.closest('.input-field').find('input.select-dropdown').addClass('invalid');
 //        });
-//
-//        $jq3.each(arrElemento, function(key, value){
-//            console.info(value);
-//        });
-//
-//        if (arrElemento) {
-//            return false;
-//        }
-//
-//        console.info(arrElemento);
 //    }
 
-    $jq3(document).ready(function () {
-        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-        $jq3('.modal').modal();
-        $jq3('.modal').find('select').material_select();
-        $jq3('.tooltipped').tooltip({delay: 50});
-        $jq3('body').on('click', '#btn-enviar', function () {
-//            if (isValid('#form-mensagem')) {
-                $jq3.post($jq3('#form-mensagem').attr('action'), $jq3('#form-mensagem').serialize(), function (result) {
-                    result = $jq3.parseJSON(result);
-                    if (result.status == '1') {
-                        $jq3('#modal').modal('close');
-                        $jq3('#form-mensagem')[0].reset();
-                        list();
-                        Materialize.toast(result.msg, 4000);
-                    } else {
-                        if (Object.keys(result.msg).length > 1) {
-                            $jq3.each(result.msg, function(strNameElement, strMsg){
-                                var elm = $jq3('[name=' + strNameElement + ']'),
-                                    elmLabel = elm.closest('div.input-field').find('label'),
-                                    strLabel = elm.closest('div.input-field').find('label').html();
-                                if (elm.length > 0) {
-//                                    elmLabel.attr('data-error', 'Este campo e obrigatorio!');
-//                                    elm.addClass('invalid');
-                                    elm.focus();
-                                    Materialize.toast('Campo ' + strLabel + ' &eacute; obrigat&oacute;rio!', 8000);
-                                }
-                            });
-                        } else {
-                            Materialize.toast(result.msg, 4000);
-                        }
-                    }
-                });
-//            }
-        });
+//    $3(document).ready(function () {
+//        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+//        $3('body').on('click', '#btn-enviar', function () {
+////            if (isValid('#form-mensagem')) {
+//                $3.post($3('#form-mensagem').attr('action'), $3('#form-mensagem').serialize(), function (result) {
+//                    result = $3.parseJSON(result);
+//                    if (result.status == '1') {
+//                        $3('#modal').modal('close');
+//                        $3('#form-mensagem')[0].reset();
+//                        list();
+//                        Materialize.toast(result.msg, 4000);
+//                    } else {
+//                        if (Object.keys(result.msg).length > 1) {
+//                            $3.each(result.msg, function(strNameElement, strMsg){
+//                                var elm = $3('[name=' + strNameElement + ']'),
+//                                    elmLabel = elm.closest('div.input-field').find('label'),
+//                                    strLabel = elm.closest('div.input-field').find('label').html();
+//                                if (elm.length > 0) {
+////                                    elmLabel.attr('data-error', 'Este campo e obrigatorio!');
+////                                    elm.addClass('invalid');
+//                                    elm.focus();
+//                                    Materialize.toast('Campo ' + strLabel + ' &eacute; obrigat&oacute;rio!', 8000);
+//                                }
+//                            });
+//                        } else {
+//                            Materialize.toast(result.msg, 4000);
+//                        }
+//                    }
+//                });
+////            }
+//        });
 
-        $jq3('body').on('change', 'select[data-target]', function () {
-            var select = $jq3(this),
-                strUrl = select.attr('data-url'),
-                objTarget = $jq3(select.attr('data-target'));
-            ajaxRender(strUrl, objTarget, select.val(), '');
-        });
-
-        $jq3('body').on('click', '[data-modal]', function() {
-            var objClick = $jq3(this),
-                strUrl = objClick.attr('data-modal'),
-                objModal = $jq3('#modal');
-
-//            if ( typeof objModal == 'undefined' || typeof objModal == 'object') {
-                $jq3('#modal').remove();
-                $jq3('body').append('<div id="modal" class="modal modal-fixed-footer"></div>');
-                $jq3('#modal').modal();
-//            }
-
-            $jq3.ajax({
-                method: "GET",
-                url: strUrl,
-                data: {idPronac: "<?php echo $this->idPronac; ?>"}
-            }).done(function (result) {
-                $jq3('#modal').html(result);
-                $jq3('#modal').modal('open');
-            });
-        });
-
-        list();
+//        $3('body').on('change', 'select[data-target]', function () {
+//            var select = $3(this),
+//                strUrl = select.attr('data-url'),
+//                objTarget = $3(select.attr('data-target'));
+//            ajaxRender(strUrl, objTarget, select.val(), '');
+//        });
     });
-
-    function modal(id)
-    {
-        $jq3.ajax({
-            method: "GET",
-            url: "/admissibilidade/mensagem/listar",
-            data: {id: "<?php echo (isset($this->idPronac))? $this->idPronac : ''; ?>"}
-        }).done(function (result) {
-            $jq3('#container-list').hide().html(result).fadeIn();
-        });
-    }
-
-    function list() {
-        $jq3.ajax({
-            method: "GET",
-            url: "/admissibilidade/mensagem/listar",
-            data: {id: "<?php echo (isset($this->idPronac))? $this->idPronac : ''; ?>"}
-        }).done(function (result) {
-            $jq3('#container-list').hide().html(result).fadeIn();
-        });
-    }
 </script>
-<!--<div id="rodapeConteudo"><span></span></div>-->
-<!--<br clear="all"/>-->

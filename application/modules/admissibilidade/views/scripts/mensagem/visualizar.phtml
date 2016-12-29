@@ -1,5 +1,5 @@
 <div class="modal-content">
-    <h4><?php echo $this->title; ?></h4>
+    <h4>Visualizar Pergunta</h4>
     <form id="form-mensagem" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => $this->action)); ?>">
         <input name="idMensagemProjeto" type="hidden" value="<?php echo $this->id; ?>"/>
         <input name="IdPRONAC" type="hidden" value="<?php echo $this->idPronac; ?>"/>
@@ -7,27 +7,27 @@
             <div class="input-field col s12">
                 <select class="invalid" data-url="/admissibilidade/mensagem/usuarios"
                         data-target="select[name=idDestinatario]"
-                        name="idUnidade" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
+                        name="idDestinatarioUnidade" disabled="disabled">
                     <option value="" disabled selected>Selecione...</option>
-                    <!--                        <optgroup label="--><?php //echo $key ?><!--">-->
                     <?php foreach ($this->arrUnidades as $values): ?>
-                        <option <?php if (isset($this->dataForm['idUnidade']) && $this->dataForm['idUnidade'] == $values['Codigo']) echo 'selected="selected"' ?>
+                        <option <?php if (isset($this->dataForm['idDestinatarioUnidade']) && $this->dataForm['idDestinatarioUnidade'] == $values['Codigo']) echo 'selected="selected"' ?>
                             value="<?php echo $values['Codigo'] ?>"><?php echo $values['Sigla'] ?>
                         </option>
                     <?php endforeach; ?>
-                    <!--                        </optgroup>-->
                 </select>
                 <label>Unidade</label>
             </div>
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <select class="invalid" required="required" name="idDestinatario" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
-                    <option value="" disabled selected>Selecione...</option>
-                </select>
-                <label>Agente</label>
+        <?php if (isset($this->dataForm['idDestinatario']) && !empty($this->dataForm['idDestinatario'])): ?>
+            <div class="row">
+                <div class="input-field col s12">
+                    <select class="invalid" required="required" name="idDestinatario" disabled="disabled">
+                        <option value="" disabled selected>Selecione...</option>
+                    </select>
+                    <label>Agente</label>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
         <div class="row">
             <div class="input-field col s12">
                 <br />
@@ -52,29 +52,29 @@
         <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat light-green">Fechar</a>
 </div>
 <script>
-    $jq3(document).ready(function () {
-        $jq3('.modal').find('select').material_select();
+    $3(document).ready(function () {
+        $3('.modal').find('select').material_select();
     });
-    $jq3(document).ready(function () {
-        $jq3('#form-mensagem').find('select').material_select();
-        var select = $jq3('select[data-target]'),
+    $3(document).ready(function () {
+        $3('#form-mensagem').find('select').material_select();
+        var select = $3('select[data-target]'),
             strUrl = select.attr('data-url'),
-            objTarget = $jq3(select.attr('data-target'));
+            objTarget = $3(select.attr('data-target'));
         ajaxRender(strUrl, objTarget, select.val(), '<?php echo (isset($this->dataForm['idDestinatario'])) ? $this->dataForm['idDestinatario'] : '' ?>');
     });
 
     function ajaxRender(strUrl, objTarget, strVal, strValChecked) {
         var strHtml = '';
-        $jq3.ajax({
+        $3.ajax({
             method: "POST",
             url: strUrl,
             data: {id: strVal}
         }).done(function (result) {
-            json = $jq3.parseJSON(result);
-            strHtml = '<option value="" disabled selected>Selecione...</option>';
-            $jq3.each(json, function(key, value){
+            json = $3.parseJSON(result);
+            strHtml = '<option value="" selected>Selecione...</option>';
+            $3.each(json, function(key, value){
                 strHtml += '<optgroup label="' + key + '">';
-                $jq3.each(value, function(key2, value2){
+                $3.each(value, function(key2, value2){
                     if (strValChecked && strValChecked == key2) {
                         strHtml += '<option value="' + key2 + '" selected="selected">' + value2 + '</option>';
                     } else {
