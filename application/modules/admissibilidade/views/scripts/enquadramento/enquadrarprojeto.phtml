@@ -39,13 +39,10 @@
                             style="width: 160px;">
                         <option value=""> - Selecione -</option>
                         <?php foreach ($this->comboareasculturais as $key => $value) { ?>
-                            <option
-                                value="<?php echo $key; ?>" <?php if ($this->projeto['Area'] == $key) echo "selected=\"selected\""; ?>><?php echo $value; ?></option>
+                            <option value="<?php echo $key; ?>" <?php if ($this->projeto['Area'] == $key) echo "selected=\"selected\""; ?>><?php echo $value; ?></option>
                         <?php } ?>
-
                     </select>
                     &nbsp; <span id="erroAreaCultural" class="spanError"></span>
-
                 </td>
                 <td>
                     <label for="segmentoCultural">Segmento Cultural</label>
@@ -60,7 +57,7 @@
                             <?php } ?>
 
                             <?php foreach ($this->combosegmentosculturais as $combosegmentocultural) { ?>
-                                <option
+                                <option data-tp_enquadramento="<?php echo $combosegmentocultural->tp_enquadramento; ?>"
                                     value="<?php echo $combosegmentocultural->id; ?>" <?php if ($this->projeto['Segmento'] == $combosegmentocultural->id) echo "selected=\"selected\""; ?>>
                                     <?php echo $combosegmentocultural->descricao; ?>
                                 </option>
@@ -116,12 +113,10 @@
         });
     }
 
-    function carregarEnquadramento() {
-        var listaCodSegmento = ['11', '12', '13', '14', '15', '17', '23', '26', '28', '2A', '2B', '2E', '2F', '2G', '2H', '2I', '2J', '2K', '2L', '32', '33', '36', '4B', '4D', '5A', '5D', '5E', '5F', '5G', '5H', '5I', '5J', '5K', '5L', '5M', '5N', '5O', '5P', '62', '65', '68', '6C', '6D', '6E', '6G', '6H'];
-        $('#enquadramentoProjeto').val('1');
+    function carregarEnquadramento(object) {
         $('#enquadramentoText').html('Artigo 26');
-        if (in_array($('#segmentoCultural').val(), listaCodSegmento)) {
-            $('#enquadramentoProjeto').val('2');
+        var enquadramentoProjeto = $(object).children('option:selected').attr('data-tp_enquadramento');
+        if (enquadramentoProjeto == '2') {
             $('#enquadramentoText').html('Artigo 18');
         }
     }
@@ -132,9 +127,9 @@
         });
 
         $('#segmentoCultural').change(function () {
-            carregarEnquadramento();
+            carregarEnquadramento($(this));
         });
 
-        carregarEnquadramento();
+        $('#segmentoCultural').trigger("change");
     });
 </script>

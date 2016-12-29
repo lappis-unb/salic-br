@@ -12,6 +12,13 @@
  */
 class MinC_Db_Table_Select extends Zend_Db_Table_Select
 {
+
+    protected $isUseSchema = true;
+
+    public function isUseSchema($isUseSchema) {
+        $this->isUseSchema = $isUseSchema;
+    }
+
     /**
      * MinC_Db_Table_Select constructor.
      * @param Zend_Db_Table_Abstract $table
@@ -30,7 +37,9 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      */
     public function from($name, $cols = self::SQL_WILDCARD, $schema = null)
     {
-        $schema = $this->getSchema($schema);
+        if($this->isUseSchema) {
+            $schema = $this->getSchema($schema);
+        }
 
         return parent::from($name, $cols, $schema);
     }
@@ -44,7 +53,9 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      */
     public function join($name, $cond, $cols = self::SQL_WILDCARD, $schema = null)
     {
-        $schema = $this->getSchema($schema);
+        if($this->isUseSchema) {
+            $schema = $this->getSchema($schema);
+        }
 
         return parent::join($name, $cond, $cols, $schema);
     }
@@ -58,7 +69,9 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      */
     public function joinInner($name, $cond, $cols = self::SQL_WILDCARD, $schema = null)
     {
-        $schema = $this->getSchema($schema);
+        if($this->isUseSchema) {
+            $schema = $this->getSchema($schema);
+        }
 
         return parent::joinInner($name, $cond, $cols, $schema);
     }
@@ -72,7 +85,9 @@ class MinC_Db_Table_Select extends Zend_Db_Table_Select
      */
     public function joinLeft($name, $cond, $cols = self::SQL_WILDCARD, $schema = null)
     {
-        $schema = $this->getSchema($schema);
+        if($this->isUseSchema) {
+            $schema = $this->getSchema($schema);
+        }
 
         return parent::joinLeft($name, $cond, $cols, $schema);
     }

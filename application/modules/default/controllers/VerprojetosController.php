@@ -1439,7 +1439,8 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                                 $this->view->projetosENReconsideracao = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
                                 $this->view->comboareasculturaisReconsideracao = $mapperArea->fetchPairs('codigo',  'descricao');
-                                $this->view->combosegmentosculturaisReconsideracao = Segmentocultural::buscarSegmento($this->view->projetosENReconsideracao->cdArea);
+                                $objSegmentocultural = new Segmentocultural();
+                                $this->view->combosegmentosculturaisReconsideracao = $objSegmentocultural->buscarSegmento($this->view->projetosENReconsideracao->cdArea);
 
                                 $parecer = new Parecer();
                                 $this->view->ParecerReconsideracao = $parecer->buscar(array('IdPRONAC = ?' => $dados->IdPRONAC, 'TipoParecer in (?)' => array(1,7), 'stAtivo = ?' => 1))->current();
@@ -1477,7 +1478,8 @@ class VerProjetosController extends MinC_Controller_Action_Abstract {
                                 $this->view->projetosENRecurso = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
                                 $this->view->comboareasculturaisReconsideracao = $mapperArea->fetchPairs('codigo',  'descricao');
-                                $this->view->combosegmentosculturaisRecurso = Segmentocultural::buscarSegmento($this->view->projetosENRecurso->cdArea);
+                                $objSegmentocultural = new Segmentocultural();
+                                $this->view->combosegmentosculturaisRecurso = $objSegmentocultural->buscarSegmento($this->view->projetosENRecurso->cdArea);
 
                                 $parecer = new Parecer();
                                 $this->view->ParecerRecurso = $parecer->buscar(array('IdPRONAC = ?' => $dados->IdPRONAC, 'TipoParecer = ?' => 7, 'stAtivo = ?' => 1))->current();
