@@ -453,7 +453,8 @@ class AnalisarprojetoparecerController extends MinC_Controller_Action_Abstract {
         $this->view->itens = $itensCusto;
         $this->view->stPrincipal = $stPrincipal;
         $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
-        $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($projeto[0]->Area);
+        $objSegmentocultural = new Segmentocultural();
+        $this->view->combosegmentosculturais = $objSegmentocultural->buscarSegmento($projeto[0]->Area);
         $this->view->valorpossivel = $valorPossivel;
         $this->view->vlSolicitado = $valorSolicitado;
 
