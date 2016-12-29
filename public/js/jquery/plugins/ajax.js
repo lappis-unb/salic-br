@@ -93,16 +93,6 @@
 
     });
 
-    $(document).ready(function ($) {
-        $('.container').fadeIn(1500);
-        elmFormsMaterialize = $('form.materialize');
-        elmFormsMaterialize.find('select').material_select();
-        setTimeout(function () {
-            elmFormsMaterialize.find('[required=required]').closest('.input-field').find('input.select-dropdown').addClass('invalid');
-            elmFormsMaterialize.find('[required=required]').addClass('invalid');
-        }, 300);
-    });
-
     $(document).ajaxStart(function () {
         $('#container-progress').fadeIn('slow');
     });
@@ -110,7 +100,7 @@
         $('.container').fadeIn(1500);
         // setTimeout(function(){
             $('#container-progress').fadeOut('slow');
-        // }, 2000);
+        // }, 4000);
     });
 
     //    function isValid(strElement)
@@ -196,12 +186,11 @@
 
         // Renderizando ajax e abrindo a modal por callback.
         objSettings.strTarget = strIdModal;
-        console.info(objSettings)
         $.ajaxRender(objSettings, function () {
-            $(strIdModal).modal('open');
             if (typeof callback == 'function') {
                 callback.call(this);
             }
+            $(strIdModal).modal('open');
         });
     };
 
@@ -229,8 +218,8 @@
             }
         }, 250);
         $.ajax({url: objSettings.strUrl}).done(function (result) {
-            time = false;
             // setTimeout(function () {
+                time = false;
                 elmRender.hide().html(result).fadeIn('slow');
                 if (typeof callback == 'function') {
                     callback.call(null, result);
