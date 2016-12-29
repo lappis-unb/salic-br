@@ -238,7 +238,7 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
             $this->view->title = "Perguntas: {$arrProjeto['NomeProjeto']} ({$intIdPronac})";
             $arrConfig['idDestinatario'] = array('show' => true);
             if (in_array($arrProjeto['Situacao'], array('B02', 'B03'))) {
-//                $arrConfig['idDestinatario'] = array('show' => false);
+                $arrConfig['idDestinatario'] = array('show' => false);
             }
         }
         $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();

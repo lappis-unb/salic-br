@@ -7,9 +7,10 @@
         </div>
     </div>
 </nav>
-<div class="container"  style="display: none;">
+<div class="container fade">
     <h4>Responder pergunta</h4>
     <form id="form-mensagem"
+          class="materialize"
           data-ajax-form="true"
           data-ajax-form-redirect="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index', 'idPronac' => $this->idPronac)); ?>"
           action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => $this->action)); ?>">
@@ -62,9 +63,11 @@
         </div>
         <div class="row">
             <div class="col s12 center-align">
-                <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index', 'idPronac' => $this->idPronac), null, true); ?>" class="modal-action modal-close waves-effect waves-red btn-flat">Voltar</a>
-<!--                <a id="btn-enviar" style="margin-left: 15px;"-->
-<!--                   class="modal-action waves-effect waves-green btn-flat light-green">Enviar</a>-->
+                <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index', 'idPronac' => $this->idPronac), null, true); ?>"
+                   class="modal-action modal-close waves-effect waves-orange btn-flat">
+                    <i class="material-icons left">undo</i>
+                    Voltar
+                </a>
                 <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
                     <i class="material-icons right">send</i>
                 </button>
@@ -72,109 +75,8 @@
         </div>
     </form>
 </div>
-
 <script>
     $(document).ready(function () {
         $("textarea.editor").editorRico({altura: 200});
-    });
-    $3(document).ready(function () {
-        $3('.container').fadeIn(1500);
-        $3('#form-mensagem').find('select').material_select();
-        setTimeout(function () {
-            $3('#form-mensagem').find('[required=required]').closest('.input-field').find('input.select-dropdown').addClass('invalid');
-            $3('#form-mensagem').find('[required=required]').addClass('invalid');
-        }, 300);
-        var select = $3('select[data-target]'),
-            strUrl = select.attr('data-url'),
-            objTarget = $3(select.attr('data-target'));
-        ajaxRender(strUrl, objTarget, select.val(), '<?php echo (isset($this->dataForm['idDestinatario'])) ? $this->dataForm['idDestinatario'] : '' ?>');
-    });
-
-    function ajaxRender(strUrl, objTarget, strVal, strValChecked) {
-        var strHtml = '';
-        $3.ajax({
-            method: "POST",
-            url: strUrl,
-            data: {id: strVal}
-        }).done(function (result) {
-            json = $3.parseJSON(result);
-            strHtml = '<option value="" selected>Selecione...</option>';
-            console.info(json)
-            $3.each(json, function(key, value){
-                strHtml += '<optgroup label="' + key + '">';
-                console.info(strValChecked)
-                $3.each(value, function(key2, value2){
-                    if (strValChecked && strValChecked == key2) {
-                        strHtml += '<option value="' + key2 + '" selected="selected">' + value2 + '</option>';
-                    } else {
-                        strHtml += '<option value="' + key2 + '">' + value2 + '</option>';
-                    }
-                });
-                strHtml += '</optgroup>';
-            });
-            objTarget.html(strHtml);
-            objTarget.material_select();
-        });
-    }
-
-    //    function isValid(strElement)
-    //    {
-    //        arrElemento = $3(strElement).find('[required]').filter(function() {
-    //            return !this.value;
-    //        });
-    //
-    //        $3.each(arrElemento, function(key, value){
-    //            console.info(value);
-    //        });
-    //
-    //        if (arrElemento) {
-    //            return false;
-    //        }
-    //
-    //        console.info(arrElemento);
-    //    }
-
-    $3(document).ready(function () {
-        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-        $3('.tooltipped').tooltip({delay: 50});
-//        $3('body').on('click', '#btn-enviar', function () {
-////            if (isValid('#form-mensagem')) {
-////            strSerialize = $3('#form-mensagem:not(:textarea)').serialize() + '&dsMensagem=' + $3('dsMensagem');
-//            $('#dsResposta').val(tinyMCE.get('dsResposta').getContent());
-//            strSerialize = $3('#form-mensagem').serialize();
-//            $3.post($3('#form-mensagem').attr('action'), strSerialize, function (result) {
-//                result = $3.parseJSON(result);
-//                if (result.status == '1') {
-////                    $3('#form-mensagem')[0].reset();
-//                    Materialize.toast(result.msg, 4000);
-//                    setTimeout(function(){
-//                        window.location.href = '<?php //echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index', 'idPronac' => $this->idPronac)); ?>//';
-//                    }, 500);
-//                } else {
-//                    if (Object.keys(result.msg).length > 1) {
-//                        $3.each(result.msg, function(strNameElement, strMsg){
-//                            var elm = $3('[name=' + strNameElement + ']'),
-//                                elmLabel = elm.closest('div.input-field').find('label'),
-//                                strLabel = elm.closest('div.input-field').find('label').html();
-//                            if (elm.length > 0) {
-////                                    elmLabel.attr('data-error', 'Este campo e obrigatorio!');
-////                                    elm.addClass('invalid');
-//                                elm.focus();
-//                                Materialize.toast('Campo ' + strLabel + ' &eacute; obrigat&oacute;rio!', 8000);
-//                            }
-//                        });
-//                    } else {
-//                        Materialize.toast(result.msg, 4000);
-//                    }
-//                }
-//            });
-////            }
-//        });
-        $3('body').on('change', 'select[data-target]', function () {
-            var select = $3(this),
-                strUrl = select.attr('data-url'),
-                objTarget = $3(select.attr('data-target'));
-            ajaxRender(strUrl, objTarget, select.val(), '');
-        });
     });
 </script>
