@@ -62,6 +62,7 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
                 $model->setStAtivo(1);
                 $model->setDtMensagem(date('Y-m-d h:i:s'));
                 $model->setIdRemetente($arrAuth['usu_codigo']);
+                $model->setIdRemetenteUnidade($arrAuth['usu_orgao']);
                 $model->setCdTipoMensagem(1);
                 $arrMensagemOrigem = $this->getDbTable()->findBy($arrData['idMensagemOrigem']);
                 $model->setIdDestinatario($arrMensagemOrigem['idRemetente']);
@@ -69,7 +70,11 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
                     $booStatus = 1;
                     $this->setMessage('Pergunta respondida com sucesso!');
                 } else {
-                    $this->setMessage('Nao foi possivel respondida a pergunta!');
+                    if (isset($this->getMessages()['dsMensagem'])) {
+                        $this->setMessage($this->getMessages()['dsMensagem'], 'dsResposta');
+                        unset($this->arrMessages['dsMensagem']);
+                    }
+                    $this->setMessage('Nao foi possivel responder a pergunta!');
                 }
             } catch (Exception $e) {
                 $this->setMessage($e->getMessage());
@@ -82,16 +87,15 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
     {
         $booStatus = true;
         $arrData = $model->toArray();
-
         if (empty($arrData['idMensagemProjeto'])){
             $arrRequired = array(
-                'dsMensagem',
-                'idDestinatario',
+                'idDestinatarioUnidade',
                 'IdPRONAC',
+                'dsMensagem',
             );
         } else {
             $arrRequired = array(
-                'idDestinatario',
+                'idDestinatarioUnidade',
             );
         }
         foreach ($arrRequired as $strValue) {
@@ -113,8 +117,9 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
                 $arrAuth = array_change_key_case((array)$auth->getIdentity());
                 $model->setDtMensagem(date('Y-m-d h:i:s'));
                 $model->setIdRemetente($arrAuth['usu_codigo']);
-//                $model->setIdDestinatario($arrAuth['usu_codigo']);
-                $model->setCdTipoMensagem(1);
+                $model->setIdRemetenteUnidade($arrAuth['usu_orgao']);
+                $model->setIdDestinatario($arrAuth['usu_codigo']);
+                $model->setCdTipoMensagem('E');
                 $model->setStAtivo(1);
                 if ($intId = parent::save($model)) {
                     $booStatus = 1;

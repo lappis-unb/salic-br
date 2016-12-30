@@ -6,14 +6,14 @@
  * @version 1.0
  * @package application
  * @subpackage application.controllers
- * @copyright © 2010 - Ministério da Cultura - Todos os direitos reservados.
+ * @copyright ï¿½ 2010 - Ministï¿½rio da Cultura - Todos os direitos reservados.
  * @link http://www.cultura.gov.br
  */
 
 class SegmentoculturalController extends Zend_Controller_Action
 {
 	/**
-	 * Método para buscar os segmentos culturais de uma área
+	 * Mï¿½todo para buscar os segmentos culturais de uma ï¿½rea
 	 * @param void
 	 * @return void
 	 */
@@ -25,14 +25,14 @@ class SegmentoculturalController extends Zend_Controller_Action
 		$post = Zend_Registry::get('post');
 		$id = (int) $post->id;
 
-		// integração MODELO e VISÃO
-		$this->view->segmentosculturais = Segmentocultural::buscar($id);
+        $objSegmentocultural = new Segmentocultural();
+		$this->view->segmentosculturais = $objSegmentocultural->buscarSegmento($id);
 	}
 
 
 
 	/**
-	 * Método para buscar os segmentos culturais de uma área
+	 * Mï¿½todo para buscar os segmentos culturais de uma ï¿½rea
 	 * Busca como XML para o AJAX
 	 * @access public
 	 * @param void
@@ -42,15 +42,15 @@ class SegmentoculturalController extends Zend_Controller_Action
 	{
 		$this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
 
-		// recebe o id via post
 		$post = Zend_Registry::get('post');
 		$id = (int) $post->id;
 
-		// integração MODELO e VISÃO
-		$this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($id);
-	} // fecha comboAction()
+        $objSegmentocultural = new Segmentocultural();
+		$this->view->combosegmentosculturais = $objSegmentocultural->buscarSegmento($id);
+	}
+
 	/**
-	 * Método para buscar os segmentos culturais de uma área
+	 * Mï¿½todo para buscar os segmentos culturais de uma ï¿½rea
 	 * Busca como XML para o AJAX
 	 * @access public
 	 * @param void
@@ -64,7 +64,7 @@ class SegmentoculturalController extends Zend_Controller_Action
 		$post = Zend_Registry::get('post');
 		$id = (int) $post->id;
 
-                // integração MODELO e VISÃO
+                // integraï¿½ï¿½o MODELO e VISï¿½O
 		$Segmento = new Segmento();
 		$this->view->combosegmentosculturais = $Segmento->combo(array('a.Codigo = ?' => $id), array('s.Descricao ASC'));
 	} // fecha comboAction()

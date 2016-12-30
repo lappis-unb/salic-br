@@ -33,7 +33,7 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
         return $db->fetchAll($sql);
     }
 
-    public function buscarEtapas($idPreProjeto, $tipoEtapa)
+    public function buscarEtapas($tipoEtapa)
     {
         $db = Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -44,8 +44,6 @@ class Proposta_Model_DbTable_TbPlanilhaEtapa extends MinC_Db_Table_Abstract
             ->where("stEstado = 1")
             ->order("idPlanilhaEtapa ASC")
         ;
-
-        //$sql = " SELECT idPlanilhaEtapa as idEtapa, Descricao as DescricaoEtapa FROM SAC.dbo.tbPlanilhaEtapa WHERE tpCusto = 'P' ";
 
         return $db->fetchAll($sql);
     }

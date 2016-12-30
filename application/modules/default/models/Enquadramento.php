@@ -121,6 +121,18 @@ class Enquadramento extends MinC_Db_Table_Abstract
         $select = $this->select();
         $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
 
+        $queryMensagensNaoRespondidas = $this->select();
+        $queryMensagensNaoRespondidas->setIntegrityCheck(false);
+        $queryMensagensNaoRespondidas->from(array('tbMensagemProjeto' => 'tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("BDCORPORATIVO.scsac"));
+        $queryMensagensNaoRespondidas->where("projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
+        $queryMensagensNaoRespondidas->where("tbMensagemProjeto.idMensagemOrigem IS NULL");
+
+        $queryMensagensRespondidas = $this->select();
+        $queryMensagensRespondidas->setIntegrityCheck(false);
+        $queryMensagensRespondidas->from(array('tbMensagemProjeto'), 'count(*) as quantidade', $this->getSchema("BDCORPORATIVO.scsac"));
+        $queryMensagensRespondidas->where("projetos.IdPRONAC = tbMensagemProjeto.IdPRONAC");
+        $queryMensagensNaoRespondidas->where("tbMensagemProjeto.idMensagemOrigem IS NOT NULL");
+
         $select->setIntegrityCheck(false);
         $select->from(
             array("projetos"),
@@ -136,6 +148,8 @@ class Enquadramento extends MinC_Db_Table_Abstract
                 'projetos.DtFimExecucao',
                 'projetos.Situacao',
                 'projetos.DtSituacao',
+                '(' . $queryMensagensNaoRespondidas->assemble() . ') as mensagens_nao_respondidas',
+                '(' . $queryMensagensRespondidas->assemble() . ') as mensagens_respondidas',
             ),
             $this->_schema
         );

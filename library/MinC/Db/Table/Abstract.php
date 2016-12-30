@@ -8,14 +8,51 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     protected $_rowClass = "MinC_Db_Table_Row";
     protected $debugMode = false;
 
-    private static $databaseInstance;
-
     public function init()
     {
-        $this->_name = self::getName($this->_name);
-        $this->_banco = self::getBanco($this->_banco);
-        $this->_schema = self::getSchema($this->_schema);
+        $this->setName($this->getName($this->_name));
+        $this->setDatabase($this->getBanco($this->_banco));
+        $this->setSchema($this->getSchema($this->_schema));
     }
+
+    public function setSchema($strSchema) {
+        $this->_schema = $strSchema;
+    }
+    public function setName($name) {
+        $this->_name = $name;
+    }
+    public function setDatabase($banco) {
+        $this->_banco = $banco;
+    }
+
+    public function getSchema($strSchema = null, $isReturnDb = true, $strNameDb = null)
+    {
+
+            $db = Zend_Db_Table::getDefaultAdapter();
+
+            if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
+                if (is_null($strNameDb)) {
+                    $strNameDb = 'dbo';
+                }
+
+                if ($isReturnDb && strpos($strSchema, '.') === false) {
+                    if ($strSchema) {
+                        $strSchema = $strSchema . "." . $strNameDb;
+                    } else {
+                        $strSchema = $strNameDb;
+                    }
+                } elseif (strpos($strSchema, '.') === false) {
+                    $strSchema = $strNameDb;
+                }
+            } else if (!$strSchema) {
+                $strSchema = $this->_schema;
+            }
+
+            return $strSchema;
+
+
+    }
+
 
     public function setDebugMode($boolean) {
         $this->debugMode = $boolean;
@@ -112,31 +149,6 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         }
 
         return $strName;
-    }
-
-    public function getSchema($strSchema = null, $isReturnDb = true, $strNameDb = null)
-    {
-        $db = Zend_Db_Table::getDefaultAdapter();
-
-        if ($db instanceof Zend_Db_Adapter_Pdo_Mssql) {
-            if (is_null($strNameDb)) {
-                $strNameDb = 'dbo';
-            }
-
-            if ($isReturnDb && strpos($strSchema, '.') === false) {
-                if ($strSchema) {
-                    $strSchema = $strSchema . "." . $strNameDb;
-                } else {
-                    $strSchema = $strNameDb;
-                }
-            } elseif (strpos($strSchema, '.') === false) {
-                $strSchema = $strNameDb;
-            }
-        } else if (!$strSchema) {
-            $strSchema = $this->_schema;
-        }
-
-        return $strSchema;
     }
 
     /**
@@ -319,7 +331,11 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
         if (is_array($where)) {
             foreach ($where as $columnName => $columnValue) {
                 if (is_int(strpos($columnName, '?'))) {
-                    $select->where($columnName, trim($columnValue));
+                    if (is_array($columnValue)) {
+                        $select->where($columnName, $columnValue);
+                    } else {
+                        $select->where($columnName, trim($columnValue));
+                    }
                 } elseif (!$columnValue) {
                     $select->where($columnName);
                 } else {
@@ -364,13 +380,8 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
     public function findAll(array $where = array(), array $order = array()) {
         $select = $this->select();
         $select->setIntegrityCheck(false);
-        foreach ($where as $columnName => $columnValue) {
-            if (is_int(strpos($columnName, '?'))) {
-                $select->where($columnName, trim($columnValue));
-            } else {
-                $select->where($columnName . ' = ?', trim($columnValue));
-            }
-        }
+
+        self::setWhere($select, $where);
         if ($order) {
             $select->order($order);
         }

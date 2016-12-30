@@ -32,8 +32,6 @@ class Agente_Model_DbTable_Municipios extends MinC_Db_Table_Abstract
             $this->_schema
         );
 
-        $select->where('idUFIBGE= ?' , $idUF);
-
         if (!empty($idCidade))
         {
             $select->where('idMunicipioIBGE = ?' , $idCidade);

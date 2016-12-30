@@ -5,7 +5,7 @@
         <input name="IdPRONAC" type="hidden" value="<?php echo $this->idPronac; ?>"/>
         <div class="row">
             <div class="input-field col s12">
-                <select class="invalid"  data-url="/admissibilidade/mensagem/usuarios" data-target="select[name=idDestinatario]" name="idUnidade" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
+                <select class="invalid"  data-ajax-render="/admissibilidade/mensagem/usuarios" data-ajax-target="select[name=idDestinatario]" name="idUnidade" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
                     <option value="" disabled selected>Selecione...</option>
 <!--                        <optgroup label="--><?php //echo $key ?><!--">-->
                             <?php foreach ($this->arrUnidades as $values): ?>
@@ -53,15 +53,15 @@
     <?php endif; ?>
 </div>
 <script>
-    $jq3(document).ready(function () {
-        $jq3('.modal').find('select').material_select();
+    $3(document).ready(function () {
+        $3('.modal').find('select').material_select();
         setTimeout(function(){
-            $jq3('.modal').find('[required=required]').closest('.input-field').find('input.select-dropdown').addClass('invalid');
-            $jq3('.modal').find('[required=required]').addClass('invalid');
+            $3('.modal').find('[required=required]').closest('.input-field').find('input.select-dropdown').addClass('invalid');
+            $3('.modal').find('[required=required]').addClass('invalid');
         }, 300);
-            var select = $jq3('select[data-target]'),
+            var select = $3('select[data-target]'),
                 strUrl = select.attr('data-url'),
-                objTarget = $jq3(select.attr('data-target'));
+                objTarget = $3(select.attr('data-target'));
         ajaxRender(strUrl, objTarget, select.val(), '<?php echo (isset($this->dataForm['idDestinatario']))? $this->dataForm['idDestinatario'] :'' ?>');
     });
 

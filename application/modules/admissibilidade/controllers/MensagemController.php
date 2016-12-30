@@ -97,9 +97,9 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
     {
         $intIdPronac = $this->getRequest()->getParam('idPronac');
         if ($intIdPronac) {
-//            $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
-//            $this->view->arrResult = $dbTable->getAllBy(array('IdPRONAC' => $intIdPronac));
-            $this->view->title = "Perguntas do Pronac: Projeto TAL ({$intIdPronac})";
+            $tbProjeto = new Projetos();
+            $arrProjeto = $tbProjeto->findBy($intIdPronac);
+            $this->view->title = "Perguntas: {$arrProjeto['NomeProjeto']} ({$intIdPronac})";
             $this->view->idPronac = $intIdPronac;
         } else {
             $this->view->title = "Perguntas";
@@ -137,13 +137,17 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
      */
     public function salvarAction()
     {
+        $intIdPronac = $this->getRequest()->getParam('idPronac');
+        $tbProjeto = new Projetos();
+        $arrProjeto = $tbProjeto->findBy($intIdPronac);
+        $this->view->projeto = $arrProjeto;
         if ($this->getRequest()->isPost()) {
             $this->_helper->layout->disableLayout();
             $this->_helper->viewRenderer->setNoRender(true);
             $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
             echo json_encode(array('status' => $mapper->salvar($this->getRequest()->getPost()), 'msg' => $mapper->getMessages()));
         } else {
-            $this->view->title = 'Enviar pergunta';
+            $this->view->title = "Perguntas: {$arrProjeto['NomeProjeto']} ({$intIdPronac})";
             $this->view->action = 'salvar';
             $this->prepareForm(array('dsResposta' => array('show' => false)));
         }
@@ -211,12 +215,8 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
             $mapper = new Admissibilidade_Model_TbMensagemProjetoMapper();
             echo json_encode(array('status' => $mapper->responder($this->getRequest()->getPost()), 'msg' => $mapper->getMessages()));
         } else {
-            $this->view->title = 'Responder pergunta';
             $this->view->action = 'responder';
-            $this->prepareForm(array(
-                'idDestinatario' => array('disabled' => true),
-                'dsMensagem' => array('disabled' => true),
-            ));
+            $this->prepareForm(array('dsMensagem' => array('disabled' => true)));
         }
     }
 
@@ -231,6 +231,16 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
      */
     public function prepareForm($arrConfig = array())
     {
+        $intIdPronac = $this->getRequest()->getParam('idPronac');
+        if ($intIdPronac) {
+            $tbProjeto = new Projetos();
+            $arrProjeto = $tbProjeto->findBy($intIdPronac);
+            $this->view->title = "Perguntas: {$arrProjeto['NomeProjeto']} ({$intIdPronac})";
+            $arrConfig['idDestinatario'] = array('show' => true);
+            if (in_array($arrProjeto['Situacao'], array('B02', 'B03'))) {
+                $arrConfig['idDestinatario'] = array('show' => false);
+            }
+        }
         $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
         $vw = new vwUsuariosOrgaosGrupos();
         $intId = $this->getRequest()->getParam('id', null);
@@ -239,8 +249,6 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         $this->view->dataForm = array();
         if ($intId) {
             $arrDataForm = $dbTable->findBy($intId);
-            $unidade = $vw->findBy(array('usu_codigo' => $arrDataForm['idDestinatario']));
-            $arrDataForm['idUnidade'] = $unidade['uog_orgao'];
             $this->view->dataForm = $arrDataForm;
             $this->view->dataForm['dsResposta'] = ($arrMensagemResposta = $dbTable->findBy(array('idMensagemOrigem' => $intId)))? $arrMensagemResposta['dsMensagem'] : '';
         }
