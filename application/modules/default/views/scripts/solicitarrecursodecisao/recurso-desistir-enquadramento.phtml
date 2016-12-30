@@ -8,9 +8,9 @@
 <nav class="breadcrumb">
     <div class="nav-wrapper" style="padding: 0 15px 0 15px">
         <div class="col s12">
-            <a href="<?php echo $this->Url(array('module' => 'default', 'controller' => 'principalproponente', 'action' => 'index'))?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para o inï¿½cio">Inï¿½cio</a>
+            <a href="<?php echo $this->Url(array('module' => 'default', 'controller' => 'principalproponente', 'action' => 'index'))?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para o in?cio">In?cio</a>
             <a href="<?php echo $this->Url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'))?>?idPronac=<?php echo $this->projetos->IdPRONAC?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para consultar dados projeto">Consultar dados projeto</a>
-            <a href="#" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Pï¿½gina Atual">Desistï¿½ncia do Prazo Recursal</a>
+            <a href="#" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="P?gina Atual">Desist?ncia do Prazo Recursal</a>
         </div>
     </div>
 </nav>
@@ -34,77 +34,61 @@
     div .termo {
         margin: 0 auto;
     }
-    
-    
-    div .botoes {
-        margin-top: 22px;
-        text-align: center;
-        text-align: center;
-        margin-bottom:: 20px;
-    }
-
 </style>
 
 <div class="container">
-    
-        <h3>Desistï¿½ncia do Prazo Recursal</h3>
-        <form0 name="form" id="form" action="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso-desistencia-endraquamento')); ?>?idPronac=<?php echo $this->projetos->IdPRONAC; ?>" method="post">
+    <div class="row">
+        <h3>Desistência do Prazo Recursal</h3>
+        <form name="form" id="form" action="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso-desistencia-endraquamento')); ?>?idPronac=<?php echo $this->projetos->IdPRONAC; ?>" method="post">
             <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projetos->IdPRONAC; ?>" />
-            <table class="tabela">
+            <table>
                 <tr>
-                    <td class="destacar bold centro">Pronac</td>
-                    <td class="destacar bold centro">Nome do Projeto</td>
+                    <th>Pronac</th>
+                    <th>Nome do Projeto</th>
                 </tr>
                 <tr>
-                    <td><?php echo $this->projetos->AnoProjeto.$this->projetos->Sequencial; ?></td>
-                    <td><?php echo $this->projetos->NomeProjeto; ?></td>
+                    <td align="center"><?php echo $this->projetos->AnoProjeto.$this->projetos->Sequencial; ?></td>
+                    <td align="center"><?php echo $this->projetos->NomeProjeto; ?></td>
                 </tr>
             </table>
-    <div class="card-panel grey lighten-3 z-depth-4 termo">
-        This iLorem Ipsum tem sido o padrï¿½o desde a Idade Mï¿½dia. Um pintor teria peï¿½as mistas de texto em um livro exemplar e ï¿½ este texto que nï¿½s usamos hoje. Outra versï¿½o diz que este ï¿½ um trecho do livro de Cï¿½cero: "" De Finibus Bonorum e malorum "" seï¿½ï¿½es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascenï¿½a, ï¿½ um tratado sobre a teoria da ï¿½tica.
-        This iLorem Ipsum tem sido o padrï¿½o desde a Idade Mï¿½dia. Um pintor teria peï¿½as mistas de texto em um livro exemplar e ï¿½ este texto que nï¿½s usamos hoje. Outra versï¿½o diz que este ï¿½ um trecho do livro de Cï¿½cero: "" De Finibus Bonorum e malorum "" seï¿½ï¿½es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascenï¿½a, ï¿½ um tratado sobre a teoria da ï¿½tica.
-        This iLorem Ipsum tem sido o padrï¿½o desde a Idade Mï¿½dia. Um pintor teria peï¿½as mistas de texto em um livro exemplar e ï¿½ este texto que nï¿½s usamos hoje. Outra versï¿½o diz que este ï¿½ um trecho do livro de Cï¿½cero: "" De Finibus Bonorum e malorum "" seï¿½ï¿½es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascenï¿½a, ï¿½ um tratado sobre a teoria da ï¿½tica.
-        This iLorem Ipsum tem sido o padrï¿½o desde a Idade Mï¿½dia. Um pintor teria peï¿½as mistas de texto em um livro exemplar e ï¿½ este texto que nï¿½s usamos hoje. Outra versï¿½o diz que este ï¿½ um trecho do livro de Cï¿½cero: "" De Finibus Bonorum e malorum "" seï¿½ï¿½es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascenï¿½a, ï¿½ um tratado sobre a teoria da ï¿½tica.
-        This iLorem Ipsum tem sido o padrï¿½o desde a Idade Mï¿½dia. Um pintor teria peï¿½as mistas de texto em um livro exemplar e ï¿½ este texto que nï¿½s usamos hoje. Outra versï¿½o diz que este ï¿½ um trecho do livro de Cï¿½cero: "" De Finibus Bonorum e malorum "" seï¿½ï¿½es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascenï¿½a, ï¿½ um tratado sobre a teoria da ï¿½tica.
-        This iLorem Ipsum tem sido o padrï¿½o desde a Idade Mï¿½dia. Um pintor teria peï¿½as mistas de texto em um livro exemplar e ï¿½ este texto que nï¿½s usamos hoje. Outra versï¿½o diz que este ï¿½ um trecho do livro de Cï¿½cero: "" De Finibus Bonorum e malorum "" seï¿½ï¿½es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascenï¿½a, ï¿½ um tratado sobre a teoria da ï¿½tica.
-        This iLorem Ipsum tem sido o padrï¿½o desde a Idade Mï¿½dia. Um pintor teria peï¿½as mistas de texto em um livro exemplar e ï¿½ este texto que nï¿½s usamos hoje. Outra versï¿½o diz que este ï¿½ um trecho do livro de Cï¿½cero: "" De Finibus Bonorum e malorum "" seï¿½ï¿½es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascenï¿½a, ï¿½ um tratado sobre a teoria da ï¿½tica.
-        This iLorem Ipsum tem sido o padrï¿½o desde a Idade Mï¿½dia. Um pintor teria peï¿½as mistas de texto em um livro exemplar e ï¿½ este texto que nï¿½s usamos hoje. Outra versï¿½o diz que este ï¿½ um trecho do livro de Cï¿½cero: "" De Finibus Bonorum e malorum "" seï¿½ï¿½es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascenï¿½a, ï¿½ um tratado sobre a teoria da ï¿½tica.
-        This iLorem Ipsum tem sido o padrï¿½o desde a Idade Mï¿½dia. Um pintor teria peï¿½as mistas de texto em um livro exemplar e ï¿½ este texto que nï¿½s usamos hoje. Outra versï¿½o diz que este ï¿½ um trecho do livro de Cï¿½cero: "" De Finibus Bonorum e malorum "" seï¿½ï¿½es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascenï¿½a, ï¿½ um tratado sobre a teoria da ï¿½tica.
-        This iLorem Ipsum tem sido o padrï¿½o desde a Idade Mï¿½dia. Um pintor teria peï¿½as mistas de texto em um livro exemplar e ï¿½ este texto que nï¿½s usamos hoje. Outra versï¿½o diz que este ï¿½ um trecho do livro de Cï¿½cero: "" De Finibus Bonorum e malorum "" seï¿½ï¿½es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascenï¿½a, ï¿½ um tratado sobre a teoria da ï¿½tica.
-        Parece que apenas alguns trechos do texto original aparecem no Lipsum comumente usado, e que uma sï¿½rie de cartas tenham sido removido ou adicionado em diversos pontos do texto ao longo do tempo. ï¿½ por isso que existem hoje em dia um nï¿½mero de texto Lorem Ipsum mais ou menos diferentes uns dos outros. Devido ï¿½ sua data de produï¿½ï¿½o, uso Lorem ipsum nï¿½o estï¿½ mais sujeito a direitos de autor e evita quaisquer questï¿½es de direitos autorais. s a card panel with a teal lighten-2 class
-    </div>
-        
-            
-        <div class="botoes">
-            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">
-                Concordo
-                <i class="material-icons right modal-trigger">send</i>
-            </a>
-            <button class="btn waves-effect waves-light red" id="btn_cancelar">
-                Cancelar
-            </button>
-        </div>
+            <div class="card-panel grey lighten-3 z-depth-4 termo">
+                This iLorem Ipsum tem sido o padr?o desde a Idade M?dia. Um pintor teria pe?as mistas de texto em um livro exemplar e ? este texto que n?s usamos hoje. Outra vers?o diz que este ? um trecho do livro de C?cero: "" De Finibus Bonorum e malorum "" se??es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascen?a, ? um tratado sobre a teoria da ?tica.
+                This iLorem Ipsum tem sido o padr?o desde a Idade M?dia. Um pintor teria pe?as mistas de texto em um livro exemplar e ? este texto que n?s usamos hoje. Outra vers?o diz que este ? um trecho do livro de C?cero: "" De Finibus Bonorum e malorum "" se??es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascen?a, ? um tratado sobre a teoria da ?tica.
+                This iLorem Ipsum tem sido o padr?o desde a Idade M?dia. Um pintor teria pe?as mistas de texto em um livro exemplar e ? este texto que n?s usamos hoje. Outra vers?o diz que este ? um trecho do livro de C?cero: "" De Finibus Bonorum e malorum "" se??es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascen?a, ? um tratado sobre a teoria da ?tica.
+                This iLorem Ipsum tem sido o padr?o desde a Idade M?dia. Um pintor teria pe?as mistas de texto em um livro exemplar e ? este texto que n?s usamos hoje. Outra vers?o diz que este ? um trecho do livro de C?cero: "" De Finibus Bonorum e malorum "" se??es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascen?a, ? um tratado sobre a teoria da ?tica.
+                This iLorem Ipsum tem sido o padr?o desde a Idade M?dia. Um pintor teria pe?as mistas de texto em um livro exemplar e ? este texto que n?s usamos hoje. Outra vers?o diz que este ? um trecho do livro de C?cero: "" De Finibus Bonorum e malorum "" se??es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascen?a, ? um tratado sobre a teoria da ?tica.
+                This iLorem Ipsum tem sido o padr?o desde a Idade M?dia. Um pintor teria pe?as mistas de texto em um livro exemplar e ? este texto que n?s usamos hoje. Outra vers?o diz que este ? um trecho do livro de C?cero: "" De Finibus Bonorum e malorum "" se??es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascen?a, ? um tratado sobre a teoria da ?tica.
+                This iLorem Ipsum tem sido o padr?o desde a Idade M?dia. Um pintor teria pe?as mistas de texto em um livro exemplar e ? este texto que n?s usamos hoje. Outra vers?o diz que este ? um trecho do livro de C?cero: "" De Finibus Bonorum e malorum "" se??es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascen?a, ? um tratado sobre a teoria da ?tica.
+                This iLorem Ipsum tem sido o padr?o desde a Idade M?dia. Um pintor teria pe?as mistas de texto em um livro exemplar e ? este texto que n?s usamos hoje. Outra vers?o diz que este ? um trecho do livro de C?cero: "" De Finibus Bonorum e malorum "" se??es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascen?a, ? um tratado sobre a teoria da ?tica.
+                This iLorem Ipsum tem sido o padr?o desde a Idade M?dia. Um pintor teria pe?as mistas de texto em um livro exemplar e ? este texto que n?s usamos hoje. Outra vers?o diz que este ? um trecho do livro de C?cero: "" De Finibus Bonorum e malorum "" se??es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascen?a, ? um tratado sobre a teoria da ?tica.
+                This iLorem Ipsum tem sido o padr?o desde a Idade M?dia. Um pintor teria pe?as mistas de texto em um livro exemplar e ? este texto que n?s usamos hoje. Outra vers?o diz que este ? um trecho do livro de C?cero: "" De Finibus Bonorum e malorum "" se??es 1.10.32 / 1.10.33. Este livro, muito popular durante a Renascen?a, ? um tratado sobre a teoria da ?tica.
+                Parece que apenas alguns trechos do texto original aparecem no Lipsum comumente usado, e que uma s?rie de cartas tenham sido removido ou adicionado em diversos pontos do texto ao longo do tempo. ? por isso que existem hoje em dia um n?mero de texto Lorem Ipsum mais ou menos diferentes uns dos outros. Devido ? sua data de produ??o, uso Lorem ipsum n?o est? mais sujeito a direitos de autor e evita quaisquer quest?es de direitos autorais. s a card panel with a teal lighten-2 class
+            </div>
+            <div class="input-field col s12 center-align">
+                <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Concordo
+                    <i class="material-icons right modal-trigger">send</i>
+                </a>
+                <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->projetos->IdPRONAC; ?>"
+                   class="red-text btn waves-effect waves-dark white"
+                   id="btn_cancelar"
+                   name="action">
+                    Cancelar
+                </a>
+            </div>
     </form>
-
 </div>
-
- <div id="modal1" class="modal">
+</div>
+<div id="modal1" class="modal">
     <div class="modal-content">
-      <p>Tem certeza? Essa decisï¿½o nï¿½o pode ser revertida.</p>
+      <p>Tem certeza? Essa decisão não pode ser revertida.</p>
     </div>
     <div class="modal-footer">
       <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->projetos->IdPRONAC;?>" class=" modal-action modal-close waves-effect waves-red btn-flat">Discordo</a>
         <a href="<?php echo $this->url(array('module' => 'default', 'controller'=> 'solicitarrecursodecisao', 'action' => 'recurso-desistencia-enquadramento-salvar'));?>?idPronac=<?php echo $this->projetos->IdPRONAC;?>" class=" modal-action modal-close waves-effect waves-green btn-flat">Concordo</a>
     </div>
-  </div>
-
- <script>
+</div>
+<script type="text/javascript">
         $3(document).ready(function () {
             $3('.modal').modal();
-            
-            $3('#btn_cancelar').click(function (){
-                window.location.replace('<?php echo $this->Url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->projetos->IdPRONAC; ?>');
-            });
         });
-
 </script>
