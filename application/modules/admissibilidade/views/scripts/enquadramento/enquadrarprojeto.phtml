@@ -1,11 +1,6 @@
 <script type="text/javascript"
         src="<?php echo $this->baseUrl(); ?>/public/js/tinymce/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery/plugins/editorRico.js"></script>
-<script type="text/javascript">
-    jQuery(function ($) {
-        $("#observacao").editorRico({altura: 200});
-    });
-</script>
 <main>
     <nav class="breadcrumb">
         <div class="nav-wrapper" style="padding: 0 15px 0 15px">
@@ -138,6 +133,9 @@
         }
 
         jQuery(function ($) {
+
+            $("#observacao").editorRico({altura: 200});
+
             $('#areaCultural').change(function () {
                 carregarSegmento();
             });
