@@ -47,9 +47,8 @@
                         </tr>
                     <?php endif ?>
                 </tbody>
-        </table>
-            <div class="row">
-                <form class="col s12" name="form" id="form" method="post" action="<?php echo $this->url(array('module' => 'default', 'controller' => 'solicitarrecursodecisao', 'action' => 'recurso-enquadramento-salvar'))?>">
+            </table>
+                <form name="form" id="form" method="post" action="<?php echo $this->url(array('module' => 'default', 'controller' => 'solicitarrecursodecisao', 'action' => 'recurso-enquadramento-salvar'))?>">
                     <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projeto->IdPRONAC;?>" />
                     <input type="hidden" name="tpSolicitacao" id="ER" value="ER" />
                     <?php if($this->recurso):  ?>
@@ -59,8 +58,11 @@
                     <?php endif ?>
                     <div class="row">
                         <div class="input-field col s12">
-                            <textarea name="dsRecurso" id="dsRecurso" class="materialize-textarea"></textarea>
-                            <label for="dsRecurso">Recurso</label>
+                            <br />
+                            <label class="active" for="dsRecurso">Recurso</label>
+                            <br/>
+                            <textarea name="dsRecurso" id="dsRecurso" class="editor materialize-textarea"></textarea>
+                            <br />
                         </div>
                     </div>
                     <div class="row">
@@ -78,7 +80,6 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
     $(document).ready(function () {
         $('#form').validate({
@@ -95,8 +96,9 @@
             invalidHandler: function(event, validator) {
                 Materialize.toast('Campo "Recurso" &eacute; obrigat&oacute;rio!', 4000);
             }
-
         });
+
+        jQuery('#dsRecurso').editorRico({altura: 100});
     });
 </script>
 
