@@ -1,16 +1,25 @@
 <link rel="stylesheet" type="text/css"
       href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"/>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.material.min.css"/>
-<div id="breadcrumb">
-    <ul>
-        <li class="first"><a
-                href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecer', 'action' => 'index'), '', true); ?>"
-                title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-        <li>
-            <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecer', 'action' => 'listaprojetos'), '', true); ?>"
-               title="Localizar Parecer">Gerenciar Pareceres</a></li>
-    </ul>
-</div>
+<main>
+<nav class="breadcrumb">
+    <div class="nav-wrapper" style="padding: 0 15px 0 15px">
+        <div class="col s12">
+
+            <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecer', 'action' => 'index'), null, true); ?>"
+               class="breadcrumb tooltipped"
+               data-position="top"
+               data-delay="50"
+               data-tooltip="Ir para In&iacute;cio">In&iacute;cio</a>
+
+            <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'gerenciarparecer', 'action' => 'listaprojetos'), null, true); ?>"
+               class="breadcrumb tooltipped"
+               data-position="top"
+               data-delay="50"
+               data-tooltip="Localizar Parecer">Gerenciar Parecer</a>
+
+    </div>
+</nav>
 <div id="titulo">
     <div>
         Gerenciar Enquadramentos
@@ -22,7 +31,7 @@
     </div>
 </div>
 <div id="conteudo">
-    <table class="tabela " id="enquadramento">
+    <table class=" bordered responsive-table" id="enquadramento">
         <thead>
         <tr class="titulo_tabela">
             <th width="40">PRONAC</th>
@@ -30,7 +39,10 @@
             <th>&Aacute;rea</th>
             <th>Segmento</th>
             <th>Data</th>
-            <th align="center">A&ccedil;&otilde;es</th>
+            <?php if($this->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE): ?>
+            <th>T&eacute;cnico</th>
+            <?php endif; ?>
+            <th align="center">A&ccedil;&atilde;o</th>
         </tr>
         </thead>
         <tbody>
@@ -44,6 +56,9 @@
                 <td><?php echo $dado->area; ?></td>
                 <td><?php echo $dado->segmento; ?></td>
                 <td><?php echo Data::tratarDataZend($dado->DtSituacao, 'Brasileira'); ?></td>
+                <?php if($this->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE): ?>
+                    <td><?php echo (trim($dado->usu_nome) != "") ? $dado->usu_nome : '-' ?></td>
+                <?php endif; ?>
                 <td>
                     <?php if ($dado->Situacao == "B03") { ?>
                         <a class="btn-floating waves-effect waves-light red tooltipped" data-position="top"
@@ -52,15 +67,15 @@
                         </a>
                     <?php } ?>
                     <a class="btn-floating waves-effect waves-light tooltipped"
+
                        href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index')) . "?idPronac={$dado->pronac}"; ?>"
                        data-position="top" data-delay="50" data-tooltip="D&uacute;vida">
                         <?php
+                        $corMensagem = 'green';
                         if ($dado->mensagens_nao_respondidas == '0' && $dado->mensagens_respondidas == '0') {
                             $corMensagem = 'blue';
                         } elseif ($dado->mensagens_nao_respondidas <> $dado->mensagens_respondidas) {
                             $corMensagem = ' amber darken-1 ';
-                        } else {
-                            $corMensagem = 'green';
                         }
                         ?>
                         <i class="material-icons <?php echo $corMensagem; ?> ">&#xE0BF;</i>
@@ -116,3 +131,5 @@ type = "text/javascript" >
         });
     }($.noConflict(true)));
 </script>
+
+</main>
