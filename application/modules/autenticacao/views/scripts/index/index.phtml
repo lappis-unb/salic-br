@@ -10,108 +10,144 @@
  * @link http://www.cultura.gov.br
  */
 ?>
+<?php if (!$this->habilitarServicoLoginCidadao): ?>
+    <div class="container">
+        <!--<div class="container animated slideInUp">-->
+        <!--<div class="container animated zoomIn">-->
+        <div class="row">
+            <div class="col s12 l4"></div>
+            <div class="col s12 l4 center-align">
+                <h4>Bem vindo!</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 l4"></div>
+            <div class="col s12 l4">
+                <!--        <div class="card z-depth-5 green darken-3">-->
+                <div class="card green-text text-darken-4 animated fadeInUp">
+                    <!--            <div class="card">-->
+                    <!--                <div class="card-image">-->
+                    <!--                    <img alt="Salic" src="-->
+                    <?php //echo $this->baseUrl(); ?><!--/public/img/logo.png">-->
+                    <!--                    <span class="card-title">Login</span>-->
+                    <!--                </div>-->
+                    <div class="card-content  white-text"
+                         style="background: url(<?php echo $this->baseUrl(); ?>/public/img/bg-topo.png) no-repeat 0 0 #acda5d;">
+                        <!--                    <span class="card-title activator grey-text text-darken-4">Login-->
+                        <img alt="Salic" src="<?php echo $this->baseUrl(); ?>/public/img/logo.png">
+                        <br/>
+                        <span class="card-title"><b>Login</b></span>
+                    </div>
+                    <div class="card-content">
+                        <form
+                            data-ajax-form="true"
+                            data-ajax-form-redirect="<?php echo $this->url(array('module' => 'default', 'controller' => 'principal', 'action' => 'index'), null, true); ?>"
+                            name="inicial" id="inicial" onsubmit="return validaSenha();" method="POST"
+                              action="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'login'), null, true); ?>">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">account_circle</i>
+                                    <!--                                <input id="email" type="password" class="validate">-->
+                                    <input maxlength="14" onkeyup="mascara(this, format_cpf);" type="text" name="Login"
+                                           id="Login"/>
+                                    <label for="email">CPF</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">lock</i>
+                                    <input class="validate" type="password" name="Senha" id="Senha"/>
+                                    <label for="password">Senha</label>
+                                </div>
+                            </div>
+                            <button style="width: 100%;" title="Acessar o sistema" id="btConfirmar"
+                                    class="btn waves-effect waves-light" type="submit" name="action">Enviar
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="card-action">
+                        <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'cadastrarusuario', 'module' => 'autenticacao')); ?>"
+                           title="Cadastre-se">N&atilde;o sou cadastrado</a>&nbsp;&nbsp;&nbsp;
+                        <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'solicitarsenha', 'module' => 'autenticacao')); ?>"
+                           title="Lembrar senha">Esqueci a senha</a>
+                    </div>
+                    <!--                <div class="card-reveal">-->
+                    <!--                    <span class="card-title grey-text text-darken-4">Login<i class="material-icons right">close</i></span>-->
+                    <!--                    <p>Preencha o seu cpf e senha para acessar o sistema.</p>-->
+                    <!--                </div>-->
+                </div>
+            </div>
+            <div class="col s12 l4"></div>
+        </div>
+    </div>
+<?php else: ?>
+    <p align="center" colspan="2">
+        <a href="<?php echo $this->url(array('controller' => 'logincidadao', 'module' => 'autenticacao')) ?>">
+            <img style="border: 0px"
+                 src="<?php echo $this->baseUrl(); ?>/public/img/buttons/login_cidadao/BotaoParaLogin_escuro.png"
+                 alt="Governo Federal - Brasil - Pa&iacute;s rico &eacute; pa&iacute;s sem pobreza"
+                 title="Governo Federal - Brasil - Pa&iacute;s rico &eacute; pa&iacute;s sem pobreza"/>
+        </a>
+    </p>
+<?php endif; ?>
+<script type="text/javascript">
 
-<!-- ========== INICIO TITULO ========== -->
+//    $3(document).ready(function ($) {
+//        $('body').on('submit', 'form#inicial', function () {
+//            $('.card').removeClass('fadeInUp');
+//            $('.card').removeClass('animated');
+//            strAnimate = 'jello';
+////            strAnimate = 'wobble';
+////            strAnimate = 'pulse';
+//            $('.card').addClass(strAnimate);
+//            $('.card').addClass('animated');
+//            setTimeout(function(){
+//                $('.card').removeClass(strAnimate);
+//                $('.card').removeClass('animated');
+//            }, 1000);
+//            return false;
+//        });
+//    });
 
-<div id="titulo">
-    <div>Bem Vindo!</div>
-</div>
-<!-- ========== FIM TITULO ========== -->
+    $(document).ready(function () {
+//        $("#inicial").validate({
+//            // Define as regras
+//            rules: {
+//                Login: {
+//                    // campoNome sera obrigatorio (required) e tera tamanho manimo (minLength)
+//                    required: true,
+//                    minlength: 14
+//                },
+//                Senha: {
+//                    // campoSenha sera obrigatorio (required)
+//                    required: true,
+//                    minlength: 2
+//                }
+//            },
+//            // Define as mensagens de erro para cada regra
+//            messages: {
+//                Login: {
+//                    required: " Digite o seu CPF!",
+//                    minlength: " O CPF deve conter exatamente 11 caracteres!"
+//                },
+//                Senha: {
+//                    required: " Digite a sua senha!",
+//                    minlength: " A senha deve conter, no m&iacute;nimo, 2 caracteres!"
+//                }
+//            }
+//        });
+    });
 
-<!-- ========== INICIO CONTEUDO ========== -->
-<div id="conteudo">
+    function validaSenha() {
+        var data = document.getElementById("Senha").value;
+        //var iChars = "<";
+        data = data.replace("<", "##menor##");
+        data = data.replace(">", "##maior##");
+        data = data.replace("'", "##aspa##");
 
-    <script type="text/javascript">
-	$(document).ready( function(){
-            $("#inicial").validate({
-                // Define as regras
-                rules:{
-                    Login:{
-                        // campoNome sera obrigatorio (required) e tera tamanho manimo (minLength)
-                        required: true,
-                        minlength: 14
-                    },
-                    Senha:{
-                        // campoSenha sera obrigatorio (required)
-                        required: true,
-                        minlength: 2
-                    }
-                },
-                // Define as mensagens de erro para cada regra
-                messages:{
-                    Login:{
-                        required: " Digite o seu CPF!",
-                        minlength: " O CPF deve conter exatamente 11 caracteres!"
-                    },
-                    Senha:{
-                        required: " Digite a sua senha!",
-                        minlength: " A senha deve conter, no m&iacute;nimo, 2 caracteres!"
-                    }
-                }
-            });
-	});
-
-	function validaSenha()
-	{
-            var data = document.getElementById("Senha").value;
-            //var iChars = "<";
-            data = data.replace("<", "##menor##");
-            data = data.replace(">", "##maior##");
-            data = data.replace("'", "##aspa##");
-
-            document.getElementById("Senha").value = data;
-            //document.inicial.submit();
-            return true;
-        }
-    </script>
-
-    <fieldset>
-        <legend>Login</legend>
-        <?php
-        if(!$this->habilitarServicoLoginCidadao): ?>
-        <form name="inicial" id="inicial"  onsubmit="return validaSenha();" method="POST" action="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'login'), null, true); ?>">
-            <table class="tabela" border="1" style="margin-bottom: 50px; margin-top: 20px;">
-                <thead>
-                    <tr>
-                        <th colspan="2">Minist&eacute;rio da Cultura Apresenta&ccedil;&atilde;o de Proposta Cultural via Web</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <tr>
-                        <td width="10%" class="destacar bold" align="right"><label for="Login">CPF</label></td>
-                        <td width="90%"><input maxlength="14" onkeyup="mascara(this, format_cpf);" class="input_simples" type="text" name="Login" id="Login" /></td>
-                    </tr>
-                    <tr>
-                        <td width="10%" class="destacar bold" align="right"><label for="Senha">SENHA</label></td>
-                        <td width="90%"><input class="input_simples" type="password" name="Senha" id="Senha" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="center">
-                            <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'cadastrarusuario', 'module' => 'autenticacao')); ?>" title="Cadastre-se">N&atilde;o sou cadastrado</a>&nbsp;&nbsp;&nbsp;
-                            <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'solicitarsenha', 'module' => 'autenticacao')); ?>" title="Lembrar senha">Esqueci a senha</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" colspan="2">
-                            <input id="btConfirmar" type="submit" value=" " class="btn_confirmar enviar" title="Acessar o sistema" style="width: 88px;" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
-        <?php else: ?>
-        <p align="center" colspan="2">
-            <a href="<?php echo $this->url(array('controller' => 'logincidadao', 'module' => 'autenticacao')) ?>">
-                <img style="border: 0px" src="<?php echo $this->baseUrl(); ?>/public/img/buttons/login_cidadao/BotaoParaLogin_escuro.png" alt="Governo Federal - Brasil - Pa&iacute;s rico &eacute; pa&iacute;s sem pobreza" title="Governo Federal - Brasil - Pa&iacute;s rico &eacute; pa&iacute;s sem pobreza" />
-            </a>
-        </p>
-        <?php endif; ?>
-    </fieldset>
-</div>
-<!-- ========== FIM CONTEUDO ========== -->
-
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
-<div id="rodapeConteudo"><span></span></div>
-<br clear="all" />
-<!-- ========== FIM RODAPA DO CONTEUDO ========== -->
+        document.getElementById("Senha").value = data;
+        //document.inicial.submit();
+        return true;
+    }
+</script>

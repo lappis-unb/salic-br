@@ -64,7 +64,8 @@ class CadastrarProjetoController extends MinC_Controller_Action_Abstract {
             $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
             $post = Zend_Registry::get('post');
             $cdarea = $post->area;
-            $dadosSegmento = Segmentocultural::buscar($cdarea);
+            $objSegmentocultural = new Segmentocultural();
+            $dadosSegmento = $objSegmentocultural->buscarSegmento($cdarea);
             $i = 0;
             foreach ($dadosSegmento as $segmento) {
                 $vSegmento[$i]['cdsegmento'] = $segmento->id;

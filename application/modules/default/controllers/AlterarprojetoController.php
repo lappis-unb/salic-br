@@ -1072,7 +1072,8 @@ class AlterarprojetoController extends MinC_Controller_Action_Abstract {
             $this->view->pronac = Seguranca::encrypt($listaparecer[0]->pronac);
 
             $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
-            $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($listaparecer[0]->Area);
+            $objSegmentocultural = new Segmentocultural();
+            $this->view->combosegmentosculturais = $objSegmentocultural->buscarSegmento($listaparecer[0]->Area);
 
             $documentoDao = new tbHistoricoAlteracaoProjeto();
             $where = array(

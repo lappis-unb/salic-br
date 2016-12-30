@@ -49,10 +49,20 @@ class Admissibilidade_Model_DbTable_TbMensagemProjeto extends MinC_Db_Table_Abst
                         array('tbMensagemProjetoResposta' => $this->_name),
                         'tbMensagemProjeto.idMensagemProjeto = tbMensagemProjetoResposta.idMensagemOrigem',
                         'tbMensagemProjetoResposta.dtMensagem as dtResposta',
-                        $this->_schema);
+                        $this->_schema)
+                    ->joinLeft(
+                        array('OrgaosRemetente' => 'Orgaos'),
+                        'tbMensagemProjeto.idRemetenteUnidade = OrgaosRemetente.Codigo',
+                        'Sigla as remetenteUnidadeNome',
+                        $this->getSchema('sac'))
+                    ->joinLeft(
+                        array('OrgaosDestinatario' => 'Orgaos'),
+                        'tbMensagemProjeto.idDestinatarioUnidade = OrgaosDestinatario.Codigo',
+                        'Sigla as destinatarioUnidadeNome',
+                        $this->getSchema('sac'));
         parent::setWhere($select, $where);
         $select->order('dtMensagem DESC');
-
+//        sac.dbo.Orgaos
         $arrResult = ($arrResult = $this->fetchAll($select))? $arrResult->toArray() : array();
         foreach ($arrResult as &$arrValue) {
             $arrValue['dsMensagem'] = strip_tags($arrValue['dsMensagem']);

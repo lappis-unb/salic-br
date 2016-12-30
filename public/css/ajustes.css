@@ -13,11 +13,19 @@
 	/*padding: 0;*/
 	/*height: 33px;*/
 	/*padding: 3px 0 0 0;*/
+	margin: 0;
+}
+
+#atalhos ul {
+	margin: 0;
+}
+
+#menu-barra-temp {
+	margin: 6px;
 }
 
 /* Formata��o dos itens da lista do menu */
 #navglobal ul li {
-	/*padding: 0;*/
 	/*height: 31px;*/
 	/*display: block;*/
 	/*display: inline-block;*/
@@ -45,4 +53,9 @@
 #navglobal ul li.ativo a { 
 	/*background: url(../img/navglobal-ativo-left.gif) left 0 no-repeat;*/
 	/*color:#666;*/
+}
+
+.collapsible-body p.valign {
+	width: 100%;
+
 }

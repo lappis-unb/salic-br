@@ -1374,7 +1374,8 @@ class GerenciarPautaReuniaoController extends MinC_Controller_Action_Abstract {
                 $this->view->projetosEN = $Projetos->buscaAreaSegmentoProjeto($dados->IdPRONAC);
 
                 $this->view->comboareasculturais = $mapperArea->fetchPairs('codigo',  'descricao');
-                $this->view->combosegmentosculturais = Segmentocultural::buscarSegmento($this->view->projetosEN->cdArea);
+                $objSegmentocultural = new Segmentocultural();
+                $this->view->combosegmentosculturais = $objSegmentocultural->buscarSegmento($this->view->projetosEN->cdArea);
 
                 $parecer = new Parecer();
                 $this->view->Parecer = $parecer->buscar(array('IdPRONAC = ?' => $dados->IdPRONAC, 'TipoParecer in (?)' => array(1,7), 'stAtivo = ?' => 1))->current();

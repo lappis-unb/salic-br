@@ -161,7 +161,8 @@ class MinC_Db_Mapper
             $method = 'get' . ucfirst($pk);
             $pkValue = $model->$method();
 //            $data = array_filter($model->toArray(), 'strlen');
-            $data = array_filter($model->toArray());
+            $data = array_filter($model->toArray(), function($value){return ($value !== null);});
+//            $data = array_filter($model->toArray());($model->toArray());
 
             if ($table->getSequence()) {
                 unset($data[$pk]);

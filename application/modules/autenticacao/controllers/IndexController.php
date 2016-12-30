@@ -74,21 +74,26 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
                     $GrupoAtivo->codOrgao = $Grupo['uog_orgao'];
                     $this->orgaoAtivo = $GrupoAtivo->codOrgao;
 
-                    return $this->_helper->redirector->goToRoute(array('controller' => 'principal'), null, true);
+//                    return $this->_helper->redirector->goToRoute(array('controller' => 'principal'), null, true);
+                    $this->_helper->viewRenderer->setNoRender(true);
+                    echo json_encode(array('status' => 1, 'msg' => 'Login realizado com sucesso!'));
                 } else {
                     //se nenhum registro foi encontrado na tabela Usuario, ele passa a tentar se logar como proponente.
                     //neste ponto o _forward encaminha o processamento para o metodo login do controller login, que recebe
                     //o post igualmente e tenta encontrar usuario cadastrado em SGCAcesso
-                    $this->forward("login-proponente", "index", "autenticacao");
-//                    throw new Exception("Usuario inexistente!");
+//                    $this->forward("login-proponente", "index", "autenticacao");
+//                    echo json_encode(array('status' => false, 'msg' => 'Cpf ou senha invalida!'));
+                    throw new Exception("Usuario inexistente!");
                 }
             }
 
         } catch (Exception $objException) {
-            echo '<pre>';
-            var_dump($objException->getMessage());
-            $this->_helper->viewRenderer->setNoRender(TRUE);
-            parent::message($objException->getMessage(), "index", "ERROR");
+//            echo '<pre>';
+//            var_dump($objException->getMessage());
+//            $this->_helper->viewRenderer->setNoRender(TRUE);
+//            parent::message($objException->getMessage(), "index", "ERROR");
+            $this->_helper->viewRenderer->setNoRender(true);
+            echo json_encode(array('status' => false, 'msg' => $objException->getMessage()));
         }
     }
 
