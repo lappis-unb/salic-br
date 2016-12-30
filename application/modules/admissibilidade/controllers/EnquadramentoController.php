@@ -30,8 +30,8 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         } elseif ($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE) {
             $this->view->dados = $enquadramento->obterProjetosParaEnquadramentoVinculados($this->view->idUsuarioLogado, $ordenacao);
         }
-        $codOrgao = $this->grupoAtivo->codOrgao;
-        $this->view->codOrgao = $codOrgao;
+        $this->view->codGrupo = $this->grupoAtivo->codGrupo;
+        $this->view->codOrgao = $this->grupoAtivo->codOrgao;
     }
 
     public function enquadrarprojetoAction()
@@ -103,6 +103,9 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
                 $orgaoDestino = 166;
             }
         }
+
+        $objPlanoDistribuicaoProduto = new PlanoDistribuicao();
+        $objPlanoDistribuicaoProduto->atualizarAreaESegmento($post['areaCultural'], $post['segmentoCultural'], $projeto['idProjeto']);
 
         $objProjeto = new Projetos();
         $arrayDadosProjeto = array(

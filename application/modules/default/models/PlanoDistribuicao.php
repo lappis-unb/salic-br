@@ -1,7 +1,6 @@
 <?php
 class PlanoDistribuicao extends MinC_Db_Table_Abstract
 {
-    protected $_banco = "sac";
     protected $_schema = "sac";
     protected $_name = "planodistribuicaoproduto";
     protected $_primary = "idPlanoDistribuicao";
@@ -213,5 +212,23 @@ class PlanoDistribuicao extends MinC_Db_Table_Abstract
         $objApagar = $this->find($id)->current();
 
         return $objApagar->delete();
+    }
+
+    public function atualizarAreaESegmento($area, $segmento, $idProjeto) {
+        try {
+
+            $arrayDadosPlanoDistribuicaoProduto = array(
+                'Area' => $area,
+                'Segmento' => $segmento
+            );
+
+            $arrayWherePlanoDistribuicaoProduto = array(
+                'idProjeto = ?' => $idProjeto,
+                'stPrincipal = ?' => '1'
+            );
+            $this->update($arrayDadosPlanoDistribuicaoProduto, $arrayWherePlanoDistribuicaoProduto);
+        } catch (Exception $objException) {
+            throw new Exception($objException->getMessage(), 0, $objException);
+        }
     }
 }
