@@ -98,10 +98,11 @@
 //            strAnimate = 'pulse';
                         $('.card').addClass(strAnimate);
                         $('.card').addClass('animated');
-                        setTimeout(function(){
+                        $('.card').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
                             $('.card').removeClass(strAnimate);
                             $('.card').removeClass('animated');
-                        }, 1000);
+
+                        });
                     }
                 }
             });
