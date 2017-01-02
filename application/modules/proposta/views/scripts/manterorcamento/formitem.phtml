@@ -8,6 +8,8 @@
             JSBloquearAlteracaoFormulario();
         <?php endif; ?>
 
+        somaValores();
+
         $('.soma').keyup(function () {
             var soma = 0;
             var vlunitario = $("#vlunitario").val();
@@ -131,7 +133,6 @@
                     <input type="hidden" name="municipio" id="municipio" value="<?php echo $this->Municipio['idMunicipioIBGE'] ?>" />
                     <input type="hidden" name="idPlanilhaEtapa" id="idPlanilhaEtapa" value="<?php echo $this->Etapa['idPlanilhaEtapa'] ?>" />
 
-
                     <div class="row">
                         <div class="col s12">
                             <table style="margin-top: 0px;">
@@ -204,8 +205,11 @@
 
                     <table class="tabela" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td align="center">
-                                <input type="button" class="btn_salvar" />
+                            <td class="center-align">
+                                <button class="btn-salvar btn waves-effect waves-light" type="submit" name="action">Salvar
+                                    <i class="material-icons right">send</i>
+                                </button>
+<!--                                <input type="button" class="btn_salvar" />-->
                             </td>
                         </tr>
                     </table>
