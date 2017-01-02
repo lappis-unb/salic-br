@@ -692,9 +692,7 @@ class ConsultarpareceristasController extends MinC_Controller_Action_Abstract {
         $this->_helper->layout->disableLayout();
         if ($_POST['codigo'] != '') {
             $segmentos = new Segmentocultural();
-            $dados = new StdClass();
-            $dados->codigo = $_POST['codigo'];
-            $dados = $segmentos->carregarSegmentosArea($dados);
+            $dados = $segmentos->carregarSegmentosArea($_POST['codigo']);
             $html = '';
             if ($dados) {
                 foreach ($dados as $dado) {

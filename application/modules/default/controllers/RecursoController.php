@@ -2213,10 +2213,10 @@ class RecursoController extends MinC_Controller_Action_Abstract
         $dsAvaliacao = $this->getRequest()->getParam('dsAvaliacao');
 
         if(empty($dsAvaliacao)){
-            parent::message('Avaliação não preenchida!', "recurso-enquadramento", "ERROR");
+            parent::message('Avaliação não preenchida!', "recurso/avaliar-recurso-enquadramento?recurso=$idRecurso", "ERROR");
         }
         if(empty($idRecurso)){
-            parent::message('Recurso não encontrado!', "recurso-enquadramento", "ERROR");
+            parent::message('Recurso não encontrado!', "recurso/avaliar-recurso-enquadramento?recurso=$idRecurso", "ERROR");
         }
 
         $tbRecurso = new tbRecurso();
