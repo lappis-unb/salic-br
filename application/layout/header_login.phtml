@@ -63,11 +63,14 @@
               href="<?php echo $this->baseUrl(); ?>/public/css/noscript.css"/>
     </noscript>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script>var $3 = jQuery.noConflict();</script>
+    <script src="<?php echo $this->baseUrl(); ?>/public/js/jquery/3/jquery-3.1.1.js"></script>
+    <script>$3 = jQuery.noConflict();</script>
+    <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery/3/plugin/validation-1.16.0/dist/jquery.validate.js"></script>
+    <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery/3/plugin/validation-1.16.0/dist/localization/messages_pt_BR.js"></script>
     <script src="<?php echo $this->baseUrl(); ?>/public/materialize/js/materialize.js"></script>
     <script src="<?php echo $this->baseUrl(); ?>/public/materialize/js/materialize-ready.js"></script>
-    <script src="<?php echo $this->baseUrl(); ?>/public/js/jquery/plugins/ajax.js"></script>
+    <script src="<?php echo $this->baseUrl(); ?>/public/js/jquery/3/plugin/salic/ajax.js"></script>
+
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/materialize/css/materialize.css">
     <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/materialize/css/materialize-custom.css">
@@ -93,6 +96,9 @@
     background-position: center;
     background-color: rgba(33, 33, 33, 0.06);
 /*    background-image: url(*/<?php //echo $this->baseUrl(); ?>/*/public/img/md-bg.jpg);*/
+/*    background-image: url(*/<?php //echo $this->baseUrl(); ?>/*/public/img/md-bg-green.png);*/
+/*    background-image: url(*/<?php //echo $this->baseUrl(); ?>/*/public/img/md-bg-green-yellow.png);*/
+    background-image: url(<?php echo $this->baseUrl(); ?>/public/img/md-bg-green-orange.jpg);
 ">
     <header>
         <?php echo $this->render('partials/barraBrasil.phtml') ?>

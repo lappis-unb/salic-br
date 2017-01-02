@@ -26,8 +26,8 @@ if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
     <!--        </div>-->
     <!--    </div>-->
     <div class="row">
-        <div class="col s12 l4"></div>
-        <div class="col s12 l4">
+        <div class="col s12 m3 l3"></div>
+        <div class="col s12 m6 l6">
             <!--        <div class="card z-depth-5 green darken-3">-->
             <div class="card green-text text-darken-4 animated fadeInUp">
                 <!--            <div class="card">-->
@@ -36,12 +36,16 @@ if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
                 <?php //echo $this->baseUrl(); ?><!--/public/img/logo.png">-->
                 <!--                    <span class="card-title">Login</span>-->
                 <!--                </div>-->
-                <div class="card-content  white-text"
-                     style="background: url(<?php echo $this->baseUrl(); ?>/public/img/bg-topo.png) no-repeat 0 0 #acda5d;">
+                <div class="card-content  white-text" style="background: url(<?php echo $this->baseUrl(); ?>/public/img/bg-topo.png) no-repeat center 0 #acda5d ;">
+                    <div class="row" style="margin: 0;">
+                        <div class="col s12 center-align" >
+                            <img alt="Salic" src="<?php echo $this->baseUrl(); ?>/public/img/logo.png">
+                        </div>
+                        <div class="col s12" >
+                            <span class="card-title"><b>Cadastro</b></span>
+                        </div>
+                    </div>
                     <!--                    <span class="card-title activator grey-text text-darken-4">Login-->
-                    <img alt="Salic" src="<?php echo $this->baseUrl(); ?>/public/img/logo.png">
-                    <br/>
-                    <span class="card-title"><b>Cadastro</b></span>
                 </div>
                 <div class="card-content">
                     <form
@@ -57,35 +61,37 @@ if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
                                 <!--                                <input id="email" type="password" class="validate">-->
                                 <input value="<?php echo $this->cpf?>" onkeyup="mascara(this, format_cpf);"   maxlength="14" type="text" name="cpf" id="cpf"  />
                                 <span style="color: red;font-weight: bold;" id="mensCPF"></span>
-                                <label for="email">CPF</label>
+                                <label for="cpf">CPF</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <i class="material-icons prefix">lock</i>
+                                <i class="material-icons prefix">person</i>
                                 <input value="<?php echo $this->nome ?>" maxlength="200" type="text" name="nome" id="nome" size="50" />
-                                <label for="password">Nome Completo *</label>
+                                <label for="nome">Nome Completo *</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <i class="material-icons prefix">lock</i>
-                                <input  value="<?php echo $this->dtNascimento ?>" onblur="validaData(this)" anomenor="<?php echo date('Y-m-d');?>" onkeyup="mascara(this, format_data);" onkeydown="mascara(this, format_data);" onkeypress ="mascara(this, format_data);" maxlength="10" type="text" name="dataNasc" id="dataNasc"  />
-                                <label for="password">Data de Nascimento *</label>
+                                <i class="material-icons prefix">date_range</i>
+                                <input  value="<?php echo $this->dtNascimento ?>" onblur="validaData(this)" anomenor="<?php echo date('Y-m-d');?>" onkeyup="mascara(this, format_data);" onkeydown="mascara(this, format_data);" onkeypress ="mascara(this, format_data);" maxlength="10" type="date" class="datepicker" name="dataNasc" id="dataNasc"  />
+                                <label for="dataNasc">Data de Nascimento *</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <i class="material-icons prefix">lock</i>
-                                <input  value="<?php echo $this->dtNascimento ?>" onblur="validaData(this)" anomenor="<?php echo date('Y-m-d');?>" onkeyup="mascara(this, format_data);" onkeydown="mascara(this, format_data);" onkeypress ="mascara(this, format_data);" maxlength="10" type="text" name="dataNasc" id="dataNasc"  />
-                                <label for="password">E-mail *</label>
+                                <i class="material-icons prefix">mail_outline</i>
+                                <input  value="<?php echo $this->email ?>" maxlength="200"  type="text" name="email" id="email" size="50" />
+                                <span style="color: red;font-weight: bold;" id="mensemail"></span>
+                                <label for="email">E-mail *</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <i class="material-icons prefix">lock</i>
-                                <input  value="<?php echo $this->email ?>" maxlength="200"  type="text" name="emailConf" id="emailConf" size="50" /><span style="color: red;font-weight: bold;" id="mensemailConf"></span>
-                                <label for="password">Confirme o e-mail *</label>
+                                <i class="material-icons prefix">mail_outline</i>
+                                <input  value="<?php echo $this->email ?>" maxlength="200"  type="text" name="emailConf" id="emailConf" size="50" />
+                                <span style="color: red;font-weight: bold;" id="mensemailConf"></span>
+                                <label for="emailConf">Confirme o e-mail *</label>
                             </div>
                         </div>
                         <button style="width: 100%;" title="Acessar o sistema" id="btConfirmar"
@@ -94,7 +100,7 @@ if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
                         </button>
                     </form>
                 </div>
-                <div class="card-action">
+                <div class="card-action center-align">
                     <a href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'index', 'module' => 'autenticacao')); ?>');"
                        title="Cadastre-se">J&aacute; sou cadastrado</a>&nbsp;&nbsp;&nbsp;
                     <a href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'solicitarsenha', 'module' => 'autenticacao')); ?>');"
@@ -110,12 +116,16 @@ if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
                 <!--                </div>-->
             </div>
         </div>
-        <div class="col s12 l4"></div>
+        <div class="col s12 m3 l3"></div>
     </div>
 </div>
 
 
 <script>
+    $3('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 100 // Creates a dropdown of 15 years to control year
+    });
 
     function redirect(strUrl)
     {

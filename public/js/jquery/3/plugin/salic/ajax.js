@@ -10,7 +10,6 @@
             } else {
                 $.ajaxModal({strUrl: $(this).attr('data-ajax-modal')});
             }
-
         });
         // $('body').on('change', '[data-ajax-render]:not(select)', function() {
         //     console.info('aaa');
@@ -55,57 +54,66 @@
             var elmForm = $(this).closest('form[data-ajax-form]'),
                 strRedirect = elmForm.attr('data-ajax-form-redirect');
 
-            // elmForm
-
-
             if ($('#dsMensagem').length > 0) {
                 $('#dsMensagem').val(tinyMCE.get('dsMensagem').getContent());
             }
             if ($('#dsResposta').length > 0) {
                 $('#dsResposta').val(tinyMCE.get('dsResposta').getContent());
             }
-            console.info(elmForm.attr('action'))
             strSerialize = elmForm.serialize();
-            $3.post(elmForm.attr('action'), strSerialize, function (result) {
-                result = $3.parseJSON(result);
-                if (result.status == '1') {
+
+            if (elmForm.valid()) {
+                $3.post(elmForm.attr('action'), strSerialize, function (result) {
+                    result = $3.parseJSON(result);
+                    if (result.status == '1') {
 //                    $3('#form-mensagem')[0].reset();
-                    Materialize.toast(result.msg, 4000);
-                    setTimeout(function(){
-                        window.location.href = strRedirect;
-                    }, 500);
-                } else {
-                    if (typeof result.msg != 'string') {
-                        $3.each(result.msg, function(strNameElement, strMsg){
-                            var elm = $3('[name=' + strNameElement + ']'),
-                                elmLabel = elm.closest('div.input-field').find('label'),
-                                strLabel = elm.closest('div.input-field').find('label').html();
-                            if (elm.length > 0) {
+                        Materialize.toast(result.msg, 4000);
+                        setTimeout(function(){
+                            window.location.href = strRedirect;
+                        }, 500);
+                    } else {
+                        if (typeof result.msg != 'string') {
+                            $3.each(result.msg, function(strNameElement, strMsg){
+                                var elm = $3('[name=' + strNameElement + ']'),
+                                    elmLabel = elm.closest('div.input-field').find('label'),
+                                    strLabel = elm.closest('div.input-field').find('label').html();
+                                if (elm.length > 0) {
 //                                    elmLabel.attr('data-error', 'Este campo e obrigatorio!');
 //                                    elm.addClass('invalid');
-                                elm.focus();
-                                Materialize.toast('Campo ' + strLabel + ' &eacute; obrigat&oacute;rio!', 8000);
-                            }
-                        });
-                    } else {
-                        console.info('asdad')
-                        Materialize.toast(result.msg, 4000);
+                                    elm.focus();
+                                    Materialize.toast('Campo ' + strLabel + ' &eacute; obrigat&oacute;rio!', 8000);
+                                }
+                            });
+                        } else {
+                            Materialize.toast(result.msg, 4000);
 
-                        $('.card').removeClass('fadeInUp');
-                        $('.card').removeClass('animated');
-                        strAnimate = 'jello';
+                            $('.card').removeClass('fadeInUp');
+                            $('.card').removeClass('animated');
+                            strAnimate = 'jello';
 //            strAnimate = 'wobble';
 //            strAnimate = 'pulse';
-                        $('.card').addClass(strAnimate);
-                        $('.card').addClass('animated');
-                        $('.card').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-                            $('.card').removeClass(strAnimate);
-                            $('.card').removeClass('animated');
-
-                        });
+                            $('.card').addClass(strAnimate);
+                            $('.card').addClass('animated');
+                            $('.card').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+                                $('.card').removeClass(strAnimate);
+                                $('.card').removeClass('animated');
+                            });
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                $('.card').removeClass('fadeInUp');
+                $('.card').removeClass('animated');
+                strAnimate = 'jello';
+//            strAnimate = 'wobble';
+//            strAnimate = 'pulse';
+                $('.card').addClass(strAnimate);
+                $('.card').addClass('animated');
+                $('.card').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+                    $('.card').removeClass(strAnimate);
+                    $('.card').removeClass('animated');
+                });
+            }
             return false;
         });
 
