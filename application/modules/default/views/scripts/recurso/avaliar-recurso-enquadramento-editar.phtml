@@ -70,7 +70,11 @@
             },
             invalidHandler: function(event, validator) {
                 Materialize.toast('Campo "Avaliação" &eacute; obrigat&oacute;rio!', 4000);
-            }
+            },
+            submitHandler: function (form) {
+                    $("#container-progress").show();
+                    form.submit();
+                }
         });
         $("#dsAvaliacao").editorRico({altura: 200});
     });
