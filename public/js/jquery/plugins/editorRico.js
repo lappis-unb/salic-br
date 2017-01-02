@@ -13,13 +13,13 @@ jQuery.fn.editorRico = function (options) {
 
     var metodos = {
         elemento: {},
-        contarCharacteres: function () {
+        contarCaracteres: function () {
             var body = metodos.elemento.getBody();
             var content = tinymce.trim(body.innerText || body.textContent);
             return content.length;
         },
         limitarQuantidadeDeCaracteres: function (idElemento, minchar, maxchar) {
-            var countChars = metodos.contarCharacteres(idElemento);
+            var countChars = metodos.contarCaracteres(idElemento);
             $("#contadorRico" + idElemento).html("Caracteres: " + countChars + "/" + maxchar);
             $("#contadorRico" + idElemento).css('color', 'black');
             if ((countChars > maxchar) || (countChars <= minchar)) {
