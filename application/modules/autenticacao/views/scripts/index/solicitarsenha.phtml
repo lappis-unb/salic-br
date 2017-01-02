@@ -1,162 +1,206 @@
+<style>
+    body {overflow-x: hidden;overflow-y: hidden;}
+</style>
 <script>
+    $(document).ready(function () {
+        $("#solicitaSenha").validate({
+            // Define as regras
+            rules: {
+                cpf: {
+                    // campoNome sera obrigatório (required) e tera tamanho minimo (minLength)
+                    required: true, minlength: 14
+                },
+                email: {
+                    // campoEmail sera obrigatório (required) e precisara ser um e-mail valido (email)
+                    required: true, email: true
+                },
+                dataNasc: {
+                    // campoMensagem sera obrigatório (required) e tera tamanho minimo (minLength)
+                    required: true, minlength: 2
+                }
 
-    $(document).ready( function() {
-	$("#solicitaSenha").validate({
-		// Define as regras
-		rules:{
-                        cpf:{
-				// campoNome sera obrigatório (required) e tera tamanho minimo (minLength)
-				required: true, minlength: 14
-			},
-			email:{
-				// campoEmail sera obrigatório (required) e precisara ser um e-mail valido (email)
-				required: true, email: true
-			},
-			dataNasc:{
-				// campoMensagem sera obrigatório (required) e tera tamanho minimo (minLength)
-				required: true, minlength: 2
-			}
-
-		},
-		// Define as mensagens de erro para cada regra
-		messages:{
-                cpf:{
-				required: "Digite o seu cpf",
-				minlength: "O seu cpf deve conter, no m\xEDnimo, 11 caracteres"
-			},
-			email:{
-				required: "Digite o seu e-mail",
-				email: "Digite um e-mail v\xE1lido"
-			},
-                        dataNasc:{
-				required: "Digite a data do seu Nascimento",
-				minlength: "A sua mensagem deve conter, no m\xEDnimo, 2 caracteres"
-			}
-		}
-	});
-});
-
-
-
-function valida_email(email) // validacao de e-mail
-{
-    if (email == "" || email == "undefined")
-    {
-        $("#confirm").dialog({
-            title :'Erro',
-            resizable: false,
-            width:400,
-            height:150,
-            modal: true,
-            autoOpen:false,
-            buttons: {
-                'OK': function() {
-                    $(this).dialog('close');
-                    $('#confirm').html('Por favor, informe seu e-mail!');
+            },
+            // Define as mensagens de erro para cada regra
+            messages: {
+                cpf: {
+                    required: "Digite o seu cpf",
+                    minlength: "O seu cpf deve conter, no m\xEDnimo, 11 caracteres"
+                },
+                email: {
+                    required: "Digite o seu e-mail",
+                    email: "Digite um e-mail v\xE1lido"
+                },
+                dataNasc: {
+                    required: "Digite a data do seu Nascimento",
+                    minlength: "A sua mensagem deve conter, no m\xEDnimo, 2 caracteres"
                 }
             }
         });
-        $('#confirm').dialog('open');
-    }
-    else if ((email.indexOf("@") < 1) || (email.lastIndexOf(".") <= email.indexOf("@")) || (email.indexOf("@") == email.length))
+    });
+
+
+    function valida_email(email) // validacao de e-mail
     {
-    $("#confirm").dialog({
-            title :'Erro',
-            resizable: false,
-            width:400,
-            height:150,
-            modal: true,
-            autoOpen:false,
-            buttons: {
-                'OK': function() {
-                    $(this).dialog('close');
-                    $('#confirm').html('Por favor, informe seu e-mail!');
+        if (email == "" || email == "undefined") {
+            $("#confirm").dialog({
+                title: 'Erro',
+                resizable: false,
+                width: 400,
+                height: 150,
+                modal: true,
+                autoOpen: false,
+                buttons: {
+                    'OK': function () {
+                        $(this).dialog('close');
+                        $('#confirm').html('Por favor, informe seu e-mail!');
+                    }
                 }
-            }
-        });
-        $('#confirm').dialog('open');
+            });
+            $('#confirm').dialog('open');
+        }
+        else if ((email.indexOf("@") < 1) || (email.lastIndexOf(".") <= email.indexOf("@")) || (email.indexOf("@") == email.length)) {
+            $("#confirm").dialog({
+                title: 'Erro',
+                resizable: false,
+                width: 400,
+                height: 150,
+                modal: true,
+                autoOpen: false,
+                buttons: {
+                    'OK': function () {
+                        $(this).dialog('close');
+                        $('#confirm').html('Por favor, informe seu e-mail!');
+                    }
+                }
+            });
+            $('#confirm').dialog('open');
+        }
     }
-}
 
 </script>
 <div style="display:none" id="dialog-alert2"></div>
 <!-- ========== INICIO BREADCRUMB (LINKS TOPO) ========== -->
 <div id="breadcrumb">
-<?php
-$auth = Zend_Auth::getInstance();
+    <?php
+    $auth = Zend_Auth::getInstance();
 
-if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
-<ul>
-<li class="first"><a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'index')); ?>">In&iacute;cio</a></li>
+    if (isset ($auth->getIdentity()->Cpf)) { ?>
+        <ul>
+            <li class="first"><a href="<?php echo $this->url(array('controller' => 'login', 'action' => 'index')); ?>">In&iacute;cio</a>
+            </li>
 
-<li class="last">Solicitar Nova Senha</li>
-</ul>
-<?php }?>
+            <li class="last">Solicitar Nova Senha</li>
+        </ul>
+    <?php } ?>
 </div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
-
-
-<!-- ========== INICIO TITULO ========== -->
-
-<div id="titulo">
-<div>Solicitar Nova Senha<span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
-
-</div>
-<!-- ========== FIM TITULO ========== -->
-
-
-
-<!-- ========== INICIO CONTEUDO ========== -->
-
-	<div id="conteudo">
-
-
-<fieldset><legend>Informa&ccedil;&otilde;es</legend>
-            <form method="POST" action="<?php echo $this->url(array('module'=>'autenticacao', 'controller' => 'index', 'action' => 'solicitarsenha')); ?>" name="solicitaSenha" id="solicitaSenha">
-
-                <table border="1" class="tabela">
-                    <thead>
-                        <tr>
-                            <th colspan="2">Para obter uma nova senha, preencha os campos abaixo.</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td width="200">CPF *</td>
-                            <td><input maxlength="14" onkeydown="mascaraCnpjCpf(this);" onkeypress="mascaraCnpjCpf(this);" onkeyup="mascaraCnpjCpf(this);" class="input_simples" type="text" name="cpf" id="cpf"  /> </td>
-                        </tr>
-                        <tr>
-                            <td>Data de Nascimento *</td>
-                            <td><input onblur="validaData(this)" onkeyup="mascara(this, format_data);" onkeydown="mascara(this, format_data);" onkeypress ="mascara(this, format_data);" maxlength="10" class="input_simples" type="text" name="dataNasc" id="dataNasc"  /> </td>
-                        </tr>
-                        <tr>
-                            <td>E-mail *</td>
-                            <td><input maxlength="200" onblur="valida_email(this.value)" class="input_simples" type="text" name="email" id="email"  /> </td>
-                        </tr>
-                        <tr>
-                            <td align="center" colspan="2">
-                            <input id='btConfirmar' type='submit' value='' class='btn_confirmar enviar' style="width: 88px;" />
-                            <input id='btLimpar' type='reset' value='' class='btn_limpar enviar'  />
-                            <input id='btCancelar' type='button' value='' class='btn_cancelar enviar' onClick="history.go(-1)" onkeypress=" " />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-
-            </form>
-
-</fieldset>
-
+<div class="container">
+    <!--<div class="container animated slideInUp">-->
+    <!--<div class="container animated zoomIn">-->
+<!--    <div id="title" class="row animated fadeIn">-->
+<!--        <div class="col s12 l4"></div>-->
+<!--        <div class="col s12 l4 center-align">-->
+<!--            <h4>Bem vindo!</h4>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="row">
+        <div class="col s12 m3 l3"></div>
+        <div class="col s12 m6 l6">
+            <!--        <div class="card z-depth-5 green darken-3">-->
+            <div class="card green-text text-darken-4 animated fadeInUp">
+                <!--            <div class="card">-->
+                <!--                <div class="card-image">-->
+                <!--                    <img alt="Salic" src="-->
+                <?php //echo $this->baseUrl(); ?><!--/public/img/logo.png">-->
+                <!--                    <span class="card-title">Login</span>-->
+                <!--                </div>-->
+                <div class="card-content  white-text" style="background: url(<?php echo $this->baseUrl(); ?>/public/img/bg-topo.png) no-repeat center 0 #acda5d ;">
+                    <div class="row" style="margin: 0;">
+                        <div class="col s12 center-align" >
+                            <img alt="Salic" src="<?php echo $this->baseUrl(); ?>/public/img/logo.png">
+                        </div>
+                        <div class="col s12" >
+                            <span class="card-title"><b>Nova senha</b></span>
+                        </div>
+                    </div>
+                    <!--                    <span class="card-title activator grey-text text-darken-4">Login-->
+                </div>
+                <div class="card-content">
+                    <form
+                        data-ajax-form="true"
+                        data-ajax-form-redirect="<?php echo $this->url(array('module' => 'default', 'controller' => 'principal', 'action' => 'index'), null, true); ?>"
+                        action="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'solicitarsenha')); ?>"
+                        name="solicitaSenha" id="solicitaSenha">
+                        <form method="POST"
+                              >
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">account_circle</i>
+                                <!--                                <input id="email" type="password" class="validate">-->
+                                <input maxlength="14" onkeydown="mascaraCnpjCpf(this);" onkeypress="mascaraCnpjCpf(this);"
+                                       onkeyup="mascaraCnpjCpf(this);" type="text" name="cpf" id="cpf"/>
+                                <label for="email">CPF *</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">date_range</i>
+                                <!--                                <input id="email" type="password" class="validate">-->
+                                <input onblur="validaData(this)" onkeyup="mascara(this, format_data);"
+                                       onkeydown="mascara(this, format_data);" onkeypress="mascara(this, format_data);"
+                                       maxlength="10" class="datepicker" type="text" name="dataNasc" id="dataNasc"/>
+                                <label for="email">Data de Nascimento *</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">mail_outline</i>
+                                <input maxlength="200" onblur="valida_email(this.value)" type="text"
+                                       name="email" id="email"/>
+                                <label for="password">E-mail *</label>
+                            </div>
+                        </div>
+                        <button style="width: 100%;" title="Acessar o sistema" id="btConfirmar"
+                                class="btn waves-effect waves-light" type="submit" name="action">Enviar
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </form>
+                </div>
+                <div class="card-action center-align">
+                    <a href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'index', 'module' => 'autenticacao')); ?>');"
+                       title="Realizar login">J&aacute; sou cadastrado</a>&nbsp;&nbsp;&nbsp;
+                    <a href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'cadastrarusuario', 'module' => 'autenticacao')); ?>');"
+                       title="Cadastre-se">N&atilde;o sou cadastrado</a>&nbsp;&nbsp;&nbsp;
+                </div>
+                <!--                <div class="card-reveal">-->
+                <!--                    <span class="card-title grey-text text-darken-4">Login<i class="material-icons right">close</i></span>-->
+                <!--                    <p>Preencha o seu cpf e senha para acessar o sistema.</p>-->
+                <!--                </div>-->
+            </div>
         </div>
+        <div class="col s12 m3 l3"></div>
+    </div>
+</div>
+<script>
 
-
-<!-- ========== FIM CONTEUDO ========== -->
-
-
-
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
-	<div id="rodapeConteudo"><span></span></div>
-
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
-			<br clear="all" />
+    function redirect(strUrl)
+    {
+        $('.card').removeClass('fadeInUp');
+        $('.card').removeClass('animated');
+        strAnimate = 'fadeOutDown';
+//            strAnimate = 'jello';
+//            strAnimate = 'wobble';
+//            strAnimate = 'pulse';
+        $('.card').addClass(strAnimate);
+        $('.card').addClass('animated');
+//            setTimeout(function(){
+//                $('.card').removeClass(strAnimate);
+//                $('.card').removeClass('animated');
+//            }, 1000);
+        $('#title').fadeOut();
+        $('.card').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            window.location.href = strUrl;
+//                $('.card').removeClass(strAnimate);
+//                $('.card').removeClass('animated');
+        });
+    }
+</script>
