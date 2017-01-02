@@ -87,7 +87,7 @@ $SalvarAvaliacao = $this->url(array('module' => 'admissibilidade', 'controller' 
         });
 
         $.validator.addMethod("validarDespacho", function(value, element) {
-            if(editorRico.contarCharacteres() > 0) {
+            if(editorRico.contarCaracteres() > 0) {
                 return true;
             }
         });
