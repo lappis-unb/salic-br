@@ -19,7 +19,7 @@
             <?php foreach($this->dados as $d): ?>
             <tr>
                 <td class="center-align">
-                    <a class="black-text btn white" href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($d->idPronac); ?>" target="_blank">
+                    <a class="black-text btn white tooltipped" data-tooltip="Visualizar Projeto" href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($d->idPronac); ?>" target="_blank">
                         <?php echo $d->PRONAC; ?>
                         <i class="material-icons left hide-on-med-and-down">visibility</i>
                     </a>
@@ -30,11 +30,11 @@
                 <td class="center-align"><?php echo $d->tpRecurso; ?></td>
                 <td class="center-align">
                     <?php if($this->idPerfil == 131): ?>
-                        <a class="white-text btn" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'recurso', 'action' => 'avaliar-recurso-enquadramento-editar'))?>?recurso=<?php echo $d->idRecurso; ?>">
+                        <a class="white-text btn tooltipped" data-tooltip="Avaliar Recurso" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'recurso', 'action' => 'avaliar-recurso-enquadramento-editar'))?>?recurso=<?php echo $d->idRecurso; ?>">
                             <i class="material-icons">thumbs_up_down</i>
                         </a>
                     <?php else : ?>
-                        <a class="white-text btn" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'recurso', 'action' => 'avaliar-recurso-enquadramento'))?>?recurso=<?php echo $d->idRecurso; ?>">
+                        <a class="white-text btn tooltipped" data-tooltip="Avaliar Recurso" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'recurso', 'action' => 'avaliar-recurso-enquadramento'))?>?recurso=<?php echo $d->idRecurso; ?>">
                             <i class="material-icons">thumbs_up_down</i>
                         </a>
                     <?php endif ?>
