@@ -80,13 +80,10 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    //@todo finalizar validação com tinymce
-    $(document).ready(function () {
 
-        jQuery.validator.addMethod("requiredTinyMice", function(value, element) {
-            return  (tinymce.activeEditor.getContent().length > 0);
-        }, "");
+<script type="text/javascript" src="/public/js/jquery.validate.addMethod.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
 
         $('#form').validate({
             rules : {
@@ -99,8 +96,7 @@
             }
         });
 
-
-        jQuery('#dsRecurso').editorRico({altura: 100});
+        jQuery('#dsRecurso').editorRico({altura: 200});
     });
 </script>
 

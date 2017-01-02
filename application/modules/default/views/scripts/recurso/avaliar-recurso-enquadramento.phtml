@@ -64,13 +64,14 @@
     </div>
 </div>
 
+<script type="text/javascript" src="/public/js/jquery.validate.addMethod.js"></script>
 <script>
     $(document).ready(function(){
 
         $('#formAvaliacao').validate({
             rules : {
                 dsAvaliacao:{
-                    required:true
+                    requiredTinyMice: true
                 }
             },
             messages:{
