@@ -5,11 +5,18 @@
     $(document).ready(function ($) {
         var elmBody = $('body');
         elmBody.on('click', '[data-ajax-modal]', function () {
+
+            var objConfig = {};
+            objConfig.strUrl = $(this).attr('data-ajax-modal');
             if ($(this).attr('data-ajax-modal-type') !== '') {
-                $.ajaxModal({strUrl: $(this).attr('data-ajax-modal'), strType: $(this).attr('data-ajax-modal-type')});
-            } else {
-                $.ajaxModal({strUrl: $(this).attr('data-ajax-modal')});
+                objConfig.strType = $(this).attr('data-ajax-modal-type');
             }
+            if ($(this).attr('data-ajax-modal-height') !== '') {
+                objConfig.strHeight = $(this).attr('data-ajax-modal-height');
+            }
+
+            $.ajaxModal(objConfig);
+
         });
         // $('body').on('change', '[data-ajax-render]:not(select)', function() {
         //     console.info('aaa');
@@ -67,7 +74,7 @@
                     result = $3.parseJSON(result);
                     if (result.status == '1') {
 //                    $3('#form-mensagem')[0].reset();
-                        Materialize.toast(result.msg, 4000);
+                        Materialize.toast(result.msg, 4000, 'green light-green accent-1 black-text');
                         setTimeout(function(){
                             window.location.href = strRedirect;
                         }, 500);
@@ -85,7 +92,7 @@
                                 }
                             });
                         } else {
-                            Materialize.toast(result.msg, 4000);
+                            Materialize.toast(result.msg, 4000, 'red accent-1');
 
                             $('.card').removeClass('fadeInUp');
                             $('.card').removeClass('animated');
@@ -202,13 +209,13 @@
      * @since 28/12/2016
      */
     $.ajaxModal = function (objOption, callback) {
-        var objDefaults = {strUrl: '', strIdModal: 'modal', strType: 'modal-fixed-footer'},
+        var objDefaults = {strUrl: '', strIdModal: 'modal', strType: 'modal-fixed-footer', strHeight: ''},
             objSettings = $.extend({}, objDefaults, objOption),
             strIdModal = '#' + objSettings.strIdModal;
-
+console.info(objSettings.strHeight)
         // Removendo e criando elemento div para o modal.
         $(strIdModal).remove();
-        $('body').append('<div id="' + objSettings.strIdModal + '" class="modal ' + objSettings.strType + '"></div>');
+        $('body').append('<div id="' + objSettings.strIdModal + '" class="modal ' + objSettings.strType + '" style="height: '+ objSettings.strHeight +'"></div>');
         $(strIdModal).modal();
 
         // Renderizando ajax e abrindo a modal por callback.
