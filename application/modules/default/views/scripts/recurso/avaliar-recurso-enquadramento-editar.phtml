@@ -53,3 +53,25 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="/public/js/jquery.validate.addMethod.js"></script>
+<script>
+    $(document).ready(function(){
+
+        $('#formAvaliacao').validate({
+            rules : {
+                dsAvaliacao:{
+                    requiredTinyMice: true
+                }
+            },
+            messages:{
+                dsAvaliacao:{
+                    required:""
+                }
+            },
+            invalidHandler: function(event, validator) {
+                Materialize.toast('Campo "Avaliação" &eacute; obrigat&oacute;rio!', 4000);
+            }
+        });
+        $("#dsAvaliacao").editorRico({altura: 200});
+    });
+</script>
