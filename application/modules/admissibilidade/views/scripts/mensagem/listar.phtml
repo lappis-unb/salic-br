@@ -24,7 +24,8 @@
                     <td><?php echo ($arrValue['usu_nome_destinatario'])? $arrValue['destinatarioUnidadeNome'] . ' / ' . $arrValue['usu_nome_destinatario'] : $arrValue['destinatarioUnidadeNome']; ?></td>
                     <td><?php echo $arrValue['dsMensagem']; ?></td>
                     <td >
-                        <a data-ajax-modal="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'visualizar', 'id' => $arrValue['idMensagemProjeto'], 'idPronac' => $arrValue['IdPRONAC']), null, true); ?>" href="javascript:void(0);"
+                        <a
+                            data-ajax-modal="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'visualizar', 'id' => $arrValue['idMensagemProjeto'], 'idPronac' => $arrValue['IdPRONAC']), null, true); ?>" href="javascript:void(0);"
                            class="btn small waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Visualizar">
                             <i class="material-icons">zoom_in</i>
                         </a>
