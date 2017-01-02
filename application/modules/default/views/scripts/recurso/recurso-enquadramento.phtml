@@ -19,8 +19,9 @@
             <?php foreach($this->dados as $d): ?>
             <tr>
                 <td class="center-align">
-                    <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($d->idPronac); ?>" target="_blank">
+                    <a class="black-text btn white" href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($d->idPronac); ?>" target="_blank">
                         <?php echo $d->PRONAC; ?>
+                        <i class="large material-icons left">visibility</i>
                     </a>
                 </td>
                 <td class="center-align"><?php echo $d->NomeProjeto; ?></td>

@@ -523,7 +523,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
                 CAST(a.dsAvaliacao AS TEXT) AS dsAvaliacao,
                 a.tpRecurso,
                 CASE
-                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsideração'
+                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsidera&ccedil;&atilde;o'
                     WHEN tpRecurso = 2 THEN 'Recurso'
                 END AS tpRecursoDesc,
                 a.tpSolicitacao,
@@ -531,7 +531,7 @@ class tbRecurso extends MinC_Db_Table_Abstract
                     WHEN tpSolicitacao = 'EN' THEN 'Enquadramento'
                     WHEN tpSolicitacao = 'OR' THEN 'Orçamento'
                     WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
-                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Orçamento'
+                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or&ccedil;amento'
                     WHEN tpSolicitacao = 'ER' THEN 'Recurso Enquadramento'
                 END AS tpSolicitacaoDesc,
                 a.idAgenteAvaliador,
@@ -674,13 +674,13 @@ class tbRecurso extends MinC_Db_Table_Abstract
                 new Zend_Db_Expr("b.idPronac, a.idRecurso, b.AnoProjeto+b.Sequencial as PRONAC, b.NomeProjeto, a.dtSolicitacaoRecurso,a.tpSolicitacao as tipo"),
                 new Zend_Db_Expr("CASE
                                     WHEN tpSolicitacao = 'EN' THEN 'Enquadramento'
-                                    WHEN tpSolicitacao = 'OR' THEN 'Or�amento'
+                                    WHEN tpSolicitacao = 'OR' THEN 'Or&Ccedil;amento'
                                     WHEN tpSolicitacao = 'PI' THEN 'Projeto indeferido'
-                                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or�amento'
+                                    WHEN tpSolicitacao = 'EO' THEN 'Enquadramento e Or&Ccedil;amento'
                                     WHEN tpSolicitacao = 'ER' THEN 'Enquadramento Recurso'
                                  END AS tpSolicitacao,
                                  CASE
-                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsideração'
+                                    WHEN tpRecurso = 1 THEN 'Pedido de Reconsidera&ccedil;&atilde;o'
                                     WHEN tpRecurso = 2 THEN 'Recurso'
                                  END AS tpRecurso, a.siRecurso
                 "),

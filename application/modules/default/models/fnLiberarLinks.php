@@ -230,7 +230,7 @@ class fnLiberarLinks extends MinC_Db_Table_Abstract {
         ) {
             $Recursos = 1;
         }
-        //var_dump($Recursos, empty($recursoAdmissibilidade), $recursoFinalizado);die;
+        //var_dump($dadosProjeto->Situacao, $diasProjeto->dias, $Recursos, $recursoAdmissibilidade, $recursoFinalizado);die;
 
         /* ===== IDENTIFICAR FRASES DO PROJETO =====  */
 
