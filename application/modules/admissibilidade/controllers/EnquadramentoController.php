@@ -37,13 +37,14 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
     public function enquadrarprojetoAction()
     {
         try {
+
             $get = $this->getRequest()->getParams();
-            if (!isset($get['pronac']) || empty($get['pronac'])) {
+            if (!isset($get['IdPRONAC']) || empty($get['IdPRONAC'])) {
                 throw new Exception("Número de PRONAC não informado.");
             }
-            $this->view->pronac = $get['pronac'];
+            $this->view->IdPRONAC = $get['IdPRONAC'];
             $objProjeto = new Projetos();
-            $projeto = $objProjeto->findBy(array('IdPRONAC' => $this->view->pronac));
+            $projeto = $objProjeto->findBy(array('IdPRONAC' => $this->view->IdPRONAC));
 
             if (!$projeto) {
                 throw new Exception("PRONAC não encontrado.");
@@ -72,11 +73,10 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
     private function salvarEnquadramentoProjeto($projeto)
     {
         try {
-
             $auth = Zend_Auth::getInstance();
             $post = $this->getRequest()->getPost();
             $observacao = trim($post['observacao']);
-            if(isEmpty($observacao)) {
+            if(empty($observacao)) {
                 throw new Exception("O campo 'Justificativa' é de preenchimento obrigatório.");
             }
 
@@ -91,7 +91,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
                 'DtEnquadramento' => $objEnquadramento->getExpressionDate(),
                 'Observacao' => $post['observacao'],
                 'Logon' => $authIdentity['usu_codigo'],
-                'IdPRONAC' => $get['pronac']
+                'IdPRONAC' => $get['IdPRONAC']
             );
 
             $objEnquadramento = new Enquadramento();
@@ -131,6 +131,11 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
             $objProjeto->update($arrayDadosProjeto, $arrayWhere);
 
+            if($projeto['Situacao'] == 'B03') {
+                $tbRecurso = new tbRecurso();
+                $tbRecurso->finalizarRecurso($projeto['IdPRONAC']);
+            }
+
             $whereTextoEmail = array(
                 'idTextoEmail = ?' => 12
             );
@@ -149,8 +154,9 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         }
     }
 
-    private function carregardadosEnquadramentoProjeto($projeto)
+    private function carregardadosEnquadramentoProjeto(array $projeto)
     {
+
         $mapperArea = new Agente_Model_AreaMapper();
         $this->view->comboareasculturais = $mapperArea->fetchPairs('Codigo', 'Descricao');
         $this->view->projeto = $projeto;
@@ -174,5 +180,11 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         $arrayEnquadramento = $objEnquadramento->findBy($arrayPesquisa);
 
         $this->view->observacao = $arrayEnquadramento['Observacao'];
+        if($projeto['Situacao'] == 'B03') {
+            $objRecurso = new tbRecurso();
+            $this->view->avaliacaoRecurso = trim($objRecurso->buscarAvaliacaoRecurso($projeto['IdPRONAC']));
+        }
+
+
     }
 }
