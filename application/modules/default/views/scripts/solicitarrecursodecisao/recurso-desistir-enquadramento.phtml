@@ -8,9 +8,9 @@
 <nav class="breadcrumb">
     <div class="nav-wrapper" style="padding: 0 15px 0 15px">
         <div class="col s12">
-            <a href="<?php echo $this->Url(array('module' => 'default', 'controller' => 'principalproponente', 'action' => 'index'))?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para o in?cio">In?cio</a>
+            <a href="<?php echo $this->Url(array('module' => 'default', 'controller' => 'principalproponente', 'action' => 'index'))?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para o início">In?cio</a>
             <a href="<?php echo $this->Url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'))?>?idPronac=<?php echo $this->projetos->IdPRONAC?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para consultar dados projeto">Consultar dados projeto</a>
-            <a href="#" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="P?gina Atual">Desist?ncia do Prazo Recursal</a>
+            <a href="#" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Página Atual">Desistência do Prazo Recursal</a>
         </div>
     </div>
 </nav>
@@ -65,11 +65,12 @@
                 Parece que apenas alguns trechos do texto original aparecem no Lipsum comumente usado, e que uma s?rie de cartas tenham sido removido ou adicionado em diversos pontos do texto ao longo do tempo. ? por isso que existem hoje em dia um n?mero de texto Lorem Ipsum mais ou menos diferentes uns dos outros. Devido ? sua data de produ??o, uso Lorem ipsum n?o est? mais sujeito a direitos de autor e evita quaisquer quest?es de direitos autorais. s a card panel with a teal lighten-2 class
             </div>
             <div class="input-field col s12 center-align">
-                <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Concordo
+                <a class="tooltipped waves-effect waves-light btn modal-trigger" data-tooltip="Concordar com os Termos" href="#modal1">Concordo
                     <i class="material-icons right modal-trigger">send</i>
                 </a>
                 <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->projetos->IdPRONAC; ?>"
-                   class="red-text btn waves-effect waves-dark white"
+                   class="tooltipped red-text btn waves-effect waves-dark white"
+                   data-tooltip="Cancelar Desistência"
                    id="btn_cancelar"
                    name="action">
                     Cancelar
