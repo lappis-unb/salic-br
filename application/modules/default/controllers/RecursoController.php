@@ -2355,9 +2355,8 @@ class RecursoController extends MinC_Controller_Action_Abstract
 
             if($stAtendimento == 'D'){
                 $tblProjetos = new Projetos();
-                $recurso->siRecurso = 15; //Solicitação finalizada
                 $recurso->stAtendimento = 'D';
-                $recurso->stEstado = 1;
+                $recurso->stEstado = 0;
 
                 $projeto = array();
                 $projeto['situacao'] = 'B03';

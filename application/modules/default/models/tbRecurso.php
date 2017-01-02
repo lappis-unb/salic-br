@@ -441,19 +441,19 @@ class tbRecurso extends MinC_Db_Table_Abstract
 		$db->setFetchMode(Zend_DB::FETCH_OBJ);
 		$resultado = $db->fetchAll($sql);
 		return $resultado;
-	} // fecha m�todo buscarPlanilhaDeCustos()
+	}
 
 
     public function buscarRecursoProjeto($idPronac) {
         $sql = "SELECT  idRecurso, IdPRONAC, dtSolicitacaoRecurso, CAST(dsSolicitacaoRecurso AS TEXT) AS dsSolicitacaoRecurso,
                         idAgenteSolicitante, dtAvaliacao, dsAvaliacao, stAtendimento,
                         tpSolicitacao, idAgenteAvaliador
-                FROM SAC.dbo.tbRecurso WHERE IdPRONAC = $idPronac";
+                FROM SAC.dbo.tbRecurso WHERE IdPRONAC = {$idPronac}";
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         $resultado = $db->fetchAll($sql);
         return $resultado;
-    } // fecha m�todo buscarPlanilhaDeCustos()
+    }
 
     public function painelRecursos($where=array(), $order=array(), $tamanho=-1, $inicio=-1, $qtdeTotal=false) {
         $select = $this->select();
@@ -719,6 +719,38 @@ class tbRecurso extends MinC_Db_Table_Abstract
         $select->limit(1);
 
         return $this->fetchRow($select);
+    }
+
+    public function buscarAvaliacaoRecurso($idPronac) {
+
+        $objQuery = $this->select();
+
+        $objQuery->from(
+            array('tbRecurso' => $this->_name),
+            'dsAvaliacao',
+            $this->_schema
+        );
+
+        $objQuery->where('IdPRONAC = ?', $idPronac)
+            ->where('stEstado= ?', '0');
+        $db= Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        return $db->fetchOne($objQuery);
+    }
+
+    public function finalizarRecurso($idPronac) {
+
+        $arrayAlteracaoRecurso = array(
+            'siRecurso' => 15,
+            'stEstado' => 1
+        );
+
+        $arrayBuscaRecurso = array(
+            'IdPRONAC = ?' => $idPronac,
+            'stEstado = 0'
+        );
+        $this->update($arrayAlteracaoRecurso, $arrayBuscaRecurso);
     }
 
 }
