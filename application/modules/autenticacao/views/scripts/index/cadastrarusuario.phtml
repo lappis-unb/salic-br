@@ -1,63 +1,6 @@
-<script>
-
-$(document).ready( function() {
-    $("#cadastraUsuario").validate({
-        // Define as regras
-        rules:{
-            cpf:{
-                // campoNome sera obrigatório (required) e tera tamanho minimo (minLength)
-                required: true, minlength: 14
-            },
-            nome:{
-                // campoNome sera obrigatório (required) e tera tamanho minimo (minLength)
-                required: true, minlength: 2
-            },
-            email:{
-                // campoEmail sera obrigatório (required) e precisara ser um e-mail valido (email)
-                required: true, email: true, minlength: 2
-            },
-            emailConf:{
-                // campoEmail sera obrigatório (required) e precisara ser um e-mail valido (email)
-                required: true, email: true, minlength: 2
-            },
-            dataNasc:{
-                // campoMensagem sera obrigatório (required) e tera tamanho minimo (minLength)
-                required: true, minlength: 2
-            }
-
-        },
-            // Define as mensagens de erro para cada regra
-            messages:{
-                cpf:{
-                    required: "Digite o seu cpf",
-                        minlength: "O seu cpf deve conter, no mínimo, 14 caracteres"
-            },
-            nome:{
-                required: "Digite o seu nome",
-                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
-            },
-            email:{
-                required: "Digite o seu e-mail",
-                    email: "Digite um e-mail válido",
-                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
-            },
-            emailConf:{
-                required: "Digite o seu e-mail",
-                    email: "Digite um e-mail válido",
-                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
-            },
-            dataNasc:{
-                required: "Digite a data do seu Nascimento",
-                    minlength: "A sua mensagem deve conter, no mínimo, 2 caracteres"
-            }
-        }
-    });
-});
-
-
-</script>
-
-<!-- ========== INï¿½CIO BREADCRUMB (LINKS TOPO) ========== -->
+<style>
+    body {overflow-x: hidden;overflow-y: hidden;}
+</style>
 <div style="display:none" id="confirm">Por favor, informe seu email!</div>
 <div style="display:none" id="dialog-alert2"></div>
 <div style="display:none" id="confirmInforma">Por favor, digite seu email corretamente!</div>
@@ -72,70 +15,185 @@ if ( isset ($auth->getIdentity()->Cpf ) ) { ?>
 </ul>
 <?php } ?>
 </div>
-<!-- ========== FIM BREADCRUMB (LINKS TOPO) ========== -->
 
+<div class="container">
+    <!--<div class="container animated slideInUp">-->
+    <!--<div class="container animated zoomIn">-->
+    <!--    <div class="row">-->
+    <!--        <div class="col s12 l4"></div>-->
+    <!--        <div class="col s12 l4 center-align">-->
+    <!--            <h4>Bem vindo!</h4>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <div class="row">
+        <div class="col s12 l4"></div>
+        <div class="col s12 l4">
+            <!--        <div class="card z-depth-5 green darken-3">-->
+            <div class="card green-text text-darken-4 animated fadeInUp">
+                <!--            <div class="card">-->
+                <!--                <div class="card-image">-->
+                <!--                    <img alt="Salic" src="-->
+                <?php //echo $this->baseUrl(); ?><!--/public/img/logo.png">-->
+                <!--                    <span class="card-title">Login</span>-->
+                <!--                </div>-->
+                <div class="card-content  white-text"
+                     style="background: url(<?php echo $this->baseUrl(); ?>/public/img/bg-topo.png) no-repeat 0 0 #acda5d;">
+                    <!--                    <span class="card-title activator grey-text text-darken-4">Login-->
+                    <img alt="Salic" src="<?php echo $this->baseUrl(); ?>/public/img/logo.png">
+                    <br/>
+                    <span class="card-title"><b>Cadastro</b></span>
+                </div>
+                <div class="card-content">
+                    <form
+                        data-ajax-form="true"
+                        data-ajax-form-redirect="<?php echo $this->url(array('module' => 'default', 'controller' => 'principal', 'action' => 'index'), null, true); ?>"
+                        onsubmit="return validaSenha();" method="POST"
+                        action="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'cadastrarusuario')); ?>"
+                        name="cadastraUsuario"
+                        id="cadastraUsuario">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">account_circle</i>
+                                <!--                                <input id="email" type="password" class="validate">-->
+                                <input value="<?php echo $this->cpf?>" onkeyup="mascara(this, format_cpf);"   maxlength="14" type="text" name="cpf" id="cpf"  />
+                                <span style="color: red;font-weight: bold;" id="mensCPF"></span>
+                                <label for="email">CPF</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">lock</i>
+                                <input value="<?php echo $this->nome ?>" maxlength="200" type="text" name="nome" id="nome" size="50" />
+                                <label for="password">Nome Completo *</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">lock</i>
+                                <input  value="<?php echo $this->dtNascimento ?>" onblur="validaData(this)" anomenor="<?php echo date('Y-m-d');?>" onkeyup="mascara(this, format_data);" onkeydown="mascara(this, format_data);" onkeypress ="mascara(this, format_data);" maxlength="10" type="text" name="dataNasc" id="dataNasc"  />
+                                <label for="password">Data de Nascimento *</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">lock</i>
+                                <input  value="<?php echo $this->dtNascimento ?>" onblur="validaData(this)" anomenor="<?php echo date('Y-m-d');?>" onkeyup="mascara(this, format_data);" onkeydown="mascara(this, format_data);" onkeypress ="mascara(this, format_data);" maxlength="10" type="text" name="dataNasc" id="dataNasc"  />
+                                <label for="password">E-mail *</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">lock</i>
+                                <input  value="<?php echo $this->email ?>" maxlength="200"  type="text" name="emailConf" id="emailConf" size="50" /><span style="color: red;font-weight: bold;" id="mensemailConf"></span>
+                                <label for="password">Confirme o e-mail *</label>
+                            </div>
+                        </div>
+                        <button style="width: 100%;" title="Acessar o sistema" id="btConfirmar"
+                                class="btn waves-effect waves-light" type="submit" name="action">Enviar
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </form>
+                </div>
+                <div class="card-action">
+                    <a href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'index', 'module' => 'autenticacao')); ?>');"
+                       title="Cadastre-se">J&aacute; sou cadastrado</a>&nbsp;&nbsp;&nbsp;
+                    <a href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'solicitarsenha', 'module' => 'autenticacao')); ?>');"
+                       title="Lembrar senha">Esqueci a senha</a>
 
-<!-- ========== INï¿½CIO Tï¿½TULO ========== -->
-
-<div id="titulo">
-<div>Cadastrar Usuário<span></span> <span class="voltar"><a href="#" onclick="voltar();">Voltar</a></span></div>
-
+                    <!--                    <input id='btIncluir' type='submit' value='' class='btn_salvar enviar' />-->
+                    <!--                    <input id='btLimpar' type='reset' value='' class='btn_limpar enviar'  />-->
+                    <!--                    <input id='btCancelar' type='button' value='' class='btn_cancelar enviar' onClick="history.go(-1)" onkeypress=" " />-->
+                </div>
+                <!--                <div class="card-reveal">-->
+                <!--                    <span class="card-title grey-text text-darken-4">Login<i class="material-icons right">close</i></span>-->
+                <!--                    <p>Preencha o seu cpf e senha para acessar o sistema.</p>-->
+                <!--                </div>-->
+            </div>
+        </div>
+        <div class="col s12 l4"></div>
+    </div>
 </div>
-<!-- ========== FIM Tï¿½TULO ========== -->
 
 
+<script>
 
-<!-- ========== INï¿½CIO CONTEï¿½DO ========== -->
-<div id="conteudo">
-    <fieldset>
-        <legend>Informações</legend>
-        <form method="POST" action="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'cadastrarusuario')); ?>" name="cadastraUsuario" id="cadastraUsuario">
+    function redirect(strUrl)
+    {
+        $('.card').removeClass('fadeInUp');
+        $('.card').removeClass('animated');
+        strAnimate = 'fadeOutDown';
+//            strAnimate = 'jello';
+//            strAnimate = 'wobble';
+//            strAnimate = 'pulse';
+        $('.card').addClass(strAnimate);
+        $('.card').addClass('animated');
+//            setTimeout(function(){
+//                $('.card').removeClass(strAnimate);
+//                $('.card').removeClass('animated');
+//            }, 1000);
 
-            <table border="1" class="tabela">
-                <thead>
-                    <tr>
-                        <th colspan="2">Cadastro de Usuário</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td width="200">CPF *</td>
-                        <td><input value="<?php echo $this->cpf?>"   maxlength="14" class="input_simples" type="text" name="cpf" id="cpf"  /><span style="color: red;font-weight: bold;" id="mensCPF"></span> </td>
-                    </tr>
-                    <tr>
-                        <td>Nome Completo *</td>
-                        <td><input value="<?php echo $this->nome ?>" maxlength="200" class="input_simples" type="text" name="nome" id="nome" size="50" /> </td>
-                    </tr>
-                    <tr>
-                        <td>Data de Nascimento *</td>
-                        <td><input  value="<?php echo $this->dtNascimento ?>" onblur="validaData(this)" anomenor="<?php echo date('Y-m-d');?>" onkeyup="mascara(this, format_data);" onkeydown="mascara(this, format_data);" onkeypress ="mascara(this, format_data);" maxlength="10" class="input_simples" type="text" name="dataNasc" id="dataNasc"  /> </td>
-                    </tr>
-                    <tr>
-                        <td>E-mail *</td>
-                        <td><input value="<?php echo $this->email ?>" maxlength="200"  class="input_simples" type="text" name="email" id="email" size="50" /> </td>
-                    </tr>
-                    <tr>
-                        <td>Confirme o e-mail *</td>
-                        <td><input  value="<?php echo $this->email ?>" maxlength="200"  class="input_simples" type="text" name="emailConf" id="emailConf" size="50" /><span style="color: red;font-weight: bold;" id="mensemailConf"></span> </td>
-                    </tr>
-                    <tr>
-                        <td align="center" colspan="2">
-                        <input id='btIncluir' type='submit' value='' class='btn_salvar enviar' />
-                        <input id='btLimpar' type='reset' value='' class='btn_limpar enviar'  />
-                        <input id='btCancelar' type='button' value='' class='btn_cancelar enviar' onClick="history.go(-1)" onkeypress=" " />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
-    </fieldset>
-</div>
+        $('.card').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            window.location.href = strUrl;
+//                $('.card').removeClass(strAnimate);
+//                $('.card').removeClass('animated');
+        });
+    }
+    $(document).ready( function() {
+        $("#cadastraUsuario").validate({
+            // Define as regras
+            rules:{
+                cpf:{
+                    // campoNome sera obrigatório (required) e tera tamanho minimo (minLength)
+                    required: true, minlength: 14
+                },
+                nome:{
+                    // campoNome sera obrigatório (required) e tera tamanho minimo (minLength)
+                    required: true, minlength: 2
+                },
+                email:{
+                    // campoEmail sera obrigatório (required) e precisara ser um e-mail valido (email)
+                    required: true, email: true, minlength: 2
+                },
+                emailConf:{
+                    // campoEmail sera obrigatório (required) e precisara ser um e-mail valido (email)
+                    required: true, email: true, minlength: 2
+                },
+                dataNasc:{
+                    // campoMensagem sera obrigatório (required) e tera tamanho minimo (minLength)
+                    required: true, minlength: 2
+                }
 
-<!-- ========== INï¿½CIO RODAPï¿½ DO CONTEï¿½DO ========== -->
-    <div id="rodapeConteudo"><span></span></div>
+            },
+            // Define as mensagens de erro para cada regra
+            messages:{
+                cpf:{
+                    required: "Digite o seu cpf",
+                    minlength: "O seu cpf deve conter, no mínimo, 14 caracteres"
+                },
+                nome:{
+                    required: "Digite o seu nome",
+                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
+                },
+                email:{
+                    required: "Digite o seu e-mail",
+                    email: "Digite um e-mail válido",
+                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
+                },
+                emailConf:{
+                    required: "Digite o seu e-mail",
+                    email: "Digite um e-mail válido",
+                    minlength: "O seu nome deve conter, no mínimo, 2 caracteres"
+                },
+                dataNasc:{
+                    required: "Digite a data do seu Nascimento",
+                    minlength: "A sua mensagem deve conter, no mínimo, 2 caracteres"
+                }
+            }
+        });
+    });
 
-<!-- ========== FIM RODAPï¿½ DO CONTEï¿½DO ========== -->
-<br clear="all" />
+
+</script>
     <script>
     $(function(){
         $('#cpf').keydown(function(){

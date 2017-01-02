@@ -1,149 +1,8 @@
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("#btn_pesquisar").click(function(){
-            $('#formPesquisa').submit();
-        });
-
-        $('.btn_imprimir').click(function(){
-            $('#formImpressao').submit();
-        });
-
-        $('.btn_ver').click(function(){
-            var id = $(this).attr('idRecurso');
-            window.location = "<?php echo $this->url(array('controller' => 'recurso', 'action' => 'visualizar-recurso')); ?>?id="+id;
-        });
-
-        $('.encaminharRecursoCheckList').click(function(){
-            var id = $(this).attr('idRecurso');
-            $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente encaminhar o recurso para o Checklist de Publicação?');
-            $("#alerta").dialog({
-                resizable: false,
-                title: 'Alerta!',
-                width: 340,
-                height: 180,
-                modal: true,
-                buttons : {
-                    'Não' : function(){
-                        $(this).dialog('close');
-                    },
-                    'Sim' : function(){
-                        window.location = "<?php echo $this->url(array('controller' => 'recurso', 'action' => 'encaminhar-recurso-checklist')); ?>?id="+id;
-                    }
-                }
-            });
-            $('.ui-dialog-titlebar-close').remove();
-        });
-
-        $('.devolverRecurso').click(function(){
-            var id = $(this).attr('idRecurso');
-            $("#alerta").dialog("destroy");
-            $("#alerta").html('Deseja realmente devolver o recurso para uma nova análise?');
-            $("#alerta").dialog({
-                resizable: false,
-                title: 'Alerta!',
-                width: 340,
-                height: 180,
-                modal: true,
-                buttons : {
-                    'Não' : function(){
-                        $(this).dialog('close');
-                    },
-                    'Sim' : function(){
-                        window.location = "<?php echo $this->url(array('controller' => 'recurso', 'action' => 'devolver-recurso')); ?>?id="+id;
-                    }
-                }
-            });
-            $('.ui-dialog-titlebar-close').remove();
-        });
-
-        $('.btn_avaliar').click(function(){
-            var id = $(this).attr('recurso');
-            tipo = $(this).attr('tipo');
-            if (tipo == 'ER'){
-                window.location = "<?php echo $this->url(array('controller' => 'recurso', 'action' => 'avaliar-recurso-enquadramento')); ?>?recurso="+id;
-            } else {
-                window.location = "<?php echo $this->url(array('controller' => 'recurso', 'action' => 'avaliar-recurso')); ?>?recurso="+id;
-            }
-        });
-
-        $('.btn_avaliar_enquadramento').click(function(){
-            var id = $(this).attr('recurso');
-            window.location = "<?php echo $this->url(array('controller' => 'recurso', 'action' => 'avaliar-recurso')); ?>?recurso="+id;
-        });
-
-        $('.finalizarRecurso').click(function(){
-            var componente = $(this).parent().parent().find('select.comboComponente').val(),
-                idRecurso = $(this).attr('idRecurso');
-
-            if(componente==''){
-                $("#alerta").dialog("destroy");
-                $("#alerta").html('Favor selecionar o componente da comissão!');
-                $("#alerta").dialog({
-                    resizable: false,
-                    title: 'Alerta!',
-                    width:340,
-                    modal: true,
-                    buttons : {
-                        'OK' : function(){
-                            $(this).dialog('close');
-                        }
-                    }
-                });
-                $('.ui-dialog-titlebar-close').remove();
-
-            } else {
-                $("#alerta").dialog("destroy");
-                $("#alerta").html('Deseja realmente enviar o recurso para a análise da CNIC?<br /><br />Ao enviar o recurso será removido do seu painel.');
-                $("#alerta").dialog({
-                    resizable: false,
-                    title: 'Alerta!',
-                    width: 430,
-                    modal: true,
-                    buttons : {
-                        'Não' : function(){
-                            $(this).dialog('close');
-                        },
-                        'Sim' : function(){
-                            $.ajax({
-                                type: 'POST',
-                                url: '<?php echo $this->url(array('controller' => 'recurso', 'action' => 'coord-analise-finalizar-recurso'), '', true); ?>',
-                                data: {
-                                    componente: componente,
-                                    idRecurso: idRecurso
-                                },
-                                success: function(data){
-                                    if(data.resposta){
-                                        $("#alerta").dialog("destroy");
-                                        $("#alerta").html('<br /><div align="center"><img src="<?php echo $this->baseUrl().'/public/img/ajax.gif'; ?>"><br />Aguarde..</div>');
-                                        $("#alerta").dialog({
-                                            resizable: false,
-                                            width:320,
-                                            modal: true,
-                                            title: 'Carregando..'
-                                        });
-                                        $('.ui-dialog-titlebar-close').remove();
-                                        window.setTimeout('location.reload()', 1000);
-                                    } else {
-                                        alertaModal("Não foi possível finalizar o recurso.");
-                                    }
-                                },
-                                dataType : 'json'
-                            });
-                        }
-                    }
-                });
-                $('.ui-dialog-titlebar-close').remove();
-            }
-        });
-    });
-</script>
-
 <div id="alerta"></div>
 <div class="container">
     <h4>Análise Enquadramento Recurso</h4>
     <div class="row">
-    <table>
+    <table class="bordered">
         <caption>Recurso fase 1</caption>
         <thead>
             <tr class="">
@@ -190,7 +49,7 @@
     </div>
     <?php if($this->recurso2fase > 0) : ?>
         <div class="row">
-        <table>
+        <table class="bordered">
             <caption>Recurso fase 2</caption>
             <thead>
                 <tr class="">
@@ -206,8 +65,9 @@
                 <?php foreach($this->recurso2fase as $d): ?>
                 <tr>
                     <td class="center-align">
-                        <a href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($d->idPronac); ?>" target="_blank">
+                        <a class="btn white black-text waves-effect"  href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($d->idPronac); ?>" target="_blank">
                             <?php echo $d->PRONAC; ?>
+                            <i class="material-icons left">visibility</i>
                         </a>
                     </td>
                     <td class="center-align"><?php echo $d->NomeProjeto; ?></td>
@@ -215,15 +75,10 @@
                     <td class="center-align"><?php echo $d->tpSolicitacao; ?></td>
                     <td class="center-align"><?php echo $d->tpRecurso; ?></td>
                     <td class="center-align">
-                        <?php if($this->idPerfil == 131): ?>
-                            <a class="white-text btn" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'recurso', 'action' => 'avaliar-recurso-enquadramento-editar'));?>?recurso=<?php echo $d->idRecurso; ?>">
-                                <i class="material-icons">thumbs_up_down</i>
-                            </a>
-                        <?php else : ?>
-                            <a class="white-text btn" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'recurso', 'action' => 'avaliar-recurso-enquadramento'))?>?recurso=<?php echo $d->idRecurso; ?>">
-                                <i class="material-icons">thumbs_up_down</i>
-                            </a>
-                        <?php endif ?>
+                        <a class="white-text btn"
+                            href="<?php echo $this->url(array('module' => 'default', 'controller' => 'recurso', 'action' => 'avaliar-recurso-enquadramento-editar'));?>?recurso=<?php echo $d->idRecurso; ?>">
+                            <i class="material-icons">thumbs_up_down</i>
+                        </a>
                     </td>
                 </tr>
                 <?php endforeach ?>

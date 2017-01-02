@@ -10,11 +10,14 @@
  * @link http://www.cultura.gov.br
  */
 ?>
+<style>
+    body {overflow-x: hidden;overflow-y: hidden;}
+</style>
 <?php if (!$this->habilitarServicoLoginCidadao): ?>
     <div class="container">
         <!--<div class="container animated slideInUp">-->
         <!--<div class="container animated zoomIn">-->
-        <div class="row">
+        <div id="title" class="row animated fadeIn">
             <div class="col s12 l4"></div>
             <div class="col s12 l4 center-align">
                 <h4>Bem vindo!</h4>
@@ -67,9 +70,9 @@
                         </form>
                     </div>
                     <div class="card-action">
-                        <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'cadastrarusuario', 'module' => 'autenticacao')); ?>"
+                        <a href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'cadastrarusuario', 'module' => 'autenticacao')); ?>');"
                            title="Cadastre-se">N&atilde;o sou cadastrado</a>&nbsp;&nbsp;&nbsp;
-                        <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'solicitarsenha', 'module' => 'autenticacao')); ?>"
+                        <a href="javascript:redirect('<?php echo $this->url(array('controller' => 'index', 'action' => 'solicitarsenha', 'module' => 'autenticacao')); ?>');"
                            title="Lembrar senha">Esqueci a senha</a>
                     </div>
                     <!--                <div class="card-reveal">-->
@@ -93,6 +96,27 @@
 <?php endif; ?>
 <script type="text/javascript">
 
+    function redirect(strUrl)
+    {
+        $('.card').removeClass('fadeInUp');
+            $('.card').removeClass('animated');
+            strAnimate = 'fadeOutDown';
+//            strAnimate = 'jello';
+//            strAnimate = 'wobble';
+//            strAnimate = 'pulse';
+            $('.card').addClass(strAnimate);
+            $('.card').addClass('animated');
+//            setTimeout(function(){
+//                $('.card').removeClass(strAnimate);
+//                $('.card').removeClass('animated');
+//            }, 1000);
+        $('#title').fadeOut();
+        $('.card').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            window.location.href = strUrl;
+//                $('.card').removeClass(strAnimate);
+//                $('.card').removeClass('animated');
+        });
+    }
 //    $3(document).ready(function ($) {
 //        $('body').on('submit', 'form#inicial', function () {
 //            $('.card').removeClass('fadeInUp');
