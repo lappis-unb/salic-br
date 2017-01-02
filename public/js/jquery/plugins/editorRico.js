@@ -3,9 +3,10 @@ jQuery.fn.editorRico = function (options) {
     if (!options) {
         options = {};
     }
+
     var minchar = (options.minchar) ? options.minchar : -1;
-    var maxchar = (options.maxchar) ? options.maxchar : false;
-    var isLimitarCarateres = (typeof  options.isLimitarCarateres !== 'undefined') ? options.isLimitarCarateres : true;
+    var maxchar = (options.maxchar) ? options.maxchar : 1000;
+    var isLimitarCarateres = (typeof  options.isLimitarCarateres !== 'undefined') ? options.isLimitarCarateres : false;
     var isDesabilitarEdicao = (typeof  options.isDesabilitarEdicao !== 'undefined') ? options.isDesabilitarEdicao : false;
     var idElemento = $(this).attr('id');
     var altura = (options.altura) ? options.altura : 500;
@@ -16,11 +17,8 @@ jQuery.fn.editorRico = function (options) {
             var body = metodos.elemento.getBody();
             var content = tinymce.trim(body.innerText || body.textContent);
             return content.length;
-        }
-    };
-
-    if (maxchar) {
-        metodos.execucaoDaFuncaoLimiterPag = function (idElemento, minchar) {
+        },
+        limitarQuantidadeDeCaracteres: function (idElemento, minchar, maxchar) {
             var countChars = metodos.contarCharacteres(idElemento);
             $("#contadorRico" + idElemento).html("Caracteres: " + countChars + "/" + maxchar);
             $("#contadorRico" + idElemento).css('color', 'black');
@@ -28,13 +26,8 @@ jQuery.fn.editorRico = function (options) {
                 $("#contadorRico" + idElemento).css('color', 'red');
             }
         }
-    } else {
-        metodos.execucaoDaFuncaoLimiterPag = function (idElemento, minchar) {
-            var countChars = metodos.contarCharacteres(idElemento);
-            $("#contadorRico" + idElemento).html("Caracteres: " + countChars);
-            $("#contadorRico" + idElemento).css('color', 'black');
-        }
-    }
+    };
+
     tinymce.init({
         plugins: "paste,textcolor",
         language: "pt_BR",
@@ -52,9 +45,9 @@ jQuery.fn.editorRico = function (options) {
                 ed.on('init', function (e) {
                     metodos.elemento = tinymce.get(idElemento);
                     $("#" + idElemento).after("<div id='contadorRico" + idElemento + "'></div>");
-                    metodos.execucaoDaFuncaoLimiterPag(idElemento, minchar, maxchar);
+                    metodos.limitarQuantidadeDeCaracteres(idElemento, minchar, maxchar);
                 }).on('keyup', function (e) {
-                    metodos.execucaoDaFuncaoLimiterPag(idElemento, minchar, maxchar);
+                    metodos.limitarQuantidadeDeCaracteres(idElemento, minchar, maxchar);
                 });
             }
         }

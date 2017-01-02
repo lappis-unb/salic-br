@@ -39,12 +39,14 @@
     </div>
     <div id="conteudo">
         <form method="post"
-              action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto'), '', true) . "?pronac={$this->pronac}"; ?>">
+              id="formEnquadramentoProjeto"
+              action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto'), '', true) . "?pronac={$this->pronac}"; ?>"
+              onsubmit="return false;">
             <table class="tabela bordered gerenciar_pareceres">
                 <tr>
                     <td valign="top">
                         <label for="areaCultural">&Aacute;rea Cultural</label>
-                        <br />
+                        <br/>
                         <select name="areaCultural" id="areaCultural"
                                 class="input_simples obrigatorio"
                                 style="width: 160px;">
@@ -58,7 +60,7 @@
                     </td>
                     <td width="40%">
                         <label for="segmentoCultural">Segmento Cultural</label>
-                        <br />
+                        <br/>
                         <select name="segmentoCultural" id="segmentoCultural"
                                 class="input_simples obrigatorio">
                             <?php if (!isset($this->projeto['Area']) || empty($this->projeto['Area'])) { ?>
@@ -81,7 +83,7 @@
                     </td>
                     <td width="250" colspan="2">
                         <label>Enquadramento</label>
-                        <br />
+                        <br/>
                         <input type="hidden" name="enquadramento_projeto" id="enquadramentoProjeto" value=""
                                class="obrigatorio"/>
                         <span id="enquadramentoText" class="bold"></span>
@@ -90,18 +92,22 @@
                 <tr>
                     <td colspan="3">
                         <label>
-                            Justificativa
+                            Justificativa <b style="color: red">*</b>
                         </label>
-                    <textarea cols="80" id="observacao"
-                              name="observacao"
-                              rows="10" class="textarea_simples"
-                              style="width: 99%"><?php echo $this->observacao ?></textarea>
+                        <textarea cols="80" id="observacao"
+                                  name="observacao"
+                                  rows="10" class="textarea_simples"
+                                  style="width: 99%"><?php echo $this->observacao ?></textarea>
                     </td>
                 </tr>
-                <td colspan="3" align="center">
-                    <input type="submit" id="btSalvarConsolidacao" value="" class="btn_salvar"/>
+                <td colspan="3" align="">
+                    <button class="btn waves-effect waves-light right" type="submit" name="action">
+                        Enviar <i class="material-icons right">send</i>
+                    </button>
+
                 </td>
             </table>
+
         </form>
         <br clear="all"/>
     </div>
@@ -134,7 +140,11 @@
 
         jQuery(function ($) {
 
-            $("#observacao").editorRico({altura: 200});
+            var editorRico = $("#observacao").editorRico({
+                altura: 200,
+                isLimitarCarateres : true
+            });
+
 
             $('#areaCultural').change(function () {
                 carregarSegmento();
@@ -145,6 +155,28 @@
             });
 
             $('#segmentoCultural').trigger("change");
+
+
+            $("#formEnquadramentoProjeto").validate({
+                rules: {
+                    observacao : {
+                        validarPreenchimento: true
+                    }
+                },
+                messages: {
+                    observacao: "Dado obrigat&oacute;rio n&atilde;o informado"
+                },
+                submitHandler: function (form) {
+                    $("#container-progress").show();
+                    form.submit();
+                }
+            });
+
+            $.validator.addMethod("validarPreenchimento", function(value, element) {
+                if(editorRico.contarCharacteres() > 0) {
+                    return true;
+                }
+            });
         });
     </script>
 </main>
