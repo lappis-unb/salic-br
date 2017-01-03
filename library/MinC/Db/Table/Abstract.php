@@ -326,24 +326,24 @@ abstract class MinC_Db_Table_Abstract extends Zend_Db_Table_Abstract
      * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
      * @since  06/12/2016
      */
-    public function setWhere(&$select, $where)
+    public function setWhere(&$select, $where, $typeWhere = 'where')
     {
         if (is_array($where)) {
             foreach ($where as $columnName => $columnValue) {
                 if (is_int(strpos($columnName, '?'))) {
                     if (is_array($columnValue)) {
-                        $select->where($columnName, $columnValue);
+                        $select->{$typeWhere}($columnName, $columnValue);
                     } else {
-                        $select->where($columnName, trim($columnValue));
+                        $select->{$typeWhere}($columnName, trim($columnValue));
                     }
                 } elseif (!$columnValue) {
-                    $select->where($columnName);
+                    $select->{$typeWhere}($columnName);
                 } else {
-                    $select->where($columnName . ' = ?', trim($columnValue));
+                    $select->{$typeWhere}($columnName . ' = ?', trim($columnValue));
                 }
             }
         } else {
-            $select->where(reset($this->getPrimary()) . ' = ?', trim($where));
+            $select->{$typeWhere}(reset($this->getPrimary()) . ' = ?', trim($where));
         }
     }
 
