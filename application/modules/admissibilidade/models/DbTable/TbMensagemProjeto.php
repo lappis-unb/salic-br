@@ -14,7 +14,7 @@ class Admissibilidade_Model_DbTable_TbMensagemProjeto extends MinC_Db_Table_Abst
     protected $_schema    = 'bdcorporativo.scsac';
     protected $_name      = 'tbMensagemProjeto';
     protected $_primary   = 'idMensagemProjeto';
-    public function getAllBy($where = array())
+    public function getAllBy($where = array(), $orWhere = array())
     {
 //        $selectSub = $this->select()
 //            ->setIntegrityCheck(false)->from(array('tmp2' => $this->_name),
@@ -61,8 +61,9 @@ class Admissibilidade_Model_DbTable_TbMensagemProjeto extends MinC_Db_Table_Abst
                         'Sigla as destinatarioUnidadeNome',
                         $this->getSchema('sac'));
         parent::setWhere($select, $where);
+        parent::setWhere($select, $orWhere, 'orWhere');
         $select->order('dtMensagem DESC');
-//        sac.dbo.Orgaos
+
         $arrResult = ($arrResult = $this->fetchAll($select))? $arrResult->toArray() : array();
         foreach ($arrResult as &$arrValue) {
             $arrValue['dsMensagem'] = strip_tags($arrValue['dsMensagem']);
