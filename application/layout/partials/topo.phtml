@@ -6,7 +6,13 @@
             <?php if (!empty($this->usuario->usu_identificacao) && !empty($this->usuario->usu_nome)) : ?>
                 <li >Usu&aacute;rio <strong><?php echo $this->usuario->usu_nome; ?> [<?php echo Validacao::mascaraCPFCNPJ($this->usuario->usu_identificacao); ?>]</strong></li>
             <?php endif; ?>
-            <li class="sair"><a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), '', true); ?>" id="sairSistema" title="Sair do Sistema" onclick="logout(); return false;">Sair</a></li>
+            <li>
+                <a
+                    class="btn-floating small waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Sair do Sistema"
+                    style="text-indent: 0; bottom: 8px;" href="<?php echo $this->url(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), '', true); ?>" id="sairSistema" onclick="logout(); return false;">
+                    <i class="material-icons">power_settings_new</i>
+                </a>
+            </li>
         </ul>
     </div>
 

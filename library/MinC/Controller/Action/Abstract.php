@@ -891,4 +891,14 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
             return $oauthConfigArray['OAuth'];
         }
     }
+
+    protected function objectsInArray($objects){
+
+        foreach($objects as $object)
+        {
+            $itens[] = get_object_vars( $object );
+        }
+        return $itens;
+
+    }
 }

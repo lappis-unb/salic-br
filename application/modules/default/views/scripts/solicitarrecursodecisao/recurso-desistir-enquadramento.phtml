@@ -1,16 +1,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>var $3 = jQuery.noConflict();</script>
-<script src="<?php echo $this->baseUrl(); ?>/public/materialize/js/materialize.js"></script>
+<script src="<?php echo $this->baseUrl(); ?>/public/library/materialize/js/materialize.js"></script>
 <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/materialize/css/materialize.css">
-<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/materialize/css/materialize-custom.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize-custom.css">
 <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/animate.css">
 <nav class="breadcrumb">
     <div class="nav-wrapper" style="padding: 0 15px 0 15px">
         <div class="col s12">
-            <a href="<?php echo $this->Url(array('module' => 'default', 'controller' => 'principalproponente', 'action' => 'index'))?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para o in?cio">In?cio</a>
+            <a href="<?php echo $this->Url(array('module' => 'default', 'controller' => 'principalproponente', 'action' => 'index'))?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para o início">In?cio</a>
             <a href="<?php echo $this->Url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'))?>?idPronac=<?php echo $this->projetos->IdPRONAC?>" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Ir para consultar dados projeto">Consultar dados projeto</a>
-            <a href="#" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="P?gina Atual">Desist?ncia do Prazo Recursal</a>
+            <a href="#" class="breadcrumb tooltipped" data-position="top" data-delay="50" data-tooltip="Página Atual">Desistência do Prazo Recursal</a>
         </div>
     </div>
 </nav>
@@ -38,7 +38,7 @@
 
 <div class="container">
     <div class="row">
-        <h3>Desistência do Prazo Recursal</h3>
+        <h3>Desistï¿½ncia do Prazo Recursal</h3>
         <form name="form" id="form" action="<?php echo $this->url(array('controller' => 'solicitarrecursodecisao', 'action' => 'recurso-desistencia-endraquamento')); ?>?idPronac=<?php echo $this->projetos->IdPRONAC; ?>" method="post">
             <input type="hidden" name="idPronac" id="idPronac" value="<?php echo $this->projetos->IdPRONAC; ?>" />
             <table>
@@ -65,11 +65,12 @@
                 Parece que apenas alguns trechos do texto original aparecem no Lipsum comumente usado, e que uma s?rie de cartas tenham sido removido ou adicionado em diversos pontos do texto ao longo do tempo. ? por isso que existem hoje em dia um n?mero de texto Lorem Ipsum mais ou menos diferentes uns dos outros. Devido ? sua data de produ??o, uso Lorem ipsum n?o est? mais sujeito a direitos de autor e evita quaisquer quest?es de direitos autorais. s a card panel with a teal lighten-2 class
             </div>
             <div class="input-field col s12 center-align">
-                <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Concordo
+                <a class="tooltipped waves-effect waves-light btn modal-trigger" data-tooltip="Concordar com os Termos" href="#modal1">Concordo
                     <i class="material-icons right modal-trigger">send</i>
                 </a>
                 <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->projetos->IdPRONAC; ?>"
-                   class="red-text btn waves-effect waves-dark white"
+                   class="tooltipped red-text btn waves-effect waves-dark white"
+                   data-tooltip="Cancelar Desistência"
                    id="btn_cancelar"
                    name="action">
                     Cancelar
@@ -80,7 +81,7 @@
 </div>
 <div id="modal1" class="modal">
     <div class="modal-content">
-      <p>Tem certeza? Essa decisão não pode ser revertida.</p>
+      <p>Tem certeza? Essa decisï¿½o nï¿½o pode ser revertida.</p>
     </div>
     <div class="modal-footer">
       <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->projetos->IdPRONAC;?>" class=" modal-action modal-close waves-effect waves-red btn-flat">Discordo</a>
