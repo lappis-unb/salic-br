@@ -1,7 +1,7 @@
 <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/materialize/css/materialize.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize.css">
 <!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">-->
-<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/materialize/css/materialize-custom.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize-custom.css">
 <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/animate.css">
 <script>
     $(document).ready(function(){
@@ -12,240 +12,298 @@
         <?php endif; ?>
     });
 </script>
+<style>
 
-<div class="row container">
-    <h5 class="light">Custo por produto </h5>
-</div>
+    /*
+    Verde claro: #81C784
+Verde médio: #4CAF50
+Verde escuro: #1B5E20
+Rosa: #FF8A80
+Azul: #039BE5
+Laranja: #FB8C00
+Amarelo: #FDD835
+Cinza claro: #FAFAFA
+Cinza médio: #EEEEEE
+Cinza escuro: #212121
+*/
+    .btn_primary {
+        background-color: #29b6f6;
+
+    }
+    .btn_primary:hover {
+        background: #0277bd;
+    }
+
+    .btn_default,
+    .btn_success  {
+        background: #4caf50;
+    }
+
+    .btn_default:hover,
+    .btn_success:hover {
+        background: #388e3c !important;
+    }
+
+    .btn_danger {
+        background: #FF8A80;
+    }
+
+    .btn_danger:hover {
+        background: #ff5252;
+
+    }
+
+    .btn_warning {
+
+    }
+
+    .btn_success {
+
+    }
+
+    .bg_info {
+
+    }
+
+    #navglobal {
+        /*background: #FAFAFA;*/
+        box-shadow: 0px 4px 7px #cac5c5;;
+
+    }
+
+    #navglobal ul li a {
+        /*padding: ;*/
+        /*color: #212121;*/
+        /*font-size: 14px;*/
+    }
 
 
-<!-- Page Layout here -->
+    header {
+        margin-bottom: 0px;
+        margin-bottom: -10px;
+    }
+
+    #breadcrumb {
+        left: 0px;
+    }
+
+    #container-list {
+        margin-top: 15px;
+    }
+
+    #space_menu {
+        background: none;
+        height: auto;
+    }
+
+    .menu-contexto {
+        background: #eeeeee;
+        border-right: 1px solid #D2D2D2;
+        float: left;
+        margin-left: -10px;
+        width: 98%;
+        height: 100%;
+        min-height: 900px;
+    }
+
+    #menuContexto {
+        background: none;
+        width: 100%;
+        left: auto;
+    }
+
+    #menuContexto #qm0 {
+        width: 100%;
+        padding: 5px 0px;
+    }
+
+    #menuContexto #qm0 a {
+        background: none;
+        border: none;
+        padding: 10px 5px;
+        margin: 0px 15px;
+        font-size: 13px;
+        font-family: "Roboto", sans-serif;
+        width:88%;
+        border-bottom: 1px solid #d2d2d2;
+    }
+
+    #menuContexto #qm0 a:hover {
+        background: rgba(54, 150, 63, 0.72);
+        color: #ffffff;
+    }
+
+    #menuContexto #qm0 a:last-child {
+        border-bottom: none;
+    }
+
+    #menuContexto .top {
+        background: none;
+        height: 0;
+    }
+
+    #menuContexto .bottom {
+        background: none;
+        height: 0;
+    }
+
+    #qm0 .no_seta:hover {
+        background: none;
+    }
+
+    .sidebar aside h3:after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: -9px;
+        left: 10px;
+        width: 0;
+        border-width: 9px 9px 0px 9px;
+        border-style: solid;
+        border-color: #0c451a transparent;
+    }
+
+    #rodapeConteudo_com_menu {
+        display: none;
+    }
+
+    table th {
+        font-size: 14px;
+        padding: 16px;
+        background: transparent;
+        color: #212121;
+        text-transform: none;
+    }
+
+    table td {
+        padding: 16px;
+        color: #212121;
+    }
+
+    table td.action {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .collapsible table td {
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+    .collapsible {
+         box-shadow: none;
+        border-right: none;
+        border-left: none;
+    }
+    .collapsible-header {
+        padding: 8px;
+    }
+
+    .collapsible .collapsible .collapsible-header {
+        padding-left: 40px;
+    }
+
+
+    table .left-align {
+        text-align: left !important;
+    }
+
+    table .right-align {
+        text-align: right !important;
+    }
+
+    table thead tr.title {
+        background: transparent;
+
+    }
+
+    table thead tr.title th {
+        text-transform: uppercase;
+        text-align: left;
+        font-size: 17px;
+        /*color: #fff;*/
+    }
+
+    .tabs .tab {
+
+    }
+
+    .tabs .tab a {
+        background: #fff;
+        color: #212121;
+    }
+
+    .tabs .tab a:hover,
+    .tabs .tab a.active {
+        background-color: #c8e6c9;
+        color: #212121;
+    }
+
+    .tabs .indicator {
+        background-color: #4caf50;
+        right: 1155.38px;
+        left: 0px;
+    }
+
+
+</style>
+
 <div class="row">
-    <div class="col s12 m4 l2">
-        <?php  echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); ?>
+    <div class="col s2 m12 l2">
+        <div class="menu-contexto">
+            <?php  echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); ?>
+        </div>
     </div>
-    <div id="container-list" class="col s12 m10 l10" data-ajax-render='/proposta/manterorcamento/listarprodutos/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'></div>
+    <div class="content col s10 m12 l10">
+        <?php
+            $controller = "manterorcamento";
+            $links = array(
+                array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal','action' => 'listar-propostas')),
+                array('Or&ccedil;amento' => array())
+            );
+            montaGuiaLinks($controller, $links);
+        ?>
+        <div class="clearfix"></div>
+        <h5 class="light">Custo por produto </h5>
+
+        <div id="container-list" data-ajax-render='/proposta/manterorcamento/listarprodutos/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'></div>
+    </div>
 </div>
 
+    <!-- FIM DIV CONTEUDO -->
+    <div id="msg"></div>
 
-
-<div id="frmCadastroItem" style="text-align: center; display: none;"></div>
-<?php //echo $this->partial("manterpropostaincentivofiscal/inc/menu.inc.php", $this); ?>
-<?php
-        $controller = "manterorcamento";
-        $links = array(
-            array('Lista de Propostas' => array('controller' => 'manterpropostaincentivofiscal','action' => 'listar-propostas')),
-            array('Or&ccedil;amento' => array())
-        );
-montaGuiaLinks($controller, $links);
-?>
-
-<div id="titulo">
-    <div>Custos por Produtos <?php echo montaBotaoVoltar($controller, $links); ?></div></div>
-</div>
-
-<div id="conteudo">
-
-    <?php
-    if(count($this->Produtos)>0) {
-
-        foreach ($this->Produtos as $produtos): ?>
-
-            <div class="_produto">
-
-                <table class='tabela' style="background: transparent">
-                    <tbody>
-                        <tr class="principal"><td align="left"><input type="button" id="" class="btn_adicionar produto" /><?php echo $produtos->DescricaoProduto;?></td></tr>
-
-                        <?php foreach ($this->Etapa as $etapa) : ?>
-                            <?php $CadastrarProduto = $this->url(array('controller' => 'manterorcamento', 'action' => 'cadastrarprodutos'))."?produto=".$produtos->CodigoProduto."&etapa=".$etapa->idEtapa."&etapaNome=".$etapa->DescricaoEtapa."&idPreProjeto=".$produtos->idProposta;?>
-
-                            <?php if ($produtos->CodigoProduto) : ?>
-
-                                <tr class="etapas" style="display: none;">
-                                    <td>
-                                        <table summary="Produto" style="margin: 0px;">
-                                            <tbody>
-                                                <tr onclick="abrirDinamico('.itens_<?php echo $produtos->CodigoProduto."_".$etapa->idEtapa; ?>', $(this));" style="cursor:pointer">
-                                                    <th width="30px">
-                                                        <img style="cursor: pointer; width: 14px; height: 14px;" class="" src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" alt="Adicionar" />
-                                                    </th>
-                                                    <th class="esquerda"><?php echo $etapa->DescricaoEtapa; ?></th>
-                                                    <th class="direita">
-                                                        <input type="button" class="btn_novo" onclick="abrirFrmCadastroItem('<?php echo $CadastrarProduto; ?>');" />
-                                                    </th>
-                                               </tr>
-                                                <tr class="itens_<?php echo $produtos->CodigoProduto."_".$etapa->idEtapa; ?>" style='display: none;'>
-                                                    <td colspan="3" style="margin: 0; padding:10px;">
-                                                        <table class="tbitem" width="100%" style='margin: 0; border: 1px solid #aaa;' >
-                                                            <tr class="destacar" align="center">
-                                                                <td>Item</td>
-                                                                <td>Unidade</td>
-                                                                <td>Qtde</td>
-                                                                <td>Ocorr&ecirc;ncia</td>
-                                                                <td>Valor Unit&aacute;rio</td>
-                                                                <td>Total</td>
-                                                                <td>Localiza&ccedil;&atilde;o (Munic&iacute;pio/UF)</td>
-                                                                <td colspan="2" width="10%">A&ccedil;&otilde;es</td>
-                                                            </tr>
-                                                            <?php if(isset($this->Item)) : ?>
-                                                                <?php foreach ($this->Item as $itens) : ?>
-                                                                    <?php if ($produtos->CodigoProduto == $itens->CodigoProduto) :
-                                                                        if ($etapa->idEtapa == $itens->idEtapa) :  ?>
-
-                                                                            <?php
-                                                                                $valorTotalItem = ($itens->Quantidade * $itens->ValorUnitario) * $itens->Ocorrencia;
-                                                                                $valorProjeto = $valorTotalItem + $valorProjeto;
-                                                                            ?>
-                                                                            <tr class='fundo' style='background-color: #fff' align="center">
-                                                                                <td><?php echo $itens->DescricaoItem; ?></td>
-                                                                                <td><?php echo $itens->Unidade; ?></td>
-                                                                                <td><?php echo number_format($itens->Quantidade,0) ?></td>
-                                                                                <td><?php echo number_format($itens->Ocorrencia,0) ?></td>
-                                                                                <td><?php echo number_format($itens->ValorUnitario, 2, ",", ".") ?></td>
-                                                                                <td><?php echo number_format(($itens->Quantidade * $itens->ValorUnitario) * $itens->Ocorrencia, 2, ",", ".") ?></td>
-                                                                                <td><?php echo $itens->Municipio; ?>/<?php echo $itens->SiglaUF; ?></td>
-                                                                                <td width="5%">
-                                                                                    <input type="button" id="btn_editar" name="editar" style="width: 88px" class="btn_editar" onclick="abrirFrmCadastroItem('<?php echo $this->url(array('controller'=>'manterorcamento', 'action'=>'editarprodutos')); ?>?item=<?php echo $this->escape($itens->idItem); ?>&etapa=<?php echo $this->escape($etapa->idEtapa);?>&produto=<?php echo $this->escape($produtos->CodigoProduto);?>&idPlanilhaProposta=<?php echo $itens->idPlanilhaProposta;?>&idPreProjeto=<?php echo $this->escape($produtos->idProposta);?>');">
-                                                                                </td>
-                                                                                <td class='centro' width="5%">
-                                                                                    <input type="button" id="btn_excluir" name="excluir" style="width: 88px" class="btn_exclusao" onclick="excluir(<?php echo $itens->idPlanilhaProposta; ?>);">
-                                                                                </td>
-                                                                            </tr>
-                                                                        <?php endif; ?>
-                                                                    <?php endif; ?>
-                                                                <?php endforeach; ?>
-                                                            <?php else : ?>
-                                                                <tr  class='fundo'>
-                                                                    <td colspan="10">
-                                                                        <div class="center" align="center">Nenhum item cadastrado</div>
-                                                                    </td>
-                                                                </tr>
-                                                            <?php endif; ?>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                </table>
-            </div>
-
-        <?php endforeach; ?>
-            <?php if(!empty($valorProjeto) ) : ?>
-                <?php if ($this->EtapaCusto) : ?>
-                    <div class="custosvinculados">
-
-                        <table class='tabela' style="background: transparent">
-
-                            <?php foreach ($this->EtapaCusto as $etapaCusto) : ?>
-
-                                <tr class="principal">
-                                    <td align="left"><input type="button" id="" class="btn_adicionar produto" /><?php echo $etapaCusto->DescricaoEtapa; ?></td>
-                                </tr>
-
-                                <tr class="etapas" width="100%" style="display:none">
-                                    <td colspan="2" style="margin: 0; padding:10px;">
-
-                                        <?php if($this->ItensEtapaCusto) : ?>
-                                            <table class="tbitem" width="100%" style='margin: 0; border: 1px solid #aaa;' >
-                                                <tr class="destacar" align="center">
-                                                    <td>Item</td>
-                                                    <td>Munic&iacute;pio/UF</td>
-                                                    <td>Total</td>
-                                                </tr>
-                                                <?php $valorTotalCustosVinculados = null; ?>
-                                                <?php foreach ($this->ItensEtapaCusto as $itemEtapaCusto) : ?>
-                                                    <?php if ($etapaCusto->idEtapa == $itemEtapaCusto->idEtapa) :  ?>
-                                                        <tr class='fundo' style='background-color: #fff' align="center">
-                                                            <td><?php echo $itemEtapaCusto->DescricaoItem; ?></td>
-                                                            <td><?php echo $itemEtapaCusto->Municipio; ?>/<?php echo $itemEtapaCusto->SiglaUF; ?></td>
-                                                            <td><?php echo number_format($itemEtapaCusto->valorunitario, 2, ",", ".") ?></td>
-                                                            <?php $valorTotalCustosVinculados = $itemEtapaCusto->valorunitario + $valorTotalCustosVinculados; ?>
-                                                        </tr>
-                                                    <?php endif; ?>
-
-                                                <?php endforeach; ?>
-                                            </table>
-                                        <?php else: ?>
-                                            <div class="center" align="center">Nenhum item cadastrado</div>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-
-                            <?php endforeach; ?>
-                        </table>
-
-                        <table class='tabela' style="background: transparent">
-                            <tr>
-                                <td>
-                                    <table summary="Produto" style="margin: 0px;">
-                                        <tr>
-                                            <th colspan="2" class="centro"><?php echo "Resumo da Planilha Or&ccedil;ament&aacute;ria"; ?></th>
-                                        </tr>
-                                        <tr class="" align="center">
-                                            <td>Valor do Projeto: </td>
-                                            <td><?php echo number_format($valorProjeto, 2, ",", "."); ?></td>
-                                        </tr>
-                                        <tr class="" align="center">
-                                            <td>Valor Custos Vinculados: </td>
-                                            <td><?php echo number_format($valorTotalCustosVinculados, 2, ",", "."); ?></td>
-                                        </tr>
-                                        <tr class="" align="center">
-                                            <td>Valor total do Projeto: </td>
-                                            <td><?php echo number_format($valorTotalCustosVinculados + $valorProjeto, 2, ",", "."); ?></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                <?php endif; ?>
-            <?php endif; ?>
-        <?php } else { ?>
-        <br>
-        <div class="center" align="center">Nenhum produto cadastrado</div>
-        <br>
-    <?php } ?>
-    <br>
-</div>
-<!-- FIM DIV CONTEUDO -->
-<div id="msg"></div>
-
-<script>
-function excluir(idPlanilhaProposta)
-{
-	$("#msg").html('Tem certeza que deseja excluir o registro?');
-	$("#msg").dialog('open');
-	$("#msg").dialog
-    ({
-    	width:350,
-        height: 180,
-        modal: true,
-        draggable: false,
-        resizable: false,
-        closeOnEscape: false,
-        buttons: {
-            'Não': function()
-            {
-                $(this).dialog('close');
-            },
-            'Sim': function()
-            {
-            	window.location.href="<?php echo $this->url(array('controller'=>'manterorcamento', 'action'=>'excluiritensprodutos')); ?>?idPlanilhaProposta="+idPlanilhaProposta+"&retorno=produtoscadastrados&idPreProjeto=<?php echo $this->idPreProjeto;?>";
+    <script>
+    function excluir(idPlanilhaProposta)
+    {
+        $("#msg").html('Tem certeza que deseja excluir o registro?');
+        $("#msg").dialog('open');
+        $("#msg").dialog
+        ({
+            width:350,
+            height: 180,
+            modal: true,
+            draggable: false,
+            resizable: false,
+            closeOnEscape: false,
+            buttons: {
+                'Não': function()
+                {
+                    $(this).dialog('close');
+                },
+                'Sim': function()
+                {
+                    window.location.href="<?php echo $this->url(array('controller'=>'manterorcamento', 'action'=>'excluiritensprodutos')); ?>?idPlanilhaProposta="+idPlanilhaProposta+"&retorno=produtoscadastrados&idPreProjeto=<?php echo $this->idPreProjeto;?>";
+                }
             }
-        }
-    });
-	$(".ui-dialog-titlebar-close").remove();
-}
+        });
+        $(".ui-dialog-titlebar-close").remove();
+    }
 
-</script>
-<!-- ========== INCIO RODAPE DO CONTEDO ========== -->
-<div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEDO ========== -->
-<br clear="all" />
+    </script>
+    <!-- ========== INCIO RODAPE DO CONTEDO ========== -->
+    <div id="rodapeConteudo"><span></span></div>
+    <!-- ========== FIM RODAPE DO CONTEDO ========== -->
+    <br clear="all" />
 
 
 <script>
@@ -364,7 +422,7 @@ function excluir(idPlanilhaProposta)
 
 
     $3(document).ready(function () {
-        $3('body').on('click', '.btn_salvar', function () {
+        $3('body').on('click', '.btn-salvar', function () {
 
             var validar = true;
             $3('.valida').each(function () {
@@ -375,6 +433,7 @@ function excluir(idPlanilhaProposta)
 
             if (validar == false) {
                 Materialize.toast("Dados obrigat&oacute;rios n&atilde;o informados!", 4000);
+                return false;
             } else {
                 if ($3("#qtd").val() == 0) {
                     Materialize.toast('Quantidade n&atilde;o pode ser igual a zero', 4000);
@@ -435,6 +494,7 @@ function excluir(idPlanilhaProposta)
                     }
                 });
             }
+            return false;
         });
     });
 </script>

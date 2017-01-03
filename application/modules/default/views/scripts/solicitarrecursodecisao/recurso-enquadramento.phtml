@@ -1,6 +1,6 @@
 <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/materialize/css/materialize.css">
-<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/materialize/css/materialize-custom.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize.css">
+<link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize-custom.css">
 
 <div id="msgAlerta"></div>
 <div class="container">
@@ -21,7 +21,7 @@
             </tbody>
                 <thead>
                     <th>Estado do Projeto</th>
-                    <th>Tipo da Solicitação</th>
+                    <th>Tipo da Solicitaï¿½ï¿½o</th>
                 </thead>
                 <tbody>
                     <tr>
@@ -32,7 +32,7 @@
                             <?php if($this->recurso):  ?>
                                 Recurso
                             <?php else :  ?>
-                                Pedido de Reconsideração
+                                Pedido de Reconsideraï¿½ï¿½o
                             <?php endif ?>
                         </td>
                     </tr>
@@ -67,10 +67,10 @@
                     </div>
                     <div class="row">
                          <div class="input-field col s12 center-align">
-                             <button class="btn waves-effect waves-light " type="submit" name="action">Solicitar
+                             <button class="tooltipped btn waves-effect waves-light " data-tooltip="Solicitar Recurso" type="submit" name="action">Solicitar
                                  <i class="material-icons right">send</i>
                              </button>
-                             <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->idPronac?>" class="red-text btn waves-effect waves-dark white" id="btn_cancelar" name="action">Cancelar
+                             <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo $this->idPronac?>" class="tooltipped red-text btn waves-effect waves-dark white" data-tooltip="Cancelar Solicitação" id="btn_cancelar" name="action">Cancelar
                              </a>
                          </div>
                     </div>
@@ -93,7 +93,11 @@
             },
             invalidHandler: function(event, validator) {
                 Materialize.toast('Campo "Recurso" &eacute; obrigat&oacute;rio!', 4000);
-            }
+            },
+            submitHandler: function (form) {
+                    $("#container-progress").show();
+                    form.submit();
+                }
         });
 
         jQuery('#dsRecurso').editorRico({altura: 200});

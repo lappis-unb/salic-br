@@ -46,10 +46,14 @@
         <![endif]-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>var $3 = jQuery.noConflict();</script>
-        <script src="<?php echo $this->baseUrl(); ?>/public/materialize/js/materialize.js"></script>
-        <script src="<?php echo $this->baseUrl(); ?>/public/materialize/js/materialize-ready.js"></script>
-        <script src="<?php echo $this->baseUrl(); ?>/public/js/jquery/plugins/ajax.js"></script>
+        <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery/3/plugin/validation-1.16.0/dist/jquery.validate.js"></script>
+        <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery/3/plugin/validation-1.16.0/dist/additional-methods.js"></script>
+        <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery/3/plugin/validation-1.16.0/dist/localization/messages_pt_BR.js"></script>
+        <script src="<?php echo $this->baseUrl(); ?>/public/library/materialize/js/materialize.js"></script>
+        <script src="<?php echo $this->baseUrl(); ?>/public/library/materialize/js/materialize-ready.js"></script>
+        <script src="<?php echo $this->baseUrl(); ?>/public/js/jquery/3/plugin/salic/ajax.js"></script>
         <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery-1.4.2.min.js"></script>
+        <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery.validate.min.js"></script>
         <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/scripts/script_sem_menu.js"></script>
         <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery.tablesorter.min.js"></script>
         <script language="javascript" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/jquery.maskedinput.js"></script>
@@ -108,9 +112,9 @@
         <!--    NOVO    -->
         <?php if( isset($auth['usu_codigo']) ) : ?>
             <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-            <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/materialize/css/materialize.css">
+            <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize.css">
     <!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">-->
-            <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/materialize/css/materialize-custom.css">
+            <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/library/materialize/css/materialize-custom.css">
             <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/public/css/animate.css">
         <?php endif; ?>
 

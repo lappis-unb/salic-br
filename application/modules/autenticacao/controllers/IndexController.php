@@ -209,7 +209,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     {
 
         if ($_POST) {
-
+            $this->_helper->layout->disableLayout();
             $post = Zend_Registry::get('post');
             $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf));
 
@@ -239,64 +239,70 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $sgcAcessoBuscaCpfArray = $sgcAcessoBuscaCpf->toArray();
 
             if (!empty ($sgcAcessoBuscaCpfArray)) {
-                parent::message("CPF j&aacute; cadastrado", "/autenticacao/index/cadastrarusuario", "ALERT");
-            }
+//                parent::message("CPF j&aacute; cadastrado", "/autenticacao/index/cadastrarusuario", "ALERT");
+                $this->_helper->viewRenderer->setNoRender(true);
+                echo json_encode(array('status' => false, 'msg' => "CPF j&aacute; cadastrado"));
+            } else {
+                $sgcAcessoBuscaEmail = $sgcAcesso->buscar(array("Email = ?" => $post->email));
+                $sgcAcessoBuscaEmailArray = $sgcAcessoBuscaEmail->toArray();
 
-            $sgcAcessoBuscaEmail = $sgcAcesso->buscar(array("Email = ?" => $post->email));
-            $sgcAcessoBuscaEmailArray = $sgcAcessoBuscaEmail->toArray();
+                if (!empty ($sgcAcessoBuscaEmailArray)) {
+//                    parent::message("E-mail j&aacute; cadastrado", "/autenticacao/index/cadastrarusuario", "ALERT");
+                    $this->_helper->viewRenderer->setNoRender(true);
+                    echo json_encode(array('status' => false, 'msg' => 'E-mail j&aacute; cadastrado'));
+                } else {
+                    if (empty ($sgcAcessoBuscaCpfArray) && empty ($sgcAcessoBuscaEmailArray)) {
+                        /**
+                         * ==============================================================
+                         * INICIO DO VINCULO DO RESPONSAVEL COM ELE MESMO (PROPONENTE)
+                         * ==============================================================
+                         */
+                        /* ========== VERIFICA SE O RESPONSAVEL JA TEM CADASTRO COMO PROPONENTE ========== */
+                        $Agentes = new Agente_Model_DbTable_Agentes();
+                        $Visao = new Visao();
 
-            if (!empty ($sgcAcessoBuscaEmailArray)) {
-                parent::message("E-mail j&aacute; cadastrado", "/autenticacao/index/cadastrarusuario", "ALERT");
-            }
+                        $sgcAcessoSave = $sgcAcesso->salvar($dados);
 
-            if (empty ($sgcAcessoBuscaCpfArray) && empty ($sgcAcessoBuscaEmailArray)) {
-                /**
-                 * ==============================================================
-                 * INICIO DO VINCULO DO RESPONSAVEL COM ELE MESMO (PROPONENTE)
-                 * ==============================================================
-                 */
-                /* ========== VERIFICA SE O RESPONSAVEL JA TEM CADASTRO COMO PROPONENTE ========== */
-                $Agentes = new Agente_Model_DbTable_Agentes();
-                $Visao = new Visao();
+                        $buscarAgente = $Agentes->buscar(array('CNPJCPF = ?' => $cpf));
 
-                $sgcAcessoSave = $sgcAcesso->salvar($dados);
+                        $idAgenteProp = count($buscarAgente) > 0 ? $buscarAgente[0]->idAgente : 0;
+                        $buscarVisao = $Visao->buscar(array('Visao = ?' => 144, 'stAtivo = ?' => 'A', 'idAgente = ?' => $idAgenteProp));
 
-                $buscarAgente = $Agentes->buscar(array('CNPJCPF = ?' => $cpf));
+                        /* ========== VINCULA O RESPONSAVEL A SEU PROPRIO PERFIL DE PROPONENTE ========== */
+                        if (count($buscarVisao) > 0) {
+                            $tbVinculo = new Agente_Model_DbTable_TbVinculo();
+                            $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $sgcAcessoSave)); // pega o id do responsavel cadastrado
+                            $dadosVinculo = array(
+                                'idAgenteProponente' => $idAgenteProp
+                            ,'dtVinculo' => new Zend_Db_Expr('GETDATE()')
+                            ,'siVinculo' => 2
+                            ,'idUsuarioResponsavel' => $idResp[0]->IdUsuario
+                            );
+                            $tbVinculo->inserir($dadosVinculo);
+                        }
 
-                $idAgenteProp = count($buscarAgente) > 0 ? $buscarAgente[0]->idAgente : 0;
-                $buscarVisao = $Visao->buscar(array('Visao = ?' => 144, 'stAtivo = ?' => 'A', 'idAgente = ?' => $idAgenteProp));
+                        /**
+                         * ==============================================================
+                         * FIM DO VINCULO DO RESPONSAVEL COM ELE MESMO (PROPONENTE)
+                         * ==============================================================
+                         */
+                        /* ========== ENVIA O E-MAIL PARA O USUARIO ========== */
+                        $assunto = "Cadastro SALICWEB";
+                        $perfil = 'SALICWEB';
+                        $mens = "Ol&aacute; $post->nome ,<br><br>";
+                        $mens .= "Senha: $senha <br><br>";
+                        $mens .= "Esta &eacute; a sua senha de acesso ao Sistema de Apresenta&ccedil;&atilde;o de Projetos via Web do ";
+                        $mens .= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
+                        $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
+                        $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n&atilde;o responda.<br><br>";
+                        $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
 
-                /* ========== VINCULA O RESPONSAVEL A SEU PROPRIO PERFIL DE PROPONENTE ========== */
-                if (count($buscarVisao) > 0) :
-                    $tbVinculo = new Agente_Model_DbTable_TbVinculo();
-                    $idResp = $sgcAcesso->buscar(array('Cpf = ?' => $sgcAcessoSave)); // pega o id do responsavel cadastrado
-                    $dadosVinculo = array(
-                        'idAgenteProponente' => $idAgenteProp
-                        ,'dtVinculo' => new Zend_Db_Expr('GETDATE()')
-                        ,'siVinculo' => 2
-                        ,'idUsuarioResponsavel' => $idResp[0]->IdUsuario
-                    );
-                    $tbVinculo->inserir($dadosVinculo);
-                endif;
-
-                /**
-                 * ==============================================================
-                 * FIM DO VINCULO DO RESPONSAVEL COM ELE MESMO (PROPONENTE)
-                 * ==============================================================
-                 */
-                /* ========== ENVIA O E-MAIL PARA O USUARIO ========== */
-                $assunto = "Cadastro SALICWEB";
-                $perfil = 'SALICWEB';
-                $mens = "Ol&aacute; $post->nome ,<br><br>";
-                $mens .= "Senha: $senha <br><br>";
-                $mens .= "Esta &eacute; a sua senha de acesso ao Sistema de Apresenta&ccedil;&atilde;o de Projetos via Web do ";
-                $mens .= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
-                $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
-                $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n&atilde;o responda.<br><br>";
-                $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
-
-                $enviaEmail = EmailDAO::enviarEmail($post->email, $assunto, $mens, $perfil);
-                parent::message("Cadastro efetuado com sucesso. Verifique a senha no seu email", "/autenticacao", "CONFIRM");
+                        $enviaEmail = EmailDAO::enviarEmail($post->email, $assunto, $mens, $perfil);
+//                        parent::message("Cadastro efetuado com sucesso. Verifique a senha no seu email", "/autenticacao", "CONFIRM");
+                        $this->_helper->viewRenderer->setNoRender(true);
+                        echo json_encode(array('status' => true, 'msg' => 'Cadastro efetuado com sucesso. Verifique a senha no seu email', 'redirect' => '/autenticacao'));
+                    }
+                }
             }
         }
     }
@@ -311,6 +317,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
     public function solicitarsenhaAction()
     {
         if ($_POST) {
+            $this->_helper->layout->disableLayout();
             $post = Zend_Registry::get('post');
             $cpf = Mascara::delMaskCNPJ(Mascara::delMaskCPF($post->cpf)); // recebe cpf
             $dataNasc = data::dataAmericana($post->dataNasc); // recebe dataNasc
@@ -320,38 +327,42 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
             $sgcAcessoBuscaCpf = $sgcAcesso->buscar(array("Cpf = ?" => $cpf, "Email = ?" => $email, "DtNascimento = ?" => $dataNasc));
             $verificaUsuario = $sgcAcessoBuscaCpf->toArray();
             if (empty ($verificaUsuario)) {
-                parent::message("Dados incorretos!", "/autenticacao", "ALERT");
+//                parent::message("Dados incorretos!", "/autenticacao", "ALERT");
+                $this->_helper->viewRenderer->setNoRender(true);
+                echo json_encode(array('status' => false, 'msg' => 'Dados incorretos!'));
+            } else {
+                $sgcAcessoBuscaCpfArray = $verificaUsuario;
+                $nome = $sgcAcessoBuscaCpfArray[0]['Nome'];
+                $senha = Gerarsenha::gerasenha(15, true, true, true, true);
+                $senhaFormatada = str_replace(">", "", str_replace("<", "", str_replace("'", "", $senha)));
+
+                $senhaFormatada = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaFormatada);
+
+                $dados = array(
+                    "IdUsuario" => $sgcAcessoBuscaCpfArray[0]['IdUsuario'],
+                    "Senha" => $senhaFormatada,
+                    "Situacao" => 1,
+                    "DtSituacao" => date("Y-m-d")
+                );
+
+                $sgcAcessoSave = $sgcAcesso->salvar($dados);
+                $assunto = "Cadastro SALICWEB";
+                $perfil = "SALICWEB";
+                $mens = "Ol&aacute; " . $nome . ",<br><br>";
+                $mens .= "Senha....: " . $senha. "<br><br>";
+                $mens .= "Esta &eacute; a sua senha tempor&aacute;ria de acesso ao Sistema de Apresenta&ccedil;&atilde;o de Projetos via Web do ";
+                $mens .= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
+                $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
+                $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n&atilde;o responda.<br><br>";
+                $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
+
+                $email = $sgcAcessoBuscaCpfArray[0]['Email'];
+
+                $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
+//                parent::message("Senha gerada com sucesso. Verifique seu email!", "/autenticacao", "CONFIRM");
+                $this->_helper->viewRenderer->setNoRender(true);
+                echo json_encode(array('status' => true, 'msg' => 'Senha gerada com sucesso. Verifique seu email!', 'redirect' => '/autenticacao'));
             }
-
-            $sgcAcessoBuscaCpfArray = $verificaUsuario;
-            $nome = $sgcAcessoBuscaCpfArray[0]['Nome'];
-            $senha = Gerarsenha::gerasenha(15, true, true, true, true);
-            $senhaFormatada = str_replace(">", "", str_replace("<", "", str_replace("'", "", $senha)));
-
-            $senhaFormatada = EncriptaSenhaDAO::encriptaSenha($cpf, $senhaFormatada);
-
-            $dados = array(
-                "IdUsuario" => $sgcAcessoBuscaCpfArray[0]['IdUsuario'],
-                "Senha" => $senhaFormatada,
-                "Situacao" => 1,
-                "DtSituacao" => date("Y-m-d")
-            );
-
-            $sgcAcessoSave = $sgcAcesso->salvar($dados);
-            $assunto = "Cadastro SALICWEB";
-            $perfil = "SALICWEB";
-            $mens = "Ol&aacute; " . $nome . ",<br><br>";
-            $mens .= "Senha....: " . $senha. "<br><br>";
-            $mens .= "Esta &eacute; a sua senha tempor&aacute;ria de acesso ao Sistema de Apresenta&ccedil;&atilde;o de Projetos via Web do ";
-            $mens .= "Minist&eacute;rio da Cultura.<br><br>Lembramos que a mesma dever&aacute; ser ";
-            $mens .= "trocada no seu primeiro acesso ao sistema.<br><br>";
-            $mens .= "Esta &eacute; uma mensagem autom&aacute;tica. Por favor n&atilde;o responda.<br><br>";
-            $mens .= "Atenciosamente,<br>Minist&eacute;rio da Cultura";
-
-            $email = $sgcAcessoBuscaCpfArray[0]['Email'];
-
-            $enviaEmail = EmailDAO::enviarEmail($email, $assunto, $mens, $perfil);
-            parent::message("Senha gerada com sucesso. Verifique seu email!", "/autenticacao", "CONFIRM");
         }
     }
 
