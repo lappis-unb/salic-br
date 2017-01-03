@@ -2577,7 +2577,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
             $avaliacaoProposta = $db->fetchAll($sql);
             //if(( date('m') == 13 || date('m') == 1 ) && empty($avaliacaoProposta)) { @todo voltar esta linha, apenas para teste
-            if( getenv('APPLICATION_ENV') != 'production' && empty($avaliacaoProposta)) {
+            if( getenv('APPLICATION_ENV') == 'production' && empty($avaliacaoProposta)) {
                 $validacao->Descricao = 'Conforme Art 9&#176; da Instru&ccedil;&atilde;o Normativa n&#176; 1, de 24 de junho de 2013, nenhuma proposta poder&aacute; ser enviada ao MinC nos meses de DEZEMBRO e JANEIRO!';
                 $validacao->Observacao = 'PENDENTE';
                 $validacao->Url = '';
