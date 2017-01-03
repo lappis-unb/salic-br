@@ -165,6 +165,41 @@ class Enquadramento extends MinC_Db_Table_Abstract
         return $this->_db->fetchAll($select);
     }
 
+    public function obterProjetosEnquadrados($order = null, $limit = null)
+    {
+        $select = $this->select();
+        $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array("projetos"),
+            array('pronac' => New Zend_Db_Expr('projetos.AnoProjeto + projetos.Sequencial'),
+                'projetos.nomeProjeto',
+                'projetos.IdPRONAC',
+                'projetos.CgcCpf',
+                'projetos.idpronac',
+                'projetos.Area as cdarea',
+                'projetos.ResumoProjeto',
+                'projetos.UfProjeto',
+                'projetos.DtInicioExecucao',
+                'projetos.DtFimExecucao',
+                'projetos.Situacao',
+                'projetos.DtSituacao'
+            ),
+            $this->_schema
+        );
+
+        $select->joinLeft(array('tbAvaliacaoProposta' => 'tbAvaliacaoProposta'), 'tbAvaliacaoProposta.idProjeto = projetos.idProjeto and tbAvaliacaoProposta.stEstado = 0', array(), $this->_schema);
+        $select->joinLeft(array('Usuarios' => 'Usuarios'), 'tbAvaliacaoProposta.idTecnico = Usuarios.usu_codigo', array('Usuarios.usu_nome'), $this->getSchema('Tabelas'));
+        $select->joinInner(array('Area' => 'Area'), 'Area.Codigo = projetos.Area', array('Area.Descricao AS area'));
+        $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = projetos.Segmento', array('Segmento.Descricao AS segmento'));
+        $select->where("projetos.situacao in ( ? )", array('B02', 'B03'));
+
+        !empty($order) ? $select->order($order) : null;
+        !empty($limit) ? $select->limit($limit) : null;
+        return $this->_db->fetchAll($select);
+    }
+
     public function obterProjetosParaEnquadramentoVinculados($id_usuario, $order = null, $limit = null)
     {
         $select = $this->select();

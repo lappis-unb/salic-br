@@ -11,11 +11,11 @@
                    data-delay="50"
                    data-tooltip="Ir para In&iacute;cio">In&iacute;cio</a>
 
-                <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'gerenciarparecer', 'action' => 'listaprojetos'), null, true); ?>"
+                <a href="#"
                    class="breadcrumb tooltipped"
                    data-position="top"
                    data-delay="50"
-                   data-tooltip="Localizar Parecer">Gerenciar Parecer</a>
+                   data-tooltip="Localizar Parecer">Encaminhar para Portaria</a>
             </div>
         </div>
     </nav>
@@ -30,50 +30,33 @@
                         <th>Nome do Projeto</th>
                         <th>&Aacute;rea</th>
                         <th>Segmento</th>
-                        <th>Data</th>
-                        <?php if ($this->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE): ?>
-                            <th>T&eacute;cnico</th>
-                        <?php endif; ?>
-                        <th align="center">A&ccedil;&atilde;o</th>
+                        <th>Dias</th>
+                        <th align="center">Encaminhar</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php foreach ($this->dados as $dado): ?>
                         <?php if ($dado->Situacao == "B03") : ?>
-                            <tr class="tooltipped red lighten-4" data-tooltip="Projeto Enquadrado Com Recurso">
+                        <tr class="red lighten-4">
                         <?php else: ?>
-                            <tr>
+                        <tr>
                         <?php endif; ?>
-                        <td>
-                            <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index')) . "?idPronac={$dado->IdPRONAC}"; ?>"><u><?php echo $dado->pronac; ?></u></a>
-                        </td>
-                        <td><?php echo $dado->nomeProjeto; ?></td>
-                        <td><?php echo $dado->area; ?></td>
-                        <td><?php echo $dado->segmento; ?></td>
-                        <td><?php echo Data::tratarDataZend($dado->DtSituacao, 'Brasileira'); ?></td>
-                        <?php if ($this->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE): ?>
-                            <td><?php echo (trim($dado->usu_nome) != "") ? $dado->usu_nome : '-' ?></td>
-                        <?php endif; ?>
-                        <td>
-                            <?php
-                            $corMensagem = 'green';
-                            if ($dado->mensagens_nao_respondidas == '0' && $dado->mensagens_respondidas == '0') {
-                                $corMensagem = 'blue';
-                            } elseif ($dado->mensagens_nao_respondidas <> $dado->mensagens_respondidas) {
-                                $corMensagem = 'amber darken-1';
-                            }
-                            ?>
-                            <a class="btn waves-effect waves-light tooltipped <?php echo $corMensagem; ?>"
-                               href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => 'index')) . "?IdPronac={$dado->idpronac}"; ?>"
-                               data-position="top" data-delay="50" data-tooltip="D&uacute;vida">
-                                <i class="material-icons white-text">&#xE0BF;</i>
-                            </a>
-                            <a class="btn waves-effect waves-light cyan tooltipped"
-                               href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto')) . "?IdPRONAC={$dado->idpronac}" ?>"
-                               data-position="top" data-delay="50" data-tooltip="Enquadramento">
-                                <i class="material-icons white-text darken-4">&#xE869;</i>
-                            </a>
-                        </td>
+                            <td>
+                                <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index')) . "?idPronac={$dado->IdPRONAC}"; ?>"><u><?php echo $dado->pronac; ?></u></a>
+                            </td>
+                            <td><?php echo $dado->nomeProjeto; ?></td>
+                            <td><?php echo $dado->area; ?></td>
+                            <td><?php echo $dado->segmento; ?></td>
+                            <td>@todo : Carregar</td>
+                            <td>
+                                <a class="btn waves-effect waves-light cyan tooltipped"
+                                   href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'encaminhar-portaria')) . "?IdPRONAC={$dado->idpronac}&encaminhar=true" ?>"
+                                   data-position="top"
+                                   data-delay="50"
+                                   data-tooltip="Encaminhar">
+                                    <i class="material-icons white-text">navigate_next</i>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
@@ -85,7 +68,7 @@
                     Projeto Enquadrado Com Recurso
                     <br clear="both" />
                     <div class="" style="border: 1px solid gray; height: 20px; display: inline">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                    Projeto Para Enquadrado
+                    Projeto Enquadrado
                 </div>
             </div>
         </div>
