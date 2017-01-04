@@ -434,9 +434,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $buscarProdutos = $tbPlanilhaProposta->buscarDadosEditarProdutos($idPreProjeto, $params['etapa'], $params['produto'], $params['item'], null, $params['uf'], $params['municipio']);
 
             if($buscarProdutos){
-                $retorno['msg'] = "Cadastro duplicado de Produto na mesma etapa envolvendo o mesmo item, transa&ccedil;&atilde;o cancelada!";
-                $retorno['pergunta'] = true;
-                $retorno['status'] = false;
+                $return['msg'] = "Item duplicado na mesma etapa.<br> Transa&ccedil;&atilde;o cancelada!";
+                $return['close'] = false;
+                $return['status'] = false;
 
             }else{
                 $result = $tbPlanilhaProposta->insert($dados);
@@ -444,12 +444,11 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 if( $result )
                     $this->salvarcustosvinculados($idPreProjeto);
 
-                $retorno['msg'] = "Item cadastrado com sucesso.";
-                $retorno['pergunta'] = true;
-                $retorno['status'] = true;
+                $return['msg'] = "Item cadastrado com sucesso.";
+                $return['close'] = false;
+                $return['status'] = true;
             }
         } else {
-
 
             if( isset($params['produto'] ) ) {
 
@@ -459,14 +458,14 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
                 $this->salvarcustosvinculados($idPreProjeto);
 
-                $retorno['msg'] = "Altera&ccedil;&atilde;o realizada com sucesso!";
-                $retorno['pergunta'] = true;
-                $retorno['status'] = true;
+                $return['msg'] = "Altera&ccedil;&atilde;o realizada com sucesso!";
+                $return['close'] = true;
+                $return['status'] = true;
 
             }
         }
 
-        echo json_encode($retorno);
+        echo json_encode($return);
         die;
 
     }

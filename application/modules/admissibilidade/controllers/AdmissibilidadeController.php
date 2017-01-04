@@ -2700,7 +2700,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 //            $resultado = $db->query($sqlAnaliseDeConteudo);
 
             $sqlContaBancaria = "INSERT INTO SAC.dbo.ContaBancaria (AnoProjeto,Sequencial,Mecanismo,Banco,Agencia,Logon)
-                                 SELECT '{$AnoProjeto}', '{$NrProjeto}', Mecanismo,'001',AgenciaBancaria,{$idUsuario} 
+                                 SELECT '{$AnoProjeto}', '{$NrProjeto}', Mecanismo, '001', AgenciaBancaria, {$idUsuario} 
                                    FROM SAC.dbo.PreProjeto 
                                   WHERE idPreProjeto = {$idPreProjeto}";
             $resultado = $db->query($sqlContaBancaria);

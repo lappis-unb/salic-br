@@ -115,16 +115,19 @@ class Admissibilidade_MensagemController extends MinC_Controller_Action_Abstract
         $arrAuth = array_change_key_case((array) $auth->getIdentity());
         $intUsuCodigo = $arrAuth['usu_codigo'];
         $intUsuOrgao = $arrAuth['usu_orgao'];
-        $arrWhere = array('tbMensagemProjeto.idMensagemOrigem IS NULL' => '');
         $dbTable = new Admissibilidade_Model_DbTable_TbMensagemProjeto();
         if (empty($intIdPronac)) {
-            $arrWhere['tbMensagemProjeto.idDestinatario'] = $intUsuCodigo;
+            $arrWhere = array('tbMensagemProjeto.idMensagemOrigem IS NULL AND tbMensagemProjeto.idDestinatario = ?' => $intUsuCodigo);
+            $arrOrWhere = array("tbMensagemProjeto.idDestinatario = {$intUsuCodigo} AND tbMensagemProjeto.idDestinatarioUnidade = ?" => $intUsuOrgao);
+            $this->view->arrResult = $dbTable->getAllBy($arrWhere, $arrOrWhere);
         } else {
+            $arrWhere = array('tbMensagemProjeto.idMensagemOrigem IS NULL' => '');
             $arrWhere['tbMensagemProjeto.IdPRONAC'] = $intIdPronac;
+            $this->view->arrResult = $dbTable->getAllBy($arrWhere);
         }
-        $this->view->arrResult = $dbTable->getAllBy($arrWhere);
         $this->view->usuCodigo = $intUsuCodigo;
         $this->view->usuOrgao = $intUsuOrgao;
+        $this->view->idPronac = $intIdPronac;
     }
 
     /**

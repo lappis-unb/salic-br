@@ -156,7 +156,6 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
     private function carregardadosEnquadramentoProjeto(array $projeto)
     {
-
         $mapperArea = new Agente_Model_AreaMapper();
         $this->view->comboareasculturais = $mapperArea->fetchPairs('Codigo', 'Descricao');
         $this->view->projeto = $projeto;
@@ -184,7 +183,55 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             $objRecurso = new tbRecurso();
             $this->view->avaliacaoRecurso = trim($objRecurso->buscarAvaliacaoRecurso($projeto['IdPRONAC']));
         }
+    }
 
+    public function encaminharPortariaAction() {
+        try {
+            $get = $this->getRequest()->getParams();
+            if (isset($get['IdPRONAC']) || !empty($get['IdPRONAC']) && $get['encaminhar'] == 'true') {
+                $objProjeto = new Projetos();
+                $projeto = $objProjeto->findBy(array('IdPRONAC' => $get['IdPRONAC']));
 
+                if(!$projeto) {
+                    throw new Exception("Projeto n&atilde;o encontrado.");
+                }
+
+                if($projeto['Situacao'] != 'B02' || $projeto['Situacao'] != 'B03') {
+                    throw new Exception("Situa&ccedil;&atilde;o do projeto inv&aacute;lida!");
+                }
+
+                $orgaoDestino = 272;
+                if($projeto['Area'] == 2) {
+                    $orgaoDestino = 166;
+                }
+
+                $auth = Zend_Auth::getInstance();
+                $authIdentity = array_change_key_case((array)$auth->getIdentity());
+                $objProjeto = new Projetos();
+                $arrayDadosProjeto = array(
+                    'Situacao' => 'D27',
+                    'DtSituacao' => $objProjeto->getExpressionDate(),
+                    'ProvidenciaTomada' => 'Projeto encamihado para Portaria.',
+                    'logon' => $authIdentity['usu_codigo'],
+                    'Orgao' => $orgaoDestino
+                );
+
+                $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
+                $objProjeto->update($arrayDadosProjeto, $arrayWhere);
+
+                parent::message('Projeto encaminhado com sucesso.', '/admissibilidade/enquadramento/encaminhar-portaria', 'CONFIRM');
+            } else {
+                $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
+                $enquadramento = new Enquadramento();
+
+                $this->view->dados = array();
+                $ordenacao = array("projetos.DtSituacao asc");
+                $this->view->dados = $enquadramento->obterProjetosEnquadrados($ordenacao);
+                $this->view->codGrupo = $this->grupoAtivo->codGrupo;
+                $this->view->codOrgao = $this->grupoAtivo->codOrgao;
+            }
+        } catch (Exception $objException) {
+            parent::message($objException->getMessage(), '/admissibilidade/enquadramento/encaminhar-portaria');
+        }
     }
 }
