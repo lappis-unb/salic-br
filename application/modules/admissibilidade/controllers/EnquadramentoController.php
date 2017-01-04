@@ -60,6 +60,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             } else {
                 $this->salvarEnquadramentoProjeto($projeto);
             }
+
         } catch (Exception $objException) {
             parent::message($objException->getMessage(), "/admissibilidade/enquadramento/gerenciar-enquadramento");
         }
