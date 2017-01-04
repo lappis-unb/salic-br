@@ -346,7 +346,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $idMunicipio    = $params['idMunicipio'];
         $etapa          = $params['etapa'];
 
-        if( !empty( $params['idPlanilhaProposta']) ) {
+        if( !empty( $params['idPlanilhaProposta']) ) { // editar item91141824
+
 
             $idProposta = $params['idPreProjeto'];
             $idEtapa = $params['etapa'];
@@ -354,11 +355,11 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $idItem = $params['item'];
             $idPlanilhaProposta = $params['idPlanilhaProposta'];
             $tblanilhaProposta = new Proposta_Model_DbTable_TbPlanilhaProposta();
-            $buscaDados = $tblanilhaProposta->buscarDadosEditarProdutos($idProposta, $idEtapa, $idProduto, $idItem, $idPlanilhaProposta);
+            $buscaDados = $tblanilhaProposta->buscarDadosEditarProdutos($idProposta, $idEtapa, $idProduto, $idItem, $idPlanilhaProposta, $iduf, $idMunicipio );
 
             $this->view->Dados = $buscaDados;
 
-        } else {
+        } else { // novo item
             if( !empty( $idPreProjeto ) && !empty( $idProduto ) ) {
                 $TDP = new Proposta_Model_DbTable_PlanoDistribuicaoProduto();
                 $this->view->Dados = $TDP->buscarDadosCadastrarProdutos($idPreProjeto, $idProduto);
@@ -401,6 +402,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
         $this->_helper->layout->disableLayout();
         $params = $this->getRequest()->getParams();
+        $result = false;
 
         $idPreProjeto = $params['idPreProjeto'];
 
@@ -410,7 +412,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             'idProjeto' => $idPreProjeto,
             'idProduto' => $params['produto'],
             'idEtapa' => $params['idPlanilhaEtapa'],
-            'idPlanilhaItem' => $params['item'],
+            'idPlanilhaItem' => $params['planilhaitem'],
             'Descricao' => '',
             'Unidade' => $params['unidade'],
             'Quantidade' => $params['qtd'],
@@ -431,22 +433,20 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
         if( empty( $params['idPlanilhaProposta'] ) ) {
 
-            $buscarProdutos = $tbPlanilhaProposta->buscarDadosEditarProdutos($idPreProjeto, $params['etapa'], $params['produto'], $params['item'], null, $params['uf'], $params['municipio']);
+            $buscarProdutos = $tbPlanilhaProposta->buscarDadosEditarProdutos($idPreProjeto, $params['etapa'], $params['produto'], $params['planilhaitem'], null, $params['uf'], $params['municipio']);
 
             if($buscarProdutos){
-                $return['msg'] = "Item duplicado na mesma etapa.<br> Transa&ccedil;&atilde;o cancelada!";
+                $return['msg'] = "Item duplicado na mesma etapa. Transa&ccedil;&atilde;o cancelada!";
                 $return['close'] = false;
                 $return['status'] = false;
 
             }else{
                 $result = $tbPlanilhaProposta->insert($dados);
 
-                if( $result )
-                    $this->salvarcustosvinculados($idPreProjeto);
-
                 $return['msg'] = "Item cadastrado com sucesso.";
                 $return['close'] = false;
                 $return['status'] = true;
+
             }
         } else {
 
@@ -454,9 +454,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
                 $where = "idPlanilhaProposta = ".$params['idPlanilhaProposta'];
 
-                $tbPlanilhaProposta->update($dados, $where);
-
-                $this->salvarcustosvinculados($idPreProjeto);
+                $result = $tbPlanilhaProposta->update($dados, $where);
 
                 $return['msg'] = "Altera&ccedil;&atilde;o realizada com sucesso!";
                 $return['close'] = true;
@@ -464,6 +462,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
             }
         }
+
+        if( $result )
+            $this->salvarcustosvinculados($idPreProjeto);
 
         echo json_encode($return);
         die;

@@ -258,6 +258,7 @@ Cinza escuro: #212121
         background-color: #4caf50;
         right: 1155.38px;
         left: 0px;
+        width: 25%;
     }
 
     form .input_simples:hover,
@@ -463,71 +464,92 @@ Cinza escuro: #212121
 
 
 
-    $3(document).ready(function () {
-        $3('body').on('click', '.btn-salvar', function () {
+$3(document).ready(function () {
+    $3('body').on('click', '.btn-salvar', function () {
 
-            var validar = true;
-            $3('.valida').each(function () {
-                if ($3(this).val() == '') {
-                    validar = false;
+        var validar = true;
+        $3('.valida').each(function () {
+            if ($3(this).val() == '') {
+                validar = false;
+            }
+        });
+
+        if (validar == false) {
+            Materialize.toast("Dados obrigat&oacute;rios n&atilde;o informados!", 4000);
+            return false;
+        } else {
+            if ($3("#qtd").val() == 0) {
+                Materialize.toast('Quantidade n&atilde;o pode ser igual a zero', 4000);
+                $3("#qtd").focusin();
+                return false;
+            }
+
+            if ($3("#ocorrencia").val() == 0) {
+                Materialize.toast('Ocorr&ecirc;ncia n&atilde;o pode ser igual a zero', 4000);
+                $3("#ocorrencia").focusin();
+                return false;
+            }
+
+            var vlunitario = $3("#vlunitario").val();
+            vlunitario = vlunitario.replace(/\D/g, "");
+            vlunitario = vlunitario.replace(/(\d{0})(\d)/, "$1$2");
+
+            if (vlunitario == 0) {
+                Materialize.toast('Valor unit&aacute;rio n&atilde;o pode ser igual a zero', 4000);
+                $3("#vlunitario").focusin();
+                return false;
+            }
+
+            if ($3("#qtdDias").val() == 0) {
+                Materialize.toast('Quantidade de dias n&atilde;o pode ser igual a zero', 4000);
+                $3("#qtdDias").focusin();
+                return false;
+            }
+
+            $3.post($3('#form').attr('action'), $3('#form').serialize(), function (result) {
+                result = $3.parseJSON(result);
+
+                if (result.status == '1') {
+
+//                    console.log(form.produto);
+//                    console.log($3('#form').serialize());
+
+                    if(result.close == '1' )
+                        $3('#modal').modal('close');
+
+                    $3('#form')[0].reset();
+                    $3.ajaxRender()
+                    Materialize.toast(result.msg, 4000, 'green white-text');
+                    $3.each($('div[data-ajax-render]'), function () {
+                        $3.ajaxRender({
+                            strUrl: $(this).attr('data-ajax-render'),
+                            strTarget: '#' + $(this).attr('id')
+                        }, function () {
+
+                            produto = $3('input[name="produto"]').val();
+                            etapa = $3('input[name="idPlanilhaEtapa"]').val();
+                            mun = $3('input[name="municipio"]').val();
+
+                            $3(".produto-"+produto+" .collapsible-header").addClass("active");
+                            $3(".produto-"+produto).collapsible({accordion: false});
+                            etapa = "#etapa" +produto + "" + etapa + "" + mun ;
+
+                            console.log(etapa);
+                            $('#form').filter('[href='+etapa+']').css('background', 'red');
+//                            $('ul.tabs').tabs();
+//
+//                            var active = $('ul.tabs .active').attr('href').addClass('active');
+//                            $('.tabs-content ' + active).show();
+
+//                            $3('ul.tabs').tabs('select', "#etapa251003081");
+
+                        });
+                    });
+                } else {
+                    Materialize.toast(result.msg, 8000, 'red darken-1 white-text');
                 }
             });
-
-            if (validar == false) {
-                Materialize.toast("Dados obrigat&oacute;rios n&atilde;o informados!", 4000);
-                return false;
-            } else {
-                if ($3("#qtd").val() == 0) {
-                    Materialize.toast('Quantidade n&atilde;o pode ser igual a zero', 4000);
-                    $3("#qtd").focusin();
-                    return false;
-                }
-
-                if ($3("#ocorrencia").val() == 0) {
-                    Materialize.toast('Ocorr&ecirc;ncia n&atilde;o pode ser igual a zero', 4000);
-                    $3("#ocorrencia").focusin();
-                    return false;
-                }
-
-                var vlunitario = $3("#vlunitario").val();
-                vlunitario = vlunitario.replace(/\D/g, "");
-                vlunitario = vlunitario.replace(/(\d{0})(\d)/, "$1$2");
-
-                if (vlunitario == 0) {
-                    Materialize.toast('Valor unit&aacute;rio n&atilde;o pode ser igual a zero', 4000);
-                    $3("#vlunitario").focusin();
-                    return false;
-                }
-
-                if ($3("#qtdDias").val() == 0) {
-                    Materialize.toast('Quantidade de dias n&atilde;o pode ser igual a zero', 4000);
-                    $3("#qtdDias").focusin();
-                    return false;
-                }
-
-
-                $3.post($3('#form').attr('action'), $3('#form').serialize(), function (result) {
-                    result = $3.parseJSON(result);
-                    if (result.status == '1') {
-
-                        if(result.close == '1' )
-                            $3('#modal').modal('close');
-
-                        $3('#form')[0].reset();
-                        $3.ajaxRender()
-                        Materialize.toast(result.msg, 4000, 'green white-text');
-                        $3.each($('div[data-ajax-render]'), function () {
-                            $3.ajaxRender({
-                                strUrl: $(this).attr('data-ajax-render'),
-                                strTarget: '#' + $(this).attr('id')
-                            });
-                        });
-                    } else {
-                        Materialize.toast(result.msg, 8000, 'red darken-1 white-text');
-                    }
-                });
-            }
-            return false;
-        });
+         }
     });
+});
 </script>
