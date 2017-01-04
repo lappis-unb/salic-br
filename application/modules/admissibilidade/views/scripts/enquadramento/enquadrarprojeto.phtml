@@ -44,7 +44,7 @@
                     <table class=" gerenciar_pareceres">
                         <tr>
                             <td valign="top" colspan="2">
-                                <div class="input-field">
+                                <div class="input-field col s12 m6">
                                     <select id="areaCultural" disabled="disabled"
                                             style="width: 160px;">
                                         <option value=""> - Selecione -</option>
@@ -57,7 +57,7 @@
                                     <input name="areaCultural" type="hidden" value="<?php echo $this->projeto['Area']?>" />
                                     &nbsp; <span id="erroAreaCultural" class="spanError"></span>
                                 </div>
-                                <div class="input-field">
+                                <div class="input-field col s12 m6">
                                     <select name="segmentoCultural" id="segmentoCultural">
                                         <?php if (!isset($this->projeto['Area']) || empty($this->projeto['Area'])) { ?>
                                             <option value=""> - Selecione uma &Aacute;rea Cultural -</option>
