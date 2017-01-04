@@ -37,7 +37,6 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
     public function enquadrarprojetoAction()
     {
         try {
-
             $get = $this->getRequest()->getParams();
             if (!isset($get['IdPRONAC']) || empty($get['IdPRONAC'])) {
                 throw new Exception("Número de PRONAC não informado.");
