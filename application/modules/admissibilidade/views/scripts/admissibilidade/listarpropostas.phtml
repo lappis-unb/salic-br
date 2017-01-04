@@ -1,20 +1,5 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col s12">
-            <div id="breadcrumb">
-                <ul>
-                    <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>"
-                                         title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-                    <li class="second">Admissibilidade</li>
-                    <li>
-                        <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'listar-propostas')); ?>"
-                           title="Ir para In&iacute;cio">Avalia&ccedil;&atilde;o</a></li>
-                    <li class="last">Admissibilidade de Propostas</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
         <div class="col s9 m8 l8">
             <h4>Admissibilidade de propostas</h4>
