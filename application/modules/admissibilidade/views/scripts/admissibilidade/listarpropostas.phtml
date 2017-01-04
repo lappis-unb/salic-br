@@ -1,87 +1,91 @@
-<?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
-<div id="breadcrumb">
-    <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>"
-                             title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-        <li class="second">Admissibilidade</li>
-        <li>
-            <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'listar-propostas')); ?>"
-               title="Ir para In&iacute;cio">Avalia&ccedil;&atilde;o</a></li>
-        <li class="last">Admissibilidade de Propostas</li>
-    </ul>
-</div>
-<div id="titulo">
-    <div>Admissibilidade de propostas <span class="voltar"><a href="javascript:voltar();"
-                                                              title="Ir para p&aacute;gina anterior">Voltar</a></span>
+<div class="row">
+    <div class="col s12">
+        <div id="breadcrumb">
+            <ul>
+                <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>"
+                                     title="Ir para In&iacute;cio">In&iacute;cio</a></li>
+                <li class="second">Admissibilidade</li>
+                <li>
+                    <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'listar-propostas')); ?>"
+                       title="Ir para In&iacute;cio">Avalia&ccedil;&atilde;o</a></li>
+                <li class="last">Admissibilidade de Propostas</li>
+            </ul>
+        </div>
+        </div>
+        </div>
+
+<div class="row">
+    <div class="col s2">
+        <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
     </div>
-</div>
-<script type="text/javascript">
 
-    $(document).ready(function () {
-        $("#tabelaAnaliseInicial").tablesorter();
-        $("#tabelaAnaliseVisual").tablesorter();
-        $("#tabelaAnaliseDocumental").tablesorter();
-        $("#tabelaAnaliseFinal").tablesorter();
-    });
+<div class="col s10">
+    <h4>Admissibilidade de propostas</h4>
+    <script type="text/javascript">
 
-    function abrirDinamico(elemento, obj) {
-        if ($(elemento).css('display') == 'none') {
-            $(elemento).fadeIn('fast', function () {
-                $('img', $(obj)).attr('src', '<?php echo $this->baseUrl();?>/public/img/navigation-right.png');
-            });
-        } else {
-            $(elemento).fadeOut('fast', function () {
-                $('img', $(obj)).attr('src', '<?php echo $this->baseUrl();?>/public/img/navigation-baixo.PNG');
-            });
-        }
-    }
-
-    function transformarProposta(idPreProjeto, unidade) {
-        $("#modalTransformarProposta").html('<Center><br>Aguarde...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif"></center>');
-        jqAjaxLinkSemLoading('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/transformar-proposta-em-projeto?idPreProjeto=' + idPreProjeto + '&recuperarUnidade=sim', '', 'modalTransformarProposta');
-        // modal com os ddos do dirigente
-        $("#modalTransformarProposta").dialog("destroy");
-        $("#modalTransformarProposta").dialog({
-            width: 550,
-            height: 200,
-            EscClose: false,
-            modal: true,
-            buttons: {
-                'Cancelar': function () {
-                    $(this).dialog('close'); // fecha a modal
-                },
-                'Sim': function () {
-                    $("#modalTransformarProposta").html('<Center><br>Gerando PRONAC...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif"></center>');
-                    jqAjaxLinkSemLoading('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/transformar-proposta-em-projeto?idPreProjeto=' + idPreProjeto, '', 'modalTransformarProposta');
-                    $("#modalTransformarProposta").dialog({
-                        buttons: {
-                            "OK": function () {
-                                $(this).dialog('close'); // fecha a modal
-                                window.location = "";
-                            }
-                        }
-                    });
-                }
-            }
+        $(document).ready(function () {
+            $("#tabelaAnaliseInicial").tablesorter();
+            $("#tabelaAnaliseVisual").tablesorter();
+            $("#tabelaAnaliseDocumental").tablesorter();
+            $("#tabelaAnaliseFinal").tablesorter();
         });
-        return false;
-    }
-</script>
-<form action="<?php echo $this->urlResumo; ?>" method="post" name="frmResumo" id="frmResumo">
-    <input type="hidden" name="Inicial" value="<?php echo count($this->propostasInicial); ?>"/>
-    <input type="hidden" name="Visual" value="<?php echo count($this->propostasVisual); ?>"/>
-    <input type="hidden" name="Documental" value="<?php echo count($this->propostasDocumental); ?>"/>
-    <input type="hidden" name="Final" value="<?php echo count($this->propostasFinal); ?>"/>
-</form>
-<form method="POST" id="formGerarPdf" name="formGerarPdf"
-      action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerarpdf')); ?>"
-      target="gerarPDF" style="display:none">
-    <textarea name="html" id="conteudoImprimir"></textarea>
-</form>
 
-<div id="conteudo">
+        function abrirDinamico(elemento, obj) {
+            if ($(elemento).css('display') == 'none') {
+                $(elemento).fadeIn('fast', function () {
+                    $('img', $(obj)).attr('src', '<?php echo $this->baseUrl();?>/public/img/navigation-right.png');
+                });
+            } else {
+                $(elemento).fadeOut('fast', function () {
+                    $('img', $(obj)).attr('src', '<?php echo $this->baseUrl();?>/public/img/navigation-baixo.PNG');
+                });
+            }
+        }
 
-    <table class="tabela">
+        function transformarProposta(idPreProjeto, unidade) {
+            $("#modalTransformarProposta").html('<Center><br>Aguarde...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif"></center>');
+            jqAjaxLinkSemLoading('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/transformar-proposta-em-projeto?idPreProjeto=' + idPreProjeto + '&recuperarUnidade=sim', '', 'modalTransformarProposta');
+            // modal com os ddos do dirigente
+            $("#modalTransformarProposta").dialog("destroy");
+            $("#modalTransformarProposta").dialog({
+                width: 550,
+                height: 200,
+                EscClose: false,
+                modal: true,
+                buttons: {
+                    'Cancelar': function () {
+                        $(this).dialog('close'); // fecha a modal
+                    },
+                    'Sim': function () {
+                        $("#modalTransformarProposta").html('<Center><br>Gerando PRONAC...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif"></center>');
+                        jqAjaxLinkSemLoading('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/transformar-proposta-em-projeto?idPreProjeto=' + idPreProjeto, '', 'modalTransformarProposta');
+                        $("#modalTransformarProposta").dialog({
+                            buttons: {
+                                "OK": function () {
+                                    $(this).dialog('close'); // fecha a modal
+                                    window.location = "";
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+            return false;
+        }
+    </script>
+    <form action="<?php echo $this->urlResumo; ?>" method="post" name="frmResumo" id="frmResumo">
+        <input type="hidden" name="Inicial" value="<?php echo count($this->propostasInicial); ?>"/>
+        <input type="hidden" name="Visual" value="<?php echo count($this->propostasVisual); ?>"/>
+        <input type="hidden" name="Documental" value="<?php echo count($this->propostasDocumental); ?>"/>
+        <input type="hidden" name="Final" value="<?php echo count($this->propostasFinal); ?>"/>
+    </form>
+    <form method="POST" id="formGerarPdf" name="formGerarPdf"
+          action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerarpdf')); ?>"
+          target="gerarPDF" style="display:none">
+        <textarea name="html" id="conteudoImprimir"></textarea>
+    </form>
+
+    <table>
         <tr>
             <td align="center">
                 <input type="button" style="width: 88px" class="btn_localizar" id="btn_localizar"
@@ -96,7 +100,7 @@
 
         <!-- ============ ANALISE Unificada  ============== -->
         <?php if (!empty($this->propostas)): ?>
-                    <table class="tabela" id="tabelaAnaliseFinal">
+                    <table class="" id="tabelaAnaliseFinal">
                         <thead>
                         <tr>
                             <th style="cursor:pointer" title="Clique aqui para ordenar">N&uacute;mero</th>
@@ -108,8 +112,6 @@
                             <th>Outras</th>
                             <th>T&eacute;cnico</th>
                             <th>Visual</th>
-                            <th>Despachos</th>
-                            <th>Encaminhar</th>
                             <th>Projeto</th>
                             <th>Arquivar</th>
                             <th>Imprimir</th>
@@ -155,19 +157,6 @@
                                     </a>
                                 </td>
                                 <td align="center">
-                                    <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/despacharproposta?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
-                                        <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/despacho.png"
-                                             title="Vizualizar despachos da Proposta"
-                                             alt="Vizualizar despachos da Proposta"/>
-                                    </a>
-                                </td>
-                                <td align="center">
-                                    <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/encaminharproposta?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
-                                        <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/enviar.png"
-                                             title="Encaminhar Proposta" alt="Encaminhar Proposta"/>
-                                    </a>
-                                </td>
-                                <td align="center">
                                     <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/transformar.png"
                                          title="Transformar Proposta em Projeto" alt="Transformar Proposta em Projeto"
                                          style="cursor: pointer"
@@ -197,8 +186,8 @@
         <?php endif; ?>
     </div>
 </div>
+</div>
 
 <div id="modalTransformarProposta" style="display:none;"></div>
-<div id="rodapeConteudo"><span></span></div>
 <br clear="all"/>
 <iframe name="gerarPDF" style="display: none;"></iframe>
