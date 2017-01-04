@@ -70,9 +70,7 @@
                                             <?php foreach ($this->combosegmentosculturais as $combosegmentocultural) { ?>
                                                 <option
                                                     data-tp_enquadramento="<?php echo $combosegmentocultural->tp_enquadramento; ?>"
-                                                    value="<?php echo $combosegmentocultural->id; ?>" <?php if ($this->projeto['Segmento'] == $combosegmentocultural->id) echo "selected=\"selected\""; ?>>
-                                                    <?php echo $combosegmentocultural->descricao; ?>
-                                                </option>
+                                                    value="<?php echo $combosegmentocultural->id; ?>" <?php if ($this->projeto['Segmento'] == $combosegmentocultural->id) echo "selected=\"selected\""; ?>><?php echo $combosegmentocultural->descricao; ?></option>
                                             <?php } ?>
                                         <?php } ?>
                                     </select>
