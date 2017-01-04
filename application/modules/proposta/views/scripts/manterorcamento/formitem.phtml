@@ -12,7 +12,7 @@
             somaValores();
         });
 
-        if ( $('#item').val() != '') {
+        if ( $('#planilhaitem').val() != '') {
             somaValores();
         }
 
@@ -131,8 +131,8 @@
 
                     <div class="row">
                         <div class="col s3">
-                            <label for="item">Item</label>
-                            <select class="valida browser-default" id="item" name="item">
+                            <label for="planilhaitem">Item</label>
+                            <select class="valida browser-default" id="planilhaitem" name="planilhaitem">
                                 <option disabled selected> - Selecione - </option>
                                 <?php foreach($this->Item as $itens) : ?>
                                     <option value="<?php echo $itens->idPlanilhaItens ?>" <?php echo $dados->idItem == $itens->idPlanilhaItens ? "selected" : ""; ?>><?php echo $itens->Descricao ?></option>
