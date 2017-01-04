@@ -26,28 +26,40 @@ Cinza claro: #FAFAFA
 Cinza médio: #EEEEEE
 Cinza escuro: #212121
 */
-    .btn_primary {
-        background-color: #29b6f6;
 
-    }
-    .btn_primary:hover {
-        background: #0277bd;
-    }
-
+    .btn,
+    .btn-large,
+    .btn-floating,
     .btn_default,
     .btn_success  {
         background: #4caf50;
     }
 
+    .btn:focus,
+    .btn-large:focus,
+    .btn-floating:focus,
+    .btn:hover,
+    .btn_default:focus,
+    .btn-sucess:focus,
     .btn_default:hover,
     .btn_success:hover {
-        background: #388e3c !important;
+        background: #388e3c;
+    }
+
+    .btn_primary {
+        background-color: #29b6f6;
+    }
+
+    .btn_primary:focus,
+    .btn_primary:hover {
+        background: #0277bd;
     }
 
     .btn_danger {
         background: #FF8A80;
     }
 
+    .btn_danger:focus,
     .btn_danger:hover {
         background: #ff5252;
 
@@ -63,6 +75,10 @@ Cinza escuro: #212121
 
     .bg_info {
 
+    }
+
+    #toast-container div {
+        font-weight: bold;
     }
 
     #navglobal {
@@ -242,6 +258,32 @@ Cinza escuro: #212121
         background-color: #4caf50;
         right: 1155.38px;
         left: 0px;
+    }
+
+    form .input_simples:hover,
+    form .textarea_simples:hover,
+    form .select_simples:hover,
+    form .input_simples2:hover,
+    form .input_simples,
+    form .textarea_simples,
+    form .select_simples,
+    form .input_simples2 {
+        background: none;
+    }
+
+    form select.browser-default {
+        min-height: 44px;
+        background-color: #fafafa;
+        border-bottom: 1px solid #aaa;
+    }
+    .input-field label,
+    form label {
+        color: #212121;
+    }
+
+    .modal.bottom-sheet {
+        max-height: 50%;
+        /*overflow: visible !important;*/
     }
 
 
@@ -467,10 +509,13 @@ Cinza escuro: #212121
                 $3.post($3('#form').attr('action'), $3('#form').serialize(), function (result) {
                     result = $3.parseJSON(result);
                     if (result.status == '1') {
-                        $3('#modal').modal('close');
+
+                        if(result.close == '1' )
+                            $3('#modal').modal('close');
+
                         $3('#form')[0].reset();
                         $3.ajaxRender()
-                        Materialize.toast(result.msg, 4000);
+                        Materialize.toast(result.msg, 4000, 'green white-text');
                         $3.each($('div[data-ajax-render]'), function () {
                             $3.ajaxRender({
                                 strUrl: $(this).attr('data-ajax-render'),
@@ -478,19 +523,7 @@ Cinza escuro: #212121
                             });
                         });
                     } else {
-//                        if (Object.keys(result.msg).length > 1) {
-//                            $3.each(result.msg, function (strNameElement, strMsg) {
-//                                var elm = $3('[name=' + strNameElement + ']'),
-//                                    elmLabel = elm.closest('div.input-field').find('label'),
-//                                    strLabel = elm.closest('div.input-field').find('label').html();
-//                                if (elm.length > 0) {
-//                                    elm.focus();
-//                                    Materialize.toast('Campo ' + strLabel + ' &eacute; obrigat&oacute;rio!', 8000);
-//                                }
-//                            });
-//                        } else {
-//                            Materialize.toast(result.msg, 4000);
-//                        }
+                        Materialize.toast(result.msg, 8000, 'red darken-1 white-text');
                     }
                 });
             }
