@@ -5,7 +5,6 @@
     <nav class="breadcrumb">
         <div class="nav-wrapper" style="padding: 0 15px 0 15px">
             <div class="col s12">
-
                 <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecer', 'action' => 'index'), null, true); ?>"
                    class="breadcrumb tooltipped"
                    data-position="top"
@@ -18,11 +17,17 @@
                    data-delay="50"
                    data-tooltip="Gerenciar Enquadramento">Gerenciar Enquadramento</a>
 
-                <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'gerenciar-enquadramento'), null, true); ?>"
+                <a href="#"
                    class="breadcrumb tooltipped"
                    data-position="top"
                    data-delay="50"
-                   data-tooltip="Gerenciar Enquadramentos">Gerenciar Enquadramentos</a>
+                   data-tooltip="Enquadrar Projeto">Enquadrar Projeto</a>
+
+                <a href="#"
+                   class="breadcrumb tooltipped"
+                   data-position="top"
+                   data-delay="50"
+                   data-tooltip="<?php echo $this->projeto['AnoProjeto'] . $this->projeto['Sequencial'] ?>"><?php echo "({$this->projeto['AnoProjeto']}{$this->projeto['Sequencial']}) {$this->projeto['NomeProjeto']}"; ?></a>
             </div>
         </div>
     </nav>
@@ -31,7 +36,6 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h4>Enquadrar Projeto</h4>
                 <form method="post"
                       class="materialize"
                       id="formEnquadramentoProjeto"
