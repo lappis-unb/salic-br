@@ -1,4 +1,7 @@
+<div class="container-fluid">
+    <div class="row">
 <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
+        <div class="col s9">
 <script type="text/javascript">
     $(document).ready(function(){
 
@@ -21,30 +24,21 @@
     });
 </script>
 
-<div id="breadcrumb">
-    <ul>
-        <li class="first"> <a href="<?php echo $this->url(array('controller' => 'principal', 'action' => 'index')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-        <li>Admissibilidade</li>
-        <li><a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'listar-propostas')); ?>" title="Ir para In&iacute;cio">Avalia&ccedil;&atilde;o</a></li>
-        <li class="last">Projetos Distribuidos por Orgaos</li>
-    </ul>
-</div>
+<h4>
+    Projetos Distribu&iacute;dos por &oacute;rg&atilde;os
+</h4>
 
-<div id="titulo">
-    <div>Projetos Distribuidos por orgãos <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span></div>
-</div>
-
-<div id="conteudo">
+<div>
     <form action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'lista-projetos-distribuidos')); ?>" method="get" name="fomulario" id="formulario">
         <table class="tabela" id="desarquivarProposta">
             <tr>
-                <td class="destacar bold w100" align="right">PRONAC</td>
+                <td class="bold w100" align="right">PRONAC</td>
                 <td>
                     <input type="text" class="input_simples" id="pronac" name="pronac" onkeypress="mascara(this, format_num);">
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold w100" align="right">Orgão</td>
+                <td class="bold w100" align="right">&Oacute;rg&atilde;o</td>
                 <td>
                     <select class="select_simples" id="orgao" name="orgao">
                         <option value=""> - Selecione - </option>
@@ -55,7 +49,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="destacar bold w100" align="right">Estado</td>
+                <td class="bold w100" align="right">Estado</td>
                 <td>
                     <select class="select_simples" id="estado" name="estado">
                         <option value=""> - Selecione - </option>
@@ -69,5 +63,6 @@
     <p align="center"><input type="button" class="btn_localizar" /></p>
     <br clear="all">
 </div>
-<div id="rodapeConteudo"><span></span></div>
-<br clear="all" />
+    </div>
+</div>
+</div>
