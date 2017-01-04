@@ -45,7 +45,7 @@
                         <tr>
                             <td valign="top" colspan="2">
                                 <div class="input-field">
-                                    <select name="areaCultural" id="areaCultural"
+                                    <select id="areaCultural" disabled="disabled"
                                             style="width: 160px;">
                                         <option value=""> - Selecione -</option>
                                         <?php foreach ($this->comboareasculturais as $key => $value) { ?>
@@ -54,6 +54,7 @@
                                         <?php } ?>
                                     </select>
                                     <label>&Aacute;rea Cultural</label>
+                                    <input name="areaCultural" type="hidden" value="<?php echo $this->projeto['Area']?>" />
                                     &nbsp; <span id="erroAreaCultural" class="spanError"></span>
                                 </div>
                                 <div class="input-field">
