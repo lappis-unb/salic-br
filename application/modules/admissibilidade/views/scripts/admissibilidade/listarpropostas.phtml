@@ -1,191 +1,181 @@
-<div class="row">
-    <div class="col s12">
-        <div id="breadcrumb">
-            <ul>
-                <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>"
-                                     title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-                <li class="second">Admissibilidade</li>
-                <li>
-                    <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'listar-propostas')); ?>"
-                       title="Ir para In&iacute;cio">Avalia&ccedil;&atilde;o</a></li>
-                <li class="last">Admissibilidade de Propostas</li>
-            </ul>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col s12">
+            <div id="breadcrumb">
+                <ul>
+                    <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>"
+                                         title="Ir para In&iacute;cio">In&iacute;cio</a></li>
+                    <li class="second">Admissibilidade</li>
+                    <li>
+                        <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'listar-propostas')); ?>"
+                           title="Ir para In&iacute;cio">Avalia&ccedil;&atilde;o</a></li>
+                    <li class="last">Admissibilidade de Propostas</li>
+                </ul>
+            </div>
         </div>
-        </div>
-        </div>
-
-<div class="row">
-    <div class="col s2">
-        <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
     </div>
+    <div class="row">
+        <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
+        <div class="col s10 m8 l8">
+            <h4>Admissibilidade de propostas</h4>
+            <script type="text/javascript">
 
-<div class="col s10">
-    <h4>Admissibilidade de propostas</h4>
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            $("#tabelaAnaliseInicial").tablesorter();
-            $("#tabelaAnaliseVisual").tablesorter();
-            $("#tabelaAnaliseDocumental").tablesorter();
-            $("#tabelaAnaliseFinal").tablesorter();
-        });
-
-        function abrirDinamico(elemento, obj) {
-            if ($(elemento).css('display') == 'none') {
-                $(elemento).fadeIn('fast', function () {
-                    $('img', $(obj)).attr('src', '<?php echo $this->baseUrl();?>/public/img/navigation-right.png');
+                $(document).ready(function () {
+                    $("#tabelaAnaliseInicial").tablesorter();
+                    $("#tabelaAnaliseVisual").tablesorter();
+                    $("#tabelaAnaliseDocumental").tablesorter();
+                    $("#tabelaAnaliseFinal").tablesorter();
                 });
-            } else {
-                $(elemento).fadeOut('fast', function () {
-                    $('img', $(obj)).attr('src', '<?php echo $this->baseUrl();?>/public/img/navigation-baixo.PNG');
-                });
-            }
-        }
 
-        function transformarProposta(idPreProjeto, unidade) {
-            $("#modalTransformarProposta").html('<Center><br>Aguarde...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif"></center>');
-            jqAjaxLinkSemLoading('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/transformar-proposta-em-projeto?idPreProjeto=' + idPreProjeto + '&recuperarUnidade=sim', '', 'modalTransformarProposta');
-            // modal com os ddos do dirigente
-            $("#modalTransformarProposta").dialog("destroy");
-            $("#modalTransformarProposta").dialog({
-                width: 550,
-                height: 200,
-                EscClose: false,
-                modal: true,
-                buttons: {
-                    'Cancelar': function () {
-                        $(this).dialog('close'); // fecha a modal
-                    },
-                    'Sim': function () {
-                        $("#modalTransformarProposta").html('<Center><br>Gerando PRONAC...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif"></center>');
-                        jqAjaxLinkSemLoading('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/transformar-proposta-em-projeto?idPreProjeto=' + idPreProjeto, '', 'modalTransformarProposta');
-                        $("#modalTransformarProposta").dialog({
-                            buttons: {
-                                "OK": function () {
-                                    $(this).dialog('close'); // fecha a modal
-                                    window.location = "";
-                                }
-                            }
+                function abrirDinamico(elemento, obj) {
+                    if ($(elemento).css('display') == 'none') {
+                        $(elemento).fadeIn('fast', function () {
+                            $('img', $(obj)).attr('src', '<?php echo $this->baseUrl();?>/public/img/navigation-right.png');
+                        });
+                    } else {
+                        $(elemento).fadeOut('fast', function () {
+                            $('img', $(obj)).attr('src', '<?php echo $this->baseUrl();?>/public/img/navigation-baixo.PNG');
                         });
                     }
                 }
-            });
-            return false;
-        }
-    </script>
-    <form action="<?php echo $this->urlResumo; ?>" method="post" name="frmResumo" id="frmResumo">
-        <input type="hidden" name="Inicial" value="<?php echo count($this->propostasInicial); ?>"/>
-        <input type="hidden" name="Visual" value="<?php echo count($this->propostasVisual); ?>"/>
-        <input type="hidden" name="Documental" value="<?php echo count($this->propostasDocumental); ?>"/>
-        <input type="hidden" name="Final" value="<?php echo count($this->propostasFinal); ?>"/>
-    </form>
-    <form method="POST" id="formGerarPdf" name="formGerarPdf"
-          action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerarpdf')); ?>"
-          target="gerarPDF" style="display:none">
-        <textarea name="html" id="conteudoImprimir"></textarea>
-    </form>
 
-    <table>
-        <tr>
-            <td align="center">
-                <input type="button" style="width: 88px" class="btn_localizar" id="btn_localizar"
-                       onclick="window.location.href='<?php echo $this->formularioLocalizar; ?>';"/>
-                <input type="button" name="imprimir" class="btn_imprimir"
-                       onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'>
-                <input type="button" style="width: 88px" class="btn_resumo" id="btn_resumo"
-                       onclick="$('#frmResumo').submit();"/>
-            </td>
-        </tr>
-    </table>
-
-        <!-- ============ ANALISE Unificada  ============== -->
-        <?php if (!empty($this->propostas)): ?>
-                    <table class="" id="tabelaAnaliseFinal">
-                        <thead>
-                        <tr>
-                            <th style="cursor:pointer" title="Clique aqui para ordenar">N&uacute;mero</th>
-                            <th style="cursor:pointer" title="Clique aqui para ordenar">Nome</th>
-                            <th>Data/Hora</th>
-                            <th>Dias</th>
-                            <th>Dias de Dilig&ecirc;ncia</th>
-                            <th>Dias de Resposta de Dilig&ecirc;ncia</th>
-                            <th>Outras</th>
-                            <th>T&eacute;cnico</th>
-                            <th>Visual</th>
-                            <th>Projeto</th>
-                            <th>Arquivar</th>
-                            <th>Imprimir</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach ($this->propostas as $propostaFinal): $ctPropostasGeral++; ?>
-
-                            <?php
-                            if ($propostaFinal->diasCorridos < 11) {
-                                $cor = 'style = "color: #228B22"';
-                            } else if ($propostaFinal->diasCorridos > 10 && $propostaFinal->diasCorridos < 21) {
-                                $cor = 'style = "color: #FFD700"';
-                            } else {
-                                $cor = 'style = "color: #FF0000"';
+                function transformarProposta(idPreProjeto, unidade) {
+                    $("#modalTransformarProposta").html('<Center><br>Aguarde...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif"></center>');
+                    jqAjaxLinkSemLoading('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/transformar-proposta-em-projeto?idPreProjeto=' + idPreProjeto + '&recuperarUnidade=sim', '', 'modalTransformarProposta');
+                    // modal com os ddos do dirigente
+                    $("#modalTransformarProposta").dialog("destroy");
+                    $("#modalTransformarProposta").dialog({
+                        width: 550,
+                        height: 200,
+                        EscClose: false,
+                        modal: true,
+                        buttons: {
+                            'Cancelar': function () {
+                                $(this).dialog('close'); // fecha a modal
+                            },
+                            'Sim': function () {
+                                $("#modalTransformarProposta").html('<Center><br>Gerando PRONAC...<br><img src="<?php echo $this->baseUrl(); ?>/public/img/ajax.gif"></center>');
+                                jqAjaxLinkSemLoading('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/transformar-proposta-em-projeto?idPreProjeto=' + idPreProjeto, '', 'modalTransformarProposta');
+                                $("#modalTransformarProposta").dialog({
+                                    buttons: {
+                                        "OK": function () {
+                                            $(this).dialog('close'); // fecha a modal
+                                            window.location = "";
+                                        }
+                                    }
+                                });
                             }
-                            ?>
+                        }
+                    });
+                    return false;
+                }
+            </script>
+            <form action="<?php echo $this->urlResumo; ?>" method="post" name="frmResumo" id="frmResumo">
+                <input type="hidden" name="Inicial" value="<?php echo count($this->propostasInicial); ?>"/>
+                <input type="hidden" name="Visual" value="<?php echo count($this->propostasVisual); ?>"/>
+                <input type="hidden" name="Documental" value="<?php echo count($this->propostasDocumental); ?>"/>
+                <input type="hidden" name="Final" value="<?php echo count($this->propostasFinal); ?>"/>
+            </form>
+            <form method="POST" id="formGerarPdf" name="formGerarPdf"
+                  action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'gerarpdf')); ?>"
+                  target="gerarPDF" style="display:none">
+                <textarea name="html" id="conteudoImprimir"></textarea>
 
-                            <tr>
-                                <td>
-                                    <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>"><?php echo $propostaFinal->idProjeto; ?></a>
-                                </td>
-                                <td><?php echo $propostaFinal->NomeProposta; ?></td>
-                                <td><?php echo str_replace(" ", " as ", data::dataBrasileira($propostaFinal->DtAdmissibilidade)); ?></td>
-                                <td align="center" <?php echo $cor ?> > <?php echo $propostaFinal->diasCorridos; ?></td>
-                                <td align="center"> <?php echo ($propostaFinal->diasDiligencia) ? $propostaFinal->diasDiligencia : 0; ?></td>
-                                <td align="center"> <?php echo ($propostaFinal->diasRespostaDiligencia) ? $propostaFinal->diasRespostaDiligencia : 0; ?></td>
-
-                                <td align="center">
-
-                                    <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaFinal->idAgente; ?>">
-                                        <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png"
-                                             title="Vizualizar outras Propostas deste Proponente"
-                                             alt="Vizualizar outras Propostas deste Proponente"/>
-                                    </a>
-                                </td>
-                                <td><?php echo $propostaFinal->Tecnico; ?></td>
-                                <td align="center">
-                                    <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>&realizar_analise=sim">
-                                        <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/eye.png"
-                                             title="Fazer An�lise Visual da Proposta"
-                                             alt="Fazer An�lise Visual da Proposta"/>
-                                    </a>
-                                </td>
-                                <td align="center">
-                                    <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/transformar.png"
-                                         title="Transformar Proposta em Projeto" alt="Transformar Proposta em Projeto"
-                                         style="cursor: pointer"
-                                         onclick="transformarProposta(<?php echo $propostaFinal->idProjeto; ?>, 'IBRAN')"/>
-                                </td>
-                                <td align="center">
-                                    <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/confirmararquivarproposta?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
-                                        <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/archive.png"
-                                             title="Arquivar Proposta" alt="Arquivar Proposta"/>
-                                    </a>
-                                </td>
-                                <td align="center">
-                                    <input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" "
-                                           onclick="window.open('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>');"/>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                        </tbody>
-                    </table>
-            <?php endif; ?>
-        <?php if ($ctPropostasGeral == 0): ?>
-            <table class="tabela">
-                <tr class="destacar">
-                    <th align="center">Nenhum registro encontrado</th>
+            <table>
+                <tr>
+                    <td align="center">
+                        <input type="button" style="width: 88px" class="btn_localizar" id="btn_localizar"
+                               onclick="window.location.href='<?php echo $this->formularioLocalizar; ?>';"/>
+                        <input type="button" name="imprimir" class="btn_imprimir"
+                               onclick='$("#conteudoImprimir").val($(".conteudoImprimivel").html()); $("#formGerarPdf").submit();'>
+                        <input type="button" style="width: 88px" class="btn_resumo" id="btn_resumo"
+                               onclick="$('#frmResumo').submit();"/>
+                    </td>
                 </tr>
             </table>
-        <?php endif; ?>
+                <!-- ============ ANALISE Unificada  ============== -->
+                <table  id="tabelaAnaliseFinal">
+                <?php if (!empty($this->propostas)): ?>
+                            <thead>
+                                <tr>
+                                    <th style="cursor:pointer" title="Clique aqui para ordenar">N&uacute;mero</th>
+                                    <th style="cursor:pointer" title="Clique aqui para ordenar">Nome</th>
+                                    <th>Data/Hora</th>
+                                    <th>Dias</th>
+                                    <th>Dias de Dilig&ecirc;ncia</th>
+                                    <th>Dias de Resposta de Dilig&ecirc;ncia</th>
+                                    <th>Outras</th>
+                                    <th>T&eacute;cnico</th>
+                                    <th>Visual</th>
+                                    <th>Projeto</th>
+                                    <th>Arquivar</th>
+                                    <th>Imprimir</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($this->propostas as $propostaFinal): $ctPropostasGeral++; ?>
+                                <?php
+                                if ($propostaFinal->diasCorridos < 11) {
+                                    $cor = 'style = "color: #228B22"';
+                                } else if ($propostaFinal->diasCorridos > 10 && $propostaFinal->diasCorridos < 21) {
+                                    $cor = 'style = "color: #FFD700"';
+                                } else {
+                                    $cor = 'style = "color: #FF0000"';
+                                }
+                                ?>
+                                <tr>
+                                    <td>
+                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>"><?php echo $propostaFinal->idProjeto; ?></a>
+                                    </td>
+                                    <td><?php echo $propostaFinal->NomeProposta; ?></td>
+                                    <td><?php echo str_replace(" ", " as ", data::dataBrasileira($propostaFinal->DtAdmissibilidade)); ?></td>
+                                    <td align="center" <?php echo $cor ?> > <?php echo $propostaFinal->diasCorridos; ?></td>
+                                    <td align="center"> <?php echo ($propostaFinal->diasDiligencia) ? $propostaFinal->diasDiligencia : 0; ?></td>
+                                    <td align="center"> <?php echo ($propostaFinal->diasRespostaDiligencia) ? $propostaFinal->diasRespostaDiligencia : 0; ?></td>
+                                    <td>
+
+                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/proposta-por-proponente?agente=<?php echo $propostaFinal->idAgente; ?>">
+                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/kdict.png"
+                                                 title="Vizualizar outras Propostas deste Proponente"
+                                                 alt="Vizualizar outras Propostas deste Proponente"/>
+                                        </a>
+                                    </td>
+                                    <td><?php echo $propostaFinal->Tecnico; ?></td>
+                                    <td align="center">
+                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>&realizar_analise=sim">
+                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/eye.png"
+                                                 title="Fazer An�lise Visual da Proposta"
+                                                 alt="Fazer An�lise Visual da Proposta"/>
+                                        </a>
+                                    </td>
+                                    <td align="center">
+                                        <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/transformar.png"
+                                             title="Transformar Proposta em Projeto" alt="Transformar Proposta em Projeto"
+                                             style="cursor: pointer"
+                                             onclick="transformarProposta(<?php echo $propostaFinal->idProjeto; ?>, 'IBRAN')"/>
+                                    </td>
+                                    <td align="center">
+                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/confirmararquivarproposta?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
+                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/archive.png"
+                                                 title="Arquivar Proposta" alt="Arquivar Proposta"/>
+                                        </a>
+                                    </td>
+                                    <td align="center">
+                                        <input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" "
+                                               onclick="window.open('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>');"/>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php endif; ?>
+                    <?php if ($ctPropostasGeral == 0): ?>
+                        <th >Nenhum registro encontrado</th>
+                    <?php endif; ?>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
 </div>
 
 <div id="modalTransformarProposta" style="display:none;"></div>
