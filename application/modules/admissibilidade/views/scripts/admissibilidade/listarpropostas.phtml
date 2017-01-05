@@ -133,18 +133,30 @@
                                                  alt="Fazer An�lise Visual da Proposta"/>
                                         </a>
                                     </td>
-                                    <td align="center">
-                                        <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/transformar.png"
-                                             title="Transformar Proposta em Projeto" alt="Transformar Proposta em Projeto"
-                                             style="cursor: pointer"
-                                             onclick="transformarProposta(<?php echo $propostaFinal->idProjeto; ?>, 'IBRAN')"/>
-                                    </td>
-                                    <td align="center">
-                                        <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/confirmararquivarproposta?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
-                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/archive.png"
-                                                 title="Arquivar Proposta" alt="Arquivar Proposta"/>
-                                        </a>
-                                    </td>
+                                    <?php if ($propostaFinal->CodSituacao == Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL): ?>
+                                        <td align="center">
+                                            <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/transformar.png"
+                                                 title="Transformar Proposta em Projeto" alt="Transformar Proposta em Projeto"
+                                                 style="cursor: pointer"
+                                                 onclick="transformarProposta(<?php echo $propostaFinal->idProjeto; ?>, 'IBRAN')"/>
+                                        </td>
+                                    <?php else: ?>
+                                        <td align="center">
+                                            -
+                                        </td>
+                                    <?php endif ?>
+                                    <?php if ($propostaFinal->CodSituacao == Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL): ?>
+                                        <td align="center">
+                                            <a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/confirmararquivarproposta?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>">
+                                                <img src="<?php echo $this->baseUrl(); ?>/public/img/ico/archive.png"
+                                                     title="Arquivar Proposta" alt="Arquivar Proposta"/>
+                                            </a>
+                                        </td>
+                                    <?php else: ?>
+                                        <td align="center">
+                                            -
+                                        </td>
+                                    <?php endif ?>
                                     <td align="center">
                                         <input type="button" class="btn_imprimir" title="Imprimir Proposta" value=" "
                                                onclick="window.open('<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/imprimirpropostacultural?idPreProjeto=<?php echo $propostaFinal->idProjeto; ?>');"/>
