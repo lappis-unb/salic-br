@@ -1,14 +1,11 @@
+<div class="container-fluid">
+    <div class="row">
 <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
-<div id="breadcrumb">
-    <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-        <li class="second">Admissibilidade</li>
-        <li class="last">Admissibilidade de propostas - Lista de propostas em analise final</li>
-    </ul>
-</div>
-<div id="titulo">
-    <div>Admissibilidade de propostas - Lista de propostas em analise final <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span></div>
-</div>
+<div class="col s9">
+    <h4>
+        Lista de propostas em an&aacute;lise final
+    </h4>
+
 <style type="text/css">
 <!--
 .mensagem {
@@ -25,7 +22,7 @@ $(document).ready(function(){
 });
 
 /*
- * Fun¿¿o respons¿vel pela exibi¿¿o ou ocultamento de conte¿do,
+ * Funï¿½ï¿½o responsï¿½vel pela exibiï¿½ï¿½o ou ocultamento de conteï¿½do,
  * mudando a imagem.
  **/
 function abrirDinamico(elemento, obj) {
@@ -67,13 +64,13 @@ function toogleAjax(id, url){
 <form action="<?php echo $this->urlPDF; ?>" name="frmPDF" id="frmPDF" method="post" style="display: none;">
     <textarea name="htmlpdf" id="htmlpdf"></textarea>
 </form>
-<div id="conteudo">
+<div>
 <form action="<?php echo $this->urlResumo; ?>" method="post" name="frmResumo" id="frmResumo">
     <div id="conteudoImprimivel">
     <table class="tabela">
         <tr>
             <th>
-                Proposta em análise final
+                Proposta em an&aacute;lise final
             </th>
         </tr>
         <?php $ultimoRegistro = null; $ct = 1; ?>
@@ -93,13 +90,13 @@ function toogleAjax(id, url){
                     <tr>
                         <th width="10%">Nr. Proposta</th>
                         <th width="75%">Nome da Proposta</th>
-                        <th width="15%">Dt. Movimentação</th>
+                        <th width="15%">Dt. Movimenta&ccedil;&atilde;o</th>
                     </tr>
                     <?php foreach($propostas as $proposta): ?>
                     <tr>
                         <td class="centro"><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idPreProjeto; ?>" title="Abrir proposta"><?php echo $proposta->idPreProjeto; ?></a></td>
                         <td><?php echo $proposta->NomeProjeto; ?></td>
-                        <td class="centro"><?php echo str_replace(" ", " às ", data::dataBrasileira($proposta->DtMovimentacao)); ?></td>
+                        <td class="centro"><?php echo str_replace(" ", " &agrave;s ", data::dataBrasileira($proposta->DtMovimentacao)); ?></td>
                     </tr>
                     <?php endforeach; ?>
                 </table>
@@ -125,7 +122,6 @@ function toogleAjax(id, url){
 </form>
 </div>
 <!-- ========== FIM CONTEUDO ========== -->
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
-<div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
-<br clear="all" />
+</div>
+    </div>
+</div>

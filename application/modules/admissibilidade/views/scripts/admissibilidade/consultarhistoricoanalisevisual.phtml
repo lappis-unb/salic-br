@@ -1,16 +1,13 @@
+<div class="container-fluid">
+    <div class="row">
 <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
+        <div class="col s9">
 <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/public/js/ckeditor/_samples/sample.js"></script>
-<div id="breadcrumb">
-    <ul>
-        <li class="first"><a href="<?php echo $this->url(array('controller' => 'principal', 'action' => '')); ?>" title="Ir para In&iacute;cio">In&iacute;cio</a></li>
-        <li class="second">Admissibilidade</li>
-        <li class="last">Admissibilidade de Propostas - Consultar Historico de Analise Visual</li>
-    </ul>
-</div>
-<div id="titulo">
-    <div>Admissibilidade de propostas - Consultar historico de analise visual <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span></div>
-</div>
+
+<h4>
+    Consultar hist&oacute;rico de an&aacute;lise visual
+</h4>
 
 <script type="text/javascript">
 <!--
@@ -96,16 +93,16 @@ function JsTrataDatas(){
     }
 //-->
 </script>
-<div id="conteudo">
+<div>
     <form name="frmBuscaHistorico" id="frmBuscaHistorico" action="<?php echo $this->urlForm; ?>" method="get" onsubmit="">
         <input type="hidden" name="busca" value="1"/>
-    <table class="tabela">
+    <table>
         <tr>
-            <th colspan="2">Historico de Analise Visual</th>
+            <th colspan="2">11Hist&oacute;rico de An&aacute;lise Visual</th>
         </tr>
         <tr>
             <td>
-                Técnico:
+                T&eacute;cnico:
             </td>
             <td>
                 <select class="select_simples required_group" name="tecnico" id="tecnico">
@@ -132,7 +129,7 @@ function JsTrataDatas(){
         </tr>
         <tr>
             <td>
-                Situação:
+                Situa&ccedil;&atilde;o:
             </td>
             <td>
                 <input type="hidden" name="situacaoAUX" id="situacaoAUX" value="" style="display: none;" />
@@ -154,5 +151,7 @@ function JsTrataDatas(){
     </form>
 <div id="lblMsg" align="center"></div>
 </div>
-<div id="rodapeConteudo"><span></span></div>
-<br clear="all" />
+</div>
+    </div>
+</div>
+

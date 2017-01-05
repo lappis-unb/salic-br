@@ -9,33 +9,12 @@
         <?php endif; ?>
 
         $('.soma').keyup(function () {
-            var soma = 0;
-            var vlunitario = $("#vlunitario").val();
-
-            // retira os pontos e as virgulas, deixando somente numeros
-            vlunitario = vlunitario.replace(/\D/g, "");
-            vlunitario = vlunitario.replace(/(\d{0})(\d)/, "$1$2");
-
-            // adiciona o ponto na casa decimal
-            vlunitario = vlunitario.replace(/(\d)(\d{2})$/, "$1.$2");
-
-            // converte para float e adiciona precisao decimal
-            qtd = parseFloat($("#qtd").val()).toFixed(2);
-            ocorrencia = parseFloat($("#ocorrencia").val()).toFixed(2);
-            valor = parseFloat(vlunitario).toFixed(2);
-            soma = parseFloat(qtd * ocorrencia * valor).toFixed(2); // armazena o resultado
-            if (soma >= 0) {
-                $("#total").val(soma);
-            } else {
-                $("#total").val(0);
-            }
-            $("#total").priceFormat();
+            somaValores();
         });
 
-//
-//        if ( $('#item').val() != '') {
-//            somaValores();
-//        }
+        if ( $('#planilhaitem').val() != '') {
+            somaValores();
+        }
 
         $('.numero').keydown(function (event) {
             if ((event.keyCode >= 96 && event.keyCode <= 105) || (event.keyCode >= 48 && event.keyCode <= 57) || event.keyCode == 8 || event.keyCode == 9) {
@@ -60,12 +39,28 @@
     });
 
     function somaValores(){
+
         var soma = 0;
-        var vlunitario = $("#vlunitario").val().replace('R$','');
-        var vlunitario = $.trim(vlunitario.replace(',','.'));
-        soma = $("#qtd").val()*$("#ocorrencia").val() * vlunitario;
-        soma = soma.toFixed(2).replace('.',',');
-        $("#total").val(soma);
+        var vlunitario = $("#vlunitario").val();
+
+        // retira os pontos e as virgulas, deixando somente numeros
+        vlunitario = vlunitario.replace(/\D/g, "");
+        vlunitario = vlunitario.replace(/(\d{0})(\d)/, "$1$2");
+
+        // adiciona o ponto na casa decimal
+        vlunitario = vlunitario.replace(/(\d)(\d{2})$/, "$1.$2");
+
+        // converte para float e adiciona precisao decimal
+        qtd = parseFloat($("#qtd").val()).toFixed(2);
+        ocorrencia = parseFloat($("#ocorrencia").val()).toFixed(2);
+        valor = parseFloat(vlunitario).toFixed(2);
+        soma = parseFloat(qtd * ocorrencia * valor).toFixed(2); // armazena o resultado
+        if (soma >= 0) {
+            $("#total").val(soma);
+        } else {
+            $("#total").val(0);
+        }
+        $("#total").priceFormat();
     }
 
     function Limpar(valor, validos) {
@@ -119,9 +114,12 @@
 <div class="container">
     <div class="row">
         <div class="col s12">
-
-            <h6 class="light" >Cadastrar novo item <span class="badge" data-badge-caption="Etapa: <?php echo $this->Etapa['Descricao']; ?> - Local de realizacao: <?php echo $this->Municipio['Descricao']; ?> - <?php echo $this->Estado['Descricao']; ?>"></span></h6>
-
+            <div class="section">
+                <h5>Cadastrar novo item
+                    <span class="badge" data-badge-caption="">Etapa: <?php echo $this->Etapa['Descricao']; ?> - Local de realizacao: <?php echo $this->Municipio['Descricao']; ?> - <?php echo $this->Estado['Descricao']; ?></span>
+                </h5>
+            </div>
+            
             <?php foreach ($this->Dados as $dados) : ?>
                 <form name="form" id="form" method="post" action ="<?php echo $this->url(array('module'=>'proposta', 'controller' => 'manterorcamento', 'action' => 'salvaritem')); ?>">
                     <input type="hidden" name="produto" id="produto" value="<?php echo $dados->CodigoProduto ?>" />
@@ -131,87 +129,83 @@
                     <input type="hidden" name="municipio" id="municipio" value="<?php echo $this->Municipio['idMunicipioIBGE'] ?>" />
                     <input type="hidden" name="idPlanilhaEtapa" id="idPlanilhaEtapa" value="<?php echo $this->Etapa['idPlanilhaEtapa'] ?>" />
 
-
                     <div class="row">
-                        <div class="col s12">
-                            <table style="margin-top: 0px;">
-                                <thead>
-                                <tr>
-                                    <th><label for="item">Item</label></th>
-                                    <th><label for="unidade">Unidade</label></th>
-                                    <th><label for="qtdDias">Qtd de dias</label></th>
-                                    <th><label for="qtd">Quantidade</label></th>
-                                    <th><label for="ocorrencia">Ocorr&ecirc;ncia</label></th>
-                                    <th><label for="vlunitario">Valor Unit&aacute;rio (R$)</th>
-                                    <th><label for="total">Total (R$)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <select class="select_simples valida" id="item" name="item" style="width: 80%">
-                                            <option> - Selecione um item - </option>
-                                            <?php foreach($this->Item as $itens) : ?>
-                                                <option value="<?php echo $itens->idPlanilhaItens ?>" <?php echo $dados->idItem == $itens->idPlanilhaItens ? "selected" : ""; ?>><?php echo $itens->Descricao ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="select_simples valida" id="unidade" name="unidade">
-                                            <option value="<?php echo "" ?>"> - Selecione - </option>
-                                            <?php foreach($this->Unidade as $unidade) {?>
-                                                <option value="<?php echo $unidade->idUnidade ?>" <?php echo ($dados->Unidade == $unidade->idUnidade) ? "selected" : ""; ?>><?php echo $unidade->Descricao ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="text" maxlength="4" class="input_simples valida numero" size="4" value="<?php echo isset($dados->QtdDias) ? $dados->QtdDias: ''; ?>" name='qtdDias' id='qtdDias' />
-                                    </td>
-                                    <td>
-                                        <input type="text" class="input_simples valida soma numero" size="3" id="qtd" maxlength="10" name="qtd" value="<?php echo isset($dados->Quantidade) ? (int) $dados->Quantidade : ''; ?>">
-                                    </td>
-                                    <td>
-                                        <input type="text" maxlength="4" class="input_simples valida soma numero" size="3" id="ocorrencia" maxlength="10" name="ocorrencia" value="<?php echo isset($dados->Ocorrencia) ? (int) $dados->Ocorrencia : ''; ?>">
-                                    </td>
-                                    <td>
-                                        <input type="text" maxlength="13" class="input_simples valida soma numero" size="10" id="vlunitario" name="vlunitario" value="<?php echo isset($dados->ValorUnitario) ? number_format($dados->ValorUnitario, 2, ",", ".") : '';?>">
-                                    </td>
-                                    <td>
-                                        <input type="text" value="" maxlength="6" class="input_simples valida" size="15" name="total" id="total" readonly="readonly">
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table style="margin: 0px;">
-                                <tr>
-                                    <td align="left"><label for="uf">Fonte de recurso:</label> <br />
-                                        <select class="select_simples valida" id="fonterecurso" name="fonterecurso">
-                                            <?php foreach($this->Recurso as $recurso) {?>
-                                                <option <?php echo ($recurso->idverificacao == 109) ? 'selected' : ''; ?>  value="<?php echo $recurso->idverificacao ?>"><?php echo $recurso->verificacaodescricao ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="justify">
-                                        <label for="edito1">Detalhamento / Justificativa / Observa&ccedil;&otilde;es</label>
-                                        <textarea cols="80" id="editor1" name="editor1" rows="7" class="textarea_simples"><?php echo $dados->Justificativa; ?></textarea>
-                                    </td>
-                                </tr>
-                            </table>
+                        <div class="col s3">
+                            <label for="planilhaitem">Item</label>
+                            <select class="valida browser-default" id="planilhaitem" name="planilhaitem">
+                                <option disabled selected> - Selecione - </option>
+                                <?php foreach($this->Item as $itens) : ?>
+                                    <option value="<?php echo $itens->idPlanilhaItens ?>" <?php echo $dados->idItem == $itens->idPlanilhaItens ? "selected" : ""; ?>><?php echo $itens->Descricao ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
+
+                        <div class="col s3">
+                            <label for="unidade">Unidade</label>
+                            <select class="valida browser-default" id="unidade" name="unidade">
+                                <option disabled selected> - Selecione - </option>
+                                <?php foreach($this->Unidade as $unidade) : ?>
+                                    <option value="<?php echo $unidade->idUnidade ?>" <?php echo ($dados->Unidade == $unidade->idUnidade) ? "selected" : ""; ?>><?php echo $unidade->Descricao ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="input-field col s1">
+                            <input placeholder="0" type="text" maxlength="4" class="valida numero" size="4" value="<?php echo isset($dados->QtdDias) ? $dados->QtdDias: ''; ?>" name='qtdDias' id='qtdDias' />
+                            <label for="qtdDias">Qtd de dias</label>
+                        </div>
+
+                        <div class="input-field col s1">
+                            <input placeholder="0" type="text" class="valida soma numero" size="3" id="qtd" maxlength="10" name="qtd" value="<?php echo isset($dados->Quantidade) ? (int) $dados->Quantidade : ''; ?>">
+                            <label for="qtd">Quantidade</label>
+                        </div>
+
+                        <div class="input-field col s1">
+                            <input placeholder="0" type="text" maxlength="4" class="valida soma numero" size="3" id="ocorrencia" maxlength="10" name="ocorrencia" value="<?php echo isset($dados->Ocorrencia) ? (int) $dados->Ocorrencia : ''; ?>">
+                            <label for="ocorrencia">Ocorr&ecirc;ncia</label>
+                        </div>
+                        <div class="input-field col s2">
+                            <input placeholder="0" type="text" maxlength="13" class="valida soma numero" size="10" id="vlunitario" name="vlunitario" value="<?php echo isset($dados->ValorUnitario) ? number_format($dados->ValorUnitario, 2, ",", ".") : '';?>">
+                            <label for="vlunitario">Valor Unit&aacute;rio (R$)</label>
+                        </div>
+                        <div class="input-field col s1">
+                            <input placeholder="0" type="text" value="" maxlength="6" class="valida disabled" size="15" name="total" id="total" readonly="readonly">
+                            <label for="total">Total (R$)</label>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col s4">
+                            <label for="fonterecurso">Fonte de recurso</label><br><br><br>
+                            <select class="valida browser-default" id="fonterecurso" name="fonterecurso">
+                                <?php foreach($this->Recurso as $recurso) {?>
+                                    <option <?php echo ($recurso->idverificacao == 109) ? 'selected' : ''; ?>  value="<?php echo $recurso->idverificacao ?>"><?php echo $recurso->verificacaodescricao ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+
+                        <div class="input-field col s8">
+                            <textarea cols="80" id="editor1" name="editor1" rows="7" class="materialize-textarea" placeholder=" "><?php echo $dados->Justificativa; ?></textarea>
+                            <label for="edito1">Detalhamento / Justificativa / Observa&ccedil;&otilde;es</label>
+                        </div>
+
                     </div>
 
-                    <table class="tabela" cellpadding="0" cellspacing="0">
-                        <tr>
-                            <td align="center">
-                                <input type="button" class="btn_salvar" />
-                            </td>
-                        </tr>
-                    </table>
-
+                    <div class="row">
+                        <div class="input-field col s12 center-align">
+                            <a href="javascript:void(0);" class="btn-salvar btn waves-effect waves-light" name="action">Salvar
+                                <i class="material-icons right">send</i>
+                            </a>
+                        </div>
+                    </div>
                 </form>
             <?php endforeach;?>
         </div>
     </div>
 </div>
+
+<script>
+    $3(document).ready(function(){
+        $3('.modal').find('select').material_select();
+    });
+</script>

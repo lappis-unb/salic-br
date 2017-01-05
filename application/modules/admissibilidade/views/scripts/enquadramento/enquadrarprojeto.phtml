@@ -5,25 +5,29 @@
     <nav class="breadcrumb">
         <div class="nav-wrapper" style="padding: 0 15px 0 15px">
             <div class="col s12">
-
                 <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'gerenciarparecer', 'action' => 'index'), null, true); ?>"
                    class="breadcrumb tooltipped"
                    data-position="top"
                    data-delay="50"
                    data-tooltip="Ir para In&iacute;cio">In&iacute;cio</a>
 
-                <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'gerenciarparecer', 'action' => 'listaprojetos'), null, true); ?>"
-                   class="breadcrumb tooltipped"
-                   data-position="top"
-                   data-delay="50"
-                   data-tooltip="Localizar Parecer">Gerenciar Parecer</a>
-
                 <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'gerenciar-enquadramento'), null, true); ?>"
                    class="breadcrumb tooltipped"
                    data-position="top"
                    data-delay="50"
-                   data-tooltip="Gerenciar Enquadramentos">Gerenciar Enquadramentos</a>
+                   data-tooltip="Gerenciar Enquadramento">Gerenciar Enquadramento</a>
 
+                <a href="#"
+                   class="breadcrumb tooltipped"
+                   data-position="top"
+                   data-delay="50"
+                   data-tooltip="Enquadrar Projeto">Enquadrar Projeto</a>
+
+                <a href="#"
+                   class="breadcrumb tooltipped"
+                   data-position="top"
+                   data-delay="50"
+                   data-tooltip="<?php echo $this->projeto['AnoProjeto'] . $this->projeto['Sequencial'] ?>"><?php echo "({$this->projeto['AnoProjeto']}{$this->projeto['Sequencial']}) {$this->projeto['NomeProjeto']}"; ?></a>
             </div>
         </div>
     </nav>
@@ -32,7 +36,6 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <h4>Enquadrar Projeto</h4>
                 <form method="post"
                       class="materialize"
                       id="formEnquadramentoProjeto"
@@ -41,8 +44,8 @@
                     <table class=" gerenciar_pareceres">
                         <tr>
                             <td valign="top" colspan="2">
-                                <div class="input-field">
-                                    <select name="areaCultural" id="areaCultural"
+                                <div class="input-field col s12 m6">
+                                    <select id="areaCultural" disabled="disabled"
                                             style="width: 160px;">
                                         <option value=""> - Selecione -</option>
                                         <?php foreach ($this->comboareasculturais as $key => $value) { ?>
@@ -51,9 +54,10 @@
                                         <?php } ?>
                                     </select>
                                     <label>&Aacute;rea Cultural</label>
+                                    <input name="areaCultural" type="hidden" value="<?php echo $this->projeto['Area']?>" />
                                     &nbsp; <span id="erroAreaCultural" class="spanError"></span>
                                 </div>
-                                <div class="input-field">
+                                <div class="input-field col s12 m6">
                                     <select name="segmentoCultural" id="segmentoCultural">
                                         <?php if (!isset($this->projeto['Area']) || empty($this->projeto['Area'])) { ?>
                                             <option value=""> - Selecione uma &Aacute;rea Cultural -</option>
@@ -66,9 +70,7 @@
                                             <?php foreach ($this->combosegmentosculturais as $combosegmentocultural) { ?>
                                                 <option
                                                     data-tp_enquadramento="<?php echo $combosegmentocultural->tp_enquadramento; ?>"
-                                                    value="<?php echo $combosegmentocultural->id; ?>" <?php if ($this->projeto['Segmento'] == $combosegmentocultural->id) echo "selected=\"selected\""; ?>>
-                                                    <?php echo $combosegmentocultural->descricao; ?>
-                                                </option>
+                                                    value="<?php echo $combosegmentocultural->id; ?>" <?php if ($this->projeto['Segmento'] == $combosegmentocultural->id) echo "selected=\"selected\""; ?>><?php echo $combosegmentocultural->descricao; ?></option>
                                             <?php } ?>
                                         <?php } ?>
                                     </select>
@@ -117,7 +119,7 @@
                                 Cancelar
                             </a>
                             <button class="btn waves-effect waves-light" type="submit" name="action">
-                                Enviar <i class="material-icons right">send</i>
+                                Salvar <i class="material-icons right">send</i>
                             </button>
                         </td>
                     </table>
