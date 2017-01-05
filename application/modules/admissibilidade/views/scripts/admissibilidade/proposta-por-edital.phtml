@@ -1,20 +1,16 @@
+<div class="container-fluid">
+    <div class="row">
 <?php
 if(!$this->menu){
     echo $this->partial("admissibilidade/inc/menu.inc.php");
 }
 $IncluirAvaliacao                 = $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'incluiravaliacao'));
 ?>
-<div id="titulo">
-    <div><?php if(!$this->tituloTopo){?>Admissibilidade de propostas - Proposta cultural<?php } else { echo $this->tituloTopo;} ?>
-        <span class="voltar">
-            <?php if(isset($_GET['gravado']) && $_GET["gravado"]=="sim" ) :?>
-                <a href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'listar-propostas'))."?idPreProjeto=".$this->idPreProjeto; ?>"/>Voltar</a>
-           <?php else: ?>
-                <a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a>
-            <?php endif; ?>
-        </span>
-    </div>
-</div>
+        <div class="col s9">
+<h4>
+    Admissibilidade de propostas - Proposta cultural
+</h4>
+
 <style type="text/css">
 .mensagem {
     padding: 8px;
@@ -97,7 +93,7 @@ $IncluirAvaliacao                 = $this->url(array('module' => 'admissibilidad
             }
     }
 </script>
-<div id="conteudo">
+<div>
 <form method="get" id="formGerarPdf" target="_blank" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'imprimirpropostacultural')); ?>" style="display:none">
     <textarea name="html" id="html"></textarea>
     <input type="hidden" name="idPreProjeto" id="idPreProjeto" value="<?php echo $this->idPreProjeto; ?>" />
@@ -135,16 +131,16 @@ $IncluirAvaliacao                 = $this->url(array('module' => 'admissibilidad
                 <div id="proponente">
                 <table class="tabela">
                     <tr>
-                        <td class="red bold destacar" style="font-size: 14px;">Edital - <?php echo $this->nmEdital; ?></td>
+                        <td class="bold destacar" style="font-size: 14px;color:red">Edital - <?php echo $this->nmEdital; ?></td>
                     </tr>
                 </table>
                 <fieldset>
                     <legend>Identifica&ccedil;&atilde;o</legend>
                     <table class="tabela">
                         <tr>
-                            <td width="10%" class="esquerda destacar"><b>CNPJ / CPF</b></td>
+                            <td width="10%" class="esquerda"><b>CNPJ / CPF</b></td>
                             <td class="esquerda"><?php echo (strlen($this->itensGeral[0]->CNPJCPF) > 11)?aplicaMascara($this->itensGeral[0]->CNPJCPF, "99.999.999/9999-99"):  aplicaMascara($this->itensGeral[0]->CNPJCPF, "999.999.999-99") ?></td>
-                            <td width="10%" class="esquerda destacar"><b>Proponente</b></td>
+                            <td width="10%" class="esquerda"><b>Proponente</b></td>
                             <td class="esquerda"><?php echo $this->itensGeral[0]->NomeAgente ?></td>
                         </tr>
                     </table>
@@ -153,10 +149,10 @@ $IncluirAvaliacao                 = $this->url(array('module' => 'admissibilidad
                     <legend>Endere&ccedil;o</legend>
                     <table class="tabela">
                         <tr class="destacar">
-                            <td width="10%" nowrap class="centro"><b>Tipo de Endere�o</b></td>
+                            <td width="10%" nowrap class="centro"><b>Tipo de Endere&ccedil;o</b></td>
                             <td width="10%" nowrap class="centro"><b>Tipo do Logradouro</b></td>
                             <td width="20%" class="centro"><b>Logradouro</b></td>
-                            <td class="centro"><b>N�mero</b></td>
+                            <td class="centro"><b>N&uacute;mero</b></td>
                             <td class="centro"><b>Complemento</b></td>
                             <td class="centro"><b>Bairro</b></td>
                             <td class="centro"><b>Cidade</b></td>
@@ -192,7 +188,7 @@ $IncluirAvaliacao                 = $this->url(array('module' => 'admissibilidad
                             <td width="10%"><b>Tipo</b></td>
                             <td><b>UF</b></td>
                             <td><b>DDD</b></td>
-                            <td><b>N�mero</b></td>
+                            <td><b>N&uacute;mero</b></td>
                             <td><b>Divulgar</b></td>
                         </tr>
                         <?php if(is_array($this->itensTelefone) and count($this->itensTelefone)>0){
@@ -317,9 +313,9 @@ $IncluirAvaliacao                 = $this->url(array('module' => 'admissibilidad
                     <legend>Usu&aacute;rio SalicWEB</legend>
                     <table class="tabela">
                         <tr>
-                            <td width="10%" class="esquerda destacar"><b>CPF</b></td>
+                            <td width="10%" class="esquerda"><b>CPF</b></td>
                             <td width="40%" class="esquerda"><?php echo aplicaMascara($this->itensGeral[0]->Cpf, "999.999.999-99"); ?></td>
-                            <td width="10%" class="esquerda destacar"><b>Nome</b></td>
+                            <td width="10%" class="esquerda"><b>Nome</b></td>
                             <td width="40%" class="esquerda"><?php echo $this->itensGeral[0]->nomeUsuario ?></td>
                         </tr>
                     </table>
@@ -342,22 +338,22 @@ $IncluirAvaliacao                 = $this->url(array('module' => 'admissibilidad
                     <table class="tabela">
                         <tr>
                         <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
-                            <td width="10%" class="destacar"><b>N&ordm; da Proposta</b></td>
+                            <td width="10%"><b>N&ordm; da Proposta</b></td>
                             <td><?php echo $this->itensGeral[0]->idPreProjeto ?></td>
-                            <td width="10%" nowrap class="destacar"><b>T&iacute;tulo da Proposta</b></td>
+                            <td width="10%" nowrap><b>T&iacute;tulo da Proposta</b></td>
                             <td><?php echo $this->itensGeral[0]->NomeProjeto ?></td>
                         <?php } ?>
                         </tr>
                     </table>
                 </fieldset>
                 <fieldset>
-                    <legend>Informa�&otilde;es Complementares</legend>
+                    <legend>Informa&ccedil;&otilde;es Complementares</legend>
                     <table class="tabela">
                         <tr class="destacar">
                             <td><b>&Eacute; proposta de audiovisual?</b></td>
                             <td><b>Mecanismo</b></td>
                             <td><b>Ag&ecirc;ncia Banc&aacute;ria</b></td>
-                            <td><b>Dt. In&iacute;cio Execu�&atilde;o</b></td>
+                            <td><b>Dt. In&iacute;cio Execu&ccedil;&atilde;o</b></td>
                             <td><b>Dt. Final Execu&ccedil;&atilde;o</b></td>
                             <td><b>Dt. Fixa</b></td>
                             <td><b>Plano Atual</b></td>
@@ -376,7 +372,7 @@ $IncluirAvaliacao                 = $this->url(array('module' => 'admissibilidad
                     </table>
                 </fieldset>
                 <fieldset>
-                    <legend>Informa�&otilde;es sobre tombamento</legend>
+                    <legend>Informa&ccedil;&otilde;es sobre tombamento</legend>
                     <table class="tabela">
                         <tr class="destacar">
                             <td><b>N&ordm; Ato Tombamento</b></td>
@@ -573,7 +569,7 @@ $IncluirAvaliacao                 = $this->url(array('module' => 'admissibilidad
         <tr onclick="abrirDinamico('#historicoAvaliacoes', $(this))" style="cursor:pointer">
             <th>
                 <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
-                Hist�rico de Avalia&ccedil;&otilde;es
+                Hist&oacute;rico de Avalia&ccedil;&otilde;es
             </th>
         </tr>
         <tr>
@@ -657,7 +653,6 @@ $IncluirAvaliacao                 = $this->url(array('module' => 'admissibilidad
     </table>
 </div>
 <!-- ========== FIM CONTEUDO ========== -->
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
-<div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
-<br clear="all" />
+        </div>
+    </div>
+</div>

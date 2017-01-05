@@ -234,4 +234,12 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             parent::message($objException->getMessage(), '/admissibilidade/enquadramento/encaminhar-portaria');
         }
     }
+   //@TODO TERMINAR DESISTENCIA RECURSAL E FINALIZAR DESISTENCIA RECURSAL 
+    public function desistenciaRecursalAction(){
+        
+    }
+    
+    public function finalizarDesistenciaRecursalAction(){
+       xd('finalizou'); 
+    }
 }
