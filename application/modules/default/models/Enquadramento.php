@@ -165,7 +165,7 @@ class Enquadramento extends MinC_Db_Table_Abstract
         return $this->_db->fetchAll($select);
     }
 
-    public function obterProjetosEnquadrados($order = null, $limit = null)
+    public function obterProjetosEnquadradosParaEncaminhamento($order = null, $limit = null)
     {
         $select = $this->select();
         $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -178,13 +178,14 @@ class Enquadramento extends MinC_Db_Table_Abstract
                 'projetos.IdPRONAC',
                 'projetos.CgcCpf',
                 'projetos.idpronac',
-                'projetos.Area as cdarea',
+                'projetos.Area',
                 'projetos.ResumoProjeto',
                 'projetos.UfProjeto',
                 'projetos.DtInicioExecucao',
                 'projetos.DtFimExecucao',
                 'projetos.Situacao',
-                'projetos.DtSituacao'
+                'projetos.DtSituacao',
+                'dias' => 'DATEDIFF(DAY, projetos.DtSituacao, GETDATE())'
             ),
             $this->_schema
         );

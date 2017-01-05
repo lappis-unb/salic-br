@@ -189,57 +189,65 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         try {
             $get = $this->getRequest()->getParams();
             if (isset($get['IdPRONAC']) || !empty($get['IdPRONAC']) && $get['encaminhar'] == 'true') {
-                $objProjeto = new Projetos();
-                $projeto = $objProjeto->findBy(array('IdPRONAC' => $get['IdPRONAC']));
-
-                if(!$projeto) {
-                    throw new Exception("Projeto n&atilde;o encontrado.");
-                }
-
-                if($projeto['Situacao'] != 'B02' || $projeto['Situacao'] != 'B03') {
-                    throw new Exception("Situa&ccedil;&atilde;o do projeto inv&aacute;lida!");
-                }
-
-                $orgaoDestino = 272;
-                if($projeto['Area'] == 2) {
-                    $orgaoDestino = 166;
-                }
-
-                $auth = Zend_Auth::getInstance();
-                $authIdentity = array_change_key_case((array)$auth->getIdentity());
-                $objProjeto = new Projetos();
-                $arrayDadosProjeto = array(
-                    'Situacao' => 'D27',
-                    'DtSituacao' => $objProjeto->getExpressionDate(),
-                    'ProvidenciaTomada' => 'Projeto encamihado para Portaria.',
-                    'logon' => $authIdentity['usu_codigo'],
-                    'Orgao' => $orgaoDestino
-                );
-
-                $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
-                $objProjeto->update($arrayDadosProjeto, $arrayWhere);
-
-                parent::message('Projeto encaminhado com sucesso.', '/admissibilidade/enquadramento/encaminhar-portaria', 'CONFIRM');
+                $this->encaminharProjetoParaPortaria($get);
             } else {
-                $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
-                $enquadramento = new Enquadramento();
-
-                $this->view->dados = array();
-                $ordenacao = array("projetos.DtSituacao asc");
-                $this->view->dados = $enquadramento->obterProjetosEnquadrados($ordenacao);
-                $this->view->codGrupo = $this->grupoAtivo->codGrupo;
-                $this->view->codOrgao = $this->grupoAtivo->codOrgao;
+                $this->carregarListaEncaminhamentoPortaria();
             }
         } catch (Exception $objException) {
             parent::message($objException->getMessage(), '/admissibilidade/enquadramento/encaminhar-portaria');
         }
     }
-   //@TODO TERMINAR DESISTENCIA RECURSAL E FINALIZAR DESISTENCIA RECURSAL 
-    public function desistenciaRecursalAction(){
-        
+
+    private function encaminharProjetoParaPortaria($get) {
+        $objProjeto = new Projetos();
+        $projeto = $objProjeto->findBy(array('IdPRONAC' => $get['IdPRONAC']));
+
+        if(!$projeto) {
+            throw new Exception("Projeto n&atilde;o encontrado.");
+        }
+
+        if($projeto['Situacao'] != 'B02' || $projeto['Situacao'] != 'B03') {
+            throw new Exception("Situa&ccedil;&atilde;o do projeto inv&aacute;lida!");
+        }
+
+        $orgaoDestino = 272;
+        if($projeto['Area'] == 2) {
+            $orgaoDestino = 166;
+        }
+
+        $auth = Zend_Auth::getInstance();
+        $authIdentity = array_change_key_case((array)$auth->getIdentity());
+        $objProjeto = new Projetos();
+        $arrayDadosProjeto = array(
+            'Situacao' => 'D27',
+            'DtSituacao' => $objProjeto->getExpressionDate(),
+            'ProvidenciaTomada' => 'Projeto encamihado para Portaria.',
+            'logon' => $authIdentity['usu_codigo'],
+            'Orgao' => $orgaoDestino
+        );
+
+        $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
+        $objProjeto->update($arrayDadosProjeto, $arrayWhere);
+
+        parent::message('Projeto encaminhado com sucesso.', '/admissibilidade/enquadramento/encaminhar-portaria', 'CONFIRM');
     }
-    
+
+    private function carregarListaEncaminhamentoPortaria() {
+        $this->view->idUsuarioLogado = $this->auth->getIdentity()->usu_codigo;
+        $enquadramento = new Enquadramento();
+
+        $this->view->dados = array();
+        $ordenacao = array("dias desc");
+        $this->view->dados = $enquadramento->obterProjetosEnquadradosParaEncaminhamento($ordenacao);
+        $this->view->codGrupo = $this->grupoAtivo->codGrupo;
+        $this->view->codOrgao = $this->grupoAtivo->codOrgao;
+    }
+   //@TODO TERMINAR DESISTENCIA RECURSAL E FINALIZAR DESISTENCIA RECURSAL
+    public function desistenciaRecursalAction(){
+
+    }
+
     public function finalizarDesistenciaRecursalAction(){
-       xd('finalizou'); 
+       xd('finalizou');
     }
 }
