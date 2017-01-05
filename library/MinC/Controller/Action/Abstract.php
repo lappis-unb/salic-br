@@ -892,7 +892,7 @@ class MinC_Controller_Action_Abstract extends Zend_Controller_Action
         }
     }
 
-    protected function objectsInArray($objects){
+    protected function objectsToArray($objects){
 
         foreach($objects as $object)
         {

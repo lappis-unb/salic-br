@@ -30,8 +30,8 @@ Cinza escuro: #212121
     .btn,
     .btn-large,
     .btn-floating,
-    .btn_default,
-    .btn_success  {
+    .btn-default,
+    .btn-success  {
         background: #4caf50;
     }
 
@@ -39,37 +39,37 @@ Cinza escuro: #212121
     .btn-large:focus,
     .btn-floating:focus,
     .btn:hover,
-    .btn_default:focus,
+    .btn-default:focus,
     .btn-sucess:focus,
-    .btn_default:hover,
-    .btn_success:hover {
+    .btn-default:hover,
+    .btn-success:hover {
         background: #388e3c;
     }
 
-    .btn_primary {
+    .btn-primary {
         background-color: #29b6f6;
     }
 
-    .btn_primary:focus,
-    .btn_primary:hover {
+    .btn-primary:focus,
+    .btn-primary:hover {
         background: #0277bd;
     }
 
-    .btn_danger {
+    .btn-danger {
         background: #FF8A80;
     }
 
-    .btn_danger:focus,
-    .btn_danger:hover {
+    .btn-danger:focus,
+    .btn-danger:hover {
         background: #ff5252;
 
     }
 
-    .btn_warning {
+    .btn-warning {
 
     }
 
-    .btn_success {
+    .btn-success {
 
     }
 
@@ -86,13 +86,6 @@ Cinza escuro: #212121
         box-shadow: 0px 4px 7px #cac5c5;;
 
     }
-
-    #navglobal ul li a {
-        /*padding: ;*/
-        /*color: #212121;*/
-        /*font-size: 14px;*/
-    }
-
 
     header {
         margin-bottom: 0px;
@@ -206,7 +199,7 @@ Cinza escuro: #212121
         padding-bottom: 7px;
     }
     .collapsible {
-         box-shadow: none;
+        box-shadow: none;
         border-right: none;
         border-left: none;
     }
@@ -218,7 +211,6 @@ Cinza escuro: #212121
         padding-left: 40px;
     }
 
-
     table .left-align {
         text-align: left !important;
     }
@@ -229,7 +221,6 @@ Cinza escuro: #212121
 
     table thead tr.title {
         background: transparent;
-
     }
 
     table thead tr.title th {
@@ -237,10 +228,6 @@ Cinza escuro: #212121
         text-align: left;
         font-size: 17px;
         /*color: #fff;*/
-    }
-
-    .tabs .tab {
-
     }
 
     .tabs .tab a {
@@ -275,8 +262,17 @@ Cinza escuro: #212121
     form select.browser-default {
         min-height: 44px;
         background-color: #fafafa;
-        border-bottom: 1px solid #aaa;
+        border: 1px solid #212121;
+        width: 100%;
+
     }
+
+    form textarea.materialize-textarea {
+        margin-top: 10px;
+        padding: 13px 10px;
+        border: 1px solid #212121; !important;
+    }
+
     .input-field label,
     form label {
         color: #212121;
@@ -284,7 +280,21 @@ Cinza escuro: #212121
 
     .modal.bottom-sheet {
         max-height: 50%;
-        /*overflow: visible !important;*/
+        /*overflow: visible;*/
+    }
+
+    .section {
+        position: relative;
+    }
+
+    .section .btn-close-modal {
+        position: absolute;
+        top: 5px;
+        z-index: 32;
+        right: -76px;
+    }
+    .section  span.badge {
+        font-size: 1.3rem;
     }
 
 
@@ -309,40 +319,15 @@ Cinza escuro: #212121
         <h5 class="light">Custo por produto </h5>
 
         <div id="container-list" data-ajax-render='/proposta/manterorcamento/listarprodutos/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'></div>
+
+        <div id="custosvinculados" data-ajax-render='/proposta/manterorcamento/resumoplanilha/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'></div>
     </div>
 </div>
 
-    <!-- FIM DIV CONTEUDO -->
+
+<!-- FIM DIV CONTEUDO -->
     <div id="msg"></div>
 
-    <script>
-    function excluir(idPlanilhaProposta)
-    {
-        $("#msg").html('Tem certeza que deseja excluir o registro?');
-        $("#msg").dialog('open');
-        $("#msg").dialog
-        ({
-            width:350,
-            height: 180,
-            modal: true,
-            draggable: false,
-            resizable: false,
-            closeOnEscape: false,
-            buttons: {
-                'Não': function()
-                {
-                    $(this).dialog('close');
-                },
-                'Sim': function()
-                {
-                    window.location.href="<?php echo $this->url(array('controller'=>'manterorcamento', 'action'=>'excluiritensprodutos')); ?>?idPlanilhaProposta="+idPlanilhaProposta+"&retorno=produtoscadastrados&idPreProjeto=<?php echo $this->idPreProjeto;?>";
-                }
-            }
-        });
-        $(".ui-dialog-titlebar-close").remove();
-    }
-
-    </script>
     <!-- ========== INCIO RODAPE DO CONTEDO ========== -->
     <div id="rodapeConteudo"><span></span></div>
     <!-- ========== FIM RODAPE DO CONTEDO ========== -->
@@ -351,120 +336,8 @@ Cinza escuro: #212121
 
 <script>
 
-//    $('.btn_salvar').click(function () {
-//
-//        var validar = true;
-//        $('.valida').each(function () {
-//            if ($(this).val() == '') {
-//                validar = false;
-//            }
-//        });
-//
-//        if (validar == false) {
-//            $("#error").html('Dados obrigat&oacute;rios n&atilde;o informados!');
-//            $("#error").dialog('open');
-//
-//        } else {
-//            if ($("#qtd").val() == 0) {
-//                $("#error").html('Quantidade n&atilde;o pode ser igual a zero');
-//                $("#error").dialog('open');
-//                $("#qtd").val('');
-//                return false;
-//            }
-//
-//            if ($("#ocorrencia").val() == 0) {
-//                $("#error").html('Ocorr&ecirc;ncia n&atilde;o pode ser igual a zero');
-//                $("#error").dialog('open');
-//                $("#ocorrencia").val('');
-//                return false;
-//            }
-//
-//            var vlunitario = $("#vlunitario").val();
-//            vlunitario = vlunitario.replace(/\D/g, "");
-//            vlunitario = vlunitario.replace(/(\d{0})(\d)/, "$1$2");
-//
-//            if (vlunitario == 0) {
-//                $("#error").html('Valor unit&aacute;rio n&atilde;o pode ser igual a zero');
-//                $("#error").dialog('open');
-//                $("#vlunitario").val('');
-//                return false;
-//            }
-//
-//            if ($("#qtdDias").val() == 0) {
-//                $("#error").html('Quantidade de dias n&atilde;o pode ser igual a zero');
-//                $("#error").dialog('open');
-//                $("#qtdDias").val('');
-//                return false;
-//            } else {
-//                var jstv = $('#editor1').val();
-//                if (jstv.length > 500) {
-//                    $("#justificativaErro").dialog("destroy");
-//                    $("#justificativaErro").html('O campo Justificativa n&atilde;o pode ultrapassar 500 caracteres!');
-//                    $("#justificativaErro").dialog({
-//                        width: 320,
-//                        height: 180,
-//                        title: 'Alerta!',
-//                        draggable: true,
-//                        EscClose: true,
-//                        modal: true,
-//                        buttons: {
-//                            'Ok': function () {
-//                                $(this).dialog('close');
-//                            }
-//                        }
-//                    });
-//                    return false;
-//                }
-//
-//                $.ajax({
-//                    url: $("#form").attr('action'),
-//                    type: "POST",
-//                    async: false,
-//                    data: $("#form").serialize(),
-//                    success: function (data) {
-//                        if( data.error) {
-//                            $("#msg").html(data.error);
-//                        }else {
-//                            $("#msg").html(data.success);
-//                        }
-//
-//                    }, dataType: 'json'
-//                });
-//
-//                $("#msg").dialog
-//                ({
-//                    width: 500,
-//                    height: 250,
-//                    draggable: true,
-//                    EscClose: true,
-//                    modal: true,
-//                    close: function () {
-//                        $("#item").val("");
-//                        $("#unidade").val("");
-//                        $("#qtd").val("");
-//                        $("#ocorrencia").val("");
-//                        $("#vlunitario").val("");
-//                        $("#qtdDias").val("");
-//                        $("#total").val("");
-//                        $("#editor1").val("");
-//                    },
-//                    buttons: {
-//                        'N\xE3o': function () {
-//                            $("#frmCadastroItem").dialog("destroy");
-////                                window.location.reload();
-//                        },
-//                        'Sim': function () {
-//                            $(this).dialog('close');
-//                        }
-//                    }
-//                });
-//            }
-//        }
-//    });
-
-
-
 $3(document).ready(function () {
+
     $3('body').on('click', '.btn-salvar', function () {
 
         var validar = true;
@@ -511,38 +384,30 @@ $3(document).ready(function () {
 
                 if (result.status == '1') {
 
-//                    console.log(form.produto);
-//                    console.log($3('#form').serialize());
+                    if( result.action == 'update') {
+                        $("#item-planilha-" +result.idPlanilhaProposta).replaceWith(result.html);
+                    }
+                    else if( result.action == 'insert') {
+
+                        var produto = $3('#produto').val();
+                        var etapa = $3('#idPlanilhaEtapa').val();
+                        var mun = $3('#municipio').val();
+
+                        var idEtapa = "#etapa" + etapa + "" + mun + "" + produto;
+                        console.log(idEtapa);
+                        $3(idEtapa + ' table tbody').append(result.html);
+                    }
 
                     if(result.close == '1' )
                         $3('#modal').modal('close');
 
                     $3('#form')[0].reset();
-                    $3.ajaxRender()
+//                    $3.ajaxRender()
                     Materialize.toast(result.msg, 4000, 'green white-text');
                     $3.each($('div[data-ajax-render]'), function () {
                         $3.ajaxRender({
-                            strUrl: $(this).attr('data-ajax-render'),
-                            strTarget: '#' + $(this).attr('id')
-                        }, function () {
-
-                            produto = $3('input[name="produto"]').val();
-                            etapa = $3('input[name="idPlanilhaEtapa"]').val();
-                            mun = $3('input[name="municipio"]').val();
-
-                            $3(".produto-"+produto+" .collapsible-header").addClass("active");
-                            $3(".produto-"+produto).collapsible({accordion: false});
-                            etapa = "#etapa" +produto + "" + etapa + "" + mun ;
-
-                            console.log(etapa);
-                            $('#form').filter('[href='+etapa+']').css('background', 'red');
-//                            $('ul.tabs').tabs();
-//
-//                            var active = $('ul.tabs .active').attr('href').addClass('active');
-//                            $('.tabs-content ' + active).show();
-
-//                            $3('ul.tabs').tabs('select', "#etapa251003081");
-
+                            strUrl: $('#custosvinculados').attr('data-ajax-render'),
+                            strTarget: '#custosvinculados'
                         });
                     });
                 } else {
@@ -551,5 +416,52 @@ $3(document).ready(function () {
             });
          }
     });
+
 });
+
+
+
+//function excluirItem(idPlanilhaProposta) {
+////        $(".btn-excluir-item").click(function () {
+////            var idPlanilhaProposta = $(this).attr('data-ajax');
+//
+//    $("#msg").html('Tem certeza que deseja excluir o item?');
+//
+//    $("#msg").dialog
+//    ({
+//        width: 350,
+//        height: 200,
+//        modal: true,
+//        draggable: false,
+//        resizable: false,
+//        closeOnEscape: false,
+//        buttons: {
+//            'N\xE3o': function () {
+//                $(this).dialog('close');
+//            },
+//            'Sim': function () {
+//                var urlAction = "<?php //echo $this->url(array('module' => 'proposta', 'controller' => 'manterorcamento', 'action' => 'excluiritem')); ?>//";
+//                var dados = {idPlanilhaProposta: idPlanilhaProposta};
+//
+//                $.post(urlAction, dados, function (result) {
+//                    result = JSON.parse(result);
+//                    if (result.status == '1') {
+//                        $("#item-planilha-" + idPlanilhaProposta).remove();
+//                        Materialize.toast(result.msg, 4000, 'green white-text');
+//                    } else {
+//                        Materialize.toast(result.msg, 8000, 'red darken-1 white-text');
+//                    }
+//                });
+//
+//                $(this).dialog('close');
+//            }
+//        }
+//    });
+//
+//    $(".ui-dialog-titlebar-close").remove();
+//
+//    return false;
+//}
+
+
 </script>

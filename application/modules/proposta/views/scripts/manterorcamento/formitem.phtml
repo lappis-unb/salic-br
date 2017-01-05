@@ -111,15 +111,16 @@
     }
 </script>
 
-<div class="container">
+<div class="container-salic">
     <div class="row">
         <div class="col s12">
             <div class="section">
                 <h5>Cadastrar novo item
                     <span class="badge" data-badge-caption="">Etapa: <?php echo $this->Etapa['Descricao']; ?> - Local de realizacao: <?php echo $this->Municipio['Descricao']; ?> - <?php echo $this->Estado['Descricao']; ?></span>
                 </h5>
+                <a class="btn-close-modal btn-floating red"><i class="material-icons">clear</i></a>
             </div>
-            
+
             <?php foreach ($this->Dados as $dados) : ?>
                 <form name="form" id="form" method="post" action ="<?php echo $this->url(array('module'=>'proposta', 'controller' => 'manterorcamento', 'action' => 'salvaritem')); ?>">
                     <input type="hidden" name="produto" id="produto" value="<?php echo $dados->CodigoProduto ?>" />
@@ -130,7 +131,7 @@
                     <input type="hidden" name="idPlanilhaEtapa" id="idPlanilhaEtapa" value="<?php echo $this->Etapa['idPlanilhaEtapa'] ?>" />
 
                     <div class="row">
-                        <div class="col s3">
+                        <div class="col s4">
                             <label for="planilhaitem">Item</label>
                             <select class="valida browser-default" id="planilhaitem" name="planilhaitem">
                                 <option disabled selected> - Selecione - </option>
@@ -138,6 +139,7 @@
                                     <option value="<?php echo $itens->idPlanilhaItens ?>" <?php echo $dados->idItem == $itens->idPlanilhaItens ? "selected" : ""; ?>><?php echo $itens->Descricao ?></option>
                                 <?php endforeach; ?>
                             </select>
+                            <br>
                         </div>
 
                         <div class="col s3">
@@ -164,13 +166,13 @@
                             <input placeholder="0" type="text" maxlength="4" class="valida soma numero" size="3" id="ocorrencia" maxlength="10" name="ocorrencia" value="<?php echo isset($dados->Ocorrencia) ? (int) $dados->Ocorrencia : ''; ?>">
                             <label for="ocorrencia">Ocorr&ecirc;ncia</label>
                         </div>
-                        <div class="input-field col s2">
-                            <input placeholder="0" type="text" maxlength="13" class="valida soma numero" size="10" id="vlunitario" name="vlunitario" value="<?php echo isset($dados->ValorUnitario) ? number_format($dados->ValorUnitario, 2, ",", ".") : '';?>">
-                            <label for="vlunitario">Valor Unit&aacute;rio (R$)</label>
+                        <div class="input-field col s1">
+                            <input placeholder="R$" type="text" maxlength="13" class="valida soma numero" size="10" id="vlunitario" name="vlunitario" value="<?php echo isset($dados->ValorUnitario) ? number_format($dados->ValorUnitario, 2, ",", ".") : '';?>">
+                            <label for="vlunitario">Valor Unit&aacute;rio</label>
                         </div>
                         <div class="input-field col s1">
-                            <input placeholder="0" type="text" value="" maxlength="6" class="valida disabled" size="15" name="total" id="total" readonly="readonly">
-                            <label for="total">Total (R$)</label>
+                            <input placeholder="R$" type="text" value="" maxlength="6" class="valida disabled" size="15" name="total" id="total" readonly="readonly">
+                            <label for="total">Total</label>
                         </div>
 
                     </div>
@@ -185,7 +187,7 @@
                         </div>
 
                         <div class="input-field col s8">
-                            <textarea cols="80" id="editor1" name="editor1" rows="7" class="materialize-textarea" placeholder=" "><?php echo $dados->Justificativa; ?></textarea>
+                            <textarea cols="80" id="editor1" name="editor1" rows="7" class="materialize-textarea browser-default" placeholder=" "><?php echo $dados->Justificativa; ?></textarea>
                             <label for="edito1">Detalhamento / Justificativa / Observa&ccedil;&otilde;es</label>
                         </div>
 
@@ -207,5 +209,10 @@
 <script>
     $3(document).ready(function(){
         $3('.modal').find('select').material_select();
+
+        $3('.btn-close-modal').on('click', function() {
+            $3('#modal').modal('close');
+
+        });
     });
 </script>
