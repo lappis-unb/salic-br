@@ -75,8 +75,15 @@
                     if (result.status == '1') {
 //                    $3('#form-mensagem')[0].reset();
                         Materialize.toast(result.msg, 4000, 'green light-green accent-1 black-text');
+                        console.info(typeof strRedirect)
+                        console.info(result.redirect)
                         setTimeout(function(){
-                            window.location.href = strRedirect;
+                            console.info(typeof result.redirect)
+                            if (typeof strRedirect == 'undefined' && typeof result.redirect != 'undefined') {
+                                window.location.href = result.redirect;
+                            } else if (typeof strRedirect != 'undefined') {
+                                window.location.href = strRedirect;
+                            }
                         }, 500);
                     } else {
                         if (typeof result.msg != 'string') {
@@ -212,7 +219,6 @@
         var objDefaults = {strUrl: '', strIdModal: 'modal', strType: 'modal-fixed-footer', strHeight: ''},
             objSettings = $.extend({}, objDefaults, objOption),
             strIdModal = '#' + objSettings.strIdModal;
-console.info(objSettings.strHeight)
         // Removendo e criando elemento div para o modal.
         $(strIdModal).remove();
         $('body').append('<div id="' + objSettings.strIdModal + '" class="modal ' + objSettings.strType + '" style="height: '+ objSettings.strHeight +'"></div>');

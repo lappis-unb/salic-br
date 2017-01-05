@@ -1,86 +1,95 @@
 <?php if ( !empty($this->Produtos) ) : ?>
-    <p class="right-align">
-        <a class="expandall waves-effect waves-light btn tooltipped" onClick="expandAll();" data-tooltip="Expandir tudo"><i class="material-icons left">fullscreen</i></a>
-        <a class="collapseall waves-effect waves-light btn tooltipped" onClick="collapseAll();" data-tooltip="Fechar tudo"><i class="material-icons left">fullscreen_exit</i></a>
+
+    <p class="right-align" style="position: absolute; top: 190px; right: 20px">
+        <a class="expandall btn-floating waves-effect waves-light btn tooltipped" onClick="expandAll();" data-tooltip="Expandir tudo"><i class="material-icons left">fullscreen</i></a>
+        <a class="collapseall btn-floating waves-effect waves-light btn tooltipped" onClick="collapseAll();" data-tooltip="Fechar tudo"><i class="material-icons left">fullscreen_exit</i></a>
     </p>
     <?php foreach ($this->Produtos as $produto) : ?>
-
-        <ul class="collapsible" data-collapsible="accordion">
+        <ul class="collapsible coll-produto produto-<?php echo $produto->CodigoProduto; ?>" data-collapsible="accordion">
             <li>
-                <div class="collapsible-header"><?php echo $produto->DescricaoProduto; ?></div>
+                <!-- view_quilt business data_usage widgets insert_chart pie_chart pie_chart_outlined more_horiz event_note-->
+                <div class="collapsible-header"><i class="material-icons">event_note</i><?php echo $produto->DescricaoProduto; ?> </div>
                 <div class="collapsible-body">
                     <div class="row">
                         <div class="col s12">
                             <?php if ( !empty($this->localRealizacao) ) : ?>
                                 <?php foreach ($this->localRealizacao as $local) : ?>
-                                <ul class="collapsible popout" data-collapsible="expandable">
+                                <ul class="collapsible coll-local popout localizacao local-<?php echo $local['idMunicipioIBGE']; ?>" data-collapsible="expandable">
                                     <li>
                                         <div class="collapsible-header"><i class="material-icons">place</i><?php echo $local['cidade']; ?> - <?php echo $local['uf']; ?></div>
                                         <div class="collapsible-body">
-                                            <div class="row">
-                                                <div class="col s12">
+                                            <div class="rosw">
+                                                <div class="cosl s12s">
                                                     <ul class="tabs tab-demo z-depth-1">
                                                         <?php foreach ($this->Etapa as $key => $etapa) : ?>
-                                                            <li class="tab col s3"><a class="<?php echo ($key == 0) ? 'active' : ''; ?>" href="#etapa<?php echo $etapa->idEtapa . $local['idMunicipioIBGE']; ?>"><?php echo $etapa->DescricaoEtapa; ?></a></li>
+                                                            <li class="tab col s3"><a class="<?php echo ($key == 0) ? 'active' : ''; ?> " href="#etapa<?php echo $etapa->idEtapa . $local['idMunicipioIBGE'] . $produto->CodigoProduto; ?>"><?php echo $etapa->DescricaoEtapa; ?></a></li>
                                                         <?php endforeach; ?>
                                                     </ul>
                                                 </div>
 
-                                                <?php foreach ($this->Etapa as $etapa) : ?>
-                                                    <div id="etapa<?php echo $etapa->idEtapa . $local['idMunicipioIBGE']; ?>" class="col s12">
+                                                <?php foreach ($this->Etapa as $etapa) : //idEtapa?>
+                                                    <div id="etapa<?php echo $etapa->idEtapa . $local['idMunicipioIBGE'] . $produto->CodigoProduto; ?>" class="col s12 etapa-<?php echo $etapa->idEtapa; ?>">
 
-                                                        <?php if ( !empty($this->Item) ) : ?>
-                                                            <table class="bordered striped highlight" style="margin: 0px;">
+                                                        <?php if ( !empty($this->Itens)
+                                                            && in_array($etapa->idEtapa, array_column($this->Itens, 'idEtapa'))
+                                                            && in_array($local['cidade'], array_column($this->Itens, 'Municipio')) ) : ?>
+
+                                                            <table class="bordered striped centered" style="margin: 0px;">
                                                                 <thead>
-                                                                    <tr>
-                                                                        <th>#</th>
-                                                                        <th>Item</th>
+                                                                    <tr class="center">
+                                                                        <th class="left-align">Item</th>
                                                                         <th>Unidade</th>
                                                                         <th>Qtd</th>
                                                                         <th>Ocorr&ecirc;ncia</th>
-                                                                        <th>Valor Unit&aacute;rio</th>
-                                                                        <th>Total</th>
-                                                                        <th colspan="2" width="8%">A&ccedil;&otilde;es</th>
+                                                                        <th>Valor Unit&aacute;rio (R$)</th>
+                                                                        <th>Total (R$)</th>
+                                                                        <th colspan="2" width="5%"">A&ccedil;&otilde;es</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <?php foreach ($this->Item as $key => $item) : ?>
-                                                                        <?php if ($produto->CodigoProduto == $item->CodigoProduto) : ?>
-                                                                            <?php if ($etapa->idEtapa == $item->idEtapa) : ?>
+                                                                    <?php foreach ($this->Itens as $key => $item) : ?>
+                                                                        <?php if ($produto->CodigoProduto == $item['CodigoProduto']) : ?>
+                                                                            <?php if ($etapa->idEtapa == $item['idEtapa']) : ?>
+                                                                                <?php if ($local['cidade'] == $item['Municipio']) : ?>
 
-                                                                                 <?php
-                                                                                    $editarProduto = array(
-                                                                                        'module' => 'proposta',
-                                                                                        'controller'=>'manterorcamento',
-                                                                                        'action'=>'formitem',
-                                                                                        'item' => $this->escape($item->idItem),
-                                                                                        'etapa' => $this->escape($etapa->idEtapa),
-                                                                                        'produto' => $this->escape($produto->CodigoProduto),
-                                                                                        'idPlanilhaProposta' => $item->idPlanilhaProposta,
-                                                                                        'idPreProjeto' => $this->escape($produto->idProposta),
-                                                                                        'idUf' => $local['idUF'],
-                                                                                        'idMunicipio' => $local['idMunicipioIBGE']
-                                                                                    );
-                                                                                ?>
+                                                                                    <?php
+                                                                                    $valorTotalItem = ($item['Quantidade'] * $item['ValorUnitario']) * $item['Ocorrencia'];
+                                                                                    $valorTotalEtapas[$etapa->DescricaoEtapa] = $valorTotalItem +  $valorTotalEtapas[$etapa->DescricaoEtapa];
+                                                                                    $valorProjeto = $valorTotalItem + $valorProjeto;
+                                                                                    ?>
 
-                                                                                <tr>
-                                                                                    <td><?php echo $key+1; ?></td>
-                                                                                    <td><?php echo $item->DescricaoItem; ?></td>
-                                                                                    <td><?php echo $item->Unidade; ?></td>
-                                                                                    <td><?php echo number_format($item->Quantidade,0) ?></td>
-                                                                                    <td><?php echo number_format($item->Ocorrencia,0) ?></td>
-                                                                                    <td><?php echo number_format($item->ValorUnitario, 2, ",", ".") ?></td>
-                                                                                    <td><?php echo number_format(($item->Quantidade * $item->ValorUnitario) * $item->Ocorrencia, 2, ",", ".") ?></td>
-                                                                                    <td align="center">
-                                                                                        <a data-ajax-modal="<?php echo $this->url($editarProduto); ?>" href="javascript:void(0);" class="btn-floating waves-effect waves-light btn tooltipped" data-position="top" data-delay="50" data-tooltip="Editar" data-ajax-modal-type="bottom-sheet">
-                                                                                            <i class="material-icons">edit</i>
-                                                                                        </a>
-                                                                                    </td>
-                                                                                    <td align="center">
-                                                                                        <a class="btn-floating waves-effect waves-light btn tooltipped" data-tooltip="Excluir"><i class="material-icons">delete</i></a>
-                                                                                    </td>
-                                                                                </tr>
+                                                                                     <?php
+                                                                                        $editarProduto = array(
+                                                                                            'module' => 'proposta',
+                                                                                            'controller'=>'manterorcamento',
+                                                                                            'action'=>'formitem',
+                                                                                            'item' => $this->escape($item['idItem']),
+                                                                                            'etapa' => $this->escape($etapa->idEtapa),
+                                                                                            'produto' => $this->escape($produto->CodigoProduto),
+                                                                                            'idPlanilhaProposta' => $item['idPlanilhaProposta'],
+                                                                                            'idPreProjeto' => $this->escape($produto->idProposta),
+                                                                                            'idUf' => $local['idUF'],
+                                                                                            'idMunicipio' => $local['idMunicipioIBGE']
+                                                                                        );
+                                                                                    ?>
 
+                                                                                    <tr id="item-planilha-<?php echo $item['idPlanilhaProposta']; ?>">
+                                                                                        <td class="left-align"><?php echo $item['DescricaoItem']; ?></td>
+                                                                                        <td><?php echo $item['Unidade']; ?></td>
+                                                                                        <td><?php echo number_format($item['Quantidade'],0) ?></td>
+                                                                                        <td><?php echo number_format($item['Ocorrencia'],0) ?></td>
+                                                                                        <td><?php echo number_format($item['ValorUnitario'], 2, ",", ".") ?></td>
+                                                                                        <td ><?php echo number_format(($item['Quantidade'] * $item['ValorUnitario']) * $item['Ocorrencia'], 2, ",", ".") ?></td>
+                                                                                        <td class="action right-align">
+                                                                                            <a data-ajax-modal="<?php echo $this->url($editarProduto); ?>" href="javascript:void(0);" class="btn small waves-effect waves-light tooltipped btn_primary" data-position="top" data-delay="50" data-tooltip="Editar" data-ajax-modal-type="bottom-sheet">
+                                                                                                <i class="material-icons">edit</i>
+                                                                                            </a>
+                                                                                        </td>
+                                                                                        <td class="action left-align">
+                                                                                            <a class="btn small waves-effect waves-light tooltipped btn_danger" data-tooltip="Excluir"><i class="material-icons">delete</i></a>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                <?php endif; ?>
                                                                             <?php endif; ?>
                                                                         <?php endif; ?>
                                                                     <?php endforeach; ?>
@@ -108,7 +117,7 @@
                                                             <div class="col s12 center-align">
                                                                 <p>
 
-                                                                    <a class="waves-effect waves-light btn tooltipped" data-ajax-modal="<?php echo $this->url($novoProduto)?>" href="javascript:void(0);" class="waves-effect waves-light btn tooltipped" data-position="top" data-delay="50" data-tooltip="Cadastrar novo item" data-ajax-modal-type="bottom-sheet">
+                                                                    <a class="waves-effect waves-light btn tooltipped btn_default" data-ajax-modal="<?php echo $this->url($novoProduto)?>" href="javascript:void(0);" class="waves-effect waves-light btn tooltipped" data-position="top" data-delay="50" data-tooltip="Cadastrar novo item" data-ajax-modal-type="bottom-sheet">
                                                                         Novo item
                                                                     </a>
                                                                 </p>
@@ -135,6 +144,76 @@
             </li>
         </ul>
     <?php endforeach; ?>
+
+    <?php if(!empty($valorProjeto) ) : ?>
+        <?php if($this->EtapaCusto) : ?>
+            <div class="custosvinculados">
+                    <?php foreach ($this->EtapaCusto as $etapaCusto) : ?>
+                                <?php  if($this->ItensEtapaCusto) : ?>
+                                    <table class="bordered striped centered" width="98%" >
+                                        <thead>
+                                            <tr class="title">
+                                                <th colspan="3">Custos Vinculados</th>
+                                            </tr>
+                                            <tr>
+                                                <th width="48%" class="left-align">Item</th>
+                                                <th>Munic&iacute;pio/UF</th>
+                                                <th>Total (R$)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $valorTotalCustosVinculados = null; ?>
+                                            <?php foreach ($this->ItensEtapaCusto as $itemEtapaCusto) : ?>
+                                                <?php if ($etapaCusto->idEtapa == $itemEtapaCusto->idEtapa) :  ?>
+
+                                                    <tr>
+                                                        <td class="left-align"><?php echo $itemEtapaCusto->DescricaoItem; ?></td>
+                                                        <td><?php echo $itemEtapaCusto->Municipio; ?>/<?php echo $itemEtapaCusto->SiglaUF; ?></td>
+                                                        <td><?php echo number_format($itemEtapaCusto->valorunitario, 2, ",", ".") ?></td>
+                                                        <?php $valorTotalCustosVinculados = $itemEtapaCusto->valorunitario + $valorTotalCustosVinculados; ?>
+                                                    </tr>
+                                                <?php endif; ?>
+
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                <?php else: ?>
+                                    <div class="center" align="center">Nenhum item cadastrado</div>
+                                <?php endif; ?>
+                    <?php endforeach; ?>
+                <br>
+
+                    <table style="margin: 0px;" class="bordered striped">
+                        <thead>
+                            <tr class="title">
+                                <th colspan="2" class="centro"><?php echo "Resumo da Planilha Or&ccedil;ament&aacute;ria"; ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($valorTotalEtapas as $key => $totalEtapa) : ?>
+                                <tr class="" align="center">
+                                    <td>Valor total <?php echo $key; ?></td>
+                                    <td>R$ <?php echo number_format($totalEtapa, 2, ",", "."); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            <tr class="" align="center">
+                                <td>Valor do Projeto </td>
+                                <td>R$ <?php echo number_format($valorProjeto, 2, ",", "."); ?></td>
+                            </tr>
+                            <tr class="" align="center">
+                                <td>Valor Custos Vinculados </td>
+                                <td>R$ <?php echo number_format($valorTotalCustosVinculados, 2, ",", "."); ?></td>
+                            </tr>
+                            <tr class="" align="center">
+                                <td>Valor total do Projeto </td>
+                                <td>R$ <?php echo number_format($valorTotalCustosVinculados + $valorProjeto, 2, ",", "."); ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+
 <?php else: ?>
     <div class="valign-wrapper">
         <p class="valign">Para preencher a planilha &eacute; necess&aacute;rio <a href="<?php echo $this->url( array('module' => 'proposta', 'controller' => 'plano-distribuicao', 'action' => 'index', 'idPreProjeto' => $this->idPreProjeto)); ?>" titlte="Cadastrar produto">cadastrar um produto</a>.</p>
@@ -145,6 +224,10 @@
     $3(document).ready(function(){
         $3('.collapsible').collapsible();
         $3('ul.tabs').tabs();
+
+        $3('.modal').find('select').material_select();
+
+        //expandAll();
     });
 
     function expandAll(){

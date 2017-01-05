@@ -8,7 +8,7 @@
             validClass: "valid",
             errorPlacement: function (error, element) {
                 var elmForm = $(element).closest("form"),
-                    elmIcon = $(element).prev('i'),
+                    elmIcon = $(element).closest('input-field').find('i'),
                     elmLabel = elmForm.find("label[for='" + $(element).attr("id") + "']");
                 elmLabel.attr('data-error', error.text());
                 elmLabel.removeClass('green-text');

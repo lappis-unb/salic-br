@@ -4031,7 +4031,7 @@
                 today: "Hoje",
                 clear: "Limpar",
                 close: "Fechar",
-                format: "d/mm/yyyy",
+                format: "dd/mm/yyyy",
                 klass: {
                     table: a + "table",
                     header: a + "header",
