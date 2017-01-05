@@ -175,23 +175,33 @@
             $("#formEnquadramentoProjeto").validate({
                 rules: {
                     observacao: {
-                        validarPreenchimento: true
+                        validarPreenchimento: true,
+                        validarPreenchimentoMaximo: true,
                     }
                 },
-                messages: {
-                    observacao: "Dado obrigat&oacute;rio n&atilde;o informado"
+                messages: {observacao
+                    observacao: {
+                        validarPreenchimento : "Dado obrigat&oacute;rio n&atilde;o informado",
+                        validarPreenchimentoMaximo: "limite excedido",
+                    }
                 },
+
                 submitHandler: function (form) {
                     $("#container-progress").show();
                     form.submit();
                 },
                 invalidHandler: function (event, validator) {
-                    Materialize.toast('Campo "Observa&ccedil;&atilde;o" &eacute; obrigat&oacute;rio!', 4000);
+                    Materialize.toast(validator.submitted.observacao, 4000);
                 }
             });
 
             $.validator.addMethod("validarPreenchimento", function (value, element) {
                 if (editorRico.contarCaracteres() > 0) {
+                    return true;
+                }
+            });
+            $.validator.addMethod("validarPreenchimentoMaximo", function (value, element) {
+                if (editorRico.contarCaracteres() <= 1000) {
                     return true;
                 }
             });
