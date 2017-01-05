@@ -10,10 +10,38 @@
 
         $("#nrAtoTombamento").numeric();
 
+    //VALIDA CAMPO RESUMO DA PROPOSTA
+    jQuery.validator.addMethod("validarResumoDoProjeto", function(value, element)
+    {
+        var texto = CKEDITOR.instances['resumoDoProjeto'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
+
+        if (texto.length > 0)
+        {
+            $('#resumoDoProjeto').val(CKEDITOR.instances['resumoDoProjeto'].getData());
+            return true;
+        }
+
+        return false;
+    });
+
+    //VALIDA CAMPO RESUMO DA PROPOSTA Menor que 1000 caracteres
+    jQuery.validator.addMethod("validarResumoDoProjeto1000", function(value, element)
+    {
+        var texto = CKEDITOR.instances['resumoDoProjeto'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
+
+        if (texto.length > 1000)
+        {
+            return false;
+        }
+
+        $('#resumoDoProjeto').val(CKEDITOR.instances['resumoDoProjeto'].getData());
+        return true;
+    });
+
         $("#frmProposta").validate({
             rules: {
                 nomeProjeto: { required: true },
-                resumoDoProjeto: { required:  true, validarResumoDoProjeto: true },
+                resumoDoProjeto: { validarResumoDoProjeto: true, validarResumoDoProjeto1000:  true },
                 agenciaBancaria: { required:  true },
                 dtInicioDeExecucao: { required: true, minlength: 10 },
                 dtFinalDeExecucao: { required: true, minlength: 10 },
@@ -23,7 +51,8 @@
                 nomeProjeto: { required: function(){ return "<br>Dado obrigat&oacute;rio n&atilde;o informado" } },
                 resumoDoProjeto: {
                     required: function(){ return "<br>Dado obrigat&oacute;rio n&atilde;o informado" },
-                    validarResumoDoProjeto: function(){ return "Dado obrigat&oacute;rio n&atilde;o informado" }
+                    validarResumoDoProjeto: function(){ return "Dado obrigat&oacute;rio n&atilde;o informado" },
+                    validarResumoDoProjeto1000: function(){ return "Dado obrigat&oacute;rio n&atilde;o informado 1000" }
                 },
                 agenciaBancaria: { required: function(){ return "<br>Dado obrigat&oacute;rio n&atilde;o informado" } },
                 dtInicioDeExecucao: {
@@ -130,22 +159,6 @@
         $("#comprovanteplanodeexecucao #arquivo").removeAttr('disabled');
     }
 
-        //VALIDA CAMPO RESUMO DA PROPOSTA
-    jQuery.validator.addMethod("validarResumoDoProjeto", function(value, element)
-    {
-        var texto = CKEDITOR.instances['resumoDoProjeto'].getData().toString().replace(/(<.*?>)|(&nbsp;)|(\s+)/g,'');
-
-        if (texto.length > 0)
-        {
-            $('#resumoDoProjeto').val(CKEDITOR.instances['resumoDoProjeto'].getData());
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
-    });
 //    $("#solicitarvinculo").click(function(){
 //        $("#confirmacao").dialog({
 //            resizable: true,
@@ -495,7 +508,7 @@
                         <td colspan="5"><b>Resumo da Proposta Cultural</b></td>
                     </tr>
                     <tr>
-                        <td  colspan="5">No resumo do projeto, o resumo deve descrever o que se pretende realizar em no m&aacute;ximo 5 linhas, limitado ao m&aacute;ximo de 1000 caracteres. Trata-se de uma s&iacute;ntese com as informa&ccedil;&otilde;es essenciais fazendo refer&ecirc;ncia ao(s) produto(s) cadastrado(s) no Plano de Distribui&ccedil;&atilde;o.<br/> A leitura do resumo deve responder &agrave; quest&atilde;o: O QU&Ecirc;? *
+                        <td  colspan="5">No resumo do projeto, o resumo deve descrever o que se pretende realizar, limitado ao m&aacute;ximo de 1000 caracteres. Trata-se de uma s&iacute;ntese com as informa&ccedil;&otilde;es essenciais fazendo refer&ecirc;ncia ao(s) produto(s) cadastrado(s) no Plano de Distribui&ccedil;&atilde;o.<br/> A leitura do resumo deve responder &agrave; quest&atilde;o: O QU&Ecirc;? *
 
                             <!-- ========== EDITOR ========== -->
                             <textarea cols="80" id="resumoDoProjeto" obrigatorio="1" name="resumoDoProjeto" rows="10"><?php
@@ -503,6 +516,9 @@
                                        echo $this->proposta['ResumoDoProjeto'];
                             ?></textarea>
                         </td>
+                    </tr>
+                    <tr >
+                        <td colspan="5"><span style="color: #ff5050;">Limite m&aacute;ximo de 8000 caracteres.</span></td>
                     </tr>
                     <tr class="destacar centro">
                         <td colspan="5"><b>Informa&ccedil;&otilde;es Complementares</b></td>
