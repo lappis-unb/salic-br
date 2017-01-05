@@ -405,5 +405,10 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
             parent::message('Não foi possível cadastrar a desistência do prazo recursal!', "consultardadosprojeto?idPronac=". Seguranca::encrypt($idPronac), "ERROR");
         }
     }
+    
+    public function concordarDesistenciaRecursalModalAction(){
+        $this->_helper->layout->disableLayout();
+         $this->view->idPronac = $this->_request->getParam("idPronac");
+    }
 
 }
