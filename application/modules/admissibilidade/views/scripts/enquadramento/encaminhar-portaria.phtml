@@ -22,7 +22,6 @@
     <div class="content">
         <div class="row">
             <div class="col s12">
-                <h4>Gerenciar Enquadramentos</h4>
                 <table class="bordered responsive-table" id="enquadramento">
                     <thead>
                     <tr class="titulo_tabela">
@@ -37,19 +36,20 @@
                     <tbody>
                     <?php foreach ($this->dados as $dado): ?>
                         <?php if ($dado->Situacao == "B03") : ?>
-                        <tr class="red lighten-4">
+                        <tr class="amber lighten-4">
                         <?php else: ?>
                         <tr>
                         <?php endif; ?>
                             <td>
-                                <a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index')) . "?idPronac={$dado->IdPRONAC}"; ?>"><u><?php echo $dado->pronac; ?></u></a>
+                                <a class="blue-text"
+                                   href="<?php echo $this->url(array('module' => 'default', 'controller' => 'consultardadosprojeto', 'action' => 'index')) . "?idPronac={$dado->IdPRONAC}"; ?>"><u><?php echo $dado->pronac; ?></u></a>
                             </td>
                             <td><?php echo $dado->nomeProjeto; ?></td>
                             <td><?php echo $dado->area; ?></td>
                             <td><?php echo $dado->segmento; ?></td>
                             <td>@todo : Carregar</td>
                             <td>
-                                <a class="btn waves-effect waves-light cyan tooltipped"
+                                <a class="btn waves-effect waves-light cyan tooltipped small"
                                    href="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'encaminhar-portaria')) . "?IdPRONAC={$dado->idpronac}&encaminhar=true" ?>"
                                    data-position="top"
                                    data-delay="50"
@@ -64,7 +64,7 @@
                 <div class="col s12 m6 l4">
                     <label>Legenda:</label>
                     <br />
-                    <div class="red lighten-4" style="border: 1px solid gray; height: 20px; display: inline">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <div class="amber lighten-4" style="border: 1px solid gray; height: 20px; display: inline">&nbsp;&nbsp;&nbsp;&nbsp;</div>
                     Projeto Enquadrado Com Recurso
                     <br clear="both" />
                     <div class="" style="border: 1px solid gray; height: 20px; display: inline">&nbsp;&nbsp;&nbsp;&nbsp;</div>
