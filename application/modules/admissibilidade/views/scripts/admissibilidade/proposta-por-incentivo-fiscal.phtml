@@ -137,15 +137,15 @@
                                 <tr>
 
                                 <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
-                                    <td width="100px" class="destacar"><b>N&ordm; da Proposta</b></td>
+                                    <td width="100px"><b>N&ordm; da Proposta</b></td>
                                     <td width="70px"><?php echo $this->itensGeral[0]->idPreProjeto ?></td>
 
-                                    <td width="80px" class="esquerda destacar" nowrap><b>PRONAC</b></td>
-                                    <td width="80px" class="esquerda" nowrap>
+                                    <td width="80px" nowrap><b>PRONAC</b></td>
+                                    <td width="80px" nowrap>
                                         <?php echo (isset($this->Pronac) && !empty($this->Pronac)) ? $this->Pronac : ''; ?>
                                     </td>
 
-                                    <td width="130px" nowrap class="destacar"><b>T&iacute;tulo da Proposta</b></td>
+                                    <td width="130px" nowrap><b>T&iacute;tulo da Proposta</b></td>
                                     <td nowrap><?php echo $this->itensGeral[0]->NomeProjeto ?></td>
                                 <?php } ?>
 
@@ -153,13 +153,13 @@
                             </table>
                         </fieldset>
                         <fieldset>
-                            <legend>Informa�&otilde;es Complementares</legend>
+                            <legend>Informa&ccedil;&otilde;es Complementares</legend>
                             <table class="tabela">
                                 <tr class="destacar">
                                     <td><b>&Eacute; proposta de audiovisual?</b></td>
                                     <td><b>Mecanismo</b></td>
                                     <td><b>Ag&ecirc;ncia Banc&aacute;ria</b></td>
-                                    <td><b>Dt. In&iacute;cio Execu�&atilde;o</b></td>
+                                    <td><b>Dt. In&iacute;cio Execu&ccedil;&atilde;o</b></td>
                                     <td><b>Dt. Final Execu&ccedil;&atilde;o</b></td>
                                     <td><b>Dt. Fixa</b></td>
                                     <td><b>Plano Anual</b></td>
@@ -178,7 +178,7 @@
                             </table>
                         </fieldset>
                         <fieldset>
-                            <legend>Informa�&otilde;es sobre tombamento</legend>
+                            <legend>Informa&ccedil;&otilde;es sobre tombamento</legend>
                             <table class="tabela">
                                 <tr class="destacar">
                                     <td><b>N&ordm; Ato Tombamento</b></td>
@@ -242,7 +242,7 @@
                             </table>
                         </fieldset>
                         <fieldset>
-                            <legend>Democratiza�&atilde;o de Acesso</legend>
+                            <legend>Democratiza&ccedil;&atilde;o de Acesso</legend>
                             <table class="tabela">
                                 <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
                                 <tr>
@@ -262,7 +262,7 @@
                             </table>
                         </fieldset>
                         <fieldset>
-                            <legend>Ficha T�cnica</legend>
+                            <legend>Ficha T&eacute;cnica</legend>
                             <table class="tabela">
                                 <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
                                 <tr>
@@ -292,7 +292,7 @@
                             </table>
                         </fieldset>
                         <fieldset>
-                            <legend>Especifica�&otilde;es t�cnicas do produto</legend>
+                            <legend>Especifica&ccedil;&otilde;es t&eacute;cnicas do produto</legend>
                             <table class="tabela">
                                 <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
                                 <tr>
@@ -302,7 +302,7 @@
                             </table>
                         </fieldset>
                         <fieldset>
-                            <legend>Outras Informa�&otilde;es</legend>
+                            <legend>Outras Informa&ccedil;&otilde;es</legend>
                             <table class="tabela">
                                 <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
                                 <tr>
@@ -316,7 +316,7 @@
                             <tr onclick="abrirDinamico('#planoDistribuicaoProduto', $(this))" style="cursor:pointer">
                                 <th align="center">
                                     <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
-                                    Plano de Distribui�&atilde;o do Produto
+                                    Plano de Distribui&ccedil;&atilde;o do Produto
                                    </th>
                             </tr>
                             <tr>
@@ -325,17 +325,17 @@
                                     <table class="tabela">
                                         <tr class="destacar">
                                             <td style="font-size:11px">Nome do Evento / Produto</td>
-                                            <td style="font-size:11px">�rea</td>
+                                            <td style="font-size:11px">&Aacute;rea</td>
                                             <td style="font-size:11px">Segmento</td>
-                                            <td style="font-size:11px">Posi�&atilde;o da Logomarca</td>
-                                            <td style="font-size:11px">N&ordm; Exemplares / Ingressos</td>
-                                            <td style="font-size:11px">Distribu��&atilde;o / Patrocinador</td>
-                                            <td style="font-size:11px">Distribu��&atilde;o / Divulga�&atilde;o</td>
-                                            <td style="font-size:11px">Distribu��&atilde;o / Benefici�rios</td>
+                                            <td style="font-size:11px">Posi&ccedil;&atilde;o da Logomarca</td>
+                                            <td style="font-size:11px">N&ordm; Exemplares/ Ingressos</td>
+                                            <td style="font-size:11px">Distribui&ccedil;&atilde;o/ Patrocinador</td>
+                                            <td style="font-size:11px">Distribui&ccedil;&atilde;o/ Divulga&ccedil;&atilde;o</td>
+                                            <td style="font-size:11px">Distribui&ccedil;&atilde;o/ Benefici&aacute;rios</td>
                                             <td style="font-size:11px">Total Venda Normal</td>
                                             <td style="font-size:11px">Total Venda Promocional</td>
-                                            <td style="font-size:11px">Pre�o Unit�rio Normal</td>
-                                            <td style="font-size:11px">Pre�o Unit�rio Promocional</td>
+                                            <td style="font-size:11px">Pre&ccedil;o Unit&aacute;rio Normal</td>
+                                            <td style="font-size:11px">Pre&ccedil;o Unit&aacute;rio Promocional</td>
                                             <td style="font-size:11px">Receita Prevista Venda Normal (R$)</td>
                                             <td style="font-size:11px">Receita Prevista Venda Promocional (R$)</td>
                                             <td style="font-size:10px">Total de Receita Prevista (R$)</td>
@@ -400,7 +400,7 @@
                             <tr onclick="abrirDinamico('#planilhaOrcamentaria', $(this));" style="cursor:pointer">
                                 <th align="center">
                                     <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
-                                    Planilha Or�ament�ria
+                                    Planilha Or&ccedil;ament&aacute;ria
                                 </th>
                             </tr>
                             <tr>
@@ -874,7 +874,7 @@
                             <tr onclick="abrirDinamico('#historicoAvaliacoes', $(this))" style="cursor:pointer">
                                 <th>
                                     <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
-                                    Hist�rico de Avalia&ccedil;&otilde;es
+                                    Hist&oacute;rico de Avalia&ccedil;&otilde;es
                                 </th>
                             </tr>
                             <tr>
@@ -922,9 +922,9 @@
                             <legend>Identifica&ccedil;&atilde;o</legend>
                             <table class="tabela">
                                 <tr>
-                                    <td width="10%" class="esquerda destacar" nowrap><b>CNPJ / CPF</b></td>
+                                    <td width="10%" class="esquerda" nowrap><b>CNPJ / CPF</b></td>
                                     <td class="esquerda" nowrap><?php echo (strlen($this->itensGeral[0]->CNPJCPF) > 11)?aplicaMascara($this->itensGeral[0]->CNPJCPF, "99.999.999/9999-99"):  aplicaMascara($this->itensGeral[0]->CNPJCPF, "999.999.999-99") ?></td>
-                                    <td width="10%" class="esquerda destacar" nowrap><b>Proponente</b></td>
+                                    <td width="10%" class="esquerda" nowrap><b>Proponente</b></td>
                                     <td class="esquerda" nowrap><?php echo $this->itensGeral[0]->NomeAgente ?></td>
                                 </tr>
                             </table>
@@ -933,10 +933,10 @@
                             <legend>Endere&ccedil;o</legend>
                             <table class="tabela">
                                 <tr class="destacar">
-                                    <td width="10%" nowrap class="centro"><b>Tipo de Endere�o</b></td>
+                                    <td width="10%" nowrap class="centro"><b>Tipo de Endere&ccedil;o</b></td>
                                     <td width="10%" nowrap class="centro"><b>Tipo do Logradouro</b></td>
                                     <td width="20%" class="centro"><b>Logradouro</b></td>
-                                    <td class="centro"><b>N�mero</b></td>
+                                    <td class="centro"><b>N&uacute;mero</b></td>
                                     <td class="centro"><b>Complemento</b></td>
                                     <td class="centro"><b>Bairro</b></td>
                                     <td class="centro"><b>Cidade</b></td>
@@ -972,7 +972,7 @@
                                     <td width="10%"><b>Tipo</b></td>
                                     <td><b>UF</b></td>
                                     <td><b>DDD</b></td>
-                                    <td><b>N�mero</b></td>
+                                    <td><b>N&uacute;mero</b></td>
                                     <td><b>Divulgar</b></td>
                                 </tr>
                                 <?php if(is_array($this->itensTelefone) and count($this->itensTelefone)>0){
@@ -1101,9 +1101,9 @@
                             <table class="tabela">
                                 <tr>
                                 <?php if(is_array($this->itensGeral) and !empty($this->itensGeral[0]->nomeUsuario)){ ?>
-                                    <td width="10%" class="esquerda destacar"><b>CPF</b></td>
+                                    <td width="10%" class="esquerda"><b>CPF</b></td>
                                     <td class="esquerda"><?php echo aplicaMascara($this->itensGeral[0]->Cpf, "999.999.999-99") ?></td>
-                                    <td width="10%" class="esquerda destacar"><b>Nome</b></td>
+                                    <td width="10%" class="esquerda"><b>Nome</b></td>
                                     <td class="esquerda"><?php echo $this->itensGeral[0]->nomeUsuario ?></td>
                                 <?php } ?>
                                 </tr>
