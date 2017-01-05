@@ -123,8 +123,8 @@ class Proposta_model_DbTable_PlanoDistribuicaoProduto extends MinC_Db_Table_Abst
 
         $select->from(
             array('pd'=>$this->getName('PlanoDistribuicaoProduto')),
-            array('codigoproduto'=>'pd.idproduto',
-                'idproposta'=> 'pd.idprojeto'
+            array('CodigoProduto'=>'pd.idproduto',
+                'idProposta'=> 'pd.idprojeto'
             ),
             $this->_schema
         );

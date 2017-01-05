@@ -196,5 +196,31 @@ class tbItensPlanilhaProduto extends MinC_Db_Table_Abstract
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         return $db->fetchAll($select);
     }
+
+    public function buscarItem($where = array(), $order = array())
+    {
+
+        $select = $this->select()->distinct();
+        $select->setIntegrityCheck(false);
+        $select->from(
+            array('i' => 'tbPlanilhaItens'),
+            array(
+                'idPlanilhaItens',
+                'Descricao'
+            ),
+            $this->_schema
+        );
+
+        //adiciona quantos filtros foram enviados
+        foreach ($where as $coluna => $valor) {
+            $select->where($coluna, $valor);
+        }
+
+        $select->order($order);
+
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+        return $db->fetchRow($select);
+    }
 }
 ?>
