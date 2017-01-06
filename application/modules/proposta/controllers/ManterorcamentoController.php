@@ -19,10 +19,11 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
     {
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // t?tulo da p?gina
-        $auth = Zend_Auth::getInstance(); // pega a autentica??o
+        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura";
+
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $PermissoesGrupo = array();
-        if (!$auth->hasIdentity()) // caso o usu?rio esteja autenticado
+        if (!$auth->hasIdentity()) // caso o usuario esteja autenticado
         {
              return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
@@ -30,7 +31,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usu?rio
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuario
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo){
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -87,30 +88,63 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      */
     public function produtoscadastradosAction()
     {
-        $buscarEstado = new Agente_Model_DbTable_UF();
-        $this->view->Estados = $buscarEstado->buscar();
+        $this->view->idPreProjeto = $this->idPreProjeto;
+
+        $this->view->charset = Zend_Registry::get('config')->db->params->charset;
+
+//        $buscarEstado = new Agente_Model_DbTable_UF();
+//        $this->view->Estados = $buscarEstado->buscar();
+//
+//        $tbPreprojeto = new Proposta_Model_DbTable_PreProjeto();
+//        $this->view->Produtos = $tbPreprojeto->listarProdutos($this->idPreProjeto);
+//
+//        $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+//
+//        $listaEtapa = $manterOrcamento->buscarEtapas('P');
+//
+//        //altera ordem de apresenção das etapas no orcamento
+//        $newListaEtapa = $listaEtapa;
+//        $newListaEtapa[3] = $listaEtapa[2];
+//        $newListaEtapa[2] = $listaEtapa[3];
+//        $this->view->Etapa = $newListaEtapa;
+//
+//        $this->view->Item = $tbPreprojeto->listarItensProdutos($this->idPreProjeto);
+//
+//        $this->view->EtapaCusto = $manterOrcamento->buscarEtapas("A");
+//        $this->view->ItensEtapaCusto = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
+//
+//        $arrBusca = array();
+//        $arrBusca['idprojeto'] = $this->idPreProjeto;
+//        $arrBusca['stabrangencia'] = 1;
+//        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
+//        $this->view->localRealizacao = $tblAbrangencia->buscar($arrBusca);
+
+    }
+
+
+    /**
+     * Lista os produtos na planilha orcamentaria
+     *
+     * @access public
+     * @return void
+     */
+    public function listarprodutosAction()
+    {
+        $this->_helper->layout->disableLayout();
 
         $tbPreprojeto = new Proposta_Model_DbTable_PreProjeto();
         $this->view->Produtos = $tbPreprojeto->listarProdutos($this->idPreProjeto);
 
         $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-
         $listaEtapa = $manterOrcamento->buscarEtapas('P');
+        $this->view->EtapasProduto = $this->reordenaretapas($listaEtapa);
+        $this->view->ItensProduto = $this->objectsToArray($tbPreprojeto->listarItensProdutos($this->idPreProjeto));
 
-        //altera ordem de apresenção das etapas no orcamento
-        $newListaEtapa = $listaEtapa;
-        $newListaEtapa[3] = $listaEtapa[2];
-        $newListaEtapa[2] = $listaEtapa[3];
-        $this->view->Etapa = $newListaEtapa;
+        $arrBusca = array(
+            'idprojeto' => $this->idPreProjeto,
+            'stabrangencia' => 1
+        );
 
-        $this->view->Item = $tbPreprojeto->listarItensProdutos($this->idPreProjeto);
-
-        $this->view->EtapaCusto = $manterOrcamento->buscarEtapas("A");
-        $this->view->ItensEtapaCusto = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
-
-        $arrBusca = array();
-        $arrBusca['idprojeto'] = $this->idPreProjeto;
-        $arrBusca['stabrangencia'] = 1;
         $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $this->view->localRealizacao = $tblAbrangencia->buscar($arrBusca);
 
@@ -119,42 +153,22 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $this->view->charset = Zend_Registry::get('config')->db->params->charset;
     }
 
+    /**
+     * altera ordem de apresentação das etapas no orcamento
+     *
+     * @access public
+     * @return void
+     */
+    public function reordenaretapas( $etapas ) {
 
-    public function listarprodutosAction()
-    {
-        $this->_helper->layout->disableLayout();
+        if( empty($etapas) )
+            return false;
 
-        $buscarEstado = new Agente_Model_DbTable_UF();
-        $this->view->Estados = $buscarEstado->buscar();
+        $newListaEtapa = $etapas;
+        $newListaEtapa[3] = $etapas[2];
+        $newListaEtapa[2] = $etapas[3];
 
-        $tbPreprojeto = new Proposta_Model_DbTable_PreProjeto();
-        $this->view->Produtos = $tbPreprojeto->listarProdutos($this->idPreProjeto);
-
-        $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-
-        $listaEtapa = $manterOrcamento->buscarEtapas('P');
-
-        //altera ordem de apresenção das etapas no orcamento
-        $newListaEtapa = $listaEtapa;
-        $newListaEtapa[3] = $listaEtapa[2];
-        $newListaEtapa[2] = $listaEtapa[3];
-        $this->view->Etapa = $newListaEtapa;
-
-//        $this->view->Item = $tbPreprojeto->listarItensProdutos($this->idPreProjeto);
-        $this->view->Itens = $this->objectsToArray($tbPreprojeto->listarItensProdutos($this->idPreProjeto));
-
-        $this->view->EtapaCusto = $manterOrcamento->buscarEtapas("A");
-        $this->view->ItensEtapaCusto = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
-
-        $arrBusca = array();
-        $arrBusca['idprojeto'] = $this->idPreProjeto;
-        $arrBusca['stabrangencia'] = 1;
-        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
-        $this->view->localRealizacao = $tblAbrangencia->buscar($arrBusca);
-
-        $this->view->idPreProjeto = $this->idPreProjeto;
-
-        $this->view->charset = Zend_Registry::get('config')->db->params->charset;
+        return $newListaEtapa;
     }
 
     /**
@@ -348,25 +362,25 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
         $valorEtapa = array();
 
-        foreach ($itens as $item) {
-            $valorTotalItem = $item['Quantidade'] * $item['Ocorrencia'] * $item['ValorUnitario'];
-            $valorEtapa[$item['idEtapa']] = $valorTotalItem + $valorEtapa[$item['idEtapa']];
-        }
+        if( $itens ) {
 
-        foreach( $listaEtapa as $etapa ) {
-
-            if( isset($valorEtapa[$etapa['idEtapa']]) ) {
-                $etapa['valorTotal'] = $valorEtapa[$etapa['idEtapa']];
+            foreach ($itens as $item) {
+                $valorTotalItem = $item['Quantidade'] * $item['Ocorrencia'] * $item['ValorUnitario'];
+                $valorEtapa[$item['idEtapa']] = $valorTotalItem + $valorEtapa[$item['idEtapa']];
             }
 
-            $novaLista[] = $etapa;
+            foreach( $listaEtapa as $etapa ) {
+
+                if( isset($valorEtapa[$etapa['idEtapa']]) ) {
+                    $etapa['valorTotal'] = $valorEtapa[$etapa['idEtapa']];
+                }
+
+                $etapasPlanilha[] = $etapa;
+            }
+
+            $this->view->EtapasProduto = $this->reordenaretapas($etapasPlanilha);
         }
 
-        //altera ordem de apresenção das etapas no orcamento
-        $newListaEtapa = $novaLista;
-        $newListaEtapa[3] = $novaLista[2];
-        $newListaEtapa[2] = $novaLista[3];
-        $this->view->EtapasProduto = $newListaEtapa;
 
     }
 
@@ -558,15 +572,15 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 .     '<td>' . utf8_encode($unidade['Descricao']). '</td>'
                 .     '<td>' . number_format($dados['Quantidade'],0) . '</td>'
                 .     '<td>' . number_format($dados['Ocorrencia'],0) . '</td>'
-                .     '<td>' . number_format($dados['ValorUnitario'], 2, ",", ".") . '</td>'
-                .     '<td>' .  number_format(($dados['Quantidade'] * $dados['ValorUnitario']) * $dados['Ocorrencia'], 2, ",", ".") . '</td>'
+                .     '<td class="right-align">' . number_format($dados['ValorUnitario'], 2, ",", ".") . '</td>'
+                .     '<td class="right-align">' .  number_format(($dados['Quantidade'] * $dados['ValorUnitario']) * $dados['Ocorrencia'], 2, ",", ".") . '</td>'
                 .     '<td class="action right-align">'
                 .         '<a data-ajax-modal="' . $urlEditarProduto . '" href="javascript:void(0);" class="btn small waves-effect waves-light tooltipped btn-primary" data-position="top" data-delay="50" data-tooltip="Editar" data-ajax-modal-type="bottom-sheet">'
                 .             '<i class="material-icons">edit</i>'
                 .         '</a>'
                 .     '</td>'
                 .     '<td class="action left-align">'
-                .           '<a class="btn small waves-effect waves-light tooltipped btn-danger btn-excluir-item" href="#" data-tooltip="Excluir" data-ajax="' . $result['idPlanilhaProposta'] . '" ><i class="material-icons">delete</i></a>'
+                .           '<a class="btn small waves-effect waves-light tooltipped btn-danger btn-excluir-item" href="javascript:void(0);" data-tooltip="Excluir" data-ajax="' . $return['idPlanilhaProposta'] . '" ><i class="material-icons">delete</i></a>'
                 .     '</td>'
                 . '</tr>';
 
@@ -600,7 +614,6 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $where = 'idPlanilhaProposta = ' . $idPlanilhaProposta;
 
        $result = $tbPlanilhaProposta->delete($where);
-        $result = true;
 
         if( $result) {
             $this->salvarcustosvinculados($this->idPreProjeto);
@@ -618,7 +631,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
-     * @deprecated Custos administrativos foi desativado em Proposta em 23/11/2016
+     * @deprecated Custos administrativos foi desativado em Proposta em 23/11/2016 [in2017]
      */
     public function cadastrarcustosAction() {
         $this->_helper->layout->disableLayout();
@@ -705,6 +718,14 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $this->view->idPreProjeto = $this->idPreProjeto;
     }
 
+
+    /**
+     * editarprodutosAction
+     *
+     * @access public
+     * @return void
+     * @deprecated Este metodo nao eh mais utilizado [in2017]
+     */
     public function editarprodutosAction () {
 
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -835,7 +856,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
-     * @deprecated Custos administrativos foi desativado na Proposta em 23/11/2016
+     * @deprecated Custos administrativos foi desativado na Proposta em 23/11/2016 [in2017]
      */
     public function editarcustosAction () {
         $this->_helper->layout->disableLayout(); // desabilita o Zend_Layout
@@ -926,7 +947,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
-     * @deprecated Custos administrativos foi desativado na Proposta em 23/11/2016
+     * @deprecated Custos administrativos foi desativado na Proposta em 23/11/2016 [in2017]
      */
     public function salvarprodutosAction () {
 
@@ -975,7 +996,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
-     * @deprecated Custos administrativos foi desativado na Proposta em 23/11/2016
+     * @deprecated Custos administrativos foi desativado na Proposta em 23/11/2016 [in2017]
      */
     public function salvarcustosAction () {
 
@@ -1050,6 +1071,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      *
      * @access public
      * @return void
+     * @deprecated Este metodo nao eh mais utilizado com a nova IN [in2017]
      */
     public function salvarmesmoprodutoAction () {
         if  ( isset ( $_POST ) ) {
@@ -1082,7 +1104,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      * excluiritensprodutosAction
      *
      * @access public
-     * @return void
+     * @return void,
+     * @deprecated Este metodo nao eh mais utilizado com a nova IN [in2017]
      */
     public function excluiritensprodutosAction()
     {
@@ -1125,23 +1148,26 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             // @todo fazer uma busca mais leve, nao precisa dos joins
             $todosItensPlanilha = $TPP->buscarCustos($idPreProjeto, 'P', '', '', '', '', 109);
 
-            if( empty($todosItensPlanilha) )
-                return;
-
             $valorTotalProjeto = null;
 
-            foreach ($todosItensPlanilha as $item) {
+            if( empty($todosItensPlanilha) ) { // se não tiver nenhum item zerar os custos
+                $valorTotalProjeto = 0;
+            }else {
 
-                $valorTotalItem = null;
-                $valorTotalItem = ($item->quantidade * $item->ocorrencia * $item->valorunitario);
+                foreach ($todosItensPlanilha as $item) {
 
-                $valorTotalProjeto = $valorTotalItem + $valorTotalProjeto;
+                    $valorTotalItem = null;
+                    $valorTotalItem = ($item->quantidade * $item->ocorrencia * $item->valorunitario);
 
-                $idUf = $item->idUF;
-                $idMunicipio = $item->idMunicipio;
+                    $valorTotalProjeto = $valorTotalItem + $valorTotalProjeto;
+
+                    $idUf = $item->idUF;
+                    $idMunicipio = $item->idMunicipio;
+                }
+
+                $ufRegionalizacaoPlanilha =  $TPP->buscarItensUfRegionalizacao($idPreProjeto);
+
             }
-
-            $ufRegionalizacaoPlanilha =  $TPP->buscarItensUfRegionalizacao($idPreProjeto);
 
             // definindo os criterios de regionalizacao
             if( !empty($ufRegionalizacaoPlanilha) ) {
