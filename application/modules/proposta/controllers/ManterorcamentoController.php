@@ -19,10 +19,11 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
     {
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
 
-        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura"; // t?tulo da p?gina
-        $auth = Zend_Auth::getInstance(); // pega a autentica??o
+        $this->view->title = "Salic - Sistema de Apoio às Leis de Incentivo à Cultura";
+
+        $auth = Zend_Auth::getInstance(); // pega a autenticacao
         $PermissoesGrupo = array();
-        if (!$auth->hasIdentity()) // caso o usu?rio esteja autenticado
+        if (!$auth->hasIdentity()) // caso o usuario esteja autenticado
         {
              return $this->_helper->redirector->goToRoute(array('controller' => 'index', 'action' => 'logout'), null, true);
         }
@@ -30,7 +31,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         //Da permissao de acesso a todos os grupos do usuario logado afim de atender o UC75
         if(isset($auth->getIdentity()->usu_codigo)){
             //Recupera todos os grupos do Usuario
-            $Usuario = new Autenticacao_Model_Usuario(); // objeto usu?rio
+            $Usuario = new Autenticacao_Model_Usuario(); // objeto usuario
             $grupos = $Usuario->buscarUnidades($auth->getIdentity()->usu_codigo, 21);
             foreach ($grupos as $grupo){
                 $PermissoesGrupo[] = $grupo->gru_codigo;
@@ -87,6 +88,10 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      */
     public function produtoscadastradosAction()
     {
+        $this->view->idPreProjeto = $this->idPreProjeto;
+
+        $this->view->charset = Zend_Registry::get('config')->db->params->charset;
+
 //        $buscarEstado = new Agente_Model_DbTable_UF();
 //        $this->view->Estados = $buscarEstado->buscar();
 //
@@ -114,47 +119,56 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 //        $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
 //        $this->view->localRealizacao = $tblAbrangencia->buscar($arrBusca);
 
-        $this->view->idPreProjeto = $this->idPreProjeto;
-
-        $this->view->charset = Zend_Registry::get('config')->db->params->charset;
     }
 
 
+    /**
+     * Lista os produtos na planilha orcamentaria
+     *
+     * @access public
+     * @return void
+     */
     public function listarprodutosAction()
     {
         $this->_helper->layout->disableLayout();
-
-        $buscarEstado = new Agente_Model_DbTable_UF();
-        $this->view->Estados = $buscarEstado->buscar();
 
         $tbPreprojeto = new Proposta_Model_DbTable_PreProjeto();
         $this->view->Produtos = $tbPreprojeto->listarProdutos($this->idPreProjeto);
 
         $manterOrcamento = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-
         $listaEtapa = $manterOrcamento->buscarEtapas('P');
+        $this->view->EtapasProduto = $this->reordenaretapas($listaEtapa);
+        $this->view->ItensProduto = $this->objectsToArray($tbPreprojeto->listarItensProdutos($this->idPreProjeto));
 
-        //altera ordem de apresenção das etapas no orcamento
-        $newListaEtapa = $listaEtapa;
-        $newListaEtapa[3] = $listaEtapa[2];
-        $newListaEtapa[2] = $listaEtapa[3];
-        $this->view->Etapa = $newListaEtapa;
+        $arrBusca = array(
+            'idprojeto' => $this->idPreProjeto,
+            'stabrangencia' => 1
+        );
 
-//        $this->view->Item = $tbPreprojeto->listarItensProdutos($this->idPreProjeto);
-        $this->view->Itens = $this->objectsToArray($tbPreprojeto->listarItensProdutos($this->idPreProjeto));
-
-        $this->view->EtapaCusto = $manterOrcamento->buscarEtapas("A");
-        $this->view->ItensEtapaCusto = $manterOrcamento->listarItensCustosAdministrativos($this->idPreProjeto, "A");
-
-        $arrBusca = array();
-        $arrBusca['idprojeto'] = $this->idPreProjeto;
-        $arrBusca['stabrangencia'] = 1;
         $tblAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $this->view->localRealizacao = $tblAbrangencia->buscar($arrBusca);
 
         $this->view->idPreProjeto = $this->idPreProjeto;
 
         $this->view->charset = Zend_Registry::get('config')->db->params->charset;
+    }
+
+    /**
+     * altera ordem de apresentação das etapas no orcamento
+     *
+     * @access public
+     * @return void
+     */
+    public function reordenaretapas( $etapas ) {
+
+        if( empty($etapas) )
+            return false;
+
+        $newListaEtapa = $etapas;
+        $newListaEtapa[3] = $etapas[2];
+        $newListaEtapa[2] = $etapas[3];
+
+        return $newListaEtapa;
     }
 
     /**
@@ -364,11 +378,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 $etapasPlanilha[] = $etapa;
             }
 
-            //altera ordem de apresenção das etapas no orcamento
-            $novaOrdemEtapas = $etapasPlanilha;
-            $novaOrdemEtapas[3] = $etapasPlanilha[2];
-            $novaOrdemEtapas[2] = $etapasPlanilha[3];
-            $this->view->EtapasProduto = $novaOrdemEtapas;
+            $this->view->EtapasProduto = $this->reordenaretapas($etapasPlanilha);
         }
 
 
@@ -562,15 +572,15 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 .     '<td>' . utf8_encode($unidade['Descricao']). '</td>'
                 .     '<td>' . number_format($dados['Quantidade'],0) . '</td>'
                 .     '<td>' . number_format($dados['Ocorrencia'],0) . '</td>'
-                .     '<td>' . number_format($dados['ValorUnitario'], 2, ",", ".") . '</td>'
-                .     '<td>' .  number_format(($dados['Quantidade'] * $dados['ValorUnitario']) * $dados['Ocorrencia'], 2, ",", ".") . '</td>'
+                .     '<td class="right-align">' . number_format($dados['ValorUnitario'], 2, ",", ".") . '</td>'
+                .     '<td class="right-align">' .  number_format(($dados['Quantidade'] * $dados['ValorUnitario']) * $dados['Ocorrencia'], 2, ",", ".") . '</td>'
                 .     '<td class="action right-align">'
                 .         '<a data-ajax-modal="' . $urlEditarProduto . '" href="javascript:void(0);" class="btn small waves-effect waves-light tooltipped btn-primary" data-position="top" data-delay="50" data-tooltip="Editar" data-ajax-modal-type="bottom-sheet">'
                 .             '<i class="material-icons">edit</i>'
                 .         '</a>'
                 .     '</td>'
                 .     '<td class="action left-align">'
-                .           '<a class="btn small waves-effect waves-light tooltipped btn-danger btn-excluir-item" href="#" data-tooltip="Excluir" data-ajax="' . $result['idPlanilhaProposta'] . '" ><i class="material-icons">delete</i></a>'
+                .           '<a class="btn small waves-effect waves-light tooltipped btn-danger btn-excluir-item" href="javascript:void(0);" data-tooltip="Excluir" data-ajax="' . $return['idPlanilhaProposta'] . '" ><i class="material-icons">delete</i></a>'
                 .     '</td>'
                 . '</tr>';
 
@@ -604,7 +614,6 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
         $where = 'idPlanilhaProposta = ' . $idPlanilhaProposta;
 
        $result = $tbPlanilhaProposta->delete($where);
-        $result = true;
 
         if( $result) {
             $this->salvarcustosvinculados($this->idPreProjeto);

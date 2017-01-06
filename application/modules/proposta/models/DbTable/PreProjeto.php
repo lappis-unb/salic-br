@@ -2984,6 +2984,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             'pp.ValorUnitario',
             'pp.qtdeDias',
             'pp.idPlanilhaProposta',
+            'Verificador' => new Zend_Db_Expr("CONCAT(pp.idProduto, pp.idetapa, pp.municipiodespesa)"),
         );
 
         $sql = $db->select()->distinct()
