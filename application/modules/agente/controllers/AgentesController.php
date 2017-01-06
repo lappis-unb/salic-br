@@ -1026,13 +1026,8 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $this->autenticacao();
         $idAgente = $this->_request->getParam("id");
 
-
-//        $lista = Agente_Model_ManterAgentesDAO::buscarEmails($idAgente);
-
-
         $modelInternet = new Agente_Model_DbTable_Internet();
         $lista = $modelInternet->buscarEmails($idAgente);
-//        var_dump($lista); die;
 
         $this->view->emails = $lista;
         $this->view->qtdEmail = count($lista);
@@ -1869,7 +1864,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      */
     private function salvaragente()
     {
-        $arrAuth = array_change_key_case((array) Zend_Auth::getInstance()->getIdentity());
+        $arrAuth = (array) Zend_Auth::getInstance()->getIdentity();
         $usuario = isset($arrAuth['IdUsuario']) ? $arrAuth['IdUsuario'] : $arrAuth['usu_codigo'];
         $arrayAgente = array(
             'cnpjcpf' => $this->_request->getParam("cpf"),
@@ -1884,7 +1879,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
 
         $agente = $mprAgentes->findBy(array('cnpjcpf' => $mdlAgente->getCnpjcpf()));
         $cpf = preg_replace('/\.|-|\//','',$_REQUEST['cpf']);
-        $idAgente = $agente['idagente'];
+        $idAgente = $agente['idAgente'];
         $nome = $this->_request->getParam("nome");
         $TipoNome = (strlen($mdlAgente->getCnpjcpf()) == 11 ? 18 : 19); // 18 = pessoa fisica e 19 = pessoa juridica
         if($this->modal == "s"){
@@ -1898,7 +1893,9 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
                 'status' => 0,
                 'usuario' => $usuario
             );
+
             $mprNomes->save(new Agente_Model_Nomes($arrNome));
+
         } catch (Exception $e) {
             parent::message("Erro ao salvar o nome: " . $e->getMessage(), "agente/agentes/incluiragente", "ERROR");
         }
@@ -2087,7 +2084,6 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
     				'siVinculo' => 0,
     				'idUsuarioResponsavel' => $arrAuth->getIdentity()->IdUsuario
     		);
-            var_dump($dadosVinculo);die;
     		$tbVinculo->inserir($dadosVinculo);
     	}
 
@@ -2643,10 +2639,10 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
         $cpf = Mascara::delMaskCPF($this->_request->getParam('cpf'));
 
         $buscar = $agentes->consultaPareceristasPainel($nome, $cpf);
-        
+
         $this->view->dados = $buscar;
         $this->view->qtpareceristas = count($buscar);
-            
+
         $orgaos = new Orgaos();
         $this->view->orgaos = $orgaos->pesquisarTodosOrgaos();
     }
