@@ -215,6 +215,13 @@
                         if (result.status == '1') {
                             $("#item-planilha-" + idPlanilhaProposta).remove();
                             Materialize.toast(result.msg, 4000, 'green white-text');
+
+                            $3.each($('div[data-ajax-render]'), function () {
+                                $3.ajaxRender({
+                                    strUrl: $('#custosvinculados').attr('data-ajax-render'),
+                                    strTarget: '#custosvinculados'
+                                });
+                            });
                         } else {
                             Materialize.toast(result.msg, 8000, 'red darken-1 white-text');
                         }
