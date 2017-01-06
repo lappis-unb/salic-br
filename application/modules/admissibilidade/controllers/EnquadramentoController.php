@@ -188,25 +188,33 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
     public function encaminharPortariaAction() {
         try {
             $get = $this->getRequest()->getParams();
-            if (isset($get['IdPRONAC']) || !empty($get['IdPRONAC']) && $get['encaminhar'] == 'true') {
-                $this->encaminharProjetoParaPortaria($get);
-            } else {
-                $this->carregarListaEncaminhamentoPortaria();
+            $post = $this->getRequest()->getPost();
+
+            if (isset($get['IdPRONAC']) && !empty($get['IdPRONAC']) && $get['encaminhar'] == 'true') {
+                $this->encaminharProjetoParaPortaria($get['IdPRONAC']);
+                parent::message('Projeto encaminhado com sucesso.', '/admissibilidade/enquadramento/encaminhar-portaria', 'CONFIRM');
+            } elseif(isset($post['IdPRONAC']) && is_array($post['IdPRONAC']) && count($post['IdPRONAC']) > 0) {
+                foreach($post['IdPRONAC'] as $idPronac) {
+                    $this->encaminharProjetoParaPortaria($idPronac);
+                }
+                parent::message('Projetos encaminhados com sucesso.', '/admissibilidade/enquadramento/encaminhar-portaria', 'CONFIRM');
             }
+            $this->carregarListaEncaminhamentoPortaria();
         } catch (Exception $objException) {
             parent::message($objException->getMessage(), '/admissibilidade/enquadramento/encaminhar-portaria');
         }
     }
 
-    private function encaminharProjetoParaPortaria($get) {
+    private function encaminharProjetoParaPortaria($IdPRONAC) {
+
         $objProjeto = new Projetos();
-        $projeto = $objProjeto->findBy(array('IdPRONAC' => $get['IdPRONAC']));
+        $projeto = $objProjeto->findBy(array('IdPRONAC' => $IdPRONAC));
 
         if(!$projeto) {
             throw new Exception("Projeto n&atilde;o encontrado.");
         }
 
-        if($projeto['Situacao'] != 'B02' || $projeto['Situacao'] != 'B03') {
+        if($projeto['Situacao'] != 'B02' && $projeto['Situacao'] != 'B03') {
             throw new Exception("Situa&ccedil;&atilde;o do projeto inv&aacute;lida!");
         }
 
@@ -228,8 +236,6 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
         $arrayWhere = array('IdPRONAC  = ?' => $projeto['IdPRONAC']);
         $objProjeto->update($arrayDadosProjeto, $arrayWhere);
-
-        parent::message('Projeto encaminhado com sucesso.', '/admissibilidade/enquadramento/encaminhar-portaria', 'CONFIRM');
     }
 
     private function carregarListaEncaminhamentoPortaria() {
