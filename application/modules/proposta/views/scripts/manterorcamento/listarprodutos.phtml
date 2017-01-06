@@ -1,5 +1,4 @@
 <?php if ( !empty($this->Produtos) ) : ?>
-
     <p class="right-align" style="position: absolute; top: 190px; right: 20px">
         <a class="expandall btn-floating waves-effect waves-light btn tooltipped" onClick="expandAll();" data-tooltip="Expandir tudo"><i class="material-icons left">fullscreen</i></a>
         <a class="collapseall btn-floating waves-effect waves-light btn tooltipped" onClick="collapseAll();" data-tooltip="Fechar tudo"><i class="material-icons left">fullscreen_exit</i></a>
@@ -30,12 +29,18 @@
                                                 <?php foreach ($this->Etapa as $etapa) : //idEtapa?>
                                                     <div id="etapa<?php echo $etapa->idEtapa . $local['idMunicipioIBGE'] . $produto->CodigoProduto; ?>" class="col s12 etapa-<?php echo $etapa->idEtapa; ?>">
 
-                                                        <?php if ( !empty($this->Itens)
-                                                            && in_array($etapa->idEtapa, array_column($this->Itens, 'idEtapa'))
-                                                            && in_array($local['cidade'], array_column($this->Itens, 'Municipio')) ) : ?>
+                                                        <?php
 
-                                                            <table class="bordered striped centered" style="margin: 0px;">
-                                                                <thead>
+                                                            $display_item = false;
+                                                            if ( !empty($this->Itens)
+                                                                && in_array($etapa->idEtapa, array_column($this->Itens, 'idEtapa'))
+                                                                    && in_array($local['cidade'], array_column($this->Itens, 'Municipio'))
+                                                                       && in_array($produto->CodigoProduto, array_column($this->Itens, 'CodigoProduto')) )
+                                                                        $display_item = true;
+                                                        ?>
+                                                            <table class="itens bordered striped centered" style="margin: 0px;">
+
+                                                                <thead style="display : <?php echo ($display_item) ? 'table-header-group':'none'; ?>">
                                                                     <tr class="center">
                                                                         <th class="left-align">Item</th>
                                                                         <th>Unidade</th>
@@ -47,59 +52,61 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <?php foreach ($this->Itens as $key => $item) : ?>
-                                                                        <?php if ($produto->CodigoProduto == $item['CodigoProduto']) : ?>
-                                                                            <?php if ($etapa->idEtapa == $item['idEtapa']) : ?>
-                                                                                <?php if ($local['cidade'] == $item['Municipio']) : ?>
+                                                                    <?php if ( $display_item ) : ?>
+                                                                        <?php foreach ($this->Itens as $key => $item) : ?>
+                                                                            <?php if ($produto->CodigoProduto == $item['CodigoProduto']) : ?>
+                                                                                <?php if ($etapa->idEtapa == $item['idEtapa']) : ?>
+                                                                                    <?php if ($local['cidade'] == $item['Municipio']) : ?>
 
-                                                                                    <?php
-                                                                                    $valorTotalItem = ($item['Quantidade'] * $item['ValorUnitario']) * $item['Ocorrencia'];
-                                                                                    $valorTotalEtapas[$etapa->DescricaoEtapa] = $valorTotalItem +  $valorTotalEtapas[$etapa->DescricaoEtapa];
-                                                                                    $valorProjeto = $valorTotalItem + $valorProjeto;
-                                                                                    ?>
+                                                                                        <?php
+                                                                                        $valorTotalItem = ($item['Quantidade'] * $item['ValorUnitario']) * $item['Ocorrencia'];
+                                                                                        $valorTotalEtapas[$etapa->DescricaoEtapa] = $valorTotalItem +  $valorTotalEtapas[$etapa->DescricaoEtapa];
+                                                                                        $valorProjeto = $valorTotalItem + $valorProjeto;
+                                                                                        ?>
 
-                                                                                     <?php
-                                                                                        $editarProduto = array(
-                                                                                            'module' => 'proposta',
-                                                                                            'controller'=>'manterorcamento',
-                                                                                            'action'=>'formitem',
-                                                                                            'item' => $this->escape($item['idItem']),
-                                                                                            'etapa' => $this->escape($etapa->idEtapa),
-                                                                                            'produto' => $this->escape($produto->CodigoProduto),
-                                                                                            'idPlanilhaProposta' => $item['idPlanilhaProposta'],
-                                                                                            'idPreProjeto' => $this->escape($produto->idProposta),
-                                                                                            'idUf' => $local['idUF'],
-                                                                                            'idMunicipio' => $local['idMunicipioIBGE']
-                                                                                        );
-                                                                                    ?>
+                                                                                         <?php
+                                                                                            $editarProduto = array(
+                                                                                                'module' => 'proposta',
+                                                                                                'controller'=>'manterorcamento',
+                                                                                                'action'=>'formitem',
+                                                                                                'item' => $this->escape($item['idItem']),
+                                                                                                'etapa' => $this->escape($etapa->idEtapa),
+                                                                                                'produto' => $this->escape($produto->CodigoProduto),
+                                                                                                'idPlanilhaProposta' => $item['idPlanilhaProposta'],
+                                                                                                'idPreProjeto' => $this->escape($produto->idProposta),
+                                                                                                'idUf' => $local['idUF'],
+                                                                                                'idMunicipio' => $local['idMunicipioIBGE']
+                                                                                            );
+                                                                                        ?>
 
-                                                                                    <tr id="item-planilha-<?php echo $item['idPlanilhaProposta']; ?>">
-                                                                                        <td class="left-align"><?php echo $item['DescricaoItem']; ?></td>
-                                                                                        <td><?php echo $item['Unidade']; ?></td>
-                                                                                        <td><?php echo number_format($item['Quantidade'],0) ?></td>
-                                                                                        <td><?php echo number_format($item['Ocorrencia'],0) ?></td>
-                                                                                        <td><?php echo number_format($item['ValorUnitario'], 2, ",", ".") ?></td>
-                                                                                        <td ><?php echo number_format(($item['Quantidade'] * $item['ValorUnitario']) * $item['Ocorrencia'], 2, ",", ".") ?></td>
-                                                                                        <td class="action right-align">
-                                                                                            <a data-ajax-modal="<?php echo $this->url($editarProduto); ?>" href="javascript:void(0);" class="btn small waves-effect waves-light tooltipped btn-primary" data-position="top" data-delay="50" data-tooltip="Editar" data-ajax-modal-type="bottom-sheet">
-                                                                                                <i class="material-icons">edit</i>
-                                                                                            </a>
-                                                                                        </td>
-                                                                                        <td class="action left-align">
-                                                                                            <a class="btn small waves-effect waves-light tooltipped btn-danger btn-excluir-item" href="javascript:void(0);"  data-tooltip="Excluir" data-ajax="<?php echo $item['idPlanilhaProposta'];?>" ><i class="material-icons">delete</i></a>
-                                                                                        </td>
-                                                                                    </tr>
+                                                                                        <tr id="item-planilha-<?php echo $item['idPlanilhaProposta']; ?>">
+                                                                                            <td class="left-align"><?php echo $item['DescricaoItem']; ?></td>
+                                                                                            <td><?php echo $item['Unidade']; ?></td>
+                                                                                            <td><?php echo number_format($item['Quantidade'],0) ?></td>
+                                                                                            <td><?php echo number_format($item['Ocorrencia'],0) ?></td>
+                                                                                            <td><?php echo number_format($item['ValorUnitario'], 2, ",", ".") ?></td>
+                                                                                            <td ><?php echo number_format(($item['Quantidade'] * $item['ValorUnitario']) * $item['Ocorrencia'], 2, ",", ".") ?></td>
+                                                                                            <td class="action right-align">
+                                                                                                <a data-ajax-modal="<?php echo $this->url($editarProduto); ?>" href="javascript:void(0);" class="btn small waves-effect waves-light tooltipped btn-primary" data-position="top" data-delay="50" data-tooltip="Editar" data-ajax-modal-type="bottom-sheet">
+                                                                                                    <i class="material-icons">edit</i>
+                                                                                                </a>
+                                                                                            </td>
+                                                                                            <td class="action left-align">
+                                                                                                <a class="btn small waves-effect waves-light tooltipped btn-danger btn-excluir-item" href="javascript:void(0);"  data-tooltip="Excluir" data-ajax="<?php echo $item['idPlanilhaProposta'];?>" ><i class="material-icons">delete</i></a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    <?php endif; ?>
                                                                                 <?php endif; ?>
                                                                             <?php endif; ?>
-                                                                        <?php endif; ?>
-                                                                    <?php endforeach; ?>
+                                                                        <?php endforeach; ?>
+                                                                    <?php else : ?>
+                                                                        <div class="info valign-wrapper center-align">
+                                                                            <p class="valign center-align">Nenhum item cadastrado em <?php echo $etapa->DescricaoEtapa; ?>.</p>
+                                                                        </div>
+                                                                    <?php endif; ?>
                                                                 </tbody>
                                                             </table>
-                                                        <?php else : ?>
-                                                            <div class="valign-wrapper center-align">
-                                                                <p class="valign center-align">Nenhum item cadastrado em <?php echo $etapa->DescricaoEtapa; ?>.</p>
-                                                            </div>
-                                                        <?php endif; ?>
+
 
                                                         <?php
                                                             $novoProduto = array(
