@@ -116,9 +116,8 @@
         <div class="col s12">
             <div class="section">
                 <h5>Cadastrar novo item
-                    <span class="badge" data-badge-caption="">Etapa: <?php echo $this->Etapa['Descricao']; ?> - Local de realizacao: <?php echo $this->Municipio['Descricao']; ?> - <?php echo $this->Estado['Descricao']; ?></span>
+                    <span class="badge" data-badge-caption=""><div><?php echo $this->Etapa['Descricao']; ?></div> <i class="material-icons">place</i> <div><?php echo $this->Municipio['Descricao']; ?> - <?php echo $this->Estado['Descricao']; ?></div></span>
                 </h5>
-                <a class="btn-close-modal btn-floating red"><i class="material-icons">clear</i></a>
             </div>
 
             <?php foreach ($this->Dados as $dados) : ?>
@@ -171,7 +170,7 @@
                             <label for="vlunitario">Valor Unit&aacute;rio</label>
                         </div>
                         <div class="input-field col s1">
-                            <input placeholder="R$" type="text" value="" maxlength="6" class="valida disabled" size="15" name="total" id="total" readonly="readonly">
+                            <input placeholder="R$" type="text" value="" maxlength="6" class="disabled" size="15" name="total" id="total" disabled">
                             <label for="total">Total</label>
                         </div>
 
@@ -187,14 +186,15 @@
                         </div>
 
                         <div class="input-field col s8">
-                            <textarea cols="80" id="editor1" name="editor1" rows="7" class="materialize-textarea browser-default" placeholder=" "><?php echo $dados->Justificativa; ?></textarea>
                             <label for="edito1">Detalhamento / Justificativa / Observa&ccedil;&otilde;es</label>
+                            <textarea cols="80" id="editor1" name="editor1" rows="7" class="materialize-textarea browser-default" placeholder=" "><?php echo $dados->Justificativa; ?></textarea>
                         </div>
 
                     </div>
 
                     <div class="row">
                         <div class="input-field col s12 center-align">
+                            <a class="btn-close-modal waves-effect waves-teal btn btn-info"><i class="material-icons left">clear</i>Fechar</a>
                             <a href="javascript:void(0);" class="btn-salvar btn waves-effect waves-light" name="action">Salvar
                                 <i class="material-icons right">send</i>
                             </a>
