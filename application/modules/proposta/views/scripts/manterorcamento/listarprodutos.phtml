@@ -6,7 +6,7 @@
     <?php foreach ($this->Produtos as $produto) : ?>
         <ul class="collapsible coll-produto produto-<?php echo $produto->CodigoProduto; ?>" data-collapsible="accordion">
             <li>
-                <div class="collapsible-header produto"><i class="material-icons">more_vert</i><?php echo $produto->DescricaoProduto; ?> </div>
+                <div class="collapsible-header produto"><i class="material-icons">more_vert</i><?php echo $produto->DescricaoProduto; ?> <?php echo ( $produto->ProdutoPrincipal) ? '<span class="badge">Produto Principal</span>' : ''; ?></div>
                 <div class="collapsible-body">
                     <div class="row">
                         <div class="col s12">
@@ -32,8 +32,11 @@
 
                                                 $display_item = false;
 
-                                                if( in_array($verificador, array_column($this->ItensProduto, 'Verificador') ) )
-                                                    $display_item = true;
+                                                if( !empty($this->ItensProduto)) {
+
+                                                    if (in_array($verificador, array_column($this->ItensProduto, 'Verificador')))
+                                                        $display_item = true;
+                                                }
 
                                                 ?>
 

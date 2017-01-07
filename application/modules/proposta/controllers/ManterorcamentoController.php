@@ -600,6 +600,8 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
      */
     public function excluiritemAction()
     {
+        $this->verificarPermissaoAcesso(true, false, false);
+
         $this->_helper->layout->disableLayout();
 
         $params = $this->getRequest()->getParams();
