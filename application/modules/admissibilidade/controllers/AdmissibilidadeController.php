@@ -358,8 +358,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $avaliacaoProposta = new tbAvaliacaoProposta();
         $avaliacaoProposta->inserir($dados);
 
-        $objTbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
-        $objTbMovimentacao->alterarConformidadeProposta($post->idPreProjeto, $this->idUsuario, Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL);
+        if ($dados['ConformidadeOK'] == 1) {
+            $objTbMovimentacao = new Proposta_Model_DbTable_TbMovimentacao();
+            $objTbMovimentacao->alterarConformidadeProposta($post->idPreProjeto, $this->idUsuario, Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL);
+        }
 
         parent::message("Conformidade visual finalizada com sucesso!", "/admissibilidade/admissibilidade/exibirpropostacultural?idPreProjeto=" . $post->idPreProjeto . "&gravado=sim", "CONFIRM");
     }
@@ -2587,7 +2589,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                INNER JOIN Agentes.dbo.EnderecoNacional e on (p.idAgente = e.idAgente and e.Status = 1)
                                INNER JOIN Agentes.dbo.vUFMunicipio u on (e.UF = u.idUF and e.Cidade = u.idMunicipio )
                                 LEFT JOIN  SAC.dbo.vwNatureza n on (p.idAgente =n.idAgente)
-                               WHERE p.CNPJCPF='{$cnpjcpf}' 
+                               WHERE p.CNPJCPF='{$cnpjcpf}'
                                  AND Correspondencia = 1";
             } else {
                 $sqlInteressado = "  UPDATE SAC.dbo.Interessado
@@ -2666,7 +2668,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                    INNER JOIN Agentes.dbo.Agentes a on (p.idAgente = a.idAgente)
                                    INNER JOIN Agentes.dbo.EnderecoNacional e on (a.idAgente = e.idAgente and e.Status = 1)
                                    INNER JOIN Agentes.dbo.UF u on (e.UF = u.idUF)
-                                   WHERE idPreProjeto  = {$idPreProjeto} 
+                                   WHERE idPreProjeto  = {$idPreProjeto}
                                      AND NOT EXISTS(SELECT TOP 1 * FROM SAC.dbo.Projetos x WHERE p.idPreProjeto = x.idProjeto)";
 
             $resultado = $db->query($sqlProjetos);
@@ -2700,8 +2702,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 //            $resultado = $db->query($sqlAnaliseDeConteudo);
 
             $sqlContaBancaria = "INSERT INTO SAC.dbo.ContaBancaria (AnoProjeto,Sequencial,Mecanismo,Banco,Agencia,Logon)
-                                 SELECT '{$AnoProjeto}', '{$NrProjeto}', Mecanismo, '001', AgenciaBancaria, {$idUsuario} 
-                                   FROM SAC.dbo.PreProjeto 
+                                 SELECT '{$AnoProjeto}', '{$NrProjeto}', Mecanismo, '001', AgenciaBancaria, {$idUsuario}
+                                   FROM SAC.dbo.PreProjeto
                                   WHERE idPreProjeto = {$idPreProjeto}";
             $resultado = $db->query($sqlContaBancaria);
 
@@ -2709,7 +2711,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                 throw new Exception ("Não é possível incluir mais de %d registros na ContaBancari");
             }
 
-            $sqlHistoricoEmail = "SELECT TOP 1 * FROM SAC.dbo.tbHistoricoEmail WHERE idPronac = {$idPronac} and 
+            $sqlHistoricoEmail = "SELECT TOP 1 * FROM SAC.dbo.tbHistoricoEmail WHERE idPronac = {$idPronac} and
                                   idTextoEmail = 12 and (CONVERT(char(10),(DtEmail),111) = CONVERT(char(10),getdate(),111))";
             $arrayHistoricoEmail = $db->fetchRow($sqlHistoricoEmail);
             if(!$arrayHistoricoEmail) {
