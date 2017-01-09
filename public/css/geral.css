@@ -1002,7 +1002,7 @@ div.plan span {
 	margin-left:90px;
 }
 .msgALERT, .msgCONFIRM, .msgERROR {
-	min-height:30px;
+	/*min-height:30px;*/
 }
 .msgALERT div, .msgCONFIRM div, .msgERROR div {
 	margin-left:40px;
