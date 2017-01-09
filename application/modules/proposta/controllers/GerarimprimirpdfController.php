@@ -78,8 +78,8 @@ class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstrac
 
         $id_projeto = $_REQUEST['idPreProjeto'];
         $this->view->id_projeto = $id_projeto;
-
         $tblPreProjeto = new Proposta_Model_DbTable_PreProjeto();
+
         $rsDadosProjeto = array_change_key_case( $tblPreProjeto->buscaCompleta(array("idPreProjeto = ?"=>$id_projeto))->current()->toArray() );
         $this->view->rsDadosProjeto = $rsDadosProjeto;
 
