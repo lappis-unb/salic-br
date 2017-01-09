@@ -39,8 +39,11 @@
                 <form method="post"
                       class="materialize"
                       id="formEnquadramentoProjeto"
-                      action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'enquadramento', 'action' => 'enquadrarprojeto'), '', true) . "?IdPRONAC={$this->IdPRONAC}"; ?>"
-                      onsubmit="return false;">
+                      action="<?php echo $this->url(array(
+                          'module' => 'admissibilidade',
+                          'controller' => 'enquadramento',
+                          'action' => 'enquadrarprojeto'
+                          ), '', true) . "?IdPRONAC={$this->projeto['IdPRONAC']}"; ?>">
                     <table class=" gerenciar_pareceres">
                         <tr>
                             <td valign="top" colspan="2">
@@ -176,13 +179,13 @@
                 rules: {
                     observacao: {
                         validarPreenchimento: true,
-                        validarPreenchimentoMaximo: true,
+                        validarPreenchimentoMaximo: true
                     }
                 },
-                messages: {observacao
+                messages: {
                     observacao: {
                         validarPreenchimento : "Dado obrigat&oacute;rio n&atilde;o informado",
-                        validarPreenchimentoMaximo: "limite excedido",
+                        validarPreenchimentoMaximo: "limite excedido"
                     }
                 },
 
