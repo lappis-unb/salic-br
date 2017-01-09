@@ -359,10 +359,10 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
         }
     }
 
-    public function recursoDesistenciaEnquadramentoSalvarAction(){
-        
+    public function recursoDesistenciaEnquadramentoSalvarAction()
+    {
         $post = Zend_Registry::get('post');
-        $idPronac = $this->_request->getParam("idPronac"); // pega o id do pronac via get
+        $idPronac = $this->_request->getParam("idPronac");
         $auth = Zend_Auth::getInstance();
 
         if (strlen($idPronac) > 7) {
@@ -381,31 +381,19 @@ class SolicitarRecursoDecisaoController extends MinC_Controller_Action_Abstract 
                 'tpSolicitacao'         => 'DR',
                 'tpRecurso'             => 1,
                 'stAnalise'             => null,
-                'stEstado'              => 1
-            );
-
-
-            $objProjetos = new Projetos();
-
-            $dadosProjetos = array(
-                'DtSituacao'        => $objProjetos->getExpressionDate(),
-                'Situacao'          => 'D27',
-                'logon'             => $auth->getIdentity()->IdUsuario,
-                'ProvidenciaTomada' => 'Desistência do prazo recursal'
+                'stEstado'              => 0
             );
 
             $tbRecurso = new tbRecurso();
             $resultadoPesquisa = $tbRecurso->buscar(array('IdPRONAC = ?'=> $idPronac));
 
-            $objProjetos->update($dadosProjetos, array('IdPRONAC = ?' => $idPronac));
-            
             RecursoDAO::cadastrar($dados);
             parent::message('A desistência do prazo recursal foi cadastrada com sucesso!', "consultardadosprojeto?idPronac=". Seguranca::encrypt($idPronac), "CONFIRM");
         } else {
             parent::message('Não foi possível cadastrar a desistência do prazo recursal!', "consultardadosprojeto?idPronac=". Seguranca::encrypt($idPronac), "ERROR");
         }
     }
-    
+
     public function concordarDesistenciaRecursalModalAction(){
         $this->_helper->layout->disableLayout();
          $this->view->idPronac = $this->_request->getParam("idPronac");
