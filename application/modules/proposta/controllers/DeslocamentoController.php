@@ -164,26 +164,29 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
             "de.qtde "=>$post['qtde']), array(), array('iddeslocamento' => $post['iddeslocamento']));
 
         if(!empty($deslocamentos)){
-            parent::message("Trecho j&aacute; cadastrado, transa&ccedil;&atilde;o cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ALERT");
+            parent::message("Trecho j&aacute; cadastrado, transa&ccedil;&atilde;o cancelada!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto, "ALERT");
             die;
         }
 
-        $mapper->beginTransaction();
+//        $mapper->beginTransaction();
         try {
+            if( empty($post['iddeslocamento']) )
+                unset($post['iddeslocamento']);
+
             $intIdSave = $mapper->save(new Proposta_Model_TbDeslocamento($post));
-            $mapper->commit();
+//            $mapper->commit();
             if($post['iddeslocamento'] == '') {
-                parent::message("Cadastro realizado com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
+                parent::message("Cadastro realizado com sucesso!", "/proposta/localderealizacao/index?deslocamento=true&idPreProjeto=".$this->idPreProjeto, "CONFIRM");
             }
             else {
-                parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
+                parent::message("Altera&ccedil;&atilde;o realizada com sucesso!", "/proposta/localderealizacao/index?deslocamento=true&idPreProjeto=".$this->idPreProjeto, "CONFIRM");
             }
 
         }catch(Zend_Exception $ex) {
-            $mapper->rollback();
+//            $mapper->rollback();
             echo $ex->getMessage();
         }
-        parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o! <br>", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "ERROR");
+        parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o! <br>", "/proposta/localderealizacao/index?deslocamento=true&idPreProjeto=".$this->idPreProjeto, "ERROR");
     }
 
     /**
@@ -198,7 +201,7 @@ class Proposta_DeslocamentoController extends MinC_Controller_Action_Abstract {
             try {
                 $mapper = new Proposta_Model_TbDeslocamentoMapper();
                 $excluir = $mapper->delete($_GET['id']);
-                parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/localderealizacao/index?idPreProjeto=".$this->idPreProjeto.$edital, "CONFIRM");
+                parent::message("Exclus&atilde;o realizada com sucesso!", "/proposta/localderealizacao/index?deslocamento=true&idPreProjeto=".$this->idPreProjeto, "CONFIRM");
             }catch(Zend_Exception $ex) {
                 $this->view->message      = $ex->getMessage();
                 $this->vies->message_type = "ERROR";

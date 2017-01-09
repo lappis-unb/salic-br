@@ -753,4 +753,32 @@ class tbRecurso extends MinC_Db_Table_Abstract
         $this->update($arrayAlteracaoRecurso, $arrayBuscaRecurso);
     }
 
+    /**
+     * Retorna o projetos com desistencia recursal apenas fase 1
+     *
+     * @param mixed $idPronac
+     * @access public
+     * @return void
+     */
+    public function desistenciaRecursal($area)
+    {
+        $select = $this->select()
+            ->setIntegrityCheck(false)
+            ->from(array('r' => $this->_name), '*', $this->_schema)
+            ->join(array('p' => 'projetos'),'r.IdPRONAC = p.IdPRONAC', '*', $this->_schema)
+            ->where('stEstado = 0')
+            ->where("tpSolicitacao = 'DR'")
+            ->where('siFaseProjeto = 1')
+        ;
+
+        if ($area == '2'){
+            $select->where("area = 2");
+        } else {
+            $select->where("area <> 2");
+        }
+
+        $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
+
+        return $this->_db->fetchAll($select);
+    }
 }
