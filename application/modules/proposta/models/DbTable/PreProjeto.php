@@ -2919,10 +2919,11 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
 
         $sql = $db->select()
             ->from(array('pre' => 'preprojeto'), array('pre.idpreprojeto as PreProjeto', 'pre.idpreprojeto as idProposta'), $this->getSchema('sac'))
-            ->join(array('pd' => 'planodistribuicaoproduto'), '(pre.idpreprojeto = pd.idProjeto AND pd.stplanodistribuicaoproduto = 1)', null, $this->getSchema('sac'))
+            ->join(array('pd' => 'planodistribuicaoproduto'), '(pre.idpreprojeto = pd.idProjeto AND pd.stplanodistribuicaoproduto = 1)', array('pd.stPrincipal as ProdutoPrincipal'), $this->getSchema('sac'))
             ->join(array('p' => 'produto'), '(pd.idproduto = p.codigo)', array('p.codigo as CodigoProduto', 'p.descricao as DescricaoProduto'),  $this->getSchema('sac'))
             ->where('idpreprojeto = ?', $idPreProjeto)
-            ->group(array('p.codigo', 'p.descricao', 'idpreprojeto'))
+            ->order('pd.stPrincipal DESC')
+            ->group(array('p.codigo', 'p.descricao', 'idpreprojeto', 'pd.stPrincipal'))
         ;
 
         return $db->fetchAll($sql);
