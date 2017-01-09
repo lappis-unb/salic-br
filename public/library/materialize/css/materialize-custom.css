@@ -153,19 +153,19 @@ nav.breadcrumb {
     position: relative;
 }
 
+/* Buttons */
+.btn-default,
+.btn-success  {
+    background: #4caf50;
+    color: #fff !important;
+}
 
-.btn:focus,
-.btn-large:focus,
-.btn-floating:focus,
-.btn:hover,
 .btn-default:focus,
 .btn-sucess:focus,
 .btn-default:hover,
 .btn-success:hover {
     background: #388e3c;
 }
-
-/* Buttons */
 
 .btn-primary {
     background-color: #29b6f6;
