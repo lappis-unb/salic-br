@@ -1,22 +1,10 @@
 <?php
-/**
- * Proposta_PlanoDistribuicaoController
- *
- * @uses GenericControllerNew
- * @package
- * @author wouerner <wouerner@gmail.com>
- */
+
 class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstract
 {
-        private $intTamPag;
-        private $_idPreProjeto = null;
+    private $intTamPag;
+    private $_idPreProjeto = null;
 
-	/**
-	 * Reescreve o m�todo init()
-	 * @access public
-	 * @param void
-	 * @return void
-	 */
 	public function init()
 	{
         $idPreProjeto = $this->getRequest()->getParam('idPreProjeto');
@@ -60,12 +48,6 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
             $this->verificarPermissaoAcesso(true, false, false);
 	}
 
-    /**
-     * indexAction
-     *
-     * @access public
-     * @return void
-     */
     public function indexAction()
     {
         $pag = 1;
@@ -102,12 +84,6 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $this->montaTela("planodistribuicao/index.phtml", $arrDados);
     }
 
-    /**
-     * consultarComponenteAction
-     *
-     * @access public
-     * @return void
-     */
     public function consultarComponenteAction()
     {
         $get = Zend_Registry::get("get");
@@ -126,12 +102,6 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         }
     }
 
-    /**
-     * frmPlanoDistribuicaoAction
-     *
-     * @access public
-     * @return void
-     */
     public function frmPlanoDistribuicaoAction(){
 
         $this->_helper->viewRenderer->setNoRender(true);
@@ -145,7 +115,6 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
             $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscarPlanoDistribuicao(array('idPlanoDistribuicao = ?' =>$get->idPlanoDistribuicao));
             $arrDados["planoDistribuicao"] = $rsPlanoDistribuicao;
         }
-//        xd($rsPlanoDistribuicao);
 
         $tblProduto = new Produto();
         $rsProdutos = $tblProduto->buscar(array("stestado = ?" => 0), array("descricao ASC"));
@@ -165,10 +134,6 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
             $arrDados["segmento"] = $tblSegmento->buscar(array("codigo=?" =>$arrPlanoDistribuicao[0]['Segmento']));
         }
 
-//        $tblLogomarca = new Verificacao();
-//        $listaLogomarcas = $tblLogomarca->buscar(array("idtipo=?"=>3));
-//
-//        $arrDados["combologomarcas"] = $listaLogomarcas;
         $arrDados["comboprodutos"] = $rsProdutos;
         $manterAgentes = new ManterAgentes();
         $arrDados["comboareasculturais"] = $manterAgentes->listarAreasCulturais();
@@ -180,12 +145,6 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         $this->montaTela("planodistribuicao/formplanodistribuicao.phtml", $arrDados);
     }
 
-    /**
-     * salvarAction
-     *
-     * @access public
-     * @return void
-     */
     public function salvarAction(){
 
         $post = Zend_Registry::get("post");
@@ -264,12 +223,6 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         }
     }
 
-    /**
-     * apagarAction
-     *
-     * @access public
-     * @return void
-     */
     public function apagarAction(){
         $get = Zend_Registry::get("get");
         $tblPlanoDistribuicao = new PlanoDistribuicao();
@@ -280,21 +233,5 @@ class Proposta_PlanoDistribuicaoController extends MinC_Controller_Action_Abstra
         }else{
             parent::message("N&atilde;o foi poss&iacute;vel realizar a opera&ccedil;&atilde;o!!", "/proposta/plano-distribuicao/index?idPreProjeto=".$this->_idPreProjeto, "ERROR");
         }
-    }
-
-    /**
-     * testeAction
-     *
-     * @access public
-     * @return void
-     * @todo verificar uso dessa action
-     */
-    public function testeAction(){
-        $tblPlanoDistribuicao = new PlanoDistribuicao();
-        $rs = $tblPlanoDistribuicao->fetchAll();
-        echo "<pre>";
-        print_r($rs);
-
-        die("<br>parando");
     }
 }
