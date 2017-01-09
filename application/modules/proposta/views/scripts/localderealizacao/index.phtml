@@ -11,6 +11,10 @@ if(isset($_GET['edital'])) {
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
+        <?php if( isset($_GET['deslocamento']) ) : ?>
+            trocatela(2);
+        <?php endif; ?>
+
         <?php if(!empty($this->movimentacaoAtual) && $this->movimentacaoAtual != '95'): ?>
              //DESABILITA ALTERACOES NOS DADOS DO FORMULARIO (INCLUIR/ALTERAR/EXCLUIR)
              JSBloquearAlteracaoFormulario();
@@ -30,7 +34,7 @@ if(isset($_GET['edital'])) {
         $("#modalConfirmaExclusao").dialog
         ({
             width:400,
-            height:170,
+            height:180,
             EscClose:false,
             modal:true
             ,buttons:
@@ -84,8 +88,8 @@ montaGuiaLinks($controller, $links);
 <div id="conteudo">
     <?php  if(!isset($_GET['edital'])): ?>
         <p style="margin-top: 30px;">
-            &nbsp;&nbsp;&nbsp;&nbsp<input type="radio" checked name="selecionar" id="selecionar1" value="realizacao" onclick="trocatela('1')" style="margin-right: 15px;" />Local de Realiza&ccedil;&atilde;o &nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp<input type="radio" name="selecionar" id="selecionar2" value="deslocamento" onclick="trocatela('2')" style="margin-right: 15px;" />Deslocamento
+            &nbsp;&nbsp;&nbsp;&nbsp<input type="radio" <?php echo( !isset($_GET['deslocamento']) ) ? 'checked' : ''; ?> name="selecionar" id="selecionar1" value="realizacao" onclick="trocatela('1')" style="margin-right: 15px;" />Local de Realiza&ccedil;&atilde;o &nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp<input type="radio" <?php echo( isset($_GET['deslocamento']) ) ? 'checked' : ''; ?> name="selecionar" id="selecionar2" value="deslocamento" onclick="trocatela('2')" style="margin-right: 15px;" />Deslocamento
         </p>
     <?php  endif; ?>
 
