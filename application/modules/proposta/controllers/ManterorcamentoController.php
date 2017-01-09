@@ -487,7 +487,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             'FonteRecurso' => $params['fonterecurso'],
             'UfDespesa' => $params['uf'],
             'MunicipioDespesa' => $params['municipio'],
-            'dsJustificativa' =>  substr($justificativa,0,450),
+            'dsJustificativa' =>  substr($justificativa,0,500),
             'idUsuario' => $this->idUsuario
         );
 
