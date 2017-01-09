@@ -1,6 +1,20 @@
 /*.btn {*/
 /*background: transparent;*/
 /*}*/
+
+/* Paleta de cores by Jamile
+    Verde claro: #81C784
+    Verde médio: #4CAF50
+    Verde escuro: #1B5E20
+    Rosa: #FF8A80
+    Azul: #039BE5
+    Laranja: #FB8C00
+    Amarelo: #FDD835
+    Cinza claro: #FAFAFA
+    Cinza médio: #EEEEEE
+    Cinza escuro: #212121
+*/
+
 table td {
     background: transparent;
     padding: 8px;
@@ -137,6 +151,66 @@ body {
 nav.breadcrumb {
     bottom: 20px;
     position: relative;
+}
+
+.btn,
+.btn-large,
+.btn-floating,
+.btn-default,
+.btn-success  {
+    background: #4caf50;
+    color: #fff !important;
+}
+
+.btn:focus,
+.btn-large:focus,
+.btn-floating:focus,
+.btn:hover,
+.btn-default:focus,
+.btn-sucess:focus,
+.btn-default:hover,
+.btn-success:hover {
+    background: #388e3c;
+}
+
+/* Buttons */
+
+.btn-primary {
+    background-color: #29b6f6;
+    color: #fff !important;
+}
+
+.btn-primary:focus,
+.btn-primary:hover {
+    background: #0277bd;
+}
+
+.btn-danger {
+    background: #FF8A80;
+    color: #fff !important;
+}
+
+.btn-danger:focus,
+.btn-danger:hover {
+    background: #ff5252;
+
+}
+
+.btn-warning {
+
+}
+
+.btn-success {
+
+}
+
+.btn-info {
+    background: #212121;
+    color: #fff;
+}
+.btn-info:focus,
+.btn-info:hover {
+    background: #757575;
 }
 
 .btn.small{
