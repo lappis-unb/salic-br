@@ -27,28 +27,27 @@
                     <tr class="titulo_tabela">
                         <th width="14%" >PRONAC</th>
                         <th>Nome do Projeto</th>
-                        <th>&Aacute;rea</th>
-                        <th>Segmento</th>
                         <th align="center">A&ccedil;&atilde;o</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <td class="center-align">
-                            <a class="black-text btn white tooltipped" data-tooltip="Visualizar Projeto" href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($d->idPronac); ?>" target="_blank">
-                                160141
-                                <i class="material-icons left hide-on-med-and-down">visibility</i>
-                            </a>
-                        </td>
-                        <td>b</td>
-                        <td>c</td>
-                        <td>d</td>
-                        <td class="center-align">
-                            <a class="btn waves-effect waves-light tooltipped small" data-tooltip="Visualizar Projeto" href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($d->idPronac); ?>"
-                            data-position="top" data-delay="50" data-tooltip="Finalizar">
-                                <i class="material-icons left hide-on-med-and-down">&#xE8E4;</i>
-                            </a>
-                        </td>
+                        <?php foreach($this->recursos as $recurso): ?>
+                        <tr>
+                            <td class="center-align">
+                                <a class="black-text btn white tooltipped" data-tooltip="Visualizar Projeto" href="<?php echo $this->url(array('controller' => 'consultardadosprojeto', 'action' => 'index'));?>?idPronac=<?php echo ($recurso->IdPRONAC); ?>">
+                                <?php echo $recurso->IdPRONAC?>
+                                    <i class="material-icons left hide-on-med-and-down">visibility</i>
+                                </a>
+                            </td>
+                            <td><?php echo $recurso->NomeProjeto?></td>
+                            <td class="center-align">
+                                <a class="btn waves-effect waves-light tooltipped small" data-tooltip="Visualizar Projeto" href="<?php echo $this->url(array('module'=>'admissibilidade', 'controller' => 'enquadramento', 'action' => 'finalizar-desistencia-recursal'));?>?idPronac=<?php echo $recurso->IdPRONAC ?>&idRecurso=<?php echo $recurso->idRecurso ?>"
+                                data-position="top" data-delay="50" data-tooltip="Finalizar">
+                                    <i class="material-icons left hide-on-med-and-down">&#xE8E4;</i>
+                                </a>
+                            </td>
                         </tr>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
 <!--                <div class="col s12 m6 l4">-->
