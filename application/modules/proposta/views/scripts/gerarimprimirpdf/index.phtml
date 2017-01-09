@@ -19,6 +19,10 @@
         p{
             padding:15px;
         }
+
+        table.identificacao tr {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 
@@ -26,23 +30,32 @@
 <center><h1>Proposta Cultural</h1></center>
 <br>
 <h2>Identifica&ccedil;&atilde;o </h2>
-<table>
+<table class="identificacao">
     <tr>
         <td width="300px">
             N. da Proposta: <br><b><?php echo $this->id_projeto; ?></b>
         </td>
         <td>
-            Nome da Proposta: <br><b></b><?php echo $this->rsDadosProjeto['nomeprojeto']; ?></b>
+            Nome da Proposta: <br><b><?php echo $this->rsDadosProjeto['nomeprojeto']; ?></b>
         </td>
     </tr>
     <tr>
         <td width="300px">
-            Proponente: <br><b></b><?php echo $this->rsDadosProjeto['cnpjcpf'].' - '.$this->rsDadosProjeto['nomeagente']; ?></b>
+            Mecanismo: <br>
+            <b><?php echo $this->mecanismo; ?></b>
         </td>
         <td>
-            Mecanismo: <br>
-            <b></b><?php echo $this->mecanismo; ?></b>
-
+            Proponente: <br><b><?php echo $this->rsDadosProjeto['cnpjcpf'];?> - <?php echo utf8_encode($this->rsDadosProjeto['nomeagente']); ?></b>
+        </td>
+        <br>
+    </tr>
+    <tr>
+        <td width="300px">
+            Prorroga&ccedil;&atilde;o autom&aacute;tica: <br><b><?php echo ($this->rsDadosProjeto['tpprorrogacao']) ? 'Sim' : 'N;&atilde;o'; ?></b>
+        </td>
+        <td>
+            Plano de execu&ccedil;&atilde;o imediata: <br>
+            <b><?php echo utf8_encode($this->ExecucaoImediata['Descricao']); ?></b>
         </td>
     </tr>
 </table>

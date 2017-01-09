@@ -83,6 +83,10 @@ class Proposta_GerarimprimirpdfController extends MinC_Controller_Action_Abstrac
         $rsDadosProjeto = array_change_key_case( $tblPreProjeto->buscaCompleta(array("idPreProjeto = ?"=>$id_projeto))->current()->toArray() );
         $this->view->rsDadosProjeto = $rsDadosProjeto;
 
+        // Busca na tabela apoio ExecucaoImediata stproposta
+        $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
+        $this->view->ExecucaoImediata = $tableVerificacao->findBy(array('idVerificacao' => $rsDadosProjeto['stproposta']));
+
         $tbAbrangencia = new Proposta_Model_DbTable_Abrangencia();
         $this->view->rsAbrangencias = $tbAbrangencia->buscar( array("idProjeto"=>$id_projeto) );
 
