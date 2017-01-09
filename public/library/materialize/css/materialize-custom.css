@@ -153,14 +153,6 @@ nav.breadcrumb {
     position: relative;
 }
 
-.btn,
-.btn-large,
-.btn-floating,
-.btn-default,
-.btn-success  {
-    background: #4caf50;
-    color: #fff !important;
-}
 
 .btn:focus,
 .btn-large:focus,
