@@ -26,22 +26,13 @@
     </style>
 
     <script type="text/javascript">
-        /*
-         * Fun&ccedil;&atilde;o respons�vel pela exibi&ccedil;&atilde;o ou ocultamento de conte�do,
-         * mudando a imagem.
-         **/
         $(document).ready(function(){
-            $('#novo').click(function(){
+            $('.avaliarProposta').click(function(){
                 $('#preProjeto').attr('action','<?php echo $IncluirAvaliacao;?>');
                 $('#preProjeto').submit();
             });
-
-            $('#novo1').click(function(){
-                $('#preProjeto').attr('action','<?php echo $IncluirAvaliacao;?>');
-                $('#preProjeto').submit();
-            });
-
-            $('.btn_imprimir').click(function(){
+            $('.imprimirProposta').click(function(){
+                // $("#html").html($(".conteudoImprimir").html());
                 $("#formGerarPdf").submit();
             });
         });
@@ -106,12 +97,14 @@
             <br />
             <div align="center">
                 <?php if((isset($_GET['realizar_analise']) && $_GET['realizar_analise']=="sim")):?>
-                <input type="button" id="novo" class="btn_novo" />
+                    <button class="btn waves-effect waves-light avaliarProposta" type="button" name="action">
+                        Avaliar <i class="material-icons right">gavel</i>
+                    </button>
                 <?php endif; ?>
                 <iframe name="esconde" id="esconde" class="sumir"> </iframe>
-
-                <input type="button" class="btn_imprimir" />
-
+                <button class="btn waves-effect waves-light imprimirProposta blue" type="button" name="action">
+                    Imprimir <i class="material-icons right">print</i>
+                </button>
             </div>
             <div class="conteudoImprimir">
             <table class="tabela">
@@ -1099,12 +1092,12 @@
                                                                                     <?php echo $mandato->Descricao;?>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <b>N� do documento</b><br>
+                                                                                    <b>N&ordm; do documento</b><br>
                                                                                     <?php echo $mandato->dsNumeroDocumento;?>
                                                                                 </td>
                                                                                 <td>
                                                                                     <b>Per&iacute;odo de vig&ecirc;ncia</b><br>
-                                                                                    <?php echo date('d/m/Y',strtotime($mandato->dtInicioMandato)).' � '.date('d/m/Y',strtotime($mandato->dtFimMandato)); ?>
+                                                                                    <?php echo date('d/m/Y',strtotime($mandato->dtInicioMandato)).' &agrave; '.date('d/m/Y',strtotime($mandato->dtFimMandato)); ?>
                                                                                 </td>
                                                                                 <td>
                                                                                     <b>Arquivo</b><br>
@@ -1152,9 +1145,14 @@
             <tr>
             <td class="centro">
                 <?php if((isset($_GET['realizar_analise']) && $_GET['realizar_analise']=="sim")):?>
-                <input type="button" id="novo1" class="btn_novo" title="Novo" />
+                    <button class="btn waves-effect waves-light avaliarProposta" type="button" name="action">
+                        Avaliar <i class="material-icons right">gavel</i>
+                    </button>
                 <?php endif; ?>
-                <input type="button" class="btn_imprimir" title="Imprimir" />
+                <iframe name="esconde" id="esconde" class="sumir"> </iframe>
+                <button class="btn waves-effect waves-light imprimirProposta blue" type="button" name="action">
+                    Imprimir <i class="material-icons right">print</i>
+                </button>
             </td>
             </tr>
             </table>
