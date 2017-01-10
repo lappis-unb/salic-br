@@ -56,30 +56,8 @@
         });
 
         // Adicionando evento de enviar o formulario via ajax caso tenha a tag data-ajax-form.
-        // @todo verificar uma forma legal para usar com o card da tela de login.
         elmBody.on('submit', 'form[data-ajax-form]', function(){
-            strAnimate = 'jello';
-//            strAnimate = 'wobble';
-//            strAnimate = 'pulse';
-            if ($(this).ajaxFormSubmit()) {
-                $('.card').removeClass('fadeInUp');
-                $('.card').removeClass('animated');
-                $('.card').addClass(strAnimate);
-                $('.card').addClass('animated');
-                $('.card').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-                $('.card').removeClass(strAnimate);
-                $('.card').removeClass('animated');
-                });
-            } else {
-                $('.card').removeClass('fadeInUp');
-                $('.card').removeClass('animated');
-                $('.card').addClass(strAnimate);
-                $('.card').addClass('animated');
-                $('.card').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-                $('.card').removeClass(strAnimate);
-                $('.card').removeClass('animated');
-                });
-            }
+            $(this).ajaxFormSubmit();
             return false;
         });
     });
@@ -203,7 +181,7 @@
                     tinyMCE.triggerSave();
                 },
                 success: function(result) {
-                    var result = $3.parseJSON(result);
+                    result = $3.parseJSON(result);
                     if (result.status == '1') {
                         Materialize.toast(result.msg, 4000, 'green light-green accent-1 black-text');
                         setTimeout(function(){
@@ -232,6 +210,10 @@
                     }
                 }
             });
+        } else {
+            if (typeof callback == 'function') {
+                callback.call(null, false);
+            }
         }
     };
 
@@ -288,8 +270,12 @@
             },
             objSettings = $.extend( {}, objDefaults, objOption );
 
-        $(strIdModal).remove();
-        $('body').append('<div id="modal-" class="modal ' + objSettings.strType + '" style="height: '+ objSettings.strHeight +'"></div>');
+        // $(strIdModal).remove();
+        var strHtml =
+            '<div id="modal-" class="modal ' + objSettings.strType + '" style="height: '+ objSettings.strHeight +'">' +
+                '' +
+            '</div>';
+        $('body').append();
         // Gerar id dinamicamente.
         var elmModal = $('#modal-');
 

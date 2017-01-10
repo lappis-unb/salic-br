@@ -22,7 +22,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
      */
     public function init()
     {
-        Zend_Layout::startMvc(array('layout' => 'layout_login'));
+        Zend_Layout::startMvc(array('layout' => 'open'));
         parent::init();
     }
 
