@@ -66,6 +66,7 @@ class Admissibilidade_Model_TbMensagemProjetoMapper extends MinC_Db_Mapper
                 $model->setCdTipoMensagem(1);
                 $arrMensagemOrigem = $this->getDbTable()->findBy($arrData['idMensagemOrigem']);
                 $model->setIdDestinatario($arrMensagemOrigem['idRemetente']);
+                $model->setIdDestinatarioUnidade($arrMensagemOrigem['idRemetenteUnidade']);
                 if ($intId = parent::save($model)) {
                     $booStatus = 1;
                     $this->setMessage('Pergunta respondida com sucesso!');
