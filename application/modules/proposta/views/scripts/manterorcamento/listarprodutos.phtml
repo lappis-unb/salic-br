@@ -1,5 +1,5 @@
 <?php if ( !empty($this->Produtos) ) : ?>
-    <p class="right-align" style="position: absolute; top: 190px; right: 20px">
+    <p class="right-align" style="position: absolute; top: 167px; right: 20px">
         <a class="expandall btn-floating waves-effect waves-light btn tooltipped btn-info" onClick="expandAll();" data-tooltip="Expandir tudo"><i class="material-icons left">fullscreen</i></a>
         <a class="collapseall btn-floating waves-effect waves-light btn tooltipped btn-info " onClick="collapseAll();" data-tooltip="Fechar tudo"><i class="material-icons left">fullscreen_exit</i></a>
     </p>
@@ -163,7 +163,12 @@
 <script>
     $3(document).ready(function(){
         $3('.collapsible').collapsible();
-        $3('ul.tabs').tabs();
+        $3('ul.tabs').tabs({
+            activate: function(event, ui) {
+                alert();
+                window.location.hash = ui.newPanel.attr('id');
+            }
+        });
 
         $3('.modal').find('select').material_select();
 

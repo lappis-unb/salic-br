@@ -27,6 +27,10 @@
         margin-bottom: -10px;
     }
 
+    main {
+        margin-top: 15px;
+    }
+
     #breadcrumb {
         left: 0px;
     }
@@ -312,6 +316,18 @@
 
     }
 
+    .modal.modal-pre-loader {
+        width: 300px;
+        height: 180px;
+        top: 50% !important;
+        margin-top: -200px !important;
+        padding: 10px;
+    }
+
+    .modal.modal-pre-loader .modal-content {
+        padding: 10px;
+    }
+
 
 </style>
 
@@ -334,7 +350,7 @@
         <h5 class="light">Custo por produto </h5>
 
         <div id="container-list" data-ajax-render='/proposta/manterorcamento/listarprodutos/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'><p class="center align">Carregando or&ccedil;amento ...</p></div>
-        <br><br>
+
         <div id="custosvinculados" data-ajax-render='/proposta/manterorcamento/resumoplanilha/idPreProjeto/<?php echo( isset($this->idPreProjeto) ) ? $this->idPreProjeto : ''; ?>'></div>
     </div>
 </div>
@@ -349,11 +365,48 @@
     <br clear="all" />
 
 
+<!-- Modal Structure -->
+<div id="modal-pre-loader" class="modal modal-pre-loader">
+    <div class="modal-header center valign"><h5>Aguarde!</h5></div>
+    <div class="modal-content">
+        <div class="row">
+            <div class="col s4">
+                <div class="preloader-wrapper small active">
+                    <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                            <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s8">
+                <p>Carregando...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button data-target="modal1" class="btn">Modal</button>
 <script>
+
+$3( document ).ajaxStart(function() {
+    $3('#modal-pre-loader').modal('open');
+});
+
+$3(document).ajaxComplete(function () {
+    $3('#modal-pre-loader').modal('close');
+});
 
 $3(document).ready(function () {
 
+    $3('.modal-pre-loader').modal();
+
     $3('body').on('click', '.btn-salvar', function () {
+
 
         var validar = true;
         $3('.valida').each(function () {
@@ -412,6 +465,7 @@ $3(document).ready(function () {
 
                         $3(idEtapa + " div.info").hide();
                         $3(idEtapa + ' table tbody').append(result.html);
+                        $3("#planilhaitem").focus();
                     }
 
                     if(result.close == '1' )
@@ -435,7 +489,6 @@ $3(document).ready(function () {
     });
 
 });
-
 
 
 </script>
