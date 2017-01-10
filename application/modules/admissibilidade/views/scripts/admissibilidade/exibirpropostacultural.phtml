@@ -963,31 +963,32 @@ if (is_array($this->itensLocalRealiazacao) and count($this->itensLocalRealiazaca
                 </fieldset>
             </td>
         </tr>
-
-        <tr onclick="abrirDinamico('#planoDivulgacao', $(this))" style="cursor:pointer">
-            <th>
-                <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
-                Plano de Divulga&ccedil;&atilde;o
-            </th>
-        </tr>
-        <tr>
-            <td>
-                <table class="tabela" id="planoDivulgacao">
-                    <tr class="destacar">
-                        <td align="left"><b>Pe�a de Divulga&ccedil;&atilde;o</b></td>
-                        <td align="left"><b>Ve�culo de Divulga&ccedil;&atilde;o</b></td>
-                    </tr>
-                    <?php if (is_array($this->itensPlanoDivulgacao) and count($this->itensPlanoDivulgacao) > 0)
-                        foreach ($this->itensPlanoDivulgacao as $divulgacao) {
-                            ?>
-                            <tr>
-                                <td align="left"><?php echo $divulgacao->Peca ?></td>
-                                <td align="left"><?php echo $divulgacao->Veiculo ?></td>
-                            </tr>
-                            <?php } ?>
-                </table>
-            </td>
-        </tr>
+        <?php if(!empty($this->itensPlanoDivulgacao)): ?>
+            <tr onclick="abrirDinamico('#planoDivulgacao', $(this))" style="cursor:pointer">
+                <th>
+                    <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
+                    Plano de Divulga&ccedil;&atilde;o
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <table class="tabela" id="planoDivulgacao">
+                        <tr class="destacar">
+                            <td align="left"><b>Peça de Divulga&ccedil;&atilde;o</b></td>
+                            <td align="left"><b>Veículo de Divulga&ccedil;&atilde;o</b></td>
+                        </tr>
+                        <?php if (is_array($this->itensPlanoDivulgacao) and count($this->itensPlanoDivulgacao) > 0)
+                            foreach ($this->itensPlanoDivulgacao as $divulgacao) {
+                                ?>
+                                <tr>
+                                    <td align="left"><?php echo $divulgacao->Peca ?></td>
+                                    <td align="left"><?php echo $divulgacao->Veiculo ?></td>
+                                </tr>
+                                <?php } ?>
+                    </table>
+                </td>
+            </tr>
+        <?php endif ?>
         <tr onclick="abrirDinamico('#documentosProponente', $(this)); abrirDinamico('#documentosProposta', $(this));" style="cursor:pointer">
             <th>
                 <img src="<?php echo $this->baseUrl(); ?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>

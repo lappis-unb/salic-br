@@ -161,6 +161,7 @@ class vwUsuariosOrgaosGrupos extends MinC_Db_Table_Abstract {
             $sql->where('vinculo = 1');
         }
         $sql->where('status = 0');
+        $sql->where('stVinculada = 1');
         $sql->order('Sigla ASC');
         $arrResult = $this->fetchAll($sql);
         return $arrResult;

@@ -1,54 +1,22 @@
 <div class="modal-content">
     <h4>Encaminhar pergunta</h4>
-    <form
-        class="materialize"
-        id="form-mensagem" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => $this->action)); ?>">
-        <input name="idMensagemProjeto" type="hidden" value="<?php echo $this->id; ?>"/>
-        <input name="IdPRONAC" type="hidden" value="<?php echo $this->idPronac; ?>"/>
-        <div class="row">
-            <div class="input-field col s12">
-                <select class="invalid" data-url="/admissibilidade/mensagem/usuarios"
-                        data-target="select[name=idDestinatario]"
-                        name="idDestinatarioUnidade" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
-                    <option value="" disabled selected>Selecione...</option>
-                    <!--                        <optgroup label="--><?php //echo $key ?><!--">-->
-                    <?php foreach ($this->arrUnidades as $values): ?>
-                        <option <?php if (isset($this->dataForm['idDestinatarioUnidade']) && $this->dataForm['idDestinatarioUnidade'] == $values['Codigo']) echo 'selected="selected"' ?>
-                            value="<?php echo $values['Codigo'] ?>"><?php echo $values['Sigla'] ?>
-                        </option>
-                    <?php endforeach; ?>
-                    <!--                        </optgroup>-->
-                </select>
-                <label>Unidade</label>
-            </div>
-        </div>
-        <?php if (!isset($this->arrConfig['idDestinatario']) || (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['show'] !== false)): ?>
-            <div class="row">
-                <div class="input-field col s12">
-                    <select class="invalid" required="required" name="idDestinatario" <?php if (isset($this->arrConfig['idDestinatario']) && $this->arrConfig['idDestinatario']['disabled']) echo 'disabled="disabled"' ?>>
-                        <option value="" selected>Selecione...</option>
-                    </select>
-                    <label>Agente</label>
-                </div>
-            </div>
-        <?php endif; ?>
-    </form>
+    <?php echo $this->partial('/mensagem/partials/form.phtml', $this->arrPartial); ?>
 </div>
 <div class="modal-footer">
-    <a id="btn-enviar" style="margin-left: 15px;"
-       class="modal-action waves-effect waves-green btn-flat light-green">Encaminhar</a>
-    <a href="#!" class="modal-action modal-close waves-effect waves-orange btn-flat">Cancelar</a>
+    <a id="btn-enviar" style="margin-left: 15px;" class="modal-action waves-effect waves-green btn-flat green-text">Encaminhar</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-orange orange-text btn-flat">Cancelar</a>
 </div>
 <script>
     $3(document).ready(function ($) {
-        $('.modal').find('select').material_select();
-//        setTimeout(function(){
-//            $3('.modal').find('[required=required]').closest('.input-field').find('input.select-dropdown').addClass('invalid');
-//            $3('.modal').find('[required=required]').addClass('invalid');
-//        }, 300);
-//            var select = $3('select[data-target]'),
-//                strUrl = select.attr('data-url'),
-//                objTarget = $3(select.attr('data-target'));
-//        ajaxRender(strUrl, objTarget, select.val(), '<?php //echo (isset($this->dataForm['idDestinatario']))? $this->dataForm['idDestinatario'] :'' ?>//');
+        $('#btn-enviar').on('click', function () {
+            var elmForm = $(this).closest('div.modal').find('form');
+            $(elmForm).ajaxFormSubmit(function (booStatus) {
+                if (booStatus) {
+                    $3('#modal').modal('close');
+                    var divRender = $('div[data-ajax-render]');
+                    $3.ajaxRender({strUrl: divRender.attr('data-ajax-render'), strTarget: '#' + divRender.attr('id')});
+                }
+            });
+        });
     });
 </script>

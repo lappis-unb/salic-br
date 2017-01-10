@@ -39,6 +39,7 @@ jQuery.fn.editorRico = function (options) {
         readonly: isDesabilitarEdicao,
         mode: "specific_textareas",
         editor_selector: "mceEditor",
+        // entity_encoding : "raw",
 
         setup: function (ed) {
             if (isLimitarCarateres) {

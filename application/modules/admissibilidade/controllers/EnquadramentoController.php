@@ -66,10 +66,6 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
         }
     }
 
-    /**
-     * @todo Alterar o valor da variável '$whereTextoEmail' pois até o momento não nos foi enviado qual o valor correto.
-     *       O valor atual é temporário.
-     */
     private function salvarEnquadramentoProjeto($projeto)
     {
         try {
@@ -98,7 +94,9 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             if(!$arrayDadosEnquadramento) {
                 $objEnquadramento->inserir($arrayArmazenamentoEnquadramento);
             } else {
-                $objEnquadramento->update($arrayArmazenamentoEnquadramento, array('IdEnquadramento = ?' => $arrayDadosEnquadramento['IdEnquadramento']));
+                $objEnquadramento->update($arrayArmazenamentoEnquadramento, array(
+                    'IdEnquadramento = ?' => $arrayDadosEnquadramento['IdEnquadramento']
+                ));
             }
 
             $situacaoFinalProjeto = 'B02';
@@ -136,21 +134,25 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
                 $tbRecurso->finalizarRecurso($projeto['IdPRONAC']);
             }
 
-            $whereTextoEmail = array(
-                'idTextoEmail = ?' => 12
-            );
+            $objVerificacao = new Verificacao();
+            $verificacao = $objVerificacao->findBy(array(
+                'idVerificacao = ?' => 620
+            ));
+
             $tbTextoEmailDAO = new tbTextoEmail();
-            $textoEmail = $tbTextoEmailDAO->findBy($whereTextoEmail);
+            $textoEmail = $tbTextoEmailDAO->findBy(array(
+                'idTextoEmail = ?' => 23
+            ));
 
             $objInternet = new Agente_Model_DbTable_Internet();
             $arrayEmails = $objInternet->obterEmailProponentesPorPreProjeto($projeto['idProjeto']);
             foreach ($arrayEmails as $email) {
-                EmailDAO::enviarEmail($email->Descricao, 'Projeto Cultural', $textoEmail['dsTexto']);
+                EmailDAO::enviarEmail($email->Descricao, $verificacao['Descricao'], $textoEmail['dsTexto']);
             }
 
             parent::message('Enquadramento cadastrado com sucesso.', '/admissibilidade/enquadramento/gerenciar-enquadramento', 'CONFIRM');
         } catch (Exception $objException) {
-            parent::message($objException->getMessage(), '/admissibilidade/enquadramento/enquadrarprojeto');
+            parent::message($objException->getMessage(), "/admissibilidade/enquadramento/enquadrarprojeto?IdPRONAC={$projeto['IdPRONAC']}");
         }
     }
 
