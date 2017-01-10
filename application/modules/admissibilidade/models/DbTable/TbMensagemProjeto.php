@@ -48,7 +48,10 @@ class Admissibilidade_Model_DbTable_TbMensagemProjeto extends MinC_Db_Table_Abst
                     ->joinLeft(
                         array('tbMensagemProjetoResposta' => $this->_name),
                         'tbMensagemProjeto.idMensagemProjeto = tbMensagemProjetoResposta.idMensagemOrigem',
-                        'tbMensagemProjetoResposta.dtMensagem as dtResposta',
+                        array(
+                            'tbMensagemProjetoResposta.dtMensagem as dtResposta',
+                            'tbMensagemProjetoResposta.dsMensagem as dsResposta',
+                        ),
                         $this->_schema)
                     ->joinLeft(
                         array('OrgaosRemetente' => 'Orgaos'),
@@ -67,8 +70,11 @@ class Admissibilidade_Model_DbTable_TbMensagemProjeto extends MinC_Db_Table_Abst
         $arrResult = ($arrResult = $this->fetchAll($select))? $arrResult->toArray() : array();
         foreach ($arrResult as &$arrValue) {
             $arrValue['dsMensagem'] = strip_tags($arrValue['dsMensagem']);
+            $arrValue['dsResposta'] = strip_tags($arrValue['dsResposta']);
             if (strlen($arrValue['dsMensagem']) > 50)
                 $arrValue['dsMensagem'] = substr($arrValue['dsMensagem'], 0, 50) . '...';
+            if (strlen($arrValue['dsResposta']) > 50)
+                $arrValue['dsResposta'] = substr($arrValue['dsResposta'], 0, 50) . '...';
             $date = new DateTime( $arrValue['dtMensagem'] );
             if ($arrValue['dtResposta']){
                 $date2 = new DateTime( $arrValue['dtResposta'] );

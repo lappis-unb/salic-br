@@ -189,11 +189,12 @@ a:hover {
 	background: #36963f;
 	/*background: #1B5E20;*/
 	display: block;
-	height: 34px;
+	/*height: 34px;*/
+	height: 35px;
 	float: left;
 	width:100% !important;
 	clear: both;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 
 #navglobal ul li {
@@ -259,7 +260,8 @@ a:hover {
 }
 #conteudo, #titulo, #rodapeConteudo {
 	position:relative;
-	top:10px;
+	/*top:10px;*/
+	top: 0px;
 	left:20px;
 }
 #conteudo {
@@ -322,6 +324,7 @@ a:hover {
 	background:url(../img/bg-titulo-left.gif) repeat-x;
 	color:#35953f;
 	font-size:20px;
+	margin-top: 10px;
 }
 #titulo div {
 	background:url(../img/bg-titulo-right.gif) right no-repeat;
@@ -986,6 +989,8 @@ div.plan span {
 	font:bold 12px Verdana, Arial, Helvetica, sans-serif;
 	color:#f03;
 	text-align:left;
+	clear: both;
+	padding: 12px;
 }
 .carregando {
 	text-align:center;
@@ -998,7 +1003,7 @@ div.plan span {
 	margin-left:90px;
 }
 .msgALERT, .msgCONFIRM, .msgERROR {
-	min-height:30px;
+	/*min-height:30px;*/
 }
 .msgALERT div, .msgCONFIRM div, .msgERROR div {
 	margin-left:40px;
@@ -1012,8 +1017,6 @@ div.plan span {
 	border:1px solid #fc0;
 	color:#000;
 	background:#ffc url(../img/msgALERT.png) 3px 3px no-repeat;
-    float: left;
-    width: 100%;
 }
 .msgCONFIRM {
 	border:1px solid #096;
@@ -1766,7 +1769,7 @@ div.plan span {
 }
 
 header {
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 	position: relative;
 	display: block;
 	clear: both;

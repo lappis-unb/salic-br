@@ -23,7 +23,11 @@
             <?php if (!empty($user['cpf']) && !empty($user['nome'])) : ?>
                 <li>Usu&aacute;rio <strong><?php echo $user['nome']; ?> [<?php echo Validacao::mascaraCPFCNPJ($user['cpf']); ?>]</strong></li>
             <?php endif; ?>
-            <li class="sair"><a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), '', true); ?>" id="sairSistema" title="Sair do Sistema" onclick="logout(); return false;">Sair</a></li>
+            <a
+                class="btn-floating small waves-effect waves-light red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Sair do Sistema"
+                style="text-indent: 0; bottom: 8px;" href="<?php echo $this->url(array('controller' => 'index', 'action' => 'logout', 'module' => 'autenticacao'), '', true); ?>" id="sairSistema" onclick="logout(); return false;">
+                <i class="material-icons">power_settings_new</i>
+            </a>
         </ul>
     </div>
 

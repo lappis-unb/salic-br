@@ -97,6 +97,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      *
      * @access public
      * @return void
+     *
+     * @todo verificar uma forma de nao adicionar o path de helper na mao e sim utilizando apenas o application.ini.
      */
     public function _initView()
     {
@@ -105,9 +107,19 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'layout'     => 'layout',
                 'layoutPath' => APPLICATION_PATH.'/layout/',
                 'contentKey' => 'content'));
-
         # paginacao
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginacao/paginacaoMinc.phtml');
+
+        // Initialize view
+        $view         = new Zend_View();
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
+            'ViewRenderer'
+        );
+        $viewRenderer->setView($view);
+        $view->addHelperPath(
+            APPLICATION_PATH . '/../library/MinC/View/Helper/',
+            'MinC_View_Helper_'
+        );
     }
 
     public function _initRouteRest()
@@ -177,4 +189,22 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         )));
         $controllerFront->getRouter()->addRoute('rest', $restRoute);
     }
+
+    /**
+     * Adiciona os helpers a controller
+     */
+    protected function _initController()
+    {
+        // Add helpers prefixed with Helper in Plugins/Helpers/
+//        Zend_Controller_Action_HelperBroker::addPath('./Plugins/Helpers',
+
+//            $breadCrumb = new MinC_Controller_Action_Helper_BreadCrumb();
+//        Zend_Controller_Action_HelperBroker::addHelper($breadCrumb);
+//            $breadCrumb = new Zend_View_Helper_BreadCrumb();
+//        echo '<pre>';
+//        var_dump($breadCrumb);
+//        exit;
+//            Zend_Controller_Action_HelperBroker::addHelper($breadCrumb);
+    }
+
 }

@@ -129,15 +129,27 @@
 
             var i=0,
                 erros = null,
-                nExemplares = parseInt($('input#nexemplares').val()),
-                patrocinador = parseInt($('input#patrocinador').val()),
-                divulgacao = parseInt($('input#divulgacao').val()),
-                baixarenda = parseInt($('input#beneficiarios').val()),
-                qtdenormal = parseInt($('input#qtdenormal').val()),
-                qtdepromocional = parseInt($('input#qtdepromocional').val()),
-                preconormal = parseInt($('input#preconormal').val().replace(',', '')),
-                precopromocional = parseInt($('input#precopromocional').val().replace(',', ''));
+                nExemplares = parseInt($('input#nexemplares').val(), 10),
+                patrocinador = parseInt($('input#patrocinador').val(), 10),
+                divulgacao = parseInt($('input#divulgacao').val(), 10),
+                baixarenda = parseInt($('input#beneficiarios').val(), 10),
+                qtdenormal = parseInt($('input#qtdenormal').val(), 10),
+                qtdepromocional = parseInt($('input#qtdepromocional').val(), 10),
+                preconormal = parseInt($('input#preconormal').val().replace(',', ''), 10),
+                precopromocional = parseInt($('input#precopromocional').val().replace(',', ''), 10);
 
+            if( patrocinador == null || patrocinador == NaN ){
+                i++;
+                erros = erros + i+' - Favor preencher o campo Patrocinador.<br />';
+            }
+            if( divulgacao == null || divulgacao == NaN  ){
+                i++;
+                erros = erros + i+' - Favor preencher o campo Divulgação.<br />';
+            }
+            if( baixarenda == null || baixarenda == NaN  ){
+                i++;
+                erros = erros + i+' - Favor preencher o campo Popula&ccedil;&atilde;o de Baixa Renda.<br />';
+            }
             if( patrocinador > (nExemplares/10) ){
                 i++;
                 erros = erros + i+' - A quantidade destinada ao patrocinador n&atilde;o pode ser maior do que 10% do n&uacute;mero Exemplares/Ingressos.<br />';
@@ -212,22 +224,20 @@
         if(!cmp1){ cmp1 = "0"; }
         if(!cmp2){ cmp2 = "0"; }
 
+        valor1 = cmp1;
+        valor2 = cmp2;
         if(tratarMascara == true){
             valor1 = cmp1.replace(".","");
             valor1 = valor1.replace(",", ".");
             valor2 = cmp2.replace(".", "");
             valor2 = valor2.replace(",", ".");
-        } else {
-            valor1 = cmp1;
-            valor2 = cmp2;
         }
 
         soma_valores = parseFloat(valor1) + parseFloat(valor2);
         soma_valores = Math.abs(soma_valores);
         soma_valores = soma_valores.toFixed(precisao);
-        if (precisao == 0) {
-            $('#' + idDestino).val(soma_valores);
-        } else {
+        $('#' + idDestino).val(soma_valores);
+        if (precisao != 0) {
             $('#' + idDestino).val(soma_valores).priceFormat();
         }
     }
@@ -243,14 +253,13 @@
         if(!cmp1){ cmp1 = "0"; }
         if(!cmp2){ cmp2 = "0"; }
 
+        valor1 = cmp1;
+        valor2 = cmp2;
         if(tratarMascara == true){
             valor1 = cmp1.replace(".","");
             valor1 = valor1.replace(",",".");
             valor2 = cmp2.replace(".","");
             valor2 = valor2.replace(",",".");
-        }else{
-            valor1 = cmp1;
-            valor2 = cmp2;
         }
 
         soma_valores = parseFloat(valor1) * parseFloat(valor2);
@@ -323,33 +332,15 @@
             </td>
         </tr>
     </table>
-    <!--<table class="tabela">
-        <tr>
-            <th colspan="2" align="center">Posi&ccedil;&atilde;o da Logomarca</th>
-        </tr>
-        <tr>
-            <td class="destacar bold w150">Posi&ccedil;&atilde;o da Logomarca <span style="color: red;">*</span></td>
-            <td>
-                <select class="input_simples obrigatorio" name="logomarca" id="logomarca" onchange="">
-                    <option value=""> - Selecione - </option>
-                    <?php //foreach ($this->combologomarcas as $logomarca): ?>
-                        <option value="<?php // echo $logomarca['idVerificacao']; ?>" <?php //echo ($logomarca['idVerificacao'] == $this->planoDistribuicao['idPosicaoDaLogo']) ? " selected='selected'" : ""; ?>>
-                            <?php //echo $logomarca['Descricao']; ?>
-                        </option>
-                    <?php //endforeach; ?>
-                </select>
-            </td>
-        </tr>
-    </table>-->
 
     <table class="tabela">
         <tr>
             <th align="center" colspan="3"><?php echo "Distribui&ccedil;&atilde;o Gratuita"; ?> (Qtde)</th>
         </tr>
         <tr>
-            <td class="destacar bold" width="33%" align="center">Patrocinador</td>
-            <td class="destacar bold" width="33%" align="center">Divulga&ccedil;&atilde;o</td>
-            <td class="destacar bold" width="34%" align="center">Popula&ccedil;&atilde;o de Baixa Renda</td>
+            <td class="destacar bold" width="33%" align="center">Patrocinador <span style="color: red;">*</span></td>
+            <td class="destacar bold" width="33%" align="center">Divulga&ccedil;&atilde;o <span style="color: red;">*</span></td>
+            <td class="destacar bold" width="34%" align="center">Popula&ccedil;&atilde;o de Baixa Renda <span style="color: red;">*</span></td>
         </tr>
         <tr>
             <td align="center">
