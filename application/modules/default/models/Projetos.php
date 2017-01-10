@@ -6034,7 +6034,7 @@ class Projetos extends MinC_Db_Table_Abstract
                             then 'Artigo 26'
                             when Enquadramento = '2'
                             then 'Artigo 18'
-                            else 'N�o enquadrado'
+                            else 'N&atilde;o enquadrado'
                             end as Enquadramento, p.Situacao as codSituacao,
                             (SELECT sum(b1.vlComprovacao)
                                 FROM BDCORPORATIVO.scSAC.tbComprovantePagamentoxPlanilhaAprovacao AS a1
@@ -6591,7 +6591,7 @@ class Projetos extends MinC_Db_Table_Abstract
                         THEN 'Artigo 26'
                         WHEN Enquadramento = '2'
                         THEN 'Artigo 18'
-                        ELSE 'N�o enquadrado'
+                        ELSE 'N&atilde;o enquadrado'
                     END AS Enquadramento,
                     pr.Objetivos,
                     pr.Justificativa,
