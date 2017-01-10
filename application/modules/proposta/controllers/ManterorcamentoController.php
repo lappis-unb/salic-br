@@ -487,7 +487,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             'FonteRecurso' => $params['fonterecurso'],
             'UfDespesa' => $params['uf'],
             'MunicipioDespesa' => $params['municipio'],
-            'dsJustificativa' =>  substr($justificativa,0,500),
+            'dsJustificativa' =>  substr($justificativa,0,510),
             'idUsuario' => $this->idUsuario
         );
 
@@ -1148,12 +1148,18 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
             $TPP = new Proposta_Model_DbTable_PlanilhaProposta();
 
             // @todo fazer uma busca mais leve, nao precisa dos joins
-            $todosItensPlanilha = $TPP->buscarCustos($idPreProjeto, 'P', '', '', '', '', 109);
+            $todosItensPlanilha = $TPP->buscarCustos($idPreProjeto, 'P', '', '', '', '', 109); // apenas itens de incentivo fiscal
 
             $valorTotalProjeto = null;
-
             if( empty($todosItensPlanilha) ) { // se não tiver nenhum item zerar os custos
-                $valorTotalProjeto = 0;
+
+                $valorTotalProjeto = '1';
+                $limitCaptacao = 200000;
+                $calcDivugacao = 0;
+                $calcCaptacao = 0;
+                $idUf  = 1;
+                $idMunicipio = 1;
+
             }else {
 
                 foreach ($todosItensPlanilha as $item) {
@@ -1169,21 +1175,20 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
                 $ufRegionalizacaoPlanilha =  $TPP->buscarItensUfRegionalizacao($idPreProjeto);
 
-            }
+                // definindo os criterios de regionalizacao
+                if( !empty($ufRegionalizacaoPlanilha) ) {
+                    $calcDivugacao =  0.2;
+                    $calcCaptacao = 0.1;
+                    $limitCaptacao = 100000;
 
-            // definindo os criterios de regionalizacao
-            if( !empty($ufRegionalizacaoPlanilha) ) {
-                $calcDivugacao =  0.2;
-                $calcCaptacao = 0.1;
-                $limitCaptacao = 100000;
+                    $idUf         = $ufRegionalizacaoPlanilha->idUF;
+                    $idMunicipio  = $ufRegionalizacaoPlanilha->idMunicipio;
 
-                $idUf         = $ufRegionalizacaoPlanilha->idUF;
-                $idMunicipio  = $ufRegionalizacaoPlanilha->idMunicipio;
-
-            }else {
-                $calcDivugacao =  0.3;
-                $calcCaptacao = 0.2;
-                $limitCaptacao = 200000;
+                }else {
+                    $calcDivugacao =  0.3;
+                    $calcCaptacao = 0.2;
+                    $limitCaptacao = 200000;
+                }
             }
 
             $itensPlanilhaProduto = new tbItensPlanilhaProduto();
@@ -1221,9 +1226,9 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
                 $dados = array(
                     'idprojeto' => $idPreProjeto,
                     'idetapa' => $idEtapa,
-                    'idplanilhaitem' => $item->idPlanilhaItens, // item rômulo vai mandar
+                    'idplanilhaitem' => $item->idPlanilhaItens,
                     'descricao' => '',
-                    'unidade' => '1', // nao informado
+                    'unidade' => '1',
                     'quantidade' => '1',
                     'ocorrencia' => '1',
                     'valorunitario' => $valorCustoItem,
@@ -1240,9 +1245,7 @@ class Proposta_ManterorcamentoController extends MinC_Controller_Action_Abstract
 
                 if($save) {
                     if( isset($custosVinculados[0]->idItem)) {
-
                         $where = 'idPlanilhaProposta = ' . $custosVinculados[0]->idPlanilhaProposta;
-
                         $TPP->update($dados, $where);
                     }
                     else {
