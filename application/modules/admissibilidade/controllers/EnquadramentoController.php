@@ -1,8 +1,5 @@
 <?php
 
-/**
- * @since 02/12/2016 16:06
- */
 class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abstract
 {
     public function init()
