@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstração da tabela SAC.dbo.tbMensagem
+ * Abstraï¿½ï¿½o da tabela SAC.dbo.tbMensagem
  *
  * @author rafael.gloria@cultura.gov.br
  */
@@ -12,7 +12,7 @@ class Mensagem extends GenericModel{
     protected $_banco = 'SAC';
 
     /**
-     * Salva a informação de para quais dispositivos foram enviadas as mensagens no banco de dados.
+     * Salva a informaÃ§&atilde;o de para quais dispositivos foram enviadas as mensagens no banco de dados.
      *
      * @param Zend_Db_Table_Row_Abstract $messageRow
      */
@@ -29,20 +29,18 @@ class Mensagem extends GenericModel{
     }
 
     /**
-     * Monta todos os filtros padrões das consultas e também montará os filtros dinâmicos.
+     * Monta todos os filtros padr&otilde;es das consultas e tamb&eacute;m montar os filtros din&acirc;micos.
      *
      * @param Zend_Db_Table_Select $consulta
      * @param stdClass $objParam
      * @return Zend_Db_Table_Select
      */
     public function montarFiltrosListarDeDispositivo($consulta, stdClass $objParam){
-        # Filtros padrões obrigatórios.
         $consulta
             ->where('m.dtExclusao IS NULL')
             ->where('md.dtExclusao IS NULL')
             ->where('d.idRegistration = ?', $objParam->idRegistration? $objParam->idRegistration: '');
 
-        # Filtro(s) Dinamico(s).
         if($objParam->new) {
             $consulta->where('m.dtAcesso IS NULL');
         }
@@ -58,7 +56,6 @@ class Mensagem extends GenericModel{
             ->from(array('m' => 'tbMensagem'), array('total' => new Zend_Db_Expr('COUNT(DISTINCT m.idMensagem)')), 'SAC.dbo')
             ->join(array('md' => 'tbMensagemDispositivoMovel'), 'm.idMensagem = md.idMensagem', array(), 'SAC.dbo')
             ->join(array('d' => 'tbDispositivoMovel'), 'md.idDispositivoMovel = d.idDispositivoMovel', array(), 'SAC.dbo');
-        # Filtros
         $this->montarFiltrosListarDeDispositivo($consulta, $objParam);
 
         $rs = $this->fetchRow($consulta);
@@ -105,15 +102,31 @@ class Mensagem extends GenericModel{
                 'dtAcesso ASC',
                 'dtEnvio DESC'));
 
-        # Filtros
         $consulta = $this->montarFiltrosListarDeDispositivo($consulta, $objParam);
 
-        # Paginação
         if($objParam->next) {
             $consulta->limit($objParam->next, (int)$objParam->offset);
         }
-//xd($consulta->__toString());
         return $this->fetchAll($consulta);
+    }
+
+    public function obterInteressadoProjeto($idPronac) {
+
+        $objQuery = $this->select();
+        $objQuery->from(
+            array('Projetos' => 'Projetos'),
+            array('NomeProjeto'),
+            $this->_schema
+        );
+        $objQuery->joinInner(
+            array('Interessado' => 'Interessado'),
+            'Interessado.CgcCpf = Projetos.CgcCpf',
+            'Nome',
+            $this->_schema
+        );
+        $objQuery->where('Projetos.IdPRONAC = ?', $idPronac);
+
+        return $this->fetchRow($objQuery);
     }
 
 }
