@@ -76,7 +76,7 @@ class Autenticacao_IndexController extends MinC_Controller_Action_Abstract
 
 //                    return $this->_helper->redirector->goToRoute(array('controller' => 'principal'), null, true);
                     $this->_helper->viewRenderer->setNoRender(true);
-                    echo json_encode(array('status' => 1, 'msg' => 'Login realizado com sucesso!'));
+                    echo json_encode(array('status' => 1, 'msg' => 'Login realizado com sucesso!','redirect' => '/principal'));
                 } else {
                     //se nenhum registro foi encontrado na tabela Usuario, ele passa a tentar se logar como proponente.
                     //neste ponto o _forward encaminha o processamento para o metodo login do controller login, que recebe
