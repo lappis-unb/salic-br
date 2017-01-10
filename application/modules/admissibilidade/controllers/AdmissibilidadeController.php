@@ -648,8 +648,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                     echo '<br><br><a href="../gerenciarparecertecnico/dadosetiqueta?pronac=' . $nrPronac . '&etiqueta=nao" target="_blank">Imprimir etiqueta</a>';
                 }
             } catch (Exception $e) {
-                xd($e->getMessage());
-                echo "Erro ao tentar transformar proposta em projeto!";
+                echo "Erro ao tentar transformar proposta em projeto! " . $e->getMessage();
             }
         }
     }
@@ -1888,7 +1887,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $in[] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL;
 
             $tec['x.idTecnico = '] = $usuario;
-            $this->view->propostas = $tblProposta->propostaAdmissibilidade($tec, array("x.DtAvaliacao DESC"), $in);
+            $this->view->propostas = $tblProposta->propostaAdmissibilidade($tec, array("x.DtAvaliacao DESC"), $in, $this->codOrgaoSuperior );
         }
 
         //recuperando a unidade do usuario logado

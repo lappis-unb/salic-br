@@ -3122,7 +3122,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
      * @access public
      * @todo Verificar otimização do Select.
      */
-    public function propostaAdmissibilidade($where=array(), $order=array() , $in)
+    public function propostaAdmissibilidade($where=array(), $order=array() , $in, $orgSuperior)
     {
         $db = $this->getAdapter();
         $db->setFetchMode(Zend_DB :: FETCH_OBJ);
@@ -3141,12 +3141,15 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         );
 
         // Replace da funcao: SAC.dbo.fnIdOrgaoSuperiorAnalista(a.idTecnico)
-        $orgao = $db->select()
-            ->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas.dbo')
-            ->where('usu_codigo = x.idTecnico')
-            ->where('sis_codigo = 21')
-            ->where('gru_codigo = 92')
-            ->group('org_superior');
+        //$orgao = $db->select()
+            //->from(array('vwUsuariosOrgaosGrupos'), 'org_superior', 'tabelas.dbo')
+            //->where('usu_codigo = x.idTecnico')
+            //->where('sis_codigo = 21')
+            //->where('gru_codigo = 92')
+            //->group('org_superior')
+            //->limit(1)
+            //;
+
 
         //replace funcao: SAC.dbo.fnNomeTecnicoMinc(a.idTecnico)
         $tecnico = $db->select()
@@ -3160,7 +3163,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
             'x.DtAvaliacao',
             'x.idAvaliacaoProposta',
             "($tecnico) AS Tecnico",
-            "($orgao) AS idSecretaria",
+            "($orgSuperior) AS idSecretaria",
         );
 
         $sql = $db->select()
@@ -3192,6 +3195,7 @@ class Proposta_Model_DbTable_PreProjeto extends MinC_Db_Table_Abstract
         }
 
         $sql->order($order);
+        //echo $sql;
 
         return $db->fetchAll($sql);
     }
