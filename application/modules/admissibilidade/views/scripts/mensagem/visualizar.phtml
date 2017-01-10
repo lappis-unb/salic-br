@@ -1,53 +1,7 @@
 <div class="modal-content">
     <h4>Visualizar Pergunta</h4>
-    <form class="materialize" id="form-mensagem" action="<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'mensagem', 'action' => $this->action)); ?>">
-        <input name="idMensagemProjeto" type="hidden" value="<?php echo $this->id; ?>"/>
-        <input name="IdPRONAC" type="hidden" value="<?php echo $this->idPronac; ?>"/>
-        <div class="row">
-            <div class="input-field col s12">
-                <select class="invalid" data-url="/admissibilidade/mensagem/usuarios"
-                        data-target="select[name=idDestinatario]"
-                        name="idDestinatarioUnidade" disabled="disabled">
-                    <option value="" disabled selected>Selecione...</option>
-                    <?php foreach ($this->arrUnidades as $values): ?>
-                        <option <?php if (isset($this->dataForm['idDestinatarioUnidade']) && $this->dataForm['idDestinatarioUnidade'] == $values['Codigo']) echo 'selected="selected"' ?>
-                            value="<?php echo $values['Codigo'] ?>"><?php echo $values['Sigla'] ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <label>Unidade</label>
-            </div>
-        </div>
-        <?php if (isset($this->dataForm['idDestinatario']) && !empty($this->dataForm['idDestinatario'])): ?>
-            <div class="row">
-                <div class="input-field col s12">
-                    <select name="idDestinatario" disabled="disabled">
-                        <option value="" disabled selected>Selecione...</option>
-                    </select>
-                    <label>Agente</label>
-                </div>
-            </div>
-        <?php endif; ?>
-        <div class="row">
-            <div class="input-field col s12">
-                <br />
-                <?php if (isset($this->dataForm['dsMensagem'])) echo $this->dataForm['dsMensagem']; ?>
-                <br />
-                <label for="textarea1" <?php if (isset($this->dataForm['dsMensagem'])) echo 'class="active"' ?>>Pergunta</label>
-            </div>
-        </div>
-        <?php if ((!isset($this->arrConfig['dsResposta']) || $this->arrConfig['dsResposta']['show'] !== false)): ?>
-            <div class="row">
-                <div class="input-field col s12">
-                    <br />
-                    <?php if (isset($this->dataForm['dsResposta'])) echo $this->dataForm['dsResposta']; ?>
-                    <br />
-                    <label for="textarea1" class="active">Resposta</label>
-                </div>
-            </div>
-        <?php endif; ?>
-    </form>
+    <?php echo $this->partial('/mensagem/partials/form.phtml', $this->arrPartial); ?>
 </div>
 <div class="modal-footer">
-    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat light-green">Fechar</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat green-text">Fechar</a>
 </div>

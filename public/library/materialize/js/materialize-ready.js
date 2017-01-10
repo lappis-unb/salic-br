@@ -24,11 +24,11 @@
                 elmIcon.removeClass('red-text');
                 elmLabel.addClass('green-text');
                 elmIcon.addClass('green-text');
-            },
-            submitHandler: function (form) {
-                console.log('form ok');
-                return false;
             }
+            // submitHandler: function (form) {
+            //     console.log('form ok');
+            //     return false;
+            // }
         });
     });
 

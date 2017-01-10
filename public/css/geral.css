@@ -189,11 +189,12 @@ a:hover {
 	background: #36963f;
 	/*background: #1B5E20;*/
 	display: block;
-	height: 34px;
+	/*height: 34px;*/
+	height: 35px;
 	float: left;
 	width:100% !important;
 	clear: both;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 
 #navglobal ul li {
@@ -1768,7 +1769,7 @@ div.plan span {
 }
 
 header {
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 	position: relative;
 	display: block;
 	clear: both;
