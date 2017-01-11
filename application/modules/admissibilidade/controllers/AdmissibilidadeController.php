@@ -567,91 +567,66 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
     public function transformarPropostaEmProjetoAction()
     {
-        //verifica se id preprojeto foi enviado
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 
         $get = Zend_Registry::get('get');
 
         $this->validarAcessoAdmissibilidade();
-        $auth = Zend_Auth::getInstance(); // instancia da autentica��o
+        $auth = Zend_Auth::getInstance();
         $idOrgao = $auth->getIdentity()->usu_orgao;
 
         $tblProposta = new Proposta_Model_DbTable_PreProjeto();
         $rsProposta = $tblProposta->buscar(array("idPreProjeto = ?" => $this->idPreProjeto))->current();
 
-        //O codigo deste IF serve apenas para mostrar a mensagem ao usuario
-        if ($get->recuperarUnidade != "") {
-            //Buscando produto principal
-            $tblPlanoDistribuicao = new PlanoDistribuicao();
-            $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscar(array("idProjeto = ?" => $this->idPreProjeto, "stPrincipal = ?" => 1))->current();
+        //Buscando produto principal
+        $tblPlanoDistribuicao = new PlanoDistribuicao();
+        $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscar(array("idProjeto = ?" => $this->idPreProjeto, "stPrincipal = ?" => 1))->current();
 
-            $tblOrgaos = new Orgaos();
-            if ($rsProposta->idEdital == 0 && empty($rsProposta->idEdital)) {
-                //Se existe plano de distribuicao, entao pega-se o orgao baseado no produto principal
-                $rsOrgaos = $tblOrgaos->buscarOrgaoPorSegmento($rsPlanoDistribuicao->Segmento)->current();
-            } else {
-                //Se nao existe plano de distribuicao, entao esta e uma proposta por edital,
-                //entao pega-se o orgao do edital
-                $tblEdital = new Edital();
-                $rsEdital = $tblEdital->buscar(array("idEdital = ?" => $rsProposta->idEdital))->current();
-
-                $rsOrgaos = $tblOrgaos->buscar(array("Codigo = ?" => $rsEdital->idOrgao))->current();
-            }
-
-            echo "Deseja Transformar a proposta Nr. {$this->idPreProjeto}, em Projeto? <br>A mesma ser&aacute; enviada para a Unidade: {$rsOrgaos->Sigla}, para An&aacute;lise T&eacute;cnica.<br> Confirma a opera&ccedil;&atilde;o?";
-            $this->_helper->viewRenderer->setNoRender(TRUE);
+        $tblOrgaos = new Orgaos();
+        if ($rsProposta->idEdital == 0 || empty($rsProposta->idEdital)) {
+            //Se existe plano de distribuicao, entao pega-se o orgao baseado no produto principal
+            $rsOrgaos = $tblOrgaos->buscarOrgaoPorSegmento($rsPlanoDistribuicao->Segmento)->current();
+            //$idOrgao = $rsOrgaos->Codigo;
+            $idOrgao = $this->codOrgao;
         } else {
+            //Se nao existe plano de distribuicao, entao esta e uma proposta por edital,
+            //entao pega-se o orgao do edital
+            $tblEdital = new Edital();
+            $rsEdital = $tblEdital->buscar(array("idEdital = ?" => $rsProposta->idEdital))->current();
 
-            //Buscando produto principal
-            $tblPlanoDistribuicao = new PlanoDistribuicao();
-            $rsPlanoDistribuicao = $tblPlanoDistribuicao->buscar(array("idProjeto = ?" => $this->idPreProjeto, "stPrincipal = ?" => 1))->current();
-
-            $tblOrgaos = new Orgaos();
-            if ($rsProposta->idEdital == 0 || empty($rsProposta->idEdital)) {
-                //Se existe plano de distribuicao, entao pega-se o orgao baseado no produto principal
-                $rsOrgaos = $tblOrgaos->buscarOrgaoPorSegmento($rsPlanoDistribuicao->Segmento)->current();
-                //$idOrgao = $rsOrgaos->Codigo;
-                $idOrgao = $this->codOrgao;
-            } else {
-                //Se nao existe plano de distribuicao, entao esta e uma proposta por edital,
-                //entao pega-se o orgao do edital
-                $tblEdital = new Edital();
-                $rsEdital = $tblEdital->buscar(array("idEdital = ?" => $rsProposta->idEdital))->current();
-
-                $rsOrgaos = $tblOrgaos->buscar(array("Codigo = ?" => $rsEdital->idOrgao))->current();
-                //$idOrgao = $rsOrgaos->Codigo;
-                $idOrgao = $this->codOrgao;
-            }
-
-            $tblAgente = new Agente_Model_DbTable_Agentes();
-            $rsAgente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsProposta->idAgente))->current();
-
-            $cnpjcpf = $rsAgente->CNPJCPF;
-
-            $wsWebServiceSEI = new ServicosSEI();
-
-            $arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento();
-
-            $chars = array(".", "/", "-");
-            $nrProcessoSemFormatacao = str_replace($chars, "", $arrRetornoGerarProcedimento->ProcedimentoFormatado);
-            $nrProcesso = $nrProcessoSemFormatacao;
-
-            try {
-                $this->incluirProjeto($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
-                $tblProjeto = new Projetos();
-                $rsProjeto = $tblProjeto->buscar(array("idProjeto = ?" => $this->idPreProjeto), "IdPRONAC DESC")->current();
-                if (!empty($rsProjeto)) {
-                    $nrPronac = $rsProjeto->AnoProjeto . $rsProjeto->Sequencial;
-
-                    echo "A Proposta " . $this->idPreProjeto . " foi transformada no Projeto No. " . $nrPronac;
-                    echo '<br><br><a href="../gerenciarparecertecnico/dadosetiqueta?pronac=' . $nrPronac . '&etiqueta=nao" target="_blank">Imprimir etiqueta</a>';
-                }
-            } catch (Exception $e) {
-                xd($e->getMessage());
-                echo "Erro ao tentar transformar proposta em projeto!";
-            }
+            $rsOrgaos = $tblOrgaos->buscar(array("Codigo = ?" => $rsEdital->idOrgao))->current();
+            //$idOrgao = $rsOrgaos->Codigo;
+            $idOrgao = $this->codOrgao;
         }
+
+        $tblAgente = new Agente_Model_DbTable_Agentes();
+        $rsAgente = $tblAgente->buscarAgenteNome(array("a.idAgente = ?" => $rsProposta->idAgente))->current();
+
+        $cnpjcpf = $rsAgente->CNPJCPF;
+
+        $wsWebServiceSEI = new ServicosSEI();
+
+        $arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento();
+
+        $chars = array(".", "/", "-");
+        $nrProcessoSemFormatacao = str_replace($chars, "", $arrRetornoGerarProcedimento->ProcedimentoFormatado);
+        $nrProcesso = $nrProcessoSemFormatacao;
+
+        try {
+            $this->incluirProjeto($this->idPreProjeto, $cnpjcpf, $idOrgao, $this->idUsuario, $nrProcesso);
+            $tblProjeto = new Projetos();
+            $rsProjeto = $tblProjeto->buscar(array("idProjeto = ?" => $this->idPreProjeto), "IdPRONAC DESC")->current();
+            if (!empty($rsProjeto)) {
+                $nrPronac = $rsProjeto->AnoProjeto . $rsProjeto->Sequencial;
+
+                echo "A Proposta " . $this->idPreProjeto . " foi transformada no Projeto No. " . $nrPronac;
+                echo '<br><br><a href="../gerenciarparecertecnico/dadosetiqueta?pronac=' . $nrPronac . '&etiqueta=nao" target="_blank">Imprimir etiqueta</a>';
+            }
+        } catch (Exception $e) {
+            echo "Erro ao tentar transformar proposta em projeto! " . $e->getMessage();
+        }
+
     }
 
     public function encaminharpropostaAction()
@@ -1888,7 +1863,7 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             $in[] = Agente_Model_DbTable_Verificacao::PROPOSTA_EM_ANALISE_FINAL;
 
             $tec['x.idTecnico = '] = $usuario;
-            $this->view->propostas = $tblProposta->propostaAdmissibilidade($tec, array("x.DtAvaliacao DESC"), $in);
+            $this->view->propostas = $tblProposta->propostaAdmissibilidade($tec, array("x.DtAvaliacao DESC"), $in, $this->codOrgaoSuperior );
         }
 
         //recuperando a unidade do usuario logado
@@ -2545,7 +2520,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $db= Zend_Db_Table::getDefaultAdapter();
         $db->setFetchMode(Zend_DB::FETCH_OBJ);
         try {
-            $db->beginTransaction();
             $objInteressado = new Interessado();
             $arrayInteressados = $objInteressado->findAll(array('CgcCpf' => $cnpjcpf));
 
@@ -2557,7 +2531,12 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                                          then  '1'
                                          else  '2'
                                      end as TipoPessoa,
-                                     Nome, SAC.dbo.fnNomeResponsavel(p.Usuario),p.Logradouro + ' - ' + p.Bairro,u.Municipio,u.UF,p.CEP,
+                                     Nome, 
+                                     SAC.dbo.fnNomeResponsavel(p.Usuario),
+                                     p.Logradouro + ' - ' + p.Bairro,
+                                     u.Municipio,
+                                     u.UF,
+                                     p.CEP,
                                      case
                                        when Direito = 1
                                          then '1'
@@ -2723,18 +2702,13 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                     throw new Exception ("Não é permitido inserir %d registros ao mesmo tempo na tabela tbHistoricoEmail");
                 }
 
-                $sqlTextoEmail = "SELECT dsTexto FROM SAC.dbo.tbTextoEmail WHERE idTextoEmail = {$idTextoEmail}";
-                $arrayMensagem = $db->fetchRow($sqlTextoEmail);
-                $mensagem = $arrayMensagem->dsTexto;
+                $objTbTextoEmail = new tbTextoEmail();
+                $resultadoTetoEmail = $objTbTextoEmail->obterTextoPorIdentificador($idTextoEmail);;
 
-                $sqlDadosProposta = "SELECT NomeProjeto, Nome
-                                       FROM SAC.dbo.Projetos p
-                                      INNER JOIN SAC.dbo.Interessado i on (p.CgcCpf = i.CgcCpf)
-                                      WHERE idPronac = {$idPronac}";
-                $arrayMensagem = $db->fetchRow($sqlDadosProposta);
-                $nomeProposta = $arrayMensagem->NomeProjeto;
-                $destinatario = $arrayMensagem->Nome;
-                $mensagemEmail = "<b>Projeto: {$AnoProjeto}{$NrProjeto} - {$nomeProposta} <br> Proponente: {$destinatario}<br> </b>{$mensagem}";
+                $objMensagem = new Mensagem();
+                $resultadoMensagem = $objMensagem->obterInteressadoProjeto($idPronac);
+
+                $mensagemEmail = "<b>Projeto: {$AnoProjeto}{$NrProjeto} - {$resultadoMensagem->NomeProjeto} <br> Proponente: {$resultadoMensagem->Nome}<br> </b>{$resultadoTetoEmail->dsTexto}";
 
                 $objInternet = new Agente_Model_DbTable_Internet();
                 $arrayEmails = $objInternet->obterEmailProponentesPorPreProjeto($idPreProjeto);
@@ -2743,9 +2717,8 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                     EmailDAO::enviarEmail($email->Descricao, "Projeto Cultural", $mensagemEmail);
                 }
             }
-            $db->commit();
+
         } catch (Exception $objException) {
-            $db->rollBack();
             throw new Exception ($objException->getMessage(), 0, $objException);
         }
 

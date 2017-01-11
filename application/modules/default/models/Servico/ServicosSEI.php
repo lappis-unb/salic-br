@@ -12,19 +12,8 @@
  */
 class ServicosSEI {
 
-    # Constante usada na classe para conexao com o WS
-//    const CAMINHO_WSDL_SEI 		= "http://sei.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Produ��o
-    const CAMINHO_WSDL_SEI 		= "http://seihomolog.cultura.gov.br/sei/controlador_ws.php?servico=sei";#Homologa��o
-//APPLICATION_ENV
-    # Atributos da classe
     private static $objSoapCliente;
 
-    /**
-     * Funcao que verifica que possui uma conexao com o WS
-     *
-     * @param INTEGER $objSoapCliente
-     * @return MIX
-     */
     private function getSoapClient( )
     {
         if(!@file_get_contents(self::CAMINHO_WSDL_SEI)){

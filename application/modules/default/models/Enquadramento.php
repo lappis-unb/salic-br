@@ -116,7 +116,7 @@ class Enquadramento extends MinC_Db_Table_Abstract
         return $this->delete($where);
     }
 
-    public function obterProjetosParaEnquadramento($order = null, $limit = null)
+    public function obterProjetosParaEnquadramento($codOrgao, $order = null)
     {
         $select = $this->select();
         $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -159,7 +159,7 @@ class Enquadramento extends MinC_Db_Table_Abstract
         $select->joinInner(array('Area' => 'Area'), 'Area.Codigo = projetos.Area', array('Area.Descricao AS area'));
         $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = projetos.Segmento', array('Segmento.Descricao AS segmento'));
         $select->where("projetos.situacao in ( ? )", array('B01', 'B03'));
-
+        $select->where("projetos.Orgao = ?", $codOrgao);
         !empty($order) ? $select->order($order) : null;
         !empty($limit) ? $select->limit($limit) : null;
         return $this->_db->fetchAll($select);
@@ -201,7 +201,7 @@ class Enquadramento extends MinC_Db_Table_Abstract
         return $this->_db->fetchAll($select);
     }
 
-    public function obterProjetosParaEnquadramentoVinculados($id_usuario, $order = null, $limit = null)
+    public function obterProjetosParaEnquadramentoVinculados($id_usuario, $codOrgao, $order = null)
     {
         $select = $this->select();
         $this->_db->setFetchMode(Zend_DB::FETCH_OBJ);
@@ -244,11 +244,11 @@ class Enquadramento extends MinC_Db_Table_Abstract
         $select->joinLeft(array('Segmento' => 'Segmento'), 'Segmento.Codigo = projetos.Segmento', array('Segmento.Descricao AS segmento'), $this->_schema);
 
         $select->where("projetos.situacao in ( ? )", array('B01', 'B03'));
+        $select->where("projetos.Orgao = ?", $codOrgao);
         $select->where("tbAvaliacaoProposta.stEstado = ?", array('0'));
         $select->where("tbAvaliacaoProposta.idTecnico = ?", array($id_usuario));
 
         !empty($order) ? $select->order($order) : null;
-        !empty($limit) ? $select->limit($limit) : null;
 
         return $this->_db->fetchAll($select);
     }

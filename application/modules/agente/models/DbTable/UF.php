@@ -1,32 +1,11 @@
 <?php
 
-/**
- * Class Agente_Model_DbTable_UF
- *
- * @name Agente_Model_DbTable_UF
- * @package Modules/Agente
- * @subpackage Models/DbTable
- * @version $Id$
- *
- * @author Ruy Junior Ferreira Silva <ruyjfs@gmail.com>
- * @since 01/09/2016
- *
- * @copyright © 2012 - Ministerio da Cultura - Todos os direitos reservados.
- * @link http://salic.cultura.gov.br
- */
 class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
 {
     protected $_banco = 'AGENTES';
     protected $_name = 'uf';
     protected $_schema = 'AGENTES';
 
-    /**
-     * Metodo para buscar os estados
-     * @access public
-     * @param void
-     * @return array
-     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
-     */
     public function buscar($where = array(), $order = array(), $tamanho = -1, $inicio = -1)
     {
         $select = $this->select();
@@ -45,13 +24,6 @@ class Agente_Model_DbTable_UF extends MinC_Db_Table_Abstract
         }
     }
 
-    /**
-     * Metodo para buscar os estados de acordo com a regiao
-     * @access public
-     * @param void
-     * @return array
-     * @author Vinicius Feitosa da Silva <viniciusfesil@mail.com>
-     */
     public function buscarRegiao($regiao)
     {
         $objEstado = self::obterInstancia();

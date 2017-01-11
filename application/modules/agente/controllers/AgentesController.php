@@ -523,7 +523,7 @@ class Agente_AgentesController extends MinC_Controller_Action_Abstract {
      * @return void
      */
     public function incluiragenteexternoAction() {
-        Zend_Layout::startMvc(array('layout' => 'layout_login'));
+        Zend_Layout::startMvc(array('layout' => 'open'));
         $this->incluir();
     }
 
