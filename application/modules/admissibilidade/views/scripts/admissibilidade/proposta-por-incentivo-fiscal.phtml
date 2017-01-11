@@ -126,7 +126,7 @@
                         <?php } ?>
                         <fieldset>
                             <legend>Identifica&ccedil;&atilde;o</legend>
-                            <table class="tabela">
+                            <table class="">
                                 <tr>
 
                                 <?php if(is_array($this->itensGeral) and count($this->itensGeral)>0){ ?>
@@ -305,7 +305,7 @@
                             </table>
                         </fieldset>
 
-                        <table class="tabela">
+                        <table class="">
                             <tr onclick="abrirDinamico('#planoDistribuicaoProduto', $(this))" style="cursor:pointer">
                                 <th align="center">
                                     <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
@@ -315,7 +315,7 @@
                             <tr>
                                 <td align="center">
                                     <div id="planoDistribuicaoProduto" style="display: none;">
-                                    <table class="tabela">
+                                    <table class="bordered striped responsive-table">
                                         <tr class="destacar">
                                             <td style="font-size:11px">Nome do Evento / Produto</td>
                                             <td style="font-size:11px">&Aacute;rea</td>
@@ -389,7 +389,7 @@
                             </tr>
                         </table>
 
-                        <table class="tabela">
+                        <table>
                             <tr onclick="abrirDinamico('#planilhaOrcamentaria', $(this));" style="cursor:pointer">
                                 <th align="center">
                                     <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
@@ -398,7 +398,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <table class="tabela" id="planilhaOrcamentaria" style="display: none;">
+                                    <table class="bordered striped responsive-table" id="planilhaOrcamentaria" style="display: none;">
                                         <?php
                                         $item = 1;
 
@@ -540,15 +540,15 @@
                                                 <!-- ========== IN�CIO TITULO �TENS ========== -->
                                                 <tr class="destacar IFF<?php echo $comparadorIncentivo; ?> IFF_PRODUTO<?php echo $comparadorProdutos; ?> IFF_ETAPA<?php echo $comparadorEtapas; ?> IFF_UF<?php echo $comparadorUFs; ?>">
                                                         <td>&nbsp;</td>
-                                                        <td width="20%">Item</td>
+                                                        <td width="">Item</td>
                                                         <td>Dias</td>
                                                         <td>Unidade</td>
                                                         <td>Qtde</td>
                                                         <td>Ocor.</td>
-                                                        <td width="12%">Vl. Unit&aacute;rio</td>
-                                                        <td width="12%">Vl. Solicitado</td>
+                                                        <td width="">Vl. Unit&aacute;rio</td>
+                                                        <td width="">Vl. Solicitado</td>
                                                         <!--<td width="12%">Vl. Sugerido do Parecerista</td>-->
-                                                        <td width="20%">Justificativa do Proponente</td>
+                                                        <td width="">Justificativa do Proponente</td>
                                                         <!--<th width="20%">Justificativa do Parecerista</th>-->
                                                         <!--<th width="12%">Vl. Sugerido do Relator</th>
                                                         <th>Justificativa do Relator</th>-->
@@ -578,7 +578,7 @@
                                                         <td class="direita"><?php echo $this->formatarReal($this->escape($resposta->ValorUnitario)); ?></td>
                                                         <td class="direita blue-text"><?php echo $this->formatarReal($this->escape($resposta->VlSolicitado)); ?></td>
                                                         <td class="direita"><?php echo $this->escape(strip_tags($resposta->JustificativaProponente)); ?></td>
-                                                        <td><?php //echo $this->escape($this->LimitadorCaracteres($resposta->dsJustificativaConselheiro)); ?></td>-->
+                                                        <td><?php //echo $this->escape($this->LimitadorCaracteres($resposta->dsJustificativaConselheiro)); ?></td>
                                                 </tr>
                                                 <!-- ========== FIM �TENS ========== -->
 
@@ -713,7 +713,7 @@
                             </tr>
                         </table>
 
-                        <table class="tabela">
+                        <table>
                             <tr onclick="abrirDinamico('#fonteRecurso', $(this))" style="cursor:pointer">
                                 <th>
                                     <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
@@ -722,7 +722,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <table class="tabela" id="fonteRecurso" style="display: none;">
+                                    <table class="bordered striped responsive-table" id="fonteRecurso" style="display: none;">
                                         <tr class="destacar">
                                             <td align="left"><b>Fonte de Recurso</b></td>
                                             <td align="right"><b>Valor</b></td>
@@ -739,7 +739,7 @@
                             </tr>
                         </table>
 
-                        <table class="tabela">
+                        <table>
                         <tr onclick="abrirDinamico('#localRealizacao', $(this)); abrirDinamico('#deslocamento', $(this));" style="cursor:pointer">
                             <th>
                                 <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
@@ -750,7 +750,7 @@
                             <td>
                                 <fieldset id="localRealizacao" style="display: none;">
                                     <legend>Local de Realiza&ccedil;&atilde;o</legend>
-                                    <table class="tabela" id="localRealizacao">
+                                    <table class="bordered striped responsive-table" id="localRealizacao">
                                         <tr class="destacar">
                                             <td align="left"><b>Pais</b></td>
                                             <td align="left"><b>UF</b></td>
@@ -773,7 +773,7 @@
                                 </fieldset>
                                 <fieldset id="deslocamento" style="display: none;">
                                     <legend>Deslocamento</legend>
-                                    <table class="tabela" id="deslocamento">
+                                    <table class="bordered striped responsive-table" id="deslocamento">
                                         <tr class="destacar">
                                             <td align='left'><b>Pais de Origem</b></td>
                                             <td align='left'><b>UF de Origem</b></td>
@@ -805,7 +805,7 @@
                             </tr>
                         </table>
 
-                        <table class="tabela">
+                        <table>
                             <tr onclick="abrirDinamico('#planoDivulgacao', $(this))" style="cursor:pointer">
                                 <th>
                                     <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
@@ -814,10 +814,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <table class="tabela" id="planoDivulgacao" style="display: none;">
+                                    <table class="bordered striped responsive-table" id="planoDivulgacao" style="display: none;">
                                         <tr class="destacar">
-                                            <td align="left"><b>Pe�a de Divulga&ccedil;&atilde;o</b></td>
-                                            <td align="left"><b>Ve�culo de Divulga&ccedil;&atilde;o</b></td>
+                                            <td align="left"><b>Pe&ccedil;a de Divulga&ccedil;&atilde;o</b></td>
+                                            <td align="left"><b>Ve&iacute;culo de Divulga&ccedil;&atilde;o</b></td>
                                         </tr>
                                     <?php if(is_array($this->itensPlanoDivulgacao) and count($this->itensPlanoDivulgacao)>0)
                                                 foreach ($this->itensPlanoDivulgacao as $divulgacao){ ?>
@@ -831,7 +831,7 @@
                             </tr>
                         </table>
 
-                        <table class="tabela">
+                        <table>
                             <tr onclick="abrirDinamico('#documentosProponente', $(this)); abrirDinamico('#documentosProposta', $(this));" style="cursor:pointer">
                                 <th>
                                     <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
@@ -844,7 +844,7 @@
                                     <fieldset id="documentosProponente" style="display: none;">
                                         <legend>Documentos da Proposta</legend>
                                         <?php if(count($this->arquivosProposta)>0){ ?>
-                                        <table class="tabela">
+                                        <table class="bordered striped responsive-table">
                                             <tr class="destacar">
                                                 <td align="center"><b>Documento</b></td>
                                                 <td align="center"><b>Data envio</b></td>
@@ -871,7 +871,7 @@
                                     <fieldset id="documentosProposta" style="display: none;">
                                         <legend>Documentos do Proponente</legend>
                                         <?php if(count($this->arquivosProponente)>0){ ?>
-                                        <table class="tabela">
+                                        <table class="bordered striped responsive-table">
                                             <tr class="destacar">
                                                 <td align="center"><b>Documento</b></td>
                                                 <td align="center"><b>Data envio</b></td>
@@ -896,7 +896,7 @@
                             </tr>
                         </table>
 
-                        <table class="tabela">
+                        <table>
                             <tr onclick="abrirDinamico('#historicoAvaliacoes', $(this))" style="cursor:pointer">
                                 <th>
                                     <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" align="left"/>
@@ -905,7 +905,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <table class="tabela" id="historicoAvaliacoes" style="display: none;">
+                                    <table class="bordered striped responsive-table" id="historicoAvaliacoes" style="display: none;">
                                         <tr class="destacar">
                                             <!--<td align="left"><b>Ator</b></td>-->
                                             <td align="left"><b>Data</b></td>
@@ -946,7 +946,7 @@
                         <div id="proponente">
                         <fieldset>
                             <legend>Identifica&ccedil;&atilde;o</legend>
-                            <table class="tabela">
+                            <table>
                                 <tr>
                                     <td width="10%" class="esquerda" nowrap><b>CNPJ / CPF</b></td>
                                     <td class="esquerda" nowrap><?php echo (strlen($this->itensGeral[0]->CNPJCPF) > 11)?aplicaMascara($this->itensGeral[0]->CNPJCPF, "99.999.999/9999-99"):  aplicaMascara($this->itensGeral[0]->CNPJCPF, "999.999.999-99") ?></td>
@@ -957,7 +957,7 @@
                         </fieldset>
                         <fieldset>
                             <legend>Endere&ccedil;o</legend>
-                            <table class="tabela">
+                            <table class="bordered striped responsive-table">
                                 <tr class="destacar">
                                     <td width="10%" nowrap class="centro"><b>Tipo de Endere&ccedil;o</b></td>
                                     <td width="10%" nowrap class="centro"><b>Tipo do Logradouro</b></td>
@@ -993,7 +993,7 @@
                         </fieldset>
                         <fieldset>
                             <legend>Telefones</legend>
-                            <table class="tabela">
+                            <table class="bordered striped responsive-table">
                                 <tr class="destacar">
                                     <td width="10%"><b>Tipo</b></td>
                                     <td><b>UF</b></td>
@@ -1016,7 +1016,7 @@
                         </fieldset>
                         <fieldset>
                             <legend>E-mail</legend>
-                            <table class="tabela">
+                            <table class="bordered striped responsive-table">
                                 <tr class="destacar">
                                     <td width="10%"><b>Tipo</b></td>
                                     <td><b>E-mail</b></td>
@@ -1040,7 +1040,7 @@
                         </fieldset>
                         <fieldset>
                             <legend>Natureza</legend>
-                            <table class="tabela">
+                            <table class="bordered striped responsive-table">
                                 <tr class="destacar">
                                     <td width="10%"><b>Direito</b></td>
                                     <td><b>Esfera</b></td>
@@ -1061,7 +1061,7 @@
                         </fieldset>
                         <fieldset>
                             <legend>Dirigente</legend>
-                                <table class="tabela">
+                                <table class="bordered striped responsive-table">
                                     <?php if ($this->dirigentes && count($this->dirigentes)>0) { ?>
                                         <tr class="destacar">
                                             <td width="20%" align="center"><b>CPF</b></td>
@@ -1080,7 +1080,7 @@
                                                     <tr>
                                                         <td></td>
                                                         <td>
-                                                            <table class='tabela'>
+                                                            <table class='bordered striped responsive-table'>
                                                                 <tr class="destacar">
                                                                     <td class="centro" colspan="4">Mandatos</td>
                                                                 </tr>
@@ -1124,7 +1124,7 @@
                             </fieldset>
                         <fieldset>
                             <legend>Usu&aacute;rio SalicWEB</legend>
-                            <table class="tabela">
+                            <table class="bordered striped responsive-table">
                                 <tr>
                                 <?php if(is_array($this->itensGeral) and !empty($this->itensGeral[0]->nomeUsuario)){ ?>
                                     <td width="10%" class="esquerda"><b>CPF</b></td>
@@ -1141,7 +1141,7 @@
             </table>
             </div><!-- fecha div de impressao -->
             <br />
-            <table class="tabela">
+            <table>
             <tr>
             <td class="centro">
                 <?php if((isset($_GET['realizar_analise']) && $_GET['realizar_analise']=="sim")):?>
