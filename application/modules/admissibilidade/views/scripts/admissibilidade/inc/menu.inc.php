@@ -1,4 +1,4 @@
-<div class="col s3 ">
+<div class="col s2 ">
     <ul class="collection with-header">
         <li class=" collection-header  "><h6>Consultar</h6></li>
         <li class="collection-item"><a href='<?php echo $this->url(array('module' => 'admissibilidade', 'controller' => 'admissibilidade', 'action' => 'listar-propostas-analise-visual-tecnico')); ?>' title="Ir para Visual por T&eacute;cnico">Visual por T&eacute;cnico</a></li>
