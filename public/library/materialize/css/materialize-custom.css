@@ -15,11 +15,133 @@
     Cinza escuro: #212121
 */
 
-table td {
-    background: transparent;
-    padding: 8px;
-    color: auto !important;
+
+/** Ajustes materialize com o salic **/
+#conteudo {
+    margin-bottom: 20px;
+    border: none;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    box-shadow: 1px 2px 4px #9e9e9e;
 }
+
+#conteudo, #titulo, #rodapeConteudo {
+    /*top: 0px;*/
+    left: 15px;
+}
+
+/*#rodapeConteudo {*/
+    /*top: -20px;*/
+/*}*/
+
+#imagemRodapeTelaMenorQueMenu span,
+#imagemRodape span,
+#rodapeConteudo span,
+#rodapeConteudo_com_menu span,
+#rodapeConteudo,
+#rodapeConteudo_com_menu,
+#rodapeSemSolicitacao,
+#conteudo,
+#rodapeConteudo_com_menu {
+    background: none;
+}
+.conteudoImprimir table,
+#conteudo table.tabela {
+    background: #fff;
+    font-size: 14px;
+    margin: 10px !important;
+    width: 98%;
+}
+
+.conteudoImprimir table th,
+#conteudo table.tabela th {
+    border-radius: 0px;
+    padding: 10px;
+}
+
+.conteudoImprimir table td,
+#conteudo table.tabela td {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+table.tabela td.destacar span,
+#conteudo #planilhaOrcamentariaMontada table.tabela td,
+#conteudo #planilhaOrcamentariaMontada table.tabela td span {
+    background: transparent !important;
+}
+
+
+#conteudo table.cke_editor {
+    background: transparent;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+}
+
+#conteudo table.cke_editor .cke_top {
+    display: none;
+}
+
+#conteudo table.cke_editor .cke_contents {
+    padding: 0px;
+    margin: 0px;
+}
+
+
+#conteudo table.cke_editor .cke_bottom {
+    padding: 5px;
+    margin: 0px;
+    background: transparent;
+}
+
+#conteudo table.tabela th,
+#conteudo p[align="center"],
+#conteudo table.tabela th[align="center"],
+#conteudo table.tabela td[align="center"] {
+    text-align: center !important;
+}
+
+#conteudo table.tabela tr a {
+    text-decoration: underline;
+}
+
+#conteudo [type="radio"]:not(:checked),
+#conteudo [type="radio"]:checked,
+#conteudo table.tabela [type="radio"]:not(:checked),
+#conteudo table.tabela [type="radio"]:checked {
+    position: relative;
+    left: 0px;
+    opacity: 1;
+}
+
+#conteudo table.tabela label {
+    font-size: 0.8rem;
+    color: #212121;
+}
+
+#conteudo .btn_calendario,
+#conteudo .btn_calendario:hover,
+#conteudo .btn_calendario-off,
+#conteudo  .btn_relogio {
+    width: 110px;
+}
+
+#space_menu {
+    height: auto;
+}
+
+#menu {
+    float: left;
+    min-height: 100px;
+}
+
+.ui-dialog {
+    font-size: 14px;
+}
+
+
+/** fim ajustes materialize com o salic **/
 
 nav .nav-wrapper {
     color: #fff;
