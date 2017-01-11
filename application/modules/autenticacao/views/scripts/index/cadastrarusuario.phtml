@@ -15,6 +15,7 @@ if (isset ($auth->getIdentity()->Cpf)) { ?>
         </ul>
     </div>
 <?php } ?>
+<?php $this->headScript()->appendFile('/public/scripts/autenticacao/js/index.js') ?>
 <div class="container">
     <div class="row">
         <div class="col s12 m3 l3"></div>
@@ -34,7 +35,6 @@ if (isset ($auth->getIdentity()->Cpf)) { ?>
                 <div class="card-content">
                     <form
                         class="materialize"
-                        data-ajax-form="true"
                         onsubmit="return validaSenha();" method="POST"
                         action="<?php echo $this->url(array('module' => 'autenticacao', 'controller' => 'index', 'action' => 'cadastrarusuario')); ?>"
                         name="cadastraUsuario"
@@ -65,7 +65,7 @@ if (isset ($auth->getIdentity()->Cpf)) { ?>
                                 <label for="dataNasc">Data de Nascimento</label>
                                 <input value="<?php echo $this->dtNascimento ?>" onblur="validaData(this)" onkeyup="mascara(this, format_data);"
                                        onkeydown="mascara(this, format_data);" onkeypress="mascara(this, format_data);"
-                                       maxlength="10" type="date" class="datepicker" name="dataNasc" id="dataNasc"
+                                       maxlength="10" type="text" class="datepicker" name="dataNasc" id="dataNasc"
                                        required="required"/>
                             </div>
                         </div>
@@ -103,25 +103,14 @@ if (isset ($auth->getIdentity()->Cpf)) { ?>
     </div>
 </div>
 <script>
-    function redirect(strUrl) {
-        strAnimate = 'fadeOutDown';
-        $('.card').removeClass('fadeInUp');
-        $('.card').removeClass('animated');
-        $('.card').addClass(strAnimate);
-        $('.card').addClass('animated');
-        $('.card').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-            window.location.href = strUrl;
-        });
-    }
-
-    var dateNow = new Date();
-    dateNow.setFullYear(dateNow.getUTCFullYear() - 16);
+//    var dateNow = new Date();
+//    dateNow.setFullYear(dateNow.getUTCFullYear() - 16);
     $3(document).ready(function($){
-        $('.datepicker').pickadate({
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 100, // Creates a dropdown of 15 years to control year
-            max: dateNow
-        });
+//        $('.datepicker').pickadate({
+//            selectMonths: true, // Creates a dropdown to control month
+//            selectYears: 100, // Creates a dropdown of 15 years to control year
+//            max: dateNow
+//        });
         $("form.materialize").validate({
             rules: {
                 cpf: {

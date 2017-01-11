@@ -1,8 +1,5 @@
 <?php
 
-/**
- * @since 02/12/2016 16:06
- */
 class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abstract
 {
     public function init()
@@ -25,13 +22,21 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
 
         $this->view->dados = array();
         $ordenacao = array("projetos.DtSituacao asc");
+
         if($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::COORDENADOR_ADMISSIBILIDADE) {
-            $this->view->dados = $enquadramento->obterProjetosParaEnquadramento($ordenacao);
+            $this->view->dados = $enquadramento->obterProjetosParaEnquadramento(
+                $this->grupoAtivo->codOrgao,
+                $ordenacao
+            );
         } elseif ($this->grupoAtivo->codGrupo == Autenticacao_Model_Grupos::TECNICO_ADMISSIBILIDADE) {
-            $this->view->dados = $enquadramento->obterProjetosParaEnquadramentoVinculados($this->view->idUsuarioLogado, $ordenacao);
+            $this->view->dados = $enquadramento->obterProjetosParaEnquadramentoVinculados(
+                $this->view->idUsuarioLogado,
+                $this->grupoAtivo->codOrgao,
+                $ordenacao
+            );
         }
+
         $this->view->codGrupo = $this->grupoAtivo->codGrupo;
-        $this->view->codOrgao = $this->grupoAtivo->codOrgao;
     }
 
     public function enquadrarprojetoAction()
@@ -62,7 +67,7 @@ class Admissibilidade_EnquadramentoController extends MinC_Controller_Action_Abs
             }
 
         } catch (Exception $objException) {
-            parent::message($objException->getMessage(), "/admissibilidade/enquadramento/gerenciar-enquadramento");
+            parent::message($objException->getMessage(), '/admissibilidade/enquadramento/gerenciar-enquadramento');
         }
     }
 
