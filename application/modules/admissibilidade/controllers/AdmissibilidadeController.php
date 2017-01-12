@@ -615,7 +615,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $wsWebServiceSEI = new ServicosSEI();
 
         $arrRetornoGerarProcedimento = $wsWebServiceSEI->wsGerarProcedimento();
-
         $chars = array(".", "/", "-");
         $nrProcessoSemFormatacao = str_replace($chars, "", $arrRetornoGerarProcedimento->ProcedimentoFormatado);
         $nrProcesso = $nrProcessoSemFormatacao;
@@ -1559,7 +1558,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $html .= '
                 </table>
                 ';
-        //echo $html; die;
         $pdf = new PDF($html, 'pdf');
         $pdf->gerarRelatorio();
 
@@ -1682,7 +1680,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $html .= '
                 </table>
                 ';
-        //echo $html; die;
         $pdf = new PDF($html, 'pdf');
         $pdf->gerarRelatorio();
 
@@ -2655,13 +2652,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
             $idPronac = $db->lastInsertId();
 
-            $arrayDados = array(
-                'Situacao' => 'B01'
-            );
-            $arrayWhere = array('IdPRONAC  = ?' => $idPronac);
-            $objProjeto = new Projetos();
-            $objProjeto->update($arrayDados, $arrayWhere);
-
 //            $sqlParecerista = "INSERT INTO SAC.dbo.tbPlanilhaProjeto
 //                                 (idPlanilhaProposta,idPronac,idProduto,idEtapa,idPlanilhaItem,Descricao,idUnidade,Quantidade,Ocorrencia,ValorUnitario,QtdeDias,
 //                                 TipoDespesa,TipoPessoa,Contrapartida,FonteRecurso,UFDespesa,    MunicipioDespesa,idUsuario)
@@ -2715,7 +2705,6 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
                     EmailDAO::enviarEmail($email->Descricao, "Projeto Cultural", $mensagemEmail);
                 }
             }
-
         } catch (Exception $objException) {
             throw new Exception ($objException->getMessage(), 0, $objException);
         }
