@@ -101,9 +101,16 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
         $idEmpresa = $Empresa->idAgente;
+//xd($this->view->itensGeral);
 
         $Projetos = new Projetos();
         $dadosProjeto = $Projetos->buscar(array('idProjeto = ?' => $this->idPreProjeto))->current();
+
+        // Busca na tabela apoio ExecucaoImediata stproposta
+      //  xd($this->idPreProjeto);
+        $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
+        if( !empty($this->view->itensGeral[0]->stProposta))
+            $this->view->ExecucaoImediata = $tableVerificacao->findBy(array('idVerificacao' => $this->view->itensGeral[0]->stProposta));
 
         $Pronac = null;
         if (count($dadosProjeto) > 0) {
@@ -741,96 +748,10 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
         $this->_helper->layout->disableLayout();
 
         $idPreProjeto = $this->idPreProjeto;
-        $dao = new Proposta_Model_AnalisarPropostaDAO();
-        $this->view->itensGeral = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
-        $propostaPorEdital = false;
-        if ($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0) {
-            $propostaPorEdital = true;
-        }
-        $this->view->itensTelefone = Proposta_Model_AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
-        $this->view->itensPlanosDistribuicao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
-
-        $this->view->itensFonteRecurso = Proposta_Model_AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
-        $this->view->itensLocalRealiazacao = Proposta_Model_AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
-        $this->view->itensDeslocamento = Proposta_Model_AnalisarPropostaDAO::buscarDeslocamento($idPreProjeto);
-        $this->view->itensPlanoDivulgacao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDivulgacao($idPreProjeto);
-
-        $tblAvaliacaoProposta = new AvaliacaoProposta();
-        $rsAvaliacaoProposta = $tblAvaliacaoProposta->buscar(array("idProjeto = ?" => $idPreProjeto, "idArquivo ?" => new Zend_Db_Expr("IS NOT NULL")));
-        $tbArquivo = new tbArquivo();
-        $arrDadosArquivo = array();
-        $arrRelacionamentoAvaliacaoDocumentosExigidos = array();
-        if (count($rsAvaliacaoProposta) > 0) {
-            foreach ($rsAvaliacaoProposta as $avaliacao) {
-                $arrDadosArquivo[$avaliacao->idArquivo] = $tbArquivo->buscar(array("idArquivo = ?" => $avaliacao->idArquivo));
-                $arrRelacionamentoAvaliacaoDocumentosExigidos[$avaliacao->idArquivo] = $avaliacao->idCodigoDocumentosExigidos;
-            }
-        }
-        $this->view->relacionamentoAvaliacaoDocumentosExigidos = $arrRelacionamentoAvaliacaoDocumentosExigidos;
-        $this->view->itensDocumentoPreProjeto = $arrDadosArquivo;
-
-        //PEGANDO RELACAO DE DOCUMENTOS EXIGIDOS(GERAL, OU SEJA, TODO MUNDO)
-        $tblDocumentosExigidos = new DocumentosExigidos();
-        $rsDocumentosExigidos = $tblDocumentosExigidos->buscar()->toArray();
-        $arrDocumentosExigidos = array();
-        foreach ($rsDocumentosExigidos as $documentoExigido) {
-            $arrDocumentosExigidos[$documentoExigido["Codigo"]] = $documentoExigido;
-        }
-        $this->view->documentosExigidos = $arrDocumentosExigidos;
-
-        $this->view->itensHistorico = Proposta_Model_AnalisarPropostaDAO::buscarHistorico($idPreProjeto);
-
-        /*
-         * PEGANDO DOCUMENTOS ANEXADOS
-         */
-        $tblAvaliacaoProposta = new AvaliacaoProposta();
-        $rsAvaliacaoProposta = $tblAvaliacaoProposta->buscar(array("idProjeto = ?" => $idPreProjeto, "idArquivo ?" => new Zend_Db_Expr("IS NOT NULL")));
-        $tbArquivo = new tbArquivo();
-        $arrDadosArquivo = array();
-        $arrRelacionamentoAvaliacaoDocumentosExigidos = array();
-        if (count($rsAvaliacaoProposta) > 0) {
-            foreach ($rsAvaliacaoProposta as $avaliacao) {
-                $arrDadosArquivo[$avaliacao->idArquivo] = $tbArquivo->buscar(array("idArquivo = ?" => $avaliacao->idArquivo));
-                $arrRelacionamentoAvaliacaoDocumentosExigidos[$avaliacao->idArquivo] = $avaliacao->idCodigoDocumentosExigidos;
-            }
-        }
-        //x($arrRelacionamentoAvaliacaoDocumentosExigidos);
-        $this->view->relacionamentoAvaliacaoDocumentosExigidos = $arrRelacionamentoAvaliacaoDocumentosExigidos;
-        $this->view->itensDocumentoPreProjeto = $arrDadosArquivo;
-
-        //PEGANDO RELACAO DE DOCUMENTOS EXIGIDOS(GERAL, OU SEJA, TODO MUNDO)
-        $tblDocumentosExigidos = new DocumentosExigidos();
-        $rsDocumentosExigidos = $tblDocumentosExigidos->buscar()->toArray();
-        $arrDocumentosExigidos = array();
-        foreach ($rsDocumentosExigidos as $documentoExigido) {
-            $arrDocumentosExigidos[$documentoExigido["Codigo"]] = $documentoExigido;
-        }
-
-        $this->view->documentosExigidos = $arrDocumentosExigidos;
-
-        /*
-         * FINAL - PEGANDO DOCUMENTOS ANEXADOS
-         */
-
-        $this->view->itensPlanilhaOrcamentaria = $dao->buscarPlanilhaOrcamentaria($idPreProjeto);
-
-        $buscarProduto = ManterorcamentoDAO::buscarProdutos($this->idPreProjeto);
-        $this->view->Produtos = $buscarProduto;
-
-        $objPlanilhaEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
-        $buscarEtapa = $objPlanilhaEtapa->listarEtapasProdutos($this->idPreProjeto);
-        $this->view->Etapa = $buscarEtapa;
-
-
-        $objPreprojeto = new Proposta_Model_DbTable_PreProjeto();
-        $buscarItem = $objPreprojeto->listarItensProdutos($this->idPreProjeto);
-        $this->view->Item = $buscarItem;
-
-        $this->view->AnaliseCustos = $objPreprojeto->analiseDeCustos($this->idPreProjeto);
-        $this->view->idPreProjeto = $this->idPreProjeto;
+        $dados = Proposta_Model_AnalisarPropostaDAO::buscarGeral($idPreProjeto);
+        $this->view->itensGeral = $dados;
 
         //========== inicio codigo dirigente ================
-        /*==================================================*/
         $arrMandatos = array();
         $this->view->mandatos = $arrMandatos;
         $preProjeto = new Proposta_Model_DbTable_PreProjeto();
@@ -838,11 +759,27 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
 
         $Empresa = $preProjeto->buscar(array('idPreProjeto = ?' => $this->idPreProjeto))->current();
         $idEmpresa = $Empresa->idAgente;
+//xd($this->view->itensGeral);
 
-        if (isset($this->view->itensGeral[0]->CNPJCPFdigirente) && $this->view->itensGeral[0]->CNPJCPFdigirente != "") {
+        $Projetos = new Projetos();
+        $dadosProjeto = $Projetos->buscar(array('idProjeto = ?' => $this->idPreProjeto))->current();
+
+        // Busca na tabela apoio ExecucaoImediata stproposta
+        //  xd($this->idPreProjeto);
+        $tableVerificacao = new Proposta_Model_DbTable_Verificacao();
+        if( !empty($this->view->itensGeral[0]->stProposta))
+            $this->view->ExecucaoImediata = $tableVerificacao->findBy(array('idVerificacao' => $this->view->itensGeral[0]->stProposta));
+
+        $Pronac = null;
+        if (count($dadosProjeto) > 0) {
+            $Pronac = $dadosProjeto->AnoProjeto . $dadosProjeto->Sequencial;
+        }
+        $this->view->Pronac = $Pronac;
+
+        if (isset($dados[0]->CNPJCPFdigirente) && $dados[0]->CNPJCPFdigirente != "") {
             $tblAgente = new Agente_Model_DbTable_Agentes();
             $tblNomes = new Nomes();
-            foreach ($this->view->itensGeral as $v) {
+            foreach ($dados as $v) {
                 $rsAgente = $tblAgente->buscarAgenteNome(array('CNPJCPF=?' => $v->CNPJCPFdigirente))->current();
                 $rsDirigentes[$rsAgente->idAgente]['CNPJCPFDirigente'] = $rsAgente->CNPJCPF;
                 $rsDirigentes[$rsAgente->idAgente]['idAgente'] = $rsAgente->idAgente;
@@ -857,11 +794,72 @@ class Admissibilidade_AdmissibilidadeController extends MinC_Controller_Action_A
             }
         }
 
-        //$tbDirigentes = $geral->buscarDirigentes($idPronac);
         $this->view->dirigentes = $rsDirigentes;
         $this->view->mandatos = $arrMandatos;
         //============== fim codigo dirigente ================
-        /*==================================================*/
+
+        $propostaPorEdital = false;
+        if ($this->view->itensGeral[0]->idEdital && $this->view->itensGeral[0]->idEdital != 0) {
+            $propostaPorEdital = true;
+        }
+        $this->view->isEdital = $propostaPorEdital;
+        $this->view->itensTelefone = Proposta_Model_AnalisarPropostaDAO::buscarTelefone($this->view->itensGeral[0]->idAgente);
+        $this->view->itensPlanosDistribuicao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDistribucaoProduto($idPreProjeto);
+        $this->view->itensFonteRecurso = Proposta_Model_AnalisarPropostaDAO::buscarFonteDeRecurso($idPreProjeto);
+        $this->view->itensLocalRealiazacao = Proposta_Model_AnalisarPropostaDAO::buscarLocalDeRealizacao($idPreProjeto);
+        $this->view->itensDeslocamento = Proposta_Model_AnalisarPropostaDAO::buscarDeslocamento($idPreProjeto);
+        $this->view->itensPlanoDivulgacao = Proposta_Model_AnalisarPropostaDAO::buscarPlanoDeDivulgacao($idPreProjeto);
+
+        //DOCUMENTOS ANEXADOS PROPOSTA
+        $tbl = new Proposta_Model_DbTable_TbDocumentosPreProjeto();
+        $rs = $tbl->buscarDocumentos(array("idProjeto = ?" => $this->idPreProjeto));
+        $this->view->arquivosProposta = $rs;
+
+        //DOCUMENTOS ANEXADOS PROPONENTE
+        $tbA = new Proposta_Model_DbTable_TbDocumentosAgentes();
+        $rsA = $tbA->buscarDocumentos(array("idAgente = ?" => $dados[0]->idAgente));
+        $this->view->arquivosProponente = $rsA;
+
+        //DOCUMENTOS ANEXADOS NA DILIGENCIA
+        $tblAvaliacaoProposta = new AvaliacaoProposta();
+        $rsAvaliacaoProposta = $tblAvaliacaoProposta->buscar(array("idProjeto = ?" => $idPreProjeto, "idArquivo ?" => new Zend_Db_Expr("IS NOT NULL")));
+        $tbArquivo = new tbArquivo();
+        $arrDadosArquivo = array();
+        $arrRelacionamentoAvaliacaoDocumentosExigidos = array();
+        if (count($rsAvaliacaoProposta) > 0) {
+            foreach ($rsAvaliacaoProposta as $avaliacao) {
+                $arrDadosArquivo[$avaliacao->idArquivo] = $tbArquivo->buscar(array("idArquivo = ?" => $avaliacao->idArquivo));
+                $arrRelacionamentoAvaliacaoDocumentosExigidos[$avaliacao->idArquivo] = $avaliacao->idCodigoDocumentosExigidos;
+            }
+        }
+        $this->view->relacionamentoAvaliacaoDocumentosExigidos = $arrRelacionamentoAvaliacaoDocumentosExigidos;
+        $this->view->itensDocumentoPreProjeto = $arrDadosArquivo;
+
+        //PEGANDO RELACAO DE DOCUMENTOS EXIGIDOS(GERAL, OU SEJA, TODO MUNDO)
+        $tblDocumentosExigidos = new DocumentosExigidos();
+        $rsDocumentosExigidos = $tblDocumentosExigidos->buscar()->toArray();
+        $arrDocumentosExigidos = array();
+        foreach ($rsDocumentosExigidos as $documentoExigido) {
+            $arrDocumentosExigidos[$documentoExigido["Codigo"]] = $documentoExigido;
+        }
+        $this->view->documentosExigidos = $arrDocumentosExigidos;
+        $this->view->itensHistorico = Proposta_Model_AnalisarPropostaDAO::buscarHistorico($idPreProjeto);
+        $this->view->itensPlanilhaOrcamentaria = Proposta_Model_AnalisarPropostaDAO::buscarPlanilhaOrcamentaria($idPreProjeto);
+
+        $buscarProduto = ManterorcamentoDAO::buscarProdutos($this->idPreProjeto);
+        $this->view->Produtos = $buscarProduto;
+
+        $tbPlanilhaEtapa = new Proposta_Model_DbTable_TbPlanilhaEtapa();
+        $buscarEtapa = $tbPlanilhaEtapa->listarEtapasProdutos($this->idPreProjeto);
+
+        $this->view->Etapa = $buscarEtapa;
+
+        $preProjeto = new Proposta_Model_DbTable_PreProjeto();
+
+        $buscarItem = $preProjeto->listarItensProdutos($this->idPreProjeto);
+        $this->view->AnaliseCustos = Proposta_Model_DbTable_PreProjeto::analiseDeCustos($this->idPreProjeto);
+
+        $this->view->idPreProjeto = $this->idPreProjeto;
 
 
         if ($propostaPorEdital) {
