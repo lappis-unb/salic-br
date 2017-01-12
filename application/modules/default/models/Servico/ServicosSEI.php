@@ -10,31 +10,38 @@
  * @since 18/04/2016
  * @version 1.0
  */
-class ServicosSEI {
+class ServicosSEI
+{
+
+    private $caminhoWSDLSEI;
 
     private static $objSoapCliente;
 
-    private function getSoapClient( )
+    public function __construct()
     {
-        if(!@file_get_contents(self::CAMINHO_WSDL_SEI)){
-            throw new Exception("Arquivo WSDL n�o encontrado! Verifique: " . self::CAMINHO_WSDL_SEI);
+        $this->caminhoWSDLSEI = "http://seihomolog.cultura.gov.br/sei/controlador_ws.php?servico=sei";
+        if (APPLICATION_ENV == "production") {
+            $this->caminhoWSDLSEI = "http://sei.cultura.gov.br/sei/controlador_ws.php?servico=sei";
+        }
+    }
+
+    private function getSoapClient()
+    {
+        if (!@file_get_contents($this->caminhoWSDLSEI)) {
+            throw new Exception("Arquivo WSDL n&atilde;o encontrado! Verifique: {$this->caminhoWSDLSEI}");
         }
 
-        if ( is_null( self::$objSoapCliente ) )
-        {
-            try
-            {
+        if (is_null(self::$objSoapCliente)) {
+            try {
                 # Instanciando a classe que conecta ao WebService
-                $objSoapCliente = new Zend_Soap_Client( self::CAMINHO_WSDL_SEI,array('encoding'=>'UTF-8') );
-            }
-            catch ( Exception $objException )
-            {
+                $objSoapCliente = new Zend_Soap_Client($this->caminhoWSDLSEI, array('encoding' => 'UTF-8'));
+            } catch (Exception $objException) {
                 # Retorna mensagem de erro
-                return ( $objException->getMessage() );
+                return ($objException->getMessage());
             }
             self::$objSoapCliente = $objSoapCliente;
         }
-        return ( self::$objSoapCliente );
+        return (self::$objSoapCliente);
     }
 
     /**
@@ -46,11 +53,11 @@ class ServicosSEI {
      * @param null $nrIdSerie
      * @return mixed
      */
-    public function wsListarUnidades( $txSiglaSistema, $txIdentificacaoServico, $nrIdTipoProcedimento = NULL, $nrIdSerie = NULL )
+    public function wsListarUnidades($txSiglaSistema, $txIdentificacaoServico, $nrIdTipoProcedimento = NULL, $nrIdSerie = NULL)
     {
         $objSoapCliente = self::getSoapClient();
         //Nome do M�todo Remoto a ser Chamado
-        $mixResult = $objSoapCliente->listarUnidades( $txSiglaSistema, $txIdentificacaoServico, $nrIdTipoProcedimento, $nrIdSerie );
+        $mixResult = $objSoapCliente->listarUnidades($txSiglaSistema, $txIdentificacaoServico, $nrIdTipoProcedimento, $nrIdSerie);
         return $mixResult;
     }
 
@@ -62,7 +69,7 @@ class ServicosSEI {
      * @return mixed
      * @throws Exception
      */
-    public function wsGerarProcedimento( $txSiglaSistema = "INTRANET", $txIdentificacaoServico = "SALIC", $nrIdUnidade = '110000151' )
+    public function wsGerarProcedimento($txSiglaSistema = "INTRANET", $txIdentificacaoServico = "SALIC", $nrIdUnidade = '110000151')
     {
         $objSoapCliente = self::getSoapClient();
 
@@ -86,7 +93,7 @@ class ServicosSEI {
 
         //Assuntos
         $arrAssuntos = array();
-        $arrAssuntos[] = array('CodigoEstruturado'=>'067.1');
+        $arrAssuntos[] = array('CodigoEstruturado' => '067.1');
         #$arrAssuntos[] = array('CodigoEstruturado'=>'930.b');
         #$arrAssuntos[] = array('CodigoEstruturado'=>'930.c');
         $Procedimento['Assuntos'] = $arrAssuntos; //Atribui os Assuntos aos Dados do Procedimento
@@ -204,24 +211,11 @@ class ServicosSEI {
         ###################################################################################################################################################################
 
         //Nome do M�todo Remoto a ser Chamado
-        $mixResult = $objSoapCliente->gerarProcedimento($txSiglaSistema,$txIdentificacaoServico, $nrIdUnidade, $Procedimento, array(),$ProcedimentosRelacionados,  $UnidadesEnvio);
+        $mixResult = $objSoapCliente->gerarProcedimento($txSiglaSistema, $txIdentificacaoServico, $nrIdUnidade, $Procedimento, array(), $ProcedimentosRelacionados, $UnidadesEnvio);
 
         return $mixResult;
     }
 
-    /**
-     * Metodo chamado quando o objeto da classe e instanciado
-     *
-     * @return VOID
-     */
-    public function __construct()
-    {
-        if(APPLICATION_ENV == "production") {
-            define("CAMINHO_WSDL_SEI", "http://sei.cultura.gov.br/sei/controlador_ws.php?servico=sei");
-        } else {
-            define("CAMINHO_WSDL_SEI", "http://seihomolog.cultura.gov.br/sei/controlador_ws.php?servico=sei");
-        }
-    }
 
     /**
      * Metodo chamado quando o objeto da classe e serializado
@@ -248,9 +242,9 @@ class ServicosSEI {
      * @param ARRAY $arrParameters
      * @return VOID
      */
-    public function __call( $strMethod , $arrParameters )
+    public function __call($strMethod, $arrParameters)
     {
-        debug( "O metodo " . $strMethod . " nao foi encontrado na classe " . get_class( $this ) . ".<br />" . __FILE__ . "(linha " . __LINE__ . ")" , 1 );
+        debug("O metodo " . $strMethod . " nao foi encontrado na classe " . get_class($this) . ".<br />" . __FILE__ . "(linha " . __LINE__ . ")", 1);
     }
 
     /*
