@@ -158,6 +158,9 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             new Zend_Db_Expr("convert(varchar(max),b.dsJustificativa) as JustProponente")
         );
 
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $db->setFetchMode(Zend_DB::FETCH_OBJ);
+
         $sac = 'sac.dbo';
         $concat = MinC_Db_Expr::concat();
 
@@ -169,7 +172,7 @@ class spPlanilhaOrcamentaria extends MinC_Db_Table_Abstract {
             ->joinInner(array('e' => 'tbplanilhaunidade'), '(b.unidade = e.idunidade)', 'e.descricao as Unidade', $sac)
             ->joinInner(array('i' => 'tbplanilhaitens '), '(b.idplanilhaitem=i.idplanilhaitens)', 'i.descricao as Item', $sac)
             ->joinInner(array('x' => 'verificacao'), '(b.fonterecurso = x.idverificacao)', 'x.descricao as FonteRecurso', $sac)
-            ->joinInner(array('f' => 'vufmunicipio '), '(b.ufdespesa = f.iduf and b.municipiodespesa = f.idmunicipio)', array('f.uf','f.municipio'), 'agentes.dbo')
+            ->joinInner(array('f' => 'vufmunicipio '), '(b.ufdespesa = f.iduf and b.municipiodespesa = f.idmunicipio)', array('f.uf as UF','f.municipio as  Municipio'), 'agentes.dbo')
             ->where('a.idpronac = ? ', $idPronac)
             ->order("x.Descricao")
             ->order("c.Descricao DESC")
