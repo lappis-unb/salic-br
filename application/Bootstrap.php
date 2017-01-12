@@ -28,7 +28,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             'automatic_serialization' => true
         );
         $backendOptions = array(
-            'cache_dir' => APPLICATION_PATH . '/../data/cache/' // Directory where to put the cache files
+//            'cache_dir' => APPLICATION_PATH . '/../data/cache/' // Directory where to put the cache files
         );
 
         // getting a Zend_Cache_Core object
