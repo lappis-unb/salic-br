@@ -100,8 +100,8 @@
                                                     <th>Plano Anual</th>
                                                     <th>Detalhes</th>
                                                     <th>Outras</th>
-                                                    <th>Devolver</th>
-                                                    <th>Despachos</th>
+                                                    <!--th>Devolver</th-->
+                                                    <!--th>Despachos</th-->
                                                 </tr>';
                                     foreach ($projetos as $idProjeto => $projeto) {
                                         if($projeto['stPlanoAnual']){
@@ -147,7 +147,7 @@
                                                         <img src="' . $this->baseUrl() . '/public/img/buttons/ver.gif" alt="Visualizar outras propostas deste proponente" />
                                                     </a>
                                                 </td>
-                                                <td align="center">
+                                                <!--td align="center">
                                                     <a href="' . $this->baseUrl() . '/admissibilidade/admissibilidade/devolverproposta?idPreProjeto=' . $idProjeto . '" title="Devolver proposta">
                                                         <img src="' . $this->baseUrl() . '/public/img/voltar.png" alt="Devolver proposta" />
                                                     </a>
@@ -156,7 +156,7 @@
                                                     <a href="' . $this->baseUrl() . '/admissibilidade/admissibilidade/despacharproposta?idPreProjeto=' . $idProjeto . '" title="Visualizar despachos">
                                                         <img src="' . $this->baseUrl() . '/public/img/ico/despacho.png" alt="Visualizar despachos" />
                                                     </a>
-                                                </td>
+                                                </td-->
                                             </tr>';
                                     }
                                     $html .='</table>';

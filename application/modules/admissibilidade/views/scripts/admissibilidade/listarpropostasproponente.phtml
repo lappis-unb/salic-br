@@ -1,70 +1,69 @@
-<?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
-<div id="titulo">
-    <div>Admissibilidade de propostas - Lista de propostas por proponente <span class="voltar"><a href="javascript:voltar();" title="Ir para p&aacute;gina anterior">Voltar</a></span></div>
-</div>
-<script type="text/javascript">
-<!--
-$(document).ready(function(){
-$("#tabelaPropostas").tablesorter();
-    $('th').css("cursor","pointer");
-    $('th').attr("title","Clique aqui para ordenar");
-});
+<div class="container-fluid">
+    <div class="row">
+        <?php echo $this->partial("admissibilidade/inc/menu.inc.php"); ?>
+        <div class="col s10">
+                <h4>Lista de propostas por proponente</h4>
+            <script type="text/javascript">
+            <!--
+            $(document).ready(function(){
+            $("#tabelaPropostas").tablesorter();
+                $('th').css("cursor","pointer");
+                $('th').attr("title","Clique aqui para ordenar");
+            });
 
-/*
- * Fun��o respons�vel pela exibi��o ou ocultamento de conte�do,
- * mudando a imagem.
- **/
-function abrirDinamico(elemento, obj) {
-    if($(elemento).css('display') == 'none') {
-        $(elemento).fadeIn('fast', function() {
-            $('img', $(obj)).attr('src','<?php echo $this->baseUrl();?>/public/img/navigation-right.png');
-        });
-    } else {
-        $(elemento).fadeOut('fast', function() {
-            $('img', $(obj)).attr('src','<?php echo $this->baseUrl();?>/public/img/navigation-baixo.PNG');
-        });
-    }
-}
-//-->
-</script>
-<div id="conteudo">
-    <?php if(!empty($this->propostas)): ?>
-    <table class="tabela">
-        <tr onclick="abrirDinamico('#propostasProponente', $(this))" style="cursor:pointer">
-            <th align="left">
-                <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" />
-                <?php echo $this->agente->Descricao; ?>
-            </th>
-        </tr>
-        <tr id="propostasProponente">
-            <td>
-                <table class="tabela" id="tabelaPropostas">
-                    <thead>
-                    <tr>
-                        <th style="cursor: pointer" title="Clique aqui para ordenar">Nr. Proposta</th>
-                        <th>Nome da Proposta Cultural</th>
-                        <th>Status</th>
-                        <th>T�cnico</th>
+            /*
+             * Fun��o respons�vel pela exibi��o ou ocultamento de conte�do,
+             * mudando a imagem.
+             **/
+            function abrirDinamico(elemento, obj) {
+                if($(elemento).css('display') == 'none') {
+                    $(elemento).fadeIn('fast', function() {
+                        $('img', $(obj)).attr('src','<?php echo $this->baseUrl();?>/public/img/navigation-right.png');
+                    });
+                } else {
+                    $(elemento).fadeOut('fast', function() {
+                        $('img', $(obj)).attr('src','<?php echo $this->baseUrl();?>/public/img/navigation-baixo.PNG');
+                    });
+                }
+            }
+            //-->
+            </script>
+            <div >
+                <?php if(!empty($this->propostas)): ?>
+                <table class="tabela">
+                    <tr onclick="abrirDinamico('#propostasProponente', $(this))" style="cursor:pointer">
+                        <th align="left">
+                            <img src="<?php echo $this->baseUrl();?>/public/img/navigation-right.png" id="imgDinamica" />
+                            <?php echo $this->agente->Descricao; ?>
+                        </th>
                     </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach($this->propostas as $proposta): ?>
-                    <tr>
-                        <td nowrap><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idPreProjeto; ?>"><?php echo $proposta->idPreProjeto; ?></a></td>
-                        <td><?php echo $proposta->NomeProjeto; ?></td>
-                        <td><?php echo $this->movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"]; ?></td>
-                        <td><?php echo $this->movimentacoes[$proposta->idPreProjeto]["tecnico"]; ?></td>
+                    <tr id="propostasProponente">
+                        <td>
+                            <table class="tabela" id="tabelaPropostas">
+                                <thead>
+                                <tr>
+                                    <th style="cursor: pointer" title="Clique aqui para ordenar">Nr. Proposta</th>
+                                    <th>Nome da Proposta Cultural</th>
+                                    <th>Status</th>
+                                    <th>Técnico</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach($this->propostas as $proposta): ?>
+                                <tr>
+                                    <td nowrap><a href="<?php echo $this->baseUrl(); ?>/admissibilidade/exibirpropostacultural?idPreProjeto=<?php echo $proposta->idPreProjeto; ?>"><?php echo $proposta->idPreProjeto; ?></a></td>
+                                    <td><?php echo $proposta->NomeProjeto; ?></td>
+                                    <td><?php echo $this->movimentacoes[$proposta->idPreProjeto]["txtMovimentacao"]; ?></td>
+                                    <td><?php echo $this->movimentacoes[$proposta->idPreProjeto]["tecnico"]; ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
-                    <?php endforeach; ?>
-                    </tbody>
                 </table>
-            </td>
-        </tr>
-    </table>
-    <?php endif; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
 </div>
-<!-- ========== FIM CONTEUDO ========== -->
-<!-- ========== INICIO RODAPE DO CONTEUDO ========== -->
-<div id="rodapeConteudo"><span></span></div>
-<!-- ========== FIM RODAPE DO CONTEUDO ========== -->
-<br clear="all" />
